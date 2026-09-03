@@ -444,9 +444,9 @@
 			render_list += "<span class='info ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</span><br>"
 
 	for(var/datum/disease/disease as anything in target.diseases)
-		if(istype(disease, /datum/disease/acute))
-			var/datum/disease/acute/acute_disease = disease
-			acute_disease.Refresh_Acute()
+		if(istype(disease, /datum/disease))
+			var/datum/disease/acute_disease = disease
+			acute_disease.Refresh()
 			if(!(disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT))
 				if(disease.severity == DISEASE_SEVERITY_POSITIVE || DISEASE_SEVERITY_NONTHREAT)
 					render_list += "<span class='info ml-1'><b>[acute_disease.origin] disease detected</b>\n\
@@ -853,20 +853,12 @@
 		return
 
 	var/list/render = list()
-	for(var/datum/disease/disease as anything in patient.diseases)
-		if(istype(disease, /datum/disease/acute))
-			var/datum/disease/acute/advanced = disease
-			advanced.Refresh_Acute()
-			if(!(disease.visibility_flags & HIDDEN_SCANNER))
-				render += "<span class='alert ml-1'><b>Warning: [advanced.origin] disease detected</b>\n\
-				<div class='ml-2'>Name: [advanced.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
-				</span>"
-
-		else
-			if(!(disease.visibility_flags & HIDDEN_SCANNER))
-				render += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
-				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
-				</span>"
+	for(var/datum/disease/disease in patient.diseases)
+		disease.Refresh()
+		if(!(disease.visibility_flags & HIDDEN_SCANNER))
+			render += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
+			<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
+			</span>"
 
 	if(!length(render))
 		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)

@@ -14,7 +14,7 @@
 	if(!ishuman(victim) || !isturf(victim.loc) || !QDELETED(victim.internal) || !QDELETED(victim.external) || victim.is_mouth_covered() || victim.has_smoke_protection() || victim.check_airborne_sterility())
 		return
 	var/strength = 0
-	for(var/datum/disease/acute/virus in victim.diseases)
+	for(var/datum/disease/virus in victim.diseases)
 		strength += virus.infectionchance
 	strength = round(strength / length(victim.diseases))
 	var/i = 1

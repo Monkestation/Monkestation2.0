@@ -40,7 +40,7 @@
 /datum/component/infective/proc/on_organ_insertion(obj/item/organ/target, mob/living/carbon/receiver)
 	SIGNAL_HANDLER
 
-	for(var/datum/disease/acute/disease in diseases)
+	for(var/datum/disease/disease in diseases)
 		receiver.infect_disease(disease, TRUE, "Insertion of infected organ")
 
 	qdel(src) // once organ is implanted delete the infective component
@@ -48,7 +48,7 @@
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 
-	for(var/datum/disease/acute/disease in diseases)
+	for(var/datum/disease/disease in diseases)
 		if(!disease.has_required_infectious_organ(eater, ORGAN_SLOT_STOMACH))
 			continue
 
@@ -63,7 +63,7 @@
 	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
 	try_infect(feeder, appendage_zone)
 
-	for(var/datum/disease/acute/disease in diseases)
+	for(var/datum/disease/disease in diseases)
 		if(!disease.has_required_infectious_organ(drinker, ORGAN_SLOT_STOMACH))
 			continue
 
@@ -147,5 +147,5 @@
 	var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 	if(!length(contact) || block)
 		return
-	for(var/datum/disease/acute/V as anything in contact)
+	for(var/datum/disease/V as anything in contact)
 		living.try_contact_infect(V, note="(Skin Contact - (Infective Component), coming from [src.parent])")

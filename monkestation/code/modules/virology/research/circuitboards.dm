@@ -1,7 +1,7 @@
 /obj/item/circuitboard/machine/centrifuge
 	name = "Centrifuge"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/disease2/centrifuge
+	build_path = /obj/machinery/pathology/centrifuge
 	req_components = list(
 		/datum/stock_part/manipulator = 3
 	)
@@ -9,7 +9,7 @@
 /obj/item/circuitboard/machine/diseaseanalyser
 	name = "Disease Analyzer"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/disease2/diseaseanalyser
+	build_path = /obj/machinery/pathology/disease_analyser
 	req_components = list(
 		/datum/stock_part/scanning_module = 3,
 		/datum/stock_part/manipulator = 1,
@@ -19,7 +19,7 @@
 /obj/item/circuitboard/machine/incubator
 	name = "Pathogenic Incubator"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/disease2/incubator
+	build_path = /obj/machinery/pathology/incubator
 	req_components = list(
 		/datum/stock_part/scanning_module = 4,
 		/datum/stock_part/matter_bin = 1,
@@ -27,13 +27,13 @@
 	)
 
 /obj/item/circuitboard/machine/centrifuge/fullupgrade
-	build_path = /obj/machinery/disease2/centrifuge/fullupgrade
+	build_path = /obj/machinery/pathology/centrifuge/fullupgrade
 	req_components = list(
 		/datum/stock_part/manipulator/tier4 = 3,
 	)
 
 /obj/item/circuitboard/machine/diseaseanalyser/fullupgrade
-	build_path = /obj/machinery/disease2/diseaseanalyser/fullupgrade
+	build_path = /obj/machinery/pathology/disease_analyser/fullupgrade
 	req_components = list(
 		/datum/stock_part/scanning_module/tier4 = 3,
 		/datum/stock_part/manipulator/tier4 = 1,

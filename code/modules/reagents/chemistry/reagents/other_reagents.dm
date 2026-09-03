@@ -110,7 +110,7 @@
 		cached_data = list()
 	else
 		cached_data = data
-	cached_data |= "[/datum/disease/acute/premade/fungal_tb]"
+	cached_data |= "[/datum/disease/premade/fungal_tb]"
 	src.data = cached_data
 
 /datum/reagent/water
@@ -1399,8 +1399,7 @@
 /datum/reagent/snail/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_SNAIL, TRUE, "Infected by ingestion of [src]")
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"

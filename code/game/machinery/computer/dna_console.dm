@@ -821,10 +821,10 @@
 				//This change was to bring it more in line with what I originally imagined, that the virus risk was from the virus misbehaving somehow - it
 				//should be a "sometimes" thing, not an "always" thing, but risky enough to force the need for precautions to isolate the subject
 				if(prob(60))
-					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(2,2)
+					var/datum/disease/random/random_disease = new /datum/disease/random(2)
 					random_disease.try_infect(scanner_occupant, FALSE)
 				else if (prob(30))
-					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(3,4)
+					var/datum/disease/advance/random_disease = new /datum/disease/random(3)
 					random_disease.try_infect(scanner_occupant, FALSE)
 				//Instantiate list to hold resulting mutation_index
 				var/mutation_data[0]

@@ -75,7 +75,6 @@
 			span_hear("You hear something heavy collide with the ground."),
 		)
 		owner.infect_disease_predefined(DISEASE_HEART, TRUE)
-		//owner.ForceContractDisease(heart_attack)
 		owner.Unconscious(20 SECONDS)
 		qdel(src) //Victim passes out from fear, calming them down and permenantly damaging their heart.
 

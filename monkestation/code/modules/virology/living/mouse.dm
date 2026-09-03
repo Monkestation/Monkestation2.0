@@ -10,7 +10,6 @@
 	immune_system = new(src)
 
 	if(prob(disease_chance) && diseased)
-		var/virus_choice = pick(WILD_ACUTE_DISEASES)
 		var/list/anti = list(
 			ANTIGEN_BLOOD	= 2,
 			ANTIGEN_COMMON	= 2,
@@ -25,8 +24,8 @@
 			EFFECT_DANGER_HARMFUL	= 2,
 			EFFECT_DANGER_DEADLY	= 2,
 		)
-		var/datum/disease/acute/disease = new virus_choice
-		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
+		var/datum/disease/disease = new()
+		disease.randomize_disease(50, 90, 10, 100, null, anti, bad, GLOB.disease_variations, src)
 		disease.spread_flags &= ~DISEASE_SPREAD_AIRBORNE
 		diseases = list()
 		diseases += disease

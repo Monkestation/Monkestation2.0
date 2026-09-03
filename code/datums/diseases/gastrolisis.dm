@@ -1,4 +1,4 @@
-/datum/disease/gastrolosis
+/datum/disease/premade/gastrolosis
 	name = "Invasive Gastrolosis"
 	max_stages = 4
 	spread_text = "Unknown"
@@ -6,10 +6,9 @@
 	cure_text = "Salt and mutadone"
 	agent = "Agent S and DNA restructuring"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	stage_prob = 0.5
 	disease_flags = CURABLE
+	category = DISEASE_SNAIL
 	cures = list(/datum/reagent/consumable/salt,  /datum/reagent/medicine/mutadone)
-
 
 /datum/disease/gastrolosis/stage_act(seconds_per_tick, times_fired)
 	. = ..()

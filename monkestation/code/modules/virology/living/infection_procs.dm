@@ -1,5 +1,6 @@
 /mob/living/proc/find_nearby_disease()//only tries to find Contact and Blood spread diseases. Airborne ones are handled by breath_airborne_diseases()
-	if(buckled)//Riding a vehicle?
+	//Riding a vehicle?
+	if(buckled)
 		return
 	if(HAS_TRAIT(src, TRAIT_MOVE_FLYING))//Flying?
 		return
@@ -40,7 +41,7 @@
 /mob/living/proc/assume_contact_diseases(list/disease_list, atom/source, blocked=0, bleeding=0)
 	if(!length(disease_list))
 		return
-	for(var/datum/disease/acute/V as anything in disease_list)
+	for(var/datum/disease/V as anything in disease_list)
 		if (!V)
 			message_admins("[key_name(src)] is trying to assume contact diseases from touching \a [source], but the disease_list contains an ID ([V.uniqueID]-[V.subID]) that isn't associated to an actual disease datum! Ping Dwasint about it please.")
 			return
@@ -53,17 +54,22 @@
 		else if(!blocked && bleeding && (V.spread_flags & DISEASE_SPREAD_BLOOD))
 			infect_disease(V, notes="(Blood, from [source])")
 
-//Called in Life() by humans (in handle_breath.dm), monkeys and mice
-/mob/living/proc/breath_airborne_diseases()//only tries to find Airborne spread diseases. Blood and Contact ones are handled by find_nearby_disease()
-	if (!check_airborne_sterility() && isturf(loc))//checking for sterile mouth protections
-		breath_airborne_diseases_from_clouds()
+/**
+ * Called in Life() by humans (in handle_breath.dm), monkeys and mice
+ * Only tries to find Airborne spread diseases. Blood and Contact ones are handled by find_nearby_disease()
+ */
+/mob/living/proc/breath_airborne_diseases()
+	/// Checking for sterile mouth protections
+	if(!isturf(loc) || check_airborne_sterility())
+		return
+	breath_airborne_diseases_from_clouds()
 
-		for(var/obj/effect/decal/cleanable/C in loc)
-			if (!length(C.diseases))
-				continue
-			for(var/datum/disease/acute/V as anything in C.diseases)
-				if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
-					infect_disease(V, notes="(Airborne, from [C])")
+	for(var/obj/effect/decal/cleanable/mess in loc)
+		if(!length(mess.diseases))
+			continue
+		for(var/datum/disease/disease as anything in mess.diseases)
+			if(disease.spread_flags & DISEASE_SPREAD_AIRBORNE)
+				infect_disease(disease, notes="(Airborne, from [mess])")
 
 /mob/living/proc/breath_airborne_diseases_from_clouds()
 	var/sanity = 0
@@ -71,10 +77,10 @@
 		if(sanity > 10)
 			break
 		sanity++ //anything more than 10 and you aint getting air really
-		if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
-			for (var/datum/disease/acute/V in cloud.viruses)
+		if(!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
+			for(var/datum/disease/disease in cloud.viruses)
 				//if (V.spread & SPREAD_AIRBORNE)	//Anima Syndrome allows for clouds of non-airborne viruses
-				infect_disease(V, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
+				infect_disease(disease, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
 
 /mob/living/proc/handle_virus_updates(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_VIRUSIMMUNE))
@@ -85,31 +91,30 @@
 
 	activate_diseases(seconds_per_tick, times_fired)
 
+/// Activates viruses that the mob has
 /mob/living/proc/activate_diseases(seconds_per_tick, times_fired)
-	if (length(diseases))
-		var/active_disease = pick(diseases)//only one disease will activate its effects at a time.
-		for (var/datum/disease/disease as anything in diseases)
-			var/datum/disease/acute/acute_disease = disease
-			if(istype(acute_disease))
-				acute_disease.activate(src, active_disease != acute_disease, seconds_per_tick)
-
-				if(HAS_TRAIT(src, TRAIT_IRRADIATED))
-					if (prob(50))//radiation turns your body into an inefficient pathogenic incubator.
-						acute_disease.incubate(src, 1)
-						//effect mutations won't occur unless the mob also has ingested mutagen
-						//and even if they occur, the new effect will have a badness similar to the old one, so helpful pathogen won't instantly become deadly ones.
-			else if(istype(disease))
-				if(stat != DEAD || disease.process_dead)
-					disease.stage_act(seconds_per_tick, times_fired)
-	else
+	if(!length(diseases))
 		//Slowly decay back to regular strength immune system while you are sick
 		if(immune_system?.strength > 1)
 			immune_system.strength = max(immune_system.strength - 0.01, 1)
+		return
 
-/mob/living/proc/try_contact_infect(datum/disease/acute/D, zone = BODY_ZONE_EVERYTHING, note = "Try Contact Infect")
-	if(!(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
+	//only one disease will activate its effects at a time.
+	var/active_disease = pick(diseases)
+	for(var/datum/disease/disease in diseases)
+		disease.activate(src, active_disease != disease, seconds_per_tick)
+
+		if(!HAS_TRAIT(src, TRAIT_IRRADIATED) && !prob(50))
+			continue
+		//radiation turns your body into an inefficient pathogenic incubator.
+		//effect mutations won't occur unless the mob also has ingested mutagen
+		//and even if they occur, the new effect will have a badness similar to the old one, so helpful pathogen won't instantly become deadly ones.
+		disease.incubate(src, 1)
+
+/mob/living/proc/try_contact_infect(datum/disease/disease, zone = BODY_ZONE_EVERYTHING, note = "Try Contact Infect")
+	if(!(disease.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
 		return
 	var/block = check_contact_sterility(zone)
 	if(!block)
-		infect_disease(D, notes = note)
+		infect_disease(disease, notes = note)
 
