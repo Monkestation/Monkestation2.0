@@ -21,22 +21,20 @@
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
 
-	. += EXAMINE_HINT("<b>Left-click</b> a MODsuit or IPC.")
-	. += EXAMINE_HINT("<b>Right-click</b> a MODsuit or robotic limb to recolor.")
+	. += span_notice("[EXAMINE_HINT("Click")] a MODsuit, IPC, or robotic limb to repaint or recolor it.")
 
-/obj/item/mod/paint/proc/paint_target(atom/interacting_with, mob/living/user, secondary = FALSE)
+/obj/item/mod/paint/proc/paint_target(atom/interacting_with, mob/living/user)
 	if(user.istate & ISTATE_HARM)
 		return FALSE
 
-	if(secondary)
-		if(!isbodypart(interacting_with))
-			return FALSE
+	if(isipc(interacting_with))
+		color_ipc(interacting_with, user)
+		return TRUE
+
+	if(isbodypart(interacting_with))
 		return color_limb(interacting_with, user)
 
-	if(!isipc(interacting_with))
-		return FALSE
-	color_ipc(interacting_with, user)
-	return TRUE
+	return FALSE
 
 /obj/item/mod/paint/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!paint_target(interacting_with, user))
