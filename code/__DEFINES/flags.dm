@@ -69,6 +69,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
+/// This atom does not need to generate its own preview icon for GAGS
+#define NO_NEW_GAGS_PREVIEW_1 (1<<21)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name

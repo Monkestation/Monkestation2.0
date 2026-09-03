@@ -115,23 +115,26 @@
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 	var/static/list/signalCache = list(
-		COMSIG_LIVING_STAMINA_STUN,
 		COMSIG_LIVING_STATUS_STUN,
-		COMSIG_LIVING_STATUS_KNOCKDOWN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
 		COMSIG_LIVING_STATUS_PARALYZE,
-		COMSIG_LIVING_STATUS_DAZE,
 	)
 
-	var/stun_cap_amount = 40
+	///timer before the implant activates
+	var/stun_cap_amount = 1 SECONDS
+	///amount of time you are resistant to stuns and knockdowns
+	var/stun_resistance_time = 6 SECONDS
+	COOLDOWN_DECLARE(implant_cooldown)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_remove(mob/living/carbon/implant_owner)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
+	UnregisterSignal(implant_owner, COMSIG_LIVING_STAMINA_STUN)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignals(receiver, signalCache, PROC_REF(on_signal))
+	RegisterSignal(receiver, COMSIG_LIVING_STAMINA_STUN, PROC_REF(on_stamcrit))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER
@@ -139,13 +142,32 @@
 	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
 		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
+/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_stamcrit(datum/source)
+	SIGNAL_HANDLER
+	if(!(organ_flags & ORGAN_FAILING))
+		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
+
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/clear_stuns()
-	if(owner || !(organ_flags & ORGAN_FAILING))
-		owner.exit_stamina_stun()
-		owner.SetStun(0)
-		owner.SetKnockdown(0)
-		owner.SetImmobilized(0)
-		owner.SetParalyzed(0)
+	if(isnull(owner) || (organ_flags & ORGAN_FAILING) || !COOLDOWN_FINISHED(src, implant_cooldown))
+		return
+
+	owner.SetAllImmobility(0)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, SetAllImmobility), 0), stun_resistance_time)
+
+	do_sparks(5, 1, owner)
+
+	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_CANT_STAMCRIT), REF(src))
+	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src)), stun_resistance_time)
+	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_BATON_RESISTANCE, REF(src)), stun_resistance_time)
+	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, REF(src)), stun_resistance_time)
+	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_CANT_STAMCRIT, REF(src)), stun_resistance_time)
+
+	COOLDOWN_START(src, implant_cooldown, 60 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(implant_ready)),60 SECONDS)
+
+/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/implant_ready()
+	if(owner)
+		to_chat(owner, span_purple("Your rebooter implant is ready."))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
@@ -156,6 +178,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
+	implant_ready()
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
 	name = "contraband CNS rebooter implant"
