@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "The freezer within Theseus's research server room now properly cools down the research server."

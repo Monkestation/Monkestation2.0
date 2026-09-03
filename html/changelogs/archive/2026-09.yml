@@ -31,3 +31,17 @@
   hexakats:
   - balance: you can now hold the china lake grenade launcher in one hand (still can't
       fire it while your other hand is holding anything tho!)
+2026-09-03:
+  Runian:
+  - bugfix: The freezer within Theseus's research server room now properly cools down
+      the research server.
+  - bugfix: Kilostation's North Central Primary Hallway's disposal pipes are correctly
+      connected and no longer ends early in the hallway.
+  notghosti:
+  - bugfix: Dying in a mech as a AI will now properly handle you returning to your
+      mecha.
+  - bugfix: AI mech wreckages now are functional
+  - bugfix: AI mech domination will no longer softlock a second ai view panel if they
+      were booted from it.
+  osaka-fuuri:
+  - rscadd: X-ray users can now scan guns to see chambered ammo

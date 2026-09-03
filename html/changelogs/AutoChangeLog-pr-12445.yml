@@ -1,4 +1,0 @@
-author: "osaka-fuuri"
-delete-after: True
-changes:
-  - rscadd: "X-ray users can now scan guns to see chambered ammo"
