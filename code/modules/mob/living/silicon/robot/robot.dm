@@ -152,9 +152,6 @@
 	if(href_list["showalerts"])
 		alert_control.ui_interact(src)
 
-/mob/living/silicon/robot/get_cell()
-	return cell
-
 /mob/living/silicon/robot/proc/pick_model()
 	if(has_model())
 		return
@@ -941,6 +938,9 @@
 //
 // Power
 //
+
+/mob/living/silicon/robot/get_cell()
+	return cell
 
 /// Replaces the cyborg's current cell with a new cell. Will not automatically move the new cell.
 /mob/living/silicon/robot/proc/set_cell(obj/item/stock_parts/power_store/cell/new_cell)
