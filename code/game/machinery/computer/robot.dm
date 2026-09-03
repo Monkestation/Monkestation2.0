@@ -30,6 +30,13 @@
 			unlock_cyborg()
 	return ..()
 
+/obj/machinery/computer/robotics/examine(mob/user)
+	. = ..()
+	if(!QDELETED(locked_cyborg))
+		. += span_notice("Active lockdown on: [locked_cyborg.name]")
+	if(lockdown_timer)
+		. += span_notice("They will automatically unlock in [DisplayTimeText(timeleft(lockdown_timer))]!")
+
 /obj/machinery/computer/robotics/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -164,6 +171,8 @@
 		return FALSE
 	if(target_cyborg.scrambledcodes)
 		return FALSE
+	if(!is_valid_z_level(get_turf(src), get_turf(target_cyborg)))
+		return FALSE
 	return TRUE
 
 /// Unlocks the targetted cyborg.
@@ -177,7 +186,7 @@
 			deltimer(lockdown_timer)
 		return
 	if(target_cyborg == locked_cyborg)
-		UnregisterSignal(target_cyborg, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_CYBORG_LOCKDOWN_CONSOLE_UNLOCK_ATTEMPT, COMSIG_CYBORG_LOCKDOWN_UNLOCK))
+		UnregisterSignal(target_cyborg, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_MOVABLE_Z_CHANGED, COMSIG_CYBORG_LOCKDOWN_CONSOLE_UNLOCK_ATTEMPT, COMSIG_CYBORG_LOCKDOWN_UNLOCK))
 		update_mode_power_usage(IDLE_POWER_USE, idle_power_usage)
 		locked_cyborg = null
 		deltimer(lockdown_timer)
@@ -195,7 +204,7 @@
 
 /// Locks a cyborg and assigns them to this computer.
 /obj/machinery/computer/robotics/proc/lock_cyborg(mob/user, mob/living/silicon/robot/target_cyborg)
-	if(issilicon(user))
+	if(isAI(user))
 		target_cyborg.ai_lockdown = TRUE
 	target_cyborg.SetLockdown(TRUE)
 	update_mode_power_usage(IDLE_POWER_USE, active_power_usage)
@@ -205,6 +214,7 @@
 
 	RegisterSignal(target_cyborg, COMSIG_LIVING_DEATH, PROC_REF(on_cyborg_death))
 	RegisterSignal(target_cyborg, COMSIG_QDELETING, PROC_REF(on_cyborg_deleted))
+	RegisterSignal(target_cyborg, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_cyborg_zlevel_changed))
 	RegisterSignal(target_cyborg, COMSIG_CYBORG_LOCKDOWN_CONSOLE_UNLOCK_ATTEMPT, PROC_REF(on_cyborg_unlock_intercept))
 	RegisterSignal(target_cyborg, COMSIG_CYBORG_LOCKDOWN_UNLOCK, PROC_REF(on_cyborg_unlocked))
 	to_chat(target_cyborg, span_alert("Your have been locked down!"))
@@ -230,6 +240,17 @@
 	playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 	say("Automatic release of [locked_cyborg.name]. Cause: telemetry no longer exists!")
 	log_silicon("Robotics console automatically released [key_name(locked_cyborg)] upon deletion!")
+	unlock_cyborg()
+
+/// Unlocks the cyborg and informs those nearby that it was because the cyborg changed z-levels.
+/obj/machinery/computer/robotics/proc/on_cyborg_zlevel_changed(datum/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	var/turf/console_turf = get_turf(src)
+	if(new_turf.z == console_turf.z || (new_turf in SSmapping.get_connected_levels(console_turf.z)))
+		return
+	playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+	say("Automatic release of [locked_cyborg.name]. Cause: telemetry out of range!")
+	log_silicon("Robotics console automatically released [key_name(locked_cyborg)] upon zlevel change!")
 	unlock_cyborg()
 
 /// Unlocks the cyborg and informs those nearby that it was because of a different robotics console.
