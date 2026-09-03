@@ -1054,7 +1054,6 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
 	desc = "A hip holster that uses chameleon technology to disguise itself, due to the added chameleon tech, it cannot be mounted onto armor."
@@ -1132,7 +1131,6 @@
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	action_slots = ALL
 
-
 /obj/item/radio/headset/chameleon/multitool_act(mob/living/user, obj/item/tool)
 	if(chameleon_action.hidden)
 		chameleon_action.hidden = FALSE
@@ -1145,7 +1143,6 @@
 		chameleon_action.Remove(user)
 		log_game("[key_name(user)] has locked the disguise of the chameleon headset ([name]) with [tool]")
 	return ITEM_INTERACT_SUCCESS
-
 
 /obj/item/radio/headset/chameleon/Initialize(mapload)
 	. = ..()
