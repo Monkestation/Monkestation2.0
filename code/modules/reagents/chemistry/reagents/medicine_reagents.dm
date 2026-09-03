@@ -1270,7 +1270,7 @@
 		affected_mob.reagents.remove_reagent(R.type, 5 * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness_up_to(4 SECONDS * REM * seconds_per_tick, 30 SECONDS)
 
-	if(affected_mob.stamina.current <= 0)
+	if(HAS_TRAIT_FROM(affected_mob, TRAIT_INCAPACITATED, STAMINA))
 		affected_mob.reagents.remove_reagent(type, 5 * REAGENTS_METABOLISM * REM * seconds_per_tick)
 
 	if(affected_mob.get_timed_status_effect_duration(/datum/status_effect/jitter) >= 6 SECONDS)
