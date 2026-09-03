@@ -85,21 +85,21 @@
 	if(screen)
 		. += span_info("The screen is [screen_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [screen_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
 	if(check_completion())
-	. += span_info("It is ready to be finalized with a <b>multitool</b>.")
-	return
-if(core_state != IPC_CONSTRUCTION_SECURED)
-	. += span_info("Install each chest component, add <b>cable</b>, then use a <b>screwdriver</b> to secure the chest cavity.")
-	return
-if(check_body_completion() && !screen)
-	. += span_info("Install an <b>IPC screen</b>, then wire and secure it before finalizing the chassis with a <b>multitool</b>.")
-	return
-if(screen && screen_state == IPC_CONSTRUCTION_UNWIRED)
-	. += span_info("Use <b>cable</b> to wire the installed screen.")
-	return
-if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
-	. += span_info("Use a <b>screwdriver</b> to secure the wired screen.")
-	return
-. += span_info("Attach all IPC limbs plus a secured head before installing the screen and finalizing the chassis.")
+		. += span_info("It is ready to be finalized with a <b>multitool</b>.")
+		return
+	if(core_state != IPC_CONSTRUCTION_SECURED)
+		. += span_info("Install each chest component, add <b>cable</b>, then use a <b>screwdriver</b> to secure the chest cavity.")
+		return
+	if(check_body_completion() && !screen)
+		. += span_info("Install an <b>IPC screen</b>, then wire and secure it before finalizing the chassis with a <b>multitool</b>.")
+		return
+	if(screen && screen_state == IPC_CONSTRUCTION_UNWIRED)
+		. += span_info("Use <b>cable</b> to wire the installed screen.")
+		return
+	if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
+		. += span_info("Use a <b>screwdriver</b> to secure the wired screen.")
+		return
+	. += span_info("Attach all IPC limbs plus a secured head before installing the screen and finalizing the chassis.")
 
 /obj/item/ipc_core/update_overlays()
 	. = ..()
@@ -239,8 +239,11 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 		return ITEM_INTERACT_BLOCKING
+	cutter.play_tool_sound(src)
 	. = ITEM_INTERACT_SUCCESS
-	...
+	to_chat(user, span_notice("You cut the wires out of [src]'s chest cavity."))
+	new /obj/item/stack/cable_coil(drop_location(), 1)
+	core_state = IPC_CONSTRUCTION_UNWIRED
 
 /obj/item/ipc_core/crowbar_act(mob/living/user, obj/item/prytool)
 	. = ..()
@@ -492,39 +495,39 @@ if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
 		qdel(ipc_body)
 		return FALSE
 
-// Roundstart IPCs receive a charging cord from their species, but constructed shells must have it installed later through augmentation surgery.
-var/obj/item/organ/internal/cyberimp/arm/item_set/power_cord/power_cord = ipc_body.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord)
-if(power_cord)
-	power_cord.Remove(ipc_body, TRUE)
-	qdel(power_cord)
+	// Roundstart IPCs receive a charging cord from their species, but constructed shells must have it installed later through augmentation surgery.
+	var/obj/item/organ/internal/cyberimp/arm/item_set/power_cord/power_cord = ipc_body.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord)
+	if(power_cord)
+		power_cord.Remove(ipc_body, TRUE)
+		qdel(power_cord)
 
-// Remove clothes, facial hair, and features.
-ipc_body.undershirt = null
-ipc_body.underwear = null
-ipc_body.socks = null
-ipc_body.facial_hairstyle = null
-ipc_body.hairstyle = null
+	// Remove clothes, facial hair, and features.
+	ipc_body.undershirt = null
+	ipc_body.underwear = null
+	ipc_body.socks = null
+	ipc_body.facial_hairstyle = null
+	ipc_body.hairstyle = null
 
-// Suppress emotes while creating the inert shell.
-ADD_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
-ipc_body.death()
-REMOVE_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
+	// Suppress emotes while creating the inert shell.
+	ADD_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
+	ipc_body.death()
+	REMOVE_TRAIT(ipc_body, TRAIT_EMOTEMUTE, type)
 
-// The new shell may have randomized to no screen, so establish a valid display feature before inserting the fabricated screen.
-ipc_body.dna.features["ipc_screen"] = "Blue"
-if(!installed_screen.Insert(ipc_body, TRUE, FALSE))
-	qdel(ipc_body)
-	return FALSE
+	// The new shell may have randomized to no screen, so establish a valid display feature before inserting the fabricated screen.
+	ipc_body.dna.features["ipc_screen"] = "Blue"
+	if(!installed_screen.Insert(ipc_body, TRUE, FALSE))
+		qdel(ipc_body)
+		return FALSE
 
-installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
+	installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
 
-ipc_body.regenerate_icons()
-user.visible_message(
-	span_notice("[user] finishes [src] into an inert IPC shell."),
-	span_notice("You finish [src] into an inert IPC shell.")
-)
-qdel(src)
-return TRUE
+	ipc_body.regenerate_icons()
+	user.visible_message(
+		span_notice("[user] finishes [src] into an inert IPC shell."),
+		span_notice("You finish [src] into an inert IPC shell.")
+	)
+	qdel(src)
+	return TRUE
 
 #undef IPC_CORE_OFF_SCREEN
 #undef IPC_CORE_UNCONNECTED_SCREEN

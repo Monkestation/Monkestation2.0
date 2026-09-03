@@ -179,7 +179,7 @@
 		skins += list("[skin_option]" = part_image)
 	var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
 	if(!choice || !can_paint_target(limb, user))
-	return FALSE
+		return FALSE
 
 	playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
