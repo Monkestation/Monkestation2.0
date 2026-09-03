@@ -151,7 +151,7 @@
 			They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, \
 			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
 			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
-	item = /obj/item/clothing/glasses/thermal/syndi
+	item = /obj/item/clothing/glasses/thermal/chameleon
 	cost = 4
 
 /datum/uplink_item/steutility_clothingalthy_tools/military_belt
