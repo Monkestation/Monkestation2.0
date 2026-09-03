@@ -547,7 +547,6 @@
 		log_game("[key_name(user)] has locked the disguise of the chameleon glasses ([name]) with [tool]")
 	return ITEM_INTERACT_SUCCESS
 
-
 /obj/item/clothing/glasses/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -571,6 +570,79 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
+/obj/item/clothing/glasses/thermal/chameleon
+	name = "chameleon thermals"
+	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
+
+	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
+
+/obj/item/clothing/glasses/thermal/chameleon/multitool_act(mob/living/user, obj/item/tool)
+	if(chameleon_action.hidden)
+		chameleon_action.hidden = FALSE
+		actions += chameleon_action
+		chameleon_action.Grant(user)
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon thermals ([name]) with [tool]")
+	else
+		chameleon_action.hidden = TRUE
+		actions -= chameleon_action
+		chameleon_action.Remove(user)
+		log_game("[key_name(user)] has locked the disguise of the chameleon thermals ([name]) with [tool]")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/clothing/glasses/thermal/chameleon/Initialize(mapload)
+	. = ..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/clothing/glasses
+	chameleon_action.chameleon_name = "Glasses"
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
+	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
+
+/obj/item/clothing/glasses/thermal/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	chameleon_action.emp_randomise()
+
+/obj/item/clothing/glasses/hud/security/chameleon
+	name = "chameleon security HUD"
+	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
+	flash_protect = FLASH_PROTECTION_FLASH
+
+	// Yes this code is the same as normal chameleon glasses, but we don't
+	// have multiple inheritance, okay?
+	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
+
+/obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
+	. = ..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/clothing/glasses
+	chameleon_action.chameleon_name = "Glasses"
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
+	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
+
+/obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	chameleon_action.emp_randomise()
+
+/obj/item/clothing/glasses/hud/security/chameleon/multitool_act(mob/living/user, obj/item/tool)
+	if(chameleon_action.hidden)
+		chameleon_action.hidden = FALSE
+		actions += chameleon_action
+		chameleon_action.Grant(user)
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon security HUD ([name]) with [tool]")
+	else
+		chameleon_action.hidden = TRUE
+		actions -= chameleon_action
+		chameleon_action.Remove(user)
+		log_game("[key_name(user)] has locked the disguise of the chameleon security HUD ([name]) with [tool]")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/clothing/gloves/chameleon
 	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
@@ -591,8 +663,6 @@
 	laser = 10
 	fire = 50
 	acid = 50
-
-
 
 /obj/item/clothing/gloves/chameleon/multitool_act(mob/living/user, obj/item/tool)
 	if(chameleon_action.hidden)
@@ -945,7 +1015,6 @@
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-
 /obj/item/storage/belt/chameleon/multitool_act(mob/living/user, obj/item/tool)
 	if(chameleon_action.hidden)
 		chameleon_action.hidden = FALSE
@@ -984,6 +1053,79 @@
 /obj/item/storage/belt/chameleon/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+
+
+/obj/item/storage/belt/holster/chameleon
+	name = "syndicate holster"
+	desc = "A hip holster that uses chameleon technology to disguise itself, due to the added chameleon tech, it cannot be mounted onto armor."
+	icon_state = "syndicate_holster"
+	inhand_icon_state = "syndicate_holster"
+	worn_icon_state = "syndicate_holster"
+	w_class = WEIGHT_CLASS_NORMAL
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
+	. = ..()
+
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/storage/belt
+	chameleon_action.chameleon_name = "Belt"
+	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
+
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
+	. = ..()
+	atom_storage.silent = TRUE
+
+/obj/item/storage/belt/holster/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	chameleon_action.emp_randomise()
+
+/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
+
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_total_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/m10mm,
+		/obj/item/ammo_box/magazine/m45,
+		/obj/item/ammo_box/magazine/m50,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/ammo_box/c38,
+		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/magazine/toy/pistol,
+		/obj/item/gun/energy/recharge/ebow,
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/taser,
+		/obj/item/gun/energy/dueling,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
+	))
+
+	atom_storage.silent = TRUE
+
+/obj/item/storage/belt/holster/chameleon/multitool_act(mob/living/user, obj/item/tool)
+	if(chameleon_action.hidden)
+		chameleon_action.hidden = FALSE
+		actions += chameleon_action
+		chameleon_action.Grant(user)
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon holster ([name]) with [tool]")
+	else
+		chameleon_action.hidden = TRUE
+		actions -= chameleon_action
+		chameleon_action.Remove(user)
+		log_game("[key_name(user)] has locked the disguise of the chameleon holster ([name]) with [tool]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/headset/chameleon
 	name = "radio headset"
