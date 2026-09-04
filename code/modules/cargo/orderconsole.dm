@@ -43,6 +43,8 @@
 /obj/machinery/computer/cargo/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
+	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/cargo_console_lock))
+		req_access = list(ACCESS_CARGO)
 
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
@@ -86,6 +88,11 @@
 	. = ..()
 	circuit.configure_machine(src)
 
+/obj/machinery/computer/cargo/allowed(mob/accessor)
+	if(obj_flags & EMAGGED)
+		return TRUE
+	return ..()
+
 /obj/machinery/computer/cargo/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -100,6 +107,7 @@
 	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
 	if(bank)
 		data["points"] = bank.account_balance
+	data["company_imports_available"] = GLOB.cargo_union.demand_is_implemented(/datum/union_demand/trade_freedom)
 	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
@@ -162,36 +170,32 @@
 	data["max_order"] = CARGO_MAX_ORDER
 	data["supplies"] = list()
 
+	var/list/user_access = user.get_access()
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
 		if(!data["supplies"][pack.group])
 			data["supplies"][pack.group] = list(
 				"name" = pack.group,
-				"packs" = get_packs_data(pack.group),
+				"packs" = get_packs_data(pack.group, user_access = user_access),
 			)
 
 	return data
+
 
 /**
  * returns a list of supply packs for a certain group
  * * group - the group of packs to return
  * * express - if this is an express console
  */
-/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
+/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE, list/user_access)
 	var/list/packs = list()
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
 		if(pack.group != group)
 			continue
 
-		// Express console packs check
-		if(express && (pack.hidden || pack.special))
-			continue
-
-		if(!express && ((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only))
-			continue
-
-		if(pack.contraband && !contraband)
+		var/view_accessibility = can_order_pack(pack, express, user_access)
+		if(view_accessibility == CARGO_CANT_VIEW)
 			continue
 
 		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
@@ -204,11 +208,30 @@
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = pack.goody,
 			"access" = pack.access,
+			"view_access" = pack.access_view,
 			"contraband" = pack.contraband,
 			"contains" = pack.get_contents_ui_data(),
+			"can_order" = (view_accessibility == CARGO_CAN_ORDER),
 		))
 
 	return packs
+
+/obj/machinery/computer/cargo/proc/can_order_pack(datum/supply_pack/pack, express = FALSE, list/user_access)
+	if(pack.hidden || (!express && pack.drop_pod_only))
+		return CARGO_CANT_VIEW
+	//emagged has access to pretty much everything else
+	if(obj_flags & EMAGGED)
+		return CARGO_CAN_ORDER
+	//not emagged, can't order emagged stuff.
+	if(pack.emag_only)
+		return CARGO_CANT_VIEW
+	//This is for multitool-ing the board. Emag also sets this but whatever.
+	if(pack.contraband && !contraband)
+		return CARGO_CANT_VIEW
+	//Can we only see this?
+	if(length(pack.access_view) && !(pack.access_view in user_access))
+		return CARGO_CAN_VIEW
+	return CARGO_CAN_ORDER
 
 /**
  * returns the discount multiplier applied to all supply packs,
@@ -226,13 +249,17 @@
 /obj/machinery/computer/cargo/proc/add_item(mob/user, id, amount = 1)
 	if(is_express)
 		return
+	if(!requestonly && !allowed(user))
+		say("ERROR: Access not found.")
+		return TRUE
 	id = text2path(id) || id
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!istype(pack))
 		CRASH("Unknown supply pack id given by order console ui. ID: [id]")
 	if(amount > CARGO_MAX_ORDER || amount < 1) // Holy shit fuck off
 		CRASH("Invalid amount passed into add_item")
-	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || !pack.available())
+	var/view_accessibility = can_order_pack(pack, user_access = user.get_access())
+	if(view_accessibility != CARGO_CAN_ORDER)
 		return
 
 	var/name = "*None Provided*"
@@ -277,7 +304,8 @@
 			return
 
 		name = account?.account_holder
-		if(account?.account_job)
+		//only command personnel can blow their budget on actual orders, rest can use their dep console.
+		if(account?.account_job && (account?.account_job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 			personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
 			if(!(personal_department.account_holder == "Cargo Budget"))
 				var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
@@ -342,7 +370,7 @@
 			return FALSE
 		if(order.applied_coupon)
 			say("Coupon refunded.")
-			order.applied_coupon.forceMove(get_turf(src))
+			order.applied_coupon.forceMove(get_turf(drop_location()))
 		SSshuttle.shopping_list -= order
 		qdel(order)
 		return TRUE
@@ -363,10 +391,14 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("send")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			if(currently_sending)
-				say("ERROR: This console lacks permission to call or send the Shuttle")
+				say("ERROR: This console lacks permission to call or send the Shuttle.")
 				return
 			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
@@ -378,11 +410,11 @@
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
-				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
+				user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
-					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
+					var/obj/item/paper/requisition/requisition_paper = new(get_turf(drop_location()))
 					requisition_paper.name = "requisition form - [station_time_timestamp()]"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"
@@ -404,12 +436,15 @@
 					requisition_paper.color = "#9ef5ff"
 					requisition_paper.update_appearance()
 
-				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
+				user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 
 			return TRUE
 		if("loan")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			if(!SSshuttle.shuttle_loan)
 				return
 			if(SSshuttle.supply_blocked)
@@ -424,17 +459,20 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
-				ui.user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				ui.user.log_message("accepted a shuttle loan event.", LOG_GAME)
+				user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
-			return add_item(ui.user, params["id"])
+			return add_item(user, params["id"])
 		if("add_by_name")
 			var/supply_pack_id = name_to_id(params["order_name"])
 			if(!supply_pack_id)
 				return
-			return add_item(ui.user, supply_pack_id)
+			return add_item(user, supply_pack_id)
 		if("remove")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/order_name = params["order_name"]
 			//try removing at least one item with the specified name. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
@@ -445,6 +483,9 @@
 
 			return TRUE
 		if("modify")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/order_name = params["order_name"]
 
 			//clear out all orders with the above mentioned order_name name to make space for the new amount
@@ -461,8 +502,11 @@
 			var/supply_pack_id = name_to_id(order_name) //map order name to supply pack id for adding
 			if(!supply_pack_id)
 				return
-			return add_item(ui.user, supply_pack_id, amount)
+			return add_item(user, supply_pack_id, amount)
 		if("clear")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			//create copy of list else we will get runtimes when iterating & removing items on the same list SSshuttle.shopping_list
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
 			for(var/datum/supply_order/cancelled_order in shopping_cart)
@@ -470,6 +514,9 @@
 					continue //don't cancel other department's orders or orders that can't be cancelled
 				remove_item(cancelled_order.id) //remove & properly refund any coupons attached with this order
 		if("approve")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
@@ -478,6 +525,9 @@
 					. = TRUE
 					break
 		if("deny")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
@@ -485,18 +535,24 @@
 					. = TRUE
 					break
 		if("denyall")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			SSshuttle.request_list.Cut()
 			. = TRUE
 		if("toggleprivate")
 			self_paid = !self_paid
 			. = TRUE
+		if("company_import_window")
+			var/datum/component/armament/company_imports/company_import_component = GetComponent(/datum/component/armament/company_imports)
+			company_import_component.ui_interact(user, host = src)
+			return TRUE
+
 	if(.)
 		post_signal(cargo_shuttle)
 
 /obj/machinery/computer/cargo/proc/post_signal(command)
-
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
 	if(!frequency)
 		return
 

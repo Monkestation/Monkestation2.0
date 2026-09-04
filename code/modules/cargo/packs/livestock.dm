@@ -218,7 +218,7 @@
 /datum/supply_pack/critter/garden_gnome
 	name = "Garden Gnome Crate"
 	desc = "Collect them all for your garden. Comes with three!"
-	hidden = TRUE
+	emag_only = TRUE
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(/mob/living/basic/garden_gnome)
 	crate_name = "garden gnome crate"

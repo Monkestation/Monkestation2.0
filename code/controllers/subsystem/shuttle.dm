@@ -161,6 +161,9 @@ SUBSYSTEM_DEF(shuttle)
 		if(ispath(pack, /datum/supply_pack))
 			pack = new pack
 
+		if(!pack.available())
+			continue
+
 		var/list/generated_packs = pack.generate_supply_packs()
 		if(generated_packs)
 			pack_processing += generated_packs

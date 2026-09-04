@@ -141,7 +141,7 @@
 	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	icon_state = "remote_cargo_open" //monkestation edit
 	remote_type = "cargo" //monkestation edit
-	region_access = REGION_SUPPLY
+	region_access = list(REGION_SUPPLY, REGION_UNION) //monkestation addition
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"

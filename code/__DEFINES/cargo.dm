@@ -62,8 +62,6 @@
 #define SUPPLY_PACK_NOT_DISCOUNTABLE null
 
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
-///Assoc List of people part of the Cargo Union, by default all Cargo personnel but the QM can add more.
-GLOBAL_LIST_EMPTY(cargo_union_employees)
 
 GLOBAL_LIST_INIT(podstyles, list(\
 	list(POD_SHAPE_NORML, "pod",         TRUE, "default", "yellow",   RUBBLE_NORMAL, "supply pod",     "A Nanotrasen supply drop pod."),\
@@ -87,5 +85,9 @@ GLOBAL_LIST_INIT(podstyles, list(\
 //Nearby reference because nobody else did this:
 //The order is: Shape, Base, Door, Decal, Glow Color, Rubble Type, Name, Description
 
-#define CARGO_UNION_NAME "name"
-#define CARGO_UNION_LEADER "leader"
+///The supply pack can be seen and ordered
+#define CARGO_CAN_ORDER "can_order"
+///The supply pack can be seen, but not ordered
+#define CARGO_CAN_VIEW "can_view"
+///The supply pack cant be ordered and is fully invisible to the user.
+#define CARGO_CANT_VIEW "cant_view"

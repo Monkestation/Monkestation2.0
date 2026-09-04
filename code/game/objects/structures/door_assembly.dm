@@ -325,6 +325,7 @@
 	door.close()
 	door.auto_dir_align() // monkestation edit: ensure doors get aligned properly on creation
 	door.update_appearance()
+	door.on_finished_door()
 
 	qdel(src)
 
