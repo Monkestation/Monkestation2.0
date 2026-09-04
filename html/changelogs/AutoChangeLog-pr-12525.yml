@@ -1,5 +1,0 @@
-author: "osaka-fuuri"
-delete-after: True
-changes:
-  - bugfix: "Wrapping papers & package wrappers now can be stacked by hand."
-  - code_imp: "Stackable items now use the new item_interaction() instead of the old attackby()."

@@ -45,3 +45,8 @@
       were booted from it.
   osaka-fuuri:
   - rscadd: X-ray users can now scan guns to see chambered ammo
+2026-09-04:
+  osaka-fuuri:
+  - bugfix: Wrapping papers & package wrappers now can be stacked by hand.
+  - code_imp: Stackable items now use the new item_interaction() instead of the old
+      attackby().
