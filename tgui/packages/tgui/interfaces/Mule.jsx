@@ -15,6 +15,7 @@ export const Mule = (props) => {
   const { act, data } = useBackend();
   const {
     on,
+    emagged,
     cell,
     cellPercent,
     load,
@@ -44,6 +45,18 @@ export const Mule = (props) => {
                 icon="fa-poll-h"
                 content="Rename"
                 onClick={() => act('rename')}
+              />
+              <Button
+                color="danger"
+                content={emagged ? 'Malfunctional' : 'Safety Lock'}
+                selected={!emagged}
+                icon={emagged ? 'bug' : 'lock'}
+                onClick={() => act('hack')}
+                tooltip={
+                  !emagged
+                    ? 'Unlocks the safety protocols.'
+                    : 'Resets the bot operating system.'
+                }
               />
               {!locked && (
                 <Button

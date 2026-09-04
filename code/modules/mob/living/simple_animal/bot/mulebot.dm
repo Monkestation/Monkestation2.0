@@ -31,6 +31,7 @@
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
+	hackables = "safety protocols"
 	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
 
 	/// unique identifier in case there are multiple mulebots.
@@ -247,6 +248,7 @@
 	var/list/data = list()
 	data["on"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
+	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["mode"] = mode ? "[mode]" : "Ready"
 	data["modeStatus"] = ""
@@ -386,7 +388,7 @@
 
 	var/obj/structure/closet/crate/crate = AM
 	if(!istype(crate))
-		if(!wires.is_cut(WIRE_LOADCHECK))
+		if(!wires.is_cut(WIRE_LOADCHECK) && !(bot_cover_flags & BOT_COVER_HACKED))
 			buzz(SIGH)
 			return // if not hacked, only allow crates to be loaded
 		crate = null
@@ -634,7 +636,7 @@
 			// not loaded
 			if(auto_pickup) // find a crate
 				var/atom/movable/AM
-				if(wires.is_cut(WIRE_LOADCHECK)) // if hacked, load first unanchored thing we find
+				if(wires.is_cut(WIRE_LOADCHECK) || bot_cover_flags & BOT_COVER_HACKED) // if hacked, load first unanchored thing we find
 					for(var/atom/movable/A in get_step(loc, loaddir))
 						if(!A.anchored)
 							AM = A
@@ -669,7 +671,7 @@
 
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
-	if (!(bot_cover_flags & BOT_COVER_EMAGGED) && !wires.is_cut(WIRE_AVOIDANCE))
+	if ((!(bot_cover_flags & BOT_COVER_EMAGGED) && (!wires.is_cut(WIRE_AVOIDANCE) || !(bot_cover_flags & BOT_COVER_HACKED))))
 		if (!has_status_effect(/datum/status_effect/careful_driving))
 			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
 		apply_status_effect(/datum/status_effect/careful_driving)
@@ -819,7 +821,7 @@
 		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 		AM.forceMove(src)
 
-	else if(!wires.is_cut(WIRE_LOADCHECK))
+	else if(!wires.is_cut(WIRE_LOADCHECK) && !(bot_cover_flags & BOT_COVER_HACKED))
 		buzz(SIGH)
 		return // if not hacked, only allow ghosts to be loaded
 
