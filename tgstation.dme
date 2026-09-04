@@ -3384,7 +3384,6 @@
 #include "code\modules\antagonists\borers\items\imprisonment_cage.dm"
 #include "code\modules\antagonists\borers\mobs\cortical_borer.dm"
 #include "code\modules\antagonists\borers\mobs\empowered_borer.dm"
-#include "code\modules\antagonists\borers\mobs\name_lists.dm"
 #include "code\modules\antagonists\borers\mobs\neutered_borer.dm"
 #include "code\modules\antagonists\brainwashing\brainwashing.dm"
 #include "code\modules\antagonists\brainwashing\brainwashing_alert.dm"
