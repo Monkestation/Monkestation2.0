@@ -1,0 +1,5 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - rscadd: "Borers now use adjectives for their names instead of bad preset ones"
+  - balance: "You can no longer tell if a borer is a hivequeen or its generation from looking/speaking to it"
