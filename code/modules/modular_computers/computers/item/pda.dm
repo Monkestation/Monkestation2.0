@@ -344,6 +344,12 @@
 /obj/item/modular_computer/pda/silicon/ai/get_ntnet_status()
 	return NTNET_ETHERNET_SIGNAL
 
+/obj/item/modular_computer/pda/silicon/ai/alert_call(datum/computer_file/program/origin, alerttext, sound = 'sound/machines/twobeep_high.ogg', vision_distance = DEFAULT_MESSAGE_RANGE) //doing a visible message results in AIs being unable to see their own notifications.
+	if(QDELETED(loc) || QDELETED(origin) || !origin.alert_able || origin.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+		return FALSE
+	playsound(src, sound, 50, TRUE)
+	to_chat(silicon_owner, span_notice("<img class='icon' src='\ref[src]'> \The [src] displays a [origin.filedesc] notification: [html_encode(alerttext)]"))
+
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
 	. = ..()
 	vis_flags |= VIS_INHERIT_ID
