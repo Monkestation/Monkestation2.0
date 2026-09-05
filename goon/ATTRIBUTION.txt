@@ -409,3 +409,7 @@ plant_weed.dmi
 	binarysudoku https://github.com/goonstation/goonstation/commit/9fb6d4c8df6ca51bbd6178cc703ffbeb5ae64be7
 	M-earthfire, tobleroneswordfish https://github.com/goonstation/goonstation/commit/08c48c389012d17c8bbf735a6bc0f0fec684dd54
 https://github.com/goonstation/goonstation/blob/master/icons/obj/hydroponics/plants_weed.dmi
+
+human_hair.dmi
+	Flaborized https://github.com/goonstation/goonstation/pull/3871
+https://github.com/goonstation/goonstation/blob/master/icons/mob/human_hair.dmi

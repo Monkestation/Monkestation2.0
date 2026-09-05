@@ -1,25 +1,25 @@
 /proc/generate_lizard_side_shot(datum/sprite_accessory/sprite_accessory, key, include_snout = TRUE)
-	var/static/icon/lizard
-	var/static/icon/lizard_with_snout
+	var/static/datum/universal_icon/lizard
+	var/static/datum/universal_icon/lizard_with_snout
 
 	if (isnull(lizard))
-		lizard = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-		var/icon/eyes = icon('icons/mob/species/human/human_face.dmi', "eyes", EAST)
-		eyes.Blend(COLOR_GRAY, ICON_MULTIPLY)
-		lizard.Blend(eyes, ICON_OVERLAY)
+		lizard = uni_icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_head", EAST)
+		var/datum/universal_icon/eyes = uni_icon('icons/mob/species/human/human_face.dmi', "eyes_l", EAST)
+		eyes.blend_color(COLOR_GRAY, ICON_MULTIPLY)
+		lizard.blend_icon(eyes, ICON_OVERLAY)
 
-		lizard_with_snout = icon(lizard)
-		lizard_with_snout.Blend(icon('icons/mob/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
+		lizard_with_snout = lizard.copy()
+		lizard_with_snout.blend_icon(uni_icon('icons/mob/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
 
-	var/icon/final_icon = include_snout ? icon(lizard_with_snout) : icon(lizard)
+	var/datum/universal_icon/final_icon = include_snout ? lizard_with_snout.copy() : lizard.copy()
 
-	if (!isnull(sprite_accessory))
-		var/icon/accessory_icon = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
-		final_icon.Blend(accessory_icon, ICON_OVERLAY)
+	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
-	final_icon.Crop(11, 20, 23, 32)
-	final_icon.Scale(32, 32)
-	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+	final_icon.crop(11, 20, 23, 32)
+	final_icon.scale(32, 32)
+	final_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
 
 	return final_icon
 
@@ -36,24 +36,20 @@
 
 /datum/preference/choiced/lizard_body_markings/icon_for(value)
 	var/datum/sprite_accessory/sprite_accessory = GLOB.body_markings_list[value]
+	var/datum/universal_icon/final_icon = uni_icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
-	var/icon/final_icon = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_chest_m")
-
-	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-
-	if (sprite_accessory.icon_state != "none")
-		var/icon/body_markings_icon = icon(
-			'icons/mob/species/lizard/lizard_misc.dmi',
+	if(!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/body_markings_icon = uni_icon(
+			sprite_accessory.icon,
 			"m_body_markings_[sprite_accessory.icon_state]_ADJ",
 		)
 
-		body_markings_icon.Blend(COLOR_VIVID_YELLOW, ICON_MULTIPLY)
+		final_icon.blend_icon(body_markings_icon, ICON_OVERLAY)
 
-		final_icon.Blend(body_markings_icon, ICON_OVERLAY)
-
-	final_icon.Crop(10, 8, 22, 23)
-	final_icon.Scale(26, 32)
-	final_icon.Crop(-2, 1, 29, 32)
+	final_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+	final_icon.crop(10, 8, 22, 23)
+	final_icon.scale(26, 32)
+	final_icon.crop(-2, 1, 29, 32)
 
 	return final_icon
 
@@ -159,3 +155,24 @@
 /datum/preference/choiced/lizard_tail/create_default_value()
 	var/datum/sprite_accessory/tails/lizard/smooth/tail = /datum/sprite_accessory/tails/lizard/smooth
 	return initial(tail.name)
+
+/datum/preference/numeric/hiss_length
+	savefile_key = "hiss_length"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	priority = PREFERENCE_PRIORITY_NAMES
+	can_randomize = FALSE
+	minimum = 2
+	maximum = 6
+
+/datum/preference/numeric/hiss_length/create_default_value()
+	return 3
+
+/datum/preference/numeric/hiss_length/is_accessible(datum/preferences/preferences)
+	return ..() && ispath(preferences.read_preference(/datum/preference/choiced/species), /datum/species/lizard)
+
+/datum/preference/numeric/hiss_length/apply_to_human(mob/living/carbon/human/target, value)
+	var/obj/item/organ/internal/tongue/lizard/tongue = target.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!istype(tongue))
+		return
+	tongue.draw_length = value

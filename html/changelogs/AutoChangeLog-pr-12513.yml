@@ -1,0 +1,6 @@
+author: "hexakats"
+delete-after: True
+changes:
+  - spellcheck: "Bandolier description says it hold .357 bullets"
+  - spellcheck: "Large chemical canisters don't say they can't fit in standard hyposprays anymore"
+  - spellcheck: "CMO Hypospray doesn't say it fits larger canisters anymore, also says that it's faster than standard hyposprays"

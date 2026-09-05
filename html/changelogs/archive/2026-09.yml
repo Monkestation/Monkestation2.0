@@ -1,0 +1,52 @@
+2026-09-01:
+  TheColorCyan:
+  - bugfix: (SmArtKar) Fixed flypeople not being able to gain nutrition from slurping
+      up vomit
+  - bugfix: fixed pony ears coloring
+  - bugfix: kinetic smg can no longer be suppresed which fucked its sprite up
+  - bugfix: replaced invisible weight machines in void raptor with stacklifters
+  - bugfix: elucidate will now properly hear and revive the target
+  - bugfix: fixed rainbow adult slimes and silver baby slimes being invisible
+  - bugfix: (SmArtKar) Trying to ignite oil with a welding tool no longer runtimes
+      due to it trying to get ignited twice
+  hexakats:
+  - balance: Replaced the oxygen jetpack in the traitor space suit box with a jetpack
+      harness
+  - balance: The traitor space suit box can hold the jetpack harness along side the
+      space suit and helmet
+  notghosti:
+  - rscadd: PTL laser now disables when disabled
+  - qol: PTL TGUI is adjusted to actually show how many credits have been earnt.
+  - balance: PTL will now do damage/gib based on the actual power outputted, not how
+      much you set output to.
+2026-09-02:
+  JohnFulpWillard:
+  - bugfix: Fixes (very much lowers) AI CPU point generation (both in Research points
+      & researching programs).
+  - balance: Lowers credits gained from bitcoin mining.
+  - balance: Makes CPU scaling slightly more linear.
+  - balance: Buffs Bluespace CPU a tiny bit.
+  Tractor-Maam:
+  - rscadd: Traitor plasmamen can purchase a Tacticool Plasmaman outfit for 1TC.
+  hexakats:
+  - balance: you can now hold the china lake grenade launcher in one hand (still can't
+      fire it while your other hand is holding anything tho!)
+2026-09-03:
+  Runian:
+  - bugfix: The freezer within Theseus's research server room now properly cools down
+      the research server.
+  - bugfix: Kilostation's North Central Primary Hallway's disposal pipes are correctly
+      connected and no longer ends early in the hallway.
+  notghosti:
+  - bugfix: Dying in a mech as a AI will now properly handle you returning to your
+      mecha.
+  - bugfix: AI mech wreckages now are functional
+  - bugfix: AI mech domination will no longer softlock a second ai view panel if they
+      were booted from it.
+  osaka-fuuri:
+  - rscadd: X-ray users can now scan guns to see chambered ammo
+2026-09-04:
+  osaka-fuuri:
+  - bugfix: Wrapping papers & package wrappers now can be stacked by hand.
+  - code_imp: Stackable items now use the new item_interaction() instead of the old
+      attackby().

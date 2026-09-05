@@ -195,6 +195,8 @@
 	var/upgrade_flags = 0
 	/// Multiplier for a borer's negative effects to their host
 	var/host_harm_multiplier = 1
+	/// The total amount of hivequeens that were created
+	var/static/hivequeen_amount
 
 /mob/living/basic/cortical_borer/can_track(mob/living/user)
 	return FALSE // The validhunt box machines are onto us, we cannot let them track us
@@ -223,6 +225,8 @@
 
 /mob/living/basic/cortical_borer/mind_initialize()
 	if(!mind) // This proc is used for both new and recycled (when someone ghosts and another takes over) minds. Make sure we do dis once
+		if(generation == 0)
+			hivequeen_amount++
 		create_name()
 	. = ..()
 	if(!mind.has_antag_datum(/datum/antagonist/cortical_borer))
@@ -307,19 +311,18 @@
 	to_chat(user, span_warning("You are a cortical borer! You can fear someone to make them stop moving, but make sure to inhabit them! You only grow/heal/talk when inside a host!"))
 	PossessByPlayer(user.ckey)
 
+/// Creates a random (probably unique) name for the borer
 /mob/living/basic/cortical_borer/proc/create_name()
-	// So their gen and a random. ex 1-288 is first gen named 288, 4-483 is fourth gen named 483
-	// Additionally we add in a random title,
-	// mainly so people can ahelp borers quicker and admins dont have to look through the logs of the 5 borers that were inside you
-	name = "[pick(borer_first_names)]: [pick(borer_second_names)]"
-	real_name = "([name]) ([generation]-[rand(100,999)])"
-	if(istype(/mob/living/basic/cortical_borer/empowered, src)) // lets also distinguish empowered borers from normal ones
-		name = "larger [name]"
-		real_name = "larger [real_name]"
+	name = initial(name)
+	if(prob(99))
+		name = "[pick(GLOB.adjectives)] [name]"
+	else
+		name = "[pick(GLOB.gross_adjectives)] [name]"
 
-	if(generation == 0) //The first ever borer gets a special name
-		name = "The hivequeen [initial(name)]"
-		real_name = name
+	if(generation == 0)
+		real_name = "[name] (Queen [hivequeen_amount])"
+	else
+		real_name = "[name] ([generation]-[rand(100,999)])"
 
 //check if the host has sugar
 /mob/living/basic/cortical_borer/proc/host_sugar()
@@ -378,13 +381,12 @@
 	if(host_sugar())
 		message = scramble_message_replace_chars(message, 10)
 	message = sanitize(message)
-	var/list/split_message = splittext(message, "")
 
 	/// Contains the fancy version of our message
 	var/text
 
 	//this is so they can talk in hivemind
-	if(split_message[1] == ";")
+	if(message[1] == ";")
 		var/datum/antagonist/cortical_borer/antag = mind.has_antag_datum(/datum/antagonist/cortical_borer)
 		if(isnull(antag) || isnull(antag.team))
 			to_chat(src, span_warning("You aren't connected to a hivemind!"))
@@ -392,9 +394,9 @@
 
 		message = copytext(message, 2)
 		message = capitalize(message)
-		if(HAS_TRAIT(src, TRAIT_NEUTERED)) 	// Nuetered sound offtune.
+		if(HAS_TRAIT(src, TRAIT_NEUTERED)) // Neutered sound offtune.
 			text = span_red("<b>Cortical Hivemind: [real_name] croons, \"[message]\"</b>")
-		else if(generation == 0) 	//Hivequeens demand attention.
+		else if (generation == 0) // Hivequeens have larger text
 			text = span_purplelarge("<b>Cortical Hivemind: [real_name] choruses, \"[message]\"</b>")
 		else
 			text = span_purple("<b>Cortical Hivemind: [real_name] sings, \"[message]\"</b>")
@@ -414,11 +416,11 @@
 	message = capitalize(message)
 
 	if(HAS_TRAIT(src, TRAIT_NEUTERED))
-		text = span_red("Cortical Link: [real_name] croons, \"[message]\"")
+		text = span_red("Cortical Link: [name] croons, \"[message]\"")
 	else if(HAS_MIND_TRAIT(human_host, TRAIT_WILLING_HOST))
-		text = span_purplelarge("Cortical Link: [real_name] choruses, \"[message]\"")
+		text = span_purplelarge("Cortical Link: [name] choruses, \"[message]\"")
 	else
-		text = span_purple("Cortical Link: [real_name] sings, \"[message]\"")
+		text = span_purple("Cortical Link: [name] sings, \"[message]\"")
 
 	to_chat(human_host, text)
 	to_chat(src, text)

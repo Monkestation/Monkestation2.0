@@ -7,7 +7,7 @@
 
 /mob/living/silicon/robot/update_overlays()
 	. = ..()
-	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) // Not dead, not stunned.
+	if(stat == CONSCIOUS && !low_power_mode) // Awake and has sufficient power. Various stuns will make them unconscious.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
