@@ -145,3 +145,10 @@
 	icon_state = "bolter_wrench"
 	inhand_icon_state = "bolter_wrench"
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/wrench/makeshift
+	name = "makeshift wrench"
+	desc = "A crude, self-wrought wrench with common uses. Can be found in your hand."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "wrench_makeshift"
+	toolspeed = 2
