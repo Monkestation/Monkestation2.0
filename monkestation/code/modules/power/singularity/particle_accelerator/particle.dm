@@ -82,9 +82,21 @@
 /obj/energy_ball/accelerated_particle_act(obj/effect/accelerated_particle/particle)
 	energy += particle.energy
 
+/obj/machinery/power/supermatter_crystal/accelerated_particle_act(obj/effect/accelerated_particle/particle)
+	external_power_immediate += particle.energy * bullet_energy
+	particle.movement_range = 0
+	radiation_pulse(src, floor(particle.energy * 0.3), 3, 0.5)
+	log_activation(who = "particle accelerator")
+
 /obj/structure/blob/accelerated_particle_act(obj/effect/accelerated_particle/particle)
 	take_damage(particle.energy * 0.6)
 	particle.movement_range = 0
 
 /mob/living/accelerated_particle_act(obj/effect/accelerated_particle/particle)
 	radiation_pulse(src, 1, 3, 0.5)
+
+// reflectors
+
+/obj/structure/reflector/accelerated_particle_act(obj/effect/accelerated_particle/particle)
+	particle.forceMove(get_turf(src))  // accelerated_particle_act is called when its ABOUT to hit, not when it actually enters its loc
+	particle.dir = angle2dir(rotation_angle) // 8 directions, change to cardinal if issues
