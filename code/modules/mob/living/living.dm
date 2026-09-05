@@ -1134,7 +1134,7 @@
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs. This will handle click cooldown on its own if the user has to resist cuffs.
 
-	if (reset_cooldown)
+	if(reset_cooldown)
 		changeNext_move(CLICK_CD_RESIST)
 
 /mob/proc/resist_grab(moving_resist)
