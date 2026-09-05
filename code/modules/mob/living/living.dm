@@ -1143,7 +1143,7 @@
 ///Returns FALSE for successfully breaking free, TRUE otherwise.
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	if (moving_resist && !can_resist()) //Moving doesnt check for resist cooldown on its own, so we handle it here
+	if(moving_resist && !can_resist()) //Moving doesnt check for resist cooldown on its own, so we handle it here
 		return
 
 	// Base chance to escape a grab. Divided by effective grab state
