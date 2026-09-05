@@ -14875,7 +14875,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "dCL" = (
@@ -24671,7 +24671,7 @@
 "gGs" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/clothing/mask/surgical,
 /obj/machinery/camera/directional/north{
 	c_tag = "Medical - Morgue";
@@ -71322,7 +71322,7 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/item/radio/intercom/directional/south,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "uWn" = (
@@ -81000,7 +81000,7 @@
 /area/station/hallway/primary/tram/center)
 "xYa" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "xYc" = (

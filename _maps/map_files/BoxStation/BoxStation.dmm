@@ -12701,7 +12701,7 @@
 /obj/item/emergency_bed{
 	pixel_y = 14
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/machinery/defibrillator_mount/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
@@ -28426,7 +28426,7 @@
 /obj/item/paper_bin,
 /obj/item/folder/white,
 /obj/item/pen,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -44145,8 +44145,8 @@
 /obj/item/emergency_bed{
 	pixel_y = 14
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/machinery/defibrillator_mount/directional/south,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "ojr" = (
@@ -58274,7 +58274,7 @@
 	pixel_x = -1;
 	pixel_y = 6
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "sQN" = (

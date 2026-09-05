@@ -2071,7 +2071,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Mq" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/gloves/latex/nitrile{
@@ -2714,7 +2714,7 @@
 "YA" = (
 /obj/machinery/vending/wallmed/directional/south,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white/textured_edge,
 /area/shuttle/escape)
 "YI" = (
