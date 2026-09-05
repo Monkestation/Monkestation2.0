@@ -69,6 +69,17 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
+/obj/item/bag_of_holding_inert/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly/signaler/anomaly/bluespace))
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			return
+		var/obj/item/storage/backpack/holding/doomsday_device = new(get_turf(src))
+		qdel(tool)
+		user.put_in_hands(doomsday_device)
+		playsound(doomsday_device, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(src)
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
