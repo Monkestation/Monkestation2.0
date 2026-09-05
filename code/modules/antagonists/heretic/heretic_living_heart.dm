@@ -301,10 +301,12 @@
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/navigate_arrow/Initialize(mapload, datum/hud/hud_owner, turf/tracked_turf, arrow_color)
+/atom/movable/screen/navigate_arrow/Initialize(mapload, datum/hud/hud_owner, turf/tracked_turf, arrow_color, forced_loc)
 	. = ..()
 	var/mob/owner = get_mob()
-	if (owner)
+	if(forced_loc)
+		animate(src, transform = matrix(get_angle(forced_loc, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
+	else if(owner)
 		animate(src, transform = matrix(get_angle(owner, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
 	screen_loc = around_player
 	color = arrow_color
