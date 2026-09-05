@@ -363,20 +363,19 @@
 	return FALSE
 
 /obj/item/modular_computer/pda/silicon/get_ntnet_status()
-	//No borg found
+	// No owner found.
 	if(!silicon_owner)
 		return FALSE
-	// no AIs/pAIs
+	// Non-cyborgs can continue as usual.
 	var/mob/living/silicon/robot/cyborg_check = silicon_owner
 	if(!istype(cyborg_check))
 		return ..()
-	//lockdown restricts borg networking
+	// Lockdown restricts cyborg networking.
 	if(cyborg_check.lockcharge)
 		return FALSE
-	//borg cell dying restricts borg networking
-	if(!cyborg_check.cell || cyborg_check.cell.charge == 0)
+	// Lack of power restricts cyborg networking.
+	if(cyborg_check.low_power_mode)
 		return FALSE
-
 	return ..()
 
 /**

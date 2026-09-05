@@ -30,8 +30,8 @@
 
 	previous_health = health
 
-	if(ispath(cell))
-		cell = new cell(src)
+	if(cell)
+		set_cell(cell)
 
 	create_modularInterface()
 
@@ -151,9 +151,6 @@
 	//Show alerts window if user clicked on "Show alerts" in chat
 	if(href_list["showalerts"])
 		alert_control.ui_interact(src)
-
-/mob/living/silicon/robot/get_cell()
-	return cell
 
 /mob/living/silicon/robot/proc/pick_model()
 	if(has_model())
@@ -678,10 +675,7 @@
 			update_icons()
 
 	if(gone == cell)
-		cell = null
-		low_power_mode = TRUE
-		if(!QDELETED(src))
-			update_icons()
+		set_cell(null)
 
 	if(gone == mmi)
 		mmi = null
@@ -890,13 +884,6 @@
 		for(var/i in connected_ai.aicamera.stored)
 			aicamera.stored[i] = TRUE
 
-/mob/living/silicon/robot/proc/charge(datum/source, amount, repairs, sendmats)
-	SIGNAL_HANDLER
-	if(cell)
-		cell.charge = min(cell.charge + amount, cell.maxcharge)
-	if(repairs)
-		heal_bodypart_damage(repairs, repairs)
-
 /mob/living/silicon/robot/proc/set_connected_ai(new_ai)
 	if((connected_ai == new_ai) || centcom)
 		return
@@ -935,15 +922,6 @@
 
 	return GLOB.fire_appearances[fire_icon]
 
-/// Draw power from the robot
-/mob/living/silicon/robot/proc/draw_power(power_to_draw)
-	cell?.use(power_to_draw)
-
-
-/mob/living/silicon/robot/set_stat(new_stat)
-	. = ..()
-	//update_stat() // This is probably not needed, but hopefully should be a little sanity check for the spaghetti that borgs are built from
-
 /mob/living/silicon/robot/proc/on_dampen()
 	SIGNAL_HANDLER
 	eject_riders()
@@ -956,6 +934,98 @@
 		unbuckle_mob(buckled_mob) // In case the paralyze doesn't automatically unbuckle them.
 		buckled_mob.Paralyze(1 SECONDS)
 	do_sparks(5, 0, src)
+
+//
+// Power
+//
+
+/mob/living/silicon/robot/get_cell()
+	return cell
+
+/// Replaces the cyborg's current cell with a new cell. Will not automatically move the new cell.
+/mob/living/silicon/robot/proc/set_cell(obj/item/stock_parts/power_store/cell/new_cell)
+	if(cell)
+		UnregisterSignal(cell, list(COMSIG_QDELETING, COMSIG_CELL_POWER_USED, COMSIG_CELL_POWER_GIVEN, COMSIG_CELL_POWER_CHANGED))
+		cell = null
+	if(!new_cell)
+		if(!low_power_mode && !cell)
+			set_low_power_mode(TRUE)
+			return
+		update_icons()
+		return
+	cell = ispath(new_cell) ? new new_cell(src) : new_cell
+	RegisterSignal(cell, COMSIG_QDELETING, PROC_REF(on_cell_deleted))
+	RegisterSignal(cell, COMSIG_CELL_POWER_USED, PROC_REF(on_cell_power_used))
+	RegisterSignal(cell, COMSIG_CELL_POWER_GIVEN, PROC_REF(on_cell_power_given))
+	RegisterSignal(cell, COMSIG_CELL_POWER_CHANGED, PROC_REF(on_cell_power_changed))
+	if(low_power_mode && cell.charge())
+		set_low_power_mode(FALSE)
+		return
+	if(!low_power_mode && !cell.charge())
+		set_low_power_mode(TRUE)
+		return
+	update_icons()
+
+/// Charges the cyborg with power. Repairs are optional.
+/mob/living/silicon/robot/proc/charge(datum/source, amount, repairs)
+	SIGNAL_HANDLER
+	cell?.give(amount)
+	if(repairs)
+		heal_bodypart_damage(repairs, repairs)
+
+/// Uses a certain amount of power from the cyborg.
+/mob/living/silicon/robot/proc/draw_power(power_to_draw)
+	cell?.use(power_to_draw)
+
+/// Occurs when our current cell gets deleted.
+/mob/living/silicon/robot/proc/on_cell_deleted(datum/source)
+	SIGNAL_HANDLER
+	cell = null
+	if(!low_power_mode)
+		set_low_power_mode(TRUE)
+
+/// Occurs when our current cell's power is used.
+/mob/living/silicon/robot/proc/on_cell_power_used(datum/source, power_used)
+	SIGNAL_HANDLER
+	if(QDELETED(cell) || !power_used)
+		return
+	if(!low_power_mode && !cell.charge())
+		set_low_power_mode(TRUE)
+		return
+	diag_hud_set_borgcell()
+
+/// Occurs when our current cell's power is recharged.
+/mob/living/silicon/robot/proc/on_cell_power_given(datum/source, power_gained)
+	SIGNAL_HANDLER
+	if(QDELETED(cell) || !power_gained)
+		return
+	if(low_power_mode && cell.charge())
+		set_low_power_mode(FALSE)
+		return
+	diag_hud_set_borgcell()
+
+/// Occurs when our current cell's power is directly set to a value.
+/mob/living/silicon/robot/proc/on_cell_power_changed(datum/source, power_difference)
+	SIGNAL_HANDLER
+	if(power_difference >= 0)
+		on_cell_power_given(source, power_difference)
+		return
+	on_cell_power_used(source, -power_difference)
+
+/// Sets the cyborg's low power mode status.
+/mob/living/silicon/robot/proc/set_low_power_mode(new_mode)
+	if(low_power_mode == new_mode)
+		return
+	low_power_mode = new_mode
+	if(low_power_mode)
+		drop_all_held_items()
+		toggle_headlamp(TRUE)
+	update_icons()
+	diag_hud_set_borgcell()
+
+//
+// Models & Skins
+//
 
 /// Resets the model to default.
 /mob/living/silicon/robot/proc/reset_model()
