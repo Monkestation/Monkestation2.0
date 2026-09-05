@@ -1108,8 +1108,7 @@
 
 	var/reset_cooldown = FALSE //We only reset click cooldown if we actually resisted something
 
-	if (src._listen_lookup?[COMSIG_LIVING_RESIST])
-		SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
+	if (SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src) & COMPONENT_RESIST_ATTEMPTED)
 		reset_cooldown = TRUE
 
 	//resisting grabs (as if it helps anyone...)
