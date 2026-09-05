@@ -7,12 +7,11 @@
 		return
 	switch(alert("Would you like to enter cryo? This will ghost you. Remember to AHELP before cryoing out of important roles, even with no admins online.",,"Yes.","No."))
 		if("Yes.")
+			log_silicon("[key_name(src)] entered cryogenic storage.")
+			log_admin("[key_name(src)] entered AI cryogenic storage.")
+			message_admins("[key_name_admin(src)] has entered cryogenic storage as an AI.")
 			src.ghostize(FALSE)
-			var/announce_rank = "Artificial Intelligence,"
-			if(GLOB.announcement_systems.len)
-				// Sends an announcement the AI has cryoed.
-				var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-				announcer.announce("CRYOSTORAGE", src.real_name, announce_rank, list())
+			minor_announce("[src] has been uploaded to AI cryogenic storage.", "AI Cryogenic Oversight")
 			if(src.mind)
 				//Handle job slot/tater cleanup.
 				if(src.mind.assigned_role.title == JOB_AI)
