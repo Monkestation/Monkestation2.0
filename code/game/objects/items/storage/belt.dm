@@ -503,7 +503,7 @@
 		/obj/item/storage/box/kinetic/shotgun,
 		/obj/item/storage/box/kinetic/shotgun/rockbreaker,
 		/obj/item/storage/box/kinetic/shotgun/sniperslug,
-		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_box/magazine/autoshotgun/kinetic,
 		/obj/item/ammo_casing/shotgun/hydrakinetic,
 		/obj/item/storage/box/kinetic/autoshotgun,
 		/obj/item/storage/box/kinetic/autoshotgun/smallcase,

@@ -907,7 +907,7 @@
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
-		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/shotgun/semiauto/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg,
@@ -934,7 +934,7 @@
 	atom_storage.max_slots = 2
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
-		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/shotgun/semiauto/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg,
@@ -971,7 +971,7 @@
 	atom_storage.set_holdable(list( //all the ammo for mining guns can be stored in here, but nothing else.
 		/obj/item/ammo_box/magazine/pksmgmag,
 		/obj/item/storage/box/kinetic,
-		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_box/magazine/autoshotgun/kinetic,
 		/obj/item/ammo_casing/shotgun/hydrakinetic,
 		/obj/item/storage/box/kinetic/autoshotgun,
 		/obj/item/storage/box/kinetic/autoshotgun/smallcase,
