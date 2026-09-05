@@ -591,7 +591,6 @@
 	desc = "A semi-automatic shotgun nicknamed the 'auto shotgun' by field agents. \
 	Compatible with 12 gauge shell magazines that hold 12 shots each."
 	projectile_wound_bonus = 15
-	weapon_weight = WEAPON_MEDIUM
 	special_mags = TRUE
 	tac_reloads = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/syndicate
