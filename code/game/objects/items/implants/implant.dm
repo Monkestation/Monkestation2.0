@@ -25,6 +25,8 @@
 	var/hud_icon_state = null
 	//if true, this implant broadcasts a warning when it is removed surgically
 	var/has_surgical_warning = FALSE
+	/// If false, implant will not be moved into implantcase when it is removed surgically
+	var/move_to_case = TRUE
 
 
 /obj/item/implant/proc/activate()

@@ -70,7 +70,7 @@
 			break
 		if(!case)
 			case = locate(/obj/item/implantcase) in get_turf(target)
-		if(case && !case.imp)
+		if(case && !case.imp && implant.move_to_case)
 			case.imp = implant
 			implant.forceMove(case)
 			case.update_appearance()
