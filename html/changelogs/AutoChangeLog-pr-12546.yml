@@ -1,5 +1,0 @@
-author: "hexakats"
-delete-after: True
-changes:
-  - balance: "Haloperidol purges itself from your bloodstream (at 1u/tick) once you're in stamina crit."
-  - balance: "Haloperidol's applied drowsiness status effect caps out at 30 seconds."

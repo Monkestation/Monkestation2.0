@@ -1,8 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - rscadd: "AI Dashboard Program; Nightvision Camera Upgrade"
-  - rscadd: "AI Dashboard Program; Supply Shuttle Navigation Optimization"
-  - rscadd: "AI Dashboard Program; Expanded Camera Network"
-  - bugfix: "Malfunctioning AI Camera Upgrade now properly provides night vision"
-  - admin: "Spawn AI no longer asks if you want to move it into a new core"
