@@ -10,17 +10,11 @@
 
 	/// How many chemicals this costs
 	var/chemical_cost = 0
-	/// How many chem evo points are needed to use this ability
-	var/chemical_evo_points = 0
 	/// How many stat evo points are needed to use this ability
 	var/stat_evo_points = 0
 
 	/// Does this ability need a human host to be triggered?
 	var/requires_host = FALSE
-	/// Can this ability function within a living host?
-	var/needs_living_host = FALSE
-	/// Can this ability function within a dead host?
-	var/needs_dead_host = FALSE
 	/// Does this ability stop working when the host has sugar?
 	var/sugar_restricted = FALSE
 
@@ -31,48 +25,62 @@
 		compiled_string += "([chemical_cost] chemical[chemical_cost == 1 ? "" : "s"])"
 	if(stat_evo_points)
 		compiled_string += " ([stat_evo_points] stat point[stat_evo_points == 1 ? "" : "s"])"
-	if(chemical_evo_points)
-		compiled_string += " ([chemical_evo_points] chemical point[chemical_evo_points == 1 ? "" : "s"])"
-	name = "[initial(name)][compiled_string]"
+	name += compiled_string
+	RegisterSignal(src, COMSIG_ACTION_TRIGGER, PROC_REF(check_conditions))
 
-/datum/action/cooldown/borer/Trigger(trigger_flags, atom/target)
-	if (!IsAvailable(feedback = TRUE))
-		return FALSE
+/datum/action/cooldown/borer/Destroy(force)
+	UnregisterSignal(src, COMSIG_ACTION_TRIGGER)
+	if(owner)
+		if(requires_host)
+			UnregisterSignal(owner, COMSIG_HOST_CHANGED)
+		if(sugar_restricted)
+			UnregisterSignal(owner, COMSIG_SUGAR_CHANGED)
+	return ..()
 
-	..()
+/datum/action/cooldown/borer/Grant(mob/grant_to)
+	if(owner)
+		if(requires_host)
+			UnregisterSignal(owner, COMSIG_HOST_CHANGED)
+		if(sugar_restricted)
+			UnregisterSignal(owner, COMSIG_SUGAR_CHANGED)
+	. = ..()
+	if(grant_to)
+		if(requires_host)
+			RegisterSignal(grant_to, COMSIG_HOST_CHANGED, PROC_REF(update_status_on_signal))
+		if(sugar_restricted)
+			RegisterSignal(grant_to, COMSIG_SUGAR_CHANGED, PROC_REF(update_status_on_signal))
 
-	// Safety checks
-	if(!iscorticalborer(owner))
+/// Use for conditions that can be properly expected and you can update with a signal/by directly calling build_all_button_icons(UPDATE_BUTTON_STATUS)
+/datum/action/cooldown/borer/IsAvailable(feedback)
+	. = ..()
+	if(!.)
+		return
+
+	if(!iscorticalborer(owner)) // Our abilities very much need borers, for now
 		to_chat(owner, span_warning("You must be a cortical borer to use this action!"))
 		return FALSE
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
 
-	// Status Requirements
-	if(requires_host == TRUE && !cortical_owner.inside_human())
-		owner.balloon_alert(owner, "host required")
-		return FALSE
-	if(needs_living_host == TRUE && cortical_owner.human_host.stat == DEAD)
-		owner.balloon_alert(owner, "alive host required")
-		return FALSE
-	if(needs_dead_host == TRUE && cortical_owner.human_host.stat != DEAD)
-		owner.balloon_alert(owner, "dead host required")
+	var/mob/living/basic/cortical_borer/cortical_owner = owner
+	if(requires_host == TRUE && isnull(cortical_owner.human_host))
+		if(feedback)
+			owner.balloon_alert(owner, "host required")
 		return FALSE
 	if(sugar_restricted == TRUE && cortical_owner.host_sugar())
-		owner.balloon_alert(owner, "cannot function with sugar in host")
+		if(feedback)
+			owner.balloon_alert(owner, "cannot function with sugar in host")
 		return FALSE
 
-	// Resource costs
+/// Used for conditions that can change at any time
+/datum/action/cooldown/borer/proc/check_conditions()
+	SIGNAL_HANDLER
+	var/mob/living/basic/cortical_borer/cortical_owner = owner
+	if(cortical_owner.stat_evolution < stat_evo_points)
+		cortical_owner.balloon_alert(cortical_owner, "need [stat_evo_points] evolution points")
+		return COMPONENT_ACTION_BLOCK_TRIGGER
+
 	if(cortical_owner.chemical_storage < chemical_cost)
 		cortical_owner.balloon_alert(cortical_owner, "need [chemical_cost] chemicals")
-		return FALSE
-	if(cortical_owner.chemical_evolution < chemical_evo_points)
-		cortical_owner.balloon_alert(cortical_owner, "need [chemical_evo_points] chemical points")
-		return FALSE
-	if(cortical_owner.stat_evolution < stat_evo_points)
-		cortical_owner.balloon_alert(cortical_owner, "need [stat_evo_points] stat points")
-		return FALSE
-
-	return TRUE
+		return COMPONENT_ACTION_BLOCK_TRIGGER
 
 /datum/asset/simple/borer_icons
 

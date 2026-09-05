@@ -55,7 +55,7 @@
 	)
 	if(QDELETED(src)) // prevent shenanigans with refunds
 		return
-	if(!LAZYLEN(candidates))
+	if(!length(candidates))
 		opened = FALSE
 		to_chat(user, "Yet the borer after looking at you quickly retreats back into their cage, visibly scared. Perhaps try later?")
 		playsound(src, 'sound/machines/boltsup.ogg', 30, TRUE)
@@ -65,23 +65,28 @@
 	var/mob/dead/observer/picked_candidate = pick(candidates)
 
 	var/mob/living/basic/cortical_borer/neutered/new_mob = new(drop_location())
-	new_mob.PossessByPlayer(picked_candidate.ckey)
+	new_mob.PossessByPlayer(picked_candidate.key)
 
-	var/datum/antagonist/cortical_borer/borer_antagonist_datum = new
+	var/datum/antagonist/cortical_borer/antag = new_mob.mind.has_antag_datum(/datum/antagonist/cortical_borer)
 
-	var/datum/objective/protect/protect_objective = new
-	var/datum/objective/custom/listen_objective = new
+	var/datum/objective/borer/learn_chemicals/selfish/chem_objective = new()
+	chem_objective.owner = new_mob.mind
+	chem_objective.update_explanation_text()
 
+	var/datum/objective/protect/protect_objective = new()
+	protect_objective.owner = new_mob.mind
 	protect_objective.target = user.mind
 	protect_objective.update_explanation_text()
 
+	var/datum/objective/custom/listen_objective = new()
+	listen_objective.owner = new_mob.mind
 	listen_objective.explanation_text = "Listen to any commands given by [user.name]"
 	listen_objective.completed = TRUE // its just an objective for flavor less-so than for greentext
 
-	borer_antagonist_datum.objectives += protect_objective
-	borer_antagonist_datum.objectives += listen_objective
-
-	new_mob.mind.add_antag_datum(borer_antagonist_datum)
+	antag.objectives += protect_objective
+	antag.objectives += listen_objective
+	antag.objectives += chem_objective
+	antag.update_static_data_for_all_viewers()
 
 	notify_ghosts(
 		"[new_mob] has been chosen from the ghost pool!",
