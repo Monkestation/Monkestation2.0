@@ -75,7 +75,7 @@
 // We override the proc to avoid renaming when brain is removed & discard brainmob creation (we don't need one)
 /obj/item/organ/internal/brain/cybernetic/ai/transfer_identity(mob/living/L)
 	if(suicided)
-		ADD_TRAIT(brainmob, TRAIT_SUICIDED, REF(src))
+		ADD_TRAIT(L, TRAIT_SUICIDED, REF(src))
 	return
 
 /// Updates the connecting AI's statpanel.
