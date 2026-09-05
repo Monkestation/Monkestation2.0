@@ -13,6 +13,8 @@
 	var/mutable_appearance/custom_portrait_icon
 	///The AI that controls the core display, it changes emotions as they do.
 	var/mob/living/silicon/ai/connected_ai
+	/// The networks it broadcasts to, default is CAMERANET_NETWORK_AI_CORE
+	var/list/camera_networks = list(CAMERANET_NETWORK_AI_CORE)
 
 /obj/machinery/status_display/ai_core/Initialize(mapload)
 	. = ..()
@@ -36,6 +38,7 @@
 	connected_ai = null
 	custom_emotion = null
 	custom_portrait_icon = null
+	remove_internal_camera()
 	return ..()
 
 /obj/machinery/status_display/ai_core/examine(mob/user)
@@ -131,10 +134,15 @@
 		return
 	if(connected_ai)
 		UnregisterSignal(connected_ai, list(COMSIG_QDELETING, COMSIG_AI_ICON_CHANGE))
+		remove_internal_camera()
 	connected_ai = new_ai
+	if(!connected_ai)
+		return
 	RegisterSignal(connected_ai, COMSIG_QDELETING, PROC_REF(on_ai_deleting))
 	RegisterSignal(connected_ai, COMSIG_AI_ICON_CHANGE, PROC_REF(on_ai_screen_change))
 	INVOKE_ASYNC(connected_ai, TYPE_PROC_REF(/mob/living/silicon/ai, set_core_display_icon), null, connected_ai?.client)
+
+	LoadComponent(/datum/component/internal_cam, networks = camera_networks, custom_ctag = "[connected_ai.name] core display", emp_flags = NONE)
 
 ///Called when the first AI of the round is created, as we get automatically assigned to it.
 /obj/machinery/status_display/ai_core/proc/on_ai_creation(atom/source, mob/living/silicon/ai/new_ai)
@@ -162,3 +170,7 @@
 	else
 		custom_emotion = icon_used
 	update_appearance(UPDATE_ICON)
+
+/obj/machinery/status_display/ai_core/proc/remove_internal_camera()
+	var/datum/component/internal_cam/cam = GetComponent(/datum/component/internal_cam)
+	qdel(cam)
