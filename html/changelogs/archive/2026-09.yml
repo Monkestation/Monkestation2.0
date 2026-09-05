@@ -45,3 +45,30 @@
       were booted from it.
   osaka-fuuri:
   - rscadd: X-ray users can now scan guns to see chambered ammo
+2026-09-04:
+  osaka-fuuri:
+  - bugfix: Wrapping papers & package wrappers now can be stacked by hand.
+  - code_imp: Stackable items now use the new item_interaction() instead of the old
+      attackby().
+2026-09-05:
+  Gboster-0:
+  - rscadd: Borers now use adjectives for their names instead of bad preset ones
+  - balance: You can no longer tell if a borer is a hivequeen or its generation from
+      looking/speaking to it
+  KuiperPilgrim:
+  - rscadd: added the "Einstein" hairstyle
+  hexakats:
+  - spellcheck: Bandolier description says it hold .357 bullets
+  - spellcheck: Large chemical canisters don't say they can't fit in standard hyposprays
+      anymore
+  - spellcheck: CMO Hypospray doesn't say it fits larger canisters anymore, also says
+      that it's faster than standard hyposprays
+  - balance: Haloperidol purges itself from your bloodstream (at 1u/tick) once you're
+      in stamina crit.
+  - balance: Haloperidol's applied drowsiness status effect caps out at 30 seconds.
+  notghosti:
+  - rscadd: AI Dashboard Program; Nightvision Camera Upgrade
+  - rscadd: AI Dashboard Program; Supply Shuttle Navigation Optimization
+  - rscadd: AI Dashboard Program; Expanded Camera Network
+  - bugfix: Malfunctioning AI Camera Upgrade now properly provides night vision
+  - admin: Spawn AI no longer asks if you want to move it into a new core
