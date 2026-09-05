@@ -352,3 +352,11 @@
 	new /obj/item/reagent_containers/chemcanister/bluespace/pen_acid(src)
 	new /obj/item/reagent_containers/chemcanister/bluespace/oxy(src)
 	new /obj/item/reagent_containers/chemcanister/bluespace/atropine(src)
+
+/obj/item/storage/lockbox/vialbox/blood
+	name = "blood sample vial box"
+	desc = "A small box that can hold up to six vials in a sealed environment. This one is intended to store blood."
+
+/obj/item/storage/lockbox/vialbox/blood/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/chemcanister(src)
