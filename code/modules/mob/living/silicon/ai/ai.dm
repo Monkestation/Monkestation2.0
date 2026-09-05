@@ -48,6 +48,7 @@
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
 	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
+	var/ai_holocolor //The AI's hologram color, defaults to blue when nothing is selected
 	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
@@ -745,6 +746,16 @@
 
 	if(incapacitated())
 		return
+
+	ai_holocolor = tgui_color_picker(usr, "Choose a color for your hologram", "Hologram Color")
+	if(ai_holocolor)
+		var/ai_holo_hsv = rgb2hsv(ai_holocolor)
+		var/default_hsv = rgb2hsv(COLOR_AI_HOLOGRAM_BLUE)
+
+		default_hsv[1] = ai_holo_hsv[1]
+
+		ai_holocolor = hsv2rgb(default_hsv)
+
 	var/input
 	switch(tgui_input_list(usr, "Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?", "Customize", list("Custom Character","Unique","Animal")))
 		if("Custom Character")
