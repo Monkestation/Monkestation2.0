@@ -1115,7 +1115,7 @@
 	//resisting grabs (as if it helps anyone...)
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")
-		if (resist_grab(FALSE)) //We only reset click cooldown on a failed resist attempt - not a successful one
+		if(resist_grab(FALSE)) //We only reset click cooldown on a failed resist attempt - not a successful one
 			reset_cooldown = TRUE
 
 	//unbuckling yourself
