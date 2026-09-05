@@ -523,7 +523,15 @@
 
 	if(!.)
 		return
-	monkestation_vv_do_topic(href_list) //monkestation edit
+
+	if(href_list[VV_HK_POSSESS_ITEM] && check_rights(R_FUN))
+
+		var/mob/living/basic/possession_holder/created = new(get_turf(src), src)
+		var/choice = tgui_alert(usr, "Take Control of newly created mob?", "Possession", list("Yes", "No"))
+		if(!choice)
+			return
+		if(choice == "Yes")
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_assume_direct_control, created)
 
 	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
 
@@ -673,6 +681,51 @@
 	if(user.low_power_mode) //can't equip modules with an empty cell.
 		return
 	user.activate_module(src)
+
+/obj/item/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(.)
+		return
+	if(!user)
+		return
+	if(anchored)
+		return
+
+	if(isbasicmob(user))
+		var/mob/living/basic/true_user = user
+		if(!true_user.dexterous)
+			if (obj_flags & CAN_BE_HIT)
+				return ..()
+			return
+	else if(istype(user, /mob/living/simple_animal))
+		return
+
+	. = TRUE
+
+	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
+		return
+
+	//If the item is in a storage item, take it out
+	if(loc.atom_storage && !loc.atom_storage.remove_single(user, src, user.loc, silent = TRUE))
+		return
+	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
+		return
+
+	if(throwing)
+		throwing.finalize(FALSE)
+	if(loc == user)
+		if(!can_mob_unequip(user) || !user.temporarilyRemoveItemFromInventory(src))
+			return
+
+	. = FALSE
+	if(cant_grab)
+		return FALSE
+	pickup(user)
+	add_fingerprint(user)
+	if(!user.put_in_active_hand(src, FALSE, FALSE))
+		user.dropItemToGround(src)
+		return TRUE
+	return 0
+
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
