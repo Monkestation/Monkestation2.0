@@ -70,7 +70,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "IPC Screen"
-	relevant_mutant_bodypart = "ipc_screen"
+	relevant_external_organ = /obj/item/organ/external/ipc_screen
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ipc_screen/init_possible_values()
@@ -84,10 +84,11 @@
 	var/datum/sprite_accessory/screen = GLOB.ipc_screens_list[value]
 	var/datum/universal_icon/icon_with_screen = ipc_head.copy()
 
-	icon_with_screen.blend_icon(uni_icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
+	if(!isnull(screen) && screen.icon_state != SPRITE_ACCESSORY_NONE)
+		icon_with_screen.blend_icon(uni_icon(screen.icon, "m_ipc_screen_[screen.icon_state]_ADJ"), ICON_OVERLAY)
+
 	icon_with_screen.scale(64, 64)
 	icon_with_screen.crop(15, 64 - 31, 15 + 31, 64)
-
 	return icon_with_screen
 
 /datum/preference/choiced/ipc_screen/apply_to_human(mob/living/carbon/human/target, value)
@@ -109,7 +110,7 @@
 	if (!istype(target.dna.species, /datum/species/ipc))
 		return
 	if (value == "Compact MMI")
-		var/obj/item/organ/internal/brain/synth/mmi/new_organ = new()
+		var/obj/item/organ/internal/brain/positronic/mmi/new_organ = new()
 		var/obj/item/organ/internal/brain/existing_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 		if(istype(existing_brain) && !existing_brain.decoy_override)
 			existing_brain.before_organ_replacement(new_organ)
