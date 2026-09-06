@@ -1137,7 +1137,7 @@
 				continue
 			var/obj/item/organ/internal/brain/cybernetic/ai/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
 			// Checks if the AI-uplink is unowned OR ours, and if our body is augmented sufficiently.
-			if(brain.check_if_augmented() && !brain.deployed && human.stat != DEAD && (brain.mainframe_ai == null || brain.mainframe_ai == src))
+			if(brain.check_if_augmented() && !brain.deployed && human.stat != DEAD && (!brain.mainframe_ai || brain.mainframe_ai == src))
 				possible += human
 
 	if(!LAZYLEN(possible))
