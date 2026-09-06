@@ -27,7 +27,7 @@
 	var/maximum_max_power = 2
 
 	//Lower value means speed and power is more linear
-	var/minimum_growth = 0.7
+	var/minimum_growth = 0.6
 	//High values means its easier to get a high overclock at low power
 	var/maximum_growth = 3.5
 
@@ -71,6 +71,8 @@
 	icon_state = "cpuboard_adv"
 
 	speed = 2
+	minimum_max_power = /obj/item/ai_cpu::minimum_max_power
+	maximum_max_power = /obj/item/ai_cpu::maximum_max_power
 	power_multiplier = /obj/item/ai_cpu::power_multiplier * 1.75
 
 /obj/item/ai_cpu/experimental
@@ -93,6 +95,8 @@
 	icon_state = "cpuboard_super"
 
 	speed = 3
+	minimum_max_power = 1
+	maximum_max_power = /obj/item/ai_cpu::maximum_max_power
 	base_power_usage = /obj/item/ai_cpu::power_multiplier * 2.5
 
 #undef OVERCLOCK_MIN_POWER_MULT

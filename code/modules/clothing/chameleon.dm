@@ -373,15 +373,17 @@
 
 
 /obj/item/clothing/under/chameleon
-//starts off as black
+	//starts off as black
 	name = "black jumpsuit"
-	icon_state = "jumpsuit"
-	greyscale_colors = "#3f3f3f"
-	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/chameleon")
+	greyscale_config = /datum/greyscale_config/jumpsuit
+	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
+	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
+	greyscale_colors = "#3f3f3f"
+
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
 	resistance_flags = NONE
@@ -432,6 +434,9 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/under/chameleon/broken
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/under/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -827,12 +832,15 @@
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
-	icon_state = "sneakers"
-	inhand_icon_state = "sneakers_back"
-	greyscale_colors = "#545454#ffffff"
-	greyscale_config = /datum/greyscale_config/sneakers
-	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
 	desc = "A pair of black shoes."
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/chameleon")
+	inhand_icon_state = "sneakers_back"
+	greyscale_config = /datum/greyscale_config/sneakers
+	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
+	greyscale_colors = "#545454#ffffff"
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_chameleon
 
@@ -887,6 +895,7 @@
 	name = "no-slip black shoes"
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	can_be_bloody = FALSE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize(mapload)
 	. = ..()
@@ -1030,8 +1039,8 @@
 
 /obj/item/modular_computer/pda/chameleon
 	name = "tablet"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
-
 
 /obj/item/modular_computer/pda/chameleon/multitool_act(mob/living/user, obj/item/tool)
 	if(chameleon_action.hidden)

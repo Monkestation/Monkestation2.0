@@ -1,7 +1,7 @@
 /obj/item/clothing/under/plasmaman/medical
 	name = "medical plasma envirosuit"
 	desc = "A suit designed for the station's more plasma-based doctors."
-	icon_state = "cross"
+	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/medical")
 	worn_icon_state = "cross_w"
 	inhand_icon_state = "cross"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
@@ -14,18 +14,21 @@
 /obj/item/clothing/under/plasmaman/medical/chemist
 	name = "chemistry plasma envirosuit"
 	desc = "A plasmaman envirosuit designed for chemists."
+	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/medical/chemist")
 	greyscale_colors = "#eeeeee#eeeeee#d15b1b#eeeeee#d15b1b#d15b1b#8c2a0f"
 	sleek_greyscale_colors = "#eeeeee#39393f#d15b1b#39393f#eeeeee"
 
 /obj/item/clothing/under/plasmaman/medical/viro
 	name = "virology plasma envirosuit"
 	desc = "The suit worn by the safest people on the station, those who are completely immune to the monstrosities they create."
+	SETUP_MAP_ICONS("cross", "/obj/item/clothing/under/plasmaman/medical/viro")
 	greyscale_colors = "#eeeeee#eeeeee#40992e#eeeeee#40992e#40992e#003300"
 	sleek_greyscale_colors = "#eeeeee#39393f#40992e#39393f#eeeeee"
 
 /obj/item/clothing/under/plasmaman/paramedic
 	name = "paramedic envirosuit"
 	desc = "A suit designed for the station's plasmaman paramedics."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/paramedic")
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/striped
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/striped
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/striped
@@ -38,17 +41,20 @@
 /obj/item/clothing/under/plasmaman/science
 	name = "science plasma envirosuit"
 	desc = "A plasmaman envirosuit designed for scientists."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/science")
 	greyscale_colors = "#eeeeee#eeeeee#b347a1#eeeeee#eeeeee#747182"
 	sleek_greyscale_colors = "#eeeeee#39393f#b347a1#39393f#eeeeee"
 
 /obj/item/clothing/under/plasmaman/robotics
 	name = "robotics plasma envirosuit"
 	desc = "A plasmaman envirosuit designed for roboticists."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/robotics")
 	greyscale_colors = "#39393f#39393f#88242d#88242d#88242d#18191e"
 	sleek_greyscale_colors = "#88242d#39393f#eeeeee#39393f#88242d"
 
 /obj/item/clothing/under/plasmaman/genetics
 	name = "genetics plasma envirosuit"
 	desc = "A plasmaman envirosuit designed for geneticists."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/genetics")
 	greyscale_colors = "#eeeeee#eeeeee#4a77a1#4a77a1#eeeeee#747182"
 	sleek_greyscale_colors = "#eeeeee#39393f#4a77a1#39393f#eeeeee"

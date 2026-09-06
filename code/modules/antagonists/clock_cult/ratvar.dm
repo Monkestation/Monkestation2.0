@@ -76,6 +76,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	if(GLOB.cult_ratvar == src)
 		GLOB.cult_ratvar = null
 	STOP_PROCESSING(SSobj, src)
+	SSshuttle.clearHostileEnvironment(src)
 	return ..()
 
 /obj/ratvar/process(seconds_per_tick)

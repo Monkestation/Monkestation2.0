@@ -6,7 +6,7 @@
 
 /datum/sprite_accessory/oni_tail/none
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/oni_tail/spade
 	name = "Spade"
@@ -20,7 +20,7 @@
 
 /datum/sprite_accessory/oni_wings/none
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/oni_wings/normal
 	name = "Normal"
@@ -38,7 +38,7 @@
 
 /datum/sprite_accessory/oni_horns/none
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/oni_horns/oni
 	name = "Oni"

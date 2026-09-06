@@ -124,7 +124,7 @@
 /obj/item/reagent_containers/chemcanister/large
 	name = "large chemical canister"
 	base_name = "large chemical canister"
-	desc = "A large chemical for holding a sizable amounts of reagents. It's too large to fit in standard hyposprays."
+	desc = "A large chemical for holding a sizable amounts of reagents."
 	icon_state = "canister_large"
 	base_icon_state = "canister_large"
 	unique_reskin = list(

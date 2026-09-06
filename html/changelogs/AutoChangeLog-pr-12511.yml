@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "AIs can now read program notifications from their PDA in the chat box."
