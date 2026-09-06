@@ -23,8 +23,8 @@
 	var/datum/action/innate/brain_undeployment/undeploy_action = new
 	/// A weakref to our imaginary brain radio implant.
 	var/datum/weakref/radio_weakref
-	/// Organ traits given upon insertion
-	var/list/traits = list(
+	/// Unique organ traits to add
+	var/list/traits_to_add = list(
 		TRAIT_REVERSE_MMI,
 		TRAIT_MEDICAL_HUD,
 		TRAIT_NO_MINDSWAP,
@@ -34,6 +34,8 @@
 /obj/item/organ/internal/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "eyes move with machine precision.", BODY_ZONE_PRECISE_EYES)
+	for(var/trait in traits_to_add)
+		add_organ_trait(trait)
 
 /obj/item/organ/internal/brain/cybernetic/ai/Destroy()
 	. = ..()
@@ -44,8 +46,6 @@
 /obj/item/organ/internal/brain/cybernetic/ai/on_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	organ_owner.faction |= FACTION_SILICON // we are of siliconkind
-	for(var/trait in traits)
-		add_organ_trait(trait)
 	update_med_hud_status(organ_owner)
 	RegisterSignal(organ_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
 	RegisterSignal(organ_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
@@ -73,8 +73,6 @@
 	GLOB.available_ai_shells -= organ_owner
 	undeploy()
 	mainframe_ai = null
-	for(var/trait in traits)
-		remove_organ_trait(trait)
 	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN))
 	var/obj/item/implant/radio/radio = radio_weakref.resolve()
 	if(radio)
@@ -169,7 +167,7 @@
 	undeploy_action.Grant(owner)
 	update_med_hud_status(owner)
 
-	add_organ_trait(TRAIT_SILICON_ACCESS)
+	owner.add_traits(list(TRAIT_SILICON_ACCESS))
 	ADD_TRAIT(mainframe_ai.mind, TRAIT_UNCONVERTABLE, REF(src))
 	ADD_TRAIT(mainframe_ai, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	mainframe_ai.mind.transfer_to(owner)
@@ -207,7 +205,7 @@
 		mainframe_ai.eyeobj.setLoc(owner.loc)
 	REMOVE_TRAIT(mainframe_ai.mind, TRAIT_UNCONVERTABLE, REF(src))
 	REMOVE_TRAIT(mainframe_ai, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-	remove_organ_trait(TRAIT_SILICON_ACCESS) // we don't want randoms using our body as free AA, so we only have it when we active.
+	owner.remove_traits(list(TRAIT_SILICON_ACCESS)) // we don't want randoms using our body as free AA, so we only have it when we active.
 	var/obj/item/implant/radio/implant = radio_weakref.resolve() // We check incase weakref is null
 	if(implant)
 		implant.radio.resetChannels()
