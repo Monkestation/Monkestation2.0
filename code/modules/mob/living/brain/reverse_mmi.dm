@@ -14,7 +14,7 @@
 
 /obj/item/organ/internal/brain/cybernetic/ai
 	name = "AI-uplink brain"
-	desc = "A seemingly robotic brain of unknown origin; it has a receiver attached to it	."
+	desc = "A seemingly robotic brain of unknown origin; it has a receiver attached to it."
 	/// The connected mainframe AI of this brain/shell.
 	var/mob/living/silicon/ai/mainframe_ai
 	/// Is the mainframe AI currently deployed to this brain/shell?
