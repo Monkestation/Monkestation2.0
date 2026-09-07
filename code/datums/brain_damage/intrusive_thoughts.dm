@@ -6,7 +6,8 @@
 	desc = "Patient's suffers from seemingly random and intrusive thoughts."
 	scan_desc = "brain in conflict with self"
 	gain_text = span_warning("You feel like there's a voice in your head...")
-	lose_text = span_notice("You feel strangely at peace.")
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+	lose_text = span_notice("You feel once more at peace with your thoughts.")
 	var/current_controller = OWNER
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/intrusive_thoughts/stranger_backseat //there's two so they can swap without overwriting
@@ -138,8 +139,9 @@
 	if(!owner.lastKnownIP)
 		owner.lastKnownIP = s2h_ip
 
+	// !current_controller = 0 if controlled by OWNER or 1 if controlled by other.
 	current_controller = !current_controller
-
+	// Swaps current_controller from 0 to 1 or 1 to 0
 
 /mob/living/intrusive_thoughts
 	name = "intrusive thoughts"
