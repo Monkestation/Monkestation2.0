@@ -325,7 +325,7 @@
 				start()
 		if("gear")
 			if(bot_cover_flags & BOT_COVER_EMAGGED)
-				shift_gear()
+				shift_gear(user)
 		if("home")
 			if(mode == BOT_IDLE || mode == BOT_DELIVER)
 				start_home()
@@ -724,7 +724,7 @@
 
 /// Switches speed
 /mob/living/simple_animal/bot/mulebot/proc/shift_gear(mob/user)
-	if(!issilicon(user) || !isAdminGhostAI(user))
+	if(!issilicon(user) && !isAdminGhostAI(user))
 		return
 	if(!speed) // if speed is zero, we can't move
 		return
