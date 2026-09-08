@@ -822,7 +822,7 @@
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding rifle and shotgun ammunition."
+	desc = "A bandolier for holding rifle, shotgun and .357 revolver ammunition."
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"

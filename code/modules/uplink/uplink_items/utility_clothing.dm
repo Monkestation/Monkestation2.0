@@ -25,7 +25,8 @@
 	name = "Syndicate Space Suit"
 	desc = "This red Syndicate space suit is less encumbering than Nanotrasen variants, \
 			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
-			sightings, however." //monkestation edit
+			sightings, however. \
+			Comes with a jetpack harness."
 	item = /obj/item/storage/box/syndie_kit/space
 	cost = 2
 
