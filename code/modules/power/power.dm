@@ -503,7 +503,7 @@
 	var/obj/item/stock_parts/power_store/cell/cell = powernet_info["cell"]
 
 	// MONKESTATION ADDITION -- This whole proc is basically polluted because long ago we didnt care for modularization
-	if(victim.wearing_shock_proof_gloves() && (PN && PN?.netexcess < 100 MW) && !always_shock)
+	if(!victim.should_electrocute(power_source) && !always_shock)
 		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 		return FALSE //to avoid spamming with insulated gloves on
 
@@ -527,15 +527,9 @@
 		tesla_zap(victim, 7, PN.netexcess)
 		drained_hp = PN.netexcess * 0.01
 	else
-		var/obj/item/organ/internal/brain/carbon_brain = victim.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/turf/turf = get_turf(victim)
+		drained_hp = victim.electrocute_act(600, source, siemens_coeff) //OUCH!
 		playsound(victim.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
-		victim.death(FALSE, "electrocution")
-		carbon_brain.Remove(victim)
-		carbon_brain.forceMove(turf)
-		victim.visible_message(span_danger("[victim] turns to ash from the electrical shock!"))
-		victim.dust()
-		drained_hp = PN.netexcess * 0.1
+		victim.visible_message(span_danger("[victim]'s skin turns to ash from the electrical shock!"))
 
 	log_combat(source, victim, "electrocuted")
 
