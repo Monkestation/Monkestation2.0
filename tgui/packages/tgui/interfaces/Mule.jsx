@@ -39,9 +39,8 @@ export const Mule = (props) => {
     2 : { label: 'FAST', color: 'orange', icon: 'fa-thermometer-half' },
     3 : { label: 'Normal', color: 'green', icon: 'fa-thermometer-quarter' },
   };
-  const gearState = speed !== undefined
-  ? (gearStates[speed])
-  : null;
+  const gearState =
+    (gearStates[speed]);
   return (
     <Window width={350} height={445}>
       <Window.Content>
@@ -137,7 +136,7 @@ export const Mule = (props) => {
                   onClick={() => act('stop')}
                 />
                 <Button icon="play" content="Go" onClick={() => act('go')} />
-                {gearState && (
+                {!!emagged && (
                   <Button
                     content={gearState.label}
                     color={gearState.color}
