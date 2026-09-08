@@ -64,7 +64,7 @@
 	var/obj/item/stock_parts/power_store/cell/cell
 	///How much power we use when we move.
 	var/cell_move_power_usage = 1
- 	///The amount of steps we should take until we rest for a time.
+	///The amount of steps we should take until we rest for a time.
 	var/num_steps = 0
 	/// If speed is overridden, it will be equal to this
 	var/override_speed = 0
