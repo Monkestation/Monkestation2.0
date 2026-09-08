@@ -141,7 +141,7 @@ export const Mule = (props) => {
                     content={gearState.label}
                     color={gearState.color}
                     icon={gearState.icon}
-                    tooltip={speed ? }
+                    tooltip={speed ? 'Overrides current speed.' : 'Bot is unable to move.'}
                     onClick={() => act('gear')}
                   />
                 )}
