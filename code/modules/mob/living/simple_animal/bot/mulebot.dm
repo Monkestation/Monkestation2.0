@@ -273,7 +273,8 @@
 	data["load"] = get_load_name()
 	data["destination"] = destination ? destination : null
 	data["home"] = home_destination
-	data["speed"] = (bot_cover_flags & BOT_COVER_EMAGGED) ? (override_speed || speed) : null
+	if(issilicon(user) || isobserver(user))
+		data["speed"] = (bot_cover_flags & BOT_COVER_EMAGGED) ? (override_speed || speed) : null
 	data["destinations"] = GLOB.deliverybeacontags
 	data["cell"] = cell ? TRUE : FALSE
 	data["cellPercent"] = cell ? cell.percent() : null
@@ -722,7 +723,9 @@
 		max_blood = 4)
 
 /// Switches speed
-/mob/living/simple_animal/bot/mulebot/proc/shift_gear()
+/mob/living/simple_animal/bot/mulebot/proc/shift_gear(mob/user)
+	if(!issilicon(user) || !isAdminGhostAI(user))
+		return
 	if(!speed) // if speed is zero, we can't move
 		return
 	if(override_speed > 1)
