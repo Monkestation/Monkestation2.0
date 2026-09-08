@@ -509,7 +509,7 @@
 
 	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
 	if(!speed)//Devide by zero man bad
-		speed = override_speed
+		override_speed = speed
 		return
 	if(override_speed) // if we can move and speed is overridden
 		speed = override_speed
