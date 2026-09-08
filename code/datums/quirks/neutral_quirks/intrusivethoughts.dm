@@ -2,8 +2,7 @@
 	name = "Intrusive Thoughts"
 	desc = "You suffer from impulsive and intrusive thoughts."
 	icon = FA_ICON_USER_FRIENDS
-	value = -6
-	hardcore_value = 6
+	value = 0
 	/// Weakref to the trauma we give out
 	var/datum/weakref/added_trama_ref
 	species_blacklist = list(SPECIES_IPC)
