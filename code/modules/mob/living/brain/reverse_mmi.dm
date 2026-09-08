@@ -23,6 +23,8 @@
 	var/datum/action/innate/brain_undeployment/undeploy_action = new
 	/// A weakref to our imaginary brain radio implant.
 	var/datum/weakref/radio_weakref
+	/// Blacklisted species
+	var/static/list/blacklist_species
 	/// Unique organ traits to add
 	var/list/traits_to_add = list(
 		TRAIT_REVERSE_MMI,
@@ -33,6 +35,8 @@
 
 /obj/item/organ/internal/brain/cybernetic/ai/Initialize(mapload)
 	. = ..()
+	if(isnull(blacklist_species))
+		blacklist_species =	typecacheof(list(/datum/species/ipc, /datum/species/oozeling))
 	AddElement(/datum/element/noticable_organ, "eyes move with machine precision.", BODY_ZONE_PRECISE_EYES)
 	for(var/trait in traits_to_add)
 		add_organ_trait(trait)
@@ -45,6 +49,13 @@
 
 /obj/item/organ/internal/brain/cybernetic/ai/on_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
+
+	var/owner_species = organ_owner.dna.species
+	if(is_type_in_typecache(owner_species, blacklist_species))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		Remove(organ_owner, no_id_transfer = TRUE)
+		forceMove(get_turf(organ_owner))
+
 	organ_owner.faction |= FACTION_SILICON // we are of siliconkind
 	update_med_hud_status(organ_owner)
 	RegisterSignal(organ_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
