@@ -29,9 +29,18 @@ export const Mule = (props) => {
     id,
     allow_possession,
     possession_enabled,
+    speed,
     destinations = [],
   } = data;
   const locked = data.locked && !data.siliconUser;
+  const gearStates = {
+    0 : { label: 'Halted', color: 'label', icon: 'fa-thermometer-empty' },
+    1 : { label: '!MAXIMUM!', color: 'red', icon: 'fa-thermometer-full' },
+    2 : { label: 'FAST', color: 'orange', icon: 'fa-thermometer-half' },
+    3 : { label: 'Normal', color: 'green', icon: 'fa-thermometer-quarter' },
+  };
+  const gearState =
+    (gearStates[speed]);
   return (
     <Window width={350} height={445}>
       <Window.Content>
@@ -127,6 +136,16 @@ export const Mule = (props) => {
                   onClick={() => act('stop')}
                 />
                 <Button icon="play" content="Go" onClick={() => act('go')} />
+                {!!emagged && (
+                  <Button
+                    icon="stop"
+                    content={gearState.label}
+                    color={gearState.color}
+                    icon={gearState.icon}
+                    tooltip={speed ? 'Overrides current speed.' : 'Bot is unable to move.'}
+                    onClick={() => act('gear')}
+                  />
+                )}
               </LabeledList.Item>
               <LabeledList.Item label="Home">
                 <Dropdown
