@@ -138,11 +138,10 @@ export const Mule = (props) => {
                 <Button icon="play" content="Go" onClick={() => act('go')} />
                 {!!emagged && (
                   <Button
-                    icon="stop"
                     content={gearState.label}
                     color={gearState.color}
                     icon={gearState.icon}
-                    tooltip={speed ? 'Overrides current speed.' : 'Bot is unable to move.'}
+                    tooltip={speed ? }
                     onClick={() => act('gear')}
                   />
                 )}
