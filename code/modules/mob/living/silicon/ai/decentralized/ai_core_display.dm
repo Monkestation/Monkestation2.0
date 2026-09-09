@@ -43,6 +43,7 @@
 
 /obj/machinery/status_display/ai_core/examine(mob/user)
 	. = ..()
+	. += span_info("The internal AI camera is [GetComponent(/datum/component/internal_cam) ? "active" : "disabled"].")
 	if(!isobserver(user) || isnull(connected_ai))
 		return .
 	connected_ai.examine(user)
