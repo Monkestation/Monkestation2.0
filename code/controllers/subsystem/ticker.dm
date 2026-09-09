@@ -956,7 +956,7 @@ SUBSYSTEM_DEF(ticker)
 	end_state.count()
 	roundend_station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	file_data["additional data"]["station integrity"] = roundend_station_integrity
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_escapees, list("escapees", "total"))
@@ -1046,7 +1046,7 @@ SUBSYSTEM_DEF(ticker)
 		pos++
 	if(GLOB.news_network.wanted_issue.active)
 		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scanned_user]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 ///Handles random hardcore point rewarding if it applies.
 /datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
@@ -1739,7 +1739,7 @@ SUBSYSTEM_DEF(ticker)
 			)
 
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 /datum/controller/subsystem/ticker/proc/update_everything_flag_in_db()
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -1821,7 +1821,7 @@ SUBSYSTEM_DEF(ticker)
 			)
 
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 /datum/controller/subsystem/ticker/proc/cheevo_report()
 	var/list/parts = list()

@@ -140,7 +140,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		file_data["relic_hat"] = head ? head.type : null
 		file_data["relic_mask"] = wear_mask ? wear_mask.type : null
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 /mob/living/carbon/human/species/monkey/wide
 	name = " W i d e  A p e "

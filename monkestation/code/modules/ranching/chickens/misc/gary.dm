@@ -113,7 +113,7 @@
 		file_data["longestdeathstreak"] = longest_deathstreak
 	file_data["heldshines"] = held_shinies + file_data["heldshines"]
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 /mob/living/basic/chicken/gary/proc/sanitize_shinies()
 	var/list/uncleaned = held_shinies.Copy()

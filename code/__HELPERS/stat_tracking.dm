@@ -26,7 +26,7 @@
 			"count" = counts[key],
 		)
 
-	rustg_file_write(json_encode(output), "[GLOB.log_directory]/[filename]")
+	rustg_file_write(json_encode(output, JSON_PRETTY_PRINT), "[GLOB.log_directory]/[filename]")
 
 /proc/stat_tracking_export_to_csv_later(filename, costs, counts)
 	if (IsAdminAdvancedProcCall())
