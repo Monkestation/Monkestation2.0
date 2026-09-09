@@ -114,7 +114,7 @@
 			ignored_mobs = tipper
 		)
 
-		if(!do_after(tipper, tip_time, target = tipped_mob, extra_checks = CALLBACK(src, PROC_REF(should_continue_tipping))))
+		if(!do_after(tipper, tip_time, target = tipped_mob, extra_checks = CALLBACK(src, PROC_REF(should_continue_tipping), FALSE)))
 			if(!isnull(tipped_mob.client))
 				tipped_mob.log_message("was attempted to tip over by [key_name(tipper)]", LOG_VICTIM, log_globally = FALSE)
 				tipper.log_message("failed to tip over [key_name(tipped_mob)]", LOG_ATTACK)
@@ -122,9 +122,9 @@
 			return
 	do_tip(tipped_mob, tipper)
 
-// Checks if we should continue tipping during the do_after.
-/datum/component/tippable/proc/should_continue_tipping()
-	return !is_tipped
+// Checks if we should continue (un)tipping during the do_after.
+/datum/component/tippable/proc/should_continue_tipping(untipping_instead)
+	return untipping_instead ? is_tipped : !is_tipped
 
 /**
  * Actually tip over the mob, setting it to tipped.
@@ -173,15 +173,11 @@
 			ignored_mobs = untipper
 		)
 
-		if(!do_after(untipper, untip_time, target = tipped_mob, extra_checks = CALLBACK(src, PROC_REF(should_continue_untipping))))
+		if(!do_after(untipper, untip_time, target = tipped_mob, extra_checks = CALLBACK(src, PROC_REF(should_continue_tipping), TRUE)))
 			to_chat(untipper, span_warning("You fail to right [tipped_mob]."))
 			return
 
 	do_untip(tipped_mob, untipper)
-
-// Checks if we should continue untipping during the do_after.
-/datum/component/tippable/proc/should_continue_untipping()
-	return is_tipped
 
 /**
  * Actually untip over the mob, setting it to untipped.
