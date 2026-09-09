@@ -287,21 +287,20 @@
 /obj/item/clothing/suit/jacket/tailcoat //parent type
 	name = "tailcoat"
 	desc = "A coat usually worn by bunny themed waiters and the like."
-	worn_icon = 'icons/mob/clothing/suit.dmi'
-	icon = 'icons/obj/clothing/suits.dmi'
-	icon_state = "tailcoat"
-	greyscale_colors = "#39393f"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("tailcoat", "/obj/item/clothing/suit/jacket/tailcoat")
 	greyscale_config = /datum/greyscale_config/tailcoat
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_worn
+	greyscale_colors = "#39393f"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/jacket/tailcoat/bartender
 	name = "bartender's tailcoat"
 	desc = "A coat usually worn by bunny themed bartenders. It has an interior holster for firearms and some extra padding for minor protection."
-	icon_state = "tailcoat_bar"
-	greyscale_colors = "#39393f#ffffff"
+	SETUP_MAP_ICONS("tailcoat_bar", "/obj/item/clothing/suit/jacket/tailcoat/bartender")
 	greyscale_config = /datum/greyscale_config/tailcoat_bar
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_bar_worn
+	greyscale_colors = "#39393f#ffffff"
 	armor_type = /datum/armor/tailcoat_bar
 
 /datum/armor/tailcoat_bar
@@ -325,12 +324,13 @@
 /obj/item/clothing/suit/jacket/tailcoat/syndicate
 	name = "suspicious tailcoat"
 	desc = "A oddly intimidating coat usually worn by bunny themed assassins. It's reinforced with some extremely flexible lightweight alloy. How much did they pay for this?"
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "tailcoat_syndi"
 	armor_type = /datum/armor/tailcoat_syndi
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-
 
 /datum/armor/tailcoat_syndi
 	melee = 30
@@ -366,16 +366,30 @@
 /obj/item/clothing/suit/jacket/tailcoat/centcom
 	name = "Centcom tailcoat"
 	desc = "An official coat usually worn by bunny themed executives. The inside is lined with comfortable yet tasteful bunny fluff."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "tailcoat_centcom"
 	armor_type = /datum/armor/armor_centcom_formal
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+/obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep
+	name = "Centcom tailcoat"
+	desc = "An official coat usually worn by bunny themed executives. The inside is lined with comfortable yet tasteful bunny fluff. Now for Representatives"
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "tailcoat_centcom"
+	armor_type = /datum/armor/nanotrasen_representative_bathrobe
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/british
 	name = "british flag tailcoat"
 	desc = "A tailcoat emblazoned with the Union Jack. Perfect attire for teatime."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "tailcoat_brit"
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -385,6 +399,8 @@
 /obj/item/clothing/suit/jacket/tailcoat/communist
 	name = "really red tailcoat"
 	desc = "A red tailcoat emblazoned with a golden star. The official uniform of the Bunny Waiter Union."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "tailcoat_communist"
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -393,6 +409,8 @@
 /obj/item/clothing/suit/jacket/tailcoat/usa
 	name = "stars tailcoat"
 	desc = "A vintage coat worn by the 5th bunny battalion during the Revolutionary War. Smooth-bore musket not included."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "tailcoat_stars"
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -401,6 +419,8 @@
 /obj/item/clothing/suit/jacket/tailcoat/plasmaman
 	name = "purple tailcoat"
 	desc = "A purple coat that looks to be the same purple used in several plasmaman evirosuits."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "tailcoat_plasma"
 	greyscale_config = null
 	greyscale_config_worn = null

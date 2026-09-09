@@ -10217,11 +10217,11 @@
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningdock)
 "dec" = (
-/obj/structure/weightmachine,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "deg" = (
@@ -19503,9 +19503,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/ce)
 "fIP" = (
-/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/effect/turf_decal/bot,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness/recreation/entertainment)
 "fIQ" = (
@@ -34275,10 +34275,10 @@
 /turf/open/floor/wood/large,
 /area/station/hallway/secondary/exit/departure_lounge)
 "jHc" = (
-/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/assistant,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness/recreation/entertainment)
 "jHd" = (

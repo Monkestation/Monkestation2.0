@@ -36,9 +36,8 @@
 /obj/item/clothing/head/helmet/cin_surplus_helmet
 	name = "\improper GZ-03 combat helmet"
 	desc = "An outdated service helmet previously used by CIN military forces. The design dates back to the years leading up to CIN - SolFed border war, and was in service until the advent of VOSKHOD powered armor becoming standard issue."
-	icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
-	icon_state = "helmet_plain"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("helmet_plain", "/obj/item/clothing/head/helmet/cin_surplus_helmet")
 	greyscale_config = /datum/greyscale_config/cin_surplus_helmet/object
 	greyscale_config_worn = /datum/greyscale_config/cin_surplus_helmet
 	greyscale_colors = CIN_WINTER_COLORS
@@ -85,15 +84,19 @@
 	return .
 
 /obj/item/clothing/head/helmet/cin_surplus_helmet/desert
+	SETUP_MAP_ICONS("helmet_plain", "/obj/item/clothing/head/helmet/cin_surplus_helmet/desert")
 	greyscale_colors = CIN_MOUNTAIN_DESERT_COLORS
 
 /obj/item/clothing/head/helmet/cin_surplus_helmet/forest
+	SETUP_MAP_ICONS("helmet_plain", "/obj/item/clothing/head/helmet/cin_surplus_helmet/forest")
 	greyscale_colors = CIN_FOREST_COLORS
 
 /obj/item/clothing/head/helmet/cin_surplus_helmet/marine
+	SETUP_MAP_ICONS("helmet_plain", "/obj/item/clothing/head/helmet/cin_surplus_helmet/marine")
 	greyscale_colors = CIN_MARINE_COLORS
 
 /obj/item/clothing/head/helmet/cin_surplus_helmet/random_color
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	/// The different colors this helmet can choose from when initializing
 	var/static/list/possible_spawning_colors = list(
 		CIN_WINTER_COLORS,
@@ -105,31 +108,33 @@
 
 /obj/item/clothing/head/helmet/cin_surplus_helmet/random_color/Initialize(mapload)
 	greyscale_colors = pick(possible_spawning_colors)
-
-	. = ..()
+	return ..()
 
 // Undersuits
 
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus
 	name = "\improper CIN combat uniform"
 	desc = "A CIN designed combat uniform that can come in any number of camouflauge variations. Despite this particular design being developed in the years leading up to the CIN-SolFed border war, the uniform is still in use by many member states to this day."
-	icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
-	icon_state = "undersuit_greyscale"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("undersuit_greyscale", "/obj/item/clothing/under/syndicate/rus_army/cin_surplus")
 	greyscale_config = /datum/greyscale_config/cin_surplus_undersuit/object
 	greyscale_config_worn = /datum/greyscale_config/cin_surplus_undersuit
 	greyscale_colors = "#bbbbc9#bbbbc9#34343a"
 
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus/desert
+	SETUP_MAP_ICONS("undersuit_greyscale", "/obj/item/clothing/under/syndicate/rus_army/cin_surplus/desert")
 	greyscale_colors = "#aa6d4c#aa6d4c#34343a"
 
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus/forest
+	SETUP_MAP_ICONS("undersuit_greyscale", "/obj/item/clothing/under/syndicate/rus_army/cin_surplus/forest")
 	greyscale_colors = "#6D6D51#6D6D51#34343a"
 
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus/marine
+	SETUP_MAP_ICONS("undersuit_greyscale", "/obj/item/clothing/under/syndicate/rus_army/cin_surplus/marine")
 	greyscale_colors = "#51517b#51517b#34343a"
 
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus/random_color
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	/// What colors the jumpsuit can spawn with (only does the arms and legs of it)
 	var/static/list/possible_limb_colors = list(
 		CIN_WINTER_COLORS,
@@ -141,7 +146,7 @@
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus/random_color/Initialize(mapload)
 	greyscale_colors = "[pick(possible_limb_colors)][pick(possible_limb_colors)][CIN_EVIL_COLORS]"
 
-	. = ..()
+	return ..()
 
 // Vests
 
@@ -189,24 +194,27 @@
 
 /obj/item/storage/belt/military/cin_surplus
 	desc = "A tactical webbing often used by the CIN's military forces."
-	icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
-	icon_state = "chestrig"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("chestrig", "/obj/item/storage/belt/military/cin_surplus")
 	worn_icon_state = "chestrig"
 	greyscale_config = /datum/greyscale_config/cin_surplus_chestrig/object
 	greyscale_config_worn = /datum/greyscale_config/cin_surplus_chestrig
 	greyscale_colors = CIN_WINTER_COLORS_COMPLIMENT
 
 /obj/item/storage/belt/military/cin_surplus/desert
+	SETUP_MAP_ICONS("chestrig", "/obj/item/storage/belt/military/cin_surplus/desert")
 	greyscale_colors = CIN_MOUNTAIN_DESERT_COLORS_COMPLIMENT
 
 /obj/item/storage/belt/military/cin_surplus/forest
+	SETUP_MAP_ICONS("chestrig", "/obj/item/storage/belt/military/cin_surplus/forest")
 	greyscale_colors = CIN_FOREST_COLORS_COMPLIMENT
 
 /obj/item/storage/belt/military/cin_surplus/marine
+	SETUP_MAP_ICONS("chestrig", "/obj/item/storage/belt/military/cin_surplus/marine")
 	greyscale_colors = CIN_MARINE_COLORS_COMPLIMENT
 
 /obj/item/storage/belt/military/cin_surplus/random_color
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	/// The different colors this can choose from when initializing
 	var/static/list/possible_spawning_colors = list(
 		CIN_WINTER_COLORS_COMPLIMENT,
@@ -218,31 +226,34 @@
 
 /obj/item/storage/belt/military/cin_surplus/random_color/Initialize(mapload)
 	greyscale_colors = pick(possible_spawning_colors)
-
-	. = ..()
+	return ..()
 
 // Backpack
 
 /obj/item/storage/backpack/industrial/cin_surplus
 	name = "\improper CIN military backpack"
 	desc = "A rugged backpack often used by the CIN's military forces."
-	icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
-	icon_state = "backpack"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("backpack", "/obj/item/storage/backpack/industrial/cin_surplus")
+	worn_icon_state = "backpack"
 	greyscale_config = /datum/greyscale_config/cin_surplus_backpack/object
 	greyscale_config_worn = /datum/greyscale_config/cin_surplus_backpack
 	greyscale_colors = CIN_WINTER_COLORS_COMPLIMENT
 
 /obj/item/storage/backpack/industrial/cin_surplus/desert
+	SETUP_MAP_ICONS("backpack", "/obj/item/storage/backpack/industrial/cin_surplus/desert")
 	greyscale_colors = CIN_MOUNTAIN_DESERT_COLORS_COMPLIMENT
 
 /obj/item/storage/backpack/industrial/cin_surplus/forest
+	SETUP_MAP_ICONS("backpack", "/obj/item/storage/backpack/industrial/cin_surplus/forest")
 	greyscale_colors = CIN_FOREST_COLORS_COMPLIMENT
 
 /obj/item/storage/backpack/industrial/cin_surplus/marine
+	SETUP_MAP_ICONS("backpack", "/obj/item/storage/backpack/industrial/cin_surplus/marine")
 	greyscale_colors = CIN_MARINE_COLORS_COMPLIMENT
 
 /obj/item/storage/backpack/industrial/cin_surplus/random_color
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	/// The different colors this can choose from when initializing
 	var/static/list/possible_spawning_colors = list(
 		CIN_WINTER_COLORS_COMPLIMENT,
@@ -254,8 +265,7 @@
 
 /obj/item/storage/backpack/industrial/cin_surplus/random_color/Initialize(mapload)
 	greyscale_colors = pick(possible_spawning_colors)
-
-	. = ..()
+	return ..()
 
 #undef CIN_WINTER_COLORS
 #undef CIN_MOUNTAIN_DESERT_COLORS

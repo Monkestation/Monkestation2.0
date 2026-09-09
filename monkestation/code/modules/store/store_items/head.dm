@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 
 /datum/store_item/head/pflatcap //BUYABLE
 	name = "Poly Flat Cap"
-	item_path = /obj/item/clothing/head/colourable_flatcap
+	item_path = /obj/item/clothing/head/flatcap/recolor
 	item_cost = 2500
 
 /datum/store_item/head/mothcap //BUYABLE

@@ -1,5 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - bugfix: "AIs ejecting from exosuits without a valid core nearby will no longer get sent to container hell."
-  - bugfix: "AIs opening PDA bombs will disrupt their APC again."

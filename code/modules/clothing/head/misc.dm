@@ -1,7 +1,8 @@
 /obj/item/clothing/head/polycowboyhat
 	name = "Poly Cowboy Hat"
 	desc = "A Cowboy hat, made out of a special polychromatic material allowing it to be colored"
-	icon_state = "cowboyhat_poly"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("cowboyhat_poly", "/obj/item/clothing/head/polycowboyhat")
 	worn_icon_state = "wcowboyhat_poly"
 	greyscale_config = /datum/greyscale_config/polycowhat
 	greyscale_config_worn = /datum/greyscale_config/polycowhat_worn
