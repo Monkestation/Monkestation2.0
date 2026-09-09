@@ -21,11 +21,11 @@
 	var/base_pixel_x = 0
 	/// The Y offset of the sprite.
 	var/base_pixel_y = 0
-	/// The X offset of any worn hats. If not null, allows hat to be worn.
+	/// The X and Y offsets of any worn hats. If not null, allows hat to be worn.
 	var/list/hat_offset = null
-	/// The X offset of any worn badges. If not null, allows badges to be worn.
+	/// The X and Y offsets of any worn badges. If not null, allows badges to be worn.
 	var/list/badge_offset = null
-	/// The offsets of any buckled individuals.
+	/// The X and Y offsets of any buckled individuals.
 	var/list/ride_offset = list(
 		"north" = list(0, 4),
 		"south" = list(0, 4),
