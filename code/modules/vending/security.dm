@@ -38,7 +38,7 @@
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 5,
 		/obj/item/watertank/pepperspray = 2,
-		/obj/item/storage/belt/holster/energy = 4,
+		/obj/item/storage/belt/holster = 4,
 		/obj/item/holosign_creator/security = 2,
 		/obj/item/modular_computer/laptop/preset/security = 3,
 		/obj/item/storage/box/pinpointer_pairs = 2,

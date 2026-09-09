@@ -1060,12 +1060,14 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT // Missing textures for a lot of things when worn in the suit storage slot
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
+
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/storage/belt
