@@ -60,3 +60,6 @@
 
 /datum/job/cyborg/get_radio_information()
 	return "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>"
+
+/datum/job/cyborg/get_lobby_icon()
+	return icon('icons/mob/huds/hud.dmi', "hudcyborg")
