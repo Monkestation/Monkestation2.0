@@ -334,6 +334,7 @@
 	name = "\improper Immovable Rod of Asclepius"
 	desc = "A wooden rod about the size of you with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon_state = "goodrod"
+	/// Stores if we currently have a snake on us
 	var/has_snek = TRUE
 
 /obj/effect/immovablerod/of_asclepius/penetrate(mob/living/smeared_mob)
