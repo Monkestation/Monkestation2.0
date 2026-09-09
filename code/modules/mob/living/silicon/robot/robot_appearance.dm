@@ -30,10 +30,16 @@
 		else
 			. += "[skin.icon_state_cover]-opencover -c"
 	if(worn_hat && !isnull(skin.hat_offset))
-		var/mutable_appearance/head_overlay = worn_hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		head_overlay.pixel_z += skin.hat_offset
-		. += head_overlay
+		var/mutable_appearance/hat_overlay = worn_hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		var/list/offset = skin.hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+		if(offset)
+			hat_overlay.pixel_w = offset[1]
+			hat_overlay.pixel_z = offset[2]
+		. += hat_overlay
 	if(worn_badge && !isnull(skin.badge_offset))
-		var/mutable_appearance/accessory_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
-		accessory_overlay.pixel_z += skin.badge_offset
-		. += accessory_overlay
+		var/mutable_appearance/badge_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
+		var/list/offset = skin.badge_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+		if(offset)
+			badge_overlay.pixel_w = offset[1]
+			badge_overlay.pixel_z = offset[2]
+		. += badge_overlay

@@ -7,5 +7,15 @@
 	icon_state_light = "kilt"
 	icon_state_transform = "kilt_transform"
 	transformation_duration = 5.4 SECONDS
-	hat_offset = -2
-	badge_offset = -2
+	hat_offset = list(
+		"north" = list(0, -4),
+		"east" = list(0, -4),
+		"south" = list(0, -4),
+		"west" = list(0, -4),
+	)
+	badge_offset = list(
+		"north" = list(0, -4),
+		"east" = list(0, -4),
+		"south" = list(0, -4),
+		"west" = list(0, -4),
+	)

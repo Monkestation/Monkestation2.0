@@ -5,8 +5,18 @@
 	name = "Science"
 	icon_state = "science"
 	icon_state_light = "science"
-	hat_offset = 3
-	badge_offset = 3
+	hat_offset = list(
+		"north" = list(0, 3),
+		"east" = list(2, 3),
+		"south" = list(0, 3),
+		"west" = list(2, 3),
+	)
+	badge_offset = list(
+		"north" = list(0, 3),
+		"east" = list(0, 3),
+		"south" = list(0, 3),
+		"west" = list(0, 3),
+	)
 
 /datum/robot_skin/science/eyebot
 	name = "Eyebot"
