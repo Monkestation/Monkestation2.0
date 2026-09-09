@@ -19,10 +19,13 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/rainbow_flower
-	seed = /obj/item/seeds/rainbow_bunch
 	name = "rainbow flower"
 	desc = "A beautiful flower capable of being used for most dyeing processes."
-	icon_state = "map_flower"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_flower", "/obj/item/food/grown/rainbow_flower")
+	greyscale_config = /datum/greyscale_config/flower_simple
+	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
+	greyscale_colors = COLOR_BLACK //only here for unit testing. overriden in initialize()
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 0
@@ -32,9 +35,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("pompfs")
 	attack_verb_simple = list("pompf")
-	greyscale_colors = "#000000" //only here for unit testing. overriden in initialize()
-	greyscale_config = /datum/greyscale_config/flower_simple
-	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
+	seed = /obj/item/seeds/rainbow_bunch
 
 /obj/item/food/grown/rainbow_flower/Initialize(mapload)
 	. = ..()

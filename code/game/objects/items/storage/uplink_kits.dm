@@ -77,7 +77,7 @@
 			new /obj/item/healthanalyzer/rad_laser(src) // 3 tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/soap/syndie(src) // 1 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/jammer(src) // 5 tc
 
@@ -104,7 +104,7 @@
 
 		if(KIT_MURDER)
 			new /obj/item/melee/energy/sword/saber(src) // 8 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
@@ -126,7 +126,7 @@
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 
 		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
@@ -156,7 +156,7 @@
 		if(KIT_SNIPER) //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/rifle/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src) // 5 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/clothing/gloves/latex/nitrile(src) // ~ 1 tc for outfit
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
@@ -552,26 +552,34 @@
 /obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
 	new /obj/item/implanter/radio/syndicate(src)
 
+/obj/item/storage/box/syndie_kit/plasmaman
+	name = "boxed badass plasmaman outfit"
+	desc = "A sleek, sturdy box used to hold a \"tactical\" plasmaman outfit."
+	illustration = "syndiesuit"
+
+/obj/item/storage/box/syndie_kit/plasmaman/PopulateContents()
+	new /obj/item/clothing/under/plasmaman/syndicate(src)
+	new /obj/item/clothing/head/helmet/space/plasmaman/syndie(src)
+	new /obj/item/clothing/gloves/combat(src)
+
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
-	desc = "A sleek, sturdy box used to hold an emergency spacesuit."
+	desc = "A sleek, sturdy box used to hold an emergency spacesuit and a jetpack harness."
 	illustration = "syndiesuit"
 
 /obj/item/storage/box/syndie_kit/space/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
+	atom_storage.set_holdable(list(
+		/obj/item/clothing/suit/space/syndicate,
+		/obj/item/clothing/head/helmet/space/syndicate,
+		/obj/item/tank/jetpack/harness,
+	))
 
-//MONKESTATION EDIT START: return to the classic red suit
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	// var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets) //leaving this here for now
-	// new spess_suit(src) // Above allows me to get the helmet from a variable on the object
-	// var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
-	// new spess_helmet(src) // 4 TC for the space gear
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
-	new /obj/item/tank/jetpack/oxygen(src)
-//MONKESTATION EDIT STOP
+	new /obj/item/tank/jetpack/harness(src)
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
@@ -988,7 +996,7 @@
 			/obj/item/gun/syringe/syndicate,
 			/obj/item/storage/backpack/duffelbag/syndie/x4,
 			/obj/item/clothing/shoes/chameleon/noslip,
-			/obj/item/clothing/glasses/thermal/syndi,
+			/obj/item/clothing/glasses/thermal/chameleon,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
 			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,
@@ -1038,7 +1046,7 @@
 			/obj/item/gun/syringe/syndicate,
 			/obj/item/storage/backpack/duffelbag/syndie/x4,
 			/obj/item/clothing/shoes/chameleon/noslip,
-			/obj/item/clothing/glasses/thermal/syndi,
+			/obj/item/clothing/glasses/thermal/chameleon,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
 			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,

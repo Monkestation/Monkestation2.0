@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Tippable things no longer appears to be upright while tipped / upside down while upright if two people (un)tip them at the same time."
