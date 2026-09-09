@@ -44,7 +44,7 @@
 
 	to_chat(non_controller, "[user_message] [user_message_body]")
 
-	personality_body.balloon_alert(personality_body, "You feel something in the back of your mind... ")
+	personality_body.balloon_alert(personality_body, "you feel something in the back of your mind... ")
 	to_chat(personality_body, "[fluff_text] [user_message_body]")
 
 	log_directed_talk(non_controller, personality_body, to_send, LOG_SAY, "[name]")
