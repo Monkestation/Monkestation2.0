@@ -327,9 +327,9 @@
 
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
-		if(!istype(robot_parent.skin) || isnull(robot_parent.skin.ride_offset))
+		if(isnull(robot_parent.skin.ride_offset))
 			continue
-		var/list/offset = robot_parent.skin.ride_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+		var/list/offset = robot_parent.skin.ride_offset[dir2text(dir)]
 		if(offset)
 			rider.pixel_x = offset[1]
 			rider.pixel_y = offset[2]
