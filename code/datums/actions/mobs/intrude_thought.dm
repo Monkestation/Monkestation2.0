@@ -8,7 +8,7 @@
 	overlay_icon_state = "bg_spell_border"
 
 	/// Fluff text shown when a message is sent to the pair
-	var/fluff_text = span_boldnotice("You hear an echoing voice in the back of your head...")
+	var/fluff_text = span_boldnotice("A thought pops up in the back of your mind... ")
 
 /datum/action/intrude_thought/New(Target)
 	. = ..()
@@ -31,7 +31,7 @@
 	var/mob/living/split_personality/non_controller = usr
 	var/client/non_controller_client = non_controller.client
 
-	var/to_send = tgui_input_text(non_controller, "What would you like to say?", "Commune")
+	var/to_send = tgui_input_text(non_controller, "What would you like to convey?", "Commune")
 	if(QDELETED(src) || QDELETED(trauma) || !to_send)
 		return FALSE
 
@@ -44,7 +44,7 @@
 
 	to_chat(non_controller, "[user_message] [user_message_body]")
 
-	personality_body.balloon_alert(personality_body, "you hear a voice... ")
+	personality_body.balloon_alert(personality_body, "You feel something in the back of your mind... ")
 	to_chat(personality_body, "[fluff_text] [user_message_body]")
 
 	log_directed_talk(non_controller, personality_body, to_send, LOG_SAY, "[name]")

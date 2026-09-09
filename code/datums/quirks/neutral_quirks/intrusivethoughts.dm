@@ -1,7 +1,7 @@
 /datum/quirk/intrusivethoughts
 	name = "Intrusive Thoughts"
 	desc = "You suffer from impulsive and intrusive thoughts."
-	icon = FA_ICON_USER_FRIENDS
+	icon = FA_ICON_PERSON_CIRCLE_PLUS
 	value = 0
 	/// Weakref to the trauma we give out
 	var/datum/weakref/added_trama_ref
