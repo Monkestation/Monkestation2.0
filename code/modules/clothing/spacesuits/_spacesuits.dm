@@ -318,9 +318,9 @@
 	user.apply_status_effect(/datum/status_effect/freon)
 	if(!ishuman(user))
 		return FIRELOSS
-	//var/mob/living/carbon/human/humanafterall = user
-	//var/datum/disease/advance/cold/pun = new //in the show, arnold survives his stunt, but catches a cold because of it
-	//humanafterall.ForceContractDisease(pun, FALSE, TRUE) //this'll show up on health analyzers and the like
+	var/mob/living/carbon/human/humanafterall = user
+	//in the show, arnold survives his stunt, but catches a cold because of it
+	humanafterall.infect_disease_predefined(DISEASE_COLD, TRUE, "Infected by suicide via space helmet") //this'll show up on health analyzers and the like
 	return FIRELOSS
 
 #undef THERMAL_REGULATOR_COST

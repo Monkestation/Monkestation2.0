@@ -15,7 +15,7 @@
 		final_timer = null
 	return ..()
 
-/datum/symptom/heart_failure/activate(mob/living/carbon/affected_mob, datum/disease/acute/disease)
+/datum/symptom/heart_failure/activate(mob/living/carbon/affected_mob, datum/disease/disease)
 	. = ..()
 	if(ismouse(affected_mob))
 		affected_mob.death()
@@ -61,7 +61,7 @@
 			return FALSE
 	multiplier_tweak(0.1)
 
-/datum/symptom/heart_failure/deactivate(mob/living/carbon/affected_mob, datum/disease/acute/disease, safe = FALSE)
+/datum/symptom/heart_failure/deactivate(mob/living/carbon/affected_mob, datum/disease/disease, safe = FALSE)
 	. = ..()
 	if(final_timer)
 		deltimer(final_timer)

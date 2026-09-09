@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/adrenal_crisis
+/datum/disease/premade/adrenal_crisis
 	name = "Adrenal Crisis"
 	origin = "Trauma"
 	category = DISEASE_TRAUMA

@@ -14,7 +14,7 @@
 	COOLDOWN_DECLARE(last_coma)
 	var/cooldown_alert = FALSE // To give some mechanical signal that it's back online
 
-/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/disease)
 	. = ..()
 	if (!COOLDOWN_FINISHED(src, last_coma))
 		cooldown_alert = FALSE

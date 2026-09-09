@@ -39,8 +39,8 @@
 					antigens_that_matter += antibody
 					continue
 				if (length(L.diseases))
-					for (var/datum/disease/acute/D as anything in L.diseases)
-						D.Refresh_Acute()
+					for (var/datum/disease/D as anything in L.diseases)
+						D.Refresh()
 						var/ID = "[D.uniqueID]-[D.subID]"
 						if(ID in GLOB.virusDB)
 							if (antibody in D.antigen)
@@ -79,7 +79,7 @@
 			i++
 
 	if (length(L.diseases))
-		for (var/datum/disease/acute/D as anything in L.diseases)
+		for (var/datum/disease/D as anything in L.diseases)
 			var/ID = "[D.uniqueID]-[D.subID]"
 			scan.DrawBox("#FF0000",6,6+D.strength*3,display_width-5,6+D.strength*3)
 			if(ID in GLOB.virusDB)
@@ -112,7 +112,7 @@
 	info += "</table>"
 
 	if (length(L.diseases))
-		for (var/datum/disease/acute/D as anything in L.diseases)
+		for (var/datum/disease/D as anything in L.diseases)
 			var/ID = "[D.uniqueID]-[D.subID]"
 			if(ID in GLOB.virusDB)
 				var/datum/data/record/V = GLOB.virusDB[ID]
@@ -139,7 +139,7 @@
 			span = "notice"
 		to_chat(user,"<span class='[span]'>Scanning \the [I]...sterility level = [I.sterility]%</span>")
 		if (isvirusdish(I))
-			var/obj/item/weapon/virusdish/dish = I
+			var/obj/item/virus_dish/dish = I
 			if (dish.open && dish.contained_virus)
 				to_chat(user,span_danger("However, since its lid has been opened, unprotected contact with the dish can result in infection."))
 

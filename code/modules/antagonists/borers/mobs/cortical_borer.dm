@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 		return FALSE
 	if(human_host?.reagents?.has_reagent(/datum/reagent/consumable/sugar))
 		if(is_willing_host(human_host))
-			human_host.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE)
+			//human_host.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE)
 		return TRUE
 	return FALSE
 

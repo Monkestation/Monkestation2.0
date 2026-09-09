@@ -3,7 +3,7 @@
 		return list()
 
 	var/list/viable = list()
-	for(var/datum/disease/acute/disease as anything in diseases)
+	for(var/datum/disease/disease as anything in diseases)
 		if(!(disease.spread_flags & required))
 			continue
 		viable += disease
@@ -13,34 +13,66 @@
 	if(!length(list))
 		return list()
 	var/list/L = list()
-	for(var/datum/disease/acute/D as anything in list)
+	for(var/datum/disease/D as anything in list)
 		L += D.Copy()
 	return L
 
-/datum/disease/proc/makerandom(list/str = list(), list/rob = list(), list/anti = list(), list/bad = list(), atom/source = null)
+/**
+ * Randomizes existing disease
+ *
+ * Arguments:
+ * * min_strength - minimum strength that can roll, defaults to 1 if not set
+ * * max_strength - maximum strength that can roll, defaults to 100 if not set
+ * * min_robustness - minimum robustness that can roll, defaults to 1 if not set
+ * * max_robustness - maximum robustness that can roll, defaults to 100 if not set
+ * * max_symptoms - maximum amount of symptoms we can get, if not set will be randomized
+ * * antigen - list of antigen that can roll for the disease, if not set will be randomized
+ * * symptom_danger - list of possible badness of the disease, if not set will be randomized
+ * * possible_forms - list of possible forms disease can be, if not set will default to DISEASE_VIRUS
+ * * source - source of the disease
+ */
+/datum/disease/proc/randomize_disease(
+		min_strength,
+		max_strength,
+		min_robustness,
+		max_robustness,
+		max_symptoms,
+		list/antigen = list(),
+		list/symptom_danger = list(),
+		list/possible_forms = list(),
+		atom/source = null
+		)
+
 	//ID
-	uniqueID = rand(0,9999)
-	subID = rand(0,9999)
+	uniqueID = rand(0, 9999)
+	subID = rand(0, 9999)
 
-	//base stats
-	strength = rand(str[1],str[2])
-	robustness = rand(rob[1],rob[2])
-	roll_antigen(anti)
+	// Base stats
+	strength = rand((min_strength ? min_strength : 1), (max_strength ? max_strength : 100))
+	robustness = rand((min_robustness ? min_robustness : 1), (max_robustness ? max_robustness : 100))
+	roll_antigen(antigen)
 
-	//effects
-	for(var/i = 1; i <= max_stages; i++)
-		var/selected_badness = pick(
-			bad[EFFECT_DANGER_HELPFUL];EFFECT_DANGER_HELPFUL,
-			bad[EFFECT_DANGER_FLAVOR];EFFECT_DANGER_FLAVOR,
-			bad[EFFECT_DANGER_ANNOYING];EFFECT_DANGER_ANNOYING,
-			bad[EFFECT_DANGER_HINDRANCE];EFFECT_DANGER_HINDRANCE,
-			bad[EFFECT_DANGER_HARMFUL];EFFECT_DANGER_HARMFUL,
-			bad[EFFECT_DANGER_DEADLY];EFFECT_DANGER_DEADLY,
-			)
-		var/datum/symptom/e = new_effect(text2num(selected_badness), i)
-		symptoms += e
-		SEND_SIGNAL(e, COMSIG_SYMPTOM_ATTACH, src)
-		log += "<br />[ROUND_TIME()] Added effect [e.name] ([e.chance]% Occurence)."
+	if(length(possible_forms))
+		set_form(pick(possible_forms))
+
+	if(!max_symptoms)
+		max_symptoms = rand(1, VIRUS_SYMPTOM_LIMIT)
+	else if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
+		max_symptoms = VIRUS_SYMPTOM_LIMIT
+
+	// Effects
+	for(var/new_symptom in 1 to max_symptoms)
+		var/selected_danger
+		if(!length(symptom_danger))
+			add_symptom(stage = rand(1, max_stages))
+			continue
+		else
+			selected_danger = pick(symptom_danger)
+
+		if(!selected_danger)
+			continue
+
+		add_symptom(danger = selected_danger, stage = rand(1, max_stages))
 
 	//slightly randomized infection chance
 	var/variance = initial(infectionchance)/10
@@ -48,29 +80,54 @@
 	infectionchance_base = infectionchance
 
 	//cosmetic petri dish stuff - if set beforehand, will not be randomized
-	if (!color)
+	if(!color)
 		var/list/randomhexes = list("8","9","a","b","c","d","e")
 		color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
 		pattern = rand(1,6)
 		pattern_color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
 
 	//spreading vectors - if set beforehand, will not be randomized
-	if (!spread_flags)
+	if(!spread_flags)
 		randomize_spread()
 
 	//logging
 	log += "<br />[ROUND_TIME()] Created and Randomized<br>"
 
 	//admin panel
-	if (origin == "Unknown")
-		if (isvirusdish(source))
-			if (isturf(source.loc))
-				var/turf/T = source.loc
-				if (istype(T.loc,/area/centcom))
-					origin = "Centcom"
-				else if (istype(T.loc,/area/station/medical/virology))
-					origin = "Pathology"
+	if(origin == "Unknown" && isvirusdish(source) && isturf(source.loc))
+		var/turf/source_turf = source.loc
+		if(istype(source_turf.loc, /area/centcom))
+			origin = "Centcom"
+		else if(istype(source_turf.loc, /area/station/medical/virology))
+			origin = "Pathology"
+
 	update_global_log()
+
+/**
+ * Adds symptom to the disease
+ * If symptom is not set, will randomize the symptom instead
+ *
+ * Arguments:
+ * * symtom - symptom we are adding to the disease, if not set will be randomized
+ * * danger - if symptom randomized, will add symptom of this danger level; if not set, will randomize danger level
+ * * stage - if symptom randomized, will pick the symptom to this stage; 1 if not set
+ * * log_symptom - if set, will log time, name and occurance chance in disease log
+ */
+/datum/disease/proc/add_symptom(datum/symptom/symptom, danger, stage, log_symptom = FALSE)
+	if(istype(symptom, /datum/symptom))
+		stack_trace("Attempted to pass non-symptom datum onto add_symptom()! [symptom]")
+		return
+	var/datum/symptom/added_symptom
+	if(!symptom)
+		var/symptom_danger = danger ? danger : pick(GLOB.symptom_danger_levels)
+		added_symptom = new_effect(text2num(symptom_danger), stage ? stage : 1)
+	else
+		added_symptom = symptom
+	symptoms += added_symptom
+	SEND_SIGNAL(added_symptom, COMSIG_SYMPTOM_ATTACH, src)
+	if(!log_symptom)
+		return
+	log += "<br />[ROUND_TIME()] Added effect [added_symptom.name] ([added_symptom.chance]% Occurence)."
 
 /datum/disease/proc/AddToGoggleView(mob/living/infectedMob)
 	if (spread_flags & DISEASE_SPREAD_CONTACT_SKIN)

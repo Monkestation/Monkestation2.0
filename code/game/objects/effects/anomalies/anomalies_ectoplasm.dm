@@ -80,7 +80,7 @@
 
 			if(ishuman(impacted_thing))
 				var/mob/living/carbon/human/mob_to_infect = impacted_thing
-				//mob_to_infect.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE) // TODO Replace with advanced custom disease
+				mob_to_infect.apply_status_effect(/datum/status_effect/revenant_blight)
 				new /obj/effect/temp_visual/revenant(get_turf(mob_to_infect))
 				to_chat(mob_to_infect, span_revenminor("A cacophony of ghostly wailing floods your ears for a moment. The noise subsides, but a distant whispering continues echoing inside of your head..."))
 

@@ -64,4 +64,4 @@ DEFINE_BITFIELD(spread_flags, list(
 #define DISEASE_HOLOSIGN_BLOCK 3
 
 /// Any non predefined disease subtype.
-#define WILD_ACUTE_DISEASES (subtypesof(/datum/disease/acute) - typesof(/datum/disease/acute/premade))
+#define WILD_ACUTE_DISEASES (subtypesof(/datum/disease) - typesof(/datum/disease/premade))

@@ -152,23 +152,17 @@
 		return
 
 	//We're running just under the "worst disease", since we don't want these to be too strong
-	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 2,
 		ANTIGEN_COMMON	= 2,
-		ANTIGEN_RARE	= 0,
-		ANTIGEN_ALIEN	= 0,
 	)
 	var/list/bad = list(
 		EFFECT_DANGER_HELPFUL	= 1,
 		EFFECT_DANGER_FLAVOR	= 2,
 		EFFECT_DANGER_ANNOYING	= 2,
-		EFFECT_DANGER_HINDRANCE	= 0,
-		EFFECT_DANGER_HARMFUL	= 0,
-		EFFECT_DANGER_DEADLY	= 0,
 	)
-	var/datum/disease/acute/disease = new virus_choice
-	disease.makerandom(list(20,50),list(30,50),anti,bad,src)
+	var/datum/disease/disease = new()
+	disease.randomize_disease(20, 50, 30, 50, null, anti, bad, GLOB.disease_variations, src)
 
 	var/note = "Rot Infection Contact [key_name(react_to)]"
 	react_to.try_contact_infect(disease, note = note)

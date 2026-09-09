@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 
 	viruses = virus
 
-	for(var/datum/disease/acute/D as anything in viruses)
+	for(var/datum/disease/D as anything in viruses)
 		id_list += "[D.uniqueID]-[D.subID]"
 
 	if(!core)
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	. = FALSE
 	if(!islist(viruses))
 		viruses = list(viruses)
-	for(var/datum/disease/acute/virus as anything in viruses)
+	for(var/datum/disease/virus as anything in viruses)
 		var/id = "[virus.uniqueID]-[virus.subID]"
 		if(id in id_list)
 			continue
@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 		return
 
 	var/strength = 0
-	for (var/datum/disease/acute/V as anything in viruses)
+	for (var/datum/disease/V as anything in viruses)
 		strength += V.infectionchance
 	strength = round(strength / length(viruses))
 	var/list/possible_turfs = list()

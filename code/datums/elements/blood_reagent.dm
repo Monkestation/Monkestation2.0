@@ -86,7 +86,7 @@
 	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA))
 		return
 
-	for(var/datum/disease/acute/strain as anything in source.data["viruses"])
+	for(var/datum/disease/strain as anything in source.data["viruses"])
 		if ((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 			continue
 
@@ -193,9 +193,6 @@
 			else
 				to_preserve += disease
 
-		var/datum/disease/advance/disease = Advance_Mix(mix_target)
-		if (disease)
-			to_preserve += disease
 		source.data["viruses"] = to_preserve
 	else if (mix_viruses)
 		source.data["viruses"] = mix_viruses.Copy()

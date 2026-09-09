@@ -127,7 +127,7 @@
 	for(var/datum/disease/bite_infection as anything in user.diseases)
 		if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 			continue // ignore diseases that have special spread logic, or are not contagious
-		victim.ForceContractDisease(bite_infection)
+		victim.infect_disease(bite_infection)
 
 	return TRUE
 

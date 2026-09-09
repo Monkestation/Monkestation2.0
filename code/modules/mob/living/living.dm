@@ -112,7 +112,7 @@
 		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
-			for(var/datum/disease/acute/V as anything in contact)
+			for(var/datum/disease/V as anything in contact)
 				living.infect_disease(V, notes="(Skin Contact - (Bump), coming from [src])")
 
 	if(isliving(M))
@@ -121,7 +121,7 @@
 		if(length(living.diseases))
 			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 			if(length(contact) && !block)
-				for(var/datum/disease/acute/V as anything in contact)
+				for(var/datum/disease/V as anything in contact)
 					infect_disease(V, notes="(Skin Contact - (Bump), coming from [living])")
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
@@ -428,7 +428,7 @@
 				var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
 				var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 				if(length(contact) && !block)
-					for(var/datum/disease/acute/V as anything in contact)
+					for(var/datum/disease/V as anything in contact)
 						living.infect_disease(V, notes="(Skin Contact - (Grab), coming from [src])")
 
 			if(isliving(M))
@@ -437,7 +437,7 @@
 				if(length(living.diseases))
 					var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 					if(length(contact) && !block)
-						for(var/datum/disease/acute/V as anything in contact)
+						for(var/datum/disease/V as anything in contact)
 							infect_disease(V, notes="(Skin Contact - (Grab), coming from [living])")
 
 			if(iscarbon(L))

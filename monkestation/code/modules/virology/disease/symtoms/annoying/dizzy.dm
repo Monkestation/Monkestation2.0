@@ -19,12 +19,12 @@
 	max_multiplier = 3
 
 
-/datum/symptom/dizzy/Start(datum/disease/acute/A)
+/datum/symptom/dizzy/Start(datum/disease/A)
 	. = ..()
 	if(!.)
 		return
 
-/datum/symptom/dizzy/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/dizzy/activate(mob/living/carbon/mob, datum/disease/disease)
 	switch(round(multiplier))
 		if(1)
 			if(prob(base_message_chance) && !suppress_warning)

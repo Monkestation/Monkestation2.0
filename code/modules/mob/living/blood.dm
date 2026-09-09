@@ -231,7 +231,7 @@
 		return TRUE
 
 	if(blood_data["viruses"])
-		for(var/datum/disease/acute/blood_disease as anything in blood_data["viruses"])
+		for(var/datum/disease/blood_disease as anything in blood_data["viruses"])
 			if((blood_disease.spread_flags & (DISEASE_SPREAD_SPECIAL|DISEASE_SPREAD_NON_CONTAGIOUS)))
 				continue
 			target.infect_disease(blood_disease, TRUE, "(Transfer of infected blood)")

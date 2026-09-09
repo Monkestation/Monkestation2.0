@@ -14,7 +14,7 @@
 	circuit = /obj/item/circuitboard/computer/diseasesplicer
 	var/datum/symptom/memorybank = null
 	var/analysed = FALSE // If the buffered effect came from a dish that had been analyzed this is TRUE
-	var/obj/item/weapon/virusdish/dish = null
+	var/obj/item/virus_dish/dish = null
 	var/burning = 0 // Time in process ticks until disk burning is over
 
 	var/splicing = 0 // Time in process ticks until splicing is over

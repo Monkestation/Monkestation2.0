@@ -23,7 +23,7 @@
 	if(!(HAS_TRAIT(mob, TRAIT_TOXINLOVER) || HAS_TRAIT(mob, TRAIT_TOXIMMUNE)))
 		mob.adjustToxLoss(-heal_amt)
 
-/datum/symptom/immortal/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
+/datum/symptom/immortal/deactivate(mob/living/carbon/mob, datum/disease/disease, safe = FALSE)
 	if(safe) // don't kill people if they get ahealed!!
 		return
 	if(ishuman(mob))

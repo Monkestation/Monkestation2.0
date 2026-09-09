@@ -9,7 +9,7 @@
 	var/passive_message = span_notice("You feel tingling on your skin as light passes over it.")
 	COOLDOWN_DECLARE(heal_msg_cooldown)
 
-/datum/symptom/darkness/activate(mob/living/mob, datum/disease/acute/disease)
+/datum/symptom/darkness/activate(mob/living/mob, datum/disease/disease)
 	. = ..()
 	switch(round(multiplier))
 		if(4, 5, 6, 7, 8)

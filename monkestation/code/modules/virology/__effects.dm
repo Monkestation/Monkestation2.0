@@ -7,7 +7,7 @@
 	mouse_opacity = 1
 	layer = OBJ_LAYER
 	var/last_openner
-	var/datum/disease/acute/contained_virus
+	var/datum/disease/contained_virus
 
 /obj/effect/decal/cleanable/virusdish/Entered(mob/living/perp)
 	..()

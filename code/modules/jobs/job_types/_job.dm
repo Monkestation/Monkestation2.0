@@ -189,7 +189,6 @@
 	if(/datum/quirk/item_quirk/immunodeficiency::name in player_client.prefs?.all_quirks)
 		return
 	if(prob(25))
-		var/virus_choice = pick(WILD_ACUTE_DISEASES)
 		var/static/list/anti = list(
 			ANTIGEN_BLOOD = 2,
 			ANTIGEN_COMMON = 2,
@@ -204,14 +203,14 @@
 			EFFECT_DANGER_HARMFUL = 2,
 			EFFECT_DANGER_DEADLY = 2,
 		)
-		var/datum/disease/acute/disease = new virus_choice
-		disease.makerandom(list(50,90), list(10,100), anti, bad, src)
+		var/datum/disease/disease = new()
+		disease.randomize_disease(50, 90, 10, 100, null, anti, bad, GLOB.disease_variations, src)
 
 		disease.disease_flags |= DISEASE_DORMANT
 		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)
 
 		spawned.infect_disease(disease, TRUE, "Random Dormant Disease [key_name(src)]")
-		disease.Refresh_Acute()
+		disease.Refresh()
 
 /// Announce that this job as joined the round to all crew members.
 /// Note the joining mob has no client at this point.
