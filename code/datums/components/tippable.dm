@@ -123,8 +123,8 @@
 	do_tip(tipped_mob, tipper)
 
 // Checks if we should continue (un)tipping during the do_after.
-/datum/component/tippable/proc/should_continue_tipping(untipping_instead)
-	return untipping_instead ? is_tipped : !is_tipped
+/datum/component/tippable/proc/should_continue_tipping(untipping = FALSE)
+	return untipping ? is_tipped : !is_tipped
 
 /**
  * Actually tip over the mob, setting it to tipped.
