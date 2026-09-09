@@ -356,6 +356,11 @@
 	name = "Drill Hair (Extended)"
 	icon_state = "hair_drillhairextended"
 
+/datum/sprite_accessory/hair/einstein
+	icon = 'goon/icons/mob/sprite_accessories/human_hair.dmi'
+	name = "Einstein"
+	icon_state = "hair_einstein"
+
 /datum/sprite_accessory/hair/emo
 	name = "Emo"
 	icon_state = "hair_emo"

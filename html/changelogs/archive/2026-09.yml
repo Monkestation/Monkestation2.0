@@ -45,3 +45,56 @@
       were booted from it.
   osaka-fuuri:
   - rscadd: X-ray users can now scan guns to see chambered ammo
+2026-09-04:
+  osaka-fuuri:
+  - bugfix: Wrapping papers & package wrappers now can be stacked by hand.
+  - code_imp: Stackable items now use the new item_interaction() instead of the old
+      attackby().
+2026-09-05:
+  Gboster-0:
+  - rscadd: Borers now use adjectives for their names instead of bad preset ones
+  - balance: You can no longer tell if a borer is a hivequeen or its generation from
+      looking/speaking to it
+  KuiperPilgrim:
+  - rscadd: added the "Einstein" hairstyle
+  hexakats:
+  - spellcheck: Bandolier description says it hold .357 bullets
+  - spellcheck: Large chemical canisters don't say they can't fit in standard hyposprays
+      anymore
+  - spellcheck: CMO Hypospray doesn't say it fits larger canisters anymore, also says
+      that it's faster than standard hyposprays
+  - balance: Haloperidol purges itself from your bloodstream (at 1u/tick) once you're
+      in stamina crit.
+  - balance: Haloperidol's applied drowsiness status effect caps out at 30 seconds.
+  notghosti:
+  - rscadd: AI Dashboard Program; Nightvision Camera Upgrade
+  - rscadd: AI Dashboard Program; Supply Shuttle Navigation Optimization
+  - rscadd: AI Dashboard Program; Expanded Camera Network
+  - bugfix: Malfunctioning AI Camera Upgrade now properly provides night vision
+  - admin: Spawn AI no longer asks if you want to move it into a new core
+2026-09-08:
+  Runian:
+  - bugfix: Experimental Cloner Corruption is no longer a valid event for False Alarm.
+  Tractor-Maam:
+  - bugfix: AIs can now read program notifications from their PDA in the chat box.
+2026-09-09:
+  JupiterJaeden:
+  - spellcheck: Removes references to birth from tomas and monster hunter rabbits.
+  Tractor-Maam:
+  - qol: Bags of Holding can be slap crafted now.
+  hexakats:
+  - balance: the chameleon holster no longer fits on suit storage (this was done because
+      a lot of forms looked borked or have missing icons for suit storage, also it
+      already said that on the description before)
+  - refactor: moved more chameleon items from attackby to multitool_act for chameleon
+      locking
+  - code_imp: moved more chameleon items to chameleon.dm
+  - rscadd: Adds the auto shotgun case to the traitor uplink
+  - rscadd: Replaces the special ammo boxes with auto shotgun magazines that come
+      with said ammo types
+  - rscdel: Removes the renoster shotgun case from the traitor uplink
+  - balance: Trickshot shells now deal a total of 42 damage per shell when all pellets
+      hit
+  - balance: Uranium penetrator shells now have high armor penetration (75%)
+  notghosti:
+  - map: Boulder refinery room to boxstation
