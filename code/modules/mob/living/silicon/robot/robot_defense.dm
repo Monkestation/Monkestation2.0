@@ -30,12 +30,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		else
 			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			cell = attacking_item
-			if(cell.charge)
-				low_power_mode = FALSE
-			to_chat(user, span_notice("You insert the power cell."))
-		update_icons()
-		diag_hud_set_borgcell()
+			set_cell(attacking_item)
+			to_chat(user, span_notice("You insert \the [attacking_item]."))
 		return
 
 	if(is_wire_tool(attacking_item))
@@ -215,11 +211,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!wiresexposed && !issilicon(user))
 		if(!cell)
 			return
-		cell.update_appearance()
-		cell.add_fingerprint(user)
-		user.put_in_active_hand(cell)
-		to_chat(user, span_notice("You remove \the [cell]."))
-		diag_hud_set_borgcell()
+		var/obj/item/stock_parts/power_store/cell/removed_cell = cell
+		user.put_in_active_hand(removed_cell) // Cell becomes null here.
+		removed_cell.add_fingerprint(user)
+		removed_cell.update_appearance()
+		to_chat(user, span_notice("You remove \the [removed_cell]."))
 
 /mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
 	. = ..()

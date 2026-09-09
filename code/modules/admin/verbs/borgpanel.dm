@@ -111,7 +111,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 				if (borg.cell)
 					QDEL_NULL(borg.cell)
 				var/new_cell = new chosen(borg)
-				borg.cell = new_cell
+				borg.set_cell(new_cell)
 				borg.cell.charge = borg.cell.maxcharge
 				borg.diag_hud_set_borgcell()
 				message_admins("[key_name_admin(user)] changed the cell of [ADMIN_LOOKUPFLW(borg)] to [new_cell].")
