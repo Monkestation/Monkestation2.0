@@ -519,6 +519,7 @@
 		qdel(src)
 		return
 	deletion_queued = PROJECTILE_IMPACT_DELETE
+	return TRUE
 
 /*
  * Main projectile hit loop code

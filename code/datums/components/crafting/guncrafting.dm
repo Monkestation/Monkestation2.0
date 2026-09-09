@@ -71,3 +71,8 @@
 /obj/item/weaponcrafting/gunkit/hellgun
 	name = "hellfire laser gun degradation kit (warcrime lethal)"
 	desc = "Take a perfectly functioning laser gun. Butcher the inside of the gun so it runs hot and mean. You now have a hellfire laser. You monster."
+
+/obj/item/weaponcrafting/gunkit/photon
+	name = "photon cannon parts kit (nonlethal)"
+	desc = "A suitcase containing the necessary gun parts to construct a photon cannon around a stabilized flux anomaly. Harness the power of the sun, in the palms of your hands."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)

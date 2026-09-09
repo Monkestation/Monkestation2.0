@@ -111,10 +111,10 @@
 	unit_name = "hand drill"
 	export_types = list(/obj/item/screwdriver/power)
 
-/datum/export/rld_mini
+/datum/export/rld
 	cost = CARGO_CRATE_VALUE * 0.75
-	unit_name = "mini rapid lighting device"
-	export_types = list(/obj/item/construction/rld/mini)
+	unit_name = "rapid lighting device"
+	export_types = list(/obj/item/construction/rld)
 
 /datum/export/rsf
 	cost = CARGO_CRATE_VALUE * 0.5
