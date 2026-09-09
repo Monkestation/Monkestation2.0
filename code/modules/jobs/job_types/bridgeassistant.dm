@@ -60,14 +60,6 @@ Bridge Assistant
 	if(istype(bridgie))
 		bridgie.gain_trauma(/datum/brain_trauma/special/axedoration)
 
-/obj/item/modular_computer/pda/bridge_assistant
-	name = "bridge assistant PDA"
-	greyscale_colors = "#374f7e#a92323"
-	starting_programs = list(
-		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/status,
-	)
-
 /datum/outfit/job/bridge_assistant
 	name = "Bridge Assistant"
 	jobtype = /datum/job/bridge_assistant

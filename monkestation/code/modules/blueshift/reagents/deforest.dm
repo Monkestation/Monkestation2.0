@@ -255,7 +255,7 @@
 		return
 
 	our_guy.add_movespeed_modifier(/datum/movespeed_modifier/reagent/twitch)
-	our_guy.next_move_modifier -= 0.3 // For the duration of this you move and attack faster
+	our_guy.next_move_modifier *= 0.7 // For the duration of this you move and attack faster
 
 	our_guy.sound_environment_override = SOUND_ENVIRONMENT_DIZZY
 
@@ -285,7 +285,7 @@
 	. = ..()
 
 	our_guy.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/twitch)
-	our_guy.next_move_modifier += (overdosed ? 0.5 : 0.3)
+	our_guy.next_move_modifier /= (overdosed ? 0.49 : 0.7)
 
 	our_guy.sound_environment_override = NONE
 
@@ -384,7 +384,7 @@
 
 	//RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets)) //This is the code that enables dodging bullets, it's disabled due to bullet immunity being extremely overpowered.
 
-	our_guy.next_move_modifier -= 0.2 // Overdosing makes you a liiitle faster but you know has some really bad consequences
+	our_guy.next_move_modifier *= 0.7 // Overdosing makes you a liiitle faster but you know has some really bad consequences
 
 	if(!our_guy.hud_used)
 		return
