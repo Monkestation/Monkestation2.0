@@ -83,7 +83,7 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 75
+	var/crate_tc_value = 100
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
