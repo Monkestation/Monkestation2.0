@@ -23,10 +23,10 @@
 	icon_state = "kerfus_centcom"
 	icon_state_light = "kerfus_centcom"
 	hat_offset = list(
-		"north" = list(0, 3),
-		"east" = list(0, 3),
-		"south" = list(0, 3),
-		"west" = list(0, 3),
+		"north" = list(0, -3),
+		"east" = list(0, -3),
+		"south" = list(0, -3),
+		"west" = list(0, -3),
 	)
 	badge_offset = list(
 		"north" = list(0, -6),
