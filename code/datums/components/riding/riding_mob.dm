@@ -324,14 +324,14 @@
 
 /datum/component/riding/creature/cyborg/handle_vehicle_offsets(dir)
 	var/mob/living/silicon/robot/robot_parent = parent
-
+	if(isnull(robot_parent.skin.ride_offset))
+		return
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
-		if(dir2text(dir) in robot_parent.skin.ride_offset_x)
-			rider.pixel_x = robot_parent.skin.ride_offset_x[dir2text(dir)]
-		if(dir2text(dir) in robot_parent.skin.ride_offset_y)
-			rider.pixel_y = robot_parent.skin.ride_offset_y[dir2text(dir)]
-
+		var/list/offset = robot_parent.skin.ride_offset[dir2text(dir)]
+		if(offset)
+			rider.pixel_x = offset[1]
+			rider.pixel_y = offset[2]
 //now onto every other ridable mob//
 
 /datum/component/riding/creature/mulebot/handle_specials()
