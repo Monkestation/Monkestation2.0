@@ -832,6 +832,14 @@
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
+"Em" = (
+/obj/structure/closet/crate/engineering{
+	name = "Coolant Crate"
+	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/plating,
+/area/virtual_domain/powered_lighting)
 "EC" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -926,7 +934,7 @@
 /obj/item/stack/sheet/glass/fifty{
 	pixel_x = -6
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 1;
 	pixel_y = -7
 	},
@@ -2460,7 +2468,7 @@ yD
 yh
 yD
 yD
-yD
+Em
 yh
 yh
 yD
