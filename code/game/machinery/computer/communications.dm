@@ -108,6 +108,24 @@
 		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
 
+/// Are we NOT a silicon, NOT the captain, AND we're logged in as the HOS?
+/obj/machinery/computer/communications/proc/authenticated_as_hos(mob/user)
+	if (issilicon(user) || (ACCESS_CAPTAIN in authorize_access))
+		return FALSE
+	return ACCESS_HOS in authorize_access
+
+/// Are we NOT a silicon, NOT the captain, AND we're logged in as the CE?
+/obj/machinery/computer/communications/proc/authenticated_as_ce(mob/user)
+	if (issilicon(user) || (ACCESS_CAPTAIN in authorize_access))
+		return FALSE
+	return ACCESS_CE in authorize_access
+
+/// Are we NOT a silicon, NOT the captain, AND we're logged in as the CMO?
+/obj/machinery/computer/communications/proc/authenticated_as_cmo(mob/user)
+	if (issilicon(user) || (ACCESS_CAPTAIN in authorize_access))
+		return FALSE
+	return ACCESS_CMO in authorize_access
+
 ///Returns TRUE/FALSE whether we can print AI codes, which relies on being Non-silicon command, and the sat codes were untouched.
 /obj/machinery/computer/communications/proc/can_print_ai_codes(mob/user)
 	if(issilicon(user))
@@ -202,7 +220,7 @@
 			SSshuttle.requestEvac(user, reason)
 			post_status("shuttle")
 		if ("changeSecurityLevel")
-			if (!authenticated_as_silicon_or_captain(user))
+			if (!authenticated_as_silicon_or_captain(user) && !authenticated_as_hos(user) && !authenticated_as_ce(user) && !authenticated_as_cmo())
 				return
 			//monkestation edit start:
 			if(istype(get_area(src), /area/shuttle/syndicate/cruiser)) // monkestation edit: Prevents assault ops from modifying the alert level from their shuttle
@@ -210,7 +228,11 @@
 				return
 			//monkestation edit end
 
-			// Check if they have
+			var/datum/security_level/new_sec_level = SSsecurity_level.available_levels[params["newSecurityLevel"]]
+			if(!new_sec_level)
+				return
+
+			// Check if they have access
 			if (!HAS_SILICON_ACCESS(user))
 				var/obj/item/held_item = user.get_active_held_item()
 				var/obj/item/card/id/id_card = held_item?.GetID()
@@ -218,15 +240,13 @@
 					to_chat(user, span_warning("You need to swipe your ID!"))
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
-				if (!(ACCESS_CAPTAIN in id_card.access))
+				if (!(ACCESS_CAPTAIN in id_card.access) && !(new_sec_level.required_access in id_card.access))
 					to_chat(user, span_warning("You are not authorized to do this!"))
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
 			// monkestation start: prevent lowering alert level from delta
-			var/datum/security_level/new_sec_level = SSsecurity_level.available_levels[params["newSecurityLevel"]]
-			if(!new_sec_level)
-				return
+
 			var/datum/security_level/current_sec_level = SSsecurity_level.current_security_level
 			if(!current_sec_level.can_crew_change_alert)
 				to_chat(user, span_warning("Alert cannot be manually lowered from the current security level!"))
@@ -567,6 +587,23 @@
 	var/has_connection = has_communication()
 	data["hasConnection"] = has_connection
 
+	data["settableLevels"] = list()
+
+	if (authenticated_as_silicon_or_captain(user))
+		for(var/level_name in SSsecurity_level.available_levels)
+			var/datum/security_level/level = SSsecurity_level.available_levels[level_name]
+			if(!level.can_set_via_comms_console)
+				continue
+			data["settableLevels"] += level_name
+	else
+		if (authenticated_as_hos(user))
+			data["settableLevels"] += "green"
+			data["settableLevels"] += "blue"
+		if (authenticated_as_ce(user))
+			data["settableLevels"] += "yellow"
+		if (authenticated_as_cmo(user))
+			data["settableLevels"] += "amber"
+
 	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
 		data["canRequestSafeCode"] = TRUE
 		data["safeCodeDeliveryWait"] = 0
@@ -637,6 +674,10 @@
 						data["canSetAlertLevel"] = issilicon(user) ? "NO_SWIPE_NEEDED" : "SWIPE_NEEDED"
 				else if(syndicate)
 					data["canMakeAnnouncement"] = TRUE
+				else if (authenticated_as_hos(user) || authenticated_as_ce(user) || authenticated_as_cmo(user))
+					if(SSsecurity_level.current_security_level?.can_crew_change_alert)
+						data["canSetAlertLevel"] = "SWIPE_NEEDED"
+					data["alertLevelTick"] = alert_level_tick
 
 				if (SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL)
 					data["shuttleCalled"] = TRUE
@@ -703,13 +744,7 @@
 		"callShuttleReasonMinLength" = CALL_SHUTTLE_REASON_LENGTH,
 		"maxStatusLineLength" = MAX_STATUS_LINE_LENGTH,
 		"maxMessageLength" = MAX_MESSAGE_LEN,
-		"settableLevels" = list(),
 	)
-	for(var/level_name in SSsecurity_level.available_levels)
-		var/datum/security_level/level = SSsecurity_level.available_levels[level_name]
-		if(!level.can_set_via_comms_console)
-			continue
-		.["settableLevels"] += level_name
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if (href_list["reject_cross_comms_message"])
