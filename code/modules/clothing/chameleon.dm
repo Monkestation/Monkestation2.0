@@ -1060,7 +1060,6 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
-	slot_flags = ITEM_SLOT_BELT // Missing textures for a lot of things when worn in the suit storage slot
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
