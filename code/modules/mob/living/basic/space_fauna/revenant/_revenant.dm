@@ -73,6 +73,7 @@
 		/datum/action/cooldown/spell/aoe/revenant/malfunction,
 		/datum/action/cooldown/spell/aoe/revenant/overload,
 		/datum/action/cooldown/spell/list_target/telepathy/revenant,
+		/datum/action/cooldown/spell/revenant_reveal,
 	)
 
 	/// The resource, and health, of revenants.
