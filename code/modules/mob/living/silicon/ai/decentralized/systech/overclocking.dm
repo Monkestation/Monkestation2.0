@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/ai_overclocking
 	name = "overclocking workstation"
-	desc = "Used for overclocking neural processing units."
+	desc = "Used for overclocking ai cpu units."
 
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"

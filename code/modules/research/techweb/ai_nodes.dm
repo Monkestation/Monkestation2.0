@@ -2,7 +2,7 @@
 /datum/techweb_node/ai_cpu_advanced
 	id = "ai_cpu_advanced"
 	display_name = "Advanced Neural Processing"
-	description = "Using breakthroughs in high-efficiency fabrication it should be possible to drastically increase the speed of Neural Processing Units, at the cost of increased power consumption."
+	description = "Using breakthroughs in high-efficiency fabrication it should be possible to drastically increase the speed of AI CPU Units, at the cost of increased power consumption."
 	design_ids = list("advanced_ai_cpu")
 	prereq_ids = list("high_efficiency", "ai_basic")
 	research_costs = list(TECHWEB_POINT_TYPE_AI = TECHWEB_TIER_2_POINTS)
@@ -61,7 +61,7 @@
  */
 /datum/techweb_node/ai_cpu_2
 	id = "ai_cpu_2"
-	display_name = "Improved CPU Sockets"
+	display_name = "Improved AI CPU Sockets"
 	description = "Refinements in general data theory should allow the mounting of an extra CPU core in each AI server rack."
 	design_ids = list("ai_cpu_socket_2")
 	prereq_ids = list("ai_basic")
@@ -70,7 +70,7 @@
 
 /datum/techweb_node/ai_cpu_3
 	id = "ai_cpu_3"
-	display_name = "Advanced CPU Sockets"
+	display_name = "Advanced AI CPU Sockets"
 	description = "256 bit computing allows the introduction of another CPU core."
 	design_ids = list("ai_cpu_socket_3")
 	prereq_ids = list("ai_arch_256")
@@ -79,7 +79,7 @@
 
 /datum/techweb_node/ai_cpu_4
 	id = "ai_cpu_4"
-	display_name = "Bluespace CPU Sockets"
+	display_name = "Bluespace AI CPU Sockets"
 	description = "Instant teleportation of data across CPU caches allows the installation of a fourth CPU core."
 	design_ids = list("ai_cpu_socket_4")
 	prereq_ids = list("ai_arch_bluespace", "ai_cpu_3")
@@ -88,7 +88,7 @@
 
 /datum/techweb_node/ai_ram_2
 	id = "ai_ram_2"
-	display_name = "Improved Memory Bus"
+	display_name = "Improved AI Memory Bus"
 	description = "Refinements in general data theory should allow the addition of another memory stick in each AI server rack."
 	design_ids = list("ai_ram_socket_2")
 	prereq_ids = list("ai_basic")
@@ -97,7 +97,7 @@
 
 /datum/techweb_node/ai_ram_3
 	id = "ai_ram_3"
-	display_name = "Advanced Memory Bus"
+	display_name = "Advanced AI Memory Bus"
 	description = "256 bit computing allows the introduction of another memory module."
 	design_ids = list("ai_ram_socket_3")
 	prereq_ids = list("ai_arch_256")
@@ -106,7 +106,7 @@
 
 /datum/techweb_node/ai_ram_4
 	id = "ai_ram_4"
-	display_name = "Bluespace Memory Bus"
+	display_name = "Bluespace AI Memory Bus"
 	description = "Bluespace teleportation allows the removal of all bottlenecks. Allows for the introduction of a fourth memory module."
 	design_ids = list("ai_ram_socket_4")
 	prereq_ids = list("ai_ram_3", "ai_arch_bluespace")
