@@ -420,6 +420,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/effect/landmark/start/network_admin,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "agM" = (
@@ -27514,11 +27515,11 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance)
 "ihS" = (
-/obj/machinery/telecomms/server/presets/supply,
-/obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 8
 	},
+/obj/machinery/telecomms/server/presets/security,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "ihW" = (
@@ -41328,11 +41329,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "mbi" = (
-/obj/machinery/telecomms/server/presets/science,
-/obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/telecomms/server/presets/service,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "mbu" = (
@@ -41706,8 +41707,8 @@
 /turf/open/floor/carpet,
 /area/station/security/checkpoint/escape)
 "mgc" = (
-/obj/machinery/telecomms/server/presets/service,
-/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/telecomms/server/presets/science,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "mgd" = (
@@ -48873,6 +48874,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"oml" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/turf/open/floor/engine,
+/area/station/science/server)
 "omo" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -52650,8 +52655,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "psI" = (
-/obj/machinery/telecomms/server/presets/security,
-/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/telecomms/bus/preset_four,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "psV" = (
@@ -54800,11 +54804,11 @@
 	},
 /area/station/maintenance/department/medical)
 "qaj" = (
-/obj/machinery/telecomms/server/presets/command,
-/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/telecomms/server/presets/supply,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "qal" = (
@@ -57312,16 +57316,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "qII" = (
-/obj/machinery/telecomms/server/presets/common,
-/obj/effect/turf_decal/tile/dark_green/fourcorners,
-/obj/effect/turf_decal/tile/dark_green/fourcorners,
-/obj/effect/turf_decal/siding/dark_green/end,
-/obj/effect/turf_decal/siding/dark_green{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/telecomms/server/presets/command,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "qIL" = (
@@ -60868,8 +60867,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "rIv" = (
-/obj/machinery/telecomms/server/presets/engineering,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/effect/turf_decal/siding/dark_green/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_green{
+	dir = 8
+	},
+/obj/machinery/telecomms/server/presets/common,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "rIF" = (
@@ -60895,6 +60901,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rIQ" = (
@@ -61002,7 +61011,9 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rJI" = (
@@ -61375,13 +61386,6 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
-"rPr" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "rPB" = (
 /obj/structure/grandfatherclock,
 /obj/structure/disposalpipe/segment{
@@ -68349,9 +68353,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/engine,
 /area/station/science/server)
 "tPo" = (
@@ -69103,8 +69105,8 @@
 /turf/closed/wall,
 /area/station/smithing)
 "tZQ" = (
-/obj/machinery/telecomms/bus/preset_four,
 /obj/effect/turf_decal/tile/gray/full,
+/obj/machinery/telecomms/bus/preset_two,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "tZR" = (
@@ -82302,7 +82304,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "xPT" = (
-/obj/machinery/telecomms/bus/preset_two,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/telecomms/server/presets/engineering,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "xQa" = (
@@ -106627,7 +106630,7 @@ oAh
 vdw
 xLC
 tPl
-jrK
+oml
 fqx
 gBx
 cOR
@@ -107397,7 +107400,7 @@ bLq
 kIN
 agN
 bGY
-jCR
+eAB
 eHC
 eHC
 eHC
@@ -107911,7 +107914,7 @@ hxo
 kIN
 ueB
 bGY
-rPr
+eAB
 ruT
 fWH
 gxR
@@ -115613,10 +115616,10 @@ jgm
 lXw
 jGA
 jGA
+mgc
 aFa
-aFa
-xPT
-ghg
+obf
+eVY
 jGA
 uOG
 sDt
@@ -115869,9 +115872,9 @@ gTP
 jgm
 nhC
 jGA
+gMy
 aFa
-mgc
-psI
+aFa
 aFa
 iZG
 jGA
@@ -116385,7 +116388,7 @@ lXw
 jGA
 ree
 huz
-aVk
+ghg
 aFa
 qaj
 xNK
@@ -117925,9 +117928,9 @@ mZj
 jgm
 nhC
 jGA
+xPT
 aFa
-gMy
-rIv
+aFa
 aFa
 iZG
 xNK
@@ -118183,10 +118186,10 @@ jgm
 lXw
 jGA
 jGA
+rIv
 aFa
-aFa
-obf
-eVY
+psI
+aVk
 xNK
 xUs
 tWQ

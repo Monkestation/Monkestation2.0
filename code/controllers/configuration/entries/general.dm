@@ -795,3 +795,6 @@
 
 /datum/config_entry/string/twitch_key
 	default = "changethisplease"
+
+/datum/config_entry/flag/generate_assets_in_init
+	default = FALSE

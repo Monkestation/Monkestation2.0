@@ -47,13 +47,13 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
-	#ifdef REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
-	#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 	//Should we save found refs. Used for unit testing
 	var/should_save_refs = FALSE
-	#endif
-	#endif
+#endif
+#endif
 
 	// monkestation start: disabling hard deletes
 #if !defined(UNIT_TESTS) && !defined(REFERENCE_TRACKING)
