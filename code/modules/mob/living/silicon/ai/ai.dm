@@ -151,13 +151,6 @@
 	/// Can we see engineering-based scan? (atmos, and power)
 	var/canEngineeringScan = FALSE
 
-	//Do we have access to camera tracking?
-	var/canCameraMemoryTrack = FALSE
-	//The person we are tracking
-	var/cameraMemoryTarget = null
-	//We only check every X ticks
-	var/cameraMemoryTickCount = 0
-
 	///Did we get the death prompt?
 	var/is_dying = FALSE
 
