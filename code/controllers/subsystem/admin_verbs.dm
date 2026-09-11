@@ -1,9 +1,9 @@
 GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 
 SUBSYSTEM_DEF(admin_verbs)
-	name = "Admin/Mentor Verbs" // MONKE EDIT
+	name = "Admin/Mentor Verbs"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_ADMIN_VERBS
+	init_stage = INITSTAGE_EARLY
 	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
 	/// A list of all admin verbs indexed by their visibility flag.
@@ -13,7 +13,6 @@ SUBSYSTEM_DEF(admin_verbs)
 	/// A list of all admins that are pending initialization of this SS.
 	var/list/admins_pending_subsytem_init = list()
 
-	//MONKE EDIT START All mentor related verb lists.
 	/// A list of all mentor verbs indexed by their type.
 	var/list/datum/mentor_verb/mentor_verbs_by_type = list()
 	/// A list of all mentor verbs indexed by their visibility flag.
@@ -22,7 +21,6 @@ SUBSYSTEM_DEF(admin_verbs)
 	var/list/mentor_visibility_flags = list()
 	/// A list of all mentor that are pending initialization of this SS.
 	var/list/mentors_pending_subsytem_init = list()
-	//MONKE EDIT END
 
 /datum/controller/subsystem/admin_verbs/Initialize()
 	setup_verb_list()
@@ -35,12 +33,8 @@ SUBSYSTEM_DEF(admin_verbs)
 	mentor_verbs_by_type = SSadmin_verbs.mentor_verbs_by_type // MONKE EDIT
 
 /datum/controller/subsystem/admin_verbs/stat_entry(msg)
-//MONKE EDIT START Having it report offline is confusing. So if it initialized it initialized.
-	. = ..()
-	if(initialized)
-		. = "Initialized | AV: [length(admin_verbs_by_type)] | MV: [length(mentor_verbs_by_type)]"
-	return .
-//MONKE EDIT END
+	msg = "AV:[length(admin_verbs_by_type)]|MV:[length(mentor_verbs_by_type)]"
+	return ..()
 
 /datum/controller/subsystem/admin_verbs/proc/process_pending_admins()
 	var/list/pending_admins = admins_pending_subsytem_init

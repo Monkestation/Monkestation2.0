@@ -72,7 +72,7 @@
 		cortical_owner.balloon_alert(cortical_owner, "need [stat_evo_points] stat points")
 		return FALSE
 
-	return . == FALSE ? FALSE : TRUE //. can be null, true, or false. There's a difference between null and false here
+	return TRUE
 
 /datum/asset/simple/borer_icons
 

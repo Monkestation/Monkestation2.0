@@ -75,28 +75,36 @@
  * Arguments:
  * * mixture: the gas mixture to be scrubbed
  */
-/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture)
+/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/environment)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
 		return
 
-	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
+	var/list/cached_moles = environment.moles
 
-	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
-	var/datum/gas_mixture/filtered = new
-	if(!filtering)
-		return
+	//contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
+	var/datum/gas_mixture/filtered_out = new
 
-	filtered.temperature = filtering.temperature
-	for(var/gas in filtering.gases & scrubbing)
-		filtered.add_gas(gas)
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
-	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
+	filtered_out.temperature = environment.temperature
 
-	air_contents.merge(filtered) // Store filtered out gasses.
-	mixture.merge(filtering) // Returned the cleaned gas.
-	if(!holding)
-		air_update_turf(FALSE, FALSE)
+	//maximum percentage of the turfs gas we can filter
+	var/removal_ratio =  min(1, volume_rate / environment.volume)
+
+	var/total_moles_to_remove = 0
+	for(var/gas_id in cached_moles & scrubbing)
+		total_moles_to_remove += cached_moles[gas_id]
+
+	if(!total_moles_to_remove)//no gases to remove
+		return FALSE
+
+	for(var/gas_id in cached_moles & scrubbing)
+		var/transferred_moles = max(QUANTIZE(cached_moles[gas_id] * removal_ratio * (cached_moles[gas_id] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, cached_moles[gas_id]))
+
+		filtered_out.moles[gas_id] += transferred_moles
+		cached_moles[gas_id] -= transferred_moles
+
+	environment.garbage_collect()
+	//Remix the resulting gases
+	air_contents.merge(filtered_out)
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	. = ..()
@@ -125,9 +133,13 @@
 	data["reactionSuppressionEnabled"] = !!suppress_reactions
 
 	data["filterTypes"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filterTypes"] += list(list("gasId" = gas[META_GAS_ID], "gasName" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
+	var/cached_gas_info = GLOB.meta_gas_info
+	for(var/path in cached_gas_info[META_GAS_ID])
+		data["filterTypes"] += list(list(
+			"gasId" = cached_gas_info[META_GAS_ID][path],
+			"gasName" = cached_gas_info[META_GAS_NAME][path],
+			"enabled" = (path in scrubbing)
+		))
 
 	if(holding)
 		data["holding"] = list()

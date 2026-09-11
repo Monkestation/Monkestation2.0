@@ -35,7 +35,8 @@
 /area/shuttle/auxiliary_base)
 "h" = (
 /obj/machinery/camera/directional/south{
-	network = list("auxbase")
+	network = list("auxbase");
+	c_tag = "Auxiliary Base"
 	},
 /obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating,

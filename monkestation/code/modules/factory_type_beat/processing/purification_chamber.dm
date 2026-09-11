@@ -81,8 +81,7 @@
 /obj/machinery/bouldertech/flatpack/purification_chamber/check_processing_resource()
 	var/oxygen_moles = 0
 	if(oxygen_input)
-		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
-		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
+		oxygen_moles = oxygen_input.air_contents.moles[/datum/gas/oxygen]
 		if(oxygen_moles >= REQUIRED_OXYGEN_MOLES)
 			return TRUE
 		if(prob(60))

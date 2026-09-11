@@ -303,3 +303,10 @@
 		user.put_in_hands(new /obj/item/bot_assembly/firebot)
 	else
 		..()
+
+/obj/item/extinguisher/anti
+	name = "fire extender"
+	desc = "A traditional red fire extinguisher. Made in Britain... wait, what?"
+	chem = /datum/reagent/fuel
+	tanktype = /obj/structure/reagent_dispensers/fueltank
+	cooling_power = 0

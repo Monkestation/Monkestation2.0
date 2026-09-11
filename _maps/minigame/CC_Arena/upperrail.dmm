@@ -1,5 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ae" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
 	},
@@ -104,15 +110,6 @@
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/glass/waterbottle/large/empty,
 /turf/open/floor/iron/smooth_large,
-/area/centcom/tdome/arena/actual)
-"hL" = (
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/iron/textured_large,
 /area/centcom/tdome/arena/actual)
 "ic" = (
 /obj/effect/decal/cleanable/dirt,
@@ -665,7 +662,7 @@ VD
 EP
 VF
 Fz
-hL
+Fz
 ae
 xD
 VD

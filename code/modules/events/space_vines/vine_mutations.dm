@@ -218,65 +218,53 @@
 	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 
-/datum/spacevine_mutation/oxy_eater
+/datum/spacevine_mutation/gas_eater
+	/// Type of gas consumed by this mutation
+	var/datum/gas/gas_type = null
+
+/datum/spacevine_mutation/gas_eater/process_mutation(obj/structure/spacevine/holder)
+	if(isnull(gas_type))
+		stack_trace("gas_type not set for gas_eater mutation [type]")
+		return
+
+	var/turf/open/floor/turf = holder.loc
+	if(!istype(turf))
+		return
+
+	var/datum/gas_mixture/gas_mix = turf.air
+	if(!gas_mix.moles[gas_type])
+		return
+
+	gas_mix.set_gas(gas_type, max(gas_mix.moles[gas_type] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0))
+	gas_mix.garbage_collect()
+
+/datum/spacevine_mutation/gas_eater/oxy_eater
 	name = "Oxygen consuming"
 	hue = "#28B5B5"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	gas_type = /datum/gas/oxygen
 
-/datum/spacevine_mutation/oxy_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/oxygen])
-			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/nitro_eater
+/datum/spacevine_mutation/gas_eater/nitro_eater
 	name = "Nitrogen consuming"
 	hue = "#FF7B54"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	gas_type = /datum/gas/nitrogen
 
-/datum/spacevine_mutation/nitro_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/nitrogen])
-			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/carbondioxide_eater
+/datum/spacevine_mutation/gas_eater/carbondioxide_eater
 	name = "CO2 consuming"
 	hue = "#798777"
 	severity = SEVERITY_MINOR
 	quality = POSITIVE
+	gas_type = /datum/gas/carbon_dioxide
 
-/datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
-			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/plasma_eater
+/datum/spacevine_mutation/gas_eater/plasma_eater
 	name = "Plasma consuming"
 	hue = "#9074b6"
 	severity = SEVERITY_AVERAGE
 	quality = POSITIVE
-
-/datum/spacevine_mutation/plasma_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/plasma])
-			return
-		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
+	gas_type = /datum/gas/plasma
 
 /datum/spacevine_mutation/thorns
 	name = "Thorny"

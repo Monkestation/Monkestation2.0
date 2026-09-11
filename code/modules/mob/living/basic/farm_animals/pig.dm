@@ -56,8 +56,10 @@
 /mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
 	can_buckle = TRUE
 	buckle_lying = 0
+	playsound(src, 'sound/creatures/pig1.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
 	visible_message(span_notice("[src] snorts respectfully."))
+	new /obj/effect/temp_visual/heart(loc)
 
 /datum/ai_controller/basic_controller/pig
 	blackboard = list(

@@ -669,16 +669,19 @@
 	. = ..()
 	if(worn_hat == gone)
 		worn_hat = null
-		if(!QDELETED(src)) //Don't update icons if we are deleted.
+		if(!QDELETED(src))
 			update_icons()
 
 	if(worn_badge == gone)
 		worn_badge = null
-		if(!QDELETED(src)) //Don't update icons if we are deleted.
+		if(!QDELETED(src))
 			update_icons()
 
 	if(gone == cell)
 		cell = null
+		low_power_mode = TRUE
+		if(!QDELETED(src))
+			update_icons()
 
 	if(gone == mmi)
 		mmi = null
@@ -998,7 +1001,7 @@
 	var/obj/item/robot_model/temporary_robot_model = new robot_model_typepath(null) // We just want one of its list.
 	var/list/reskin_icons = list()
 	for(var/datum/robot_skin/robot_skin as anything in temporary_robot_model.available_skins)
-		reskin_icons[robot_skin] = image(icon = robot_skin.icon, icon_state = robot_skin.icon_state)
+		reskin_icons[robot_skin] = image(icon = robot_skin::icon, icon_state = robot_skin::icon_state)
 	var/datum/robot_skin/picked_robot_skin = show_radial_menu(src, src, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), src), radius = 42, require_near = TRUE)
 	. = picked_robot_skin
 	qdel(temporary_robot_model)

@@ -107,6 +107,20 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
+/datum/status_effect/headache_soothed
+	id = "headache_soothed"
+	duration = 60 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/headache_soothed/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_SOOTHED_HEADACHE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/headache_soothed/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_SOOTHED_HEADACHE, TRAIT_STATUS_EFFECT(id))
+
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
@@ -624,6 +638,31 @@
 	desc = replacetext(desc, "TARGET_NAME", tagalong.shadowing.real_name)
 	..()
 	desc = initial(desc) //yogs end
+
+///Makes the mob glow blue and rarely emit nuclear particles
+/datum/status_effect/cherenkov_radiation
+	id = "cherenkov_radiation"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	alert_type = null
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/cherenkov_radiation/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/cherenkov_radiation/on_apply()
+	mob_light_obj = owner.mob_light(2, 4, "#33ddff")
+	return TRUE
+
+/datum/status_effect/cherenkov_radiation/tick(seconds_between_ticks)
+	if(SPT_PROB(1.5, seconds_between_ticks))
+		owner.fire_nuclear_particle()
+
+/datum/status_effect/cherenkov_radiation/on_remove()
+	if(!QDELETED(mob_light_obj))
+		QDEL_NULL(mob_light_obj)
 
 /datum/status_effect/gutted
 	id = "gutted"

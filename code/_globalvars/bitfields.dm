@@ -16,6 +16,29 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 		bitfields[bitfield.variable] = bitfield.flags
 	return bitfields
 
+/// Returns an associative list of bitflag name -> number for all valid bitflags in the passed in field
+/proc/get_valid_bitflags(var_name)
+	return GLOB.bitfields[var_name] || list()
+
+/proc/get_random_bitflag(var_name)
+	var/list/flags = get_valid_bitflags(var_name)
+	if(!length(flags))
+		return
+	var/name = pick(flags)
+	return flags[name]
+
+/// Returns null if no such field exists, a list of all matching flags by name otherwise
+/proc/get_matching_bitflags(var_name, value)
+	var/list/valid_bitflags = get_valid_bitflags(var_name)
+	if(!length(valid_bitflags))
+		return null
+
+	var/list/flags = list()
+	for (var/bit_name in valid_bitflags)
+		if (value & valid_bitflags[bit_name])
+			flags += bit_name
+	return flags
+
 DEFINE_BITFIELD(appearance_flags, list(
 	"KEEP_APART" = KEEP_APART,
 	"KEEP_TOGETHER" = KEEP_TOGETHER,
@@ -114,13 +137,16 @@ DEFINE_BITFIELD(flags_1, list(
 	"HAS_CONTEXTUAL_SCREENTIPS_1" = HAS_CONTEXTUAL_SCREENTIPS_1,
 	"HAS_DISASSOCIATED_STORAGE_1" = HAS_DISASSOCIATED_STORAGE_1,
 	"HOLOGRAM_1" = HOLOGRAM_1,
+	"HTML_USE_INITAL_ICON_1" = HTML_USE_INITAL_ICON_1,
 	"INITIALIZED_1" = INITIALIZED_1,
 	"IS_ONTOP_1" = IS_ONTOP_1,
 	"IS_PLAYER_COLORABLE_1" = IS_PLAYER_COLORABLE_1,
 	"IS_SPINNING_1" = IS_SPINNING_1,
-	"NODECONSTRUCT_1" = NODECONSTRUCT_1,
-	"NO_SCREENTIPS_1" = NO_SCREENTIPS_1,
+	"NO_NEW_GAGS_PREVIEW_1" = NO_NEW_GAGS_PREVIEW_1,
 	"ON_BORDER_1" = ON_BORDER_1,
+	"NO_NEW_GAGS_PREVIEW_1",
+	"NO_SCREENTIPS_1" = NO_SCREENTIPS_1,
+	"NODECONSTRUCT_1" = NODECONSTRUCT_1,
 	"PREVENT_CLICK_UNDER_1" = PREVENT_CLICK_UNDER_1,
 	"PREVENT_CONTENTS_EXPLOSION_1" = PREVENT_CONTENTS_EXPLOSION_1,
 	"SUPERMATTER_IGNORES_1" = SUPERMATTER_IGNORES_1,

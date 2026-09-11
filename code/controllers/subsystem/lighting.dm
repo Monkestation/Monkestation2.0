@@ -1,7 +1,10 @@
 SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
-	init_order = INIT_ORDER_LIGHTING
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/mapping,
+	)
 	flags = SS_TICKER
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
@@ -24,7 +27,6 @@ SUBSYSTEM_DEF(lighting)
 
 	return SS_INIT_SUCCESS
 
-
 /datum/controller/subsystem/lighting/proc/create_all_lighting_objects()
 	for(var/area/area as anything in GLOB.areas)
 		if(!area.static_lighting)
@@ -36,7 +38,6 @@ SUBSYSTEM_DEF(lighting)
 				new /datum/lighting_object(area_turf)
 			CHECK_TICK
 		CHECK_TICK
-
 
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)
@@ -121,7 +122,6 @@ SUBSYSTEM_DEF(lighting)
 			break
 	if(i)
 		queue.Cut(1, i + 1)
-
 
 /datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized

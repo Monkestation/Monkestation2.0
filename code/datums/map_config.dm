@@ -48,8 +48,12 @@
 	/// List of additional areas that count as a part of the library
 	var/library_areas = list()
 
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
+	/// If TRUE, only unit tests with UNIT_TEST_DEBUG_MAP_ONLY will run on this map
+	var/is_unit_test_map = FALSE
+#endif
 
 	/// List of station traits that cannot be rolled on this map.
 	var/list/banned_station_traits
@@ -222,6 +226,9 @@
 			stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
 			continue
 		LAZYADD(skipped_tests, path_real)
+
+	if("is_unit_test_map" in json)
+		is_unit_test_map = json["is_unit_test_map"]
 #endif
 
 	for(var/path_as_text in json["banned_station_traits"])

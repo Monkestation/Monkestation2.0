@@ -38,6 +38,15 @@
 /obj/effect/turf_decal/tile/dark_blue/full,
 /turf/open/floor/iron/textured_large,
 /area/centcom/tdome/arena/actual)
+"n" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
 "o" = (
 /obj/structure/chair/stool/directional/east,
 /obj/item/soap/nanotrasen,
@@ -113,12 +122,6 @@
 /obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/plastic,
-/area/centcom/tdome/arena/actual)
-"P" = (
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/iron/freezer,
 /area/centcom/tdome/arena/actual)
 "S" = (
 /obj/structure/chair/stool/directional/east,
@@ -236,8 +239,8 @@ a
 a
 q
 V
-P
 q
+n
 a
 a
 l

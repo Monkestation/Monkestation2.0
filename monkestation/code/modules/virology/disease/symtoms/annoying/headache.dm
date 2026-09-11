@@ -19,6 +19,9 @@
 	COOLDOWN_DECLARE(effect_cooldown)
 
 /datum/symptom/headache/activate(mob/living/carbon/mob)
+	if(HAS_TRAIT(mob, TRAIT_SOOTHED_HEADACHE))
+		return
+
 	if(round(multiplier) == 2 & prob(50))
 		if(prob(50) & COOLDOWN_FINISHED(src, effect_cooldown))
 			to_chat(mob, span_userdanger("[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]"))

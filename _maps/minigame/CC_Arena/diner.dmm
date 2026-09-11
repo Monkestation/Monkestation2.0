@@ -79,9 +79,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena/actual)
@@ -328,6 +325,15 @@
 /obj/item/storage/bag/tray,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/tdome/arena/actual)
+"HW" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
 "Ju" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
@@ -545,7 +551,7 @@ ih
 mi
 xl
 lt
-GL
+HW
 lO
 WK
 GL
