@@ -133,7 +133,7 @@
 /obj/item/clothing/suit/toggle/labcoat/cmo
 	alternative_screams = list()
 
-/obj/item/clothing/suit/toggle/labcoat/emt
+/obj/item/clothing/suit/toggle/labcoat/paramedic
 	alternative_screams = list()
 
 /obj/item/clothing/suit/toggle/labcoat/brig_phys

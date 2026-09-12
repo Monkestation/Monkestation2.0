@@ -330,6 +330,18 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer5
+	piping_layer = 5
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	SETUP_MAP_ICONS("thermo_1", "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on")
 	flags_1 = /obj/machinery/atmospherics/components/unary/thermomachine::flags_1 // we want this one to generate a preview

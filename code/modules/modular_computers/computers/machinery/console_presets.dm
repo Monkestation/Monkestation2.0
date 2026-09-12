@@ -149,3 +149,15 @@
 		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.find_file_by_name("ntnrc_client")
 		other_chatprograms.active_channel = chatprogram.active_channel
 		cargochat.add_client(other_chatprograms, silent = TRUE)
+
+/obj/machinery/modular_computer/preset/mining
+	name = "mining console"
+	desc = "A stationary computer. This one comes preloaded with programs to monitor the lavaland mining operation."
+	starting_programs = list(
+		/datum/computer_file/program/secureye/mining,
+	)
+
+/obj/machinery/modular_computer/preset/mining/Initialize(mapload)
+	. = ..()
+	var/datum/computer_file/program/secureye/mining/cams = locate() in cpu.stored_files
+	cpu.open_program(null, cams, FALSE)

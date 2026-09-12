@@ -238,3 +238,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
 	desc = "Home to a very special crowbar. Apply to wall to use."
 	icon_state = "mechremoval"
 	result_path = /obj/structure/fireaxecabinet/mechremoval/empty
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/fishing_rod, 32)
+
+/obj/structure/fireaxecabinet/fishing_rod
+	name = "fishing cabinet"
+	desc = "There is a small label that reads \"Fo* Em**gen*y u*e *nly\". All the other text is scratched out and replaced with various fish weights."
+	icon_state = "fishing"
+	item_overlay = "rod"
+	locked = FALSE
+	item_path = /obj/item/fishing_rod/telescopic
+
+/obj/structure/fireaxecabinet/fishing_rod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
