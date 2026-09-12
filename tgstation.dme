@@ -1887,6 +1887,7 @@
 #include "code\datums\quirks\positive_quirks\drunk_healing.dm"
 #include "code\datums\quirks\positive_quirks\dwarfism.dm"
 #include "code\datums\quirks\positive_quirks\empath.dm"
+#include "code\datums\quirks\positive_quirks\fat.dm"
 #include "code\datums\quirks\positive_quirks\fluffy_tongue.dm"
 #include "code\datums\quirks\positive_quirks\freerunning.dm"
 #include "code\datums\quirks\positive_quirks\friendly.dm"
