@@ -1,0 +1,4 @@
+author: "hexakats"
+delete-after: True
+changes:
+  - bugfix: "Removed autoshotgun ammo from the nukie uplink (they can't buy the gun for it)"
