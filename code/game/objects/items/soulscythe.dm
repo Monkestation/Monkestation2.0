@@ -161,6 +161,7 @@
 	if(isturf(loc))
 		return
 	INVOKE_ASYNC(src, PROC_REF(break_out))
+	return COMPONENT_RESIST_ATTEMPTED
 
 /obj/item/soulscythe/proc/break_out()
 	if(!use_blood(10))

@@ -358,6 +358,7 @@
 /datum/status_effect/tased/proc/try_remove_taser(datum/source)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(try_remove_taser_async), owner)
+	return COMPONENT_RESIST_ATTEMPTED
 
 /datum/status_effect/tased/proc/someome_removing_taser(datum/source, mob/living/helper)
 	SIGNAL_HANDLER

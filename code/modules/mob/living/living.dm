@@ -1105,34 +1105,46 @@
 /mob/living/proc/execute_resist()
 	if(!can_resist())
 		return
-	changeNext_move(CLICK_CD_RESIST)
 
-	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
+	var/reset_cooldown = FALSE //We only reset click cooldown if we actually resisted something
+
+	if (SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src) & COMPONENT_RESIST_ATTEMPTED)
+		reset_cooldown = TRUE
+
 	//resisting grabs (as if it helps anyone...)
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")
-		resist_grab()
-		return
+		if(resist_grab(FALSE)) //We only reset click cooldown on a failed resist attempt - not a successful one
+			reset_cooldown = TRUE
 
 	//unbuckling yourself
-	if(buckled && last_special <= world.time)
-		resist_buckle()
+	else if(buckled && last_special <= world.time)
+		resist_buckle() //This will handle click cooldown on its own if the user has to resist a bucklecuff.
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc != get_turf(src))
 		loc.container_resist_act(src)
+		reset_cooldown = TRUE
 
 	else if(mobility_flags & MOBILITY_MOVE)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
+			reset_cooldown = TRUE
 		else if(last_special <= world.time)
-			resist_restraints() //trying to remove cuffs.
+			resist_restraints() //trying to remove cuffs. This will handle click cooldown on its own if the user has to resist cuffs.
+
+	if(reset_cooldown)
+		changeNext_move(CLICK_CD_RESIST)
 
 /mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+	return TRUE //returning FALSE means we successfully broke free
 
+///Returns FALSE for successfully breaking free, TRUE otherwise.
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
+	if(moving_resist && !can_resist()) //Moving doesnt check for resist cooldown on its own, so we handle it here
+		return
+
 	// Base chance to escape a grab. Divided by effective grab state
 	var/escape_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
 	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
@@ -1158,8 +1170,8 @@
 			visible_message(span_danger("[src] struggles as they fail to break free of [pulledby]'s grip!"), \
 							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
-		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 4 SECONDS
+		if(moving_resist && client) //we resisted by trying to move - need to update the resist cooldown
+			changeNext_move(CLICK_CD_RESIST)
 	else
 		pulledby.stop_pulling()
 		return FALSE
