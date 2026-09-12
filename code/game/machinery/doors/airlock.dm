@@ -1995,6 +1995,45 @@
 	var/area/source_area = get_area(src)
 	return source_area?.airlock_wires ? new source_area.airlock_wires(src) : new /datum/wires/airlock(src)
 
+/obj/machinery/door/airlock/proc/on_finished_door()
+	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/independent_access) && is_station_level(z))
+		set_union_access()
+
+/obj/machinery/door/airlock/proc/set_union_access()
+	var/list/access_to_check = req_one_access + req_access
+	if((ACCESS_CARGO in access_to_check) || (ACCESS_SHIPPING in access_to_check))
+		LAZYREMOVE(req_one_access, list(ACCESS_CARGO, ACCESS_SHIPPING))
+		LAZYREMOVE(req_access, list(ACCESS_CARGO, ACCESS_SHIPPING))
+		LAZYADD(req_one_access, ACCESS_UNION)
+
+	if((ACCESS_MINING in access_to_check) || (ACCESS_MINING_STATION in access_to_check) || (ACCESS_BIT_DEN in access_to_check))
+		LAZYREMOVE(req_one_access, list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_BIT_DEN))
+		LAZYREMOVE(req_access, list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_BIT_DEN))
+		LAZYADD(req_one_access, ACCESS_UNION_MINER)
+
+	if(ACCESS_QM in access_to_check)
+		LAZYREMOVE(req_one_access, ACCESS_QM)
+		LAZYREMOVE(req_access, ACCESS_QM)
+		LAZYADD(req_one_access, ACCESS_UNION_LEADER)
+
+///This is the best we'll get.
+/obj/machinery/door/airlock/proc/unset_union_access()
+	var/list/access_to_check = req_one_access + req_access
+	if(ACCESS_UNION in access_to_check)
+		LAZYREMOVE(req_one_access, ACCESS_UNION)
+		LAZYREMOVE(req_access, ACCESS_UNION)
+		LAZYADD(req_one_access, ACCESS_CARGO)
+
+	if(ACCESS_UNION_MINER in access_to_check)
+		LAZYREMOVE(req_one_access, ACCESS_UNION_MINER)
+		LAZYREMOVE(req_access, ACCESS_UNION_MINER)
+		LAZYADD(req_one_access, ACCESS_MINING)
+
+	if(ACCESS_UNION_LEADER in access_to_check)
+		LAZYREMOVE(req_one_access, ACCESS_UNION_LEADER)
+		LAZYREMOVE(req_access, ACCESS_UNION_LEADER)
+		LAZYADD(req_one_access, ACCESS_QM)
+
 /obj/structure/fluff/airlock_filler/Destroy(force)
 	filled_airlock = null
 	return ..()

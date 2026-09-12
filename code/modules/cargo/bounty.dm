@@ -5,19 +5,10 @@
 	var/name
 	var/description
 	var/reward = 1000 // In credits.
-	var/claimed = FALSE
 	var/high_priority = FALSE
 
 /datum/bounty/proc/can_claim()
-	return !claimed
-
-/// Called when the claim button is clicked. Override to provide fancy rewards.
-/datum/bounty/proc/claim()
-	if(can_claim())
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			D.adjust_money(reward * SSeconomy.bounty_modifier)
-		claimed = TRUE
+	return TRUE
 
 /// If an item sent in the cargo shuttle can satisfy the bounty.
 /datum/bounty/proc/applies_to(obj/O)

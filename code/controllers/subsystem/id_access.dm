@@ -118,6 +118,7 @@ SUBSYSTEM_DEF(id_access)
 	accesses_by_region[REGION_RESEARCH] = REGION_ACCESS_RESEARCH
 	accesses_by_region[REGION_ENGINEERING] = REGION_ACCESS_ENGINEERING
 	accesses_by_region[REGION_SUPPLY] = REGION_ACCESS_SUPPLY
+	accesses_by_region[REGION_UNION] = REGION_ACCESS_UNION
 	accesses_by_region[REGION_COMMAND] = REGION_ACCESS_COMMAND
 	accesses_by_region[REGION_CENTCOM] = REGION_ACCESS_CENTCOM
 	accesses_by_region[REGION_CHARLIE_STATION] = REGION_ACCESS_CHARLIE_STATION //MONKESTATION ADDITION - Used for Charlie Station ID console.
@@ -347,6 +348,9 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_AWAY_MEDICAL]"] = "Beta Station Medical"
 	desc_by_access["[ACCESS_AWAY_SEC]"] = "Charlie Station Security"
 	desc_by_access["[ACCESS_AWAY_ENGINEERING]"] = "Beta Station Engineering"
+	desc_by_access["[ACCESS_UNION]"] = "Union Access"
+	desc_by_access["[ACCESS_UNION_LEADER]"] = "Union Leader Access"
+	desc_by_access["[ACCESS_UNION_MINER]"] = "Union Miner Access"
 	//END OF ADDITION
 
 /**

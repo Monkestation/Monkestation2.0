@@ -9,14 +9,15 @@
 	desc = "Contains two boxes of beanbag shotgun shells, two boxes \
 		of rubbershot shotgun shells, two boxes of buckshot, two boxes of slugs, and one of each special .38 speedloaders."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/ammo_box/advanced/s12gauge/bean = 2,
-					/obj/item/ammo_box/advanced/s12gauge/rubber = 2,
-					/obj/item/ammo_box/advanced/s12gauge/buckshot = 2,
-					/obj/item/ammo_box/advanced/s12gauge = 2,
-					/obj/item/ammo_box/c38/trac,
-					/obj/item/ammo_box/c38/hotshot,
-					/obj/item/ammo_box/c38/iceblox,
-				)
+	contains = list(
+		/obj/item/ammo_box/advanced/s12gauge/bean = 2,
+		/obj/item/ammo_box/advanced/s12gauge/rubber = 2,
+		/obj/item/ammo_box/advanced/s12gauge/buckshot = 2,
+		/obj/item/ammo_box/advanced/s12gauge = 2,
+		/obj/item/ammo_box/c38/trac,
+		/obj/item/ammo_box/c38/hotshot,
+		/obj/item/ammo_box/c38/iceblox,
+	)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/security/armor
@@ -233,19 +234,6 @@
 		)
 	crate_name = ".35 Auto Non-Lethal Ammo crate"
 
-/datum/supply_pack/security/bio
-	name = "Biological Containment Gear Crate"
-	desc = "This crate holds 3 full security bio suits which will protect you from viruses along with 3 viral analyzer goggles and PENLITE barrier projectors to stop the spread."
-	cost = CARGO_CRATE_VALUE * 12
-	contains = list(/obj/item/clothing/head/bio_hood/security = 3,
-					/obj/item/clothing/suit/bio_suit/security = 3,
-					/obj/item/reagent_containers/syringe/antiviral = 3,
-					/obj/item/clothing/gloves/latex/nitrile = 3,
-					/obj/item/clothing/glasses/pathology = 3,
-					/obj/item/holosign_creator/medical = 3,
-				)
-	crate_name = "biological containment gear crate"
-
 /datum/supply_pack/security/grenadelauncher
 	name = "Riot Grenade Launcher Crate"
 	desc = "Local revolution banging on your doorstep? Suppress the masses with this swanky riot control crate. Contains one grenade launcher and one box each of flashbangs and teargas grenades. Teargas protection included."
@@ -263,7 +251,7 @@
 /datum/supply_pack/security/armory
 	group = "Armory"
 	access = ACCESS_ARMORY
-	access_view = ACCESS_ARMORY
+	access_view = ACCESS_WEAPONS
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/security/armory/bulletarmor

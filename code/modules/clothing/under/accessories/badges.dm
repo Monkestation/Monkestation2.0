@@ -350,11 +350,13 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	attachment_slot = NONE //can be worn while rolled down
 
 	///The access needed to change the stored name, not needed if no name is given.
-	var/access_required = ACCESS_CARGO
+	var/access_required
 	///The REAL name of the person who imprinted their details onto the badge.
 	var/stored_name
 	///The job title the badge holds.
 	var/badge_string
+	///List of access this badge has. If none is set, this badge gets no special effects.
+	var/list/access
 
 /obj/item/clothing/accessory/badge/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -420,9 +422,33 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 		span_danger("You invade [target]'s personal space, thrusting [src] into their face insistently."))
 	user.do_attack_animation(target)
 
+/obj/item/clothing/accessory/badge/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(length(access) && (slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS))) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+		if(ishuman(user))
+			user.sec_hud_set_ID()
+
+/obj/item/clothing/accessory/badge/dropped(mob/living/carbon/human/user)
+	if(!length(access))
+		return ..()
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(ishuman(user))
+		user.sec_hud_set_ID()
+	return ..()
+
+/obj/item/clothing/accessory/badge/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += access
+
+/obj/item/clothing/accessory/badge/GetAccess()
+	return access
+
 ///Sets the badge's identity to the name and description given to us.
 /obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
 	if(!ismob(named_mob))
+		//If we used a custom name of someone that exists, use their actual
+		//name to keep capitalization consistency.
 		var/found_name = findname(named_mob)
 		if(found_name)
 			named_mob = found_name
@@ -463,25 +489,18 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	desc = "A badge designating the user as part of the 'Cargo Workers Union', employee level."
 	icon_state = "cargo-silver"
 	badge_string = "Union Employee"
-	var/list/access = list(
+	access_required = ACCESS_CARGO
+	access = list(
 		ACCESS_UNION,
 	)
 
-/obj/item/clothing/accessory/badge/cargo/equipped(mob/living/user, slot)
+/obj/item/clothing/accessory/badge/cargo/Initialize(mapload)
 	. = ..()
-	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
-		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+	GLOB.cargo_union.printed_badges += src
 
-/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
-	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+/obj/item/clothing/accessory/badge/cargo/Destroy()
+	GLOB.cargo_union.printed_badges -= src
 	return ..()
-
-/obj/item/clothing/accessory/badge/cargo/proc/retrieve_access(datum/source, list/player_access)
-	SIGNAL_HANDLER
-	player_access += access
-
-/obj/item/clothing/accessory/badge/cargo/GetAccess()
-	return access
 
 /obj/item/clothing/accessory/badge/cargo/quartermaster
 	name = "union president badge"
@@ -491,6 +510,18 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	access = list(
 		ACCESS_UNION,
 		ACCESS_UNION_LEADER,
+		ACCESS_UNION_MINER,
+	)
+
+/obj/item/clothing/accessory/badge/cargo/miner
+	name = "union president badge"
+	desc = "A badge designating the user as part of the 'Cargo Workers Union', mining level."
+	icon_state = "cargo-mine"
+	badge_string = "Union Miner"
+	access = list(
+		ACCESS_UNION,
+		ACCESS_UNION_LEADER,
+		ACCESS_UNION_MINER,
 	)
 
 /obj/item/clothing/accessory/badge/lawyer
