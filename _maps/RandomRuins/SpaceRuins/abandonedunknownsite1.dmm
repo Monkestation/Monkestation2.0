@@ -1500,7 +1500,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/office2)
 "fJ" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -13648,7 +13648,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/prisoncafe)
 "Zh" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 6
 	},
 /obj/structure/table/glass,

@@ -956,7 +956,7 @@
 "MC" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/machinery/light/directional/north,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
