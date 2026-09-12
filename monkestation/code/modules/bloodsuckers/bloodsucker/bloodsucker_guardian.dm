@@ -72,6 +72,23 @@
 	timestop_ability.Grant(src)
 
 /mob/living/basic/guardian/standard/timestop/set_summoner(mob/living/to_who, different_person = FALSE)
+	. = ..()
+	apply_summoner_aura()
+
+var/obj/effect/dummy/lighting_obj/moblight/bstimestoplight
+
+/mob/living/basic/guardian/standard/timestop/proc/apply_summoner_aura()
+	var/mob/living/carbon/summoner = src.summoner
+	bstimestoplight = summoner.mob_light()
+	bstimestoplight.set_light_range_power_color(2, 5, LIGHT_COLOR_BLOOD_MAGIC)
+	bstimestoplight.set_light_on(TRUE)
+	RegisterSignal(summoner, COMSIG_ATOM_EXAMINE, PROC_REF(on_summoner_examine))
+
+/mob/living/basic/guardian/standard/timestop/proc/on_summoner_examine(mob/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	examine_text += span_danger("[source.p_They()] [source.p_are()] surrounded by a menacing bloodred aura!")
+
+/mob/living/basic/guardian/standard/timestop/set_summoner(mob/living/to_who, different_person = FALSE)
 	..()
 	for(var/action in actions)
 		var/datum/action/cooldown/spell/timestop/guardian/timestop_ability = action
@@ -89,10 +106,11 @@
 /datum/action/cooldown/spell/timestop/guardian
 	name = "Guardian Timestop"
 	desc = "This spell stops time for everyone except for you and your master, \
-		allowing you to move freely while your enemies and even projectiles are frozen."
+		allowing you to move freely while your enemies and even projectiles are frozen. COST: 150 blood."
 	cooldown_time = 60 SECONDS
 	spell_requirements = NONE
 	invocation_type = INVOCATION_NONE
+	var/bloodcost = 200
 
 /datum/action/cooldown/spell/timestop/guardian/proc/grant_summoner_immunity()
 	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
@@ -103,3 +121,18 @@
 	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
 	if(bloodsucker_guardian && istype(bloodsucker_guardian) && bloodsucker_guardian.summoner)
 		REMOVE_TRAIT(bloodsucker_guardian.summoner, TRAIT_TIME_STOP_IMMUNE, REF(src))
+
+/datum/action/cooldown/spell/timestop/guardian/PreActivate(atom/target)
+	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(bloodsucker_guardian.summoner)
+	if(bloodsuckerdatum && bloodsuckerdatum.bloodsucker_blood_volume < bloodcost)
+		to_chat(bloodsucker_guardian, span_warning("Your master doesn't have enough blood for you to cast Timestop!"))
+		return FALSE
+
+	return ..()
+
+/datum/action/cooldown/spell/timestop/guardian/cast(list/targets)
+	. = ..()
+	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(bloodsucker_guardian.summoner)
+	bloodsuckerdatum.AddBloodVolume(-bloodcost)
