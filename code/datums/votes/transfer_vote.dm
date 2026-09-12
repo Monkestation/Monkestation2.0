@@ -54,7 +54,7 @@
 	. = TRUE
 	if(voter.client?.holder)
 		return TRUE
-	if(isobserver(voter) || voter.stat == DEAD || !(voter.ckey in GLOB.joined_player_list)) // only living crew gets to vote
+	if(!(voter.ckey in GLOB.joined_player_list)) // only non-observers get to vote
 		return FALSE
 
 /datum/vote/shuttle_call/tiebreaker(list/winners)
