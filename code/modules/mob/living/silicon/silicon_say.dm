@@ -17,6 +17,13 @@
 		spans
 	)
 
+	var/namepart = name
+
+	// AI in carbon body should still have its real name
+	if(HAS_TRAIT(src, TRAIT_REVERSE_MMI))
+		var/obj/item/organ/internal/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+		namepart = brain.mainframe_ai.name
+		designation = brain.mainframe_ai.job
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
@@ -24,7 +31,7 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						<a href='byond://?src=[REF(M)];track=[html_encode(name)]'>[span_name("[name] ([designation])")]</a> \
+						<a href='byond://?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
 						<span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
@@ -34,7 +41,7 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						[span_name("[name]")] <span class='message'>[quoted_message]</span>\
+						[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
 				)
@@ -56,7 +63,7 @@
 				span_binarysay("\
 					[follow_link] \
 					Robotic Talk, \
-					[span_name("[name]")] <span class='message'>[quoted_message]</span>\
+					[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 				"),
 				avoid_highlighting = src == M
 			)

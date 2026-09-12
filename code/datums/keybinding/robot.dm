@@ -77,9 +77,8 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/silicon/robot/shell/our_shell = user.mob
-	//We make sure our shell is actually a shell
-	if(our_shell.shell == FALSE)
+	if(!isAI(user))
 		return
-	our_shell.undeploy()
+	var/mob/living/silicon/ai/AI = user
+	AI.disconnect_shell()
 	return TRUE

@@ -25,6 +25,7 @@
 					/obj/item/organ/internal/empowered_borer_egg,
 					/obj/item/organ/internal/legion_tumour,
 					/obj/item/organ/internal/ears/cat/super,
+					/obj/item/organ/internal/brain/cybernetic/ai
 				),
 			)),
 			"Bodyparts" = generate_organ_choices(/obj/item/bodypart),

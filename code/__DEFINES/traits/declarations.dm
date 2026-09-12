@@ -306,6 +306,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_SLIP_SLIDE "noslip_slide"
 /// Stops all slipping and sliding from ocurring
 #define TRAIT_NO_SLIP_ALL "noslip_all"
+/// The mob has an AI-uplink brain.
+#define TRAIT_REVERSE_MMI "reverse_mmi"
 
 /// Unlinks gliding from movement speed, meaning that there will be a delay between movements rather than a single move movement between tiles
 #define TRAIT_NO_GLIDE "no_glide"

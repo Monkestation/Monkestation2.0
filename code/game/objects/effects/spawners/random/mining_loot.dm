@@ -55,6 +55,7 @@
 		/obj/item/book/granter/action/spell/sacredflame = 1,
 		/obj/item/book_of_babel = 1, // MONKESTATION ADDITION
 		/obj/item/wisp_lantern = 1, // MONKESTATION ADDITION
+		/obj/item/organ/internal/brain/cybernetic/ai = 1,
 		/obj/item/organ/internal/cyberimp/arm/item_set/katana = 1, // MONKESTATION ADDITION
 		/obj/item/clothing/suit/hooded/berserker = 1, // MONKESTATION ADDITION
 	)
