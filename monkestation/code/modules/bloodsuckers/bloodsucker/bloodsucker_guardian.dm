@@ -106,7 +106,7 @@ var/obj/effect/dummy/lighting_obj/moblight/bstimestoplight
 /datum/action/cooldown/spell/timestop/guardian
 	name = "Guardian Timestop"
 	desc = "This spell stops time for everyone except for you and your master, \
-		allowing you to move freely while your enemies and even projectiles are frozen. COST: 150 blood."
+		allowing you to move freely while your enemies and even projectiles are frozen. COST: 200 Blood."
 	cooldown_time = 60 SECONDS
 	spell_requirements = NONE
 	invocation_type = INVOCATION_NONE
