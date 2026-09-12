@@ -22,7 +22,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/storage/belt/holster/detective,
 		/obj/item/storage/belt/holster/nukie,
-		/obj/item/storage/belt/holster/energy,
+		/obj/item/storage/belt/holster,
 		/obj/item/clothing/mask/breath/sec_bandana,
 	)
 
