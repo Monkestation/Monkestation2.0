@@ -1,5 +1,0 @@
-author: "Needicla"
-delete-after: True
-changes:
-  - qol: "You can now set your name to be randomized each round without also having to randomize your body."
-  - bugfix: "The randomization dropdowns in character setup now correctly show their color state."

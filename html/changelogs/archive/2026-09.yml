@@ -105,3 +105,9 @@
   Veth-s:
   - balance: Changed the number of joined players require for station goals to proc
       from 10 to 5.
+2026-09-12:
+  Needicla:
+  - qol: You can now set your name to be randomized each round without also having
+      to randomize your body.
+  - bugfix: The randomization dropdowns in character setup now correctly show their
+      color state.
