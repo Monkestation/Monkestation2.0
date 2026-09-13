@@ -63,6 +63,7 @@
 	creator_name = "Timestop"
 	creator_desc = "Devastating close combat attacks and high damage resistance. Can smash through weak walls and stop time."
 	creator_icon = "timestop"
+	var/obj/effect/dummy/lighting_obj/moblight/bstimestoplight
 
 /mob/living/basic/guardian/standard/timestop/Initialize(mapload, theme)
 	//Wizard Holoparasite theme, just to be more visibly stronger than regular ones
@@ -74,8 +75,6 @@
 /mob/living/basic/guardian/standard/timestop/set_summoner(mob/living/to_who, different_person = FALSE)
 	. = ..()
 	apply_summoner_aura()
-
-var/obj/effect/dummy/lighting_obj/moblight/bstimestoplight
 
 /mob/living/basic/guardian/standard/timestop/proc/apply_summoner_aura()
 	var/mob/living/carbon/summoner = src.summoner
