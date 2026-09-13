@@ -54,6 +54,7 @@
 
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
+/// Makes text for all members of the hive
 /datum/team/cortical_borers/proc/printborerlist(list/players)
 	var/list/parts = list()
 
@@ -63,6 +64,7 @@
 	parts += "</ul>"
 	return parts.Join()
 
+/// Makes text for an individual borer
 /datum/team/cortical_borers/proc/printborer(datum/mind/mind)
 	var/text = "<b>[mind.name]</b> " // We need to bold with <b> because span_bold() isn't supported
 	var/show_key = GLOB.roundend_hidden_ckeys[ckey(mind.key)]

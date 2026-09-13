@@ -4,6 +4,7 @@
 	/// The amount of bonus maturation speed we get upon completing the objective
 	var/maturation_boost = 5 SECONDS
 
+/// Makes all borers re-make their maturation speeds
 /datum/objective/borer/proc/recalculate_borer_speed()
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/mind as anything in owners)
@@ -47,18 +48,18 @@
 	if(completed)
 		return TRUE
 
-	var/successfull_borers = 0
+	var/successful_borers = 0
 	for(var/borer_key in borers)
 		if(borers[borer_key] < target_amount)
 			continue
-		successfull_borers++
-		if(successfull_borers == required_borers)
+		successful_borers++
+		if(successful_borers == required_borers)
 			. = TRUE
 			completed = TRUE
 			recalculate_borer_speed()
 			break
 
-	status_text = "[required_borers] borers producing [target_amount] eggs: [successfull_borers]/[required_borers]"
+	status_text = "[required_borers] borers producing [target_amount] eggs: [successful_borers]/[required_borers]"
 
 /datum/objective/borer/willing_hosts
 	name = "gather willing hosts"
@@ -106,19 +107,19 @@
 		return TRUE
 
 	total_chems_learned = 0
-	var/successfull_borers = 0
+	var/successful_borers = 0
 	for(var/borer_key in borers)
 		total_chems_learned += borers[borer_key]
 		if(borers[borer_key] < target_amount)
 			continue
-		successfull_borers++
-		if(successfull_borers == required_borers)
+		successful_borers++
+		if(successful_borers == required_borers)
 			. = TRUE
 			completed = TRUE
 			recalculate_borer_speed()
 			break
 
-	status_text = "[required_borers] borers learning [target_amount] chemicals from the blood: [successfull_borers]/[required_borers]"
+	status_text = "[required_borers] borers learning [target_amount] chemicals from the blood: [successful_borers]/[required_borers]"
 
 /datum/objective/borer/learn_chemicals/selfish
 	name = "learn chemicals from blood (Optional)"

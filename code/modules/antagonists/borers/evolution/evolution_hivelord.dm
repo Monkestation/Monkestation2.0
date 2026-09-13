@@ -13,7 +13,7 @@
 
 /datum/borer_evolution/hivelord/dissection
 	name = "Dissect Corpse"
-	desc = "Gain the ability to probes a corspe's brain to further the rate you grow."
+	desc = "Gain the ability to probe a corpse's brain to further the rate you grow."
 	gain_text = "After applying extreme radiation exposure to a sample of the eggs, that generation's bed of worms never produced eggs. However, the sanitation teams observed these same worms festering around a dead host that was to be removed."
 	tier = 1
 	evo_cost = 1

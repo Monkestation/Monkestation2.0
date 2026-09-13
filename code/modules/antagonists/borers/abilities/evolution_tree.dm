@@ -49,6 +49,7 @@
 	if(grant_to && length(completed_evolutions) == 0)
 		evolve(initialized_evolutions[/datum/borer_evolution/base::name])
 
+/// Learns the evolution path, expects an initialized evolution datum
 /datum/action/cooldown/borer/evolution_tree/proc/evolve(datum/borer_evolution/evolution)
 	available_evolutions -= evolution
 	completed_evolutions += evolution

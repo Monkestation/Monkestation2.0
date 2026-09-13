@@ -96,6 +96,7 @@
 	user.human_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * user.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
 	return ..()
 
+/// Actually learns the chemical
 /datum/action/cooldown/borer/upgrade_chemical/proc/learn_chem(datum/reagent/path, datum/action/cooldown/borer/inject_chemical/action)
 	var/mob/living/basic/cortical_borer/user = owner
 	user.chemical_evolution -= CHEM_COST

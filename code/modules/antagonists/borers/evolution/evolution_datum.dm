@@ -22,7 +22,7 @@
 /// What happens when a borer gets this evolution
 /datum/borer_evolution/proc/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	SHOULD_CALL_PARENT(TRUE)
-	to_chat(cortical_owner, span_notice("<span class='italics'>[gain_text]</span>"))
+	to_chat(cortical_owner, span_notice(span_italics(gain_text)))
 	if(added_action)
 		var/datum/action/cooldown/borer/new_action = new added_action(cortical_owner)
 		new_action.Grant(cortical_owner)
@@ -56,6 +56,7 @@
 	return unlocked_evolutions
 
 /datum/borer_evolution/reagent_giver
+	/// List of reagents to let the borer learn
 	var/list/reagents = list()
 
 /datum/borer_evolution/reagent_giver/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
