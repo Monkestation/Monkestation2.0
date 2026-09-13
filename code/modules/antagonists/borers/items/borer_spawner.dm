@@ -15,18 +15,6 @@
 	/// Dictates the poll time
 	var/polling_time = 10 SECONDS
 
-/obj/item/neutered_borer_spawner/Initialize(mapload)
-	. = ..()
-	update_appearance()
-
-/obj/item/neutered_borer_spawner/update_overlays()
-	. = ..()
-	. += "borer"
-	if(opened)
-		. += "doors_open"
-	else
-		. += "doors_closed"
-
 /obj/item/neutered_borer_spawner/proc/do_wriggler_messages()
 	sleep(polling_time * 0.2)
 	if(!opened) // There were no candidates. Lets not give messages after the fail message comes up
@@ -48,7 +36,6 @@
 	if(delayed)
 		sleep(delayed)
 	INVOKE_ASYNC(src, PROC_REF(do_wriggler_messages)) // give them something to look at whilst we poll the ghosts
-	update_appearance()
 	var/list/candidates = SSpolling.poll_ghost_candidates(
 		role = ROLE_CORTICAL_BORER,
 		poll_time = polling_time,
@@ -61,7 +48,6 @@
 		opened = FALSE
 		to_chat(user, "Yet the borer after looking at you quickly retreats back into their cage, visibly scared. Perhaps try later?")
 		playsound(src, 'sound/machines/boltsup.ogg', 30, TRUE)
-		update_appearance()
 		return
 
 	var/mob/dead/observer/picked_candidate = pick(candidates)
