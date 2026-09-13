@@ -1,9 +1,13 @@
 /obj/item/neutered_borer_spawner
-	name = "syndicate cortical borer cage"
-	desc = "The opposite of a harmless cage that is intended to capture cortical borer, \
+	name = "syndicate cortical borer carrier"
+	desc = "The opposite of a harmless carrier that is intended to capture cortical borer, \
 			as this one contains a borer trained to assist anyone who it first sees in completing their goals."
-	icon = 'icons/obj/borer/items.dmi'
-	icon_state = "cage"
+	icon = 'icons/obj/pet_carrier.dmi'
+	icon_state = "small_carrier_occupied"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
 	/// Used to animate the cage opening when you use the borer spawner, and closing if it fails to spawn a borer. Also midly against spam
 	var/opened = FALSE
 	/// Toggles if the borer spawner should be delayed or not, if this gets a value if will use that value to delay (for example: 5 SECONDS)
@@ -24,12 +28,10 @@
 		. += "doors_closed"
 
 /obj/item/neutered_borer_spawner/proc/do_wriggler_messages()
-	if(!opened) // there were no candidates at all somehow, probably tests on local. Lets not give messages after the fail message comes up
-		return
 	sleep(polling_time * 0.2)
-	visible_message(span_notice("The borer seems to have woken up"))
-	if(!opened) // one more check to be sure
+	if(!opened) // There were no candidates. Lets not give messages after the fail message comes up
 		return
+	visible_message(span_notice("The borer seems to have woken up"))
 	sleep(polling_time * 0.2)
 	visible_message(span_notice("The borer has perked up their head, finally noticing the opened cage..."))
 	sleep(polling_time * 0.2)
@@ -98,7 +100,7 @@
 	log_game("[key_name(new_mob)] was spawned as a borer by [key_name(user)].")
 	visible_message("A borer wriggles out of the [src]!")
 
-	var/obj/item/cortical_cage/empty_cage = new(drop_location())
+	var/obj/item/pet_carrier/small/borer/empty_cage = new(drop_location())
 	var/user_held = user.get_held_index_of_item(src)
 	if(user_held) // seems more immersive if you don't just suddenly drop the cage, and it empties while still seemingly in your hand.
 		user.dropItemToGround(src, force = TRUE, silent = TRUE)

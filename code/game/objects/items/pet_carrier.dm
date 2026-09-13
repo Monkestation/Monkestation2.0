@@ -35,9 +35,9 @@
 	var/max_occupant_weight = MOB_SIZE_SMALL
 
 	/// Sound played when the mob carrier is opened.
-	var/open_sound = 'sound/items/handling/cardboard_box/cardboard_box_rustle.ogg'
+	var/open_sound = 'sound/effects/bin_open.ogg'
 	/// Sound played when the mob carrier is closed.
-	var/close_sound = 'sound/items/handling/cardboard_box/cardboardbox_drop.ogg'
+	var/close_sound = 'sound/items/handling/cardboardbox_drop.ogg'
 
 /obj/item/pet_carrier/Initialize(mapload)
 	. = ..()
@@ -131,10 +131,11 @@
 /obj/item/pet_carrier/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
+	var/escape_time = get_escape_time(user)
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, span_notice("You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)"))
 		to_chat(loc, span_warning("You see [user] reach through the bars and fumble for the lock switch!"))
-		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !(user in occupants))
+		if(!do_after(user, escape_time, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] flips the lock switch on [src] by reaching through!"), null, null, null, user)
 		to_chat(user, span_boldannounce("Bingo! The lock pops open!"))
@@ -143,8 +144,8 @@
 		update_appearance()
 	else
 		loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), null, null, null, user)
-		to_chat(user, span_notice("You start pushing out of [src]... (This will take about 20 seconds.)"))
-		if(!do_after(user, 20 SECONDS, target = user) || open || !locked || !(user in occupants))
+		to_chat(user, span_notice("You start pushing out of [src]... (This will take some time.)"))
+		if(!do_after(user, escape_time, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] shoves out of [src]!"), null, null, null, user)
 		to_chat(user, span_notice("You shove open [src]'s door against the lock's resistance and fall out!"))
@@ -215,6 +216,11 @@
 	occupants -= occupant
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
+
+/obj/item/pet_carrier/proc/get_escape_time(mob/living/user)
+	if(user.mob_size <= MOB_SIZE_SMALL)
+		return rand(30 SECONDS, 40 SECONDS)
+	return 20 SECONDS
 
 /obj/item/pet_carrier/biopod
 	name = "biopod"

@@ -91,7 +91,7 @@
 	qdel(src)
 
 /obj/item/organ/internal/borer_body/on_life(seconds_per_tick, times_fired)
-	if(!iscarbon(owner) || !owner.reagents)
+	if(!iscarbon(owner) || isnull(owner.reagents))
 		return
 
 	if(organ_flags & ORGAN_FAILING)
@@ -158,7 +158,6 @@
 	var/health_per_level = 2.5
 	/// How much health regen you gain per level. Before further upgrades brings borers up to 170 seconds to full heal at level 100, limit is 208 seconds
 	var/health_regen_per_level = 0.012
-
 	/// How much more chemical storage you gain per level
 	var/chem_storage_per_level = 20
 	/// Chemical regen you gain per level
@@ -185,25 +184,27 @@
 	var/health_regen = 0.415
 	/// Holds the chems right before injection
 	var/obj/item/reagent_containers/reagent_holder
-	/// Lust a flavor kind of thing
-	var/generation = 0
+
 	/// What focuses the borer has unlocked
 	var/list/body_focuses = list()
-	/// How many children the borer has produced
-	var/children_produced = 0
 	/// Bitflag of upgrades and effects the borer has
-	var/upgrade_flags = 0
+	var/upgrade_flags = NONE
 	/// Multiplier for a borer's negative effects to their host
 	var/host_harm_multiplier = 1
+
 	/// The total amount of hivequeens that were created
 	var/static/hivequeen_amount
+	/// Lust a flavor kind of thing
+	var/generation = 0
+	/// How many children the borer has produced
+	var/children_produced = 0
 
 /mob/living/basic/cortical_borer/can_track(mob/living/user)
 	return FALSE // The validhunt box machines are onto us, we cannot let them track us
 
 /mob/living/basic/cortical_borer/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT) //they need to be able to move around
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT) // They need to be able to move around
 
 	var/matrix/borer_matrix = matrix(transform)
 	borer_matrix.Scale(0.75, 0.75)
@@ -298,14 +299,14 @@
 //if it doesnt have a ckey, let ghosts have it
 /mob/living/basic/cortical_borer/attack_ghost(mob/dead/observer/user)
 	. = ..()
-	if(ckey || key)
+	if(ckey)
 		return
 	if(stat == DEAD)
 		return
 	var/choice = tgui_input_list(usr, "Do you want to control [src]?", "Confirmation", list("Yes", "No"))
 	if(choice != "Yes")
 		return
-	if(!istype(user) || ckey || key)
+	if(!istype(user) || ckey)
 		return
 	to_chat(user, span_warning("As a borer, you have the option to be friendly or not. Note that how you act will determine how a host responds!"))
 	to_chat(user, span_warning("You are a cortical borer! You can fear someone to make them stop moving, but make sure to inhabit them! You only grow/heal/talk when inside a host!"))
