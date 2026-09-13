@@ -36,12 +36,12 @@
 	buildstackamount = 2
 	
 /obj/structure/fans/examine(mob/user)
-    . += ..()
-    . += deconstruction_hints(user)
+	. += ..()
+	. += deconstruction_hints(user)
 
 
 /obj/structure/fans/proc/deconstruction_hints(mob/user)
-    return span_notice("It's <b>bolted</b> onto the floor.")
+	return span_notice("It's <b>bolted</b> onto the floor.")
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
