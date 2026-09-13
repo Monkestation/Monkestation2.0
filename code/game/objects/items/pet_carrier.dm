@@ -250,7 +250,7 @@
 	name = "small mouse carrier"
 	desc = "A small pet carrier for miniature sized animals. This looks prepared for a mouse."
 	open = FALSE
-	icon_state = "small_carrier_occupied_unlocked"
+	icon_state = "small_carrier_occupied"
 
 /obj/item/pet_carrier/small/mouse/Initialize(mapload)
 	var/mob/living/basic/mouse/hero_mouse = new /mob/living/basic/mouse(src)
