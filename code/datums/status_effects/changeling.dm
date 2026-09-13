@@ -118,7 +118,9 @@
 		return
 	COOLDOWN_START(src, extra_effects_cooldown, 1 SECONDS)
 
-	owner.has_borer()?.leave_host()
+	var/mob/living/basic/cortical_borer/borer = has_borer(owner)
+	if(borer)
+		borer.leave_host()
 
 	if(!iscarbon(owner))
 		return

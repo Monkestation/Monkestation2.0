@@ -101,7 +101,7 @@
 /datum/mutation/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
 		return FALSE
-	if(acquirer.has_borer())
+	if(has_borer(acquirer))
 		to_chat(acquirer, span_warning("Something inside holds dearly to your humanity!"))
 		return FALSE
 	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id))
