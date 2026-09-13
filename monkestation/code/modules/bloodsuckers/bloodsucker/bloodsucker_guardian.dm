@@ -126,7 +126,7 @@ var/obj/effect/dummy/lighting_obj/moblight/bstimestoplight
 	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(bloodsucker_guardian.summoner)
 	if(bloodsuckerdatum && bloodsuckerdatum.bloodsucker_blood_volume < bloodcost)
-		bloodsucker_guardian.balloon_alert(bloodsucker_guardian, "Not enough blood!")
+		bloodsucker_guardian.balloon_alert(bloodsucker_guardian, "not enough blood!")
 		return FALSE
 
 	return ..()
