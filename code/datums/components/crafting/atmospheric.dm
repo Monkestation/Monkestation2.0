@@ -392,3 +392,4 @@
 		/obj/item/stack/sheet/iron = 5,
 		/obj/item/stock_parts/manipulator = 1,
 	)
+	category = CAT_STRUCTURE
