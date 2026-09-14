@@ -39,7 +39,6 @@
 	. += ..()
 	. += deconstruction_hints(user)
 
-
 /obj/structure/fans/proc/deconstruction_hints(mob/user)
 	return span_notice("It's <b>bolted</b> onto the floor.")
 
