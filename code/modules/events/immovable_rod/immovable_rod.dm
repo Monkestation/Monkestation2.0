@@ -355,7 +355,6 @@
 		for(var/obj/item/organ/internal/internal_target in blessed_carbon.organs)
 			internal_target.apply_organ_damage(-internal_target.damage * 0.5)
 		blessed_carbon.gain_trauma(/datum/brain_trauma/severe/pacifism)
-
 	else
 		ADD_TRAIT(smeared_mob, TRAIT_PACIFISM, MAGIC_TRAIT)
 
