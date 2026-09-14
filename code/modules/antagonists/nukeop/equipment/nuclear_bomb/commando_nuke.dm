@@ -22,7 +22,10 @@
 	var/list/forbidden_areas
 	/// What the timer will be once the code is set. Default 15 minutes.
 	var/timer = 900
-
+	/// Reduces the timer if using the real Nuclear Authentication Disk. Default -5 minutes.
+	var/real_NAD_offset = 300
+	/// Reduces the timer if in a decrypt area. Default -7 minutes.
+	var/decrypt_offset = 480
 	// partical holder
 	var/obj/effect/abstract/particle_holder/damage_particles = null
 
@@ -293,14 +296,14 @@
 /obj/machinery/nuclearbomb/commando/proc/calculate_timer()
 	if(timing)
 		return
-	timer = 900
+	var/calc_timer = timer
 	var/area/arm_location = get_area(src)
 	if(arm_location in decrypt_areas)
-		timer -= 480 //8 minutes
+		calc_timer -= decrypt_offset //8 minutes
 	if(istype(auth, /obj/item/disk/nuclear) && !auth.fake)
-		timer -= 300
+		calc_timer -= real_NAD_offset
 
-	timer_set = timer
+	timer_set = calc_timer
 
 /obj/machinery/nuclearbomb/commando/set_anchor(mob/anchorer)
 	set_anchored(!anchored)
