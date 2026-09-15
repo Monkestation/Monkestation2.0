@@ -121,7 +121,7 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell?.use(12))
+		if(!robot_user.cell?.use(0.0012 * STANDARD_CELL_VALUE))
 			to_chat(user, span_warning("Not enough power."))
 			return ITEM_INTERACT_BLOCKING
 
@@ -140,7 +140,7 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell?.use(12))
+		if(!robot_user.cell?.use(0.0012 * STANDARD_CELL_VALUE))
 			to_chat(user, span_warning("Not enough power."))
 			return ITEM_INTERACT_BLOCKING
 

@@ -110,8 +110,6 @@
 		removed_cell.update_appearance()
 		removed_cell.add_fingerprint(user)
 		user.put_in_hands(removed_cell)
-		touched_cyborg.update_icons()
-		touched_cyborg.diag_hud_set_borgcell()
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
