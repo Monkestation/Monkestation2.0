@@ -1056,6 +1056,7 @@
 	skin = new_skin
 	icon = skin.icon
 	icon_state = skin.icon_state
+	bubble_icon = skin.bubble_icon
 	base_pixel_x = skin.base_pixel_x
 	base_pixel_y = skin.base_pixel_y
 	if(isnull(skin.hat_offset) && worn_hat)
