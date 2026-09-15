@@ -684,7 +684,7 @@
 					/obj/item/reagent_containers/spray,
 					/obj/item/reagent_containers/medigel,
 					/obj/item/reagent_containers/chem_pack,
-					/obj/item/weapon/virusdish
+					/obj/item/virus_dish
 	))
 
 	if(istype(O, /obj/item/storage/pill_bottle))

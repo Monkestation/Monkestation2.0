@@ -39,7 +39,7 @@
 	r += "<BR>Strength / Robustness : <b>[strength]% / [robustness]%</b> - [get_subdivisions_string()]"
 	r += "<BR>Infectability : <b>[infectionchance]%</b>"
 	r += "<BR>Spread forms : <b>[get_spread_string()]</b>"
-	r += "<BR>Progress Speed : <b>[stageprob]%</b>"
+	r += "<BR>Progress Speed : <b>[stage_prob]%</b>"
 	r += "<dl>"
 	for(var/datum/symptom/e in symptoms)
 		r += "<dt> &#x25CF; <b>Stage [e.stage] - [e.name]</b> (Danger: [e.badness]). Strength: <b>[e.multiplier]</b>. Occurrence: <b>[e.chance]%</b>.</dt>"

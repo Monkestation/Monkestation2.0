@@ -10,5 +10,5 @@
 	ADD_TRAIT(mob, TRAIT_DISFIGURED, type)
 	mob.visible_message(span_warning("[mob]'s face appears to cave in!"), span_notice("You feel your face crumple and cave in!"))
 
-/datum/symptom/disfiguration/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
+/datum/symptom/disfiguration/deactivate(mob/living/carbon/mob, datum/disease/disease, safe = FALSE)
 	REMOVE_TRAIT(mob, TRAIT_DISFIGURED, type)

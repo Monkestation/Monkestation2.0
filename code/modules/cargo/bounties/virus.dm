@@ -41,27 +41,27 @@
 	stat_name = "resistance"
 
 /datum/bounty/virus/resistance/accepts_virus(V)
-	var/datum/disease/advance/A = V
-	return A.totalResistance() == stat_value
+//	var/datum/disease/advance/A = V
+//	return A.totalResistance() == stat_value
 
 /datum/bounty/virus/stage_speed
 	stat_name = "stage speed"
 
 /datum/bounty/virus/stage_speed/accepts_virus(V)
-	var/datum/disease/advance/A = V
-	return A.totalStageSpeed() == stat_value
+//	var/datum/disease/advance/A = V
+//	return A.totalStageSpeed() == stat_value
 
 /datum/bounty/virus/stealth
 	stat_name = "stealth"
 
 /datum/bounty/virus/stealth/accepts_virus(V)
-	var/datum/disease/advance/A = V
-	return A.totalStealth() == stat_value
+//	var/datum/disease/advance/A = V
+//	return A.totalStealth() == stat_value
 
 /datum/bounty/virus/transmit
 	stat_name = "transmissible"
 
 /datum/bounty/virus/transmit/accepts_virus(V)
-	var/datum/disease/advance/A = V
-	return A.totalTransmittable() == stat_value
+//	var/datum/disease/advance/A = V
+//	return A.totalTransmittable() == stat_value
 

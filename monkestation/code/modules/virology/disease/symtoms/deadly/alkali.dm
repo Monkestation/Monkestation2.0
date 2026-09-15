@@ -23,13 +23,13 @@ Bonus
 	var/explosion_power = 1
 	max_multiplier = 2
 
-/datum/symptom/alkali/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/alkali/first_activate(mob/living/carbon/mob, datum/disease/disease)
 	if(disease.robustness >= 60)
 		chems = TRUE
 	if(disease.infectivity >= 40)
 		explosion_power = 2
 
-/datum/symptom/alkali/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/alkali/activate(mob/living/carbon/mob, datum/disease/disease)
 	switch(disease.stage)
 		if(1 to 2)
 			if(prob(base_message_chance))
@@ -51,14 +51,14 @@ Bonus
 			to_chat(mob, span_userdanger("Your skin erupts into an inferno!"))
 			mob.emote("scream")
 
-/datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/carbon/mob, datum/disease/disease)
 	var/get_stacks = 3 * multiplier
 	mob.adjust_fire_stacks(get_stacks)
 	mob.take_overall_damage(burn = get_stacks / 2)
 	if(chems)
 		mob.reagents?.add_reagent(/datum/reagent/clf3, 2 * multiplier)
 
-/datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/carbon/mob, datum/disease/disease)
 	var/get_stacks = 5 * multiplier
 	mob.adjust_fire_stacks(get_stacks)
 	mob.take_overall_damage(burn = get_stacks)

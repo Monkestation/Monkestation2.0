@@ -556,9 +556,9 @@ Behavior that's still missing from this component that original food items had t
 
 	var/food_quality = get_perceived_food_quality(gourmand)
 	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
-		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
-			to_chat(gourmand, span_warning("You feel your throat start to itch."))
-			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+	//	if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
+	//		to_chat(gourmand, span_warning("You feel your throat start to itch."))
+	//		gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
 		return
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)

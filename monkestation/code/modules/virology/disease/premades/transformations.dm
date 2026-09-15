@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/gondola
+/datum/disease/premade/gondola
 	name = "Gondola Transformation"
 	form = "Gondola Cells"
 	origin = "Gondola Toxins"
@@ -15,19 +15,19 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/gondola/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/gondola/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/consumable/condensedcapsaicin, 1)) //Pepperspray can ruin anyones peaceful existancce.
 		cure()
 
-/datum/disease/acute/premade/gondola/digital
+/datum/disease/premade/gondola/digital
 	category = DISEASE_GONDOLA_DIGITAL
 
 	symptoms = list(
 		new /datum/symptom/transformation/gondola/digital
 	)
 
-/datum/disease/acute/premade/xeno
+/datum/disease/premade/xeno
 	name = "Xenomorph Transformation"
 	form = "Foreign Cells"
 	origin = "UNKNOWN"
@@ -43,12 +43,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/xeno/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/xeno/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/phlogiston, 1)) //Fire
 		cure()
 
-/datum/disease/acute/premade/corgi
+/datum/disease/premade/corgi
 	name = "Puppification"
 	form = "Puppy Cells"
 	origin = "Ian"
@@ -64,12 +64,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/corgi/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/corgi/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/consumable/coco, 1)) //Feed Ian chocolatebars
 		cure()
 
-/datum/disease/acute/premade/slime
+/datum/disease/premade/slime
 	name = "Slime Syndrome"
 	form = "Simplified Cells"
 	origin = "Slime Colonies"
@@ -85,12 +85,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/slime/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/water, 1)) //Water is effective against slimes
 		cure()
 
-/datum/disease/acute/premade/morph
+/datum/disease/premade/morph
 	name = "Gluttony"
 	form = "Hungering Cells"
 	origin = "The Hivemind"
@@ -106,12 +106,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/morph/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/morph/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/toxin/lipolicide, 1)) //Empties the hunger
 		cure()
 
-/datum/disease/acute/premade/robot
+/datum/disease/premade/robot
 	name = "Nanite Conversion"
 	form = "Nanites"
 	origin = "Swarmers"
@@ -127,12 +127,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/robot/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/robot/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/medicine/system_cleaner, 1))
 		cure()
 
-/datum/disease/acute/premade/jungle_fever
+/datum/disease/premade/jungle_fever
 	name = "Jungle Fever"
 	form = "Ape Cells"
 	origin = "Ape Colonies"
@@ -148,7 +148,7 @@
 	infectionchance_base = 20
 	stage_variance = 0
 
-/datum/disease/acute/premade/jungle_fever/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/jungle_fever/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/medicine/coagulant/banana_peel, 1)) // mmmmh banana
 		cure()
