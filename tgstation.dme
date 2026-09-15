@@ -4173,7 +4173,6 @@
 #include "code\modules\bloodsuckers\bloodsucker\bloodsucker_sol.dm"
 #include "code\modules\bloodsuckers\bloodsucker\bloodsucker_tracking.dm"
 #include "code\modules\bloodsuckers\bloodsucker\bloodsucker_traumas.dm"
-#include "code\modules\bloodsuckers\bloodsucker\bloodsucker_conversion.dm"
 #include "code\modules\bloodsuckers\clans\_clan_base.dm"
 #include "code\modules\bloodsuckers\clans\_clan_flavortext.dm"
 #include "code\modules\bloodsuckers\clans\malkavian.dm"
