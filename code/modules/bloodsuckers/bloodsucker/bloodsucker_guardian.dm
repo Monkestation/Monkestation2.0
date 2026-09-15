@@ -1,12 +1,5 @@
 ///Bloodsuckers spawning a Guardian will get the Bloodsucker one instead.
 /obj/item/guardian_creator/tech/attack_self(mob/living/user)
-	// If this code looks odd, it's because I'm intentionally inserting a hack,
-	// as I'm trying to avoid touching `guardian_creator.dm` in a major way. The
-	// intent with this hack is to force Bloodsuckers to always get a Timestop
-	// Guardian, no matter the item that a Bloodsucker uses to get a guardian.
-	//
-	// There is plans to refactor/modularization guardians, which will hopefully
-	// allow this all to happen without as much of a hack.
 
 	// START COPIED CODE FROM guardian_creator.dm
 	if(isguardian(user) && !allow_guardian)
