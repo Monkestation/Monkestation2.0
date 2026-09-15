@@ -271,7 +271,10 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/mob/living/silicon/ai/AI = usr
 			if(!istype(AI))
 				return
-			AI.ai_tracking_tool.track_mob(AI, params["ref"])
+			var/mob/living/tracked_mob = locate(params["ref"]) in GLOB.mob_living_list
+			if(!tracked_mob)
+				return
+			AI.ai_tracking_tool.track_mob(AI, tracked_mob)
 
 /datum/crewmonitor/proc/get_ntnet_wireless_status(z)
 	// NTNet is down and we are not connected via wired connection. No signal.
