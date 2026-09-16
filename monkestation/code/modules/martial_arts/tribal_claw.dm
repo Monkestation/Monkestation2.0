@@ -18,21 +18,13 @@
 	block_chance = 60
 	//originally wanted to do inverse correlation but it donbt work :pensive:
 
-/datum/armor/scales
-	melee = 40
-	bullet = 40
-	laser = 40
-	wound = 50
-
 /datum/martial_art/tribal_claw/teach(mob/living/carbon/human/target, make_temporary = FALSE)
 	. = ..()
 	if(!.)
 		return
 	target.add_traits(tribal_traits)
-	target.set_armor(target.get_armor().add_other_armor(/datum/armor/scales))
 
 /datum/martial_art/tribal_claw/on_remove(mob/living/carbon/human/target)
-	target.set_armor(target.get_armor().subtract_other_armor(/datum/armor/scales))
 	REMOVE_TRAITS_IN(target, tribal_traits)
 	. = ..()
 
