@@ -1,6 +1,0 @@
-author: "osaka-fuuri"
-delete-after: True
-changes:
-  - rscadd: "Added malf button to MULEbot UI"
-  - rscadd: "Added speed adjuster button (when malf) to MULEbot UI"
-  - code_imp: "fixed MULEbot variable autodocs"
