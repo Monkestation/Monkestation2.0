@@ -404,7 +404,7 @@
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 
-/datum/design/rld_mini/New()
+/datum/design/rld/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 
