@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Cyborg skins now correctly set the cyborg's bubble icon."

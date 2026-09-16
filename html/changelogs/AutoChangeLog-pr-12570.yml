@@ -1,5 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - bugfix: "Expanded view range now persist when controlling ai shells and mechs"
-  - bugfix: "Expanded view range no longer shows more of the multicamera area"
