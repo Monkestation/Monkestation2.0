@@ -43,11 +43,10 @@
 		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
-		builtInCamera = new (src)
+		builtInCamera = new(src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.toggle_cam(null, displaymessage = FALSE)
+			builtInCamera.camera_enabled = FALSE
 	update_icons()
 	. = ..()
 
