@@ -94,12 +94,11 @@
 			R.logevent("Lawsync Module fault [mend ? "cleared" : "detected"]")
 		if (WIRE_CAMERA) // Disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
-				var/fixing_camera = !mend
-				R.builtInCamera.camera_enabled = fixing_camera
-				R.builtInCamera.toggle_cam(usr, 0)
+				R.builtInCamera.camera_enabled = !mend // Ensures that it will be toggled to the correct value below.
+				R.builtInCamera.toggle_cam(usr, FALSE)
 				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
-				R.logevent("Camera Module fault [fixing_camera ? "cleared" : "detected"]")
-				log_silicon("[key_name(usr)] [fixing_camera ? "enabled" : "disabled"] [key_name(R)]'s camera via wire")
+				R.logevent("Camera Module fault [mend ? "cleared" : "detected"]")
+				log_silicon("[key_name(usr)] [mend ? "enabled" : "disabled"] [key_name(R)]'s camera via wire")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
 			R.logevent("Motor Controller fault [mend?"cleared":"detected"]")
