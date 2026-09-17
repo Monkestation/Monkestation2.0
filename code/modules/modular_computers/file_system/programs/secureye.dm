@@ -175,7 +175,7 @@
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
-	cam_screen?.hide_from(user)
+	cam_screen.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		var/obj/machinery/camera/active_camera = camera_ref?.resolve()
