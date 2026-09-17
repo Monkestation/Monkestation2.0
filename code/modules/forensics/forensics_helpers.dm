@@ -165,11 +165,10 @@
 /mob/living/carbon/human/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
 	return add_blood_DNA_to_items(blood_DNA_to_add, diseases = diseases)
 
-// mobs don't have blood
+/// Adds blood DNA to certain slots the mob is wearing
 /mob/living/proc/add_blood_DNA_to_items()
 	return
 
-/// Adds blood DNA to certain slots the mob is wearing
 /mob/living/carbon/human/add_blood_DNA_to_items(
 	list/blood_DNA_to_add,
 	target_flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_GLOVES|ITEM_SLOT_HEAD|ITEM_SLOT_MASK,

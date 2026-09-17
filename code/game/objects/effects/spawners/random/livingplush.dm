@@ -8,6 +8,7 @@
 	. = INITIALIZE_HINT_NORMAL
 	INVOKE_ASYNC(src, PROC_REF(spawn_plush))
 
+/// Spawns a plush and polls the ghosts
 /obj/effect/spawner/livingplush/proc/spawn_plush()
 	var/plush = pick(subtypesof(/obj/item/toy/plush) - /obj/item/toy/plush/lobotomy)
 	plush = new plush(get_turf(src))

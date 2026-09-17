@@ -345,10 +345,12 @@
 
 	return GLOB.fire_appearances[fire_icon]
 
+/// Applies an overlay to the mob
 /mob/living/basic/proc/apply_overlay(cache_index)
 	if((. = possession_overlays[cache_index]))
 		add_overlay(.)
 
+/// Removes an overlay from the mob
 /mob/living/basic/proc/remove_overlay(cache_index)
 	var/I = possession_overlays[cache_index]
 	if(I)

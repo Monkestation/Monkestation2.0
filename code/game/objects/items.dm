@@ -527,11 +527,10 @@
 	if(href_list[VV_HK_POSSESS_ITEM] && check_rights(R_FUN))
 
 		var/mob/living/basic/possession_holder/created = new(get_turf(src), src)
-		var/choice = tgui_alert(usr, "Take Control of newly created mob?", "Possession", list("Yes", "No"))
-		if(!choice)
+		if(tgui_alert(usr, "Take Control of newly created mob?", "Possession", list("Yes", "No")) != "Yes")
 			return
-		if(choice == "Yes")
-			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_assume_direct_control, created)
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_assume_direct_control, created)
+		return
 
 	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
 
@@ -1039,12 +1038,7 @@
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
-/* overrided in the monkestation/modules/possession folder
-/obj/item/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if (obj_flags & CAN_BE_HIT)
-		return ..()
-	return 0
-*/
+
 /obj/item/burn()
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
