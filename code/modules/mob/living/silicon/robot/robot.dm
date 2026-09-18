@@ -318,7 +318,6 @@
 	if(W)
 		W.attack_self(src)
 
-
 /mob/living/silicon/robot/proc/SetLockdown(state = TRUE)
 	// They stay locked down if their wire is cut.
 	if(wires?.is_cut(WIRE_LOCKDOWN))
@@ -327,7 +326,8 @@
 		throw_alert(ALERT_HACKED, /atom/movable/screen/alert/locked)
 	else
 		clear_alert(ALERT_HACKED)
-	set_lockcharge(state)
+	if(set_lockcharge(state) && !state)
+		SEND_SIGNAL(src, COMSIG_CYBORG_LOCKDOWN_UNLOCK)
 
 /mob/living/silicon/robot/proc/motivate()
 	// :3
@@ -340,15 +340,14 @@
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
 	if(new_lockcharge == lockcharge)
-		return
-	. = lockcharge
+		return FALSE
 	lockcharge = new_lockcharge
 	if(lockcharge)
-		if(!.)
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
-	else if(.)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, CYBORG_LOCKED_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, CYBORG_LOCKED_TRAIT)
 	logevent("System lockdown [lockcharge?"triggered":"released"].")
+	return TRUE
 
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
