@@ -89,7 +89,8 @@
 /obj/item/clothing/under/rank/civilian/clown/jester
 	name = "jester suit"
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
-	icon_state = "jester"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("jester", "/obj/item/clothing/under/rank/civilian/clown/jester")
 	greyscale_config = /datum/greyscale_config/jester
 	greyscale_config_worn = /datum/greyscale_config/jester_worn
 	greyscale_colors = "#51E33F#FF1F1F"

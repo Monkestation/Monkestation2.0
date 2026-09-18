@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "AIs now create a message when they enter cryo (updated from requesting the AAS for an invalid message type to an announcement)"
+  - admin: "AIs entering cryo storage now make an admin log."

@@ -143,7 +143,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		MAT_CATEGORY_SILO = TRUE,
 		MAT_CATEGORY_RIGID = TRUE,
 		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		AT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT

@@ -58,7 +58,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack
+		/datum/pet_command/point_targeting/attack,
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -218,10 +218,10 @@
 	faction = list(FACTION_NEUTRAL)
 	maxHealth = 200
 	health = 200
+	icon_state = "magicarp"
 	icon_dead = "magicarp_dead"
 	icon_gib = "magicarp_gib"
 	icon_living = "magicarp"
-	icon_state = "magicarp"
 	greyscale_config = NONE
 
 /// Boosted chance for Cayenne to be silver
@@ -280,7 +280,6 @@
 /mob/living/basic/carp/passive
 	name = "passive carp"
 	desc = "A timid, sucker-bearing creature that resembles a fish. "
-
 	icon_state = "base_friend"
 	icon_living = "base_friend"
 	icon_dead = "base_friend_dead"

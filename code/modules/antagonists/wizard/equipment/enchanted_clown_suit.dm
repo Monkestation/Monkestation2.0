@@ -98,6 +98,7 @@
 /// Enchanted plasmaman clown suit
 /obj/item/clothing/under/plasmaman/clown/magic
 	name = "enchanted clown envirosuit"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/under/plasmaman/clown/magic/Initialize(mapload)
 	. = ..()

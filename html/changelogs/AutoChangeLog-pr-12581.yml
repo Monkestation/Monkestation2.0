@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "Added Reveal ability to Revenants to willingly reveal themselves."

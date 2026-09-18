@@ -244,6 +244,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		to_chat(src, span_warning("This function is not available at this time."))
 		return
 	multicam_on = TRUE
+	client.view_size.resetToDefault()
 	refresh_multicam()
 	to_chat(src, span_notice("Multiple-camera viewing mode activated."))
 
@@ -264,6 +265,8 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 			var/atom/movable/screen/movable/pic_in_pic/P = V
 			P.unshow_to(client)
 	reset_perspective()
+	if(view_range_boost > 0)
+		client?.view_size.setTo(view_range_boost)
 	to_chat(src, span_notice("Multiple-camera viewing mode deactivated."))
 
 

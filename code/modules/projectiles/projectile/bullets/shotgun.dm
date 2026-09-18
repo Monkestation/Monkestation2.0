@@ -174,11 +174,12 @@
 	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "uraniumpen"
 	damage = 35
+	armour_penetration = 75
 	projectile_piercing = (ALL & (~PASSMOB))
 
 /obj/projectile/bullet/pellet/trickshot
 	name = "trickshot pellet"
-	damage = 6
+	damage = 7
 	damage_falloff_tile = 0
 	ricochets_max = 5
 	ricochet_chance = 100
