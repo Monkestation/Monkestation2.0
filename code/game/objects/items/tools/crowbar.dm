@@ -246,3 +246,12 @@
 	worn_icon_state = "jawsofdeath"
 	toolspeed = 0.5
 	force_opens = TRUE
+
+/obj/item/crowbar/makeshift
+	name = "makeshift crowbar"
+	desc = "A crude, self-wrought crowbar. Heavy."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "crowbar_makeshift"
+	force = 12 //same as large crowbar, but bulkier and slower
+	w_class = WEIGHT_CLASS_BULKY
+	toolspeed = 2
