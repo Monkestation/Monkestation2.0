@@ -76,6 +76,14 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	AC.Grant(ai)
 	return AC
 
+/datum/ai_project/proc/remove_ability(datum/action/innate/ai/ability)
+	var/datum/action/innate/ai/has_ability = locate(ability) in ai.actions
+	if(isnull(has_ability))
+		return FALSE
+
+	has_ability.Remove(ai)
+	return TRUE
+
 /datum/ai_project/proc/invest_ability(used_cpu)
 	var/datum/action/innate/ai/ability = locate(ability_path) in ai.actions
 	if(isnull(ability))
