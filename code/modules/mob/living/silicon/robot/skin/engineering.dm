@@ -7,5 +7,15 @@
 	icon_state_light = "engineer"
 	icon_state_transform = "engineer_transform"
 	transformation_duration = 4.4 SECONDS
-	hat_offset = -4
-	badge_offset = -4
+	hat_offset = list(
+		"north" = list(0, -4),
+		"east" = list(0, -4),
+		"south" = list(0, -4),
+		"west" = list(0, -4),
+	)
+	badge_offset = list(
+		"north" = list(0, -4),
+		"east" = list(0, -4),
+		"south" = list(0, -4),
+		"west" = list(0, -4),
+	)
