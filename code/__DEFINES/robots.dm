@@ -161,6 +161,8 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define BOT_IDLE "Idle"
 /// Found target, hunting
 #define BOT_HUNT "In Pursuit"
+/// Found target on green alert, 'hunting' to annoy them
+#define BOT_GREEN_HUNT "In Warning Pursuit"
 /// Start patrol
 #define BOT_START_PATROL "Beginning Patrol"
 /// Patrolling

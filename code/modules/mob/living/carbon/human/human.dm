@@ -500,7 +500,11 @@
 				if(WANTED_PAROLE)
 					threatcount += 2
 				if(WANTED_SEARCH)
-					threatcount += 2
+					//On red alert, beepsky attempts to detain search warrants just like arrest warrants
+					if (SSsecurity_level.current_security_level.number_level >= SEC_LEVEL_RED)
+						threatcount += 5
+					else
+						threatcount += 2
 
 	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
 		threatcount += 2
