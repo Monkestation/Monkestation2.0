@@ -51,7 +51,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 4,
-		/obj/item/lighter/greyscale/pickle = 4,
+		/obj/item/lighter/greyscale/pickle = 2,
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	initial_language_holder = /datum/language_holder/syndicate
@@ -70,7 +70,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_cannabis = 5,
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 4,
-		/obj/item/lighter/greyscale/pickle = 4,
+		/obj/item/lighter/greyscale/pickle = 2,
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	premium = list(
