@@ -37,6 +37,8 @@
 	var/can_crew_change_alert = TRUE
 	/// if TRUE, stops mail shipments from being sent during this security level
 	var/disables_mail = FALSE
+	/// The required head of staff access to set this alert level from the comms console. The captain can set any, so don't put that in here.
+	var/required_access = null
 
 /datum/security_level/New()
 	. = ..()
@@ -59,6 +61,7 @@
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
 	shuttle_call_time_mod = 2
 	can_set_via_comms_console = TRUE
+	required_access = ACCESS_HOS
 
 /**
  * BLUE
@@ -75,6 +78,7 @@
 	elevating_to_configuration_key = /datum/config_entry/string/alert_blue_upto
 	shuttle_call_time_mod = 1
 	can_set_via_comms_console = TRUE
+	required_access = ACCESS_HOS
 
 /**
  * RED
@@ -142,6 +146,7 @@
 	elevating_to_configuration_key = /datum/config_entry/string/alert_yellow
 	shuttle_call_time_mod = 1
 	can_set_via_comms_console = TRUE
+	required_access = ACCESS_CE
 
 /**
  * AMBER
@@ -158,6 +163,7 @@
 	elevating_to_configuration_key = /datum/config_entry/string/alert_amber
 	shuttle_call_time_mod = 1
 	can_set_via_comms_console = TRUE
+	required_access = ACCESS_CMO
 
 /**
  * GAMMA
