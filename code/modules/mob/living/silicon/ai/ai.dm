@@ -156,6 +156,9 @@
 	///Did we get the death prompt?
 	var/is_dying = FALSE
 
+	///How much ai's client view_range should be adjusted by with view_size.setTo(). 0 Is default view size.
+	var/view_range_boost = 0
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.

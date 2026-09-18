@@ -1268,7 +1268,10 @@
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	for(var/datum/reagent/drug/R in affected_mob.reagents.reagent_list)
 		affected_mob.reagents.remove_reagent(R.type, 5 * REM * seconds_per_tick)
-	affected_mob.adjust_drowsiness(4 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_drowsiness_up_to(4 SECONDS * REM * seconds_per_tick, 30 SECONDS)
+
+	if(HAS_TRAIT_FROM(affected_mob, TRAIT_INCAPACITATED, STAMINA))
+		affected_mob.reagents.remove_reagent(type, 5 * REAGENTS_METABOLISM * REM * seconds_per_tick)
 
 	if(affected_mob.get_timed_status_effect_duration(/datum/status_effect/jitter) >= 6 SECONDS)
 		affected_mob.adjust_jitter(-6 SECONDS * REM * seconds_per_tick)

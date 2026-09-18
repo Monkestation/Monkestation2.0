@@ -111,6 +111,9 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
+	/// This is where our overlays reside
+	var/overlays_icon = 'icons/obj/computer.dmi'
+
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20
@@ -427,15 +430,11 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-	if(!init_icon)
-		return
-
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_open_overlay) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += mutable_appearance(overlays_icon, "bsod")
+		. += mutable_appearance(overlays_icon, "broken")
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)

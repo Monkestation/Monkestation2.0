@@ -5,7 +5,7 @@
 
 /datum/sprite_accessory/ethereal_horns/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/ethereal_horns/short
 	name = "Short"

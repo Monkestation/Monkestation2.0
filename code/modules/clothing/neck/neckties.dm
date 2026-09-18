@@ -1,22 +1,24 @@
 /obj/item/clothing/neck/tie/bunnytie
 	name = "bowtie collar"
 	desc = "A fancy tie that includes a collar. Looking snazzy!"
-	icon = 'icons/obj/clothing/necks.dmi'
-	worn_icon = 'icons/mob/clothing/neck.dmi'
-	icon_state = "bowtie_collar_tied"
-	tie_type = "bowtie_collar"
-	greyscale_colors = "#ffffff#39393f"
+	SETUP_MAP_ICONS("bowtie_collar_tied", "/obj/item/clothing/neck/tie/bunnytie")
 	greyscale_config = /datum/greyscale_config/bowtie_collar
-	greyscale_config_worn = /datum/greyscale_config/bowtie_collar_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	greyscale_config_worn = /datum/greyscale_config/bowtie_collar/worn
+	greyscale_colors = "#ffffff#39393f"
+
 	alternate_worn_layer = UNDER_SUIT_LAYER
+	flags_1 = IS_PLAYER_COLORABLE_1
+	tie_type = "bowtie_collar"
 
 /obj/item/clothing/neck/tie/bunnytie/tied
 	is_tied = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/neck/tie/bunnytie/syndicate
 	name = "blood-red bowtie collar"
 	desc = "A fancy tie that includes a red collar. Looking sinister..."
+	icon = 'icons/obj/clothing/necks.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "bowtie_collar_syndi_tied"
 	tie_type = "bowtie_collar_syndi"
 	armor_type = /datum/armor/bunnytie_syndicate
@@ -35,6 +37,8 @@
 /obj/item/clothing/neck/tie/bunnytie/magician
 	name = "magician's bowtie collar"
 	desc = "A fancy gold tie that includes a collar. Looking magical!"
+	icon = 'icons/obj/clothing/necks.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "bowtie_collar_wiz_tied"
 	tie_type = "bowtie_collar_wiz"
 	greyscale_config = null
@@ -48,6 +52,8 @@
 /obj/item/clothing/neck/tie/bunnytie/centcom
 	name = "centcom bowtie collar"
 	desc = "A fancy gold tie that includes a collar. Looking in charge!"
+	icon = 'icons/obj/clothing/necks.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "bowtie_collar_centcom_tied"
 	tie_type = "bowtie_collar_centcom"
 	greyscale_config = null
@@ -60,6 +66,8 @@
 /obj/item/clothing/neck/tie/bunnytie/communist
 	name = "really red bowtie collar"
 	desc = "A simple red tie that includes a collar. Looking egalitarian!"
+	icon = 'icons/obj/clothing/necks.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "bowtie_collar_communist_tied"
 	tie_type = "bowtie_collar_communist"
 	greyscale_config = null
@@ -72,6 +80,8 @@
 /obj/item/clothing/neck/tie/bunnytie/blue
 	name = "blue bowtie collar"
 	desc = "A simple blue tie that includes a collar. Looking imperialist!"
+	icon = 'icons/obj/clothing/necks.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "bowtie_collar_blue_tied"
 	tie_type = "bowtie_collar_blue"
 	greyscale_config = null

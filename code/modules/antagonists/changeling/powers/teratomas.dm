@@ -1,6 +1,6 @@
 /datum/action/changeling/teratoma
-	name = "Birth Teratoma"
-	desc = "Our form divides, creating an egg that will soon hatch into a living tumor, fixated on causing mayhem. Costs 50 chemicals."
+	name = "Teratoma Mitosis"
+	desc = "Our form divides, creating an egg that will soon hatch into a living tumor, a teratoma, fixated on causing mayhem. Costs 50 chemicals."
 	helptext = "The tumor will not be loyal to us or our cause. Requires an changeling absorption for every two tumors created."
 	button_icon_state = "spread_infestation"
 	chemical_cost = 50

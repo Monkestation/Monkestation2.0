@@ -10,7 +10,7 @@
 
 	preview_outfit = /datum/outfit/commando_operative
 
-	preview_outfit_behind = /datum/outfit/syndicate/junior
+	preview_outfit_behind = /datum/outfit/nuclear_operative_junior
 
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
 	nuke_icon_state = "old_nuclearbomb_base"
