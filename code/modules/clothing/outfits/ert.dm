@@ -539,7 +539,7 @@
 	name = "Militia Man"
 
 	id = /obj/item/card/id/advanced/centcom/ert/militia
-	belt = /obj/item/storage/belt/holster/energy/smoothbore
+	belt = /obj/item/storage/belt/holster/smoothbore
 	suit = /obj/item/clothing/suit/armor/militia
 	suit_store = /obj/item/gun/energy/laser/musket
 	head = /obj/item/clothing/head/cowboy/black
