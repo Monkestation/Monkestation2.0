@@ -55,6 +55,8 @@ GLOBAL_VAR(station_nuke_source)
 	var/proper_bomb = TRUE //Please
 	/// A reference to the countdown that goes up over the nuke
 	var/obj/effect/countdown/nuclearbomb/countdown
+	/// if TRUE, the disk can be ejected while the timer is on
+	var/can_eject_while_armed = TRUE
 
 	// Special icon system
 	var/special_icons = FALSE
@@ -346,7 +348,7 @@ GLOBAL_VAR(station_nuke_source)
 			first_status = "DEVICE READY"
 			second_status = "TIME: [get_time_left()]"
 		if(NUKEUI_TIMING)
-			first_status = "DEVICE ARMED"
+			first_status = "DEVICE ARMED[(can_eject_while_armed) ? null : " - CANNOT EJECT DISK"]"
 			second_status = "TIME: [get_time_left()]"
 		if(NUKEUI_EXPLODED)
 			first_status = "DEVICE DEPLOYED"
@@ -369,11 +371,14 @@ GLOBAL_VAR(station_nuke_source)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
-				auth.forceMove(get_turf(src))
-				auth = null
-				. = TRUE
+				if(timing && !can_eject_while_armed)
+					playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+				else
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+					auth.forceMove(get_turf(src))
+					auth = null
+					. = TRUE
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))

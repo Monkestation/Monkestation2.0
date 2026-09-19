@@ -22,7 +22,10 @@
 	var/list/forbidden_areas
 	/// What the timer will be once the code is set. Default 15 minutes.
 	var/timer = 900
-
+	/// Reduces the timer if using the real Nuclear Authentication Disk. Default -5 minutes.
+	var/real_NAD_offset = 300
+	/// Reduces the timer if in a decrypt area. Default -7 minutes.
+	var/decrypt_offset = 480
 	// partical holder
 	var/obj/effect/abstract/particle_holder/damage_particles = null
 
@@ -210,11 +213,14 @@
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
-				auth.forceMove(get_turf(src))
-				auth = null
-				. = TRUE
+				if(timing && !can_eject_while_armed)
+					playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+				else
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+					auth.forceMove(get_turf(src))
+					auth = null
+					. = TRUE
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
@@ -293,14 +299,14 @@
 /obj/machinery/nuclearbomb/commando/proc/calculate_timer()
 	if(timing)
 		return
-	timer = 900
+	var/calc_timer = timer
 	var/area/arm_location = get_area(src)
 	if(arm_location in decrypt_areas)
-		timer -= 480 //8 minutes
+		calc_timer -= decrypt_offset //8 minutes
 	if(istype(auth, /obj/item/disk/nuclear) && !auth.fake)
-		timer -= 300
+		calc_timer -= real_NAD_offset
 
-	timer_set = timer
+	timer_set = calc_timer
 
 /obj/machinery/nuclearbomb/commando/set_anchor(mob/anchorer)
 	set_anchored(!anchored)
@@ -343,7 +349,7 @@
 			first_status = "DEVICE READY"
 			second_status = "TIME: [get_time_left()]"
 		if(NUKEUI_TIMING)
-			first_status = "DEVICE ARMED"
+			first_status = "DEVICE ARMED[(can_eject_while_armed) ? null : " - CANNOT EJECT DISK"]"
 			second_status = "TIME: [get_time_left()]"
 		if(NUKEUI_EXPLODED)
 			first_status = "DEVICE DEPLOYED"
