@@ -34,6 +34,10 @@
 	density = FALSE
 	icon_state = "fan_tiny"
 	buildstackamount = 2
+	
+/obj/structure/fans/examine(mob/user)
+	. += ..()
+	. += span_notice("You can see the [EXAMINE_HINT("bolts")] holding it together.")
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
