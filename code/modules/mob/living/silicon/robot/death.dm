@@ -35,7 +35,7 @@
 	SSblackbox.ReportDeath(src)
 
 /mob/living/silicon/set_suicide(suicide_state)
-	return // Since silicons can be ordered to suicide, they don't permanently lose their soul.
+	return // Since silicons can be ordered to suicide, they shouldn't be unrevivable when they do it.
 
 /mob/living/silicon/final_checkout(obj/item/suicide_tool, apply_damage = FALSE)
 	if(apply_damage)
