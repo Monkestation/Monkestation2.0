@@ -115,6 +115,7 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(self_brace_async), source)
+	return COMPONENT_RESIST_ATTEMPTED
 
 /datum/component/limbless_aid/proc/un_self_brace(mob/living/source)
 	REMOVE_TRAIT(source, TRAIT_NO_LEG_AID, "[REF(src)]_brace")

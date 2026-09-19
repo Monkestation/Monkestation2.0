@@ -120,6 +120,7 @@
 		UnregisterSignal(escapee, COMSIG_LIVING_RESIST)
 		return //Somehow they got out without telling us
 	INVOKE_ASYNC(src, PROC_REF(struggle_free), escapee)
+	return COMPONENT_RESIST_ATTEMPTED
 
 /**
  * Completes the struggle code

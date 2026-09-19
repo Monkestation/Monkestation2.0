@@ -76,6 +76,7 @@
 	SIGNAL_HANDLER
 	interrupted = TRUE
 	owner.remove_status_effect(src)
+	return COMPONENT_RESIST_ATTEMPTED
 
 /datum/status_effect/slimerecall/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
@@ -117,6 +118,7 @@
 	SIGNAL_HANDLER
 
 	owner.remove_status_effect(src)
+	return COMPONENT_RESIST_ATTEMPTED
 
 /datum/status_effect/frozenstasis/on_remove()
 	if(cube)
