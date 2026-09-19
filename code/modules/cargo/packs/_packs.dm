@@ -3,8 +3,10 @@
 	var/name = "Crate"
 	/// The group that the supply pack is sorted into within the cargo purchasing UI.
 	var/group = ""
-	/// Is this cargo supply pack visible to the cargo purchasing UI.
+	/// Is this cargo supply pack visible to the cargo purchasing UI. This is for things that should NEVER be purchaseable.
 	var/hidden = FALSE
+	/// Boolean on whether this cargo supply pack is visible to an emagged cargo UI.
+	var/emag_only = FALSE
 	/// Is this supply pack purchasable outside of the standard purchasing band? Contraband is available by multitooling the cargo purchasing board.
 	var/contraband = FALSE
 	/// Cost of the crate. DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible!
@@ -27,10 +29,6 @@
 	var/crate_type = /obj/structure/closet/crate
 	/// Should we message admins?
 	var/dangerous = FALSE
-	/// Event/Station Goals/Admin enabled packs
-	var/special = FALSE
-	/// When a cargo pack can be unlocked by special events (as seen in special), this toggles if it's been enabled in the round yet (For example, after the station alert, we can now enable buying the station goal pack).
-	var/special_enabled = FALSE
 	/// Only usable by the Bluespace Drop Pod via the express cargo console
 	var/drop_pod_only = FALSE
 	/// If this pack comes shipped in a specific pod when launched from the express console
@@ -53,7 +51,7 @@
 			"name" = item.name,
 			"icon" = item.greyscale_config ? null : item.icon,
 			"icon_state" = item.greyscale_config ? null : item.icon_state,
-			"amount" = contains[item]
+			"amount" = contains[item],
 		)
 		UNTYPED_LIST_ADD(data, item_data)
 
@@ -84,7 +82,7 @@
 	return C
 
 /datum/supply_pack/proc/available()
-	return !special || special_enabled
+	return TRUE
 
 /datum/supply_pack/proc/get_cost()
 	. = cost

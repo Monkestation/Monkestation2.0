@@ -39,13 +39,17 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /// Unlocks special cargo crates
 /datum/adventure_loot_generator/cargo
 	id = "trade_contract"
-	var/static/list/unlockable_packs = list(/datum/supply_pack/exploration/scrapyard,/datum/supply_pack/exploration/catering,/datum/supply_pack/exploration/shrubbery)
+	var/static/list/unlockable_packs = list(
+		/datum/supply_pack/exploration/scrapyard,
+		/datum/supply_pack/exploration/catering,
+		/datum/supply_pack/exploration/shrubbery,
+	)
 
 /datum/adventure_loot_generator/cargo/generate()
 	var/list/still_locked_packs = list()
 	for(var/pack_type in unlockable_packs)
 		var/datum/supply_pack/pack_singleton = SSshuttle.supply_packs[pack_type]
-		if(!pack_singleton.special_enabled)
+		if(!pack_singleton.hidden)
 			still_locked_packs += pack_type
 	if(!length(still_locked_packs)) // Just give out some cash instead.
 		var/datum/adventure_loot_generator/simple/cash/replacement = new
@@ -133,10 +137,10 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 
 /obj/item/trade_chip/proc/try_to_unlock_contract(mob/user)
 	var/datum/supply_pack/pack_singleton = SSshuttle.supply_packs[unlocked_pack_type]
-	if(!unlocked_pack_type || !pack_singleton || !pack_singleton.special)
+	if(!unlocked_pack_type || !pack_singleton || !pack_singleton.hidden)
 		to_chat(user,span_danger("This chip is invalid!"))
 		return
-	pack_singleton.special_enabled = TRUE
+	pack_singleton.hidden = FALSE
 	to_chat(user,span_notice("Contract accepted into nanotrasen supply database."))
 	qdel(src)
 

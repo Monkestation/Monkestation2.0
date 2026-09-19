@@ -157,3 +157,16 @@ End Monkestation Removal*/
 		/obj/item/organ/internal/cyberimp/arm/strongarm/l,
 	)
 	crate_name = "Strong-Arm implant crate"
+
+/datum/supply_pack/medical/bio
+	name = "Biological Containment Gear Crate"
+	desc = "This crate holds 3 full security bio suits which will protect you from viruses along with 3 viral analyzer goggles and PENLITE barrier projectors to stop the spread."
+	cost = CARGO_CRATE_VALUE * 12
+	contains = list(/obj/item/clothing/head/bio_hood/security = 3,
+					/obj/item/clothing/suit/bio_suit/security = 3,
+					/obj/item/reagent_containers/syringe/antiviral = 3,
+					/obj/item/clothing/gloves/latex/nitrile = 3,
+					/obj/item/clothing/glasses/pathology = 3,
+					/obj/item/holosign_creator/medical = 3,
+				)
+	crate_name = "biological containment gear crate"

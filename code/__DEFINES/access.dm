@@ -195,8 +195,9 @@
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
 #define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcom, and syndicate mech access later -SonofSpace
 
-#define ACCESS_UNION "Union"
-#define ACCESS_UNION_LEADER "Union Leader"
+#define ACCESS_UNION "union"
+#define ACCESS_UNION_LEADER "union_leader"
+#define ACCESS_UNION_MINER "union_miner"
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
@@ -542,6 +543,15 @@
 	ACCESS_VAULT, \
 	ACCESS_BLUESHIELD, \
 	ACCESS_NT_REPRESENTATVE, \
+)
+
+/// Name for the Union-related region.
+#define REGION_UNION "Union"
+/// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
+#define REGION_ACCESS_UNION list( \
+	ACCESS_UNION, \
+	ACCESS_UNION_LEADER, \
+	ACCESS_UNION_MINER, \
 )
 
 /// Name for the Centcom region.

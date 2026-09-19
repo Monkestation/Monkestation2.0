@@ -64,6 +64,10 @@
 		/datum/computer_file/program/cargo_union,
 	)
 
+/obj/machinery/modular_computer/preset/quartermaster/Initialize(mapload)
+	. = ..()
+	cpu.device_theme = PDA_THEME_RETRO
+
 /obj/machinery/modular_computer/preset/representative
 	name = "nanotrasen representative console"
 	desc = "A stationary computer. This one comes preloaded with command programs."
