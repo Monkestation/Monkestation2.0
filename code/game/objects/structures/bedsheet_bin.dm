@@ -375,6 +375,14 @@ LINEN BINS
 	light_power = 2
 	light_outer_range = 1.4
 
+/obj/item/bedsheet/prisoner
+	name = "prisoner's blanket"
+	desc = "An old, heavy-duty, Nanotrasen-issue prison bedsheet, recently swapped for brown ones. You try not to think about where those stains came from..."
+	icon_state = "sheetprisoner"
+	inhand_icon_state = "sheetprisoner"
+	dream_messages = list("a prison cell", "orange", "a warden", "filth", "captivity", "shackles", "misconduct", "depravity")
+	bedsheet_type = BEDSHEET_ABSTRACT // Not really, but we don't want this one randomly spawned
+
 /obj/item/bedsheet/random
 	icon_state = "random_bedsheet"
 	name = "random bedsheet"
