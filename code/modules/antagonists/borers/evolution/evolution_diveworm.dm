@@ -9,8 +9,7 @@
 	tier = 1
 	unlocked_evolutions = list(
 		/datum/borer_evolution/diveworm/host_speed,
-		/datum/borer_evolution/diveworm/dissection,
-		)
+	)
 	evo_cost = 1
 
 /datum/borer_evolution/diveworm/health_per_level/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
@@ -25,32 +24,25 @@
 	desc = "Decrease the time it takes to enter a host when you are not hiding."
 	gain_text = "Once or twice, I would blink, and see the non-host monkeys be grappling with a worm that was cross the room just moments before."
 	tier = 2
-	unlocked_evolutions = list(/datum/borer_evolution/diveworm/expanded_chemicals)
+	unlocked_evolutions = list(/datum/borer_evolution/reagent_giver/diveworm_chems)
 
 /datum/borer_evolution/diveworm/host_speed/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.upgrade_flags |= BORER_FAST_BORING
 
-/datum/borer_evolution/diveworm/dissection
-	name = "Dissect Corspe"
-	desc = "Gain the ability to probes a corspe's brain to further the rate you grow."
-	gain_text = "After applying extreme radiation exposure to a sample of the eggs, that generation's bed of worms never produced eggs. However, the sanitation teams observed these same worms festering around a dead host that was to be removed."
-	tier = -1
-	added_action = /datum/action/cooldown/borer/dissection
-	neutered_only = TRUE
-
 // T3 + T1 path
-/datum/borer_evolution/diveworm/expanded_chemicals
-	name = "Expanded Chemical List"
+/datum/borer_evolution/reagent_giver/diveworm_chems
+	name = "Expanded Toxin List"
 	desc = "Gain access to a new list of devious chemicals to the unlockable list."
 	gain_text = "Sometimes, I would just see a known host monkey... collapse, then get up, then collapse again. It was as if the worm was playing with it..."
-	mutually_exclusive = TRUE
+	evo_type = BORER_EVOLUTION_DIVEWORM
+	locks_paths = TRUE
 	tier = 3
 	unlocked_evolutions = list(
 		/datum/borer_evolution/diveworm/harm_increase,
 		/datum/borer_evolution/diveworm/health_per_level/t2,
 	)
-	var/static/list/added_chemicals = list(
+	reagents = list(
 		/datum/reagent/toxin/fentanyl,
 		/datum/reagent/toxin/staminatoxin,
 		/datum/reagent/toxin/mutetoxin,
@@ -59,10 +51,6 @@
 		/datum/reagent/drug/mushroomhallucinogen,
 		/datum/reagent/inverse/oculine,
 	)
-
-/datum/borer_evolution/diveworm/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
-	. = ..()
-	cortical_owner.potential_chemicals |= added_chemicals
 
 /datum/borer_evolution/diveworm/health_per_level/t2 //100 hp per 13 1/3  levels, By level 100 775 hp and 427 seconds to fully heal. Limit is 536 seconds
 	name = "Health Increase II"
@@ -87,6 +75,16 @@
 		/datum/borer_evolution/diveworm/empowered_offspring,
 	)
 
+/datum/borer_evolution/diveworm/harm_increase/get_evolution_paths(mob/living/basic/cortical_borer/borer)
+	if(HAS_TRAIT(borer, TRAIT_NEUTERED))
+		return list(
+			/datum/borer_evolution/diveworm/harm_increase/t2,
+			/datum/borer_evolution/sugar_immunity,
+			/datum/borer_evolution/synthetic_borer,
+			/datum/borer_evolution/reagent_giver/synthetic_chems_negative,
+		)
+	return unlocked_evolutions
+
 /datum/borer_evolution/diveworm/harm_increase/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.host_harm_multiplier += 0.25
@@ -97,11 +95,16 @@
 	tier = -1
 	unlocked_evolutions = list(/datum/borer_evolution/diveworm/harm_increase/t3)
 
+/datum/borer_evolution/diveworm/harm_increase/t2/get_evolution_paths(mob/living/basic/cortical_borer/borer)
+	return unlocked_evolutions
+
 /datum/borer_evolution/diveworm/harm_increase/t3
 	name = "Toxins Increase III"
 	desc = "Further increase the passive and active damage you do to your host, and how often it occurs."
 	tier = -1
-	unlocked_evolutions = list()
+
+/datum/borer_evolution/diveworm/harm_increase/t3/get_evolution_paths(mob/living/basic/cortical_borer/borer)
+	return list()
 
 // T5
 /datum/borer_evolution/diveworm/empowered_offspring
@@ -113,7 +116,6 @@
 	unlocked_evolutions = list(
 		/datum/borer_evolution/sugar_immunity,
 		/datum/borer_evolution/synthetic_borer,
-		/datum/borer_evolution/synthetic_chems_negative,
+		/datum/borer_evolution/reagent_giver/synthetic_chems_negative,
 	)
 	added_action = /datum/action/cooldown/borer/empowered_offspring
-	skip_for_neutered = TRUE

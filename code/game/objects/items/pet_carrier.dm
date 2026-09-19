@@ -19,13 +19,29 @@
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	interaction_flags_mouse_drop = NEED_DEXTERITY
-
+	/// Is the pet carrier open? Allows you to collect/remove pets.
 	var/open = TRUE
+	/// Does this carrier allow locking? Disabled for the small pet carrier.
+	var/allows_locking = TRUE
+	/// Is this carrier locked? Locks don't require access, just an alt click.
 	var/locked = FALSE
+	/// List of all mob occupants from inside of the pet carrier.
 	var/list/occupants = list()
+	/// Combined weight of all mob occupants based on the MOB_SIZE_ defines.
 	var/occupant_weight = 0
-	var/max_occupants = 3 //Hard-cap so you can't have infinite mice or something in one carrier
-	var/max_occupant_weight = MOB_SIZE_SMALL //This is calculated from the mob sizes of occupants
+	/// Maximum number of mobs that can fit in a pet carrier, so you can't have infinite mice or something in one carrier
+	var/max_occupants = 3
+	/// Maximum weight of a mob that can be carried. This is calculated from the mob sizes of occupants
+	var/max_occupant_weight = MOB_SIZE_SMALL
+
+	/// Sound played when the mob carrier is opened.
+	var/open_sound = 'sound/effects/bin_open.ogg'
+	/// Sound played when the mob carrier is closed.
+	var/close_sound = 'sound/items/handling/cardboardbox_drop.ogg'
+
+/obj/item/pet_carrier/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/item/pet_carrier/Destroy()
 	if(occupants.len)
@@ -51,25 +67,25 @@
 
 	// At some point these need to be converted to contextual screentips
 	. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door. Click-drag onto floor to release its occupants.")
-	if(!open)
+	if(!open && allows_locking)
 		. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
 		to_chat(user, span_notice("You close [src]'s door."))
-		playsound(user, 'sound/effects/bin_close.ogg', 50, TRUE)
+		playsound(user, close_sound, 50, TRUE)
 		open = FALSE
 	else
 		if(locked)
 			to_chat(user, span_warning("[src] is locked!"))
 			return
 		to_chat(user, span_notice("You open [src]'s door."))
-		playsound(user, 'sound/effects/bin_open.ogg', 50, TRUE)
+		playsound(user, open_sound, 50, TRUE)
 		open = TRUE
 	update_appearance()
 
 /obj/item/pet_carrier/click_alt(mob/living/user)
-	if(open)
+	if(open || !allows_locking)
 		return CLICK_ACTION_BLOCKING
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
@@ -115,10 +131,11 @@
 /obj/item/pet_carrier/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
+	var/escape_time = get_escape_time(user)
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, span_notice("You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)"))
 		to_chat(loc, span_warning("You see [user] reach through the bars and fumble for the lock switch!"))
-		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !(user in occupants))
+		if(!do_after(user, escape_time, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] flips the lock switch on [src] by reaching through!"), null, null, null, user)
 		to_chat(user, span_boldannounce("Bingo! The lock pops open!"))
@@ -127,8 +144,8 @@
 		update_appearance()
 	else
 		loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), null, null, null, user)
-		to_chat(user, span_notice("You start pushing out of [src]... (This will take about 20 seconds.)"))
-		if(!do_after(user, 20 SECONDS, target = user) || open || !locked || !(user in occupants))
+		to_chat(user, span_notice("You start pushing out of [src]... (This will take some time.)"))
+		if(!do_after(user, escape_time, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] shoves out of [src]!"), null, null, null, user)
 		to_chat(user, span_notice("You shove open [src]'s door against the lock's resistance and fall out!"))
@@ -139,7 +156,7 @@
 
 /obj/item/pet_carrier/update_icon_state()
 	if(open)
-		icon_state = initial(icon_state)
+		icon_state = "[base_icon_state]_open"
 		return ..()
 	icon_state = "[base_icon_state]_[!occupants.len ? "closed" : "occupied"]"
 	return ..()
@@ -155,6 +172,16 @@
 		span_notice("You unload [src] onto [over_atom]."))
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)
+
+/obj/item/pet_carrier/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!locked)
+		context[SCREENTIP_CONTEXT_LMB] = open ? "Close door" : "Open door"
+		return TRUE
+	if(allows_locking)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = locked ? "Unlock door" : "Lock door"
+		return  TRUE
 
 /obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target)
 	if(pet_carrier_full(src))
@@ -190,11 +217,44 @@
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
 
+/obj/item/pet_carrier/proc/get_escape_time(mob/living/user)
+	if(user.mob_size <= MOB_SIZE_SMALL)
+		return rand(30 SECONDS, 40 SECONDS)
+	return 20 SECONDS
+
 /obj/item/pet_carrier/biopod
 	name = "biopod"
 	desc = "Alien device used for undescribable purpose. Or carrying pets."
 	base_icon_state = "biopod"
 	icon_state = "biopod_open"
 	inhand_icon_state = "biopod"
+
+/obj/item/pet_carrier/small
+	name = "small pet carrier"
+	desc = "A small pet carrier for miniature sized animals."
+	w_class = WEIGHT_CLASS_NORMAL
+	base_icon_state = "small_carrier"
+	icon_state = "small_carrier_open"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	greyscale_config = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = null
+
+	max_occupants = 1
+	allows_locking = FALSE
+
+/obj/item/pet_carrier/small/mouse
+	name = "small mouse carrier"
+	desc = "A small pet carrier for miniature sized animals. This looks prepared for a mouse."
+	open = FALSE
+	icon_state = "small_carrier_occupied"
+
+/obj/item/pet_carrier/small/mouse/Initialize(mapload)
+	var/mob/living/basic/mouse/hero_mouse = new /mob/living/basic/mouse(src)
+	add_occupant(hero_mouse) //mouse hero
+	return ..()
 
 #undef pet_carrier_full
