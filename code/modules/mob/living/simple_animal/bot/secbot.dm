@@ -552,7 +552,7 @@
 
 		if(threatlevel >= 4)
 			//This area check includes the armory and a few other 'high security' areas - in these areas beepsky will act normal regardless of alert level.
-			if (SSsecurity_level.current_security_level.number_level > SEC_LEVEL_GREEN || istype(get_area(nearby_carbons), /area/station/ai_monitored/) || istype(get_area(src), /area/station/ai_monitored))
+			if (SSsecurity_level.current_security_level.number_level > SEC_LEVEL_GREEN || istype(get_area(nearby_carbons), /area/station/ai_monitored) || istype(get_area(src), /area/station/ai_monitored))
 				switch(bot_type)
 					if(ADVANCED_SEC_BOT)
 						speak("Level [threatlevel] infraction alert!")
