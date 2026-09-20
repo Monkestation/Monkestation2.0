@@ -1,4 +1,4 @@
-// No AI controller for these guys - they should be inert if they're not player controlled.
+/// No AI controller for these guys - they should be inert if they're not player controlled.
 /mob/living/basic/spiderbot
 	name = "spider bot"
 	desc = "A skittering robotic friend!" // More like ultimate shitter

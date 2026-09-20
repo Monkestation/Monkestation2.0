@@ -1,3 +1,4 @@
+/// Checks that a spiderbot takes in an MMI's personality and hands it back intact on ejection.
 /datum/unit_test/spiderbot_personality_round_trip
 
 /datum/unit_test/spiderbot_personality_round_trip/Run()

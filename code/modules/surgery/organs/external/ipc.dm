@@ -1,3 +1,4 @@
+/// An IPC's antennae. Unlike organic antennae these cannot be burned off.
 /obj/item/organ/external/antennae/ipc
 	name = "IPC antennae"
 	desc = "An IPC's antennae. What is it telling them? What are they sensing?"
@@ -13,6 +14,7 @@
 /obj/item/organ/external/antennae/ipc/try_burn_antennae(mob/living/carbon/human/human)
 	return
 
+/// Draws the IPC antennae, coloured from the chassis secondary palette.
 /datum/bodypart_overlay/mutant/antennae_ipc
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "ipc_antenna"
@@ -26,6 +28,7 @@
 /datum/bodypart_overlay/mutant/antennae_ipc/get_base_icon_state()
 	return sprite_datum.icon_state
 
+/// An IPC's face display. Stores the chosen sprite, blanks on death and restores it on revival.
 /obj/item/organ/external/ipc_screen
 	name = "IPC screen"
 	desc = "An IPC's screen, can it run doom?"
@@ -52,6 +55,7 @@
 	/// Pending timer which restores the saved display after revival.
 	var/restore_screen_timer
 
+/// Draws the IPC face display. Keeps its own stored colour instead of following the chassis palette.
 /datum/bodypart_overlay/mutant/ipc_screen
 	layers = EXTERNAL_ADJACENT
 	feature_key = "ipc_screen"

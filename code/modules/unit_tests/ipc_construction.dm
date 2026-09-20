@@ -1,3 +1,4 @@
+/// Checks that an IPC head only reports complete while it actually holds every one of its components.
 /datum/unit_test/ipc_construction_head_validation
 
 /datum/unit_test/ipc_construction_head_validation/Run()
@@ -35,6 +36,7 @@
 	TEST_ASSERT(!head.check_completion(), "An IPC head missing its eyes still reported complete.")
 	TEST_ASSERT(!core.check_body_completion(), "An IPC core accepted a stripped head solely because its secured flag was set.")
 
+/// Checks that a constructed IPC shell keeps its iron butt but never gains the round-start power cord, even after organ regeneration.
 /datum/unit_test/ipc_construction_augment_policy
 
 /datum/unit_test/ipc_construction_augment_policy/Run()

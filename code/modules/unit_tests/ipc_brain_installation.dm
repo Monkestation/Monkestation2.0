@@ -1,3 +1,4 @@
+/// Checks that an MMI is refused by an IPC shell that already has a brain, leaving both sides untouched.
 /datum/unit_test/ipc_brain_installation_rejects_occupied_shell
 
 /datum/unit_test/ipc_brain_installation_rejects_occupied_shell/Run()
@@ -20,6 +21,7 @@
 	TEST_ASSERT_EQUAL(incoming_personality.current, incoming_brainmob, "A rejected MMI installation transferred the incoming personality out of its brainmob.")
 	TEST_ASSERT_EQUAL(incoming_mmi.loc, original_mmi_location, "A rejected MMI installation moved the incoming MMI.")
 
+/// Checks that a round-start IPC's extracted positronic brain carries its personality and name into another shell.
 /datum/unit_test/roundstart_ipc_posibrain_name_transfer
 
 /datum/unit_test/roundstart_ipc_posibrain_name_transfer/Run()
@@ -41,6 +43,7 @@
 	TEST_ASSERT_EQUAL(destination_shell.mind, source_personality, "The round-start IPC's personality did not transfer into the destination shell.")
 	TEST_ASSERT_EQUAL(destination_shell.real_name, "Roundstart IPC Test", "The destination IPC shell did not inherit the round-start IPC's name.")
 
+/// Checks that positronic brains only issue a master directive once imprinted, and never re-imprint after a personality activates.
 /datum/unit_test/positronic_ipc_binding_states
 
 /datum/unit_test/positronic_ipc_binding_states/Run()
@@ -88,6 +91,7 @@
 	bound_posi.try_unbrainwash_ipc(bound_shell)
 	TEST_ASSERT_NULL(bound_personality.has_antag_datum(/datum/antagonist/brainwashed), "The positronic binding test left brainwashing active during test cleanup.")
 
+/// Checks that installing an already-brainwashed Syndicate MMI into an IPC neither duplicates nor drops its directive.
 /datum/unit_test/syndicate_mmi_ipc_brainwashing_lifecycle
 
 /datum/unit_test/syndicate_mmi_ipc_brainwashing_lifecycle/Run()
@@ -148,6 +152,7 @@
 	syndicate_mmi.try_unbrainwash()
 	TEST_ASSERT_NULL(incoming_personality.has_antag_datum(/datum/antagonist/brainwashed), "Removing the remaining normal MMI brainwashing left a brainwashed antagonist datum behind.")
 
+/// Checks that removing an installed Syndicate MMI brain with special = TRUE strips the brainwashing it applied.
 /datum/unit_test/syndicate_mmi_ipc_special_removal_cleans_brainwashing
 
 /datum/unit_test/syndicate_mmi_ipc_special_removal_cleans_brainwashing/Run()
@@ -185,6 +190,7 @@
 	TEST_ASSERT_NULL(syndicate_mmi.ipc_brainwash_objectives, "Special brain removal retained IPC-only objective tracking.")
 	qdel(installed_brain)
 
+/// Checks that deleting an installed Syndicate MMI outright strips the brainwashing it applied.
 /datum/unit_test/syndicate_mmi_ipc_direct_deletion_cleans_brainwashing
 
 /datum/unit_test/syndicate_mmi_ipc_direct_deletion_cleans_brainwashing/Run()

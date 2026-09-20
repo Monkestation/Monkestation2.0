@@ -56,6 +56,7 @@
 /datum/objective/emagged_spiderbot
 	completed = TRUE
 
+/// Persistent reminder that the chassis is subverted, so the player cannot miss their antag status.
 /atom/movable/screen/alert/emagged_spiderbot
 	name = "Subverted"
 	desc = "Your access controller has been overwritten. You answer to whoever emagged you."
