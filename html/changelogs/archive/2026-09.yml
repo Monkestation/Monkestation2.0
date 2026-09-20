@@ -140,3 +140,14 @@
   CabinetOnFire, TheColorCyan:
   - bugfix: Fixed some sleeping procs that could run in procs that arent allowed to
       sleep
+2026-09-19:
+  Mantlecrawler:
+  - rscadd: Adds the green, a new storyteller that only runs events that dont create
+      antagonists
+  Tractor-Maam:
+  - bugfix: AIs now create a message when they enter cryo (updated from requesting
+      the AAS for an invalid message type to an announcement)
+  - admin: AIs entering cryo storage now make an admin log.
+  - rscadd: Added Reveal ability to Revenants to willingly reveal themselves.
+  ashallaryn:
+  - image: modified twintail floor hairstyle north, east, south, west sprites
