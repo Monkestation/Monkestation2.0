@@ -6339,7 +6339,7 @@
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/smooth/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "bwr" = (
 /obj/structure/table/wood,
@@ -12416,7 +12416,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/smooth/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "cQy" = (
 /obj/machinery/camera/directional/south{
@@ -45266,7 +45266,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/power/smes/super/full,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/smooth/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
 "kAv" = (
 /obj/machinery/light/small/directional/east,
@@ -50515,7 +50515,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
 /obj/structure/cable/layer3,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/iron/smooth/telecomms,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "lKK" = (
 /obj/structure/cable,
