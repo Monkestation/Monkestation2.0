@@ -443,7 +443,7 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
-					C.grippedby(src)
+					INVOKE_ASYNC(C, PROC_REF(grippedby), src)
 
 			update_pull_movespeed()
 

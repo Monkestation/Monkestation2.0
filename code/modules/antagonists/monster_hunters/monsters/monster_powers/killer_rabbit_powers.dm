@@ -3,9 +3,9 @@
  * On cast, makes a new rabbit.
  */
 /datum/action/cooldown/spell/rabbit_spawn
-	name = "Create Offspring"
+	name = "Conjure Bunnies"
 	button_icon_state = "killer_rabbit"
-	desc = "Give birth to a bunch of cute bunnies eager to suicide bomb the nearest enemy!"
+	desc = "Give life to a bunch of cute bunnies eager to suicide bomb the nearest enemy!"
 	cooldown_time = 3 SECONDS
 	button_icon = 'icons/mob/rabbit.dmi'
 	button_icon_state = "killer_rabbit"
