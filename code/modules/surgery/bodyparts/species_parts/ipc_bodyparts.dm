@@ -20,8 +20,6 @@
 
 	disabling_threshold_percentage = 1
 
-	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
-
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 	/// IPC head assembly parts are stored here until the completed chassis becomes a mob.
@@ -244,8 +242,6 @@
 
 	disabling_threshold_percentage = 1
 
-	biological_state = (BIO_ROBOTIC)
-
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/arm/left/ipc
@@ -268,8 +264,6 @@
 	dmg_overlay_type = "synth"
 
 	disabling_threshold_percentage = 1
-
-	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -294,8 +288,6 @@
 
 	disabling_threshold_percentage = 1
 
-	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
-
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/left/ipc
@@ -318,8 +310,6 @@
 
 	disabling_threshold_percentage = 1
 
-	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
-
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/right/ipc
@@ -337,12 +327,9 @@
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
-
 	dmg_overlay_type = "synth"
 	step_sounds = list('sound/effects/servostep.ogg')
 
 	disabling_threshold_percentage = 1
-
-	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)

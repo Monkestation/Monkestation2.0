@@ -3600,6 +3600,7 @@
 #include "code\modules\antagonists\devil\spells\invisibility.dm"
 #include "code\modules\antagonists\devil\spells\jaunt.dm"
 #include "code\modules\antagonists\devil\spells\revival.dm"
+#include "code\modules\antagonists\emagged_spiderbot\emagged_spiderbot.dm"
 #include "code\modules\antagonists\ert\ert.dm"
 #include "code\modules\antagonists\ert\moff_inspectors.dm"
 #include "code\modules\antagonists\evil_clone\evil_clone.dm"

@@ -89,20 +89,16 @@
 		if(!inserted_mmi.brainmob.mind)
 			balloon_alert(user, "mmi has no personality!")
 			return ITEM_INTERACT_BLOCKING
-
 		if(inserted_mmi.brainmob.stat == DEAD)
 			balloon_alert(user, "mmi is dead!")
 			return ITEM_INTERACT_BLOCKING
-
 		if(is_banned_from(inserted_mmi.brainmob.key, list(ROLE_PAI, JOB_CYBORG)))
 			balloon_alert(user, "mmi rejected!")
 			return ITEM_INTERACT_BLOCKING
-
 		if(!user.transferItemToLoc(inserted_mmi, src))
 			return ITEM_INTERACT_BLOCKING
 		mmi = inserted_mmi
 		transfer_personality(inserted_mmi)
-
 		balloon_alert(user, "brain installed")
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -111,16 +107,13 @@
 		if(!mmi)
 			balloon_alert(user, "no brain installed!")
 			return ITEM_INTERACT_BLOCKING
-
 		if(emagged)
 			balloon_alert(user, "access system unresponsive!")
 			return ITEM_INTERACT_BLOCKING
-
 		if(allowed(user))
 			balloon_alert(user, "brain ejected")
 			eject_brain()
 			return ITEM_INTERACT_SUCCESS
-
 		balloon_alert(user, "access denied!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -145,30 +138,35 @@
 		balloon_alert(user, "already emagged!")
 		return FALSE
 	emagged = TRUE
-	balloon_alert(user, "security protocols rewritten")
-	to_chat(src, span_userdanger("You have been emagged; you are now completely loyal to [user] and [user.p_their()] every order!"))
 	emagged_master = WEAKREF(user)
+	balloon_alert(user, "security protocols rewritten")
 	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].")
 	maxHealth = 60
 	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attack_sound = 'sound/machines/defib_zap.ogg'
+	apply_emagged_directive()
 	return TRUE
+
+/// Hands the installed personality the emagged spiderbot antag datum.
+/mob/living/basic/spiderbot/proc/apply_emagged_directive()
+	if(!emagged || !mind || mind.has_antag_datum(/datum/antagonist/emagged_spiderbot))
+		return
+	if(!emagged_master?.resolve())
+		emagged_master = null
+	var/datum/antagonist/emagged_spiderbot/subversion = new()
+	subversion.master_ref = emagged_master
+	mind.add_antag_datum(subversion)
+
+/// Strips the emagged spiderbot antag datum from the personality leaving the chassis.
+/mob/living/basic/spiderbot/proc/clear_emagged_directive()
+	mind?.remove_antag_datum(/datum/antagonist/emagged_spiderbot)
 
 /// Transfers the inserted MMI's personality into the spiderbot.
 /mob/living/basic/spiderbot/proc/transfer_personality(obj/item/mmi/inserted_mmi)
 	inserted_mmi.brainmob.mind.transfer_to(src)
-	if(!emagged)
-		return
-
-	var/mob/living/master = emagged_master?.resolve()
-	if(master)
-		to_chat(src, span_userdanger("You have been emagged; you are now completely loyal to [master] and [master.p_their()] every order!"))
-		return
-
-	emagged_master = null
-	to_chat(src, span_userdanger("You have been emagged; your original master signal is no longer traceable."))
+	apply_emagged_directive()
 
 /mob/living/basic/spiderbot/update_name(updates)
 	. = ..()
@@ -194,6 +192,7 @@
 	var/obj/item/mmi/ejected_mmi = mmi
 	mmi = null
 	ejected_mmi.forceMove(drop_location())
+	clear_emagged_directive()
 	if(mind)
 		if(ejected_mmi.brainmob)
 			mind.transfer_to(ejected_mmi.brainmob)

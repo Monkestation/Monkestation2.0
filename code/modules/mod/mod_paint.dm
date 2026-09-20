@@ -20,9 +20,9 @@
 
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
-
 	. += span_notice("[EXAMINE_HINT("Click")] a MODsuit, IPC, or robotic limb to repaint or recolor it.")
 
+/// Paints the target if it is something this kit can paint.
 /obj/item/mod/paint/proc/paint_target(atom/interacting_with, mob/living/user)
 	if(user.istate & ISTATE_HARM)
 		return FALSE
