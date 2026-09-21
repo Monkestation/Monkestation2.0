@@ -243,7 +243,7 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
-			// monkestation start: prevent lowering alert level from delta
+			// prevent lowering alert level from delta
 
 			var/datum/security_level/current_sec_level = SSsecurity_level.current_security_level
 			if(!current_sec_level.can_crew_change_alert)
