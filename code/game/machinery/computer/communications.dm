@@ -595,12 +595,12 @@
 			data["settableLevels"] += level_name
 	else
 		if (authenticated_as_hos(user))
-			data["settableLevels"] += "green"
-			data["settableLevels"] += "blue"
+			data["settableLevels"] += /datum/security_level/green::name
+			data["settableLevels"] += /datum/security_level/blue::name
 		if (authenticated_as_ce(user))
-			data["settableLevels"] += "yellow"
+			data["settableLevels"] += /datum/security_level/yellow::name
 		if (authenticated_as_cmo(user))
-			data["settableLevels"] += "amber"
+			data["settableLevels"] += /datum/security_level/amber::name
 
 	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
 		data["canRequestSafeCode"] = TRUE
