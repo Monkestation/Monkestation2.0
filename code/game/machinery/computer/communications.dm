@@ -222,11 +222,9 @@
 		if ("changeSecurityLevel")
 			if (!authenticated_as_silicon_or_captain(user) && !authenticated_as_hos(user) && !authenticated_as_ce(user) && !authenticated_as_cmo())
 				return
-			//monkestation edit start:
-			if(istype(get_area(src), /area/shuttle/syndicate/cruiser)) // monkestation edit: Prevents assault ops from modifying the alert level from their shuttle
+			if(istype(get_area(src), /area/shuttle/syndicate/cruiser)) // Prevents assault ops from modifying the alert level from their shuttle
 				to_chat(user, span_warning("Unable to connect to security level systems due to local interference"))
 				return
-			//monkestation edit end
 
 			var/datum/security_level/new_sec_level = SSsecurity_level.available_levels[params["newSecurityLevel"]]
 			if(!new_sec_level)
