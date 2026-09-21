@@ -42,7 +42,7 @@
 
 /obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
 	if(ishuman(eater))
-		var/datum/disease/acute/parasite/disease = new
+		var/datum/disease/disease = new()
 		var/list/anti = list(
 			ANTIGEN_BLOOD	= 1,
 			ANTIGEN_COMMON	= 1,
@@ -58,7 +58,7 @@
 			EFFECT_DANGER_DEADLY	= 0,
 			)
 
-		disease.makerandom(list(30,55),list(0,50),anti,bad,null)
+		disease.randomize_disease(30, 55, 0, 50, null, anti, bad, list(DISEASE_PARASITE), null)
 
 		disease.log += "<br />[ROUND_TIME()] Infected [key_name(eater)]"
 		if(!length(eater.diseases))

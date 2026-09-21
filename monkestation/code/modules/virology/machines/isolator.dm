@@ -1,19 +1,19 @@
-/obj/machinery/disease2/isolator
+/obj/machinery/pathology/isolator
 	name = "Pathogenic Isolator"
 	desc = "Takes a syringe of blood, and isolates the pathogens inside into a dish."
 	density = TRUE
 	anchored = TRUE
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "isolator"
-	var/datum/disease/acute/isolated_disease = null
+	var/datum/disease/isolated_disease = null
 	var/isolating = 0
 	var/beaker = null
 
-/obj/machinery/disease2/isolator/Destroy()
+/obj/machinery/pathology/isolator/Destroy()
 	isolated_disease = null
 	return ..()
 
-/obj/machinery/disease2/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/pathology/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/reagent_containers/syringe))
 		return NONE
 
@@ -31,7 +31,7 @@
 	icon_state = "isolator_in"
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/disease2/isolator/Topic(href, href_list)
+/obj/machinery/pathology/isolator/Topic(href, href_list)
 	if(..())
 		return
 
@@ -53,7 +53,7 @@
 			return
 		var/list/virus = virus_copylist(Blood.data["viruses"])
 		var/choice = text2num(href_list["isolate"])
-		for (var/datum/disease/acute/V as anything in virus)
+		for (var/datum/disease/V as anything in virus)
 			if (V.uniqueID == choice)
 				isolated_disease = V
 				isolating = 40
@@ -71,7 +71,7 @@
 		src.updateUsrDialog()
 		return
 
-/obj/machinery/disease2/isolator/attack_hand(mob/user, list/modifiers)
+/obj/machinery/pathology/isolator/attack_hand(mob/user, list/modifiers)
 	if(machine_stat & BROKEN)
 		return
 	user.machine = src
@@ -94,7 +94,7 @@
 				if(length(G.data) && ("viruses" in G.data))
 					var/list/virus = G.data["viruses"]
 					passes = TRUE
-					for (var/datum/disease/acute/V as anything in virus)
+					for (var/datum/disease/V as anything in virus)
 						dat |= "<li>[G.name]: <A href='byond://?src=[REF(src)];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
 			if(!passes)
 				dat += "<li><em>No pathogen</em></li>"
@@ -102,11 +102,11 @@
 	onclose(user, "isolator")
 	return
 
-/obj/machinery/disease2/isolator/process()
+/obj/machinery/pathology/isolator/process()
 	if(isolating > 0)
 		isolating -= 1
 		if(isolating == 0)
-			var/obj/item/weapon/virusdish/d = new /obj/item/weapon/virusdish(src.loc)
+			var/obj/item/virus_dish/d = new /obj/item/virus_dish(src.loc)
 			d.contained_virus = isolated_disease.Copy()
 			d.contained_virus.log += "[ROUND_TIME()] <br />Transferred to Virus dish"
 			d.update_icon()

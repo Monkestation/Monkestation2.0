@@ -20,7 +20,7 @@ Bonus
 	symptom_delay_min = 15
 	symptom_delay_max = 60
 
-/datum/symptom/flesh_eating/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/flesh_eating/activate(mob/living/carbon/mob, datum/disease/disease)
 	if(HAS_TRAIT(mob, TRAIT_NO_ZOMBIFY)) //These are the zombie symtomps. Best not to kill the zombies with them
 		return
 	switch(disease.stage)
@@ -31,7 +31,7 @@ Bonus
 			to_chat(mob, span_userdanger("[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]"))
 			Flesheat(mob, disease)
 
-/datum/symptom/flesh_eating/proc/Flesheat(mob/living/mob, datum/disease/acute/disease)
+/datum/symptom/flesh_eating/proc/Flesheat(mob/living/mob, datum/disease/disease)
 	var/get_damage = rand(15,25) * multiplier
 	mob.take_overall_damage(brute = get_damage)
 	if(round(multiplier) == 2)

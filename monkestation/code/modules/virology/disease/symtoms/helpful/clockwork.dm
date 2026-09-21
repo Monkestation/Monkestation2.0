@@ -28,7 +28,7 @@
 	max_multiplier = 12
 	max_chance = 24
 
-/datum/symptom/robotic_adaptation/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/robotic_adaptation/first_activate(mob/living/carbon/mob, datum/disease/disease)
 	. = ..()
 
 	if(multiplier >= 6)
@@ -38,7 +38,7 @@
 	if(disease.robustness == 100) //robust disease for robust parts
 		robustbits = TRUE //note that having this symptom means most healing symptoms won't work on you
 
-/datum/symptom/robotic_adaptation/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/robotic_adaptation/activate(mob/living/carbon/mob, datum/disease/disease)
 	disease.infectable_biotypes |= biotypes
 	switch(disease.stage)
 		if(1, 2)
@@ -208,7 +208,7 @@
 					return TRUE
 	return FALSE
 
-/datum/symptom/robotic_adaptation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
+/datum/symptom/robotic_adaptation/deactivate(mob/living/carbon/mob, datum/disease/disease, safe = FALSE)
 	disease.infectable_biotypes &= ~(biotypes)
 	if(disease.stage >= 3 && (replaceorgans || replacebody)) //sorry. no disease quartets allowed
 		to_chat(mob, "<span class='userdanger'>You feel lighter and springier as your innards lose their clockwork facade.</span>")

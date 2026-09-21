@@ -31,6 +31,10 @@
 //Unique antigens
 #define ANTIGEN_IG "Ig" //For TB
 
+#define DISEASE_VIRUS "virus"
+#define DISEASE_BACTERIA "bacteria"
+#define DISEASE_PRION "prion"
+#define DISEASE_PARASITE "parasite"
 
 #define DISEASE_BUMP "bump"
 #define DISEASE_TOUCH "touch"
@@ -54,6 +58,7 @@
 #define DISEASE_SHOCK "shock"
 #define DISEASE_FUNGUS "fungal_spores"
 #define DISEASE_DEBUG "debug"
+#define DISEASE_SNAIL "snail"
 
 #define COMSIG_CRACKER_PUZZLE_FAILURE "cracker_puzzle_failure"
 #define COMSIG_CRACKER_PUZZLE_SUCCESS "cracker_puzzle_success"

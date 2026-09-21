@@ -5,7 +5,7 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 	member_name = "plague rat"
 
 	var/disease_id = ""
-	var/datum/disease/acute/bacteria/plague
+	var/datum/disease/plague
 	var/turf/invasion
 	var/list/hud_icons = list("plague-logo")
 	var/logo_state = "plague-logo"
@@ -16,14 +16,10 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 		plague = new
 
 		var/list/anti = list(
-			ANTIGEN_BLOOD	= 0,
-			ANTIGEN_COMMON	= 0,
 			ANTIGEN_RARE	= 1,
 			ANTIGEN_ALIEN	= 2,
 			)
 		var/list/bad = list(
-			EFFECT_DANGER_HELPFUL	= 0,
-			EFFECT_DANGER_FLAVOR	= 0,
 			EFFECT_DANGER_ANNOYING	= 1,
 			EFFECT_DANGER_HINDRANCE	= 1,
 			EFFECT_DANGER_HARMFUL	= 3,
@@ -38,8 +34,8 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 			plague.origin = pick("Black Plague", "Javorian Pox", "Gray Death", "Doom of Pandyssia", "Thrassian Plague",
 								"Redlight", "Khaara Bacterium", "MEV-1")
 
+		plague.set_form(DISEASE_BACTERIA)
 		plague.spread_flags = DISEASE_SPREAD_BLOOD|DISEASE_SPREAD_CONTACT_FLUIDS|DISEASE_SPREAD_CONTACT_SKIN|DISEASE_SPREAD_AIRBORNE //gotta ensure that our mice can spread that disease
-
 		plague.infectivity = 75
 		plague.color = "#ADAEAA"
 		plague.pattern = 3
@@ -47,8 +43,8 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 		plague.max_stages = 4 //4 stages, unlocks the really dangerous symptoms rather than just DNA Degradation
 		plague.speed = 2 //Takes about 100 seconds to advance to the next stage, max stage in 5 minutes
 
-		plague.makerandom(list(90,100),list(40,75),anti,bad,null)
-		plague.Refresh_Acute()
+		plague.randomize_disease(90, 100, 40, 75, null, anti, bad, null, null)
+		plague.Refresh()
 		for(var/datum/symptom/e in plague.symptoms)
 			e.chance *= 2 //More likely to trigger symptoms per tick
 

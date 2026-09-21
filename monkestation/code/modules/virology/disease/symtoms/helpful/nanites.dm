@@ -1,4 +1,4 @@
-/* codeblocked until functional. Not converted to datum/disease/acute yet
+/* codeblocked until functional. Not converted to datum/disease yet
 /datum/symptom/nano_boost
 	name = "Nano-symbiosis"
 	desc = "The virus reacts to nanites in the host's bloodstream by enhancing their replication cycle."

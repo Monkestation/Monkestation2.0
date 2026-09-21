@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/death_sandwich_poisoning
+/datum/disease/premade/death_sandwich_poisoning
 	name = "Death Sandwich Poisoning"
 	form = "Condition"
 	origin = "Death Sandwich"
@@ -15,12 +15,12 @@
 	infectionchance_base = 0
 	stage_variance = 0
 
-/datum/disease/acute/premade/death_sandwich_poisoning/after_add()
+/datum/disease/premade/death_sandwich_poisoning/after_add()
 	. = ..()
 	antigen = null
 	stage = 3
 
-/datum/disease/acute/premade/death_sandwich_poisoning/activate(mob/living/mob, starved, seconds_per_tick)
+/datum/disease/premade/death_sandwich_poisoning/activate(mob/living/mob, starved, seconds_per_tick)
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/toxin/anacea, 1)) //anacea is still the cure, i dunno
 		cure()

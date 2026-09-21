@@ -1,4 +1,4 @@
-/datum/disease/acute/premade/disease_debug
+/datum/disease/premade/disease_debug
 	name = "Debug Virus"
 	form = "Infective code"
 	origin = "Rogue Code"
@@ -16,7 +16,7 @@
 	can_kill = list()
 	viable_mobtypes = list(/mob/living/carbon/human)
 
-/datum/disease/acute/premade/disease_debug/after_add()
+/datum/disease/premade/disease_debug/after_add()
 	. = ..()
 	antigen = null
 	stage = 4
@@ -38,7 +38,7 @@
 		cached_data = list()
 	else
 		cached_data = data
-	cached_data |= "[/datum/disease/acute/premade/disease_debug]"
+	cached_data |= "[/datum/disease/premade/disease_debug]"
 	src.data = cached_data
 
 /obj/item/storage/box/debugbox/tools
@@ -54,4 +54,4 @@
 /obj/item/reagent_containers/cup/bottle/disease_debug
 	name = "Disease Debug culture bottle"
 	desc = "A small bottle, contains a uncurable disease with whatever symtomp the debuggers are feelings at the time."
-	spawned_disease = /datum/disease/acute/premade/disease_debug
+	spawned_disease = /datum/disease/premade/disease_debug
