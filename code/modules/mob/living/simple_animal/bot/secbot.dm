@@ -341,19 +341,24 @@
 		playsound(src, SFX_LAW, 50, FALSE)
 		back_to_idle()
 
+///Checks if the current_target is nearby the front doors to the brig, and the securitron is within at least 7 tiles of them.
 /mob/living/simple_animal/bot/secbot/proc/check_nearby_doors(mob/living/carbon/current_target)
+	if (get_dist(src, current_target) >= 7)
+		return FALSE
+
 	for (var/obj/machinery/door/airlock/nearby_door in view(3, current_target))
-		if ((nearby_door.req_one_access == ACCESS_BRIG_ENTRANCE || (ACCESS_BRIG_ENTRANCE in nearby_door.req_access)) && get_dist(src, current_target) < 7)
+		if ((nearby_door.req_one_access == ACCESS_BRIG_ENTRANCE || (ACCESS_BRIG_ENTRANCE in nearby_door.req_access)))
 			return TRUE
 	return FALSE
 
-
+///Checks if the current_target is "in custody" - this means in handcuffs, inside security, being pulled by an officer, or near the brig front doors.
 /mob/living/simple_animal/bot/secbot/proc/is_in_custody(mob/living/carbon/current_target)
 	return current_target.handcuffed \
 	|| istype(get_area(current_target), /area/station/security) \
 	|| (ACCESS_SECURITY in current_target.pulledby?.get_access()) \
 	|| check_nearby_doors(current_target)
 
+///Makes the simplebot yell annoyingly at the current_target passed to it. Checks for cooldown inside the proc. Set first_annoy to TRUE if this is the first time the bot is annoying this target.
 /mob/living/simple_animal/bot/secbot/proc/annoy(mob/living/carbon/current_target, first_annoy = FALSE)
 	if (COOLDOWN_FINISHED(src, annoy_cooldown))
 		COOLDOWN_START(src, annoy_cooldown, 5 SECONDS)
@@ -571,7 +576,7 @@
 				point_at(target)
 				mode = BOT_HUNT
 				INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
-				break
+				return
 			else
 				if (!is_in_custody(nearby_carbons) && !QDELETED(nearby_carbons.client) && !nearby_carbons.client?.is_afk())
 					target = nearby_carbons
@@ -581,7 +586,7 @@
 					mode = BOT_GREEN_HUNT
 					weewooloop.start()
 					INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
-					break
+					return
 
 
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(obj/item/slot_item)
