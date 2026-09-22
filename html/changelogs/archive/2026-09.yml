@@ -133,3 +133,33 @@
   - rscadd: Added malf button to MULEbot UI
   - rscadd: Added speed adjuster button (when malf) to MULEbot UI
   - code_imp: fixed MULEbot variable autodocs
+2026-09-17:
+  BebeYoshi:
+  - rscadd: 'A new fuzzy hat has been added to your local loadout shop  for only 4.999
+      monkey coins: The Bear Pelt Hat! (1 Monkey Coin tip required)'
+  CabinetOnFire, TheColorCyan:
+  - bugfix: Fixed some sleeping procs that could run in procs that arent allowed to
+      sleep
+2026-09-19:
+  Mantlecrawler:
+  - rscadd: Adds the green, a new storyteller that only runs events that dont create
+      antagonists
+  Tractor-Maam:
+  - bugfix: AIs now create a message when they enter cryo (updated from requesting
+      the AAS for an invalid message type to an announcement)
+  - admin: AIs entering cryo storage now make an admin log.
+  - rscadd: Added Reveal ability to Revenants to willingly reveal themselves.
+  ashallaryn:
+  - image: modified twintail floor hairstyle north, east, south, west sprites
+2026-09-22:
+  Happyowl93, Odairu, vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents (vinylspiders)
+  - code_imp: makeHologram now allows a color override. (Happyowl93)
+  - rscadd: AIs can pick the color of their hologram. (Odairu)
+  - bugfix: holo ray on holograms no longer shows twice (Odairu)
+  Runian:
+  - bugfix: The light from a cyborg's headlight now always appears in front of them
+      rather than sometimes appearing to be ontop of them.
+  - bugfix: Various cyborg skins no longer have floating hats and now have their worn
+      hat much closer to the top of their head.
+  - code_imp: Cyborg skins now support x-offsets for worn hats and worn badges.

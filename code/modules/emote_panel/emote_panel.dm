@@ -55,9 +55,7 @@
 /datum/emote_panel/ui_state(mob/user)
 	return GLOB.always_state
 
-/mob/living/verb/emote_panel()
-	set name = "Emote Panel"
-	set category = "IC"
+GAME_VERB(/mob/living, emote_panel, "Emote Panel", "IC")
 
 	var/static/datum/emote_panel/emote_panel
 	if(isnull(emote_panel))

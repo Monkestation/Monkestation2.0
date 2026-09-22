@@ -100,10 +100,7 @@
 		+ "</body></html>", "window=photo_showing;size=480x608")
 	onclose(user, "[name]")
 
-/obj/item/photo/verb/rename()
-	set name = "Rename photo"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/photo, rename, usr, "Rename photo", "Object")
 
 	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
