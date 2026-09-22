@@ -1,7 +1,3 @@
-
-/datum/config_entry/flag/show_job_estimation
-	default = TRUE
-
 /datum/preference/toggle/ready_job
 	savefile_key = "ready_job"
 	savefile_identifier = PREFERENCE_PLAYER

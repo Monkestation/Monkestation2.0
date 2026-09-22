@@ -313,8 +313,6 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/proc/add_job_estimation(mob/dead/new_player/player)
 	if(isnull(player.client))
 		return
-	//if(!CONFIG_GET(flag/show_job_estimation))
-	//	return
 
 	var/datum/preferences/prefs = player.client?.prefs
 	var/datum/job/player_job = prefs?.get_highest_priority_job()
@@ -327,8 +325,7 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/display
 	// people who have opted out of giving their name will show up as 'a mysterious [job title here]', unless they're command or AI
-	//if(!prefs.read_preference(/datum/preference/toggle/ready_job) && !(player_job.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) && title != JOB_AI)
-	if(!(player_job.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) && title != JOB_AI)
+	if(!prefs.read_preference(/datum/preference/toggle/ready_job) && !(player_job.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) && title != JOB_AI)
 		display = "a mysterious"
 	else
 		// If the job the player is selecting has a special name, that name should be displayed in the menu, otherwise it should use the normal name
