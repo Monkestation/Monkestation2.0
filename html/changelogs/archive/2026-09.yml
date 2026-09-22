@@ -151,3 +151,15 @@
   - rscadd: Added Reveal ability to Revenants to willingly reveal themselves.
   ashallaryn:
   - image: modified twintail floor hairstyle north, east, south, west sprites
+2026-09-22:
+  Happyowl93, Odairu, vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents (vinylspiders)
+  - code_imp: makeHologram now allows a color override. (Happyowl93)
+  - rscadd: AIs can pick the color of their hologram. (Odairu)
+  - bugfix: holo ray on holograms no longer shows twice (Odairu)
+  Runian:
+  - bugfix: The light from a cyborg's headlight now always appears in front of them
+      rather than sometimes appearing to be ontop of them.
+  - bugfix: Various cyborg skins no longer have floating hats and now have their worn
+      hat much closer to the top of their head.
+  - code_imp: Cyborg skins now support x-offsets for worn hats and worn badges.
