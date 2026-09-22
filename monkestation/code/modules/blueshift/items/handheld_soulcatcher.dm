@@ -44,6 +44,10 @@
 		linked_soulcatcher.scan_body(target_mob, user)
 		return TRUE
 
+	if(HAS_TRAIT(target_mob, TRAIT_REVERSE_MMI)) // AI-uplink shells cannot be soulcatched.
+		to_chat(user, span_warning("You are unable to interface with soul of [target_mob]."))
+		return FALSE
+
 	if(!target_mob.mind)
 		to_chat(user, span_warning("You are unable to remove a mind from an empty body."))
 		return FALSE
@@ -114,6 +118,9 @@
 
 /obj/item/handheld_soulcatcher/attack_secondary(mob/living/carbon/human/target_mob, mob/living/user, params)
 	if(!istype(target_mob))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(HAS_TRAIT(target_mob, TRAIT_REVERSE_MMI)) // AI-uplink shells cannot be soul-catched
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/organ/internal/brain/target_brain = target_mob.get_organ_slot(ORGAN_SLOT_BRAIN)

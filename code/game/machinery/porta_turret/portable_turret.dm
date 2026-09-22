@@ -489,7 +489,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(sillyconerobot.stat != CONSCIOUS)
 					continue
-				if(in_faction(sillyconerobot)) // borgs in faction are friendly
+				if(length((sillycone.faction & faction) - list(FACTION_SILICON))) // borgs in faction are friendly, we dont check for silicon faction
 					continue
 				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
@@ -860,6 +860,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/ai
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
+	faction = list(FACTION_TURRET, FACTION_SILICON)
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
