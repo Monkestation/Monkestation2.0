@@ -20,6 +20,8 @@ SUBSYSTEM_DEF(statpanels)
 	var/list/player_ready_data = list()
 	/// The assoc list of job estimation data keyed to player ref (for command players only). data format: list(estimation_string, ckey)
 	var/list/command_player_ready_data = list()
+	/// The assoc list of job estimation data keyed to player ref (for assistant players only). data format: list(estimation_string, ckey)
+	var/list/assistant_player_ready_data = list()
 
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
@@ -294,10 +296,13 @@ SUBSYSTEM_DEF(statpanels)
 		"",
 	)
 	var/is_admin = check_rights_for(recipient.client, R_ADMIN)
-	for(var/player_ref, player_data in command_player_ready_data)
+	for(var/player_ref, player_data in command_player_ready_data) // Command and silicons first
 		job_estimation += "[player_data[INDEX_PLAYER_DATA]][is_admin ? " ([player_data[INDEX_PLAYER_CKEY]])" : ""]"
 
 	for(var/player_ref, player_data in player_ready_data)
+		job_estimation += "[player_data[INDEX_PLAYER_DATA]][is_admin ? " ([player_data[INDEX_PLAYER_CKEY]])" : ""]"
+
+	for(var/player_ref, player_data in assistant_player_ready_data) // Assistants last
 		job_estimation += "[player_data[INDEX_PLAYER_DATA]][is_admin ? " ([player_data[INDEX_PLAYER_CKEY]])" : ""]"
 
 	return job_estimation
@@ -319,9 +324,6 @@ SUBSYSTEM_DEF(statpanels)
 		return
 
 	var/title = player_job.title
-	// If the readied player has selected a miscellaneous job (Assistant, or Prisoner), they shouldn't be displayed
-	if(title == JOB_ASSISTANT || title == JOB_PRISONER)
-		return
 
 	var/display
 	// people who have opted out of giving their name will show up as 'a mysterious [job title here]', unless they're command or AI
@@ -350,8 +352,11 @@ SUBSYSTEM_DEF(statpanels)
 	/// The string as it appears in the stat panel
 	var/job_estimation_text = "* [display] [player.client?.prefs.alt_job_titles?[title] || title]"
 	// If our player is a member of Command or a Silicon, we want to sort them to the top of the list. Otherwise, just add them to the end of the list.
+	// Assistants show up after everyone else.
 	if(player_job.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND | DEPARTMENT_BITFLAG_SILICON))
 		command_player_ready_data[player_ref] = list(job_estimation_text, player.ckey)
+	else if(player_job.departments_bitflags & DEPARTMENT_BITFLAG_ASSISTANT)
+		assistant_player_ready_data[player_ref] = list(job_estimation_text, player.ckey)
 	else
 		player_ready_data[player_ref] = list(job_estimation_text, player.ckey)
 
@@ -367,6 +372,9 @@ SUBSYSTEM_DEF(statpanels)
 
 	if(length(command_player_ready_data))
 		command_player_ready_data -= player_ref
+
+	if(length(assistant_player_ready_data))
+		assistant_player_ready_data -= player_ref
 
 	UnregisterSignal(player, list(COMSIG_JOB_PREF_UPDATED))
 
