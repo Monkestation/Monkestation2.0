@@ -3,17 +3,17 @@
 	desc = "You suffer from impulsive and intrusive thoughts."
 	icon = FA_ICON_PERSON_CIRCLE_PLUS
 	value = 0
+	species_blacklist = list(SPECIES_IPC)
 	/// Weakref to the trauma we give out
 	var/datum/weakref/added_trama_ref
-	species_blacklist = list(SPECIES_IPC)
 
 /datum/quirk/intrusivethoughts/add(client/client_source)
 	if(!iscarbon(quirk_holder))
 		return
+	/// Character with the quirk
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 
-	// Setup our brain trauma.
-	// also as we inherit the names and values from our quirk.
+	/// The Brain Trauma this quirk creates
 	var/datum/brain_trauma/special/intrusive_thoughts/added_trauma = new()
 
 	carbon_quirk_holder.gain_trauma(added_trauma)
