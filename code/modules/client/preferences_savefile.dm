@@ -405,6 +405,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		preference_middleware.on_new_character(usr)
 
 	character_preview_view?.update_body()
+	SSstatpanels.update_job_estimation(ckey = parent.ckey) // update the job estimations with their new char
 
 /datum/preferences/proc/remove_current_slot()
 	PRIVATE_PROC(TRUE)
