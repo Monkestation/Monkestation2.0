@@ -69,6 +69,7 @@
 
 /datum/component/carbon_sprint/proc/keyUp()
 	UnregisterSignal(carbon_parent, COMSIG_MOB_CLIENT_PRE_MOVE)
+	stopSprint()
 
 /datum/component/carbon_sprint/proc/stopSprint()
 	sprinting = FALSE
