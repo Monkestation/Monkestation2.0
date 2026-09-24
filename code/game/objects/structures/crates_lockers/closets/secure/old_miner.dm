@@ -100,6 +100,7 @@
 /obj/item/clothing/head/beret/medical/paramedic/mining
 	name = "modified paramedic beret"
 	desc = "For finding corpses in style! This one has MM embossed into it and durathread lining the inside."
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/beret/medical/paramedic/mining")
 	armor_type = /datum/armor/miner_medic_head
 
 /datum/armor/miner_medic_head
