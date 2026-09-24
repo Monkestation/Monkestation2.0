@@ -162,6 +162,9 @@
 	/// Can people buckle themselves / be buckled to the cyborg?
 	var/can_be_ridden = TRUE
 
+	/// Has the ghosts been polled to takeover us already?
+	var/unborgable_prompted_ghosts = FALSE
+
 // Defining specific kinds of robots
 ///This is the subtype that gets created by robot suits. It's needed so that those kind of borgs don't have a useless cell in them
 /mob/living/silicon/robot/nocell

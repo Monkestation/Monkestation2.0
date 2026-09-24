@@ -79,6 +79,7 @@
 	if (feeble)
 		power_throw = 0
 	//MONKESTATION EDIT END
+	do_attack_animation(target, no_effect = TRUE)
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
 		if(thrown_item.throw_verb)
