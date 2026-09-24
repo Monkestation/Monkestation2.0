@@ -118,10 +118,6 @@
 	icon_state = "labor_camp_security"
 	ambience_index = AMBIENCE_DANGER
 
-/area/ruin/unpowered/dragonslair
-	name = "Dragons Lair"
-	area_flags = parent_type::area_flags | NOTELEPORT
-
 /area/mine/atmos
 	name = "Mining Station Atmospherics"
 

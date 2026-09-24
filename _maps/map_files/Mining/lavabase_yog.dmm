@@ -4,9 +4,7 @@
 /area/template_noop)
 "ai" = (
 /obj/machinery/light/small,
-/obj/structure/sign/departments/mining{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/mining/directional/south,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/mine/eva/lower)
 "ak" = (
@@ -556,7 +554,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/mine/production)
 "fO" = (
@@ -627,12 +624,10 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "hq" = (
-/obj/structure/sign/departments/mining{
-	pixel_y = 32
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/sign/departments/mining/directional/north,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
 "hH" = (
@@ -678,7 +673,6 @@
 "ia" = (
 /obj/effect/turf_decal/loading_area,
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/mine/production)
@@ -1674,7 +1668,7 @@
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/camera/directional/south{
-	c_tag = "Secondary EVA";
+	c_tag = "Mining Secondary EVA";
 	network = list("mine")
 	},
 /turf/open/floor/iron,
@@ -1930,7 +1924,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	network = list("mine");
-	c_tag = "EVA"
+	c_tag = "Mining EVA"
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
@@ -2966,7 +2960,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/camera/directional/south{
 	network = list("mine");
-	c_tag = "Infirmary"
+	c_tag = "Mining Infirmary"
 	},
 /turf/open/floor/iron/dark,
 /area/mine/medical)
@@ -3111,7 +3105,6 @@
 /area/mine/living_quarters)
 "Vt" = (
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/mine/production)
 "VB" = (
@@ -3128,7 +3121,6 @@
 	name = "Smelter Conveyor Control Switch"
 	},
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/mine/production)
 "VK" = (
@@ -3224,7 +3216,7 @@
 /obj/item/bedsheet/medical,
 /obj/machinery/camera/directional/east{
 	network = list("mine");
-	c_tag = "Recovery Room"
+	c_tag = "Mining Recovery Room"
 	},
 /turf/open/floor/iron/white,
 /area/mine/medical)
