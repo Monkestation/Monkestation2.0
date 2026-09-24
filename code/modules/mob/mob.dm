@@ -200,9 +200,7 @@
 /**
  * Some kind of debug verb that gives atmosphere environment details
  */
-/mob/proc/Cell()
-	set category = "Admin"
-	set hidden = TRUE
+GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 
 	if(!loc)
 		return
@@ -566,9 +564,7 @@
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-/mob/verb/examinate(atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
-	set name = "Examine"
-	set category = "IC"
+GAME_VERB(/mob, examinate, "Examine", "IC", atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
@@ -763,10 +759,7 @@
  *
  * Calls attack self on the item and updates the inventory hud for hands
  */
-/mob/verb/mode()
-	set name = "Activate Held Object"
-	set category = "Object"
-	set src = usr
+GAME_VERB_SRC(/mob, mode, usr, "Activate Held Object", "Object")
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
@@ -793,9 +786,7 @@
  *
  * Only works if flag/norespawn is allowed in config
  */
-/mob/verb/abandon_mob()
-	set name = "Respawn"
-	set category = "OOC"
+GAME_VERB(/mob, abandon_mob, "Respawn", "OOC")
 
 	if (CONFIG_GET(flag/norespawn))
 		if (!check_rights_for(usr.client, R_ADMIN))
@@ -833,23 +824,15 @@
 /**
  * Sometimes helps if the user is stuck in another perspective or camera
  */
-/mob/verb/cancel_camera()
-	set name = "Cancel Camera View"
-	set category = "OOC"
+GAME_VERB(/mob, cancel_camera, "Cancel Camera View", "OOC")
 	reset_perspective(null)
 	unset_machine()
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
-/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
-	set name = ".click"
-	set hidden = TRUE
-	set category = null
+GAME_VERB_HIDDEN(/mob, DisClick, ".click", argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	return
 
-/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
-	set name = ".dblclick"
-	set hidden = TRUE
-	set category = null
+GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	return
 
 /**
@@ -1461,9 +1444,7 @@
 	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
-/mob/verb/open_language_menu_verb()
-	set name = "Open Language Menu"
-	set category = "IC"
+GAME_VERB(/mob, open_language_menu_verb, "Open Language Menu", "IC")
 
 	get_language_holder().open_language_menu(usr)
 
@@ -1590,10 +1571,7 @@
 	canon_client = null
 
 ///Shows a tgui window with memories
-/mob/verb/memory()
-	set name = "Memories"
-	set category = "IC"
-	set desc = "View your character's memories."
+GAME_VERB_DESC(/mob, memory, "Memories", "View your character's memories.", "IC")
 	if(!mind)
 		var/fail_message = "You have no mind!"
 		if(isobserver(src))
@@ -1645,9 +1623,7 @@
 	data["memories"] = memories
 	return data
 
-/mob/verb/view_skills()
-	set category = "IC"
-	set name = "View Skills"
+GAME_VERB(/mob, view_skills, "View Skills", "IC")
 
 	mind?.print_levels(src)
 

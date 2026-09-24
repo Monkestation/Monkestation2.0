@@ -465,7 +465,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/pflatcap //BUYABLE
 	name = "Poly Flat Cap"
-	item_path = /obj/item/clothing/head/colourable_flatcap
+	item_path = /obj/item/clothing/head/flatcap/recolor
 
 /datum/loadout_item/head/mothcap //BUYABLE
 	name = "Mothic Softcap"
@@ -631,6 +631,10 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/warning_cone //BUYABLE
 	name = "Warning Cone"
 	item_path = /obj/item/clothing/head/cone
+
+/datum/loadout_item/head/bear_pelt //BUYABLE
+	name = "Bear Pelt"
+	item_path = /obj/item/clothing/head/costume/bearpelt
 
 /*
 *	JOB-LOCKED

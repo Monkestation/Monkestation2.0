@@ -21,16 +21,19 @@
 	var/base_pixel_x = 0
 	/// The Y offset of the sprite.
 	var/base_pixel_y = 0
-	/// The X offset of any worn hats. If not null, allows hat to be worn.
-	var/hat_offset = null
-	/// The X offset of any worn badges. If not null, allows badges to be worn.
-	var/badge_offset = null
-	/// The X offsets for any buckled individuals.
-	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
-	/// The Y offsets for any buckled people.
-	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
+	/// The X and Y offsets of any worn hats. If not null, allows hat to be worn.
+	var/list/hat_offset = null
+	/// The X and Y offsets of any worn badges. If not null, allows badges to be worn.
+	var/list/badge_offset = null
+	/// The X and Y offsets of any buckled individuals.
+	var/list/ride_offset = list(
+		"north" = list(0, 4),
+		"south" = list(0, 4),
+		"east" = list(-6, 3),
+		"west" = list(6, 3),
+	)
 	/// The traits that are given when using this skin.
-	var/list/traits
+	var/list/traits = null
 
 /// Performs the transformation animation, if there is any.
 /datum/robot_skin/proc/do_transformation_animation(mob/living/silicon/robot/cyborg_target, should_immobilize = TRUE)

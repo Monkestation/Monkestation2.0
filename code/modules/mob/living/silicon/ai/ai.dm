@@ -48,6 +48,7 @@
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
 	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
+	var/ai_holocolor //The AI's hologram color, defaults to blue when nothing is selected
 	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
@@ -156,6 +157,9 @@
 	///Did we get the death prompt?
 	var/is_dying = FALSE
 
+	///How much ai's client view_range should be adjusted by with view_size.setTo(). 0 Is default view size.
+	var/view_range_boost = 0
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -214,7 +218,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
+	ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, show_laws_verb)
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -229,13 +233,11 @@
 	nanite_remote.Grant(src)
 
 	if(isvalidAIloc(loc))
-		add_verb(src, list(
-			/mob/living/silicon/ai/proc/ai_network_change,
-			/mob/living/silicon/ai/proc/ai_hologram_change,
-			/mob/living/silicon/ai/proc/botcall,
-			/mob/living/silicon/ai/proc/control_integrated_radio,
-			/mob/living/silicon/ai/proc/set_automatic_say_channel,
-		))
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_network_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_hologram_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, botcall)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, control_integrated_radio)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, set_automatic_say_channel)
 
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
@@ -368,9 +370,8 @@
 	add_verb(src, addedVerb)
 	view_core()
 
-/mob/living/silicon/ai/verb/pick_icon()
-	set category = "AI Commands"
-	set name = "Set AI Core Display"
+GAME_VERB_DESC(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose what appears on your AI core display", "AI Commands")
+
 	if(incapacitated())
 		return
 	icon = initial(icon)
@@ -493,9 +494,7 @@
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
 
-/mob/living/silicon/ai/verb/ai_camera_track()
-	set name = "track"
-	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
 	ai_tracking_tool.track_input(src)
 
@@ -630,10 +629,7 @@
 	eyeobj.setLoc(get_turf(C))
 	return TRUE
 
-/mob/living/silicon/ai/proc/botcall()
-	set category = "AI Commands"
-	set name = "Access Robot Control"
-	set desc = "Wirelessly control various automatic robots."
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirelessly control various automatic robots.", "AI Commands")
 
 	if(!robot_control)
 		robot_control = new(src)
@@ -694,9 +690,7 @@
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
 //Addition by Mord_Sith to define AI's network change ability
-/mob/living/silicon/ai/proc/ai_network_change()
-	set category = "AI Commands"
-	set name = "Jump To Network"
+GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "AI Commands")
 
 	unset_machine()
 
@@ -738,13 +732,20 @@
 //End of code by Mord_Sith
 
 //I am the icon meister. Bow fefore me. //>fefore
-/mob/living/silicon/ai/proc/ai_hologram_change()
-	set name = "Change Hologram"
-	set desc = "Change the default hologram available to AI to something else."
-	set category = "AI Commands"
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", "AI Commands")
 
 	if(incapacitated())
 		return
+
+	ai_holocolor = tgui_color_picker(usr, "Choose a color for your hologram", "Hologram Color")
+	if(ai_holocolor)
+		var/ai_holo_hsv = rgb2hsv(ai_holocolor)
+		var/default_hsv = rgb2hsv(COLOR_AI_HOLOGRAM_BLUE)
+
+		default_hsv[1] = ai_holo_hsv[1]
+
+		ai_holocolor = hsv2rgb(default_hsv)
+
 	var/input
 	switch(tgui_input_list(usr, "Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?", "Customize", list("Custom Character","Unique","Animal")))
 		if("Custom Character")
@@ -899,10 +900,7 @@
 		C.Togglelight(1)
 		lit_cameras |= C
 
-/mob/living/silicon/ai/proc/control_integrated_radio()
-	set name = "Transceiver Settings"
-	set desc = "Allows you to change settings of your radio."
-	set category = "AI Commands"
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Settings", "Allows you to change settings of your radio.", "AI Commands")
 
 	if(incapacitated())
 		return
@@ -915,10 +913,7 @@
 	if(radio)
 		radio.make_syndie()
 
-/mob/living/silicon/ai/proc/set_automatic_say_channel()
-	set name = "Set Auto Announce Mode"
-	set desc = "Modify the default radio setting for your automatic announcements."
-	set category = "AI Commands"
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Announce Mode", "Modify the default radio setting for your automatic announcements.", "AI Commands")
 
 	if(incapacitated())
 		return
@@ -1113,10 +1108,11 @@
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 	apc.update_appearance()
 
-/mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
-	set category = "AI Commands"
-	set name = "Deploy to Shell"
+GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfer to an available remote body.", "AI Commands")
 
+	select_shell()
+
+/mob/living/silicon/ai/proc/select_shell(mob/living/silicon/robot/target)
 	if(incapacitated())
 		return
 	if(control_disabled)
@@ -1205,16 +1201,10 @@
 			past_os.remove_ai(src)
 
 /mob/living/silicon/ai/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
 	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
 /mob/living/silicon/ai/down()
-	set name = "Move Down"
-	set category = "IC"
-
 	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 
@@ -1262,9 +1252,7 @@
 		return ai_voicechanger.say_name
 	return
 
-/mob/living/silicon/ai/verb/jobtitles()
-	set category = "AI Commands"
-	set name = "Toggle Jobtitle Display"
+GAME_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "AI Commands")
 
 	if(incapacitated())
 		return

@@ -1,0 +1,169 @@
+2026-09-01:
+  TheColorCyan:
+  - bugfix: (SmArtKar) Fixed flypeople not being able to gain nutrition from slurping
+      up vomit
+  - bugfix: fixed pony ears coloring
+  - bugfix: kinetic smg can no longer be suppresed which fucked its sprite up
+  - bugfix: replaced invisible weight machines in void raptor with stacklifters
+  - bugfix: elucidate will now properly hear and revive the target
+  - bugfix: fixed rainbow adult slimes and silver baby slimes being invisible
+  - bugfix: (SmArtKar) Trying to ignite oil with a welding tool no longer runtimes
+      due to it trying to get ignited twice
+  hexakats:
+  - balance: Replaced the oxygen jetpack in the traitor space suit box with a jetpack
+      harness
+  - balance: The traitor space suit box can hold the jetpack harness along side the
+      space suit and helmet
+  notghosti:
+  - rscadd: PTL laser now disables when disabled
+  - qol: PTL TGUI is adjusted to actually show how many credits have been earnt.
+  - balance: PTL will now do damage/gib based on the actual power outputted, not how
+      much you set output to.
+2026-09-02:
+  JohnFulpWillard:
+  - bugfix: Fixes (very much lowers) AI CPU point generation (both in Research points
+      & researching programs).
+  - balance: Lowers credits gained from bitcoin mining.
+  - balance: Makes CPU scaling slightly more linear.
+  - balance: Buffs Bluespace CPU a tiny bit.
+  Tractor-Maam:
+  - rscadd: Traitor plasmamen can purchase a Tacticool Plasmaman outfit for 1TC.
+  hexakats:
+  - balance: you can now hold the china lake grenade launcher in one hand (still can't
+      fire it while your other hand is holding anything tho!)
+2026-09-03:
+  Runian:
+  - bugfix: The freezer within Theseus's research server room now properly cools down
+      the research server.
+  - bugfix: Kilostation's North Central Primary Hallway's disposal pipes are correctly
+      connected and no longer ends early in the hallway.
+  notghosti:
+  - bugfix: Dying in a mech as a AI will now properly handle you returning to your
+      mecha.
+  - bugfix: AI mech wreckages now are functional
+  - bugfix: AI mech domination will no longer softlock a second ai view panel if they
+      were booted from it.
+  osaka-fuuri:
+  - rscadd: X-ray users can now scan guns to see chambered ammo
+2026-09-04:
+  osaka-fuuri:
+  - bugfix: Wrapping papers & package wrappers now can be stacked by hand.
+  - code_imp: Stackable items now use the new item_interaction() instead of the old
+      attackby().
+2026-09-05:
+  Gboster-0:
+  - rscadd: Borers now use adjectives for their names instead of bad preset ones
+  - balance: You can no longer tell if a borer is a hivequeen or its generation from
+      looking/speaking to it
+  KuiperPilgrim:
+  - rscadd: added the "Einstein" hairstyle
+  hexakats:
+  - spellcheck: Bandolier description says it hold .357 bullets
+  - spellcheck: Large chemical canisters don't say they can't fit in standard hyposprays
+      anymore
+  - spellcheck: CMO Hypospray doesn't say it fits larger canisters anymore, also says
+      that it's faster than standard hyposprays
+  - balance: Haloperidol purges itself from your bloodstream (at 1u/tick) once you're
+      in stamina crit.
+  - balance: Haloperidol's applied drowsiness status effect caps out at 30 seconds.
+  notghosti:
+  - rscadd: AI Dashboard Program; Nightvision Camera Upgrade
+  - rscadd: AI Dashboard Program; Supply Shuttle Navigation Optimization
+  - rscadd: AI Dashboard Program; Expanded Camera Network
+  - bugfix: Malfunctioning AI Camera Upgrade now properly provides night vision
+  - admin: Spawn AI no longer asks if you want to move it into a new core
+2026-09-08:
+  Runian:
+  - bugfix: Experimental Cloner Corruption is no longer a valid event for False Alarm.
+  Tractor-Maam:
+  - bugfix: AIs can now read program notifications from their PDA in the chat box.
+2026-09-09:
+  JupiterJaeden:
+  - spellcheck: Removes references to birth from tomas and monster hunter rabbits.
+  Tractor-Maam:
+  - qol: Bags of Holding can be slap crafted now.
+  hexakats:
+  - balance: the chameleon holster no longer fits on suit storage (this was done because
+      a lot of forms looked borked or have missing icons for suit storage, also it
+      already said that on the description before)
+  - refactor: moved more chameleon items from attackby to multitool_act for chameleon
+      locking
+  - code_imp: moved more chameleon items to chameleon.dm
+  - rscadd: Adds the auto shotgun case to the traitor uplink
+  - rscadd: Replaces the special ammo boxes with auto shotgun magazines that come
+      with said ammo types
+  - rscdel: Removes the renoster shotgun case from the traitor uplink
+  - balance: Trickshot shells now deal a total of 42 damage per shell when all pellets
+      hit
+  - balance: Uranium penetrator shells now have high armor penetration (75%)
+  notghosti:
+  - map: Boulder refinery room to boxstation
+2026-09-10:
+  Runian:
+  - bugfix: Tippable things no longer appears to be upright while tipped / upside
+      down while upright if two people (un)tip them at the same time.
+  Veth-s:
+  - balance: Changed the number of joined players require for station goals to proc
+      from 10 to 5.
+2026-09-12:
+  Needicla:
+  - qol: You can now set your name to be randomized each round without also having
+      to randomize your body.
+  - bugfix: The randomization dropdowns in character setup now correctly show their
+      color state.
+2026-09-13:
+  hexakats:
+  - bugfix: Removed autoshotgun ammo from the nukie uplink (they can't buy the gun
+      for it)
+2026-09-16:
+  Runian:
+  - image: Lobby job icons for Cyborg / AI.
+  - bugfix: Cyborg skins now correctly set the cyborg's bubble icon.
+  Tostah:
+  - qol: Placing xeno structures on top of a vent no longer gives you a pop up
+  artcertain:
+  - rscadd: adds nitrogen canisters and metal foam grenades to the DIY supermatter
+      setup tutorial
+  ashallaryn:
+  - image: modified nitori hairstyle north, east, south, west sprites
+  notghosti:
+  - bugfix: Expanded view range now persist when controlling ai shells and mechs
+  - bugfix: Expanded view range no longer shows more of the multicamera area
+  osaka-fuuri:
+  - rscadd: Added malf button to MULEbot UI
+  - rscadd: Added speed adjuster button (when malf) to MULEbot UI
+  - code_imp: fixed MULEbot variable autodocs
+2026-09-17:
+  BebeYoshi:
+  - rscadd: 'A new fuzzy hat has been added to your local loadout shop  for only 4.999
+      monkey coins: The Bear Pelt Hat! (1 Monkey Coin tip required)'
+  CabinetOnFire, TheColorCyan:
+  - bugfix: Fixed some sleeping procs that could run in procs that arent allowed to
+      sleep
+2026-09-19:
+  Mantlecrawler:
+  - rscadd: Adds the green, a new storyteller that only runs events that dont create
+      antagonists
+  Tractor-Maam:
+  - bugfix: AIs now create a message when they enter cryo (updated from requesting
+      the AAS for an invalid message type to an announcement)
+  - admin: AIs entering cryo storage now make an admin log.
+  - rscadd: Added Reveal ability to Revenants to willingly reveal themselves.
+  ashallaryn:
+  - image: modified twintail floor hairstyle north, east, south, west sprites
+2026-09-22:
+  Happyowl93, Odairu, vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents (vinylspiders)
+  - code_imp: makeHologram now allows a color override. (Happyowl93)
+  - rscadd: AIs can pick the color of their hologram. (Odairu)
+  - bugfix: holo ray on holograms no longer shows twice (Odairu)
+  Runian:
+  - bugfix: The light from a cyborg's headlight now always appears in front of them
+      rather than sometimes appearing to be ontop of them.
+  - bugfix: Various cyborg skins no longer have floating hats and now have their worn
+      hat much closer to the top of their head.
+  - code_imp: Cyborg skins now support x-offsets for worn hats and worn badges.
+2026-09-23:
+  hry-gh:
+  - code_imp: the backend to all verbs in the game has been played with, please report
+      any issues to github

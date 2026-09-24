@@ -271,6 +271,13 @@
 		add_overlay(eye_lights)
 	return ..()
 
+/mob/living/silicon/robot/setDir(newdir)
+	var/old_dir = dir
+	. = ..()
+	if(. == old_dir)
+		return
+	update_icons()
+
 /mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(user)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
@@ -303,13 +310,6 @@
 		// Instead of being listed as "deactivated". The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
 		// I could change the network to null but I don't know what would happen, and it seems too hacky for me.
-
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	return ..()
 
 /mob/living/silicon/robot/execute_mode()
 	if(incapacitated())
@@ -669,16 +669,19 @@
 	. = ..()
 	if(worn_hat == gone)
 		worn_hat = null
-		if(!QDELETED(src)) //Don't update icons if we are deleted.
+		if(!QDELETED(src))
 			update_icons()
 
 	if(worn_badge == gone)
 		worn_badge = null
-		if(!QDELETED(src)) //Don't update icons if we are deleted.
+		if(!QDELETED(src))
 			update_icons()
 
 	if(gone == cell)
 		cell = null
+		low_power_mode = TRUE
+		if(!QDELETED(src))
+			update_icons()
 
 	if(gone == mmi)
 		mmi = null
@@ -827,6 +830,8 @@
 		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
 	if(mainframe.eyeobj)
 		mainframe.eyeobj.setLoc(loc)
+	if(mainframe.view_range_boost > 0)
+		mainframe.client?.view_size.setTo(mainframe.view_range_boost) // Update the viewrange if its greater than 0
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -1053,6 +1058,7 @@
 	skin = new_skin
 	icon = skin.icon
 	icon_state = skin.icon_state
+	bubble_icon = skin.bubble_icon
 	base_pixel_x = skin.base_pixel_x
 	base_pixel_y = skin.base_pixel_y
 	if(isnull(skin.hat_offset) && worn_hat)

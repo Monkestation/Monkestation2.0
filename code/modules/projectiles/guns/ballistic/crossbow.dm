@@ -62,7 +62,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/shoot_with_empty_chamber(mob/living/user)
 	if(chambered || !magazine || !length(magazine.contents))
 		return ..()
-	drop_bolt(user)
+	INVOKE_ASYNC(src, PROC_REF(drop_bolt), user)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
 	. = ..()

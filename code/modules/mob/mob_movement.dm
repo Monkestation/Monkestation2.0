@@ -3,8 +3,7 @@
  *
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
-/client/verb/drop_item()
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
@@ -390,10 +389,8 @@
  * (bound to 8) - repeated presses toggles through head - eyes - mouth
  */
 
-///Hidden verb to target the head, bound to 8
-/client/verb/body_toggle_head()
-	set name = "body-toggle-head"
-	set hidden = TRUE
+///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
+GAME_VERB_HIDDEN(/client, body_toggle_head, "body-toggle-head")
 
 	if(!check_has_body_select())
 		return
@@ -411,9 +408,7 @@
 	selector.set_selected_zone(next_in_line, mob)
 
 ///Hidden verb to target the eyes, bound to 7
-/client/verb/body_eyes()
-	set name = "body-eyes"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_eyes, "body-eyes")
 
 	if(!check_has_body_select())
 		return
@@ -422,9 +417,7 @@
 	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
 
 ///Hidden verb to target the mouth, bound to 9
-/client/verb/body_mouth()
-	set name = "body-mouth"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_mouth, "body-mouth")
 
 	if(!check_has_body_select())
 		return
@@ -433,9 +426,7 @@
 	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
 ///Hidden verb to target the right arm, bound to 4
-/client/verb/body_r_arm()
-	set name = "body-r-arm"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_r_arm, "body-r-arm")
 
 	if(!check_has_body_select())
 		return
@@ -444,9 +435,7 @@
 	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
 ///Hidden verb to target the chest, bound to 5
-/client/verb/body_chest()
-	set name = "body-chest"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_chest, "body-chest")
 
 	if(!check_has_body_select())
 		return
@@ -455,9 +444,7 @@
 	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
 ///Hidden verb to target the left arm, bound to 6
-/client/verb/body_l_arm()
-	set name = "body-l-arm"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_l_arm, "body-l-arm")
 
 	if(!check_has_body_select())
 		return
@@ -466,9 +453,7 @@
 	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
 ///Hidden verb to target the right leg, bound to 1
-/client/verb/body_r_leg()
-	set name = "body-r-leg"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_r_leg, "body-r-leg")
 
 	if(!check_has_body_select())
 		return
@@ -477,9 +462,7 @@
 	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
 ///Hidden verb to target the groin, bound to 2
-/client/verb/body_groin()
-	set name = "body-groin"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_groin, "body-groin")
 
 	if(!check_has_body_select())
 		return
@@ -488,9 +471,7 @@
 	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
 ///Hidden verb to target the left leg, bound to 3
-/client/verb/body_l_leg()
-	set name = "body-l-leg"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, body_l_leg, "body-l-leg")
 
 	if(!check_has_body_select())
 		return
@@ -499,10 +480,7 @@
 	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 ///Verb to toggle the walk or run status
-/client/verb/toggle_walk_run()
-	set name = "toggle-walk-run"
-	set hidden = TRUE
-	set instant = TRUE
+GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	if(mob)
 		if(mob.m_intent != MOVE_INTENT_WALK)
 			mob.set_move_intent(MOVE_INTENT_WALK)
@@ -521,9 +499,7 @@
 			selector.update_appearance()
 
 ///Moves a mob upwards in z level
-/mob/verb/up()
-	set name = "Move Upwards"
-	set category = "IC"
+GAME_VERB(/mob, up, "Move Upwards", "IC")
 
 	var/turf/current_turf = get_turf(src)
 
@@ -542,9 +518,7 @@
 		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
-/mob/verb/down()
-	set name = "Move Down"
-	set category = "IC"
+GAME_VERB(/mob, down, "Move Down", "IC")
 
 	var/turf/current_turf = get_turf(src)
 

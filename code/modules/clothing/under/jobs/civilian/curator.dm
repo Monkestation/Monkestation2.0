@@ -31,13 +31,15 @@
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
-	icon_state = "jumpsuit"
+	icon = 'icons/map_icons/clothing/under/color.dmi'
+	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/color")
 	inhand_icon_state = "jumpsuit"
-	greyscale_colors = "#3f3f3f"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
+	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
+	greyscale_colors = "#3f3f3f"
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/curator_nasa
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

@@ -12,7 +12,8 @@
 /obj/item/clothing/head/cowboy/nova/wide
 	name = "wide brimmed hat"
 	desc = "A wide-brimmed hat, to keep the sun out of your eyes in style."
-	icon_state = "widebrim"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("widebrim", "/obj/item/clothing/head/cowboy/nova/wide")
 	greyscale_colors = "#4D4D4D#DE9754"
 	greyscale_config = /datum/greyscale_config/cowboy_wide
 	greyscale_config_worn = /datum/greyscale_config/cowboy_wide/worn
@@ -21,7 +22,7 @@
 /obj/item/clothing/head/cowboy/nova/wide/feathered
 	name = "wide brimmed feathered hat"
 	desc = "A wide-brimmed hat adorned with a feather, the perfect flourish to a rugged outfit."
-	icon_state = "widebrim_feathered"
+	SETUP_MAP_ICONS("widebrim_feathered", "/obj/item/clothing/head/cowboy/nova/wide/feathered")
 	greyscale_colors = "#4D4D4D#DE9754#D5D5B9"
 	greyscale_config = /datum/greyscale_config/cowboy_wide_feathered
 	greyscale_config_worn = /datum/greyscale_config/cowboy_wide_feathered/worn
@@ -29,7 +30,8 @@
 /obj/item/clothing/head/cowboy/nova/flat
 	name = "flat brimmed hat"
 	desc = "A finely made hat with a short flat brim, perfect for an old fashioned shootout."
-	icon_state = "flatbrim"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("flatbrim", "/obj/item/clothing/head/cowboy/nova/flat")
 	greyscale_colors = "#BE925B#914C2F"
 	greyscale_config = /datum/greyscale_config/cowboy_flat
 	greyscale_config_worn = /datum/greyscale_config/cowboy_flat/worn
@@ -38,7 +40,7 @@
 /obj/item/clothing/head/cowboy/nova/flat/cowl
 	name = "flat brimmed hat with cowl"
 	desc = "A finely made hat with a short flat brim, paired with a snug and warm cowl. Today's a cold day to die..."
-	icon_state = "flatbrim_cowl"
+	SETUP_MAP_ICONS("flatbrim_cowl", "/obj/item/clothing/head/cowboy/nova/flat/cowl")
 	greyscale_colors = "#c26934#8f89ae#774B2D"
 	greyscale_config = /datum/greyscale_config/cowboy_flat_cowl
 	greyscale_config_worn = /datum/greyscale_config/cowboy_flat_cowl/worn
@@ -49,7 +51,8 @@
 /obj/item/clothing/head/cowboy/nova/cattleman
 	name = "cattleman hat"
 	desc = "A hat with a creased brim and a tall crown, intended to be pushed down further on the head to stay on in harsh weather. Not as relevant in space but still comes in handy."
-	icon_state = "cattleman"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("cattleman", "/obj/item/clothing/head/cowboy/nova/cattleman")
 	greyscale_colors = "#725443#B2977C"
 	greyscale_config = /datum/greyscale_config/cowboy_cattleman
 	greyscale_config_worn = /datum/greyscale_config/cowboy_cattleman/worn
@@ -58,7 +61,7 @@
 /obj/item/clothing/head/cowboy/nova/cattleman/wide
 	name = "wide brimmed cattleman hat"
 	desc = "A hat with a wide, slightly creased brim. Good for working in the sun, not so much for fitting through tight gaps."
-	icon_state = "cattleman_wide"
+	SETUP_MAP_ICONS("cattleman_wide", "/obj/item/clothing/head/cowboy/nova/cattleman/wide")
 	greyscale_colors = "#4D4D4D#5F666E"
 	greyscale_config = /datum/greyscale_config/cowboy_cattleman_wide
 	greyscale_config_worn = /datum/greyscale_config/cowboy_cattleman_wide/worn
@@ -68,24 +71,28 @@
 /obj/item/clothing/head/cowboy/nova/flat/sheriff
 	name = "sheriff hat"
 	desc = "A dark brown hat with a smell of whiskey. There's a small set of antlers embroidered on the inside."
+	SETUP_MAP_ICONS("flatbrim", "/obj/item/clothing/head/cowboy/nova/flat/sheriff")
 	greyscale_colors = "#704640#8f89ae"
 	flags_1 = NONE //No recoloring presets
 
 /obj/item/clothing/head/cowboy/nova/flat/deputy
 	name = "deputy hat"
 	desc = "A light brown hat with a smell of iron. There's a small set of antlers embroidered on the inside."
+	SETUP_MAP_ICONS("flatbrim", "/obj/item/clothing/head/cowboy/nova/flat/deputy")
 	greyscale_colors = "#c26934#8f89ae"
 	flags_1 = NONE //No recoloring presets
 
 /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
 	name = "winter sheriff hat"
 	desc = "A dark hat with a matching dark cowl, warm yet breathable. There's a small set of antlers embroidered on the inside."
+	SETUP_MAP_ICONS("flatbrim_cowl", "/obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff")
 	greyscale_colors = "#3F3F3F#716349#3F3F3F"
 	flags_1 = NONE //No recoloring presets
 
 /obj/item/clothing/head/cowboy/nova/cattleman/sec
 	name = "security cattleman hat"
 	desc = "A security cattleman hat, perfect for any true lawman."
+	SETUP_MAP_ICONS("cattleman", "/obj/item/clothing/head/cowboy/nova/cattleman/sec")
 	greyscale_colors = "#39393F#3F6E9E"
 	armor_type = /datum/armor/head_helmet
 	flags_1 = NONE //No recoloring presets
@@ -93,6 +100,7 @@
 /obj/item/clothing/head/cowboy/nova/cattleman/wide/sec
 	name = "wide brimmed security cattleman hat"
 	desc = "A bandit turned sheriff, his enforcement is brutal but effective - whether out of fear or respect is unclear, though not many bodies hang high. A peaceful land, a quiet people."
+	SETUP_MAP_ICONS("cattleman_wide", "/obj/item/clothing/head/cowboy/nova/cattleman/wide/sec")
 	greyscale_colors = "#39393F#3F6E9E"
 	armor_type = /datum/armor/head_helmet
 	flags_1 = NONE //No recoloring presets

@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	w_class = WEIGHT_CLASS_SMALL
 	alternate_worn_layer = LOW_FACEMASK_LAYER
 
-/obj/item/clothing/head/frenchberet/Initialize(mapload)
+/obj/item/clothing/mask/luchador/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("luchador_replacement.json", "luchador"), end_string = " OLE!", end_string_chance = 25, uppercase = TRUE, slots = ITEM_SLOT_MASK)
 

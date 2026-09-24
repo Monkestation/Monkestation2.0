@@ -176,7 +176,7 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 					recursion_count + 1,\
 					/*is_special_list = */ is_atom && (varname == "contents" || varname == "vis_contents" || varname == "locs"))
 			else if(variable == src)
-				#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
 					if(!found_refs)
 						found_refs = list()
@@ -184,9 +184,9 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 					continue //End early, don't want these logging
 				else
 					log_reftracker("Found [type] [text_ref(src)] in [datum_container.type]'s [datum_container.ref_search_details()] [varname] var. [container_name]")
-				#else
+#else
 				log_reftracker("Found [type] [text_ref(src)] in [datum_container.type]'s [datum_container.ref_search_details()] [varname] var. [container_name]")
-				#endif
+#endif
 				references_to_clear -= 1
 				if(references_to_clear == 0)
 					log_reftracker("All references to [type] [text_ref(src)] found, exiting.")
@@ -202,7 +202,7 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 					DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", search_time, recursion_count + 1)
 			//Check normal entrys
 			else if(element_in_list == src)
-				#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
 					if(!found_refs)
 						found_refs = list()
@@ -210,9 +210,9 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 					continue
 				else
 					log_reftracker("Found [type] [text_ref(src)] in list [container_name].")
-				#else
+#else
 				log_reftracker("Found [type] [text_ref(src)] in list [container_name].")
-				#endif
+#endif
 
 				// This is dumb as hell I'm sorry
 				// I don't want the garbage subsystem to count as a ref for the purposes of this number
@@ -242,7 +242,7 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 							DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", search_time, recursion_count + 1)
 					//Check assoc entry
 					else if(assoc_val == src)
-						#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 						if(SSgarbage.should_save_refs)
 							if(!found_refs)
 								found_refs = list()
@@ -250,9 +250,9 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 							continue
 						else
 							log_reftracker("Found [type] [text_ref(src)] in list [container_name]\[[element_in_list]\]")
-						#else
+#else
 						log_reftracker("Found [type] [text_ref(src)] in list [container_name]\[[element_in_list]\]")
-						#endif
+#endif
 						references_to_clear -= 1
 						if(references_to_clear == 0)
 							log_reftracker("All references to [type] [text_ref(src)] found, exiting.")

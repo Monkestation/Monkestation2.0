@@ -84,6 +84,10 @@
 	remove_occupant(M)
 	if(!isAI(M))//This is the ONE mob we dont want to be moved to the vehicle that should be handeled when used
 		M.forceMove(exit_location(M))
+	else
+		var/mob/living/silicon/ai/AiPilot = M
+		if(AiPilot.view_range_boost > 0)
+			AiPilot.client?.view_size.setTo(AiPilot.view_range_boost)
 	if(randomstep)
 		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
 		M.throw_at(target_turf, 5, 10)

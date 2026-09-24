@@ -58,11 +58,12 @@
 /obj/item/clothing/shoes/heels
 	name = "heels"
 	desc = "A both professional and stylish pair of footwear that are difficult to walk in."
-	icon_state = "heels"
-	can_be_tied = FALSE
-	greyscale_colors = "#39393f"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("heels", "/obj/item/clothing/shoes/heels")
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels_worn
+	greyscale_colors = "#39393f"
+	can_be_tied = FALSE
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/heels/Initialize(mapload)
@@ -72,6 +73,7 @@
 /obj/item/clothing/shoes/heels/syndicate
 	name = "heels"
 	desc = "A both professional and stylish pair of footwear that are shockingly comfortable to walk in. They have have been sharpened to allow them to be used as a rudimentary weapon."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "heels_syndi"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	strip_delay = 2 SECONDS
@@ -87,6 +89,7 @@
 /obj/item/clothing/shoes/heels/magician
 	name = "magical heels"
 	desc = "A pair of heels that seem to magically solve all the problems with walking in heels."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "heels_wiz"
 	strip_delay = 2 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -97,6 +100,7 @@
 /obj/item/clothing/shoes/heels/centcom
 	name = "green heels"
 	desc = "A stylish piece of corporate footwear, its ergonomic design makes it easier to both run and work in than the average pair of heels."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "heels_centcom"
 	greyscale_colors = null
 	greyscale_config = null
@@ -105,6 +109,7 @@
 /obj/item/clothing/shoes/heels/red
 	name = "red heels"
 	desc = "A pair of classy red heels."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "heels_red"
 	greyscale_colors = null
 	greyscale_config = null
@@ -113,6 +118,7 @@
 /obj/item/clothing/shoes/heels/blue
 	name = "blue heels"
 	desc = "A pair of classy blue heels."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "heels_blue"
 	greyscale_colors = null
 	greyscale_config = null
@@ -121,6 +127,7 @@
 /obj/item/clothing/shoes/heels/enviroheels
 	name = "enviroheels"
 	desc = "A pair of heels designed to function marginally better with envirosuits."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "enviroheels"
 	greyscale_colors = null
 	greyscale_config = null
@@ -134,3 +141,14 @@
 	can_be_tied = FALSE
 
 //END HEELS
+
+/obj/item/clothing/shoes/colorable_laceups
+	name = "laceup shoes"
+	desc = "These don't seem to come pre-polished, how saddening."
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("laceups", "/obj/item/clothing/shoes/colorable_laceups")
+	greyscale_config = /datum/greyscale_config/laceup
+	greyscale_config_worn = /datum/greyscale_config/laceup/worn
+	greyscale_colors = "#383631"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK

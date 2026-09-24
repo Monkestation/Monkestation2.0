@@ -161,6 +161,11 @@
 #define TIMER_DEBUG
 #endif
 
+// Checks if unit tests are being run locally or well, not
+#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#define RUNNING_LOCAL_TESTS
+#endif
+
 #ifdef TGS
 // TGS performs its own build of dm.exe, but includes a prepended TGS define.
 #define CBT

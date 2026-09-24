@@ -104,10 +104,7 @@
 	if(mop_action.Trigger())
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/mob/living/carbon/human/proc/buster_style_help()
-	set name = "Buster Style"
-	set desc = "You mentally practice the stunts you can pull with the buster arm."
-	set category = "Buster Style"
+GAME_VERB_PROC_DESC(/mob/living/carbon/human, buster_style_help, "Buster Style", "You mentally practice the stunts you can pull with the buster arm.", "Buster Style")
 	var/list/combined_msg = list()
 	combined_msg +=  "<b><i>You think about what stunts you can pull with the power of a buster arm.</i></b>"
 

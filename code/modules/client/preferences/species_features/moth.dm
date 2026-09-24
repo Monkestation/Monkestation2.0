@@ -10,19 +10,21 @@
 	return assoc_to_keys_features(GLOB.moth_antennae_list)
 
 /datum/preference/choiced/moth_antennae/icon_for(value)
-	var/static/icon/moth_head
+	var/static/datum/universal_icon/moth_head
 
 	if (isnull(moth_head))
-		moth_head = icon('icons/mob/species/moth/bodyparts.dmi', "moth_head")
-		moth_head.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
-		moth_head.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
+		moth_head = uni_icon('icons/mob/species/moth/bodyparts.dmi', "moth_head")
+		moth_head.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
+		moth_head.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
 
 	var/datum/sprite_accessory/antennae = GLOB.moth_antennae_list[value]
+	var/datum/universal_icon/icon_with_antennae = moth_head.copy()
 
-	var/icon/icon_with_antennae = new(moth_head)
-	icon_with_antennae.Blend(icon(antennae.icon, "m_moth_antennae_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
-	icon_with_antennae.Scale(64, 64)
-	icon_with_antennae.Crop(15, 64, 15 + 31, 64 - 31)
+	if(!isnull(antennae) && antennae.icon_state != SPRITE_ACCESSORY_NONE)
+		icon_with_antennae.blend_icon(uni_icon(antennae.icon, "m_moth_antennae_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
+
+	icon_with_antennae.scale(64, 64)
+	icon_with_antennae.crop(15, 64 - 31, 15 + 31, 64)
 
 	return icon_with_antennae
 
@@ -42,39 +44,44 @@
 
 /datum/preference/choiced/moth_markings/icon_for(value)
 	var/static/list/body_parts = list(
-		/obj/item/bodypart/head/moth,
-		/obj/item/bodypart/chest/moth,
-		/obj/item/bodypart/arm/left/moth,
-		/obj/item/bodypart/arm/right/moth,
+		BODY_ZONE_HEAD,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_R_LEG,
+		BODY_ZONE_PRECISE_L_HAND,
+		BODY_ZONE_PRECISE_R_HAND,
 	)
 
-	var/static/icon/moth_body
-	if (isnull(moth_body))
-		moth_body = icon('icons/blanks/32x32.dmi', "nothing")
+	var/static/datum/universal_icon/moth_body
+	if(isnull(moth_body))
+		moth_body = uni_icon('icons/blanks/32x32.dmi', "nothing")
 
-		moth_body.Blend(icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_BEHIND"), ICON_OVERLAY)
+		for(var/body_part in body_parts)
+			var/gender = body_part == BODY_ZONE_CHEST ? "_m" : ""
+			moth_body.blend_icon(uni_icon('icons/mob/species/moth/bodyparts.dmi', "moth_[body_part][gender]"), ICON_OVERLAY)
 
-		for (var/obj/item/bodypart/body_part as anything in body_parts)
-			moth_body.Blend(icon('icons/mob/species/moth/bodyparts.dmi', initial(body_part.icon_state)), ICON_OVERLAY)
-
-		moth_body.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
-		moth_body.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
+		moth_body.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
+		moth_body.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
 
 	var/datum/sprite_accessory/markings = GLOB.moth_markings_list[value]
-	var/icon/icon_with_markings = new(moth_body)
+	var/datum/universal_icon/icon_with_markings = moth_body.copy()
 
-	if (value != "None")
-		for (var/obj/item/bodypart/body_part as anything in body_parts)
-			var/icon/body_part_icon = icon(markings.icon, "[markings.icon_state]_[initial(body_part.body_zone)]")
-			body_part_icon.Crop(1, 1, 32, 32)
-			icon_with_markings.Blend(body_part_icon, ICON_OVERLAY)
+	if(!isnull(markings) && markings.icon_state != SPRITE_ACCESSORY_NONE)
+		for(var/body_part in body_parts)
+			if(body_part == BODY_ZONE_PRECISE_L_HAND || body_part == BODY_ZONE_PRECISE_R_HAND) // :(((((((
+				continue
+			var/datum/universal_icon/body_part_icon = uni_icon(markings.icon, "[markings.icon_state]_[body_part]")
+			body_part_icon.crop(1, 1, 32, 32)
+			icon_with_markings.blend_icon(body_part_icon, ICON_OVERLAY)
 
-	icon_with_markings.Blend(icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_FRONT"), ICON_OVERLAY)
-	icon_with_markings.Blend(icon('icons/mob/species/moth/moth_antennae.dmi', "m_moth_antennae_plain_FRONT"), ICON_OVERLAY)
+	icon_with_markings.blend_icon(uni_icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_FRONT"), ICON_OVERLAY)
+	icon_with_markings.blend_icon(uni_icon('icons/mob/species/moth/moth_antennae.dmi', "m_moth_antennae_plain_FRONT"), ICON_OVERLAY)
 
 	// Zoom in on the top of the head and the chest
-	icon_with_markings.Scale(64, 64)
-	icon_with_markings.Crop(15, 64, 15 + 31, 64 - 31)
+	icon_with_markings.scale(64, 64)
+	icon_with_markings.crop(15, 64 - 31, 15 + 31, 64)
 
 	return icon_with_markings
 
@@ -94,12 +101,11 @@
 
 /datum/preference/choiced/moth_wings/icon_for(value)
 	var/datum/sprite_accessory/moth_wings = GLOB.moth_wings_list[value]
-	if(moth_wings.icon_state == null || moth_wings.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
-	var/icon/final_icon = icon(moth_wings.icon, "m_moth_wings_[moth_wings.icon_state]_BEHIND")
-	final_icon.Blend(icon(moth_wings.icon, "m_moth_wings_[moth_wings.icon_state]_FRONT"), ICON_OVERLAY)
-	return final_icon
+
+	if(isnull(moth_wings) || moth_wings.icon_state == SPRITE_ACCESSORY_NONE)
+		return uni_icon('icons/mob/landmarks.dmi', "x")
+
+	return uni_icon(moth_wings.icon, "m_moth_wings_[moth_wings.icon_state]_BEHIND")
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value

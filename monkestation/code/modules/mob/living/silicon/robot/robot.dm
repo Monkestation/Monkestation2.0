@@ -15,7 +15,6 @@
 	unborgable_prompted_ghosts = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		check_jobban = JOB_CYBORG,
-		role = JOB_CYBORG,
 		poll_time = 25 SECONDS,
 		checked_target = src,
 		alert_pic = src,

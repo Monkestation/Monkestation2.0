@@ -11,19 +11,17 @@
 	if(!.)
 		return .
 	ai.canCameraMemoryTrack = TRUE
-	ai.add_verb_ai(/mob/living/silicon/ai/proc/choose_camera_target)
 
 /datum/ai_project/camera_tracker/stop()
 	ai.canCameraMemoryTrack = FALSE
-	remove_verb(ai, /mob/living/silicon/ai/proc/choose_camera_target)
 	return ..()
 
-/mob/living/silicon/ai/proc/choose_camera_target()
-	set name = "Choose Camera Memory Target"
-	set category = "AI Commands"
-	set desc = "Select a target for the camera memory tracker. Case sensitive."
+GAME_VERB_DESC(/mob/living/silicon/ai, choose_camera_target, "Choose Camera Memory Target", "Select a target for the camera memory tracker. Case sensitive.", "AI Commands")
 
-	if(incapacitated())
+	if(stat == DEAD)
+		return
+	if(!canCameraMemoryTrack)
+		to_chat(src, span_warning("Unable to set memory targets without Memory Tracker active."))
 		return
 	var/target = tgui_input_text(usr, "Please enter the target's full name:", "Camera Tracker", "", MAX_NAME_LEN)
 	if(!target)

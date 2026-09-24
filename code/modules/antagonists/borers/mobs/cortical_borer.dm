@@ -7,9 +7,6 @@ GLOBAL_LIST_EMPTY(willing_hosts)
 
 GLOBAL_LIST_EMPTY(cortical_borers)
 
-GLOBAL_LIST_INIT(borer_first_name, file2list("monkestation/code/modules/antagonists/borers/code/first_borer_names.txt"))
-GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagonists/borers/code/second_borer_names.txt"))
-
 /// This divisor controls how fast body temperature changes to match the environment
 #define BODYTEMP_DIVISOR 16
 
@@ -277,6 +274,8 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 
 	/// Skips unique borer status tab text, used for unique borer subtypes with their own status tabs
 	var/skip_status_tab = FALSE
+	/// The total amount of hivequeens that were created
+	var/static/hivequeen_amount
 
 /mob/living/basic/cortical_borer/can_track(mob/living/user)
 	return FALSE // The validhunt box machines are onto us, we cannot let them track us
@@ -290,6 +289,8 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	borer_matrix.Scale(0.75, 0.75)
 	transform = borer_matrix
 
+	if(generation == 0)
+		hivequeen_amount++
 	create_name()
 
 	GLOB.cortical_borers += src
@@ -299,9 +300,8 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 		var/datum/action/attack_action = new action_type(src)
 		attack_action.Grant(src)
 
-	if(mind)
-		if(!mind.has_antag_datum(antagonist_datum))
-			mind.add_antag_datum(antagonist_datum)
+	if(mind && !mind.has_antag_datum(antagonist_datum))
+		mind.add_antag_datum(antagonist_datum)
 
 	for(var/focus_path in subtypesof(/datum/borer_focus))
 		possible_focuses += new focus_path
@@ -399,19 +399,18 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	if(mind)
 		mind.add_antag_datum(antagonist_datum)
 
+/// Creates a random (probably unique) name for the borer
 /mob/living/basic/cortical_borer/proc/create_name()
-	// So their gen and a random. ex 1-288 is first gen named 288, 4-483 is fourth gen named 483
-	// Additionally we add in a random title,
-	// mainly so people can ahelp borers quicker and admins dont have to look through the logs of the 5 borers that were inside you
-	name = "[pick(borer_first_names)]: [pick(borer_second_names)]"
-	real_name = "([name]) ([generation]-[rand(100,999)])"
-	if(istype(/mob/living/basic/cortical_borer/empowered, src)) // lets also distinguish empowered borers from normal ones
-		name = "larger [name]"
-		real_name = "larger [real_name]"
+	name = initial(name)
+	if(prob(99))
+		name = "[pick(GLOB.adjectives)] [name]"
+	else
+		name = "[pick(GLOB.gross_adjectives)] [name]"
 
-	if(generation == 0) //The first ever borer gets a special name
-		name = "The hivequeen [initial(name)]"
-		real_name = name
+	if(generation == 0)
+		real_name = "[name] (Queen [hivequeen_amount])"
+	else
+		real_name = "[name] ([generation]-[rand(100,999)])"
 
 // if things can go wrong, they will. So this proc is an emergency measure meant to resolve them
 /mob/living/basic/cortical_borer/proc/resolve_misc_issues()
@@ -497,26 +496,25 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	if(host_sugar())
 		message = scramble_message_replace_chars(message, 10)
 	message = sanitize(message)
-	var/list/split_message = splittext(message, "")
 
 	/// Contains the fancy version of our message
 	var/text
 
 	//this is so they can talk in hivemind
-	if(split_message[1] == ";")
+	if(message[1] == ";")
 		message = copytext(message, 2)
 		message = capitalize(message)
-		if (neutered) 	// Nuetered sound offtune.
+		if (neutered) // Neutered sound offtune.
 			text = span_red("<b>Cortical Hivemind: [real_name] croons, \"[message]\"</b>")
-		else if (generation == 0) 	//Hivequeens demand attention.
+		else if (generation == 0) // Hivequeens have larger text
 			text = span_purplelarge("<b>Cortical Hivemind: [real_name] choruses, \"[message]\"</b>")
 		else
 			text = span_purple("<b>Cortical Hivemind: [real_name] sings, \"[message]\"</b>")
 
-		for (var/borer in GLOB.cortical_borers)
+		for(var/borer in GLOB.cortical_borers)
 			to_chat(borer, text, type = MESSAGE_TYPE_RADIO)
 
-		for (var/mob/dead_mob in GLOB.dead_mob_list)
+		for(var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, src)
 			to_chat(dead_mob, "[link] [message]", type = MESSAGE_TYPE_RADIO)
 
@@ -527,11 +525,11 @@ GLOBAL_LIST_INIT(borer_second_name, file2list("monkestation/code/modules/antagon
 	message = capitalize(message)
 
 	if (neutered)
-		text = span_red("Cortical Link: [real_name] croons, \"[message]\"")
+		text = span_red("Cortical Link: [name] croons, \"[message]\"")
 	else if (human_host.is_willing_host(human_host))
-		text = span_purplelarge("Cortical Link: [real_name] choruses, \"[message]\"")
+		text = span_purplelarge("Cortical Link: [name] choruses, \"[message]\"")
 	else
-		text = span_purple("Cortical Link: [real_name] sings, \"[message]\"")
+		text = span_purple("Cortical Link: [name] sings, \"[message]\"")
 
 	to_chat(human_host, text)
 	to_chat(src, text)

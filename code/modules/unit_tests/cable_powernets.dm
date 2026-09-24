@@ -1,7 +1,8 @@
 ///Checking all powernets to see if they are properly connected and powered.
-/datum/unit_test/cable_powernets
+/datum/unit_test/maptest_cable_powernets
+	test_flags = UNIT_TEST_MAP_TEST
 
-/datum/unit_test/cable_powernets/Run()
+/datum/unit_test/maptest_cable_powernets/Run()
 	for(var/datum/powernet/powernets as anything in SSmachines.powernets)
 
 		//nodes (machines, which includes APCs and SMES)

@@ -273,7 +273,7 @@
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
-		add_item_action(path)
+		INVOKE_ASYNC(src, PROC_REF(add_item_action), path)
 	actions_types = null
 
 	if(force_string)
@@ -430,10 +430,7 @@
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
-/obj/item/verb/move_to_top()
-	set name = "Move To Top"
-	set category = "Object"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
@@ -821,10 +818,7 @@
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped)
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Pick up"
+GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 
 	if(usr.incapacitated() || !Adjacent(usr))
 		return

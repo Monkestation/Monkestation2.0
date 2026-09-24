@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(ai_os)
 
 	//Find out how much is actually assigned. We can have more total_cpu than the sum of cpu_assigned. Same with RAM
 	var/total_assigned_ram = total_ram_assigned()
-	//If we have less assigned  ram than we have cpu and ram, just return, everything is fine.
+	//If we have less assigned ram than we have cpu and ram, just return, everything is fine.
 	if(total_assigned_ram < total_ram)
 		return
 
@@ -118,22 +118,26 @@ GLOBAL_LIST_EMPTY(ai_os)
 
 	to_chat(affected_AIs, span_warning("You have been deducted processing capabilities. Please contact your network administrator if you believe this to be an error."))
 
-/datum/ai_os/proc/set_cpu(mob/living/silicon/ai/AI, amount, update = TRUE)
+/datum/ai_os/proc/set_cpu(mob/living/silicon/ai/AI, amount, adjust_overflow = FALSE, update = TRUE)
 	if(!istype(AI) || amount < 0)
 		return
-	//total cpu - (current AIs CPU + CPU we're giving) > total_cpu
-	if(total_cpu_assigned() - (cpu_assigned[AI] + amount) > total_cpu)
-		return
+	//total cpu - current AIs CPU + new CPU we're giving > total_cpu
+	if(total_cpu_assigned() - cpu_assigned[AI] + amount > total_cpu)
+		if(!adjust_overflow)
+			return
+		amount = total_cpu - total_cpu_assigned() + cpu_assigned[AI]
 	cpu_assigned[AI] = amount
 	if(update)
 		update_allocations()
 
-/datum/ai_os/proc/set_ram(mob/living/silicon/ai/AI, amount, update = TRUE)
+/datum/ai_os/proc/set_ram(mob/living/silicon/ai/AI, amount, adjust_overflow = FALSE, update = TRUE)
 	if(!istype(AI) || amount < 0)
 		return
-	//total ram - (current AIs ram + ram we're giving) > total_ram
-	if(total_ram_assigned() - (ram_assigned[AI] + amount) > total_ram)
-		return
+	//total ram - current AIs ram + new ram we're giving > total_ram
+	if(total_ram_assigned() - ram_assigned[AI] + amount > total_ram)
+		if(!adjust_overflow)
+			return
+		amount = total_ram - total_ram_assigned() + ram_assigned[AI]
 	ram_assigned[AI] = amount
 	if(update)
 		update_allocations()

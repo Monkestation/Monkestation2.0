@@ -178,3 +178,87 @@
   - bugfix: Rack creators numbers are tweaked to properly adjust with manipulators
   osaka-fuuri:
   - rscadd: Added pig taming visual & SFX
+2026-08-22:
+  Runian:
+  - rscadd: Cargo teleporters now tries to restore their charges when right-clicking
+      a fulton.
+  - qol: Cargo teleporters no longer prompts to select an extraction beacon when trying
+      to fulton something.
+  - qol: Cargo teleporters can set their extraction beacon via ctrl-click.
+  - bugfix: Cargo teleporters no longer hits things that fail to be extracted by a
+      fulton.
+  - spellcheck: Cargo teleporter's description is now more accurate about fulton usage.
+  RusselNotSCP:
+  - rscadd: Added three new liqueurs, with bottles available in the booze-o-mat.
+  - rscadd: You can now make 30 new classic (and some less classic) cocktails. Includes
+      old standards like the Old Fashioned, Daiquiri, Ramos Gin Fizz, and more!
+  antropod, SmArtKar, TheColorCyan:
+  - refactor: Atmos refactor & speedup by utilizing BYOND 516 vector functions (report
+      any atmos bugs)
+2026-08-23:
+  JohnFulpWillard:
+  - bugfix: Hopefully finally fixes AI in mechs leaving and being able to re-enter
+      their core.
+  Runian:
+  - bugfix: People with the Unborgable quirk that somehow become cyborgs now correctly
+      polls ghosts if they want to take over the their body.
+  - bugfix: Changing a cyborg's now immediately changes their low power mode and their
+      appearance rather than shortly after.
+  Tractor-Maam:
+  - rscadd: Paco handguns can now be suppressed.
+  notghosti:
+  - map: Fixes disconnected disposal pipes in Theseus science
+  - map: Adjusted Theseus Telecommunications to be more readable and give more space
+  osaka-fuuri:
+  - bugfix: Androids now have no spleens
+  - bugfix: Flatulance Simulator (IPC/Android butt) is now robotic.
+2026-08-26:
+  JohnFulpWillard:
+  - bugfix: AIs can use Memory Tracker app now.
+  Runian:
+  - bugfix: Cyborg's lights now correctly temporarily turn off when they're unconscious
+      caused by a knockdown.
+  Tractor-Maam:
+  - bugfix: AIs ejecting from exosuits without a valid core nearby will no longer
+      get sent to container hell.
+  - bugfix: AIs opening PDA bombs will disrupt their APC again.
+  hexakats:
+  - balance: Lawbringer detain mode no longer ignores armor.
+  - balance: Cybersun laser gun disabler modes now respect energy armor instead of
+      laser armor.
+2026-08-27:
+  Gboster-0:
+  - bugfix: twitch now properly interacts with other action modifiers
+  JupiterJaeden:
+  - balance: Adds 2 slug ammo boxes to the ammo crate, consistent with it having the
+      other types of shotgun ammo.
+  notghosti:
+  - bugfix: AI Crypto mining will now properly generate bitcoin at high values of
+      CPU
+  - qol: AI Research Acceleration will not run if it is already being ran by another
+      AI
+  - qol: Setting a RAM/CPU value higher than whats possible via the distribution console
+      will now default to the highest possible value.
+  - bugfix: You no longer can generate fake RAM/CPU with multiple AI's
+  - qol: AI system resource distribution RAM is now formatted like CPU distrubution.
+  - bugfix: AI system resource distribution CPU now shows proper % for remaining ram
+  osaka-fuuri:
+  - rscadd: Cyborgs can now use assembler interface
+2026-08-29:
+  Cheffie, vinylspiders:
+  - refactor: preview icons for greyscale items are now automatically generated, meaning
+      you can see GAGS as they actually appear ingame while mapping or viewing the
+      loadout menu.
+  - bugfix: Fixed or improved many missing or bad preference feature preview icons.
+  notghosti:
+  - rscadd: Upgrading nanite chambers lasers increases volume of nanites initially
+      given, by 25 per laser tier for publics, and 35 for regular chambers
+  - balance: Anomalous mutations can't be saved via DNA disk
+2026-08-31:
+  EnterTheJake:
+  - balance: CNS Rebooter Implant will now pull you out of stamcrit and grant you
+      a few seconds of stun immunity
+  Runian:
+  - bugfix: Uranium can now be used once more as an item material.
+  Tractor-Maam:
+  - spellcheck: Pre-Approved Cyborg Candidates are no longer "Cantidates"
