@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(map_vote)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/map_vote/proc/write_cache()
-	rustg_file_write(json_encode(map_vote_cache), MAP_VOTE_CACHE_LOCATION)
+	rustg_file_write(json_encode(map_vote_cache, JSON_PRETTY_PRINT), MAP_VOTE_CACHE_LOCATION)
 
 /datum/controller/subsystem/map_vote/proc/sanitize_cache()
 	var/max = CONFIG_GET(number/map_vote_maximum_tallies)

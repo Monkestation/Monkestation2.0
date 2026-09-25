@@ -436,7 +436,7 @@
 		file_data["record_age"] = record_age
 		file_data["saved_head"] = null
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 ///Reads the database's persistence json file and applies age, record_age and saved_head to Ian.
 /mob/living/basic/pet/dog/corgi/ian/proc/Read_Memory()

@@ -265,7 +265,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	//We're going to save this immidiately this is non-recoverable operation
 	var/json_file = file("data/paintings.json")
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(result))
+	WRITE_FILE(json_file, json_encode(result, JSON_PRETTY_PRINT))
 	return result
 
 /datum/controller/subsystem/persistent_paintings/proc/migrate_to_version_2(list/current_data)

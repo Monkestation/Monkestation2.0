@@ -39,7 +39,7 @@
 	saved_data["entries"] = entries
 
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(saved_data))
+	WRITE_FILE(json_file, json_encode(saved_data, JSON_PRETTY_PRINT))
 
 ///This proc can update entries if the format has changed at some point.
 /datum/controller/subsystem/persistence/proc/update_prisoner_tattoos(json)
@@ -49,7 +49,7 @@
 	//Save it to the file
 	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(json))
+	WRITE_FILE(json_file, json_encode(json, JSON_PRETTY_PRINT))
 
 	return json
 
