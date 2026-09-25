@@ -13,8 +13,8 @@
 	outfit = /datum/outfit/job/explorer
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
-	paycheck = PAYCHECK_CREW
-	paycheck_department = ACCOUNT_CAR
+	paycheck = PAYCHECK_UNION_CREW
+	paycheck_department = ACCOUNT_SRV
 
 	mind_traits = list(TRAIT_DETECT_STORM)
 
@@ -69,7 +69,7 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
-	accessory = /obj/item/clothing/accessory/badge/cargo
+	accessory = /obj/item/clothing/accessory/badge/cargo/miner
 
 /obj/item/storage/box/emergency_eva/explorer
 	name = "boxed explorer's EVA kit"
