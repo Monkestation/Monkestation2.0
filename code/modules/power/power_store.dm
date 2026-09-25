@@ -162,28 +162,29 @@
 /// - force: If true, uses the remaining power from the cell if there isn't enough power to supply the demand.
 /// Returns: The power used from the cell in joules.
 /obj/item/stock_parts/power_store/use(used, force = FALSE)
-	SHOULD_CALL_PARENT(FALSE) // MONKE EDIT: Ignoring the parent call
-	var/power_used = min(used, charge)
-	if(rigged && power_used > 0)
+	SHOULD_CALL_PARENT(FALSE)
+	. = min(used, charge)
+	if(rigged && . > 0)
 		explode()
-		return 0 // The cell decided to explode so we won't be able to use it.
-	if(!force && charge < used)
-		return 0
-	charge -= power_used
-	if(!istype(loc, /obj/machinery/power/apc))
-		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return power_used
+		. = 0 // The cell decided to explode so we won't be able to use it.
+	else if(!force && charge < used)
+		. = 0 // Nothing to use.
+	else
+		charge -= .
+		if(!istype(loc, /obj/machinery/power/apc))
+			SSblackbox.record_feedback("tally", "cell_used", 1, type)
+	SEND_SIGNAL(src, COMSIG_CELL_POWER_USED, .)
 
 /// Recharge the cell.
 /// Args:
 /// - amount: The amount of energy to give to the cell in joules.
 /// Returns: The power given to the cell in joules.
 /obj/item/stock_parts/power_store/proc/give(amount)
-	var/power_used = min(maxcharge-charge,amount)
+	var/power_used = min(maxcharge - charge, amount)
 	charge += power_used
 	if(rigged && amount > 0)
 		explode()
-	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER) // MONKE EDIT: Signal
+	SEND_SIGNAL(src, COMSIG_CELL_POWER_GIVEN, power_used)
 	return power_used
 
 /**
@@ -197,6 +198,7 @@
 	charge += energy_used
 	if(rigged && energy_used)
 		explode()
+	SEND_SIGNAL(src, COMSIG_CELL_POWER_CHANGED, energy_used)
 	return energy_used
 
 /obj/item/stock_parts/power_store/examine(mob/user)
