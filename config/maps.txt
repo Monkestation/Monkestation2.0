@@ -91,3 +91,6 @@ endmap
 map oshan
 	votable
 endmap
+
+map buildyourownstation
+endmap
