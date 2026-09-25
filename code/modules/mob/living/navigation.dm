@@ -10,9 +10,7 @@
 	/// Images of the path created by navigate().
 	var/list/navigation_images = list()
 
-/mob/living/verb/navigate()
-	set name = "Navigate"
-	set category = "IC"
+GAME_VERB(/mob/living, navigate, "Navigate", "IC")
 
 	if(incapacitated())
 		return

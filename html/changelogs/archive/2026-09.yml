@@ -163,3 +163,14 @@
   - bugfix: Various cyborg skins no longer have floating hats and now have their worn
       hat much closer to the top of their head.
   - code_imp: Cyborg skins now support x-offsets for worn hats and worn badges.
+2026-09-23:
+  hry-gh:
+  - code_imp: the backend to all verbs in the game has been played with, please report
+      any issues to github
+2026-09-25:
+  AberrantQuerist:
+  - image: Resprited several floor tiles (Minor changes.)
+  PotatoTomahto:
+  - rscadd: ai core displays have an internal camera for AIs to use
+  TheColorCyan:
+  - rscadd: throwing things now plays throw animation
