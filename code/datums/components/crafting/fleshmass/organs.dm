@@ -16,6 +16,7 @@
 	)
 	time = 1.5 SECONDS
 	category = CAT_ORGANS
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/humam_liver
 	name = "Human Liver"
@@ -24,6 +25,7 @@
 		/obj/item/stack/sheet/cloth = 2,
 		/obj/item/stack/sheet/fleshmass = 6,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_spleen
 	name = "Human Spleen"
@@ -32,6 +34,7 @@
 		/obj/item/stack/sheet/cloth = 1,
 		/obj/item/stack/sheet/fleshmass = 4,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_butt
 	name = "Human Butt"
@@ -40,6 +43,7 @@
 		/obj/item/stack/sheet/cloth = 1,
 		/obj/item/stack/sheet/fleshmass = 3,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_appendix
 	name = "Human Appendix"
@@ -48,6 +52,7 @@
 		/obj/item/stack/sheet/cloth = 1,
 		/obj/item/stack/sheet/fleshmass = 2,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_bladder
 	name = "Human Bladder"
@@ -56,6 +61,7 @@
 		/obj/item/stack/sheet/cloth = 1,
 		/obj/item/stack/sheet/fleshmass = 3,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_eyes
 	name = "Human Eyes"
@@ -64,6 +70,7 @@
 		/obj/item/stack/sheet/cloth = 2,
 		/obj/item/stack/sheet/fleshmass = 6,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_ears
 	name = "Human Ears"
@@ -72,6 +79,7 @@
 		/obj/item/stack/sheet/cloth = 2,
 		/obj/item/stack/sheet/fleshmass = 6,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_tongue
 	name = "Human Tongue"
@@ -80,6 +88,7 @@
 		/obj/item/stack/sheet/cloth = 1,
 		/obj/item/stack/sheet/fleshmass = 4,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/human_stomach
 	name = "Human Stomach"
@@ -88,6 +97,7 @@
 		/obj/item/stack/sheet/cloth = 2,
 		/obj/item/stack/sheet/fleshmass = 6,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/organ/monkey_tail
 	name = "Monkey Tail"
@@ -96,3 +106,4 @@
 		/obj/item/stack/sheet/cloth = 1,
 		/obj/item/stack/sheet/fleshmass = 3,
 	)
+	always_available = TRUE
