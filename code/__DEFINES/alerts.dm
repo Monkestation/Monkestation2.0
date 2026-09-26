@@ -69,4 +69,8 @@
 #define ALERT_BITRUNNER_BREACH "bitrunning_breach"
 #define ALERT_BITRUNNER_GLITCH "bitrunning_glitch"
 
+/** Brainwashing */
 #define ALERT_BRAINWASHED "brainwashed"
+
+/** Silicon */
+#define ALERT_SILICON_RECORDING "silicon_recording"
