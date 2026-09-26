@@ -123,6 +123,9 @@
 	///whether AI is anchored or not, used for checks
 	var/is_anchored = TRUE
 
+	///List of mobs targeted in the improved targeting project, used for stat-panel updates.
+	var/target_list
+
 	///Command report cooldown
 	COOLDOWN_DECLARE(command_report_cd) // monkestation edit
 
@@ -142,17 +145,12 @@
 	VAR_FINAL/setting_waypoint = FALSE
 
 	var/datum/ai_dashboard/dashboard
-	//override for the can_download, checked first in case we have other code in can_download
+	/// Override for the can_download, checked first in case we have other code in can_download
 	var/can_download = TRUE
-	//Can we (simple) examine humans?
+	/// Can we (simple) examine humans?
 	var/canExamineHumans = FALSE
-
-	//Do we have access to camera tracking?
-	var/canCameraMemoryTrack = FALSE
-	//The person we are tracking
-	var/cameraMemoryTarget = null
-	//We only check every X ticks
-	var/cameraMemoryTickCount = 0
+	/// Can we see engineering-based scan? (atmos, and power)
+	var/canEngineeringScan = FALSE
 
 	///Did we get the death prompt?
 	var/is_dying = FALSE
@@ -538,6 +536,11 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 		if(!connected_ipc)
 			return
 		ai_tracking_tool.set_tracked_target(connected_ipc)
+	if(href_list["track_target"])
+		var/mob/living/carbon/human/target_lock = locate(href_list["track_target"]) in target_list
+		if(!target_lock)
+			return
+		ai_tracking_tool.set_tracked_target(target_lock)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()

@@ -59,14 +59,6 @@
 	if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 		ai_restore_power()
 
-	if(cameraMemoryTarget)
-		if(cameraMemoryTickCount >= AI_CAMERA_MEMORY_TICKS)
-			cameraMemoryTickCount = 0
-			if(ai_tracking_tool.set_tracked_target(cameraMemoryTarget))
-				to_chat(src, span_notice("Tracked target [cameraMemoryTarget] found visible on cameras. Tracking disabled."))
-				cameraMemoryTarget = 0
-		cameraMemoryTickCount++
-
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
