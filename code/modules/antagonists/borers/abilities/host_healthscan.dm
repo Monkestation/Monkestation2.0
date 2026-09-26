@@ -9,11 +9,7 @@
 	Additionally you will be able to taste the host's chemicals and measure them acuratelly\n\
 	"
 
-/datum/action/cooldown/borer/check_blood/Trigger(trigger_flags, atom/target)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	healthscan(owner, cortical_owner.human_host, advanced = TRUE) // :thinking:
-	chemscan(owner, cortical_owner.human_host)
-	StartCooldown()
+/datum/action/cooldown/borer/check_blood/Activate(mob/living/basic/cortical_borer/user)
+	healthscan(user, user.human_host, advanced = TRUE) // :thinking:
+	chemscan(user, user.human_host)
+	return ..()

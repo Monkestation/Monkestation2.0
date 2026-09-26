@@ -8,17 +8,13 @@
 	While inside of a host, it is much more effective and is used on the host itself\n\
 	"
 
-/datum/action/cooldown/borer/fear_human/Trigger(trigger_flags, atom/target)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	if(cortical_owner.human_host)
+/datum/action/cooldown/borer/fear_human/Activate(mob/living/basic/cortical_borer/user)
+	if(user.human_host)
 		incite_internal_fear()
-		StartCooldown()
-		return
+		return ..()
+
 	var/list/potential_freezers = list()
-	for(var/mob/living/carbon/human/listed_human in range(1, cortical_owner))
+	for(var/mob/living/carbon/human/listed_human in range(1, user))
 		if(!ishuman(listed_human)) //no nonhuman hosts
 			continue
 		if(listed_human.stat == DEAD) //no dead hosts
@@ -26,38 +22,45 @@
 		if(considered_afk(listed_human.mind)) //no afk hosts
 			continue
 		potential_freezers += listed_human
+
 	if(length(potential_freezers) == 1)
+		if(!IsAvailable(TRUE))
+			return
 		incite_fear(potential_freezers[1])
-		return
-	var/mob/living/carbon/human/choose_fear = tgui_input_list(cortical_owner, "Choose who you will fear!", "Fear Choice", potential_freezers)
+		return ..()
+
+	var/mob/living/carbon/human/choose_fear = tgui_input_list(user, "Choose who you will fear!", "Fear Choice", potential_freezers)
 	if(!choose_fear)
 		owner.balloon_alert(owner, "no target chosen")
 		return
-	if(get_dist(choose_fear, cortical_owner) > 1)
+	if(!IsAvailable(TRUE))
+		return
+
+	if(get_dist(choose_fear, user) > 1)
 		owner.balloon_alert(owner, "chosen target too far")
 		return
 	incite_fear(choose_fear)
-	StartCooldown()
+	return ..()
 
 /datum/action/cooldown/borer/fear_human/proc/incite_fear(mob/living/carbon/human/singular_fear)
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
+	var/mob/living/basic/cortical_borer/user = owner
 	to_chat(singular_fear, span_warning("Something glares menacingly at you!"))
 	singular_fear.Paralyze(7 SECONDS)
 	singular_fear.stamina.adjust(-25)
 	singular_fear.set_confusion_if_lower(9 SECONDS)
 	var/turf/human_turf = get_turf(singular_fear)
-	var/logging_text = "[key_name(cortical_owner)] feared/paralyzed [key_name(singular_fear)] at [loc_name(human_turf)]"
-	cortical_owner.log_message(logging_text, LOG_GAME)
+	var/logging_text = "[key_name(user)] feared/paralyzed [key_name(singular_fear)] at [loc_name(human_turf)]"
+	user.log_message(logging_text, LOG_GAME)
 	singular_fear.log_message(logging_text, LOG_GAME)
 
 /datum/action/cooldown/borer/fear_human/proc/incite_internal_fear()
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
+	var/mob/living/basic/cortical_borer/user = owner
 	owner.balloon_alert(owner, "fear incited into host")
-	cortical_owner.human_host.Paralyze(10 SECONDS)
-	cortical_owner.human_host.stamina.adjust(-50)
-	cortical_owner.human_host.set_confusion_if_lower(15 SECONDS)
-	to_chat(cortical_owner.human_host, span_warning("Something moves inside of you violently!"))
-	var/turf/human_turf = get_turf(cortical_owner.human_host)
-	var/logging_text = "[key_name(cortical_owner)] feared/paralyzed [key_name(cortical_owner.human_host)] (internal) at [loc_name(human_turf)]"
-	cortical_owner.log_message(logging_text, LOG_GAME)
-	cortical_owner.human_host.log_message(logging_text, LOG_GAME)
+	user.human_host.Paralyze(10 SECONDS)
+	user.human_host.stamina.adjust(-50)
+	user.human_host.set_confusion_if_lower(15 SECONDS)
+	to_chat(user.human_host, span_warning("Something moves inside of you violently!"))
+	var/turf/human_turf = get_turf(user.human_host)
+	var/logging_text = "[key_name(user)] feared/paralyzed [key_name(user.human_host)] (internal) at [loc_name(human_turf)]"
+	user.log_message(logging_text, LOG_GAME)
+	user.human_host.log_message(logging_text, LOG_GAME)
