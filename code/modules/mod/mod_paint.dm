@@ -163,7 +163,7 @@
 		"engineer" = 'icons/mob/augmentation/augments_engineer.dmi',
 		"security" = 'icons/mob/augmentation/augments_security.dmi',
 		"mining" = 'icons/mob/augmentation/augments_mining.dmi',
-		)
+	)
 
 	for(var/skin_option in style_list_icons)
 		var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.body_zone]")
