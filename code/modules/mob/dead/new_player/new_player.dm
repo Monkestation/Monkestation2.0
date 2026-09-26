@@ -64,14 +64,14 @@
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
 
-/mob/dead/new_player/verb/_join_game()
-	set name = "Join Game"
-	set category = "IC"
+// This gets called both when the client disconnects and when the client is shoved into their spawn mob.
+/mob/dead/new_player/become_uncliented()
+	SSstatpanels.remove_job_estimation(src)
+
+GAME_VERB(/mob/dead/new_player, _join_game, "Join Game", "IC")
 	join_game(FALSE)
 
-/mob/dead/new_player/verb/observe()
-	set category = "IC"
-	set name = "Observe"
+GAME_VERB(/mob/dead/new_player, observe, "Observe", "IC")
 
 	if (!(SSticker.current_state > GAME_STATE_STARTUP) && !check_rights())
 		to_chat(src, span_warning("Please wait for the server to finish initializing!"))
@@ -506,7 +506,7 @@
 		I.ui_interact(src)
 
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel. See interface/interface.dm
-	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(src, GLOB.important_interface_verbs)
 
 

@@ -59,7 +59,7 @@
 
 /datum/action/cooldown/borer/produce_offspring/proc/no_host_egg()
 	var/mob/living/basic/cortical_borer/user = owner
-	user.apply_damage(max(1, user.health -= OUT_OF_HOST_EGG_COST), BRUTE)
+	user.apply_damage(min(OUT_OF_HOST_EGG_COST, user.health - 1), BRUTE)
 	produce_egg()
 	var/turf/borer_turf = get_turf(user)
 	new/obj/effect/decal/cleanable/blood/splatter(borer_turf)

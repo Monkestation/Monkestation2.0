@@ -99,6 +99,8 @@
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
+	addtimer(CALLBACK(src, PROC_REF(prompt_ghosts_if_unborgable)), 2 SECONDS, TIMER_UNIQUE)
+
 /mob/living/silicon/robot/set_suicide(suicide_state)
 	. = ..()
 	if(mmi)
@@ -271,6 +273,13 @@
 		add_overlay(eye_lights)
 	return ..()
 
+/mob/living/silicon/robot/setDir(newdir)
+	var/old_dir = dir
+	. = ..()
+	if(. == old_dir)
+		return
+	update_icons()
+
 /mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(user)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
@@ -303,13 +312,6 @@
 		// Instead of being listed as "deactivated". The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
 		// I could change the network to null but I don't know what would happen, and it seems too hacky for me.
-
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	return ..()
 
 /mob/living/silicon/robot/execute_mode()
 	if(incapacitated())
@@ -830,6 +832,8 @@
 		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
 	if(mainframe.eyeobj)
 		mainframe.eyeobj.setLoc(loc)
+	if(mainframe.view_range_boost > 0)
+		mainframe.client?.view_size.setTo(mainframe.view_range_boost) // Update the viewrange if its greater than 0
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -1056,6 +1060,7 @@
 	skin = new_skin
 	icon = skin.icon
 	icon_state = skin.icon_state
+	bubble_icon = skin.bubble_icon
 	base_pixel_x = skin.base_pixel_x
 	base_pixel_y = skin.base_pixel_y
 	if(isnull(skin.hat_offset) && worn_hat)
@@ -1066,3 +1071,26 @@
 		add_traits(skin.traits, CYBORG_SKIN_TRAIT)
 	if(!perform_animation || !skin.do_transformation_animation(src, lock_animation))
 		update_icons()
+
+//
+// Quirks / Unborgable
+//
+
+/// Prompts all ghosts if this cyborg doesn't want to be one.
+/mob/living/silicon/robot/proc/prompt_ghosts_if_unborgable()
+	if(unborgable_prompted_ghosts || !HAS_MIND_TRAIT(src, TRAIT_UNBORGABLE))
+		return
+	unborgable_prompted_ghosts = TRUE
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = JOB_CYBORG,
+		poll_time = 25 SECONDS,
+		checked_target = src,
+		alert_pic = src,
+		role_name_text = JOB_CYBORG,
+	)
+	if(chosen_one)
+		to_chat(src, span_warning("Your mob has been taken over by a ghost, due to being otherwise unborgable."))
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace unborgable player.")
+		log_game("[key_name(chosen_one)] has taken control of ([key_name(src)]) to replace unborgable player.")
+		ghostize(can_reenter_corpse = FALSE)
+		key = chosen_one.key

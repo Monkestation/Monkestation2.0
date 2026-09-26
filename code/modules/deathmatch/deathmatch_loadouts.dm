@@ -635,7 +635,7 @@
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/hooded/ablative
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
-	glasses = /obj/item/clothing/glasses/thermal/syndi
+	glasses = /obj/item/clothing/glasses/thermal/chameleon
 	gloves = /obj/item/clothing/gloves/combat
 	suit_store = /obj/item/gun/energy/recharge/ebow
 	l_hand = /obj/item/melee/energy/sword

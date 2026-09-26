@@ -8,11 +8,8 @@ GLOBAL_LIST(antag_token_config)
 #define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
 #define ADMIN_CHECK_ANTAGS(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];check_antagonist=1'>Check antagonists</a>)"
 #define ADMIN_OPEN_TOKEN_MANAGER(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];token_manager=1'>Open Token Manager</a>)"
-/client/verb/spend_antag_tokens()
-	set category = "IC"
-	set name = "Spend Antag Tokens"
-	set desc = "Opens a ui to spend antag tokens on"
 
+GAME_VERB_DESC(/client, spend_antag_tokens, "Spend Antag Tokens", "Opens a ui to spend antag tokens on", "IC")
 
 	if(!isobserver(mob) && !isliving(mob))
 		to_chat(src, "For this to work you need to either be observing or playing.")
@@ -84,10 +81,7 @@ GLOBAL_LIST(antag_token_config)
 	)
 	client_token_holder.antag_timeout = addtimer(CALLBACK(client_token_holder, TYPE_PROC_REF(/datum/meta_token_holder, timeout_antag_token)), 5 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
-/client/verb/trigger_token_event()
-	set category = "IC"
-	set name = "Trigger Token Event"
-	set desc = "Opens a ui to spend event tokens on"
+GAME_VERB_DESC(/client, trigger_token_event, "Trigger Token Event", "Opens a ui to spend event tokens on", "IC")
 
 	if(!isobserver(mob))
 		to_chat(src, "You can only trigger events as a ghost.")

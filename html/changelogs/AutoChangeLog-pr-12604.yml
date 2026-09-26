@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: " Borer egg outside of host now deals 50 damage as intended, instead of all but 50 of your health at high health pools"

@@ -77,7 +77,7 @@
 			new /obj/item/healthanalyzer/rad_laser(src) // 3 tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/soap/syndie(src) // 1 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/jammer(src) // 5 tc
 
@@ -104,7 +104,7 @@
 
 		if(KIT_MURDER)
 			new /obj/item/melee/energy/sword/saber(src) // 8 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
@@ -126,7 +126,7 @@
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 
 		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
@@ -156,7 +156,7 @@
 		if(KIT_SNIPER) //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/rifle/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src) // 5 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/clothing/gloves/latex/nitrile(src) // ~ 1 tc for outfit
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
@@ -996,7 +996,7 @@
 			/obj/item/gun/syringe/syndicate,
 			/obj/item/storage/backpack/duffelbag/syndie/x4,
 			/obj/item/clothing/shoes/chameleon/noslip,
-			/obj/item/clothing/glasses/thermal/syndi,
+			/obj/item/clothing/glasses/thermal/chameleon,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
 			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,
@@ -1046,7 +1046,7 @@
 			/obj/item/gun/syringe/syndicate,
 			/obj/item/storage/backpack/duffelbag/syndie/x4,
 			/obj/item/clothing/shoes/chameleon/noslip,
-			/obj/item/clothing/glasses/thermal/syndi,
+			/obj/item/clothing/glasses/thermal/chameleon,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
 			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,

@@ -1,0 +1,4 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - qol: "(vinylspiders) adds lobby job estimations to statpanel, so you can see what jobs others are prioritizing"

@@ -210,9 +210,11 @@
 				new_client.readied_store = new(new_player)
 			new_client.readied_store.ui_interact(new_player)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(interview_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
+		SSstatpanels.add_job_estimation(new_player)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
+		SSstatpanels.remove_job_estimation(new_player)
 	update_appearance(UPDATE_ICON)
 
 ///Shown when the game has started
