@@ -159,9 +159,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
-
-/obj/item/gun/ballistic/revolver/mateba/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
@@ -190,6 +188,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
@@ -279,9 +278,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(span_danger("[user.name] fires [src] at [user.p_their()] head!"), span_userdanger("You fire [src] at your head!"), span_hear("You hear a gunshot!"))
-
-/obj/item/gun/ballistic/revolver/russian/give_manufacturer_examine()
-	return
 
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"
