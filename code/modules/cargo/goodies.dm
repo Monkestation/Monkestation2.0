@@ -84,7 +84,7 @@
 	desc = "Contains one disabler, the nonlethal workhorse of Nanotrasen security everywehere. Comes in a energy holster, just in case you happen to have an extra disabler."
 	cost = PAYCHECK_COMMAND * 3
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/storage/belt/holster/energy/disabler)
+	contains = list(/obj/item/storage/belt/holster/disabler)
 
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
@@ -112,7 +112,7 @@
 	desc = "Contains twinned thermal pistols in a holster, ready for use in the field."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/storage/belt/holster/energy/thermal)
+	contains = list(/obj/item/storage/belt/holster/thermal)
 
 /datum/supply_pack/goody/sologamermitts
 	name = "Insulated Gloves Single-Pack"
