@@ -545,3 +545,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 24
+
+/obj/machinery/button/shieldwallgen
+	name = "holofield switch"
+	desc = "A remote switch for a holofield generator"
+	icon_state= "button-warning"
+	skin = "-warning"
+	device_type = /obj/item/assembly/control/shieldwallgen
+	req_access = list()
+	id = 1

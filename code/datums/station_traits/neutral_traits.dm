@@ -507,3 +507,15 @@
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
 		ai_datum.total_positions = 3
+
+/datum/station_trait/random_lavaland
+	name = "Random lavaland base"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = TRUE
+	report_message = "Your station's mining outpost has been recycled from a fork of your division, thus may look a bit different."
+	trait_to_give = STATION_TRAIT_RANDOM_LAVALAND
+	var/chosen_lavabase
+
+/datum/station_trait/random_lavaland/New()
+	. = ..()
+	chosen_lavabase = rand(1, 2)
