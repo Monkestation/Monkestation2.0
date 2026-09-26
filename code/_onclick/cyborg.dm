@@ -110,85 +110,103 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/target)
 	target.BorgCtrlClick(src)
 
-/atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
+/**
+ * Handles whenever a cyborg Ctrl+Shift+Click onto this atom.
+ *
+ * By default, will forward to [/proc/base_click_ctrl_shift] if not overridden.
+ */
+/atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user)
 	user.base_click_ctrl_shift(src)
 
-/obj/machinery/door/airlock/BorgCtrlShiftClick(mob/living/silicon/robot/user) // Sets/Unsets Emergency Access Override Forwards to AI code.
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AICtrlShiftClick(user)
-	else
-		..()
-
-/atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
+/**
+ * Handles whenever a cyborg Shift+Click onto this atom.
+ *
+ * By default, will forward to [/proc/ShiftClick] behavior if not overridden.
+ */
+/atom/proc/BorgShiftClick(mob/living/silicon/robot/user)
 	ShiftClick(user)
 
-/obj/machinery/door/airlock/BorgShiftClick(mob/living/silicon/robot/user)  // Opens and closes doors! Forwards to AI code.
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AIShiftClick(user)
-	else
-		..()
-
-/atom/proc/BorgCtrlClick(mob/living/silicon/robot/user) //forward to human click if not overridden
+/**
+ * Handles whenever a cyborg Ctrl+Click onto this atom.
+ *
+ * By default, will forward to [/proc/base_click_ctrl] behavior if not overridden.
+ */
+/atom/proc/BorgCtrlClick(mob/living/silicon/robot/user)
 	user.base_click_ctrl(src)
 
-/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AICtrlClick(user)
-	else
-		..()
-
-/obj/machinery/power/apc/BorgCtrlClick(mob/living/silicon/robot/user) // turns off/on APCs. Forwards to AI code.
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AICtrlClick(user)
-	else
-		..()
-
-/obj/machinery/power/apc/BorgCtrlShiftClick(mob/living/silicon/robot/user)
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AICtrlShiftClick(user)
-	else
-		..()
-
-/obj/machinery/power/apc/BorgShiftClick(mob/living/silicon/robot/user)
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AIShiftClick(user)
-	else
-		..()
-
-/obj/machinery/power/apc/borg_click_alt(mob/living/silicon/robot/user)
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		ai_click_alt(user)
-	else
-		..()
-
-
-/obj/machinery/power/apc/attack_robot_secondary(mob/living/silicon/user, list/modifiers)
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		return attack_ai_secondary(user, modifiers)
-	else
-		..()
-
-/obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user) //turret control on/off. Forwards to AI code.
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		AICtrlClick(user)
-	else
-		..()
-
+/**
+ * Handles whenever a cyborg Alt+Click onto this atom.
+ *
+ * By default, will forward to [/proc/base_click_alt] behavior if not overridden.
+ */
 /atom/proc/borg_click_alt(mob/living/silicon/robot/user)
 	user.base_click_alt(src)
 	return
 
-/obj/machinery/door/airlock/borg_click_alt(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
-		ai_click_alt(user)
-	else
-		..()
+/obj/machinery/door/airlock/BorgCtrlShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		AICtrlShiftClick(user) // Toggles emergency access override on the airlock.
+		return
+	return ..()
 
-/obj/machinery/turretid/borg_click_alt(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
-	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
+/obj/machinery/door/airlock/BorgShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		AIShiftClick(user) // Opens or closes the airlock.
+		return
+	return ..()
+
+/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		AICtrlClick(user) // Toggles bolts on the airlock.
+		return
+	return ..()
+
+/obj/machinery/door/airlock/borg_click_alt(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
 		ai_click_alt(user)
-	else
-		..()
+		return // Toggles electrification for the airlock.
+	return ..()
+
+/obj/machinery/power/apc/BorgCtrlClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		AICtrlClick(user) // Toggles main power for the APC.
+		return
+	return ..()
+
+/obj/machinery/power/apc/BorgCtrlShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		AICtrlShiftClick(user) // Toggles environment power for the APC.
+		return
+	return ..()
+
+/obj/machinery/power/apc/BorgShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		AIShiftClick(user) // Toggles lighting power for the APC.
+		return
+	return ..()
+
+/obj/machinery/power/apc/borg_click_alt(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		ai_click_alt(user) // Toggles equipment power for the APC.
+		return
+	return ..()
+
+/obj/machinery/power/apc/attack_robot_secondary(mob/living/silicon/robot/user, list/modifiers)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		return attack_ai_secondary(user, modifiers) // Toggles locks for the APC.
+	return ..()
+
+/obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		AICtrlClick(user) // Toggles on / off mode for the turret.
+		return
+	return ..()
+
+/obj/machinery/turretid/borg_click_alt(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled) && !user.low_power_mode)
+		ai_click_alt(user) // Toggles non-lethal / lethal mode for the turret.
+		return
+	return ..()
 
 /*
 	As with AI, these are not used in click code,
