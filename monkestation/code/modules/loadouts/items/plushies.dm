@@ -132,3 +132,6 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 	name = "Milky Plushie"
 	item_path = /obj/item/toy/plush/expie/milky
 
+/datum/loadout_item/plushies/argemia
+	name = "Ariral Plush"
+	item_path = /obj/item/toy/plush/argemia
