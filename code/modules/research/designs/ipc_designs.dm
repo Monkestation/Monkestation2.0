@@ -120,9 +120,9 @@
 	build_type = MECHFAB
 	build_path = /obj/item/ipc_core
 	materials = list(
-	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
-	/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
-	/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
 	)
 	construction_time = 30 SECONDS
 	category = list(
