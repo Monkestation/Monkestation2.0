@@ -14447,7 +14447,7 @@
 /area/station/medical/abandoned)
 "dsM" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/clothing/gloves/latex,
@@ -22554,7 +22554,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fno" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
@@ -82122,7 +82122,7 @@
 /area/station/engineering/atmos)
 "tsx" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,

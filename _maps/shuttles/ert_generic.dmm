@@ -1522,7 +1522,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table/reinforced/rglass,
 /obj/item/clothing/gloves/latex/surgical,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_x = -1;
 	pixel_y = 13
 	},
