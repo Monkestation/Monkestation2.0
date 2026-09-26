@@ -303,9 +303,13 @@
 			packed_materials[material_ref.type] = amount
 
 /obj/machinery/rnd/production/omnilathe/proc/prepare_for_packing()
-	build_packed_material_cache()
+	if(materials?.silo)
+		return
+
 	if(!materials?.mat_container)
 		return
+
+	build_packed_material_cache()
 
 	for(var/datum/material/material_ref as anything in materials.mat_container.materials)
 		materials.mat_container.materials[material_ref] = 0
@@ -377,46 +381,46 @@
 			return entry[2]
 	return null
 
-/obj/machinery/rnd/production/omnilathe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/circuitboard/machine) && isliving(user))
+/obj/machinery/rnd/production/omnilathe/item_interaction(mob/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/circuitboard/machine) && isliving(user))
 		if(machine_stat & (NOPOWER|BROKEN))
 			return ITEM_INTERACT_BLOCKING
 		var/mob/living/living_user = user
-		var/obj/item/circuitboard/machine/board = attacking_item
+		var/obj/item/circuitboard/machine/board = tool
 		var/recipe_set = get_recipe_set_from_board(board)
 		if(isnull(recipe_set))
 			return ITEM_INTERACT_BLOCKING
 		if(unlocked_recipe_sets[recipe_set])
 			balloon_alert(living_user, "department recipes already unlocked")
 			return ITEM_INTERACT_BLOCKING
-		if(!living_user.transferItemToLoc(attacking_item, src))
+		if(!living_user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		living_user.visible_message(span_notice("[living_user] begins loading [attacking_item] into [src]..."),
+		living_user.visible_message(span_notice("[living_user] begins loading [tool] into [src]..."),
 			balloon_alert(living_user, "loading board..."),
 			span_hear("You hear the chatter of a drive slot."))
 		if(!do_after(living_user, 1.5 SECONDS, target = src))
-			if(attacking_item?.loc == src)
-				try_put_in_hand(attacking_item, living_user)
+			if(tool?.loc == src)
+				try_put_in_hand(tool, living_user)
 			balloon_alert(living_user, "interrupted!")
 			return ITEM_INTERACT_BLOCKING
-		qdel(attacking_item)
+		qdel(tool)
 		unlocked_recipe_sets[recipe_set] = TRUE
 		lathe_recipe_set = recipe_set
 		rebuild_cached_designs()
 		balloon_alert(living_user, "department recipes unlocked")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/disk/design_disk) && isliving(user))
+	if(istype(tool, /obj/item/disk/design_disk) && isliving(user))
 		if(machine_stat & (NOPOWER|BROKEN))
 			return ITEM_INTERACT_BLOCKING
 		var/mob/living/living_user = user
-		living_user.visible_message(span_notice("[living_user] begins to load [attacking_item] into [src]..."),
+		living_user.visible_message(span_notice("[living_user] begins to load [tool] into [src]..."),
 			balloon_alert(living_user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		if(!do_after(living_user, 1.5 SECONDS, target = src))
 			balloon_alert(living_user, "interrupted!")
 			return ITEM_INTERACT_BLOCKING
-		var/obj/item/disk/design_disk/disky = attacking_item
+		var/obj/item/disk/design_disk/disky = tool
 		var/list/not_imported
 		for(var/datum/design/blueprint as anything in disky.blueprints)
 			if(!blueprint)
@@ -430,25 +434,25 @@
 		rebuild_cached_designs()
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/ammo_box) && isliving(user) && !(user.istate & ISTATE_HARM))
+	if(istype(tool, /obj/item/ammo_box) && isliving(user) && !(user.istate & ISTATE_HARM))
 		var/mob/living/living_user = user
-		if(!living_user.transferItemToLoc(attacking_item, src))
-			return TRUE
+		if(!living_user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_SUCCESS
 		if(loaded_magazine)
 			loaded_magazine.forceMove(drop_location())
 			living_user.put_in_hands(loaded_magazine)
-		loaded_magazine = attacking_item
+		loaded_magazine = tool
 		if(ammo_busy)
 			ammo_fill_finish(FALSE)
 		update_ammotypes()
 		update_appearance()
 		playsound(loc, 'sound/weapons/autoguninsert.ogg', 18, TRUE)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	if(isliving(user) && materials?.mat_container)
 		var/mob/living/living_user = user
-		materials.mat_container.user_insert(attacking_item, living_user, src)
-		return TRUE
+		materials.mat_container.user_insert(tool, living_user, src)
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
