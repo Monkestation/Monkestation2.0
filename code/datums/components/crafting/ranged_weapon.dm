@@ -393,3 +393,13 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/photoncannon
+	name = "Photon Cannon"
+	result = /obj/item/gun/energy/photon
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/weaponcrafting/gunkit/photon = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED
