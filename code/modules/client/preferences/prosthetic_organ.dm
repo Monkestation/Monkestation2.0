@@ -21,5 +21,5 @@
 	values += "Random"
 	return values
 
-/datum/preference/choiced/language/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/prosthetic_organ/apply_to_human(mob/living/carbon/human/target, value)
 	return
