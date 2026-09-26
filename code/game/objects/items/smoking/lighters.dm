@@ -428,3 +428,9 @@
 		/obj/item/lighter/mime,
 		/obj/item/lighter/bright,
 	)
+
+/obj/item/lighter/greyscale/pickle
+	name = "pickle lighter"
+	desc = "The very idea of a lighter adorned with a pickle drives you to the brink of madness."
+	overlay_state = "pickle"
+	lighter_color = COLOR_ASSEMBLY_WHITE
