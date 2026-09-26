@@ -1,4 +1,5 @@
-ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Panel", mob/player in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Panel", /mob)
+	VERB_ARG_TYPED(player, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
@@ -153,7 +154,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Pan
 	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x515")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
-GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game", mob/mob in GLOB.mob_list)
+GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game")
+	VERB_ARG_TYPED(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 
 	if(!check_rights(R_ADMIN))
 		return
@@ -396,7 +398,8 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 	mob.lighting_cutoff = mob.default_lighting_cutoff()
 	mob.update_sight()
 
-ADMIN_VERB(show_traitor_panel, R_ADMIN, FALSE, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME, mob/target_mob)
+ADMIN_VERB(show_traitor_panel, R_ADMIN, FALSE, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
 		to_chat(user, "This mob has no mind!", confidential = TRUE)
@@ -407,7 +410,8 @@ ADMIN_VERB(show_traitor_panel, R_ADMIN, FALSE, "Show Traitor Panel", "Edit mobs'
 	target_mind.traitor_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
 
-ADMIN_VERB(show_skill_panel, R_ADMIN, FALSE, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_GAME, mob/target_mob)
+ADMIN_VERB(show_skill_panel, R_ADMIN, FALSE, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_GAME)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind
 	if(istype(target_mob, /datum/mind))
 		target_mind = target_mob

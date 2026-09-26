@@ -172,7 +172,6 @@ window "info_and_buttons"
 		size = 640x477
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffc41f
 		saved-params = "splitter"
 		left = "infobuttons"
 		right = "infowindow"
@@ -265,22 +264,55 @@ window "infobuttons"
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 281,0
+		pos = 281,5
 		size = 640x475
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "info"
+	elem "info_child"
 		type = CHILD
-		pos = 0,5
+		pos = 0,0
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
+        splitter = 40
+		background-color = #202020
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
+
+window "input_buttons"
+	elem "input_buttons_main"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "input_buttons_child"
+		type = CHILD
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #ffc41f
+		saved-params = "splitter"
+		left = "inputwindow"
+		right = "inputbuttons"
+		is-vert = true
+		splitter = 70
+		show-splitter = false
+	elem "mediapanel"
+		type = BROWSER
+		pos = 599,460
+		size = 1x1
+		anchor1 = 100,100
+		anchor2 = -1,-1
+		is-visible = false
+		saved-params = ""
 
 window "outputwindow"
 	elem "outputwindow"
@@ -291,27 +323,14 @@ window "outputwindow"
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "output_input_child"
+	elem "output_selector_screen"
 		type = CHILD
-		pos = 0,0
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffc41f
 		saved-params = "splitter"
+		background-color = #ffc41f
 		left = "output_selector"
-		right = "input_and_buttons"
-		is-vert = false
-		splitter = 96
-		show-splitter = false
-	elem "mediapanel"
-		type = BROWSER
-		pos = 599,460
-		size = 1x1
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		is-visible = false
-		saved-params = ""
 
 window "output_selector"
 	elem "output_selector"
@@ -331,27 +350,6 @@ window "output_selector"
 		saved-params = "splitter"
 		left = "output_legacy"
 		is-vert = false
-
-window "input_and_buttons"
-	elem "input_and_buttons"
-		type = MAIN
-		pos = 291,0
-		size = 640x20
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
-	elem "input_buttons_child"
-		type = CHILD
-		pos = 0,0
-		size = 640x20
-		anchor1 = 0,0
-		anchor2 = 100,100
-		background-color = #ffc41f
-		saved-params = "splitter"
-		left = "inputwindow"
-		right = "inputbuttons"
-		is-vert = true
 		splitter = 80
 		show-splitter = false
 
@@ -359,16 +357,16 @@ window "inputwindow"
 	elem "inputwindow"
 		type = MAIN
 		pos = 575,0
-		size = 520x25
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		size = 480x25
+		anchor1 = 0,0
+		anchor2 = 70,100
 		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 520x20
+		size = 480x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
@@ -380,8 +378,8 @@ window "inputbuttons"
 	elem "inputbuttons"
 		type = MAIN
 		pos = 291,0
-		size = 120x25
-		anchor1 = 0,0
+		size = 160x25
+		anchor1 = 70,0
 		anchor2 = 100,100
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
@@ -390,7 +388,7 @@ window "inputbuttons"
 		pos = 0,0
 		size = 40x20
 		anchor1 = 0,0
-		anchor2 = 33,100
+		anchor2 = 25,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
@@ -434,6 +432,24 @@ window "output_legacy"
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
+    elem "output_and_input_legacy"
+        type = CHILD
+        pos = 0,0
+        size = 640x456
+        anchor1 = 0,0
+        anchor2 = 100,100
+        left = "output_legacy_pane"
+        right = "input_buttons"
+        split = 97.5
+
+window "output_legacy_pane"
+    elem "output_legacy_pane"
+        type = MAIN
+        pos = 0,0
+        size = 640x456
+        anchor1 = -1,-1
+        anchor2 = -1,-1
+        is-pane = true
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
