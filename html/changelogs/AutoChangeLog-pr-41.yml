@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - rscadd: "You can now choose which prosthetic organ you get, from the prosthetic organ quirk"
