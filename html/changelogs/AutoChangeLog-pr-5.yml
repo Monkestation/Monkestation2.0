@@ -1,0 +1,4 @@
+author: "byondsucks"
+delete-after: True
+changes:
+  - rscadd: "Unreadied players now count as 1/3 of a ready player for storyteller"

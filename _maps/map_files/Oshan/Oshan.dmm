@@ -73922,9 +73922,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "wJz" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine=400)
-	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/starboard/upper)
 "wJB" = (

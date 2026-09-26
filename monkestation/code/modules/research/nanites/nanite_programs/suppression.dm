@@ -148,7 +148,6 @@
 		"*surrender",
 		"*collapse",
 		"*faint",
-		"*piss",
 	)
 
 /datum/nanite_program/comm/speech/register_extra_settings()

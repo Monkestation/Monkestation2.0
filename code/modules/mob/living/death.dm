@@ -169,6 +169,6 @@
 	if (client)
 		client.move_delay = initial(client.move_delay)
 
-	persistent_client?.time_of_death = timeofdeath
-
-	return TRUE
+	if (persistent_client)
+		persistent_client.time_of_death = timeofdeath
+		COOLDOWN_START(persistent_client, respawn_timer, RESPAWN_TIMER)

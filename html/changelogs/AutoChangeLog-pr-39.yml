@@ -1,0 +1,6 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - sound: "Plays a sound to admins whenever an event is scheduled."
+  - config: "Changed the default sprint keybind from Shift to Space. Sets the default 'hold throw mode' keybind to unbound."
+  - spellcheck: "Changes the world name to Bastion Station 13."

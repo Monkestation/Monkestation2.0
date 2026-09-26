@@ -1,0 +1,8 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - rscadd: "Adds the bastion station respawn system! You cannot respawn as an observer (including if you take a ghost role and then die). After dying, you must wait 13 minutes to respawn (timer is displayed in the status tab), and when respawning, you cannot join as any department OR character that you have previously played in the round. You also cannot join as command or security after respawning."
+  - admin: "Admins are notified when someone respawns to main menu, and when they actually latejoin back into the game."
+  - code_imp: "tmp_change_character_slot() now changes the active slot loaded in the character creator too."
+  - spellcheck: "Observing now warns you that you won't be able to respawn."
+  - bugfix: "Fixes a bug where the lobby music would sometimes keep playing even after you rejoin the game (after respawning)."

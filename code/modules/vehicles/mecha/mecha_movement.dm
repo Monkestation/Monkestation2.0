@@ -3,8 +3,6 @@
 	. = ..()
 	for(var/mob/living/occupant as anything in occupants)
 		occupant.setDir(newdir)
-	if(length(buckled_mobs))
-		update_desant_positions()
 
 ///Called when the mech moves
 /obj/vehicle/sealed/mecha/proc/on_move()

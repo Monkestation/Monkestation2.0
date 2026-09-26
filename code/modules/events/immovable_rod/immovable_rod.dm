@@ -227,10 +227,6 @@
 
 	if(smeared_mob.density || prob(10))
 		EX_ACT(smeared_mob, EXPLODE_HEAVY)
-		if (istype(smeared_carbon))
-			smeared_carbon.gib_fart()
-	else if (istype(smeared_carbon))
-		smeared_carbon.impact_fart()
 
 /obj/effect/immovablerod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

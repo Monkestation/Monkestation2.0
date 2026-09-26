@@ -178,9 +178,6 @@
 /turf/open/floor/carpet/orange,
 /area/template_noop)
 "pb" = (
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine=600)
-	},
 /obj/effect/mob_spawn/corpse/human/clown,
 /obj/item/reagent_containers/cup/glass/waterbottle/large/empty{
 	pixel_x = -11;

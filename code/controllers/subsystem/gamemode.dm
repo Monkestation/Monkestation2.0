@@ -366,6 +366,10 @@ SUBSYSTEM_DEF(gamemode)
 	var/round_started = SSticker.HasRoundStarted()
 	if(round_started)
 		message_admins("Event: [passed_event] has been scheduled to run in [DisplayTimeText(passed_time)]. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(scheduled)];action=refund'>REFUND</a>)")
+		//Play sound to admins to let them know
+		for(var/client/X in GLOB.admins)
+			if(X.prefs.toggles & SOUND_ADMINHELP)
+				X.mob.playsound_local(null, 'sound/misc/prompt.ogg', 70, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
 	else //Only roundstart events can be scheduled before round start
 		message_admins("Event: [passed_event] has been scheduled to run on roundstart. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>)")
 	scheduled_events += scheduled
