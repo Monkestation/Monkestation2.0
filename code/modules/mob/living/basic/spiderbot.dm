@@ -71,7 +71,7 @@
 		heavy_impact_range = 2,
 		light_impact_range = 3,
 		flash_range = 5,
-		explosion_cause = "Emagged spiderbot death",
+		explosion_cause = src,
 	)
 
 /mob/living/basic/spiderbot/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
