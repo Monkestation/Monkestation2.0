@@ -5489,6 +5489,7 @@
 #include "code\modules\mob\living\basic\pets\dog\_dog.dm"
 #include "code\modules\mob\living\basic\pets\dog\corgi.dm"
 #include "code\modules\mob\living\basic\pets\dog\dog_subtypes.dm"
+#include "code\modules\mob\living\basic\pets\dog\Ian_variants.dm"
 #include "code\modules\mob\living\basic\pets\dog\strippable_items.dm"
 #include "code\modules\mob\living\basic\pets\parrot\_parrot.dm"
 #include "code\modules\mob\living\basic\pets\parrot\parrot_items.dm"
