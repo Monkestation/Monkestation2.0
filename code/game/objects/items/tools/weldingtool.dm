@@ -93,11 +93,11 @@
 	return "[initial(icon_state)][ratio]"
 
 /obj/item/weldingtool/process(seconds_per_tick)
+	if(automatic_refueling && reagents && (get_fuel() < reagents.maximum_volume))
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 	if(welding)
 		use(1)
 		open_flame()
-	if(automatic_refueling && reagents && (get_fuel() < reagents.maximum_volume))
-		reagents.add_reagent(/datum/reagent/fuel, 1)
 	if(!welding && !always_processing)
 		STOP_PROCESSING(SSobj, src)
 
@@ -426,10 +426,10 @@
 	return "[initial(icon_state)][ratio]"
 
 /obj/item/weldingtool/electric/process(seconds_per_tick)
-	if(welding)
-		use(1)
 	if(automatic_refueling && stored_cell?.used_charge())
 		stored_cell.give(power_cost) // Refunds a unit's worth of power.
+	if(welding)
+		use(1)
 	if(!welding && !always_processing)
 		STOP_PROCESSING(SSobj, src)
 
@@ -448,7 +448,7 @@
 	else
 		. += span_notice("Looks like \the [displayed_item_name] is loose, allowing for attachment or modifications.")
 		. += span_notice("You could use a [EXAMINE_HINT("screwdriver")] on it to secure it in-place.")
-		if(stored_cell) // It looks better in this order.
+		if(stored_cell)
 			. += span_notice("[EXAMINE_HINT("Ctrl+Shift+Click")] to eject it.")
 
 /obj/item/weldingtool/electric/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
