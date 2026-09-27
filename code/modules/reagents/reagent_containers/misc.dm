@@ -208,7 +208,7 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] = cap_on ? "Open" : "Close"
 		screentip_change = TRUE
 
-	if(istype(held_item, /obj/item/weldingtool) && reagents.total_volume)
+	if(istype(held_item, /obj/item/weldingtool) && held_item.reagents && reagents.total_volume)
 		context[SCREENTIP_CONTEXT_LMB] = "Refuel"
 		screentip_change = TRUE
 
@@ -268,7 +268,7 @@
 /obj/item/reagent_containers/cup/fuelcanister/proc/boom()
 	var/datum/reagent/fuel/volatiles = reagents.has_reagent(/datum/reagent/fuel)
 	var/fuel_amt = 0
-	if(volatiles.volume <= 25)
+	if(!volatiles || volatiles.volume <= 25)
 		return
 	if(istype(volatiles))
 		fuel_amt = volatiles.volume
@@ -347,6 +347,9 @@
 	if(istype(welder) && !welder.welding)
 		if(!cap_on)
 			to_chat(user, span_warning("\The [src] is uncapped!"))
+			return
+		if(!welder.reagents)
+			to_chat(user, span_warning("Your [welder.name] doesn't use fuel!"))
 			return
 		if(welder.reagents.total_volume >= welder.reagents.maximum_volume)
 			to_chat(user, span_warning("Your [welder.name] is already full!"))
