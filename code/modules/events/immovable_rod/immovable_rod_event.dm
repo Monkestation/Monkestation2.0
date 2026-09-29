@@ -29,7 +29,11 @@
 	var/startside = pick(GLOB.cardinals)
 	var/turf/end_turf = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
 	var/turf/start_turf = spaceDebrisStartLoc(startside, end_turf.z)
-	var/atom/rod = new /obj/effect/immovablerod(start_turf, end_turf, special_target, force_looping)
+	var/atom/rod = /obj/effect/immovablerod
+	if(prob(10))
+		rod = /obj/effect/immovablerod/of_asclepius
+
+	rod = new rod(start_turf, end_turf, special_target, force_looping)
 	announce_to_ghosts(rod)
 
 /// Admins can pick a spot the rod will aim for
