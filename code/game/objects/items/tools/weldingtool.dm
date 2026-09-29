@@ -93,11 +93,11 @@
 	return "[initial(icon_state)][ratio]"
 
 /obj/item/weldingtool/process(seconds_per_tick)
-	if(automatic_refueling && reagents && (get_fuel() < reagents.maximum_volume))
-		reagents.add_reagent(/datum/reagent/fuel, 1)
 	if(welding)
 		use(1)
 		open_flame()
+	if(automatic_refueling && reagents && (get_fuel() < reagents.maximum_volume))
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 	if(!welding && !always_processing)
 		STOP_PROCESSING(SSobj, src)
 
@@ -404,7 +404,7 @@
 	max_fuel = null
 	starting_fuel = FALSE
 	/// The energy cost per unit of fuel usage. This should never be zero.
-	var/power_cost = 0.1 * STANDARD_CELL_CHARGE // 100 uses by default.
+	var/power_cost = 0.0025 * STANDARD_CELL_CHARGE // 4000 uses by default.
 	/// The cell that we are using to power the welder. Will be created & applied upon initialization.
 	var/obj/item/stock_parts/power_store/stored_cell = /obj/item/stock_parts/power_store/cell/high
 
@@ -426,10 +426,10 @@
 	return "[initial(icon_state)][ratio]"
 
 /obj/item/weldingtool/electric/process(seconds_per_tick)
-	if(automatic_refueling && stored_cell?.used_charge())
-		stored_cell.give(power_cost) // Refunds a unit's worth of power.
 	if(welding)
 		use(1)
+	if(automatic_refueling && stored_cell?.used_charge())
+		stored_cell.give(power_cost) // Refunds a unit's worth of power.
 	if(!welding && !always_processing)
 		STOP_PROCESSING(SSobj, src)
 
@@ -526,7 +526,7 @@
 	light_outer_range = 2
 	light_power = 0.75
 	toolspeed = 1
-	power_cost = 0.125 * STANDARD_CELL_CHARGE  // 80 uses by default.
+	power_cost = 0.01 * STANDARD_CELL_CHARGE  // 1000 uses by default.
 
 /obj/item/weldingtool/electric/arc_welder/Initialize(mapload)
 	. = ..()
@@ -543,10 +543,10 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_FLARE
 	toolspeed = 0.2
-	power_cost = 0.20 * STANDARD_CELL_CHARGE // 50 uses by default.
+	power_cost = 0.002 * STANDARD_CELL_CHARGE // 5000 uses by default.
 
 /obj/item/weldingtool/electric/raynewelder/hacked
 	name = "modified laser welding tool"
 	desc = "A Rayne corp laser cutter and welder. This one seems to have been refitted by the Syndicate for general salvage use, though the removal of its safety measures has slightly reduced its efficiency."
 	toolspeed = 0.3
-	power_cost = 0.25 * STANDARD_CELL_CHARGE // 40 uses by default.
+	power_cost = 0.0025 * STANDARD_CELL_CHARGE // 4000 uses by default.
