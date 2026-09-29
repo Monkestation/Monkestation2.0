@@ -239,7 +239,7 @@
 		switched_off()
 		return FALSE
 	if(change_icons)
-		update_appearance(UPDATE_OVERLAYS) // Since our fuel ratio could be different, we need to ensure the overlays are accurate.
+		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks, interaction_key)
