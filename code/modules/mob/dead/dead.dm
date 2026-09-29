@@ -49,8 +49,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	. += "Players Ready: [SSticker.totalPlayersReady]"
 	if(client.holder)
 		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
-		. += "Gamemaster: [GLOB.called_gamemaster ? GLOB.called_gamemaster : "None" ]"
-
 
 #define SERVER_HOPPER_TRAIT "server_hopper"
 
