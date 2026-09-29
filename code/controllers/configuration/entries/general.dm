@@ -300,7 +300,7 @@
 	default = "http://www.tgstation13.org/wiki"
 
 /datum/config_entry/string/forumurl
-	default = "http://tgstation13.org/phpBB/index.php"
+	//default = "http://tgstation13.org/phpBB/index.php"
 
 /datum/config_entry/string/rulesurl
 	default = "http://www.tgstation13.org/wiki/Rules"
@@ -373,6 +373,7 @@
 /datum/config_entry/flag/no_default_techweb_link
 
 /datum/config_entry/flag/see_own_notes //Can players see their own admin notes
+	default = TRUE
 
 /datum/config_entry/number/note_fresh_days
 	default = null

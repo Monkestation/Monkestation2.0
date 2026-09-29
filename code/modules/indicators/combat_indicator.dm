@@ -174,6 +174,7 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, generate_combat_overlay())
 
 #undef COMBAT_NOTICE_COOLDOWN
 
+/*
 /datum/keybinding/living/combat_indicator
 	hotkey_keys = list("C")
 	name = "combat_indicator"
@@ -187,6 +188,7 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, generate_combat_overlay())
 		return
 	var/mob/living/L = user.mob
 	L.user_toggle_combat_indicator()
+*/
 
 /datum/config_entry/flag/combat_indicator
 
