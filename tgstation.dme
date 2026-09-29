@@ -3111,6 +3111,7 @@
 #include "code\modules\admin\battle_royale\signup_tracker.dm"
 #include "code\modules\admin\battle_royale\supplypod.dm"
 #include "code\modules\admin\callproc\callproc.dm"
+#include "code\modules\admin\game_masters\round_calling.dm"
 #include "code\modules\admin\smites\bad_luck.dm"
 #include "code\modules\admin\smites\berforate.dm"
 #include "code\modules\admin\smites\bloodless.dm"
