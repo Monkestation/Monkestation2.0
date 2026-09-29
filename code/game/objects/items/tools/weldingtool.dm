@@ -98,6 +98,8 @@
 		open_flame()
 	if(automatic_refueling && reagents && (get_fuel() < reagents.maximum_volume))
 		reagents.add_reagent(/datum/reagent/fuel, 1)
+		if(change_icons)
+			update_appearance(UPDATE_OVERLAYS) // Our new fuel ratio could of reached a threshold, thus need to update everytime we get fuel.
 	if(!welding && !always_processing)
 		STOP_PROCESSING(SSobj, src)
 
@@ -124,6 +126,11 @@
 /obj/item/weldingtool/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return FIRELOSS
+
+/obj/item/weldingtool/cyborg_unequip(mob/user)
+	if(!welding)
+		return
+	switched_off(user)
 
 /obj/item/weldingtool/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -430,6 +437,8 @@
 		use(1)
 	if(automatic_refueling && stored_cell?.used_charge())
 		stored_cell.give(power_cost) // Refunds a unit's worth of power.
+		if(change_icons)
+			update_appearance(UPDATE_OVERLAYS)
 	if(!welding && !always_processing)
 		STOP_PROCESSING(SSobj, src)
 
