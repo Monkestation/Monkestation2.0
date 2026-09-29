@@ -418,7 +418,7 @@
 		QDEL_NULL(stored_cell)
 	return ..()
 
-/obj/item/weldingtool/get_charge_overlay()
+/obj/item/weldingtool/electric/get_charge_overlay()
 	if(!change_icons)
 		return
 	var/ratio = stored_cell ? get_fuel() / max(1, stored_cell.maxcharge / power_cost) : 0
@@ -433,7 +433,7 @@
 	if(!welding && !always_processing)
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weldingtool/examine(mob/user)
+/obj/item/weldingtool/electric/examine(mob/user)
 	. = ..()
 	if(!stored_cell)
 		. += span_notice("It does not have a cell inserted!")
