@@ -439,17 +439,15 @@
 		. += span_notice("It does not have a cell inserted!")
 	else
 		. += span_notice("It has [stored_cell] inserted with [stored_cell.percent()]% charge left.")
+		. += span_notice("[EXAMINE_HINT("Ctrl+Shift+Click")] to eject it.")
 	if(automatic_refueling)
 		. += span_notice("It automatically charges itself over time.")
-	var/displayed_item_name = stored_cell ? stored_cell : "cell slot"
 	if(secured)
-		. += span_notice("Looks like \the [displayed_item_name] is currently secured firmly in-place.")
+		. += span_notice("Looks like the cell slot is currently secured firmly in-place.")
 		. += span_notice("You could use a [EXAMINE_HINT("screwdriver")] on it to allow attachment or modifications.")
 	else
-		. += span_notice("Looks like \the [displayed_item_name] is loose, allowing for attachment or modifications.")
+		. += span_notice("Looks like the cell slot is loose, allowing for attachment or modifications.")
 		. += span_notice("You could use a [EXAMINE_HINT("screwdriver")] on it to secure it in-place.")
-		if(stored_cell)
-			. += span_notice("[EXAMINE_HINT("Ctrl+Shift+Click")] to eject it.")
 
 /obj/item/weldingtool/electric/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
