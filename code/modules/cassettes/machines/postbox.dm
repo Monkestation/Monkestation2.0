@@ -39,23 +39,13 @@
 		to_chat(user, span_notice("Please add a description to your tape before submitting it, you can't change this later!"))
 		return ITEM_INTERACT_BLOCKING
 
-	var/choice = tgui_alert(user, "Are you sure? This costs 5k Monkecoins", "Mailbox", list("Yes", "No"))
+	var/choice = tgui_alert(user, "Are you sure?", "Mailbox", list("Yes", "No"))
 	if(choice != "Yes")
 		return ITEM_INTERACT_BLOCKING
 
 	var/secondchoice = tgui_alert(user, "Please make sure to Adminhelp and check for any available admins that can review your cassette before submitting, you will not be refunded if it is denied. If an admin does not review your cassette, and you are connected at the end of the round, you may be refunded.", "Mailbox", list("Acknowledge", "Cancel"))
 	if(secondchoice != "Acknowledge")
 		return ITEM_INTERACT_BLOCKING
-
-#ifndef TESTING
-	///these two parts here should be commented out for local testing without a db
-	if(user.client.prefs?.metacoins < 5000)
-		to_chat(user, span_notice("Sorry, you don't have enough Monkecoins to submit a cassette for review."))
-		return ITEM_INTERACT_BLOCKING
-
-	if(!user.client.prefs?.adjust_metacoins(user.client.ckey, -5000, "Submitted a mixtape", donator_multiplier = FALSE))
-		return ITEM_INTERACT_BLOCKING
-#endif
 
 	submit_cassette_for_review(user, tape)
 	return ITEM_INTERACT_SUCCESS

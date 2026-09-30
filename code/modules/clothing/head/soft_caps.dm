@@ -178,8 +178,7 @@
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
-	if(add_element) //monkestation edit
-		AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
 
 #define PROPHAT_MOOD "prophat"
 

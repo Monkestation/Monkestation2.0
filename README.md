@@ -10,7 +10,7 @@
 | Website                 | Link                                                                                                           |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------- |
 | Code                    | [https://github.com/Bastion-Station-13/Bastion-Station](https://github.com/Bastion-Station-13/Bastion-Station) |
-| Wiki                    | [https://wiki.monkestation.com/](https://wiki.monkestation.com/)                                               |
+| Monke Wiki              | [https://wiki.monkestation.com/](https://wiki.monkestation.com/)                                               |
 | Codedocs                | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)                                         |
 | Bastion Station Discord | [https://discord.gg/55Z4R5Xtsw](https://discord.gg/55Z4R5Xtsw)                                                 |
 

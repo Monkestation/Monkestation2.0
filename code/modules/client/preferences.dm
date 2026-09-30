@@ -406,14 +406,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				preference_middleware.post_set_preference(ui.user, requested_preference_key, value)
 			return TRUE
 
-		if ("open_store")
-			if(parent.open_store_ui)
-				parent.open_store_ui.ui_interact(usr)
-			else
-				var/datum/store_manager/tgui = new(usr)
-				tgui.ui_interact(usr)
-			return TRUE
-
 		if ("set_color_preference")
 			var/requested_preference_key = params["preference"]
 
@@ -633,7 +625,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return enabled_character_names
 
 	if (latejoin_overrride_character != 0)
-		return get_character_name(latejoin_overrride_character) + " (via override)"
+		return get_character_name(latejoin_overrride_character)
 
 	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
 	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
@@ -824,11 +816,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		prefs.save_character()
 		prefs.switch_to_slot(choice)
 
+///Note, this will change the loaded character slot (i.e. active_slot)
 /datum/preferences/proc/tmp_change_character_slot()
 	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Set Override Character")
 	if(choice)
 		latejoin_overrride_character = choice
 		enabled_character_names = null
+		switch_to_slot(choice)
 
 /datum/preferences/proc/set_default_character()
 	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Change Default Character")

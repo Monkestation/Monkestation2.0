@@ -153,9 +153,56 @@
   - image: modified twintail floor hairstyle north, east, south, west sprites
 2026-09-20:
   JupiterJaeden:
-  - balance: Insulation (of any kind) now protects against door shocks regardless of how powerful the shock is.
-  - balance: Getting shocked by an extremely powered door now husks you instead of dusting you.
-  - admin: Allows dead crew (NOT observers or dead ghost roles) to vote in the automatic shuttle vote.
-  - bugfix: Resisting grabs no longer freezes you in place or prevents you from clicking on things for several seconds after successfully resisting the grab.
-  - bugfix: Resisting grabs now has a consistent cooldown (2 seconds) between moving resist and using the actual resist verb, and the cooldown applies to both.
-  - bugfix: Using the resist verb no longer locks you out of clicking on anything for a couple seconds. You only get a click cooldown if you actually resist something - and not for successfully resisting grabs or buckles.
+  - balance: Insulation (of any kind) now protects against door shocks regardless
+      of how powerful the shock is.
+  - balance: Getting shocked by an extremely powered door now husks you instead of
+      dusting you.
+  - admin: Allows dead crew (NOT observers or dead ghost roles) to vote in the automatic
+      shuttle vote.
+  - bugfix: Resisting grabs no longer freezes you in place or prevents you from clicking
+      on things for several seconds after successfully resisting the grab.
+  - bugfix: Resisting grabs now has a consistent cooldown (2 seconds) between moving
+      resist and using the actual resist verb, and the cooldown applies to both.
+  - bugfix: Using the resist verb no longer locks you out of clicking on anything
+      for a couple seconds. You only get a click cooldown if you actually resist something
+      - and not for successfully resisting grabs or buckles.
+2026-09-29:
+  DrDiasyl, Zxaber, Jacquerel,  Maurukas, JohnFulpWillard, MrMelbert:
+  - rscadd: Paddy is back in the hangars of Security departments
+  - rscadd: Now up to 3 people can hang off the mechs like tank desant
+  JupiterJaeden:
+  - sound: Plays a sound to admins whenever an event is scheduled.
+  - config: Changed the default sprint keybind from Shift to Space. Sets the default
+      'hold throw mode' keybind to unbound.
+  - spellcheck: Changes the world name to Bastion Station 13.
+  - rscadd: Adds the bastion station respawn system! You cannot respawn as an observer
+      (including if you take a ghost role and then die). After dying, you must wait
+      13 minutes to respawn (timer is displayed in the status tab), and when respawning,
+      you cannot join as any department OR character that you have previously played
+      in the round. You also cannot join as command or security after respawning.
+  - admin: Admins are notified when someone respawns to main menu, and when they actually
+      latejoin back into the game.
+  - code_imp: tmp_change_character_slot() now changes the active slot loaded in the
+      character creator too.
+  - spellcheck: Observing now warns you that you won't be able to respawn.
+  - bugfix: Fixes a bug where the lobby music would sometimes keep playing even after
+      you rejoin the game (after respawning).
+  - spellcheck: Updated the README.md that displays on github to refer to bastion
+      station rather than monke station
+  - rscadd: adds a tough little battlement as the window icon
+  - spellcheck: fixed some references from monkestation to bastion station
+  - rscdel: Removed pissing and farting.
+  - rscdel: Removed the ass-related traits/quirks.
+  - rscdel: Removed the 'prude mode' sound channel and preference toggle.
+  - rscdel: Removed bladders. Did not remove asses. You can still blow someone's ass
+      off and wear it as a hat, just as Doc Johnson intended.
+  - rscdel: Removed buttbots.
+  Mantlecrawler:
+  - rscadd: You can now choose which prosthetic organ you get, from the prosthetic
+      organ quirk
+  - rscadd: Menu icons swapped
+  - rscdel: most admin plushies
+  byondsucks:
+  - rscadd: Unreadied players now count as 1/3 of a ready player for storyteller
+  mc-oofert:
+  - rscdel: removed monkecoin, lootboxes, the shop and stuff related to that

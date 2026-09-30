@@ -12,9 +12,6 @@
 	///list of all items in inventory
 	var/list/inventory = list()
 
-	///the amount of metacoins currently possessed
-	var/metacoins
-
 	///sound storage
 	var/datum/ui_module/volume_mixer/pref_mixer
 
@@ -44,8 +41,6 @@
 		"single-use" = list(),
 		"generic" = list(),
 		)
-	///amount of lootboxes owned
-	var/lootboxes_owned = 0
 
 	///our current antag rep (base is 10)
 	var/antag_rep = 10

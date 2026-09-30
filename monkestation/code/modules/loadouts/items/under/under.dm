@@ -233,7 +233,6 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Jester Suit"
 	item_path = /obj/item/clothing/under/rank/civilian/clown/jester
 	restricted_roles = list(JOB_CLOWN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/maidcostume
 	name = "Maid Costume"
@@ -587,7 +586,6 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /// DONATOR
 /datum/loadout_item/under/donator
 	donator_only = TRUE
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/shrine
 	name = "Shrine Priestess Kimono"
@@ -598,7 +596,6 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Constable Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/security/constable
 	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 
 /// EVERYTHING NOVA RELATED
@@ -610,55 +607,46 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/jumpsuit/frontier
 	name = "Frontier Jumpsuit"
 	item_path = /obj/item/clothing/under/frontier_colonist
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/impcap
 	name = "Captain's Naval Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/captain/nova/imperial
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/imphop
 	name = "Head of Personnel's Naval Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/civilian/head_of_personnel/nova/imperial
 	restricted_roles = list(JOB_HEAD_OF_PERSONNEL)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/impce
 	name = "Chief Engineer's Naval Uniform"
 	item_path = /obj/item/clothing/under/rank/engineering/chief_engineer/nova/imperial
 	restricted_roles = list(JOB_CHIEF_ENGINEER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/impcommand
 	name = "Light Grey Officer's Naval Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/impcom
 	name = "Grey Officer's Naval Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic/grey
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/impred
 	name = "Red Officer's Naval Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic/red
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/impcomtrous
 	name = "Grey Officer's Naval Jumpsuit (Trousers)"
 	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic/pants
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/security_jumpskirt
 	name = "Security Jumpskirt"
 	item_path = /obj/item/clothing/under/rank/security/officer/skirt
 	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/imperial_police_uniform //BUYABLE
 	name = "Imperial Police Uniform"
@@ -672,13 +660,11 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Sol Emergency Medical Uniform"
 	item_path = /obj/item/clothing/under/sol_emt
 	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_CHEMIST, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/hlscientist
 	name = "Ridiculous Scientist Outfit"
 	item_path = /obj/item/clothing/under/rank/rnd/scientist/hlscience
 	restricted_roles = list(JOB_SCIENTIST)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility	//BUYABLE
 	name = "Utility Uniform"
@@ -688,37 +674,31 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Engineering Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/engineering/engineer/nova/utility
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_med
 	name = "Medical Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/medical/doctor/utility
 	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHEMIST, JOB_VIROLOGIST, JOB_GENETICIST ,JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_sci
 	name = "Science Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/rnd/scientist/utility
 	restricted_roles = list(JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_XENOBIOLOGIST)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_cargo
 	name = "Supply Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/utility
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_sec
 	name = "Security Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/security/utility
 	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_WARDEN, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_HEAD_OF_SECURITY) //i dunno about the blueshield, they're a weird combo of sec and command, thats why they arent in the loadout pr im making
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_com
 	name = "Command Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/captain/nova/utility
 	restricted_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_RESEARCH_DIRECTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CHIEF_ENGINEER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/gnome_green
 	name = "Green Gnome Uniform"
@@ -999,49 +979,41 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Cargo Tech Casualwear"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/casualman
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/cargo_turtle
 	name = "Cargo Turtleneck"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/cargo_gorka
 	name = "Cargo Gorka"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/gorka
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/cargo_skirtle
 	name = "Cargo Skirtleneck"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck/skirt
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/qm_skirtle
 	name = "Quartermaster's Skirtleneck"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck/skirt
 	restricted_roles = list(JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/qm_turtle
 	name = "Quartermaster's Turtleneck"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck
 	restricted_roles = list(JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/qm_casual
 	name = "Quartermaster's Casualwear"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/casual
 	restricted_roles = list(JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/qm_gorka
 	name = "Quartermaster's Gorka Uniform"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/gorka
 	restricted_roles = list(JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /*
 *	FORMAL UNDERSUITS

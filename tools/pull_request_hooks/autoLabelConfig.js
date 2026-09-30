@@ -52,6 +52,9 @@ export const title_labels = {
   'Process: do not merge': {
     keywords: ['[dnm]', '[do not merge]'],
   },
+  Mirrored: {
+    keywords: ['[mirror]'],
+  },
   'Process: testmerge only': {
     keywords: ['[tm only]', '[test merge only]'],
   },

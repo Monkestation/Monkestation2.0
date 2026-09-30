@@ -20,26 +20,7 @@
 				for(var/path in user.prefs.job_rewards_claimed[key_id])
 					if(path == milestone_type)
 						return
-			if(!user.prefs.inventory[initial(listed_loadout.item_path)])
-				user.prefs.inventory += initial(listed_loadout.item_path)
-				var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-					INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
-					list("ckey" = user.ckey, "item_id" = initial(listed_loadout.item_path), "amount" = 1))
-				if(!query_add_gear_purchase.Execute())
-					to_chat(user, "Failed to add level up reward to the database, contact coders.")
-					qdel(query_add_gear_purchase)
-					return FALSE
-				qdel(query_add_gear_purchase)
-			else
-				user.prefs.inventory += initial(listed_loadout.item_path)
-				var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-					UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
-					list("ckey" = user.ckey, "item_id" = initial(listed_loadout.item_path), "amount" = 1))
-				if(!query_add_gear_purchase.Execute())
-					to_chat(user, "Failed to add level up reward to the database, contact coders.")
-					qdel(query_add_gear_purchase)
-					return FALSE
-				qdel(query_add_gear_purchase)
+			user.prefs.inventory += initial(listed_loadout.item_path)
 
 		if(!user.prefs.job_rewards_claimed[key_id])
 			user.prefs.job_rewards_claimed[key_id] = list()

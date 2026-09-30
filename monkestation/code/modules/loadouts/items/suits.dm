@@ -383,7 +383,6 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 
 /datum/loadout_item/suit/donator
 	donator_only = TRUE
-	requires_purchase = FALSE
 
 
 /// EVERYTHING NOVA RELATED
@@ -397,7 +396,6 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Assistant's Formal Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/nova
 	restricted_roles = list(JOB_ASSISTANT, JOB_SECURITY_ASSISTANT) //funny
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/korea
 	name = "Eastern Winter Coat"
@@ -583,7 +581,6 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Runner Coat"
 	item_path = /obj/item/clothing/suit/toggle/deckard
 	restricted_roles = list(JOB_DETECTIVE)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/bltrench
 	name = "Black Trenchcoat"
@@ -682,37 +679,31 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Security Officer's Navy Blue Formal Jacket"
 	item_path = /obj/item/clothing/suit/jacket/officer/blue
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/navybluejacketwarden
 	name = "Warden's Navy Blue Formal Jacket"
 	item_path = /obj/item/clothing/suit/jacket/warden/blue
 	restricted_roles = list(JOB_WARDEN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/navybluejackethos
 	name = "Head of Security's Navy Blue Formal Jacket"
 	item_path = /obj/item/clothing/suit/jacket/hos/blue
 	restricted_roles = list(JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/security_jacket
 	name = "Security Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/sec
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/security_jacket_hi_vis
 	name = "Security Hi-Vis Jacket"
 	item_path = /obj/item/clothing/suit/armor/vest/secjacket
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/british_jacket
 	name = "Peacekeeper Officer Coat"
 	item_path = /obj/item/clothing/suit/british_officer
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/offdep_jacket
 	name = "Off-Department Jacket"
@@ -722,25 +713,21 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Engineering Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/engi
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/sci_jacket
 	name = "Science Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/sci
 	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_XENOBIOLOGIST)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/med_jacket
 	name = "Medbay Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/med
 	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHEMIST, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/supply_jacket
 	name = "Supply Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/supply
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/digicoat_glitched //Purchasable version of Razurath's donator reward.
 	name = "Glitched Digicoat"
@@ -774,31 +761,26 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Nun's Habit"
 	item_path = /obj/item/clothing/suit/chaplainsuit/nun
 	restricted_roles = list(JOB_CHAPLAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/chap_holiday
 	name = "Chaplain's Holiday Robe"
 	item_path = /obj/item/clothing/suit/chaplainsuit/holidaypriest
 	restricted_roles = list(JOB_CHAPLAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/chap_brownmonk
 	name = "Monk's Brown Habit"
 	item_path = /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit
 	restricted_roles = list(JOB_CHAPLAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/chap_eastmonk
 	name = "Eastern Monk's Robe"
 	item_path = /obj/item/clothing/suit/chaplainsuit/monkrobeeast
 	restricted_roles = list(JOB_CHAPLAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/chap_shrinehand
 	name = "Shrinehand Robe"
 	item_path = /obj/item/clothing/suit/chaplainsuit/shrinehand
 	restricted_roles = list(JOB_CHAPLAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/suit/henchmen_coat
 	name = "Henchmen Coat"

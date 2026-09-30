@@ -246,9 +246,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		for(var/prize in prizes)
 			if(!prizes[prize])
 				continue
-			if(prize == COIN_PRIZE)
-				winner.client?.prefs.adjust_metacoins(winner.ckey, prizes[prize], "Won battle royale.")
-			else
+			if(prize != COIN_PRIZE)
 				winner.client?.client_token_holder.adjust_antag_tokens(prize, prizes[prize])
 				to_chat(winner, span_boldnotice("You have gained [prizes[prize]] [prize] token(s) for winning battle royale."))
 

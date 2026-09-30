@@ -43,14 +43,6 @@ export const ATM = () => {
 
               <Stack justify="space-between">
                 <Box>
-                  <Icon name="coins" mr={1} />
-                  Monkecoins
-                </Box>
-                <Box bold>{meta_balance}</Box>
-              </Stack>
-
-              <Stack justify="space-between">
-                <Box>
                   <Icon name="ticket" mr={1} />
                   Current Lottery Pool
                 </Box>
@@ -68,9 +60,6 @@ export const ATM = () => {
 
           <Section title="Transactions">
             <Stack vertical>
-              <Button fluid icon="arrow-down" onClick={() => act('withdraw')}>
-                Withdraw Monkecoins
-              </Button>
 
               <Button
                 fluid
@@ -82,10 +71,6 @@ export const ATM = () => {
 
               <Button fluid icon="ticket" onClick={() => act('lottery_buy')}>
                 Buy Lottery Tickets
-              </Button>
-
-              <Button fluid icon="gift" onClick={() => act('buy_lootbox')}>
-                Purchase Lootbox
               </Button>
             </Stack>
           </Section>

@@ -110,8 +110,6 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/month_number = text2num(time2text(world.time, "MM"))
 
 	if(token_month != month_number)
-		if(patreon.has_access(ACCESS_NUKIE_RANK))    ///if nukie rank, get coins AND token
-			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations", donator_multiplier = FALSE)
 
 		donator_token++
 		token_month = month_number  ///update per-person month counter

@@ -885,6 +885,9 @@
 	// The signal is called after everything else so components can properly check the updated values
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal_flags)
 
+	if(persistent_client)
+		COOLDOWN_RESET(persistent_client, respawn_timer)
+
 /**
  * Heals up the mob up to [heal_to] of the main damage types.
  * EX: If heal_to is 50, and they have 150 brute damage, they will heal 100 brute (up to 50 brute damage)

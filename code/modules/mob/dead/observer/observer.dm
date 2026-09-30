@@ -273,7 +273,10 @@ Works together with spawning an observer, noted above.
 	if(isliving(former_mob))
 		recordable_time = former_mob.timeofdeath
 
-	ghost.persistent_client?.time_of_death = recordable_time
+	if (ghost.persistent_client)
+		ghost.persistent_client.time_of_death = recordable_time
+		if (!COOLDOWN_STARTED(ghost.persistent_client, respawn_timer))
+			COOLDOWN_START(ghost.persistent_client, respawn_timer, RESPAWN_TIMER)
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
