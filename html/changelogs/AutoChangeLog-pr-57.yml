@@ -1,5 +1,0 @@
-author: "ValuedEmployee"
-delete-after: True
-changes:
-  - image: "modified the ook icons replacing them with a mothroach in bottom_buttons.dmi"
-  - refactor: "altered new_player.dm's naming scheme for the ook button to roach and changed the sound effect to a moth scream"
