@@ -19,7 +19,7 @@
 	/// A custom map template to spawn the ERT at. If this is null or use_custom_shuttle is FALSE, the ERT will spawn at Centcom.
 	var/datum/map_template/ert_template
 	/// If we should actually _use_ the ert_template custom shuttle
-	var/use_custom_shuttle = TRUE
+	var/use_custom_shuttle = FALSE
 	//MONKESTATION EDIT START
 	//If we want a custom name for the poll title
 	var/poll_title = "Emergency Response Team"
