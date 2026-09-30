@@ -129,13 +129,6 @@
 
 	return typelist
 
-/datum/world_topic/plx_getunusualitems
-	keyword = "PLX_getunusualitems"
-	require_comms_key = TRUE
-
-/datum/world_topic/plx_getunusualitems/Run(list/input)
-	return GLOB.possible_lootbox_clothing
-
 /datum/world_topic/get_unusualeffects
 	keyword = "PLX_getunusualeffects"
 	require_comms_key = TRUE
@@ -303,87 +296,6 @@
 	TOPIC_EMITTER
 
 	return returning
-
-/datum/world_topic/plx_generategiveawaycodes
-	keyword = "PLX_generategiveawaycodes"
-	require_comms_key = TRUE
-
-/datum/world_topic/plx_generategiveawaycodes/Run(list/input)
-	var/type = input["type"]
-	var/codeamount = input["limit"]
-
-	. = list()
-
-	if (type == "loadout" && !input["loadout"])
-		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "loadout", "reason" = "loadout type codes require a loadout parameter")
-
-	for (var/i in 1 to codeamount)
-		var/returning = list("type" = type)
-
-		switch(type)
-			if ("coin")
-				var/amount = input["coins"]
-				if (isnull(amount))
-					amount = 5000
-				returning["coins"] = amount
-				returning["code"] = generate_coin_code(amount, TRUE)
-			if ("loadout")
-				var/loadout = input["loadout"]
-				//we are not chosing a random one for this, you MUST specify
-				if (!loadout) return
-				returning["loadout"] = loadout
-				returning["code"] = generate_loadout_code(loadout, TRUE)
-			if ("antagtoken")
-				var/tokentype = input["antagtoken"]
-				if (!tokentype)
-					tokentype = LOW_THREAT
-				returning["antagtoken"] = tokentype
-				returning["code"] = generate_antag_token_code(tokentype, TRUE)
-			if ("unusual")
-				var/item = input["unusual_item"]
-				var/effect = input["unusual_effect"]
-				if (!item)
-					item = pick(GLOB.possible_lootbox_clothing)
-				if (!effect)
-					var/static/list/possible_effects = subtypesof(/datum/component/particle_spewer) - /datum/component/particle_spewer/movement
-					effect = pick(possible_effects)
-				returning["item"] = item
-				returning["effect"] = effect
-				returning["code"] = generate_unusual_code(item, effect, TRUE)
-
-		. += list(returning)
-
-/datum/world_topic/plx_givecoins
-	keyword = "PLX_givecoins"
-	require_comms_key = TRUE
-
-/datum/world_topic/plx_givecoins/Run(list/input)
-	var/ckey = input["ckey"]
-	var/amount = input["amount"]
-	var/reason = input["reason"]
-
-	amount = text2num(amount)
-	if (!amount)
-		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "amount", "reason" = "parameter must be a number greater than 0")
-
-	if(!ckey)
-		return list("error" = PLEXORA_ERROR_MISSING_CKEY)
-
-	var/client/userclient = disambiguate_client(ckey)
-
-	var/datum/preferences/prefs
-	if (QDELETED(userclient))
-		var/datum/client_interface/mock_player = new(ckey)
-		mock_player.prefs = new /datum/preferences(mock_player)
-
-		prefs = mock_player.prefs
-	else
-		prefs = userclient.prefs
-
-	prefs.adjust_metacoins(ckey, amount, reason, donator_multiplier = FALSE, respects_roundcap = FALSE, announces = FALSE)
-
-	return list("totalcoins" = prefs.metacoins)
-
 
 /datum/world_topic/plx_forceemote
 	keyword = "PLX_forceemote"

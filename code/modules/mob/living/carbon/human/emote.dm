@@ -244,52 +244,6 @@ monkestation edit end */
 	message_param = "signs the number %t."
 	hands_use_check = TRUE
 
-/datum/emote/living/carbon/human/fart
-	key = "fart"
-	key_third_person = "farts"
-
-//MonkeStation Edit Start
-//Butt-Based Farts
-/datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(issilicon(user))
-		var/list/ignored_mobs = list()
-		for(var/mob/anything in GLOB.player_list)
-			if(!anything.client)
-				continue
-			if(!anything.client.prefs.read_preference(/datum/preference/toggle/prude_mode))
-				continue
-			ignored_mobs |= anything
-		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!", ignored_mobs = ignored_mobs)
-		playsound(user, pick(
-			'sound/effects/robot_farts/rbf1.ogg',
-			'sound/effects/robot_farts/rbf2.ogg',
-			'sound/effects/robot_farts/rbf3.ogg',
-			'sound/effects/robot_farts/rbf4.ogg',
-			'sound/effects/robot_farts/rbf5.ogg',
-			'sound/effects/robot_farts/rbf6.ogg',
-			'sound/effects/robot_farts/rbf7.ogg',
-			'sound/effects/robot_farts/rbf8.ogg',
-			'sound/effects/robot_farts/rbf9.ogg',
-			'sound/effects/robot_farts/rbf10.ogg',
-			'sound/effects/robot_farts/rbf11.ogg',
-			'sound/effects/robot_farts/rbf12.ogg',
-			'sound/effects/robot_farts/rbf13.ogg',
-			'sound/effects/robot_farts/rbf14.ogg',
-			'sound/effects/robot_farts/rbf15.ogg',
-			'sound/effects/robot_farts/rbf16.ogg',
-			'sound/effects/robot_farts/rbf17.ogg',
-			'sound/effects/robot_farts/rbf18.ogg',
-		), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
-		return
-	if(user.stat == CONSCIOUS)
-		if((!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user)))
-			to_chat(user, "<span class='warning'>You don't have a butt!</span>")
-			return
-		var/obj/item/organ/internal/butt/booty = user.get_organ_by_type(/obj/item/organ/internal/butt)
-		if(!booty.cooling_down)
-			booty.On_Fart(user)
-
 /// emotes for glowy goobers
 /datum/emote/living/carbon/human/glow
 	key = "glow"

@@ -96,7 +96,6 @@
 	sleep(1 SECONDS)
 	playsound(get_turf(user), "desecration-01.ogg", 50, TRUE, -1)
 	user.reagents.add_reagent(/datum/reagent/consumable/lemonjuice, 300)
-	new /obj/effect/decal/cleanable/piss_stain(get_turf(user))
 	return BRUTELOSS
 
 

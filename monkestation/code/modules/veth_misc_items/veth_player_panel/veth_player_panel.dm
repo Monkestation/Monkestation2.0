@@ -105,9 +105,6 @@ ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, FALSE, "Open TGUI PP", "Play
 		if("adminVOX")
 			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/AdminVOX)  //logs/rightscheck inside the proc
 			return
-		if("generateCode")
-			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/generate_code) //logs/rightscheck inside the proc
-			return
 		if("viewOpfors")
 			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/view_opfors)  //logs/rightscheck inside the proc
 			return

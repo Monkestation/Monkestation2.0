@@ -84,7 +84,7 @@ window "mainwindow"
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
-		icon = 'icons\\ui_icons\\common\\ss13_32.png'
+		icon = 'icons\\ui_icons\\common\\bastion_32.png'
 		macro = "default"
 		menu = "menu"
 	elem "split"

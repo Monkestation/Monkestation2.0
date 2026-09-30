@@ -12,7 +12,6 @@
 	var/gravestoneHasRandDesc = TRUE
 	var/list/gravestoneRandList = list(
 		"Got romantic with the supermatter crystal...",
-		"Suffocated in their own piss cube...",
 		"Was wrastled by Hulk Hogan...",
 		"Was turned into a felinid...",
 		"Tripped on their shoelaces setting up the singularity...",
@@ -59,7 +58,6 @@
 		"Stole from gary...",
 		"Shoved a crayon up their nose...",
 		"Joined a cult...",
-		"Drowned in a piss cube...",
 		"Pissed off the bartender...",
 		"Was devoured by a plushie...",
 		"Was eaten by a grue...",

@@ -28,7 +28,6 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/jackboots
 	name = "Jackboots"
 	item_path = /obj/item/clothing/shoes/jackboots
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/swat_replica
 	name = "Combat boots"
@@ -172,7 +171,6 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 	name = "Jester Shoes"
 	item_path = /obj/item/clothing/shoes/clown_shoes/green_jester_shoes
 	restricted_roles = list(JOB_CLOWN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/jester
 	name = "Clown's Jester Shoes"
@@ -185,7 +183,6 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 
 /datum/loadout_item/shoes/donator
 	donator_only = TRUE
-	requires_purchase = FALSE
 
 
 /datum/loadout_item/shoes/donator/rainbow
@@ -201,27 +198,22 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/nova/jackboots/recolorable
 	name = "Recolorable Jackboots"
 	item_path = /obj/item/clothing/shoes/jackboots/recolorable
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/nova/colorable_laceups
 	name = "Recolorable Laceups"
 	item_path = /obj/item/clothing/shoes/colorable_laceups
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/nova/colorable_sandals
 	name = "Recolorable Sandals"
 	item_path = /obj/item/clothing/shoes/colorable_sandals
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/nova/wraps/colorable
 	name = "colourable foot wraps"
 	item_path = /obj/item/clothing/shoes/wraps/colourable
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/nova/wraps/cloth
 	name = "cloth foot wraps"
 	item_path = /obj/item/clothing/shoes/wraps/cloth
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/nova/wraps/swag
 	name = "gilded foot wraps"
@@ -278,12 +270,10 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/redcuffs
 	name = "Red Leg Wraps"
 	item_path = /obj/item/clothing/shoes/wraps/red
-	requires_purchase = FALSE
 
 /datum/loadout_item/shoes/bluecuffs
 	name = "Blue Leg Wraps"
 	item_path = /obj/item/clothing/shoes/wraps/blue
-	requires_purchase = FALSE
 
 /*
 *	MISC
@@ -334,4 +324,3 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 	name = "Pink Clown Shoes"
 	item_path = /obj/item/clothing/shoes/clown_shoes/pink
 	restricted_roles = list(JOB_CLOWN)
-	requires_purchase = FALSE

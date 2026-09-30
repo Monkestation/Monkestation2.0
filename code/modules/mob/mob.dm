@@ -797,12 +797,28 @@
 	set name = "Respawn"
 	set category = "OOC"
 
+
 	if (CONFIG_GET(flag/norespawn))
 		if (!check_rights_for(usr.client, R_ADMIN))
 			to_chat(usr, span_boldnotice("Respawning is not enabled!"))
 			return
 		else if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
 			return
+
+	if (client?.persistent_client)
+		if (isobserver(src) && client.persistent_client.has_observed)
+			if (!check_rights_for(usr.client, R_ADMIN))
+				to_chat(usr, span_boldnotice("You cannot respawn as an observer!"))
+				return
+			else if (tgui_alert(usr, "Respawning as an observer is normally disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+				return
+
+		if (!COOLDOWN_FINISHED(client.persistent_client, respawn_timer))
+			if (!check_rights_for(usr.client, R_ADMIN))
+				to_chat(usr, span_boldnotice("You cannot respawn before [RESPAWN_TIMER / 600] minutes are up!"))
+				return
+			else if (tgui_alert(usr, "Respawning before [RESPAWN_TIMER / 600] minutes is normally disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+				return
 
 	if (stat != DEAD)
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
@@ -826,6 +842,11 @@
 		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
 		qdel(M)
 		return
+
+	message_admins("Player [real_name], ckey: [client.ckey], has respawned to main menu.")
+	client.persistent_client.has_respawned_to_menu = TRUE
+	client.persistent_client.last_name_before_respawn = real_name
+	COOLDOWN_RESET(client.persistent_client, respawn_timer)
 
 	M.PossessByPlayer(key)
 
@@ -873,7 +894,11 @@
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
-	return .
+
+	if (persistent_client)
+		if (stat == DEAD && !persistent_client.has_observed && !isnewplayer(src))
+			. += "Respawn Timer: [floor(COOLDOWN_TIMELEFT(src.persistent_client, respawn_timer) / 10)] seconds remain."
+	return
 
 /**
  * Convert a list of spells into a displyable list for the statpanel

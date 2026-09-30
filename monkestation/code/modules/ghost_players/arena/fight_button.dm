@@ -13,8 +13,6 @@
 	var/mob/living/carbon/human/ghost/player_two
 	///the selected item both players spawn with
 	var/obj/item/weapon_of_choice = /obj/item/storage/toolbox
-	///the wager in monkecoins thats paid out to the winner
-	var/payout = 0
 	///list of weakrefs to spawned weapons for deletion on duel end
 	var/list/spawned_weapons = list()
 
@@ -48,7 +46,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/fight_button/proc/update_maptext()
-	var/string = "<span class='ol c pixel'><span style='color: #40b0ff;'>Player One: [player_one ? "[player_one.real_name]" : "No One"]\nPlayer Two: [player_two ? "[player_two.real_name]" : "No One"]\nWeapon: [initial(weapon_of_choice.name)]\nWager: [payout]</span></span>"
+	var/string = "<span class='ol c pixel'><span style='color: #40b0ff;'>Player One: [player_one ? "[player_one.real_name]" : "No One"]\nPlayer Two: [player_two ? "[player_two.real_name]" : "No One"]\nWeapon: [initial(weapon_of_choice.name)]</span></span>"
 
 	maptext_height = 256
 	maptext_width = 128
@@ -57,7 +55,7 @@
 
 	maptext = string
 
-	desc = "A button that displays your intent to duel aswell as the weapon of choice and stakes of the duel.\n\nPlayer One: [player_one ? "[player_one.real_name]" : "No One"]\nPlayer Two: [player_two ? "[player_two.real_name]" : "No One"]\nWeapon: [initial(weapon_of_choice.name)]\nWager: [payout]"
+	desc = "A button that displays your intent to duel aswell as the weapon of choice and stakes of the duel.\n\nPlayer One: [player_one ? "[player_one.real_name]" : "No One"]\nPlayer Two: [player_two ? "[player_two.real_name]" : "No One"]\nWeapon: [initial(weapon_of_choice.name)]"
 
 /obj/structure/fight_button/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -71,10 +69,7 @@
 		player_one.linked_button = src
 		update_maptext()
 	else if(!player_two && user != player_one)
-		if(user.client.prefs.metacoins < payout)
-			to_chat(user, span_warning("You do not have the funds to compete in this wager!"))
-			return
-		var/choice = tgui_alert(user, "Do you wish to enter the duel? The wager is [payout].", "[src.name]", list("Yes", "No"))
+		var/choice = tgui_alert(user, "Do you wish to enter the duel?", "[src.name]", list("Yes", "No"))
 		if(choice != "Yes" || fight_in_progress)
 			return
 		player_two = user
@@ -113,17 +108,10 @@
 		to_chat(player_two, span_warning("You get a notification, it seems the duel has been cancelled."))
 		player_two.linked_button = null
 		player_two = null
-	payout = 0
 	fight_in_progress = FALSE
 	player_one.linked_button = null
 
 /obj/structure/fight_button/proc/set_rules(mob/living/carbon/human/ghost/user)
-	var/max_amount = user.client.prefs.metacoins
-	var/choice = tgui_input_number(user, "How much would you like to wager?", "[src.name]", default = min(max_amount, 100), max_value = max_amount, min_value = 0)
-	if(!isnum(choice) || fight_in_progress)
-		return FALSE
-	payout = choice
-
 	var/weapon_choice = tgui_input_list(user, "Choose the dueling weapon", "[src.name]", weapon_choices)
 	if(!weapon_choice || fight_in_progress)
 		return FALSE
@@ -132,25 +120,8 @@
 
 /obj/structure/fight_button/proc/prep_round()
 	if(!player_one || !player_two)
-		payout = 0
 		fight_in_progress = FALSE
 		say("One or more of the players have left the area, match has been cancelled!")
-		return
-
-	if (!player_one?.client?.prefs?.has_coins(payout))
-		to_chat(player_one, span_warning("You do not have the funds to compete in this wager!"))
-		return
-
-	if(!player_one?.client?.prefs?.adjust_metacoins(player_one?.ckey, -payout, "Added to the Payout"))
-		return
-
-	if(!player_two?.client?.prefs?.has_coins(payout))
-		to_chat(player_two, span_warning("You do not have the funds to compete in this wager!"))
-		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout, "Opponent does not have enough coins, reimbursed", donator_multiplier = FALSE)
-		return
-
-	if(!player_two?.client?.prefs?.adjust_metacoins(player_two?.ckey, -payout, "Added to the Payout"))
-		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout, "Opponent left, reimbursed", donator_multiplier = FALSE)
 		return
 
 	var/turf/player_one_spot = locate(138, 131, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
@@ -176,10 +147,6 @@
 	SEND_SIGNAL(player, COMSIG_HUMAN_BEGIN_DUEL)
 
 /obj/structure/fight_button/proc/end_duel(mob/living/carbon/human/ghost/loser)
-	if(loser == player_one)
-		player_two.client.prefs.adjust_metacoins(player_two.ckey, payout * 2, "Won Duel", donator_multiplier = FALSE)
-	else if(loser == player_two)
-		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout * 2, "Won Duel", donator_multiplier = FALSE)
 
 	addtimer(CALLBACK(src, GLOBAL_PROC_REF(reset_arena_area)), 5 SECONDS)
 
@@ -195,7 +162,6 @@
 	player_two = null
 
 	fight_in_progress = FALSE
-	payout = 0
 	update_maptext()
 
 	for(var/datum/weakref/weapon in spawned_weapons)

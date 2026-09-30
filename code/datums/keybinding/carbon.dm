@@ -22,7 +22,7 @@
 	return TRUE
 
 /datum/keybinding/carbon/hold_throw_mode
-	hotkey_keys = list("Space")
+	hotkey_keys = list("Unbound")
 	name = "hold_throw_mode"
 	full_name = "Hold throw mode"
 	description = "Hold this to turn on throw mode, and release it to turn off throw mode"
@@ -58,7 +58,7 @@
 	return TRUE
 
 /datum/keybinding/living/sprint
-	hotkey_keys = list("Shift")
+	hotkey_keys = list("Space")
 	name = "Sprint"
 	full_name = "Sprint"
 	description = "Move fast at the cost of stamina"

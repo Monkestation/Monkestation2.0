@@ -43,7 +43,6 @@
 	mutantliver = null
 	mutantlungs = null
 	mutantappendix = null
-	mutantbladder = null
 	mutantspleen = null
 	mutanteyes = /obj/item/organ/internal/eyes/robotic
 	mutantears = /obj/item/organ/internal/ears/cybernetic

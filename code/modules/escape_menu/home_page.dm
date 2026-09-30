@@ -29,30 +29,6 @@
 			null,
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
-			/* button_text = */ "Open Lootbox",
-			/* offset = */ list(-186, 28),
-			/* font_size = */ 24,
-			/* on_click_callback = */ CALLBACK(src, PROC_REF(try_open_lootbox)),
-		)
-	)
-
-	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/text/clickable(
-			null,
-			/* hud_owner = */ null,
-			/* escape_menu = */ src,
-			/* button_text = */ "Redeem Code",
-			/* offset = */ list(-221, 30),
-			/* font_size = */ 24,
-			/* on_click_callback = */ CALLBACK(src, PROC_REF(start_redeem)),
-		)
-	)
-
-	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/text/clickable(
-			null,
-			/* hud_owner = */ null,
-			/* escape_menu = */ src,
 			/* button_text = */ "Players",
 			/* offset = */ list(-256, 30),
 			/* font_size = */ 24,
@@ -187,12 +163,6 @@
 
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
-
-/datum/escape_menu/proc/try_open_lootbox()
-	client?.try_open_or_buy_lootbox()
-
-/datum/escape_menu/proc/start_redeem()
-	client?.redeem_code()
 
 /datum/escape_menu/proc/home_open_game_settings()
 	client?.prefs?.open_window(user = client?.mob)

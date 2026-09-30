@@ -93,7 +93,6 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 /datum/loadout_item/neck/ascot
 	name = "Ascot"
 	item_path = /obj/item/clothing/neck/ascot
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/large_scarf
 	name = "Large Scarf"
@@ -243,7 +242,6 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 
 /datum/loadout_item/neck/donator
 	donator_only = TRUE
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/donator/knight_cloak
 	name = "Knight Cloak"
@@ -303,37 +301,31 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Quartermaster's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/qm
 	restricted_roles = list(JOB_QUARTERMASTER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/mantle_hop
 	name = "Head of Personnel's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/hopmantle
 	restricted_roles = list(JOB_HEAD_OF_PERSONNEL)
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/mantle_cmo
 	name = "Chief Medical Officer's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/cmomantle
 	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/mantle_rd
 	name = "Research Director's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/rdmantle
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR)
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/mantle_ce
 	name = "Chief Engineer's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/cemantle
 	restricted_roles = list(JOB_CHIEF_ENGINEER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/mantle_hos
 	name = "Head of Security's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/hosmantle
 	restricted_roles = list(JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 
 /datum/loadout_item/neck/mantle_bs
@@ -345,19 +337,16 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Captain's Mantle"
 	item_path = /obj/item/clothing/neck/mantle/capmantle
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/mantle_chap
 	name = "Bishop's Cloak"
 	item_path = /obj/item/clothing/neck/chaplain
 	restricted_roles = list(JOB_CHAPLAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/neck/mantle_bchap
 	name = "Bishop's Cloak (Black)"
 	item_path = /obj/item/clothing/neck/chaplain/black
 	restricted_roles = list(JOB_CHAPLAIN)
-	requires_purchase = FALSE
 
 /*
 *	MISC

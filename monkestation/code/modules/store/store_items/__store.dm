@@ -3,9 +3,6 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 
 /// -- The loadout manager and UI --
 /// Tracking when a client has an open loadout manager, to prevent funky stuff.
-/client
-	/// A ref to store_manager datum.
-	var/datum/store_manager/open_store_ui = null
 
 /// Datum holder for the loadout manager UI.
 /datum/store_manager
@@ -36,7 +33,6 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 
 /datum/store_manager/New(user)
 	owner = CLIENT_FROM_VAR(user)
-	owner.open_store_ui = src
 	custom_loadout = new()
 
 /datum/store_manager/ui_close(mob/user)
@@ -44,7 +40,6 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	if(menu)
 		SStgui.close_uis(menu)
 		menu = null
-	owner?.open_store_ui = null
 	qdel(custom_loadout)
 	qdel(src)
 
@@ -130,7 +125,6 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 		all_selected_paths += path */
 	data["user_is_donator"] = !!(owner.persistent_client.patreon.is_donator() || owner.persistent_client.twitch.is_donator() || is_admin(owner))
 	data["owned_items"] = user.client.prefs.inventory
-	data["total_coins"] = user.client.prefs.metacoins
 
 	return data
 
