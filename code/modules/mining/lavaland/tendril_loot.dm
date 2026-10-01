@@ -173,6 +173,10 @@
 	return ..()
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
+	if(IS_BLOODSUCKER(user))
+		to_chat(user, span_warning("The Memento notices your undead soul, and refuses to react.."))
+		return
+
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
 	if(do_after(user, 4 SECONDS, target = user))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
@@ -193,6 +197,10 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
+	if(source.health <= source.dead_threshold && IS_BLOODSUCKER(source))
+		to_chat(source, span_warning("The Memento notices your undead soul and is enraged by your trickery"))
+		mori()
+		return
 
 	var/list/guardians = source.get_all_linked_holoparasites()
 	if(!length(guardians))

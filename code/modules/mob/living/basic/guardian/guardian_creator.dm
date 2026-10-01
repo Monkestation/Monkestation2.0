@@ -9,6 +9,10 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		option.info = span_boldnotice(initial(guardian_path.creator_desc))
 		.[guardian_path] = option
 
+	// Hack to change Timestop Guardian's radial icon, since it's in a different DMI
+	var/datum/radial_menu_choice/timestop_opt = .[/mob/living/basic/guardian/standard/timestop]
+	timestop_opt.image = image(icon = 'icons/bloodsuckers/timestop_guardian.dmi', icon_state = "timestop")
+
 /// An item which grants you your very own soul buddy
 /obj/item/guardian_creator
 	name = "enchanted deck of tarot cards"

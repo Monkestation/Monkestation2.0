@@ -4,20 +4,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/// Prevents using a Memento Mori
-/obj/item/clothing/neck/necklace/memento_mori/memento(mob/living/carbon/human/user)
-	if(IS_BLOODSUCKER(user))
-		to_chat(user, span_warning("The Memento notices your undead soul, and refuses to react.."))
-		return
-	return ..()
-
-/obj/item/clothing/neck/necklace/memento_mori/check_health(mob/living/source)
-	if(source.health <= source.dead_threshold && IS_BLOODSUCKER(source))
-		to_chat(source, span_warning("The Memento notices your undead soul and is enraged by your trickery"))
-		mori()
-		return
-	return ..()
-
 // Used when analyzing a Bloodsucker, Masquerade will hide brain traumas (Unless you're a Beefman)
 /mob/living/carbon/get_traumas(ignore_flags = NONE)
 	if(QDELETED(mind))
