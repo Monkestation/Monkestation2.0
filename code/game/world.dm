@@ -426,7 +426,7 @@ GLOBAL_VAR(restart_counter)
 		if (server_name)
 			new_status += "<b>[server_name]</b> "
 		if(!CONFIG_GET(flag/norespawn))
-			features += "respawn"
+			features += "Respawn enabled"
 		if(!CONFIG_GET(flag/allow_ai))
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
@@ -445,7 +445,9 @@ GLOBAL_VAR(restart_counter)
 		new_status += ": [jointext(features, ", ")]"
 
 	new_status += "<br>Beginner Friendly: <b>Learn to play SS13!</b>"
-	new_status += "<br>Roleplay: \[<b>Medium-Rare</b>\]"
+	new_status += "<br>M&RP: \[<b>Mechanics & Roleplay</b>\]"
+
+	new_status += "<br>Current Game Master: <b>[GLOB.called_gamemaster ? capitalize(GLOB.called_gamemaster) : "None"]</b>"
 
 	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
 	if(SSmapping.current_map)

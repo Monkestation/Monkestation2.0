@@ -111,6 +111,4 @@
 	recoil = 0
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
-
-/obj/item/gun/ballistic/rifle/boltaction/harpoon/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE

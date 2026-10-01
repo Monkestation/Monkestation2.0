@@ -47,6 +47,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	. += "Players: [LAZYLEN(GLOB.clients)]"
 	. += "Players Ready: [SSticker.totalPlayersReady]"
+	. += "Game Master: [GLOB.called_gamemaster ? capitalize(GLOB.called_gamemaster) : "None" ]"
 	if(client.holder)
 		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 

@@ -206,3 +206,22 @@
   - rscadd: Unreadied players now count as 1/3 of a ready player for storyteller
   mc-oofert:
   - rscdel: removed monkecoin, lootboxes, the shop and stuff related to that
+2026-09-30:
+  JupiterJaeden:
+  - rscdel: Removed the keybind for combat indicator, as we are not using this currently
+      on our server.
+  - config: Changed the default keybind for press to toggle move intent from unbound
+      to C.
+  - admin: When spawning an ERT, 'use custom shuttle' is now set to NO by default
+      - some of these shuttles are bugged if you try to also spawn yourself in as
+      an admiral for briefing.
+  - admin: '"Mundane" events no longer play a sound to notify admins when scheduled.'
+  - rscdel: Removes the "license to plasmaflood" traitor item.
+  - bugfix: The forum button now correctly tells you we have no forum set up instead
+      of taking you to /tg/ forums.
+  - config: Changed the default job selection mode to "Per Character Priorities",
+      the legacy setting.
+  ValuedEmployee:
+  - image: modified the ook icons replacing them with a mothroach in bottom_buttons.dmi
+  - refactor: altered new_player.dm's naming scheme for the ook button to roach and
+      changed the sound effect to a moth scream

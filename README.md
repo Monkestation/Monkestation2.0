@@ -1,4 +1,4 @@
-# bastion station codebase
+# Bastion Station Codebase
 
 [![Build Status](https://github.com/Bastion-Station-13/Bastion-Station/workflows/CI%20Suite/badge.svg)](https://github.com/Bastion-Station-13/Bastion-Station/actions?query=workflow%3A%22CI+Suite%22)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/monkestation/monkestation2.0.svg)](https://isitmaintained.com/project/monkestation/monkestation2.0 "Percentage of issues still open")

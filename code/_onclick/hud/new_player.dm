@@ -621,16 +621,16 @@
 // 	layer = LOBBY_BACKGROUND_LAYER
 
 //Monke button
-/atom/movable/screen/lobby/button/ook
+/atom/movable/screen/lobby/button/roach
 	screen_loc = "TOP:-126,CENTER:110"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "monke"
-	base_icon_state = "monke"
+	icon_state = "roach"
+	base_icon_state = "roach"
 
-/atom/movable/screen/lobby/button/ook/Click(location, control, params)
+/atom/movable/screen/lobby/button/roach/Click(location, control, params)
 	. = ..()
 	if(.)
-		SEND_SOUND(usr, 'sound/misc/menumonkey.ogg')
+		SEND_SOUND(usr, 'sound/voice/moth/scream_moth.ogg')
 
 /atom/movable/screen/lobby/overflow_alert
 	screen_loc = "TOP:-48,CENTER-2.7"
