@@ -1,4 +1,0 @@
-author: "Mantlecrawler"
-delete-after: True
-changes:
-  - admin: "GM's can now call a round in advance, which shows up in the status tab"

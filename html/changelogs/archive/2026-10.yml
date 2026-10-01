@@ -1,0 +1,17 @@
+2026-10-01:
+  Mantlecrawler:
+  - admin: GM's can now call a round in advance, which shows up in the status tab
+  Runian:
+  - bugfix: The light from a cyborg's headlight now always appears in front of them
+      rather than sometimes appearing to be ontop of them.
+  - bugfix: Various cyborg skins no longer have floating hats and now have their worn
+      hat much closer to the top of their head.
+  - code_imp: Cyborg skins now support x-offsets for worn hats and worn badges.
+  hexakats:
+  - bugfix: fixed automatic weapons not working with two time root beer
+  - image: the auto shotgun case now uses the large syndicate case sprite
+  - image: added a blinking animation for the large case if it's a variant that can
+      explode
+  notghosti:
+  - code_imp: Refactors guns without manufacturers to use has_manufacturer instead
+      of just returning the proc

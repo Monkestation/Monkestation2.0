@@ -1,4 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - code_imp: "Refactors guns without manufacturers to use has_manufacturer instead of just returning the proc"
