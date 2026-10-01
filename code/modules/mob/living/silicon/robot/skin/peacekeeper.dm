@@ -7,5 +7,15 @@
 	icon_state_light = "peace"
 	icon_state_transform = "peace_transform"
 	transformation_duration = 5.4 SECONDS
-	hat_offset = -2
-	badge_offset = -2
+	hat_offset = list(
+		"north" = list(0, -2),
+		"east" = list(0, -2),
+		"south" = list(0, -2),
+		"west" = list(0, -2),
+	)
+	badge_offset = list(
+		"north" = list(0, -2),
+		"east" = list(0, -2),
+		"south" = list(0, -2),
+		"west" = list(0, -2),
+	)
