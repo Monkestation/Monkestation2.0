@@ -1226,6 +1226,8 @@ SUBSYSTEM_DEF(ticker)
 	//might want to make this a full section
 	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "N/A"]")]</span></div>"
 
+	parts += "<div class='panel stationborder'><span class='header'>[("Game Master: [GLOB.called_gamemaster ? capitalize(GLOB.called_gamemaster) : "None"]")]</span><br><b>(as of roundend)</b></div>"
+
 	if(nanotrasen_rep_status)
 		parts += nanotrasen_rep_report()
 
