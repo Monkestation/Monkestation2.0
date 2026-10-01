@@ -3,7 +3,10 @@ GLOBAL_VAR_INIT(called_gamemaster, null)
 
 ADMIN_VERB(call_round, R_ADMIN, FALSE, "Call Round", "Call the round as its game master", ADMIN_CATEGORY_GAME)
 	if(user.ckey == GLOB.called_gamemaster)
-		tgui_alert(user, "You have already called this round!")
+		message_admins("[key_name_admin(GLOB.called_gamemaster)] has un-called the round.")
+		BLACKBOX_LOG_ADMIN_VERB("Call Round")
+		GLOB.called_gamemaster = null
+		world.update_status()
 		return
 	if(GLOB.called_gamemaster)
 		var/return_option = tgui_alert(user, "Another game master has already called the round, do you wish to override their call?", "Override Call", list("Yes", "No"))
@@ -18,3 +21,4 @@ ADMIN_VERB(call_round, R_ADMIN, FALSE, "Call Round", "Call the round as its game
 
 	message_admins("[key_name_admin(GLOB.called_gamemaster)] has called the round.")
 	BLACKBOX_LOG_ADMIN_VERB("Call Round")
+	world.update_status()
