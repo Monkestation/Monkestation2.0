@@ -1,0 +1,5 @@
+author: "hexakats"
+delete-after: True
+changes:
+  - image: "the auto shotgun case now uses the large syndicate case sprite"
+  - image: "added a blinking animation for the large case if it's a variant that can explode"
