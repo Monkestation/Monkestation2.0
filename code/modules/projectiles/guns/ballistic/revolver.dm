@@ -42,6 +42,8 @@
 	chamber_round()
 
 /obj/item/gun/ballistic/revolver/click_alt(mob/user)
+	if(suppressed) //probably want to remove the suppressor instead of spinning it.
+		return ..()
 	spin()
 	return CLICK_ACTION_SUCCESS
 
@@ -356,7 +358,8 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
-	suppressor_x_offset = 5
+	suppressor_x_offset = 8
+	suppressor_y_offset = 1
 	can_suppress = TRUE
 	fire_delay = 1 SECONDS
 	recoil = 3
