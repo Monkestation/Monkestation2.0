@@ -60,21 +60,18 @@
 	name = stored_item.name
 	real_name = stored_item.name
 
-/mob/living/basic/possession_holder/create_overlay_index()
-	var/list/new_overlays[2]
-	possession_overlays = new_overlays
-
 /mob/living/basic/possession_holder/death(gibbed)
 	. = ..()
 	if(stored_item)
+		visible_message("You can feel the soul leaving the [stored_item], it returns back to its original self.")
 		stored_item.forceMove(get_turf(src))
 		stored_item = null
-		visible_message("You can feel the soul leaving the [stored_item], it returns back to its original self.")
+	ghostize()
 	qdel(src)
 
 /mob/living/basic/possession_holder/Life(seconds_per_tick, times_fired)
 	. = ..()
-	if(maxHealth > health)
+	if(maxHealth > health && health_regeneration > 0)
 		heal_overall_damage(health_regeneration, health_regeneration)
 
 /mob/living/basic/possession_holder/face_atom(atom/atom_to_face)
@@ -209,3 +206,9 @@
 	UnregisterSignal(stored_item, COMSIG_ITEM_DROPPED)
 	src.forceMove(get_turf(stored_item))
 	stored_item.forceMove(src)
+
+/mob/living/basic/possession_holder/weak
+	health_regeneration = 0
+	maxHealth = 50
+	health = 50
+	speed = 3
