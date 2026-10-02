@@ -263,7 +263,7 @@
 			locked = !locked
 			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
-			if(!locked)
+			if(!locked && !isAI(user) && !iscyborg(user))
 				ui_interact(user)
 		else
 			balloon_alert(user, "access denied!")
