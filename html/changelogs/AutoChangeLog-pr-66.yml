@@ -1,0 +1,5 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - config: "Changes default keybind for LOOC from I to L"
+  - config: "Changes default keybind for Look Up from L to '"
