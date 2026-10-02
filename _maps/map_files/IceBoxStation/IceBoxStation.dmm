@@ -54787,6 +54787,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/item/toy/plush/argemia,
 /turf/open/floor/plating/icemoon,
 /area/station/science/ordnance/bomb)
 "qKH" = (
