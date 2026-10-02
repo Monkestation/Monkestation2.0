@@ -15,3 +15,17 @@
   notghosti:
   - code_imp: Refactors guns without manufacturers to use has_manufacturer instead
       of just returning the proc
+2026-10-02:
+  Happyowl93, Odairu, vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents (vinylspiders)
+  - code_imp: makeHologram now allows a color override. (Happyowl93)
+  - rscadd: AIs can pick the color of their hologram. (Odairu)
+  - bugfix: holo ray on holograms no longer shows twice (Odairu)
+  JupiterJaeden:
+  - spellcheck: Updates the BYOND hub text to include the current game master + be
+      more accurate to bastion station.
+  - spellcheck: Shows the game master in the roundend report.
+  - config: Changes default keybind for LOOC from I to L
+  - config: Changes default keybind for Look Up from L to '
+  Mantlecrawler:
+  - bugfix: Titanium shuttle airlocks now have a welded overlay
