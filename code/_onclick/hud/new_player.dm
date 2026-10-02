@@ -620,7 +620,7 @@
 // 	server_id = PLEXORA_SERVERID_VANDERLIN
 // 	layer = LOBBY_BACKGROUND_LAYER
 
-//Monke button
+//Mothroach button
 /atom/movable/screen/lobby/button/roach
 	screen_loc = "TOP:-126,CENTER:110"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
