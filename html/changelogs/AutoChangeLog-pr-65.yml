@@ -1,0 +1,4 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - bugfix: "Titanium shuttle airlocks now have a welded overlay"
