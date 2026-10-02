@@ -104,19 +104,20 @@
 		if(!hearer.client)
 			continue
 		var/pitch_to_use = 0
+		var/hearer_volume = volume
 		var/sound/sound_to_use
 		if (sound_override)
 			sound_to_use = sound_override
 		else
 			if (hearer.client.prefs.read_preference(/datum/preference/toggle/voice_sounds_only_simple) && !voicepack.is_simple)
 				sound_to_use = voicepack.simple_equiv.sounds[sound_idx]
-				volume *= voicepack.simple_equiv.volume
+				hearer_volume *= voicepack.simple_equiv.volume
 			else
-				volume *= voicepack.volume
+				hearer_volume *= voicepack.volume
 				sound_to_use = voicepack.sounds[sound_idx]
 			if (!hearer.client.prefs.read_preference(/datum/preference/toggle/barks_limited_pitch))
 				pitch_to_use = vocal_pitch
-		hearer.playsound_local(turf, vol = volume, vary = TRUE,
+		hearer.playsound_local(turf, vol = hearer_volume, vary = TRUE,
 			max_distance = distance, falloff_distance = 0, use_reverb = FALSE,
 			falloff_exponent = falloff_exponent,
 			distance_multiplier = 1, mixer_channel = CHANNEL_VOICES,
