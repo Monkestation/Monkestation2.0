@@ -1,0 +1,7 @@
+author: "Happyowl93, Odairu, vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes emissive blockers sometimes being put in an atom's contents (vinylspiders)"
+  - code_imp: "makeHologram now allows a color override. (Happyowl93)"
+  - rscadd: "AIs can pick the color of their hologram. (Odairu)"
+  - bugfix: "holo ray on holograms no longer shows twice (Odairu)"
