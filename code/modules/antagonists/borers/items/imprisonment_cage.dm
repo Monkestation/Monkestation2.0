@@ -63,6 +63,7 @@
 		return rand(20 SECONDS, 30 SECONDS)
 	return rand(30 SECONDS, 40 SECONDS)
 
+/// Locks the borers that walk over it inside while on the ground
 /obj/item/pet_carrier/small/borer/proc/spring_trap(datum/source, mob/living/basic/cortical_borer/borer)
 	SIGNAL_HANDLER
 	//it will only trigger on a cortical borer, and it has to be open

@@ -217,6 +217,7 @@
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
 
+/// Returns the time needed for a mob to escape the cage
 /obj/item/pet_carrier/proc/get_escape_time(mob/living/user)
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		return rand(30 SECONDS, 40 SECONDS)

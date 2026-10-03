@@ -26,7 +26,7 @@
 				return
 			// We have a host with sugar and our host is dead. Amazing fuckup
 			owner.balloon_alert(owner, "struggling to leave")
-			to_chat(owner, span_userdanger("We struggle to leave our host, barelly able to due to the sugar in their blood no longer moving, this will take time..."))
+			to_chat(owner, span_userdanger("We struggle to leave our host, barely able to due to the sugar in their blood no longer moving, this will take time..."))
 			StartCooldown(30 SECONDS) // stay in place now
 			if(!do_after(user, 30 SECONDS, user.human_host, IGNORE_TARGET_LOC_CHANGE, hidden = TRUE))
 				return

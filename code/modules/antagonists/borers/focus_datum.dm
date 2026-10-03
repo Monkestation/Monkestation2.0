@@ -9,14 +9,14 @@
 	var/lose_text = "Your tongue stops rapidly spinning (call coders)"
 
 /// Effects to take when the focus is added
-/datum/borer_focus/proc/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
+/datum/borer_focus/proc/on_add(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(host, span_notice("[gain_text]"))
 	for(var/trait in traits)
 		ADD_TRAIT(host, trait, REF(borer))
 
 /// Effects to take when the focus is removed
-/datum/borer_focus/proc/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
+/datum/borer_focus/proc/on_remove(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(host, span_notice("[lose_text]"))
 	REMOVE_TRAITS_IN(host, REF(borer))
@@ -27,14 +27,14 @@
 	gain_text = "Your eyes begin to feel strange..."
 	lose_text = "Your eyes begin to return to normal..."
 
-/datum/borer_focus/head/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
+/datum/borer_focus/head/on_add(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
 	host.update_sight()
 	ADD_TRAIT(borer, TRAIT_NOFLASH, REF(borer))
 	borer.lighting_cutoff = LIGHTING_CUTOFF_HIGH // They arent Carbon mobs so TRAIT_TRUE_NIGHT_VISION wont work.
 	borer.update_sight()
 	return ..()
 
-/datum/borer_focus/head/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
+/datum/borer_focus/head/on_remove(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
 	host.update_sight()
 	REMOVE_TRAIT(borer, TRAIT_NOFLASH, REF(borer))
 	borer.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
@@ -53,12 +53,12 @@
 	gain_text = "Your arms start to feel funny..."
 	lose_text = "Your arms start to feel normal again..."
 
-/datum/borer_focus/arms/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	borer.human_host.add_actionspeed_modifier(/datum/actionspeed_modifier/focus_speed)
+/datum/borer_focus/arms/on_add(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
+	host.add_actionspeed_modifier(/datum/actionspeed_modifier/focus_speed)
 	return ..()
 
-/datum/borer_focus/arms/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	borer.human_host.remove_actionspeed_modifier(ACTIONSPEED_ID_BORER)
+/datum/borer_focus/arms/on_remove(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
+	host.remove_actionspeed_modifier(ACTIONSPEED_ID_BORER)
 	return ..()
 
 /datum/borer_focus/legs
@@ -67,10 +67,10 @@
 	gain_text = "You feel faster..."
 	lose_text = "You feel slower..."
 
-/datum/borer_focus/legs/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
+/datum/borer_focus/legs/on_add(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
 	host.add_movespeed_modifier(/datum/movespeed_modifier/focus_speed)
 	return ..()
 
-/datum/borer_focus/legs/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
+/datum/borer_focus/legs/on_remove(mob/living/carbon/host, mob/living/basic/cortical_borer/borer)
 	host.remove_movespeed_modifier(/datum/movespeed_modifier/focus_speed)
 	return ..()

@@ -220,6 +220,7 @@
 
 /mob/living/basic/cortical_borer/Destroy()
 	QDEL_NULL(reagent_holder)
+	body_focuses = null
 	if(human_host)
 		leave_host()
 	return ..()

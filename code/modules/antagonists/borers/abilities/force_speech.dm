@@ -7,6 +7,7 @@
 	ability_explanation = "\
 	Forces your host to speak any words you desire.\
 	"
+	/// List of strings the user cannot force their host to say
 	var/static/list/blacklist = null
 
 /datum/action/cooldown/borer/force_speak/New(Target, original)

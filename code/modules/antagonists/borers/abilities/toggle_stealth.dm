@@ -1,12 +1,13 @@
 /datum/action/cooldown/borer/toggle_hiding
 	name = "Toggle Hiding"
 	button_icon_state = "hide"
-	var/hidden = FALSE
 	ability_explanation = "\
 	Turns your hiding abilities on/off\n\
 	Whilst on, you will hide under most objects, like tables.\n\
 	If you are a diveworm, you will bore into hosts twice as fast whilst not hidden\n\
 	"
+	/// Are we currently hiding?
+	var/hidden = FALSE
 
 /datum/action/cooldown/borer/toggle_hiding/Activate(mob/living/basic/cortical_borer/user)
 	if(hidden == FALSE)

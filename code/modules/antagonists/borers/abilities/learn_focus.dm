@@ -14,15 +14,21 @@
 	Arms - Insulates the host from any shocks, while improving their ability to carry bodies and build faster.\n\
 	Legs - Increases the host's natural stride, letting them move faster.\n\
 	"
-	var/list/learnable_focuses = list()
+	/// List of instantiated focuses that all borers share
+	var/static/list/focuses = null
+	/// List of focuses we can currently attempt to learn
+	var/list/learnable_focuses = null
 
 /datum/action/cooldown/borer/learn_focus/New(Target, original)
 	. = ..()
-	for(var/datum/borer_focus/focus_path as anything in subtypesof(/datum/borer_focus))
-		learnable_focuses += new focus_path
+	if(isnull(focuses))
+		focuses = list()
+		for(var/datum/borer_focus/focus_path as anything in subtypesof(/datum/borer_focus))
+			focuses += new focus_path
+	learnable_focuses = focuses.Copy()
 
 /datum/action/cooldown/borer/learn_focus/Destroy(force)
-	QDEL_LIST(learnable_focuses)
+	learnable_focuses = null
 	return ..()
 
 /datum/action/cooldown/borer/learn_focus/Activate(mob/living/basic/cortical_borer/user)
@@ -39,7 +45,7 @@
 		return
 
 	var/datum/borer_focus/picked_focus = fancy_list[focus_choice]
-	if(!picked_focus)
+	if(isnull(picked_focus))
 		return
 
 	user.stat_evolution -= FOCUS_COST

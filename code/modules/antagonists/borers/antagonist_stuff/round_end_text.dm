@@ -6,6 +6,7 @@
 	. = ..()
 	name = "[capitalize(pick(GLOB.adjectives))] [name]" // Make sure we have some distinct name if another hive existed
 
+/// Creates objectives for the team of borers
 /datum/team/cortical_borers/proc/create_objectives()
 	var/list/objectives_to_give = list(
 		/datum/objective/borer_survive,
