@@ -22,4 +22,10 @@
 	emagged_modules = list(
 		/obj/item/melee/energy/sword/cyborg, // I don't think there was any reason to use cyborg specific esword with this? They both act functionally the same.
 	)
+	clockwork_modules = list(
+		/obj/item/clock_module/abscond,
+		/obj/item/clockwork/weapon/brass_spear,
+		/obj/item/clock_module/kindle,
+		/obj/item/clock_module/vanguard,
+	)
 	traits = list(TRAIT_NEGATES_GRAVITY)
