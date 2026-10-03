@@ -29,3 +29,11 @@
   - config: Changes default keybind for Look Up from L to '
   Mantlecrawler:
   - bugfix: Titanium shuttle airlocks now have a welded overlay
+2026-10-03:
+  JupiterJaeden:
+  - bugfix: Fixes the server description from getting cut off in the BYOND hub.
+  ValuedEmployee:
+  - image: modified the disabled states of signs in sister_server_buttons_large.dmi
+      and sister_server_buttons.dmi
+  - spellcheck: small comment fix on new_player.dm to properly label the mothroach
+      button

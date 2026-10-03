@@ -1,5 +1,0 @@
-author: "ValuedEmployee"
-delete-after: True
-changes:
-  - image: "modified the disabled states of signs in sister_server_buttons_large.dmi and sister_server_buttons.dmi"
-  - spellcheck: "small comment fix on new_player.dm to properly label the mothroach button"
