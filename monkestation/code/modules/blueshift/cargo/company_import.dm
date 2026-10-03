@@ -50,13 +50,3 @@
 /obj/structure/closet/crate/large/import
 	name = "heavy-duty wooden crate"
 	icon = 'monkestation/code/modules/blueshift/icons/import_crate.dmi'
-
-/obj/machinery/computer/cargo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-
-	if(action == "company_import_window")
-		var/datum/component/armament/company_imports/company_import_component = GetComponent(/datum/component/armament/company_imports)
-		company_import_component.ui_interact(usr)
-		return TRUE

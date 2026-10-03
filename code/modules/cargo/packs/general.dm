@@ -254,7 +254,7 @@
 /datum/supply_pack/misc/syndicate
 	name = "Assorted Syndicate Gear"
 	desc = "Contains a random assortment of syndicate gear."
-	special = TRUE //Cannot be ordered via cargo
+	hidden = TRUE //Cannot be ordered via cargo
 	contains = list()
 	crate_name = "syndicate gear crate"
 	crate_type = /obj/structure/closet/crate

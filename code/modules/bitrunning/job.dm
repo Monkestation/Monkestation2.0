@@ -10,8 +10,8 @@
 	config_tag = "BITRUNNER"
 	outfit = /datum/outfit/job/bitrunner
 	plasmaman_outfit = /datum/outfit/plasmaman/bitrunner
-	paycheck = PAYCHECK_CREW
-	paycheck_department = ACCOUNT_CAR
+	paycheck = PAYCHECK_UNION_CREW
+	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BITRUNNER
 	bounty_types = CIV_JOB_RANDOM
 	departments_list = list(
@@ -39,4 +39,4 @@
 	uniform = /obj/item/clothing/under/rank/cargo/bitrunner
 	belt = /obj/item/modular_computer/pda/bitrunner
 	ears = /obj/item/radio/headset/headset_cargo
-	accessory = /obj/item/clothing/accessory/badge/cargo
+	accessory = /obj/item/clothing/accessory/badge/cargo/miner

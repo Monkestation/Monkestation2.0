@@ -35,7 +35,7 @@
 	. = ..()
 	//enable buying engines from cargo
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
-	P.special_enabled = TRUE
+	P.hidden = FALSE
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"

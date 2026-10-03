@@ -22,6 +22,7 @@ type Pack = {
   id: string;
   desc: string;
   goody: string;
+  can_order: boolean;
 };
 
 type Category = {
@@ -143,7 +144,9 @@ const DepartmentCatalog = (props) => {
               <Stack.Item className="candystripe" key={pack.name}>
                 <Stack fill>
                   <Stack.Item grow>
-                    <Tooltip content={pack.desc}>
+                    <Tooltip
+                      content={pack.desc}
+                    >
                       <Box
                         as="span"
                         style={{

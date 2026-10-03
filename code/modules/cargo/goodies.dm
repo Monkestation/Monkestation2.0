@@ -69,14 +69,16 @@
 	name = "Pump Shotgun Single-Pack"
 	desc = "A respectable pump action shotgun, to restock armoury supplies. Comes with a bandolier."
 	cost = PAYCHECK_COMMAND * 15
-	access_view = ACCESS_ARMORY
+	access = ACCESS_ARMORY
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/riot, /obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
 	cost = PAYCHECK_COMMAND * 15
-	access_view = ACCESS_ARMORY
+	access = ACCESS_ARMORY
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/goody/disabler_single
