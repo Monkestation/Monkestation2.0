@@ -667,7 +667,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 /obj/item/attack_robot(mob/living/silicon/robot/user)
 	if(loc != user.model)
 		return
-	if(user.low_power_mode) //can't equip modules with an empty cell.
+	if(user.low_power_mode) // Can't equip modules with an empty cell.
 		return
 	user.activate_module(src)
 

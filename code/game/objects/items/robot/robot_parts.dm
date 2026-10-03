@@ -340,7 +340,7 @@
 		brainmob.mind?.remove_antags_for_borging()
 		new_borg.job = JOB_CYBORG
 
-		new_borg.cell = chest.cell
+		new_borg.set_cell(chest.cell)
 		chest.cell.forceMove(new_borg)
 
 		tool.forceMove(new_borg)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.

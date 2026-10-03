@@ -210,9 +210,7 @@
 /obj/item/melee/energy/sword/cyborg/attack(mob/target, mob/living/silicon/robot/user)
 	if(!user.cell)
 		return
-
-	var/obj/item/stock_parts/power_store/cell/our_cell = user.cell
-	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(user.cell.use(hitcost)))
 		attack_self(user)
 		to_chat(user, span_notice("It's out of charge!"))
 		return
