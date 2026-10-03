@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 		json = list()
 
 	json["[stored_character_slot_index]"] = serialize_contents_to_list()
-	WRITE_FILE(json_file, json_encode(json))
+	WRITE_FILE(json_file, json_encode(json, JSON_PRETTY_PRINT))
 
 /// Saves the persistence data for the owner.
 /mob/living/carbon/human/proc/save_individual_persistence(ckey)

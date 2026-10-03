@@ -19,7 +19,7 @@
 	var/frame_json = json_decode(file2text(frame_path))
 	frame_json -= identifier
 
-	frame_json = json_encode(frame_json)
+	frame_json = json_encode(frame_json, JSON_PRETTY_PRINT)
 	fdel(frame_path)
 	WRITE_FILE(frame_path, frame_json)
 
@@ -66,7 +66,7 @@
 		var/list/L = A.get_picture_id_list()
 		album_json[A.persistence_id] = L
 
-	album_json = json_encode(album_json)
+	album_json = json_encode(album_json, JSON_PRETTY_PRINT)
 
 	WRITE_FILE(album_path, album_json)
 
@@ -80,7 +80,7 @@
 			continue
 		frame_json[F.persistence_id] = F.get_photo_id()
 
-	frame_json = json_encode(frame_json)
+	frame_json = json_encode(frame_json, JSON_PRETTY_PRINT)
 
 	WRITE_FILE(frame_path, frame_json)
 

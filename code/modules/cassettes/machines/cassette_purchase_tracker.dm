@@ -93,7 +93,7 @@
 		"server_id" = CONFIG_GET(string/serversqlname)
 	))
 
-	rustg_file_write(json_encode(purchases), CASSETTE_PURCHASES_JSON_FILE)
+	rustg_file_write(json_encode(purchases, JSON_PRETTY_PRINT), CASSETTE_PURCHASES_JSON_FILE)
 	return TRUE
 
 /// gets the top cassettes by purchase count

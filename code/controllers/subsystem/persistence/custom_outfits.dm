@@ -29,4 +29,4 @@
 	for(var/datum/outfit/outfit in GLOB.custom_outfits)
 		data += list(outfit.get_json_data())
 
-	WRITE_FILE(file, json_encode(data))
+	WRITE_FILE(file, json_encode(data, JSON_PRETTY_PRINT))

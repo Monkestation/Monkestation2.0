@@ -426,5 +426,5 @@ ADMIN_VERB(export_lighting_info, R_DEBUG, FALSE, "Export Lighting Info", "Shows 
 
 	var/file_name = "[user.ckey]_lighting_info_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
 	var/json_file = file("tmp/[file_name]")
-	WRITE_FILE(json_file, json_encode(lighting_info))
+	WRITE_FILE(json_file, json_encode(lighting_info, JSON_PRETTY_PRINT))
 	DIRECT_OUTPUT(user, ftp(json_file, file_name))

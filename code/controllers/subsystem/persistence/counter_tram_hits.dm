@@ -37,7 +37,7 @@
 
 	file_data["data"] = converted_data
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 /datum/controller/subsystem/persistence/proc/package_tram_data(datum/transport_controller/linear/tram/tram_controller)
 	var/list/packaged_data = list()
