@@ -13,3 +13,8 @@
   notghosti:
   - code_imp: Refactors guns without manufacturers to use has_manufacturer instead
       of just returning the proc
+2026-10-03:
+  Absolucy:
+  - bugfix: Fixed voice barks being too quiet (or even inaudible) sometimes.
+  LettuceGuardian:
+  - bugfix: CIN and NRI webbing being able to be reskinned and turned invisible
