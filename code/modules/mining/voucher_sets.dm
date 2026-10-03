@@ -196,7 +196,7 @@
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "disabler"
 	set_items = list(
-		/obj/item/storage/belt/holster/energy/disabler,
+		/obj/item/storage/belt/holster/disabler,
 		/obj/item/gun/energy/disabler,
 		)
 
