@@ -131,6 +131,14 @@
 	roundstart_template = /datum/map_template/shuttle/mining/kilo
 	height = 10
 
+/obj/docking_port/stationary/mining_home/kilo/load_roundstart()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_LAVALAND)) // Yogs lavaland has a small landing pad, so we need to be replaced
+		var/datum/station_trait/random_lavaland/trait = locate(/datum/station_trait/random_lavaland) in SSstation.station_traits
+		if(trait.chosen_lavabase == 2)
+			roundstart_template = /datum/map_template/shuttle/mining/yog
+			height = /obj/docking_port/stationary/mining_home::height
+	return ..()
+
 /obj/docking_port/stationary/mining_home/northstar
 	roundstart_template = /datum/map_template/shuttle/mining/northstar
 	height = 6

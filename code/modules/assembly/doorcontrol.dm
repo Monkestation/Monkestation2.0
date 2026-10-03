@@ -176,3 +176,15 @@
 			C.cremate(usr)
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+
+/obj/item/assembly/control/shieldwallgen
+	name = "holofield controller"
+	desc = "A small device used to remotely operate holofield generators."
+
+/obj/item/assembly/control/shieldwallgen/activate()
+	if(!COOLDOWN_FINISHED(src, cooldown))
+		return
+	COOLDOWN_START(src, cooldown, 3 SECONDS)
+	for(var/obj/machinery/power/shieldwallgen/machine as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/shieldwallgen))
+		if(machine.id == src.id)
+			INVOKE_ASYNC(machine, TYPE_PROC_REF(/obj/machinery/power/shieldwallgen, toggle))
