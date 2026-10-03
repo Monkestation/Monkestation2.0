@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - bugfix: "Fixes the server description from getting cut off in the BYOND hub."
