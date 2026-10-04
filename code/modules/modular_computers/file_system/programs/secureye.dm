@@ -52,6 +52,16 @@
 	)
 	spying = TRUE
 
+/datum/computer_file/program/secureye/mining
+	filename = "mineeye"
+	filedesc = "MineEye"
+	extended_desc = "This program allows access to the lavaland base networks, discontinued due to its limited uses."
+	download_access = list()
+	program_flags = NONE
+	network = list(
+		CAMERANET_NETWORK_MINE,
+	)
+
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	// Map name has to start and end with an A-Z character,

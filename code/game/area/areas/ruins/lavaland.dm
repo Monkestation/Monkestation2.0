@@ -90,6 +90,11 @@
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
 	ambient_buzz = 'sound/ambience/magma.ogg'
+
 /area/ruin/unpowered/ratvar
 	outdoors = TRUE
 	ambient_buzz = 'sound/ambience/magma.ogg'
+
+/area/ruin/unpowered/dragonslair
+	name = "Dragons Lair"
+	area_flags = parent_type::area_flags | NOTELEPORT

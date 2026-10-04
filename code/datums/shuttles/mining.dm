@@ -36,6 +36,10 @@
 	suffix = "kilo"
 	name = "mining shuttle (Kilo)"
 
+/datum/map_template/shuttle/mining/yog
+	suffix = "yog"
+	name = "mining shuttle (Yog)"
+
 /datum/map_template/shuttle/mining/large
 	suffix = "large"
 	name = "mining shuttle (Large)"
