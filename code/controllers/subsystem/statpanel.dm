@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(statpanels)
 
 		global_data += list(
 			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "Secret"]",
+			"Game Master: [GLOB.called_gamemaster ? capitalize(GLOB.called_gamemaster) : "None"]",
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 			"Connected: [length(GLOB.clients)] | Active: [active_players] | Observing: [observing_players]",
 			" ",
