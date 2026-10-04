@@ -171,17 +171,19 @@
 	var/atom/drop_loc = drop_location()
 	for(var/obj/item/head_item in src)
 		if(head_item == brain)
+			var/obj/item/organ/internal/brain/dropped_brain = brain
 			if(user)
 				user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
 			if(brainmob)
+				var/mob/living/brain/brainmob_to_transfer = brainmob
 				brainmob.container = null
-				brainmob.forceMove(brain)
-				brain.brainmob = brainmob
-				brainmob = null
+				brainmob = null // brainmob needs to be null before the brain is moved.
+				brainmob_to_transfer.forceMove(dropped_brain) // brain variable becomes null here after it is moved.
+				dropped_brain.brainmob = brainmob_to_transfer
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, span_warning("[brain] was damaged in the process!"))
-				brain.set_organ_damage(brain.maxHealth)
-			brain.forceMove(drop_loc)
+				dropped_brain.set_organ_damage(dropped_brain.maxHealth)
+			dropped_brain.forceMove(drop_loc)
 			brain = null
 			update_icon_dropped()
 		else
