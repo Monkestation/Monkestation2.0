@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - admin: "Moves the game master from the pre-roundstart lobby status display to the global status display, i.e. you can always see who the current round GM is."
