@@ -37,3 +37,7 @@
       and sister_server_buttons.dmi
   - spellcheck: small comment fix on new_player.dm to properly label the mothroach
       button
+2026-10-04:
+  JupiterJaeden:
+  - admin: Moves the game master from the pre-roundstart lobby status display to the
+      global status display, i.e. you can always see who the current round GM is.
