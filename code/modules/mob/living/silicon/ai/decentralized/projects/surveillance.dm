@@ -16,10 +16,7 @@
 	ai.canCameraMemoryTrack = FALSE
 	return ..()
 
-/mob/living/silicon/ai/verb/choose_camera_target()
-	set name = "Choose Camera Memory Target"
-	set category = "AI Commands"
-	set desc = "Select a target for the camera memory tracker. Case sensitive."
+GAME_VERB_DESC(/mob/living/silicon/ai, choose_camera_target, "Choose Camera Memory Target", "Select a target for the camera memory tracker. Case sensitive.", "AI Commands")
 
 	if(stat == DEAD)
 		return
