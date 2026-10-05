@@ -41,3 +41,9 @@
   JupiterJaeden:
   - admin: Moves the game master from the pre-roundstart lobby status display to the
       global status display, i.e. you can always see who the current round GM is.
+2026-10-05:
+  TheColorCyan:
+  - rscadd: throwing things now plays throw animation
+  hry-gh:
+  - code_imp: the backend to all verbs in the game has been played with, please report
+      any issues to github
