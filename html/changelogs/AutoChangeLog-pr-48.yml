@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - code_imp: "Optimized sprinting again, report any issues that may arise out of this. thanks."
