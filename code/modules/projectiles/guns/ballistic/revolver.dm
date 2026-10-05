@@ -59,11 +59,7 @@
 			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
 
-/obj/item/gun/ballistic/revolver/verb/spin()
-	set name = "Spin Chamber"
-	set category = "Object"
-	set desc = "Click to spin your revolver's chamber."
-
+GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	var/mob/user = usr
 
 	if(user.stat || !in_range(user, src))
@@ -163,9 +159,7 @@
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
-
-/obj/item/gun/ballistic/revolver/mateba/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
@@ -194,6 +188,7 @@
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
@@ -283,9 +278,6 @@
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(span_danger("[user.name] fires [src] at [user.p_their()] head!"), span_userdanger("You fire [src] at your head!"), span_hear("You hear a gunshot!"))
-
-/obj/item/gun/ballistic/revolver/russian/give_manufacturer_examine()
-	return
 
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"

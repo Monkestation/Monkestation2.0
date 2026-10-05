@@ -1,0 +1,4 @@
+author: "PotatoTomahto"
+delete-after: True
+changes:
+  - rscadd: "ai core displays have an internal camera for AIs to use"

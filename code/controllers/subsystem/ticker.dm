@@ -486,6 +486,9 @@ SUBSYSTEM_DEF(ticker)
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
 			SSjob.EquipRank(new_player_living, player_assigned_role, new_player_mob.client)
+
+		new_player_mob.persistent_client.joined_departments_bitflag |= player_assigned_role.departments_bitflags
+
 		player_assigned_role.after_roundstart_spawn(new_player_living, new_player_mob.client)
 		if(picked_spare_id_candidate == new_player_mob)
 			captainless = FALSE
@@ -1222,6 +1225,8 @@ SUBSYSTEM_DEF(ticker)
 
 	//might want to make this a full section
 	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "N/A"]")]</span></div>"
+
+	parts += "<div class='panel stationborder'><span class='header'>[("Game Master: [GLOB.called_gamemaster ? capitalize(GLOB.called_gamemaster) : "None"]")]</span><br><b>(as of roundend)</b></div>"
 
 	if(nanotrasen_rep_status)
 		parts += nanotrasen_rep_report()

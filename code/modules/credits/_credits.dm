@@ -14,7 +14,7 @@
 		SScredits.generate_credits()
 
 	for(var/client/client in GLOB.clients)
-		add_verb(client, /client/proc/ClearCredits)
+		ASSIGN_GAME_VERB(client, /client, ClearCredits)
 
 	var/count = 0
 
@@ -41,15 +41,12 @@
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
 
 	for(var/client/client in GLOB.clients)
-		remove_verb(client, /client/proc/ClearCredits)
+		UNASSIGN_GAME_VERB(client, /client, ClearCredits)
 
 	LAZYNULL(SScredits.ignored_clients)
 
-/client/proc/ClearCredits()
-	set name = "Hide Credits"
-	set category = "OOC"
-	remove_verb(src, /client/proc/ClearCredits)
-
+GAME_VERB_PROC(/client, ClearCredits, "Hide Credits", "OOC")
+	UNASSIGN_GAME_VERB(src, /client, ClearCredits)
 	LAZYADDASSOC(SScredits.ignored_clients, src, TRUE)
 
 	for(var/atom/movable/screen/credit/credit in src.screen)

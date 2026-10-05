@@ -119,9 +119,6 @@
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
 
-	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
-		return
-
 	if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
 		sound_to_use.volume *= 0.2
 
@@ -288,8 +285,6 @@
 			return list("Robot Instruments", "All instruments played by silicon.") //you caused this DONGLE
 		if(CHANNEL_MOB_SOUNDS) //This should be moved to voices or emotes eventually. WTF is a mob sound that isn't one of those?
 			return list("Mob Sounds", "Radio noises (AI, Drones), chittering.")
-		if(CHANNEL_PRUDE)
-			return list("Prude Sounds", "Farting.")
 		if(CHANNEL_SQUEAK)
 			return list("Squeaks / Plushies", "Frogs, axolotls, plushies, and anything else that squeaks.")
 		if(CHANNEL_MOB_EMOTES)

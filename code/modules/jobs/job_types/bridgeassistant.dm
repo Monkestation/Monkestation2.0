@@ -27,6 +27,9 @@ Bridge Assistant
 	display_order = JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT
 	department_for_prefs = /datum/job_department/captain //hes the only person who is exclusively subordinate to the captain and not running another dept
 
+	//Only used for respawn system - not set normally like other jobs!
+	departments_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
+
 	family_heirlooms = list(
 		/obj/item/banner/command/mundane,
 		/obj/item/pen/fountain,

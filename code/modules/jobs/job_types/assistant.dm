@@ -20,6 +20,9 @@ Assistant
 
 	department_for_prefs = /datum/job_department/assistant
 
+	//Only used for respawn system - not set normally like other jobs!
+	departments_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
+
 	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom, /obj/item/screwdriver, /obj/item/crowbar, /obj/item/wirecutters)
 
 	mail_goodies = list(

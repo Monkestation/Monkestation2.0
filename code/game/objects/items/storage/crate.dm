@@ -73,7 +73,6 @@
 			for(var/index in 1 to 5)
 				new /obj/item/food/grown/banana(src)
 			new /obj/item/seeds/banana(src)
-			new /obj/item/toy/plush/moth/ookplush(src)
 			new /mob/living/carbon/human/species/monkey/dukeman(src)
 			new /obj/item/dnainjector/h2m(src)
 		if(65 to 67)

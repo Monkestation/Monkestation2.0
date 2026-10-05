@@ -1314,16 +1314,13 @@
 	pin = /obj/item/firing_pin
 	automatic_charge_overlays = FALSE
 	can_select = FALSE
+	has_manufacturer = FALSE
 
 	/// The vars copied over to our projectile on fire.
 	var/list/chameleon_projectile_vars
 
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
-
-/obj/item/gun/energy/laser/chameleon/give_manufacturer_examine()
-	return
-
 
 /obj/item/gun/energy/laser/chameleon/multitool_act(mob/living/user, obj/item/tool)
 	if(chameleon_action.hidden)

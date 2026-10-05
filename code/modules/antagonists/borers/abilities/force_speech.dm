@@ -12,7 +12,6 @@
 		"*surrender",
 		"*collapse",
 		"*faint",
-		"*piss",
 	)
 
 /datum/action/cooldown/borer/force_speak/Trigger(trigger_flags, atom/target)

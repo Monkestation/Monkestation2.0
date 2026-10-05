@@ -1,0 +1,49 @@
+2026-10-01:
+  Mantlecrawler:
+  - admin: GM's can now call a round in advance, which shows up in the status tab
+  Runian:
+  - bugfix: The light from a cyborg's headlight now always appears in front of them
+      rather than sometimes appearing to be ontop of them.
+  - bugfix: Various cyborg skins no longer have floating hats and now have their worn
+      hat much closer to the top of their head.
+  - code_imp: Cyborg skins now support x-offsets for worn hats and worn badges.
+  hexakats:
+  - bugfix: fixed automatic weapons not working with two time root beer
+  - image: the auto shotgun case now uses the large syndicate case sprite
+  - image: added a blinking animation for the large case if it's a variant that can
+      explode
+  notghosti:
+  - code_imp: Refactors guns without manufacturers to use has_manufacturer instead
+      of just returning the proc
+2026-10-02:
+  Happyowl93, Odairu, vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents (vinylspiders)
+  - code_imp: makeHologram now allows a color override. (Happyowl93)
+  - rscadd: AIs can pick the color of their hologram. (Odairu)
+  - bugfix: holo ray on holograms no longer shows twice (Odairu)
+  JupiterJaeden:
+  - spellcheck: Updates the BYOND hub text to include the current game master + be
+      more accurate to bastion station.
+  - spellcheck: Shows the game master in the roundend report.
+  - config: Changes default keybind for LOOC from I to L
+  - config: Changes default keybind for Look Up from L to '
+  Mantlecrawler:
+  - bugfix: Titanium shuttle airlocks now have a welded overlay
+2026-10-03:
+  JupiterJaeden:
+  - bugfix: Fixes the server description from getting cut off in the BYOND hub.
+  ValuedEmployee:
+  - image: modified the disabled states of signs in sister_server_buttons_large.dmi
+      and sister_server_buttons.dmi
+  - spellcheck: small comment fix on new_player.dm to properly label the mothroach
+      button
+2026-10-04:
+  JupiterJaeden:
+  - admin: Moves the game master from the pre-roundstart lobby status display to the
+      global status display, i.e. you can always see who the current round GM is.
+2026-10-05:
+  TheColorCyan:
+  - rscadd: throwing things now plays throw animation
+  hry-gh:
+  - code_imp: the backend to all verbs in the game has been played with, please report
+      any issues to github
