@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Roundstart / latejoin cyborgs are now given their unusual hat. This overrides their loadout hat."
