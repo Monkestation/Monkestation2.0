@@ -20,6 +20,9 @@
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 	department_for_prefs = /datum/job_department/security
 
+	//Only used for respawn system - not set normally like other jobs!
+	departments_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
+
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list (
 		/obj/effect/spawner/random/contraband/prison = 1

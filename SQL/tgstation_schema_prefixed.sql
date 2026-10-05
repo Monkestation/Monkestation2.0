@@ -401,7 +401,6 @@ CREATE TABLE `SS13_player` (
   `accountjoindate` DATE DEFAULT NULL,
   `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
   `antag_tokens` tinyint(4) unsigned DEFAULT '0',
-  `metacoins` int(10) unsigned NOT NULL DEFAULT '0',
   `twitch_rank` VARCHAR(32) NOT NULL DEFAULT '',
 	`twitch_user` VARCHAR(32) NOT NULL DEFAULT '',
   `patreon_key` VARCHAR(32) NOT NULL DEFAULT 'None',
@@ -568,15 +567,6 @@ CREATE TABLE `SS13_achievement_metadata` (
 	`achievement_description` VARCHAR(512) NULL DEFAULT NULL,
 	PRIMARY KEY (`achievement_key`)
 ) ENGINE=InnoDB;
-
-DROP TABLE IF EXISTS `SS13_metacoin_item_purchases`;
-CREATE TABLE `SS13_metacoin_item_purchases` (
-	`ckey` varchar(32) NOT NULL,
-	`purchase_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-	`item_id` varchar(50) NOT NULL,
-	`amount` tinyint(4) unsigned NOT NULL,
-	PRIMARY KEY (`ckey`,`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 --
 -- Table structure for table `SS13_ticket`

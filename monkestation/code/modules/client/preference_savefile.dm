@@ -82,7 +82,6 @@
 	savefile.set_entry("channel_volume", channel_volume)
 	savefile.set_entry("saved_tokens", saved_tokens)
 	savefile.set_entry("extra_stat_inventory", extra_stat_inventory)
-	savefile.set_entry("lootboxes_owned", lootboxes_owned)
 	savefile.set_entry("antag_rep", antag_rep)
 	savefile.set_entry("modular_version", MODULAR_SAVEFILE_VERSION_MAX)
 
@@ -97,6 +96,5 @@
 	extra_stat_inventory = savefile.get_entry("extra_stat_inventory", extra_stat_inventory)
 	extra_stat_inventory = SANITIZE_LIST(extra_stat_inventory)
 
-	lootboxes_owned = savefile.get_entry("lootboxes_owned", lootboxes_owned)
 	antag_rep = savefile.get_entry("antag_rep", antag_rep)
 

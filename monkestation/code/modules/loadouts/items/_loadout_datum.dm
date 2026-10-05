@@ -54,8 +54,6 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/donator_only
 	/// Whether the item requires a specific season in order to be available
 	var/required_season = null
-	///does this item require being bought to show up?
-	var/requires_purchase = TRUE
 	///can only admins use this?
 	var/admin_only = FALSE
 	//can only mentors use this?

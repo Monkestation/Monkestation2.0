@@ -687,7 +687,6 @@
 /obj/effect/spawner/random/entertainment/plushie,
 /obj/effect/spawner/random/entertainment/plushie,
 /obj/effect/spawner/random/entertainment/plushie,
-/obj/item/toy/plush/admin/marisa,
 /obj/item/toy/plush/lobotomy/bongbong,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape/engine)

@@ -64,15 +64,6 @@ export const StoreManager = () => {
               title="Store Categories"
               align="center"
               className="StoreManager__Categories__Section"
-              buttons={
-                <Button
-                  icon="fa-solid fa-coins"
-                  tooltip="This is your total Monkecoin amount."
-                  tooltipPosition="top"
-                >
-                  {total_coins}
-                </Button>
-              }
             >
               <Tabs>
                 {store_tabs.map((curTab) => (

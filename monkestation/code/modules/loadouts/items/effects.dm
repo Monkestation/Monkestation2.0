@@ -12,4 +12,3 @@ GLOBAL_LIST_INIT(loadout_effects, generate_loadout_items(/datum/loadout_item/eff
 	ckeywhitelist = list("madducks")
 	name = "Honk Platinum Transformation"
 	item_path = /obj/item/effect_granter/honk_platinum
-	requires_purchase = FALSE

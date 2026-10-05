@@ -1589,7 +1589,6 @@
 	pixel_y = 4;
 	pixel_x = 1
 	},
-/obj/effect/decal/cleanable/piss_stain,
 /obj/item/borg/upgrade/transform/clown,
 /obj/item/clothing/mask/gas/clown_hat/yellow,
 /turf/open/floor/plating,
@@ -2294,12 +2293,6 @@
 /area/station/command/heads_quarters/captain/private)
 "aKv" = (
 /obj/structure/flora/bush/flowers_br,
-/obj/item/reagent_containers/cup/glass/bottle/holywater{
-	volume = 400;
-	list_reagents = list(/datum/reagent/ammonia/urine  = 400);
-	name = "strange flask";
-	desc = "A flask of some strange liquid?"
-	},
 /turf/open/floor/grass,
 /area/station/maintenance/department/medical)
 "aKB" = (
@@ -8789,7 +8782,6 @@
 	},
 /obj/structure/mop_bucket,
 /obj/item/mop,
-/obj/effect/decal/cleanable/piss_stain,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -27837,7 +27829,6 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/piss_stain,
 /obj/machinery/light/small,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/white,
@@ -67876,7 +67867,6 @@
 "tJx" = (
 /obj/effect/spawner/random/trash/mopbucket,
 /obj/item/mop,
-/obj/effect/decal/cleanable/piss_stain,
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 1
 	},
