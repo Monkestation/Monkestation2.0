@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Heads with an active mind now drop all of their organs, including their brain, onto the floor instead of being deleted when deconstructed, burnt, gutted, etc."
