@@ -1,0 +1,4 @@
+author: "LettuceGuardian"
+delete-after: True
+changes:
+  - bugfix: "CIN and NRI webbing being able to be reskinned and turned invisible"
