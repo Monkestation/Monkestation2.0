@@ -55,6 +55,7 @@
 
 /obj/effect/decal/cleanable/blood/splatter/oil
 	name = "motor oil"
+	beauty = -50
 	color = /datum/blood_type/oil::color
 
 /obj/effect/decal/cleanable/blood/splatter/oil/get_default_blood_type()
