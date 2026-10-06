@@ -545,6 +545,7 @@
 	desc = "A small, lightweight cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
+	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5
 	var/max_charges = 5
@@ -557,21 +558,14 @@
 	name = "large toner cartridge"
 	desc = "A hefty cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
-	w_class = WEIGHT_CLASS_SMALL
-	charges = 100
-	max_charges = 100
-
-/obj/item/toner/large/decal
-	name = "high-capacity toner cartridge"
-	desc = "An oversized cartridge of Nanotrasen ValueBrand toner, standard issue for decal painters. Fits photocopiers and autopainters alike."
 	charges = 250
 	max_charges = 250
 
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"
 	desc = "Why would ANYONE need THIS MUCH TONER?"
-	charges = 200
-	max_charges = 200
+	charges = 500
+	max_charges = 500
 
 #undef PHOTO_GREYSCALE
 #undef PHOTO_COLOR
