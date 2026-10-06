@@ -27,6 +27,9 @@ icon_exists_cache.json
 
 # Ignore compiled linux libs in the root folder, e.g. librust_g.so
 /*.so
+!/libdmeow.so
+*.dmeowlog
+dmeow_compile_cache.json
 
 #Ignore compiled files and other files generated during compilation.
 *.mdme

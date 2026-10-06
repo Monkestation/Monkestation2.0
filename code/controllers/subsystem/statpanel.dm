@@ -220,6 +220,7 @@ SUBSYSTEM_DEF(statpanels)
 		list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
 		list("Master Controller:", Master.stat_entry(), text_ref(Master)),
 		list("Failsafe Controller:", Failsafe.stat_entry(), text_ref(Failsafe)),
+		list("JIT Status:", "[dmeow_loaded ? "Loaded" : "Not Loaded"]\n  [dmeow_armed ? "Armed" : "Not Armed"]\n  Hooks: [dmeow_hooks_enabled ? "on" : "off"]\n  [dmeow_counting_threshold ? "Counting Threshold: [dmeow_counting_threshold]" : "Counting Off"]"),
 		list("","")
 	)
 #if defined(MC_TAB_TRACY_INFO) || defined(SPACEMAN_DMM)
