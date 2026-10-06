@@ -6,7 +6,7 @@
 	icon_state = "decal_sprayer"
 	inhand_icon_state = "decal_sprayer"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
-	initial_ink_type = /obj/item/toner/large
+	initial_ink_type = /obj/item/toner/large/decal
 	/// The current direction of the decal being printed
 	VAR_PRIVATE/selected_dir = SOUTH
 	/// The current color of the decal being printed.

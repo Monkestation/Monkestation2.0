@@ -557,8 +557,15 @@
 	name = "large toner cartridge"
 	desc = "A hefty cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
-	charges = 25
-	max_charges = 25
+	w_class = WEIGHT_CLASS_SMALL
+	charges = 100
+	max_charges = 100
+
+/obj/item/toner/large/decal
+	name = "high-capacity toner cartridge"
+	desc = "An oversized cartridge of Nanotrasen ValueBrand toner, standard issue for decal painters. Fits photocopiers and autopainters alike."
+	charges = 250
+	max_charges = 250
 
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"
