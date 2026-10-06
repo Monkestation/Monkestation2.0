@@ -547,8 +547,8 @@
 	icon_state = "tonercartridge"
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
-	var/charges = 5
-	var/max_charges = 5
+	var/charges = 50
+	var/max_charges = 50
 
 /obj/item/toner/examine(mob/user)
 	. = ..()
