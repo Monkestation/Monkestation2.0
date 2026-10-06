@@ -474,6 +474,13 @@
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
 
+/// Ninja medical cyborg hypospray.
+/obj/item/reagent_containers/borghypo/syndicate/ninja
+	name = "ninja cyborg hypospray"
+	desc = "An experimental piece of Ninja technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. \
+		Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
+	icon_state = "borghypo_n"
+
 /// Paramedic toolset hypospray.
 /obj/item/reagent_containers/borghypo/paramedic
 	name = "emergency paramedic hypospray"
