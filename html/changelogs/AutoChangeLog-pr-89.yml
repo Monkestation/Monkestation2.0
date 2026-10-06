@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "fixed stacks of 10 iron/glass (and other exact sheet amounts) getting rejected by lathes, the silo, and flatpackers after boulder machines had been used"

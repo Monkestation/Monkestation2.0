@@ -1,5 +1,0 @@
-author: "LettuceGuardian"
-delete-after: True
-changes:
-  - bugfix: "revolver silencers being unable to be taken off"
-  - image: "Modified takbok suppressor sprites"

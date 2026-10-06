@@ -1,5 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - balance: "Lowered Chameleon Bomb's price to 2TC (down from 4TC)"
-  - balance: "Chameleon Bombs can no longer be discounted (because anything under 4TC isnt eligible for discount in the uplink)"

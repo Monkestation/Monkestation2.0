@@ -1,5 +1,0 @@
-author: "LettuceGuardian"
-delete-after: True
-changes:
-  - bugfix: "fixed paco suppressors sometimes being invisible"
-  - image: "updated the paco suppressor sprite"
