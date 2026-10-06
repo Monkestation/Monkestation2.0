@@ -59,9 +59,3 @@
 
 /obj/effect/decal/cleanable/blood/splatter/oil/get_default_blood_type()
 	return get_blood_type(BLOOD_TYPE_OIL)
-
-/obj/effect/decal/cleanable/blood/splatter/oil/streak
-	icon_state = "streak1"
-	icon = 'icons/mob/silicon/robots.dmi'
-	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
-	beauty = -50

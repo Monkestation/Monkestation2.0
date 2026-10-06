@@ -12986,7 +12986,7 @@
 /area/station/engineering/storage/tech)
 "dYK" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "dYM" = (
@@ -27831,7 +27831,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "iGM" = (
@@ -41534,7 +41534,7 @@
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/medbay/lobby)
 "mOT" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "mOU" = (
@@ -64174,7 +64174,7 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "tKZ" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "tLb" = (

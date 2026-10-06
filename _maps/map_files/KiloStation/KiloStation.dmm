@@ -14195,7 +14195,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library/abandoned)
 "exQ" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -29034,7 +29034,7 @@
 "iSP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
@@ -37478,7 +37478,7 @@
 /area/station/maintenance/aft)
 "lDK" = (
 /obj/effect/decal/remains/robot,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/storage)
@@ -40046,7 +40046,7 @@
 "mtk" = (
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4

@@ -512,7 +512,7 @@
 /turf/open/floor/iron/colony/white,
 /area/template_noop)
 "ID" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/bronze,
 /area/template_noop)
 "IQ" = (

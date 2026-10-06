@@ -496,7 +496,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/engineering)
 "ca" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -12155,7 +12155,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/lounge)
 "Tz" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/blood/splatter{
 	icon_state = "gibbl5"
 	},
