@@ -135,8 +135,8 @@
 	dat += "<BR><a href='byond://?src=[REF(src)];panel=stats;action=set_roundstart'[roundstart_event_view ? "class='linkOn'" : ""]>Roundstart Events</a> Forced Roundstart events will use rolled points, and are guaranteed to trigger (even if the used points are not enough)"
 	dat += "<BR>Avg. event intervals: "
 	for(var/track, track_d in event_tracks)
-		if(last_point_gains[track]) //DOUBLE CHECK THIS CALCULATION IS CORRECT
-			var/est_time = round(astype(track_d, /datum/storyteller_track).threshold / last_point_gains[track] / 40 / 6) / 10
+		if(last_point_gains[track])
+			var/est_time = round(astype(track_d, /datum/storyteller_track).threshold / last_point_gains[track] * wait / (1 MINUTES), 0.1)
 			dat += "[track]: ~[est_time] m. | "
 	dat += "<HR>"
 	for(var/track in EVENT_PANEL_TRACKS)
