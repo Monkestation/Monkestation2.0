@@ -57,13 +57,13 @@
 	if(clothing_to_equip && clothing_to_equip.clothing_flags & VOX_CLOTHING) // vox clothing, we good
 		return
 	if(equip_target.slot_flags & ITEM_SLOT_FEET || equip_target.slot_flags & ITEM_SLOT_OCLOTHING || equip_target.slot_flags & ITEM_SLOT_ICLOTHING || equip_target.slot_flags & ITEM_SLOT_GLOVES)
-		to_chat(owner, span_warning("[src] doesn't fit!"))
+		to_chat(owner, span_warning("[clothing_to_equip]  doesn't fit!"))
 		return COMPONENT_BLOCK_EQUIP
 	if(equip_target.slot_flags & ITEM_SLOT_HEAD && check_coverage_conflict(equip_target))
-		to_chat(owner, span_warning("[src] doesn't fit!"))
+		to_chat(owner, span_warning("[clothing_to_equip] doesn't fit!"))
 		return COMPONENT_BLOCK_EQUIP
 	if(equip_target.slot_flags & ITEM_SLOT_MASK && check_coverage_conflict(equip_target))
-		to_chat(owner, span_warning("[src] doesn't fit!"))
+		to_chat(owner, span_warning("[clothing_to_equip] doesn't fit!"))
 		return COMPONENT_BLOCK_EQUIP
 
 /datum/species/vox/proc/check_coverage_conflict(obj/item/item_to_check)
