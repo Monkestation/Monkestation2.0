@@ -76,9 +76,10 @@
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 // #define UNIT_TESTS
 
-// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
-// Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
-// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
+// If this is uncommented, will start recording a byond-tracy capture from the start of world init.
+// Even if it's not defined, you can pass "tracy" via -params in order to start one.
+// byond-tracy is built into dmeow (dmeow.dll/libdmeow.so), which has to be present.
+// Captures go to data/profiler, named after the round ID once there is one.
 // #define USE_BYOND_TRACY
 
 // If defined, we will compile with FULL timer debug info, rather then a limited scope
