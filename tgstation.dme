@@ -8545,6 +8545,7 @@
 #include "monkestation\code\modules\store\store_items\toys.dm"
 #include "monkestation\code\modules\store\store_items\under.dm"
 #include "monkestation\code\modules\storytellers\config.dm"
+#include "monkestation\code\modules\storytellers\latejoin_antags.dm"
 #include "monkestation\code\modules\storytellers\scheduled_events.dm"
 #include "monkestation\code\modules\storytellers\subsystem_ui.dm"
 #include "monkestation\code\modules\storytellers\antag_rep\helper_procs.dm"

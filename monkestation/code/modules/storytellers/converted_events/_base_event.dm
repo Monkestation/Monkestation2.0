@@ -19,10 +19,13 @@
 	var/list/extra_spawned_events
 	// Same as above
 	var/list/preferred_events
+	/// If set, setup() only considers these mobs instead of everyone who's eligible. Cleared once setup() is done with it.
+	var/list/candidate_pool
 
 /datum/round_event/antagonist/New(my_processing, datum/round_event_control/antagonist/event_controller)
 	. = ..()
 	if(istype(event_controller))
+		candidate_pool = event_controller.next_candidate_pool
 		if(event_controller.extra_spawned_events)
 			extra_spawned_events = fill_with_ones(event_controller.extra_spawned_events)
 		if(event_controller.preferred_events)
@@ -35,7 +38,8 @@
 	antag_datum = cast_control.antag_datum
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
-	var/list/possible_candidates = cast_control.get_candidates()
+	var/list/possible_candidates = cast_control.get_candidates(candidate_pool)
+	candidate_pool = null
 	var/list/candidates = list()
 	if(cast_control == SSgamemode.current_roundstart_event && length(SSgamemode.roundstart_antag_minds))
 		log_storyteller("Running roundstart antagonist assignment, event type: [src.type], roundstart_antag_minds: [english_list(SSgamemode.roundstart_antag_minds)]")

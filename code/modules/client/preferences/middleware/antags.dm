@@ -85,6 +85,9 @@
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
 		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
+		ROLE_SYNDICATE_INFILTRATOR = /datum/antagonist/traitor/infiltrator,
+		ROLE_HERETIC_SMUGGLER = /datum/antagonist/heretic,
+		ROLE_BLOODSUCKERBREAKOUT = VAMPIRE_ANTAG_DATUM,
 		// monkestation end
 	)
 
@@ -154,6 +157,9 @@
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
 		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
+		ROLE_SYNDICATE_INFILTRATOR = /datum/antagonist/traitor/infiltrator,
+		ROLE_HERETIC_SMUGGLER = /datum/antagonist/heretic,
+		ROLE_BLOODSUCKERBREAKOUT = VAMPIRE_ANTAG_DATUM,
 		// monkestation end
 	)
 

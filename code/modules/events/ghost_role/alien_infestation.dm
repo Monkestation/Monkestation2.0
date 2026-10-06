@@ -30,7 +30,7 @@
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
 
-/datum/round_event_control/antagonist/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
+/datum/round_event_control/antagonist/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE, list/candidate_pool) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .
