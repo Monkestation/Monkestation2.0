@@ -19,8 +19,13 @@ fi
 #set the map
 cp _maps/$MAP.json ci_test/data/next_map.json
 
+DD_PARAMS="log-directory=ci"
+if [ "${DMEOW:-1}" != "0" ]; then
+	DD_PARAMS="$DD_PARAMS&dmeow"
+fi
+
 cd ci_test
-DreamDaemon tgstation.dmb -close -trusted -verbose -params "log-directory=ci"
+DreamDaemon tgstation.dmb -close -trusted -verbose -params "$DD_PARAMS"
 
 cd ..
 
