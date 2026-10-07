@@ -293,11 +293,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 				new selected_recipe.brewed_item(get_turf(src))
 		selected_recipe = null
 
-
-/obj/structure/fermentation_keg/verb/reset_keg()
-	set name = "Clear Keg (Completely Resets)"
-	set category = "Object"
-	set src in range(1)
+GAME_VERB_SRC(/obj/structure/fermentation_keg, reset_keg, range(1), "Clear Keg (Completely Resets)", "Object")
 
 	if(!isdead(usr))
 		clear_keg(TRUE)

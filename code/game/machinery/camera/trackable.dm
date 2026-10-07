@@ -199,9 +199,12 @@
  *  tracked - The person being tracked.
  */
 /datum/trackable/proc/track_mob(mob/living/tracker, mob/living/tracked)
-	if(QDELETED(tracker) || QDELETED(tracked) || tracker.stat == DEAD)
+	if(QDELETED(tracker) || QDELETED(tracked) || tracker.stat == DEAD || (!locate(tracked) in GLOB.mob_living_list))
 		return
-	// Need to make sure the tracked mob is in our list
-	track_name(tracker, tracked.name)
+	if(!tracked.can_track(tracker)) // We don't use [find_trackable_mobs] because mobs can have duplicate names.
+		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
+		return
+	to_chat(tracker, span_notice("Now tracking [tracked.name] on camera."))
+	set_tracked_target(tracked)
 
 #undef CAMERA_TICK_LIMIT

@@ -431,6 +431,8 @@ GLOBAL_VAR(restart_counter)
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
 
+	features += "Beginner friendly"
+
 	if (CONFIG_GET(flag/station_name_in_hub_entry))
 		new_status += " &#8212; <b>[station_name()]</b>"
 
@@ -444,7 +446,6 @@ GLOBAL_VAR(restart_counter)
 	if(length(features))
 		new_status += ": [jointext(features, ", ")]"
 
-	new_status += "<br>Beginner Friendly: <b>Learn to play SS13!</b>"
 	new_status += "<br>M&RP: \[<b>Mechanics & Roleplay</b>\]"
 
 	new_status += "<br>Current Game Master: <b>[GLOB.called_gamemaster ? capitalize(GLOB.called_gamemaster) : "None"]</b>"

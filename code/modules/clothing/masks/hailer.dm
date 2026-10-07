@@ -157,10 +157,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
 		return ..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/halt()
-	set category = "Object"
-	set name = "HALT"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/mask/gas/sechailer, halt, usr, "HALT", "Object")
+
 	if(!isliving(usr) || !can_use(usr) || !COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
 	if(broken_hailer)
