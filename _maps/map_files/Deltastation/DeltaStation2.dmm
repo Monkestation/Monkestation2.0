@@ -13506,7 +13506,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
 /obj/machinery/door/airlock/mining{
-	name = "Quatermaster's Office"
+	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -24382,10 +24382,10 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
 /obj/machinery/door/airlock/mining{
-	name = "Quatermaster's Office"
+	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
-/area/station/cargo/quartermaster)
+/area)
 "fKH" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/structure/chair/comfy/black{
