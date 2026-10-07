@@ -454,7 +454,7 @@
 			servant_antagonist.setup_master(user)
 			servant_mind.add_antag_datum(servant_antagonist)
 
-			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
+			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, summoned_mob = human_servant)
 			summon_servant.Grant(user)
 
 		if(17)
@@ -505,7 +505,7 @@
 
 	var/datum/weakref/summon_weakref
 
-/datum/action/cooldown/spell/summon_mob/New(Target, mob/living/summoned_mob)
+/datum/action/cooldown/spell/summon_mob/New(Target, original = TRUE, mob/living/summoned_mob)
 	. = ..()
 	if(summoned_mob)
 		summon_weakref = WEAKREF(summoned_mob)
