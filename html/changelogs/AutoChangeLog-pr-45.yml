@@ -1,0 +1,5 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - rscadd: "Ian can now randomly roll two new variants of himself, on rare occasions"
+  - rscadd: "Dinosaur Ian, Expie Ian"
