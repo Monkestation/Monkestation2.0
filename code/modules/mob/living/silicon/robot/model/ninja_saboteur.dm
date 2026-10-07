@@ -4,7 +4,7 @@
 	default_skin = /datum/robot_skin/ninja_saboteur/default
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/construction/rcd/borg/syndicate,
+		/obj/item/construction/rcd/borg/syndicate/ninja,
 		/obj/item/pipe_dispenser,
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
