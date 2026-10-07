@@ -273,6 +273,7 @@
 		/obj/item/clothing/mask/muzzle = 2,
 		/obj/item/clothing/shoes/clown_shoes/ducky_shoes = 1,
 		/obj/item/clothing/shoes/clown_shoes/meown_shoes = 1,
+		/obj/item/clothing/shoes/clown_shoes/moffers = 1,
 		/obj/item/clothing/suit/costume/judgerobe = 1,
 		/obj/item/clothing/head/costume/lobsterhat = 1,
 		/obj/item/clothing/under/costume/lobster = 1,
