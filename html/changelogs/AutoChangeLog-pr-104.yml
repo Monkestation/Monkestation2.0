@@ -1,4 +1,0 @@
-author: "Longestarmlonglaw"
-delete-after: True
-changes:
-  - qol: "Ink cartridges are smaller and  decal printers start with higher capacity\n:cl:\n## Pre-Merge Checklist\n- [x] You tested this on a local server.\n- [x] This code did not runtime during testing.\n- [x] You documented all of your changes."

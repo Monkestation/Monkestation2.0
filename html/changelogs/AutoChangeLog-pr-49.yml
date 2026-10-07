@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Tracking someone via crew suit monitor as an AI now always tracks that specific person rather than someone with a similar name."

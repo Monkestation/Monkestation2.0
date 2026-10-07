@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - config: "Allow 'required_enemies' (and other /datum/round_event_control/ settings) to be set by events.json"

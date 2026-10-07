@@ -82,3 +82,55 @@
   notghosti:
   - bugfix: ' Borer egg outside of host now deals 50 damage as intended, instead of
       all but 50 of your health at high health pools'
+2026-10-07:
+  00-Steven:
+  - bugfix: Books no longer cut off valid paper inputs when they are under the character
+      limit.
+  AberrantQuerist:
+  - image: Resprited several floor tiles (Minor changes.)
+  - image: Resprites NTRep, Blueshield, and Barber lockers.
+  - image: Resprites wooden and corporate doors.
+  Absolucy:
+  - config: Allow 'required_enemies' (and other /datum/round_event_control/ settings)
+      to be set by events.json
+  - bugfix: Fixed oozeling core revives (and other DNA updates) sometimes changing
+      your gender.
+  Gboster-0:
+  - rscadd: The Rod of Asclepius can now rarelly spawn instead of an immovable rod
+  JohnFulpWillard:
+  - balance: Vampires aren't forced to be Albino anymore.
+  Longestarmlonglaw:
+  - qol: 'Ink cartridges are smaller and  decal printers start with higher capacity
+
+      :cl:
+
+      ## Pre-Merge Checklist
+
+      - [x] You tested this on a local server.
+
+      - [x] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
+  Runian:
+  - bugfix: Tracking someone via crew suit monitor as an AI now always tracks that
+      specific person rather than someone with a similar name.
+  - bugfix: You can no longer teleport living beings via a cargo teleporter by teleporting
+      whatever they're buckled to.
+  ValuedEmployee:
+  - rscadd: moffers clown shoes
+  - sound: new moffers footstep sound effect
+  - image: moffers icons
+  - spellcheck: tiny empty space changes
+  - refactor: added crafting and autodrobe entries for the moffers
+  ashallaryn:
+  - image: modified twintail long hairstyle sprites
+  - image: modified hime cut hairstyle sprites
+  - image: modified hime cut 2 hairstyle sprites
+  - image: modified hime updo hairstyle sprites
+  cheese, kiaroh:
+  - rscadd: adds the pickle lighter to the cigarette vendors
+  hexakats:
+  - balance: Nerfs the innate armor tribal claw gives
+  - bugfix: Omnilathe no longer tries to take materials from the ore silo then delete
+      the ones that don't fit when repacking a linked one
+  - refactor: Omnilathe uses item_interaction instead of attackby
