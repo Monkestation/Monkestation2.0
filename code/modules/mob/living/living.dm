@@ -1373,7 +1373,7 @@ GAME_VERB(/mob/living, resist, "Resist", "IC")
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && (!ISADVANCEDTOOLUSER(src) && !HAS_TRAIT(src, TRAIT_GUN_NATURAL)))
 		to_chat(src, span_warning("You try to fire [G], but can't use the trigger!"))
 		return FALSE
-	if(G.trigger_guard == TRIGGER_GUARD_NORMAL && HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
+	if(G.trigger_guard == TRIGGER_GUARD_NORMAL && HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) && is_holding(G)) // not in our hands means telekinesis, so no fingers involved
 		balloon_alert(src, "fingers are too big!")
 		return FALSE
 	return TRUE

@@ -362,6 +362,8 @@
 	var/memory_saved = FALSE
 	///Path of the item Ian was wearing in a previous shift, if he survived through it
 	var/saved_head = null
+	///The chosen Ian variant, from a weighted list
+	var/datum/ian_variant/chosen_variant
 
 /mob/living/basic/pet/dog/corgi/ian/Initialize(mapload)
 	. = ..()
@@ -369,6 +371,7 @@
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
+	chosen_variant = pick_variant()
 	if(age == 0)
 		var/turf/target = get_turf(loc)
 		if(target)
@@ -376,18 +379,26 @@
 			Write_Memory(FALSE)
 			return INITIALIZE_HINT_QDEL
 	else if(age == record_age)
-		icon_state = "old_corgi"
-		icon_living = "old_corgi"
-		held_state = "old_corgi"
-		icon_dead = "old_corgi_dead"
-		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
-		ai_controller?.set_blackboard_key(BB_DOG_IS_SLOW, TRUE)
-		is_slow = TRUE
-		speed = 2
+		chosen_variant = /datum/ian_variant/old
 
 	//setup roundend check for Ian's whereabouts
 	i_will_survive = CALLBACK(src, PROC_REF(check_ian_survival))
 	SSticker.OnRoundend(i_will_survive)
+	activate_variant()
+
+//Helper proc that inits a variant, currently just calls the variants init but exists so that admins can more easily change ian variants
+/mob/living/basic/pet/dog/corgi/ian/proc/activate_variant()
+	var/datum/ian_variant/variant = new chosen_variant
+	variant.init_variant(src)
+
+///Helper proc that assembles a weighted list of ian variants, then sets this ians chosen_variant var to a picked one from that list
+/mob/living/basic/pet/dog/corgi/ian/proc/pick_variant()
+	var/pick_list = list()
+	for(var/datum/ian_variant/i as anything in typesof(/datum/ian_variant))
+		if(!(i.random_pickable))
+			continue
+		pick_list[i] = i.weight
+	return pick_weight(pick_list)
 
 /mob/living/basic/pet/dog/corgi/ian/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, i_will_survive) //cleanup the survival callback

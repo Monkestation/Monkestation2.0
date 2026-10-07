@@ -132,7 +132,8 @@
 
 	if(ishuman(usr) && !allow_chunky)
 		var/mob/living/carbon/human/human_user = usr
-		if(HAS_TRAIT(human_user, TRAIT_CHUNKYFINGERS))
+		var/using_telekinesis = human_user.dna.check_mutation(/datum/mutation/telekinesis) && !human_user.CanReach(physical || src)
+		if(HAS_TRAIT(human_user, TRAIT_CHUNKYFINGERS) && !using_telekinesis)
 			balloon_alert(human_user, "fingers are too big!")
 			return TRUE
 
