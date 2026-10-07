@@ -101,8 +101,8 @@
 #define BASE_LATEJOIN_SPAWN_TIME 5 MINUTES
 
 ///the shortest and longest wait after a latejoin antag before another one can be rolled
-#define LATEJOIN_ANTAG_COOLDOWN_LOW (10 MINUTES)
-#define LATEJOIN_ANTAG_COOLDOWN_HIGH (20 MINUTES)
+#define LATEJOIN_ANTAG_COOLDOWN_LOW (20 MINUTES)
+#define LATEJOIN_ANTAG_COOLDOWN_HIGH (35 MINUTES)
 ///multiplier on the latejoin antag chance before BASE_MIDROUND_SPAWN_TIME
 #define LATEJOIN_ANTAG_EARLY_MULTIPLIER 0.2
 
