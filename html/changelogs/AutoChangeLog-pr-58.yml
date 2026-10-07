@@ -1,0 +1,8 @@
+author: "ValuedEmployee"
+delete-after: True
+changes:
+  - rscadd: "moffers clown shoes"
+  - sound: "new moffers footstep sound effect"
+  - image: "moffers icons"
+  - spellcheck: "tiny empty space changes"
+  - refactor: "added crafting and autodrobe entries for the moffers"
