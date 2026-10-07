@@ -1,4 +1,5 @@
-ADMIN_VERB(jump_to_area, R_ADMIN, FALSE, "Jump To Area", "Jumps to the specified area.", ADMIN_CATEGORY_GAME, area/target in world)
+ADMIN_VERB(jump_to_area, R_ADMIN, FALSE, "Jump To Area", "Jumps to the specified area.", ADMIN_CATEGORY_GAME)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_AREA, VERB_ARG_SOURCE_WORLD, /area)
 	if(!isobserver(user.mob))
 		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 
@@ -18,7 +19,8 @@ ADMIN_VERB(jump_to_area, R_ADMIN, FALSE, "Jump To Area", "Jumps to the specified
 	message_admins("[key_name_admin(user)] jumped to [AREACOORD(drop_location)]")
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Area")
 
-ADMIN_VERB(jump_to_turf, R_ADMIN, FALSE, "Jump To Turf", "Jump to any turf in the game. This will lag your client.", ADMIN_CATEGORY_GAME, turf/locale in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(jump_to_turf, R_ADMIN, FALSE, "Jump To Turf", /turf)
+	VERB_ARG_TYPED(locale, VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_WORLD, /turf)
 	if(!isobserver(user.mob))
 		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 	log_admin("[key_name(user)] jumped to [AREACOORD(locale)]")
@@ -26,7 +28,8 @@ ADMIN_VERB(jump_to_turf, R_ADMIN, FALSE, "Jump To Turf", "Jump to any turf in th
 	user.mob.abstract_move(locale)
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Turf")
 
-ADMIN_VERB(jump_to_mob, R_ADMIN, FALSE, "Jump To Mob", "Jump to any mob in the game.", ADMIN_CATEGORY_GAME, mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(jump_to_mob, R_ADMIN, FALSE, "Jump To Mob", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!isobserver(user.mob))
 		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 	user.mob.abstract_move(target.loc)
@@ -34,7 +37,10 @@ ADMIN_VERB(jump_to_mob, R_ADMIN, FALSE, "Jump To Mob", "Jump to any mob in the g
 	message_admins("[key_name_admin(user)] jumped to [ADMIN_LOOKUPFLW(target)] at [AREACOORD(target)]")
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Mob")
 
-ADMIN_VERB(jump_to_coord, R_ADMIN, FALSE, "Jump To Coordinate", "Jump to a specific coordinate in the game world.", ADMIN_CATEGORY_GAME, cx as num, cy as num, cz as num)
+ADMIN_VERB(jump_to_coord, R_ADMIN, FALSE, "Jump To Coordinate", "Jump to a specific coordinate in the game world.", ADMIN_CATEGORY_GAME)
+	VERB_ARG(cx, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(cy, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(cz, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	if(!isobserver(user.mob))
 		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 
@@ -63,7 +69,8 @@ ADMIN_VERB(jump_to_key, R_ADMIN, FALSE, "Jump To Key", "Jump to a specific playe
 	user.mob.abstract_move(M.loc)
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Key")
 
-ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, FALSE, "Get Mob", "Teleport a mob to your location.", ADMIN_CATEGORY_GAME, mob/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, FALSE, "Get Mob", "Teleport a mob to your location.", ADMIN_CATEGORY_GAME, /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/atom/loc = get_turf(user.mob)
 	target.admin_teleport(loc)
 	BLACKBOX_LOG_ADMIN_VERB("Get Mob")
@@ -108,7 +115,8 @@ ADMIN_VERB(get_key, R_ADMIN, FALSE, "Get Key", "Teleport the player with the pro
 		M.forceMove(get_turf(user))
 		BLACKBOX_LOG_ADMIN_VERB("Get Key")
 
-ADMIN_VERB(send_mob, R_ADMIN, FALSE, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_GAME, mob/jumper)
+ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, FALSE, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_GAME, /mob)
+	VERB_ARG_TYPED(jumper, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/list/sorted_areas = get_sorted_areas()
 	if(!length(sorted_areas))
 		to_chat(user, "No areas found.", confidential = TRUE)
@@ -129,11 +137,13 @@ ADMIN_VERB(send_mob, R_ADMIN, FALSE, "Send Mob", "Teleport the specified mob to 
 		to_chat(user, "Failed to move mob to a valid location.", confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Send Mob")
 
-ADMIN_VERB_AND_CONTEXT_MENU(get_atom, FALSE, FALSE, "Get", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/movable/the_atom in world)
+ADMIN_VERB_AND_CONTEXT_MENU(get_atom, FALSE, FALSE, "Get", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /atom/movable)
+	VERB_ARG_TYPED(the_atom, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /atom/movable)
 	var/turf/turf = get_turf(user.mob)
 	if(!turf || QDELETED(the_atom))
 		return
 	the_atom.forceMove(turf)
 
-ADMIN_VERB_AND_CONTEXT_MENU(jump_to, FALSE, FALSE, "Jump To", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as turf in world)
+ADMIN_VERB_AND_CONTEXT_MENU(jump_to, FALSE, FALSE, "Jump To", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /atom)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_WORLD, /atom)
 	user.mob.forceMove(target)

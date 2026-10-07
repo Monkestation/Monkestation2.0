@@ -17,7 +17,7 @@
 /turf/open/indestructible/bingle,
 /area/misc/bingle_pit)
 "T" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/indestructible/bingle,
 /area/misc/bingle_pit)
 "U" = (

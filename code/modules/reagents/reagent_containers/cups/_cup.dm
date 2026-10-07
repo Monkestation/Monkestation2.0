@@ -23,7 +23,7 @@
 	. = ..()
 	if(drink_type)
 		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
-		. += span_notice("It is [lowertext(english_list(types))].")
+		. += span_notice("It is [LOWER_TEXT(english_list(types))].")
 
 /**
  * Checks if the mob actually liked drinking this cup.
@@ -400,17 +400,17 @@
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
 	desc = "It's a bucket."
-	icon = 'icons/obj/service/janitor.dmi'
-	worn_icon = 'icons/mob/clothing/head/utility.dmi'
-	icon_state = "bucket"
-	inhand_icon_state = "bucket"
+	icon = 'icons/map_icons/items/_item.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
+	SETUP_MAP_ICONS("bucket", "/obj/item/reagent_containers/cup/bucket")
+	inhand_icon_state = "bucket"
 	greyscale_config = /datum/greyscale_config/buckets
 	greyscale_config_worn = /datum/greyscale_config/buckets_worn
 	greyscale_config_inhand_left = /datum/greyscale_config/buckets_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/buckets_inhands_right
+	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
+
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
@@ -443,6 +443,8 @@
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
+	icon = 'icons/obj/service/janitor.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
 	greyscale_colors = null

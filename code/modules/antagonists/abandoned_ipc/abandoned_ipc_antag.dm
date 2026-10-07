@@ -108,7 +108,7 @@
 	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy/quiet(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 1 SECOND)
+		QDEL_IN(hosts_mind.current, 1 SECONDS)
 
 	var/turf/spawn_loc = find_safe_turf_in_maintenance()
 	if(isnull(spawn_loc))

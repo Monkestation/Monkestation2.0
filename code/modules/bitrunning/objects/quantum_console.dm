@@ -111,5 +111,8 @@
 /obj/machinery/computer/quantum_console/tutorial_coop
 	bitrunning_id = "tutorial_coop"
 
-/obj/machinery/computer/quantum_console/tutorial_solo
-	bitrunning_id = "tutorial_solo"
+/obj/machinery/computer/quantum_console/tutorial_solo_1
+	bitrunning_id = "tutorial_solo_1"
+
+/obj/machinery/computer/quantum_console/tutorial_solo_2
+	bitrunning_id = "tutorial_solo_2"

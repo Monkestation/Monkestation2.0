@@ -50,18 +50,10 @@
 	var/mob/living/carbon/human/mentor = new /mob/living/carbon/human(get_turf(loc), src)
 	mentor.PossessByPlayer(candidate.key)
 
-	if(isobserver(candidate))
-		var/mob/dead/observer/observer = candidate
-		mentor.real_name = observer.real_name
-		mentor.name = observer.name
-		mentor.hairstyle = observer.hairstyle
-		mentor.facial_hairstyle = observer.facial_hairstyle
-		mentor.hair_color = observer.hair_color
-		mentor.facial_hair_color = observer.facial_hair_color
-		mentor.update_body(is_creating = TRUE)
-
+	if(isobserver(candidate) && mentor?.client?.prefs)
+		mentor.client.prefs.apply_prefs_to(mentor)
+		mentor.dna.species.give_important_for_life(mentor)
+	mentor.equipOutfit(/datum/outfit/allmightyjanitor)
 
 	var/datum/action/cooldown/spell/self_destruct/new_spell = new /datum/action/cooldown/spell/self_destruct(mentor.mind || mentor)
 	new_spell.Grant(mentor)
-
-	mentor.equipOutfit(/datum/outfit/allmightyjanitor)

@@ -14,7 +14,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag
-
 	/// If TRUE, then this GPS needs to be calibrated to point to specific z-levels.
 	var/requires_z_calibration = TRUE
 
@@ -49,6 +48,11 @@
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/gps/medical
+	desc = "A variention on the standard GPS Model, purposed for finding signals of those who have been lost. This one is in blue!"
+	icon_state = "gps-c"
+	gpstag = "PARA0"
 
 /obj/item/gps/cyborg
 	icon_state = "gps-b"
@@ -230,7 +234,7 @@
 		return
 	obj_flags |= EMAGGED
 	do_sparks(3, FALSE, src)
-	sleep(1 SECOND)
+	sleep(1 SECONDS)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	gps_component.jammed = TRUE
 	gps_component.handle_overlay()

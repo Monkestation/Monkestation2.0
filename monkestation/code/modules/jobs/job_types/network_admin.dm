@@ -86,4 +86,4 @@
 
 	uniform = /obj/item/clothing/under/plasmaman/engineering/signal_tech
 	gloves = /obj/item/clothing/gloves/color/plasmaman/engineer
-	head = /obj/item/clothing/head/helmet/space/plasmaman/signal_tech
+	head = /obj/item/clothing/head/helmet/space/plasmaman/engineering/signal_tech

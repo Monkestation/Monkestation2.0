@@ -129,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 
 	for(var/network_name in network)
 		network -= network_name
-		network += lowertext(network_name)
+		network += LOWER_TEXT(network_name)
 
 	camnet = default_camera_net()
 	camnet.cameras += src

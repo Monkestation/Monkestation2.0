@@ -48,6 +48,10 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
+/obj/machinery/computer/security/telescreen/entertainment/Destroy()
+	LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
+	return ..()
+
 /obj/machinery/computer/security/telescreen/entertainment/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -56,6 +60,20 @@
 	. = ..()
 	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
 	speakers.toggle_mute()
+
+/obj/machinery/computer/security/telescreen/entertainment/update_active_camera_screen()
+	. = ..()
+	update_spesstv_watcher_list(REF(src), active_camera)
+
+/obj/machinery/computer/security/telescreen/entertainment/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
+
+/obj/machinery/computer/security/telescreen/entertainment/power_change()
+	. = ..()
+	if(!powered())
+		LAZYREMOVE(GLOB.spesstv_viewers, REF(src))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 

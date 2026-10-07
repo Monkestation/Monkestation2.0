@@ -4,6 +4,7 @@
 #define DAMAGED_SUPERMATTER_COLOR list(1,0.1,0.2,0, 0,0.9,0.1,0, 0.1,-0.05,0.85,0, 0,0,0,0.9, 0,0,0,0)
 #define MISTAKES_WERE_MADE 0
 #define MANUAL_INTERVENTION 0
+#define DIVINE_INTERVENTION 3
 #define AUTOMATIC_SAFETIES 1
 #define BUTTON_PUSHED 0
 #define BUTTON_IDLE 1
@@ -253,8 +254,7 @@
 /obj/machinery/atmospherics/components/unary/delam_scram/New()
 	. = ..()
 	var/datum/gas_mixture/delam_juice = new
-	delam_juice.add_gases(/datum/gas/freon)
-	delam_juice.gases[/datum/gas/freon][MOLES] = SM_COOLING_MIXTURE_MOLES
+	delam_juice.set_gas(/datum/gas/freon, SM_COOLING_MIXTURE_MOLES)
 	delam_juice.temperature = SM_COOLING_MIXTURE_TEMP
 	airs[1] = delam_juice
 

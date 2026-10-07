@@ -13,7 +13,7 @@
 
 /datum/component/basic_inhands/Initialize(display_layer = 1, y_offset = 0, x_offset = 0)
 	. = ..()
-	if (!isliving(parent))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.display_layer = display_layer
 	src.y_offset = y_offset
@@ -24,19 +24,31 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_updated_overlays))
 	RegisterSignal(parent, COMSIG_MOB_UPDATE_HELD_ITEMS, PROC_REF(on_updated_held_items))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/basic_inhands/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOB_UPDATE_HELD_ITEMS))
+	UnregisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOB_UPDATE_HELD_ITEMS, COMSIG_ATOM_EXAMINE))
+
+/datum/component/basic_inhands/proc/on_examine(datum/source, mob/user, list/examine_info)
+	SIGNAL_HANDLER
+
+	var/mob/living/parent = src.parent
+	for(var/obj/item/held_thing in parent.held_items)
+		if((held_thing.item_flags & (ABSTRACT | HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
+			continue
+		examine_info += span_info("[parent.p_They()] [parent.p_are()] holding [held_thing.examine_title(user)] in [parent.p_their()] [parent.get_held_index_name(parent.get_held_index_of_item(held_thing))].")
 
 /// When your overlays update, add your held overlays
 /datum/component/basic_inhands/proc/on_updated_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
+
 	overlays += cached_overlays
 
 /// When your number of held items changes, regenerate held icons
 /datum/component/basic_inhands/proc/on_updated_held_items(mob/living/holding_mob)
 	SIGNAL_HANDLER
+
 	var/list/held_overlays = list()
 	for(var/obj/item/held in holding_mob.held_items)
 		var/is_right = holding_mob.get_held_index_of_item(held) % 2 == 0

@@ -1,7 +1,7 @@
 /datum/ai_project/examine_humans
 	name = "Examination Upgrade"
 	description = "Using experimental image enhancing algorithms will allow you to examine humans."
-	research_cost = 4000
+	research_cost = 2000
 	ram_required = 4
 	research_requirements = list(/datum/ai_project/diag_med_hud)
 	category = AI_PROJECT_SURVEILLANCE

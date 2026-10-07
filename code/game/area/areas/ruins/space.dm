@@ -780,3 +780,35 @@
 // Specifically for the antennas of the shrimp. im not a shrimxpert.
 /area/ruin/space/shrimptennas
 	name = "Shrimp Outside"
+
+/area/ruin/space/has_grav/listeningstation
+	name = "\improper Listening Post"
+
+/area/ruin/space/has_grav/listeningstation/dorms
+	name = "Listening Post Dormitories"
+
+/area/ruin/space/has_grav/listeningstation/lobby
+	name = "Listening Post Lobby"
+
+/area/ruin/space/has_grav/listeningstation/lounge
+	name = "Listening Post Lounge"
+
+/area/ruin/space/has_grav/listeningstation/support
+	name = "Listening Post Support Facilities"
+
+/area/ruin/space/has_grav/listeningstation/asteroid
+	name = "Suspicious Asteroid"
+
+/area/ruin/space/has_grav/listeningstation/comms
+	name = "Listening Post Communications"
+
+/area/ruin/space/has_grav/listeningstation/medical
+	name = "Listening Post Infirmary"
+
+// abandoned infiltrator area
+/area/ruin/space/has_grav/old_infiltrator
+	name = "Abandoned Syndicate Infiltrator"
+	//i dont know where to put a no charge apc so im just gonna do this
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE

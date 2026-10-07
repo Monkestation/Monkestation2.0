@@ -67,7 +67,8 @@
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
 	desc = "A collectable red beret. It smells faintly of garlic."
-	icon_state = "beret"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("beret", "/obj/item/clothing/head/collectable/beret")
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
@@ -94,11 +95,13 @@
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"
 	desc = "A collectible farmer's flat cap!"
-	icon_state = "beret_flat"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("beret_flat", "/obj/item/clothing/head/flatcap")
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"
 	inhand_icon_state = null
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/head/collectable/pirate
 	name = "collectable pirate hat"

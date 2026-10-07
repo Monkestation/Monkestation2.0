@@ -104,14 +104,10 @@
 		/obj/item/clothing/mask/cigarette/pipe,
 	)
 
-/datum/quirk/item_quirk/junkie/smoker/New()
-	drug_container_type = pick(/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/fancy/cigarettes/cigpack_midori,
-		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
-		/obj/item/storage/fancy/cigarettes/cigpack_robust,
-		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-		/obj/item/storage/fancy/cigarettes/cigpack_carp)
-
+/datum/quirk/item_quirk/junkie/smoker/add_unique(client/client_source)
+	var/brand_name = client_source?.prefs?.read_preference(/datum/preference/choiced/smoker_brand) || "Random"
+	brand_name = brand_name == "Random" ? pick(GLOB.smoker_cigarette_brands) : brand_name
+	drug_container_type = GLOB.smoker_cigarette_brands[brand_name] || /obj/item/storage/fancy/cigarettes
 	return ..()
 
 /datum/quirk/item_quirk/junkie/smoker/post_add()
@@ -165,17 +161,10 @@
 	/// Cached typepath of the owner's favorite alcohol reagent
 	var/datum/reagent/consumable/ethanol/favorite_alcohol
 
-/datum/quirk/item_quirk/junkie/alcoholic/New()
-	drug_container_type = pick(
-		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
-		/obj/item/reagent_containers/cup/glass/bottle/vodka,
-		/obj/item/reagent_containers/cup/glass/bottle/ale,
-		/obj/item/reagent_containers/cup/glass/bottle/beer,
-		/obj/item/reagent_containers/cup/glass/bottle/hcider,
-		/obj/item/reagent_containers/cup/glass/bottle/wine,
-		/obj/item/reagent_containers/cup/glass/bottle/sake,
-	)
-
+/datum/quirk/item_quirk/junkie/alcoholic/add_unique(client/client_source)
+	var/drink_name = client_source?.prefs?.read_preference(/datum/preference/choiced/alcoholic_brand) || "Random"
+	drink_name = drink_name == "Random" ? pick(GLOB.alcoholic_drinks) : drink_name
+	drug_container_type = GLOB.alcoholic_drinks[drink_name] || /obj/item/reagent_containers/cup/glass/bottle/whiskey
 	return ..()
 
 /datum/quirk/item_quirk/junkie/alcoholic/post_add()

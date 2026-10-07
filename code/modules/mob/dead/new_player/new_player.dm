@@ -64,20 +64,60 @@
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
 
-/mob/dead/new_player/verb/_join_game()
-	set name = "Join Game"
-	set category = "IC"
+// This gets called both when the client disconnects and when the client is shoved into their spawn mob.
+/mob/dead/new_player/become_uncliented()
+	SSstatpanels.remove_job_estimation(src)
+
+GAME_VERB(/mob/dead/new_player, _join_game, "Join Game", "IC")
 	join_game(FALSE)
 
-/mob/dead/new_player/verb/observe()
-	set category = "IC"
-	set name = "Observe"
+GAME_VERB(/mob/dead/new_player, observe, "Observe", "IC")
 
 	if (!(SSticker.current_state > GAME_STATE_STARTUP) && !check_rights())
 		to_chat(src, span_warning("Please wait for the server to finish initializing!"))
 		return
 
 	make_me_an_observer()
+
+/mob/dead/new_player/proc/enter_tutorial()
+	if(QDELETED(src) || QDELETED(client))
+		ready = PLAYER_NOT_READY
+		return FALSE
+
+	if(interview_safety(src, "attempting to enter tutorial"))
+		qdel(client)
+		return FALSE
+
+	var/this_is_like_playing_right = tgui_alert(src, "Are you sure you wish to enter tutorial? You may return to lobby if you try to leave the tutorial chamber", "Tutorial", list("Yes", "No"))
+	if(QDELETED(src) || QDELETED(client))
+		return FALSE
+
+	if(this_is_like_playing_right != "Yes")
+		ready = PLAYER_NOT_READY
+		return FALSE
+
+	//creates the tutorial body and spawns them in CC
+	var/obj/effect/landmark/tutorial_start/obs_start = locate(/obj/effect/landmark/tutorial_start) in GLOB.landmarks_list
+	to_chat(src, span_notice("Now teleporting."))
+
+	if(!obs_start)
+		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
+		stack_trace("There's no freaking tutorial landmark available on yet! you're accessing the tutorial before the CC is initialised")
+		return
+
+	var/mob/living/carbon/human/tutorial/tutorial_body = new(get_turf(obs_start))
+	spawning = TRUE
+
+	tutorial_body.PossessByPlayer(key)
+	tutorial_body.client = client
+
+	if(tutorial_body?.client?.prefs)
+		tutorial_body.client.prefs.apply_prefs_to(tutorial_body)
+		tutorial_body.dna.species.give_important_for_life(tutorial_body)
+	tutorial_body.equipOutfit(/datum/outfit/ghost_player)
+
+	QDEL_NULL(mind)
+	qdel(src)
 
 /mob/dead/new_player/proc/join_game(from_lobby_menu = FALSE, params = null)
 	if(isnull(client))
@@ -466,7 +506,7 @@
 		I.ui_interact(src)
 
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel. See interface/interface.dm
-	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(src, GLOB.important_interface_verbs)
 
 

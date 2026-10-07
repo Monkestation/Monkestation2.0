@@ -71,6 +71,7 @@
 	name = "Flatulence Simulator"
 	desc = "Designed from the ground up to create advanced humor."
 	icon_state = "roboass"
+	organ_flags = ORGAN_ROBOTIC
 	sound_effect = list('sound/machines/buzz-sigh.ogg', 'sound/machines/buzz-two.ogg', 'sound/machines/terminal_error.ogg', 'sound/weapons/ring.ogg')
 	atmos_gas = "co2=0.25;TEMP=310.15"
 

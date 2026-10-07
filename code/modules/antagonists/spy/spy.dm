@@ -216,12 +216,12 @@
 		stack_trace("[type] created on invalid target [Target || "null"]")
 		qdel(src)
 
-/datum/action/backup_uplink/Trigger(mob/clicker, trigger_flags)
+/datum/action/backup_uplink/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
 
-	var/mob/living/spy = clicker
+	var/mob/living/spy = owner
 	var/obj/item/held_thing = spy.get_active_held_item()
 	if(isnull(held_thing))
 		spy.balloon_alert(spy, "you need to hold something!")

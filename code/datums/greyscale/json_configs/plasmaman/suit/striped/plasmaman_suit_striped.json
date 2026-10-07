@@ -1,0 +1,28 @@
+{
+	"plasmaman_suit": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_suit/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2, 3, 7]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt",
+			"blend_mode": "overlay",
+			"color_ids": [4]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seal",
+			"blend_mode": "overlay",
+			"color_ids": [5]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bands_stripe",
+			"blend_mode": "overlay",
+			"color_ids": [6]
+		}
+	]
+}

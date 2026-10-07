@@ -13,7 +13,9 @@
 
 SUBSYSTEM_DEF(holomaps)
 	name = "Holomaps"
-	init_order = 31
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+	)
 	flags = SS_NO_FIRE
 
 	var/static/list/valid_map_indexes = list()

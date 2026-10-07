@@ -66,6 +66,10 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
+/obj/item/clothing/head/costume/bunnyhead/regular //the real bunny hat
+	slowdown = 0
+	desc = "Considerably more cute than 'Frank'. It looks old."
+
 /obj/item/clothing/suit/costume/bunnysuit
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"

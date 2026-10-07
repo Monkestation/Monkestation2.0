@@ -10,7 +10,7 @@
 	density = TRUE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	can_be_unanchored = FALSE
 	///This variable is used to preserve real_wall if the false wall is deleted via being bolted down instead of actually destroyed.
 	var/bolting_back_down = FALSE
@@ -19,7 +19,8 @@
 	var/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = FALSE
-	var/turf/real_wall
+
+	var/turf/closed/wall/real_wall
 
 /obj/structure/falsewall/Initialize(mapload)
 	. = ..()
@@ -160,7 +161,7 @@
 	base_icon_state = "reinforced_wall"
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
-	smoothing_flags = SMOOTH_BITMASK
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
 	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))

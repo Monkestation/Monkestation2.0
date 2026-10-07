@@ -111,6 +111,9 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
+	/// This is where our overlays reside
+	var/overlays_icon = 'icons/obj/computer.dmi'
+
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20
@@ -264,14 +267,20 @@
 	if(computer_id_slot)
 		return FALSE
 
-	computer_id_slot = inserting_id
-	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
-	else
-		inserting_id.forceMove(src)
+	var/obj/item/card/id/real_id = inserting_id
+	if(!istype(real_id))
+		if(user)
+			balloon_alert(user, "not an ID card")
+		return FALSE
 
+	if(user)
+		if(!user.transferItemToLoc(real_id, src))
+			return FALSE
+		balloon_alert(user, "inserted [real_id]")
+	else
+		real_id.forceMove(src)
+
+	computer_id_slot = real_id
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -421,15 +430,11 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-	if(!init_icon)
-		return
-
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_open_overlay) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += mutable_appearance(overlays_icon, "bsod")
+		. += mutable_appearance(overlays_icon, "broken")
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)

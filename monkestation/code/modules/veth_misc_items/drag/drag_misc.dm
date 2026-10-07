@@ -31,7 +31,6 @@
 
 /datum/sprite_accessory/hair/hornet
 	name = "Hornet"
-	icon ='icons/mob/sprite_accessories/hair.dmi'
 	icon_state = "hair_hornet"
 
 

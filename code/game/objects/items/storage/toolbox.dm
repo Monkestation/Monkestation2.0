@@ -411,7 +411,9 @@
 	new weapon_to_spawn (src)
 	for(var/i in 1 to 2)
 		new extra_to_spawn (src)
-	new ammo_box_to_spawn(src)
+
+	if(ammo_box_to_spawn)
+		new ammo_box_to_spawn(src)
 
 /obj/item/storage/toolbox/guncase/traitor/update_icon_state()
 	. = ..()
@@ -458,6 +460,56 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
 	extra_to_spawn = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
 	ammo_box_to_spawn = /obj/item/ammo_box/c45/caseless
+
+/obj/item/storage/toolbox/guncase/traitor/revolver
+	name = "\improper Syndicate revolver gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate
+	extra_to_spawn = /obj/item/ammo_box/a357
+
+/obj/item/storage/toolbox/guncase/traitor/autoshotgun
+	name = "\improper Syndicate auto shotgun gun case"
+	icon_state = "infiltrator_case"
+	base_icon_state = "infiltrator_case"
+	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/semiauto/syndicate
+	extra_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun
+	name = "\improper Syndicate auto shotgun buckshot magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/slug
+	name = "\improper Syndicate auto shotgun slug magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/slug
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/rubbershot
+	name = "\improper Syndicate auto shotgun rubbershot magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/rubbershot
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/beanbag
+	name = "\improper Syndicate auto shotgun beanbags magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/beanbag
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/uraniumpen
+	name = "\improper Syndicate auto shotgun uranium penetrator magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/uraniumpen
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/trickshot
+	name = "\improper Syndicate auto shotgun trickshot magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/trickshot
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/PopulateContents()
+	for(var/i in 1 to 2)
+		new weapon_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/traitor/autoshotgun/PopulateContents()
+	new weapon_to_spawn(src)
+	for(var/i in 1 to 3)
+		new extra_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/traitor/revolver/PopulateContents()
+	new weapon_to_spawn(src)
+	for(var/i in 1 to 3)
+		new extra_to_spawn(src)
 
 /obj/item/storage/toolbox/guncase/traitor/wespe
 	name = "\improper Wespe pistol gun case"

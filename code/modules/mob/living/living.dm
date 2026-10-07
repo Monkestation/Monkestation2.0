@@ -443,7 +443,7 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
-					C.grippedby(src)
+					INVOKE_ASYNC(C, PROC_REF(grippedby), src)
 
 			update_pull_movespeed()
 
@@ -486,12 +486,10 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-/mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
-	set name = "Pull"
-	set category = "Object"
-
-	if(istype(AM) && Adjacent(AM))
-		start_pulling(AM)
+GAME_VERB_CONTEXT(/mob/living, pulled, "Pull", "", "Object", /atom/movable)
+	VERB_ARG_TYPED(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable)
+	if(istype(thing_pulled) && Adjacent(thing_pulled))
+		start_pulling(thing_pulled)
 	else if(!(istate & ISTATE_HARM)) //Don;'t cancel pulls if misclicking in combat mode.
 		stop_pulling()
 
@@ -503,9 +501,8 @@
 	update_pull_movespeed()
 	update_pull_hud_icon()
 
-/mob/living/verb/stop_pulling1()
-	set name = "Stop Pulling"
-	set category = "IC"
+GAME_VERB(/mob/living, stop_pulling1, "Stop Pulling", "IC")
+
 	stop_pulling()
 
 //same as above
@@ -522,8 +519,9 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as null)
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob/living, succumb, "succumb")
+	VERB_ARG(whispered, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
+
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -596,9 +594,7 @@
 
 // MOB PROCS //END
 
-/mob/living/proc/mob_sleep()
-	set name = "Sleep"
-	set category = "IC"
+GAME_VERB(/mob/living, mob_sleep, "Sleep", "IC")
 
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
@@ -653,9 +649,7 @@
 		account = I.registered_account
 		return account
 
-/mob/living/proc/toggle_resting()
-	set name = "Rest"
-	set category = "IC"
+GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 
 	set_resting(!resting, FALSE)
 
@@ -1095,10 +1089,7 @@
 		return FALSE
 	return TRUE
 
-/mob/living/verb/resist()
-	set name = "Resist"
-	set category = "IC"
-
+/mob/living/proc/resist()
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
 
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
@@ -2628,3 +2619,25 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/check_hit_limb_zone_name(hit_zone)
 	if(has_limbs)
 		return hit_zone
+
+/mob/living/proc/is_cat_enough(include_all_anime = FALSE)
+	if(iscat(src)) // there's nothing more cat than a cat
+		return TRUE
+
+	if(include_all_anime && HAS_TRAIT(src, TRAIT_ANIME))
+		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_CAT))
+		return TRUE
+
+	if(istype(get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/costume/kitty)) // combine with glue for hilarity
+		return TRUE
+
+	var/obj/item/organ/external/anime_head/anime_head = get_organ_slot(ORGAN_SLOT_EXTERNAL_ANIME_HEAD)
+	var/obj/item/organ/external/anime_bottom/anime_bottom = get_organ_slot(ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM)
+
+	var/list/cat_tails = list(/datum/sprite_accessory/anime_bottom/cat, /datum/sprite_accessory/anime_bottom/leopard, /datum/sprite_accessory/anime_bottom/catbig, /datum/sprite_accessory/anime_bottom/twocat) // if adding new cat tails, be sure to include them in this var list
+	if(istype(anime_head?.bodypart_overlay?.sprite_datum, /datum/sprite_accessory/anime_head/cat) && (anime_bottom?.bodypart_overlay?.sprite_datum?.type in cat_tails)) // cat ears AND tail? aight then, you're very much cat
+		return TRUE
+
+	return FALSE

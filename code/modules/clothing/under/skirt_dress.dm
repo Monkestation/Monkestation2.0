@@ -45,45 +45,49 @@
 /obj/item/clothing/under/dress/skirt/plaid
 	name = "plaid skirt"
 	desc = "A preppy plaid skirt with a white blouse."
-	icon_state = "plaidskirt"
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
+	SETUP_MAP_ICONS("plaidskirt", "/obj/item/clothing/under/dress/skirt/plaid")
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#CC2102"
 	greyscale_config = /datum/greyscale_config/plaidskirt
 	greyscale_config_worn = /datum/greyscale_config/plaidskirt_worn
+	greyscale_colors = "#CC2102"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/dress/skirt/turtleskirt
 	name = "turtleneck skirt"
 	desc = "A casual turtleneck skirt."
-	icon_state = "turtleskirt"
-	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#cc0000#5f5f5f"
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
+	SETUP_MAP_ICONS("turtleskirt", "/obj/item/clothing/under/dress/skirt/turtleskirt")
 	greyscale_config = /datum/greyscale_config/turtleskirt
 	greyscale_config_worn = /datum/greyscale_config/turtleskirt_worn
+	greyscale_colors = "#cc0000#5f5f5f"
+	custom_price = PAYCHECK_CREW
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/dress/tango
 	name = "tango dress"
 	desc = "Filled with Latin fire."
-	icon_state = "tango"
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
+	SETUP_MAP_ICONS("tango", "/obj/item/clothing/under/dress/tango")
 	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#ff0000#1c1c1c"
 	greyscale_config = /datum/greyscale_config/tango
 	greyscale_config_worn = /datum/greyscale_config/tango_worn
+	greyscale_colors = "#ff0000#1c1c1c"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/sundress
 	name = "sundress"
 	desc = "Makes you want to frolic in a field of daisies."
-	icon_state = "sundress"
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
+	SETUP_MAP_ICONS("sundress", "/obj/item/clothing/under/dress/sundress")
 	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#FFE60F#9194A5#1F243C"
 	greyscale_config = /datum/greyscale_config/sundress
 	greyscale_config_worn = /datum/greyscale_config/sundress_worn
+	greyscale_colors = "#FFE60F#9194A5#1F243C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN
 
@@ -91,34 +95,39 @@
 /obj/item/clothing/under/dress/ballgown
 	name = "ballgown"
 	desc = "A luxurious ballgown best worn before midnight. A signature of the letters 'VA` is stitched on the hem."
-	icon_state = "ballgown"
-	custom_price = PAYCHECK_COMMAND
-	body_parts_covered = CHEST|GROIN|LEGS
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
+	SETUP_MAP_ICONS("ballgown", "/obj/item/clothing/under/dress/ballgown")
 	greyscale_config = /datum/greyscale_config/ballgown
 	greyscale_config_worn = /datum/greyscale_config/ballgown_worn
 	greyscale_colors = "#FFFFFF#CCECFF#FFFFFF"
+	custom_price = PAYCHECK_COMMAND
+	body_parts_covered = CHEST|GROIN|LEGS
 	flags_1 = IS_PLAYER_COLORABLE_1
 	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/dress/wlpinafore
 	name = "wonderland pinafore"
 	desc = "An adorable pinafore, just don't chase any white rabbits down any holes this time. It has the initials 'VA' embroidered on the skirt hem."
-	icon_state = "wlpinafore"
-	custom_price = PAYCHECK_COMMAND
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
+	SETUP_MAP_ICONS("wlpinafore", "/obj/item/clothing/under/dress/wlpinafore")
 	greyscale_config = /datum/greyscale_config/wlpinafore
 	greyscale_config_worn = /datum/greyscale_config/wlpinafore_worn
 	greyscale_colors = "#5190c8#FFFFFF"
+
+	custom_price = PAYCHECK_COMMAND
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/ribbondress
 	name = "ribboned gown"
 	desc = "A classy and elegant gown with ribbon sleeves. It has the initials 'VA' stitched on the back hem."
-	icon_state = "ribbondress"
-	custom_price = PAYCHECK_COMMAND
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
+	SETUP_MAP_ICONS("ribbondress", "/obj/item/clothing/under/dress/ribbondress")
 	greyscale_config = /datum/greyscale_config/ribbondress
 	greyscale_config_worn = /datum/greyscale_config/ribbondress_worn
 	greyscale_colors = "#845FAA#D5A6F4"
+
+	custom_price = PAYCHECK_COMMAND
 	flags_1 = IS_PLAYER_COLORABLE_1
 	flags_inv = HIDESHOES
 	body_parts_covered = CHEST|GROIN|LEGS

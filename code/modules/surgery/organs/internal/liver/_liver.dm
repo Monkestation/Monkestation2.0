@@ -86,6 +86,8 @@
 			. += "Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>."
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
 			. += "The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>."
+		if(HAS_TRAIT(src, TRAIT_BARTENDER_METABOLISM))
+			. += span_info("The decidedly well-used look from periods of prolonged exposure to a wide variety of alcohols, implies that this is the liver of a <em>bartender</em>.")
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
 			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>."
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
@@ -292,6 +294,13 @@
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+
+/obj/item/organ/internal/liver/drunkards
+	name = "drunkard's liver"
+
+/obj/item/organ/internal/liver/drunkards/Initialize(mapload, mob_sprite)
+	. = ..()
+	AddComponent(/datum/component/abberant_organ, 200, ORGAN_LIVER, list(/datum/organ_process/reagent_conversion), /datum/organ_trigger/chemical_consume)
 
 /obj/item/organ/internal/liver/pod
 	name = "pod peroxisome"

@@ -134,6 +134,22 @@
 
 // Electric welder but not quite as strong
 
+/obj/item/weldingtool/electric
+	name = "electrical welding tool"
+	desc = "An experimental welding tool capable of welding functionality through the use of electricity. The flame seems almost cold."
+	icon = 'monkestation/code/modules/blueshift/icons/tools.dmi'
+	icon_state = "arc_welder"
+	light_power = 1
+	light_color = LIGHT_COLOR_HALOGEN
+	tool_behaviour = NONE
+	toolspeed = 0.2
+	power_use_amount = 25
+	// We don't use fuel
+	change_icons = FALSE
+	max_fuel = 20
+	var/cell_override = /obj/item/stock_parts/power_store/cell/high
+	var/powered = FALSE
+
 /obj/item/weldingtool/electric/arc_welder
 	name = "arc welding tool"
 	desc = "A specialized welding tool utilizing high powered arcs of electricity to weld things together. \
@@ -151,21 +167,22 @@
 	. = ..()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 
-/obj/item/weldingtool/electric
-	name = "electrical welding tool"
-	desc = "An experimental welding tool capable of welding functionality through the use of electricity. The flame seems almost cold."
-	icon = 'monkestation/code/modules/blueshift/icons/tools.dmi'
-	icon_state = "arc_welder"
+/obj/item/weldingtool/electric/raynewelder
+	name = "laser welding tool"
+	desc = "A Rayne corp laser cutter and welder. This Laser welder has a built in safety to turn off outside Nanotrasens designated shipbreaking area."
+	icon = 'icons/obj/rayne_corp/rayne.dmi'
+	icon_state = "raynewelder"
+	inhand_icon_state = "raynewelder"
+	lefthand_file = 'icons/mob/inhands/equipment/engineering_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/engineering_righthand.dmi'
 	light_power = 1
-	light_color = LIGHT_COLOR_HALOGEN
+	light_color = LIGHT_COLOR_FLARE
 	tool_behaviour = NONE
 	toolspeed = 0.2
-	power_use_amount = 25
+	power_use_amount = 20
 	// We don't use fuel
 	change_icons = FALSE
-	var/cell_override = /obj/item/stock_parts/power_store/cell/high
-	var/powered = FALSE
-	max_fuel = 20
+	max_fuel = 80
 
 /obj/item/weldingtool/electric/Initialize(mapload)
 	. = ..()

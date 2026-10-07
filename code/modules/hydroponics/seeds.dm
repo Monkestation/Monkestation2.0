@@ -580,7 +580,7 @@
 					return
 				if(!user.can_perform_action(src))
 					return
-				name = "[lowertext(newplantname)]"
+				name = "[LOWER_TEXT(newplantname)]"
 				plantname = newplantname
 			if("Seed Description")
 				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)

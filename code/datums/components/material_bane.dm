@@ -89,7 +89,7 @@
 		if(301 to INFINITY)
 			if(SPT_PROB(10, seconds_per_tick))
 				humholder.emote("scream")
-				humholder.Paralyze(1 SECOND)
+				humholder.Paralyze(1 SECONDS)
 				humholder.set_jitter_if_lower(3 MINUTES)
 				humholder.adjust_confusion(5 SECONDS)
 	if(bane_power > 250 && damaging)
@@ -108,7 +108,7 @@
 				var/ouchy_arm = (humholder.get_held_index_of_item(held) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 				humholder.apply_damage((((bane_power / 50) * effect_power) * seconds_per_tick), BURN, ouchy_arm)
 			if(COOLDOWN_FINISHED(src, active_message_cooldown))
-				COOLDOWN_START(src, active_message_cooldown, 1 SECOND)
+				COOLDOWN_START(src, active_message_cooldown, 1 SECONDS)
 				switch(bane_power)
 					if(0 to 100)
 						humholder.visible_message(span_warning("[held] sizzles in [humholder]'s hand."), span_warning("[held] stings as you hold it, slowly burning an imprint into your hand!"))
@@ -145,9 +145,9 @@
 	if(damaging)
 		humholder.adjustFireLoss(10)
 	if(prob(25))
-		humholder.Paralyze(0.5 SECOND)
+		humholder.Paralyze(0.5 SECONDS)
 	else
-		humholder.Stun(0.25 SECOND)
+		humholder.Stun(0.25 SECONDS)
 
 /datum/component/material_bane/proc/is_this_bane(atom/thing)
 	for(var/material in thing?.custom_materials)

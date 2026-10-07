@@ -28,7 +28,7 @@
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
-		network += lowertext(i)
+		network += LOWER_TEXT(i)
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
@@ -163,6 +163,13 @@
 
 	cam_screen.show_camera(visible_turfs, size_x, size_y)
 
+/obj/machinery/camera/proc/count_spesstv_viewers()
+	. = 0
+	var/list/spesstv_viewers = GLOB.spesstv_viewers // just in case this ends up being a hot proc
+	for(var/key in spesstv_viewers)
+		if(spesstv_viewers[key] == c_tag)
+			.++
+
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()
 	var/user_ref = REF(user)
@@ -213,6 +220,12 @@
 	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
+
+/obj/machinery/computer/security/wooden_tv/wall_mounted
+	name = "wall mounted security camera monitor"
+	desc = "An old, wall mounted, TV hooked into the station's camera network."
+	icon_state = "wall_television"
+	icon_screen = "detective_tv_wall"
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera console"

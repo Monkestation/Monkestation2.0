@@ -204,7 +204,7 @@
 
 	return data
 
-/obj/machinery/netpod/ui_act(action, params)
+/obj/machinery/netpod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -488,5 +488,8 @@
 /obj/machinery/netpod/tutorial_coop
 	bitrunning_id = "tutorial_coop"
 
-/obj/machinery/netpod/tutorial_solo
-	bitrunning_id = "tutorial_solo"
+/obj/machinery/netpod/tutorial_solo_1
+	bitrunning_id = "tutorial_solo_1"
+
+/obj/machinery/netpod/tutorial_solo_2
+	bitrunning_id = "tutorial_solo_2"

@@ -286,9 +286,8 @@
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
-	icon_state = "jumpsuit"
-	icon_preview = 'icons/obj/previews.dmi'
-	icon_state_preview = "prisonsuit"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/rank/prisoner")
 	inhand_icon_state = "jumpsuit"
 	greyscale_colors = "#ff8300"
 	greyscale_config = /datum/greyscale_config/jumpsuit_prison
@@ -302,29 +301,24 @@
 /obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
-	icon_state = "jumpskirt"
-	icon_preview = 'icons/obj/previews.dmi'
-	icon_state_preview = "prisonskirt"
-	greyscale_colors = "#ff8300"
-	greyscale_config = /datum/greyscale_config/jumpsuit_prison
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_prison_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_prison_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_prison_worn
+	SETUP_MAP_ICONS("jumpskirt", "/obj/item/clothing/under/rank/prisoner/skirt")
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-
 /obj/item/clothing/under/rank/prisoner/syndicate
 	name = "syndicate prisoner jumpsuit"
 	desc = "A crimson red jumpsuit worn by syndicate captives. Its sensors have been shorted out."
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("jumpsuit", "/obj/item/clothing/under/rank/prisoner/syndicate")
 	greyscale_colors = "#992300"
 	has_sensor = FALSE
 
 /obj/item/clothing/under/rank/prisoner/skirt/syndicate
 	name = "syndicate prisoner jumpskirt"
 	desc = "A crimson red jumpskirt worn by syndicate captives. Its sensors have been shorted out."
+	SETUP_MAP_ICONS("jumpskirt", "/obj/item/clothing/under/rank/prisoner/skirt/syndicate")
 	greyscale_colors = "#992300"
 	has_sensor = FALSE
 	supports_variations_flags = NONE
@@ -376,3 +370,12 @@
 	desc = "A tactical security jumpsuit for the lieutenants of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
 	icon_state = "lieutenant"
 
+/obj/item/clothing/under/rank/security/officer/tactical
+	name = "security officer's tactical uniform"
+	desc = "A security uniform that has tactical pants and a formal shirt. It comes with a with Nanotrasen belt buckle"
+	icon_state = "security_tactical"
+	inhand_icon_state = null
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/security/officer/tactical/blue
+	icon_state = "security_tactical_blue"

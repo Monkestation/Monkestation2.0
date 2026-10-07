@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	embed_type = /datum/embedding/rods
 	novariants = TRUE
 	matter_amount = 2
-	cost = 250
+	cost = HALF_SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/iron
 	merge_type = /obj/item/stack/rods
 

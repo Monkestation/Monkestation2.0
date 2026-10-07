@@ -75,3 +75,19 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	var/datum/action/AC = new ability()
 	AC.Grant(ai)
 	return AC
+
+/**
+*	Finds the actual action button in the AI's actions list and removes it.
+*/
+/datum/ai_project/proc/remove_ability(datum/action/innate/ai/ability)
+	var/datum/action/innate/has_ability = locate(ability) in ai.actions
+	if(has_ability)
+		has_ability.Remove()
+
+/datum/ai_project/proc/invest_ability(used_cpu)
+	var/datum/action/innate/ai/ability = locate(ability_path) in ai.actions
+	if(isnull(ability))
+		return FALSE
+	if(ability.uses >= ability.max_uses) //we're already full
+		return
+	ability_recharge_invested += used_cpu

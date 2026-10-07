@@ -37,7 +37,7 @@
 		mat_capacity += new_matter_bin.tier * 40 * SHEET_MATERIAL_AMOUNT
 	materials.max_amount = mat_capacity
 
-	var/total_rating = 1.2
+	var/total_rating = 1.1
 	for(var/datum/stock_part/manipulator/M in component_parts)
 		total_rating = clamp(total_rating - (M.tier * 0.1), 0, 1)
 	efficiency_coeff = round(total_rating, 0.1)

@@ -17,6 +17,9 @@
 	var/obj/machinery/rnd/server/selected_server = pick(SSresearch.get_available_servers(ai_turf))
 	if(isnull(selected_server))
 		return FALSE
+	if(selected_server.stored_research.ai_boosted)
+		to_chat(ai, span_warning("Found research network is already being boosted by another artifical intelligence; preventing redundant processing."))
+		return FALSE
 	techweb_boosting = selected_server.stored_research
 	return ..()
 

@@ -13,15 +13,17 @@
 /obj/item/toy/plush/beeplushie,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
-"m" = (
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/grass,
-/area/centcom/tdome/arena/actual)
 "o" = (
 /obj/item/food/peanuts/honey_roasted,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"p" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 "r" = (
@@ -195,8 +197,8 @@ C
 V
 V
 X
-m
-V
+X
+p
 V
 A
 P

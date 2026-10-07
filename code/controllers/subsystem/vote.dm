@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING
-	init_order = INIT_ORDER_VOTE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of all generated action buttons
@@ -466,9 +465,7 @@ SUBSYSTEM_DEF(vote)
 	voting -= user.client?.ckey
 
 /// Mob level verb that allows players to vote on the current vote.
-/mob/verb/vote()
-	set category = "OOC"
-	set name = "Vote"
+GAME_VERB(/mob, vote, "Vote", "OOC")
 
 	if(!SSvote.initialized)
 		to_chat(usr, span_notice("<i>Voting is not set up yet!</i>"))

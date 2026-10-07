@@ -22,20 +22,16 @@
 /// Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
-/proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block, state_color = null) // Monkestation Edit - Airlock accent greyscale color support - Added `state_color = null`
+/proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block, state_color = null)
 	var/static/list/airlock_overlays = list()
 
-	var/base_icon_key = "[icon_state][REF(icon_file)][state_color]" // Monkestation Edit- Airlock accent greyscale color support - ORIGINAL: var/base_icon_key = "[icon_state][REF(icon_file)]"
+	var/base_icon_key = "[icon_state][REF(icon_file)][state_color]"
 	if(!(. = airlock_overlays[base_icon_key]))
-		/* Monkestation Edit - Airlock accent greyscale color support - ORIGINAL:
-		. = airlock_overlays[base_icon_key] = mutable_appearance(icon_file, icon_state)
-		*/ // Monkestation Edit START
 		var/mutable_appearance/airlock_overlay = mutable_appearance(icon_file, icon_state)
 		if(state_color)
 			airlock_overlay.color = state_color
 
 		. = airlock_overlays[base_icon_key] = airlock_overlay
-		// Monkestation Edit END
 
 	if(isnull(em_block))
 		return
@@ -60,26 +56,46 @@
 #define AIRLOCK_FRAME_OPEN "open"
 #define AIRLOCK_FRAME_OPENING "opening"
 
-#define AIRLOCK_SECURITY_NONE 0 //Normal airlock //Wires are not secured
-#define AIRLOCK_SECURITY_IRON 1 //Medium security airlock //There is a simple iron plate over wires (use welder)
-#define AIRLOCK_SECURITY_PLASTEEL_I_S 2 //Sliced inner plating (use crowbar), jumps to 0
-#define AIRLOCK_SECURITY_PLASTEEL_I 3 //Removed outer plating, second layer here (use welder)
-#define AIRLOCK_SECURITY_PLASTEEL_O_S 4 //Sliced outer plating (use crowbar)
-#define AIRLOCK_SECURITY_PLASTEEL_O 5 //There is first layer of plasteel (use welder)
-#define AIRLOCK_SECURITY_PLASTEEL 6 //Max security airlock //Fully secured wires (use wirecutters to remove grille, that is electrified)
-
-#define AIRLOCK_INTEGRITY_N  300 // Normal airlock integrity
-#define AIRLOCK_INTEGRITY_MULTIPLIER 1.5 // How much reinforced doors health increases
+/// Normal airlock //Wires are not secured
+#define AIRLOCK_SECURITY_NONE 0
+/// Medium security airlock //There is a simple iron plate over wires (use welder)
+#define AIRLOCK_SECURITY_IRON 1
+/// Sliced inner plating (use crowbar), jumps to 0
+#define AIRLOCK_SECURITY_PLASTEEL_I_S 2
+/// Removed outer plating, second layer here (use welder)
+#define AIRLOCK_SECURITY_PLASTEEL_I 3
+/// Sliced outer plating (use crowbar)
+#define AIRLOCK_SECURITY_PLASTEEL_O_S 4
+/// There is first layer of plasteel (use welder)
+#define AIRLOCK_SECURITY_PLASTEEL_O 5
+/// Max security airlock //Fully secured wires (use wirecutters to remove grille, that is electrified)
+#define AIRLOCK_SECURITY_PLASTEEL 6
+/// Normal airlock integrity
+#define AIRLOCK_INTEGRITY_N 300
+/// How much reinforced doors health increases
+#define AIRLOCK_INTEGRITY_MULTIPLIER 1.5
 /// How much extra health airlocks get when braced with a seal
 #define AIRLOCK_SEAL_MULTIPLIER  2
-#define AIRLOCK_DAMAGE_DEFLECTION_N  21  // Normal airlock damage deflection
-#define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
+/// Normal airlock damage deflection
+#define AIRLOCK_DAMAGE_DEFLECTION_N 21
+/// Reinforced airlock damage deflection
+#define AIRLOCK_DAMAGE_DEFLECTION_R 30
+/// The amount of time for the airlock deny animation to show
+#define AIRLOCK_DENY_ANIMATION_TIME (0.6 SECONDS)
+/// Time before a door closes, if not overridden
+#define DOOR_CLOSE_WAIT 60
+///The maximum distance a door will see out to
+#define DOOR_VISION_DISTANCE 11
 
-#define AIRLOCK_DENY_ANIMATION_TIME (0.6 SECONDS) /// The amount of time for the airlock deny animation to show
-
-#define DOOR_CLOSE_WAIT 60 /// Time before a door closes, if not overridden
-
-#define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
+#define AIRLOCK_LIGHT_POWER 0.5
+#define AIRLOCK_LIGHT_RANGE 2
+#define AIRLOCK_LIGHT_ENGINEERING "engineering"
+#define AIRLOCK_POWERON_LIGHT_COLOR "#3aa7c2"
+#define AIRLOCK_BOLTS_LIGHT_COLOR "#c22323"
+#define AIRLOCK_ACCESS_LIGHT_COLOR "#57e69c"
+#define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
+#define AIRLOCK_ENGINEERING_LIGHT_COLOR "#fd8719"
+#define AIRLOCK_DENY_LIGHT_COLOR "#c22323"
 
 /obj/machinery/door/airlock
 	name = "Airlock"
@@ -97,6 +113,12 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OPEN
 	interaction_flags_click = ALLOW_SILICON_REACH
 	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker. We don't want the normal behavior.
+
+	flags_1 = HTML_USE_INITAL_ICON_1
+	rad_insulation = RAD_MEDIUM_INSULATION
+
+	align_to_windows = TRUE
+	door_align_type = /obj/machinery/door/airlock
 
 	///The type of door frame to drop during deconstruction
 	var/assemblytype = /obj/structure/door_assembly
@@ -134,16 +156,19 @@
 	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
-	var/doorOpen = 'sound/machines/airlock.ogg'
-	var/doorClose = 'sound/machines/airlockclose.ogg'
+
+	var/doorOpen = 'sound/machines/airlock/open.ogg'
+	var/doorClose = 'sound/machines/airlock/close.ogg'
 	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/boltsup.ogg'
-	var/boltDown = 'sound/machines/boltsdown.ogg'
+	var/boltUp = 'sound/machines/airlock/bolts_up.ogg'
+	var/boltDown = 'sound/machines/airlock/bolts_down.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
+
 	/// What airlock assembly mineral plating was applied to
 	var/previous_airlock = /obj/structure/door_assembly
 	/// Material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/airlock_material
+
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	/// Used for papers and photos pinned to the airlock
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -163,22 +188,44 @@
 	var/shockedby
 	/// How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
+	///Is this door external? E.g. does it lead to space? Shuttle docking systems bolt doors with this flag.
+	var/external = FALSE
 
-	flags_1 = HTML_USE_INITAL_ICON_1
-	rad_insulation = RAD_MEDIUM_INSULATION
+	/// For those airlocks you might want to have varying "fillings" for, without having to
+	/// have an icon file per door with a different filling.
+	var/fill_state_suffix = null
+	/// For the airlocks that use greyscale lights, set this to the color you want your lights to be.
+	var/greyscale_lights_color = null
+	/// For the airlocks that use a greyscale accent door color, set this color to the accent color you want it to be.
+	var/greyscale_accent_color = null
+
+	/// Does this airlock emit a light?
+	var/has_environment_lights = TRUE
+	var/light_color_poweron = AIRLOCK_POWERON_LIGHT_COLOR
+	var/light_color_bolts = AIRLOCK_BOLTS_LIGHT_COLOR
+	var/light_color_access = AIRLOCK_ACCESS_LIGHT_COLOR
+	var/light_color_emergency = AIRLOCK_EMERGENCY_LIGHT_COLOR
+	var/light_color_engineering = AIRLOCK_ENGINEERING_LIGHT_COLOR
+	var/light_color_deny = AIRLOCK_DENY_LIGHT_COLOR
+
+	var/door_light_range = AIRLOCK_LIGHT_RANGE
+	var/door_light_power = AIRLOCK_LIGHT_POWER
 
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 
 	set_wires(get_wires())
+
 	if(glass)
 		airlock_material = "glass"
+
 	if(security_level > AIRLOCK_SECURITY_IRON)
 		atom_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 	else
 		atom_integrity = normal_integrity
 		max_integrity = normal_integrity
+
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_IRON)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 
@@ -195,7 +242,37 @@
 
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_GREY_TIDE, COMSIG_GLOBAL_GREY_TIDE_TRAITOR), PROC_REF(grey_tide))
 
-/obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas, traitor_bug = FALSE) //monkestation edit: adds traitor_bug
+/obj/machinery/door/LateInitialize(mapload_arg)
+	. = ..()
+	// Automatically align the direction of the airlock
+	auto_dir_align()
+
+/obj/machinery/door/airlock/Destroy()
+	QDEL_NULL(wires)
+	QDEL_NULL(electronics)
+	if (cyclelinkedairlock)
+		if (cyclelinkedairlock.cyclelinkedairlock == src)
+			cyclelinkedairlock.cyclelinkedairlock = null
+		cyclelinkedairlock = null
+	if(close_others) //remove this airlock from the list of every linked airlock
+		closeOtherId = null
+		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
+			otherlock.close_others -= src
+		close_others.Cut()
+	if(id_tag)
+		for(var/obj/machinery/door_buttons/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons))
+			D.removeMe(src)
+	QDEL_NULL(note)
+	QDEL_NULL(seal)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.remove_atom_from_hud(src)
+	return ..()
+
+/obj/machinery/door/airlock/power_change()
+	. = ..()
+	update_appearance()
+
+/obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas, traitor_bug = FALSE)
 	SIGNAL_HANDLER
 
 	if(!is_station_level(z) || critical_machine)
@@ -204,11 +281,9 @@
 	for(var/area_type in grey_tide_areas)
 		if(!istype(get_area(src), area_type))
 			continue
-//monkestation edit start
 		if(traitor_bug)
 			INVOKE_ASYNC(src, PROC_REF(traitor_bug_tide))
 		else
-//monkestation edit end
 			INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
 
 /obj/machinery/door/airlock/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -302,27 +377,6 @@
 		A = new /obj/machinery/door/airlock/cult/weak(T)
 	qdel(src)
 
-/obj/machinery/door/airlock/Destroy()
-	QDEL_NULL(wires)
-	QDEL_NULL(electronics)
-	if (cyclelinkedairlock)
-		if (cyclelinkedairlock.cyclelinkedairlock == src)
-			cyclelinkedairlock.cyclelinkedairlock = null
-		cyclelinkedairlock = null
-	if(close_others) //remove this airlock from the list of every linked airlock
-		closeOtherId = null
-		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
-			otherlock.close_others -= src
-		close_others.Cut()
-	if(id_tag)
-		for(var/obj/machinery/door_buttons/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons))
-			D.removeMe(src)
-	QDEL_NULL(note)
-	QDEL_NULL(seal)
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-	diag_hud.remove_atom_from_hud(src)
-	return ..()
-
 /obj/machinery/door/airlock/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == note)
@@ -352,10 +406,7 @@
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
 	return ((aiControlDisabled != AI_WIRE_DISABLED) && !isAllPowerCut())
-/* MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
-/obj/machinery/door/airlock/proc/canAIHack()
-	return ((aiControlDisabled == AI_WIRE_DISABLED) && (!hackProof) && (!isAllPowerCut()));
-*/
+
 /obj/machinery/door/airlock/hasPower()
 	return ((!remaining_main_outage() || !remaining_backup_outage()) && !(machine_stat & NOPOWER))
 
@@ -532,9 +583,12 @@
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
 
-/* monkestation edit
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
+	var/pre_light_range = 0
+	var/pre_light_power = 0
+	var/pre_light_color = NONSENSICAL_VALUE // avoid issues if we somehow don't set a pre_light_color
+	var/lights_overlay = ""
 
 	var/frame_state
 	var/light_state
@@ -543,30 +597,72 @@
 			frame_state = AIRLOCK_FRAME_CLOSED
 			if(locked)
 				light_state = AIRLOCK_LIGHT_BOLTS
+				lights_overlay = "lights_bolts"
+				pre_light_color = light_color_bolts
 			else if(emergency)
 				light_state = AIRLOCK_LIGHT_EMERGENCY
+				lights_overlay = "lights_emergency"
+				pre_light_color = light_color_emergency
+			else
+				lights_overlay = "lights_poweron"
+				pre_light_color = light_color_poweron
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED
+			lights_overlay = "lights_denied"
+			pre_light_color = light_color_deny
 		if(AIRLOCK_EMAG)
 			frame_state = AIRLOCK_FRAME_CLOSED
 		if(AIRLOCK_CLOSING)
 			frame_state = AIRLOCK_FRAME_CLOSING
 			light_state = AIRLOCK_LIGHT_CLOSING
+			lights_overlay = "lights_closing"
+			pre_light_color = light_color_access
 		if(AIRLOCK_OPEN)
 			frame_state = AIRLOCK_FRAME_OPEN
+			if(locked)
+				lights_overlay = "lights_bolts_open"
+				pre_light_color = light_color_bolts
+			else if(emergency)
+				lights_overlay = "lights_emergency_open"
+				pre_light_color = light_color_emergency
+			else
+				lights_overlay = "lights_poweron_open"
+				pre_light_color = light_color_poweron
 		if(AIRLOCK_OPENING)
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
+			lights_overlay = "lights_opening"
+			pre_light_color = light_color_access
 
 	. += get_airlock_overlay(frame_state, icon, src, em_block = TRUE)
 	if(airlock_material)
 		. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, src, em_block = TRUE)
 	else
-		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
+		. += get_airlock_overlay("fill_[frame_state + fill_state_suffix]", icon, src, em_block = TRUE)
+
+	if(greyscale_lights_color && !light_state)
+		lights_overlay += "_greyscale"
 
 	if(lights && hasPower())
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
+		pre_light_range = door_light_range
+		pre_light_power = door_light_power
+		if(has_environment_lights)
+			set_light(l_outer_range = pre_light_range, l_power = pre_light_power, l_color = pre_light_color, l_on = TRUE)
+	else
+		lights_overlay = ""
+		set_light(l_on = FALSE)
+
+	var/mutable_appearance/lights_appearance = mutable_appearance(overlays_file, lights_overlay, FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+
+	if(greyscale_lights_color && !light_state)
+		lights_appearance.color = greyscale_lights_color
+
+	. += lights_appearance
+
+	if(greyscale_accent_color)
+		. += get_airlock_overlay("[frame_state]_accent", overlays_file, src, em_block = TRUE, state_color = greyscale_accent_color)
 
 	if(panel_open)
 		. += get_airlock_overlay("panel_[frame_state][security_level ? "_protected" : null]", overlays_file, src, em_block = TRUE)
@@ -611,7 +707,63 @@
 					floorlight.pixel_x = -32
 					floorlight.pixel_y = 0
 			. += floorlight
-*/ //monkestation end
+
+/obj/machinery/door/proc/auto_dir_align()
+	if(!auto_dir_align)
+		return
+	// Set directional facing
+	var/turf/my_turf = get_turf(src)
+	var/turf/north_turf = get_step(my_turf, NORTH)
+	var/turf/south_turf = get_step(my_turf, SOUTH)
+	//If south or north is blocked, face towards west
+	var/block_dir = SOUTH
+	var/align_dir
+	for(var/i in 1 to 2)
+		var/turf/check_turf = i == 1 ? north_turf : south_turf
+		if(!check_turf)
+			continue
+		if(!check_turf.density)
+			//Adjacent turf is not dense, check if we can maybe align with a window or a low wall
+			if(align_to_windows)
+				var/obj/structure/window/window = locate() in check_turf
+				var/obj/structure/window_sill/low_wall = locate() in check_turf
+				if(!low_wall && (!window || !window.fulltile))
+					continue
+			else
+				continue
+		block_dir = WEST
+		break
+
+	if(door_align_type)
+		var/turf/west_turf = get_step(my_turf, WEST)
+		var/turf/east_turf = get_step(my_turf, EAST)
+		for(var/i in 1 to 4)
+			var/dir_to_align
+			var/turf/check_turf
+			switch(i)
+				if(1)
+					check_turf = north_turf
+					dir_to_align = WEST
+				if(2)
+					check_turf = south_turf
+					dir_to_align = WEST
+				if(3)
+					check_turf = east_turf
+					dir_to_align = SOUTH
+				if(4)
+					check_turf = west_turf
+					dir_to_align = SOUTH
+			if(!check_turf)
+				continue
+			var/obj/machinery/door/found_door = locate(door_align_type) in check_turf
+			if(found_door)
+				align_dir = dir_to_align
+				break
+
+	if(align_dir)
+		setDir(align_dir)
+	else
+		setDir(block_dir)
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
@@ -729,12 +881,6 @@
 	return .
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
-//	if(!canAIControl(user)) MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
-//		if(canAIHack())
-//			hack(user)
-//			return
-//		else
-//			to_chat(user, span_warning("Airlock AI control has been blocked with a firewall. Unable to hack."))
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("Unable to interface: Airlock is unresponsive."))
 		return
@@ -743,63 +889,7 @@
 		return
 
 	ui_interact(user)
-/* MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
-///Performs basic checks to make sure we are still able to hack an airlock. If control is restored early through outside means, opens the airlock's control interface.
-/obj/machinery/door/airlock/proc/check_hacking(mob/user, success_message)
-	if(QDELETED(src))
-		to_chat(user, span_warning("Connection lost! Unable to locate airlock on network."))
-		aiHacking = FALSE
-		return FALSE
-	if(canAIControl(user))
-		to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
-		aiHacking = FALSE
-		if(user)
-			attack_ai(user) //bring up airlock dialog
-		return
-	else if(!canAIHack())
-		to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
-		aiHacking = FALSE
-		return
-	if(success_message)
-		to_chat(user, span_notice(success_message))
-	return TRUE
 
-///Attemps to override airlocks that have the AI control wire disabled.
-/obj/machinery/door/airlock/proc/hack(mob/user)
-	set waitfor = 0
-	if(!aiHacking)
-		aiHacking = TRUE
-		to_chat(user, span_warning("Airlock AI control has been blocked. Beginning fault-detection."))
-		sleep(5 SECONDS)
-
-		if(!check_hacking(user, "Fault confirmed: airlock control wire disabled or cut."))
-			return
-		sleep(2 SECONDS)
-
-		if(!check_hacking(user, "Attempting to hack into airlock. This may take some time."))
-			return
-		sleep(20 SECONDS)
-
-		if(!check_hacking(user, "Upload access confirmed. Loading control program into airlock software."))
-			return
-		sleep(17 SECONDS)
-
-		if(!check_hacking(user,"Transfer complete. Forcing airlock to execute program."))
-			return
-		sleep(5 SECONDS)
-
-		if(!check_hacking(user, "Receiving control information from airlock."))
-			return
-		aiControlDisabled = AI_WIRE_HACKED //disable blocked control
-		sleep(1 SECONDS)
-
-		aiHacking = FALSE
-		if(QDELETED(src))
-			to_chat(user, span_warning("Connection lost! Unable to locate airlock on network."))
-			return
-		if(user)
-			attack_ai(user) //bring up airlock dialog
-*/
 /obj/machinery/door/airlock/attack_animal(mob/user, list/modifiers)
 	if(isElectrified() && shock(user, 100))
 		return
@@ -1020,10 +1110,6 @@
 		if(panel_open)
 			attempt_wire_interaction(user)
 			return
-/*		else
-			attempt_hacking_interaction(user)
-			return
-*/
 
 	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
 		if(istype(C, /obj/item/stack/sheet/iron))
@@ -1301,10 +1387,8 @@
 		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
 			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
 			return
-		//MONKESTATION EDIT START
 		if(apply_feeble_delay(user, density ? "open" : "close"))
 			return FALSE
-		//MONKESTATION EDIT END
 		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
@@ -1419,7 +1503,6 @@
 		SSexplosions.med_mov_atom += killthis
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 
-	// monkestation edit: liquids
 	var/turf/open/open_turf = get_turf(src)
 	if(!QDELETED(open_turf.liquids))
 		var/datum/liquid_group/turfs_group = open_turf.liquids.liquid_group
@@ -1432,7 +1515,6 @@
 					continue
 				turfs_group.check_edges(direction_turf)
 		QDEL_NULL(open_turf.liquids)
-	// monkestation end
 
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_CLOSING, 1)
@@ -1486,13 +1568,12 @@
 	return ..()
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if((obj_flags & EMAGGED) || is_probably_external_airlock()) // monkestation edit: STOP SPACING ENGI
+	if((obj_flags & EMAGGED) || is_probably_external_airlock())
 		return
 	if(locked)
 		unbolt()
 	open()
 	bolt()
-	return
 
 // gets called when a player uses an airlock painter on this airlock
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/airlock_painter/painter, mob/user)
@@ -1889,6 +1970,21 @@
 		say("Link broken, unbolting.")
 	cycle_pump = null
 
+/obj/machinery/door/airlock/proc/apply_feeble_delay(mob/user, action)
+	if(!HAS_TRAIT(user, TRAIT_FEEBLE))
+		return FALSE
+	if(!feeble_callback())
+		return TRUE
+	user.visible_message(span_notice("[user] struggles to [action] the airlock."), \
+		span_notice("You struggle to [action] the airlock."))
+	return !do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/door/airlock, feeble_callback)))
+
+/obj/machinery/door/airlock/proc/feeble_callback()
+	if( operating || welded || locked || seal )
+		return FALSE
+	return TRUE
+
+
 /**
  * Generates the airlock's wire layout based on the current area the airlock resides in.
  *
@@ -1949,6 +2045,38 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
 
+/obj/machinery/door/airlock/command/corporate
+	icon = 'icons/obj/doors/airlocks/station/corporate.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_corporate
+
+/obj/machinery/door/airlock/command/captain
+	icon = 'icons/obj/doors/airlocks/station/cap.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_captain
+
+/obj/machinery/door/airlock/command/hop
+	icon = 'icons/obj/doors/airlocks/station/hop.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_hop
+
+/obj/machinery/door/airlock/command/hos
+	icon = 'icons/obj/doors/airlocks/station/hos.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_hos
+
+/obj/machinery/door/airlock/command/ce
+	icon = 'icons/obj/doors/airlocks/station/ce.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_ce
+
+/obj/machinery/door/airlock/command/rd
+	icon = 'icons/obj/doors/airlocks/station/rd.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_rd
+
+/obj/machinery/door/airlock/command/qm
+	icon = 'icons/obj/doors/airlocks/station/qm.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_qm
+
+/obj/machinery/door/airlock/command/cmo
+	icon = 'icons/obj/doors/airlocks/station/cmo.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_cmo
+
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
@@ -1962,8 +2090,12 @@
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
 
+/obj/machinery/door/airlock/service
+	icon = 'icons/obj/doors/airlocks/station/service.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_service
+
 /obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
-	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
+	icon = 'icons/obj/doors/airlocks/station/botany.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
 
 /obj/machinery/door/airlock/maintenance
@@ -2004,6 +2136,18 @@
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
 
+/obj/machinery/door/airlock/psych
+	icon = 'icons/obj/doors/airlocks/station/psych.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_psych
+
+/obj/machinery/door/airlock/asylum
+	icon = 'icons/obj/doors/airlocks/station/asylum.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_asylum
+
+/obj/machinery/door/airlock/bathroom
+	icon = 'icons/obj/doors/airlocks/station/bathroom.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_bathroom
+
 // Station Airlocks Glass
 
 /obj/machinery/door/airlock/glass
@@ -2028,6 +2172,38 @@
 	glass = TRUE
 	normal_integrity = 400
 
+/obj/machinery/door/airlock/command/corporate/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/command/captain/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/command/hop/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/command/hos/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/command/ce/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/command/rd/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/command/qm/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/command/cmo/glass
+	opacity = FALSE
+	glass = TRUE
+
 /obj/machinery/door/airlock/engineering/glass
 	opacity = FALSE
 	glass = TRUE
@@ -2041,6 +2217,10 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/medical/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/service/glass
 	opacity = FALSE
 	glass = TRUE
 
@@ -2080,6 +2260,10 @@
 	glass = TRUE
 
 /obj/machinery/door/airlock/virology/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/psych/glass
 	opacity = FALSE
 	glass = TRUE
 
@@ -2275,6 +2459,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
+	external = TRUE
 
 	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
@@ -2390,6 +2575,7 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
+	external = TRUE
 
 /obj/machinery/door/airlock/shuttle/glass
 	opacity = FALSE

@@ -432,11 +432,10 @@
 	name = "integrated wrapping paper"
 	is_cyborg = TRUE
 	source = /datum/robot_energy_storage/wrapping_paper
-
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/stack/wrapping_paper/xmas/cyborg/use(used, transfer, check = FALSE) // Check is set to FALSE here, so the stack istn't deleted.
-	. = ..()
-
+	return ..()
 
 /// Some override that didn't belong anywhere else.
 

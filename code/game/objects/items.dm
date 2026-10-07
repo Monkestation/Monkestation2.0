@@ -252,6 +252,13 @@
 	/// Does this use the advanced reskinning setup?
 	var/uses_advanced_reskins = FALSE
 
+	/// If specified, the pickup sound will use this mixer channel.
+	var/pickup_mixer_channel = CHANNEL_SOUND_EFFECTS
+	/// If specified, the drop sound will use this mixer channel.
+	var/drop_mixer_channel = CHANNEL_SOUND_EFFECTS
+	/// If specified, the equip sound will use this mixer channel.
+	var/equip_mixer_channel = CHANNEL_SOUND_EFFECTS
+
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
@@ -270,7 +277,7 @@
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
-		add_item_action(path)
+		INVOKE_ASYNC(src, PROC_REF(add_item_action), path)
 	actions_types = null
 
 	if(force_string)
@@ -427,10 +434,7 @@
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
-/obj/item/verb/move_to_top()
-	set name = "Move To Top"
-	set category = "Object"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
@@ -817,10 +821,7 @@
 		return FALSE
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped)
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Pick up"
+GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 
 	if(usr.incapacitated() || !Adjacent(usr))
 		return
@@ -1077,7 +1078,7 @@
 /obj/item/proc/apply_outline(outline_color = null)
 	if(((get(src, /mob) != usr) && !loc?.atom_storage && !(item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
 		return FALSE
-	var/theme = lowertext(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
+	var/theme = LOWER_TEXT(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
 		switch(theme) //yeah it kinda has to be this way
 			if("midnight")
@@ -1357,6 +1358,8 @@
  * * taker - the person trying to accept the offer
  */
 /obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	if(!HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(src, TRAIT_BORG_GIVE) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS))
+		return TRUE // Both must be able to hold items for this to make sense.
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
@@ -1701,3 +1704,11 @@
 		target_limb = victim.get_bodypart(target_limb) || victim.bodyparts[1]
 
 	return get_embed()?.embed_into(victim, target_limb)
+
+/obj/item/proc/adjust_weight_class(amt, min_weight = WEIGHT_CLASS_TINY, max_weight = WEIGHT_CLASS_GIGANTIC)
+	if(!amt || !isnum(amt))
+		stack_trace("Attempted to adjust weight class by an invalid value ([amt])")
+		return FALSE
+	var/old_w_class = w_class
+	w_class = clamp(w_class + amt, min_weight, max_weight)
+	return w_class != old_w_class

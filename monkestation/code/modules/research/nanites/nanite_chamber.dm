@@ -20,6 +20,7 @@
 	var/busy_icon_state
 	var/busy_message
 	var/message_cooldown = 0
+	var/nanites_given = 30 // 100 base with 2 t1 lasers
 
 /obj/machinery/nanite_chamber/Initialize(mapload)
 	. = ..()
@@ -30,6 +31,9 @@
 	scan_level = 0
 	for(var/datum/stock_part/scanning_module/P in component_parts)
 		scan_level += P.tier
+	nanites_given = 30
+	for(var/datum/stock_part/micro_laser/laser in component_parts) // (100 - 170 - 240 - 310)
+		nanites_given += laser.tier * 35
 
 /obj/machinery/nanite_chamber/examine(mob/user)
 	. = ..()
@@ -77,7 +81,7 @@
 	set_busy(FALSE)
 	if(!occupant)
 		return
-	occupant.AddComponent(/datum/component/nanites, 100)
+	occupant.AddComponent(/datum/component/nanites, nanites_given)
 
 /obj/machinery/nanite_chamber/proc/remove_nanites(datum/nanite_program/NP)
 	if(machine_stat & (NOPOWER|BROKEN))

@@ -73,7 +73,7 @@
 	regenerate_icons()
 	return src
 
-/mob/proc/AIize(client/preference_source, move = TRUE)
+/mob/proc/AIize(client/preference_source)
 	var/valid_core = FALSE
 	for(var/obj/machinery/ai/data_core/core in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
 		if(core.valid_data_core(src) && is_station_level(core.z) && !QDELETED(core))
@@ -264,6 +264,22 @@
 	to_chat(new_corgi, span_boldnotice("You are now a Corgi. Yap Yap!"))
 	qdel(src)
 	return new_corgi
+
+///Transforms cockroach mob into romch.
+/mob/living/basic/cockroach/proc/romchifize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(0.1 SECONDS, ignore_canstun = TRUE)
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	var/mob/living/basic/pet/eris_romch/romch = new(get_turf(src))
+	if(mind)
+		mind.transfer_to(romch)
+	else
+		romch.PossessByPlayer(key)
+	qdel(src)
+	return romch
 
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))

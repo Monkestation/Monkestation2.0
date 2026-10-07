@@ -81,6 +81,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/scrambled = FALSE
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
+	var/body_height = "Normal"
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -663,7 +664,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		gender = PLURAL
 		return
 
-	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3))
+	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), GENDERS))
 		if(G_MALE)
 			gender = MALE
 		if(G_FEMALE)
@@ -806,6 +807,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		return FALSE
 	add_mutation(mutation, MUTATION_SOURCE_ACTIVATED)
 	return TRUE
+
+/datum/dna/proc/update_body_height()
+	if(!ishuman(holder) || isdummy(holder))
+		return
+	var/mob/living/carbon/human/human_holder = holder
+	var/height = GLOB.body_heights[body_height]
+	if(height)
+		human_holder.set_mob_height(height)
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
 

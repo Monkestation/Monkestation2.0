@@ -7,16 +7,18 @@
 	toolspeed = 0.3
 
 /obj/item/screwdriver/caravan
-	icon_state = "screwdriver_caravan"
-	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster."
 	name = "experimental screwdriver"
+	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "screwdriver_caravan"
 	toolspeed = 0.3
 	random_color = FALSE
 
 /obj/item/wirecutters/caravan
-	icon_state = "cutters_caravan"
-	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster."
 	name = "experimental wirecutters"
+	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "cutters_caravan"
 	worn_icon_state = "cutters"
 	toolspeed = 0.3
 	random_color = FALSE

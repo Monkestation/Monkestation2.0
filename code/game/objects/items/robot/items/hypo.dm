@@ -585,7 +585,7 @@
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom
 	amount_per_transfer_from_this = 50
-	recharge_time = 1 SECOND
+	recharge_time = 1 SECONDS
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)
 	default_reagent_types += BASE_CENTCOM_REAGENTS

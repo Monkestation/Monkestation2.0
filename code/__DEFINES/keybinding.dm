@@ -16,6 +16,7 @@
 #define COMSIG_KB_ADMIN_DEADMIN_DOWN "keybinding_admin_deadmin_down"
 #define COMSIG_KB_ADMIN_READMIN_DOWN "keybinding_admin_readmin_down"
 #define COMSIG_KB_ADMIN_VIEWTAGS_DOWN "keybinding_admin_viewtags_down"
+#define COMSIG_KB_ADMIN_VERBPANEL_DOWN "keybinding_admin_verbpanel_down"
 
 //Carbon
 #define COMSIG_KB_CARBON_HOLDRUNMOVEINTENT_DOWN "keybinding_carbon_holdrunmoveintent_down"
@@ -101,3 +102,17 @@
 
 ///The key for 'Escape' since it's not as obvious as normal keyboard keys.
 #define ESCAPE_KEY "Escape"
+
+#define COMSIG_KB_CLIENT_LOOC_DOWN "keybinding_client_looc_down"
+
+#define COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN "keybinding_living_item_pixelshift_down"
+#define COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP "keybinding_living_item_pixelshift_up"
+#define COMSIG_KB_LIVING_PIXELSHIFT "keybinding_living_pixelshift"
+#define COMSIG_KB_LIVING_PIXEL_SHIFT_DOWN "keybinding_living_pixelshift_down"
+#define COMSIG_KB_LIVING_PIXEL_SHIFT_UP "keybinding_living_pixelshift_up"
+#define COMSIG_KB_LIVING_PIXEL_TILT_DOWN "keybinding_living_pixeltilt_down"
+#define COMSIG_KB_LIVING_PIXEL_TILT_UP "keybinding_living_pixeltilt_up"
+
+#define COMSIG_KB_LIVING_TOGGLE_WIELD "keybinding_living_toggle_wield"
+
+#define COMSIG_KB_LIVING_COMBAT_INDICATOR "keybinding_living_combat_indicator"

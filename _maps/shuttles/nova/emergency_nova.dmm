@@ -167,7 +167,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "mL" = (
-/obj/machinery/door/airlock/security/old/glass{
+/obj/machinery/door/airlock/security/glass{
 	name = "Shuttle Brig"
 	},
 /obj/effect/turf_decal/delivery/white,

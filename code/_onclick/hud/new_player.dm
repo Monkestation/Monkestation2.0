@@ -210,9 +210,11 @@
 				new_client.readied_store = new(new_player)
 			new_client.readied_store.ui_interact(new_player)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(interview_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
+		SSstatpanels.add_job_estimation(new_player)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
+		SSstatpanels.remove_job_estimation(new_player)
 	update_appearance(UPDATE_ICON)
 
 ///Shown when the game has started
@@ -284,6 +286,38 @@
 	flick("[base_icon_state]_enabled", src)
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+
+/atom/movable/screen/lobby/button/tutorial
+	name = "Spawn in Tutorial Chamber."
+	screen_loc = "TOP, CENTER:-164"
+	icon = 'icons/hud/lobby/tutorial.dmi'
+	icon_state = "tutorial_disabled"
+	base_icon_state = "tutorial"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/tutorial/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	if(!usr.client || usr.client.interviewee)
+		return
+
+	var/mob/dead/new_player/new_player = hud.mymob
+	new_player.enter_tutorial()
+
+/atom/movable/screen/lobby/button/tutorial/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(SSticker.current_state > GAME_STATE_STARTUP)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(enable_tutorial))
+
+/atom/movable/screen/lobby/button/tutorial/proc/enable_tutorial()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+
 
 /atom/movable/screen/lobby/button/patreon_link
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'

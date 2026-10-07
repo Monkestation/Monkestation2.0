@@ -240,7 +240,7 @@
 			update_integrity(min(atom_integrity + health_regen, max_integrity))
 			COOLDOWN_START(src, heal_timestamp, 2 SECONDS)
 		update_appearance()
-		COOLDOWN_START(src, pulse_timestamp, 1 SECOND)
+		COOLDOWN_START(src, pulse_timestamp, 1 SECONDS)
 		return TRUE //we did it, we were pulsed!
 	return FALSE //oh no we failed
 

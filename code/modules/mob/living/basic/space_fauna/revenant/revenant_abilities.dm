@@ -13,6 +13,49 @@
 
 	antimagic_flags = MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND
 
+/datum/action/cooldown/spell/revenant_reveal
+	name = "Reveal"
+	desc = "Reveal yourself to the living for 5 seconds. \
+	Because no haunting is complete without a ghost sighting."
+	panel = "Revenant Abilities"
+	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
+	button_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "reveal"
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
+	spell_requirements = NONE
+
+	///Time the revenant is revealed for when used, or the amount the reveal is extended by when already revealed.
+	var/reveal_duration = 5 SECONDS
+
+/datum/action/cooldown/spell/revenant_reveal/New(Target)
+	. = ..()
+	if(!isrevenant(target))
+		stack_trace("[type] was given to a non-revenant mob, please don't.")
+		qdel(src)
+		return
+
+/datum/action/cooldown/spell/revenant_reveal/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!isrevenant(owner))
+		stack_trace("[type] was owned by a non-revenant mob, please don't.")
+		return FALSE
+	var/datum/status_effect/revenant/revealed/affected = owner.has_status_effect(/datum/status_effect/revenant/revealed)
+	if(affected && (affected.duration - world.time) > 5 SECONDS)
+		if(feedback)
+			owner.balloon_alert(owner, "already revealed!")
+		return FALSE
+
+/datum/action/cooldown/spell/revenant_reveal/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/basic/revenant/ghost = cast_on
+	if(!istype(ghost))
+		stack_trace("[type] was cast on something not a revenant ([cast_on])")
+		return
+	ghost.adjust_timed_status_effect(reveal_duration, /datum/status_effect/revenant/revealed)
+
 /datum/action/cooldown/spell/aoe/revenant
 	panel = "Revenant Abilities (Locked)"
 	background_icon_state = "bg_revenant"

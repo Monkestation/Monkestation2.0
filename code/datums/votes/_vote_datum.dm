@@ -43,6 +43,9 @@
 	/// List of mob types who should not recieve this vote. key is type, value is reasoning to show in vote menu
 	var/list/exclude_mobs
 
+	/// The volume of the vote sound, from 0 to 100 or above.
+	var/vote_sound_volume = 100
+
 /**
  * Used to determine if this vote is a possible
  * vote type for the vote subsystem.
@@ -89,10 +92,8 @@
  */
 /datum/vote/proc/can_be_initiated(forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	//monkestation edit begin
 	if(!player_startable && !forced)
 		return FALSE
-	//monkestation edit end
 	if(!forced && !is_config_enabled())
 		return "This vote is currently disabled by the server configuration."
 
@@ -109,7 +110,7 @@
 	for(var/key in default_choices)
 		choices[key] = 0
 
-	list_clear_nulls(choices) // monke edit: ensure no nulls end up in a vote
+	list_clear_nulls(choices)
 
 	return TRUE
 
@@ -125,6 +126,9 @@
 	time_remaining = round(duration / 10)
 
 	return "[contains_vote_in_name ? "[capitalize(name)]" : "[capitalize(name)] vote"] started by [initiator || "Central Command"]."
+
+/datum/vote/proc/can_vote(mob/voter)
+	return TRUE
 
 /**
  * Gets the result of the vote.

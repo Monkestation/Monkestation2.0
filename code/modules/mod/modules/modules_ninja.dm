@@ -320,7 +320,7 @@
 	if(!.)
 		return
 	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
-		mod.wearer.say("Get over here!", forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), "Get over here!", forced = type)
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.aim_projectile(target, mod.wearer)
 	net.firer = mod.wearer
@@ -410,7 +410,7 @@
 	if(!.)
 		return
 	if(IS_SPACE_NINJA(mod.wearer))
-		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
 	mod.wearer.SetUnconscious(0)
 	mod.wearer.SetStun(0)

@@ -31,6 +31,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if(!user.transferItemToLoc(attacking_item, src))
 				return
 			cell = attacking_item
+			if(cell.charge)
+				low_power_mode = FALSE
 			to_chat(user, span_notice("You insert the power cell."))
 		update_icons()
 		diag_hud_set_borgcell()
@@ -217,7 +219,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		cell.add_fingerprint(user)
 		user.put_in_active_hand(cell)
 		to_chat(user, span_notice("You remove \the [cell]."))
-		update_icons()
 		diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)

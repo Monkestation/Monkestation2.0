@@ -158,13 +158,13 @@
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
-		ear_owner.AddElement(/datum/element/waddling)
+		ear_owner.AddElementTrait(TRAIT_WADDLING, ORGAN_TRAIT, /datum/element/waddling)
 
 /obj/item/organ/internal/ears/penguin/on_remove(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
-		ear_owner.RemoveElement(/datum/element/waddling)
+		REMOVE_TRAIT(ear_owner, TRAIT_WADDLING, ORGAN_TRAIT)
 
 /obj/item/organ/internal/ears/bronze
 	name = "tin ears"

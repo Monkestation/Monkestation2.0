@@ -465,7 +465,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/pflatcap //BUYABLE
 	name = "Poly Flat Cap"
-	item_path = /obj/item/clothing/head/colourable_flatcap
+	item_path = /obj/item/clothing/head/flatcap/recolor
 
 /datum/loadout_item/head/mothcap //BUYABLE
 	name = "Mothic Softcap"
@@ -632,6 +632,10 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Warning Cone"
 	item_path = /obj/item/clothing/head/cone
 
+/datum/loadout_item/head/bear_pelt //BUYABLE
+	name = "Bear Pelt"
+	item_path = /obj/item/clothing/head/costume/bearpelt
+
 /*
 *	JOB-LOCKED
 */
@@ -749,8 +753,11 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	restricted_roles = list(JOB_ROBOTICIST)
 	requires_purchase = FALSE
 
-
 // Legacy unpaintable cowboy hat because it fits a character better
 /datum/loadout_item/head/cowboyhat_legacy  //BUYABLE
 	name = "Cowboy Hat (Legacy)"
 	item_path = /obj/item/clothing/head/costume/cowboyhat_old
+
+/datum/loadout_item/head/henchmen_hat
+	name = "Henchmen Cap"
+	item_path = /obj/item/clothing/head/henchmen_hat

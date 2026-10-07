@@ -40,7 +40,7 @@
 	AddElement(/datum/element/pet_bonus, "whickers.")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, unique = unique_tamer)
 
 /mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
@@ -54,7 +54,7 @@
 	ai_controller.replace_planning_subtrees(list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/pony/tamed
+		/datum/ai_planning_subtree/random_speech/pony/tamed,
 	))
 
 	if(unique_tamer)
@@ -118,7 +118,7 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/pony
+		/datum/ai_planning_subtree/random_speech/pony,
 	)
 
 // A stronger horse is required for our strongest cowboys.

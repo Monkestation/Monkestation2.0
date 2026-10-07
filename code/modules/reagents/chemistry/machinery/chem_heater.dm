@@ -405,7 +405,7 @@ To continue set your target temperature to 390K."}
 
 	return data
 
-/obj/machinery/chem_heater/ui_act(action, params)
+/obj/machinery/chem_heater/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

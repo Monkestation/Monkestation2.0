@@ -70,6 +70,53 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 			carbon_user.update_body_parts()
 		return TRUE
 
+/obj/item/clothing/mask/floortilebalaclava
+	name = "floor-tile balaclava"
+	desc = "The newest floor-tile camouflage balaclava used for hallway warfare. The best breathability, flexibility, and comfort. Designed by Camo-J's."
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	icon_state = "floortile_balaclava"
+	inhand_icon_state = "balaclava"
+	flags_inv = HIDE_ALL_HEAD
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	alternate_worn_layer = UNDER_SUIT_LAYER
+	w_class = WEIGHT_CLASS_SMALL
+	actions_types = list(/datum/action/item_action/adjust)
+
+/obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
+	adjustmask(user)
+
+/obj/item/clothing/mask/floortilebalaclava/ui_action_click(mob/user, datum/action/action)
+	adjustmask(user)
+	return TRUE
+
+/obj/item/clothing/mask/floortilebalaclava/adjustmask(mob/living/carbon/user)
+	if(user?.incapacitated())
+		return
+
+	mask_adjusted = !mask_adjusted
+
+	if(!mask_adjusted)
+		REMOVE_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
+		clothing_flags |= visor_flags
+		flags_inv |= visor_flags_inv
+		flags_cover |= visor_flags_cover
+		slot_flags = initial(slot_flags)
+		to_chat(user, span_notice("You pull \the [src] back over your face."))
+	else
+		ADD_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
+		clothing_flags &= ~visor_flags
+		flags_inv &= ~visor_flags_inv
+		flags_cover &= ~visor_flags_cover
+		if(adjusted_flags)
+			slot_flags = adjusted_flags
+		to_chat(user, span_notice("You pull \the [src] down off your face."))
+
+	if(user.wear_mask == src)
+		user.wear_mask_update(src, toggle_off = mask_adjusted)
+
+	if(loc == user)
+		user.update_mob_action_buttons()
+
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
@@ -79,7 +126,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	w_class = WEIGHT_CLASS_SMALL
 	alternate_worn_layer = LOW_FACEMASK_LAYER
 
-/obj/item/clothing/head/frenchberet/Initialize(mapload)
+/obj/item/clothing/mask/luchador/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("luchador_replacement.json", "luchador"), end_string = " OLE!", end_string_chance = 25, uppercase = TRUE, slots = ITEM_SLOT_MASK)
 

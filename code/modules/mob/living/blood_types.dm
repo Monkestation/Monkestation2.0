@@ -350,6 +350,7 @@
 	color = /datum/reagent/toxin/slimejelly::color
 	reagent_type = /datum/reagent/toxin/slimejelly
 	restoration_chem = /datum/reagent/stable_plasma // Because normal plasma already refills our blood
+	blood_flags = BLOOD_ADD_DNA | BLOOD_TRANSFER_VIRAL_DATA
 
 // Ensures that lighter slimefolk look half-decent when wounded and bleeding
 /datum/blood_type/slime/get_wound_color(mob/living/carbon/victim)

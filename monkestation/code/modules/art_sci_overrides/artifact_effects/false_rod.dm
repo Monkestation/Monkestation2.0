@@ -29,7 +29,7 @@
 		LAZYSET(first_touched, user, TRUE)
 		COOLDOWN_START(src, touch_cooldown, 7.5 SECONDS) // so you don't get fucked over by spam-clicking it
 		return COMPONENT_EQUIPPED_FAILED
-	addtimer(CALLBACK(src,PROC_REF(post_pickup),user),(0.2 SECOND))
+	addtimer(CALLBACK(src,PROC_REF(post_pickup),user),(0.2 SECONDS))
 	return
 
 /datum/artifact_effect/false_rod/on_destroy(atom/source)

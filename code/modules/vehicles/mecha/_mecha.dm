@@ -334,10 +334,11 @@
 			var/turf/ai_location_turf = get_turf(ai_occupant.last_used_data_core || ai_occupant)
 			if(!LAZYLEN(GLOB.data_cores["[ai_location_turf.z]"])) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
-				unlucky_ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
-				unlucky_ai.gib() //No wreck, no AI to recover
+				if(!wreckage)
+					unlucky_ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
+					unlucky_ai.gib() //No wreck, no AI to recover
 			else
-				mob_exit(unlucky_ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
+				mob_exit(ai_occupant, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, forced = TRUE)
 		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..

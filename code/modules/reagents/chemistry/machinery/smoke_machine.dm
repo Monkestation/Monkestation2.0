@@ -145,7 +145,7 @@
 	data["maxSetting"] = max_range
 	return data
 
-/obj/machinery/smoke_machine/ui_act(action, params)
+/obj/machinery/smoke_machine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(. || !anchored)

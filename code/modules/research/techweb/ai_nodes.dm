@@ -73,7 +73,7 @@
 	display_name = "Advanced CPU Sockets"
 	description = "256 bit computing allows the introduction of another CPU core."
 	design_ids = list("ai_cpu_socket_3")
-	prereq_ids = list("ai_arch_256", "ai_cpu_2")
+	prereq_ids = list("ai_arch_256")
 	research_costs = list(TECHWEB_POINT_TYPE_AI = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
@@ -100,7 +100,7 @@
 	display_name = "Advanced Memory Bus"
 	description = "256 bit computing allows the introduction of another memory module."
 	design_ids = list("ai_ram_socket_3")
-	prereq_ids = list("ai_arch_256", "ai_ram_2")
+	prereq_ids = list("ai_arch_256")
 	research_costs = list(TECHWEB_POINT_TYPE_AI = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 

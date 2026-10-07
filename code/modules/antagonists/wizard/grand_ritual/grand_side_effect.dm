@@ -334,18 +334,19 @@
 		to_create--
 		addtimer(CALLBACK(src, PROC_REF(drop_food), pick_n_take(valid_turfs)), rand(0, (1 SECONDS) * seconds_per_tick))
 
-/* monkestation edit: reimplemented in [monkestation/code/modules/antagonists/wizard/grand_ritual/grand_side_effect.dm]
 /obj/effect/abstract/local_food_rain/proc/drop_food(turf/landing_zone)
+	var/food_type = get_random_food()
+	var/obj/item/food/summoned_food = new food_type
+	summoned_food.preserved_food = TRUE // it's magical food
 	podspawn(list(
 			"target" = landing_zone,
 			"style" = STYLE_SEETHROUGH,
-			"spawn" = get_random_food(),
+			"spawn" = summoned_food,
 			"delays" = list(POD_TRANSIT = 0, POD_FALLING = (3 SECONDS), POD_OPENING = 0, POD_LEAVING = 0),
 			"effectStealth" = TRUE,
 			"effectQuiet" = TRUE,
 		)
 	)
-monkestation end */
 
 /obj/effect/abstract/local_food_rain/proc/end_rain()
 	qdel(src)

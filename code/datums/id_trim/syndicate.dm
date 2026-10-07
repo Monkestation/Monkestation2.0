@@ -81,8 +81,10 @@
 /datum/id_trim/chameleon/operative/clown
 	assignment = "Syndicate Entertainment Operative"
 	trim_state = "trim_clown"
+	sechud_icon_state = SECHUD_SYNDIECLOWN
 
 /// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon/operative/clown_leader
 	assignment = "Syndicate Entertainment Operative Leader"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
+	sechud_icon_state = SECHUD_SYNDIECLOWN

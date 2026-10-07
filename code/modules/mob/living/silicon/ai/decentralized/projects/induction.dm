@@ -8,7 +8,7 @@
 
 /datum/ai_project/induction_cyborg
 	name = "Bluespace Induction - Cyborgs"
-	description = "This ability will allow you to charge any visible cyborgs by 33%"
+	description = "This ability will allow you to charge any visible Cyborgs by 33%"
 	research_cost = 2500
 	ram_required = 0
 	research_requirements = list(/datum/ai_project/induction_basic)
@@ -19,17 +19,11 @@
 	ability_recharge_cost = 1500
 
 /datum/ai_project/induction_cyborg/finish()
-	var/datum/action/innate/ai/ranged/charge_borg_or_apc/ability = add_ability(/datum/action/innate/ai/ranged/charge_borg_or_apc)
-	if(ability)
-		ability.works_on_borgs = TRUE
-		ability.name = "Charge cyborg"
-		ability.desc = "Click a cyborg to charge it by 33%"
-	else
-		ability = locate(/datum/action/innate/ai/ranged/charge_borg_or_apc) in ai.actions
-		ability.works_on_borgs = TRUE
-		ability.name = "Charge cyborg/APC"
-		ability.desc = "Click a cyborg or APC to charge it by 33%"
-
+	var/datum/action/innate/ai/ranged/charge_borg_or_apc/ability = locate(/datum/action/innate/ai/ranged/charge_borg_or_apc) in ai.actions
+	if(isnull(ability))
+		ability = add_ability(/datum/action/innate/ai/ranged/charge_borg_or_apc)
+	ability.works_on_borgs = TRUE
+	ability.build_all_button_icons(UPDATE_BUTTON_NAME)
 
 /datum/ai_project/induction_apc
 	name = "Bluespace Induction - APCs"
@@ -44,20 +38,15 @@
 	ability_recharge_cost = 1500
 
 /datum/ai_project/induction_apc/finish()
-	var/datum/action/innate/ai/ranged/charge_borg_or_apc/ability = add_ability(/datum/action/innate/ai/ranged/charge_borg_or_apc)
-	if(ability)
-		ability.name = "Charge APC"
-		ability.desc = "Click an APC to charge it by 33%"
-	else
-		ability = locate(/datum/action/innate/ai/ranged/charge_borg_or_apc) in ai.actions
-		ability.name = "Charge cyborg/APC"
-		ability.desc = "Click a cyborg or APC to charge it by 33%"
+	var/datum/action/innate/ai/ranged/charge_borg_or_apc/ability = locate(/datum/action/innate/ai/ranged/charge_borg_or_apc) in ai.actions
+	if(isnull(ability))
+		ability = add_ability(/datum/action/innate/ai/ranged/charge_borg_or_apc)
 	ability.works_on_apcs = TRUE
-
+	ability.build_all_button_icons(UPDATE_BUTTON_NAME)
 
 /datum/action/innate/ai/ranged/charge_borg_or_apc
-	name = "Charge cyborg/APC"
-	desc = "Depending on upgrades you can charge either a single cyborg or APC in view by 33%"
+	name = "Charge Cyborg/APC"
+	desc = "Depending on upgrades you can charge either a single Cyborg or APC in view by 33%"
 	button_icon_state = "electrified"
 	uses = 1
 	delete_on_empty = FALSE
@@ -67,15 +56,27 @@
 	var/works_on_borgs = FALSE
 	var/works_on_apcs = FALSE
 
+/datum/action/innate/ai/ranged/charge_borg_or_apc/update_button_name(atom/movable/screen/movable/action_button/button, force)
+	if(works_on_borgs && works_on_apcs)
+		name = "Charge Cyborg/APC"
+		desc = "Click a Cyborg or APC to charge it by 33%"
+	else if(works_on_borgs)
+		name = "Charge Cyborg"
+		desc = "Click a Cyborg to charge it by 33%"
+	else if(works_on_apcs)
+		name = "Charge APC"
+		desc = "Click an APC to charge it by 33%"
+	return ..()
+
 /datum/action/innate/ai/ranged/charge_borg_or_apc/do_ability(mob/living/user, atom/clicked_on)
 	if(!iscyborg(clicked_on) && !isapc(clicked_on))
-		to_chat(owner, span_warning("You can only charge cyborgs or APCs!"))
+		to_chat(owner, span_warning("You can only charge Cyborgs or APCs!"))
 		return FALSE
 	if(!works_on_borgs && iscyborg(clicked_on))
 		to_chat(owner, span_warning("You can only charge APCs!"))
 		return FALSE
 	if(!works_on_apcs && isapc(clicked_on))
-		to_chat(owner, span_warning("You can only charge cyborgs!"))
+		to_chat(owner, span_warning("You can only charge Cyborgs!"))
 		return FALSE
 
 	owner.playsound_local(owner, SFX_SPARKS, 50, FALSE)

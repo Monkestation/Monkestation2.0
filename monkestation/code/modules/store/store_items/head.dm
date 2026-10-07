@@ -218,6 +218,11 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_path = /obj/item/clothing/head/cone
 	item_cost = 1000
 
+/datum/store_item/head/bear_pelt
+	name = "Bear Pelt"
+	item_path = /obj/item/clothing/head/costume/bearpelt
+	item_cost = 5000
+
 /*
 *	HALLOWEEN
 */
@@ -418,7 +423,7 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 
 /datum/store_item/head/pflatcap //BUYABLE
 	name = "Poly Flat Cap"
-	item_path = /obj/item/clothing/head/colourable_flatcap
+	item_path = /obj/item/clothing/head/flatcap/recolor
 	item_cost = 2500
 
 /datum/store_item/head/mothcap //BUYABLE
@@ -641,3 +646,8 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	name = "Cowboy Hat (Legacy)"
 	item_path = /obj/item/clothing/head/costume/cowboyhat_old
 	item_cost = 3000
+
+/datum/store_item/head/henchmen_hat
+	name = "Henchmen Cap"
+	item_path = /obj/item/clothing/head/henchmen_hat
+	item_cost = 15000

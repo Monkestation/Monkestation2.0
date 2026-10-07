@@ -42,11 +42,15 @@
 
 /datum/robot_energy_storage/iron
 	name = "Iron Synthesizer"
+	max_energy = SHEET_MATERIAL_AMOUNT * 60
+	recharge_rate = SHEET_MATERIAL_AMOUNT * 7.5
 	renewable = FALSE
 	mat_type = /datum/material/iron
 
 /datum/robot_energy_storage/glass
 	name = "Glass Synthesizer"
+	max_energy = SHEET_MATERIAL_AMOUNT * 60
+	recharge_rate = SHEET_MATERIAL_AMOUNT * 7.5
 	renewable = FALSE
 	mat_type = /datum/material/glass
 

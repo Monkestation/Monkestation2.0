@@ -102,13 +102,19 @@
 			disableReason += "Not enough materials. "
 		if(print_tier > max_part_tier)
 			disableReason += "This design is too advanced for this machine. "
+
+		var/icon_file = build::icon
+		if(build::greyscale_config && build::greyscale_colors)
+			icon_file = SSgreyscale.GetColoredIconByType(build::greyscale_config, build::greyscale_colors)
+
 		design = list(
 			"name" = initial(build.name),
 			"requiredMaterials" = cost_mats,
-			"icon" = icon2base64(icon(initial(build.icon), initial(build.icon_state), frame = 1)),
+			"icon" = icon2base64(icon(icon_file, build::icon_state, frame = 1)),
 			"canPrint" = has_materials && print_tier <= max_part_tier,
 			"disableReason" = disableReason
 		)
+
 	data["design"] = design
 	return data
 

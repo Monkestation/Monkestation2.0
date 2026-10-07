@@ -32,7 +32,8 @@ ADMIN_VERB(announce, R_ADMIN, FALSE, "Announce", "Announce your desires to the w
 	log_admin("Announce: [key_name(user)] [user.holder.fakekey ? "(stealthed)" : ""]: [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
-ADMIN_VERB(unprison, R_ADMIN, FALSE, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/prisoner)
+ADMIN_VERB(unprison, R_ADMIN, FALSE, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(prisoner, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!is_centcom_level(prisoner.z))
 		tgui_alert(user, "[prisoner.name] is not prisoned.")
 		return
@@ -150,7 +151,8 @@ monkestation end */
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ADMIN_VERB(drop_everything, R_ADMIN, FALSE, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/dropee)
+ADMIN_VERB(drop_everything, R_ADMIN, FALSE, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(dropee, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/confirm = tgui_alert(user, "Make [dropee] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return

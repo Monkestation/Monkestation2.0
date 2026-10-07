@@ -722,23 +722,31 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
 
+/// The threshold of lavaland points that need to be surpassed before mineral chance starts to increase.
+#define LAVALAND_POINTS_CHANCE_THRESHOLD 55000
 
-/turf/closed/mineral/random/regrowth/New(loc, mineral_increase)
-	if(isnum(mineral_increase))
-		src.mineralChance += mineral_increase
-	. = ..()
+/// For each set of this amount of points, the regrow timer will decrease by 1 second.
+#define LAVALAND_POINTS_PER_SECOND 1000
+
+/// For each set of this amount of points beyond LAVALAND_POINTS_CHANCE_THRESHOLD, the mineral chance increases by 1.
+#define LAVALAND_POINTS_PER_CHANCE 1000
 
 /turf/closed/mineral/random/regrowth/Destroy(force)
 	. = ..()
-	var/timer = max(1 MINUTES - round(max(1, GLOB.lavaland_points_generated) / 1000), 5 SECONDS)
+	var/timer = max(1 MINUTES - round(max(1, GLOB.lavaland_points_generated) / LAVALAND_POINTS_PER_SECOND), 5 SECONDS)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(regrow_mineral), get_turf(src)), timer)
 
+/// Creates a regrowth material turf ontop of an another turf.
 /proc/regrow_mineral(turf/location)
-	var/mineral_increase = 0
-	if(GLOB.lavaland_points_generated > 55000)
-		mineral_increase = min(87, (GLOB.lavaland_points_generated - 55000) / 1000)
-	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.ChangeTurf(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
-	regrowth_turf?.mineralChance += mineral_increase
+	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.PlaceOnTop(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
+	if(GLOB.lavaland_points_generated <= LAVALAND_POINTS_CHANCE_THRESHOLD)
+		return
+	var/mineral_increase = (GLOB.lavaland_points_generated - LAVALAND_POINTS_CHANCE_THRESHOLD) / LAVALAND_POINTS_PER_CHANCE
+	regrowth_turf.mineralChance = clamp(initial(regrowth_turf.mineralChance) + mineral_increase, 0, 100)
+
+#undef LAVALAND_POINTS_CHANCE_THRESHOLD
+#undef LAVALAND_POINTS_PER_SECOND
+#undef LAVALAND_POINTS_PER_CHANCE
 
 /turf/closed/mineral/random/regrowth/underwater
 	turf_type = /turf/open/floor/plating/ocean/dark

@@ -117,8 +117,7 @@
 				turf_air.temperature = T20C
 			// remove flammable gases in general
 			for(var/gas_type in list(/datum/gas/plasma, /datum/gas/tritium, /datum/gas/hydrogen, /datum/gas/freon))
-				turf_air.assert_gas(gas_type)
-				turf_air.gases[gas_type][MOLES] = 0
+				turf_air.set_gas(gas_type, 0)
 			turf_air.garbage_collect()
 			victim_turf.air_update_turf(FALSE, FALSE)
 		return

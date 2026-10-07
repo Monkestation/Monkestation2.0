@@ -22,7 +22,8 @@
 		if(vending_languages.selected_language == vending_languages.spoken_languages[i])
 			language_iterator = i
 			break
-	..()
+
+	return..()
 
 /datum/wires/vending/interactable(mob/user)
 	if(!..())
@@ -45,6 +46,12 @@
 	status += "A white light is [vending_machine.age_restrictions ? "on" : "off"]."
 	status += "The speaker light is [vending_machine.shut_up ? "off" : "on"]. The language is set to [current_language.name]."
 	return status
+
+/datum/wires/vending/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
+		return TRUE
+
+	return ..()
 
 /datum/wires/vending/on_pulse(wire)
 	var/obj/machinery/vending/vending_machine = holder

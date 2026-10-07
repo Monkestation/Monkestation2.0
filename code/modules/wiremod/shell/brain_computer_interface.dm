@@ -68,7 +68,7 @@
 /obj/item/circuit_component/equipment_action/bci/update_action()
 	bci_action.name = button_name.value
 	// Change nanite -> bci if we get a set of bci action icons instead of nanite action icons
-	bci_action.button_icon_state = "nanite_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
+	bci_action.button_icon_state = "nanite_[replacetextEx(LOWER_TEXT(icon_options.value), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"

@@ -119,3 +119,16 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 /datum/loadout_item/plushies/expie
 	name = "Expie Plushie"
 	item_path = /obj/item/toy/plush/expie
+
+/datum/loadout_item/plushies/expie/spinny_hat
+	name = "Spinny Expie Plushie"
+	item_path = /obj/item/toy/plush/expie/spinny_hat
+
+/datum/loadout_item/plushies/expie/dune
+	name = "Dune Plushie"
+	item_path = /obj/item/toy/plush/expie/dune
+
+/datum/loadout_item/plushies/expie/milky
+	name = "Milky Plushie"
+	item_path = /obj/item/toy/plush/expie/milky
+

@@ -376,8 +376,7 @@
 	if(!iscarbon(cast_on))
 		return FALSE
 	var/mob/living/carbon/target = cast_on
-	target.grab_ghost()
-	target.revive(TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	target.revive(HEAL_DAMAGE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	target.SetAllImmobility(0, TRUE)
 	target.resting = FALSE
 	target.apply_status_effect(/datum/status_effect/speed_boost, 15 SECONDS, -0.5, type)

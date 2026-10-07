@@ -59,7 +59,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
-	can_be_tied = FALSE
+	can_be_tied = TRUE
 
 /datum/armor/shoes_jackboots
 	bio = 90
@@ -71,13 +71,27 @@
 	if(type == /obj/item/clothing/shoes/jackboots/sec/hos)
 		AddComponent(/datum/component/shoesteps/hosboots)
 	else
-		AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
+		AddComponent(/datum/component/shoesteps/combine_boot_sounds)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
+
+/obj/item/clothing/shoes/jackboots/recolorable
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("jackboots", "/obj/item/clothing/shoes/jackboots/recolorable")
+	greyscale_config = /datum/greyscale_config/jackboots
+	greyscale_config_worn = /datum/greyscale_config/jackboots/worn
+	greyscale_colors = "#383631"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/jackboots/floortile
+	name = "floor-tile camouflage jackboots"
+	desc = "Is it just me, or is there a pair of jackboots on the floor?"
+	icon_state = "ftc_boots"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/jackboots/sec/hos
 	name = "head of security jackboots"
@@ -128,6 +142,22 @@
 	equip_delay_other = 4 SECONDS
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
+
+/obj/item/clothing/shoes/winterboots/christmas
+	name = "red christmas boots"
+	desc = "A pair of fluffy red christmas boots!"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("christmas_boots", "/obj/item/clothing/shoes/winterboots/christmas")
+	greyscale_config = /datum/greyscale_config/christmas_boots
+	greyscale_config_worn = /datum/greyscale_config/christmas_boots/worn
+	greyscale_colors = "#cc0f0f#c4c2c2"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/winterboots/christmas/green
+	name = "green christmas boots"
+	desc = "A pair of fluffy green christmas boots!"
+	SETUP_MAP_ICONS("christmas_boots", "/obj/item/clothing/shoes/winterboots/christmas/green")
+	greyscale_colors = "#1a991a#c4c2c2"
 
 /datum/armor/ice_boots_eva
 	melee = 10
@@ -246,3 +276,19 @@
 	name = "Deforest work boots"
 	desc = "A pair of Deforest Medical boots built of reinforced leathers and weather-resistant rubber; there's a large white reflective strip across the collar."
 	icon_state = "hivisboots"
+
+/obj/item/clothing/shoes/combat/swat/admiral // Reskin for Abraxis's Admiral set
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
+	icon_state = "admiral"
+
+/obj/item/clothing/shoes/admiral  // Loadout version of the Abraxis Centcom Admiral boots
+	name = "black boots"
+	icon_state = "admiral"
+
+/obj/item/clothing/shoes/admiral/vex
+	name = "NT-QCAC Series VII \"Silent Step Boots\""
+	desc = "Shoes only for the most bitchin' of the Elite."
+	icon_state = "admiral_drag"
+	worn_icon_state = "admiral_drag"
+	inhand_icon_state = "admiral_drag"

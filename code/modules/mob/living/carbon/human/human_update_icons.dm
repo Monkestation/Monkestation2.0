@@ -100,7 +100,7 @@ There are several things that need to be remembered:
 
 		CHECK_SHOULDNT_RENDER(uniform, ITEM_SLOT_ICLOTHING) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
-		var/target_overlay = uniform.icon_state
+		var/target_overlay = RESOLVE_ICON_STATE(uniform) //Selects proper icon from the vars the clothing has (Search define for more.)
 		if(uniform.adjusted == ALT_STYLE)
 			target_overlay = "[target_overlay]_d"
 
@@ -136,7 +136,8 @@ There are several things that need to be remembered:
 		)
 
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
-		my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
+		if(!uniform.ignore_mob_height_adjustments)
+			my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 		apply_overlay(UNIFORM_LAYER)
 		check_body_shape(BODYTYPE_DIGITIGRADE, ITEM_SLOT_ICLOTHING)
@@ -865,6 +866,7 @@ generate/load female uniform sprites matching all previously decided variables
 			type = female_uniform,
 			greyscale_colors = greyscale_colors,
 		)
+
 	if(!isinhands && is_digi && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		building_icon = wear_digi_version(
 			base_icon = building_icon || icon(file2use, t_state),
@@ -872,33 +874,28 @@ generate/load female uniform sprites matching all previously decided variables
 			key = "[t_state]-[file2use]-[female_uniform]",
 			greyscale_colors = greyscale_colors,
 		)
+
 	if(building_icon)
 		standing = mutable_appearance(building_icon, layer = -layer2use)
 
 	// no special handling done, default it
 	standing ||= mutable_appearance(file2use, t_state, layer = -layer2use)
 
-	// MONKESTATION EDIT START
 	var/width = isinhands ? inhand_x_dimension : worn_x_dimension
 	var/height = isinhands ? inhand_y_dimension : worn_y_dimension
 	standing = center_image(standing, width, height)
-	// MONKESTATION EDIT END
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(length(worn_overlays))
-		// MONKESTATION EDIT START
+
 		if (width != 32 || height != 32)
 			for (var/image/overlay in worn_overlays)
 				overlay.pixel_x -= standing.pixel_x
 				overlay.pixel_y -= standing.pixel_y
-		// MONKESTATION EDIT END
-		standing.overlays += worn_overlays
 
-	// MONKESTATION EDIT START
-	// standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension) - moved up
-	// MONKESTATION EDIT END
+		standing.overlays += worn_overlays
 
 	//Worn offsets
 	var/list/offsets = get_worn_offsets(isinhands)
@@ -1033,6 +1030,9 @@ generate/load female uniform sprites matching all previously decided variables
 		This is required because they use cached / shared appearences
 	if(mob_height == HUMAN_HEIGHT_MEDIUM) - original */
 	if(mob_height == HUMAN_HEIGHT_MEDIUM && cache_index != MUTATIONS_LAYER && cache_index != FRONT_MUTATIONS_LAYER)
+		return ..()
+
+	if(cache_index == UNIFORM_LAYER && w_uniform?.ignore_mob_height_adjustments)
 		return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
