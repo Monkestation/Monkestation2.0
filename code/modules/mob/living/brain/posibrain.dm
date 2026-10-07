@@ -322,6 +322,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/proc/finish_ipc_brain_reboot()
 	if(QDELETED(src) || !restore_brainmob_consciousness())
 		return
+	brainmob.grab_ghost()
 	visible_message(span_notice("[src] chimes as its consciousness comes back online."))
 	update_appearance()
 

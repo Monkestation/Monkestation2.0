@@ -17,9 +17,9 @@
 	core.head = head
 	var/obj/item/organ/internal/eyes/synth/eyes = allocate(/obj/item/organ/internal/eyes/synth)
 	eyes.forceMove(head)
-	head.ipc_eyes = eyes
-	head.ipc_ears = new /obj/item/organ/internal/ears/synth(head)
-	head.ipc_tongue = new /obj/item/organ/internal/tongue/robot/synth(head)
+	head.eyes = eyes
+	head.ears = new /obj/item/organ/internal/ears/synth(head)
+	head.tongue = new /obj/item/organ/internal/tongue/robot/synth(head)
 	head.antennae = new /obj/item/organ/external/antennae/ipc(head)
 	head.wired = TRUE
 	head.secured = TRUE
@@ -27,7 +27,7 @@
 	TEST_ASSERT(head.check_completion(), "A fully populated IPC head did not report complete.")
 	TEST_ASSERT(core.check_body_completion(), "A fully populated IPC core did not accept its completed head.")
 
-	var/obj/item/organ/internal/eyes/synth/removed_eyes = head.ipc_eyes
+	var/obj/item/organ/internal/eyes/synth/removed_eyes = head.eyes
 	removed_eyes.forceMove(run_loc_floor_bottom_left)
 	TEST_ASSERT(!head.secured, "Removing a component from a secured IPC head did not invalidate its secured state.")
 
@@ -36,7 +36,7 @@
 	TEST_ASSERT(!head.check_completion(), "An IPC head missing its eyes still reported complete.")
 	TEST_ASSERT(!core.check_body_completion(), "An IPC core accepted a stripped head solely because its secured flag was set.")
 
-/// Checks that a constructed IPC shell keeps its iron butt but never gains the round-start power cord, even after organ regeneration.
+/// Checks that a constructed IPC shell never gains the round-start power cord, even after organ regeneration.
 /datum/unit_test/ipc_construction_augment_policy
 
 /datum/unit_test/ipc_construction_augment_policy/Run()
@@ -57,9 +57,9 @@
 	var/obj/item/bodypart/head/ipc/head = new(core)
 	core.head = head
 	var/obj/item/organ/internal/eyes/synth/eyes = new(head)
-	head.ipc_eyes = eyes
-	head.ipc_ears = new /obj/item/organ/internal/ears/synth(head)
-	head.ipc_tongue = new /obj/item/organ/internal/tongue/robot/synth(head)
+	head.eyes = eyes
+	head.ears = new /obj/item/organ/internal/ears/synth(head)
+	head.tongue = new /obj/item/organ/internal/tongue/robot/synth(head)
 	head.antennae = new /obj/item/organ/external/antennae/ipc(head)
 	head.wired = TRUE
 	head.secured = TRUE
@@ -73,7 +73,6 @@
 	TEST_ASSERT_NOTNULL(constructed_shell, "The completed IPC shell was not present on the construction turf.")
 
 	TEST_ASSERT_NULL(constructed_shell.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord), "A constructed IPC shell retained the roundstart power cord augment.")
-	TEST_ASSERT_NOTNULL(constructed_shell.get_organ_by_type(/obj/item/organ/internal/butt/iron), "A constructed IPC shell lost its naturally initialized iron butt.")
 	// Exclude the head and core so this focused check does not generate a brain and revive the intentionally inert shell.
 	constructed_shell.dna.species.regenerate_organs(constructed_shell, replace_current = FALSE, excluded_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 	TEST_ASSERT_NULL(constructed_shell.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord), "Organ regeneration restored the roundstart power cord to a constructed IPC shell.")

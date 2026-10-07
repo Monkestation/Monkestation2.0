@@ -22,73 +22,72 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
-	/// IPC head assembly parts are stored here until the completed chassis becomes a mob.
-	var/obj/item/organ/internal/eyes/synth/ipc_eyes = null
-	/// Synthetic ears stored in the IPC head during construction.
-	var/obj/item/organ/internal/ears/synth/ipc_ears = null
-	/// Synthetic tongue stored in the IPC head during construction.
-	var/obj/item/organ/internal/tongue/robot/synth/ipc_tongue = null
-	/// IPC antennae stored in the IPC head during construction.
+	/// IPC antennae stored in the head during construction or after beheading.
 	var/obj/item/organ/external/antennae/ipc/antennae = null
+	/// Screen stored in a detached IPC head.
+	var/obj/item/organ/external/ipc_screen/screen = null
 	/// Whether the IPC head assembly has been wired.
 	var/wired = FALSE
 	/// Whether the IPC head assembly has been secured.
 	var/secured = FALSE
 
+/obj/item/bodypart/head/ipc/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/organ/external/antennae/ipc))
+		antennae = arrived
+	if(istype(arrived, /obj/item/organ/external/ipc_screen))
+		screen = arrived
+
 /obj/item/bodypart/head/ipc/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone == ipc_eyes)
-		ipc_eyes = null
-	if(gone == ipc_ears)
-		ipc_ears = null
-	if(gone == ipc_tongue)
-		ipc_tongue = null
 	if(gone == antennae)
 		antennae = null
+	if(gone == screen)
+		screen = null
 	if(secured && !check_completion())
 		secured = FALSE
 
 /obj/item/bodypart/head/ipc/Destroy()
-	QDEL_NULL(ipc_eyes)
-	QDEL_NULL(ipc_ears)
-	QDEL_NULL(ipc_tongue)
 	QDEL_NULL(antennae)
+	QDEL_NULL(screen)
 	return ..()
 
 /obj/item/bodypart/head/ipc/examine(mob/user)
 	. = ..()
-	. += span_info("It has [ipc_eyes ? "optical sensors" : "no optical sensors"], [ipc_ears ? "synthetic ears" : "no synthetic ears"], [ipc_tongue ? "a synthetic tongue" : "no synthetic tongue"], and [antennae ? "IPC antennae" : "no IPC antennae"] installed. Its monitor is installed after the head is mounted onto a chassis.")
+	. += span_info("It has [eyes ? "optical sensors" : "no optical sensors"], [ears ? "synthetic ears" : "no synthetic ears"], [tongue ? "a synthetic tongue" : "no synthetic tongue"], and [antennae ? "IPC antennae" : "no IPC antennae"] installed. [screen ? "Its monitor is installed." : "Its monitor is installed after the head is mounted onto a chassis."]")
 	. += span_info("It is [wired ? "wired" : "unwired"] and [secured ? "secured" : "unsecured"].")
 	if(!secured)
-		. += span_info("Install each head component, add <b>cable</b>, then use a <b>screwdriver</b> to secure it.")
+		. += span_info("Install each head component, add " + EXAMINE_HINT("cable") + ", then use a " + EXAMINE_HINT("screwdriver") + " to secure it.")
 
 /// Returns whether the IPC head contains every required component and wiring.
 /obj/item/bodypart/head/ipc/proc/check_completion()
-	return ipc_eyes && ipc_ears && ipc_tongue && antennae && wired
+	return eyes && ears && tongue && antennae && wired
 
 /// Drops every component stored in the IPC head assembly.
 /obj/item/bodypart/head/ipc/proc/drop_stored_parts(atom/drop_to = drop_location())
-	ipc_eyes?.forceMove(drop_to)
-	ipc_ears?.forceMove(drop_to)
-	ipc_tongue?.forceMove(drop_to)
+	eyes?.forceMove(drop_to)
+	ears?.forceMove(drop_to)
+	tongue?.forceMove(drop_to)
 	antennae?.forceMove(drop_to)
-	ipc_eyes = null
-	ipc_ears = null
-	ipc_tongue = null
+	screen?.forceMove(drop_to)
+	eyes = null
+	ears = null
+	tongue = null
 	antennae = null
 	secured = FALSE
 
 /// Installs every stored head component into the completed IPC body.
 /obj/item/bodypart/head/ipc/proc/install_stored_organs(mob/living/carbon/receiver)
-	if(ipc_eyes && !ipc_eyes.Insert(receiver, TRUE, FALSE))
-		return FALSE
-	ipc_eyes = null
-	if(ipc_ears && !ipc_ears.Insert(receiver, TRUE, FALSE))
-		return FALSE
-	ipc_ears = null
-	if(ipc_tongue && !ipc_tongue.Insert(receiver, TRUE, FALSE))
-		return FALSE
-	ipc_tongue = null
+	. = TRUE
+	if(eyes && !eyes.Insert(receiver, TRUE, FALSE))
+		. = FALSE
+	eyes = null
+	if(ears && !ears.Insert(receiver, TRUE, FALSE))
+		. = FALSE
+	ears = null
+	if(tongue && !tongue.Insert(receiver, TRUE, FALSE))
+		. = FALSE
+	tongue = null
 	if(antennae)
 		var/datum/bodypart_overlay/mutant/antennae_ipc/antennae_overlay = antennae.bodypart_overlay
 		var/antennae_style = antennae_overlay?.sprite_datum?.name
@@ -97,43 +96,43 @@
 			antennae_overlay?.set_appearance_from_name(antennae_style)
 		receiver.dna.features["ipc_antenna"] = antennae_style
 		if(!antennae.Insert(receiver, TRUE, FALSE))
-			return FALSE
+			. = FALSE
 	antennae = null
-	return TRUE
+	return .
 
 /obj/item/bodypart/head/ipc/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(secured)
 		return ..()
 
 	if(istype(tool, /obj/item/organ/internal/eyes/synth))
-		if(ipc_eyes)
+		if(eyes)
 			to_chat(user, span_warning("[src] already has optical sensors installed!"))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		ipc_eyes = tool
+		eyes = tool
 		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/organ/internal/ears/synth))
-		if(ipc_ears)
+		if(ears)
 			to_chat(user, span_warning("[src] already has synthetic ears installed!"))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		ipc_ears = tool
+		ears = tool
 		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/organ/internal/tongue/robot/synth))
-		if(ipc_tongue)
+		if(tongue)
 			to_chat(user, span_warning("[src] already has a synthetic tongue installed!"))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		ipc_tongue = tool
+		tongue = tool
 		to_chat(user, span_notice("You install [tool] into [src]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -202,7 +201,7 @@
 	if(secured)
 		to_chat(user, span_warning("You need to unsecure [src] first!"))
 		return TRUE
-	if(!ipc_eyes && !ipc_ears && !ipc_tongue && !antennae)
+	if(!eyes && !ears && !tongue && !antennae)
 		to_chat(user, span_warning("There are no components to remove from [src]."))
 		return TRUE
 	prytool.play_tool_sound(src)

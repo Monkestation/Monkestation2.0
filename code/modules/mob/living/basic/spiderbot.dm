@@ -54,15 +54,14 @@
 	return ..()
 
 /mob/living/basic/spiderbot/death(gibbed)
-	if(stat == DEAD)
-		return FALSE
-
 	. = ..()
+	if(!.)
+		return
 
 	if(!emagged)
 		return
 
-	// Detonate once on death. The devastation zone gibs the spiderbot itself.
+	// Detonate once on death, then gib the chassis.
 	emagged = FALSE
 	QDEL_NULL(mmi)
 	explosion(
@@ -73,10 +72,12 @@
 		flash_range = 5,
 		explosion_cause = src,
 	)
+	if(!gibbed && !QDELETED(src))
+		gib()
 
-/mob/living/basic/spiderbot/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
-	if(istype(attacking_item, /obj/item/mmi))
-		var/obj/item/mmi/inserted_mmi = attacking_item
+/mob/living/basic/spiderbot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mmi))
+		var/obj/item/mmi/inserted_mmi = tool
 		if(mmi) // There's already a brain in it.
 			balloon_alert(user, "already has a brain!")
 			return ITEM_INTERACT_BLOCKING
@@ -103,19 +104,19 @@
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-	if(attacking_item.GetID())
+	if(tool.GetID())
 		if(!mmi)
 			balloon_alert(user, "no brain installed!")
 			return ITEM_INTERACT_BLOCKING
 		if(emagged)
 			balloon_alert(user, "access system unresponsive!")
 			return ITEM_INTERACT_BLOCKING
-		if(allowed(user))
-			balloon_alert(user, "brain ejected")
-			eject_brain()
-			return ITEM_INTERACT_SUCCESS
-		balloon_alert(user, "access denied!")
-		return ITEM_INTERACT_BLOCKING
+		if(!allowed(user))
+			balloon_alert(user, "access denied!")
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "brain ejected")
+		eject_brain()
+		return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/spiderbot/welder_act(mob/living/user, obj/item/tool)
 	if((user.istate & ISTATE_HARM) && user != src)

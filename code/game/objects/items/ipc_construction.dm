@@ -11,15 +11,13 @@
 	w_class = WEIGHT_CLASS_GIGANTIC
 	interaction_flags_item = NONE
 
-	/// Left arm part of the IPC assembly.
+	/// Arm parts of the IPC assembly.
 	var/obj/item/bodypart/arm/left/ipc/left_arm = null
-	/// Right arm part of the IPC assembly.
 	var/obj/item/bodypart/arm/right/ipc/right_arm = null
-	/// Left leg part of the IPC assembly.
+	//  Leg parts of the IPC assembly.
 	var/obj/item/bodypart/leg/left/ipc/left_leg = null
-	/// Right leg part of the IPC assembly.
 	var/obj/item/bodypart/leg/right/ipc/right_leg = null
-	/// Head part of the IPC assembly.
+	/// Head of the IPC assembly.
 	var/obj/item/bodypart/head/ipc/head = null
 	/// IPC chest cavity parts are stored directly in the core until the completed chassis becomes a mob.
 	var/obj/item/organ/internal/stomach/synth/stomach = null
@@ -85,19 +83,19 @@
 	if(screen)
 		. += span_info("The screen is [screen_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [screen_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
 	if(check_completion())
-		. += span_info("It is ready to be finalized with a <b>multitool</b>.")
+		. += span_info("It is ready to be finalized with a " + EXAMINE_HINT("multitool") + ".")
 		return
 	if(core_state != IPC_CONSTRUCTION_SECURED)
-		. += span_info("Install each chest component, add <b>cable</b>, then use a <b>screwdriver</b> to secure the chest cavity.")
+		. += span_info("Install each chest component, add " + EXAMINE_HINT("cable") + ", then use a " + EXAMINE_HINT("screwdriver") + " to secure the chest cavity.")
 		return
 	if(check_body_completion() && !screen)
-		. += span_info("Install an <b>IPC screen</b>, then wire and secure it before finalizing the chassis with a <b>multitool</b>.")
+		. += span_info("Install an " + EXAMINE_HINT("IPC screen") + ", then wire and secure it before finalizing the chassis with a " + EXAMINE_HINT("multitool") + ".")
 		return
 	if(screen && screen_state == IPC_CONSTRUCTION_UNWIRED)
-		. += span_info("Use <b>cable</b> to wire the installed screen.")
+		. += span_info("Use " + EXAMINE_HINT("cable") + " to wire the installed screen.")
 		return
 	if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
-		. += span_info("Use a <b>screwdriver</b> to secure the wired screen.")
+		. += span_info("Use a " + EXAMINE_HINT("screwdriver") + " to secure the wired screen.")
 		return
 	. += span_info("Attach all IPC limbs plus a secured head before installing the screen and finalizing the chassis.")
 
@@ -150,15 +148,16 @@
 
 /// Installs all organs stored directly in this IPC core into the completed IPC shell.
 /obj/item/ipc_core/proc/install_stored_organs(mob/living/carbon/receiver)
+	. = TRUE
 	if(stomach && !stomach.Insert(receiver, TRUE, FALSE))
-		return FALSE
+		. = FALSE
 	if(lungs && !lungs.Insert(receiver, TRUE, FALSE))
-		return FALSE
+		. = FALSE
 	if(heart && !heart.Insert(receiver, TRUE, FALSE))
-		return FALSE
+		. = FALSE
 	if(liver && !liver.Insert(receiver, TRUE, FALSE))
-		return FALSE
-	return TRUE
+		. = FALSE
+	return .
 
 /// Drops all bodyparts currently attached to this IPC core.
 /obj/item/ipc_core/proc/drop_all_parts(atom/drop_to = drop_location())
@@ -221,39 +220,36 @@
 	to_chat(user, span_notice("You secure [src]'s chest cavity."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/ipc_core/wirecutter_act(mob/living/user, obj/item/cutter)
-	. = ..()
+/obj/item/ipc_core/wirecutter_act(mob/living/user, obj/item/tool)
 	if(screen && screen_state >= IPC_CONSTRUCTION_WIRED)
 		if(screen_state == IPC_CONSTRUCTION_SECURED)
 			to_chat(user, span_warning("You need to unsecure [screen] first!"))
 			return ITEM_INTERACT_BLOCKING
-		cutter.play_tool_sound(src)
-		. = ITEM_INTERACT_SUCCESS
+		tool.play_tool_sound(src)
 		to_chat(user, span_notice("You cut [screen]'s wiring out of [src]."))
 		new /obj/item/stack/cable_coil(drop_location(), 1)
 		screen_state = IPC_CONSTRUCTION_UNWIRED
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 	if(core_state == IPC_CONSTRUCTION_UNWIRED)
-		return
+		return ..()
 	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 		return ITEM_INTERACT_BLOCKING
-	cutter.play_tool_sound(src)
-	. = ITEM_INTERACT_SUCCESS
+	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the wires out of [src]'s chest cavity."))
 	new /obj/item/stack/cable_coil(drop_location(), 1)
 	core_state = IPC_CONSTRUCTION_UNWIRED
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/ipc_core/crowbar_act(mob/living/user, obj/item/prytool)
-	. = ..()
+/obj/item/ipc_core/crowbar_act(mob/living/user, obj/item/tool)
 	if(core_state == IPC_CONSTRUCTION_SECURED)
 		to_chat(user, span_warning("You need to unsecure [src]'s chest cavity first!"))
 		return ITEM_INTERACT_BLOCKING
 	if(!stomach && !lungs && !heart && !liver)
 		to_chat(user, span_warning("There are no chest components to remove from [src]."))
 		return ITEM_INTERACT_BLOCKING
-	prytool.play_tool_sound(src)
+	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You pry the chest components out of [src]."))
 	drop_stored_parts()
 	update_appearance()
@@ -436,9 +432,9 @@
 
 /// Moves stored head organs out of the bodypart contents before try_attach_limb() auto-inserts contents.
 /obj/item/ipc_core/proc/stage_stored_head_organs_for_assembly(obj/item/bodypart/head/ipc/assembled_head)
-	var/obj/item/organ/internal/eyes/synth/staged_eyes = assembled_head.ipc_eyes
-	var/obj/item/organ/internal/ears/synth/staged_ears = assembled_head.ipc_ears
-	var/obj/item/organ/internal/tongue/robot/synth/staged_tongue = assembled_head.ipc_tongue
+	var/obj/item/organ/internal/eyes/synth/staged_eyes = assembled_head.eyes
+	var/obj/item/organ/internal/ears/synth/staged_ears = assembled_head.ears
+	var/obj/item/organ/internal/tongue/robot/synth/staged_tongue = assembled_head.tongue
 	var/obj/item/organ/external/antennae/ipc/staged_antennae = assembled_head.antennae
 
 	var/list/stored_organs = list(staged_eyes, staged_ears, staged_tongue, staged_antennae)
@@ -446,36 +442,26 @@
 		if(stored_organ)
 			stored_organ.moveToNullspace()
 
-	assembled_head.ipc_eyes = staged_eyes
-	assembled_head.ipc_ears = staged_ears
-	assembled_head.ipc_tongue = staged_tongue
-	assembled_head.antennae = staged_antennae
+	return stored_organs
 
 /// Converts the completed construction core into an inert IPC body.
 /obj/item/ipc_core/proc/build_ipc_body(mob/living/user)
 	var/turf/build_turf = get_turf(src)
-	if(!build_turf)
+	if(!build_turf || !check_completion())
 		return FALSE
 
 	var/mob/living/carbon/human/species/ipc/ipc_body = new(build_turf)
 	if(!ipc_body)
 		return FALSE
-	// Keep the roundstart augment policy on normal IPCs, but prevent organ regeneration from restoring it on this constructed shell.
-	ipc_body.dna.species.mutant_organs = ipc_body.dna.species.mutant_organs.Copy()
+	// Constructed IPCs have the option for a power cord to be installed through surgery.
 	ipc_body.dna.species.mutant_organs -= /obj/item/organ/internal/cyberimp/arm/item_set/power_cord
 
 	// Remove default IPC organs so the shell only uses fabricated components.
-	// The iron butt is initialized with the shell and can still be replaced later through augmentation.
 	for(var/obj/item/organ/existing_organ as anything in ipc_body.organs.Copy())
 		if(istype(existing_organ, /obj/item/organ/internal/butt/iron))
 			continue
 		existing_organ.Remove(ipc_body, TRUE)
 		qdel(existing_organ)
-
-	var/obj/item/organ/internal/brain/brain = ipc_body.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(brain)
-		brain.Remove(ipc_body, TRUE)
-		qdel(brain)
 
 	for(var/obj/item/bodypart/bodypart as anything in ipc_body.bodyparts.Copy())
 		qdel(bodypart)
@@ -483,23 +469,24 @@
 	var/obj/item/bodypart/chest/ipc/installed_chest = new /obj/item/bodypart/chest/ipc
 	var/obj/item/bodypart/head/ipc/installed_head = head
 	var/obj/item/organ/external/ipc_screen/installed_screen = screen
-	stage_stored_head_organs_for_assembly(installed_head)
+	var/list/staged_head_organs = stage_stored_head_organs_for_assembly(installed_head)
 
+	. = TRUE
 	var/list/attached_parts = list(installed_chest, installed_head, left_arm, right_arm, left_leg, right_leg)
 	for(var/obj/item/bodypart/bodypart as anything in attached_parts)
 		if(!bodypart.try_attach_limb(ipc_body, TRUE))
-			qdel(ipc_body)
-			return FALSE
+			. = FALSE
 
-	if(!install_stored_organs(ipc_body) || !installed_head.install_stored_organs(ipc_body))
-		qdel(ipc_body)
-		return FALSE
+	// Head attachment clears its organ references; restore them only after attaching the limbs.
+	installed_head.eyes = staged_head_organs[1]
+	installed_head.ears = staged_head_organs[2]
+	installed_head.tongue = staged_head_organs[3]
+	installed_head.antennae = staged_head_organs[4]
 
-	// Roundstart IPCs receive a charging cord from their species, but constructed shells must have it installed later through augmentation surgery.
-	var/obj/item/organ/internal/cyberimp/arm/item_set/power_cord/power_cord = ipc_body.get_organ_by_type(/obj/item/organ/internal/cyberimp/arm/item_set/power_cord)
-	if(power_cord)
-		power_cord.Remove(ipc_body, TRUE)
-		qdel(power_cord)
+	if(!install_stored_organs(ipc_body))
+		. = FALSE
+	if(!installed_head.install_stored_organs(ipc_body))
+		. = FALSE
 
 	// Remove clothes, facial hair, and features.
 	ipc_body.undershirt = null
@@ -516,18 +503,18 @@
 	// The new shell may have randomized to no screen, so establish a valid display feature before inserting the fabricated screen.
 	ipc_body.dna.features["ipc_screen"] = "Blue"
 	if(!installed_screen.Insert(ipc_body, TRUE, FALSE))
-		qdel(ipc_body)
-		return FALSE
-
-	installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
+		. = FALSE
+	else
+		installed_screen.switch_to_screen(ipc_body, "Blue", IPC_CORE_UNCONNECTED_SCREEN_COLOR)
 
 	ipc_body.regenerate_icons()
-	user.visible_message(
-		span_notice("[user] finishes [src] into an inert IPC shell."),
-		span_notice("You finish [src] into an inert IPC shell.")
-	)
+	if(.)
+		user.visible_message(
+			span_notice("[user] finishes [src] into an inert IPC shell."),
+			span_notice("You finish [src] into an inert IPC shell.")
+		)
 	qdel(src)
-	return TRUE
+	return .
 
 #undef IPC_CORE_OFF_SCREEN
 #undef IPC_CORE_UNCONNECTED_SCREEN
