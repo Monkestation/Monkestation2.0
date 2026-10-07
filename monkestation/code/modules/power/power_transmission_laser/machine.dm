@@ -301,7 +301,10 @@
 /obj/machinery/power/transmission_laser/proc/sell_power(power_amount)
 	var/mw_power = power_amount / (1 MW)
 
-	var/generated_cash = (2 * mw_power * PROCESS_CAP) / (2 * mw_power + PROCESS_CAP * A1_CURVE)
+	var/generated_cash = (1/PROCESS_CAP) * mw_power^2
+
+
+	var/generated_cash = A1_CURVE * mw_power * (mw_power / (mw_power + 1))
 	generated_cash += (4 * mw_power * MINIMUM_BAR) / (4 * mw_power + MINIMUM_BAR)
 	generated_cash = round(generated_cash)
 	if(generated_cash < 0)
