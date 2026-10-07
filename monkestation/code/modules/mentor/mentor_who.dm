@@ -1,6 +1,4 @@
-/client/verb/mentorwho()
-	set category = "Mentor"
-	set name = "Mentorwho"
+GAME_VERB(/client, mentorwho, "Mentorwho", "Mentor")
 
 	var/msg = "<b>Current Mentors:</b>\n"
 	//Admin version

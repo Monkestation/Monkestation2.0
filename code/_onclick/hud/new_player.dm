@@ -207,9 +207,11 @@
 				ready_message += ", Highest occupation setting: [highest_job]"
 			to_chat(new_client, span_notice(ready_message))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(interview_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
+		SSstatpanels.add_job_estimation(new_player)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
+		SSstatpanels.remove_job_estimation(new_player)
 	update_appearance(UPDATE_ICON)
 
 ///Shown when the game has started
@@ -620,17 +622,17 @@
 // 	server_id = PLEXORA_SERVERID_VANDERLIN
 // 	layer = LOBBY_BACKGROUND_LAYER
 
-//Monke button
-/atom/movable/screen/lobby/button/ook
+//Mothroach button
+/atom/movable/screen/lobby/button/roach
 	screen_loc = "TOP:-126,CENTER:110"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "monke"
-	base_icon_state = "monke"
+	icon_state = "roach"
+	base_icon_state = "roach"
 
-/atom/movable/screen/lobby/button/ook/Click(location, control, params)
+/atom/movable/screen/lobby/button/roach/Click(location, control, params)
 	. = ..()
 	if(.)
-		SEND_SOUND(usr, 'sound/misc/menumonkey.ogg')
+		SEND_SOUND(usr, 'sound/voice/moth/scream_moth.ogg')
 
 /atom/movable/screen/lobby/overflow_alert
 	screen_loc = "TOP:-48,CENTER-2.7"
