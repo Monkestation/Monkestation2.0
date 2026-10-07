@@ -24,7 +24,3 @@
 /// Security bitrunning domains, shows up in the Torment Nexus.
 #define BITRUNNER_DOMAIN_TUTORIAL "tutorial"
 
-/// Monkecoins rewards
-#define TUTORIAL_REWARD_LOW 500
-#define TUTORIAL_REWARD_MEDIUM 1000
-#define TUTORIAL_REWARD_HIGH 2000

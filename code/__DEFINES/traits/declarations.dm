@@ -973,13 +973,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLOWN_DISBELIEVER	"clown_disbeliever"
 #define TRAIT_HIDDEN_IMAGE "generic-hidden-image"
 #define TRAIT_JAILBIRD "jailbird"
-#define TRAIT_LOUD_ASS "loud_ass"
 #define TRAIT_MINING_CALLOUTS "miner_callouts"
 #define TRAIT_PARANOIA "paranoia"
 #define TRAIT_PRIDE_PIN "pride_pin"
-#define TRAIT_STABLE_ASS "stable_ass"
 #define TRAIT_STOWAWAY "stowaway"
-#define TRAIT_UNSTABLE_ASS "unstable_ass"
 
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"

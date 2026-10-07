@@ -267,7 +267,7 @@
 	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
 	var/list/firing_directions
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target)
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target, original = TRUE)
 	. = ..()
 	if(!firing_directions)
 		firing_directions = GLOB.alldirs.Copy()

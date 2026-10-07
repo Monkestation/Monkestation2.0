@@ -235,7 +235,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/jack
 	name = "Carved Square Pumpkin"
 	item_path = /obj/item/clothing/head/utility/hardhat/jack
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/xenos
 	name = "Xenos Helmet"
@@ -399,7 +398,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/donator
 	donator_only = TRUE
-	requires_purchase = FALSE
 
 /*
 *	FLOWERS
@@ -446,7 +444,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Constable Helmet"
 	item_path = /obj/item/clothing/head/costume/constable
 	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 /// EVERYTHING NOVA RELATED
 
@@ -644,38 +641,32 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Captain's Naval Cap"
 	item_path = /obj/item/clothing/head/hats/imperial/cap
 	restricted_roles = list(JOB_CAPTAIN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/imperial_hop
 	name = "Head of Personnel's Naval Cap"
 	item_path = /obj/item/clothing/head/hats/imperial/hop
 	restricted_roles = list(JOB_HEAD_OF_PERSONNEL)
-	requires_purchase = FALSE
 
 
 /datum/loadout_item/head/imperial_cmo
 	name = "Chief Medical Officer's Naval Cap"
 	item_path = /obj/item/clothing/head/hats/imperial/cmo
 	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/imperial_ce
 	name = "Chief Engineer's blast helmet."
 	item_path = /obj/item/clothing/head/hats/imperial/ce
 	restricted_roles = list(JOB_CHIEF_ENGINEER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/cowboyhat_sec
 	name = "Cattleman Hat, Security"
 	item_path = /obj/item/clothing/head/cowboy/nova/cattleman/sec
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT ,JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/cowboyhat_secwide
 	name = "Wide-Brimmed Cattleman Hat, Security"
 	item_path = /obj/item/clothing/head/cowboy/nova/cattleman/wide/sec
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT ,JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/blasthelmet //BUYABLE
 	name = "Blast Helmet"
@@ -685,7 +676,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Head of Security's Naval Cap"
 	item_path = /obj/item/clothing/head/hats/imperial/hos
 	restricted_roles = list(JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/cybergoggles_civ //BUYABLE
 	name = "Type-34C Forensics Headwear"
@@ -695,7 +685,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Type-34P Forensics Headwear"
 	item_path = /obj/item/clothing/head/fedora/det_hat/cybergoggles
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT ,JOB_HEAD_OF_SECURITY)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/imperial_generic //BUYABLE
 	name = "Grey Naval Officer Cap"
@@ -717,13 +706,11 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Jester hat"
 	item_path = /obj/item/clothing/head/costume/jester
 	restricted_roles = list(JOB_CLOWN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/jester2
 	name = "Alternate Jester Hat"
 	item_path = /obj/item/clothing/head/costume/jester2
 	restricted_roles = list(JOB_CLOWN)
-	requires_purchase = FALSE
 
 /*
 *	JOB BERETS
@@ -733,25 +720,21 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Atmospherics Beret"
 	item_path = /obj/item/clothing/head/beret/atmos
 	restricted_roles = list(JOB_ATMOSPHERIC_TECHNICIAN)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/beret_viro
 	name = "Virologist Beret"
 	item_path = /obj/item/clothing/head/beret/medical/virologist
 	restricted_roles = list(JOB_VIROLOGIST)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/beret_chem
 	name = "Chemist Beret"
 	item_path = /obj/item/clothing/head/beret/medical/chemist
 	restricted_roles = list(JOB_CHEMIST)
-	requires_purchase = FALSE
 
 /datum/loadout_item/head/beret_robo
 	name = "Roboticist Beret"
 	item_path = /obj/item/clothing/head/beret/science/robo
 	restricted_roles = list(JOB_ROBOTICIST)
-	requires_purchase = FALSE
 
 // Legacy unpaintable cowboy hat because it fits a character better
 /datum/loadout_item/head/cowboyhat_legacy  //BUYABLE

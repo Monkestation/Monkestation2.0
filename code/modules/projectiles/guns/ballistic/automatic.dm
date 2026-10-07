@@ -1115,7 +1115,6 @@
 	desc = "Using parts from confiscated weapons, the Mining Research team has thrown together \
 	A beast of a weapon. Using Proto Kinetic Acceleration technology as per usual, the 'Hellhound' \
 	is a LMG chambered in kinetic 7.62 with a incredibly high fire rate, for when you need a beast \
-	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
 	to kill a beast. Has a fixed unremovable 150 round magazine with a special loading port on the outside, forcing you to \
 	top off and reload using stripper clips."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'

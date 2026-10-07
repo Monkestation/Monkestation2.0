@@ -1736,7 +1736,6 @@
 	pixel_y = 1;
 	pixel_x = 14
 	},
-/obj/effect/decal/cleanable/piss_stain,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,

@@ -310,10 +310,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	prefs.last_id = computer_id //these are gonna be used for banning
 
 	if(fexists(roundend_report_file()))
-		add_verb(src, /client/proc/show_previous_roundend_report)
+		ASSIGN_GAME_VERB(src, /client, show_previous_roundend_report)
 
 	if(fexists("data/server_last_roundend_report.html"))
-		add_verb(src, /client/proc/show_servers_last_roundend_report)
+		ASSIGN_GAME_VERB(src, /client, show_servers_last_roundend_report)
 
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		connecting_admin = TRUE
 		deadmin_datum.activate()
 	else if(deadmin_datum)
-		add_verb(src, /client/proc/readmin)
+		ASSIGN_GAME_VERB(src, /client, readmin)
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
@@ -1010,11 +1010,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (interviewee)
 		return
 	if(CONFIG_GET(flag/see_own_notes))
-		add_verb(src, /client/proc/self_notes)
+		ASSIGN_GAME_VERB(src, /client, self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
-		add_verb(src, /client/proc/self_playtime)
+		ASSIGN_GAME_VERB(src, /client, self_playtime)
 	if(!CONFIG_GET(flag/forbid_preferences_export))
-		add_verb(src, /client/proc/export_preferences)
+		ASSIGN_GAME_VERB(src, /client, export_preferences)
 
 
 #undef UPLOAD_LIMIT
@@ -1316,11 +1316,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)
 
-/client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
-	set category = "OOC"
-	set desc = "Stop Current Sounds"
-
+GAME_VERB_DESC(/client, stop_client_sounds, "Stop Sounds", "Stop Current Sounds", "OOC")
 	current_ambient_sound = null
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
@@ -1328,18 +1324,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.lobby_media.remove_listener(mob)
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
+GAME_VERB(/client, toggle_fullscreen, "Toggle Fullscreen", "OOC")
 
 	fullscreen = !fullscreen
 
 	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
-/client/verb/toggle_status_bar()
-	set name = "Toggle Status Bar"
-	set category = "OOC"
+GAME_VERB(/client, toggle_status_bar, "Toggle Status Bar", "OOC")
 
 	show_status_bar = !show_status_bar
 

@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY_TYPED(lottery_ticket_owners, /datum/bank_account)
 
 /obj/machinery/atm
 	name = "ATM"
-	desc = "You can withdraw or deposit Monkecoins in here, also acts as a terminal for flash sale items."
+	desc = "Acts as a terminal for flash sale items."
 
 	density = FALSE
 	active_power_usage = 0
@@ -53,7 +53,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 	if(registed_account)
 		cash_balance = registed_account.account_balance
 
-	data["meta_balance"] = user.client.prefs.metacoins
 	data["cash_balance"] = cash_balance
 	data["lottery_pool"] = lottery_pool
 	data["time_until_draw"] = DisplayTimeText(timeleft(lottery_timer_id))
@@ -79,9 +78,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 
 	var/mob/user = ui.user
 	switch(action)
-		if("withdraw")
-			attempt_withdraw(user)
-			return TRUE
 		if("withdraw_cash")
 			withdraw_cash(user)
 			return TRUE
@@ -90,9 +86,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 			return TRUE
 		if("buy_flash")
 			buy_flash_sale(user)
-			return TRUE
-		if("buy_lootbox")
-			buy_lootbox(user)
 			return TRUE
 	return TRUE
 
@@ -136,53 +129,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 	if(flash_sale_datum.attempt_purchase(user.client))
 		say("Item successfully purchased.")
 
-/obj/machinery/atm/proc/attempt_withdraw(mob/user)
-	var/current_balance = user.client.prefs.metacoins
-	var/withdraw_amount = tgui_input_number(user, "How many Monkecoins would you like to withdraw?", "ATM", 0 , current_balance, 0)
-	if(!withdraw_amount)
-		return
-
-	withdraw_amount = clamp(withdraw_amount, 0, current_balance)
-	if(!user.client.prefs.adjust_metacoins(user.client.ckey, -withdraw_amount, "Withdrew from an ATM", donator_multiplier = FALSE))
-		return
-
-	var/obj/item/stack/monkecoin/coin_stack = new(user.loc)
-	coin_stack.amount = withdraw_amount
-	coin_stack.update_desc()
-	user.put_in_hands(coin_stack)
-
-/obj/machinery/atm/proc/buy_lootbox(mob/user)
-	var/current_balance = user.client.prefs.metacoins
-	if(tgui_alert(user, "Are you sure you would like to purchase a lootbox for [LOOTBOX_COST] monkecoins?", "Balance: [current_balance]", list("Yes", "No")) != "Yes")
-		return
-	if(!user.client.prefs.has_coins(LOOTBOX_COST))
-		balloon_alert(user, "not enough monkecoins!")
-		return
-	if(!user.client.prefs.adjust_metacoins(user.client.ckey, -LOOTBOX_COST, "Bought a lootbox"))
-		return
-
-	var/obj/item/lootbox/box = new(get_turf(user))
-	user.put_in_hands(box)
-
-
 /obj/machinery/atm/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/stack/monkecoin))
-		var/obj/item/stack/monkecoin/attacked_coins = tool
-		var/coin_amount = attacked_coins.amount
-		if(QDELETED(attacked_coins) || !user.temporarilyRemoveItemFromInventory(attacked_coins, force = TRUE))
-			return
-		if(attacked_coins.amount != coin_amount)
-			stack_trace("Monkecoin stack amount somehow changed while removing from inventory (from [coin_amount] to [attacked_coins.amount])")
-		qdel(attacked_coins)
-		var/ckey = user.client?.ckey
-		if(!user.client?.prefs?.adjust_metacoins(ckey, coin_amount, "Deposited coins to an ATM", donator_multiplier = FALSE))
-			say("Error accepting coins, please try again later.")
-			user.put_in_hands(new /obj/item/stack/monkecoin(drop_location(), coin_amount, FALSE), merge_stacks = FALSE)
-			return
-		say("Coins deposited to your account, have a nice day.")
-		return ITEM_INTERACT_SUCCESS
-
-	else if(istype(tool, /obj/item/stack/spacecash))
+	if(istype(tool, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/attacked_cash = tool
 		var/datum/bank_account/registed_account = astype(user, /mob/living)?.get_bank_account()
 		if(isnull(registed_account) && ishuman(user))

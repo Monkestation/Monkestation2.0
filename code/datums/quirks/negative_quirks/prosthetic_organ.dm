@@ -15,6 +15,8 @@
 
 /datum/quirk/prosthetic_organ/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/incompatible = FALSE
+	var/organ_slot = client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic_organ)
 	var/static/list/organ_slots = list(
 		ORGAN_SLOT_HEART,
 		ORGAN_SLOT_LUNGS,
@@ -24,20 +26,26 @@
 	)
 
 	var/list/possible_organ_slots = organ_slots.Copy()
-	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD) && organ_slot == ORGAN_SLOT_HEART)
 		possible_organ_slots -= ORGAN_SLOT_HEART
-	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+		incompatible = TRUE
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH) && organ_slot == ORGAN_SLOT_LUNGS)
 		possible_organ_slots -= ORGAN_SLOT_LUNGS
-	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
+		incompatible = TRUE
+	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM) && organ_slot == ORGAN_SLOT_LIVER)
 		possible_organ_slots -= ORGAN_SLOT_LIVER
-	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
+		incompatible = TRUE
+	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER) && organ_slot == ORGAN_SLOT_STOMACH)
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
-	if(HAS_TRAIT(human_holder, TRAIT_SPLEENLESS_METABOLISM))
+		incompatible = TRUE
+	if(HAS_TRAIT(human_holder, TRAIT_SPLEENLESS_METABOLISM) && organ_slot == ORGAN_SLOT_SPLEEN)
 		possible_organ_slots -= ORGAN_SLOT_SPLEEN
+		incompatible = TRUE
 	if(!length(organ_slots)) //what the hell
 		return
 
-	var/organ_slot = pick(possible_organ_slots)
+	if(isnull(organ_slot) || organ_slot == "Random" || incompatible)
+		organ_slot = pick(possible_organ_slots)
 	var/obj/item/organ/prosthetic
 	switch(organ_slot)
 		if(ORGAN_SLOT_HEART)

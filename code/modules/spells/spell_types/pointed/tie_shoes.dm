@@ -23,7 +23,7 @@
 	/// Summons shoes to untie if the target has none.
 	var/summons_shoes = FALSE
 
-/datum/action/cooldown/spell/pointed/untie_shoes/New(Target)
+/datum/action/cooldown/spell/pointed/untie_shoes/New(Target, original = TRUE)
 	. = ..()
 	// tgs first spell with multiple invocations!!!!!!
 	invocation = pick("Acetato!", "Agaletto!")

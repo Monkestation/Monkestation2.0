@@ -547,9 +547,6 @@ MAXFINE 2000
 ## don't need (or want) this.
 #GIVE_TUTORIALS_WITHOUT_DB
 
-## Put the name of your custom currency here
-METACURRENCY_NAME Metacoin
-
 TWITCH_KEY mrhouse
 
 ## How long (in minutes) after roundstart should the server start an automatic crew transfer vote?

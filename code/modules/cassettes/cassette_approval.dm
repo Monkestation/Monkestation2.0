@@ -104,13 +104,6 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 			var/datum/persistent_client/original_submitter = GLOB.persistent_clients_by_ckey[submitter_ckey]
 			if(original_submitter)
 				to_chat(original_submitter.mob, span_big(span_notice("You feel a wave of disappointment wash over you, the Space Board of Music has <b>rejected</b> your cassette: [cassette_data.name].")))
-				original_submitter.client?.prefs?.adjust_metacoins(
-					submitter_ckey,
-					amount = 5000,
-					reason = "Cassette Tape Rejected",
-					announces = TRUE,
-					donator_multiplier = FALSE,
-				)
 			qdel(src)
 
 /datum/cassette_review/proc/operator""()

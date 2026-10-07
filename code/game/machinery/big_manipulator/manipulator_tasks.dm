@@ -10,7 +10,7 @@
 /datum/manipulator_task/proc/serialize()
 	return list("type" = type)
 
-/datum/manipulator_task/New(...)
+/datum/manipulator_task/New(..., serialized_data)
 	..()
 	return
 

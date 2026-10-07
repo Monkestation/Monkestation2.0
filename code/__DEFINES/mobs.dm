@@ -11,6 +11,9 @@
 #define MOVE_INTENT_RUN "run"
 #define MOVE_INTENT_SPRINT "sprint"
 
+///The amount of time a mob has to be dead before they can respawn
+#define RESPAWN_TIMER (13 MINUTES)
+
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL 2150
 #define BLOOD_VOLUME_EXCESS 2100

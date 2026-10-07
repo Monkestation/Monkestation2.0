@@ -79,11 +79,6 @@ SUBSYSTEM_DEF(ticker)
 	/// ID of round reboot timer, if it exists
 	var/reboot_timer = null
 
-	///add bitflags to this that should be rewarded monkecoins, example: DEPARTMENT_BITFLAG_SECURITY
-	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY, DEPARTMENT_BITFLAG_SILICON)
-	///add jobs to this that should get rewarded monkecoins, example: JOB_SECURITY_OFFICER
-	var/list/jobs_to_reward = list(JOB_JANITOR,)
-
 	var/list/popcount
 
 	/// A lazylist of roundstart splashes, so they can be faded out AFTER antags are initialized.
@@ -491,6 +486,9 @@ SUBSYSTEM_DEF(ticker)
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
 			SSjob.EquipRank(new_player_living, player_assigned_role, new_player_mob.client)
+
+		new_player_mob.persistent_client.joined_departments_bitflag |= player_assigned_role.departments_bitflags
+
 		player_assigned_role.after_roundstart_spawn(new_player_living, new_player_mob.client)
 		if(picked_spare_id_candidate == new_player_mob)
 			captainless = FALSE
@@ -507,9 +505,6 @@ SUBSYSTEM_DEF(ticker)
 				if (item.restricted_roles && length(item.restricted_roles) && !(player_assigned_role.title in item.restricted_roles))
 					continue
 				item.post_equip_item(new_player_mob.client?.prefs, new_player_living)
-
-		if(new_player_mob.client?.readied_store?.bought_item)
-			new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
 
 		CHECK_TICK
 
@@ -559,12 +554,6 @@ SUBSYSTEM_DEF(ticker)
 	var/datum/persistent_client/persistent_client = living.persistent_client
 	if(persistent_client)
 		SSchallenges.apply_challenges(persistent_client)
-		for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
-			if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				persistent_client.roundend_monkecoin_bonus += 225
-		for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
-			if(living.job == processing_reward_jobs)
-				persistent_client.roundend_monkecoin_bonus += 225
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
@@ -1073,7 +1062,6 @@ SUBSYSTEM_DEF(ticker)
 				var/score = round(human_mob.hardcore_survival_score * 2)
 				player_client?.give_award(/datum/award/score/hardcore_random, human_mob, score)
 				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
-				player_client?.prefs.adjust_metacoins(player_client.ckey, 500, "hardcore random greentext")
 				return
 
 	if(considered_escaped(human_mob.mind))
@@ -1237,6 +1225,8 @@ SUBSYSTEM_DEF(ticker)
 
 	//might want to make this a full section
 	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "N/A"]")]</span></div>"
+
+	parts += "<div class='panel stationborder'><span class='header'>[("Game Master: [GLOB.called_gamemaster ? capitalize(GLOB.called_gamemaster) : "None"]")]</span><br><b>(as of roundend)</b></div>"
 
 	if(nanotrasen_rep_status)
 		parts += nanotrasen_rep_report()
@@ -1855,29 +1845,6 @@ SUBSYSTEM_DEF(ticker)
 	. = list()
 	for(var/client/client as anything in GLOB.clients)
 		calculate_rewards_for_client(client, .)
-	calculate_station_goal_bonus(.)
-
-/datum/controller/subsystem/ticker/proc/calculate_station_goal_bonus(list/rewards)
-	var/list/joined_player_list = unique_list(GLOB.joined_player_list)
-	var/total_crew = length(joined_player_list)
-	if(total_crew < 5) // prevent wrecking the economy on like MRP2 - Changed to allow lower crews but still need a crew - veth
-		return
-	var/completed = FALSE
-	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
-		if(station_goal.check_completion())
-			completed = TRUE
-			break
-	if(!completed)
-		return
-	// Note: The math for this is complicated, but if we have an average crew member size of like, 50, each crew member will get
-	// 1000. The 2nd paremter rounds up to that nearest number
-	var/amount = CEILING(50000 / total_crew, 50) // nice even number
-	for(var/ckey in joined_player_list)
-		LAZYINITLIST(rewards[ckey])
-		rewards[ckey] += list(list(amount, "Station Goal Completion Bonus"))
-
-	message_admins("As a result of the station goal being completed, [total_crew] players were rewarded [amount] monkecoins each.")
-	log_game("As a result of the station goal being completed, [total_crew] players were rewarded [amount] monkecoins each.")
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
@@ -1890,15 +1857,6 @@ SUBSYSTEM_DEF(ticker)
 	var/client/client = GLOB.directory[ckey]
 	if(!client)
 		return
-	var/total_amount = 0
-	for(var/reward in rewards)
-		var/amount = reward[1]
-		var/reason = reward[2]
-		total_amount += amount
-		to_chat(client, span_rose(span_bold("[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]")))
-	// don't do separate SQL queries for each reward, just add all the coins at once lol
-	if(total_amount)
-		client?.prefs?.adjust_metacoins(ckey, total_amount, reason = "roundend rewards", announces = FALSE)
 	if(client?.mob?.mind?.assigned_role)
 		add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
 
@@ -1911,28 +1869,11 @@ SUBSYSTEM_DEF(ticker)
 	var/datum/persistent_client/details = client.persistent_client
 
 	var/round_end_bonus = 100
-	var/dono_bonus
-
-	// Patreon Flat Roundend Bonus
-		// Twitch Flat Roundend Bonus
-	if((details?.twitch?.has_access(ACCESS_TWITCH_SUB_TIER_1)))
-		dono_bonus += DONATOR_ROUNDEND_BONUS
-	if((details?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))
-		dono_bonus += DONATOR_ROUNDEND_BONUS
-	if(details?.patreon?.has_access(ACCESS_NUKIE_RANK))
-		dono_bonus += DONATOR_ROUNDEND_BONUS
-	if(dono_bonus > 0)
-		queue[ckey] += list(list(dono_bonus, "Donator Bonus! Thank you!"))
 
 	LAZYINITLIST(queue[ckey])
 
 	queue[ckey] += list(list(round_end_bonus, "Played a Round"))
 
-	if(world.port == MRP2_PORT)
-		queue[ckey] += list(list(500, "MRP2 Seeding Subsidies"))
-	var/special_bonus = details?.roundend_monkecoin_bonus
-	if(special_bonus)
-		queue[ckey] += list(list(special_bonus, "Special Bonus"))
 	if(!isnull(GLOB.mentor_datums[ckey]) || !isnull(GLOB.dementors[ckey]))
 		if(details?.mob?.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			queue[ckey] += list(list(300, "Mentor Head of Staff Bonus"))
@@ -1967,17 +1908,6 @@ SUBSYSTEM_DEF(ticker)
 
 		var/client/client = GLOB.directory[ownerckey] // Use directory for direct lookup (Client might be a differnet mob than when review was made.)
 		if(client && !QDELETED(client?.prefs))
-			var/prev_bal = client?.prefs?.metacoins
-			var/adjusted = client?.prefs?.adjust_metacoins(
-				client?.ckey,
-				amount = 5000,
-				reason = "No action taken on cassette:\[[review.cassette_data.name]\] before round end",
-				announces = TRUE,
-				donator_multiplier = FALSE,
-			)
-			if(!adjusted)
-				message_admins("Balance not adjusted for Cassette:[review.cassette_data.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins]. Issue logged.")
-				log_admin("Balance not adjusted for Cassette:[review.cassette_data.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins].")
 			qdel(review)
 
 #undef ROUND_START_MUSIC_LIST

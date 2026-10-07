@@ -1,4 +1,4 @@
-# bastion station codebase
+# Bastion Station Codebase
 
 [![Build Status](https://github.com/Bastion-Station-13/Bastion-Station/workflows/CI%20Suite/badge.svg)](https://github.com/Bastion-Station-13/Bastion-Station/actions?query=workflow%3A%22CI+Suite%22)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/monkestation/monkestation2.0.svg)](https://isitmaintained.com/project/monkestation/monkestation2.0 "Percentage of issues still open")
@@ -10,7 +10,7 @@
 | Website                 | Link                                                                                                           |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------- |
 | Code                    | [https://github.com/Bastion-Station-13/Bastion-Station](https://github.com/Bastion-Station-13/Bastion-Station) |
-| Wiki                    | [https://wiki.monkestation.com/](https://wiki.monkestation.com/)                                               |
+| Monke Wiki              | [https://wiki.monkestation.com/](https://wiki.monkestation.com/)                                               |
 | Codedocs                | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)                                         |
 | Bastion Station Discord | [https://discord.gg/55Z4R5Xtsw](https://discord.gg/55Z4R5Xtsw)                                                 |
 

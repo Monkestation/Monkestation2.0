@@ -32,6 +32,21 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	/// Numbers are stored as strings
 	var/list/joined_as_slots
 
+	///All departments (as a bitflag) that this client has joined in all past lifes - used for respawn system
+	var/joined_departments_bitflag = 0
+
+	///TRUE if this client has ever respawned to the main menu, FALSE otherwise
+	var/has_respawned_to_menu = FALSE
+
+	///TRUE if this client has joined the game via observing, FALSE otherwise
+	var/has_observed = FALSE
+
+	///Used for admin logging when player respawns to menu and then latejoins.
+	var/last_name_before_respawn = ""
+
+	///Cooldown for the respawn timer
+	COOLDOWN_DECLARE(respawn_timer)
+
 	/// Tracks achievements they have earned
 	var/datum/achievement_data/achievements
 
@@ -52,7 +67,7 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 /datum/persistent_client/proc/set_client(client/new_client)
 	if(client == new_client)
 		return
-	
+
 	if(client)
 		client.persistent_client = null
 	client = new_client

@@ -242,7 +242,6 @@
 			/obj/item/holochip,
 			/obj/item/mcobject,
 			/obj/item/plate,
-			/obj/item/stack/monkecoin,
 			/obj/item/stack/spacecash,
 		))
 

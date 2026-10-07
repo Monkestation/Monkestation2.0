@@ -49,7 +49,7 @@
 
 /atom/movable/screen/lobby/background
 	layer = LOBBY_BACKGROUND_LAYER
-	icon = 'icons/hud/lobby/background_monke.dmi'
+	icon = 'icons/hud/lobby/background_bastion.dmi'
 	icon_state = "background"
 	screen_loc = "TOP,CENTER:-61"
 
@@ -206,13 +206,12 @@
 			if(length(highest_job))
 				ready_message += ", Highest occupation setting: [highest_job]"
 			to_chat(new_client, span_notice(ready_message))
-			if(!new_client.readied_store)
-				new_client.readied_store = new(new_player)
-			new_client.readied_store.ui_interact(new_player)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(interview_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
+		SSstatpanels.add_job_estimation(new_player)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
+		SSstatpanels.remove_job_estimation(new_player)
 	update_appearance(UPDATE_ICON)
 
 ///Shown when the game has started
@@ -317,19 +316,19 @@
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
 
 
-/atom/movable/screen/lobby/button/patreon_link
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "patreon"
-	base_icon_state = "patreon"
-	screen_loc = "TOP:-126,CENTER:86"
+// /atom/movable/screen/lobby/button/patreon_link
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "patreon"
+// 	base_icon_state = "patreon"
+// 	screen_loc = "TOP:-126,CENTER:86"
 
-/atom/movable/screen/lobby/button/patreon_link/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	if(!CONFIG_GET(string/patreon_link_website))
-		return
-	hud.mymob.client << link("[CONFIG_GET(string/patreon_link_website)]?ckey=[hud.mymob.client.ckey]")
+// /atom/movable/screen/lobby/button/patreon_link/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	if(!CONFIG_GET(string/patreon_link_website))
+// 		return
+// 	hud.mymob.client << link("[CONFIG_GET(string/patreon_link_website)]?ckey=[hud.mymob.client.ckey]")
 
 /atom/movable/screen/lobby/button/intents
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -361,19 +360,19 @@
 	to_chat(hud.mymob, span_notice("Opening <a href='[discordurl]'>[discordurl]</a> in your browser... If it doesn't work, try copying and pasting it into your browser."))
 	hud.mymob.client << link(discordurl)
 
-/atom/movable/screen/lobby/button/twitch
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "info"
-	base_icon_state = "info"
-	screen_loc = "TOP:-126,CENTER:14"
+// /atom/movable/screen/lobby/button/twitch
+// 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+// 	icon_state = "info"
+// 	base_icon_state = "info"
+// 	screen_loc = "TOP:-126,CENTER:14"
 
-/atom/movable/screen/lobby/button/twitch/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	if(!CONFIG_GET(string/twitch_link_website))
-		return
-	hud.mymob.client << link("[CONFIG_GET(string/twitch_link_website)]?ckey=[hud.mymob.client.ckey]")
+// /atom/movable/screen/lobby/button/twitch/Click(location, control, params)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	if(!CONFIG_GET(string/twitch_link_website))
+// 		return
+// 	hud.mymob.client << link("[CONFIG_GET(string/twitch_link_website)]?ckey=[hud.mymob.client.ckey]")
 
 /atom/movable/screen/lobby/button/settings
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -524,27 +523,27 @@
 	new_player.handle_player_polling()
 
 //This is the changing You are here Button
-/atom/movable/screen/lobby/youarehere
-	var/vanderlin = 0
-	screen_loc = "TOP:-81,CENTER:+177"
-	icon = 'icons/hud/lobby/location_indicator.dmi'
-	icon_state = "you_are_here"
-	screen_loc = "TOP,CENTER:-61"
+// /atom/movable/screen/lobby/youarehere
+// 	var/vanderlin = 0
+// 	screen_loc = "TOP:-81,CENTER:+177"
+// 	icon = 'icons/hud/lobby/location_indicator.dmi'
+// 	icon_state = "you_are_here"
+// 	screen_loc = "TOP,CENTER:-61"
 
-//Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
-// and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
-/atom/movable/screen/lobby/youarehere/SlowInit(mapload)
-	. = ..()
-	var/port = world.port
-	switch(port)
-		if(HRP_PORT) //HRP
-			screen_loc = "TOP:-39,CENTER:+215"
-		if(MRP_PORT) //MRP
-			screen_loc = "TOP:-72,CENTER:+215"
-		if(MRP2_PORT) //MRP2
-			screen_loc = "TOP:-105,CENTER:+215"
-		else     //Sticks it in the middle, "TOP:0,CENTER:+128" will point at the MonkeStation logo itself.
-			screen_loc = "TOP:0,CENTER:+128"
+// //Explanation: It gets the port then sets the "here" var in /movable/screen/lobby to the port number
+// // and if the port number matches it makes clicking the button do nothing so you dont spam reconnect to the server your in
+// /atom/movable/screen/lobby/youarehere/SlowInit(mapload)
+// 	. = ..()
+// 	var/port = world.port
+// 	switch(port)
+// 		if(HRP_PORT) //HRP
+// 			screen_loc = "TOP:-39,CENTER:+215"
+// 		if(MRP_PORT) //MRP
+// 			screen_loc = "TOP:-72,CENTER:+215"
+// 		if(MRP2_PORT) //MRP2
+// 			screen_loc = "TOP:-105,CENTER:+215"
+// 		else     //Sticks it in the middle, "TOP:0,CENTER:+128" will point at the MonkeStation logo itself.
+// 			screen_loc = "TOP:0,CENTER:+128"
 
 /atom/movable/screen/lobby/button/server
 	icon = 'icons/hud/lobby/sister_server_buttons.dmi'
@@ -565,14 +564,15 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/lobby/button/server/proc/is_available()
-	if(!SSplexora.enabled)
-	  // Defaults to enabled since there's no other source for if its up or not.
-		return TRUE
+	return FALSE // we have no sister servers yet!
+	// if(!SSplexora.enabled)
+	//   // Defaults to enabled since there's no other source for if its up or not.
+	// 	return TRUE
 
-	if(SSplexora.current_server_id == server_id)
-		return TRUE
+	// if(SSplexora.current_server_id == server_id)
+	// 	return TRUE
 
-	return SSplexora.up_servers[server_id]
+	// return SSplexora.up_servers[server_id]
 
 /atom/movable/screen/lobby/button/server/Click(location, control, params)
 	. = ..()
@@ -613,26 +613,26 @@
 
 //bottom button is "TOP:-140,CENTER:+177"
 //The Vanderlin Project
-/atom/movable/screen/lobby/button/server/vanderlin
-	icon = 'icons/hud/lobby/vanderlin_button.dmi'
-	base_icon_state = "vanderlin"
-	screen_loc = "TOP:-147,CENTER:+179"
-	server_name = "Vanderlin"
-	server_port = VANDERLIN_PORT
-	server_id = PLEXORA_SERVERID_VANDERLIN
-	layer = LOBBY_BACKGROUND_LAYER
+// /atom/movable/screen/lobby/button/server/vanderlin
+// 	icon = 'icons/hud/lobby/vanderlin_button.dmi'
+// 	base_icon_state = "vanderlin"
+// 	screen_loc = "TOP:-147,CENTER:+179"
+// 	server_name = "Vanderlin"
+// 	server_port = VANDERLIN_PORT
+// 	server_id = PLEXORA_SERVERID_VANDERLIN
+// 	layer = LOBBY_BACKGROUND_LAYER
 
-//Monke button
-/atom/movable/screen/lobby/button/ook
+//Mothroach button
+/atom/movable/screen/lobby/button/roach
 	screen_loc = "TOP:-126,CENTER:110"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "monke"
-	base_icon_state = "monke"
+	icon_state = "roach"
+	base_icon_state = "roach"
 
-/atom/movable/screen/lobby/button/ook/Click(location, control, params)
+/atom/movable/screen/lobby/button/roach/Click(location, control, params)
 	. = ..()
 	if(.)
-		SEND_SOUND(usr, 'sound/misc/menumonkey.ogg')
+		SEND_SOUND(usr, 'sound/voice/moth/scream_moth.ogg')
 
 /atom/movable/screen/lobby/overflow_alert
 	screen_loc = "TOP:-48,CENTER-2.7"

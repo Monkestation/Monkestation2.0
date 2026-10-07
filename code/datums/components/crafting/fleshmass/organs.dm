@@ -49,14 +49,6 @@
 		/obj/item/stack/sheet/fleshmass = 2,
 	)
 
-/datum/crafting_recipe/organ/human_bladder
-	name = "Human Bladder"
-	result = /obj/item/organ/internal/bladder
-	reqs = list(
-		/obj/item/stack/sheet/cloth = 1,
-		/obj/item/stack/sheet/fleshmass = 3,
-	)
-
 /datum/crafting_recipe/organ/human_eyes
 	name = "Human Eyes"
 	result = /obj/item/organ/internal/eyes

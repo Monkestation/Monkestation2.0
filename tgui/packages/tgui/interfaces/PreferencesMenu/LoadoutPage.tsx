@@ -52,7 +52,6 @@ export const LoadoutManager = (props) => {
     selected_loadout,
     extra_tabs,
     user_is_donator,
-    total_coins,
     selected_unusuals,
     available_items,
   } = data;
@@ -93,18 +92,6 @@ export const LoadoutManager = (props) => {
             <Stack>
               <Stack.Item>
                 <CharacterControls handleRotate={() => act('rotate')} />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  height="37px"
-                  fontSize="22px"
-                  icon="fa-solid fa-coins"
-                  align="center"
-                  tooltip="This is your total Monkecoin amount."
-                  tooltipPosition="top"
-                >
-                  {total_coins}
-                </Button>
               </Stack.Item>
             </Stack>
           </Stack.Item>
