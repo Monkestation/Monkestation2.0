@@ -12,7 +12,7 @@
 	var/power_in_use = FALSE
 
 /// Modify description to add notice that this is aimed.
-/datum/action/cooldown/bloodsucker/targeted/New(Target)
+/datum/action/cooldown/bloodsucker/targeted/New(Target, original = TRUE)
 	desc += "<br>\[<i>Targeted Power</i>\]"
 	return ..()
 
