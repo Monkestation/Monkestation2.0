@@ -1,0 +1,4 @@
+author: "Longestarmlonglaw"
+delete-after: True
+changes:
+  - bugfix: "fixed an issue where you couldn't interact with modular computers and guns with chunky fingers from a distance when using telekinesis"
