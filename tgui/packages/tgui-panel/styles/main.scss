@@ -23,6 +23,7 @@
 @include meta.load-css('./components/Ping.scss');
 @include meta.load-css('./components/Notifications.scss');
 @include meta.load-css('./components/UnreadCount.scss');
+@include meta.load-css('./components/CommandBar.scss');
 
 // Layouts
 @include meta.load-css('~tgui/styles/layouts/Layout.scss');
@@ -33,6 +34,10 @@
 
 // Chat formats (color, size, font, etc)
 @include meta.load-css('./chat-format/chat-dark-theme.scss');
+
+.Panel__stack {
+  gap: 0 !important;
+}
 
 :root {
   --chat-text-color: hsl(210, 50%, 80%);

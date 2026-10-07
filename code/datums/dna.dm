@@ -661,7 +661,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		gender = PLURAL
 		return
 
-	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3))
+	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), GENDERS))
 		if(G_MALE)
 			gender = MALE
 		if(G_FEMALE)

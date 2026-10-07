@@ -174,3 +174,29 @@
   - rscadd: ai core displays have an internal camera for AIs to use
   TheColorCyan:
   - rscadd: throwing things now plays throw animation
+2026-09-26:
+  TheColorCyan:
+  - qol: (vinylspiders) adds lobby job estimations to statpanel, so you can see what
+      jobs others are prioritizing
+  notghosti:
+  - bugfix: ' Borer egg outside of host now deals 50 damage as intended, instead of
+      all but 50 of your health at high health pools'
+2026-09-29:
+  JohnFulpWillard:
+  - code_imp: Optimized sprinting again, report any issues that may arise out of this.
+      thanks.
+  Runian:
+  - bugfix: Tracking someone via crew suit monitor as an AI now always tracks that
+      specific person rather than someone with a similar name.
+  hry-gh, johnfulpwillard:
+  - refactor: the backend for verbs has been changed ... again, please report any
+      issues on the bug tracker
+  - qol: the command bar is now a bit prettier, and also autocompletes things like
+      typepaths and mob targets (primarily useful for admins)
+2026-09-30:
+  Gboster-0:
+  - rscadd: The Rod of Asclepius can now rarelly spawn instead of an immovable rod
+  hexakats:
+  - image: the auto shotgun case now uses the large syndicate case sprite
+  - image: added a blinking animation for the large case if it's a variant that can
+      explode

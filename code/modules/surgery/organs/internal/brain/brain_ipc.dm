@@ -38,6 +38,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	/// The original language holder of the oozeling who died.
 	var/datum/language_holder/stored_language_holder
 
+	// dna doesn't have this for some reason
+	var/stored_physique
+
 ///////
 /// Core storage
 //
@@ -312,6 +315,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	if(slime.voice)
 		copy_voice_from(slime)
+
+	stored_physique = slime.physique
 
 ///////
 /// CORE EJECTION PROC
@@ -617,6 +622,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
 	stored_dna.copy_dna(new_body.dna, COPY_DNA_SE | COPY_DNA_SPECIES)
+	new_body.physique = stored_physique
 	new_body.real_name = new_body.dna.real_name
 	new_body.name = new_body.dna.real_name
 	new_body.updateappearance(mutcolor_update = TRUE)
@@ -679,7 +685,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		if(core_item)
 			drop_items(usr, list(core_item))
 
-ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
+ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG_TYPED(core, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj/item/organ/internal/brain/slime)
 	if(QDELETED(core))
 		to_chat(user, span_boldannounce("Invalid Oozeling Core."), confidential = TRUE)
 		return

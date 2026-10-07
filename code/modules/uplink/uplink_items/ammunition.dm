@@ -87,42 +87,42 @@
 	name = "Syndicate Auto Shotgun Buckshot Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with buckshot shells. A lethal high damage spread of pellets."
 	cost = 3
-	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/autoshotgun_slugs_case
 	name = "Syndicate Auto Shotgun Slugs Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with slug shells. A lethal high damage accurate slug."
 	cost = 3
-	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/slug
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/slug
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/autoshotgun_rubbershot_case
 	name = "Syndicate Auto Shotgun Rubbershot Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with rubber shells. A less-lethal high stamina damage spread of rubber pellets."
 	cost = 2
-	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/rubbershot
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/rubbershot
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/autoshotgun_beanbags_case
 	name = "Syndicate Auto Shotgun Beanbags Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with beanbag shells. A less-lethal high stamina damage accurate rubber slug."
 	cost = 2
-	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/beanbag
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/beanbag
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/autoshotgun_trickshot_case
 	name = "Syndicate Auto Shotgun Trickshot Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with trickshot shells. Capable of bouncing up to five times, they are made for the most talented trickshooters around."
 	cost = 3
-	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/trickshot
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/trickshot
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/autoshotgun_uraniumpen_case
 	name = "Syndicate Auto Shotgun Uranium Magazine Case"
 	desc = "A case with 2 auto shotgun magazines loaded with uranium penetrator shells. Capable to penetrating walls and objects, but not people. Works best with thermals!"
 	cost = 3
-	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/uraniumpen
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/uraniumpen
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/beeshot

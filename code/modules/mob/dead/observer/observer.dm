@@ -287,7 +287,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 */
 GAME_VERB_DESC(/mob/living, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", "OOC")
 
-	if(stat != DEAD)
+	if((stat == SOFT_CRIT || stat == HARD_CRIT) && stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		if(!HAS_TRAIT(src, TRAIT_CORPSELOCKED)) //corpse-locked have to confirm with the alert below

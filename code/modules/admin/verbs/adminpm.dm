@@ -13,8 +13,8 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-/// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, FALSE, "Admin PM Mob", mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, FALSE, "Admin PM Mob", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!ismob(target))
 		to_chat(
 			user,

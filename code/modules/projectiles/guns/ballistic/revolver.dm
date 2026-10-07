@@ -42,6 +42,8 @@
 	chamber_round()
 
 /obj/item/gun/ballistic/revolver/click_alt(mob/user)
+	if(suppressed) //probably want to remove the suppressor instead of spinning it.
+		return ..()
 	spin()
 	return CLICK_ACTION_SUCCESS
 
@@ -159,9 +161,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
-
-/obj/item/gun/ballistic/revolver/mateba/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
@@ -190,6 +190,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
@@ -280,9 +281,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(span_danger("[user.name] fires [src] at [user.p_their()] head!"), span_userdanger("You fire [src] at your head!"), span_hear("You hear a gunshot!"))
 
-/obj/item/gun/ballistic/revolver/russian/give_manufacturer_examine()
-	return
-
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
@@ -356,10 +354,12 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
+	inhand_icon_state = "takbok"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
-	suppressor_x_offset = 5
+	suppressor_x_offset = 8
+	suppressor_y_offset = 1
 	can_suppress = TRUE
 	fire_delay = 1 SECONDS
 	recoil = 3
@@ -391,6 +391,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/takbok/blueshield
 	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
 	icon_state = "takbok_blueshield"
+	inhand_icon_state = "takbok_blueshield"
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
 	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
