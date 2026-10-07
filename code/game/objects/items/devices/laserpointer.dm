@@ -86,7 +86,7 @@
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return
-	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
+	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && user.is_holding(src))
 		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 	add_fingerprint(user)
