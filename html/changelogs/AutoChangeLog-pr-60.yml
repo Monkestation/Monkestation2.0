@@ -1,0 +1,5 @@
+author: "hexakats"
+delete-after: True
+changes:
+  - bugfix: "Omnilathe no longer tries to take materials from the ore silo then delete the ones that don't fit when repacking a linked one"
+  - refactor: "Omnilathe uses item_interaction instead of attackby"
