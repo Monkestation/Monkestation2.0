@@ -329,6 +329,9 @@
 	base_icon_state = "smooth"
 	floor_tile = /obj/item/stack/tile/iron/smooth
 
+/turf/open/floor/iron/smooth/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
+
 /turf/open/floor/iron/smooth_edge
 	icon_state = "smooth_edge"
 	base_icon_state = "smooth_edge"

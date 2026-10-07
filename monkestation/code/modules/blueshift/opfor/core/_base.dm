@@ -1097,10 +1097,8 @@
 	QDEL_NULL(opposing_force)
 	return ..()
 
-/mob/verb/opposing_force()
-	set name = "Opposing Force"
-	set category = "OOC"
-	set desc = "View your opposing force panel, or request one."
+GAME_VERB_DESC(/mob, opposing_force, "Opposing Force", "View your opposing force panel, or request one.", "OOC")
+
 	// Mind checks
 	if(!mind)
 		var/fail_message = "You have no mind!"

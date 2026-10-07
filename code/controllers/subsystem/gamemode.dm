@@ -454,46 +454,9 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 			continue
 
 		var/list/var_list = decoded[event_text_path]
-		for(var/variable in var_list)
-			var/value = var_list[variable]
-			switch(variable)
-				if("weight")
-					event.weight = value
-				if("min_players")
-					event.min_players = value
-				if("max_occurrences")
-					event.max_occurrences = value
-				if("earliest_start")
-					event.earliest_start = value * (1 MINUTES)
-				if("track")
-					if(value in event_tracks)
-						event.track = value
-				if("cost")
-					event.cost = value
-				if("reoccurence_penalty_multiplier")
-					event.reoccurence_penalty_multiplier = value
-				if("shared_occurence_type")
-					if(!isnull(value))
-						value = "[value]"
-					event.shared_occurence_type = value
-				if("repeated_mode_adjust")
-					event.repeated_mode_adjust = value
-				if("extra_spawned_events")
-					if(!islist(value) && !isnull(value))
-						stack_trace("extra_spawned_events must be a list or null (tried to set invalid for [event_path])")
-						continue
-					if(!istype(event, /datum/round_event_control/antagonist))
-						stack_trace("tried to set extra_spawned_events for event that isn't a subtype of /datum/round_event_control/antagonist ([event_path])")
-						continue
-					var/datum/round_event_control/antagonist/antag_event = event
-					antag_event.extra_spawned_events = null
-					var/list/extra_spawned_events = fill_with_ones(value)
-					for(var/key in extra_spawned_events)
-						var/extra_path = text2path(key)
-						if(!extra_path)
-							stack_trace("invalid event typepath '[key]' in extra_spawned_events for [event_path] in events.json")
-							continue
-						LAZYSET(antag_event.extra_spawned_events, extra_path, extra_spawned_events[key])
+		for(var/variable, value in var_list)
+			if(!event.apply_config_var(variable, value))
+				stack_trace("Failed to apply [variable]=[value] from config to [event_path]")
 
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()

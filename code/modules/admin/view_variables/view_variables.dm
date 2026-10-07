@@ -5,9 +5,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 	user.debug_variables(thing)
 
 // This is kept as a seperate proc because admins are able to show VV to non-admins
-/client/proc/debug_variables(datum/thing in world)
-	set category = "Debug"
-	set name = "View Variables"
+GAME_VERB_PROC(/client, debug_variables, "View Variables", "Debug", datum/thing in world)
 	//set src in world
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
