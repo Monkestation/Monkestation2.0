@@ -173,7 +173,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["oni_tail"] = get_consistent_feature_entry(GLOB.oni_tail_list)
 	target.dna.features["apid_wings"] = get_consistent_feature_entry(GLOB.apid_wings_list)
 	target.dna.features["apid_antenna"] = get_consistent_feature_entry(GLOB.apid_antenna_list)
-
+	target.dna.features["head_quills"] = get_consistent_feature_entry(GLOB.head_quills_list)
+	target.dna.features["face_quills"] = get_consistent_feature_entry(GLOB.face_quills_list)
+	target.dna.features["vox_tail"] = get_consistent_feature_entry(GLOB.vox_tail_list)
 
 	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = COLOR_VIBRANT_LIME

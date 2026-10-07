@@ -715,6 +715,12 @@
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
 
+/obj/item/organ/internal/eyes/vox
+	name = "alien eyes"
+	desc = "These eyes seem to glow with an unnatural blue light."
+	eye_icon_state = null
+	icon_state = "eyeballs-vox"
+
 /obj/item/organ/internal/eyes/jelly
 	name = "jelly eyes"
 	desc = "These eyes are made of a soft jelly. Unlike all other eyes, though, there are three of them."

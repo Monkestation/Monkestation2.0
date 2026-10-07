@@ -21,6 +21,6 @@
 	default_priority = 90
 
 	mutual_understanding = list(
-		/datum/language/common = 20,
+		/datum/language/common = 50,
 		/datum/language/beachbum = 20,
 	)

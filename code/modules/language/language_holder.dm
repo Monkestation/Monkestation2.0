@@ -581,6 +581,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/narsie = list(LANGUAGE_ATOM),
 	)
 
+/datum/language_holder/vox
+	understood_languages = list(
+		/datum/language/uncommon = list(LANGUAGE_ATOM),
+		/datum/language/vox_pidgin = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/uncommon = list(LANGUAGE_ATOM),
+		/datum/language/vox_pidgin = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/fly
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),

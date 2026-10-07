@@ -19,6 +19,10 @@
 	var/list/stored_ammo = list()
 	///type that the magazine will be searching for, rejects if not a subtype of
 	var/ammo_type = /obj/item/ammo_casing
+	///type of ammmo to load into the ammo box, used as a work around for items that aren't casings
+	var/ammo_type_to_load
+	///name of the ammo for the description
+	var/ammo_name = "shell"
 	///maximum amount of ammo in the magazine
 	var/max_ammo = 7
 	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_FULL_EMPTY
@@ -41,7 +45,7 @@
 	. = ..()
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
 	if(!start_empty)
-		top_off(starting=TRUE)
+		top_off(ammo_type_to_load, starting=TRUE)
 	update_icon_state()
 
 /obj/item/ammo_box/Destroy(force)
@@ -98,7 +102,7 @@
 		load_type = ammo_type
 
 	var/obj/item/ammo_casing/round_check = load_type
-	if(!starting && !(caliber ? (caliber == initial(round_check.caliber)) : (ammo_type == load_type)))
+	if(!starting && isammocasing(round_check) && !(caliber ? (caliber == initial(round_check.caliber)) : (ammo_type == load_type)))
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
@@ -173,7 +177,7 @@
 
 	if(istype(tool, /obj/item/ammo_box))
 		var/obj/item/ammo_box/other_box = tool
-		for(var/obj/item/ammo_casing/casing in other_box.ammo_list())
+		for(var/obj/item/casing in other_box.ammo_list())
 			var/did_load = give_round(casing, replace_spent)
 			if(did_load)
 				other_box.stored_ammo -= casing
@@ -181,10 +185,10 @@
 			if(!did_load || !multiload)
 				break
 		if(num_loaded)
-			other_box.update_appearance()
+			other_box.update_appearance(UPDATE_ICON)
 
-	if(isammocasing(tool))
-		var/obj/item/ammo_casing/casing = tool
+	if(istype(tool, ammo_type))
+		var/obj/item/casing = tool
 		if(give_round(casing, replace_spent))
 			user.transferItemToLoc(casing, src, TRUE)
 			num_loaded++
@@ -192,7 +196,7 @@
 
 	if(num_loaded)
 		if(!silent)
-			to_chat(user, span_notice("You load [num_loaded] shell\s into \the [src]!"))
+			to_chat(user, span_notice("You load [num_loaded] [ammo_name]\s into \the [src]!"))
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		update_appearance()
 
@@ -204,16 +208,16 @@
 		return
 
 	A.forceMove(drop_location())
-	if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
+	if((!user.is_holding(src) || !user.put_in_hands(A)) && isammocasing(A)) //incase they're using TK
 		A.bounce_away(bounce_angle = rand(0, 360), spread_multiplier = 0.75, still_warm = FALSE, sound_delay = 0)
 	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-	to_chat(user, span_notice("You remove a round from [src]!"))
-	update_appearance()
+	to_chat(user, span_notice("You remove a [ammo_name] from [src]!"))
+	update_appearance(UPDATE_ICON)
 
 /obj/item/ammo_box/update_desc(updates)
 	. = ..()
 	var/shells_left = LAZYLEN(stored_ammo)
-	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
+	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] [ammo_name]\s left!"
 
 /obj/item/ammo_box/update_icon_state()
 	if(spriteshift == TRUE)                         ///this if loop is monke edit

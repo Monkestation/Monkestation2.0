@@ -25,6 +25,9 @@
 /obj/item/reagent_containers/syringe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
+/obj/item/reagent_containers/syringe/proc/in_cartridge_sprite_icon_state()
+	return "syringe-cartridge-syringe"
+
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
 		return FALSE
@@ -255,6 +258,9 @@
 	possible_transfer_amounts = list(5, 10)
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
+/obj/item/reagent_containers/syringe/piercing/in_cartridge_sprite_icon_state()
+	return "syringe-cartridge-syringe-gamer"
+
 /obj/item/reagent_containers/syringe/crude
 	name = "crude syringe"
 	desc = "A crudely made syringe. The flimsy wooden construction makes it hold a minimal amounts of reagents, but its very disposable."
@@ -331,3 +337,80 @@
 
 /obj/item/reagent_containers/syringe/contraband/morphine
 	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 15)
+
+/obj/item/reagent_containers/syringe/tranquilizer
+	name = "syringe (tranquilizer)"
+	desc = "Contains a tranquilizing mix of chemicals. Guranteed to confuse then knock out your standard space man."
+	list_reagents = list(/datum/reagent/toxin/sodium_thiopental = 10, /datum/reagent/lithium = 5)
+
+/obj/item/ammo_box/syringe_cartridge
+	name = "syringe cartridge"
+	desc = "A syringe cartridge used to quickly load syringe guns. It can hold up to 6 syringes."
+	icon = 'icons/obj/medical/syringe.dmi'
+	icon_state = "syringe-cartridge"
+	base_icon_state = "syringe-cartridge"
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.2)
+	custom_price = PAYCHECK_CREW * 0.5
+	ammo_type = /obj/item/reagent_containers/syringe
+	max_ammo = 6
+	ammo_name = "syringe"
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/ammo_box/syringe_cartridge/Initialize(mapload)
+	..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/ammo_box/syringe_cartridge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!istype(interacting_with, /obj/item/gun/syringe))
+		return
+	if(!LAZYLEN(stored_ammo))
+		balloon_alert(user, "empty!")
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/gun/syringe/syringe_gun_to_load = interacting_with
+	if(syringe_gun_to_load.syringes.len >= syringe_gun_to_load.max_syringes)
+		balloon_alert(user, "syringe compartment full!")
+		return ITEM_INTERACT_BLOCKING
+	for(var/_syringe in ammo_list())
+		var/obj/item/reagent_containers/syringe/syringe = _syringe
+		syringe_gun_to_load.item_interaction(user, syringe, modifiers)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/ammo_box/syringe_cartridge/give_round(obj/item/ammo_casing/new_round, replace_spent = 0)
+	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
+	if(!new_round)
+		return FALSE
+
+	if(istype(new_round, /obj/item/reagent_containers/syringe/bluespace))
+		return FALSE
+
+	if (stored_ammo.len < max_ammo)
+		stored_ammo += new_round
+		new_round.forceMove(src)
+		if(new_round.custom_materials && !(item_flags & ABSTRACT))
+			var/list/new_materials = custom_materials?.Copy() || list()
+			for(var/mat in new_round.custom_materials)
+				new_materials[mat] += new_round.custom_materials[mat]
+			set_custom_materials(new_materials)
+		update_appearance(UPDATE_ICON)
+		return TRUE
+	return FALSE
+
+/obj/item/ammo_box/syringe_cartridge/update_overlays()
+	. = ..()
+	if(!stored_ammo)
+		return
+
+	var/pointy_chem_death_bolts = 0
+	for(var/_syringe in ammo_list())
+		var/obj/item/reagent_containers/syringe/syringe = _syringe
+		if(!istype(syringe))
+			continue
+
+		. += image(icon = initial(icon), icon_state = syringe.in_cartridge_sprite_icon_state(), pixel_y = pointy_chem_death_bolts * 2)
+		pointy_chem_death_bolts += 1
+
+/obj/item/ammo_box/syringe_cartridge/tranquilizer
+	name = "syringe cartridge (tranquilizer)"
+	desc = "A syringe cartridge used to quickly load syringe guns. It can hold up to 6 syringes. This one is loaded with tranquilizer syringes, neat."
+	ammo_type_to_load = /obj/item/reagent_containers/syringe/tranquilizer
