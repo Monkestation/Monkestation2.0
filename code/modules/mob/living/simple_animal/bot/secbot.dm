@@ -453,7 +453,7 @@
 				back_to_idle()
 				return
 
-			if(!target || QDELETED(target.client) || target?.client?.is_afk()) // make sure target exists and is not SSD
+			if(!target || QDELETED(target.client) || target.client.is_afk()) // make sure target exists and is not SSD
 				back_to_idle()
 				return
 
