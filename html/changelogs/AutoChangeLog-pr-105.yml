@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed oozeling core revives (and other DNA updates) sometimes changing your gender."
