@@ -38,6 +38,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	/// The original language holder of the oozeling who died.
 	var/datum/language_holder/stored_language_holder
 
+	// dna doesn't have this for some reason
+	var/stored_physique
+
 ///////
 /// Core storage
 //
@@ -312,6 +315,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	if(slime.voice)
 		copy_voice_from(slime)
+
+	stored_physique = slime.physique
 
 ///////
 /// CORE EJECTION PROC
@@ -617,6 +622,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
 	stored_dna.copy_dna(new_body.dna, COPY_DNA_SE | COPY_DNA_SPECIES)
+	new_body.physique = stored_physique
 	new_body.real_name = new_body.dna.real_name
 	new_body.name = new_body.dna.real_name
 	new_body.updateappearance(mutcolor_update = TRUE)
