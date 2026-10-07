@@ -1391,6 +1391,10 @@ SUBSYSTEM_DEF(job)
 	for(var/job in assigned_players_by_job)
 		player_count += length(assigned_players_by_job[job])
 
+	for(var/mob/dead/new_player/unreadied_player in GLOB.new_player_list)
+		if(unreadied_player.client && unreadied_player.ready == PLAYER_NOT_READY && !unreadied_player.client.holder)
+			player_count += UNREADIED_PLAYER_WEIGHT
+
 	var/list/actual_valid_rolesets = list()
 	for(var/datum/round_event_control/antagonist/roleset in valid_rolesets)
 		if(!roleset.roundstart || !roleset.can_spawn_event(player_count))

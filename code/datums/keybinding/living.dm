@@ -21,7 +21,7 @@
 	return TRUE
 
 /datum/keybinding/living/look_up
-	hotkey_keys = list("L")
+	hotkey_keys = list("\'")
 	name = "look up"
 	full_name = "Look Up"
 	description = "Look up at the next z-level.  Only works if directly below open space."

@@ -58,4 +58,3 @@
 	name = "Pet Delivery Beacon - Ordinary Flash Bulb"
 	item_path = /obj/item/choice_beacon/pet/donator/susflash
 	donator_only = TRUE
-	requires_purchase = FALSE

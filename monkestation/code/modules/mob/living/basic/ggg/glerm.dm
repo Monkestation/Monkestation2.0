@@ -67,10 +67,8 @@
 	name = "Pet Delivery Beacon - Glerm"
 	item_path = /obj/item/choice_beacon/pet/donator/glerm
 	donator_only = FALSE
-	requires_purchase = TRUE
 
 /datum/loadout_item/pocket_items/donator/coolglerm
 	name = "Pet Delivery Beacon - Cool Glerm"
 	item_path = /obj/item/choice_beacon/pet/donator/coolglerm
 	donator_only = TRUE
-	requires_purchase = FALSE

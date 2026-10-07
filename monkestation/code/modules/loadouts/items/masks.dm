@@ -155,7 +155,6 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 
 /datum/loadout_item/mask/donator
 	donator_only = TRUE
-	requires_purchase = FALSE
 
 /datum/loadout_item/mask/donator/knight_mask
 	name = "Knight Mask"

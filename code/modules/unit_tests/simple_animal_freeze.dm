@@ -90,7 +90,6 @@
 		/mob/living/simple_animal/pet/gondola/virtual_domain,
 
 		//MONKESTATION-SPECIFIC ENTRIES START
-		/mob/living/simple_animal/bot/buttbot,
 		/mob/living/simple_animal/bot/secbot/beepsky/big,
 		/mob/living/simple_animal/fish,
 		/mob/living/simple_animal/fish/angelfish,

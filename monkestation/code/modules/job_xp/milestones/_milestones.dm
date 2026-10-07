@@ -20,26 +20,7 @@
 				for(var/path in user.prefs.job_rewards_claimed[key_id])
 					if(path == milestone_type)
 						return
-			if(!user.prefs.inventory[initial(listed_loadout.item_path)])
-				user.prefs.inventory += initial(listed_loadout.item_path)
-				var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-					INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
-					list("ckey" = user.ckey, "item_id" = initial(listed_loadout.item_path), "amount" = 1))
-				if(!query_add_gear_purchase.Execute())
-					to_chat(user, "Failed to add level up reward to the database, contact coders.")
-					qdel(query_add_gear_purchase)
-					return FALSE
-				qdel(query_add_gear_purchase)
-			else
-				user.prefs.inventory += initial(listed_loadout.item_path)
-				var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-					UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
-					list("ckey" = user.ckey, "item_id" = initial(listed_loadout.item_path), "amount" = 1))
-				if(!query_add_gear_purchase.Execute())
-					to_chat(user, "Failed to add level up reward to the database, contact coders.")
-					qdel(query_add_gear_purchase)
-					return FALSE
-				qdel(query_add_gear_purchase)
+			user.prefs.inventory += initial(listed_loadout.item_path)
 
 		if(!user.prefs.job_rewards_claimed[key_id])
 			user.prefs.job_rewards_claimed[key_id] = list()
@@ -58,18 +39,12 @@
 /client
 	var/list/redeemed_rewards = list()
 
-/client/verb/open_xp_menu()
-	set category = "IC"
-	set name = "Open XP Menu"
-	set desc = "List job xp."
+GAME_VERB_DESC(/client, open_xp_menu, "Open XP Menu", "List job xp.", "IC")
 
 	xp_menu = new(src)
 	xp_menu.ui_interact(usr)
 
-/client/verb/claim_job_reward()
-	set category = "IC"
-	set name = "Claim Job Rewards"
-	set desc = "List job rewards you have for the current job and can spawn."
+GAME_VERB_DESC(/client, claim_job_reward, "Claim Job Rewards", "List job rewards you have for the current job and can spawn.", "IC")
 
 	if(!isliving(mob))
 		to_chat(src, "For this to work you need to be living.")
@@ -106,10 +81,7 @@
 		var/mob/living/carbon/human/human_mob = mob
 		human_mob.put_in_hands(new_item)
 
-/client/verb/reload_job_rewards()
-	set category = "IC"
-	set name = "Reload Job Rewards"
-	set desc = "Refresh job rewards you have for the current job (Use this if you suspect something is missing or broken)."
+GAME_VERB_DESC(/client, reload_job_rewards, "Reload Job Rewards", "Refresh job rewards you have for the current job (Use this if you suspect something is missing or broken).", "IC")
 
 	if(!isliving(mob))
 		to_chat(src, "For this to work you need to be living.")

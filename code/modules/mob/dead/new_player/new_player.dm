@@ -64,14 +64,14 @@
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
 
-/mob/dead/new_player/verb/_join_game()
-	set name = "Join Game"
-	set category = "IC"
+// This gets called both when the client disconnects and when the client is shoved into their spawn mob.
+/mob/dead/new_player/become_uncliented()
+	SSstatpanels.remove_job_estimation(src)
+
+GAME_VERB(/mob/dead/new_player, _join_game, "Join Game", "IC")
 	join_game(FALSE)
 
-/mob/dead/new_player/verb/observe()
-	set category = "IC"
-	set name = "Observe"
+GAME_VERB(/mob/dead/new_player, observe, "Observe", "IC")
 
 	if (!(SSticker.current_state > GAME_STATE_STARTUP) && !check_rights())
 		to_chat(src, span_warning("Please wait for the server to finish initializing!"))
@@ -192,7 +192,7 @@
 	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
 		less_input_message = " - Notice: Observer freelook is currently disabled."
 	// Don't convert this to tgui please, it's way too important
-	var/this_is_like_playing_right = alert(usr, "Are you sure you wish to observe? You will not be able to play this round![less_input_message]", "Observe", "Yes", "No")
+	var/this_is_like_playing_right = alert(usr, "Are you sure you wish to observe? You will not be able to play or respawn this round![less_input_message]", "Observe", "Yes", "No")
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
 		return FALSE
@@ -222,6 +222,8 @@
 		observer.client.init_verbs()
 		observer.persistent_client.time_of_death = world.time
 
+	observer.persistent_client.has_observed = TRUE
+
 	observer.update_appearance()
 	observer.update_media_source()
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)
@@ -247,11 +249,28 @@
 			return "[jobtitle] is not compatible with some antagonist role assigned to you."
 		if(JOB_UNAVAILABLE_DONOR_RANK) //MONKESTATION EDIT
 			return "The [jobtitle] job requires a higher donator rank than you have or it is out of season. Go to to https://www.patreon.com/dukeook \"Duke of Ook's Monke Content Creation Fund\" to learn more."
+		if(JOB_UNAVAILABLE_PAST_DEPARTMENT)
+			return "You cannot join as [jobtitle] due to playing in the same department previously in the round."
+		if(JOB_UNAVAILABLE_INVALID_RESPAWN)
+			return "You cannot respawn as Command or Security."
+		if(JOB_UNAVAILABLE_PAST_CHARACTER)
+			return "You cannot respawn as a character slot you have already played."
 
 	return GENERIC_JOB_UNAVAILABLE_ERROR
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	var/datum/job/job = SSjob.GetJob(rank)
+
+	//Manages blocking due to respawn system
+	if (client)
+		if ("[client.prefs.active_slot]" in client.persistent_client.joined_as_slots)
+			return JOB_UNAVAILABLE_PAST_CHARACTER
+
+		if((job.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND | DEPARTMENT_BITFLAG_SECURITY)) && client.persistent_client.has_respawned_to_menu)
+			return JOB_UNAVAILABLE_INVALID_RESPAWN
+		if(job.departments_bitflags & client.persistent_client.joined_departments_bitflag)
+			return JOB_UNAVAILABLE_PAST_DEPARTMENT
+
 	if(!(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
 		return JOB_UNAVAILABLE_GENERIC
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
@@ -315,6 +334,8 @@
 	var/mob/living/character = create_character(destination)
 	if(!character)
 		CRASH("Failed to create a character for latejoin.")
+
+	stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	transfer_character()
 
 	if(picked_point)
@@ -325,13 +346,13 @@
 
 	var/datum/persistent_client/persistent_client = character.persistent_client
 	if(persistent_client)
+		persistent_client.joined_departments_bitflag |= job.departments_bitflags
+
 		SSchallenges.apply_challenges(persistent_client)
-		for(var/processing_reward_bitflags in SSticker.bitflags_to_reward)//you really should use department bitflags if possible
-			if(character.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				persistent_client.roundend_monkecoin_bonus += 225
-		for(var/processing_reward_jobs in SSticker.jobs_to_reward)//just in case you really only want to reward a specific job
-			if(character.job == processing_reward_jobs)
-				persistent_client.roundend_monkecoin_bonus += 225
+
+		if(persistent_client.has_respawned_to_menu)
+			message_admins("ckey: [character.ckey], has respawned into the game as [character.name], job: [job.title]. Previous name: [persistent_client.last_name_before_respawn]")
+
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
@@ -506,7 +527,7 @@
 		I.ui_interact(src)
 
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel. See interface/interface.dm
-	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(src, GLOB.important_interface_verbs)
 
 

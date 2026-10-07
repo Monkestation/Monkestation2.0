@@ -186,9 +186,7 @@
 
 	update_power()
 
-/obj/item/defibrillator/proc/toggle_paddles()
-	set name = "Toggle Paddles"
-	set category = "Object"
+GAME_VERB_PROC(/obj/item/defibrillator, toggle_paddles, "Toggle Paddles", "Object")
 	on = !on
 
 	var/mob/living/carbon/user = usr

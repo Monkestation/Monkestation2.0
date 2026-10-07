@@ -58,7 +58,6 @@
 	data["user_is_donator"] = !!(preferences.parent.persistent_client.patreon?.is_donator() || preferences.parent.persistent_client.twitch?.is_donator() || is_admin(preferences.parent))
 	data["mob_name"] = preferences.read_preference(/datum/preference/name/real_name)
 	data["ismoth"] = istype(preferences.parent.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
-	data["total_coins"] = preferences.metacoins
 
 	return data
 
@@ -77,8 +76,6 @@
 			return FALSE
 	if(item.required_season && !check_holidays(item.required_season))
 		return FALSE
-	if(item.requires_purchase && !(item.item_path in preferences.inventory))
-		return FALSE
 	return TRUE
 
 /datum/preference_middleware/loadout/proc/return_item(list/params)
@@ -96,10 +93,6 @@
 
 	if(interacted_item.ckeywhitelist && (!(preferences.parent_ckey in interacted_item.ckeywhitelist)) && !is_admin(preferences.parent))
 		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent_ckey] tried loading [interacted_item.item_path], but this is ckey locked.")
-		return null
-
-	if(interacted_item.requires_purchase && !(interacted_item.item_path in preferences.inventory))
-		message_admins("LOADOUT SYSTEM: Possible exploit detected, [preferences.parent_ckey] has tried loading [interacted_item.item_path], but does not own that item.")
 		return null
 
 	return interacted_item

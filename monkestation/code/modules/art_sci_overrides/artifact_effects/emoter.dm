@@ -19,7 +19,6 @@
 	var/shield_time
 	var/list/all_emotes = list(
 		"flip",
-		"fart",
 		"spin",
 		"clap",
 		"droll",

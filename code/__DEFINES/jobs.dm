@@ -8,6 +8,12 @@
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 /// Job unavailable due to insufficient donor rank.
 #define JOB_UNAVAILABLE_DONOR_RANK 7
+/// Job unavailable due to being a prior department for a respawning player.
+#define JOB_UNAVAILABLE_PAST_DEPARTMENT 8
+/// Job unavailable due to being invalid for respawning into.
+#define JOB_UNAVAILABLE_INVALID_RESPAWN 9
+/// Job unavailable due to trying to join as a previously used character.
+#define JOB_UNAVAILABLE_PAST_CHARACTER 10
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."

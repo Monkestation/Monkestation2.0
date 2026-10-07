@@ -11,8 +11,6 @@
 	var/list/datum/challenge/applied_challenges
 	/// The challenge menu for this mob.
 	var/datum/challenge_selector/challenge_menu
-	/// Bonus monkecoins to reward this player at roundend.
-	var/roundend_monkecoin_bonus = 0
 
 /datum/persistent_client/New(ckey, client)
 	. = ..()

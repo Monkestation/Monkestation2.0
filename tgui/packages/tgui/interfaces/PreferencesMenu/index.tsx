@@ -82,18 +82,6 @@ export const PreferencesMenu = () => {
           Characters
         </PageButton>
       </Stack.Item>
-      <Stack.Item>
-        <Button
-          align="center"
-          fontSize="1em"
-          fluid
-          onClick={() => {
-            act('open_store');
-          }}
-        >
-          Loadout Store
-        </Button>
-      </Stack.Item>
       <Stack.Divider />
       Role Selection
       <Stack.Item>
