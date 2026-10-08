@@ -1,6 +1,6 @@
 /datum/uplink_category/role_restricted
 	name = "Role-Restricted"
-	weight = 1
+	weight = 2
 
 /datum/uplink_item/role_restricted
 	category = /datum/uplink_category/role_restricted
