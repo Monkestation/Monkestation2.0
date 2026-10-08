@@ -151,6 +151,7 @@
 #include "heretic_rituals.dm"
 #include "high_five.dm"
 #include "holidays.dm"
+#include "hood_overslot.dm"
 #include "human_through_recycler.dm"
 #include "hunger_curse.dm"
 #include "hydroponics_extractor_storage.dm"
