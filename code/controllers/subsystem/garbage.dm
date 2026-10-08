@@ -27,8 +27,7 @@ SUBSYSTEM_DEF(garbage)
 	wait = 2 SECONDS
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	init_order = INIT_ORDER_GARBAGE
-	init_stage = INITSTAGE_EARLY
+	init_stage = INITSTAGE_FIRST
 
 	var/list/collection_timeout = list(GC_FILTER_QUEUE, GC_CHECK_QUEUE, GC_DEL_QUEUE) // deciseconds to wait before moving something up in the queue to the next level
 
@@ -48,13 +47,13 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
-	#ifdef REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
-	#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 	//Should we save found refs. Used for unit testing
 	var/should_save_refs = FALSE
-	#endif
-	#endif
+#endif
+#endif
 
 	// monkestation start: disabling hard deletes
 #if !defined(UNIT_TESTS) && !defined(REFERENCE_TRACKING)
@@ -372,10 +371,10 @@ SUBSYSTEM_DEF(garbage)
 		found_type = "list"
 		delable = TRUE
 
-	if(isnum(to_delete))
+	else if(isnum(to_delete))
 		found_type = "number"
 
-	if(ispath(to_delete))
+	else if(ispath(to_delete))
 		found_type = "typepath"
 
 	if(delable)
@@ -428,9 +427,6 @@ SUBSYSTEM_DEF(garbage)
 			SSgarbage.Queue(to_delete)
 		if (QDEL_HINT_IWILLGC)
 			to_delete.gc_destroyed = world.time
-#ifndef DISABLE_DEMOS
-			SSdemo.mark_destroyed(to_delete) // monkestation edit: replays
-#endif
 			return
 		if (QDEL_HINT_LETMELIVE) //qdel should let the object live after calling destory.
 			if(!force)
@@ -450,14 +446,8 @@ SUBSYSTEM_DEF(garbage)
 
 			SSgarbage.Queue(to_delete)
 		if (QDEL_HINT_HARDDEL) //qdel should assume this object won't gc, and queue a hard delete
-#ifndef DISABLE_DEMOS
-			SSdemo.mark_destroyed(to_delete) // monkestation edit: replays
-#endif
 			SSgarbage.Queue(to_delete, GC_QUEUE_HARDDELETE)
 		if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
-#ifndef DISABLE_DEMOS
-			SSdemo.mark_destroyed(to_delete) // monkestation edit: replays
-#endif
 			SSgarbage.HardDelete(to_delete, override = TRUE)
 		#ifdef REFERENCE_TRACKING
 		if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
@@ -474,9 +464,3 @@ SUBSYSTEM_DEF(garbage)
 			#endif
 			trash.no_hint++
 			SSgarbage.Queue(to_delete)
-#ifndef DISABLE_DEMOS
-	// monkestation start: replays
-	if(to_delete)
-		SSdemo?.mark_destroyed(to_delete)
-	// monkestation end: replays
-#endif

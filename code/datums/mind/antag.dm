@@ -2,57 +2,60 @@
 /datum/mind/proc/add_antag_datum(datum_type_or_instance, team)
 	if(!datum_type_or_instance)
 		return
-	var/datum/antagonist/A
+
+	var/datum/antagonist/antag
 	if(!ispath(datum_type_or_instance))
-		A = datum_type_or_instance
-		if(!istype(A))
+		antag = datum_type_or_instance
+		if(!istype(antag))
 			return
 	else
-		A = new datum_type_or_instance()
+		antag = new datum_type_or_instance()
+
 	//Choose snowflake variation if antagonist handles it
-	var/datum/antagonist/S = A.specialization(src)
-	if(S && S != A)
-		qdel(A)
-		A = S
-	if(!A.can_be_owned(src))
-		qdel(A)
+	var/datum/antagonist/special = antag.specialization(src)
+	if(special && special != antag)
+		qdel(antag)
+		antag = special
+	if(!antag.can_be_owned(src))
+		qdel(antag)
 		return
-	A.owner = src
-	LAZYADD(antag_datums, A)
-	A.create_team(team)
-	var/datum/team/antag_team = A.get_team()
+
+	antag.owner = src
+	LAZYADD(antag_datums, antag)
+	antag.create_team(team)
+	var/datum/team/antag_team = antag.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
-	INVOKE_ASYNC(A, TYPE_PROC_REF(/datum/antagonist, on_gain))
-	log_game("[key_name(src)] has gained antag datum [A.name]([A.type]).")
+
+	INVOKE_ASYNC(antag, TYPE_PROC_REF(/datum/antagonist, on_gain))
+	log_game("[key_name(src)] has gained antag datum [antag.name]([antag.type]).")
 	var/client/picked_client = get_player_client(src)
 	picked_client?.mob?.mind.picking = FALSE
-	return A
+	return antag
 
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
 		return
-	var/datum/antagonist/A = has_antag_datum(datum_type)
-	if(A)
-		A.on_removal()
-		current.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
+	var/datum/antagonist/antag = has_antag_datum(datum_type)
+	if(antag)
+		antag.on_removal()
+		current.log_message("has lost antag datum [antag.name]([antag.type]).", LOG_GAME)
 		return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		A.on_removal()
+	for(var/datum/antagonist/antag in antag_datums)
+		antag.on_removal()
 	current.log_message("has lost all antag datums.", LOG_GAME)
 
-/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
+/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE) as /datum/antagonist
+	RETURN_TYPE(/datum/antagonist)
 	if(!datum_type)
 		return
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		if(check_subtypes && istype(A, datum_type))
-			return A
-		else if(A.type == datum_type)
-			return A
+	for(var/datum/antagonist/antag in antag_datums)
+		if(check_subtypes && istype(antag, datum_type))
+			return antag
+		else if(antag.type == datum_type)
+			return antag
 
 /// Returns true if mind has any antag datum from a list of types
 /datum/mind/proc/has_antag_datum_in_list(list/antag_types)
@@ -86,13 +89,6 @@
 	remove_antag_datum(/datum/antagonist/wizard)
 	special_role = null
 
-/datum/mind/proc/remove_rev()
-	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		remove_antag_datum(rev.type)
-		special_role = null
-
-
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
@@ -109,6 +105,30 @@
 	remove_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit
 
 /**
+ * Gets an item that can be used as an uplink somewhere on the mob's person.
+ *
+ * * desired_location: the location to look for the uplink in. An UPLINK_ define.
+ * If the desired location is not found, defaults to another location.
+ *
+ * Returns the item found, or null if no item was found.
+ */
+/mob/living/carbon/proc/get_uplink_location(desired_location = UPLINK_PDA)
+	var/list/all_contents = get_all_contents()
+	var/obj/item/modular_computer/pda/my_pda = locate() in all_contents
+	var/obj/item/radio/my_radio = locate() in all_contents
+	var/obj/item/pen/my_pen = (locate() in my_pda) || (locate() in all_contents)
+
+	switch(desired_location)
+		if(UPLINK_PDA)
+			return my_pda || my_radio || my_pen
+
+		if(UPLINK_RADIO)
+			return my_radio || my_pda || my_pen
+
+		if(UPLINK_PEN)
+			return my_pen || my_pda || my_radio
+
+/**
  * ## give_uplink
  *
  * A mind proc for giving anyone an uplink.
@@ -117,53 +137,27 @@
  * * antag_datum: the antag datum of the uplink owner, for storing it in antag memory. optional!
  */
 /datum/mind/proc/give_uplink(silent = FALSE, datum/antagonist/antag_datum)
-	if(!current)
+	if(isnull(current))
 		return
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
 
-	var/list/all_contents = traitor_mob.get_all_contents()
-	var/obj/item/modular_computer/pda/PDA = locate() in all_contents
-	var/obj/item/radio/R = locate() in all_contents
-	var/obj/item/pen/P
-
-	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
-		P = locate() in PDA
-	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
-		P = locate() in all_contents
-
 	var/obj/item/uplink_loc
-	var/implant = FALSE
 
 	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
-	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || traitor_mob.mind?.assigned_role.title == JOB_MIME)
+	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || is_mime_job(assigned_role))
 	if(uplink_spawn_location == UPLINK_RADIO && cant_speak)
 		if(!silent)
 			to_chat(traitor_mob, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
 		uplink_spawn_location = UPLINK_PDA
-	switch (uplink_spawn_location)
-		if(UPLINK_PDA)
-			uplink_loc = PDA
-			if(!uplink_loc)
-				uplink_loc = R
-			if(!uplink_loc)
-				uplink_loc = P
-		if(UPLINK_RADIO)
-			uplink_loc = R
-			if(!uplink_loc)
-				uplink_loc = PDA
-			if(!uplink_loc)
-				uplink_loc = P
-		if(UPLINK_PEN)
-			uplink_loc = P
-		if(UPLINK_IMPLANT)
-			implant = TRUE
 
-	if(!uplink_loc) // We've looked everywhere, let's just implant you
-		implant = TRUE
+	if(uplink_spawn_location != UPLINK_IMPLANT)
+		uplink_loc = traitor_mob.get_uplink_location(uplink_spawn_location)
+		if(istype(uplink_loc, /obj/item/radio) && cant_speak)
+			uplink_loc = null
 
-	if(implant)
+	if(isnull(uplink_loc))
 		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
@@ -180,16 +174,17 @@
 	new_uplink.uplink_handler.owner = traitor_mob.mind
 	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
 	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
-	if(uplink_loc == R)
-		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply speak \"[new_uplink.unlock_code]\" into frequency [RADIO_TOKEN_UPLINK] to unlock its hidden features."
-		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = R.name, uplink_code = new_uplink.unlock_code)
-	else if(uplink_loc == PDA)
-		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
-		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = "PDA", uplink_code = new_uplink.unlock_code)
-	else if(uplink_loc == P)
+	unlock_text = "Your Uplink is cunningly disguised as your [uplink_loc.name]. "
+	if(istype(uplink_loc, /obj/item/modular_computer/pda))
+		unlock_text += "Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
+		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = uplink_loc.name, uplink_code = new_uplink.unlock_code)
+	else if(istype(uplink_loc, /obj/item/radio))
+		unlock_text += "Simply speak \"[new_uplink.unlock_code]\" into frequency [RADIO_TOKEN_UPLINK] to unlock its hidden features."
+		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = uplink_loc.name, uplink_code = new_uplink.unlock_code)
+	else if(istype(uplink_loc, /obj/item/pen))
 		var/instructions = english_list(new_uplink.unlock_code)
-		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [instructions] from its starting position to unlock its hidden features."
-		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = "PDA pen", uplink_code = instructions)
+		unlock_text += "Simply twist the top of the pen [instructions] from its starting position to unlock its hidden features."
+		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = uplink_loc.name, uplink_code = instructions)
 
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
@@ -219,6 +214,8 @@
 
 
 	enslaved_to = WEAKREF(creator)
+
+	SEND_SIGNAL(current, COMSIG_MOB_ENSLAVED_TO, creator)
 
 	current.faction |= creator.faction
 	creator.faction |= "[REF(current)]"
@@ -270,10 +267,6 @@
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
 
-/datum/mind/proc/make_traitor()
-	if(!(has_antag_datum(/datum/antagonist/traitor)))
-		add_antag_datum(/datum/antagonist/traitor)
-
 /datum/mind/proc/make_changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
@@ -281,14 +274,12 @@
 		special_role = ROLE_CHANGELING
 	return C
 
-
 /datum/mind/proc/make_wizard()
 	if(has_antag_datum(/datum/antagonist/wizard))
 		return
 	set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
 	special_role = ROLE_WIZARD
 	add_antag_datum(/datum/antagonist/wizard)
-
 
 /datum/mind/proc/make_rev()
 	var/datum/antagonist/rev/head/head = new()
@@ -300,11 +291,11 @@
 /// Sets our can_hijack to the fastest speed our antag datums allow.
 /datum/mind/proc/get_hijack_speed()
 	. = 0
-	for(var/datum/antagonist/A in antag_datums)
-		. = max(., A.hijack_speed())
+	for(var/datum/antagonist/antag in antag_datums)
+		. = max(., antag.hijack_speed())
 
 /datum/mind/proc/has_objective(objective_type)
-	for(var/datum/antagonist/A in antag_datums)
-		for(var/O in A.objectives)
-			if(istype(O,objective_type))
+	for(var/datum/antagonist/antag in antag_datums)
+		for(var/objective in antag.objectives)
+			if(istype(objective, objective_type))
 				return TRUE

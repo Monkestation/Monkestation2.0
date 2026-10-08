@@ -8,6 +8,7 @@
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	armor_type = /datum/armor/clothing_under
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -26,6 +27,8 @@
 	var/alt_covers_chest = FALSE
 	/// The variable containing the flags for how the woman uniform cropping is supposed to interact with the sprite.
 	var/female_sprite_flags = FEMALE_UNIFORM_FULL
+	/// If TRUE, this undersuit's worn overlay is not modified by human height offsets or filters.
+	var/ignore_mob_height_adjustments = FALSE
 
 	// Sensor handling
 	/// Does this undersuit have suit sensors in general
@@ -43,7 +46,8 @@
 	/// The overlay of the accessory we're demonstrating. Only index 1 will show up.
 	/// This is the overlay on the MOB, not the item itself.
 	var/mutable_appearance/accessory_overlay
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	/// A weak reference to the current accessory that's providing armor.
+	var/datum/weakref/current_armored_accessory
 
 /datum/armor/clothing_under
 	bio = 10
@@ -102,6 +106,10 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(accessory_overlay)
 		. += accessory_overlay
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))
@@ -160,13 +168,16 @@
 	if(adjusted == ALT_STYLE)
 		adjust_to_normal()
 
-/*	 MONKESTATION EDIT
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
 		if(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
-*/
+
+/obj/item/clothing/under/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
+	return replace_icon_legs(base_icon, legs)
+
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
@@ -201,10 +212,13 @@
 /obj/item/clothing/under/proc/attach_accessory(obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
 	if(!istype(accessory))
 		return
+
 	if(!accessory.can_attach_accessory(src, user))
 		return
+
 	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
 		return
+
 	if(!accessory.attach(src, user))
 		return
 
@@ -219,15 +233,19 @@
 	if(isnull(accessory_overlay))
 		create_accessory_overlay()
 
+	RegisterSignal(accessory, COMSIG_QDELETING, PROC_REF(refresh_armor))
+	refresh_armor()
+
 	update_appearance()
+
 	return TRUE
 
 /// Removes (pops) the topmost accessory from the accessories list and puts it in the user's hands if supplied
 /obj/item/clothing/under/proc/pop_accessory(mob/living/user, attach_message = TRUE)
 	var/obj/item/clothing/accessory/popped_accessory = attached_accessories[1]
-	remove_accessory(popped_accessory)
+	remove_accessory(popped_accessory, popped = TRUE)
 
-	if(!user)
+	if(!user || QDELETED(popped_accessory))
 		return
 
 	user.put_in_hands(popped_accessory)
@@ -235,16 +253,19 @@
 		popped_accessory.balloon_alert(user, "accessory removed")
 
 /// Removes the passed accesory from our accessories list
-/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed)
+/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed, popped = FALSE)
 	if(removed == attached_accessories[1])
 		accessory_overlay = null
 
 	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
-	removed.detach(src)
+	removed.detach(src , popped)
 
 	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
 		create_accessory_overlay()
+
+	UnregisterSignal(removed, COMSIG_QDELETING)
+	refresh_armor()
 
 	update_appearance()
 
@@ -275,7 +296,8 @@
 /obj/item/clothing/under/proc/dump_attachments(atom/drop_to = drop_location())
 	for(var/obj/item/clothing/accessory/worn_accessory as anything in attached_accessories)
 		remove_accessory(worn_accessory)
-		worn_accessory.forceMove(drop_to)
+		if(!QDELETED(worn_accessory))
+			worn_accessory.forceMove(drop_to)
 
 /obj/item/clothing/under/atom_destruction(damage_flag)
 	dump_attachments()
@@ -287,7 +309,7 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
-	if(can_adjust)
+	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
 		. += "Alt-click on [src] to wear it [adjusted == ALT_STYLE ? "normally" : "casually"]."
 	if(has_sensor == BROKEN_SENSORS)
 		. += "Its sensors appear to be shorted out. You could repair it with some cabling."
@@ -310,14 +332,11 @@
 /obj/item/clothing/under/proc/list_accessories_with_icon(mob/user)
 	var/list/all_accessories = list()
 	for(var/obj/item/clothing/accessory/attached as anything in attached_accessories)
-		all_accessories += attached.get_examine_string(user)
+		all_accessories += attached.examine_title(user)
 
 	return all_accessories
 
-/obj/item/clothing/under/verb/toggle()
-	set name = "Adjust Suit Sensors"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/under, toggle, usr, "Adjust Suit Sensors", "Object")
 	var/mob/user_mob = usr
 	if(!can_toggle_sensors(user_mob))
 		return
@@ -395,10 +414,7 @@
 
 	pop_accessory(user)
 
-/obj/item/clothing/under/verb/jumpsuit_adjust()
-	set name = "Adjust Jumpsuit Style"
-	set category = null
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/under, jumpsuit_adjust, usr, "Adjust Jumpsuit Style", null)
 
 	if(!can_adjust)
 		balloon_alert(usr, "can't be adjusted!")
@@ -419,10 +435,9 @@
 /// Returns the new state
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	switch(adjusted)
-/* MONKESTATION EDIT
 		if(DIGITIGRADE_STYLE)
 			return
-*/
+
 		if(NORMAL_STYLE)
 			adjust_to_alt()
 
@@ -460,6 +475,22 @@
 	if(ismob(user) && !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return FALSE
 	return ..()
+
+/obj/item/clothing/under/proc/refresh_armor()
+	SIGNAL_HANDLER
+	var/obj/item/clothing/accessory/armored_accesory = current_armored_accessory?.resolve()
+	if(armored_accesory)
+		set_armor(get_armor().subtract_other_armor(armored_accesory.get_armor()))
+		current_armored_accessory = null
+	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
+		if(QDELETED(accessory))
+			continue
+		var/datum/armor/armor = accessory.get_armor()
+		if(!armor || istype(armor, /datum/armor/none))
+			continue
+		set_armor(get_armor().add_other_armor(accessory.get_armor()))
+		current_armored_accessory = WEAKREF(accessory)
+		return
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

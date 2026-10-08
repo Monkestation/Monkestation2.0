@@ -4,7 +4,7 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "riotgun"
 	inhand_icon_state = "riotgun"
-	w_class = WEIGHT_CLASS_NORMAL //monkestation edit: bulky to normal
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 7
 	force = 5
@@ -52,5 +52,5 @@
 	user.log_message("fired a grenade ([F.name]) with a grenade launcher ([src]) from [AREACOORD(user)] at [target] [AREACOORD(target)].", LOG_ATTACK, log_globally = FALSE)
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
-	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
+	playsound(user.loc, F.grenade_arm_sound, 75, F.grenade_sound_vary, -3)
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade, detonate)), 15)

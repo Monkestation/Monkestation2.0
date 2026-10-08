@@ -1,11 +1,11 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
-  ProgressBar,
-  NoticeBox,
   Button,
   LabeledList,
+  NoticeBox,
+  ProgressBar,
   Section,
 } from '../components';
 import { Window } from '../layouts';
@@ -87,7 +87,7 @@ export const ChemSeparator = (props) => {
                 <Box
                   lineHeight={1.9}
                   style={{
-                    'text-shadow': '1px 1px 0 black',
+                    textShadow: '1px 1px 0 black',
                   }}
                 >
                   {`${Math.ceil(data.own_total_volume)} of ${
@@ -137,7 +137,7 @@ export const ChemSeparator = (props) => {
                   <Box
                     lineHeight={1.9}
                     style={{
-                      'text-shadow': '1px 1px 0 black',
+                      textShadow: '1px 1px 0 black',
                     }}
                   >
                     {`${Math.ceil(data.beaker_total_volume)} of ${

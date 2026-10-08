@@ -85,7 +85,7 @@
 
 	if(acid_projectile)
 		var/obj/projectile/spit_projectile = new acid_projectile(user.loc)
-		spit_projectile.preparePixelProjectile(target, user, modifiers)
+		spit_projectile.aim_projectile(target, user, modifiers)
 		spit_projectile.firer = user
 		spit_projectile.fire()
 		playsound(user, spit_sound, 100, TRUE, 5, 0.9)
@@ -107,9 +107,7 @@
 /obj/projectile/neurotoxin/nova
 	name = "neurotoxin spit"
 	icon_state = "neurotoxin"
-	damage = 30
-	paralyze = 0
-	damage_type = STAMINA
+	stamina = 35 //15 more than default neurotoxin
 	armor_flag = BIO
 
 /obj/projectile/neurotoxin/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -129,7 +127,6 @@
 	name = "acid spit"
 	icon_state = "toxin"
 	damage = 20
-	paralyze = 0
 	damage_type = BURN
 
 /obj/item/organ/internal/alien/neurotoxin/sentinel

@@ -28,12 +28,12 @@
 		/obj/item/organ/internal/lungs = 1,
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
-	blacklist = list(
-		/obj/item/organ/internal/lungs/cybernetic,
-	)
-
 	result = /obj/item/food/shredded_lungs
 	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/shredded_lungs/New()
+	. = ..()
+	blacklist |= typesof(/obj/item/organ/internal/lungs/cybernetic)
 
 /datum/crafting_recipe/food/tsatsikh
 	name = "Tsatsikh"

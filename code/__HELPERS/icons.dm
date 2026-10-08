@@ -311,6 +311,63 @@ world
 /proc/BlendRGB(rgb1, rgb2, amount)
 	return rgb_gradient(amount, 0, rgb1, 1, rgb2, "loop")
 
+/**
+ * Takes a weighted normalized color list and blends them together based on weight.
+ */
+/proc/BlendMultipleRGB(list/weighted_colors)
+	if(!length(weighted_colors))
+		return null
+
+	// If only one color, return it directly
+	if(length(weighted_colors) == 1)
+		var/color = weighted_colors[1]
+		var/list/rgb = rgb2num(color)
+		if(length(rgb) > 3)
+			return rgb(rgb[1], rgb[2], rgb[3], rgb[4]) // Return RGBA
+		else
+			return rgb(rgb[1], rgb[2], rgb[3]) // Return RGB
+
+	var/r_sum = 0
+	var/g_sum = 0
+	var/b_sum = 0
+	var/a_sum = 0
+	var/usealpha = FALSE
+	for(var/color in weighted_colors)
+		// Parse color into RGB(A) components
+		var/list/rgb = rgb2num(color)
+		var/weight = weighted_colors[color]
+
+		if(isnull(weight) || weight < 0)
+			continue
+
+		// Add weighted contribution to each channel
+		r_sum += rgb[1] * weight
+		g_sum += rgb[2] * weight
+		b_sum += rgb[3] * weight
+		// Handle alpha if present
+		if(length(rgb) > 3)
+			usealpha = TRUE
+			a_sum += rgb[4] * weight
+		else
+			a_sum += 255 * weight // Default alpha if none provided
+
+	// Round final sums to nearest integer
+	var/r = round(r_sum, 1)
+	var/g = round(g_sum, 1)
+	var/b = round(b_sum, 1)
+	var/alpha = usealpha ? round(a_sum, 1) : null
+
+	// Clamp values to 0-255 range
+	r = clamp(r, 0, 255)
+	g = clamp(g, 0, 255)
+	b = clamp(b, 0, 255)
+	if(usealpha)
+		alpha = clamp(alpha, 0, 255)
+
+	if(isnull(alpha))
+		return rgb(r, g, b)
+	return rgb(r, g, b, alpha)
+
 /proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
 	if(hue < 0 || hue >= 1536)
@@ -1338,7 +1395,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 /proc/strip_appearance_underlays(mutable_appearance/appearance)
 	var/base_plane = PLANE_TO_TRUE(appearance.plane)
 	for(var/mutable_appearance/underlay as anything in appearance.underlays)
-		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
+		if(!isnull(underlay) && PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance
 
@@ -1407,3 +1464,55 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		icon_cache[job_type] = sechud_icon
 
 	return icon_cache[job_type]
+
+#define TMP_UPSCALE_PATH "tmp/resize_icon.png"
+
+/// Upscales an icon using rust-g.
+/// You really shouldn't use this TOO often, as it has to copy the icon to a temporary png file,
+/// resize it, fcopy_rsc the resized png, and then create a new /icon from said png.
+/// Cache the output where possible.
+/proc/resize_icon(icon/icon, width, height, resize_type = "nearest") as /icon
+	RETURN_TYPE(/icon)
+	SHOULD_BE_PURE(TRUE)
+
+	if(!istype(icon))
+		CRASH("Attempted to upscale non-icon")
+	if(!IS_SAFE_NUM(width) || !IS_SAFE_NUM(height))
+		CRASH("Attempted to upscale icon to non-number width/height")
+	if(!fcopy(icon, TMP_UPSCALE_PATH))
+		CRASH("Failed to create temporary png file to upscale")
+	UNLINT(rustg_dmi_resize_png(TMP_UPSCALE_PATH, "[width]", "[height]", resize_type)) // technically impure but in practice its not
+	. = icon(fcopy_rsc(TMP_UPSCALE_PATH))
+	fdel(TMP_UPSCALE_PATH)
+
+#undef TMP_UPSCALE_PATH
+
+#ifdef PRELOAD_ICON_EXISTS_CACHE
+/proc/load_icon_exists_cache()
+	. = null
+	if(!fexists("icon_exists_cache.json"))
+		log_world("icon_exists_cache.json doesn't exist, not loading cache")
+		return
+	var/cache_file = rustg_file_read("icon_exists_cache.json")
+	if(!rustg_json_is_valid(cache_file))
+		log_world("did not load icon_exists cache: file exists but wasn't valid json")
+		CRASH("did not load icon_exists cache: file exists but wasn't valid json")
+	var/list/cache_data = json_decode(cache_file)
+	if(!islist(cache_data))
+		log_world("did not load icon_exists cache: file exists but wasn't valid json")
+		CRASH("did not load icon_exists cache: file exists and is valid json, but did not decode into an object")
+	var/list/icons = cache_data["icons"]
+	if(!islist(icons))
+		log_world("did not load icon_exists cache: 'icons' key was not a list")
+		CRASH("did not load icon_exists cache: 'icons' key was not a list")
+	var/cache_revision = cache_data["revision"]
+	if(!isnull(cache_revision))
+		var/revision = rustg_git_revparse("HEAD")
+		if(cache_revision != revision)
+			log_world("did not load icon_exists cache: revision ([cache_revision]) mismatched current server revision ([revision])")
+			return
+		log_world("loaded icon_exists cache for [revision]")
+	else
+		log_world("loaded icon_exists cache without verifying revision")
+	return icons
+#endif

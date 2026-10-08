@@ -34,6 +34,8 @@
 	var/turned_on = FALSE
 	///are we attempting to fire the laser currently?
 	var/firing = FALSE
+	///is the PTL laser currently active?
+	var/laser_active = FALSE
 	///we need to create a list of all lasers we are creating so we can delete them in the end
 	var/list/laser_effects = list()
 	///our max load we can set
@@ -274,14 +276,15 @@
 
 	if(charge < MINIMUM_POWER)
 		firing = FALSE
-		output_level = 0
-		destroy_lasers()
-		return
 
-	if(!firing)
+	if(!firing) // Either manually disabled, or charge dips under MINMUM_POWER
+		if(laser_active)
+			destroy_lasers()
+		output_level = 0
 		return
 
 	output_level = min(charge, output_number * power_format_multi_output)
+
 	if(!length(laser_effects))
 		setup_lasers()
 
@@ -293,12 +296,12 @@
 #define MINIMUM_BAR 25
 #define PROCESS_CAP 5000000 - MINIMUM_BAR
 
+//larger curve less cash
 #define A1_CURVE 70
 
 /obj/machinery/power/transmission_laser/proc/sell_power(power_amount)
 	var/mw_power = power_amount / (1 MW)
-
-	var/generated_cash = (2 * mw_power * PROCESS_CAP) / (2 * mw_power + PROCESS_CAP * A1_CURVE)
+	var/generated_cash = log(10, mw_power + 1 )**2
 	generated_cash += (4 * mw_power * MINIMUM_BAR) / (4 * mw_power + MINIMUM_BAR)
 	generated_cash = round(generated_cash)
 	if(generated_cash < 0)
@@ -339,16 +342,18 @@
 		new /obj/effect/transmission_beam(target, src) // beam will add itself to our `laser_effects` during initialize
 		target = get_step(target, dir)
 		sanity--
+	laser_active = TRUE
 
 /obj/machinery/power/transmission_laser/proc/destroy_lasers()
 	if(!firing) // this is incase we turn the laser back on manually
 		QDEL_LIST(laser_effects)
+		laser_active = FALSE
 
 ///this is called every time something enters our beams
 /obj/machinery/power/transmission_laser/proc/atom_entered_beam(obj/effect/transmission_beam/triggered, mob/living/victim)
 	if(!isliving(victim) || victim.incorporeal_move || (HAS_TRAIT(victim, TRAIT_GODMODE)))
 		return
-	var/mw_power = (output_number * power_format_multi_output) / (1 MW)
+	var/mw_power = (output_level) / (1 MW)
 	switch(mw_power)
 		if(0 to 25)
 			victim.adjustFireLoss(mw_power * 15)
@@ -358,3 +363,5 @@
 		else
 			explosion(victim, 3, 2, 2)
 			victim.gib(FALSE)
+
+#undef MINIMUM_POWER

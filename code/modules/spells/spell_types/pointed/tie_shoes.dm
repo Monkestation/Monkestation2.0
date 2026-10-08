@@ -23,7 +23,7 @@
 	/// Summons shoes to untie if the target has none.
 	var/summons_shoes = FALSE
 
-/datum/action/cooldown/spell/pointed/untie_shoes/New(Target)
+/datum/action/cooldown/spell/pointed/untie_shoes/New(Target, original = TRUE)
 	. = ..()
 	// tgs first spell with multiple invocations!!!!!!
 	invocation = pick("Acetato!", "Agaletto!")
@@ -46,7 +46,7 @@
 	return isliving(cast_on)
 
 // We need to override this, as trying to change next_use_time in cast() will just result in it being overridden.
-/datum/action/cooldown/spell/touch/before_cast(atom/cast_on)
+/datum/action/cooldown/spell/pointed/untie_shoes/before_cast(atom/cast_on)
 	return ..() | SPELL_NO_IMMEDIATE_COOLDOWN
 
 /datum/action/cooldown/spell/pointed/untie_shoes/cast(mob/living/carbon/cast_on)

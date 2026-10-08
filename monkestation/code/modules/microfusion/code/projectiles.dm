@@ -5,7 +5,7 @@
 /obj/item/ammo_casing/energy/laser/microfusion
 	name = "microfusion energy lens"
 	projectile_type = /obj/projectile/beam/laser/microfusion
-	e_cost = 100 //LASER_SHOTS(10, STANDARD_CELL_CHARGE) // 10 shots with a normal cell. //monkestation edit, replaced to simply be 100(still 10 shots I think)
+	e_cost = 100
 	select_name = "laser"
 	fire_sound = 'monkestation/code/modules/microfusion/sound/laser_1.ogg'
 	fire_sound_volume = 100
@@ -18,6 +18,7 @@
 	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
 	damage = 22
 
+//Currently unused - needs to have stamina dmg re-balanced if it's ever added in
 /obj/projectile/beam/microfusion_disabler
 	name = "microfusion disabler laser"
 	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
@@ -52,7 +53,7 @@
 	icon_state = "laser_greyscale"
 	wound_bonus = 0
 	damage = 20 // You are trading damage for a significant wound bonus and speed increase
-	speed = 0.6
+	speed = 1.6
 	color = LIGHT_COLOR_FLARE
 	light_color = LIGHT_COLOR_FLARE
 
@@ -76,7 +77,7 @@
 	tracer_type = /obj/effect/projectile/tracer/heavy_laser
 	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
 	impact_type = /obj/effect/projectile/impact/heavy_laser
-	speed = 0.4
+	speed = 2.5
 
 /obj/projectile/beam/laser/microfusion/xray
 	name = "x-ray microfusion laser"

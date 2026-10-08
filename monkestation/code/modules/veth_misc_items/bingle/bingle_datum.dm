@@ -1,4 +1,3 @@
-#define BINGLE_EVOLVE "bingle evolve"
 /* to add:
 if too much trash on ground bingles roll
 
@@ -13,8 +12,8 @@ if too much trash on ground bingles roll
 	show_name_in_check_antagonists =  TRUE
 	hud_icon = 'monkestation/code/modules/veth_misc_items/bingle/icons/bingle_hud.dmi'
 	show_to_ghosts = TRUE
-	antag_flags = FLAG_ANTAG_CAP_TEAM
-	antag_count_points = 3
+	antag_flags = FLAG_ANTAG_CAP_IGNORE_HUMANITY | FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 1.5
 	var/static/datum/team/bingles/dont_bungle_the_bingle
 	var/obj/structure/bingle_hole/pit_check
 
@@ -41,7 +40,7 @@ if too much trash on ground bingles roll
 	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 1 SECOND)
+		QDEL_IN(hosts_mind.current, 1 SECONDS)
 	var/mob/living/basic/bingle/lord/bungle = new(spawn_loc)
 	bungle.PossessByPlayer(spender_key)
 	if(isobserver(spender))

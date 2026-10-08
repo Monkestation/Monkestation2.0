@@ -1,7 +1,7 @@
 /proc/format_mhelp_embed(message, id, ckey)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Mentor Help"
-	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.description = CONFIG_GET(string/roundend_webhook_description)
 	embed.author = key_name(ckey)
 	var/round_state
 	var/admin_text
@@ -29,9 +29,8 @@
 	)
 	return embed
 
-/client/verb/mentorhelp(message as text)
-	set category = "Mentor"
-	set name = "Mentorhelp"
+GAME_VERB(/client, mentorhelp, "Mentorhelp", "Mentor")
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(usr?.client?.prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,

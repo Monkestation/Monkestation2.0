@@ -170,7 +170,7 @@
 
 /obj/projectile/bullet/hair_tie/syndicate
 	damage = 10 //getting hit with this one fucking sucks
-	stamina = 30
+	stamina = 15
 	eyeblur = 2 SECONDS
 	jitter = 8 SECONDS
 
@@ -212,7 +212,7 @@
 		return
 
 	if(target_human.hairstyle == "Bald" && target_human.facial_hairstyle == "Shaved")
-		balloon_alert(user, "What hair? They have none!")
+		balloon_alert(user, "what hair? They have none!")
 		return
 
 	if(user.zone_selected != BODY_ZONE_HEAD)
@@ -225,7 +225,7 @@
 
 	if(selected_part == "Hair")
 		if(!target_human.hairstyle == "Bald" && target_human.head)
-			balloon_alert(user, "They have no hair to cut!")
+			balloon_alert(user, "they have no hair to cut!")
 			return
 
 		var/hair_id = tgui_input_list(user, "Please select what hairstyle you'd like to sculpt!", "Select masterpiece", GLOB.hairstyles_list)
@@ -245,7 +245,7 @@
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 	else
 		if(!target_human.facial_hairstyle == "Shaved" && target_human.wear_mask)
-			balloon_alert(user, "They have no facial hair to cut!")
+			balloon_alert(user, "they have no facial hair to cut!")
 			return
 
 		var/facial_hair_id = tgui_input_list(user, "Please select what facial hairstyle you'd like to sculpt!", "Select masterpiece", GLOB.facial_hairstyles_list)
@@ -283,7 +283,7 @@
 /obj/machinery/vending/barbervend
 	name = "Fab-O-Vend"
 	desc = "It would seem it vends dyes, and other stuff to make you pretty."
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "barbervend"
 	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
 	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
@@ -307,7 +307,7 @@
 		/obj/item/lipstick/quantum = 1,
 		/obj/item/razor = 1,
 		/obj/item/storage/box/perfume = 1,
-		/obj/item/secateurs = 1, //monkestation edit: plant
+		/obj/item/secateurs = 1,
 	)
 	refill_canister = /obj/item/vending_refill/barbervend
 	default_price = PAYCHECK_CREW
@@ -321,7 +321,6 @@
 /obj/structure/closet/secure_closet/barber
 	name = "barber's locker"
 	icon_state = "barber"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi'
 	req_access = list(ACCESS_SERVICE)
 
 /obj/structure/closet/secure_closet/barber/PopulateContents()
@@ -366,7 +365,7 @@
 	else
 		mode = COLOR_MODE_SPECIFIC
 
-	balloon_alert(user, "Set to [mode]!")
+	balloon_alert(user, "set to [mode]!")
 
 /obj/item/fur_dyer/attack(mob/living/M, mob/living/user, params)
 	if(!ishuman(M))

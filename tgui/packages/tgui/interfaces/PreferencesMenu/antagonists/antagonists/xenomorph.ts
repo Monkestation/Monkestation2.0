@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const Xenomorph: Antagonist = {
   key: 'xenomorph',
@@ -10,7 +10,7 @@ const Xenomorph: Antagonist = {
       your way up the caste, including even the Queen!
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Xenomorph;

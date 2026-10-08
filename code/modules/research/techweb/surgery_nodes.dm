@@ -7,6 +7,7 @@
 	design_ids = list(
 		"surgery_heal_brute_upgrade",
 		"surgery_heal_burn_upgrade",
+		"surgery_heal_robot_upgrade", // monke edit: improved mechanical surgery
 		"surgery_filter_upgrade", // monke edit: improved blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
@@ -23,6 +24,7 @@
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
+		"surgery_heal_robot_upgrade_femto", // monke edit: advanced mechanical surgery
 		"surgery_filter_upgrade_femto", // monkestation edit: advanced blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

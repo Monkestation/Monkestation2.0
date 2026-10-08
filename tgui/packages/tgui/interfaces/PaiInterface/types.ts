@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 
 export type PaiData = {
   available: ReadonlyArray<{ name: string; value: number }>;

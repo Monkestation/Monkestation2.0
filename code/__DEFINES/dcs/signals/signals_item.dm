@@ -26,6 +26,8 @@
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
+///a mob has just dropped an item
+#define COMSIG_MOB_DROPPED_ITEM "mob_dropped_item"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
@@ -88,8 +90,6 @@
 #define COMSIG_TOOL_IN_USE "tool_in_use"
 ///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
 #define COMSIG_TOOL_START_USE "tool_start_use"
-///from [/obj/item/proc/disableEmbedding]:
-#define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
@@ -161,10 +161,11 @@
 #define COMSIG_PEN_ROTATED "pen_rotated"
 
 // /obj/item/gun signals
-
+///called in /obj/item/gun/try_fire_gun (user, src, target, flag, params)
+#define COMSIG_MOB_TRYING_TO_FIRE_GUN "mob_trying_to_fire_gun"
 ///called in /obj/item/gun/fire_gun (user, target, flag, params)
 #define COMSIG_GUN_TRY_FIRE "gun_try_fire"
-	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0) /// Also returned to cancel COMSIG_MOB_TRYING_TO_FIRE_GUN
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -173,12 +174,15 @@
 #define COMSIG_GUN_CHAMBER_PROCESSED "gun_chamber_processed"
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
+///called in /obj/item/gun/ballistic/sawoff(mob/user, obj/item/saw, handle_modifications) : (mob/user)
+#define COMSIG_GUN_BEING_SAWNOFF "gun_being_sawnoff"
+	#define COMPONENT_CANCEL_SAWING_OFF (1<<0)
+#define COMSIG_GUN_SAWN_OFF "gun_sawn_off"
+
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_FIRE_CASING "fire_casing"
 ///from the base of /obj/item/ammo_casing/ready_proj() : (atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
 #define COMSIG_CASING_READY_PROJECTILE "casing_ready_projectile"
-///sent to the projectile after an item is spawned by the projectile_drop element: (new_item)
-#define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 
 // Jetpack things
 // Please kill me
@@ -209,10 +213,7 @@
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_ARMED "grenade_armed"
 
-///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
-#define COMSIG_EMBED_TRY_FORCE "item_try_embed"
-	#define COMPONENT_EMBED_SUCCESS (1<<1)
-// FROM [/obj/item/proc/updateEmbedding] sent when an item's embedding properties are changed : ()
+// FROM [/obj/item/proc/set_embed] sent when an item's embedding properties are changed : ()
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
 #define COMSIG_ITEM_ATTACK "item_attack"
@@ -233,12 +234,12 @@
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
 ///from base of [obj/item/attack()]: (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
-///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
+///from base of datum/embedding/proc/embed_into(): (mob/living/carbon/victim, obj/item/bodypart/limb)
 #define COMSIG_ITEM_EMBEDDED "item_embedded"
-///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)
+///from base of datum/embedding/proc/remove_embedding(): (mob/living/carbon/victim, obj/item/bodypart/limb)
 #define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
-/// from base of obj/item/failedEmbed()
-#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
+///from base of datum/embedding/proc/failed_embed(): (mob/living/carbon/victim, hit_zone)
+#define COMSIG_ITEM_FAILED_EMBED "item_unembedded"
 
 /// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
 #define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
@@ -275,3 +276,34 @@
 /// from /obj/item/use: (used, ...)
 #define COMSIG_ITEM_USED "item_used"
 	#define BLOCK_ITEM_USE (1<<0)
+
+/// Sent when an item is stashed in Gary's hideout.
+#define COMSIG_ITEM_GARY_STASHED "gary_stashed"
+
+/// Sent when an item is taken/looted from Gary's hideout.
+#define COMSIG_ITEM_GARY_LOOTED "gary_looted"
+
+/// Called before an item is compressed by a bluespace compression kit: (mob/user, obj/item/compression_kit/kit)
+#define COMSIG_ITEM_PRE_COMPRESS "item_pre_compress"
+	#define COMPONENT_STOP_COMPRESSION	(1 << 0)
+	#define COMPONENT_HANDLED_MESSAGE	(1 << 1)
+/// Called after an item is compressed by a bluespace compression kit: (mob/user, obj/item/compression_kit/kit)
+#define COMSIG_ITEM_COMPRESSED "item_compressed"
+
+/// Called when a clock cultist uses a clockwork slab: (obj/item/clockwork/clockwork_slab/slab)
+#define COMSIG_CLOCKWORK_SLAB_USED "clockwork_slab_used"
+
+/// the comsig for clockwork items checking turf
+#define COMSIG_CHECK_TURF_CLOCKWORK "check_turf_clockwork"
+
+#define COMSIG_ITEM_DAMAGE_MULTIPLIER "damage_multi_item"
+
+///Sent by a tumor when its removed
+#define COMSIG_ZOMBIE_TUMOR_REMOVED "zombie_tumor_removed"
+
+/// Sent when an obj/item calls item_use_power: (use_amount, user, check_only)
+#define COMSIG_ITEM_POWER_USE "item_use_power"
+	#define NO_COMPONENT NONE
+	#define COMPONENT_POWER_SUCCESS (1<<0)
+	#define COMPONENT_NO_CELL  (1<<1)
+	#define COMPONENT_NO_CHARGE (1<<2)

@@ -1,8 +1,8 @@
 import {
-  FeatureChoiced,
-  FeatureChoicedServerData,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
   FeatureIconnedDropdownInput,
-  FeatureValueProps,
+  type FeatureValueProps,
 } from '../base';
 
 export const glasses: FeatureChoiced = {

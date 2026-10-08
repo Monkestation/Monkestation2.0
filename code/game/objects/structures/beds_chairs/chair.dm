@@ -12,6 +12,7 @@
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+	astar_weight = 2
 
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
@@ -276,15 +277,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	return
 
 /obj/structure/chair/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	if(over_object == user)
-		if(!item_chair || has_buckled_mobs())
-			return
-		user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
-		var/obj/item/C = new item_chair(loc)
-		C.set_custom_materials(custom_materials)
-		TransferComponents(C)
-		user.put_in_hands(C)
-		qdel(src)
+	if(!isliving(user) || over_object != user)
+		return
+
+	if(!item_chair || has_buckled_mobs())
+		return
+
+	user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
+	var/obj/item/C = new item_chair(loc)
+	C.set_custom_materials(custom_materials)
+	TransferComponents(C)
+	user.put_in_hands(C)
+	qdel(src)
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return ..()
@@ -562,3 +566,41 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
 	particles = new /particles/musical_notes
 	origin_type = /obj/structure/chair/musical
+
+/obj/structure/chair/stool/sandstone
+	name = "sandstone stool"
+	desc = "Apply dummy thick cheeks."
+	icon = 'icons/obj/sandstone_structures.dmi'
+	icon_state = "stool"
+	resistance_flags = FIRE_PROOF
+	can_buckle = FALSE
+	buildstacktype = /obj/item/stack/sheet/mineral/sandstone
+	buildstackamount = 1
+	item_chair = /obj/item/chair/stool/sandstone
+
+/obj/item/chair/stool/sandstone
+	name = "sandstone stool"
+	icon = 'icons/obj/sandstone_structures.dmi'
+	icon_state = "stool_toppled"
+	inhand_icon_state = null
+	origin_type = /obj/structure/chair/stool/sandstone
+
+/obj/structure/chair/silk
+	name = "silk chair"
+	icon = 'icons/obj/silk_structures.dmi'
+	icon_state = "chair"
+	buildstacktype = /obj/item/stack/sheet/silk
+	buildstackamount = 3
+	item_chair = /obj/item/chair/silk
+	resistance_flags = FLAMMABLE
+
+/obj/item/chair/silk
+	name = "silk chair"
+	desc = "It's way too soft for it to make a dent on anything."
+	icon = 'icons/obj/silk_structures.dmi'
+	icon_state = "chair_toppled"
+	origin_type = /obj/structure/chair/silk
+	custom_materials = null
+	force = 0 //It's just silk
+	throwforce = 0
+	throw_range = 6

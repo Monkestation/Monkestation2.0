@@ -5,9 +5,9 @@ import { Window } from '../layouts';
 export const KeycardAuth = (props) => {
   const { act, data } = useBackend();
   return (
-    <Window width={375} height={145}>
+    <Window width={375} height={170}>
       <Window.Content>
-        <Section>
+        <Section fill>
           <Box>
             {data.waiting === 1 && (
               <span>Waiting for another device to confirm your request...</span>

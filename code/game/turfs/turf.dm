@@ -82,6 +82,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 
+	///This turf's resistance to getting rusted
+	var/rust_resistance = RUST_RESISTANCE_BASIC
+
 	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
@@ -98,6 +101,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// This would either be expensive, or impossible to manage. Let's just avoid it yes?
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
+
+	/// The weight of the turf for A* pathfinding.
+	var/astar_weight = 50
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -221,6 +227,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 	user.Move_Pulled(src)
 
+/turf/attack_robot(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!Adjacent(user))
+		return
+	user.Move_Pulled(src)
+
 /// Call to move a turf from its current area to a new one
 /turf/proc/change_area(area/old_area, area/new_area)
 	//dont waste our time
@@ -240,17 +254,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
 	transfer_area_lighting(old_area, new_area)
-	GLOB.SUNLIGHT_QUEUE_WORK += src
-	if(outdoor_effect)
-		GLOB.SUNLIGHT_QUEUE_UPDATE += outdoor_effect
 
 /turf/proc/multiz_turf_del(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
-	reconsider_sunlight() //Monkestation addition
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
-	reconsider_sunlight() //Monkestation addition
 
 /**
  * Check whether the specified turf is blocked by something dense inside it with respect to a specific atom.
@@ -544,8 +553,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return can_have_cabling() && underfloor_accessibility >= UNDERFLOOR_INTERACTABLE
 
 /turf/proc/visibilityChanged()
-	GLOB.cameranet.updateVisibility(src)
-	GLOB.thrallnet.updateVisibility(src)
+	SScameras.update_visibility(src)
 
 /turf/proc/burn_tile()
 	return
@@ -623,13 +631,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/acid_melt()
 	return
 
-/turf/rust_heretic_act()
-	if(turf_flags & NO_RUST)
-		return
-	if(HAS_TRAIT(src, TRAIT_RUSTY))
+/// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
+/turf/rust_heretic_act(rust_strength = RUST_RESISTANCE_BASIC)
+	if((rust_strength < rust_resistance))
 		return
 
-	AddElement(/datum/element/rust)
+	if (rust_turf(magic = TRUE))
+		new /obj/effect/glowing_rune(src)
+
+/// Override this to change behaviour when being rusted
+/turf/proc/rust_turf(magic = FALSE)
+	if ((turf_flags & NO_RUST) || HAS_TRAIT(src, TRAIT_RUSTIMMUNE) || HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+	AddElement(magic ? /datum/element/rust/heretic : /datum/element/rust)
+	return TRUE
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
@@ -660,7 +675,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
 
-	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+	var/vomit_type
+	switch(toxvomit)
+		if(VOMIT_NEBULA)
+			vomit_type = /obj/effect/decal/cleanable/vomit/nebula
+		if(VOMIT_NEBULA_WORMS)
+			vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms
+		else
+			vomit_type = /obj/effect/decal/cleanable/vomit
+	var/obj/effect/decal/cleanable/vomit/V = new vomit_type(src, M.get_static_viruses())
 
 	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))
@@ -679,21 +702,28 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (purge_ratio && iscarbon(M))
 		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
-/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
-	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/owner, obj/effect/decal/cleanable/vomit/vomit, purge_ratio = 0.1)
+	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
+
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
-	belly.reagents.trans_to(V, chemicals_lost, transfered_by = M)
-	//clear the stomach of anything even not food
+	if (vomit.reagents)
+		vomit.reagents.maximum_volume += chemicals_lost
+	else
+		vomit.create_reagents(chemicals_lost)
+
+	belly.reagents.trans_to(vomit, chemicals_lost, transferred_by = owner)
+	// Clear the stomach of anything even not food
 	for(var/bile in belly.reagents.reagent_list)
 		var/datum/reagent/reagent = bile
 		if(!belly.food_reagents[reagent.type])
 			belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
-		else
-			var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
-			if(bit_vol > 0)
-				belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
+			continue
+
+		var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
+		if(bit_vol > 0)
+			belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
@@ -785,3 +815,35 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
 	return TRUE
+
+/// Returns an additional distance factor based on slowdown and other factors.
+/turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
+	. = astar_weight
+	var/area/current_area = loc
+	if(current_area?.astar_weight)
+		. += current_area.astar_weight
+
+// Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
+/turf/proc/heuristic_cardinal(turf/T, mob/traverser)
+	var/travel_dir = get_dir(src, T)
+	. = Distance_cardinal(T, traverser) + get_heuristic_slowdown(traverser, travel_dir) + T.get_heuristic_slowdown(traverser, travel_dir)
+
+/// A 3d-aware version of heuristic_cardinal that just... adds the Z-axis distance with a multiplier.
+/turf/proc/heuristic_cardinal_3d(turf/T, mob/traverser)
+	return heuristic_cardinal(T, traverser) + abs(z - T.z) * 5 // Weight z-level differences higher so that we try to change Z-level sooner
+
+/**Shake() and then explode a turf based on the passed vars
+ * shake_duration: how long to shake the turf for before calling explosion()
+ * explosion_stats: the list of stats to give the called explosion()
+ * sound: if passed then what sound to play at the start of the shaking, if a list is passed then it will pick() from that list
+ * do_log: do we admin log the explosion
+**/
+/turf/proc/structural_collapse(shake_duration = 1 SECONDS, explosion_stats = list(1, 2, 3), sound/played_sound, do_log = TRUE)
+	if(QDELETED(src))
+		return
+
+	if(played_sound)
+		playsound(src, (islist(played_sound) ? pick(played_sound) : played_sound), 60)
+	visible_message(span_userdanger("\The [src] looks like its about to collapse!"))
+	Shake(0.2, 0.2, shake_duration)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, explosion_stats[1], explosion_stats[2], explosion_stats[3], 0, 0, do_log), shake_duration)

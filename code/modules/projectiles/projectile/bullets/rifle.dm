@@ -17,7 +17,7 @@
 /obj/projectile/bullet/a762/enchanted
 	name = "enchanted 7.62 bullet"
 	damage = 20
-	stamina = 80
+	stamina = 40
 
 
 // 5.56mm (M-90gl Carbine)
@@ -66,28 +66,29 @@
 /obj/projectile/bullet/c40sol/fragmentation
 	name = ".40 Sol Long fragmentation bullet"
 	damage = 10
-	stamina = 30
+	stamina = 15
 	weak_against_armour = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	shrapnel_type = /obj/item/shrapnel/stingball
-	embedding = list(
-		embed_chance = 50,
-		fall_chance = 5,
-		jostle_chance = 5,
-		ignore_throwspeed_threshold = TRUE,
-		pain_stam_pct = 0.4,
-		pain_mult = 2,
-		jostle_pain_mult = 3,
-		rip_time = 0.5 SECONDS,
-	)
+	embed_type = /datum/embedding/c40sol
 	embed_falloff_tile = -5
+
+/datum/embedding/c40sol
+	embed_chance = 50
+	fall_chance = 5
+	jostle_chance = 5
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 2
+	jostle_pain_mult = 3
+	rip_time = 0.5 SECONDS
 
 /obj/projectile/bullet/c40sol/pierce
 	name = ".40 Sol match bullet"
 	icon_state = "gaussphase"
-	speed = 0.5
+	speed = 1.4
 	damage = 15
 	armour_penetration = 40
 	wound_bonus = -30
@@ -128,8 +129,6 @@
 		gaslighter.adjust_fire_stacks(firestacks_to_give)
 		gaslighter.ignite_mob()
 
-
-
 ///.310 Strilka, like 7.62 nagant but also not
 
 /obj/projectile/bullet/strilka310
@@ -147,14 +146,14 @@
 /obj/projectile/bullet/strilka310/rubber
 	name = ".310 rubber bullet"
 	damage = 10
-	stamina = 55
+	stamina = 27.5
 	ricochets_max = 5
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.7
 	shrapnel_type = null
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
@@ -162,5 +161,4 @@
 	armour_penetration = 60
 	wound_falloff_tile = -2
 	wound_bonus = -45
-	speed = 0.3
-
+	speed = 2

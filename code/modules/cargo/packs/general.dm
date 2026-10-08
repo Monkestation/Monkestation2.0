@@ -111,6 +111,13 @@
 				)
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/candles_bulk
+	name = "Candle Box Crate"
+	desc = "Keep your local chapel lit with three candle boxes!"
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fancy/candle_box = 3)
+	crate_name = "candle box crate"
+
 /datum/supply_pack/misc/commandkeys
 	name = "Command Encryption Key Crate"
 	desc = "A pack of encryption keys that give access to the command radio network. \
@@ -211,7 +218,7 @@
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your \
 		cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
+	cost = CARGO_CRATE_VALUE * 5 // it costs so much because the Space Church needs funding to build a cathedral
 	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
 					/obj/item/book/bible/booze = 2,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie = 2,

@@ -189,10 +189,8 @@
 	player_two?.dueling = FALSE
 	SEND_SIGNAL(player_one, COMSIG_HUMAN_END_DUEL)
 	SEND_SIGNAL(player_two, COMSIG_HUMAN_END_DUEL)
-	//MONKESTATION EDIT
 	player_one.mind.martial_art.remove(player_one)
 	player_two.mind.martial_art.remove(player_two)
-	//END MONKESTATION EDIT
 	player_one = null
 	player_two = null
 

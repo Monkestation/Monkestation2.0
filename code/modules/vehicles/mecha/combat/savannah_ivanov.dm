@@ -37,7 +37,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 1,
+		MECHA_ARMOR = 2,
 	)
 	//no tax on flying, since the power cost is in the leap itself.
 	phasing_energy_drain = 0
@@ -293,7 +293,7 @@
 	owner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
 	owner.update_mouse_pointer()
 	owner.overlay_fullscreen("ivanov", /atom/movable/screen/fullscreen/ivanov_display, 1)
-	SEND_SOUND(owner, 'sound/machines/terminal_on.ogg') //spammable so I don't want to make it audible to anyone else
+	owner.playsound_local(src, 'sound/machines/terminal_on.ogg', 100) //spammable so I don't want to make it audible to anyone else
 
 /**
  * ## end_missile_targeting
@@ -335,7 +335,7 @@
 	rockets_left--
 	if(rockets_left <= 0)
 		end_missile_targeting()
-	SEND_SOUND(owner, 'sound/machines/triple_beep.ogg')
+	owner.playsound_local(src, 'sound/machines/triple_beep.ogg', 100)
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_MISSILE_STRIKE, strike_cooldown_time)
 	podspawn(list(
 		"target" = target_turf,

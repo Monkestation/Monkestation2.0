@@ -79,6 +79,43 @@
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
 
+/**
+ * Returns the distance to the nearest ore vent, where ore vents are tracked in SSore_generation's possible vents list.
+ * Returns 0 if we're not on lavaland, and as we're using get_dist, our range is limited to 127 tiles.
+ */
+/turf/closed/mineral/proc/prox_to_vent()
+	if(!is_mining_level(z))
+		return 0
+
+	var/distance = 128 // Max distance for a get_dist is 127
+	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
+		if(vent.z != src.z)
+			continue //Silly
+		var/temp_distance = get_dist(src, vent)
+		if(temp_distance < distance)
+			distance = temp_distance
+	return distance
+
+/**
+ * Returns the amount of ore to spawn in this turf, based on proximity to a vent.
+ * If for some reason we have a distance of zero (like being off mining Z levels), we return a random amount between 1 and 5 instead.
+ */
+/turf/closed/mineral/proc/scale_ore_to_vent()
+	var/distance = prox_to_vent()
+	if(distance == 0) // We're not on lavaland or similar failure condition
+		return rand(1,5)
+	if(distance < VENT_PROX_VERY_HIGH)
+		return ORE_WALL_VERY_HIGH
+	if(distance < VENT_PROX_HIGH)
+		return ORE_WALL_HIGH
+	if(distance < VENT_PROX_MEDIUM)
+		return ORE_WALL_MEDIUM
+	if(distance < VENT_PROX_LOW)
+		return ORE_WALL_LOW
+	if(distance < VENT_PROX_FAR)
+		return ORE_WALL_FAR
+	return 0
+
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
 		underlay_appearance.icon = initial(turf_type.icon)

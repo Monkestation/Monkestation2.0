@@ -1,4 +1,8 @@
-import { Feature, FeatureValueProps, StandardizedPalette } from '../../base';
+import {
+  type Feature,
+  type FeatureValueProps,
+  StandardizedPalette,
+} from '../../base';
 
 const hairPresets = {
   // these need to be short color (3 byte) compatible

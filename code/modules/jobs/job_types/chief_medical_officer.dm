@@ -38,9 +38,9 @@
 		/obj/effect/spawner/random/medical/surgery_tool_advanced = 4,
 		/obj/effect/spawner/random/medical/surgery_tool_alien = 1
 	)
-	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery, /obj/item/clothing/neck/stethoscope, /obj/item/clothing/mask/surgical, /obj/item/flashlight/pen)
 	rpg_title = "High Cleric"
-	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
 	voice_of_god_power = 1.4 //Command staff has authority
 	antag_capacity_points = 2
@@ -57,7 +57,7 @@
 	id_trim = /datum/id_trim/job/chief_medical_officer
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	suit_store = /obj/item/flashlight/pen/paramedic
+	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)
@@ -90,5 +90,5 @@
 	head = null
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
 	mask = /obj/item/clothing/mask/breath/medical
-	r_pocket = /obj/item/flashlight/pen/paramedic
+	r_pocket = /obj/item/flashlight/pen
 	internals_slot = ITEM_SLOT_SUITSTORE

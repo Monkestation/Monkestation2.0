@@ -156,7 +156,7 @@
 
 /obj/machinery/nuclearbomb/commando/atom_destruction(damage_flag)
 	new /obj/effect/gibspawner/nuke(drop_location())
-	new /obj/effect/decal/cleanable/oil/streak(drop_location())
+	new /obj/effect/decal/cleanable/blood/splatter/oil/streak(drop_location())
 	new /obj/effect/decal/cleanable/nuke_debris/main(drop_location())
 	do_sparks(5, FALSE, src)
 	if(core)
@@ -172,7 +172,6 @@
 		)
 		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
 			SSsecurity_level.set_level(SEC_LEVEL_RED)
-		SSshuttle.admin_emergency_no_recall = TRUE
 		if(!EMERGENCY_AT_LEAST_DOCKED)
 			SSshuttle.emergency.request()
 	return ..()
@@ -457,7 +456,7 @@
 /obj/item/nuke_recaller/attack_self(mob/user)
 	if(!(check_usability(user)))
 		return
-	var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/commando/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando)
 	if(nuke)
 		var/obj/structure/closet/supplypod/nuke_relocation/new_pod = new()
 		new /obj/effect/pod_landingzone(get_turf(nuke), new_pod)

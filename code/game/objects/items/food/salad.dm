@@ -10,6 +10,7 @@
 	foodtypes = VEGETABLES
 	eatverbs = list("devour", "nibble", "gnaw", "gobble", "chomp") //who the fuck gnaws and devours on a salad
 	venue_value = FOOD_PRICE_NORMAL
+	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"

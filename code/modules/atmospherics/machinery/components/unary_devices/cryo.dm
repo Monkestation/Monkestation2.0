@@ -159,7 +159,7 @@
 			adjusted_occupant = TRUE
 			var/mob/living/living = occupant
 			living.bodytemp_cold_damage_limit -= 270 KELVIN
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/cryo_cell/on_construction(mob/user)
 	..(user, dir, dir)
@@ -217,8 +217,8 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/cryo_cell/handle_atom_del(atom/gone)
-	..()
+/obj/machinery/cryo_cell/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(gone == beaker)
 		beaker = null
 
@@ -264,7 +264,7 @@
 		update_use_power(ACTIVE_POWER_USE)
 	else
 		update_use_power(IDLE_POWER_USE)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	if(QDELETED(occupant))
 		return
 	if(on)
@@ -339,6 +339,9 @@
 					radio.talk_into(src, msg, radio_channel)
 			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
 				treating_wounds = FALSE
+				for(var/datum/brain_trauma/trauma as anything in C.get_traumas())
+					if(trauma.resilience == TRAUMA_RESILIENCE_WOUND)
+						qdel(trauma)
 
 		if(!treating_wounds)
 			set_on(FALSE)
@@ -370,7 +373,7 @@
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
-	if(!internal_connector.gas_connector.nodes[1] || !internal_connector.gas_connector.airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.moles.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
@@ -474,7 +477,7 @@
 /obj/machinery/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
 
 	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool)))
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 	else
 		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
 		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
@@ -526,7 +529,7 @@
 	if(on || occupant || state_open)
 		return FALSE
 	if(default_change_direction_wrench(user, tool))
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -583,7 +586,7 @@
 
 		data["occupant"]["health"] = round(mob_occupant.health, 1)
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
-		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["minHealth"] = mob_occupant.dead_threshold
 		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
 		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
@@ -603,7 +606,7 @@
 	data["beakerContents"] = beakerContents
 	return data
 
-/obj/machinery/cryo_cell/ui_act(action, params)
+/obj/machinery/cryo_cell/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

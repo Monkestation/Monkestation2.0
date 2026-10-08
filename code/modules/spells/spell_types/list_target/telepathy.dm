@@ -26,6 +26,9 @@
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
 		return . | SPELL_CANCEL_CAST
 
+	if(owner.client?.prefs?.read_preference(/datum/preference/toggle/autopunctuation))
+		message = autopunct_bare(capitalize(message))
+
 	if(get_dist(cast_on, owner) > target_radius)
 		owner.balloon_alert(owner, "they're too far!")
 		return . | SPELL_CANCEL_CAST

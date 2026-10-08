@@ -24,6 +24,8 @@
 	caliber = CALIBER_SHOTGUN
 	custom_materials = AMMO_MATS_SHOTGUN
 	projectile_type = /obj/projectile/bullet/shotgun_slug
+	bullet_bounce_sound = 'sound/weapons/gun/shotgun/shotgun_shell_bounce.ogg'
+	bullet_bounce_sound_volume = 35
 
 /obj/item/ammo_casing/shotgun/executioner
 	name = "executioner slug"
@@ -45,6 +47,11 @@
 	icon_state = "bshell"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag
+
+/obj/item/ammo_casing/shotgun/beanbag/blank
+	name = "blank shell"
+	desc = "A blank shell usually used for training drills."
+	projectile_type = null
 
 /obj/item/ammo_casing/shotgun/apds
 	name = "armor-piercing slug"
@@ -114,9 +121,8 @@
 	icon_state = "rshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6 //monkestation edit
-	variance = 25 // 6 pellets for 15 stam and 1 damage each
+	variance = 25 // 6 pellets for 10 stam and 2 damage each
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
-
 
 /obj/item/ammo_casing/shotgun/dragonsbreath
 	name = "dragonsbreath shell"
@@ -183,14 +189,23 @@
 	variance = 35
 	can_be_printed = FALSE
 
-/obj/item/ammo_casing/shotgun/laserslug
+/obj/item/ammo_casing/shotgun/scatterlaser
 	name = "scatter laser shell"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/projectile/beam/weak
+	projectile_type = /obj/projectile/beam/scatter
 	pellets = 6
 	variance = 35
 	can_be_printed = FALSE
+
+/obj/item/ammo_casing/shotgun/scatterlaser/emp_act(severity)
+	. = ..()
+	if(isnull(loaded_projectile) || !prob(40/severity))
+		return
+	name = "malfunctioning laser shell"
+	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. The capacitor powering this assembly appears to be smoking."
+	projectile_type = /obj/projectile/beam/scatter/pathetic
+	loaded_projectile = new projectile_type(src)
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
@@ -257,7 +272,7 @@
 /obj/item/ammo_casing/shotgun/trickshot
 	name = "trickshot shell"
 	desc = "A 12 gauge trickshot shell. Specially made to bounce up to five times!"
-	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
+	icon = 'icons/obj/guns/ammunition.dmi'
 	icon_state = "trickshell"
 	projectile_type = /obj/projectile/bullet/pellet/trickshot
 	can_be_printed = FALSE
@@ -267,7 +282,7 @@
 /obj/item/ammo_casing/shotgun/uraniumpen
 	name = "uranium penetrator"
 	desc = "A uranium penetrator. Not radioactive, but capable of punching through walls and objects."
-	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
+	icon = 'icons/obj/guns/ammunition.dmi'
 	icon_state = "uraniumpenetrator"
 	projectile_type = /obj/projectile/bullet/uraniumpen
 	can_be_printed = FALSE
@@ -275,7 +290,7 @@
 /obj/item/ammo_casing/shotgun/beeshot
 	name = "beeshot"
 	desc = "A strange buzzing shell. It sort of resembles a bee."
-	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
+	icon = 'icons/obj/guns/ammunition.dmi'
 	icon_state = "beeshot"
 	projectile_type = /obj/projectile/bullet/pellet/beeshot
 	can_be_printed = FALSE
@@ -289,7 +304,7 @@
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
-	pellets = 10
+	pellets = 8 //Improvised shells shouldn't be doing MORE damage than the real thing
 	variance = 25
 	can_be_printed = FALSE
 
@@ -330,10 +345,12 @@
 	pellets = 36
 	variance = 25
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_death
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/shotgun/buckshot/hundred
 	pellets = 600
 	variance = 25
+	can_be_printed = FALSE
 
 
 // for the mining autoshotgun

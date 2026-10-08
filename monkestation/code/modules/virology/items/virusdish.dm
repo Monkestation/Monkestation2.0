@@ -17,11 +17,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	var/mob/last_openner
 	COOLDOWN_DECLARE(cloud_cooldown)
 
-/obj/item/weapon/virusdish/New(loc)
-	..()
+/obj/item/weapon/virusdish/Initialize(mapload)
+	. = ..()
 	reagents = new(10)
 	reagents.my_atom = src
-	GLOB.virusdishes.Add(src)
+	GLOB.virusdishes += src
 
 	var/list/reagent_change_signals = list(
 			COMSIG_REAGENTS_ADD_REAGENT,
@@ -34,10 +34,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	RegisterSignals(src.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
 /obj/item/weapon/virusdish/Destroy()
+	GLOB.virusdishes -= src
 	STOP_PROCESSING(SSobj, src)
 	contained_virus = null
-	GLOB.virusdishes.Remove(src)
-	. = ..()
+	last_openner = null
+	return ..()
 
 /*
 /obj/item/weapon/virusdish/clean_blood()
@@ -115,9 +116,17 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			return ITEM_INTERACT_BLOCKING
 		growth = growth - 50
 		var/obj/item/reagent_containers/syringe/syringe_tool = tool
-		var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"="O-","resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
+		var/list/data = list(
+			"viruses" = null,
+			"blood_DNA" = null,
+			"blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS),
+			"resistances" = null,
+			"trace_chem" = null,
+			"viruses" = list(),
+			"immunity" = list()
+		)
 		data["viruses"] |= list(contained_virus)
-		syringe_tool.reagents.add_reagent(/datum/reagent/blood, syringe_tool.volume, data)
+		syringe_tool.reagents.add_reagent(/datum/reagent/blood, syringe_tool.volume, data, creation_callback = CALLBACK(src, PROC_REF(on_blood_created)))
 		to_chat(user, span_notice("You take some blood from the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
@@ -131,7 +140,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			return ITEM_INTERACT_BLOCKING
 
 		var/transfered_amount = 0
-		transfered_amount = tool.reagents.trans_to(src, 10, transfered_by = user)
+		transfered_amount = tool.reagents.trans_to(src, 10, transferred_by = user)
 		if(transfered_amount > 0)
 			to_chat(user, span_notice("You transfer [transfered_amount] units of the solution to \the [src]."))
 		return ITEM_INTERACT_SUCCESS
@@ -145,7 +154,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		return ITEM_INTERACT_BLOCKING
 
 	if(is_reagent_container(interacting_with))
-		var/amount_transfered = reagents.trans_to(interacting_with, 10, transfered_by = user)
+		var/amount_transfered = reagents.trans_to(interacting_with, 10, transferred_by = user)
 		if(amount_transfered > 0)
 			to_chat(user, span_notice("You transfer [amount_transfered] units of the solution to \the [interacting_with]."))
 			return ITEM_INTERACT_SUCCESS
@@ -153,7 +162,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 
 	if(istype(interacting_with, /obj/structure/reagent_dispensers))
 		var/obj/structure/reagent_dispensers/dispenser = interacting_with
-		var/amount_transfered = dispenser.reagents.trans_to(src, 10, transfered_by = user)
+		var/amount_transfered = dispenser.reagents.trans_to(src, 10, transferred_by = user)
 		if(amount_transfered > 0)
 			to_chat(user, span_notice("You transfer [amount_transfered] units of the solution to \the [src]."))
 			return ITEM_INTERACT_SUCCESS
@@ -176,6 +185,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		to_chat(user,span_notice("You empty \the [src]'s reagents into \the [target]."))
 	reagents.clear_reagents()
 
+/obj/item/weapon/virusdish/proc/on_blood_created(datum/reagent/new_blood)
+	new_blood.AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_O_MINUS))
+
 /obj/item/weapon/virusdish/process()
 	if(!contained_virus || !open)
 		return PROCESS_KILL
@@ -195,33 +207,33 @@ GLOBAL_LIST_INIT(virusdishes, list())
 /obj/item/weapon/virusdish/random
 	name = "growth dish"
 
-/obj/item/weapon/virusdish/random/New(loc)
-	..(loc)
-	if(loc)//because fuck you /datum/subsystem/supply_shuttle/Initialize()
-		var/virus_choice = pick(WILD_ACUTE_DISEASES)
-		contained_virus = new virus_choice
-		var/list/anti = list(
-			ANTIGEN_BLOOD	= 2,
-			ANTIGEN_COMMON	= 2,
-			ANTIGEN_RARE	= 1,
-			ANTIGEN_ALIEN	= 0,
-			)
-		var/list/bad = list(
-			EFFECT_DANGER_HELPFUL	= 1,
-			EFFECT_DANGER_FLAVOR	= 2,
-			EFFECT_DANGER_ANNOYING	= 2,
-			EFFECT_DANGER_HINDRANCE	= 2,
-			EFFECT_DANGER_HARMFUL	= 2,
-			EFFECT_DANGER_DEADLY	= 0,
-			)
-		contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
-		contained_virus.Refresh_Acute()
-		growth = rand(5, 50)
-		name = "growth dish (Unknown [contained_virus.form])"
-		update_appearance()
-		contained_virus.origin = "Random Dish"
-	else
-		GLOB.virusdishes.Remove(src)
+/obj/item/weapon/virusdish/random/Initialize(mapload)
+	. = ..()
+	if(!loc) //because fuck you /datum/subsystem/supply_shuttle/Initialize()
+		GLOB.virusdishes -= src
+		return
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
+	contained_virus = new virus_choice
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 2,
+		ANTIGEN_COMMON	= 2,
+		ANTIGEN_RARE	= 1,
+		ANTIGEN_ALIEN	= 0,
+		)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_FLAVOR	= 2,
+		EFFECT_DANGER_ANNOYING	= 2,
+		EFFECT_DANGER_HINDRANCE	= 2,
+		EFFECT_DANGER_HARMFUL	= 2,
+		EFFECT_DANGER_DEADLY	= 0,
+		)
+	contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
+	contained_virus.Refresh_Acute()
+	growth = rand(5, 50)
+	name = "growth dish (Unknown [contained_virus.form])"
+	update_appearance()
+	contained_virus.origin = "Random Dish"
 
 /obj/item/weapon/virusdish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()

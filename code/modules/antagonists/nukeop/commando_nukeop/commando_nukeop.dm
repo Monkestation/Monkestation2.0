@@ -10,7 +10,7 @@
 
 	preview_outfit = /datum/outfit/commando_operative
 
-	preview_outfit_behind = /datum/outfit/syndicate/junior
+	preview_outfit_behind = /datum/outfit/nuclear_operative_junior
 
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
 	nuke_icon_state = "old_nuclearbomb_base"
@@ -22,7 +22,7 @@
 
 /datum/antagonist/nukeop/commando/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
-		var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
+		var/obj/machinery/nuclearbomb/commando/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando)
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
 			nuke_team.memorized_code = nuke.r_code
@@ -70,7 +70,7 @@
 
 /datum/antagonist/nukeop/commando/admin_tell_code(mob/admin)
 	var/code
-	for (var/obj/machinery/nuclearbomb/commando/bombue as anything in GLOB.nuke_list)
+	for (var/obj/machinery/nuclearbomb/commando/bombue as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando))
 		if (length(bombue.r_code) <= 5 && bombue.r_code != initial(bombue.r_code))
 			code = bombue.r_code
 			break

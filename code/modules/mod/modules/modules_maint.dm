@@ -32,7 +32,7 @@
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block))
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block), override = TRUE)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
@@ -57,6 +57,59 @@
 		mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
+///Corpse Exoskeleton - allows your MODsuit to stand up right whilst the person inside is dead. Great for MOD AIs, I guess!
+/obj/item/mod/module/magboot/corpse_exoskeleton // hey. if the work was done for me, why not repurpose magboots?
+	name = "MOD corpse exoskeleton module"
+	desc = "An exosuit that goes around the whole body. Upon an internal health sensor detecting the user getting fatally injured, \
+	or on a manual toggle, activates servos around the full body to ensure the user stays upright, come stun or death, the user remains vertical."
+	active_traits = list(TRAIT_FORCED_STANDING)
+	icon_state = "bulwark"
+	complexity = 2 // it is inside every part of your suit, so // People wanted cheaper aurafarming.
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
+	slowdown_active = 0.3
+	incompatible_modules = list(/obj/item/mod/module/magboot/corpse_exoskeleton) // ok so the only reason to NOT repurpose magboots is that theyll conflict with this mod, oh well, sorry CE!
+	var/autotrigger = TRUE
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/get_configuration()
+	. = ..()
+	.["autotrigger"] = add_ui_configuration("Autotrigger", "bool", autotrigger)
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/configure_edit(key, value)
+	switch(key)
+		if("autotrigger")
+			autotrigger = text2num(value)
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(health_check))
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/on_suit_deactivation(deleting)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_HEALTH_UPDATE)
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/proc/health_check()
+	if(!mod.wearer || active || !autotrigger)
+		return
+	var/health_scan = mod.wearer.health
+	if(health_scan > mod.wearer.crit_threshold)
+		return
+	dead_reckoning() // we beefed, turn it on.
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/proc/dead_reckoning()
+	if(!mod.wearer || active || !autotrigger)
+		return
+	if(on_activation())
+		mod.wearer.visible_message(
+			span_danger("[src] inside [mod.wearer]'s [mod.name] activates!"),
+			span_danger("Your body is quickly caught by your suit.")
+		)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
+	else
+		mod.wearer.visible_message(
+			span_danger("[src] inside [mod.wearer]'s [mod.name] fails to actuate."),
+		)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 25, TRUE)
+
+
+
 ///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
 /obj/item/mod/module/visor/rave
 	name = "MOD rave visor module"
@@ -64,12 +117,13 @@
 	icon_state = "rave_visor"
 	complexity = 1
 	overlay_state_inactive = "module_rave"
+
 	/// The client colors applied to the wearer.
 	var/datum/client_colour/rave_screen
 	/// The current element in the rainbow_order list we are on.
 	var/rave_number = 1
 	/// The track we selected to play.
-	var/datum/track/selection
+	var/datum/media_track/selection
 	/// A list of all the songs we can play.
 	var/list/songs = list()
 	/// A list of the colors the module can take.
@@ -84,29 +138,23 @@
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()
-	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
-	for(var/sound in tracks)
-		var/datum/track/track = new()
-		track.song_path = file("[global.config.directory]/jukebox_music/sounds/[sound]")
-		var/list/sound_params = splittext(sound,"+")
-		if(length(sound_params) != 3)
-			continue
-		track.song_name = sound_params[1]
-		track.song_length = text2num(sound_params[2])
-		track.song_beat = text2num(sound_params[3])
-		songs[track.song_name] = track
+	for(var/datum/media_track/song in SSmedia_tracks.jukebox_tracks)
+		songs += song.title
+		songs[song.title] = song
+
 	if(length(songs))
-		var/song_name = pick(songs)
-		selection = songs[song_name]
+		var/random_song_title = pick(songs)
+		selection = songs[random_song_title]
 
 /obj/item/mod/module/visor/rave/on_activation()
 	. = ..()
 	if(!.)
 		return
+
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
+		mod?.wearer?.client?.tgui_panel?.play_music(selection.url, null)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -134,19 +182,16 @@
 /obj/item/mod/module/visor/rave/get_configuration()
 	. = ..()
 	if(length(songs))
-		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, clean_songs())
+		.["selection"] = add_ui_configuration("Song", "list", selection.title, assoc_to_keys(songs))
 
 /obj/item/mod/module/visor/rave/configure_edit(key, value)
 	switch(key)
 		if("selection")
 			if(active)
 				return
+			if(QDELETED(src))
+				return
 			selection = songs[value]
-
-/obj/item/mod/module/visor/rave/proc/clean_songs()
-	. = list()
-	for(var/track in songs)
-		. += track
 
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
@@ -329,7 +374,7 @@
 	you_fucked_up = TRUE
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	to_chat(mod.wearer, span_userdanger("That was stupid."))
-	investigate_log("has flown off into space due to the [src].", INVESTIGATE_DEATHS)
+	investigate_log("has caused [key_name(mod.wearer)] to fly off into space.", INVESTIGATE_DEATHS)
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
 	animate(mod.wearer, FLY_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(mod.wearer, FLY_TIME)

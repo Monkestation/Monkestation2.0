@@ -6,4 +6,4 @@
 	severity = 2
 
 /datum/symptom/hallucinations/activate(mob/living/carbon/mob)
-	mob.adjust_hallucinations(5 SECONDS)
+	mob.adjust_hallucinations(5 SECONDS * power)

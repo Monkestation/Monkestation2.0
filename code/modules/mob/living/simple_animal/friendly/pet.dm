@@ -27,7 +27,6 @@
 	. = ..()
 
 	QDEL_NULL(collar)
-	QDEL_NULL(access_card)
 
 /mob/living/simple_animal/pet/attackby(obj/item/thing, mob/user, params)
 	if(istype(thing, /obj/item/clothing/neck/petcollar) && !collar)
@@ -57,11 +56,6 @@
 
 /mob/living/simple_animal/pet/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	. = ..()
-
-	if(access_card)
-		access_card.forceMove(drop_location())
-		access_card = null
-
 	remove_collar(drop_location(), update_visuals = FALSE)
 
 /mob/living/simple_animal/pet/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
@@ -75,10 +69,10 @@
 	. = ..()
 	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src) //Protagonist is the person memorizing it
 
-/mob/living/simple_animal/pet/handle_atom_del(atom/deleting_atom)
+/mob/living/simple_animal/pet/Exited(atom/movable/gone, direction)
 	. = ..()
 
-	if(deleting_atom != collar)
+	if(gone != collar)
 		return
 
 	collar = null

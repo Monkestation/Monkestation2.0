@@ -12,7 +12,7 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 	icon = 'monkestation/code/modules/microfusion/icons/microfusion_cells.dmi'
 	icon_state = "microfusion"
 	w_class = WEIGHT_CLASS_NORMAL
-	maxcharge = STANDARD_CELL_CHARGE * 0.012 //12 shots
+	maxcharge = STANDARD_CELL_CHARGE * 0.12 //12 shots
 	chargerate = 0 //MF cells should be unable to recharge if they are not currently inside of an MCR
 	microfusion_readout = TRUE
 	empty = TRUE //MF cells should start empty
@@ -169,7 +169,7 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 	name = "makeshift microfusion cell"
 	desc = "An... Apparatus, comprised of an everyday aluminum can with several civilian-grade batteries tightly packed together and plugged in. This vaguely resembles a microfusion cell, if you tilt your head to a precise fifty degree angle. While the effects on enemy combatants may be dubious, it will certainly do incredible damage to the gun's warranty. What the hell were you thinking when you came up with this?"
 	icon_state = "microfusion_makeshift"
-	maxcharge = STANDARD_CELL_CHARGE * 0.06
+	maxcharge = STANDARD_CELL_CHARGE * 0.6
 	max_attachments = 0
 
 /obj/item/stock_parts/power_store/cell/microfusion/makeshift/use(amount, force)

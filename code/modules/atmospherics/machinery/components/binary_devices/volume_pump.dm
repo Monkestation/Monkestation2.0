@@ -37,7 +37,6 @@
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/click_alt(mob/user)
@@ -118,7 +117,7 @@
 	. = ..()
 	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
 	if(overclocked)
-		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
+		. += span_warning("Its warning light is on[on ? " and it's spewing gas!" : "."]")
 
 /obj/machinery/atmospherics/components/binary/volume_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -161,7 +160,7 @@
 			if(.)
 				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
@@ -172,12 +171,13 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/multitool_act(mob/living/user, obj/item/I)
 	if(!overclocked)
 		overclocked = TRUE
-		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
-		update_icon()
+		to_chat(user, span_notice("[src] makes a grinding noise and air starts to hiss out as you disable its pressure limits."))
+		investigate_log("had its pressure limits disabled by [key_name(user)]", INVESTIGATE_ATMOS)
 	else
 		overclocked = FALSE
-		to_chat(user, "The pump quiets down as you turn its limiters back on.")
-		update_icon()
+		to_chat(user, span_notice("[src] quiets down as you turn its limiters back on."))
+		investigate_log("had its pressure limits enabled by [key_name(user)]", INVESTIGATE_ATMOS)
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /// mapping
@@ -286,14 +286,12 @@
 	if(!connected_pump)
 		return
 	connected_pump.set_on(TRUE)
-	connected_pump.update_appearance()
 
 /obj/item/circuit_component/atmos_volume_pump/proc/set_pump_off()
 	CIRCUIT_TRIGGER
 	if(!connected_pump)
 		return
 	connected_pump.set_on(FALSE)
-	connected_pump.update_appearance()
 
 /obj/item/circuit_component/atmos_volume_pump/proc/request_pump_data()
 	CIRCUIT_TRIGGER

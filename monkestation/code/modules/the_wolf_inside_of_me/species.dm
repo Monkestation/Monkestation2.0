@@ -35,7 +35,7 @@
 
 /obj/item/organ/internal/brain/werewolf/get_attacking_limb(mob/living/carbon/human/target)
 	name = "werewolf brain"
-	desc = "a strange mixture of a human and wolf brain"
+	desc = "A strange mixture of a human and wolf brain."
 	organ_traits = list(TRAIT_PRIMITIVE, TRAIT_CAN_STRIP)
 
 	if(target.body_position == LYING_DOWN)

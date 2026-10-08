@@ -283,7 +283,7 @@
 
 	return data
 
-/obj/machinery/chem_recipe_debug/ui_act(action, params)
+/obj/machinery/chem_recipe_debug/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

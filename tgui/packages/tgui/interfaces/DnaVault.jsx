@@ -2,10 +2,10 @@ import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  Grid,
   LabeledList,
   ProgressBar,
   Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -30,17 +30,17 @@ export const DnaVault = (props) => {
           <LabeledList>
             <LabeledList.Item label="Human DNA">
               <ProgressBar value={dna / dna_max}>
-                {dna + ' / ' + dna_max + ' Samples'}
+                {`${dna} / ${dna_max} Samples`}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Plant DNA">
               <ProgressBar value={plants / plants_max}>
-                {plants + ' / ' + plants_max + ' Samples'}
+                {`${plants} / ${plants_max} Samples`}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Animal DNA">
               <ProgressBar value={animals / animals_max}>
-                {animals + ' / ' + animals_max + ' Samples'}
+                {`${animals} / ${animals_max} Samples`}
               </ProgressBar>
             </LabeledList.Item>
           </LabeledList>
@@ -50,8 +50,8 @@ export const DnaVault = (props) => {
             <Box bold textAlign="center" mb={1}>
               Applicable Gene Therapy Treatments
             </Box>
-            <Grid>
-              <Grid.Column>
+            <Stack>
+              <Stack.Item grow>
                 <Button
                   fluid
                   bold
@@ -63,8 +63,8 @@ export const DnaVault = (props) => {
                     })
                   }
                 />
-              </Grid.Column>
-              <Grid.Column>
+              </Stack.Item>
+              <Stack.Item grow>
                 <Button
                   fluid
                   bold
@@ -76,8 +76,8 @@ export const DnaVault = (props) => {
                     })
                   }
                 />
-              </Grid.Column>
-            </Grid>
+              </Stack.Item>
+            </Stack>
           </Section>
         )}
       </Window.Content>

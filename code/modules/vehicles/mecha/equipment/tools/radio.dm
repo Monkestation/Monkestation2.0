@@ -47,4 +47,4 @@
 		qdel(src)
 
 /obj/item/radio/mech
-	subspace_transmission = TRUE
+	subspace_transmission = FALSE // works when telecomms dies, like a intercom, but mobile!

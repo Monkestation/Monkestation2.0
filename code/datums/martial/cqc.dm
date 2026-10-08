@@ -112,7 +112,7 @@
 	defender.visible_message(span_danger("[attacker] punches [defender]'s neck!"), \
 					span_userdanger("Your neck is punched by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
-	defender.stamina.adjust(-60)
+	defender.stamina.adjust(-30)
 	playsound(get_turf(attacker), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
@@ -126,7 +126,7 @@
 		defender.visible_message(span_warning("[attacker] locks [defender] into a restraining position!"), \
 						span_userdanger("You're locked into a restraining position by [attacker]!"), span_hear("You hear shuffling and a muffled groan!"), null, attacker)
 		to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
-		defender.stamina.adjust(-20)
+		defender.stamina.adjust(-10)
 		defender.Stun(10 SECONDS)
 		restraining_mob = defender
 		addtimer(VARSET_CALLBACK(src, restraining_mob, null), 50, TIMER_UNIQUE)
@@ -144,7 +144,7 @@
 		var/obj/item/held_item = defender.get_active_held_item()
 		if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
 			attacker.put_in_hands(held_item)
-		defender.stamina.adjust(-50)
+		defender.stamina.adjust(-25)
 		defender.apply_damage(25, attacker.get_attack_type())
 		return TRUE
 
@@ -256,11 +256,7 @@
 		playsound(defender, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return FALSE
 
-
-/mob/living/proc/CQC_help()
-	set name = "Remember The Basics"
-	set desc = "You try to remember some of the basics of CQC."
-	set category = "CQC"
+GAME_VERB_PROC_DESC(/mob/living, CQC_help, "Remember The Basics", "You try to remember some of the basics of CQC.", "CQC")
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
 	to_chat(usr, "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down.")

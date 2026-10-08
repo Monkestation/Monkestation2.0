@@ -52,7 +52,25 @@
 				return
 	if(isnull(expiry))
 		if(tgui_alert(usr, "Set an expiry time? Expired messages are hidden like deleted ones.", "Expiry time?", list("Yes", "No", "Cancel")) == "Yes")
-			var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons.", "Set expiry time", SQLtime()) as null|text
+			var/default_time
+			if(type == "watchlist entry")
+				// stupid snowflake thing to just have "6 months from now" be the default expiration for a watchlist
+				var/current_time = world.realtime
+				var/current_month = text2num(time2text(current_time, "MM"))
+				var/current_year = text2num(time2text(current_time, "YYYY"))
+				var/current_day = min(text2num(time2text(current_time, "DD")), 28) // too lazy to account properly for leap years or whatever so let's just ensure that's never an issue
+
+				var/new_month = current_month + 6
+				var/new_year = current_year
+				if(new_month > 12)
+					new_month -= 12
+					new_year++
+
+				// YYYY-MM-DD
+				default_time = "[new_year]-[new_month < 10 ? "0[new_month]" : "[new_month]"]-[current_day < 10 ? "0[current_day]" : "[current_day]"]"
+			else
+				default_time = SQLtime()
+			var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons.", "Set expiry time", default_time) as null|text
 			if(!expire_time)
 				return
 			var/datum/db_query/query_validate_expire_time = SSdbcore.NewQuery(

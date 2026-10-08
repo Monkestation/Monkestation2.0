@@ -68,19 +68,24 @@
 	for(var/i in 1 to 3)
 		new /obj/item/food/monkeycube/gorilla(src)
 
+/obj/item/storage/box/monkeycubes/random
+	name = "monster cube box"
+	desc = "A box containing a bunch of random cubes. Add water and see what you get!"
+	cube_type = /obj/item/food/monkeycube/random
+
 /obj/item/storage/box/stockparts/basic //for ruins where it's a bad idea to give access to an autolathe/protolathe, but still want to make stock parts accessible
 	name = "box of stock parts"
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor = 3,
 		/obj/item/stock_parts/manipulator = 3,
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/scanning_module = 3,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
@@ -88,14 +93,14 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor/quadratic = 3,
 		/obj/item/stock_parts/scanning_module/triphasic = 3,
 		/obj/item/stock_parts/manipulator/femto = 3,
 		/obj/item/stock_parts/micro_laser/quadultra = 3,
 		/obj/item/stock_parts/matter_bin/bluespace = 3,
 		)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/rndboards
 	name = "\proper the liberator's legacy"
@@ -113,7 +118,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stabilized/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/slimecross/stabilized/adamantine=1,
 		/obj/item/slimecross/stabilized/black=1,
 		/obj/item/slimecross/stabilized/blue=1,
@@ -137,4 +142,4 @@
 		/obj/item/slimecross/stabilized/silver=1,
 		/obj/item/slimecross/stabilized/yellow=1,
 		)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)

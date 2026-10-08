@@ -23,15 +23,12 @@
 	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
 	instant_grab = TRUE
-	snap_grab_state = GRAB_NECK //you can kill people a little faster
 	damage_sharpness = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)
-	//if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
-	//	return FALSE
 	if(!can_use(carp_user))
 		return FALSE
-	if(check_intent && !(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
+	if(check_intent && !(carp_user.istate & ISTATE_HARM))
 		return FALSE
 	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
 		return FALSE
@@ -47,10 +44,12 @@
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
 	target.physiology.stamina_mod *= 0.7
+	if(title && findtext_char(target.real_name, title) == 1)
+		return
 	original_name = target.real_name
-	if(original_body == null)
+	if(QDELETED(original_body))
 		original_body = target
-	if(title == null)
+	if(isnull(title))
 		title = pick(character_prefixes)
 	all_bodies += target
 	titled_name = "[title] [original_name]"
@@ -75,15 +74,12 @@
 	attacker.say("Tsunami Kick of the Heavenly Serpent!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender, set_damage)
-	stamina_damage = -100
+	stamina_damage = -50
 	. = ..(attacker, defender, set_damage = FALSE)
 	defender.adjustOxyLoss(30)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
-/mob/living/proc/awakened_dragon_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Awakened Dragon."
-	set category = "Awakened Dragon"
+GAME_VERB_PROC_DESC(/mob/living, awakened_dragon_help, "Recall Teachings", "Remember the martial techniques of the Awakened Dragon.", "Awakened Dragon")
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the venerable Awakened Dragon...</i></b>\n\
 	[span_notice("Crushing Maw")]: Punch Punch. Deal additional damage every second (consecutive) punch! Extremely good chance to wound!\n\

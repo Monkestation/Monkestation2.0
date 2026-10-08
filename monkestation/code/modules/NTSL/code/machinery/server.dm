@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(tcomms_servers)
-
 /obj/item/radio/server
 
 /obj/item/radio/server/can_receive(frequency,levels)
@@ -23,14 +21,12 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	Compiler = new()
 	Compiler.Holder = src
 	server_radio = new()
-	GLOB.tcomms_servers += src
 	return ..()
 
 /obj/machinery/telecomms/server/Destroy()
 	QDEL_NULL(Compiler)
 	QDEL_NULL(server_radio)
 	memory = null
-	GLOB.tcomms_servers -= src
 	return ..()
 
 /obj/machinery/telecomms/server/proc/update_logs()
@@ -50,6 +46,7 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	log.name = "[input] ([md5(identifier)])"
 	log.input_type = input
 	log.parameters["message"] = content
+	log.parameters["language"] = /datum/language/common
 	log_entries.Add(log)
 	update_logs()
 
@@ -59,7 +56,7 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	///The character count of the code being compiled
 	var/code_length = length(rawcode)
 
-	if(is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
+	if(is_banned_from(user.ckey, JOB_NETWORK_ADMIN) || is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
 		to_chat(user, span_warning("You are banned from using NTSL."))
 		return "Unauthorized access."
 	if(QDELETED(Compiler))
@@ -77,10 +74,10 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	var/list/compileerrors = Compiler.Compile(rawcode)
 	COOLDOWN_START(src, compile_cooldown, 2 SECONDS)
 	if(!length(compileerrors) && (compiledcode != rawcode))
-		user.log_message(rawcode, LOG_NTSL)
+		logger.Log(LOG_CATEGORY_NTSL, "Uploaded by [user]: [rawcode]")
 		compiledcode = rawcode
 	if(istype(user.mind?.assigned_role, /datum/job/signal_technician)) //achivement description says only Signal Technician gets the achivement
-		var/freq = length(freq_listening[1]) ? freq_listening[1] : 1459
+		var/freq = length(freq_listening) ? freq_listening[1] : 1459
 		var/atom/movable/M = new()
 		var/atom/movable/virtualspeaker/speaker = new(null, M, server_radio)
 		speaker.name = "Poly"
@@ -92,12 +89,13 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 			signal.data["name"] = ""
 			signal.data["reject"] = FALSE
 			Compiler.Run(signal)
-			if(!signal.data["reject"] == FALSE)
+			if(signal.data["reject"] == FALSE)
 				user.client.give_award(/datum/award/achievement/jobs/Poly_silent, user)
 		else
 			for(var/sample in signal.data["spans"])
 				if(sample == SPAN_COMMAND)
 					user.client.give_award(/datum/award/achievement/jobs/Poly_loud, user)
 					break // Not having this break leaves us open to a potential DoS attack.
+		signal.data["reject"] = TRUE //Don't pass achievement signals.
 	return compileerrors
 //end-NTSL

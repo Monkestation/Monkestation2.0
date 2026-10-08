@@ -6,6 +6,7 @@
 	dna_cost = CHANGELING_POWER_INNATE
 	req_dna = 1
 	req_human = TRUE
+	req_stat = DEAD
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
@@ -112,12 +113,15 @@
 	var/icon/cached_flat_icon
 	/// HUD job icon of the ID
 	var/hud_icon
+	/// Things we store for examine
+	var/stored_name
+	var/stored_job
 
 /obj/item/changeling/id/equipped(mob/user, slot, initial)
 	. = ..()
 	if(hud_icon)
 		var/image/holder = user.hud_list[ID_HUD]
-		holder.pixel_y = user.get_cached_height() - world.icon_size
+		holder.pixel_z = user.get_cached_height() - world.icon_size
 		holder.icon_state = hud_icon
 
 /**
@@ -128,8 +132,12 @@
 		cached_flat_icon = getFlatIcon(src)
 	return cached_flat_icon
 
-/obj/item/changeling/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+/obj/item/changeling/id/get_id_examine_strings(mob/user)
+	. = ..()
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+
+/obj/item/changeling/id/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 //Change our DNA to that of somebody we've absorbed.
 /datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)

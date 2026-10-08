@@ -1,14 +1,16 @@
 ///Deathmatch modifiers are little options the host can choose to spice the match a bit.
 /datum/deathmatch_modifier
-	///The name of the modifier
+	/// The name of the modifier
 	var/name = "Unnamed Modifier"
-	///A small description/tooltip shown in the UI
+	/// A small description/tooltip shown in the UI
 	var/description = "What the heck does this do?"
-	///The color of the button shown in the UI
+	/// The color of the button shown in the UI
 	var/color = "blue"
-	///A list of modifiers this is incompatible with.
-	var/list/blacklisted_modifiers
-	///Is this trait exempted from the "Random Modifiers" modifier.
+	/// A lazylist of modifier typepaths this is incompatible with.
+	var/list/datum/deathmatch_modifier/blacklisted_modifiers
+	/// A lazylist of map typepaths this is incomptable with.
+	var/list/datum/lazy_template/deathmatch/blacklisted_maps
+	/// Is this trait exempted from the "Random Modifiers" modifier.
 	var/random_exempted = FALSE
 
 ///Whether or not this modifier can be selected, for both host and player-selected modifiers.
@@ -18,10 +20,19 @@
 		return FALSE
 	if(length(lobby.modifiers & blacklisted_modifiers))
 		return FALSE
+	if(map_incompatible(lobby.map))
+		return FALSE
 	for(var/modpath in lobby.modifiers)
 		if(src in GLOB.deathmatch_game.modifiers[modpath].blacklisted_modifiers)
 			return FALSE
 	return TRUE
+
+/// Returns TRUE if map.type is in our blacklisted maps, FALSE otherwise.
+/datum/deathmatch_modifier/proc/map_incompatible(datum/lazy_template/deathmatch/map)
+	if(map?.type in blacklisted_maps)
+		return TRUE
+
+	return FALSE
 
 ///Called when selecting the deathmatch modifier.
 /datum/deathmatch_modifier/proc/on_select(datum/deathmatch_lobby/lobby)
@@ -31,9 +42,12 @@
 /datum/deathmatch_modifier/proc/unselect(datum/deathmatch_lobby/lobby)
 	return
 
-///Called when the host chooses to change map.
+///Called when the host chooses to change map. Returns FALSE if the new map is incompatible, TRUE otherwise.
 /datum/deathmatch_modifier/proc/on_map_changed(datum/deathmatch_lobby/lobby)
-	return
+	if(map_incompatible(lobby.map))
+		lobby.unselect_modifier(src)
+		return FALSE
+	return TRUE
 
 ///Called as the game is about to start.
 /datum/deathmatch_modifier/proc/on_start_game(datum/deathmatch_lobby/lobby)
@@ -50,18 +64,25 @@
 /datum/deathmatch_modifier/health
 	name = "Double-Health"
 	description = "Doubles your starting health"
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/triple)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/half, /datum/deathmatch_modifier/health/triple)
 	var/multiplier = 2
 
 /datum/deathmatch_modifier/health/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.maxHealth *= multiplier
 	player.health *= multiplier
 
+/datum/deathmatch_modifier/health/half
+	name = "Half-Health"
+	description = "It's your funeral"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/triple)
+	multiplier = 0.5
+
 /datum/deathmatch_modifier/health/triple
 	name = "Triple-Health"
 	description = "When \"Double-Health\" isn't enough..."
 	multiplier = 3
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/half)
+
 
 /datum/deathmatch_modifier/tenacity
 	name = "Tenacity"
@@ -83,6 +104,88 @@
 
 /datum/deathmatch_modifier/no_knockdown/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE), DEATHMATCH_TRAIT)
+
+/datum/deathmatch_modifier/no_slowdown
+	name = "No Slowdowns"
+	description = "You're too slow!"
+
+/datum/deathmatch_modifier/no_slowdown/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	ADD_TRAIT(player, TRAIT_IGNORESLOWDOWN, DEATHMATCH_TRAIT)
+
+/datum/deathmatch_modifier/teleport
+	name = "Random Teleports"
+	description = "One moment I'm here, the next I'm there"
+	///A lazylist of lobbies that have this modifier enabled
+	var/list/signed_lobbies
+	///The cooldown to the teleportation effect.
+	COOLDOWN_DECLARE(teleport_cd)
+
+/datum/deathmatch_modifier/teleport/on_select(datum/deathmatch_lobby/lobby)
+	if(isnull(signed_lobbies))
+		START_PROCESSING(SSprocessing, src)
+	LAZYADD(signed_lobbies, lobby)
+	RegisterSignal(lobby, COMSIG_QDELETING, PROC_REF(remove_lobby))
+
+/datum/deathmatch_modifier/teleport/unselect(datum/deathmatch_lobby/lobby)
+	remove_lobby(lobby)
+
+/datum/deathmatch_modifier/teleport/proc/remove_lobby(datum/deathmatch_lobby/lobby)
+	SIGNAL_HANDLER
+	LAZYREMOVE(signed_lobbies, lobby)
+	UnregisterSignal(lobby, COMSIG_QDELETING)
+	if(isnull(signed_lobbies))
+		STOP_PROCESSING(SSprocessing, src)
+
+/datum/deathmatch_modifier/teleport/process(seconds_per_tick)
+	if(!COOLDOWN_FINISHED(src, teleport_cd))
+		return
+
+	for(var/datum/deathmatch_lobby/lobby as anything in signed_lobbies)
+		if(lobby.playing != DEATHMATCH_PLAYING || isnull(lobby.location))
+			continue
+		for(var/ckey in lobby.players)
+			var/mob/living/player = lobby.players[ckey]["mob"]
+			if(istype(player))
+				continue
+			var/turf/destination
+			for(var/attempt in 1 to 5)
+				var/turf/possible_destination = pick(lobby.location.reserved_turfs)
+				if(isopenturf(destination) && !isgroundlessturf(destination))
+					destination = possible_destination
+					break
+			if(isnull(destination))
+				continue
+			//I want this modifier to be compatible with 'Mounts' and 'Paraplegic' wheelchairs.
+			var/atom/movable/currently_buckled = player.buckled
+			do_teleport(player, destination, 0, asoundin = 'sound/effects/phasein.ogg', forced = TRUE)
+			if(currently_buckled && !currently_buckled.anchored)
+				do_teleport(currently_buckled, destination, 0, asoundin = 'sound/effects/phasein.ogg', forced = TRUE)
+				currently_buckled.buckle_mob(player)
+
+	COOLDOWN_START(src, teleport_cd, rand(12 SECONDS, 24 SECONDS))
+
+/datum/deathmatch_modifier/snail_crawl
+	name = "Snail Crawl"
+	description = "Lube the floor as you slather it with your body"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/no_gravity)
+
+/datum/deathmatch_modifier/snail_crawl/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	player.AddElement(/datum/element/snailcrawl)
+
+/datum/deathmatch_modifier/blinking_and_breathing
+	name = "Manual Blinking/Breathing"
+	description = "Ruin everyone's fun by forcing them to breathe and blink manually"
+
+/datum/deathmatch_modifier/blinking_and_breathing/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	player.AddComponent(/datum/component/manual_blinking)
+	player.AddComponent(/datum/component/manual_breathing)
+
+/datum/deathmatch_modifier/forcefield_trail
+	name = "Forcefield Trail"
+	description = "You leave short-living unpassable forcefields in your wake"
+
+/datum/deathmatch_modifier/forcefield_trail/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	player.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/extrafast)
 
 /datum/deathmatch_modifier/xray
 	name = "X-Ray Vision"
@@ -141,18 +244,19 @@
 /datum/deathmatch_modifier/paraplegic
 	name = "Paraplegic"
 	description = "Wheelchairs. For. Everyone."
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/mounts)
 
 /datum/deathmatch_modifier/paraplegic/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
-	var/obj/vehicle/ridden/wheelchair/motorized/wheels = new (player.loc)
+	///Mounts are being used. Do not spawn wheelchairs.
+	if(/datum/deathmatch_modifier/mounts in lobby.modifiers)
+		return
+	var/obj/vehicle/ridden/wheelchair/motorized/improved/wheels = new (player.loc)
 	wheels.setDir(player.dir)
 	wheels.buckle_mob(player)
 
 /datum/deathmatch_modifier/mounts
 	name = "Mounts"
 	description = "A horse! A horse! My kingdom for a horse!"
-//	blacklisted_modifiers = list(/datum/deathmatch_modifier/paraplegic)
 
 /datum/deathmatch_modifier/mounts/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	///We do a bit of fun over balance here, some mounts may be better than others.
@@ -372,12 +476,25 @@
 		var/mine_path = pick(mines)
 		new mine_path (target_turf)
 
+/datum/deathmatch_modifier/random_loadouts
+	name = "Forced random loadouts"
+	description = "Randomizes everyone's loadouts"
+	random_exempted = TRUE
+
+/datum/deathmatch_modifier/random_loadouts/on_start_game(datum/deathmatch_lobby/lobby)
+	for(var/key in lobby.players)
+		lobby.players[key]["loadout"] = lobby.loadouts[1]
+
 /datum/deathmatch_modifier/random
 	name = "Random Modifiers"
 	description = "Picks 3 to 5 random modifiers as the game is about to start"
 	random_exempted = TRUE
+	///A lazylist of lobbies that have this modifier enabled, used to cleanup the added modifiers from the lobby
+	var/list/signed_lobbies
 
 /datum/deathmatch_modifier/random/on_select(datum/deathmatch_lobby/lobby)
+	LAZYADD(signed_lobbies, lobby)
+	RegisterSignal(lobby, COMSIG_QDELETING, PROC_REF(remove_lobby))
 	///remove any other global modifier if chosen. It'll pick random ones when the time comes.
 	for(var/modpath in lobby.modifiers)
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[modpath]
@@ -386,8 +503,16 @@
 		modifier.unselect(lobby)
 		lobby.modifiers -= modpath
 
+/datum/deathmatch_modifier/random/unselect(datum/deathmatch_lobby/lobby)
+	remove_lobby(lobby)
+
+/datum/deathmatch_modifier/random/proc/remove_lobby(datum/deathmatch_lobby/lobby)
+	SIGNAL_HANDLER
+	LAZYREMOVE(signed_lobbies, lobby)
+	UnregisterSignal(lobby, COMSIG_QDELETING)
+
 /datum/deathmatch_modifier/random/on_start_game(datum/deathmatch_lobby/lobby)
-	lobby.modifiers -= type //remove it before attempting to select other modifiers, or they'll fail.
+	lobby.modifiers -= type // Remove it before attempting to select other modifiers, or they'll fail.
 
 	var/static/list/static_pool
 	if(isnull(static_pool))
@@ -401,13 +526,22 @@
 		if(!modifier.selectable(lobby))
 			modifiers_pool -= modpath
 
+	signed_lobbies[lobby] = list()
 	///Pick global modifiers at random.
-	for(var/iteration in rand(3, 5))
+	for(var/iteration in 1 to rand(3, 5))
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
-		modifier.on_select(lobby)
+		lobby.select_modifier(modifier)
 		modifier.on_start_game(lobby)
-		lobby += modifier.type
+		signed_lobbies[lobby] += modifier
 		modifiers_pool -= modifier.blacklisted_modifiers
+		if(!length(modifiers_pool))
+			break
+
+	lobby.modifiers += type // And then add it so we can track and remove the modifiers later
+
+/datum/deathmatch_modifier/random/on_end_game(datum/deathmatch_lobby/lobby)
+	for(var/datum/deathmatch_modifier/modifier as anything in signed_lobbies[lobby])
+		lobby.unselect_modifier(modifier)
 
 /datum/deathmatch_modifier/any_loadout
 	name = "Any Loadout Allowed"
@@ -428,7 +562,7 @@
 
 /datum/deathmatch_modifier/any_loadout/on_map_changed(datum/deathmatch_lobby/lobby)
 	if(lobby.loadouts == GLOB.deathmatch_game.loadouts) //This arena already allows any loadout for some reason.
-		lobby.modifiers -= type
+		lobby.unselect_modifier(src)
 	else
 		lobby.loadouts = GLOB.deathmatch_game.loadouts
 
@@ -439,3 +573,37 @@
 
 /datum/deathmatch_modifier/hear_global_chat/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.add_traits(list(TRAIT_SIXTHSENSE, TRAIT_XRAY_HEARING), DEATHMATCH_TRAIT)
+
+/datum/deathmatch_modifier/apply_quirks
+	name = "Quirks enabled"
+	description = "Applies selected quirks to all players"
+
+/datum/deathmatch_modifier/apply_quirks/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	if(!player.client)
+		return
+
+	SSquirks.AssignQuirks(player, player.client)
+
+/datum/deathmatch_modifier/martial_artistry
+	name = "Random martial arts"
+	description = "Everyone learns a random martial art!"
+	blacklisted_maps = list(/datum/lazy_template/deathmatch/meatower)
+	// krav maga excluded because its too common and too simple, mushpunch excluded because its horrible and not even funny
+	var/static/list/weighted_martial_arts = list(
+		// common
+		/datum/martial_art/cqc = 30,
+		/datum/martial_art/the_sleeping_carp = 30,
+		// LEGENDARY
+		/datum/martial_art/plasma_fist = 5,
+		/datum/martial_art/wrestling = 5, // wrestling is kinda strong ngl
+		/datum/martial_art/psychotic_brawling = 5, // a complete meme. sometimes you just get hardstunned. sometimes you punch someone across the room
+	)
+
+/datum/deathmatch_modifier/martial_artistry/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
+	. = ..()
+
+	var/datum/martial_art/picked_art_path = pick_weight(weighted_martial_arts)
+	var/datum/martial_art/instantiated_art = new picked_art_path()
+	instantiated_art.teach(player)
+
+	to_chat(player, span_revenboldnotice("Your martial art is [uppertext(instantiated_art.name)]!"))

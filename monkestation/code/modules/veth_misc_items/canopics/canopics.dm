@@ -256,9 +256,9 @@
 /obj/item/storage/box/canopic_box/stocked
 
 /obj/item/storage/box/canopic_box/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/storage/box/canopic_hawk = 1,
 		/obj/item/storage/box/canopic_human = 1,
 		/obj/item/storage/box/canopic_monke = 1,
 		/obj/item/storage/box/canopic_jackal = 1)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)

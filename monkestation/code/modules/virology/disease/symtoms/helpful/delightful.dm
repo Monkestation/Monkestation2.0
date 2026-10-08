@@ -10,6 +10,6 @@
 		to_chat(mob, span_hypnophrase("You feel delightful!"))
 	mob.add_mood_event(REF(src), /datum/mood_event/delightful_symptom)
 
-/datum/symptom/delightful/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/delightful/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	mob?.clear_mood_event(REF(src))
 	to_chat(mob, span_warning("You aren't quite sure what you were so happy about."))

@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(ambience)
 			client_old_areas -= client_iterator
 			continue
 
-		if(!client_mob.can_hear()) //WHAT? I CAN'T HEAR YOU
+		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
 			continue
 
 		//Check to see if the client-mob is in a valid area
@@ -118,12 +118,12 @@ SUBSYSTEM_DEF(ambience)
 	var/area/my_area = get_area(src)
 	var/sound_to_use = my_area?.ambient_buzz
 
-	if(!sound_to_use || !(client.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
+	if(!sound_to_use || !client?.prefs?.channel_volume["[CHANNEL_BUZZ]"])
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return
 
-	if(!can_hear()) // Can the mob hear?
+	if(HAS_TRAIT(src, TRAIT_DEAF)) // Can the mob hear?
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return
@@ -138,4 +138,5 @@ SUBSYSTEM_DEF(ambience)
 			return
 
 		client.current_ambient_sound = sound_to_use
-		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
+		var/volume_to_play = calculate_mixed_volume(client, my_area.ambient_buzz_vol, CHANNEL_BUZZ)
+		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = volume_to_play, channel = CHANNEL_BUZZ))

@@ -1,20 +1,20 @@
 import { map, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import {
-  Button,
-  Section,
-  Modal,
-  Tabs,
   Box,
+  Button,
+  Collapsible,
+  Divider,
+  Flex,
+  Icon,
   Input,
   LabeledList,
-  Flex,
+  Modal,
   ProgressBar,
-  Collapsible,
-  Icon,
-  Divider,
+  Section,
+  Tabs,
 } from '../components';
-import { Window, NtosWindow } from '../layouts';
+import { NtosWindow, Window } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
@@ -29,7 +29,7 @@ const selectRemappedStaticData = (data) => {
   // Handle reshaping of node cache to fill in unsent fields, and
   // decompress the node IDs
   const node_cache = {};
-  for (let id of Object.keys(data.static_data.node_cache)) {
+  for (const id of Object.keys(data.static_data.node_cache)) {
     const node = data.static_data.node_cache[id];
     const costs = Object.keys(node.costs || {}).map((x) => ({
       type: remapId(x),
@@ -49,7 +49,7 @@ const selectRemappedStaticData = (data) => {
 
   // Do the same as the above for the design cache
   const design_cache = {};
-  for (let id of Object.keys(data.static_data.design_cache)) {
+  for (const id of Object.keys(data.static_data.design_cache)) {
     const [name, classes] = data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
       name: name,
@@ -147,6 +147,7 @@ export const TechwebContent = (props) => {
     locked,
     queue_nodes = [],
     node_cache,
+    point_types_abbreviations = [],
   } = data;
   const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
   const [lastPoints, setLastPoints] = useLocalState('lastPoints', {});
@@ -167,8 +168,8 @@ export const TechwebContent = (props) => {
                 </span>
               </LabeledList.Item>
               {Object.keys(points).map((k) => (
-                <LabeledList.Item key={k}>
-                  <b>{k}</b>: {points[k]}
+                <LabeledList.Item key={k} label={point_types_abbreviations[k]}>
+                  <b>{points[k]}</b>
                   {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
                 </LabeledList.Item>
               ))}
@@ -303,9 +304,11 @@ const TechwebOverview = (props) => {
           </Flex.Item>
           <Flex.Item align={'center'}>
             <Input
+              width="100%"
               value={searchText}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={(value) => setSearchText(value)}
               placeholder={'Search...'}
+              expensive
             />
           </Flex.Item>
         </Flex>
@@ -671,10 +674,10 @@ const TechNode = (props) => {
           className="Techweb__NodeExperimentsRequired"
           title="Required Experiments"
         >
-          {required_experiments.map((k) => {
+          {required_experiments.map((k, idx) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={idx} />;
             }
             return <Experiment key={thisExp} exp={thisExp} />;
           })}
@@ -685,10 +688,10 @@ const TechNode = (props) => {
           className="TechwebNodeExperimentsRequired"
           title="Discount-Eligible Experiments"
         >
-          {Object.keys(discount_experiments).map((k) => {
+          {Object.keys(discount_experiments).map((k, idx) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={idx} />;
             }
             return (
               <Experiment key={thisExp} exp={thisExp}>

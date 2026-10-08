@@ -14,6 +14,8 @@
 	var/icon_closed = "lockbox"
 	var/icon_open = "lockbox"
 	var/icon_broken = "lockbox+b"
+	///If the lockbox starts locked
+	var/start_locked = TRUE
 
 ///screentips for lockboxes
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -31,7 +33,8 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
 	atom_storage.max_slots = 4
-	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	if(start_locked)
+		atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
 	update_icon_state()
@@ -314,3 +317,38 @@
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/lockbox/vialbox
+	name = "vial box"
+	desc = "A small box that can hold up to six vials in a sealed enviroment."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "vialbox2"
+	req_access = list(ACCESS_MEDICAL)
+	icon_locked = "vialbox2"
+	icon_closed = "vialbox1"
+	icon_broken = "vialboxb"
+	icon_open = "vialbox1"
+	custom_price = PAYCHECK_CREW / 2
+	discountable = FALSE
+	start_locked = FALSE
+
+/obj/item/storage/lockbox/vialbox/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 6
+	atom_storage.max_total_storage = 12
+	atom_storage.set_holdable(list(/obj/item/reagent_containers/chemcanister))
+
+/obj/item/storage/lockbox/vialbox/hypo_deluxe
+	name = "deluxe hypospray vial box"
+	desc = "A small box that can hold up to six vials in a sealed enviroment. This one contains a plethora of different vials for various medical ailments, designed for use in a deluxe hypospray."
+	start_locked = TRUE
+	req_access = list(ACCESS_CMO)
+
+/obj/item/storage/lockbox/vialbox/hypo_deluxe/PopulateContents()
+	new /obj/item/reagent_containers/chemcanister/bluespace/omnizine(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/sal_acid(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/oxandrolone(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/pen_acid(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/oxy(src)
+	new /obj/item/reagent_containers/chemcanister/bluespace/atropine(src)

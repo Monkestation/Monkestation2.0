@@ -35,6 +35,8 @@
 	var/pay_token
 	///List with a transaction history for NT pay app
 	var/list/transaction_history = list()
+	/// How many paychecks to skip when payday is called.
+	var/paydays_to_skip = 0
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -165,30 +167,37 @@
  * Arguments:
  * * amount_of_paychecks - literally the number of salaries, 1 for issuing one salary, 5 for issuing five salaries.
  * * free - issuance of free funds, if TRUE then takes funds from the void, if FALSE (default) tries to send from the department's account.
+ * * skippable - if TRUE, this proc may pay out nothing if the account has paydays_to_skip
+ * * event - the name of the event that is being processed, used for bank card messages.
  */
-/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE)
+/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE, skippable = FALSE, event = "Payday")
 	if(!account_job)
-		return
+		return FALSE
+
+	if(skippable && !free)
+		while(paydays_to_skip > 0 && amount_of_paychecks > 0)
+			amount_of_paychecks -= 1
+			paydays_to_skip -= 1
+
+	if(amount_of_paychecks <= 0)
+		return FALSE
+
 	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
-	if(amount_of_paychecks == 1)
-		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
 		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
 		return TRUE
-	else
-		var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
-		if(department_account)
-			if(!transfer_money(department_account, money_to_transfer))
-				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
-				return FALSE
-			else
-				bank_card_talk("Payday processed, account now holds [account_balance] cr.")
-				return TRUE
-	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
-	return FALSE
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
+	if(isnull(department_account))
+		bank_card_talk("ERROR: [event] aborted, unable to contact departmental account.")
+		return FALSE
+	if(!transfer_money(department_account, money_to_transfer))
+		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
+		return FALSE
+	bank_card_talk("[event] processed, account now holds [account_balance]cr.")
+	return TRUE
 
 /**
  * This sends a local chat message to the owner of a bank account, on all ID cards registered to the bank_account.
@@ -210,7 +219,7 @@
 			if(!card_holder.client || (!(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 				return
 
-			if(card_holder.can_hear())
+			if(!HAS_TRAIT(card_holder, TRAIT_DEAF))
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(card.loc)) //If on the ground
@@ -218,7 +227,7 @@
 			for(var/mob/potential_hearer in hearers(1,card_location))
 				if(!potential_hearer.client || (!(potential_hearer.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 					continue
-				if(potential_hearer.can_hear())
+				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
 					potential_hearer.playsound_local(card_location, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 		else
@@ -228,7 +237,7 @@
 					continue
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
-				if(potential_hearer.can_hear())
+				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
 					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 

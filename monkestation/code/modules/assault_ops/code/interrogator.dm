@@ -268,3 +268,6 @@
 		human_occupant.forceMove(safe_turf)
 		stack_trace("[type] - return_target was unable to teleport [human_occupant] to the observer start turf. Forcemoving.")
 
+#undef STAGE_PROCESS_TIME_LOWER
+#undef STAGE_PROCESS_TIME_UPPER
+#undef ALERT_CREW_TIME

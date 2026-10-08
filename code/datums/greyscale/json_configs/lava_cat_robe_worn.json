@@ -1,0 +1,42 @@
+{
+	"lava_cat_robe": [
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_robe_main",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_robe_under",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_robe_stripes",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	],
+	"lava_cat_robe_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_robe_t_main",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_robe_t_under",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_robe_t_stripes",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	]
+}

@@ -133,6 +133,8 @@
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
+	/// How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
+	var/default_hand_amount = 2
 
 	//HUD things
 
@@ -146,9 +148,6 @@
 
 	/// What job does this mob have
 	var/job = null//Living
-
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
 
 	///A weakref to the last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
 	var/datum/weakref/LAssailant = null

@@ -7,3 +7,4 @@ GLOBAL_LIST_INIT(achievement_sounds, list(
 	CHEEVO_SOUND_JINGLE = sound('sound/effects/beeps_jingle.ogg', volume = 70),
 	CHEEVO_SOUND_TADA = sound('sound/effects/tada_fanfare.ogg', volume = 30),
 ))
+GLOBAL_LIST_INIT(achievements_unlocked, list())

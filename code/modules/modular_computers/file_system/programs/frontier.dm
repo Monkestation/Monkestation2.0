@@ -1,3 +1,4 @@
+
 /datum/computer_file/program/scipaper_program
 	filename = "ntfrontier"
 	filedesc = "NT Frontier"
@@ -28,11 +29,11 @@
 		linked_techweb = SSresearch.science_tech
 
 /datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/multitool))
+	if(!istype(attacking_item) || attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return FALSE
-	var/obj/item/multitool/attacking_tool = attacking_item
-	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
-		linked_techweb = attacking_tool.buffer
+	var/datum/buffer = multitool_get_buffer(attacking_item)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		linked_techweb = buffer
 	return TRUE
 
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()

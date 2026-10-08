@@ -116,6 +116,11 @@
 		clear_mood_event(MOOD_CATEGORY_NUTRITION)
 		return FALSE
 
+	if(HAS_TRAIT(mob_parent, TRAIT_GLUTTON))
+		add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry) //you'll never get enough
+		return TRUE
+
+
 	if(HAS_TRAIT(mob_parent, TRAIT_FAT) && !HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
 		add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
 		return TRUE
@@ -234,7 +239,7 @@
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
-	if (!(mob_parent.client || mob_parent.hud_used))
+	if (!(mob_parent.client || mob_parent.hud_used) || isnull(mood_screen_object))
 		return
 
 	mood_screen_object.cut_overlays()
@@ -502,6 +507,14 @@
 		mob_parent.remove_status_effect(/datum/status_effect/hallucination/sanity)
 
 	update_mood_icon()
+
+/// Sets sanity to a specific amount, useful for callbacks
+/datum/mood/proc/reset_sanity(amount)
+	set_sanity(amount, override = TRUE)
+
+/// Adjusts sanity by a value
+/datum/mood/proc/adjust_sanity(amount, minimum = SANITY_INSANE, maximum = SANITY_GREAT, override = FALSE)
+	set_sanity(sanity + amount, minimum, maximum, override)
 
 /// Sets the insanity effect on the mob
 /datum/mood/proc/set_insanity_effect(newval)

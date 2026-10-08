@@ -1,6 +1,11 @@
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
-	init_order = INIT_ORDER_ATOMS
+	dependencies = list(
+		/datum/controller/subsystem/processing/reagents,
+		/datum/controller/subsystem/fluids,
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/job,
+	)
 	flags = SS_NO_FIRE
 
 	/// A stack of list(source, desired initialized state)
@@ -115,19 +120,14 @@ SUBSYSTEM_DEF(atoms)
 					if(mapload_source)
 						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
 				InitAtom(A, TRUE, mapload_arg)
-#ifndef DISABLE_DEMOS
-		SSdemo.mark_multiple_new(atoms) // monkestation edit: replays
-#endif
 	else
 		#ifdef TESTING
 		count = 0
 		#endif
 
-		var/list/atoms_to_mark = list() // monkestation edit: replays
 		for(var/atom/A as anything in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, FALSE, mapload_arg)
-				atoms_to_mark += A // monkestation edit: replays
 				#ifdef TESTING
 				++count
 				#endif
@@ -136,9 +136,6 @@ SUBSYSTEM_DEF(atoms)
 					stoplag()
 					if(mapload_source)
 						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
-#ifndef DISABLE_DEMOS
-		SSdemo.mark_multiple_new(atoms_to_mark) // monkestation edit: replays
-#endif
 
 	testing("Initialized [count] atoms")
 
@@ -250,6 +247,7 @@ SUBSYSTEM_DEF(atoms)
 		initialized = base_initialized
 		base_initialized = INITIALIZATION_INNEW_REGULAR
 		return
+
 	initialized = initialized_state[length(initialized_state)][2]
 
 /// Returns TRUE if anything is currently being initialized

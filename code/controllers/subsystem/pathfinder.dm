@@ -1,7 +1,6 @@
 /// Queues and manages JPS pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
-	init_order = INIT_ORDER_PATH
 	priority = FIRE_PRIORITY_PATHFINDING
 	wait = 0.5
 	/// List of pathfind datums we are currently trying to process
@@ -95,6 +94,15 @@ SUBSYSTEM_DEF(pathfinder)
 	if(!SSpathfinder.can_pass_build_map(pass_info, target, max_distance, simulated_only, exclude, pass_in))
 		return FALSE
 	return TRUE
+
+/// Initiates an A* pathfind. Returns true if we're good, FALSE if something's failed
+/datum/controller/subsystem/pathfinder/proc/astar_pathfind(requester, end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, smooth_diagonals = TRUE, list/datum/callback/on_finish)
+	var/datum/pathfind/astar/path = new()
+	path.setup(requester, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, access, exclude, simulated_only, check_z_levels, smooth_diagonals, on_finish)
+	if(path.start())
+		active_pathing += path
+		return TRUE
+	return FALSE
 
 /// We generate a path for the passed in callbacks, and then pipe it over
 /proc/path_map_passalong(list/datum/callback/return_callbacks, turf/target, mintargetdist = 0, skip_first = TRUE, datum/path_map/hand_back)

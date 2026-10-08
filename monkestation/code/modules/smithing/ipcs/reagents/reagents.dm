@@ -26,6 +26,7 @@
 
 /datum/reagent/medicine/system_cleaner/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, 0)
+	affected_mob.adjustCloneLoss(-2 * REM * seconds_per_tick, 0)
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
 	affected_mob.adjust_drunk_effect(-10 * REM * seconds_per_tick)
 	var/remove_amount = 1 * REM * seconds_per_tick;

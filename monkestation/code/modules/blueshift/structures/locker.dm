@@ -11,7 +11,6 @@
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/restraints/handcuffs(src)
-	new /obj/item/clothing/shoes/jackboots/peacekeeper(src)
 	new /obj/item/clothing/head/helmet/toggleable/riot(src)
 	new /obj/item/shield/riot(src)
 
@@ -20,7 +19,6 @@
 	name = "nanotrasen consultant's locker"
 	req_access = list(ACCESS_CENT_GENERAL)
 	icon_state = "cc"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi'
 
 /obj/structure/closet/secure_closet/nanotrasen_consultant/PopulateContents()
 	..()

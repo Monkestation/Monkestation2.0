@@ -44,7 +44,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/multitool/M)
-	M.set_buffer(src)
+	multitool_set_buffer(M, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -58,7 +58,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/multitool/M)
-	M.set_buffer(src)
+	multitool_set_buffer(M, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -76,15 +76,16 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 /obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = NONE
 
-	if(istype(tool.buffer, /obj/machinery/bsa/back))
-		back_ref = WEAKREF(tool.buffer)
-		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
-		tool.set_buffer(null)
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(istype(buffer, /obj/machinery/bsa/back))
+		back_ref = WEAKREF(buffer)
+		to_chat(user, span_notice("You link [src] with [buffer]."))
+		multitool_set_buffer(tool, null)
 		return ITEM_INTERACT_SUCCESS
-	else if(istype(tool.buffer, /obj/machinery/bsa/front))
-		front_ref = WEAKREF(tool.buffer)
-		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
-		tool.set_buffer(null)
+	else if(istype(buffer, /obj/machinery/bsa/front))
+		front_ref = WEAKREF(buffer)
+		to_chat(user, span_notice("You link [src] with [buffer]."))
+		multitool_set_buffer(tool, null)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bsa/middle/proc/check_completion()

@@ -1,6 +1,6 @@
 import { filterMap } from 'common/collections';
 import { exhaustiveCheck } from 'common/exhaustive';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Divider, Dropdown, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -51,10 +51,12 @@ const FutureStationTraitsPage = (props) => {
       <Stack fill>
         <Stack.Item grow>
           <Dropdown
-            displayText={!selectedTrait && 'Select trait to add...'}
+            displayText={
+              !selectedTrait ? 'Select trait to add...' : selectedTrait
+            }
             onSelected={setSelectedTrait}
             options={traitNames}
-            selected={selectedTrait}
+            selected={selectedTrait || ''}
             width="100%"
           />
         </Stack.Item>

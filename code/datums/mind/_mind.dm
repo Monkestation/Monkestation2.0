@@ -109,6 +109,11 @@
 	/// If this mind has set DNR or not.
 	var/dnr = FALSE
 
+	/// The crew manifest entry for this crew member, if any.
+	var/datum/record/crew/crewfile
+	/// The locked manifest entry for this crew member, if any.
+	var/datum/record/locked/lockfile
+
 /datum/mind/New(_key)
 	key = _key
 	martial_art = default_martial_art
@@ -121,6 +126,8 @@
 	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
+	crewfile = null
+	lockfile = null
 	set_current(null)
 	return ..()
 
@@ -130,7 +137,7 @@
 	.["key"] = key
 	.["name"] = name
 	.["ghostname"] = ghostname
-	.["memories"] = memories
+	.["memories"] = length(memories) ? memories : null
 	.["martial_art"] = martial_art
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
@@ -182,6 +189,7 @@
 		key = new_character.key
 
 	if(new_character.mind) //disassociate any mind currently in our new body's mind variable
+		new_character.mind.UnregisterSignal(new_character, COMSIG_LIVING_DEATH)
 		new_character.mind.set_current(null)
 
 	var/mob/living/old_current = current
@@ -460,15 +468,20 @@
 					current.dropItemToGround(W, TRUE) //The TRUE forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
-				wipe_memory()//Remove any memory they may have had.
+				wipe_memory_type(/datum/memory/key/traitor_uplink/implant)
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler.telecrystals) as null | num
-						if(!isnull(crystals))
-							U.uplink_handler.telecrystals = crystals
+						var/crystals = tgui_input_number(
+							user = usr,
+							message = "Amount of telecrystals for [key]",
+							title = "Syndicate uplink",
+							default = U.uplink_handler.telecrystals,
+						)
+						if(isnum(crystals))
+							U.set_telecrystals(crystals)
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("progression")
@@ -584,6 +597,21 @@
 	// monkestation edit end
 	if(incoming_client && intro_message)
 		to_chat(incoming_client, intro_message)
+
+/datum/mind/proc/add_to_manifest(crew = TRUE, locked = FALSE)
+	if(crew && !QDELETED(crewfile))
+		GLOB.manifest.general |= crewfile
+	if(locked && !QDELETED(lockfile))
+		GLOB.manifest.locked |= lockfile
+
+/datum/mind/proc/remove_from_manifest(crew = TRUE, locked = FALSE)
+	if(crew && !QDELETED(crewfile))
+		GLOB.manifest.general -= crewfile
+	if(locked && !QDELETED(lockfile))
+		GLOB.manifest.locked -= lockfile
+
+/datum/mind/proc/operator""()
+	return trimtext(name || current?.real_name || current?.name)
 
 /mob/proc/sync_mind()
 	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)

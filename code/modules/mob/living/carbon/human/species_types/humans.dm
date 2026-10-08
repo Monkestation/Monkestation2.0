@@ -13,9 +13,6 @@
 	human.set_haircolor("#bb9966", update = FALSE) // brown
 	human.set_hairstyle("Business Hair", update = TRUE)
 
-/datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
-	human_mob.skin_tone = random_skin_tone()
-
 /datum/species/human/get_species_description()
 	return "Humans are the dominant species in the known galaxy. \
 		Their kind extend from old Earth to the edges of known space."

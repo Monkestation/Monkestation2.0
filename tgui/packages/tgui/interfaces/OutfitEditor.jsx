@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack } from '../components';
+import { Box, Button, Icon, Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const OutfitEditor = (props) => {
@@ -8,8 +8,7 @@ export const OutfitEditor = (props) => {
   return (
     <Window width={380} height={600} theme="admin">
       <Window.Content>
-        <Box
-          as="img"
+        <Image
           fillPositionedParent
           width="100%"
           height="100%"
@@ -17,8 +16,7 @@ export const OutfitEditor = (props) => {
           py={3}
           src={`data:image/jpeg;base64,${dummy64}`}
           style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
-            'image-rendering': 'pixelated',
+            imageRendering: 'pixelated',
           }}
         />
         <Section
@@ -29,8 +27,8 @@ export const OutfitEditor = (props) => {
                 grow={1}
                 style={{
                   overflow: 'hidden',
-                  'white-space': 'nowrap',
-                  'text-overflow': 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
                 }}
               >
                 <Button
@@ -141,13 +139,11 @@ const OutfitSlot = (props) => {
       <Box height="32px">
         {currItem?.sprite && (
           <>
-            <Box
-              as="img"
+            <Image
               src={`data:image/jpeg;base64,${currItem?.sprite}`}
               title={currItem?.desc}
               style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
-                'image-rendering': 'pixelated',
+                imageRendering: 'pixelated',
               }}
             />
             <Icon
@@ -164,8 +160,8 @@ const OutfitSlot = (props) => {
         color="label"
         style={{
           overflow: 'hidden',
-          'white-space': 'nowrap',
-          'text-overflow': 'ellipsis',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
         }}
         title={currItem?.path}
       >

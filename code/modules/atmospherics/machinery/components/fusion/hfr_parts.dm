@@ -34,26 +34,24 @@
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, attacking_item))
+		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
 			return
-	if(default_change_direction_wrench(user, attacking_item))
-		return
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_change_direction_wrench(user, I))
 		return
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
 	if(!cracked)
 		return FALSE
-	if((user.istate & ISTATE_HARM))
+	if((user.istate & ISTATE_HARM)) ///user.combat_mode not found in current build; leaving as is.
 		return FALSE
 	balloon_alert(user, "repairing...")
-	if(tool.use_tool(src, user, 10 SECONDS, volume=30, amount=5))
+	if(tool.use_tool(src, user, 10 SECONDS, volume=30))
 		balloon_alert(user, "repaired")
 		cracked = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool)
@@ -130,13 +128,13 @@
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/hypertorus/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, attacking_item))
+		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
 			return
-	if(default_change_direction_wrench(user, attacking_item))
+	if(default_change_direction_wrench(user, I))
 		return
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 
@@ -155,10 +153,13 @@
 	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface_off"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
-	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 	icon_state_off = "interface_off"
 	icon_state_open = "interface_open"
 	icon_state_active = "interface_active"
+	/// Have we been activated at least once?
+	var/activated = FALSE
+	/// Reference to the core of our machine
+	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 
 /obj/machinery/hypertorus/interface/Destroy()
 	if(connected_core)
@@ -167,16 +168,19 @@
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	var/turf/T = get_step(src,turn(dir,180))
+	var/turf/T = get_step(src,REVERSE_DIR(dir))
 	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
 		to_chat(user, span_notice("Check all parts and then try again."))
 		return TRUE
-	new/obj/item/paper/guides/jobs/atmos/hypertorus(loc)
-	connected_core = centre
 
+	connected_core = centre
 	connected_core.activate(user)
+	if(!activated)
+		new /obj/item/paper/guides/jobs/atmos/hypertorus(loc)
+		activated = TRUE
+
 	return TRUE
 
 /obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)
@@ -231,14 +235,14 @@
 	//Internal Fusion gases
 	var/list/fusion_gasdata = list()
 	if(connected_core.internal_fusion.total_moles())
-		for(var/gas_type in connected_core.internal_fusion.gases)
+		for(var/gas_type in connected_core.internal_fusion.moles)
 			var/datum/gas/gas = gas_type
 			fusion_gasdata.Add(list(list(
 			"id"= initial(gas.id),
-			"amount" = round(connected_core.internal_fusion.gases[gas][MOLES], 0.01),
+			"amount" = round(connected_core.internal_fusion.moles[gas], 0.01),
 			)))
 	else
-		for(var/gas_type in connected_core.internal_fusion.gases)
+		for(var/gas_type in connected_core.internal_fusion.moles)
 			var/datum/gas/gas = gas_type
 			fusion_gasdata.Add(list(list(
 				"id"= initial(gas.id),
@@ -247,14 +251,14 @@
 	//Moderator gases
 	var/list/moderator_gasdata = list()
 	if(connected_core.moderator_internal.total_moles())
-		for(var/gas_type in connected_core.moderator_internal.gases)
+		for(var/gas_type in connected_core.moderator_internal.moles)
 			var/datum/gas/gas = gas_type
 			moderator_gasdata.Add(list(list(
 			"id"= initial(gas.id),
-			"amount" = round(connected_core.moderator_internal.gases[gas][MOLES], 0.01),
+			"amount" = round(connected_core.moderator_internal.moles[gas], 0.01),
 			)))
 	else
-		for(var/gas_type in connected_core.moderator_internal.gases)
+		for(var/gas_type in connected_core.moderator_internal.moles)
 			var/datum/gas/gas = gas_type
 			moderator_gasdata.Add(list(list(
 				"id"= initial(gas.id),
@@ -300,9 +304,13 @@
 
 	data["waste_remove"] = connected_core.waste_remove
 	data["filter_types"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in connected_core.moderator_scrubbing)))
+	var/cached_gas_info = GLOB.meta_gas_info
+	for(var/path in cached_gas_info[META_GAS_ID])
+		data["filter_types"] += list(list(
+			"gas_id" = cached_gas_info[META_GAS_ID][path],
+			"gas_name" = cached_gas_info[META_GAS_NAME][path],
+			"enabled" = (path in connected_core.moderator_scrubbing)
+		))
 
 	data["cooling_volume"] = connected_core.airs[1].volume
 	data["mod_filtering_rate"] = connected_core.moderator_filtering_rate

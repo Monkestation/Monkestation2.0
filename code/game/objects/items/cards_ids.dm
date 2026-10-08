@@ -31,10 +31,26 @@
 	w_class = WEIGHT_CLASS_TINY
 
 	var/list/files = list()
+	/// Cached icon built for this card. Intended for use in chat/examine displays.
+	var/icon/cached_flat_icon
 
 /obj/item/card/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/card/update_overlays()
+	. = ..()
+	cached_flat_icon = null
+
+/// If no cached_flat_icon exists, this proc creates it and crops it.
+/obj/item/card/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+		cached_flat_icon.Crop(ID_ICON_BORDERS)
+	return cached_flat_icon
+
+/obj/item/card/get_examine_icon(mob/user)
+	return ma2html(get_cached_flat_icon(), user)
 
 /*
  * ID CARDS
@@ -54,11 +70,10 @@
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	/// Cached icon that has been built for this card. Intended for use in chat.
-	var/icon/cached_flat_icon
-
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
+	///Boolean on whether a blank bank account should be created on the ID's init.
+	var/create_bank_on_init = TRUE
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 
@@ -119,10 +134,11 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
-	registered_account = blank_bank_account
-	blank_bank_account.account_job = new /datum/job/unassigned
-	registered_account.replaceable = TRUE
+	if(create_bank_on_init)
+		var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+		registered_account = blank_bank_account
+		blank_bank_account.account_job = new /datum/job/unassigned
+		registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))
@@ -146,22 +162,61 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
-/obj/item/card/id/update_overlays()
+/obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	if(isitem(old_loc))
+		unequip_from_item_loc(old_loc)
 	. = ..()
+	if(isitem(loc))
+		equip_to_item_loc(loc)
 
-	cached_flat_icon = null
+/obj/item/card/id/equipped(mob/user, slot)
+	. = ..()
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	if (slot & ITEM_SLOT_POCKETS)
+		//putting it in your pocket doesn't let you use it as access.
+		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 
-/// If no cached_flat_icon exists, this proc creates it and crops it. This proc then returns the cached_flat_icon. Intended only for use displaying ID card icons in chat.
-/obj/item/card/id/proc/get_cached_flat_icon()
-	if(!cached_flat_icon)
-		cached_flat_icon = getFlatIcon(src)
-		cached_flat_icon.Crop(ID_ICON_BORDERS)
-	return cached_flat_icon
+/obj/item/card/id/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(isitem(loc))
+		equip_to_item_loc(loc) // "dropped" into an item, like a worn wallet
+	return ..()
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/// ID card is being equipped to an item (like a pda or wallet)
+/obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
+	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
+	if (ismob(new_loc.loc))
+		var/mob/wearer = new_loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, COMSIG_MOB_RETRIEVE_ACCESS)
+		on_loc_equipped(new_loc, wearer, wearer.get_slot_by_item(new_loc))
+
+/// ID card is being unequipped from an item (like a pda or wallet)
+/obj/item/card/id/proc/unequip_from_item_loc(atom/old_loc)
+	UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(old_loc.loc))
+		UnregisterSignal(old_loc.loc, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	else //This is necessary because unlike TG, Monke doens't call dropped when moving an item from hand to belt/pockets/ID
+		UnregisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
+	SIGNAL_HANDLER
+	UnregisterSignal(dropper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+///Called when we're being used as access.
+/obj/item/card/id/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += GetAccess()
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -735,6 +790,10 @@
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+		if(registered_account.mining_points)
+			. += span_notice("The account linked to the ID has [registered_account.mining_points] mining points available.")
+		if(registered_account.bitrunning_points)
+			. += span_notice("The account linked to the ID has [registered_account.bitrunning_points] bitrunning points available.")
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
@@ -800,7 +859,7 @@
 	RETURN_TYPE(/obj/item/card/id)
 	return src
 
-/obj/item/card/id/RemoveID()
+/obj/item/card/id/remove_id()
 	return src
 
 /obj/item/card/id/proc/chat_span()
@@ -971,7 +1030,12 @@
 /obj/item/card/id/departmental_budget/sci
 	department_ID = ACCOUNT_SCI
 	department_name = ACCOUNT_SCI_NAME
-	icon_state = "sci_budget"
+	icon_state = "sci_budget" //for five hundred cloners
+
+/obj/item/card/id/departmental_budget/cc
+	department_ID = ACCOUNT_CC
+	department_name = ACCOUNT_CC_NAME
+	icon_state = "cc_budget" //for mountains of goldschlager
 
 /obj/item/card/id/departmental_budget/click_alt(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
@@ -1066,24 +1130,15 @@
 	is_intern = FALSE
 	update_label()
 
-/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/item/card/id/advanced/on_loc_equipped(datum/source, mob/equipper, slot)
 	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		update_intern_status(source, equipper, slot)
 
-	//Old loc
-	if(istype(old_loc, /obj/item/storage/wallet))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	if(istype(old_loc, /obj/item/modular_computer))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	//New loc
-	if(istype(loc, /obj/item/storage/wallet))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
-
-	if(istype(loc, /obj/item/modular_computer))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
+/obj/item/card/id/advanced/on_loc_dropped(datum/source, mob/dropper)
+	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		remove_intern_status(source, dropper)
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
@@ -1313,6 +1368,10 @@
 	var/time_to_assign
 	/// Time left on a card till they can leave.
 	var/time_left = 0
+	/// if the card has been given a custom name.
+	var/named = FALSE
+
+
 
 /obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
@@ -1326,19 +1385,46 @@
 		timed = FALSE
 		time_to_assign = initial(time_to_assign)
 		registered_name = initial(registered_name)
+
 		STOP_PROCESSING(SSobj, src)
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
-	time_to_assign = choice
-	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
-	timed = TRUE
-
+	if(choice)
+		time_to_assign = choice
+		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+		timed = TRUE
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
 	START_PROCESSING(SSobj, src)
+
+/obj/item/card/id/advanced/prisoner/attackby_secondary(obj/item/card/id/C, mob/user)
+	..()
+	var/list/id_access = C.GetAccess()
+	if(!(ACCESS_BRIG in id_access))
+		return FALSE
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return FALSE
+	if(named)
+		named = FALSE
+		registered_name = initial(registered_name)
+		name = initial(name)
+		to_chat(user, "Restating prisoner ID to default parameters.")
+		return
+	var/name_input = tgui_input_text(user, "Enter prisoner name. (Will appear on suit sensors.)", "Prisoner Identification", registered_name, MAX_NAME_LEN)
+	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+		return FALSE
+	if(!name_input || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+		return FALSE
+	registered_name = name_input
+	name = "[name_input]'s ID Card (Prisoner)"
+	to_chat(user, "You set the ID's identification to [name_input].")
+	named = TRUE
+
+
 
 /obj/item/card/id/advanced/prisoner/examine(mob/user)
 	. = ..()
@@ -1674,7 +1760,7 @@
 
 					var/selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 					if(selected_trim_path)
-						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+						SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 
 				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant")
 				if(target_occupation)
@@ -1708,7 +1794,7 @@
 			if(forged)
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
-				SSid_access.remove_trim_from_chameleon_card(src)
+				SSid_access.remove_trim_override(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()
@@ -1770,6 +1856,169 @@
 	name = "Green Team identification card"
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
+
+/obj/item/card/id/advanced/bountyhunter
+	assigned_icon_state = "assigned_flame"
+
+#define CARDBOARD_ID_NAME_COLOR 1
+#define CARDBOARD_ID_ASSIGNMENT_COLOR 2
+#define CARDBOARD_ID_TRIM_COLOR 3
+
+/**
+ * A fake ID card anyone can craft with wirecutters and cardboard.
+ * It changes the visible name when worn, but has no access, account, or real ID behavior.
+ */
+/obj/item/card/cardboard
+	name = "cardboard identification card"
+	desc = "A card used to provide ID and det- Heeeey, wait a second, this is just a piece of cut cardboard!"
+	icon_state = "cardboard_id"
+	inhand_icon_state = "cardboard-id"
+	worn_icon_state = "nothing"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	resistance_flags = FLAMMABLE
+	slot_flags = ITEM_SLOT_ID
+	/// The "name" of the "owner" of this "ID".
+	var/scribbled_name
+	/// The assignment written on this card.
+	var/scribbled_assignment
+	/// An icon state used as trim.
+	var/scribbled_trim
+	/// The colors for name, assignment, and trim overlays.
+	var/list/details_colors = list("#000000", "#000000", "#000000")
+
+/obj/item/card/cardboard/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_ID)
+		update_human_identity(user)
+
+/obj/item/card/cardboard/dropped(mob/user)
+	. = ..()
+	update_human_identity(user)
+
+/obj/item/card/cardboard/proc/update_human_identity(mob/user)
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return
+	human_user.name = human_user.get_visible_name()
+	human_user.sec_hud_set_ID()
+
+/obj/item/card/cardboard/proc/update_current_wearer_identity()
+	var/mob/living/carbon/human/human_user = loc
+	if(!istype(human_user) || human_user.wear_id != src)
+		return
+	update_human_identity(human_user)
+
+/obj/item/card/cardboard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isliving(user) && user.can_write(attacking_item, TRUE))
+		var/mob/living/living_user = user
+		INVOKE_ASYNC(src, PROC_REF(modify_card), living_user, attacking_item)
+		return TRUE
+	return ..()
+
+/// Lets the user write a name, assignment, or trim on the card, or reset it.
+/obj/item/card/cardboard/proc/modify_card(mob/living/user, obj/item/attacking_item)
+	if(!user.mind)
+		return
+	var/popup_input = tgui_input_list(user, "What to change", "Cardboard ID", list("Name", "Assignment", "Trim", "Reset"))
+	if(!after_input_check(user, attacking_item, popup_input))
+		return
+	switch(popup_input)
+		if("Name")
+			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			input_name = sanitize_name(input_name, allow_numbers = TRUE)
+			if(!after_input_check(user, attacking_item, input_name, scribbled_name))
+				return
+			scribbled_name = input_name
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_NAME_COLOR] = details["color"] || "#000000"
+		if("Assignment")
+			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job assignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
+			if(!after_input_check(user, attacking_item, input_assignment, scribbled_assignment))
+				return
+			scribbled_assignment = input_assignment
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_ASSIGNMENT_COLOR] = details["color"] || "#000000"
+		if("Trim")
+			var/static/list/possible_trims
+			if(!possible_trims)
+				possible_trims = list()
+				var/list/cardboard_icon_states = icon_states(icon)
+				for(var/trim_path in typesof(/datum/id_trim))
+					var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+					if(!trim?.trim_state || !trim.assignment)
+						continue
+					var/trim_name = replacetext(trim.trim_state, "trim_", "")
+					if("cardboard_[trim_name]" in cardboard_icon_states)
+						possible_trims |= trim_name
+				possible_trims = sort_list(possible_trims)
+			var/input_trim = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", possible_trims)
+			if(!input_trim || !after_input_check(user, attacking_item, input_trim, scribbled_trim))
+				return
+			scribbled_trim = "cardboard_[input_trim]"
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_TRIM_COLOR] = details["color"] || "#000000"
+		if("Reset")
+			scribbled_name = null
+			scribbled_assignment = null
+			scribbled_trim = null
+			details_colors = list("#000000", "#000000", "#000000")
+
+	update_appearance()
+	update_current_wearer_identity()
+
+/// Checks that the conditions to modify the cardboard card still hold after user input.
+/obj/item/card/cardboard/proc/after_input_check(mob/living/user, obj/item/attacking_item, input, value)
+	if(!input || (value && input == value))
+		return FALSE
+	if(QDELETED(user) || QDELETED(attacking_item) || QDELETED(src) || user.incapacitated() || !user.is_holding(attacking_item) || !user.CanReach(src) || !user.can_write(attacking_item))
+		return FALSE
+	return TRUE
+
+/obj/item/card/cardboard/attack_self(mob/user)
+	if(!Adjacent(user))
+		return
+	user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show \the [name]."))
+	add_fingerprint(user)
+
+/obj/item/card/cardboard/update_name(updates = ALL)
+	. = ..()
+	if(!scribbled_name)
+		name = initial(name)
+		return
+	name = "[scribbled_name]'s ID Card"
+	if(scribbled_assignment)
+		name = "[name] ([scribbled_assignment])"
+
+/obj/item/card/cardboard/update_overlays()
+	. = ..()
+	if(scribbled_name)
+		var/mutable_appearance/name_overlay = mutable_appearance(icon, "cardboard_name")
+		name_overlay.color = details_colors[CARDBOARD_ID_NAME_COLOR]
+		. += name_overlay
+	if(scribbled_assignment)
+		var/mutable_appearance/assignment_overlay = mutable_appearance(icon, "cardboard_assignment")
+		assignment_overlay.color = details_colors[CARDBOARD_ID_ASSIGNMENT_COLOR]
+		. += assignment_overlay
+	if(scribbled_trim)
+		var/mutable_appearance/frame_overlay = mutable_appearance(icon, "cardboard_frame")
+		frame_overlay.color = details_colors[CARDBOARD_ID_TRIM_COLOR]
+		. += frame_overlay
+		var/mutable_appearance/trim_overlay = mutable_appearance(icon, scribbled_trim)
+		trim_overlay.color = details_colors[CARDBOARD_ID_TRIM_COLOR]
+		. += trim_overlay
+
+/obj/item/card/cardboard/get_id_examine_strings(mob/user)
+	. = ..()
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+
+/obj/item/card/cardboard/examine(mob/user)
+	. = ..()
+	. += span_notice("You could use a pen or crayon to forge a name, assignment, or trim.")
+
+#undef CARDBOARD_ID_NAME_COLOR
+#undef CARDBOARD_ID_ASSIGNMENT_COLOR
+#undef CARDBOARD_ID_TRIM_COLOR
 
 #undef INTERN_THRESHOLD_FALLBACK_HOURS
 #undef ID_ICON_BORDERS

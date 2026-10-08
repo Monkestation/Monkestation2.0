@@ -26,6 +26,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	priority = PREFERENCE_PRIORITY_NAMES
+	should_update_preview = FALSE
 
 /datum/preference/multiline_text/flavor_datum/apply_to_human(mob/living/carbon/human/target, value)
 	if(!length(value) || istype(target, /mob/living/carbon/human/dummy)) // Don't stick flavor text on dummies
@@ -66,6 +67,7 @@
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	priority = PREFERENCE_PRIORITY_NAMES
 	max_length = MAX_FLAVOR_LEN
+	should_update_preview = FALSE
 
 /datum/preference/multiline_text/record/New()
 	. = ..()

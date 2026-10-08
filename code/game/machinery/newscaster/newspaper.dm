@@ -43,7 +43,7 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/reagent_containers/cup/glass/bottle/whiskey(H.loc)
 	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
-	W.reagents.trans_to(H, W.reagents.total_volume, transfered_by = user)
+	W.reagents.trans_to(H, W.reagents.total_volume, transferred_by = user)
 	user.visible_message(span_suicide("[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!"))
 	return TOXLOSS
 
@@ -183,9 +183,10 @@
 				return
 			if(!user.can_perform_action(src))
 				return
+			add_fingerprint(user)
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			scribble_page = curr_page
 			scribble_text = s
 			attack_self(user)
-			add_fingerprint(user)
 	else
 		return ..()

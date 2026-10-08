@@ -11,7 +11,7 @@
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
-		if(button_type::abstract_type == button_type)
+		if(button_type::abstract_type == button_type || button_type::always_create != TRUE)
 			continue
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
 		lobbyscreen.SlowInit()
@@ -20,6 +20,14 @@
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
 
+	if (!owner.client?.is_localhost())
+		return
+
+	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
+	start_button.SlowInit()
+	static_inventory += start_button
+	start_button.owner = REF(owner)
+
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
@@ -27,6 +35,8 @@
 	/// Do not instantiate if type matches this.
 	var/abstract_type = /atom/movable/screen/lobby
 	var/here
+	/// If true we will create this button every time the HUD is generated
+	var/always_create = TRUE
 
 ///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
@@ -95,7 +105,7 @@
 	highlighted = FALSE
 	update_appearance(UPDATE_ICON_STATE)
 
-/atom/movable/screen/lobby/button/update_icon_state(updates)
+/atom/movable/screen/lobby/button/update_icon_state()
 	if(!enabled)
 		icon_state = "[base_icon_state]_disabled"
 	else if(highlighted)
@@ -191,13 +201,20 @@
 		base_icon_state = "ready"
 		var/client/new_client = new_player.client
 		if(new_client)
+			var/highest_job = new_client.prefs.GetHighestJobPreference()
+			var/ready_message = "Readying up as '[new_client.prefs.get_enabled_character_names()]'"
+			if(length(highest_job))
+				ready_message += ", Highest occupation setting: [highest_job]"
+			to_chat(new_client, span_notice(ready_message))
 			if(!new_client.readied_store)
 				new_client.readied_store = new(new_player)
 			new_client.readied_store.ui_interact(new_player)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(interview_safety), new_player, "readied up"), 1 SECONDS, TIMER_UNIQUE)
+		SSstatpanels.add_job_estimation(new_player)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
+		SSstatpanels.remove_job_estimation(new_player)
 	update_appearance(UPDATE_ICON)
 
 ///Shown when the game has started
@@ -227,50 +244,8 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	if(isnull(new_player?.client))
 		return
-	if(!new_player.client?.fully_created)
-		to_chat(new_player, span_warning("Your client is still initializing, please wait a second..."))
-		return
 
-	if(!SSticker?.IsRoundInProgress())
-		to_chat(new_player, span_boldwarning("The round is either not ready, or has already finished..."))
-		return
-
-	if(new_player.client?.check_overwatch())
-		to_chat(new_player, span_warning("Please wait until your connection has been authenticated before joining."))
-		message_admins("[new_player.key] tried to use the Join button but failed the overwatch check.")
-		return
-
-	//Determines Relevent Population Cap
-	var/relevant_cap
-	var/hard_popcap = CONFIG_GET(number/hard_popcap)
-	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
-	if(hard_popcap && extreme_popcap)
-		relevant_cap = min(hard_popcap, extreme_popcap)
-	else
-		relevant_cap = max(hard_popcap, extreme_popcap)
-
-	//Allow admins and Patreon supporters to bypass the cap/queue
-	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || is_mentor(new_player.client)))
-		to_chat(new_player, span_notice("The server is currently overcap, but you are a(n) patreon/mentor/admin!"))
-	else if (SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap))
-		to_chat(new_player, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
-
-		var/queue_position = SSticker.queued_players.Find(new_player)
-		if(queue_position == 1)
-			to_chat(new_player, span_notice("You are next in line to join the game. You will be notified when a slot opens up."))
-		else if(queue_position)
-			to_chat(new_player, span_notice("There are [queue_position-1] players in front of you in the queue to join the game."))
-		else
-			SSticker.queued_players += new_player
-			to_chat(new_player, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
-		return
-
-	if(!LAZYACCESS(params2list(params), CTRL_CLICK))
-		GLOB.latejoin_menu.ui_interact(new_player)
-	else
-		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show, ahelp immediately!"))
-		GLOB.latejoin_menu.fallback_ui(new_player)
-
+	new_player.join_game(TRUE, params)
 
 /atom/movable/screen/lobby/button/join/proc/show_join_button()
 	SIGNAL_HANDLER
@@ -311,6 +286,38 @@
 	flick("[base_icon_state]_enabled", src)
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+
+/atom/movable/screen/lobby/button/tutorial
+	name = "Spawn in Tutorial Chamber."
+	screen_loc = "TOP, CENTER:-164"
+	icon = 'icons/hud/lobby/tutorial.dmi'
+	icon_state = "tutorial_disabled"
+	base_icon_state = "tutorial"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/tutorial/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	if(!usr.client || usr.client.interviewee)
+		return
+
+	var/mob/dead/new_player/new_player = hud.mymob
+	new_player.enter_tutorial()
+
+/atom/movable/screen/lobby/button/tutorial/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(SSticker.current_state > GAME_STATE_STARTUP)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(enable_tutorial))
+
+/atom/movable/screen/lobby/button/tutorial/proc/enable_tutorial()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+
 
 /atom/movable/screen/lobby/button/patreon_link
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -551,6 +558,8 @@
 	var/server_ip = "play.monkestation.com"
 	/// The port of this server.
 	var/server_port
+	/// Plexora ID of this server
+	var/server_id
 
 /atom/movable/screen/lobby/button/server/SlowInit(mapload)
 	. = ..()
@@ -558,15 +567,14 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/lobby/button/server/proc/is_available()
-	var/time_info = time2text(world.realtime, "DDD hh")
-	var/day = copytext(time_info, 1, 4)
-	var/hour = text2num(copytext(time_info, 5))
-	if(!should_be_up(day, hour))
-		return FALSE
-	return TRUE
+	if(!SSplexora.enabled)
+	  // Defaults to enabled since there's no other source for if its up or not.
+		return TRUE
 
-/atom/movable/screen/lobby/button/server/proc/should_be_up(day, hour)
-	return TRUE
+	if(SSplexora.current_server_id == server_id)
+		return TRUE
+
+	return SSplexora.up_servers[server_id]
 
 /atom/movable/screen/lobby/button/server/Click(location, control, params)
 	. = ..()
@@ -582,17 +590,11 @@
 //HRP MONKE - Monkeris
 /atom/movable/screen/lobby/button/server/hrp
 	icon = 'icons/hud/lobby/sister_server_buttons_large.dmi'
-	base_icon_state = "erisbutton_serverwip"
+	base_icon_state = "erisbutton"
 	screen_loc = "TOP:-46,CENTER:+173"
-	server_name = "CEV-ERIS (HRP)"
+	server_name = "CEV-ERIS (MRP/HRP)"
 	server_port = HRP_PORT
-
-/atom/movable/screen/lobby/button/server/hrp/should_be_up(day, hour)
-	return FALSE
-
-/atom/movable/screen/lobby/button/server/hrp/update_icon_state(updates)
-	. = ..()
-	icon_state = base_icon_state
+	server_id = PLEXORA_SERVERID_MONKERIS
 
 //MAIN MONKE (MEDIUM RARE)
 /atom/movable/screen/lobby/button/server/mrp
@@ -601,13 +603,15 @@
 	enabled = TRUE
 	server_name = "Medium-Rare Roleplay (MRP)"
 	server_port = MRP_PORT
+	server_id = PLEXORA_SERVERID_MRP
 
 //MRP 2 MONKE (MEDIUM WELL)
 /atom/movable/screen/lobby/button/server/mrp2
 	screen_loc = "TOP:-117,CENTER:+173"
 	base_icon_state = "mrp2"
-	server_name = "Medium-Well (MRP)"
+	server_name = "Monke's Paw (MRP)"
 	server_port = MRP2_PORT
+	server_id = PLEXORA_SERVERID_MONKESPAW
 
 //bottom button is "TOP:-140,CENTER:+177"
 //The Vanderlin Project
@@ -617,18 +621,8 @@
 	screen_loc = "TOP:-147,CENTER:+179"
 	server_name = "Vanderlin"
 	server_port = VANDERLIN_PORT
+	server_id = PLEXORA_SERVERID_VANDERLIN
 	layer = LOBBY_BACKGROUND_LAYER
-
-/atom/movable/screen/lobby/button/server/vanderlin/should_be_up(day, hour)
-	return TRUE
-/*
-	switch(day)
-		if(FRIDAY)
-			return (hour >= 15)
-		if(SATURDAY, SUNDAY)
-			return TRUE
-	return FALSE
-*/
 
 //Monke button
 /atom/movable/screen/lobby/button/ook
@@ -640,7 +634,7 @@
 /atom/movable/screen/lobby/button/ook/Click(location, control, params)
 	. = ..()
 	if(.)
-		SEND_SOUND(usr, 'monkestation/sound/misc/menumonkey.ogg')
+		SEND_SOUND(usr, 'sound/misc/menumonkey.ogg')
 
 /atom/movable/screen/lobby/overflow_alert
 	screen_loc = "TOP:-48,CENTER-2.7"
@@ -709,3 +703,21 @@
 	job_overlay = mutable_appearance(job_icon)
 	job_overlay.pixel_x = 8
 	job_overlay.pixel_y = 18
+
+/// LOCALHOST ONLY - Start Now button
+/atom/movable/screen/lobby/button/start_now
+	name = "Start Now (LOCALHOST ONLY)"
+	screen_loc = "TOP:-150,CENTER:-40"
+	icon = 'icons/hud/lobby/start_now.dmi'
+	icon_state = "start_now"
+	base_icon_state = "start_now"
+	always_create = FALSE
+
+/atom/movable/screen/lobby/button/start_now/Click(location, control, params)
+	. = ..()
+	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
+		return
+	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_splat.ogg', volume = 40))
+	SSticker.start_immediately = TRUE
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))

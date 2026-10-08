@@ -551,32 +551,41 @@
 	if(welded || operating)
 		return
 
-	if(density)
-		being_held_open = TRUE
-		user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
-		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
-		open()
-		if(QDELETED(user))
-			being_held_open = FALSE
-			return
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
-		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
-		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
-		handle_held_open_adjacency(user)
-	else
+	if(apply_feeble_delay(user, density ? "open" : "close"))
+		return
+
+	if(!density)
 		close()
+		return
+
+	being_held_open = TRUE
+	user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
+	COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
+	open()
+
+	if(QDELETED(user))
+		being_held_open = FALSE
+		return
+
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
+	RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
+	handle_held_open_adjacency(user)
 
 /// A simple toggle for firedoors between on and off
 /obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	if(welded || operating)
 		return
 
-	if(density)
-		open()
-		if(active)
-			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
-	else
-		close()
+	if(apply_feeble_delay(user, density ? "open" : "close"))
+		return
+
+	if(!density)
+		return
+
+	open()
+	if(active)
+		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
 	SIGNAL_HANDLER
@@ -591,6 +600,20 @@
 	UnregisterSignal(user, COMSIG_QDELETING)
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
+
+/obj/machinery/door/firedoor/proc/apply_feeble_delay(mob/user, action)
+	if(!HAS_TRAIT(user, TRAIT_FEEBLE))
+		return FALSE
+	if(!feeble_callback())
+		return TRUE
+	user.visible_message(span_notice("[user] struggles to [action] the firelock."), \
+		span_notice("You struggle to [action] the firelock."))
+	return !do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/door/firedoor, feeble_callback)))
+
+/obj/machinery/door/firedoor/proc/feeble_callback()
+	if(welded || operating)
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -660,7 +683,7 @@
 		INVOKE_ASYNC(src, PROC_REF(open))
 		return
 
-/obj/machinery/door/firedoor/open()
+/obj/machinery/door/firedoor/open(forced = DEFAULT_DOOR_CHECKS)
 	if(welded)
 		return
 	var/old_activity = active
@@ -706,6 +729,7 @@
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
+	auto_dir_align = FALSE
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
@@ -795,7 +819,7 @@
 		if(CONSTRUCTION_PANEL_OPEN)
 			. += span_notice("It is <i>unbolted</i> from the floor. The circuit could be removed with a <b>crowbar</b>.")
 			if(!reinforced)
-				. += span_notice("It could be reinforced with plasteel.")
+				. += span_notice("It could be reinforced with metal.")
 		if(CONSTRUCTION_NO_CIRCUIT)
 			. += span_notice("There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .")
 
@@ -841,24 +865,24 @@
 					new /obj/machinery/door/firedoor(get_turf(src))
 				qdel(src)
 				return
-			if(istype(attacking_object, /obj/item/stack/sheet/plasteel))
-				var/obj/item/stack/sheet/plasteel/plasteel_sheet = attacking_object
+			if(istype(attacking_object, /obj/item/stack/sheet/iron))
+				var/obj/item/stack/sheet/iron/iron_sheet = attacking_object
 				if(reinforced)
 					to_chat(user, span_warning("[src] is already reinforced."))
 					return
-				if(plasteel_sheet.get_amount() < 2)
-					to_chat(user, span_warning("You need more plasteel to reinforce [src]."))
+				if(iron_sheet.get_amount() < 2)
+					to_chat(user, span_warning("You need more metal to reinforce [src]."))
 					return
 				user.visible_message(span_notice("[user] begins reinforcing [src]..."), \
 					span_notice("You begin reinforcing [src]..."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(do_after(user, DEFAULT_STEP_TIME, target = src))
-					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || plasteel_sheet.get_amount() < 2 || !plasteel_sheet)
+					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || iron_sheet.get_amount() < 2 || !iron_sheet)
 						return
 					user.visible_message(span_notice("[user] reinforces [src]."), \
 						span_notice("You reinforce [src]."))
 					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-					plasteel_sheet.use(2)
+					iron_sheet.use(2)
 					reinforced = 1
 				return
 		if(CONSTRUCTION_NO_CIRCUIT)
@@ -890,7 +914,7 @@
 					var/turf/tagetloc = get_turf(src)
 					new /obj/item/stack/sheet/iron(tagetloc, 3)
 					if(reinforced)
-						new /obj/item/stack/sheet/plasteel(tagetloc, 2)
+						new /obj/item/stack/sheet/iron(tagetloc, 2)
 					qdel(src)
 				return
 			if(istype(attacking_object, /obj/item/electroadaptive_pseudocircuit))

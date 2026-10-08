@@ -28,10 +28,16 @@
 /obj/item/gun/ballistic/atlatl/proc/drop_spear()
 	if(chambered)
 		chambered.forceMove(drop_location())
-		magazine.get_round(keep = FALSE)
+		magazine.get_round()
 		chambered = null
 	update_appearance()
 
+/obj/item/gun/ballistic/atlatl/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
+	if(chambered || !magazine)
+		return
+	if(magazine.ammo_count())
+		chambered = magazine.get_round()
+		chambered.forceMove(src)
 
 /obj/item/gun/ballistic/atlatl/equipped(mob/user, slot, initial)
 	. = ..()
@@ -40,59 +46,54 @@
 		drop_spear()
 		update_appearance()
 
-/obj/item/gun/ballistic/atlatl/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	if(!chambered)
-		return
-	. = ..() //fires, removing the spear
-	update_appearance()
-
 /obj/item/gun/ballistic/atlatl/shoot_with_empty_chamber(mob/living/user)
 	return //no clicking sounds please
 
-
 /obj/item/ammo_box/magazine/internal/atlatl
 	name = "notch"
-	ammo_type = /obj/item/ammo_casing/caseless/thrownspear
+	ammo_type = /obj/item/ammo_casing/thrownspear
 	max_ammo = 1
 	start_empty = TRUE
 	caliber = CALIBER_SPEAR
 
-/obj/item/ammo_casing/caseless/thrownspear
+/obj/item/ammo_casing/thrownspear
 	name = "throwing spear"
 	desc = "A light spear made for throwing from an atlatl"
 	icon = 'icons/obj/weapons/guns/atlatl/thrownspear.dmi'
 	icon_state = "thrownspear"
+	base_icon_state = "thrownspear"
 	custom_materials = "wood"
-	inhand_icon_state = null
-	projectile_type = /obj/projectile/bullet/reusable/thrownspear
+	projectile_type = /obj/projectile/bullet/thrownspear
 	flags_1 = NONE
 	throwforce = 25
-	w_class = WEIGHT_CLASS_BULKY
 	firing_effect_type = null
-	caliber = CALIBER_SPEAR
-	heavy_metal = FALSE
+	caliber =  CALIBER_SPEAR
 
-/obj/item/ammo_casing/caseless/thrownspear/Initialize(mapload)
+/obj/item/ammo_casing/thrownspear/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/element/envenomable_casing)
+	AddElement(/datum/element/envenomable_casing)
+	AddElement(/datum/element/caseless, TRUE)
 
+/obj/item/ammo_casing/thrownspear/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
 
-/obj/projectile/bullet/reusable/thrownspear
+/obj/projectile/bullet/thrownspear
 	name = "thrown spear"
 	desc = "Beasts be felled!"
 	icon = 'icons/obj/weapons/guns/atlatl/thrownspear.dmi'
 	icon_state = "spear_projectile"
-	ammo_type = /obj/item/ammo_casing/caseless/thrownspear
 	damage = 50
 	speed = 1.5
 	range = 20
 	wound_bonus = -20
+	shrapnel_type = null
 	/// How much the damage is multiplied by when we hit a mob with the correct biotype
 	var/biotype_damage_multiplier = 3
 	/// What biotype we look for
 	var/biotype_we_look_for = MOB_BEAST
 
-/obj/projectile/bullet/reusable/thrownspear/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/bullet/thrownspear/on_hit(atom/target, blocked, pierce_hit)
 	if(ismineralturf(target))
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(firer, FALSE)
@@ -106,7 +107,6 @@
 		damage *= biotype_damage_multiplier
 	return ..()
 
-
 /obj/item/storage/bag/spearquiver
 	name = "large quiver"
 	desc = "A large quiver to hold a few spears for your atlatl"
@@ -117,7 +117,7 @@
 	inhand_icon_state = null
 	worn_icon_state = "spearquiver"
 	/// type of arrow the quiver should hold
-	var/arrow_path = /obj/item/ammo_casing/caseless/thrownspear
+	var/arrow_path = /obj/item/ammo_casing/thrownspear
 
 /obj/item/storage/bag/spearquiver/Initialize(mapload)
 	. = ..()
@@ -125,7 +125,7 @@
 	atom_storage.max_slots = 5
 	atom_storage.max_total_storage = 100
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/caseless/thrownspear,
+		/obj/item/ammo_casing/thrownspear,
 	))
 
 /obj/item/storage/bag/spearquiver/PopulateContents()

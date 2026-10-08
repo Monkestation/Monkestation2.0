@@ -655,14 +655,14 @@
 	update_appearance()
 	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
 	///Type of cork to fire away
-	var/obj/projectile/bullet/reusable/cork_to_fire = sabraged ? /obj/projectile/bullet/reusable/champagne_cork/sabrage : /obj/projectile/bullet/reusable/champagne_cork
+	var/obj/projectile/bullet/cork_to_fire = sabraged ? /obj/projectile/bullet/champagne_cork/sabrage : /obj/projectile/bullet/champagne_cork
 	///Our resulting cork projectile
-	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (drop_location())
+	var/obj/projectile/bullet/champagne_cork/popped_cork = new cork_to_fire (drop_location())
 	popped_cork.firer = user
 	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
 
-/obj/projectile/bullet/reusable/champagne_cork
+/obj/projectile/bullet/champagne_cork
 	name = "champagne cork"
 	icon = 'icons/obj/drinks/drink_effects.dmi'
 	icon_state = "champagne_cork"
@@ -676,14 +676,18 @@
 	ricochet_incidence_leeway = 0
 	range = 7
 	knockdown = 2 SECONDS
-	ammo_type = /obj/item/trash/champagne_cork
+	var/drop_type = /obj/item/trash/champagne_cork
 
-/obj/projectile/bullet/reusable/champagne_cork/sabrage
+/obj/projectile/bullet/champagne_cork/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, drop_type)
+
+/obj/projectile/bullet/champagne_cork/sabrage
 	icon_state = "champagne_cork_sabrage"
 	damage = 12
 	ricochets_max = 2 //bit heavier
 	range = 6
-	ammo_type = /obj/item/trash/champagne_cork/sabrage
+	drop_type = /obj/item/trash/champagne_cork/sabrage
 
 /obj/item/trash/champagne_cork
 	name = "champagne cork"
@@ -749,6 +753,27 @@
 	desc = "Live the breezy life with Breezy Shoals, made with only the *finest Caribbean rum."
 	icon_state = "coconut_rum_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/aperitivo
+	name = "Camillo Aperitivo Rosso"
+	desc = "The bottle that led to the creation of the modern Camillo Group beverage conglomerate. Despite what you might expect, there's a good chance that whoever makes your favorite liquor is at least in part owned by Camillo."
+	icon_state = "aperitivo_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/aperitivo = 100)
+	drink_type = ALCOHOL
+
+/obj/item/reagent_containers/cup/glass/bottle/herbal_liqueur
+	name = "Bellarmine D.O.P Herbal Liqueur"
+	desc = "An almost millenia old herbal liqueur made from a secret recipe passed down over generations of monks. It's not great to know that the herbs and spices used in this are a better-kept secret than the codes to Nanotrasen's nuclear arsenal."
+	icon_state = "herbal_liqueur_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/herbal_liqueur = 100)
+	drink_type = ALCOHOL
+
+/obj/item/reagent_containers/cup/glass/bottle/maraschino
+	name = "Dalmazia Originale Maraschino Liqueur"
+	desc = "A small note on the back of the bottle instructs all customers who complain about a lack of cherry flavor to direct their concerns to what appears to be a defunct phone number."
+	icon_state = "maraschino_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/maraschino = 100)
+	drink_type = ALCOHOL
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/cup/glass/bottle/molotov

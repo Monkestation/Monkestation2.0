@@ -8,7 +8,6 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	blood_overlay_type = "mask"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
@@ -28,9 +27,10 @@
 	if(body_parts_covered & HEAD)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-
-/obj/item/clothing/mask/appears_bloody()
-	return ..() && (body_parts_covered & HEAD)
+		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "maskblood")
+			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+			. += blood_overlay
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -58,8 +58,10 @@
 		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
+
 	if(!istype(user))
 		return
+
 	// Update the mob if it's wearing the mask.
 	if(user.wear_mask == src)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)

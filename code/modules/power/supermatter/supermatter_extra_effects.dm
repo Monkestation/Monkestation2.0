@@ -148,6 +148,10 @@
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
 	for(var/atom/movable/movable_atom in orange(pull_range,center))
+		var/turf/target_step = get_step_towards(movable_atom, center)
+		var/turf/movable_turf = get_turf(movable_atom)
+		if(!target_step || !TURFS_CAN_SHARE(movable_turf, target_step)) // do not pull thru holofans
+			continue
 		if((movable_atom.anchored || movable_atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
 			if(istype(movable_atom, /obj/structure/closet))
 				var/obj/structure/closet/closet = movable_atom

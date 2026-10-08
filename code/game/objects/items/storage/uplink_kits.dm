@@ -10,6 +10,7 @@
 #define KIT_SNIPER "sniper"
 #define KIT_NUKEOPS_METAGAME "metaops"
 #define KIT_LORD_SINGULOTH "lordsingulo"
+#define KIT_REVOLUTIONARY "revolutionary"
 
 #define KIT_JAMES_BOND "bond"
 #define KIT_NINJA "ninja"
@@ -19,6 +20,14 @@
 #define KIT_BEES "bee"
 #define KIT_MR_FREEZE "mr_freeze"
 #define KIT_TRAITOR_2006 "ancient"
+#define KIT_SAM_FISHER "sam_fisher"
+#define KIT_PROP_HUNT "prop_hunt"
+
+#define KIT_AMATEUR_ASSASSIN "amateur_assassin"
+#define KIT_INTERN_INFILTRATOR "intern_infiltrator"
+#define KIT_BEGINNER_BOMBER "beginner_bomber"
+#define KIT_STARTER_SABOTEUR "starter_saboteur"
+#define KIT_ROOKIE_RAIDER "rookie_raider"
 
 /// last audited december 2022
 /obj/item/storage/box/syndicate
@@ -35,7 +44,8 @@
 		KIT_IMPLANTS = 1,
 		KIT_HACKER = 3,
 		KIT_SNIPER = 1,
-		KIT_NUKEOPS_METAGAME = 1
+		KIT_NUKEOPS_METAGAME = 1,
+		KIT_REVOLUTIONARY = 2,
 		)))
 		if(KIT_RECON)
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
@@ -55,7 +65,7 @@
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
-			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
+			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //I'll count this as 2 tc
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
@@ -67,7 +77,7 @@
 			new /obj/item/healthanalyzer/rad_laser(src) // 3 tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/soap/syndie(src) // 1 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/jammer(src) // 5 tc
 
@@ -94,7 +104,7 @@
 
 		if(KIT_MURDER)
 			new /obj/item/melee/energy/sword/saber(src) // 8 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
@@ -116,7 +126,7 @@
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 
 		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
@@ -146,14 +156,14 @@
 		if(KIT_SNIPER) //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/rifle/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src) // 5 tc
-			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/glasses/thermal/chameleon(src) // 4 tc
 			new /obj/item/clothing/gloves/latex/nitrile(src) // ~ 1 tc for outfit
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
 			new /obj/item/clothing/neck/tie/red/hitman(src)
 
 		if(KIT_NUKEOPS_METAGAME)
-			new /obj/item/mod/control/pre_equipped/nuclear(src) // 8 tc
+			new /obj/item/mod/control/pre_equipped/nuclear/unrestricted(src) // 8 tc
 			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
@@ -162,6 +172,18 @@
 			new /obj/item/grenade/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
+
+		if(KIT_REVOLUTIONARY)
+			new /obj/item/healthanalyzer/rad_laser(src) // 3 TC
+			new /obj/item/assembly/flash/hypnotic(src) // 7 TC
+			new /obj/item/storage/pill_bottle/lsd(src) // ~1 TC
+			new /obj/item/pen/sleepy(src) // 4 TC
+			new /obj/item/gun/ballistic/revolver/nagant(src) // 13 TC comparable to 357. revolvers
+			new /obj/item/megaphone(src)
+			new /obj/item/bedsheet/rev(src)
+			new /obj/item/clothing/suit/armor/vest/russian_coat(src)
+			new /obj/item/clothing/head/helmet/rus_ushanka(src)
+			new /obj/item/storage/box/syndie_kit/poster_box(src)
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pick_weight(list(
@@ -172,7 +194,9 @@
 		KIT_MAD_SCIENTIST = 2,
 		KIT_BEES = 1,
 		KIT_MR_FREEZE = 2,
-		KIT_TRAITOR_2006 = 1
+		KIT_TRAITOR_2006 = 1,
+		KIT_SAM_FISHER = 1,
+		KIT_PROP_HUNT = 1,
 		)))
 		if(KIT_JAMES_BOND)
 			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 tc
@@ -181,7 +205,7 @@
 			new /obj/item/ammo_box/magazine/m9mm(src)
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 			new /obj/item/clothing/under/chameleon(src) // 1 tc
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
+			new /obj/item/reagent_containers/medipen/stimulants(src) // 5 tc
 			new /obj/item/reagent_containers/cup/rag(src)
 			new /obj/item/implanter/freedom(src) // 5 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
@@ -191,7 +215,7 @@
 
 		if(KIT_NINJA)
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
+			new /obj/item/reagent_containers/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
 			new /obj/item/storage/belt/chameleon(src) // worth some fraction of a tc
@@ -262,8 +286,25 @@
 			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
 			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
 
-		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
+		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire uplink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
+
+		if(KIT_SAM_FISHER)
+			new /obj/item/clothing/under/syndicate/combat(src)
+			new /obj/item/clothing/suit/armor/vest/marine/pmc(src) //The armor kit is comparable to the infiltrator, 6 TC
+			new /obj/item/clothing/head/helmet/marine/pmc(src)
+			new /obj/item/clothing/mask/gas/sechailer(src)
+			new /obj/item/clothing/glasses/night(src) // 3~ TC
+			new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
+			new /obj/item/clothing/shoes/jackboots(src)
+			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC
+
+		if(KIT_PROP_HUNT)
+			new /obj/item/chameleon(src) // 7 TC
+			new /obj/item/card/emag/doorjack(src) // 3 TC
+			new /obj/item/storage/box/syndie_kit/imp_stealth(src) //8 TC
+			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 TC
+			new /obj/item/clothing/glasses/thermal(src) // 4 TC
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
@@ -276,6 +317,103 @@
 	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
 	new /obj/item/implanter/freedom(src) // 5 tc
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
+
+/obj/item/storage/belt/military/assault/fisher
+
+/obj/item/storage/belt/military/assault/fisher/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 7 TC
+	new /obj/item/suppressor(src) // 3 TC
+	new /obj/item/ammo_box/magazine/m10mm(src) // 1 TC
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/gun/energy/recharge/fisher(src) // Acquirable through black market, shit utility item 1 TC
+	new /obj/item/card/emag/doorjack(src) // 3 TC
+	new /obj/item/knife/combat(src) //comparable to the e-dagger, 2 TC
+
+/obj/item/storage/box/syndie_kit/mini_kit
+	name = "Syndicate Mini-Kit"
+	desc = "A tiny, suspicious-looking box. Contains a starter set of basic tools."
+	icon_state = "mini_syndiebox"
+	illustration = null
+
+/obj/item/paper/selfdestruct/mini_kit_guide
+	name = "Syndicate Field Note (Mini-Kit)"
+	desc = "A hastily written note. Seems important though, that's why it's red."
+	color = "#b94030"
+	armed = TRUE
+	default_raw_text ={"
+<br><B>Syndicate Operative Field Note</B>
+<br>
+<br><B>NOTICE:</B> This message will self-incinerate in <I>20 seconds</I> after being opened.
+<br>
+<br><B>Kit Contents:</B> Each Mini-Kit contains a randomized loadout. Open the box to inspect your tools and adapt accordingly.
+<br>
+<br><B>Using Your Uplink:</B> Your telecrystal uplink is your lifeline. Spend wisely. This kit saves TC to give you flexibility. Keep it locked and hidden when not in use.
+<br>
+<br><B>Disposal:</B> Once you've taken all items from the kit, hold the empty box and press <B>Z</B> (or your 'Activate Item in Hand' key). The box will fold into an inconspicuous piece of cardboard.
+<br>
+<br>This note will auto-incinerate momentarily.
+<br>
+<br><I>Failure is not an option. Succeed or die trying.</I>
+	"}
+
+/obj/item/paper/selfdestruct/mini_kit_guide/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/item/storage/box/syndie_kit/mini_kit/PopulateContents()
+	new /obj/item/paper/selfdestruct/mini_kit_guide(src)
+	switch (pick_weight(list(
+		KIT_AMATEUR_ASSASSIN = 3,
+		KIT_INTERN_INFILTRATOR = 3,
+		KIT_BEGINNER_BOMBER = 2,
+		KIT_STARTER_SABOTEUR = 3,
+		KIT_ROOKIE_RAIDER = 2
+		)))
+		if(KIT_AMATEUR_ASSASSIN)
+			new /obj/item/storage/pill_bottle/syndicate/poison(src)
+			new /obj/item/pen/sleepy(src)
+			new /obj/item/clothing/gloves/latex/nitrile(src)
+			new /obj/item/soap/syndie(src)
+			new /obj/item/switchblade(src)
+			new /obj/item/restraints/handcuffs(src)
+			new /obj/item/stack/sticky_tape(src)
+			new /obj/item/clothing/glasses/blindfold(src)
+			new /obj/item/clothing/glasses/thermal(src)
+
+		if(KIT_INTERN_INFILTRATOR)
+			new /obj/item/storage/toolbox/syndicate(src)
+			new /obj/item/storage/box/syndie_kit/chameleon(src)
+			new /obj/item/encryptionkey/syndicate(src)
+			new /obj/item/card/id/advanced/chameleon(src)
+			new /obj/item/implanter/uplink(src)
+
+		if(KIT_BEGINNER_BOMBER)
+			new /obj/item/grenade/syndieminibomb(src)
+			new /obj/item/grenade/c4/x4(src)
+			new /obj/item/grenade/c4/x4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/grenade/frag(src)
+
+		if(KIT_STARTER_SABOTEUR)
+			new /obj/item/card/emag(src)
+			new /obj/item/jammer(src)
+			new /obj/item/crowbar/power/syndicate(src)
+			new /obj/item/clothing/mask/balaclava(src)
+			new /obj/item/multitool/ai_detect(src)
+
+		if(KIT_ROOKIE_RAIDER)
+			new /obj/item/gun/ballistic/automatic/pistol/sol/evil(src)
+			new /obj/item/storage/box/syndie_kit/weapons_auth(src)
+			new /obj/item/ammo_box/magazine/c35sol_pistol(src)
+			new /obj/item/reagent_containers/medipen/stimulants(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src)
+			new /obj/item/clothing/suit/armor/vest(src)
+			new /obj/item/ammo_box/c35sol(src)
+
+	return
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"
@@ -414,26 +552,34 @@
 /obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
 	new /obj/item/implanter/radio/syndicate(src)
 
+/obj/item/storage/box/syndie_kit/plasmaman
+	name = "boxed badass plasmaman outfit"
+	desc = "A sleek, sturdy box used to hold a \"tactical\" plasmaman outfit."
+	illustration = "syndiesuit"
+
+/obj/item/storage/box/syndie_kit/plasmaman/PopulateContents()
+	new /obj/item/clothing/under/plasmaman/syndicate(src)
+	new /obj/item/clothing/head/helmet/space/plasmaman/syndie(src)
+	new /obj/item/clothing/gloves/combat(src)
+
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
-	desc = "A sleek, sturdy box used to hold an emergency spacesuit."
+	desc = "A sleek, sturdy box used to hold an emergency spacesuit and a jetpack harness."
 	illustration = "syndiesuit"
 
 /obj/item/storage/box/syndie_kit/space/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
+	atom_storage.set_holdable(list(
+		/obj/item/clothing/suit/space/syndicate,
+		/obj/item/clothing/head/helmet/space/syndicate,
+		/obj/item/tank/jetpack/harness,
+	))
 
-//MONKESTATION EDIT START: return to the classic red suit
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	// var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets) //leaving this here for now
-	// new spess_suit(src) // Above allows me to get the helmet from a variable on the object
-	// var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
-	// new spess_helmet(src) // 4 TC for the space gear
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
-	new /obj/item/tank/jetpack/oxygen(src)
-//MONKESTATION EDIT STOP
+	new /obj/item/tank/jetpack/harness(src)
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
@@ -442,6 +588,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
+
+/obj/item/storage/box/syndie_kit/smoke
+	name = "smoke kit"
+
+/obj/item/storage/box/syndie_kit/smoke/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/smokebomb(src)
+	new /obj/item/implanter/smoke(src)
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
@@ -456,7 +610,6 @@
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
 	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
-	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
 	new /obj/item/reagent_containers/cup/bottle/histamine(src)
 	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
 	new /obj/item/reagent_containers/cup/bottle/pancuronium(src)
@@ -492,7 +645,7 @@
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
 	new /obj/item/grenade/chem_grenade/large/tuberculosis(src) // Monkestation Edit: Large grenade
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+		new /obj/item/reagent_containers/medipen/tuberculosiscure(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 
@@ -538,6 +691,11 @@
 /obj/item/storage/box/syndie_kit/ez_clean/PopulateContents()
 	for(var/i in 1 to 3)
 		new/obj/item/grenade/chem_grenade/ez_clean(src)
+
+/obj/item/storage/box/syndie_kit/mulligan/PopulateContents()
+	. = ..()
+	new /obj/item/reagent_containers/syringe/mulligan(src)
+	new /obj/item/fake_identity_kit(src)
 
 /obj/item/storage/box/hug/reverse_revolver/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/reverse(src)
@@ -796,6 +954,305 @@
 		/obj/item/food/grown/apple = 1,
 	), src)
 
+/obj/item/storage/box/syndicate/horse_box
+	name = "A pony box"
+	desc = "This is a set containing a syndicate pony cube and an apple, for the best cowboys in the wild station! Don't make an apple pie!"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/horse_box/PopulateContents()
+	new /obj/item/food/monkeycube/dangerous_horse(src)
+	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
+	new /obj/item/food/grown/apple(src)
+
+#define KIT_ITEM_CATEGORY_SUPPORT "support"
+#define KIT_ITEM_CATEGORY_WEAPONS "weapons"
+#define KIT_ITEM_CATEGORY_MISC "misc"
+
+/obj/item/storage/box/syndie_kit/contractor_loadout
+	name = "Standard Loadout"
+	desc = "Supplied to Syndicate contractors, providing their specialised MODsuit and chameleon uniform."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndie_kit/contractor_loadout/PopulateContents()
+	new /obj/item/mod/control/pre_equipped/contractor(src)
+	new /obj/item/storage/box/syndie_kit/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/card/id/advanced/chameleon(src)
+	new /obj/item/lighter(src)
+	new /obj/item/jammer(src)
+
+/obj/item/storage/box/syndie_kit/contract_kit/PopulateContents()
+	new /obj/item/storage/box/syndie_kit/contractor_loadout(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
+
+	// You get one item from each sub list
+	var/list/item_list = list(
+		KIT_ITEM_CATEGORY_SUPPORT = list(
+			/obj/item/pen/sleepy,
+			/obj/item/storage/medkit/tactical,
+			/obj/item/pen/sleepy,
+			/obj/item/gun/syringe/syndicate,
+			/obj/item/storage/backpack/duffelbag/syndie/x4,
+			/obj/item/clothing/shoes/chameleon/noslip,
+			/obj/item/clothing/glasses/thermal/chameleon,
+			/obj/item/storage/box/syndie_kit/imp_freedom,
+			/obj/item/reagent_containers/medipen/stimulants,
+			/obj/item/card/emag/doorjack,
+		),
+
+		KIT_ITEM_CATEGORY_WEAPONS = list(
+			/obj/item/melee/powerfist, //over value but its never used
+			/obj/item/storage/box/syndie_kit/origami_bundle,
+			/obj/item/clothing/gloves/krav_maga/combatglovesplus,
+			/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+			/obj/item/storage/box/syndie_kit/throwing_weapons,
+			/obj/item/storage/box/syndie_kit/chemical, //technically over value but it cant be used on its own
+			/obj/item/autosurgeon/syndicate/anti_stun, //way over value but you dont get a real weapon, might have to remove this one
+		),
+
+		KIT_ITEM_CATEGORY_MISC = list(
+			/obj/item/syndie_glue,
+			/obj/item/slimepotion/slime/sentience/nuclear,
+			/obj/item/storage/box/syndie_kit/imp_uplink,
+			/obj/item/grenade/clusterbuster/soap,
+			/obj/item/flashlight/emp,
+			/obj/item/encryptionkey/syndicate,
+			/obj/item/multitool/ai_detect,
+			/obj/item/storage/toolbox/syndicate,
+			/obj/item/card/emag,
+			/obj/item/ai_module/syndicate,
+		)
+	)
+
+	var/list/items_to_give = list()
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_SUPPORT])] = 1
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_WEAPONS])] = 1
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_MISC])] = 1
+	generate_items_inside(items_to_give, src)
+
+	// Paper guide
+	new /obj/item/paper/contractor_guide(src)
+	new /obj/item/pinpointer/area_pinpointer(src)
+
+/obj/item/storage/box/syndie_kit/contract_kit/midround/PopulateContents()
+	// You get one item from each sub list
+	var/list/item_list = list(
+		KIT_ITEM_CATEGORY_SUPPORT = list(
+			/obj/item/pen/sleepy,
+			/obj/item/storage/medkit/tactical,
+			/obj/item/pen/sleepy,
+			/obj/item/gun/syringe/syndicate,
+			/obj/item/storage/backpack/duffelbag/syndie/x4,
+			/obj/item/clothing/shoes/chameleon/noslip,
+			/obj/item/clothing/glasses/thermal/chameleon,
+			/obj/item/storage/box/syndie_kit/imp_freedom,
+			/obj/item/reagent_containers/medipen/stimulants,
+			/obj/item/card/emag/doorjack,
+		),
+
+		KIT_ITEM_CATEGORY_WEAPONS = list(
+			/obj/item/melee/powerfist, //over value but its never used
+			/obj/item/storage/box/syndie_kit/origami_bundle,
+			/obj/item/clothing/gloves/krav_maga/combatglovesplus,
+			/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+			/obj/item/storage/box/syndie_kit/throwing_weapons,
+			/obj/item/storage/box/syndie_kit/chemical, //technically over value but it cant be used on its own
+			/obj/item/autosurgeon/syndicate/anti_stun, //way over value but you dont get a real weapon, might have to remove this one
+		),
+
+		KIT_ITEM_CATEGORY_MISC = list(
+			/obj/item/syndie_glue,
+			/obj/item/slimepotion/slime/sentience/nuclear,
+			/obj/item/storage/box/syndie_kit/imp_uplink,
+			/obj/item/grenade/clusterbuster/soap,
+			/obj/item/flashlight/emp,
+			/obj/item/encryptionkey/syndicate,
+			/obj/item/multitool/ai_detect,
+			/obj/item/storage/toolbox/syndicate,
+			/obj/item/card/emag,
+			/obj/item/ai_module/syndicate,
+		)
+	)
+
+	var/list/items_to_give = list()
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_SUPPORT])] = 1
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_WEAPONS])] = 1
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_MISC])] = 1
+	generate_items_inside(items_to_give, src)
+
+	// Paper guide
+	new /obj/item/paper/contractor_guide/midround(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+	new /obj/item/jammer(src)
+
+#undef KIT_ITEM_CATEGORY_SUPPORT
+#undef KIT_ITEM_CATEGORY_WEAPONS
+#undef KIT_ITEM_CATEGORY_MISC
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear
+	name = "hardlight spear implant box"
+	desc = "Remember your promise."
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/PopulateContents()
+	new /obj/item/implanter/hard_spear(src)
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle
+	name = "hardlight spear implant bundle"
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/bundle/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/implanter/hard_spear(src)
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/max
+	name = "commanding hardlight spear implant box"
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/max/PopulateContents()
+	new /obj/item/implanter/hard_spear/max(src)
+
+/obj/item/storage/box/syndimaid
+	name = "Syndicate maid outfit"
+	desc = "A box containing a 'tactical' and 'practical' maid outfit."
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/syndimaid/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/clothing/head/maidheadband/syndicate = 1,
+		/obj/item/clothing/under/syndicate/skirt/maid = 1,
+		/obj/item/clothing/gloves/combat/maid = 1,
+		/obj/item/clothing/accessory/maidapron/syndicate = 1,
+		/obj/item/clothing/shoes/heels/syndicate = 1,
+	)
+	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/syndibunny
+	name = "Syndicate bunny assassin outfit"
+	desc = "A box containing a high tech specialized syndicate... bunny suit?"
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/syndibunny/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/clothing/head/playbunnyears/syndicate = 1,
+		/obj/item/clothing/under/syndicate/syndibunny = 1,
+		/obj/item/clothing/suit/jacket/tailcoat/syndicate = 1,
+		/obj/item/clothing/neck/tie/bunnytie/syndicate = 1,
+		/obj/item/clothing/shoes/heels/syndicate = 1,
+	)
+	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/clonearmy
+	name = "Syndicate clone army kit"
+	desc = "A box containing everything you need to make a clone army. The disk inside cunningly disguised as a DNA data disk is used to give all clones a directive they must follow."
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/clonearmy/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/disk/clonearmy = 1,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/sheet/glass = 4,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/circuitboard/machine/clonepod/experimental = 1,
+		/obj/item/circuitboard/machine/clonescanner = 1,
+		/obj/item/circuitboard/computer/cloning = 1,
+		/obj/item/stock_parts/manipulator/femto = 2, // The syndicate is so cool they gave you tier four parts. RIP my joke about tier 2 parts.
+		/obj/item/stock_parts/scanning_module/triphasic = 3,
+		/obj/item/stock_parts/micro_laser/quadultra = 1,
+		/obj/item/stock_parts/matter_bin/bluespace = 1,
+		/obj/item/wrench = 1,
+		/obj/item/screwdriver/nuke = 1,
+		/obj/item/multitool = 1, // For those who want space between the cloning console and pod.
+		/obj/item/language_manual/codespeak_manual/unlimited = 1,
+		/obj/item/implanter/radio/syndicate = 1, // So you can communicate with your clones, instead of having random evil clones roaming the halls with no direction.
+		/obj/item/paper/clone_guide = 1,
+	)
+	generate_items_inside(items_inside, src)
+
+/obj/item/paper/clone_guide
+	name = "Clone Army User Manual" // Start and end shamelessly copied from contractor guide. I am not a good writer. This is also ugly.
+	default_raw_text = {"Welcome agent, thank you for purchasing the clone army kit.<br>\
+			<ul>\
+			<li>The "DNA data disk" inside is actually a sophisticated device that can be used to hijack an experimental cloner, giving the clones a directive they must follow.</li>\
+			<li>In order to use this disk, use it in your hand, and input your desired directive, before hitting the cloner with the disk. You can input and upload a new objective to replace the old one if you ever feel like it, the disk is infinitely reusable.</li>\
+			<li>The clones will be given basic access, including syndicate, maintenance, genetics, and mineral storage. They will also be given an implanted syndicate radio and automatically taught codespeak. Syndicate turrets and the like will recognize the clones as a member of the syndicate.</li>\
+			<li>Be wary, the clones will have obviously evil red eyes, which will alert anyone who sees them with no eye covering that something is wrong with them. Also, don't try to use this on newer cloning models, Nanotrasen fixed the vulnerability that lets the disk work in their newer models.</li>\
+			<li>When hacked, a cloner will begin to operate slower, and anyone who examines it closely will be able to see that the cloner is malfunctioning.</li>\
+			<li>A tip, any activated mutations in the person being scanned, will be present in the clones produced, allowing you to give the clones some intrinsic powers. Make sure to use activators, not mutators.</li>\
+			</ul>
+			Good luck agent. You can burn this document."}
+
+/obj/item/storage/box/syndie_kit/shit_smg_bundle
+	desc = "A box containing a surplus space soviet Plastikov and two magazines. Perfect for henchmen."
+
+/obj/item/storage/box/syndie_kit/shit_smg_bundle/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/plastikov(src)
+	new /obj/item/ammo_box/magazine/plastikov9mm(src)
+
+/obj/item/storage/box/syndie_kit/khan_package
+	name = "Tunel Khans Khare Paccage"
+	desc = "It's a syndicate box written all over with gray crayon."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndie_kit/khan_package/PopulateContents()
+	new /obj/item/book/granter/martial/the_tunnel_arts(src)
+	new /obj/item/clothing/suit/jacket/det_suit/khan(src)
+
+/obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/razorwire/l(src)
+
+/obj/item/storage/box/syndie_kit/esword/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/esword(src)
+
+/obj/item/storage/box/syndie_kit/deepvien/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/deepvien(src)
+	new /obj/item/autosurgeon/syndicate/deepvien/l(src)
+
+/obj/item/storage/box/syndie_kit/xray
+	name = "X-Ray Mutation Kit"
+	desc = "A box with a singular syndicate-grade X-Ray mutator and 3 oculine medipens."
+
+/obj/item/storage/box/syndie_kit/xray/PopulateContents()
+	new /obj/item/dnainjector/syndicate_xray(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
+
+/obj/item/storage/box/syndie_kit/laser_eyes
+	name = "Laser Eyes Mutation Kit"
+	desc = "A box with a singular syndicate-grade laser eyes mutator and 3 oculine medipens."
+
+/obj/item/storage/box/syndie_kit/laser_eyes/PopulateContents()
+	new /obj/item/dnainjector/syndicate_laser_eyes(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
+
+/obj/item/storage/box/syndicate/henchmen_traitor_outfit
+	name = "henchmen outfit box"
+
+/obj/item/storage/box/syndicate/henchmen_traitor_outfit/PopulateContents()
+	new /obj/item/clothing/head/henchmen_hat/traitor(src)
+	new /obj/item/clothing/suit/jacket/henchmen_coat/traitor(src)
+	new /obj/item/clothing/under/color/black(src)
+	new /obj/item/clothing/gloves/color/light_brown(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/switchblade(src)
+
+/datum/uplink_item/bundles_tc/henchmen_traitor_outfits
+	name = "Henchmen Bundle"
+	desc = "A set of five armored henchmen outfits! Each set comes with a cap, coat, uniform, gloves, shoes, and a switchblade!"
+	item = /obj/item/storage/backpack/duffelbag/henchmen_traitor_outfits
+	cost = 4
+
+/obj/item/storage/box/syndie_kit/buster
+	name = "Buster kit"
+	desc = "A box with a combat-grade arm prosthetic and three monkey cubes to be used as training dummies."
+
+/obj/item/storage/box/syndie_kit/buster/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/food/monkeycube(src)
+	new /obj/item/bodypart/arm/left/robot/buster(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
@@ -808,6 +1265,7 @@
 #undef KIT_SNIPER
 #undef KIT_NUKEOPS_METAGAME
 #undef KIT_LORD_SINGULOTH
+#undef KIT_REVOLUTIONARY
 
 #undef KIT_JAMES_BOND
 #undef KIT_NINJA
@@ -817,3 +1275,11 @@
 #undef KIT_BEES
 #undef KIT_MR_FREEZE
 #undef KIT_TRAITOR_2006
+#undef KIT_SAM_FISHER
+#undef KIT_PROP_HUNT
+
+#undef KIT_AMATEUR_ASSASSIN
+#undef KIT_INTERN_INFILTRATOR
+#undef KIT_BEGINNER_BOMBER
+#undef KIT_STARTER_SABOTEUR
+#undef KIT_ROOKIE_RAIDER

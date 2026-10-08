@@ -44,7 +44,8 @@
 	if(ishuman(host_mob))
 		GLOB.nanite_sensors_list -= host_mob
 
-	host_mob.hud_set_nanite_indicator()
+	if(!QDELETED(host_mob))
+		host_mob.hud_set_nanite_indicator()
 
 #define NANITE_RESEARCH_CHANGE "nanite_research_change"
 #define NANITE_RESEARCH_SLOW "Slow (1x)"
@@ -80,16 +81,16 @@
 	if (!istype(turf))
 		return
 
-	var/datum/gas_mixture/enviroment = turf.return_air()
-	if (host_mob.bodytemperature < enviroment.temperature) // sadly our bitcoin mining operations just aren't cool enough
+	var/datum/gas_mixture/environment = turf.return_air()
+	if (host_mob.bodytemperature < environment.temperature) // sadly our bitcoin mining operations just aren't cool enough
 		return
 
-	var/difference = host_mob.bodytemperature - enviroment.temperature
-	var/heat_capacity = enviroment.heat_capacity()
+	var/difference = host_mob.bodytemperature - environment.temperature
+	var/heat_capacity = environment.heat_capacity()
 	var/required_energy = difference * heat_capacity
 	var/delta_temperature = min(required_energy, research_speed * 500) / heat_capacity
 
-	enviroment.temperature += delta_temperature
+	environment.temperature += delta_temperature
 	turf.air_update_turf()
 
 /datum/nanite_program/research/enable_passive_effect()
@@ -268,24 +269,7 @@
 
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
 /datum/nanite_program/access/on_trigger(comm_message)
-	var/list/potential_items = list()
-
-	potential_items += host_mob.get_active_held_item()
-	potential_items += host_mob.get_inactive_held_item()
-	potential_items += host_mob.pulling
-
-	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		potential_items += H.wear_id
-	else if(isanimal(host_mob))
-		var/mob/living/simple_animal/A = host_mob
-		potential_items += A.access_card
-
-	var/list/new_access = list()
-	for(var/obj/item/I in potential_items)
-		new_access += I.GetAccess()
-
-	access = new_access
+	access = host_mob.get_access()
 
 /datum/nanite_program/spreading
 	name = "Infective Exo-Locomotion"
@@ -502,15 +486,15 @@
 
 /obj/item/nanite_injection_tentacle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!isliving(interacting_with))
+	if(!iscarbon(interacting_with))
 		return NONE
-	var/mob/living/guy_we_are_stabbing = interacting_with
+	var/mob/living/carbon/guy_we_are_stabbing = interacting_with
 	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(guy_we_are_stabbing))
-		guy_we_are_stabbing.balloon_alert(user, "Incompatible")
+		guy_we_are_stabbing.balloon_alert(user, "incompatible")
 		return ITEM_INTERACT_BLOCKING
 	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
 	if(nanos.nanite_volume < (200 + nanos.safety_threshold))
-		guy_we_are_stabbing.balloon_alert(user, "Not enough nanites")
+		guy_we_are_stabbing.balloon_alert(user, "not enough nanites")
 		return ITEM_INTERACT_BLOCKING
 	var/none_mod = guy_we_are_stabbing.GetComponent(/datum/component/nanites) ? 1 : 3
 	guy_we_are_stabbing.visible_message(span_warning("[user] jabs [src] into [guy_we_are_stabbing], and it begins flowing into [guy_we_are_stabbing.p_their()] skin!"), ignored_mobs=list(user,guy_we_are_stabbing))
@@ -526,27 +510,21 @@
 			return
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
-		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.spray_blood(guy_we_are_stabbing.dir)
 		guy_we_are_stabbing.visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
 			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 			to_chat(guy_we_are_stabbing, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
-			if(ishuman(guy_we_are_stabbing))
-				var/mob/living/carbon/human/guy_to_deal_pain_to = guy_we_are_stabbing
-				guy_to_deal_pain_to.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
 			return
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
-		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.spray_blood(guy_we_are_stabbing.dir)
 		guy_we_are_stabbing.visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
 			to_chat(guy_we_are_stabbing, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
 			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
-			if(ishuman(guy_we_are_stabbing))
-				var/mob/living/carbon/human/human_to_impale = guy_we_are_stabbing
-				human_to_impale.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
 			return
 		success = TRUE
 
@@ -564,9 +542,6 @@
 			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SYNC, nanos)
 			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
 			to_chat(guy_we_are_stabbing, span_userdanger("...Why can I feel my blood? WHY CAN I FEEL M-")) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
-			if(ishuman(guy_we_are_stabbing))
-				var/mob/living/carbon/human/yeowch = guy_we_are_stabbing
-				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
 			guy_we_are_stabbing.emote("scream")
 			to_chat(guy_we_are_stabbing, span_reallybig(span_robot("Integration complete.")))
 			SEND_SOUND(guy_we_are_stabbing, sound('sound/machines/chime.ogg', volume = 150))

@@ -8,7 +8,7 @@
 
 ADMIN_VERB(hide_verbs, R_NONE, FALSE, "Adminverbs - Hide All", "Hide most of your admin verbs.", ADMIN_CATEGORY_MAIN)
 	user.remove_admin_verbs()
-	add_verb(user, /client/proc/show_verbs)
+	ASSIGN_GAME_VERB(user, /client, show_verbs)
 
 	to_chat(user, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")
@@ -46,11 +46,11 @@ ADMIN_VERB(invisimin, R_ADMIN, FALSE, "Invisimin", "Toggles ghost-like invisibil
 		return
 
 	if(user.mob.invisibility == INVISIBILITY_OBSERVER)
-		user.mob.invisibility = initial(user.mob.invisibility)
+		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(user.mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
 		return
 
-	user.mob.invisibility = INVISIBILITY_OBSERVER
+	user.mob.SetInvisibility(INVISIBILITY_OBSERVER, id = INVISIBILITY_SOURCE_INVISIMIN, priority = INVISIBILITY_PRIORITY_ADMIN)
 	to_chat(user.mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, FALSE, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
@@ -142,15 +142,35 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
-/client/proc/enable_stealth_mode(new_key, source)
+/client/proc/enable_stealth_mode(new_key, pronouns, source)
 	if (!new_key)
-		new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+		new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Stealth - Fake Key", key, 26))
 		if(!new_key)
 			return
+	if (isnull(pronouns))
+		var/response = alert(src, "Show pronouns in ooc?", "Stealth - OOC Pronouns", "Yes", "No", "Custom")
+		switch(response)
+			if("Yes")
+				holder.showpronouns = TRUE
+			if("No")
+				holder.showpronouns = FALSE
+			if("Custom")
+#define PRONOUN_INPUT input(usr, "Enter the pronouns you'd like to use. Empty entry will be perceived as no custom. Rules apply. Example: \"she/it/they - Local nerd\"", "Stealth - OOC Pronouns", prefs.read_preference(/datum/preference/text/ooc_pronouns)) as text|null
+				response = PRONOUN_INPUT
+				var/datum/preference/text/ooc_pronouns/validator = new
+				while(validator.is_valid(response) == FALSE)
+					response = PRONOUN_INPUT
+#undef PRONOUN_INPUT
+
+				if(!length(response))
+					holder.showpronouns = FALSE
+				else
+					holder.showpronouns = response
+
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
-		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.SetInvisibility(INVISIBILITY_MAXIMUM, id = INVISIBILITY_SOURCE_STEALTHMODE) //JUST IN CASE
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -160,16 +180,17 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
-	source = isnull(source) ? " via [source]." : ""
+	source = isnull(source) ? "" : " via [source]."
 	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
 	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
 
 /client/proc/disable_stealth_mode()
 	var/previous_fakekey = holder.fakekey
 	holder.fakekey = null
+	holder.showpronouns = null
 	if(isobserver(mob))
 		mob.remove_alt_appearance("stealthmin")
-		mob.invisibility = initial(mob.invisibility)
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)
@@ -295,7 +316,8 @@ ADMIN_VERB(print_cards, R_DEBUG, FALSE, "Print Cards", "Print all cards to chat.
 
 ///TG GIVE MOB ACTION WOULD GO HERE
 
-ADMIN_VERB(give_spell, R_FUN, FALSE, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/spell_recipient)
+ADMIN_VERB(give_spell, R_FUN, FALSE, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(spell_recipient, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/which = tgui_alert(user, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
 	if(!which)
 		return
@@ -343,8 +365,8 @@ ADMIN_VERB(give_spell, R_FUN, FALSE, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, AD
 		to_chat(user, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
 			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
-
-ADMIN_VERB(remove_spell, R_FUN, FALSE, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target)
+ADMIN_VERB(remove_spell, R_FUN, FALSE, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(removal_target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/list/target_spell_list = list()
 	for(var/datum/action/cooldown/spell/spell in removal_target.actions)
 		target_spell_list[spell.name] = spell
@@ -364,7 +386,8 @@ ADMIN_VERB(remove_spell, R_FUN, FALSE, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION
 	message_admins("[key_name_admin(user)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Spell")
 
-ADMIN_VERB(give_disease, R_FUN, FALSE, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/victim)
+ADMIN_VERB(give_disease, R_FUN, FALSE, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(victim, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	//MONKE EDIT START
 	make_custom_virus(user, victim)
 	//TODO Figure out how to return the new infection to report it in the logs
@@ -374,7 +397,8 @@ ADMIN_VERB(give_disease, R_FUN, FALSE, "Give Disease", ADMIN_VERB_NO_DESCRIPTION
 	//MONKE EDIT END
 	BLACKBOX_LOG_ADMIN_VERB("Give Disease")
 
-ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, FALSE, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
+ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, FALSE, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /obj)
+	VERB_ARG_TYPED(speaker, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj)
 	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
 	if(!message)
 		return
@@ -400,7 +424,8 @@ ADMIN_VERB(deadmin, R_NONE, FALSE, "DeAdmin", "Shed your admin powers.", ADMIN_C
 	message_admins("[key_name_admin(user)] deadminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Deadmin")
 
-ADMIN_VERB(populate_world, R_DEBUG, FALSE, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG, amount = 50 as num)
+ADMIN_VERB(populate_world, R_DEBUG, FALSE, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG(amount, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf_equal_weight()
 		var/mob/living/carbon/human/hooman = new(tile)
@@ -567,8 +592,7 @@ ADMIN_VERB(create_mob_worm, R_FUN, FALSE, "Create Mob Worm", "Attach a linked li
 
 	var/desired_mob = text2path(attempted_target_path)
 	if(!ispath(desired_mob))
-		var/static/list/mob_paths = make_types_fancy(subtypesof(/mob/living))
-		desired_mob = pick_closest_path(attempted_target_path, mob_paths)
+		desired_mob = pick_closest_path(attempted_target_path, make_types_fancy(subtypesof(/mob/living)))
 	if(isnull(desired_mob) || !ispath(desired_mob) || QDELETED(head))
 		return //The user pressed "Cancel"
 

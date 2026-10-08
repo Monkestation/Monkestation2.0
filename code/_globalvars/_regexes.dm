@@ -1,7 +1,4 @@
 //These are a bunch of regex datums for use /((any|every|no|some|head|foot)where(wolf)?\sand\s)+(\.[\.\s]+\s?where\?)?/i
-GLOBAL_DATUM_INIT(is_http_protocol, /regex, regex("^https?://"))
-GLOBAL_DATUM_INIT(is_http_protocol_non_secure, /regex, regex("^http?://"))
-
 
 GLOBAL_DATUM_INIT(is_website, /regex, regex("http|www.|\[a-z0-9_-]+.(com|org|net|mil|edu)+", "i"))
 GLOBAL_DATUM_INIT(is_email, /regex, regex("\[a-z0-9_-]+@\[a-z0-9_-]+.\[a-z0-9_-]+", "i"))
@@ -22,3 +19,9 @@ GLOBAL_DATUM_INIT(html_tags, /regex, regex(@"<.*?>", "g"))
 GLOBAL_DATUM_INIT(filename_forbidden_chars, /regex, regex(@{""|[\\\n\t/?%*:|<>]|\.\."}, "g"))
 GLOBAL_PROTECT(filename_forbidden_chars)
 // had to use the OR operator for quotes instead of putting them in the character class because it breaks the syntax highlighting otherwise.
+
+//Does the line end in any EOL char that isn't appropriate punctuation OR does it end in a chat-formatted markdown sequence (+bold+, etc) without a period?
+GLOBAL_DATUM_INIT(needs_eol_autopunctuation, /regex, regex(@"([a-zA-Z\d]|[^.?!~-][+|_`])$"))
+
+//All non-capitalized 'i' surrounded with whitespace (aka, 'hello >i< am a cat')
+GLOBAL_DATUM_INIT(noncapital_i, /regex, regex(@"\b[i]\b", "g"))

@@ -23,6 +23,11 @@
 	/// Flags used for different effects that apply when a projectile hits something
 	var/effect_flags
 
+/obj/item/gun/magic/darkspawn/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(IS_DARKSPAWN_OR_THRALL(user))
+		return TRUE
+	return ..()
+
 /obj/item/gun/magic/darkspawn/examine(mob/user)
 	. = ..()
 	if(isobserver(user) || IS_DARKSPAWN(user))
@@ -72,9 +77,7 @@
 			target.apply_damage(20, BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 		else
 			var/datum/stamina_container/stamina = target.stamina
-			stamina.adjust(-65)
-			if(stamina.is_regenerating) // resets stamina cooldown if they're regenerating
-				stamina.pause(STAMINA_REGEN_TIME)
+			stamina.adjust(-30)
 		if(effect_flags & STAFF_UPGRADE_CONFUSION)
 			target.adjust_confusion(4 SECONDS)
 

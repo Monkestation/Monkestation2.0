@@ -7,7 +7,7 @@ import type { AntagGroup, Antagonist, Observable } from './types';
 export const getAntagCategories = (antagonists: Antagonist[]) => {
   const categories: Record<string, Antagonist[]> = {};
 
-  antagonists.map((player) => {
+  antagonists.forEach((player) => {
     const { antag_group } = player;
 
     if (!categories[antag_group]) {

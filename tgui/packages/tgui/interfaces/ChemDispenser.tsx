@@ -1,3 +1,4 @@
+import type { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -10,7 +11,6 @@ import {
   Section,
 } from '../components';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
 
 type DispensableReagent = {
   title: string;

@@ -22,7 +22,7 @@
 	manufacturer_notes = "Normally, Trial-Lite frameworks do not actually 'bond' with their user, forming an extremely loose connection before dissolving into scattered and dead nanomachines within a few hours, typically exhaled. It's so far been impossible to extend the lifespan of a Trial-Lite NIF, owing to their far inferior construction and programming."
 	nif_persistence = FALSE
 
-/obj/item/autosurgeon/organ/nif/disposable //Disposable, as in the fact that this only lasts for one shift
+/obj/item/autosurgeon/nif/disposable //Disposable, as in the fact that this only lasts for one shift
 	name = "Econo-Deck Type Autosurgeon"
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/roleplay_model/cheap
 	uses = 1
@@ -31,7 +31,7 @@
 	nif_persistence = FALSE
 	is_calibrated = TRUE
 
-/obj/item/autosurgeon/organ/nif/ghost_role
+/obj/item/autosurgeon/nif/ghost_role
 	name = "Enhanced Standard Type NIF Autosurgeon"
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/standard/ghost_role
 	uses = 1

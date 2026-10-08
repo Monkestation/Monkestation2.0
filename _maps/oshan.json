@@ -18,7 +18,6 @@
 			"Gravity": true,
 			"Mining": true,
 			"Baseturf": "/turf/open/floor/plating/ocean/rock",
-			"Daycycle": true,
 			"No Parallax": true,
 			"OshanTrait": true
 		}
@@ -31,7 +30,9 @@
 			]
 		}
 	},
-	"banned_station_traits": ["/datum/station_trait/late_arrivals", "/datum/station_trait/random_spawns"],
-
+	"banned_station_traits": [
+		"/datum/station_trait/late_arrivals",
+		"/datum/station_trait/random_spawns"
+	],
 	"minetype": "oshan"
 }

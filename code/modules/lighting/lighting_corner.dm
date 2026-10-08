@@ -79,7 +79,7 @@
 		process_next.lighting_corner_NW = src
 
 /datum/lighting_corner/proc/self_destruct_if_idle()
-	if (!LAZYLEN(affecting) && !LAZYLEN(globAffect)) //monkestation edit + && !LAZYLEN(globAffect)
+	if (!LAZYLEN(affecting))
 		qdel(src, force = TRUE)
 
 /datum/lighting_corner/proc/vis_update()

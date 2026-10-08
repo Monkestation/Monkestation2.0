@@ -73,6 +73,7 @@
 		/datum/action/cooldown/spell/aoe/revenant/malfunction,
 		/datum/action/cooldown/spell/aoe/revenant/overload,
 		/datum/action/cooldown/spell/list_target/telepathy/revenant,
+		/datum/action/cooldown/spell/revenant_reveal,
 	)
 
 	/// The resource, and health, of revenants.
@@ -95,7 +96,8 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_CAN_HEAR_MUSIC), INNATE_TRAIT)
+	remove_verb(src, /mob/living/verb/pulled)
 
 	for(var/ability in abilities)
 		var/datum/action/spell = new ability(src)
@@ -145,7 +147,7 @@
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
-		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
+		var/change_in_time = DELTA_WORLD_TIME(SSclient_mobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 

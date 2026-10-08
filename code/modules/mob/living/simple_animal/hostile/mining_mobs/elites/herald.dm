@@ -134,7 +134,7 @@
 		H = new /obj/projectile/herald(startloc)
 	else
 		H = new /obj/projectile/herald/teleshot(startloc)
-	H.preparePixelProjectile(marker, startloc)
+	H.aim_projectile(marker, startloc)
 	H.firer = src
 	if(target)
 		H.original = target
@@ -224,8 +224,8 @@
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 20
-	armour_penetration = 25 //was 50 changed because 50 was waay too much monkestation 20 edit
-	speed = 2
+	armour_penetration = 25
+	speed = 0.5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
@@ -273,7 +273,7 @@
 	var/turf/startloc = get_turf(owner)
 	var/obj/projectile/herald/H = null
 	H = new /obj/projectile/herald(startloc)
-	H.preparePixelProjectile(marker, startloc)
+	H.aim_projectile(marker, startloc)
 	H.firer = owner
 	H.fire(set_angle)
 

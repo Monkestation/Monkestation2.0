@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const FloridaMan: Antagonist = {
   key: 'floridaman',
@@ -19,7 +19,7 @@ const FloridaMan: Antagonist = {
     Who gets to boss Florida Man around anyways?
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default FloridaMan;

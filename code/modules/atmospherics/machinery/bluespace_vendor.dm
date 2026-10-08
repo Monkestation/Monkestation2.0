@@ -79,7 +79,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	. = ..()
 	if(!map_spawned)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender as anything in GLOB.bluespace_senders)
+	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/bluespace_sender))
 		register_machine(sender)
 
 /obj/machinery/bluespace_vendor/Destroy()
@@ -111,7 +111,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		return
 	var/gas_path = gas_id2path(selected_gas)
 
-	if(!connected_machine.bluespace_network.gases[gas_path])
+	if(!connected_machine.bluespace_network.moles[gas_path])
 		pumping = FALSE
 		selected_gas = null
 		mode = BS_MODE_IDLE
@@ -123,9 +123,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	purchased_gas_mix.merge(to_merge)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	if(!istype(multitool))
-		return
-	if(!istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
+	var/datum/buffer = multitool_get_buffer(multitool)
+	if(!istype(buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
 		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
 		return
 	if(connected_machine)
@@ -133,7 +132,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
-	register_machine(multitool.buffer)
+	register_machine(buffer)
 	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE
 
@@ -215,10 +214,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 	var/temp_price = 0
 	var/datum/gas_mixture/working_mix = internal_tank.return_air()
-	var/list/purchased_gases = purchased_gas_mix.gases
+	var/list/purchased_moles = purchased_gas_mix.moles
 
-	for(var/gas_id in purchased_gases)
-		temp_price += purchased_gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
+	for(var/gas_id in purchased_moles)
+		temp_price += purchased_moles[gas_id] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(tank_purchased)
@@ -247,18 +246,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/ui_data(mob/user)
 	var/list/data = list()
 	var/list/bluespace_gasdata = list()
+	var/list/network_moles = connected_machine.bluespace_network.moles
+	var/list/cached_name = GAS_META[META_GAS_NAME]
+	var/list/cached_id = GAS_META[META_GAS_ID]
 	if(connected_machine.bluespace_network.total_moles())
-		for(var/gas_id in connected_machine.bluespace_network.gases)
+		for(var/gas_id, amount in network_moles)
 			bluespace_gasdata.Add(list(list(
-			"name" = connected_machine.bluespace_network.gases[gas_id][GAS_META][META_GAS_NAME],
-			"id" = connected_machine.bluespace_network.gases[gas_id][GAS_META][META_GAS_ID],
-			"amount" = round(connected_machine.bluespace_network.gases[gas_id][MOLES], 0.01),
+			"name" = cached_name[gas_id],
+			"id" = cached_id[gas_id],
+			"amount" = round(amount, 0.01),
 			"price" = connected_machine.base_prices[gas_id],
 			)))
 	else
-		for(var/gas_id in connected_machine.bluespace_network.gases)
+		for(var/gas_id in network_moles)
 			bluespace_gasdata.Add(list(list(
-				"name" = connected_machine.bluespace_network.gases[gas_id][GAS_META][META_GAS_NAME],
+				"name" = cached_name[gas_id],
 				"id" = "",
 				"amount" = 0,
 				"price" = 0,

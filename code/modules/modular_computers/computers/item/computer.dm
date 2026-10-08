@@ -111,6 +111,9 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
+	/// This is where our overlays reside
+	var/overlays_icon = 'icons/obj/computer.dmi'
+
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20
@@ -195,15 +198,16 @@
 	if(issilicon(user))
 		return NONE
 
-	if(RemoveID(user))
+	if(remove_id(user))
 		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
-		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
-		inserted_pai = null
-		update_appearance(UPDATE_ICON)
+		remove_pai(user)
 		return CLICK_ACTION_SUCCESS
+
+	for(var/datum/computer_file/files as anything in stored_files)
+		if(files.try_eject(user))
+			return CLICK_ACTION_SUCCESS
 
 	return CLICK_ACTION_BLOCKING
 
@@ -220,9 +224,12 @@
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
+	var/list/access = list()
 	if(computer_id_slot)
-		return computer_id_slot.GetAccess()
-	return ..()
+		access |= computer_id_slot?.GetAccess()
+	for(var/datum/computer_file/app_access as anything in stored_files)
+		access |= app_access.get_access()
+	return access + ..()
 
 /obj/item/modular_computer/GetID()
 	RETURN_TYPE(/obj/item/card/id)
@@ -233,7 +240,7 @@
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
 	if(computer_id_slot)
-		. += "\The [src] is displaying [computer_id_slot]."
+		. += "[src] is displaying [computer_id_slot]:"
 		. += computer_id_slot.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
@@ -249,25 +256,31 @@
 	return TRUE
 
 /**
- * InsertID
+ * insert_id
  * Attempt to insert the ID in either card slot.
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
-/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
+/obj/item/modular_computer/insert_id(obj/item/card/inserting_id, mob/user)
 	//all slots taken
 	if(computer_id_slot)
 		return FALSE
 
-	computer_id_slot = inserting_id
-	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
-	else
-		inserting_id.forceMove(src)
+	var/obj/item/card/id/real_id = inserting_id
+	if(!istype(real_id))
+		if(user)
+			balloon_alert(user, "not an ID card")
+		return FALSE
 
+	if(user)
+		if(!user.transferItemToLoc(real_id, src))
+			return FALSE
+		balloon_alert(user, "inserted [real_id]")
+	else
+		real_id.forceMove(src)
+
+	computer_id_slot = real_id
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -282,7 +295,7 @@
  * Args:
  * user - The mob trying to remove the ID, if there is one
  */
-/obj/item/modular_computer/RemoveID(mob/user)
+/obj/item/modular_computer/remove_id(mob/user)
 	if(!computer_id_slot)
 		return ..()
 
@@ -308,6 +321,8 @@
 	return TRUE
 
 /obj/item/modular_computer/mouse_drop_dragged(atom/over_object, mob/user)
+	if(isobserver(user))
+		return
 	if(!istype(over_object, /atom/movable/screen))
 		return attack_self(user)
 
@@ -371,6 +386,8 @@
 
 	if(internal_cell)
 		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
+	else
+		. += span_info("The power cell compartment is open and empty.")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -413,15 +430,11 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-	if(!init_icon)
-		return
-
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_open_overlay) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += mutable_appearance(overlays_icon, "bsod")
+		. += mutable_appearance(overlays_icon, "broken")
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
@@ -435,7 +448,7 @@
 			var/mob/living/carbon/human/human_wearer = loc
 			human_wearer.sec_hud_set_ID()
 	if(inserted_pai == gone)
-		inserted_pai = null
+		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
@@ -518,20 +531,39 @@
 	playsound(src, sound, 50, TRUE)
 	loc.visible_message(span_notice("<img class='icon' src='\ref[src]'> \The [src] displays a [origin.filedesc] notification: [html_encode(alerttext)]"), vision_distance = vision_distance, push_appearance = src)
 
-/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
-	if(!use_energy())
+/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees, list/ignored_mobs) // bring bring
+	if(!use_energy(check_programs = FALSE))
 		return
+	// Get the messenger app's new sound settings || Monkestation Addition START
+	var/sound_to_play = 'sound/machines/twobeep_high.ogg' //defaults to the original
+	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
+	if(messenger?.ringtone_sound)
+		var/selected_sound = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
+		if(selected_sound)
+			sound_to_play = selected_sound
+	// Monkestation Addition END
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE, mixer_channel = CHANNEL_RINGTONES)
 	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, sound_to_play, 50, TRUE, mixer_channel = CHANNEL_RINGTONES) // Monkestation change
 	ringtone = "*[ringtone]*"
-	audible_message(ringtone)
+	audible_message(ringtone, ignored_mobs = ignored_mobs)
 	for(var/mob/living/alertee in balloon_alertees)
 		alertee.balloon_alert(alertee, ringtone)
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	// Monkestation Addition START
+	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
+	if(!messenger)
+		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+		return
+
+	var/sound_file = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
+	if(!sound_file)
+		sound_file = 'sound/machines/terminal_success.ogg'
+
+	playsound(src, sound_file, 15, TRUE)
+	// Monkestation Addition END
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -783,7 +815,7 @@
 /obj/item/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Check for ID first
 	if(isidcard(tool))
-		return InsertID(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		return insert_id(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	// Check for cash next
 	if(computer_id_slot && iscash(tool))
@@ -794,17 +826,10 @@
 		return inserted_id.insert_money(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING // If we do, try and put that attacking object in
 
 	// Inserting a pAI
-	if(istype(tool, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_BLOCKING
-		inserted_pai = tool
-		balloon_alert(user, "inserted pai")
-		update_appearance(UPDATE_ICON)
+	if(istype(tool, /obj/item/pai_card) && pai_act(user, tool))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
-		if(ismachinery(loc))
-			return ITEM_INTERACT_BLOCKING
 		if(internal_cell)
 			to_chat(user, span_warning("You try to connect \the [tool] to \the [src], but its connectors are occupied."))
 			return ITEM_INTERACT_BLOCKING
@@ -828,13 +853,13 @@
 			return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
-		//MONKESTATION EDIT START
-		// Don't allow plastic cards (including the spare ID safe code biscuits!) to be inserted
+		var/obj/item/paper/attacking_paper = tool
 		if(istype(tool, /obj/item/paper/paperslip/corporate))
 			return ITEM_INTERACT_BLOCKING
-		//MONKESTATION EDIT END
 		if(stored_paper >= max_paper)
 			balloon_alert(user, "no more room!")
+			return ITEM_INTERACT_BLOCKING
+		if(!attacking_paper.is_empty() && tgui_alert(user, "\the [attacking_paper] has contents on it! Are you sure you want to recycle it?", "Recycling", list("Yes", "No")) != "Yes")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(tool))
 			return FALSE
@@ -877,22 +902,25 @@
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	var/atom/droploc = drop_location()
 	remove_pai()
-	eject_aicard()
+	eject_file_contents()
+	src.eject_stored_items(droploc)
+	if (!disassembled)
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
+	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
+	relay_qdel() // Needed for /obj/item/modular_computer/processor/relay_qdel()
+	qdel(src)
+
+/obj/item/modular_computer/proc/eject_stored_items(atom/droploc) // Only used for deconstruct()
 	internal_cell?.forceMove(droploc)
 	computer_id_slot?.forceMove(droploc)
 	//stored_id?.forceMove(droploc)
 	//alt_stored_id?.forceMove(droploc)
 	inserted_disk?.forceMove(droploc)
-	if (!disassembled)
-		physical.visible_message(span_notice("\The [src] breaks apart!"))
-	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
-	relay_qdel()
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
-/obj/item/modular_computer/proc/eject_aicard()
-	var/datum/computer_file/program/ai_restorer/program = locate() in stored_files
-	if (program)
-		return program.try_eject(forced = TRUE)
+/obj/item/modular_computer/proc/eject_file_contents()
+	for(var/datum/computer_file/files as anything in stored_files)
+		files.try_eject(forced = TRUE)
 	return FALSE
 
 // Used by processor to relay qdel() to machinery type.
@@ -909,12 +937,23 @@
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
 
+/obj/item/modular_computer/proc/pai_act(mob/user, obj/item/pai_card/card)
+	if(inserted_pai)
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(card, src))
+		return ITEM_INTERACT_BLOCKING
+	inserted_pai = card
+	balloon_alert(user, "inserted pai")
+	if(inserted_pai.pai)
+		inserted_pai.pai.give_messenger_ability()
+	update_appearance(UPDATE_ICON)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/modular_computer/proc/remove_pai(mob/user)
 	if(!inserted_pai)
 		return FALSE
-	// MONKE EDIT: Not added
-	//if(inserted_pai.pai)
-	//	inserted_pai.pai.remove_messenger_ability()
+	if(inserted_pai.pai)
+		inserted_pai.pai.remove_messenger_ability()
 	if(user)
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")

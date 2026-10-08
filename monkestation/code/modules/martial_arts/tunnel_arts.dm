@@ -116,7 +116,7 @@
 
 	var/mob/living/simple_animal/hostile/illusion/khan_warrior/khan = new(attacker.loc)
 	khan.faction = attacker.faction.Copy()
-	khan.Copy_Parent(attacker, 100, attacker.health / 2.5, 12, 30)
+	khan.copy_parent(attacker, 100, attacker.health / 2.5, 12, 30)
 	khan.GiveTarget(defender)
 	attacker.visible_message(
 		span_danger("[attacker] seems to duplicate before your very eyes!"),
@@ -211,14 +211,11 @@
 	to_chat(attacker, span_userdanger("[khan_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
 	khan_user.balloon_alert(attacker, "miss!")
 	attacker.changeNext_move(CLICK_CD_MELEE)
-	playsound(khan_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(khan_user, 'sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the tunnel arts.
-/mob/living/proc/tunnel_arts_help()
-	set name = "Remember the Arts"
-	set desc = "Remember the martial techniques of Maint Khan, who brought to the Spinward Sector the knowledge of the Tunnel Arts."
-	set category = "The Tunnel Arts"
+GAME_VERB_PROC_DESC(/mob/living, tunnel_arts_help, "Remember the Arts", "Remember the martial techniques of Maint Khan, who brought to the Spinward Sector the knowledge of the Tunnel Arts.", "The Tunnel Arts")
 
 	to_chat(src, "<b><i>You retreat inward and recall the teachings of the Tunnel Arts...</i></b>\n\
 	[span_notice("One Thousand Fists")]: Punch Punch. Deal additional damage every second (consecutive) punch, and potentially conjure forth an illusionary Khan Warrior.\n\

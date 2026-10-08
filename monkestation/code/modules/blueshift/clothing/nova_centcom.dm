@@ -2,7 +2,6 @@
 //Try to keep them all a subtype of centcom/nova, for file sorting and balance - all faction representatives should have the same/similarly armored uniforms
 
 /obj/item/clothing/under/rank/centcom
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/centcom_digi.dmi'
 
 /obj/item/clothing/under/rank/centcom/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/centcom.dmi'

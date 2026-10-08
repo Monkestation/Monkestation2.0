@@ -6,6 +6,6 @@
 	class = CHEWIN_START
 	var/required_container
 
-/datum/chewin_cooking/recipe_step/start/New(var/container)
+/datum/chewin_cooking/recipe_step/start/New(container)
 	required_container = container
 

@@ -10,6 +10,7 @@
 			"ref" = REF(index),
 		))
 
+
 /// Clicks an object from the contents. Validates the object and the user
 /datum/lootpanel/proc/grab(mob/user, list/params)
 	var/ref = params["ref"]
@@ -21,7 +22,7 @@
 	if(QDELETED(index) || QDELETED(thing)) // Obj is gone
 		return FALSE
 
-	if(thing != source_turf && !(thing in source_turf.contents))
+	if(thing != source_turf && !(locate(thing) in source_turf.contents))
 		qdel(index) // Item has moved
 		return TRUE
 

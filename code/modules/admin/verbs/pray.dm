@@ -1,7 +1,5 @@
-/mob/verb/pray(msg as text)
-	set category = "IC"
-	set name = "Pray"
-
+GAME_VERB(/mob, pray, "Pray", "IC")
+	VERB_ARG(msg, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
 		return
@@ -43,10 +41,10 @@
 	GLOB.requests.pray(usr.client, msg, usr.job == JOB_CHAPLAIN)
 	msg = span_adminnotice("[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(msg)]")
 	for(var/client/C in GLOB.admins)
-		if(C.prefs.chat_toggles & CHAT_PRAYER)
-			to_chat(C, msg, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
+		if(!(C.prefs.chat_toggles & CHAT_PRAYER))
+			continue
+		to_chat(C, msg, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
 	to_chat(usr, span_info("You pray to the gods: \"[msg_tmp]\""), confidential = TRUE)
-
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -56,8 +54,8 @@
 	GLOB.requests.message_centcom(sender.client, msg)
 	msg = span_adminnotice("<b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(sender)] [ADMIN_CENTCOM_REPLY(sender)]:</b> [msg]")
 	for(var/client/staff as anything in GLOB.admins)
-		if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
-			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
+		if(staff?.prefs.channel_volume["[CHANNEL_ADMIN_SOUNDS]"])
+			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg', volume = calculate_mixed_volume(staff, 100, CHANNEL_ADMIN_SOUNDS)))
 	to_chat(GLOB.admins, msg, confidential = TRUE)
 	for(var/obj/machinery/computer/communications/console in GLOB.shuttle_caller_list)
 		console.override_cooldown()
@@ -68,8 +66,8 @@
 	GLOB.requests.message_syndicate(sender.client, msg)
 	msg = span_adminnotice("<b><font color=crimson>SYNDICATE:</font>[ADMIN_FULLMONTY(sender)] [ADMIN_SYNDICATE_REPLY(sender)]:</b> [msg]")
 	for(var/client/staff as anything in GLOB.admins)
-		if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
-			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
+		if(staff?.prefs.channel_volume["[CHANNEL_ADMIN_SOUNDS]"])
+			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg', volume = calculate_mixed_volume(staff, 100, CHANNEL_ADMIN_SOUNDS)))
 	to_chat(GLOB.admins, msg, confidential = TRUE)
 	for(var/obj/machinery/computer/communications/console in GLOB.shuttle_caller_list)
 		console.override_cooldown()
@@ -80,7 +78,8 @@
 	GLOB.requests.nuke_request(sender.client, msg)
 	msg = span_adminnotice("<b><font color=orange>NUKE CODE REQUEST:</font>[ADMIN_FULLMONTY(sender)] [ADMIN_CENTCOM_REPLY(sender)] [ADMIN_SET_SD_CODE]:</b> [msg]")
 	for(var/client/staff as anything in GLOB.admins)
-		SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
+		if(staff?.prefs.channel_volume["[CHANNEL_ADMIN_SOUNDS]"])
+			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg', volume = calculate_mixed_volume(staff, 100, CHANNEL_ADMIN_SOUNDS)))
 	to_chat(GLOB.admins, msg, confidential = TRUE)
 	for(var/obj/machinery/computer/communications/console in GLOB.shuttle_caller_list)
 		console.override_cooldown()

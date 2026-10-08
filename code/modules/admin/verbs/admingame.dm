@@ -1,9 +1,13 @@
-ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Panel", mob/player in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Panel", /mob)
+	VERB_ARG_TYPED(player, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
 		to_chat(user, span_warning("You seem to be selecting a mob that doesn't exist anymore."), confidential = TRUE)
 		return
+
+	if(istype(player, /client))
+		player = astype(player, /client).mob
 
 	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [player.key]</title></head>"
 	body += "<body>Options panel for <b>[player]</b>"
@@ -150,9 +154,9 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, FALSE, "Show Player Pan
 	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x515")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
-/client/proc/cmd_admin_godmode(mob/mob in GLOB.mob_list) //MONKE EDIT TODO CONVERT TO AVD tg doesn't no idea why.
-	set category = "Admin.Game"
-	set name = "Godmode"
+GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game")
+	VERB_ARG_TYPED(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -217,7 +221,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, FALSE, "Respawn Character", "Respawn a pl
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.name
-		new_character.gender = lowertext(record_found.gender)
+		new_character.gender = LOWER_TEXT(record_found.gender)
 		new_character.age = record_found.age
 		var/datum/dna/found_dna = record_found.locked_dna
 		new_character.hardset_dna(found_dna.unique_identity, found_dna.mutation_index, null, record_found.name, record_found.blood_type, new record_found.species_type, found_dna.features)
@@ -305,7 +309,7 @@ ADMIN_VERB(manage_job_slots, R_ADMIN, FALSE, "Manage Job Slots", "Manage the num
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
-	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 520)
+	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 580)
 	var/list/dat = list()
 	var/count = 0
 
@@ -368,7 +372,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 
 	combo_hud_enabled = TRUE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
+	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SIMIAN))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
 		atom_hud.show_to(mob)
 
@@ -384,7 +388,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 
 	combo_hud_enabled = FALSE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
+	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SIMIAN))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
 		atom_hud.hide_from(mob)
 
@@ -394,7 +398,8 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 	mob.lighting_cutoff = mob.default_lighting_cutoff()
 	mob.update_sight()
 
-ADMIN_VERB(show_traitor_panel, R_ADMIN, FALSE, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME, mob/target_mob)
+ADMIN_VERB(show_traitor_panel, R_ADMIN, FALSE, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
 		to_chat(user, "This mob has no mind!", confidential = TRUE)
@@ -405,7 +410,8 @@ ADMIN_VERB(show_traitor_panel, R_ADMIN, FALSE, "Show Traitor Panel", "Edit mobs'
 	target_mind.traitor_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
 
-ADMIN_VERB(show_skill_panel, R_ADMIN, FALSE, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_GAME, mob/target_mob)
+ADMIN_VERB(show_skill_panel, R_ADMIN, FALSE, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_GAME)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind
 	if(istype(target_mob, /datum/mind))
 		target_mind = target_mob
@@ -440,3 +446,10 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, FALSE, "Show Lag Switches", "Display the c
 	dat += "</body></html>"
 	user << browse(dat.Join(), "window=lag_switch_panel;size=420x480")
 	BLACKBOX_LOG_ADMIN_VERB("Lag Switch Panel") //MONKE EDIT
+
+ADMIN_VERB(spawn_panel, R_SPAWN, FALSE, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CATEGORY_GAME)
+	var/datum/spawnpanel/panel = get_spawnpanel_for_admin(user.mob)
+	if(panel)
+		panel.ui_interact(user.mob)
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Panel")
+

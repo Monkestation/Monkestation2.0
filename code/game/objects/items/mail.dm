@@ -224,6 +224,7 @@
 	lid_x = -26
 	lid_y = 2
 	paint_jobs = null
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -314,7 +315,7 @@
 	var/nuclear_option_odds = 0.1
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
-	var/obj/machinery/nuclearbomb/selfdestruct/self_destruct = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/selfdestruct/self_destruct = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct)
 	if(!self_destruct || !prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
 		add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'")
 		return ..()

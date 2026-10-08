@@ -34,7 +34,12 @@
 /datum/element/gun_launches_little_guys/proc/throw_it_back(obj/item/gun/weapon, mob/living/carbon/user, atom/target, params, zone_override)
 	SIGNAL_HANDLER
 
-	if(!ismonkey(user) && !HAS_TRAIT(user, TRAIT_DWARF) && !(user.dna.features["body_size"] <= 0.9))
+	var/is_smol = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.mob_height <= HUMAN_HEIGHT_DWARF)
+			is_smol = TRUE
+	if(!is_smol && HAS_TRAIT(weapon, TRAIT_WIELDED))
 		return
 
 	var/fling_direction = REVERSE_DIR(user.dir)

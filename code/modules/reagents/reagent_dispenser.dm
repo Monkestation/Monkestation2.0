@@ -248,7 +248,6 @@
 	desc = "A tank full of firefighting foam."
 	icon_state = "foam"
 	reagent_id = /datum/reagent/firefighting_foam
-	tank_volume = 500
 	openable = TRUE
 	can_buckle = TRUE //Monkestation edit start
 	buckle_lying = 0
@@ -317,7 +316,7 @@
 			if(welder.reagents.has_reagent(/datum/reagent/fuel, welder.max_fuel))
 				to_chat(user, span_warning("Your [welder.name] is already full!"))
 				return
-			reagents.trans_to(welder, welder.max_fuel, transfered_by = user)
+			reagents.trans_to(welder, welder.max_fuel, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [welder.name]."), span_notice("You refill [welder]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			welder.update_appearance()
@@ -333,7 +332,7 @@
 	name = "high capacity fuel tank"
 	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
 	icon_state = "fuel_high"
-	tank_volume =SHEET_MATERIAL_AMOUNT * 2.5
+	tank_volume = 2500
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
@@ -403,6 +402,71 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	reagent_id = /datum/reagent/consumable/virus_food
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/mutagenvirusfood
+	name = "mutagenic agar dispenser"
+	desc = "A dispenser of high-potency mutagenic agar."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/mutagen/mutagenvirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/mutagenvirusfood, 30)
+
+
+/obj/structure/reagent_dispensers/wall/mutagenvirusfoodsugar
+	name = "sucrose agar dispenser"
+	desc = "A dispenser of high-potency sugary sucrose agar."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/mutagenvirusfoodsugar, 30)
+
+/obj/structure/reagent_dispensers/wall/synaptizinevirusfood
+	name = "virus rations dispenser"
+	desc = "A dispenser of high-potency virus mutagenic."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/medicine/synaptizine/synaptizinevirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/synaptizinevirusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/plasmavirusfood
+	name = "virus plasma dispenser"
+	desc = "A dispenser of high-potency virus plasma."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/plasma/plasmavirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/plasmavirusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/plasmavirusfoodweak
+	name = "weak virus plasma dispenser"
+	desc = "A dispenser of high-potency weak-potency virus plasma."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/plasma/plasmavirusfood/weak
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/plasmavirusfoodweak, 30)
+
+/obj/structure/reagent_dispensers/wall/uraniumvirusfood
+	name = "decaying uranium gel dispenser"
+	desc = "A dispenser of decaying uranium gel."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/uranium/uraniumvirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/uraniumvirusfoodunstable
+	name = "unstable uranium gel dispenser"
+	desc = "A dispenser of unstable uranium gel."
+	icon_state = "virus_food"
+	reagent_id =/datum/reagent/uranium/uraniumvirusfood/unstable
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusfoodunstable, 30)
+
+/obj/structure/reagent_dispensers/wall/uraniumvirusfoodstable
+	name = "stable uranium gel dispenser"
+	desc = "A dispenser of high-potency virus mutagenic."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/uranium/uraniumvirusfood/stable
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusfoodstable, 30)
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"

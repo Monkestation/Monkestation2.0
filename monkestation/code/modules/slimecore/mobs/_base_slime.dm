@@ -1,9 +1,11 @@
 /mob/living/basic/slime
 	name = "grey baby slime (123)"
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
-	icon_state = "grey baby slime"
-	base_icon_state = "grey baby slime"
-	icon_dead = "grey baby slime dead"
+	icon = 'icons/mob/basic/slime.dmi'
+	icon_state = "grey_baby_slime"
+	base_icon_state = "grey_baby_slime"
+
+	icon_living = "grey_baby_slime"
+	icon_dead = "grey_baby_slime_dead"
 
 	maxHealth = 150
 	health = 150
@@ -23,6 +25,7 @@
 	unsuitable_heat_damage = 0
 	bodytemp_heat_damage_limit = INFINITY
 	habitable_atmos = null
+	mob_biotypes = MOB_SLIME
 
 	//emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
@@ -63,6 +66,8 @@
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) (cleaner )?(cat)?slime \\(\\d+\\)")
 	///our number
 	var/number
+	/// Bonus amount of extracts we make
+	var/slime_extract_bonus
 
 	///list of all possible mutations
 	var/list/possible_color_mutations = list()
@@ -75,7 +80,8 @@
 	///this is our mutation chance
 	var/mutation_chance = 30
 
-	var/obj/item/slime_accessory/worn_accessory
+	///Currently worn item on the head slot
+	var/obj/item/equipped_hat = null
 
 	///this is a list of trees that we replace goes from base = replaced
 	var/list/replacement_trees = list()
@@ -104,13 +110,12 @@
 		/datum/pet_command/point_targeting/attack/latch,
 		/datum/pet_command/stop_eating,
 	)
-	///the amount of ooze we produce
-	var/ooze_production = 10
 
 /mob/living/basic/slime/Initialize(mapload, datum/slime_color/passed_color, is_split)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SLIME, 0.5, -11)
 	AddElement(/datum/element/soft_landing)
+	AddElement(/datum/element/strippable, GLOB.strippable_slime_items)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_CAREFUL_STEPS, INNATE_TRAIT)
@@ -124,7 +129,6 @@
 
 	AddComponent(/datum/component/obeys_commands, friendship_commands)
 
-	AddComponent(/datum/component/liquid_secretion, current_color.secretion_path, ooze_production, 10 SECONDS, TYPE_PROC_REF(/mob/living/basic/slime, check_secretion))
 	AddComponent(/datum/component/generic_mob_hunger, 400, 0.1, 5 MINUTES, 200)
 	AddComponent(/datum/component/scared_of_item, 5)
 	AddComponent(/datum/component/emotion_buffer, emotion_states)
@@ -146,6 +150,7 @@
 
 /mob/living/basic/slime/death(gibbed)
 	buckled?.unbuckle_mob(src, force = TRUE)
+	equipped_hat?.forceMove(drop_location())
 	return ..()
 
 /mob/living/basic/slime/Destroy()
@@ -163,6 +168,13 @@
 		qdel(mutation)
 
 	QDEL_NULL(current_color)
+	equipped_hat?.forceMove(drop_location())
+	return ..()
+
+/mob/living/basic/slime/Exited(atom/movable/gone, direction)
+	if(gone == equipped_hat)
+		equipped_hat = null
+		update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /mob/living/basic/slime/mob_try_pickup(mob/living/user, instant)
@@ -179,24 +191,15 @@
 			. += span_notice("You are one of [src]'s best friends!")
 		else
 			. += span_notice("You are one of [src]'s friends.")
-	if(check_secretion())
-		switch(ooze_production)
-			if(-INFINITY to 10)
-				. += span_notice("It's secreting some ooze.")
-			if(10 to 40)
-				. += span_notice("It's secreting a lot of ooze.")
-			if(40 to INFINITY)
-				. += span_boldnotice("It's overflowing with ooze!")
 
 /mob/living/basic/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
-	else if(target != src && isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
-		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
+	else if(can_latch_feed(target))
+		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE)
 		return
 	. = ..()
-
 
 /mob/living/basic/slime/proc/rebuild_foods()
 	compiled_liked_foods = list()
@@ -204,6 +207,18 @@
 	for(var/datum/slime_mutation_data/data as anything in possible_color_mutations)
 		if(length(data.needed_items))
 			compiled_liked_foods |= data.needed_items
+
+/mob/living/basic/slime/proc/can_latch_feed(mob/target)
+	if(target == src)
+		return FALSE
+	if(!CanReach(target) || QDELING(target))
+		return FALSE
+	if(!isliving(target) || issilicon(target) || HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+		return FALSE
+	var/mob/living/living_target = target
+	if(living_target.mob_biotypes & MOB_ROBOTIC)
+		return FALSE
+	return TRUE
 
 /mob/living/basic/slime/proc/on_blackboard_key_changed(datum/source)
 	SIGNAL_HANDLER
@@ -256,6 +271,9 @@
 	return checker
 
 /mob/living/basic/slime/proc/update_slime_varience()
+	update_appearance(UPDATE_NAME | UPDATE_ICON)
+
+/mob/living/basic/slime/update_icon_state()
 	var/prefix = "grey"
 	if(icon_state_override)
 		prefix = icon_state_override
@@ -263,46 +281,39 @@
 		prefix = current_color.icon_prefix
 
 	if(slime_flags & ADULT_SLIME)
-		icon_state = "[prefix] adult slime"
-		icon_dead = "[prefix] baby slime dead"
+		icon_living = "[prefix]_adult_slime"
+		icon_dead = "[prefix]_baby_slime_dead"
 	else
-		icon_state = "[prefix] baby slime"
-		icon_dead = "[prefix] baby slime dead"
+		icon_living = "[prefix]_baby_slime"
+		icon_dead = "[prefix]_baby_slime_dead"
 
 	if(stat == DEAD)
 		icon_state = icon_dead
-
-	update_name()
-	if(!chemical_injection)
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, current_color.secretion_path, ooze_production, 10 SECONDS)
 	else
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, chemical_injection, ooze_production, 10 SECONDS)
+		icon_state = icon_living
+
+	return ..()
 
 /mob/living/basic/slime/update_overlays()
 	. = ..()
-	if(worn_accessory)
-		if(slime_flags & ADULT_SLIME)
-			.+= mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-adult", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
-		else
-			.+= mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-baby", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
-
-/mob/living/basic/slime/proc/check_secretion()
-	if((!(slime_flags & ADULT_SLIME)) || (slime_flags & STORED_SLIME) || (slime_flags & MUTATING_SLIME) || (slime_flags & NOOOZE_SLIME))
-		return FALSE
-	if(stat == DEAD)
-		return FALSE
-	if(hunger_precent < production_precent)
-		return FALSE
-	return TRUE
+	if (equipped_hat)
+		var/mutable_appearance/hat_overlay = equipped_hat.build_worn_icon(default_layer = 0.15, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		SET_PLANE_EXPLICIT(hat_overlay, PLANE_TO_TRUE(plane), src)
+		hat_overlay.appearance_flags = RESET_COLOR|KEEP_APART
+		hat_overlay.pixel_y -= 8
+		. += hat_overlay
 
 /mob/living/basic/slime/proc/hunger_updated(datum/source, current_hunger, max_hunger)
+	var/was_adult = slime_flags & ADULT_SLIME
 	hunger_precent = current_hunger / max_hunger
 	if(hunger_precent > production_precent)
-		slime_flags |= ADULT_SLIME
+		if(!was_adult)
+			slime_flags |= ADULT_SLIME
+			update_slime_varience()
 	else
-		slime_flags &= ~ADULT_SLIME
-	update_slime_varience()
-	update_appearance()
+		if(was_adult)
+			slime_flags &= ~ADULT_SLIME
+			update_slime_varience()
 
 /mob/living/basic/slime/proc/add_trait(datum/slime_trait/added_trait)
 	for(var/datum/slime_trait/trait as anything in slime_traits)
@@ -312,7 +323,7 @@
 	var/datum/slime_trait/new_trait = new added_trait
 	new_trait.on_add(src)
 	slime_traits += new_trait
-	update_name()
+	update_slime_varience()
 	return TRUE
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -322,7 +333,7 @@
 			continue
 		slime_traits -= trait
 		qdel(trait)
-		update_name()
+		update_slime_varience()
 		return
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -334,7 +345,7 @@
 	return FALSE
 
 /mob/living/basic/slime/update_name()
-	if(slime_name_regex.Find(name))
+	if(findtext(name, slime_name_regex))
 		if(!number)
 			number = rand(1, 1000)
 		var/slime_variant = "slime"
@@ -343,10 +354,11 @@
 		if(slime_flags & CLEANER_SLIME)
 			slime_variant = "cleaner [slime_variant]"
 
+		var/adult = (slime_flags & ADULT_SLIME) ? "adult" : "baby"
 		if(overriding_name_prefix)
-			name = "[overriding_name_prefix] [current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
+			name = "[overriding_name_prefix] [current_color.name] [adult] [slime_variant] ([number])"
 		else
-			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
+			name = "[current_color.name] [adult] [slime_variant] ([number])"
 		real_name = name
 	return ..()
 
@@ -367,7 +379,6 @@
 
 	var/mob/living/basic/slime/new_slime = new(loc, current_color.type, TRUE)
 	new_slime.mutation_chance = mutation_chance
-	new_slime.ooze_production = ooze_production
 	for(var/datum/slime_mutation_data/data as anything in possible_color_mutations)
 		data.copy_progress(new_slime)
 	for(var/datum/slime_trait/trait as anything in slime_traits)
@@ -380,6 +391,7 @@
 		nanites.nanite_volume *= 0.5
 		new_slime.AddComponent(/datum/component/nanites, nanites.nanite_volume)
 		SEND_SIGNAL(new_slime, COMSIG_NANITE_SYNC, nanites, TRUE, TRUE) //The trues are to copy activation as well
+	new_slime.slime_extract_bonus = slime_extract_bonus
 
 /mob/living/basic/slime/proc/start_mutating(random = FALSE)
 	if(!pick_mutation(random))
@@ -424,7 +436,6 @@
 	slime_flags &= ~MUTATING_SLIME
 	ai_controller.reset_ai_status()
 
-
 /mob/living/basic/slime/proc/pick_mutation(random = FALSE)
 	mutating_into = null
 	var/list/valid_choices = list()
@@ -458,22 +469,15 @@
 		mutation_chance += 10
 		start_split()
 
-/mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/slime_accessory))
-		return
-	worn_accessory = attacking_item
-	attacking_item.forceMove(src)
-	update_appearance()
-
-/mob/living/basic/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-	if(worn_accessory)
-		visible_message("[user] takes the [worn_accessory] off the [src].")
-		balloon_alert_to_viewers("removed accessory")
-		user.put_in_hands(worn_accessory)
-		worn_accessory = null
-		update_appearance()
+// Handles placing a hat on the slime
+/mob/living/basic/slime/proc/equip_hat(obj/item/item, mob/living/user)
+	if(user)
+		user.visible_message(span_notice("[user] puts [item] on [name]'s head."),
+			span_notice("You put [item] on [name]'s head."))
+	item.forceMove(src)
+	equipped_hat = item
+	update_appearance(UPDATE_OVERLAYS)
+	return TRUE
 
 /mob/living/basic/slime/Life(seconds_per_tick, times_fired)
 	if(isopenturf(loc))
@@ -486,14 +490,6 @@
 	if(QDELETED(client))
 		buckled?.unbuckle_mob(src, force = TRUE)
 	return
-
-/mob/living/basic/slime/proc/latch_callback(mob/living/target)
-	if(!chemical_injection)
-		return FALSE
-	if(!target.reagents)
-		return FALSE
-	target.reagents.add_reagent(chemical_injection, 3) // guh
-	return TRUE
 
 /mob/living/basic/slime/rainbow
 	current_color = /datum/slime_color/rainbow
@@ -517,6 +513,6 @@
 /mob/living/basic/slime/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, throwingdatum.thrower, FRIENDSHIP_FRIEND))
-		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom) && !QDELING(hit_atom))
-			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
+		if(can_latch_feed(hit_atom))
+			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE)
 			visible_message(span_danger("[throwingdatum.thrower] hucks [src] at [hit_atom] causing the [src] to stick to [hit_atom]."))

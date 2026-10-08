@@ -2,7 +2,7 @@
 	name = "slime mutation syringe"
 	desc = "Infuses a mutation into a slime."
 
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
+	icon = 'icons/obj/xenobiology/mutation_syringe.dmi'
 	icon_state = "mutation_syringe"
 
 	w_class = WEIGHT_CLASS_SMALL
@@ -75,18 +75,6 @@
 /obj/item/slime_mutation_syringe/never_evolving
 	name = "never splitting slime mutation syringe"
 	infusing_trait_path = /datum/slime_trait/never_evolving
-
-/obj/item/slime_mutation_syringe/never_ooze
-	name = "never ooze slime mutation syringe"
-	infusing_trait_path = /datum/slime_trait/never_ooze
-
-/obj/item/slime_mutation_syringe/soda_slime
-	name = "soda slime mutation syringe"
-	infusing_trait_path = /datum/slime_trait/soda_slime
-
-/obj/item/slime_mutation_syringe/beer_slime
-	name = "beer slime mutation syringe"
-	infusing_trait_path = /datum/slime_trait/beer_slime
 
 /obj/item/slime_mutation_syringe/random_color
 	name = "random color slime mutation syringe"

@@ -1,6 +1,6 @@
 /obj/item/taperecorder
 	name = "universal recorder"
-	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
+	desc = "A device that can record to recording tapes, and play them. It automatically translates the content in playback."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorder_empty"
 	inhand_icon_state = "analyzer"
@@ -15,12 +15,12 @@
 	speech_span = SPAN_TAPE_RECORDER
 	drop_sound = 'sound/items/handling/taperecorder_drop.ogg'
 	pickup_sound = 'sound/items/handling/taperecorder_pickup.ogg'
+	desc_controls = "Alt-Click to toggle the radio filter."
 	var/recording = FALSE
 	var/playing = FALSE
 	var/playsleepseconds = 0
 	var/obj/item/tape/mytape
 	var/starting_tape_type = /obj/item/tape/random
-	var/open_panel = FALSE
 	var/canprint = TRUE
 	var/list/icons_available = list()
 	var/radial_icon_file = 'icons/hud/radial_taperecorder.dmi'
@@ -30,6 +30,8 @@
 	var/time_left_warning = 60 SECONDS
 	///Sound loop that plays when recording or playing back.
 	var/datum/looping_sound/tape_recorder_hiss/soundloop
+	///If we record stuff spoken on radio
+	var/radio_sensitive = FALSE
 
 /obj/item/taperecorder/Initialize(mapload)
 	. = ..()
@@ -37,7 +39,6 @@
 		mytape = new starting_tape_type(src)
 	soundloop = new(src)
 	update_appearance()
-	become_hearing_sensitive()
 
 /obj/item/taperecorder/Destroy()
 	QDEL_NULL(soundloop)
@@ -58,11 +59,13 @@
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += span_notice("The wire panel is [open_panel ? "opened" : "closed"]. The display reads:")
+		. += span_notice("The radio filter is [radio_sensitive ? "off" : "on"].")
+		. += span_notice("The display reads:")
 		. += "[readout()]"
 
 /obj/item/taperecorder/click_alt(mob/user)
-	play()
+	radio_sensitive = !radio_sensitive
+	balloon_alert(user, "radio filter [radio_sensitive ? "off" : "on"]")
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/taperecorder/proc/update_available_icons()
@@ -111,8 +114,8 @@
 	update_appearance()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
-	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
-	..()
+	mytape?.unspool() //Fires unspool the tape, which makes sense if you don't think about it
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/taperecorder/attack_hand(mob/user, list/modifiers)
@@ -127,9 +130,7 @@
 	return FALSE
 
 
-/obj/item/taperecorder/verb/ejectverb()
-	set name = "Eject Tape"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -137,7 +138,6 @@
 	if(!mytape)
 		balloon_alert(usr, "no tape!")
 		return
-
 	eject(usr)
 
 
@@ -157,14 +157,17 @@
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(mytape && recording)
-		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [raw_message]"
+	if(!mytape || istype(speaker, /obj/item/taperecorder))
+		return
+
+	if(radio_freq && !radio_sensitive)
+		return
+
+	mytape.timestamp += mytape.used_capacity
+	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [speaker.GetVoice()]: [raw_message]"
 
 
-/obj/item/taperecorder/verb/record()
-	set name = "Start Recording"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, record, "Start Recording", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -183,6 +186,7 @@
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
+		become_hearing_sensitive()
 		balloon_alert(usr, "started recording")
 		update_sound()
 		update_appearance()
@@ -204,9 +208,7 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
-/obj/item/taperecorder/verb/stop()
-	set name = "Stop"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, stop, "Stop", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -216,6 +218,7 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		balloon_alert(usr, "stopped recording")
 		recording = FALSE
+		lose_hearing_sensitivity()
 	else if(playing)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		balloon_alert(usr, "stopped playing")
@@ -224,9 +227,7 @@
 	update_appearance()
 	update_sound()
 
-/obj/item/taperecorder/verb/play()
-	set name = "Play Tape"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, play, "Play Tape", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -265,7 +266,7 @@
 			playsleepseconds = 1
 			sleep(1 SECONDS)
 		else
-			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
+			playsleepseconds = max(mytape.timestamp[i + 1] - mytape.timestamp[i], 1 SECONDS)
 		if(playsleepseconds > 14 SECONDS)
 			sleep(1 SECONDS)
 			say("Skipping [playsleepseconds/10] seconds of silence.")
@@ -297,9 +298,7 @@
 			if("Eject")
 				eject(user)
 
-/obj/item/taperecorder/verb/print_transcript()
-	set name = "Print Transcript"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", "Object")
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
@@ -366,7 +365,7 @@
 	starting_tape_type = null
 
 /obj/item/tape
-	name = "tape"
+	name = "recording tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
 	icon_state = "tape_white"
 	icon = 'icons/obj/device.dmi'

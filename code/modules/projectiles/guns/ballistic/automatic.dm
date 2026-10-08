@@ -74,17 +74,18 @@
 	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	inhand_icon_state = "c20r"
+	fire_sound = 'sound/weapons/gun/smg/gunshot_c20.ogg'
 	selector_switch_icon = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45
 	fire_delay = 2
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
-	can_bayonet = TRUE
-	knife_x_offset = 26
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+
+/obj/item/gun/ballistic/automatic/c20r/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 26, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/c20r/update_overlays()
 	. = ..()
@@ -100,12 +101,13 @@
 
 /obj/item/gun/ballistic/automatic/wt550
 	name = "\improper WT-550 Autorifle"
-	desc = "Recalled by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
+	desc = "Recalled commercially by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
 		This outcry was fabricated through various Syndicate-backed misinformation operations to force Nanotrasen to abandon \
 		its ballistics weapon program, cornering them into the energy weapons market. Most often found today in the hands of pirates, \
-		underfunded security personnel, cargo technicians, theoritical physicists and gang bangers out on the rim. \
+		underfunded security personnel, cargo technicians, theoretical physicists and gang bangers out on the rim. \
 		Light-weight and fully automatic. Uses 4.6x30mm rounds."
 	icon_state = "wt550"
+	fire_sound = 'sound/weapons/gun/smg/gunshot_wt.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wt550m9
@@ -113,12 +115,12 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+
+/obj/item/gun/ballistic/automatic/wt550/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 25, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/wt550/Initialize(mapload)
 	. = ..()
@@ -130,9 +132,9 @@
 /obj/item/gun/ballistic/automatic/wt550/fss //Slightly worse printable WT-550
 	name = "\improper FSS-550"
 	desc = "A modified printable version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Not only does this gun have less stopping power, the magazine doesn't entirely fit, and it takes a bit of force to jam it in or rip it out. Used by Syndicate agents and rebels in more than 50 systems."
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "fss550"
 	inhand_icon_state = "fss"
 	spread = 2
@@ -311,8 +313,7 @@
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
 	icon_state = "bogseo"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_righthand.dmi'
+	worn_icon_state = "bogseo"
 	inhand_icon_state = "bogseo"
 	special_mags = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
@@ -322,10 +323,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 9
-	burst_size = 2
-	fire_delay = 0.5 SECONDS
+	fire_delay = 0.3 SECONDS
+	burst_size = 1
 	actions_types = list()
 	spread = 14.5
 	// Hope you didn't need to see anytime soon
@@ -335,7 +335,7 @@
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
-///	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/examine(mob/user)
 	. = ..()
@@ -379,7 +379,6 @@
 	can_suppress = TRUE
 	suppressor_x_offset = 0
 	suppressor_y_offset = 0
-	can_bayonet = FALSE
 	burst_size = 1
 	fire_delay = 0.2 SECONDS
 	actions_types = list()
@@ -429,7 +428,6 @@
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol/stendo
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_light.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 11
 	burst_size = 2
 	fire_delay = 0.35 SECONDS
@@ -473,7 +471,12 @@
 /obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
 	pin = /obj/item/firing_pin
 
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted/damaged // Black market variant, more spread
+	desc = "A small submachinegun, this one is painted in tacticool black and has a bent barrel. Accepts any standard Sol pistol magazine."
+	spread = 15
 
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted/damaged/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
 
 ///Rifles
 
@@ -529,6 +532,87 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
+#define FIRING_PIN_REMOVAL_DELAY 50
+/obj/item/gun/ballistic/automatic/m90/screwdriver_act_secondary(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	else if(underbarrel.pin?.pin_removable && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [underbarrel.pin] from [underbarrel] with [I]."),
+		span_notice("You attempt to remove [underbarrel.pin] from [underbarrel]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
+			if(!underbarrel.pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[underbarrel.pin] is pried out of [underbarrel] by [user], destroying the pin in the process."),
+								span_warning("You pry [underbarrel.pin] out with [I], destroying the pin in the process."), null, 3)
+			QDEL_NULL(underbarrel.pin)
+			return TRUE
+
+/obj/item/gun/ballistic/automatic/m90/welder_act_secondary(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	else if(underbarrel.pin?.pin_removable && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [underbarrel.pin] from [underbarrel] with [I]."),
+		span_notice("You attempt to remove [underbarrel.pin] from [underbarrel]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, 5, volume = 50))
+			if(!underbarrel.pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[underbarrel.pin] is spliced out of [underbarrel] by [user], melting part of the pin in the process."),
+								span_warning("You splice [underbarrel.pin] out of [underbarrel] with [I], melting part of the pin in the process."), null, 3)
+			QDEL_NULL(underbarrel.pin)
+			return TRUE
+
+/obj/item/gun/ballistic/automatic/m90/wirecutter_act_secondary(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	else if(underbarrel.pin?.pin_removable && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [underbarrel.pin] from [underbarrel] with [I]."),
+		span_notice("You attempt to remove [underbarrel.pin] from [underbarrel]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
+			if(!underbarrel.pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[underbarrel.pin] is ripped out of [underbarrel] by [user], mangling the pin in the process."),
+								span_warning("You rip [underbarrel.pin] out of [underbarrel] with [I], mangling the pin in the process."), null, 3)
+			QDEL_NULL(underbarrel.pin)
+			return TRUE
+
+/obj/item/firing_pin/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isgun(interacting_with))
+		return NONE
+	if(!(("underbarrel") in (interacting_with.vars)))
+		return NONE
+	var/obj/item/gun/ballistic/automatic/m90/targeted_gun = interacting_with
+	var/obj/item/firing_pin/old_pin = targeted_gun.underbarrel.pin
+	if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
+		if(Adjacent(user))
+			user.put_in_hands(old_pin)
+		else
+			old_pin.forceMove(targeted_gun.drop_location())
+		old_pin.gun_remove(user)
+
+	if(!targeted_gun.underbarrel.pin)
+		if(!user.temporarilyRemoveItemFromInventory(src))
+			return .
+		if(gun_insert(user, targeted_gun.underbarrel))
+			if(old_pin)
+				balloon_alert(user, "swapped firing pin")
+			else
+				balloon_alert(user, "inserted firing pin")
+	else
+		to_chat(user, span_notice("This firearm already has a firing pin installed."))
+
+	return ITEM_INTERACT_SUCCESS
+
+#undef FIRING_PIN_REMOVAL_DELAY
+
 /obj/item/gun/ballistic/automatic/m90/update_overlays()
 	. = ..()
 	switch(select)
@@ -569,7 +653,6 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/rifle_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_rifle.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 12
 	burst_size = 1
 	fire_delay = 0.4 SECONDS
@@ -717,7 +800,7 @@
 /obj/item/gun/ballistic/automatic/quarad_lmg /// Light Machine Gun, lives in the heavy armaments locker
 	name = "\improper Qarad Light Machinegun"
 	desc = "A spotless, if outdated machinegun. The same model was used to great effect against xenomorph incursions in the past, hopefully this one doesn't have any manufacturing defects...."
-	icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'
+	icon = 'icons/obj/weapons/guns/guns48x.dmi'
 	icon_state = "outomaties"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "outomaties"
@@ -735,7 +818,6 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/rifle_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_rifle.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 12
 	actions_types = list()
 	burst_size = 1
@@ -770,10 +852,10 @@
 	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 	icon_state = "outomaties_evil"
-	worn_icon = 'monkestation/icons/mob/inhands/gunsx48_worn.dmi'
+	worn_icon = 'icons/mob/inhands/gunsx48_worn.dmi'
 	worn_icon_state = "outomaties_evil"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthandx48.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthandx48.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	fire_delay = 0.1 SECONDS
@@ -886,7 +968,6 @@
 	can_suppress = TRUE
 	suppressor_x_offset = 0
 	suppressor_y_offset = 0
-	can_bayonet = FALSE
 	burst_size = 1
 	fire_delay = 1.2 SECONDS
 	actions_types = list()
@@ -945,7 +1026,6 @@
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wylom
 	can_suppress = FALSE
-	can_bayonet = FALSE
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/amr_fire.ogg'
 	fire_sound_volume = 100 // BOOM BABY
 	recoil = 4
@@ -995,7 +1075,7 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
 
 
@@ -1013,6 +1093,7 @@
 	actions_types = list()
 	mag_display = TRUE
 	empty_indicator = TRUE
+	can_suppress = FALSE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/pksmgmag
 	pin = /obj/item/firing_pin/wastes
 	bolt_type = BOLT_TYPE_LOCKING

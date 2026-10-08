@@ -110,6 +110,6 @@
 	if(!(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
 		return
 	var/block = check_contact_sterility(zone)
-	if(block)
+	if(!block)
 		infect_disease(D, notes = note)
 

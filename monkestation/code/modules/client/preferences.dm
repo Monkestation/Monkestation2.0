@@ -19,7 +19,8 @@
 	var/datum/ui_module/volume_mixer/pref_mixer
 
 	var/list/channel_volume = list(
-		"1019" = 100,
+		"1005" = 100, //master starts at 100%
+		"1018" = 100, //heartbeats for some fuckin reason
 	)
 
 	var/list/saved_tokens = list(

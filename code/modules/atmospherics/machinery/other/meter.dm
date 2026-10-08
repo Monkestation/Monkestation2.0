@@ -1,8 +1,8 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
-	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
-	icon_state = "meter"
+	icon = 'icons/map_icons/objects.dmi'
+	SETUP_MAP_ICONS("meter", "/obj/machinery/meter")
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
@@ -90,17 +90,17 @@
 		new_greyscale = COLOR_GRAY
 	else
 		switch(env_temperature)
-			if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+			if(700 to INFINITY)
 				new_greyscale = COLOR_RED
-			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+			if(460 to 700)
 				new_greyscale = COLOR_ORANGE
-			if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+			if(340 to 460)
 				new_greyscale = COLOR_YELLOW
-			if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+			if(270 to 340)
 				new_greyscale = COLOR_VIBRANT_LIME
-			if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+			if(200 to 270)
 				new_greyscale = COLOR_CYAN
-			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+			if(70 to 200)
 				new_greyscale = COLOR_BLUE
 			else
 				new_greyscale = COLOR_VIOLET
@@ -191,12 +191,15 @@
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 // why are you yelling?
 /obj/machinery/meter/turf
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/turf/reattach_to_layer()
 	target = loc
 
 /obj/machinery/meter/layer2
 	target_layer = 2
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/layer4
 	target_layer = 4
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1

@@ -33,7 +33,7 @@
 
 /// Returns true if the MC is initialized and running.
 /// Optional argument init_stage controls what stage the mc must have initializted to count as initialized. Defaults to INITSTAGE_MAX if not specified.
-#define MC_RUNNING(INIT_STAGE...) (Master && Master.processing > 0 && Master.current_runlevel && Master.init_stage_completed == (max(min(INITSTAGE_MAX, ##INIT_STAGE), 1)))
+#define MC_RUNNING(INIT_STAGE...) (Master && Master.processing > 0 && Master.current_runlevel && Master.init_stage_completed >= (max(min(INITSTAGE_MAX, ##INIT_STAGE), 1)))
 
 #define MC_LOOP_RTN_NEWSTAGES 1
 #define MC_LOOP_RTN_GRACEFUL_EXIT 2
@@ -82,6 +82,9 @@
 /// Don't show when this has init'd
 #define SS_NO_INIT_MESSAGE (1 << 8)
 
+/// Allows the subsystem to be dynamically swapped between backgrounding.
+#define SS_DYNAMIC (1 << 9)
+
 //! SUBSYSTEM STATES
 #define SS_IDLE 0 /// ain't doing shit.
 #define SS_QUEUED 1 /// queued to run
@@ -91,9 +94,11 @@
 #define SS_PAUSING 5 /// in the middle of pausing
 
 // Subsystem init stages
-#define INITSTAGE_EARLY 1 //! Early init stuff that doesn't need to wait for mapload
-#define INITSTAGE_MAIN 2 //! Main init stage
-#define INITSTAGE_MAX 2 //! Highest initstage.
+#define INITSTAGE_FIRST 1
+#define INITSTAGE_EARLY 2 //! Early init stuff that doesn't need to wait for mapload
+#define INITSTAGE_MAIN 3 //! Main init stage
+#define INITSTAGE_LAST 4
+#define INITSTAGE_MAX 4 //! Highest initstage.
 
 #define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
 /datum/controller/subsystem/##X/New(){\
@@ -143,3 +148,11 @@
 }\
 /datum/controller/subsystem/verb_manager/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/verb_manager/##X
+
+#define MOBS_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/mobs/##X);\
+/datum/controller/subsystem/mobs/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/mobs/##X/fire() {..() /*just so it shows up on the profiler*/} \
+/datum/controller/subsystem/mobs/##X

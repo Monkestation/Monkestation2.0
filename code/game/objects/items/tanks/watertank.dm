@@ -8,9 +8,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	alternate_worn_layer = ABOVE_HEAD_LAYER //monkestation addition
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 	slot_flags = ITEM_SLOT_BACK
-	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
 	armor_type = /datum/armor/item_watertank
@@ -60,9 +59,7 @@
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
 
-/obj/item/watertank/verb/toggle_mister_verb()
-	set name = "Toggle Mister"
-	set category = "Object"
+GAME_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "Object")
 	toggle_mister(usr)
 
 /obj/item/watertank/proc/make_noz()
@@ -173,7 +170,6 @@
 	inhand_icon_state = "pepperbackpacksec"
 	custom_price = PAYCHECK_CREW * 2
 	volume = 1000
-	slowdown = 0 //monkestation edit
 
 /obj/item/watertank/pepperspray/Initialize(mapload)
 	. = ..()
@@ -210,7 +206,6 @@
 	icon_state = "waterbackpackatmos"
 	worn_icon_state = "waterbackpackatmos"
 	volume = 200
-	slowdown = 0
 
 /obj/item/watertank/atmos/Initialize(mapload)
 	. = ..()
@@ -389,7 +384,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
 
 	var/on = FALSE

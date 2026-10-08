@@ -77,7 +77,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bitrunner
 	name = "Bitrunner"
-	icon_state = "Bitrunner"
+	icon_state = JOB_BITRUNNER
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
@@ -107,6 +107,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Shaft Miner"
 	icon_state = "Shaft Miner"
 
+/obj/effect/landmark/start/explorer
+	name = "Explorer"
+	icon_state = "Explorer"
+
 /obj/effect/landmark/start/security_officer
 	name = "Security Officer"
 	icon_state = "Security Officer"
@@ -125,8 +129,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bridge_assistant
 	name = "Bridge Assistant"
-	icon_state = JOB_ASSISTANT //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
-	color = COLOR_NAVY //IM LAZY OKAY
+	icon_state = JOB_BRIDGE_ASSISTANT
 
 /obj/effect/landmark/start/detective
 	name = "Detective"
@@ -190,11 +193,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/virologist
 	name = "Pathologist"
-	icon_state = "Virologist"
+	icon_state = JOB_VIROLOGIST
 
 /obj/effect/landmark/start/psychologist
 	name = "Psychologist"
 	icon_state = "Psychologist"
+
+/obj/effect/landmark/start/barber
+	name = "Barber"
+	icon_state = "Barber"
 
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
@@ -203,24 +210,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/cyborg
 	name = "Cyborg"
 	icon_state = "Cyborg"
-
-/obj/effect/landmark/start/ai
-	name = "AI"
-	icon_state = "AI"
-	delete_after_roundstart = FALSE
-	var/primary_ai = TRUE
-	var/latejoin_active = TRUE
-
-/obj/effect/landmark/start/ai/after_round_start()
-	if(latejoin_active && !used)
-		new /obj/structure/ai_core/latejoin_inactive(loc)
-	return ..()
-
-/obj/effect/landmark/start/ai/secondary
-	icon = 'icons/effects/landmarks_static.dmi'
-	icon_state = "ai_spawn"
-	primary_ai = FALSE
-	latejoin_active = FALSE
 
 //Department Security spawns
 
@@ -335,6 +324,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
 	icon_state = "observer_start"
+
+/obj/effect/landmark/tutorial_start
+	name = "tutorial_start"
 
 //generic maintenance locations
 /obj/effect/landmark/generic_maintenance_landmark
@@ -677,6 +669,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/minisat_access_chapel_library
 	location = "Chapel and Library MiniSat Access"
 
+/obj/effect/landmark/navigate_destination/garden
+	location = "Public Garden"
+
 //Service
 /obj/effect/landmark/navigate_destination/kitchen
 	location = "Kitchen"
@@ -732,3 +727,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/virology
 	location = "Virology"
 //End of monke edit
+
+/obj/effect/landmark/navigate_destination/mining_foundry
+	location = "Mining Foundry"

@@ -45,7 +45,7 @@
 
 	step(movable_parent, dir_to_move)
 	var/last_move_diagonal = ((dir_to_move & (dir_to_move - 1)) && (movable_parent.loc == next))
-	COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 2 : 1) * speed) SECOND)
+	COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 2 : 1) * speed) SECONDS)
 
 	if(QDELETED(src))
 		return COMSIG_BLOCK_RELAYMOVE
@@ -77,7 +77,7 @@
 	)
 	if(!LAZYLEN(candidates))
 		if(repolling)
-			addtimer(CALLBACK(src,PROC_REF(request_control),2.5 MINUTE))
+			addtimer(CALLBACK(src,PROC_REF(request_control), 2.5 MINUTES))
 		attempting_awakening = FALSE
 		return
 

@@ -279,7 +279,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/sensor_device,
@@ -378,23 +379,13 @@
 	desc = "A white winter coat with an outdated atomic model instead of a plastic zipper tab."
 	icon_state = "coatscience"
 	inhand_icon_state = "coatscience"
-	allowed = list(
-		/obj/item/analyzer,
-		/obj/item/dnainjector,
-		/obj/item/paper,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/storage/bag/xeno,
-		/obj/item/storage/pill_bottle,
-	)
 	armor_type = /datum/armor/wintercoat_science
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/hooded/wintercoat/science/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.science_suit_allowed
 
 /datum/armor/wintercoat_science
 	bomb = 10
@@ -599,9 +590,11 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
-	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("coatwinter", "/obj/item/clothing/suit/hooded/wintercoat/custom")
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
+	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
 	flags_1 = IS_PLAYER_COLORABLE_1
 

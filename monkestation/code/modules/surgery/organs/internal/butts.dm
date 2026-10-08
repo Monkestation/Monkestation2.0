@@ -1,22 +1,28 @@
 /obj/item/organ/internal/butt
 	name = "butt"
 	desc = "extremely treasured body part"
-	worn_icon = 'monkestation/icons/obj/worn_butts.dmi' //Wearable on the head
-	icon = 'monkestation/icons/obj/butts.dmi'
+	worn_icon = 'icons/obj/worn_butts.dmi' //Wearable on the head
+	icon = 'icons/obj/butts.dmi'
 	icon_state = "ass"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_BUTT
 	throw_speed = 1
 	force = 4
-	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 20)
+	embed_type = /datum/embedding/butt
 	hitsound = 'sound/misc/fart1.ogg'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
-	var/list/sound_effect  = list('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg')
+	var/list/sound_effect  = list('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg')
 	var/atmos_gas = "miasma=0.25;TEMP=310.15" //310.15 is body temperature
 	var/fart_instability = 1 //Percent chance to lose your rear each fart.
 	var/cooling_down = FALSE
 	var/superfart_armed = FALSE
+
+/datum/embedding/butt
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+	embed_chance = 20
 
 //ADMIN ONLY ATOMIC ASS
 /obj/item/organ/internal/butt/atomic
@@ -37,20 +43,20 @@
 		user.audible_message("[user] <font color='green'>farts.</font>")
 		if(prob(fart_instability))
 			playsound(user, "sound/machines/alarm.ogg", 100, FALSE, 50, ignore_walls=TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
-			minor_announce("The detonation of a nuclear posterior has been detected in your area. All crew are required to exit the blast radius.", "Nanotrasen Atomics", 0)
-			Person.Paralyze(120)
-			Person.electrocution_animation(120)
-			spawn(120)
-				Location = get_turf(user)
-				dyn_explosion(Location, 20,10)
-				cooling_down = FALSE
+			minor_announce("The detonation of a nuclear posterior has been detected in your area. All crew are required to exit the blast radius.", "Nanotrasen Atomics")
+			Person.Paralyze(12 SECONDS)
+			Person.electrocution_animation(12 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(kaboom), Person), 12 SECONDS)
 		else
 			playsound(user, pick(sound_effect), 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
 			Location.atmos_spawn_air(atmos_gas)
-			spawn(20)
-				cooling_down = FALSE
+			addtimer(VARSET_CALLBACK(src, cooling_down, FALSE), 2 SECONDS)
 	//Do NOT call parent on this.
 	//Unique functionality.
+
+/obj/item/organ/internal/butt/atomic/proc/kaboom(mob/living/carbon/human/user)
+	dyn_explosion(get_turf(user), 20, 10)
+	cooling_down = FALSE
 
 //BLUESPACE ASS
 /obj/item/organ/internal/butt/bluespace
@@ -65,6 +71,7 @@
 	name = "Flatulence Simulator"
 	desc = "Designed from the ground up to create advanced humor."
 	icon_state = "roboass"
+	organ_flags = ORGAN_ROBOTIC
 	sound_effect = list('sound/machines/buzz-sigh.ogg', 'sound/machines/buzz-two.ogg', 'sound/machines/terminal_error.ogg', 'sound/weapons/ring.ogg')
 	atmos_gas = "co2=0.25;TEMP=310.15"
 
@@ -77,7 +84,7 @@
 	icon_state = "clownass"
 	sound_effect = list('sound/items/party_horn.ogg', 'sound/items/bikehorn.ogg')
 
-/obj/item/organ/internal/butt/clown/Initialize()
+/obj/item/organ/internal/butt/clown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
 
@@ -100,14 +107,14 @@
 	name = "Skeletal Butt"
 	desc = "You don't understand how this works!"
 	atmos_gas = "o2=0.25;TEMP=310.15"
-	sound_effect = list("monkestation/sound/voice/laugh/skeleton/skeleton_laugh.ogg")
+	sound_effect = list("sound/voice/laugh/skeleton/skeleton_laugh.ogg")
 	icon_state =  "skeleass"
 
 //PLASMAMAN ASS
 /obj/item/organ/internal/butt/plasma
 	name = "Plasmaman Butt"
 	desc = "You REALLY don't understand how this works!"
-	sound_effect = list("monkestation/sound/voice/laugh/skeleton/skeleton_laugh.ogg")
+	sound_effect = list("sound/voice/laugh/skeleton/skeleton_laugh.ogg")
 	fart_instability = 5
 	atmos_gas = "plasma=0.25;TEMP=310.15"
 	icon_state = "plasmaass"
@@ -129,10 +136,10 @@
 /obj/effect/immovablerod/butt
 	name = "immovable butt"
 	desc = "No, really, what the fuck is that?"
-	icon = 'monkestation/icons/obj/butts.dmi'
+	icon = 'icons/obj/butts.dmi'
 	icon_state = "ass"
 
-/obj/effect/immovablerod/butt/Initialize()
+/obj/effect/immovablerod/butt/Initialize(mapload)
 	. = ..()
 	src.SpinAnimation(5, -1)
 
@@ -162,29 +169,16 @@
 	//BIBLEFART
 	//This goes above all else because it's an instagib.
 	for(var/obj/item/book/bible/Holy in Location)
-		if(Holy)
-			cooling_down = TRUE
-			var/turf/T = get_step(get_step(Person, NORTH), NORTH)
-			T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
-			Person.Paralyze(15)
-			Person.visible_message("<span class='warning'>[Person] attempts to fart on the [Holy], uh oh.<span>","<span class='ratvar'>What a grand and intoxicating innocence. Perish.</span>")
-			playsound(user,'sound/magic/lightningshock.ogg', 50, 1)
-			playsound(user,	'monkestation/sound/misc/dagothgod.ogg', 80)
-			Person.electrocution_animation(15)
-			spawn(15)
-				Person.gib()
-				dyn_explosion(Location, 1, 0)
-				cooling_down = FALSE
-			return
+		cooling_down = TRUE
+		Person.dagoth_kill_smite(butt = src, explode = TRUE)
+		return
 
 	//EMOTE MESSAGE/MOB TARGETED FARTS
 	var/hit_target = FALSE
 
 	var/list/ignored_mobs = list()
 	for(var/mob/anything in GLOB.player_list)
-		if(!anything.client)
-			continue
-		if(!anything.client.prefs.read_preference(/datum/preference/toggle/prude_mode))
+		if(!anything.client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
 			continue
 		ignored_mobs |= anything
 
@@ -202,7 +196,7 @@
 			hit_target = TRUE
 			break
 	if(!hit_target)
-		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE))
+		user.audible_message("[pick(file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE), ignored_mobs = ignored_mobs)
 
 	if(superfart_armed)
 		to_chat(user, span_notice("You decide to disarm your ass by farting slowly. Thank god."))
@@ -226,13 +220,33 @@
 			for(var/mob/living/Struck in Location)
 				if(Struck != user)
 					user.visible_message("<span class='danger'>[Struck] is struck in the face by [user]'s flying ass!</span>")
-					Struck.apply_damage(10, "brute", BODY_ZONE_HEAD)
+					Struck.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 					cooling_down = FALSE
 					return
 
-		spawn(15)
-			cooling_down = FALSE
+		addtimer(VARSET_CALLBACK(src, cooling_down, FALSE), 1.5 SECONDS)
 
+/mob/living/carbon/human/proc/dagoth_kill_smite(obj/item/organ/internal/butt/butt, explode = TRUE)
+	if(!QDELETED(butt))
+		butt.cooling_down = TRUE
+	var/turf/lighting_start = get_step(get_step(src, NORTH), NORTH)
+	to_chat(src, span_ratvar("What a grand and intoxicating innocence. Perish."))
+	lighting_start.Beam(src, icon_state = "lightning[rand(1,12)]", time = 1.5 SECONDS)
+	unequip_everything()
+	Paralyze(1.5 SECONDS)
+	playsound(src, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/misc/dagothgod.ogg', vol = 80)
+	electrocution_animation(1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_kill_smite), butt, explode), 1.5 SECONDS)
+
+/mob/living/carbon/human/proc/finish_kill_smite(obj/item/organ/internal/butt/butt, explode = TRUE)
+	var/turf/turf = get_turf(src)
+	playsound(turf, 'sound/effects/explosion3.ogg', vol = 75, vary = TRUE)
+	gib()
+	if(explode)
+		dyn_explosion(turf, 1, 0)
+	if(!QDELETED(butt))
+		butt.cooling_down = FALSE
 
 //Buttbot Production
 /obj/item/organ/internal/butt/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -274,14 +288,14 @@
 				new_butt.desc = "hiss!"
 				new_butt.icon_state = "buttbot_xeno"
 
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
+		playsound(src, pick('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
 		qdel(src)
 
 
 /mob/living/simple_animal/bot/buttbot
 	name = "\improper buttbot"
 	desc = "butts"
-	icon = 'monkestation/icons/obj/butts.dmi'
+	icon = 'icons/obj/butts.dmi'
 	icon_state = "buttbot"
 	density = FALSE
 	anchored = FALSE
@@ -289,9 +303,9 @@
 	maxHealth = 25
 	bot_type = BUTT_BOT
 	pass_flags = PASSMOB
-	var/cooling_down = FALSE
 	var/butt_probability = 15
 	var/listen_probability = 30
+	COOLDOWN_DECLARE(repeat_cooldown)
 
 /mob/living/simple_animal/bot/buttbot/Initialize(mapload)
 	. = ..()
@@ -299,19 +313,19 @@
 
 /mob/living/simple_animal/bot/buttbot/emag_act(mob/user)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
-		visible_message("<span class='warning'>[user] swipes a card through the [src]'s crack!</span>", "<span class='notice'>You swipe a card through the [src]'s crack.</span>")
+		visible_message(span_warning("[user] swipes a card through \the [src]'s crack!"), span_notice("You swipe a card through \the [src]'s crack."))
 		listen_probability = 75
 		butt_probability = 30
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		var/turf/butt = get_turf(src)
 		butt.atmos_spawn_air("miasma=5;TEMP=310.15")
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
+		playsound(src, pick('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
-	if(!cooling_down && prob(listen_probability) && ishuman(speaker))
-		cooling_down = TRUE
-		var/list/split_message = splittext(raw_message, " ")
+	if(COOLDOWN_FINISHED(src, repeat_cooldown) && prob(listen_probability))
+		COOLDOWN_START(src, repeat_cooldown, 2 SECONDS)
+		var/list/split_message = splittext_char(html_decode(raw_message), " ")
 		for (var/i in 1 to length(split_message))
 			if(prob(butt_probability))
 				split_message[i] = pick("butt", "butts")
@@ -319,11 +333,8 @@
 			var/turf/butt = get_turf(src)
 			butt.atmos_spawn_air("miasma=5;TEMP=310.15")
 		var/joined_text = jointext(split_message, " ")
-		if(!findtext(joined_text, "butt")) //We must butt, or else.
-			cooling_down = FALSE
+		if(!findtext_char(joined_text, "butt")) //We must butt, or else.
+			COOLDOWN_RESET(src, repeat_cooldown)
 			return
 		say(joined_text)
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 , use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
-		spawn(20)
-			cooling_down = FALSE
-
+		playsound(src, pick('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg'), 25 , use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)

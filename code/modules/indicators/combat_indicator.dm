@@ -64,10 +64,6 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, generate_combat_overlay())
 	if(combat_indicator_vehicle)
 		. += GLOB.combat_indicator_overlay
 
-/mob/living/proc/combat_indicator_unconscious_signal()
-	SIGNAL_HANDLER
-	set_combat_indicator(FALSE)
-
 /**
  * Called whenever a mob's CI status changes for any reason.
  *
@@ -113,12 +109,10 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, generate_combat_overlay())
 		combat_indicator = TRUE
 		apply_status_effect(/datum/status_effect/grouped/surrender, src)
 		log_message("<font color='red'>has turned ON the combat indicator!</font>", LOG_ATTACK)
-		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), PROC_REF(combat_indicator_unconscious_signal)) //From now on, whenever this mob falls unconcious, the referenced proc will fire.
 	else
 		combat_indicator = FALSE
 		remove_status_effect(/datum/status_effect/grouped/surrender, src)
 		log_message("<font color='blue'>has turned OFF the combat indicator!</font>", LOG_ATTACK)
-		UnregisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT)) //combat_indicator_unconcious_signal will no longer be fired if this mob is unconcious.
 	update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
 
 /**

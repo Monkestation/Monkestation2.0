@@ -39,9 +39,6 @@
 	. = ..()
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
 	. += span_notice("The [src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to a nearby operating computer.")
-	. += span_notice("patient = [patient]")
-	. += span_notice("op_computer = [op_computer]")
-	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()

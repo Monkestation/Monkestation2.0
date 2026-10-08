@@ -143,7 +143,7 @@
 	removed.temperature = max(removed.temperature + temperature_change, 1)
 
 /obj/machinery/atmospherics/components/binary/circulator/process_atmos()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon_state()
 	if(!is_operational)
@@ -171,7 +171,7 @@
 	var/turf/open/turf = get_turf(get_step(src, NORTH))
 	if(!isopenturf(turf))
 		return
-	balloon_alert(user, "You drain the lubricant tank.")
+	balloon_alert(user, "you drain the lubricant tank.")
 	turf.add_liquid_from_reagents(reagents)
 	reagents.remove_all(reagent_buffer)
 
@@ -268,10 +268,12 @@
 		generator.cold_circ = null
 	else
 		generator.hot_circ = null
-	generator.update_appearance()
+	generator.update_appearance(UPDATE_ICON)
 	generator = null
 
 /obj/machinery/atmospherics/components/binary/circulator/set_piping_layer(new_layer)
 	..()
 	pixel_x = 0
 	pixel_y = 0
+
+#undef DAMAGED_LUBRICANT_SYSTEM

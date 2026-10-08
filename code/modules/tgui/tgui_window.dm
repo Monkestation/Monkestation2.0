@@ -172,10 +172,11 @@
  * return bool
  */
 /datum/tgui_window/proc/can_be_suspended()
+	var/unlimited_windows = client?.prefs?.read_preference(/datum/preference/toggle/tgui_unlimited_windows)
 	return !fatally_errored \
 		&& pooled \
 		&& pool_index > 0 \
-		&& pool_index <= TGUI_WINDOW_SOFT_LIMIT \
+		&& (unlimited_windows || pool_index <= TGUI_WINDOW_SOFT_LIMIT) \
 		&& status == TGUI_WINDOW_READY
 
 /**
@@ -412,7 +413,7 @@
 		if("payloadChunk")
 			var/payload_id = payload["id"]
 			append_payload_chunk(payload_id, payload["chunk"])
-			send_message("acknowlegePayloadChunk", list("id" = payload_id))
+			send_message("acknowledgePayloadChunk", list("id" = payload_id))
 
 /datum/tgui_window/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, id) && ..()
@@ -468,6 +469,9 @@
 		var/message_type = payload["type"]
 		var/final_payload = chunks.Join()
 		remove_oversized_payload(payload_id)
+		if (!rustg_json_is_valid(final_payload))
+			log_tgui(usr, "Error: Invalid JSON")
+			return
 		on_message(message_type, json_decode(final_payload), list("type" = message_type, "payload" = final_payload, "tgui" = TRUE, "window_id" = id))
 	else
 		payload["timeout"] = addtimer(CALLBACK(src, PROC_REF(remove_oversized_payload), payload_id), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)

@@ -146,7 +146,11 @@
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
-	var/datum/forensics/forensics
+	var/datum/forensics/forensics = null
+	/// Cached color for all blood on us to avoid doing constant math
+	var/cached_blood_color = null
+	/// Cached emissive alpha for all blood on us to avoid doing constant math
+	var/cached_blood_emissive = null
 
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
@@ -178,12 +182,6 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-#ifndef DISABLE_DEMOS
-		// monkestation start: replays
-		if(!(flags_1 & DEMO_IGNORE_1))
-			SSdemo.mark_new(src)
-		// monkestation end
-#endif
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -335,7 +333,7 @@
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.angle + 180))
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
@@ -639,47 +637,24 @@
 
 ///returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	var/datum/blood_type/blood = get_blood_type()
-	if(!isnull(blood))
-		return list("UNKNOWN DNA" = blood.type)
-	return null
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
+		return
+
+	return list(blood_type.dna_string = blood_type)
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	if(isnull(dna)) // Xenos
-		return ..()
-	var/datum/blood_type/blood = get_blood_type()
-	if(isnull(blood)) // Skeletons?
-		return null
-	return list("[dna.unique_enzymes]" = blood.type)
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
+		return
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
+	if (dna?.unique_enzymes)
+		return list(dna.unique_enzymes = blood_type)
+	return list(blood_type.dna_string = blood_type)
 
 /mob/living/silicon/get_blood_dna_list()
 	return
-
-///to add a mob's dna info into an object's blood_dna list.
-/atom/proc/transfer_mob_blood_dna(mob/living/injected_mob)
-	// Returns 0 if we have that blood already
-	var/new_blood_dna = injected_mob.get_blood_dna_list()
-	if(!new_blood_dna)
-		return FALSE
-	var/old_length = GET_ATOM_BLOOD_DNA_LENGTH(src)
-	add_blood_DNA(new_blood_dna)
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src) == old_length)
-		return FALSE
-	return TRUE
-
-///to add blood from a mob onto something, and transfer their dna info
-/atom/proc/add_mob_blood(mob/living/injected_mob)
-	var/list/blood_dna = injected_mob.get_blood_dna_list()
-	if(iscarbon(injected_mob))
-		var/mob/living/carbon/mob = injected_mob
-		try_infect_with_mobs_diseases(mob)
-	if(!blood_dna)
-		return FALSE
-	return add_blood_DNA(blood_dna)
 
 ///Is this atom in space
 /atom/proc/isinspace()
@@ -695,14 +670,6 @@
  */
 /atom/proc/get_dumping_location()
 	return null
-
-/**
- * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
- *
- * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
- */
-/atom/proc/handle_atom_del(atom/deleting_atom)
-	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
 
 /**
  * the vision impairment to give to the mob whose perspective is set to that atom
@@ -743,22 +710,6 @@
 	The "highest priority" one is always displayed as opposed to the default of
 	"whichever was set last is displayed"
 */
-
-///Resets the atom's color to null, and then sets it to the highest priority colour available
-/atom/proc/update_atom_colour()
-	color = null
-	if(!atom_colours)
-		return
-	for(var/checked_color in atom_colours)
-		if(islist(checked_color))
-			var/list/color_list = checked_color
-			if(color_list.len)
-				color = color_list
-				return
-		else if(checked_color)
-			color = checked_color
-			return
-
 
 /**
  * Wash this atom
@@ -1066,7 +1017,7 @@
 	var/extra_context = ""
 	var/misc_context = ""
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
+	if(isliving(user) || isovermind(user) || iscameramob(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
 
 		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
@@ -1170,9 +1121,24 @@
 /// So transparent, blue, with a scanline and an emissive glow
 /// This is acomplished using a combination of filters and render steps/overlays
 /// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
-/atom/proc/makeHologram(opacity = 0.5)
+/// An optional color_override replaces the default blue tint — either a hex string (opacity applied on top) or a color matrix/list (passed through as-is; caller owns its own alpha)
+/// Returns the glow mutable_appearance so callers can cut the overlay later
+/atom/proc/makeHologram(opacity = 0.5, color_override)
 	// First, we'll make things blue (roughly) and sorta transparent
-	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125,180,225, opacity * 255)))
+	var/color_value
+	if(islist(color_override))
+		color_value = color_override
+	else
+		var/r = 125
+		var/g = 180
+		var/b = 225
+		if(color_override)
+			var/list/rgb_list = rgb2num(color_override)
+			r = rgb_list[1]
+			g = rgb_list[2]
+			b = rgb_list[3]
+		color_value = rgb(r, g, b, opacity * 255)
+	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(color_value))
 	// Now we're gonna do a scanline effect
 	// Gonna take this atom and give it a render target, then use it as a source for a filter
 	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
@@ -1194,7 +1160,9 @@
 		render_target = "HOLOGRAM [uid]"
 		uid++
 	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
-	var/static/atom/movable/render_step/emissive/glow = new(null)
+	var/static/atom/movable/render_step/emissive/glow
+	if(!glow)
+		glow = new(null)
 	glow.render_source = render_target
 	SET_PLANE_EXPLICIT(glow, initial(glow.plane), src)
 	// We're creating a render step that copies ourselves, and draws it to the emissive plane
@@ -1203,3 +1171,4 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
+	return glow_appearance

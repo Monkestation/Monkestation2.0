@@ -8,7 +8,7 @@
 	///where the user originally was
 	var/turf/original_loc
 
-/datum/action/cooldown/wonderland_drop/New(Target)
+/datum/action/cooldown/wonderland_drop/New(Target, original = TRUE)
 	..()
 	landmark =  GLOB.wonderland_marks["Wonderland landmark"]
 
@@ -25,7 +25,7 @@
 
 /datum/action/cooldown/wonderland_drop/proc/awaken(mob/living/sleeper)
 	to_chat(sleeper, span_warning("You wake up in the Wonderland."))
-	owner.playsound_local(sleeper, 'monkestation/sound/ambience/wonderland.ogg', vol = 10)
+	owner.playsound_local(sleeper, 'sound/ambience/wonderland.ogg', vol = 10)
 	addtimer(CALLBACK(src, PROC_REF(return_to_station), sleeper), 1 MINUTES)
 	StartCooldown()
 

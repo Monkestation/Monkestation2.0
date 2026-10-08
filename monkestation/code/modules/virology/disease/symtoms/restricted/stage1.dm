@@ -17,7 +17,7 @@
 	do_disease_transformation(mob, new_form)
 
 /*
-/datum/symptom/transformation/deactivate(mob/living/carbon/mob)
+/datum/symptom/transformation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	do_disease_transformation(mob, old_form)
 	to_chat(mob, span_notice("You feel like yourself again!"))
 */
@@ -74,6 +74,13 @@
 	new_form = /mob/living/silicon/robot
 	bantype = JOB_CYBORG
 	desc = "Restructures the subject cells into a Cyborg. Cure: Synthetic Cleaner"
+
+/datum/symptom/transformation/jungle_fever
+	name = "Jungle Fever"
+	desc = "Restructures the subject cells into a Monkey. Cure: Pulped Banana"
+
+/datum/symptom/transformation/jungle_fever/activate(mob/living/carbon/mob)
+	mob.monkeyize() // so that they keep the virus
 
 /datum/symptom/transformation/xeno
 	name = "Xenomorph Transformation"

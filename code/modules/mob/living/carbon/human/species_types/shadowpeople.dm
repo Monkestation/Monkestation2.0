@@ -1,4 +1,4 @@
-#define HEART_RESPAWN_THRESHHOLD 40
+#define HEART_RESPAWN_THRESHHOLD 30 SECONDS
 #define HEART_SPECIAL_SHADOWIFY 2
 ///cooldown between charges of the projectile absorb
 #define DARKSPAWN_REFLECT_COOLDOWN 15 SECONDS
@@ -133,7 +133,7 @@
 	if(!isturf(owner_turf))
 		return
 	var/light_amount = GET_SIMPLE_LUMCOUNT(owner_turf)
-	var/delta_time = min(round(DELTA_WORLD_TIME(SSmobs), 0.1), 8) // compensate for lag, but avoid potentially taking a shitload of damage all at once
+	var/delta_time = min(round(DELTA_WORLD_TIME(SSclient_mobs), 0.1), 8) // compensate for lag, but avoid potentially taking a shitload of damage all at once
 
 	// 1 damage per second
 	if(light_amount >= SHADOW_SPECIES_DIM_LIGHT) //if there's enough light, start dying
@@ -149,6 +149,7 @@
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	icon_state = "eyes"
 	color_cutoffs = list(20, 10, 40)
 	pepperspray_protect = TRUE
 
@@ -184,7 +185,6 @@
 		// monkestation addition: pain system
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		// monkestation end
 	)
@@ -246,7 +246,6 @@
 		TRAIT_SPECIESLOCK, //never let them swap off darkspawn, it can cause issues
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		TRAIT_NEVER_WOUNDED,
 		)
@@ -339,6 +338,19 @@
 	QDEL_NULL(terrorize_spell)
 	UnregisterSignal(brain_owner, COMSIG_ATOM_PRE_BULLET_ACT)
 
+/obj/item/organ/internal/brain/shadow/nightmare/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	if(!length(owner.all_wounds) || !SPT_PROB(10, seconds_per_tick))
+		return
+
+	var/turf/owner_turf = get_turf(owner)
+	if(owner_turf.get_lumcount() >= SHADOW_SPECIES_DIM_LIGHT)
+		return
+
+	var/datum/wound/wound = pick(owner.all_wounds)
+	to_chat(owner, span_green("The darkness soothes the [LOWER_TEXT(wound.name)] in your [wound.limb.plaintext_zone]!"))
+	qdel(wound) // Occasionally heal a random wound while in the dark.
+
 /obj/item/organ/internal/brain/shadow/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
 	SIGNAL_HANDLER
 	var/turf/dodge_turf = source.loc
@@ -425,6 +437,8 @@
 	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	respawn_progress = 0
 
+#define PASSIVE_SNUFF_LIMIT 0.5
+
 //Weapon
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
@@ -440,6 +454,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = -40
 	resistance_flags = ACID_PROOF
+	COOLDOWN_DECLARE(snuff_message_cooldown)
 
 /obj/item/light_eater/Initialize(mapload)
 	. = ..()
@@ -447,13 +462,289 @@
 	AddComponent(/datum/component/butchering, 80, 70)
 	AddComponent(/datum/component/light_eater)
 
+/obj/item/light_eater/Destroy(force)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/light_eater/pre_attack(atom/target, mob/living/user)
+	. = ..()
+	if(.)
+		return
+
+	if(user.istate & ISTATE_HARM) // In this case, you want to hit the door instead of prying it open.
+		return
+
+	var/is_fire_door = istype(target, /obj/machinery/door/firedoor)
+
+	if(!is_fire_door && !istype(target, /obj/machinery/door/airlock) && !istype(target, /obj/machinery/door/window))
+		return
+
+	var/obj/machinery/door/opening = target
+
+	if(!opening.density) // Don't bother opening that which is already open.
+		return
+
+	var/has_power = opening.hasPower() && !is_fire_door
+
+	if((!opening.requiresID() || opening.allowed(user)) && has_power) // Blocks useless messages for doors we can open normally.
+		return
+
+	if(has_power)
+		opening.balloon_alert(user, "powered!")
+		return TRUE
+
+	if(opening.locked)
+		opening.balloon_alert(user, "bolted!")
+		return TRUE
+
+	if(opening.welded)
+		opening.balloon_alert(user, "welded!")
+		return TRUE
+
+	user.visible_message(
+		message = span_warning("[user] forces [opening] to open with [user.p_their()] [src]!"),
+		self_message = span_warning("We force [opening] to open."),
+		blind_message = span_hear("You hear a metal screeching sound.")
+	)
+
+	if(is_fire_door)
+		var/obj/machinery/door/firedoor/fire_door = opening
+		if(user.istate & ISTATE_SECONDARY)
+			fire_door.try_to_crowbar_secondary(src, user)
+		else
+			fire_door.try_to_crowbar(src, user)
+	else
+		opening.open(BYPASS_DOOR_CHECKS)
+	return TRUE
+
+/obj/item/light_eater/process(seconds_per_tick)
+	do_snuff_check(loc, get_turf(loc))
+
 /obj/item/light_eater/worn_overlays(mutable_appearance/standing, isinhands, icon_file) //this doesn't work and i have no clue why
 	. = ..()
 	if(isinhands)
 		if(!istype(src, /obj/item/light_eater/nightmare))
 			. += emissive_appearance(icon, "[inhand_icon_state]_emissive", src)
 
+/obj/item/light_eater/equipped(mob/user, slot, initial)
+	. = ..()
+	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(on_moved))
+	AddComponent(/datum/component/connect_containers, user, containers_connections)
+	RegisterSignal(user, COMSIG_NIGHTMARE_SNUFF_CHECK, PROC_REF(do_snuff_check))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	START_PROCESSING(SSobj, src)
+
+/obj/item/light_eater/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_NIGHTMARE_SNUFF_CHECK, COMSIG_MOVABLE_MOVED))
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/light_eater/proc/on_moved(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+	do_snuff_check(loc, get_turf(source))
+
+/obj/item/light_eater/proc/do_snuff_check(mob/user, turf/start_turf)
+	if(!start_turf)
+		return
+
+	var/lumcount = start_turf.get_lumcount()
+	if(lumcount > PASSIVE_SNUFF_LIMIT)
+		return
+
+	var/snuffed_something = FALSE
+
+	for(var/atom/nearby as anything in view(2, start_turf))
+		if(!nearby.light || !nearby.light_on)
+			continue
+
+		if(istype(nearby, /obj/machinery/light))
+			var/obj/machinery/light/light_fixture = nearby
+			if(!light_fixture.low_power_mode) // Otherwise the emergency lights caused by tripping a fire alarm get snuffed and we don't want that.
+				continue
+
+		var/hsl = rgb2num(nearby.light_color, COLORSPACE_HSL)
+		if(nearby.light_power * (hsl[3] / 100) > 0.8) // The power of the light multiplied by its lightness is a good indicator of its overall brightness.
+			return
+
+		SEND_SIGNAL(src, COMSIG_LIGHT_EATER_EAT, nearby, src, TRUE)
+		snuffed_something = TRUE
+
+	if(!snuffed_something || !COOLDOWN_FINISHED(src, snuff_message_cooldown))
+		return
+
+	COOLDOWN_START(src, snuff_message_cooldown, 1 SECONDS)
+
+	user.visible_message(
+		message = span_danger("Something dark in [src] lashes out at nearby lights!"),
+		self_message = span_notice("Your [name] lashes out at nearby lights!"),
+		blind_message = span_danger("You feel a gnawing pulse eat at your sight.")
+	)
+
+#undef PASSIVE_SNUFF_LIMIT
 #undef DARKSPAWN_REFLECT_COOLDOWN
 #undef HEART_SPECIAL_SHADOWIFY
-#undef HEART_RESPAWN_THRESHHOLD
 
+// Shadow sect section
+#define SHADOW_CONVERSION_TRESHOLD 60 // Used for people changing into shadowpeople because of hearts
+
+/datum/species/shadow/blessed // Shadow person subsiecies with interacts with shadow sect
+	id = SPECIES_SHADOW_BLESSED
+	mutantheart = /obj/item/organ/internal/heart/shadow_ritual
+	var/sect_rituals_completed = 0 // only important if shadow sect is at play, this is a way to check what level of rituals it completed. Used by shadow hearts
+
+/datum/species/shadow/blessed/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+	. = ..()
+	var/turf/T = H.loc
+	if(!istype(T))
+		return
+
+	var/light_amount = T.get_lumcount()
+
+	if(light_amount >= SHADOW_SPECIES_DIM_LIGHT) //if there's enough light, start dying
+		H.take_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
+		if(H.has_movespeed_modifier(/datum/movespeed_modifier/shadow_sect))
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/shadow_sect)
+		return
+
+	if(sect_rituals_completed >= 1 && H.nutrition <= NUTRITION_LEVEL_WELL_FED)
+		H.nutrition += 2 * delta_time
+
+	H.heal_overall_damage((0.5 * delta_time), (0.5 * delta_time), 0, BODYTYPE_ORGANIC)
+
+	if(sect_rituals_completed >= 3)
+		H.add_movespeed_modifier(/datum/movespeed_modifier/shadow_sect)
+
+/datum/species/shadow/blessed/check_roundstart_eligible()
+	return FALSE
+
+/datum/species/shadow/blessed/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	RegisterSignal(C, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
+
+/datum/species/shadow/blessed/on_species_loss(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	UnregisterSignal(C, COMSIG_ATOM_PRE_BULLET_ACT)
+
+/datum/species/shadow/blessed/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
+	SIGNAL_HANDLER
+	var/turf/dodge_turf = source.loc
+	SEND_SIGNAL(source, COMSIG_NIGHTMARE_SNUFF_CHECK, dodge_turf)
+	if(!istype(dodge_turf) || dodge_turf.get_lumcount() >= SHADOW_SPECIES_DIM_LIGHT)
+		return NONE
+	source.visible_message(
+		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
+		span_danger("You evade [hitting_projectile] with the cover of darkness!"),
+	)
+	playsound(source, SFX_BULLET_MISS, 75, TRUE)
+	return COMPONENT_BULLET_PIERCED
+
+/datum/movespeed_modifier/shadow_sect
+	multiplicative_slowdown = -0.15
+
+/obj/item/organ/internal/heart/shadow_ritual
+	name = "shadow heart"
+	desc = "A heart imbued with the power of shadow. It reaches out towards your chest, you feel like you could plunge it into yourself or someone else to gain its power."
+	icon_state = "shadow_heart_3"
+	visual = TRUE
+	decay_factor = 0
+	var/shadow_conversion = 0 // Determines progress of transforming owner into shadow person
+	var/sect_rituals_completed_granted = 0 // What level of sect_rituals_completed the heart grants
+	var/respawn_progress = 0
+
+/obj/item/organ/internal/heart/shadow_ritual/attack(mob/target_mob, mob/living/carbon/user, obj/target)
+	if(.)
+		return TRUE
+	if(!iscarbon(target_mob))
+		to_chat(user, span_warning("\The [src] cannot be implanted into [target_mob]!"))
+		return
+	if(!do_after(user, 8 SECONDS))
+		return
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	if(target_mob == user)
+		Insert(user)
+	else
+		Insert(target_mob)
+
+/obj/item/organ/internal/heart/shadow_ritual/attack_self(mob/user, modifiers)
+	if(!do_after(user, 8 SECONDS))
+		return
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	Insert(user)
+
+/obj/item/organ/internal/heart/shadow_ritual/on_insert(mob/living/carbon/heart_owner)
+	. = ..()
+	if(isblessedshadow(heart_owner))
+		var/datum/species/shadow/blessed/S = heart_owner?.dna?.species
+		S?.sect_rituals_completed = sect_rituals_completed_granted
+	else
+		shadow_conversion = 0
+		to_chat(heart_owner, span_userdanger("You feel a chill spreading throughout your body..."))
+
+
+/obj/item/organ/internal/heart/shadow_ritual/on_remove(mob/living/carbon/heart_owner)
+	. = ..()
+	if(isblessedshadow(heart_owner))
+		var/mob/living/carbon/human/O = heart_owner
+		var/datum/species/shadow/blessed/S = O.dna.species
+		S.sect_rituals_completed = 0
+		heart_owner.alpha = 255
+		if(heart_owner.has_movespeed_modifier(/datum/movespeed_modifier/shadow_sect))
+			heart_owner.remove_movespeed_modifier(/datum/movespeed_modifier/shadow_sect)
+	if(shadow_conversion != 0)
+		to_chat(heart_owner, span_boldbig("You feel warmth returning to you once more."))
+		shadow_conversion = 0
+
+/obj/item/organ/internal/heart/shadow_ritual/on_remove(mob/living/carbon/heart_owner)
+	. = ..()
+	respawn_progress = 0
+
+/obj/item/organ/internal/heart/shadow_ritual/on_life(seconds_per_tick, times_fired)
+	..()
+	if(!isshadowperson(owner))
+		shadow_conversion += seconds_per_tick
+		if(shadow_conversion > SHADOW_CONVERSION_TRESHOLD)
+			shadow_conversion = 0
+			to_chat(owner, span_userdanger("You feel the shadows invade your skin, leaping from the center of your chest!"))
+			owner.set_species(/datum/species/shadow/blessed)
+		else
+			if(SPT_PROB(1, seconds_per_tick))
+				to_chat(owner, span_warning("Dark spots appear all over your skin."))
+			if(SPT_PROB(1, seconds_per_tick))
+				to_chat(owner, span_warning("Bright lights seem really unpleasant."))
+			if(SPT_PROB(1, seconds_per_tick))
+				to_chat(owner, span_warning("The chill isn't going away."))
+			if(SPT_PROB(1, seconds_per_tick))
+				to_chat(owner, span_warning("You feel like you should rest in a dark place."))
+	if(!owner.dna.species.id == SPECIES_SHADOW_BLESSED || !owner.dna.species.id == SPECIES_NIGHTMARE)
+		to_chat(owner, span_userdanger("You feel closer to shadows surrounding you."))
+		var/mob/living/carbon/old_owner = owner
+		old_owner.set_species(/datum/species/shadow/blessed)
+
+/obj/item/organ/internal/heart/shadow_ritual/on_death(seconds_per_tick, times_fired)
+	if(!owner)
+		return
+	var/turf/T = get_turf(owner)
+	if(istype(T))
+		var/light_amount = GET_SIMPLE_LUMCOUNT(T)
+		if(light_amount < SHADOW_SPECIES_DIM_LIGHT)
+			respawn_progress += seconds_per_tick SECONDS
+			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
+	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
+		return
+	if(!sect_rituals_completed_granted >= 3)
+		return
+	owner.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	if(!isshadowperson(owner))
+		var/mob/living/carbon/old_owner = owner
+		old_owner.set_species(/datum/species/shadow/blessed)
+		to_chat(owner, span_userdanger("You feel the shadows invade your skin, leaping from the center of your chest! You're alive!"))
+	SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
+	owner.visible_message(span_warning("[owner] staggers to [owner.p_their()] feet!"))
+	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, 1)
+	respawn_progress = 0
+
+
+#undef HEART_RESPAWN_THRESHHOLD
+#undef SHADOW_CONVERSION_TRESHOLD

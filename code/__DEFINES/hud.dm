@@ -11,9 +11,9 @@
 
 // Consider these images/atoms as part of the UI/HUD (apart of the appearance_flags)
 /// Used for progress bars and chat messages
-#define APPEARANCE_UI_IGNORE_ALPHA (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE|TILE_BOUND) // monkestation edit
+#define APPEARANCE_UI_IGNORE_ALPHA (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE|TILE_BOUND)
 /// Used for HUD objects
-#define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE|TILE_BOUND) // monkestation edit
+#define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE|TILE_BOUND)
 
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
@@ -34,12 +34,10 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Monkestation EDIT: START - CYBERNETICS
 /proc/ui_hand_position(i,y_offset = 0,y_pixel_offset = 0) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
 	var/x_off = -(!(i % 2))
 	var/y_off = round((i-1) / 2) + y_offset
 	return"CENTER+[x_off]:16,SOUTH+[y_off]:[5 + y_pixel_offset]"
-//Monkestation EDIT: END - CYBERNETICS
 
 /proc/ui_equip_position(mob/M)
 	var/y_off = round((M.held_items.len-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
@@ -138,10 +136,10 @@
 #define ui_inv3 "CENTER :16,SOUTH:5"
 #define ui_borg_module "CENTER+1:16,SOUTH:5"
 #define ui_borg_store "CENTER+2:16,SOUTH:5"
-#define ui_borg_camera "CENTER+3:21,SOUTH:5"
-#define ui_borg_alerts "CENTER+4:21,SOUTH:5"
-#define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
-#define ui_borg_navigate_menu "CENTER+3:21,SOUTH:21"
+#define ui_borg_camera "CENTER+2:16,SOUTH:5"
+#define ui_borg_alerts "CENTER+3:16,SOUTH:5"
+#define ui_borg_navigate_menu "CENTER+2:16,SOUTH:21"
+#define ui_borg_language_menu "CENTER+3:14,SOUTH+1:6"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
@@ -170,28 +168,30 @@
 #define ui_ai_track_with_camera "BOTTOM:6,LEFT+2"
 #define ui_ai_camera_light "BOTTOM:6,LEFT+1"
 #define ui_ai_sensor "BOTTOM:6,LEFT"
+#define ui_ai_dashboard "BOTTOM+1:6,LEFT+2"
 #define ui_ai_multicam "BOTTOM+1:6,LEFT+1"
 #define ui_ai_add_multicam "BOTTOM+1:6,LEFT"
 #define ui_ai_take_picture "BOTTOM+2:6,LEFT"
 
 
 //pAI
-#define ui_pai_software "SOUTH:6,WEST"
-#define ui_pai_shell "SOUTH:6,WEST+1"
-#define ui_pai_chassis "SOUTH:6,WEST+2"
-#define ui_pai_rest "SOUTH:6,WEST+3"
-#define ui_pai_light "SOUTH:6,WEST+4"
-#define ui_pai_state_laws "SOUTH:6,WEST+5"
-#define ui_pai_crew_manifest "SOUTH:6,WEST+6"
-#define ui_pai_host_monitor "SOUTH:6,WEST+7"
-#define ui_pai_internal_gps "SOUTH:6,WEST+8"
-#define ui_pai_mod_int "SOUTH:6,WEST+9"
-#define ui_pai_newscaster "SOUTH:6,WEST+10"
-#define ui_pai_take_picture "SOUTH:6,WEST+11"
-#define ui_pai_view_images "SOUTH:6,WEST+12"
-#define ui_pai_radio "SOUTH:6,WEST+13"
-#define ui_pai_language_menu "SOUTH+1:22,WEST+12:31"
-#define ui_pai_navigate_menu "SOUTH:22,WEST+13"
+#define ui_pai_software "SOUTH+1:5,WEST:2"
+#define ui_pai_state_laws "SOUTH+1:5,WEST+1"
+#define ui_pai_shell "SOUTH:5,WEST:2"
+#define ui_pai_chassis "SOUTH:5,WEST+1:2"
+#define ui_pai_rest "SOUTH:5,WEST+2:2"
+#define ui_pai_light "SOUTH:5,WEST+3:2"
+#define ui_pai_crew_manifest "SOUTH:5,CENTER-2"
+#define ui_pai_crew_monitor "SOUTH:5,CENTER-1"
+#define ui_pai_host_monitor "SOUTH:5,CENTER"
+#define ui_pai_internal_gps "SOUTH:5,CENTER+1"
+#define ui_pai_mod_int "SOUTH:5,CENTER+2"
+#define ui_pai_newscaster "SOUTH:5,CENTER+3"
+#define ui_pai_take_picture "SOUTH:5,EAST-3:28"
+#define ui_pai_view_images "SOUTH:5,EAST-2:28"
+#define ui_pai_radio "SOUTH:5,EAST-1:28"
+#define ui_pai_language_menu "SOUTH+1:22,EAST-1:28"
+#define ui_pai_navigate_menu "SOUTH:1:20,EAST-1:28"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
@@ -208,6 +208,8 @@
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"
+
+#define ui_more_under_health_and_to_the_left "EAST-2:14,CENTER-5:29"
 
 // Defines relating to action button positions
 
@@ -230,3 +232,7 @@
 
 /// The filter name for the hover outline
 #define HOVER_OUTLINE_FILTER "hover_outline"
+
+// Vote HUD
+#define UI_VOTEHUD "EAST-5:23,NORTH"
+#define UI_VOTEHUD_LEFT "WEST+2:23,NORTH"

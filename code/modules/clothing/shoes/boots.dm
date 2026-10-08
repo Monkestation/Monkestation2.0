@@ -3,6 +3,7 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	armor_type = /datum/armor/shoes_combat
 	strip_delay = 40
 	resistance_flags = NONE
@@ -53,11 +54,12 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
-	can_be_tied = FALSE
+	can_be_tied = TRUE
 
 /datum/armor/shoes_jackboots
 	bio = 90
@@ -69,13 +71,27 @@
 	if(type == /obj/item/clothing/shoes/jackboots/sec/hos)
 		AddComponent(/datum/component/shoesteps/hosboots)
 	else
-		AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
+		AddComponent(/datum/component/shoesteps/combine_boot_sounds)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
+
+/obj/item/clothing/shoes/jackboots/recolorable
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("jackboots", "/obj/item/clothing/shoes/jackboots/recolorable")
+	greyscale_config = /datum/greyscale_config/jackboots
+	greyscale_config_worn = /datum/greyscale_config/jackboots/worn
+	greyscale_colors = "#383631"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/jackboots/floortile
+	name = "floor-tile camouflage jackboots"
+	desc = "Is it just me, or is there a pair of jackboots on the floor?"
+	icon_state = "ftc_boots"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/jackboots/sec/hos
 	name = "head of security jackboots"
@@ -90,6 +106,7 @@
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	armor_type = /datum/armor/shoes_winterboots
 
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -126,6 +143,22 @@
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 
+/obj/item/clothing/shoes/winterboots/christmas
+	name = "red christmas boots"
+	desc = "A pair of fluffy red christmas boots!"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("christmas_boots", "/obj/item/clothing/shoes/winterboots/christmas")
+	greyscale_config = /datum/greyscale_config/christmas_boots
+	greyscale_config_worn = /datum/greyscale_config/christmas_boots/worn
+	greyscale_colors = "#cc0f0f#c4c2c2"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/winterboots/christmas/green
+	name = "green christmas boots"
+	desc = "A pair of fluffy green christmas boots!"
+	SETUP_MAP_ICONS("christmas_boots", "/obj/item/clothing/shoes/winterboots/christmas/green")
+	greyscale_colors = "#1a991a#c4c2c2"
+
 /datum/armor/ice_boots_eva
 	melee = 10
 	laser = 10
@@ -139,11 +172,17 @@
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
 	icon_state = "workboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	armor_type = /datum/armor/shoes_workboots
 	strip_delay = 20
 	equip_delay_other = 40
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
+
+/obj/item/clothing/shoes/workboots/black
+	name = "black work boots"
+	desc = "Lace-up work boots to protect the average grey-collar worker from stepping on hazards, from broken glass to dropped pens."
+	icon_state = "workboots_black"
 
 /obj/item/clothing/shoes/workboots/independent //nanotrasen does not make all work boots in existence
 	desc = "A pair of lace-up work boots for the especially blue-collar."
@@ -168,6 +207,7 @@
 	icon_state = "rus_shoes"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
@@ -179,6 +219,7 @@
 	desc = "They may have lost some of their lustre over the years, but these green lizardskin shoes fit you perfectly."
 	icon_state = "lizardskin_shoes"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/kim
 	name = "aerostatic boots"
@@ -230,3 +271,24 @@
 	bio = 90
 	fire = 70
 	acid = 50
+
+/obj/item/clothing/shoes/workboots/black/deforest
+	name = "Deforest work boots"
+	desc = "A pair of Deforest Medical boots built of reinforced leathers and weather-resistant rubber; there's a large white reflective strip across the collar."
+	icon_state = "hivisboots"
+
+/obj/item/clothing/shoes/combat/swat/admiral // Reskin for Abraxis's Admiral set
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
+	icon_state = "admiral"
+
+/obj/item/clothing/shoes/admiral  // Loadout version of the Abraxis Centcom Admiral boots
+	name = "black boots"
+	icon_state = "admiral"
+
+/obj/item/clothing/shoes/admiral/vex
+	name = "NT-QCAC Series VII \"Silent Step Boots\""
+	desc = "Shoes only for the most bitchin' of the Elite."
+	icon_state = "admiral_drag"
+	worn_icon_state = "admiral_drag"
+	inhand_icon_state = "admiral_drag"

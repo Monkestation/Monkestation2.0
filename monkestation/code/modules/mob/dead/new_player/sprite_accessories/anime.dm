@@ -1,11 +1,11 @@
 ///ANIME ACCESSORIES GO HERE
 /datum/sprite_accessory/anime_head
-	icon = 'monkestation/icons/mob/anime/anime_head.dmi'
+	icon = 'icons/mob/anime/anime_head.dmi'
 	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_head/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_head/elf1
 	name = "Short Elf Ears"
@@ -20,7 +20,6 @@
 /datum/sprite_accessory/anime_head/pony
 	name = "Pony Ears"
 	icon_state = "pony"
-	hasinner = TRUE
 
 /datum/sprite_accessory/anime_head/kitsune
 	name = "Kitsune Ears"
@@ -75,12 +74,12 @@
 	icon_state = "playbunny"
 
 /datum/sprite_accessory/anime_middle
-	icon = 'monkestation/icons/mob/anime/anime_middle.dmi'
+	icon = 'icons/mob/anime/anime_middle.dmi'
 	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_middle/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_middle/bee
 	name = "Bee Wings"
@@ -111,12 +110,12 @@
 	icon_state = "seraphim"
 
 /datum/sprite_accessory/anime_bottom
-	icon = 'monkestation/icons/mob/anime/anime_bottom.dmi'
+	icon = 'icons/mob/anime/anime_bottom.dmi'
 	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_bottom/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_bottom/pony
 	name = "Pony Tail"
@@ -182,8 +181,20 @@
 	icon_state = "plug"
 	hasinner = TRUE
 
+/datum/sprite_accessory/anime_bottom/leopard
+	name = "Leopard Tail"
+	icon_state = "leopard"
+
+/datum/sprite_accessory/anime_bottom/twocat
+	name = "Doubled Cat Tail"
+	icon_state = "twocat"
+
+/datum/sprite_accessory/anime_bottom/catbig
+	name = "Bigger Cat Tail"
+	icon_state = "catbig"
+
 /datum/sprite_accessory/anime_halo
-	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
+	icon = 'icons/mob/anime/anime_halo.dmi'
 	color_src = ANIME_HALO_COLOR
 	is_emissive = TRUE
 	dimension_x = 32
@@ -192,7 +203,7 @@
 
 /datum/sprite_accessory/anime_halo/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/anime_halo/gabriel
 	name = "Messenger's halo"

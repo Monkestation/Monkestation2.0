@@ -26,9 +26,6 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
-/// All bluespace gas senders
-GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/components/unary/bluespace_sender)
-
 /datum/armor/unary_bluespace_sender
 	energy = 100
 	fire = 80
@@ -38,21 +35,14 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	. = ..()
 	initialize_directions = dir
 	bluespace_network = new
-	for(var/gas_id in GLOB.meta_gas_info)
+	for(var/gas_id in GLOB.meta_gas_info[META_GAS_ID])
 		bluespace_network.assert_gas(gas_id)
-	for(var/gas_id in GLOB.meta_gas_info)
+	for(var/gas_id in GLOB.meta_gas_info[META_GAS_ID])
 		var/datum/gas/gas = gas_id
 		base_prices[gas_id] = initial(gas.base_value)
 
-	GLOB.bluespace_senders += src
-
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	register_context()
-
-/obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
-	GLOB.bluespace_senders -= src
-
-	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/examine(mob/user)
 	. = ..()
@@ -127,7 +117,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
-	multitool.set_buffer(src)
+	multitool_set_buffer(multitool, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
@@ -147,17 +137,16 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	if(!..())
 		return FALSE
 	set_init_directions()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/click_ctrl(mob/living/user)
 	if(!panel_open)
 		if(!can_interact(user))
 			return
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 		return
 	. = ..()
 
@@ -172,18 +161,21 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	data["on"] = on
 	data["gas_transfer_rate"] = gas_transfer_rate
 	var/list/bluespace_gasdata = list()
+	var/list/network_moles = bluespace_network.moles
+	var/list/cached_name = GAS_META[META_GAS_NAME]
+	var/list/cached_id = GAS_META[META_GAS_ID]
 	if(bluespace_network.total_moles())
-		for(var/gas_id in bluespace_network.gases)
+		for(var/gas_id, amount in network_moles)
 			bluespace_gasdata.Add(list(list(
-			"name" = bluespace_network.gases[gas_id][GAS_META][META_GAS_NAME],
-			"id" = bluespace_network.gases[gas_id][GAS_META][META_GAS_ID],
-			"amount" = round(bluespace_network.gases[gas_id][MOLES], 0.01),
+			"name" = cached_name[gas_id],
+			"id" = cached_id[gas_id],
+			"amount" = round(amount, 0.01),
 			"price" = base_prices[gas_id],
 			)))
 	else
-		for(var/gas_id in bluespace_network.gases)
+		for(var/gas_id in network_moles)
 			bluespace_gasdata.Add(list(list(
-				"name" = bluespace_network.gases[gas_id][GAS_META][META_GAS_NAME],
+				"name" = cached_name[gas_id],
 				"id" = "",
 				"amount" = 0,
 				"price" = 0,
@@ -207,9 +199,8 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			update_appearance()
 			. = TRUE
 
 		if("rate")

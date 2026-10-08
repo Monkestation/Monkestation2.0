@@ -6,9 +6,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		if(GIB_TYPE_ROBOTIC)
 			new /obj/effect/temp_visual/gib_animation(loc, "gibbed-r")
 
-/mob/living/carbon/human/dust_animation()
-	new /obj/effect/temp_visual/dust_animation(loc, dna.species.dust_anim)
-
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(flags_1 & HOLOGRAM_1)
 		return
@@ -17,11 +14,17 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	else
 		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
 
-/mob/living/carbon/human/spawn_dust(just_ash = FALSE)
+/mob/living/carbon/human/spawn_dust(just_ash)
 	if(just_ash)
-		new /obj/effect/decal/cleanable/ash(loc)
-	else
-		new /obj/effect/decal/remains/human(loc)
+		return ..()
+
+	var/bone_type = /obj/effect/decal/remains/human
+	if(isplasmaman(src))
+		bone_type = /obj/effect/decal/remains/plasma
+
+	var/obj/effect/decal/remains/human/bones = new bone_type(loc)
+	bones.pixel_z = -6
+	bones.pixel_w = rand(-1, 1)
 
 /mob/living/carbon/human/death(gibbed, cause_of_death = get_cause_of_death())
 	if(stat == DEAD)
@@ -46,7 +49,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 			investigate_log("has died at [loc_name(src)].<br>\
 				BRUTE: [src.getBruteLoss()] BURN: [src.getFireLoss()] TOX: [src.getToxLoss()] OXY: [src.getOxyLoss()] CLONE: [src.getCloneLoss()] STAM: [src.stamina.loss]<br>\
 				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
-				<b>Blood volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
+				<b>[get_bloodtype()?.get_blood_name() || "Blood"] volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
 	//to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.")) // MONKESTATION REMOVAL
 
@@ -82,7 +85,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 					most_toxic = poison
 
 			if(most_toxic)
-				return "[lowertext(most_toxic.name)] poisoning"
+				return "[LOWER_TEXT(most_toxic.name)] poisoning"
 
 		if("heart_attack")
 			return "cardiac arrest"
@@ -94,7 +97,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 					most_alcohol = alcohol
 
 			if(most_alcohol)
-				return "alcohol poisoning ([lowertext(most_alcohol.name)])"
+				return "alcohol poisoning ([LOWER_TEXT(most_alcohol.name)])"
 
 			return "alcohol poisoning"
 
@@ -112,7 +115,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	return probable_cause
 
 /mob/living/carbon/human/proc/reagents_readout()
-	var/readout = "Blood:"
+	var/readout = "[get_bloodtype()?.get_blood_name() || "Blood"]stream:"
 	for(var/datum/reagent/reagent in reagents?.reagent_list)
 		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
 

@@ -83,6 +83,9 @@
 	fill(C)
 	return C
 
+/datum/supply_pack/proc/available()
+	return !special || special_enabled
+
 /datum/supply_pack/proc/get_cost()
 	. = cost
 	. *= SSeconomy.pack_price_modifier

@@ -25,12 +25,10 @@
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		if(smoothing_flags & SMOOTH_CORNERS)
 			icon_state = ""
-	GLOB.cameranet.updateVisibility(src)
-	GLOB.thrallnet.updateVisibility(src)
+	SScameras.update_visibility(src)
 
 /obj/structure/Destroy()
-	GLOB.cameranet.updateVisibility(src)
-	GLOB.thrallnet.updateVisibility(src)
+	SScameras.update_visibility(src)
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
@@ -61,7 +59,10 @@
 			if(!broken)
 				return  span_warning("It's falling apart!")
 
-/obj/structure/rust_heretic_act()
+/obj/structure/examine_descriptor(mob/user)
+	return "structure"
+
+/obj/structure/rust_heretic_act(rust_strength)
 	take_damage(500, BRUTE, "melee", 1)
 
 /obj/structure/zap_act(power, zap_flags)
@@ -69,3 +70,10 @@
 		take_damage(power/8000, BURN, "energy")
 	power -= power/2000 //walls take a lot out of ya
 	. = ..()
+
+/// For when a mob comes flying through the window, smash it and damage the mob
+/obj/structure/proc/smash_and_injure(mob/living/flying_mob, atom/oldloc, direction)
+	flying_mob.balloon_alert_to_viewers("smashed through!")
+	flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(src, oldloc))
+	new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
+	deconstruct(disassembled = FALSE)

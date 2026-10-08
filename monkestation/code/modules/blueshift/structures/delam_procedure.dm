@@ -4,6 +4,7 @@
 #define DAMAGED_SUPERMATTER_COLOR list(1,0.1,0.2,0, 0,0.9,0.1,0, 0.1,-0.05,0.85,0, 0,0,0,0.9, 0,0,0,0)
 #define MISTAKES_WERE_MADE 0
 #define MANUAL_INTERVENTION 0
+#define DIVINE_INTERVENTION 3
 #define AUTOMATIC_SAFETIES 1
 #define BUTTON_PUSHED 0
 #define BUTTON_IDLE 1
@@ -253,8 +254,7 @@
 /obj/machinery/atmospherics/components/unary/delam_scram/New()
 	. = ..()
 	var/datum/gas_mixture/delam_juice = new
-	delam_juice.add_gases(/datum/gas/freon)
-	delam_juice.gases[/datum/gas/freon][MOLES] = SM_COOLING_MIXTURE_MOLES
+	delam_juice.set_gas(/datum/gas/freon, SM_COOLING_MIXTURE_MOLES)
 	delam_juice.temperature = SM_COOLING_MIXTURE_TEMP
 	airs[1] = delam_juice
 
@@ -519,8 +519,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delam_procedure, 32)
 
 	log_admin("DELAM: Round timer under 30 minutes! Supermatter will perform an automatic delam suppression at strength 0%.")
 	for(var/client/staff as anything in GLOB.admins)
-		if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
-			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
+		if(staff?.prefs.channel_volume["[CHANNEL_ADMIN_SOUNDS]"])
+			SEND_SOUND(staff, sound('sound/misc/server-ready.ogg', volume = calculate_mixed_volume(staff, 100, CHANNEL_ADMIN_SOUNDS)))
 	message_admins("<font color='[COLOR_ADMIN_PINK]'>DELAM: Round timer under 30 minutes! [ADMIN_VERBOSEJMP(sm)] will perform an automatic delam suppression once integrity reaches 0%. (<a href='byond://?src=[REF(src)];togglesuppression=yes'>TOGGLE AUTOMATIC INTERVENTION)</a>)</font>")
 	sm.station_notified = TRUE
 

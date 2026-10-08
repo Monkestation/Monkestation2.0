@@ -64,7 +64,7 @@
 	desc = "A box of linked ammunition, designed for the Ultra AC 2 exosuit weapon."
 	icon_state = "lmg"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
-	rounds = 300
+	rounds = 100
 	ammo_type = MECHA_AMMO_LMG
 
 /obj/item/mecha_ammo/minigun
@@ -74,7 +74,6 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	rounds = 375
 	ammo_type = MECHA_AMMO_PEASHOOTER
-
 
 /obj/item/mecha_ammo/flamer
 	name = "Flamethrower Fuel Drum"
@@ -166,3 +165,9 @@
 	rounds = 60
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 
+/obj/item/mecha_ammo/sentinel
+	name = "Sentinel Artillery Shells"
+	desc = "A box of barely carriable cannonshells. Used in the Sentinel Siege Walker."
+	icon_state = "sentinel"
+	rounds = 10
+	ammo_type = MECHA_AMMO_SENTINEL

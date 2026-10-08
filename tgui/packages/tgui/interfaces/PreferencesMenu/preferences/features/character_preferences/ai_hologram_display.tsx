@@ -1,8 +1,8 @@
 import {
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
   FeatureIconnedDropdownInput,
-  FeatureValueProps,
-  FeatureChoicedServerData,
-  FeatureChoiced,
+  type FeatureValueProps,
 } from '../base';
 
 export const preferred_ai_hologram_display: FeatureChoiced = {

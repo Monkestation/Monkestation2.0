@@ -6,10 +6,8 @@
 	icon = 'icons/obj/mining.dmi'
 	layer = FLOOR_CLEAN_LAYER
 	mergeable_decal = FALSE
-
-/obj/effect/decal/cleanable/brimdust/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/brimdust, 15)
+	decal_reagent = /datum/reagent/brimdust
+	reagent_amount = 15
 
 /// Ashwalker ore sensor crafted from brimdemon ash
 /obj/item/ore_sensor
@@ -37,4 +35,4 @@
 	if(!COOLDOWN_FINISHED(src, ore_sensing_cooldown))
 		return
 	COOLDOWN_START(src, ore_sensing_cooldown, cooldown)
-	mineral_scan_pulse(get_turf(src), range)
+	mineral_scan_pulse(get_turf(src), range, src)

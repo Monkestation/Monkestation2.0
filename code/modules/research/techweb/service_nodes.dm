@@ -31,6 +31,9 @@
 		"crewconsole",
 		"idcard",
 		"libraryconsole",
+		"libraryscanner",
+		"bookbinder",
+		"barcode_scanner",
 		"mining",
 		"photobooth",
 		"rdcamera",
@@ -39,6 +42,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SECURITY)
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/datatheory //Computer science
 	id = "datatheory"
@@ -51,6 +55,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SERVICE, RADIO_CHANNEL_SUPPLY)
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
@@ -107,6 +112,7 @@
 		"slime_market_pad",
 		"slime_market",
 		"slimevac",
+		"slime_compressor",
 
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

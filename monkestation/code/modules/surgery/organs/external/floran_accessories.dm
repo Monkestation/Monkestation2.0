@@ -3,7 +3,7 @@
 	desc = "you shouldn't see this"
 	organ_flags = ORGAN_UNREMOVABLE | ORGAN_HIDDEN
 	icon_state = "floran_leaves"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_floran_leaves"
 	zone = BODY_ZONE_CHEST

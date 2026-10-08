@@ -71,7 +71,7 @@
 
 /datum/nifsoft/Destroy()
 	if(active)
-		activate()
+		INVOKE_ASYNC(src, PROC_REF(activate))
 
 	linked_mob = null
 

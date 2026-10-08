@@ -5,7 +5,8 @@
  * - Add the typepath(s) to setup_expected_types
  * - In the type's initialize, REGISTER_REQUIRED_MAP_ITEM() a minimum and maximum
  */
-/datum/unit_test/required_map_items
+/datum/unit_test/maptest_required_map_items
+	test_flags = UNIT_TEST_MAP_TEST
 	/// A list of all typepaths that we expect to be in the required items list
 	var/list/expected_types = list()
 	/// Subtypes to ignore.
@@ -14,7 +15,7 @@
 /// Used to fill the expected types list with all the types we look for on the map.
 /// This list will just be full of typepaths that we expect.
 /// More detailed information about each item (mainly, how much of each should exist) is set on a per item basis
-/datum/unit_test/required_map_items/proc/setup_expected_types()
+/datum/unit_test/maptest_required_map_items/proc/setup_expected_types()
 	expected_types += subtypesof(/obj/item/stamp/head)
 	expected_types += subtypesof(/obj/machinery/computer/department_orders)
 	expected_types += /obj/machinery/computer/communications
@@ -26,9 +27,9 @@
 	expected_types += /obj/item/stamp/qm
 	expected_types += /obj/item/radio/radio_mic
 	expected_types += /obj/machinery/atm
-	expected_types += /obj/machinery/cassette/adv_cassette_deck
-	expected_types += /obj/machinery/cassette/dj_station
-	expected_types += /obj/machinery/cassette/mailbox
+	expected_types += /obj/machinery/cassette_deck
+	expected_types += /obj/machinery/dj_station
+	expected_types += /obj/machinery/cassette_postbox
 	expected_types += /obj/machinery/cryopod
 	expected_types += /obj/machinery/station_map/engineering
 	expected_types += /obj/structure/cassette_rack/prefilled
@@ -36,7 +37,7 @@
 	ignored_types  += /obj/machinery/cryopod/prison
 	// monkestation end
 
-/datum/unit_test/required_map_items/Run()
+/datum/unit_test/maptest_required_map_items/Run()
 	setup_expected_types()
 
 	var/list/required_map_items = GLOB.required_map_items.Copy()

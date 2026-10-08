@@ -16,7 +16,7 @@
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
+	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, uses_overlays = FALSE)
 
 /obj/item/mod/module/gps/on_use()
 	. = ..()
@@ -374,7 +374,7 @@
 	/// Armor values per tile.
 	var/datum/armor/armor_mod = /datum/armor/mod_ash_accretion
 	/// Speed added when you're fully covered in ash.
-	var/speed_added = 0.5
+	var/speed_added = 0.75
 	/// Speed that we actually added.
 	var/actual_speed_added = 0
 	/// Turfs that let us accrete ash.
@@ -537,8 +537,8 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/bomb = new /obj/projectile/bullet/reusable/mining_bomb(mod.wearer.loc)
-	bomb.preparePixelProjectile(target, mod.wearer)
+	var/obj/projectile/bomb = new /obj/projectile/bullet/mining_bomb(mod.wearer.loc)
+	bomb.aim_projectile(target, mod.wearer)
 	bomb.firer = mod.wearer
 	playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
 	INVOKE_ASYNC(bomb, TYPE_PROC_REF(/obj/projectile, fire))
@@ -557,7 +557,7 @@
 		return
 	on_deactivation()
 
-/obj/projectile/bullet/reusable/mining_bomb
+/obj/projectile/bullet/mining_bomb
 	name = "mining bomb"
 	desc = "A bomb. Why are you examining this?"
 	icon_state = "mine_bomb"
@@ -570,13 +570,16 @@
 	light_outer_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
-	ammo_type = /obj/structure/mining_bomb
+	embed_type = null
 
-/obj/projectile/bullet/reusable/mining_bomb/handle_drop()
-	if(dropped)
-		return
-	dropped = TRUE
-	new ammo_type(get_turf(src), firer)
+/obj/projectile/bullet/mining_bomb/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, /obj/structure/mining_bomb)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
+
+/obj/projectile/bullet/mining_bomb/proc/handle_drop(datum/source, obj/structure/mining_bomb/mining_bomb)
+	SIGNAL_HANDLER
+	addtimer(CALLBACK(mining_bomb, TYPE_PROC_REF(/obj/structure/mining_bomb, prime), firer), mining_bomb.prime_time)
 
 /obj/structure/mining_bomb
 	name = "mining bomb"
@@ -603,7 +606,6 @@
 /obj/structure/mining_bomb/Initialize(mapload, atom/movable/firer)
 	. = ..()
 	generate_image()
-	addtimer(CALLBACK(src, PROC_REF(prime), firer), prime_time)
 
 /obj/structure/mining_bomb/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)

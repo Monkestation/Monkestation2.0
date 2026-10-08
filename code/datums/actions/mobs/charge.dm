@@ -46,6 +46,7 @@
 		// Stop any existing charging, this'll clean things up properly
 		SSmove_manager.stop_looping(charger)
 
+	charger.pulledby?.stop_pulling() // janky fix for charging while grabbed breaking movement
 	charging += charger
 	actively_moving = FALSE
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)

@@ -194,7 +194,12 @@
 			if(isnull(chosen_organ))
 				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
-			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+			if(target && user?.Adjacent(target))
+				var/obj/item/held_tool = user.get_active_held_item()
+				if(held_tool)
+					held_tool = held_tool.get_proxy_attacker_for(target, user)
+				if(held_tool != tool)
+					return SURGERY_STEP_FAIL
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return SURGERY_STEP_FAIL
@@ -255,7 +260,7 @@
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 			target_organ.Remove(target)
 			var/turf/drop_turf = get_turf(target)
-			if(drop_turf)
+			if(drop_turf && !QDELETED(target_organ))
 				target_organ.forceMove(drop_turf)
 			target_organ.on_surgical_removal(user, target, target_zone, tool)
 			target.regenerate_icons()

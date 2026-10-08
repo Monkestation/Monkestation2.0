@@ -176,7 +176,8 @@
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
 
 	// Our center is unreachable, so prevent stuff from getting stuck in there
-	AddElement(/datum/element/trait_loc, TRAIT_SECLUDED_LOCATION)
+	var/static/list/turf_traits = list(TRAIT_SECLUDED_LOCATION)
+	AddElement(/datum/element/give_turf_traits, turf_traits)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)
@@ -199,7 +200,7 @@
 	machine_parts = null
 	return..()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/on_deconstruction()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(loc)
 	var/datum/gas_mixture/to_release = moderator_internal || internal_fusion
 	if(to_release == moderator_internal)

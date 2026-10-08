@@ -283,7 +283,7 @@
 ADMIN_VERB(validate_puzzgrids, R_DEBUG, FALSE, "Validate Puzzgrid Config", "Validate the puzzgrid config to ensure it's set up correctly.", ADMIN_CATEGORY_DEBUG)
 	var/line_number = 0
 
-	for (var/line in world.file2list(PUZZGRID_CONFIG))
+	for (var/line in file2list(PUZZGRID_CONFIG))
 		line_number += 1
 
 		if (length(line) == 0)

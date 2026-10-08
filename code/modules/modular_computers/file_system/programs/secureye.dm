@@ -18,7 +18,7 @@
 	///Boolean on whether or not the app will make noise when flipping around the channels.
 	var/spying = FALSE
 
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	///List of weakrefs of all users watching the program.
 	var/list/concurrent_users = list()
 
@@ -42,7 +42,14 @@
 	can_run_on_flags = PROGRAM_ALL
 	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
 
-	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
+	network = list(
+		CAMERANET_NETWORK_SS13,
+		CAMERANET_NETWORK_MINE,
+		CAMERANET_NETWORK_RD,
+		CAMERANET_NETWORK_LABOR,
+		CAMERANET_NETWORK_ORDNANCE,
+		CAMERANET_NETWORK_MINISAT,
+	)
 	spying = TRUE
 
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
@@ -53,7 +60,7 @@
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
-		network += lowertext(i)
+		network += LOWER_TEXT(i)
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
@@ -96,7 +103,7 @@
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
 			ref = REF(active_camera),
-			status = active_camera.status,
+			status = active_camera.camera_enabled,
 		)
 	return data
 
@@ -105,7 +112,7 @@
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	data["can_spy"] = !!spying
-	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network)
 	return data
 
 /datum/computer_file/program/secureye/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -114,7 +121,7 @@
 		return
 	switch(action)
 		if("switch_camera")
-			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
+			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 			if(selected_camera)
 				camera_ref = WEAKREF(selected_camera)
 			else
@@ -136,9 +143,9 @@
 			internal_tracker.track_input(usr)
 			return TRUE
 
-/datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, mob/living/target)
+/datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, atom/movable/target)
 	SIGNAL_HANDLER
-	var/datum/camerachunk/target_camerachunk = GLOB.cameranet.getTurfVis(get_turf(target))
+	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(get_turf(target))
 	if(!target_camerachunk)
 		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
 	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras["[target.z]"])

@@ -464,6 +464,11 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
+/datum/mood_event/amulet_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed!"
+	mood_change = -6
+	timeout = 5 MINUTES
+
 /datum/mood_event/mallet_humiliation
 	description = "Getting hit by such a stupid weapon feels rather humiliating..."
 	mood_change = -3
@@ -488,3 +493,18 @@
 /datum/mood_event/no_borer
 	description = "I still can hear that lingering melody, echoing."
 	mood_change = -5
+
+/datum/mood_event/smoke_in_face
+	description = "That smoke was disgusting."
+	mood_change = -3
+	timeout = 30 SECONDS
+
+/datum/mood_event/smoke_in_face/add_effects(param)
+	if(HAS_TRAIT(owner, TRAIT_SMOKER))
+		description = "Blowing smoke in my face, really?"
+		mood_change = 0
+
+/datum/mood_event/wishgranter_awakening
+	description = "What... what was that ominous feeling?"
+	mood_change = -10
+	timeout = 5 MINUTES

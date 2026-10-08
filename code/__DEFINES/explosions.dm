@@ -18,6 +18,10 @@
 /// Gibtonite will now explode
 #define GIBTONITE_DETONATE 3
 
+#define GIBTONITE_QUALITY_HIGH 3
+#define GIBTONITE_QUALITY_MEDIUM 2
+#define GIBTONITE_QUALITY_LOW 1
+
 /// A wrapper for [/atom/proc/ex_act] to ensure that the explosion propagation and attendant signal are always handled.
 #define EX_ACT(target, args...)\
 	if(!(target.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) { \

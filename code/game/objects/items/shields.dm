@@ -38,10 +38,9 @@
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
+	//More likely to block tackles, body throws, and similar attacks
 	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
+		final_block_chance += 25
 	. = ..()
 	if(.)
 		on_shield_block(owner, hitby, attack_text, damage, attack_type)
@@ -343,6 +342,22 @@
 		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/datum/armor/item_shield/improvised
+	melee = 40
+	bullet = 30
+	laser = 30
+
+/obj/item/shield/improvised
+	name = "improvised shield"
+	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
+	icon_state = "improvised"
+	inhand_icon_state = "improvised"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	max_integrity = 35
+	shield_break_leftover = /obj/item/stack/rods/two
+	armor_type = /datum/armor/item_shield/improvised
+	block_sound = 'sound/items/trayhit2.ogg'
 
 #undef BATON_BASH_COOLDOWN
 

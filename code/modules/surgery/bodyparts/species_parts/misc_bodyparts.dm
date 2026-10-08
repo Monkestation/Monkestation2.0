@@ -133,7 +133,7 @@
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN | HEAD_HAIR
 	composition_effects = list(TRAIT_COLD_BLOODED = 0.5)
-	can_dismember = TRUE
+	can_always_dismember = TRUE
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
@@ -165,6 +165,7 @@
 ///PODPEOPLE
 /obj/item/bodypart/head/pod
 	limb_id = SPECIES_PODPERSON
+	head_flags = HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN
 	is_dimorphic = TRUE
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR

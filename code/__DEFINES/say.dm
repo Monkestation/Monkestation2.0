@@ -74,6 +74,7 @@
 #define SPAN_ITALICS "italics"
 #define SPAN_SANS "sans"
 #define SPAN_PAPYRUS "papyrus"
+#define SPAN_COPPERPLATE "copperplate" //reserved for codeword marking please do not use this for anything else
 #define SPAN_REALLYBIG "reallybig"
 #define SPAN_COMMAND "command_headset"
 #define SPAN_CLOWN "clown"
@@ -112,6 +113,10 @@
 #define MAX_CHARTER_LEN 80
 #define MAX_PLAQUE_LEN 144
 #define MAX_LABEL_LEN 64
+#define MAX_DESC_LEN 280
+#define MAX_AAS_LENGTH 168
+//Editing this will cause UI issues unless you also edit the CrimeWatcher.tsx UI.
+#define MAX_CRIME_NAME_LEN 39
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
@@ -121,4 +126,4 @@
 
 //Used in visible_message_flags, audible_message_flags and runechat_flags
 #define EMOTE_MESSAGE (1<<0)
-#define LOOC_MESSAGE (1<<1) //monke: looc
+#define LOOC_MESSAGE (1<<1)

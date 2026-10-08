@@ -1,6 +1,6 @@
 GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
-ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcomm Spawning", "Toggles whether dead players can respawn in the centcomm area.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles whether dead players can respawn in the centcom area.", ADMIN_CATEGORY_FUN)
 	GLOB.disable_ghost_spawning = !GLOB.disable_ghost_spawning
 
 /mob/living/carbon/human/ghost
@@ -8,37 +8,47 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcomm Spawning", "Toggles 
 	var/old_key
 	var/datum/mind/old_mind
 	var/old_reenter
-	var/obj/item/organ/internal/brain/old_human
+	var/datum/weakref/old_human_ref
 
 	///the button we are tied to for dueling
 	var/obj/structure/fight_button/linked_button
 	///are we dueling?
 	var/dueling = FALSE
+	/// Innate traits all ghost players have.
+	var/static/list/innate_traits = list(
+		TRAIT_SIXTHSENSE,
+		TRAIT_CAN_HEAR_MUSIC,
+	)
 
 /mob/living/carbon/human/ghost/death(gibbed)
 	. = ..()
 	life_or_death()
 
-/mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter, obj/item/organ/internal/brain/_old_human)
+/mob/living/carbon/human/ghost/New(old_key, datum/mind/old_mind, old_reenter, obj/item/organ/internal/brain/old_human)
 	. = ..()
-	old_key = _old_key
-	old_mind = _old_mind
-	old_reenter = _old_reenter
-	old_human = _old_human
+	src.old_key = old_key
+	src.old_mind = old_mind
+	src.old_reenter = old_reenter
+	src.old_human_ref = WEAKREF(old_human)
 
 /mob/living/carbon/human/ghost/Initialize(mapload)
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
-	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
+	add_traits(innate_traits, INNATE_TRAIT)
 
 /mob/living/carbon/human/ghost/Destroy()
+	wake_up_from_temporary_sleep()
+
 	if(linked_button)
 		if(dueling)
 			addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
 		else
 			linked_button.remove_user(src)
 			linked_button = null
+
+	old_mind = null
+	old_human_ref = null
 
 	return ..()
 
@@ -56,8 +66,12 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcomm Spawning", "Toggles 
 		new_ghost.PossessByPlayer(old_key)
 		new_ghost.mind = old_mind
 		new_ghost.can_reenter_corpse = old_reenter
-	old_human?.temporary_sleep = FALSE
 	qdel(src)
+
+/mob/living/carbon/human/ghost/proc/wake_up_from_temporary_sleep()
+	var/obj/item/organ/internal/brain/old_human = old_human_ref?.resolve()
+	if(old_human)
+		old_human.temporary_sleep = FALSE
 
 /mob/living/carbon/human/ghost/proc/life_or_death()
 	if(dueling)

@@ -14,7 +14,6 @@ Doesn't work on other aliens/AI.*/
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	melee_cooldown_time = 0 SECONDS
 
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
@@ -75,9 +74,6 @@ Doesn't work on other aliens/AI.*/
 	if(!check_for_duplicate())
 		return FALSE
 
-	if(!check_for_vents())
-		return FALSE
-
 	return ..()
 
 /datum/action/cooldown/alien/make_structure/Activate(atom/target)
@@ -93,17 +89,6 @@ Doesn't work on other aliens/AI.*/
 
 	return TRUE
 
-/// Checks if there's an atmos machine (vent) in the owner's turf
-/datum/action/cooldown/alien/make_structure/proc/check_for_vents()
-	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in owner.loc
-	if(atmos_thing)
-		var/are_you_sure = tgui_alert(owner, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", list("Yes", "No"))
-		if(are_you_sure != "Yes")
-			return FALSE
-		if(QDELETED(src) || QDELETED(owner) || !check_for_duplicate())
-			return FALSE
-
-	return TRUE
 
 /datum/action/cooldown/alien/make_structure/plant_weeds
 	name = "Plant Weeds"
@@ -292,7 +277,7 @@ Doesn't work on other aliens/AI.*/
 		span_alertalien("You spit neurotoxin."),
 	)
 	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(user.loc)
-	neurotoxin.preparePixelProjectile(target, user, modifiers)
+	neurotoxin.aim_projectile(target, user, modifiers)
 	neurotoxin.firer = user
 	neurotoxin.fire()
 	user.newtonian_move(get_dir(target, user))

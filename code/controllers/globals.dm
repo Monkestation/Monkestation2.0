@@ -4,6 +4,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 /datum/controller/global_vars
 	name = "Global Variables"
 
+	///List of var names that are protected from VV(and other admin editing tools)
 	var/static/list/gvars_datum_protected_varlist
 	var/list/gvars_datum_in_built_vars
 	var/list/gvars_datum_init_order
@@ -19,7 +20,9 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	// Sooo we gotta be dumb
 	var/list/controller_vars = exclude_these.vars.Copy()
 	controller_vars["vars"] = null
-	gvars_datum_in_built_vars = controller_vars + list(NAMEOF(src, gvars_datum_protected_varlist), NAMEOF(src, gvars_datum_in_built_vars), NAMEOF(src, gvars_datum_init_order))
+	gvars_datum_in_built_vars = controller_vars + list(NAMEOF(src, gvars_datum_protected_varlist),
+													NAMEOF(src, gvars_datum_in_built_vars),
+													NAMEOF(src, gvars_datum_init_order))
 
 	QDEL_IN(exclude_these, 0) //signal logging isn't ready
 
@@ -49,21 +52,21 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	gvars_datum_init_order = list()
 	gvars_datum_protected_varlist = list(NAMEOF(src, gvars_datum_protected_varlist) = TRUE)
 	var/list/global_procs = typesof(/datum/controller/global_vars/proc)
-	var/expected_len = vars.len - gvars_datum_in_built_vars.len
-	if(global_procs.len != expected_len)
-		warning("Unable to detect all global initialization procs! Expected [expected_len] got [global_procs.len]!")
-		if(global_procs.len)
+	var/expected_len = length(vars) - length(gvars_datum_in_built_vars)
+	if(length(global_procs) != expected_len)
+		warning("Unable to detect all global initialization procs! Expected [expected_len] got [length(global_procs)]!")
+		if(length(global_procs))
 			var/list/expected_global_procs = vars - gvars_datum_in_built_vars
 			for(var/I in global_procs)
 				expected_global_procs -= replacetext("[I]", "InitGlobal", "")
 			log_world("Missing procs: [expected_global_procs.Join(", ")]")
 
-	for(var/I in global_procs)
+	for(var/glob_proc in global_procs)
 		var/start_tick = world.time
-		call(src, I)()
+		call(src, glob_proc)()
 		var/end_tick = world.time
 		if(end_tick - start_tick)
-			warning("Global [replacetext("[I]", "InitGlobal", "")] slept during initialization!")
+			warning("Global [replacetext("[glob_proc]", "InitGlobal", "")] slept during initialization!")
 
 	// Someone make it so this call isn't necessary
 	make_datum_reference_lists()

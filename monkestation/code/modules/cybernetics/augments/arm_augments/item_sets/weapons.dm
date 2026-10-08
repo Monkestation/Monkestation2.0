@@ -22,7 +22,7 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/item_set/gun/laser/Initialize()
+/obj/item/organ/internal/cyberimp/arm/item_set/gun/laser/Initialize(mapload)
 	. = ..()
 	var/obj/item/organ/internal/cyberimp/arm/item_set/gun/laser/laserphasergun = locate(/obj/item/gun/energy/laser/mounted) in contents
 	laserphasergun.icon = icon //No invisible laser guns kthx
@@ -154,12 +154,12 @@
 	zone = BODY_ZONE_L_ARM
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/right_arm //You know the drill.
-    zone = BODY_ZONE_R_ARM
-    slot = ORGAN_SLOT_RIGHT_ARM_AUG
+	zone = BODY_ZONE_R_ARM
+	slot = ORGAN_SLOT_RIGHT_ARM_AUG
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/left_arm
-    zone = BODY_ZONE_L_ARM
-    slot = ORGAN_SLOT_LEFT_ARM_AUG
+	zone = BODY_ZONE_L_ARM
+	slot = ORGAN_SLOT_LEFT_ARM_AUG
 
 /datum/bodypart_overlay/simple/steel_drill
 	icon = 'monkestation/code/modules/cybernetics/icons/implants_onmob.dmi'
@@ -189,13 +189,10 @@
 	var/spin_delay = 10 SECONDS
 
 /obj/item/pickaxe/drill/implant/click_alt(mob/user)
-	spin()
+	spin_drill()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/pickaxe/drill/implant/verb/spin()
-	set name = "Spin Drillbit"
-	set category = "Object"
-	set desc = "Click to spin your drill's head. It won't do practically anything, but it's pretty cool anyway."
+GAME_VERB_DESC(/obj/item/pickaxe/drill/implant, spin_drill, "Spin Drillbit", "Click to spin your drill's head. It won't do practically anything, but it's pretty cool anyway.", "Object")
 
 	var/mob/user = usr
 

@@ -71,10 +71,10 @@
 	var/last_find_references = 0
 	/// How many references we're trying to find when searching
 	var/references_to_clear = 0
-	#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 	///Stores info about where refs are found, used for sanity checks and testing
 	var/list/found_refs
-	#endif
+#endif
 #endif
 
 	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
@@ -125,11 +125,11 @@
 				continue
 			qdel(timer)
 
-	#ifdef REFERENCE_TRACKING
-	#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING_DEBUG
 	found_refs = null
-	#endif
-	#endif
+#endif
+#endif
 
 	//BEGIN: ECS SHIT
 	var/list/dc = _datum_components
@@ -416,13 +416,13 @@
  * * easing - easing arg of the BYOND animate() proc.
  * * loop - loop arg of the BYOND animate() proc.
  */
-/datum/proc/transition_filter(name, list/new_params, time, easing, loop)
+/datum/proc/transition_filter(name, list/new_params, time, easing, loop, flags)
 	var/filter = get_filter(name)
 	if (!filter)
 		return
 	// This can get injected by the filter procs, we want to support them so bye byeeeee
 	new_params -= "type"
-	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	animate(filter, new_params, time = time, easing = easing, loop = loop, flags = flags)
 	modify_filter(name, new_params)
 
 /** Keeps the steps in the correct order.
@@ -474,6 +474,12 @@
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	return atom_cast.filters[name]
 
+/// Returns filter data associated with the passed key
+/datum/proc/get_filter_data(name)
+	for (var/list/filter_info as anything in filter_data)
+		if (filter_info["name"] == name)
+			return filter_info.Copy()
+
 /// Removes the passed filter, or multiple filters, if supplied with a list.
 /datum/proc/remove_filter(name_or_names, update = TRUE)
 	ASSERT(isatom(src) || isimage(src))
@@ -514,3 +520,23 @@
 		return
 	harddel_deets_dumped = TRUE
 	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z])" : ""]"
+
+/// Datum-level proc to return a multitool's buffer if it has one. Used to support different multitool types.
+/datum/proc/multitool_get_buffer(obj/item/tool)
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multi = tool
+		return multi.buffer?.resolve()
+	if(istype(tool, /obj/item/holotool))
+		var/obj/item/holotool/holo = tool
+		return holo.buffer?.resolve()
+
+/// Datum-level proc to set the value of a multitool's buffer. Used to support different multitool types.
+/datum/proc/multitool_set_buffer(obj/item/tool, buffer_value)
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multi = tool
+		multi.set_buffer(buffer_value)
+		return TRUE
+	if(istype(tool, /obj/item/holotool))
+		var/obj/item/holotool/holo = tool
+		holo.set_buffer(buffer_value)
+		return TRUE

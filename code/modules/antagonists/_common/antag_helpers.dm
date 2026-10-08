@@ -1,6 +1,6 @@
 /// Returns MINDS of the assigned antags of given type/subtypes
 /// Supplying no antag type grants all minds with antag datums
-/proc/get_antag_minds(antag_type, specific = FALSE)
+/proc/get_antag_minds(antag_type, specific = FALSE) as /list
 	RETURN_TYPE(/list/datum/mind)
 	. = list()
 	for(var/datum/antagonist/A in GLOB.antagonists)

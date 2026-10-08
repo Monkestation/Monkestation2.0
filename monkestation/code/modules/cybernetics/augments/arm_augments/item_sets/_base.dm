@@ -10,7 +10,7 @@
 	/// Sound played when retracting
 	var/retract_sound = 'sound/mecha/mechmove03.ogg'
 
-/obj/item/organ/internal/cyberimp/arm/item_set/Initialize()
+/obj/item/organ/internal/cyberimp/arm/item_set/Initialize(mapload)
 	. = ..()
 	if(ispath(active_item))
 		active_item = new active_item(src)

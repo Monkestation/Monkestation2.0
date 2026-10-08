@@ -19,7 +19,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	armor_type = /datum/armor/mask_gas
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -275,6 +274,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
+	starting_filter_type = /obj/item/gas_filter/clown
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
@@ -307,6 +307,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		update_item_action_buttons()
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
+
+/obj/item/clothing/mask/gas/clown_hat/yellow
+	name = "yellow clown wig and mask"
+	desc = "A true prankster's facial attire. But yellow! A clown is incomplete without his wig and mask."
+	icon_state = "clown_yellow"
+	actions_types = null
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
@@ -530,5 +536,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT // I said NO.
 
-
-
+/obj/item/clothing/mask/gas/deforest
+	name = "Deforest Gas Mask"
+	desc = "A reinforced environmental mask designed by Deforest Medical for search and rescue, the tinted visor and built-in negative pressure lining guarantee a secure fit even if the wearer were to fall flat on their face."
+	icon_state = "hivismask"

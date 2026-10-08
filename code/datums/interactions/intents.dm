@@ -2,6 +2,12 @@
 	shift_to_open_context_menu = TRUE
 	var/intent = INTENT_HELP
 
+/datum/interaction_mode/intents3/Destroy(force)
+	var/atom/movable/screen/act_intent3/selector = UI
+	if(selector?.intents == src)
+		selector.intents = null
+	return ..()
+
 /datum/interaction_mode/intents3/update_istate(mob/M, modifiers)
 	M.istate = NONE
 

@@ -32,7 +32,8 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/spreading_modifier = 1
 	var/severity = DISEASE_SEVERITY_NONTHREAT
-	var/list/required_organs = list()
+	/// If the disease requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
+	var/required_organ
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
@@ -71,14 +72,22 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
+	if(required_organ)
+		if(!has_required_infectious_organ(affected_mob, required_organ))
+			return FALSE
+
+	var/cure_mod
+	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
+
 	if(has_cure())
-		if(SPT_PROB(cure_chance, seconds_per_tick))
+		cure_mod = cure_chance / bad_immune
+		if(SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(max(stage - 1, 1))
 
-		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
+		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
 			cure()
 			return FALSE
-	else if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
+	else if(SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
 	return !carrier
@@ -130,7 +139,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		return TRUE
 	return FALSE
 
-/datum/disease/proc/cure(add_resistance = TRUE, mob/living/carbon/target) // monkestation edit: AAAAAAAAAAAAA
+/datum/disease/proc/cure(add_resistance = TRUE, mob/living/carbon/target, safe = FALSE) // monkestation edit: AAAAAAAAAAAAA
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())
@@ -154,10 +163,10 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		"cures",
 		"infectivity",
 		"cure_chance",
+		"required_organ",
 		"bypasses_immunity",
 		"spreading_modifier",
 		"severity",
-		"required_organs",
 		"needs_all_cures",
 		"strain_data",
 		"infectable_biotypes",
@@ -208,7 +217,14 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	return D
 
 /datum/disease/proc/after_add()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(isnull(affected_mob))
+		return
+	if(HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY))
+		if(disease_flags & DISEASE_DORMANT)
+			disease_flags &= ~DISEASE_DORMANT
+		for(var/datum/symptom/symptom as anything in symptoms)
+			symptom.power *= 2
 
 
 /datum/disease/proc/GetDiseaseID()
@@ -238,6 +254,21 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		stack_trace("Non-path argument passed to mob_type variable: [mob_type]")
 
 	return FALSE
+
+/// Checks if the mob has the required organ and it's not robotic or affected by inorganic biology
+/datum/disease/proc/has_required_infectious_organ(mob/living/carbon/target, required_organ_slot)
+	if(!iscarbon(target))
+		return FALSE
+
+	var/obj/item/organ/target_organ = target.get_organ_slot(required_organ_slot)
+	if(!istype(target_organ))
+		return FALSE
+
+	// robotic organs are immune to disease unless 'inorganic biology' symptom is present
+	if(IS_ROBOTIC_ORGAN(target_organ) && !(infectable_biotypes & MOB_ROBOTIC))
+		return FALSE
+
+	return TRUE
 
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)

@@ -60,7 +60,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	has_fov = FALSE
 	alternative_deathgasps = list('sound/voice/sec_death.ogg')
 	COOLDOWN_DECLARE(hailer_cooldown)
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
 	///Whether the hailer has been broken due to overuse or not
@@ -100,7 +99,13 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+
+/obj/item/clothing/mask/gas/sechailer/swat/alt
+	icon_state = "swat1"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/mask/gas/sechailer/swat/alt/pig
+	icon_state = "swat2"
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
@@ -150,10 +155,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
 		return ..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/halt()
-	set category = "Object"
-	set name = "HALT"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/mask/gas/sechailer, halt, usr, "HALT", "Object")
+
 	if(!isliving(usr) || !can_use(usr) || !COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
 	if(broken_hailer)

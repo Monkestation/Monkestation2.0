@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 /// If `check_hearing` is TRUE (default), then deafened players will be skipped over. This argument is ignored if `only_listener` is set.
 /// Returns FALSE if the word doesn't exist, TRUE otherwise.
 /datum/vox_voice/proc/play_word(word, turf/origin_turf, mob/only_listener, check_hearing = TRUE)
-	word = lowertext(word)
+	word = LOWER_TEXT(word)
 
 	var/sound_file = sounds[word]
 	if(isnull(sound_file))
@@ -53,9 +53,11 @@ GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 			if(player_mob.client && !player_mob.client?.prefs)
 				stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
 				continue
-			if(check_hearing && !player_mob.can_hear())
+			if(isnewplayer(player_mob))
 				continue
-			if(!player_mob.client?.prefs?.read_preference(/datum/preference/toggle/sound_vox))
+			if(check_hearing && HAS_TRAIT(player_mob, TRAIT_DEAF))
+				continue
+			if(!player_mob.client?.prefs?.channel_volume["[CHANNEL_VOX]"])
 				continue
 			if(!isnull(origin_turf))
 				var/turf/player_turf = get_turf(player_mob)

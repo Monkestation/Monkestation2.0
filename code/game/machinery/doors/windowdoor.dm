@@ -7,14 +7,14 @@
 	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
-	var/base_state = "left"
+	auto_dir_align = FALSE
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
 	armor_type = /datum/armor/door_window
 	visible = FALSE
 	flags_1 = ON_BORDER_1
 	opacity = FALSE
-	pass_flags_self = PASSGLASS
+	pass_flags_self = PASSGLASS | PASSDOORS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	set_dir_on_move = FALSE
@@ -25,6 +25,8 @@
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
+
+	var/base_state = "left" // remove - base_icon_state
 
 /datum/armor/door_window
 	melee = 20
@@ -82,9 +84,6 @@
 		return
 
 	set_light(l_outer_range = 0)
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
@@ -117,9 +116,9 @@
 		return
 	autoclose = TRUE
 	if(check_access(null))
-		sleep(5 SECONDS)
+		sleep(8 SECONDS)
 	else //secure doors close faster
-		sleep(2 SECONDS)
+		sleep(5 SECONDS)
 	if(!density && autoclose) //did someone change state while we slept?
 		close()
 

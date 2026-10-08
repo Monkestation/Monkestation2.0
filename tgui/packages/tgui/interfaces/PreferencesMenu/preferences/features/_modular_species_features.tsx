@@ -1,4 +1,4 @@
-import { FeatureNumberInput, FeatureNumeric } from './base';
+import { FeatureNumberInput, type FeatureNumeric } from './base';
 
 export const hiss_length: FeatureNumeric = {
   name: 'Hiss Length',

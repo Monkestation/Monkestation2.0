@@ -57,8 +57,8 @@ export const InsertedSeedOne = (props) => {
                 <img
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
-                    'vertical-align': 'middle',
-                    'horizontal-align': 'middle',
+                    verticalAlign: 'middle',
+                    horizontalAlign: 'middle',
                   }}
                 />
               </Table.Cell>
@@ -126,8 +126,8 @@ export const InsertedSeedOneInfusion = (props) => {
                 <img
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
-                    'vertical-align': 'middle',
-                    'horizontal-align': 'middle',
+                    verticalAlign: 'middle',
+                    horizontalAlign: 'middle',
                   }}
                 />
               </Table.Cell>
@@ -211,8 +211,8 @@ export const InsertedSeedTwo = (props) => {
                 <img
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
-                    'vertical-align': 'middle',
-                    'horizontal-align': 'middle',
+                    verticalAlign: 'middle',
+                    horizontalAlign: 'middle',
                   }}
                 />
               </Table.Cell>
@@ -323,7 +323,7 @@ export const DamageBar = (props) => {
         value={data.combined_damage / 100}
         align="center"
       >
-        {'Infusion Damage: ' + toFixed(data.combined_damage) + '/ 100'}
+        {`Infusion Damage: ${toFixed(data.combined_damage)}/ 100`}
       </ProgressBar>
     </Section>
   );

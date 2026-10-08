@@ -38,7 +38,7 @@
 			corners |= object
 			continue
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
@@ -53,7 +53,7 @@
 		if(object.panel_open)
 			. = FALSE
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
@@ -89,22 +89,22 @@
 		return
 	to_chat(user, span_notice("You link all parts toghether."))
 	active = TRUE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	linked_interface.active = TRUE
-	linked_interface.update_appearance()
+	linked_interface.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_interface, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_input.active = TRUE
-	linked_input.update_appearance()
+	linked_input.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_input, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_output.active = TRUE
-	linked_output.update_appearance()
+	linked_output.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_output, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_moderator.active = TRUE
-	linked_moderator.update_appearance()
+	linked_moderator.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_moderator, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
-		corner.update_appearance()
+		corner.update_appearance(UPDATE_ICON)
 		RegisterSignal(corner, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	soundloop = new(src, TRUE)
 	soundloop.volume = 5
@@ -138,27 +138,27 @@
 	if(!active)
 		return
 	active = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	if(linked_interface)
 		linked_interface.active = FALSE
-		linked_interface.update_appearance()
+		linked_interface.update_appearance(UPDATE_ICON)
 		linked_interface = null
 	if(linked_input)
 		linked_input.active = FALSE
-		linked_input.update_appearance()
+		linked_input.update_appearance(UPDATE_ICON)
 		linked_input = null
 	if(linked_output)
 		linked_output.active = FALSE
-		linked_output.update_appearance()
+		linked_output.update_appearance(UPDATE_ICON)
 		linked_output = null
 	if(linked_moderator)
 		linked_moderator.active = FALSE
-		linked_moderator.update_appearance()
+		linked_moderator.update_appearance(UPDATE_ICON)
 		linked_moderator = null
 	if(corners.len)
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
-			corner.update_appearance()
+			corner.update_appearance(UPDATE_ICON)
 		corners = list()
 	QDEL_NULL(soundloop)
 
@@ -167,7 +167,7 @@
 
 	internal_fusion.assert_gas(/datum/gas/antinoblium)
 
-	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info))
+	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info[META_GAS_ID]))
 
 	if (!selected_fuel)
 		return
@@ -214,9 +214,9 @@
 /**
  * Infrequently plays accent sounds, and adjusts main loop parameters
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience(seconds_per_tick)
 	// We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
-	if(last_accent_sound < world.time && prob(20))
+	if(last_accent_sound < world.time && SPT_PROB(10, seconds_per_tick))
 		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
 		if(critical_threshold_proximity >= 300)
 			playsound(src, SFX_HYPERTORUS_MELTING, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
@@ -241,7 +241,7 @@
 		return FALSE
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		if(internal_fusion.gases[gas_type][MOLES] < FUSION_MOLE_THRESHOLD)
+		if(internal_fusion.moles[gas_type] < FUSION_MOLE_THRESHOLD)
 			return FALSE
 	return TRUE
 
@@ -261,7 +261,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gas_requirements()
 	var/datum/gas_mixture/contents = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
-		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+		if(!contents.moles[gas_type])
 			return FALSE
 	return TRUE
 
@@ -330,7 +330,7 @@
 	var/obj/machinery/power/apc/apc = area.apc
 	if (!apc)
 		return 0
-	var/obj/item/stock_parts/power_store/cell/cell = apc.cell
+	var/obj/item/stock_parts/power_store/cell = apc.cell
 	if (!cell)
 		return 0
 	return cell.percent()
@@ -421,10 +421,8 @@
 		"The [src] has begun melting down!",
 		source = src,
 		header = "Meltdown Incoming",
-		action = NOTIFY_ORBIT,
 		ghost_sound = 'sound/machines/warning-buzzer.ogg',
 		notify_volume = 75,
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
@@ -432,7 +430,7 @@
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
 			return
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individually
 			sleep(1 SECONDS)
 			continue
 		else if(i > 50)
@@ -562,7 +560,7 @@
 			epicenter = loc,
 			heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
 			light_range = critical ? emp_light_size * 2 : emp_heavy_size,
-			log = TRUE
+			log = TRUE /// "emp_source" not found in current build; leaving as is
 			)
 
 	qdel(src)
@@ -586,7 +584,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack() as /obj/machinery/atmospherics/components/unary/hypertorus
 	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
 	part.cracked = TRUE
-	part.update_appearance()
+	part.update_appearance(UPDATE_ICON)
 	return part
 
 /**

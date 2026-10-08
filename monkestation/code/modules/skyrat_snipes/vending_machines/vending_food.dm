@@ -3,14 +3,14 @@
 /obj/item/trash/empty_food_tray
 	name = "empty plastic food tray"
 	desc = "The condensation and what you can only hope are the leftovers of food make this a bit hard to reuse."
-	icon = 'monkestation/icons/obj/food/imported_quick_foods.dmi'
+	icon = 'icons/obj/food/imported_quick_foods.dmi'
 	icon_state = "foodtray_empty"
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/trash/empty_side_pack
 	name = "empty side wrapper"
 	desc = "Unfortunately, this no longer holds any sides to distract you from the other 'food'."
-	icon = 'monkestation/icons/obj/food/imported_quick_foods.dmi'
+	icon = 'icons/obj/food/imported_quick_foods.dmi'
 	icon_state = "foodpack_generic_trash"
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
@@ -29,7 +29,7 @@
 /obj/item/food/vendor_tray_meal
 	name = "\improper NT-Meal: Steak and Macaroni"
 	desc = "A 'salisbury steak' drowning in something similar to a gravy, with a macaroni and cheese substitute mix sitting right beside it."
-	icon = 'monkestation/icons/obj/food/imported_quick_foods.dmi'
+	icon = 'icons/obj/food/imported_quick_foods.dmi'
 	icon_state = "foodtray_sad_steak"
 	trash_type = /obj/item/trash/empty_food_tray
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8)

@@ -5,7 +5,8 @@
 	desc = "A thick spire of tendrils."
 	max_integrity = BLOB_FACTORY_MAX_HP
 	health_regen = BLOB_FACTORY_HP_REGEN
-	point_return = BLOB_REFUND_FACTORY_COST
+	point_cost = 60
+	point_return = 35
 	resistance_flags = LAVA_PROOF
 	armor_type = /datum/armor/structure_blob/factory
 	///How many spores this factory can have.
@@ -28,17 +29,14 @@
 	return "Will produce a blob spore every few seconds."
 
 /obj/structure/blob/special/factory/creation_action()
-	if(overmind)
-		overmind.factory_blobs += src
+	. = ..()
 
 /obj/structure/blob/special/factory/Destroy()
 	spores_and_zombies = null
 	blobbernaut = null
-	if(overmind)
-		overmind.factory_blobs -= src
 	return ..()
 
-/obj/structure/blob/special/factory/Be_Pulsed()
+/obj/structure/blob/special/factory/be_pulsed()
 	. = ..()
 	if(blobbernaut)
 		return
@@ -47,7 +45,7 @@
 	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/basic/blob_minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
+	var/mob/living/basic/blob_minion/created_spore = blob_team ? blob_team.create_spore(loc) : new(loc)
 	register_mob(created_spore)
 	RegisterSignal(created_spore, COMSIG_BLOB_ZOMBIFIED, PROC_REF(on_zombie_created))
 

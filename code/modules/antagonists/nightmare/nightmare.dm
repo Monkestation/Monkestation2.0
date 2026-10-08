@@ -44,7 +44,7 @@
 	..()
 
 /datum/objective/nightmare_fluff/check_completion()
-	return owner.current.stat != DEAD
+	return !QDELETED(owner.current) && owner.current.stat != DEAD
 
 /datum/antagonist/nightmare/forge_objectives()
 	var/datum/objective/nightmare_fluff/objective = new
@@ -64,7 +64,7 @@
 	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 1 SECOND)
+		QDEL_IN(hosts_mind.current, 1 SECONDS)
 	var/mob/living/carbon/human/nightmare = new (spawn_loc)
 	nightmare.PossessByPlayer(spender_key)
 	nightmare.mind.add_antag_datum(/datum/antagonist/nightmare)

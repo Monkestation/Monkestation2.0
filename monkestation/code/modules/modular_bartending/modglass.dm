@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	rim = RIM_LARGE
 	variants = LARGE_VARIANTS
 
-/obj/item/reagent_containers/cup/glass/modglass/Initialize()
+/obj/item/reagent_containers/cup/glass/modglass/Initialize(mapload)
 	. = ..()
 	if(variants)
 		glass_skins = glass_variants_list()
@@ -106,10 +106,10 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	update_icon()
 
 /**
-  * for each layer a garnish can be on, if there is a garnish in that layers index, apply a mutable appearance of its type and our rim size
-  * if the garnish is a "rim" garnish, it is instead split into two halves, one drawn below all others,
-  * and one above all others, allowing garnishes to be placed "inside" the glass
-  */
+	* for each layer a garnish can be on, if there is a garnish in that layers index, apply a mutable appearance of its type and our rim size
+	* if the garnish is a "rim" garnish, it is instead split into two halves, one drawn below all others,
+	* and one above all others, allowing garnishes to be placed "inside" the glass
+	*/
 /obj/item/reagent_containers/cup/glass/modglass/update_overlays()
 	. = ..()
 	var/rimtype = garnishes["2"]

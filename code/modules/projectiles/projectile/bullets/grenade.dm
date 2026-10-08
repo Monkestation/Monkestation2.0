@@ -2,14 +2,14 @@
 
 /obj/projectile/bullet/a40mm
 	name ="40mm grenade"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	damage = 60
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	range = 30
 
-/obj/projectile/bullet/a40mm/Range() //because you lob the grenade to achieve the range :)
+/obj/projectile/bullet/a40mm/reduce_range() //because you lob the grenade to achieve the range :)
 	if(!has_gravity(get_area(src)))
 		range++
 	return ..()
@@ -35,10 +35,10 @@
 //40mm slug-grenade
 /obj/projectile/bullet/shotgun_beanbag/a40mm
 	name = "40mm rubber slug"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mmRUBBER_projectile"
 	damage = 20
-	stamina = 250 //BONK
+	stamina = 125 //BONK
 	paralyze = 5 SECONDS
 	wound_bonus = 30
 	weak_against_armour = TRUE
@@ -82,7 +82,7 @@
 //40mm smoke grenade
 /obj/projectile/bullet/a40mm/smoke
 	name ="40mm smoke grenade"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	damage = 15
 
@@ -94,7 +94,7 @@
 //40mm flashbang grenade
 /obj/projectile/bullet/a40mm/stun
 	name ="40mm stun grenade"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	damage = 15
 
@@ -118,7 +118,7 @@
 //40mm HEDP grenade, good vs mechs
 /obj/projectile/bullet/a40mm/hedp
 	name ="40mm HEDP grenade"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mmHEDP_projectile"
 	damage = 50
 	var/anti_material_damage_bonus = 75
@@ -148,7 +148,7 @@
 //40mm fragmentation grenade
 /obj/projectile/bullet/a40mm/frag
 	name ="40mm fragmentation grenade"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 
 /obj/projectile/bullet/a40mm/frag/payload(atom/target)
@@ -160,7 +160,7 @@
 /obj/item/grenade/a40mm_frag
 	name = "40mm fragmentation payload"
 	desc = "An anti-personnel fragmentation payload. How the heck did this get here?"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	shrapnel_type = /obj/projectile/bullet/shrapnel/a40mm_frag
 	shrapnel_radius = 4
@@ -185,9 +185,9 @@
 /obj/projectile/bullet/c980grenade
 	name = ".980 Tydhouer practice grenade"
 	damage = 20
-	stamina = 30
+	stamina = 15
 	range = 14
-	speed = 2 // Higher means slower, y'all
+	speed = 0.5
 	sharpness = NONE
 
 /obj/projectile/bullet/c980grenade/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -288,8 +288,9 @@
 	desc = "OH SHIT!!!"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bolter"
-	damage = 100
+	damage = 50
 	range = 25
+	fauna_mod = 2
 
 /obj/projectile/bullet/a40mm/kinetic/payload(atom/target)
 	var/obj/item/grenade/shrapnel_maker = new /obj/item/grenade/kineticshrapnel(drop_location())
@@ -301,7 +302,7 @@
 /obj/item/grenade/kineticshrapnel
 	name = "Kinetic fragmentation payload"
 	desc = "holy fucking shit you should NOT be seeing this please report it and then CRY ABOUT IT"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	shrapnel_type = /obj/projectile/bullet/shrapnel/kinetic
 	shrapnel_radius = 2
@@ -312,13 +313,14 @@
 /obj/projectile/bullet/shrapnel/kinetic
 	name = "Kinetic Shrapnel Hunk"
 	range = 5
-	damage = 75
+	damage = 25
 	weak_against_armour = TRUE
 	dismemberment = 0
 	ricochets_max = 0
 	ricochet_chance = 0
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0
+	fauna_mod = 3
 
 /obj/projectile/bullet/shrapnel/kinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))

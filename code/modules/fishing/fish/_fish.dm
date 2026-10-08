@@ -408,7 +408,7 @@
 	var/datum/gas_mixture/mixture = loc.return_air()
 	if(!mixture)
 		return FALSE
-	if(safe_air_limits && !check_gases(mixture.gases, safe_air_limits))
+	if(safe_air_limits && !mixture.check_gases(safe_air_limits))
 		return FALSE
 	if(!ISINRANGE(mixture.temperature, required_temperature_min, required_temperature_max))
 		return FALSE

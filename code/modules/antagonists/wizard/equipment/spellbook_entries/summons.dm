@@ -85,7 +85,7 @@
 	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness")
 	if(!message || QDELETED(user) || QDELETED(book) || !can_buy(user, book))
 		return FALSE
-	curse_of_madness(user, message)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(curse_of_madness), user, message)
 	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return ..()
 
@@ -147,5 +147,25 @@
 		return FALSE
 	// Also, must be config enabled
 	return !CONFIG_GET(flag/no_summon_events)
+
+/datum/spellbook_entry/summon/message//sends a curse of madness message for free without any effect on the crew
+	name = "Magical Announcement"
+	desc = "Stealth is for NERDS. Tell the station what you really think about them."
+	cost = 0
+	can_random = FALSE
+
+/datum/spellbook_entry/summon/message/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
+	var/message = tgui_input_text(user, "Tell the station whats on your mind.", "Tell them All")
+	if(!message)
+		return FALSE
+	for(var/mob/living/carbon/human/messaged in GLOB.player_list)
+		if(messaged.stat == DEAD)
+			continue
+		var/turf/messaged_turf = get_turf(messaged)
+		if(messaged_turf && !is_station_level(messaged_turf.z))
+			continue
+		to_chat(messaged, span_reallybig(span_hypnophrase(message)))
+	return ..()
+
 
 #undef MINIMUM_POP_FOR_RITUALS

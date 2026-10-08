@@ -2,6 +2,7 @@
 	id = "ghoul"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/ghoul
 	/// The new max health value set for the ghoul, if supplied
 	var/new_max_health
@@ -50,7 +51,7 @@
 	var/mob/living/carbon/human/human_target = owner
 
 	RegisterSignal(human_target, COMSIG_LIVING_DEATH, PROC_REF(remove_ghoul_status))
-	human_target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) // Have to do an admin heal here, otherwise they'll likely just die due to missing organs or limbs
+	human_target.revive(ADMIN_HEAL_ALL) // Have to do an admin heal here, otherwise they'll likely just die due to missing organs or limbs
 
 	if(new_max_health)
 		if(new_max_health < human_target.maxHealth)
@@ -60,13 +61,16 @@
 		human_target.health = new_max_health
 
 	on_made_callback?.Invoke(human_target)
-	human_target.add_traits(list(TRAIT_FAKEDEATH, TRAIT_NO_SLAB_INVOKE), TRAIT_STATUS_EFFECT(id)) // monkestation edit: TRAIT_NO_SLAB_INVOKE
-	human_target.become_husk(MAGIC_TRAIT)
-	human_target.faction |= FACTION_HERETIC
+	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(human_target, TRAIT_HERETIC_SUMMON, TRAIT_STATUS_EFFECT(id))
+	human_target.become_husk(TRAIT_STATUS_EFFECT(id))
+	human_target.faction += FACTION_HERETIC
+	// human_target.apply_status_effect(/datum/status_effect/desensitized, TRAIT_STATUS_EFFECT(id), DESENSITIZED_THRESHOLD * 0.2)
 
 	if(human_target.mind)
 		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 		heretic_monster.set_owner(master_mind)
+		human_target.mind.remove_antag_datum(/datum/antagonist/cult)
 
 	return TRUE
 
@@ -88,9 +92,11 @@
 		human_target.setMaxHealth(initial(human_target.maxHealth))
 
 	on_lost_callback?.Invoke(human_target)
-	human_target.remove_traits(list(TRAIT_FAKEDEATH, TRAIT_NO_SLAB_INVOKE), TRAIT_STATUS_EFFECT(id)) // monkestation edit: TRAIT_NO_SLAB_INVOKE
-	human_target.cure_husk(MAGIC_TRAIT)
+	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(human_target, TRAIT_HERETIC_SUMMON, TRAIT_STATUS_EFFECT(id))
+	human_target.cure_husk(TRAIT_STATUS_EFFECT(id))
 	human_target.faction -= FACTION_HERETIC
+	// human_target.remove_status_effect(/datum/status_effect/desensitized, TRAIT_STATUS_EFFECT(id))
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
 
 	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)
@@ -100,4 +106,4 @@
 /atom/movable/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"
 	desc = "You are a Ghoul!"
-	icon_state = ALERT_MIND_CONTROL
+	icon_state = "mind_control"

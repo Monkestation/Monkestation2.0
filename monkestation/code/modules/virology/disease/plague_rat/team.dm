@@ -56,7 +56,7 @@ GLOBAL_VAR_INIT(static_plague_team, null)
 
 	if (!invasion)
 		var/list/found_vents = list()
-		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
+		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))
 			var/turf/scrubber_turf = get_turf(temp_vent)
 			if(!is_station_level(scrubber_turf.z))
 				continue

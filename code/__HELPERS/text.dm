@@ -22,13 +22,13 @@
 
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
-/proc/sanitize_name(target, allow_numbers = FALSE, cap_after_symbols = TRUE)
+/proc/sanitize_name(target, allow_numbers = FALSE, cap_after_symbols = TRUE, mob/user = usr)
 	if(is_ic_filtered(target) || is_soft_ic_filtered(target))
-		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
+		tgui_alert(user, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	var/result = reject_bad_name(target, allow_numbers = allow_numbers, strict = TRUE, cap_after_symbols = cap_after_symbols)
 	if(!result)
-		tgui_alert(usr, "Invalid name.")
+		tgui_alert(user, "Invalid name.")
 		return ""
 	return sanitize(result)
 
@@ -54,7 +54,6 @@
 /// Runs STRIP_HTML_SIMPLE and byond's sanitization proc.
 /proc/adminscrub(text, limit = MAX_MESSAGE_LEN)
 	return html_encode(STRIP_HTML_SIMPLE(text, limit))
-
 
 /**
  * Perform a whitespace cleanup on the text, similar to what HTML renderers do
@@ -770,7 +769,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + length(string[next_backslash]), next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + length(string[next_backslash]), next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + length(string[next_space]))
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
@@ -1000,6 +999,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return corrupted_text
 
+
+
 /// Checks if the char is lowercase
 #define is_lowercase_character(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
 /// Checks if the char is uppercase
@@ -1090,7 +1091,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/text_length = length(text)
 
 	//remove caps since words will be shuffled
-	text = lowertext(text)
+	text = LOWER_TEXT(text)
 	//remove punctuation for same reasons as above
 	var/punctuation = ""
 	var/punctuation_hit_list = list("!","?",".","-")
@@ -1183,6 +1184,16 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		else
 			. = ""
 
+/proc/weight_class_to_tooltip(w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY to WEIGHT_CLASS_SMALL)
+			return "This item can fit into pockets, boxes and backpacks."
+		if(WEIGHT_CLASS_NORMAL)
+			return "This item can fit into backpacks."
+		if(WEIGHT_CLASS_BULKY to WEIGHT_CLASS_GIGANTIC)
+			return "This item is too large to fit into any standard storage."
+	return ""
+
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
@@ -1253,3 +1264,60 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(lowercase_regex.Find(input))
 		return FALSE
 	return TRUE
+
+/// Checks to see if a string starts with http:// or https://
+/proc/is_http_protocol(text)
+	var/static/regex/http_regex
+	if(isnull(http_regex))
+		http_regex = new("^https?://")
+	return findtext(text, http_regex)
+
+/// Parses a JWT payload, returning it as a list.
+/// This doesn't do signature verification or anything, I'm just using this to get the expiry time.
+/proc/parse_jwt_payload(jwt) as /list
+	var/list/split = splittext(jwt, ".")
+	if(length(split) != 3)
+		return null
+	var/payload_base64 = split[2]
+	// rust-g fucking segfaults if you pass base64 without padding ;)
+	var/padding_needed = length(payload_base64) % 4
+	if(padding_needed != 0)
+		for(var/i = 1 to (4 - padding_needed))
+			payload_base64 += "="
+	return json_decode(rustg_decode_base64(payload_base64))
+
+/// Ensures sentences end in appropriate punctuation (a period if none exist) and that all whitespace-bounded 'i' characters are capitalized.
+/// If the sentence ends in chat-flavored markdown for bolds, italics or underscores and does not have a preceding period, exclamation mark or other flavored sentence terminator, add a period.
+/// (e.g: 'Borgs are rogue' becomes 'Borgs are rogue.', '+BORGS ARE ROGUE+ becomes '+BORGS ARE ROGUE+.', '+Borgs are rogue~+' is untouched.)
+/proc/autopunct_bare(input_text)
+	if (findtext_char(input_text, GLOB.needs_eol_autopunctuation))
+		input_text += "."
+
+	return replacetext_char(input_text, GLOB.noncapital_i, "I")
+
+/// -- Text helpers. --
+/// Provides a preview of [string] up to [len - 3], after which it appends "..." if it pasts the length.
+/proc/text_preview(string, len = 40)
+	var/char_len = length_char(string)
+	if(char_len <= len)
+		if(!char_len)
+			return "\[...\]"
+		else
+			return string
+	else
+		return "[copytext_char(string, 1, len - 3)]..."
+
+/proc/get_fancy_key(mob/user)
+	if(ismob(user))
+		var/mob/temp = user
+		return temp.key
+	else if(istype(user, /client))
+		var/client/temp = user
+		return temp.key
+	else if(istype(user, /datum/mind))
+		var/datum/mind/temp = user
+		return temp.key
+	return "* Unknown *"
+
+/proc/remove_all_spaces(text)
+	return replacetext_char(text, " ", "")

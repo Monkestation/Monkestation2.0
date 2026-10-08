@@ -4,6 +4,14 @@
 		"tgui.bundle.js" = file("tgui/public/tgui.bundle.js"),
 		"tgui.bundle.css" = file("tgui/public/tgui.bundle.css"),
 	)
+	var/ready = FALSE
+
+/datum/asset/simple/tgui/New()
+	var/file_list = flist("tgui/public/")
+	for(var/_file in file_list)
+		if(endswith(_file, ".ttf"))
+			assets[_file] = file("tgui/public/[_file]")
+	. = ..()
 
 /datum/asset/simple/tgui_panel
 	keep_local_name = TRUE

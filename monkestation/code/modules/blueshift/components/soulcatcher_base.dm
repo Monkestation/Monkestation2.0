@@ -325,10 +325,10 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 
 		if(emote)
 			parent_object.manual_emote(html_decode(message_to_send))
-			log_emote("[soul_sender] in [name] soulcatcher room emoted: [message_to_send], as an external object")
+			log_emote("[key_name(soul_sender)] in [name] soulcatcher room emoted: [message_to_send], as an external object")
 		else
 			parent_object.say(html_decode(message_to_send))
-			log_say("[soul_sender] in [name] soulcatcher room said: [message_to_send], as an external object")
+			log_say("[key_name(soul_sender)] in [name] soulcatcher room said: [message_to_send], as an external object")
 
 		parent_object.name = temp_name
 		return TRUE
@@ -388,9 +388,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 
 	joining_soul.join_soulcatcher()
 
-/mob/dead/observer/verb/join_soulcatcher()
-	set name = "Enter Soulcatcher"
-	set category = "Ghost"
+GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 
 	var/list/joinable_soulcatchers = list()
 	for(var/datum/component/soulcatcher/soulcatcher in GLOB.soulcatchers)

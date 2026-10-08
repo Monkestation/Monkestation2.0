@@ -20,6 +20,8 @@
 	// Internal vars.
 	/// The number of ressurections that have occured from this phylactery.
 	var/num_resurrections = 0
+	// The max number of resurrections that can occur from this phylactery
+	var/max_ressurections = -1
 	/// A timerid to the current revival timer.
 	var/revive_timer
 

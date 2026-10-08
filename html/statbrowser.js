@@ -40,6 +40,13 @@ var statcontentdiv = document.getElementById("statcontent");
 var storedimages = [];
 var split_admin_tabs = false;
 
+// Monkestation Addition: Token Panel
+var tokenManager = {
+  accepted: 0,
+  pending: 0,
+  rejected: 0,
+  timed_out: 0,
+};
 // Any BYOND commands that could result in the client's focus changing go through this
 // to ensure that when we relinquish our focus, we don't do it after the result of
 // a command has already taken focus for itself.
@@ -249,6 +256,7 @@ function tab_change(tab) {
   } else if (tab == "Tickets") {
     draw_tickets();
     draw_interviews();
+    draw_tokens(); // Monkestation Token Panel Addition
   } else if (tab == "SDQL2") {
     draw_sdql2();
   } else if (tab == turfname) {
@@ -590,6 +598,67 @@ function draw_tickets() {
   }
   document.getElementById("statcontent").appendChild(table);
 }
+// Monkestation Token Panel Addition START
+function draw_tokens() {
+  var body = document.createElement("div");
+  var header = document.createElement("h3");
+  header.textContent = "Token Manager";
+  body.appendChild(header);
+
+  // Link to open the full token manager panel
+  var manDiv = document.createElement("div");
+  manDiv.className = "token_panel_controls";
+  var manLink = document.createElement("a");
+  manLink.textContent = "Open Token Manager Panel";
+  manLink.href =
+    "byond://?_src_=holder;admin_token=" +
+    href_token +
+    ";token_manager=1;statpanel_item_click=left";
+  manDiv.appendChild(manLink);
+  body.appendChild(manDiv);
+
+  // Stats table
+  var statsTable = document.createElement("table");
+  statsTable.className = "token_panel_stats";
+
+  var stats = [
+    { label: "Accepted", value: tokenManager.accepted, action: "accepted" },
+    { label: "Pending", value: tokenManager.pending, action: "pending" },
+    { label: "Rejected", value: tokenManager.rejected, action: "rejected" },
+    { label: "Timed Out", value: tokenManager.timed_out, action: "timed_out" },
+  ];
+
+  for (var i = 0; i < stats.length; i++) {
+    var stat = stats[i];
+    var tr = document.createElement("tr");
+    var td1 = document.createElement("td");
+    td1.textContent = stat.label;
+    var td2 = document.createElement("td");
+
+    var a = document.createElement("a");
+    a.href =
+      "byond://?_src_=holder;admin_token=" +
+      href_token +
+      ";token_action=" +
+      stat.action +
+      ";statpanel_item_click=left";
+    a.textContent = stat.value;
+    td2.appendChild(a);
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    statsTable.appendChild(tr);
+  }
+
+  body.appendChild(statsTable);
+  document.getElementById("statcontent").appendChild(body);
+}
+
+function remove_tokens() {
+  tokenManager = { accepted: 0, pending: 0, rejected: 0, timed_out: 0 };
+}
+
+// Monkestation Token Panel Addition END
 
 function draw_interviews() {
   var body = document.createElement("div");
@@ -1004,6 +1073,16 @@ Byond.subscribeTo("update_interviews", function (I) {
   }
 });
 
+// Monkestation Addition START
+Byond.subscribeTo("update_tokens", function (payload) {
+  tokenManager = payload;
+  if (current_tab == "Tickets") {
+    draw_tokens();
+  }
+});
+
+Byond.subscribeTo("remove_tokens", remove_tokens);
+// Monkestation Addition END
 Byond.subscribeTo("update_split_admin_tabs", function (status) {
   status = status == true;
 

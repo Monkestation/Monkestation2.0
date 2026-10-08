@@ -1,3 +1,5 @@
+import type { BooleanLike } from 'common/react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -8,12 +10,9 @@ import {
   NumberInput,
   Section,
   Tooltip,
-} from 'tgui/components';
+} from '../../components';
+import type { HypertorusFilter } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
-
-import { BooleanLike } from 'common/react';
-import { HypertorusFilter } from '.';
-import { useBackend } from 'tgui/backend';
 
 type ComboProps = {
   color?: string | BooleanLike;
@@ -94,7 +93,8 @@ const ComboKnob = (props: ComboProps) => {
         maxValue={maxValue}
         step={step}
         stepPixelSize={1}
-        onDrag={(_, v) => act(parameter, { [parameter]: v })}
+        tickWhileDragging
+        onChange={(_, v) => act(parameter, { [parameter]: v })}
         {...rest}
       />
       <Button
@@ -128,7 +128,7 @@ const ComboKnob = (props: ComboProps) => {
   );
 };
 
-export const HypertorusSecondaryControls = (props) => {
+export const HypertorusSecondaryControls = () => {
   const { data } = useBackend<ControlsData>();
   const {
     cooling_volume,
@@ -198,7 +198,7 @@ export const HypertorusSecondaryControls = (props) => {
   );
 };
 
-export const HypertorusWasteRemove = (props) => {
+export const HypertorusWasteRemove = () => {
   const { act, data } = useBackend<WasteData>();
   const { filter_types = [], waste_remove, mod_filtering_rate } = data;
 
@@ -239,7 +239,8 @@ export const HypertorusWasteRemove = (props) => {
             unit="mol/s"
             minValue={5}
             maxValue={200}
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(value) =>
               act('mod_filtering_rate', {
                 mod_filtering_rate: value,
               })

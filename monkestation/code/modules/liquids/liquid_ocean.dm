@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 /area/ocean
 	name = "Ocean"
 
-	icon = 'monkestation/icons/obj/effects/liquid.dmi'
+	icon = 'icons/obj/effects/liquid.dmi'
 	base_icon_state = "ocean"
 	icon_state = "ocean_area"
 	alpha = 120
@@ -52,13 +52,14 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	baseturfs = /turf/open/openspace/ocean
 	var/replacement_turf = /turf/open/floor/plating/ocean
 
-/turf/open/openspace/ocean/Initialize()
+/turf/open/openspace/ocean/Initialize(mapload)
 	. = ..()
 	ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 
 /turf/open/floor/plating
 	///do we still call parent but dont want other stuff?
 	var/overwrites_attack_by = FALSE
+
 /turf/open/floor/plating/ocean
 	plane = FLOOR_PLANE
 	layer = TURF_LAYER
@@ -66,7 +67,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	gender = PLURAL
 	name = "ocean sand"
 	baseturfs = /turf/open/floor/plating/ocean
-	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon = 'icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
 	footstep = FOOTSTEP_SAND
@@ -78,10 +79,13 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 
 	upgradable = FALSE
 	attachment_holes = FALSE
+	can_slice_apart = FALSE
 
 	resistance_flags = INDESTRUCTIBLE
 
 	overwrites_attack_by = TRUE
+
+	astar_weight = 50
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
@@ -103,7 +107,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	/// do we build a catwalk or plating with rods
 	var/catwalk = FALSE
 
-/turf/open/floor/plating/ocean/Initialize()
+/turf/open/floor/plating/ocean/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
 	RegisterSignal(src, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
@@ -281,7 +285,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 		var/obj/item/vent_package/attacking = C
 		attacking.deploy(src)
 /obj/effect/abstract/ocean_overlay
-	icon = 'monkestation/icons/obj/effects/liquid.dmi'
+	icon = 'icons/obj/effects/liquid.dmi'
 	icon_state = "ocean"
 	base_icon_state = "ocean"
 	plane = AREA_PLANE //Same as weather, etc.
@@ -312,7 +316,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 /turf/open/floor/plating/ocean/proc/mob_fall(datum/source, mob/M)
 	SIGNAL_HANDLER
 	var/turf/T = source
-	playsound(T, 'monkestation/sound/effects/splash.ogg', 50, 0)
+	playsound(T, 'sound/effects/splash_loud.ogg', 50, 0)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		to_chat(C, span_userdanger("You fall in the water!"))
@@ -321,20 +325,23 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	SIGNAL_HANDLER
 
 	var/turf/T = source
-	if(isobserver(AM))
+	if(isobserver(AM) || iseyemob(AM) || iseffect(AM))
 		return //ghosts, camera eyes, etc. don't make water splashy splashy
-	if(prob(30))
-		var/sound_to_play = pick(list(
-			'monkestation/sound/effects/water_wade1.ogg',
-			'monkestation/sound/effects/water_wade2.ogg',
-			'monkestation/sound/effects/water_wade3.ogg',
-			'monkestation/sound/effects/water_wade4.ogg'
-			))
-		playsound(T, sound_to_play, 50, 0)
 	if(isliving(AM))
 		var/mob/living/arrived = AM
+		if(arrived.incorporeal_move)
+			return
+
 		if(!arrived.has_status_effect(/datum/status_effect/ocean_affected))
 			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
+	if(prob(30))
+		var/sound_to_play = pick(list(
+			'sound/effects/water_wade1.ogg',
+			'sound/effects/water_wade2.ogg',
+			'sound/effects/water_wade3.ogg',
+			'sound/effects/water_wade4.ogg'
+			))
+		playsound(T, sound_to_play, 50, 0)
 
 	SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WASH)
 
@@ -347,7 +354,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 	var/moving = FALSE
 
 
-/turf/open/floor/plating/ocean/false_movement/Initialize()
+/turf/open/floor/plating/ocean/false_movement/Initialize(mapload)
 	. = ..()
 	GLOB.scrollable_turfs += src
 	var/obj/machinery/movement_lever/lever = locate() in GLOB.the_lever
@@ -454,7 +461,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 /turf/open/floor/plating/ocean/dark/rock
 	name = "rock"
 	baseturfs = /turf/open/floor/plating/ocean/dark/rock
-	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon = 'icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
 	rand_variants = 0
@@ -464,7 +471,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 
 /turf/open/floor/plating/ocean/dark/rock/warm/fissure
 	name = "fissure"
-	icon = 'monkestation/icons/turf/fissure.dmi'
+	icon = 'icons/turf/fissure.dmi'
 	icon_state = "fissure-0"
 	base_icon_state = "fissure"
 	smoothing_flags = SMOOTH_BITMASK
@@ -687,7 +694,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 /turf/open/floor/plating/ocean/rock
 	name = "rock"
 	baseturfs = /turf/open/floor/plating/ocean/dark/rock
-	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon = 'icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
 	rand_variants = 0
@@ -715,23 +722,31 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
 
+/// The threshold of lavaland points that need to be surpassed before mineral chance starts to increase.
+#define LAVALAND_POINTS_CHANCE_THRESHOLD 55000
 
-/turf/closed/mineral/random/regrowth/New(loc, mineral_increase)
-	if(isnum(mineral_increase))
-		src.mineralChance += mineral_increase
-	. = ..()
+/// For each set of this amount of points, the regrow timer will decrease by 1 second.
+#define LAVALAND_POINTS_PER_SECOND 1000
+
+/// For each set of this amount of points beyond LAVALAND_POINTS_CHANCE_THRESHOLD, the mineral chance increases by 1.
+#define LAVALAND_POINTS_PER_CHANCE 1000
 
 /turf/closed/mineral/random/regrowth/Destroy(force)
 	. = ..()
-	var/timer = max(1 MINUTES - round(max(1, GLOB.lavaland_points_generated) / 1000), 5 SECONDS)
+	var/timer = max(1 MINUTES - round(max(1, GLOB.lavaland_points_generated) / LAVALAND_POINTS_PER_SECOND), 5 SECONDS)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(regrow_mineral), get_turf(src)), timer)
 
+/// Creates a regrowth material turf ontop of an another turf.
 /proc/regrow_mineral(turf/location)
-	var/mineral_increase = 0
-	if(GLOB.lavaland_points_generated > 55000)
-		mineral_increase = min(87, (GLOB.lavaland_points_generated - 55000) / 1000)
-	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.ChangeTurf(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
-	regrowth_turf?.mineralChance += mineral_increase
+	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.PlaceOnTop(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
+	if(GLOB.lavaland_points_generated <= LAVALAND_POINTS_CHANCE_THRESHOLD)
+		return
+	var/mineral_increase = (GLOB.lavaland_points_generated - LAVALAND_POINTS_CHANCE_THRESHOLD) / LAVALAND_POINTS_PER_CHANCE
+	regrowth_turf.mineralChance = clamp(initial(regrowth_turf.mineralChance) + mineral_increase, 0, 100)
+
+#undef LAVALAND_POINTS_CHANCE_THRESHOLD
+#undef LAVALAND_POINTS_PER_SECOND
+#undef LAVALAND_POINTS_PER_CHANCE
 
 /turf/closed/mineral/random/regrowth/underwater
 	turf_type = /turf/open/floor/plating/ocean/dark

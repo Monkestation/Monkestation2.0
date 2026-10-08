@@ -76,22 +76,17 @@
 	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
 
 /datum/crafting_recipe/beam_rifle
-	name = "Particle Acceleration Rifle"
-	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	result = /obj/item/gun/energy/beam_rifle
+	name = "Event Horizon Anti-Existential Beam Rifle"
+	result = /obj/item/gun/energy/event_horizon
 	reqs = list(
-		/obj/item/gun/energy/e_gun = 1,
-		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/assembly/signaler/anomaly/flux = 2,
 		/obj/item/assembly/signaler/anomaly/grav = 1,
-		/obj/item/stack/cable_coil = 5,
+		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
 		/obj/item/weaponcrafting/gunkit/beam_rifle = 1,
 	)
-	time = 20 SECONDS
+	time = 30 SECONDS //Maybe the delay will make you reconsider your choices
 	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/beam_rifle/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
 
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
@@ -151,6 +146,22 @@
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/ioncarbine/New()
+	..()
+	blacklist += subtypesof(/obj/item/gun/energy/laser)
+
+/datum/crafting_recipe/lasercannon
+	name = "Laser Cannon"
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	result = /obj/item/gun/energy/laser/cannon
+	reqs = list(
+		/obj/item/gun/energy/laser = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/weaponcrafting/gunkit/lasercannon = 1,
+	)
+	time = 20 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/lasercannon/New()
 	..()
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
 
@@ -350,7 +361,7 @@
 		/obj/item/stock_parts/water_recycler = 1,
 		/datum/reagent/consumable/nuka_cola = 15,
 	)
-	tool_behaviors = list(TOOL_SCREWDRIVER) //monke edits. removed the need for the special clothing
+	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 30 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
 
@@ -377,7 +388,7 @@
 		/obj/item/gun/energy/disabler/smoothbore = 1,
 		/obj/item/stack/sheet/mineral/gold = 5,
 		/obj/item/stock_parts/power_store/cell/hyper = 1,
-		/datum/reagent/consumable/red_queen = 10, //monke edit
+		/datum/reagent/consumable/red_queen = 10,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 20 SECONDS

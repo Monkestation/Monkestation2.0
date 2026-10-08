@@ -239,7 +239,7 @@
 	. = ..()
 	bogdanoff = user
 	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 100)
-	sound_to_playing_players('sound/items/dump_it.ogg', 20)
+	sound_to_playing_players('sound/items/dump_it.ogg', 40)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/effect/dumpeet_target/proc/startLaunch()

@@ -19,8 +19,8 @@
 	var/can_approve_requests = FALSE
 	///What do we say when the shuttle moves with living beings on it.
 	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle cannot transport live organisms, \
-		human remains, classified nuclear weaponry, mail, undelivered departmental order crates, syndicate bombs, \
-		homing beacons, unstable eigenstates, or machinery housing any form of artificial intelligence."
+		human remains, classified nuclear weaponry, mail, undelivered departmental order crates, Syndicate bombs, \
+		homing beacons, unstable eigenstates, industrial assembly machines, identification cards, or machinery housing any form of artificial intelligence."
 	///If you're being raided by pirates, what do you tell the crew?
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 	///The name of the shuttle template being used as the cargo shuttle. 'cargo' is default and contains critical code. Don't change this unless you know what you're doing.
@@ -51,10 +51,9 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D = computer?.computer_id_slot?.GetID()
-		if(!D)
+		access = computer?.GetAccess()
+		if(!length(access))
 			return FALSE
-		access = D.GetAccess()
 
 	if(paccess_to_check in access)
 		return TRUE
@@ -68,7 +67,7 @@
 
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
-	if(id_card?.registered_account)
+	if(id_card?.registered_account?.account_job)
 		buyer = SSeconomy.get_dep_account(id_card?.registered_account.account_job.paycheck_department)
 		if((ACCESS_COMMAND in id_card.access) || (ACCESS_QM in id_card.access))
 			requestonly = FALSE
@@ -90,8 +89,8 @@
 	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+	for(var/pack, value in SSshuttle.supply_packs)
+		var/datum/supply_pack/P = value
 		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
@@ -99,7 +98,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
+		if((P.hidden && (P.contraband && !contraband) || !P.available() || P.drop_pod_only))
 			continue
 
 		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
@@ -219,7 +218,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(pack.hidden || pack.contraband || pack.drop_pod_only || (pack.special && !pack.special_enabled))
+			if(pack.hidden || pack.contraband || pack.drop_pod_only || !pack.available())
 				return
 
 			var/name = "*None Provided*"

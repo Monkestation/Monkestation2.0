@@ -49,6 +49,7 @@ const ObservableSearch = (props) => {
   const {
     alive = [],
     antagonists = [],
+    can_observe,
     deadchat_controlled = [],
     dead = [],
     ghosts = [],
@@ -96,8 +97,8 @@ const ObservableSearch = (props) => {
           <Input
             autoFocus
             fluid
-            onEnter={(e, value) => orbitMostRelevant(value)}
-            onInput={(e) => setSearchQuery(e.target.value)}
+            onEnter={(value) => orbitMostRelevant(value)}
+            onChange={(value) => setSearchQuery(value)}
             placeholder="Search..."
             value={searchQuery}
           />
@@ -113,16 +114,18 @@ const ObservableSearch = (props) => {
             tooltipPosition="bottom-start"
           />
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            color={autoObserve ? 'good' : 'transparent'}
-            icon={autoObserve ? 'toggle-on' : 'toggle-off'}
-            onClick={() => setAutoObserve(!autoObserve)}
-            tooltip={multiline`Toggle Auto-Observe. When active, you'll
+        {!!can_observe && (
+          <Stack.Item>
+            <Button
+              color={autoObserve ? 'good' : 'transparent'}
+              icon={autoObserve ? 'toggle-on' : 'toggle-off'}
+              onClick={() => setAutoObserve(!autoObserve)}
+              tooltip={multiline`Toggle Auto-Observe. When active, you'll
             see the UI / full inventory of whoever you're orbiting. Neat!`}
-            tooltipPosition="bottom-start"
-          />
-        </Stack.Item>
+              tooltipPosition="bottom-start"
+            />
+          </Stack.Item>
+        )}
         <Stack.Item>
           <Button
             color="transparent"
@@ -224,7 +227,7 @@ const ObservableSection = (props: {
         bold
         color={color ?? 'grey'}
         open={!!color}
-        title={title + ` - (${filteredSection.length})`}
+        title={`${title} - (${filteredSection.length})`}
       >
         {filteredSection.map((poi, index) => {
           return <ObservableItem color={color} item={poi} key={index} />;

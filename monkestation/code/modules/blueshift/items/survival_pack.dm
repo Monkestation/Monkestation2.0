@@ -11,7 +11,7 @@
 	new /obj/item/stack/spacecash/c1000(src)
 	new /obj/item/storage/pill_bottle/iron(src)
 	new /obj/item/storage/box/nri_pens(src)
-	new /obj/item/storage/box/nri_flares(src)
+	new /obj/item/storage/box/flares(src)
 	new /obj/item/crowbar/red(src)
 
 /obj/item/storage/box/nri_pens
@@ -20,21 +20,21 @@
 	illustration = "epipen"
 
 /obj/item/storage/box/nri_pens/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen/ekit(src)
-	new /obj/item/reagent_containers/hypospray/medipen/stimpack/traitor(src)
-	new /obj/item/reagent_containers/hypospray/medipen/oxandrolone(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/penacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
-	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
-	new /obj/item/reagent_containers/hypospray/medipen/blood_loss(src)
+	new /obj/item/reagent_containers/medipen/ekit(src)
+	new /obj/item/reagent_containers/medipen/stimpack/traitor(src)
+	new /obj/item/reagent_containers/medipen/oxandrolone(src)
+	new /obj/item/reagent_containers/medipen/salacid(src)
+	new /obj/item/reagent_containers/medipen/salacid(src)
+	new /obj/item/reagent_containers/medipen/penacid(src)
+	new /obj/item/reagent_containers/medipen/salbutamol(src)
+	new /obj/item/reagent_containers/medipen/atropine(src)
+	new /obj/item/reagent_containers/medipen/blood_loss(src)
 
-/obj/item/storage/box/nri_flares
+/obj/item/storage/box/flares
 	name = "box of flares"
 	desc = "A box full of red emergency flares."
 	illustration = "firecracker"
 
-/obj/item/storage/box/nri_flares/PopulateContents()
+/obj/item/storage/box/flares/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/flashlight/flare(src)

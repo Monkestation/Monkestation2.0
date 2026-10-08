@@ -45,7 +45,7 @@
 		), \
 		FRIENDSHIP_FRIEND)
 	AddComponent(/datum/component/basic_inhands)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 
 	SEND_SIGNAL(src, COMSIG_TOGGLE_BIOBOOST)
 
@@ -104,9 +104,9 @@
 			return
 
 // craig's living icons are movement states, so we gotta ensure icon2html handles that properly
-/mob/living/basic/pet/potty/get_examine_string(mob/user, thats = FALSE)
+/mob/living/basic/pet/potty/get_examine_icon(mob/user)
 	var/is_icon_moving = (icon_state == initial(icon_state) || icon_state == initial(icon_living))
-	return "[icon2html(src, user, moving = is_icon_moving)] [thats ? "That's " : ""][get_examine_name(user)]"
+	return icon2html(src, user, moving = is_icon_moving)
 
 /datum/pet_command/craig_harvest
 	command_name = "Shake"

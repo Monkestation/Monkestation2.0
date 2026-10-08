@@ -47,7 +47,7 @@
 	new /obj/item/clothing/under/suit/black/skirt/armoured(src)
 	new /obj/item/clothing/suit/jacket/det_suit/noir/armoured(src)
 	new /obj/item/storage/belt/holster/detective/dark(src)
-	new /obj/item/clothing/head/frenchberet/armoured(src)
+	new /obj/item/clothing/head/beret/frenchberet/armoured(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/neck/tie/red/hitman(src)
 	new /obj/item/clothing/mask/gas/syndicate/ds(src) //a red spy is in the base
@@ -62,9 +62,9 @@
 	item_type = /obj/item/storage/backpack/duffelbag/syndie/maid
 
 /obj/item/storage/backpack/duffelbag/syndie/maid/PopulateContents() //by far the weakest bundle
-	new /obj/item/clothing/under/syndicate/nova/maid(src)
+	new /obj/item/clothing/under/syndicate/skirt/maid(src)
 	new /obj/item/clothing/gloves/combat/maid(src)
-	new /obj/item/clothing/head/costume/maidheadband/syndicate(src)
+	new /obj/item/clothing/head/maidheadband/syndicate(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
@@ -136,23 +136,6 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 
-/datum/opposing_force_equipment/clothing_sol/dogginos
-	name = "Dogginos Courier"
-	description = "You're just doing your job."
-	item_type = /obj/item/storage/backpack/satchel/leather/dogginos
-
-/obj/item/storage/backpack/satchel/leather/dogginos/PopulateContents()
-	new /obj/item/clothing/under/pizza(src)
-	new /obj/item/clothing/suit/pizzaleader(src)
-	new /obj/item/clothing/suit/toggle/jacket/hoodie/pizza(src)
-	new /obj/item/clothing/head/pizza(src)
-	new /obj/item/clothing/head/soft/red(src)
-	new /obj/item/clothing/glasses/regular/betterunshit(src)
-	new /obj/item/clothing/mask/fakemoustache/italian(src)
-	new /obj/item/clothing/shoes/sneakers/red(src)
-	new /obj/item/radio/headset/headset_cent/impostorsr(src)
-	new /obj/item/card/id/advanced/chameleon(src)
-
 /obj/item/card/id/advanced/chameleon/impostorsr
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_COMMAND) //I didn't know i had to say this but you're not supposed to shoot your 'superior' just because they do not have access to the bridge
 
@@ -163,11 +146,10 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/impostor/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
-	new /obj/item/clothing/under/rank/centcom/officer_skirt(src)
+	new /obj/item/clothing/under/rank/centcom/officer/skirt(src)
 	new /obj/item/clothing/head/hats/centcom_cap(src)
 	new /obj/item/clothing/suit/armor/centcom_formal(src)
 	new /obj/item/clothing/shoes/combat(src)
-	new /obj/item/radio/headset/headset_cent/impostorsr(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clipboard(src)
 	new /obj/item/card/id/advanced/chameleon/impostorsr(src) //this thing has bridge access, and no one knows about that
@@ -214,6 +196,9 @@
 	name = "NRI Soldier"
 	description = "The station failed the inspection, now they have to deal with you."
 	item_type = /obj/item/storage/backpack/industrial/cin_surplus/forest/nri_soldier
+
+/obj/item/storage/backpack/industrial/cin_surplus/forest/nri_soldier
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/storage/backpack/industrial/cin_surplus/forest/nri_soldier/PopulateContents()
 	new /obj/item/clothing/under/syndicate/rus_army(src)

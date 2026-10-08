@@ -13,8 +13,7 @@
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		armorval += check_armor(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
@@ -50,42 +49,24 @@
 			covering_part += worn
 	return covering_part
 
-/mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
-
-	if(P.firer == src && P.original == src) //can't block or reflect when shooting yourself
+/mob/living/carbon/human/bullet_act(obj/projectile/bullet, def_zone, piercing_hit = FALSE)
+	if(bullet.firer == src && bullet.original == src) //can't block or reflect when shooting yourself
 		return ..()
 
-	if(P.reflectable & REFLECT_NORMAL)
+	if(bullet.reflectable)
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message(
-				span_danger("The [P.name] gets reflected by [src]!"),
-				span_userdanger("The [P.name] gets reflected by [src]!"),
+				span_danger("The [bullet.name] gets reflected by [src]!"),
+				span_userdanger("The [bullet.name] gets reflected by [src]!"),
 			)
 			// Find a turf near or on the original location to bounce to
 			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
-				P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
-				loc.bullet_act(P, def_zone, piercing_hit)
-				return BULLET_ACT_HIT
-			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(src)
-
-				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.firer = src
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
-				var/new_angle_s = P.Angle + rand(120,240)
-				while(new_angle_s > 180) // Translate to regular projectile degrees
-					new_angle_s -= 360
-				P.set_angle(new_angle_s)
-
+				return loc.projectile_hit(bullet, def_zone, piercing_hit)
+			bullet.reflect(src)
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-	if(check_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
-		P.on_hit(src, 100, def_zone, piercing_hit)
+	if(check_block(bullet, bullet.damage, "the [bullet.name]", PROJECTILE_ATTACK, bullet.armour_penetration, bullet.damage_type))
+		bullet.on_hit(src, 100, def_zone, piercing_hit)
 		return BULLET_ACT_HIT
 
 	return ..()
@@ -115,9 +96,8 @@
 			if(worn_thing in held_items)
 				continue
 		// Things that are supposed to be held, being worn = cannot block
-		else
-			if(!(worn_thing in held_items))
-				continue
+		else if(!(worn_thing in held_items))
+			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
 		if(worn_thing.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
@@ -618,7 +598,7 @@
 		combined_msg += bleed_text
 
 	if(stamina.loss)
-		if(stamina.loss > 30)
+		if(stamina.current <= (0.30 * stamina.maximum))
 			combined_msg += span_info("You're completely exhausted.")
 		else
 			combined_msg += span_info("You feel fatigued.")
@@ -827,14 +807,31 @@
 		return 0
 
 	burn_clothing(seconds_per_tick, fire_handler.stacks)
+	if(HAS_TRAIT(src, TRAIT_RESISTHEAT))
+		return
+
 	if(!(sigreturn & BURNING_SKIP_PROTECTION))
 		if(get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
 			return 0
 		if(get_insulation(FIRE_SUIT_MAX_TEMP_PROTECT) >= 0.9)
-			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
+			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * 0.25 * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
+
+		adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
+
+		var/fire_armor = (100 - src.getarmor(null, FIRE)) * 0.01
+
+		switch(times_fired)
+			if(0 to 3)
+				apply_damage((0.20 * fire_handler.stacks * fire_armor), BURN)
+			if(4 to 6)
+				apply_damage((0.30 * fire_handler.stacks * fire_armor), BURN)
+			if(7 to 9)
+				apply_damage((0.40 * fire_handler.stacks * fire_armor), BURN)
+			if(10 to INFINITY)
+				apply_damage((0.50 * fire_handler.stacks * fire_armor), BURN)
 
 	. = ..()
-	if(. && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
+	if(.)
 		add_mood_event("on_fire", /datum/mood_event/on_fire)
 		add_mob_memory(/datum/memory/was_burning)
 	return .

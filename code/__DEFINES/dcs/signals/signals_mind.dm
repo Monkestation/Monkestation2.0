@@ -13,5 +13,8 @@
 /// Sent to the mind when an oozeling has their core ejected: (obj/item/organ/internal/brain/slime)
 #define COMSIG_OOZELING_CORE_EJECTED "oozeling_core_ejected"
 
-/// Sent to the mind when an oozeling is revived: (mob/living/carbon/human, obj/item/organ/internal/brain/slime)
+/// Sent to the mind when an oozeling is revived: (mob/living/carbon/human, obj/item/organ/internal/brain/slime, nugget)
 #define COMSIG_OOZELING_REVIVED "oozeling_revived"
+
+// Sent when a mob with a mind enters cryo storage: (mob/living/body)
+#define COMSIG_MIND_CRYOED "mind_cryoed"

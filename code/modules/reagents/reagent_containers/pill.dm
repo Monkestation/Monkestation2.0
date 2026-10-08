@@ -7,7 +7,7 @@
 	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 	volume = 50
 	grind_results = list()
 	var/apply_type = INGEST
@@ -54,7 +54,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
 
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
+		reagents.trans_to(M, reagents.total_volume, transferred_by = user, methods = apply_type)
 	qdel(src)
 	return TRUE
 
@@ -70,7 +70,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
-	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
+	reagents.trans_to(target, reagents.total_volume, transferred_by = user)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -79,7 +79,7 @@
  */
 /obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
 	to_chat(victim, span_warning("You swallow something small. [source_item ? "Was that in [source_item]?" : ""]"))
-	reagents?.trans_to(victim, reagents.total_volume, transfered_by = user, methods = INGEST)
+	reagents?.trans_to(victim, reagents.total_volume, transferred_by = user, methods = INGEST)
 	qdel(src)
 	return discover_after
 
@@ -123,6 +123,12 @@
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 30)
 	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/spaceacillin
+	name = "spaceacillin pill"
+	desc = "Increases resistance to viruses, bacteria, and parasites."
+	icon_state = "pill17"
+	list_reagents = list(/datum/reagent/medicine/antipathogenic/spaceacillin = 1.5) //1 minute since 0.05 every tick.
 
 /obj/item/reagent_containers/pill/stimulant
 	name = "stimulant pill"
@@ -275,8 +281,15 @@
 	name = "maintenance pill"
 	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
-	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
-	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
+	///Boolean on whether this will count towards your achievement score if you consume it.
+	var/count_towards_achievement = FALSE
+	var/static/list/descs = list(
+		"Your feeling is telling you no, but...",
+		"Drugs are expensive, you can't afford not to eat any pills that you find.",
+		"Surely, there's no way this could go bad.",
+		"Winners don't do dr- oh what the heck!",
+		"Free pills? At no cost, how could I lose?",
+	)
 
 /obj/item/reagent_containers/pill/maintenance/Initialize(mapload)
 	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with pick_weight(GLOB.weighted_random_reagents)
@@ -301,16 +314,28 @@
 	if(prob(30))
 		desc = pick(descs)
 	if(prob(10))
-		icon = 'monkestation/icons/obj/pills.dmi'
+		icon = 'icons/obj/pills.dmi'
 		icon_state = "mdma_wario"
 		transform.Scale(0.5 ,0.5)
 	else
 		icon_state = "pill[rand(1,21)]"
 
-/obj/item/reagent_containers/pill/maintenance/achievement/on_consumption(mob/M, mob/user)
+/obj/item/reagent_containers/pill/maintenance/on_consumption(mob/person_eating, mob/person_that_fed_us)
 	. = ..()
+	if(count_towards_achievement)
+		person_eating.client?.give_award(/datum/award/score/maintenance_pill, person_eating)
 
-	M.client?.give_award(/datum/award/score/maintenance_pill, M)
+/obj/item/reagent_containers/pill/maintenance/achievement
+	count_towards_achievement = TRUE
+
+/obj/item/reagent_containers/pill/maintenance/achievement/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ON_REAGENT_SCAN, PROC_REF(on_chemical_scan))
+
+///called when we are chemically scanned.
+/obj/item/reagent_containers/pill/maintenance/achievement/proc/on_chemical_scan(atom/source, mob/user)
+	SIGNAL_HANDLER
+	count_towards_achievement = FALSE
 
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"

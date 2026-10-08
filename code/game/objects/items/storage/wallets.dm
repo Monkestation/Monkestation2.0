@@ -13,7 +13,7 @@
 /obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 4
+	atom_storage.max_slots = 5
 	atom_storage.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
@@ -23,15 +23,16 @@
 		/obj/item/flashlight/pen,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/toy/crayon,
 		/obj/item/coin,
 		/obj/item/dice,
 		/obj/item/disk,
 		/obj/item/gbp_punchcard,
+		/obj/item/gbp_puncher,
 		/obj/item/implanter,
 		/obj/item/lighter,
 		/obj/item/match,
+		/obj/item/storage/box/matches,
 		/obj/item/paper,
 		/obj/item/pen,
 		/obj/item/photo,
@@ -57,19 +58,12 @@
 	LAZYCLEARLIST(combined_access)
 
 	front_id = null
-	var/winning_tally = 0
 	var/is_magnetic_found = FALSE
 	for(var/obj/item/card/id/id_card in contents)
 		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
 		if(!is_magnetic_found && HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
 			front_id = id_card
 			is_magnetic_found = TRUE
-
-		if(!is_magnetic_found)
-			var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
-			if(card_tally > winning_tally)
-				winning_tally = card_tally
-				front_id = id_card
 
 		LAZYINITLIST(combined_access)
 		combined_access |= id_card.access
@@ -107,10 +101,8 @@
 		cached_flat_icon = getFlatIcon(src)
 	return cached_flat_icon
 
-/obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
-	if(front_id)
-		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
-	return ..()
+/obj/item/storage/wallet/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /obj/item/storage/wallet/proc/update_label()
 	if(front_id)
@@ -132,14 +124,14 @@
 	RETURN_TYPE(/obj/item/card/id)
 	return front_id
 
-/obj/item/storage/wallet/RemoveID()
+/obj/item/storage/wallet/remove_id()
 	if(!front_id)
 		return
 	. = front_id
 	front_id.forceMove(get_turf(src))
 
-/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+/obj/item/storage/wallet/insert_id(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.remove_id()
 	if(!inserting_id)
 		return FALSE
 	attackby(inserting_id)
@@ -172,4 +164,3 @@
 /obj/item/storage/wallet/money/PopulateContents()
 	for(var/iteration in 1 to pick(3, 4))
 		new /obj/item/holochip(src, rand(50, 450))
-

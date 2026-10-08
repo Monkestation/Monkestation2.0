@@ -1,29 +1,4 @@
 // Badges, pins, and other very small items that slot onto a shirt.
-/obj/item/clothing/accessory/lawyers_badge
-	name = "attorney's badge"
-	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
-	icon_state = "lawyerbadge"
-
-/obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
-	. = ..()
-	if(prob(1))
-		user.say("The testimony contradicts the evidence!", forced = "[src]")
-	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
-
-/obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
-	user.bubble_icon = "lawyer"
-
-/obj/item/clothing/accessory/lawyers_badge/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
-	user.bubble_icon = initial(user.bubble_icon)
-
-/obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
-	SIGNAL_HANDLER
-
-	ASYNC
-		source.say("Objection!!", spans = list(SPAN_YELL), forced = "[src]")
-
 /obj/item/clothing/accessory/clown_enjoyer_pin
 	name = "\improper Clown Pin"
 	desc = "A pin to show off your appreciation for clowns and clowning!"
@@ -170,7 +145,10 @@
 	else
 		display = span_notice("The dogtag is all scratched up.")
 
-/*
+/obj/item/clothing/accessory/dogtag/borg_ready
+	name = "Pre-Approved Cyborg Candidate dogtag"
+	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
+
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Rainbow Pride" = "pride",
@@ -181,8 +159,11 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Transgender Pride" = "pride_trans",
 	"Intersex Pride" = "pride_intersex",
 	"Lesbian Pride" = "pride_lesbian",
+	"Gay Pride" = "pride_mlm",
+	"Genderfluid Pride" = "pride_genderfluid",
+	"Genderqueer Pride" = "pride_genderqueer",
+	"Aromantic Pride" = "pride_aromantic",
 ))
-*/
 
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
@@ -204,7 +185,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 /obj/item/clothing/accessory/pride/post_reskin()
 	for(var/pride_name in GLOB.pride_pin_reskins)
 		if(GLOB.pride_pin_reskins[pride_name] == icon_state)
-			name = "[lowertext(pride_name)] pin"
+			name = "[LOWER_TEXT(pride_name)] pin"
 			return
 
 	name = initial(name) // If we somehow fail to find our pride in the global list, just make us generic
@@ -262,3 +243,326 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 		to_chat(interacting_living, span_boldwarning("[user] shows [src] to you."))
 		user.visible_message(span_notice("[user] shows [src] to [interacting_living]."))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/clothing/accessory/scryer_accessory
+	name = "\improper MODlink scryer accessory"
+	desc = "A MODlink Scryer that someone modified to attach to their clothes."
+	icon = 'icons/obj/clothing/neck.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
+	icon_state = "modlink"
+	inhand_icon_state = "" //self deletes if removed from clothing
+	attachment_slot = CHEST
+
+	var/obj/item/clothing/neck/link_scryer/scryer // The scryer that this accessory is imitating.
+
+/obj/item/clothing/accessory/scryer_accessory/Initialize(mapload, obj/item/clothing/neck/link_scryer/attaching)
+	. = ..()
+	if(!isliving(src.loc) || QDELETED(attaching))
+		return INITIALIZE_HINT_QDEL
+	var/mob/living/scryer_mob = src.loc
+	if(!scryer_mob.transferItemToLoc(attaching, src))
+		scryer_mob.put_in_hands(attaching)
+		return INITIALIZE_HINT_QDEL
+	scryer = attaching
+	if(!scryer_mob.put_in_hands(src))
+		scryer_mob.put_in_hands(attaching)
+		return INITIALIZE_HINT_QDEL
+	scryer.slot_flags = ITEM_SLOT_ICLOTHING
+	scryer.mod_link.get_user_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, get_accessory_user))
+	scryer.mod_link.can_call_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, can_accessory_call))
+
+/obj/item/clothing/accessory/scryer_accessory/detach(obj/item/clothing/under/detach_from, popped)
+	. = ..()
+	if(QDELETED(src))
+		return .
+	if(QDELETED(scryer))
+		qdel(src)
+		return .
+	if(popped && isliving(detach_from.loc))
+		var/mob/living/remover = detach_from.loc
+		remover.put_in_hands(scryer)
+	else
+		scryer.forceMove(detach_from.drop_location())
+	scryer.slot_flags = ITEM_SLOT_NECK
+	scryer.mod_link.get_user_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, get_user))
+	scryer.mod_link.can_call_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, can_call))
+	scryer =  null
+	qdel(src)
+
+/obj/item/clothing/accessory/scryer_accessory/Destroy()
+	if(istype(scryer))	// For some reason this was deleted before scryer removed, Assume it was destroyed.
+		QDEL_NULL(scryer)
+	return ..()
+
+// Examining the person wearing the clothes will display the examine message to strip.
+/obj/item/clothing/accessory/scryer_accessory/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	if(istype(scryer))
+		RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+		scryer.equipped(user, user.get_slot_by_item(clothes))
+
+/obj/item/clothing/accessory/scryer_accessory/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	if(istype(scryer))
+		UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
+		scryer.dropped(user)
+
+/obj/item/clothing/accessory/scryer_accessory/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(istype(source, /mob/living/carbon/human) && istype(src.loc, /obj/item/clothing/under))
+		var/mob/living/carbon/human/holder = source
+		var/obj/item/clothing/under/uniform = src.loc
+		if(holder.w_uniform == uniform && user != holder && user.CanReach(holder, view_only = TRUE))
+			examine_list += "[get_examine_icon(user)] <a href='byond://?src=[REF(src)];strip_scryer=1;clothing=[REF(uniform)];holder=[REF(source)]'>[src.get_examine_name(user)] (Click to strip)</a>"
+
+/obj/item/clothing/accessory/scryer_accessory/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["strip_scryer"])
+		if(!iscarbon(usr) || !usr.can_perform_action(locate(href_list["holder"]), NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+			return
+		INVOKE_ASYNC(src, PROC_REF(remove_scryer), usr, locate(href_list["holder"]), locate(href_list["clothing"]))
+
+/obj/item/clothing/accessory/scryer_accessory/proc/remove_scryer(mob/living/carbon/remover, mob/living/carbon/human/wearer, obj/item/clothing/under/uniform)
+	if(QDELETED(src) || QDELETED(remover) || QDELETED(wearer) || QDELETED(uniform))
+		return
+	if(DOING_INTERACTION_WITH_TARGET(remover, wearer) || (wearer.w_uniform != uniform) || src.loc != uniform)
+		return
+	if(!remover.can_perform_action(wearer, NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		return
+	if(!remover.CanReach(wearer))
+		return
+	remover.visible_message(
+		span_warning("[remover] begins removing [src] from [wearer]."),
+		span_notice("You start removing [src] from [wearer]."))
+	if(!do_after(remover, uniform.strip_delay, wearer) || (wearer.w_uniform != uniform) || src.loc != uniform)
+		return
+	uniform.remove_accessory(src)
+
+///Actual "Badge" badges.
+/obj/item/clothing/accessory/badge
+	name = "badge"
+	desc = "A worn badge, how cool of you."
+	icon = 'icons/obj/clothing/accessories.dmi'
+	worn_icon = 'icons/mob/clothing/accessories.dmi'
+	icon_state = "badge"
+	slot_flags = ITEM_SLOT_NECK
+	attachment_slot = NONE //can be worn while rolled down
+
+	///The access needed to change the stored name, not needed if no name is given.
+	var/access_required = ACCESS_CARGO
+	///The REAL name of the person who imprinted their details onto the badge.
+	var/stored_name
+	///The job title the badge holds.
+	var/badge_string
+
+/obj/item/clothing/accessory/badge/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		return .
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Show off"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.GetID())
+		context[SCREENTIP_CONTEXT_LMB] = "Imprint Job"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(IS_WRITING_UTENSIL(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Edit Job Title"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
+/obj/item/clothing/accessory/badge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+
+	if(tool.GetID())
+		if(!allowed(user))
+			user.balloon_alert(user, "no access!")
+			return ITEM_INTERACT_BLOCKING
+		user.balloon_alert(user, "details imprinted")
+		set_identity(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(IS_WRITING_UTENSIL(tool))
+		if(!allowed(user))
+			user.balloon_alert(user, "no access!")
+			return ITEM_INTERACT_BLOCKING
+		var/new_badge_string = tgui_input_text(user, "Enter badge job title", "New job", max_length = MAX_LABEL_LEN)
+		if(isnull(new_badge_string) || !istext(new_badge_string))
+			return ITEM_INTERACT_BLOCKING
+		badge_string = new_badge_string
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/clothing/accessory/badge/interact(mob/user)
+	. = ..()
+	user.point_at(src)
+	user.balloon_alert_to_viewers("[stored_name]: [badge_string]")
+
+/obj/item/clothing/accessory/badge/allowed(mob/accessor)
+	if(isnull(stored_name) || obj_flags & EMAGGED)
+		return TRUE
+	return ..()
+
+/obj/item/clothing/accessory/badge/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	balloon_alert(user, "access restriction disabled")
+	return TRUE
+
+/obj/item/clothing/accessory/badge/attack(mob/living/target, mob/living/user, params)
+	if(!isliving(target))
+		return
+	user.visible_message(span_danger("[user] invades [target]'s personal space, thrusting [src] into their face insistently."),
+		span_danger("You invade [target]'s personal space, thrusting [src] into their face insistently."))
+	user.do_attack_animation(target)
+
+///Sets the badge's identity to the name and description given to us.
+/obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
+	if(!ismob(named_mob))
+		var/found_name = findname(named_mob)
+		if(found_name)
+			named_mob = found_name
+
+	//now is this a real mob we have, or just a random name we inserted?
+	if(ismob(named_mob))
+		stored_name = named_mob.last_name()
+	else
+		stored_name = named_mob
+
+	name = "[initial(name)] ([stored_name])"
+
+/**
+ * SUBTYPES
+ * Used by:
+ * - Detective
+ * - Cargo
+ * - Lawyer
+ */
+/obj/item/clothing/accessory/badge/detective
+	name = "detective's badge"
+	desc = "An immaculately polished silver security badge on leather."
+	icon_state = "detective-silver"
+	access_required = ACCESS_DETECTIVE
+	badge_string = JOB_DETECTIVE
+
+/obj/item/clothing/accessory/badge/detective/set_identity(mob/living/named_mob)
+	. = ..()
+	desc = initial(desc) + " Labeled '[badge_string]'."
+
+/obj/item/clothing/accessory/badge/detective/gold
+	name = "detective's badge"
+	desc = "An immaculately polished gold security badge on leather."
+	icon_state = "detective-gold"
+
+/obj/item/clothing/accessory/badge/cargo
+	name = "union badge"
+	desc = "A badge designating the user as part of the 'Cargo Workers Union', employee level."
+	icon_state = "cargo-silver"
+	badge_string = "Union Employee"
+	var/list/access = list(
+		ACCESS_UNION,
+	)
+
+/obj/item/clothing/accessory/badge/cargo/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+
+/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	return ..()
+
+/obj/item/clothing/accessory/badge/cargo/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += access
+
+/obj/item/clothing/accessory/badge/cargo/GetAccess()
+	return access
+
+/obj/item/clothing/accessory/badge/cargo/quartermaster
+	name = "union president badge"
+	desc = "A badge designating the user as part of the 'Cargo Workers Union', presidential level."
+	icon_state = "cargo-gold"
+	badge_string = "Union President"
+	access = list(
+		ACCESS_UNION,
+		ACCESS_UNION_LEADER,
+	)
+
+/obj/item/clothing/accessory/badge/lawyer
+	name = "attorney's badge"
+	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
+	icon = 'icons/obj/clothing/accessories.dmi'
+	worn_icon = 'icons/mob/clothing/accessories.dmi'
+	icon_state = "lawyerbadge"
+	access_required = ACCESS_LAWYER
+	badge_string = "Attorney-At-Law"
+
+	///The mob we're gonna copy over when we get first examined. This is like the `virgin` var of filingcabinets,
+	///this is necessary beacuse we don't know quirks/holy role/traits on initialize.
+	var/datum/weakref/to_copy_ref
+
+/obj/item/clothing/accessory/badge/lawyer/Initialize(mapload)
+	. = ..()
+	var/mob/living/person_wearing_us = recursive_loc_check(src, /mob/living)
+	if(person_wearing_us)
+		to_copy_ref = WEAKREF(person_wearing_us)
+
+/obj/item/clothing/accessory/badge/lawyer/Destroy(force)
+	to_copy_ref = null
+	return ..()
+
+/obj/item/clothing/accessory/badge/lawyer/examine(mob/user)
+	if(isnull(to_copy_ref))
+		return ..()
+	var/mob/living/badge_owner = to_copy_ref?.resolve()
+	if(badge_owner)
+		set_identity(badge_owner)
+	to_copy_ref = null
+	return ..()
+
+/obj/item/clothing/accessory/badge/lawyer/set_identity(mob/living/named_mob)
+	. = ..()
+	desc = initial(desc)
+	if(named_mob.mind?.holy_role)
+		desc  += " It is backed by the Apostolic Penitentiary."
+	else if(isipc(named_mob))
+		desc  += " It is not backed by any bar, but endorsed by an [span_red("LLM-based megacorporation")]."
+	else if(named_mob.has_quirk(/datum/quirk/fluffy_tongue))
+		desc  += " It is backed by the [span_red("Committee for Prosecutorial Excellence")]."
+	else if(HAS_TRAIT(named_mob, TRAIT_CLOWN_ENJOYER) || HAS_TRAIT(named_mob, TRAIT_CLUMSY))
+		desc  += " It is backed by the [span_red("Clown College of Law")]."
+	else if(HAS_TRAIT(named_mob, TRAIT_MIME_FAN) || HAS_TRAIT(named_mob, TRAIT_MIMING))
+		desc  += " It is backed by the [span_red("Barreau de l'espace du Québec")]."
+	else if(HAS_TRAIT(named_mob, TRAIT_EVIL))
+		desc  += " It is not backed by [span_red("any Bar Association")]."
+	else if(HAS_TRAIT(named_mob, TRAIT_HEAVY_DRINKER))
+		desc  += " It is backed by the [span_red("Bar")]."
+	else
+		desc  += " It is backed by the [span_red("Nanotrasen Bar Association")]."
+
+	if(astype(named_mob, /mob/living/carbon/human)?.age < AGE_MINOR)
+		desc  += " It is labelled as 'Unpaid Intern'."
+
+/obj/item/clothing/accessory/badge/lawyer/interact(mob/user)
+	. = ..()
+	if(prob(1))
+		user.say("The testimony contradicts the evidence!", forced = "[src]")
+
+/obj/item/clothing/accessory/badge/lawyer/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
+	user.bubble_icon = "lawyer"
+
+/obj/item/clothing/accessory/badge/lawyer/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+	user.bubble_icon = initial(user.bubble_icon)
+
+/obj/item/clothing/accessory/badge/lawyer/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+	SIGNAL_HANDLER
+
+	ASYNC
+		source.say("Objection!!", spans = list(SPAN_YELL), forced = "[src]")

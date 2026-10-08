@@ -80,8 +80,15 @@
 	addiction_types = list(/datum/addiction/stimulants = 14)
 	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
+/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/carbon/breather)
+	. = ..()
+	breather.stamina.regen_rate += 2 * REM
+
+/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/carbon/breather)
+	breather.stamina.regen_rate -= 2 * REM
+	return ..()
+
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
-	breather.stamina.adjust(2 * REM * seconds_per_tick, FALSE)
 	breather.adjustToxLoss(0.1 * current_cycle * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
 	return ..()
 

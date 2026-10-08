@@ -1,6 +1,7 @@
 /area/station/hallway
 	icon_state = "hall"
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	astar_weight = -20 // hallways should be pathed through MORE often
 
 /area/station/hallway/primary
 	name = "\improper Primary Hallway"

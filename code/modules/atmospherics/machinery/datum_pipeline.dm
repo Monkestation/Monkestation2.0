@@ -156,6 +156,8 @@
 /datum/pipeline/proc/merge(datum/pipeline/parent_pipeline)
 	if(parent_pipeline == src)
 		return
+	if(!air) //this fixes a runtime but there is probably a better way to handle this
+		air = new
 	air.volume += parent_pipeline.air.volume
 	members.Add(parent_pipeline.members)
 	for(var/obj/machinery/atmospherics/pipe/reference_pipe in parent_pipeline.members)
@@ -240,12 +242,13 @@
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
 
-	var/list/total_gases = list()
-
 	var/volume_sum = 0
 
 	var/static/process_id = 0
 	process_id = (process_id + 1) % (SHORT_REAL_LIMIT - 1)
+	var/datum/gas_mixture/total_gas_mixture = new
+	var/list/total_cached_moles = total_gas_mixture.moles
+	var/list/cached_specific_heat = GAS_META[META_GAS_SPECIFIC_HEAT]
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		// Ensure we never walk the same mix twice
@@ -257,14 +260,11 @@
 
 		// This is sort of a combined merge + heat_capacity calculation
 
-		var/list/giver_gases = gas_mixture.gases
-		var/heat_capacity = 0
+		var/list/giver_cached_moles = gas_mixture.moles
+		var/heat_capacity = values_dot(giver_cached_moles, cached_specific_heat)
 		//gas transfer
-		for(var/giver_id in giver_gases)
-			var/giver_gas_data = giver_gases[giver_id]
-			ASSERT_GAS_IN_LIST(giver_id, total_gases)
-			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+		for(var/gas_id, amount in giver_cached_moles)
+			total_cached_moles[gas_id] += amount
 
 		total_heat_capacity += heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity
@@ -272,9 +272,8 @@
 	if(volume_sum == 0)
 		return
 
-	var/datum/gas_mixture/total_gas_mixture = new(volume_sum)
+	total_gas_mixture.volume = volume_sum
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
-	total_gas_mixture.gases = total_gases
 	total_gas_mixture.garbage_collect()
 
 	//Update individual gas_mixtures by volume ratio

@@ -74,11 +74,6 @@
 		if(!QDELING(src))
 			qdel(src) //we're now a poster, huzzah!
 
-/obj/item/poster/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == poster_structure)
-		poster_structure.moveToNullspace() //get it the fuck out of us since atom/destroy qdels contents and it'll cause a qdel loop
-	return ..()
-
 /obj/item/poster/Destroy(force)
 	QDEL_NULL(poster_structure)
 	return ..()
@@ -201,11 +196,9 @@
 		return
 
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
-	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), forced = TRUE))
+	if(!can_embed_trap(user) || !payload.force_embed(user, user.get_active_hand()))
 		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
 		payload.forceMove(user.drop_location())
-	else
-		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))

@@ -3,10 +3,14 @@ SUBSYSTEM_DEF(research)
 	name = "Research"
 	priority = FIRE_PRIORITY_RESEARCH
 	wait = 1 SECONDS
-	init_order = INIT_ORDER_RESEARCH
+	dependencies = list(
+		/datum/controller/subsystem/processing/station,
+	)
+
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
+	var/list/list/datum/design/item_to_design = list() //typepath = list of design datums
 
 	///List of all techwebs.
 	var/list/datum/techweb/techwebs = list()
@@ -44,7 +48,8 @@ SUBSYSTEM_DEF(research)
 	///Associated list of all point types that techwebs will have and their respective 'abbreviated' name.
 	var/list/point_types = list(
 		TECHWEB_POINT_TYPE_GENERIC = "Gen. Res.",
-		TECHWEB_POINT_TYPE_NANITES = "Nanite Res."
+		TECHWEB_POINT_TYPE_NANITES = "Nanite Res.",
+		TECHWEB_POINT_TYPE_AI = "AI Res.",
 	)
 	//----------------------------------------------
 	var/list/single_server_income = list(
@@ -113,6 +118,8 @@ SUBSYSTEM_DEF(research)
 
 		if (techweb_list.nanite_bonus)
 			bitcoins[TECHWEB_POINT_TYPE_GENERIC] += techweb_list.nanite_bonus
+		if(techweb_list.ai_boosted)
+			bitcoins[TECHWEB_POINT_TYPE_GENERIC] *= 1.2
 		if(!isnull(techweb_list.last_income))
 			var/income_time_difference = world.time - techweb_list.last_income
 			techweb_list.last_bitcoins = bitcoins  // Doesn't take tick drift into account
@@ -202,6 +209,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
+		item_to_design = null
 		QDEL_LIST_ASSOC_VAL(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
@@ -216,6 +224,11 @@ SUBSYSTEM_DEF(research)
 			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
 			errored_datums[DN] = initial(DN.id)
 			continue
+		var/build_path = initial(DN.build_path)
+		if(!isnull(build_path))
+			if(!(build_path in item_to_design))
+				item_to_design[build_path] = list()
+			item_to_design[build_path] += DN
 		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN
 	techweb_designs = returned

@@ -12,12 +12,6 @@
 
 /datum/config_entry/flag/log_mechcomp
 
-/datum/log_category/music
-	category = LOG_CATEGORY_MUSIC
-	config_flag = /datum/config_entry/flag/log_music
-
-/datum/config_entry/flag/log_music
-
 /datum/log_category/meta
 	category = LOG_CATEGORY_META
 	config_flag = /datum/config_entry/flag/log_meta

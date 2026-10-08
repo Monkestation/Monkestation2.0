@@ -29,7 +29,7 @@
 	var/weather_duration_lower = 1200
 	/// See above - this is the highest possible duration
 	var/weather_duration_upper = 1500
-	/// Looping sound while weather is occuring
+	/// Sound that plays when the weather first starts.
 	var/weather_sound
 	/// Area overlay while the weather is occuring
 	var/weather_overlay
@@ -179,7 +179,7 @@
 			if(alert_msg)
 				to_chat(player, alert_msg)
 			if(alert_sfx)
-				SEND_SOUND(player, sound(alert_sfx))
+				player.playsound_local(null, alert_sfx, 100, channel = CHANNEL_WEATHER)
 
 // the checks for if a mob should recieve alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)

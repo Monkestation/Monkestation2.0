@@ -14,7 +14,7 @@
 	var/static/datum/techweb/linked_techweb
 	implant_color = "#0084ff"
 
-/obj/item/organ/internal/cyberimp/brain/linked_surgery/Initialize()
+/obj/item/organ/internal/cyberimp/brain/linked_surgery/Initialize(mapload)
 	. = ..()
 	if(isnull(linked_techweb))
 		linked_techweb = SSresearch.science_tech

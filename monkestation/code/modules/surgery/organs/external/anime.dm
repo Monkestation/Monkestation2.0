@@ -78,6 +78,8 @@
 	return sprite_datum.icon_state
 
 /datum/bodypart_overlay/mutant/anime_bottom/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.w_uniform?.flags_inv & HIDETAIL)
+		return FALSE
 	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
 	return ..()
@@ -105,7 +107,7 @@
 
 /obj/item/organ/external/anime_halo/proc/update_halo_on_death(mob/living/carbon/halo_owner, new_owner_stat, old_owner_stat)
 	SIGNAL_HANDLER
-	
+
 	if((new_owner_stat == DEAD) || (old_owner_stat == DEAD))
 		halo_owner.update_body_parts()
 

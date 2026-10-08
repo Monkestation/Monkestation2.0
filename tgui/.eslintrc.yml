@@ -2,7 +2,7 @@ root: true
 extends: prettier
 parser: '@typescript-eslint/parser'
 parserOptions:
-  ecmaVersion: 2020
+  ecmaVersion: latest
   sourceType: module
   ecmaFeatures:
     jsx: true
@@ -11,12 +11,11 @@ env:
   browser: true
   node: true
 plugins:
-  - radar
   - react
   - unused-imports
 settings:
   react:
-    version: '16.10'
+    version: '19.2.3'
 rules:
   ## Possible Errors
   ## ----------------------------------------
@@ -337,7 +336,7 @@ rules:
   ## Require or disallow named function expressions
   # func-names: error
   ## Enforce the consistent use of either function declarations or expressions
-  func-style: [error, expression]
+  # func-style: [error, expression]
   ## Enforce line breaks between arguments of a function call
   # function-call-argument-newline: error
   ## Enforce consistent line breaks inside function parentheses

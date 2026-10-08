@@ -144,19 +144,20 @@ handles linking back and forth.
 
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/M)
+/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/multitool)
 	SIGNAL_HANDLER
 
 	. = NONE
-	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
-		if (silo == M.buffer)
+	var/datum/buffer = multitool_get_buffer(multitool)
+	if (!QDELETED(buffer) && istype(buffer, /obj/machinery/ore_silo))
+		if (silo == buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
 			return ITEM_INTERACT_BLOCKING
-		if(!check_z_level(M.buffer))
+		if(!check_z_level(buffer))
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
 			return ITEM_INTERACT_BLOCKING
 
-		var/obj/machinery/ore_silo/new_silo = M.buffer
+		var/obj/machinery/ore_silo/new_silo = buffer
 		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
 		if (silo)
 			silo.ore_connected_machines -= src
@@ -174,6 +175,7 @@ handles linking back and forth.
 		silo = new_silo
 		silo.ore_connected_machines += src
 		mat_container = new_container
+		UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))

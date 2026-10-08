@@ -37,6 +37,9 @@
 /datum/computer_file/proc/can_store_file(obj/item/modular_computer/potential_host)
 	return TRUE
 
+/datum/computer_file/proc/get_access()
+	return null
+
 // Returns independent copy of this file.
 /datum/computer_file/proc/clone(rename = FALSE)
 	var/datum/computer_file/temp = new type

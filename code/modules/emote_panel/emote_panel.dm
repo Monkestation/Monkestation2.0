@@ -9,7 +9,7 @@
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/emote in GLOB.emote_list[key])
-			if(emote.key in keys)
+			if(emote.key in keys) //skip over alt_keys
 				continue
 			if(emote.key in blacklisted_emotes)
 				continue
@@ -21,6 +21,7 @@
 					"hands" = emote.hands_use_check,
 					"visible" = emote.emote_type & EMOTE_VISIBLE,
 					"audible" = emote.emote_type & EMOTE_AUDIBLE,
+					"has_visual" = emote.emote_type & EMOTE_HAS_VISUAL,
 					"sound" = !isnull(emote.get_sound(user)),
 					"use_params" = emote.message_param,
 				))
@@ -54,9 +55,7 @@
 /datum/emote_panel/ui_state(mob/user)
 	return GLOB.always_state
 
-/mob/living/verb/emote_panel()
-	set name = "Emote Panel"
-	set category = "IC"
+GAME_VERB(/mob/living, emote_panel, "Emote Panel", "IC")
 
 	var/static/datum/emote_panel/emote_panel
 	if(isnull(emote_panel))

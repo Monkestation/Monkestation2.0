@@ -179,19 +179,19 @@
 "hp" = (
 /obj/item/radio/intercom/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/hypospray/medipen/atropine,
+/obj/item/reagent_containers/medipen/atropine,
 /obj/structure/closet/crate/medical{
 	name = "emergency survival supplies"
 	},
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen/blood_loss,
+/obj/item/reagent_containers/medipen/blood_loss,
+/obj/item/reagent_containers/medipen,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "hu" = (
@@ -919,8 +919,8 @@
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -15
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray,
+/obj/item/surgery_tray{
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1021,10 +1021,10 @@
 /area/shuttle/escape)
 "HJ" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1084,17 +1084,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 8
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_y = 4
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam{
+/obj/item/grenade/chem_grenade/smart_metalfoam{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -1519,7 +1519,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "WO" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},

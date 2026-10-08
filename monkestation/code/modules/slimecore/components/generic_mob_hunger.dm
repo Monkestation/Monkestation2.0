@@ -8,7 +8,7 @@
 	var/feed_pause_end
 	var/remove_overfed_timer
 
-/datum/component/generic_mob_hunger/Initialize(max_hunger = 250, hunger_drain = 0.1, feed_pause_time = 1 MINUTE, starting_hunger)
+/datum/component/generic_mob_hunger/Initialize(max_hunger = 250, hunger_drain = 0.1, feed_pause_time = 1 MINUTES, starting_hunger)
 	. = ..()
 	src.hunger_drain = hunger_drain
 	src.max_hunger = max_hunger

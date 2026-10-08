@@ -424,13 +424,13 @@
 	name = "ammo box (Foam Darts)"
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
+	ammo_type = /obj/item/ammo_casing/foam_dart
 	max_ammo = 40
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+	ammo_type = /obj/item/ammo_casing/foam_dart/riot
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25)
 
 
@@ -451,8 +451,11 @@
 /obj/item/ammo_box/advanced/s12gauge/pre_attack(atom/target, mob/living/user)
 	if(DOING_INTERACTION(user, "doafter_reloading"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	if(length(stored_ammo) == 0)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	// empty ammo boxes can't reload guns but still can be inserted into ammo workbench
+	if(!length(stored_ammo))
+		if(istype(target, /obj/item/gun/ballistic))
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+		return
 	if(istype(target, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/gun = target
 		if(!(istype(target, /obj/item/gun/ballistic/revolver)))
@@ -466,6 +469,7 @@
 		old_ammo_count = length(stored_ammo)
 		if(!do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))
 			return COMPONENT_CANCEL_ATTACK_CHAIN
+		to_chat(user, span_notice("You load a shell into the [gun]."))
 
 /obj/item/ammo_box/advanced/s12gauge/afterattack(atom/target, mob/user, proximity_flag, click_parameters) //why did i do this, i guess it's funny?
 	. = ..()
@@ -489,7 +493,7 @@
 	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/bean
-	name = "beanbag Slug ammo box"
+	name = "beanbag slug ammo box"
 	desc = "A box of beanbag slug shells. These are large, singular beanbags that pack a less-lethal punch."
 	icon_state = "bean"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
@@ -566,7 +570,7 @@
 /obj/item/storage/fancy/a40mm_box
 	name = "40mm grenade box"
 	desc = "A metal box designed to hold 40mm grenades."
-	icon =  'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon =  'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_box"
 	base_icon_state = "40mm_box"
 	spawn_type = /obj/item/ammo_casing/a40mm

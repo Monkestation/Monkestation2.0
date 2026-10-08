@@ -32,7 +32,7 @@
 	return "Mythical goat-people. The clacking of hooves and smell of beer follow them around."
 
 /mob/living/carbon/human/species/satyr
-    race = /datum/species/satyr
+	race = /datum/species/satyr
 
 /datum/species/satyr/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -66,7 +66,7 @@
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fa-book-dead",
 			SPECIES_PERK_NAME = "Fey Ancenstry",
-			SPECIES_PERK_DESC = "Satyr's possess a acute allergy to cold iron.",
+			SPECIES_PERK_DESC = "Satyr's possess an acute allergy to cold iron.",
 		)
 	)
 	return to_add
@@ -89,7 +89,6 @@
 	name = "satyr liver"
 	organ_traits = list(TRAIT_ALCOHOL_TOLERANCE)
 
-
 /obj/item/organ/internal/liver/satyr/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	receiver.AddComponent(/datum/component/living_drunk)
@@ -99,14 +98,15 @@
 	var/datum/component/living_drunk/drunk = organ_owner.GetComponent(/datum/component/living_drunk)
 	qdel(drunk)
 
-/datum/species/satyr/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/obj/item/organ/internal/liver/satyr/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	if((. & COMSIG_MOB_STOP_REAGENT_TICK)  || (organ_flags & ORGAN_FAILING))
+		return
 	if(chem.type == (/datum/reagent/iron))
-		H.adjustToxLoss(3 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
+		organ_owner.adjustToxLoss(3 * REM * seconds_per_tick)
+		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_TICK
 	if(chem.type == /datum/reagent/medicine/antihol) //Cures alchol, which they need, to live.
-		to_chat(H, span_danger("You feel your veins constrict as your heads spin"))
-		H.adjustOxyLoss(4 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	return ..()
+		to_chat(organ_owner, span_danger("You feel your veins constrict as your heads spin"))
+		organ_owner.adjustOxyLoss(4 * REM * seconds_per_tick)
+		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_TICK

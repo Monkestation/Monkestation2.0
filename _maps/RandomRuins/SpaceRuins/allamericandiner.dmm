@@ -186,9 +186,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
-/obj/machinery/dance_machine{
-	active = 1
-	},
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/siding/brown,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
@@ -344,7 +342,6 @@
 "pg" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/urinal/directional/north,
-/obj/item/reagent_containers/syringe/morphine,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "qp" = (
@@ -373,7 +370,6 @@
 /obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/syringe/morphine,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "rb" = (

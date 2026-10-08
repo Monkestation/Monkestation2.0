@@ -15,8 +15,7 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEEARS
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
-	resistance_flags = FIRE_PROOF // monkestation edit so helmets don't burn, not sure how tf that happened
+	resistance_flags = FIRE_PROOF
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
@@ -26,6 +25,10 @@
 	var/has_helmet_strap = FALSE
 	///Is the helmet strap buckled?
 	var/helmet_strap_buckled = TRUE
+	var/hud_attachable = FALSE
+	var/obj/item/clothing/glasses/hud/hud_glasses = null
+	var/datum/atom_hud/our_hud = null
+	var/hud_trait = null
 
 /datum/armor/head_helmet
 	melee = 35
@@ -41,6 +44,55 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD, TRUE)
 
+/obj/item/clothing/head/helmet/examine(mob/user)
+	. = ..()
+	if(hud_glasses)
+		. += "It has \a [hud_glasses] [hud_attachable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"]."
+	else if (hud_attachable)
+		. += "It has a mounting point for some <b>HUD</b> glasses."
+
+/obj/item/clothing/head/helmet/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_HEAD))
+		return
+	give_hud(user)
+
+/obj/item/clothing/head/helmet/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(!istype(user) || user.head != src)
+		return
+	remove_hud(user)
+
+/obj/item/clothing/head/helmet/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	if(gone != hud_glasses)
+		return
+
+	hud_glasses = null
+
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer) && wearer.head == src)
+		remove_hud(wearer)
+
+/obj/item/clothing/head/helmet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/clothing/glasses/hud))
+		return NONE
+
+	if(!hud_attachable || hud_glasses)
+		return NONE
+
+	user.transferItemToLoc(tool, src)
+	hud_glasses = tool
+
+	balloon_alert(user, "attached [tool]")
+
+	var/mob/living/carbon/human/wearer = loc
+	if (istype(wearer) && wearer.head == src)
+		give_hud(wearer)
+
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/clothing/head/helmet/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(isinhands)
@@ -50,6 +102,24 @@
 	if(helmet_strap_buckled)
 		var/mutable_appearance/helmet_strap_overlay = mutable_appearance('icons/mob/clothing/head/helmet.dmi', "helmet_strap", offset_spokesman = src, offset_const = -1)
 		. += helmet_strap_overlay
+
+/obj/item/clothing/head/helmet/proc/give_hud(mob/living/carbon/human/user)
+	if(!hud_glasses)
+		return
+	if(hud_glasses.hud_type)
+		our_hud = GLOB.huds[hud_glasses.hud_type]
+		our_hud.show_to(user)
+	if(hud_glasses.hud_trait)
+		hud_trait = hud_glasses.hud_trait
+		ADD_TRAIT(user, hud_trait, HELMET_TRAIT)
+
+/obj/item/clothing/head/helmet/proc/remove_hud(mob/living/carbon/human/user)
+	if(our_hud)
+		our_hud.hide_from(user)
+		our_hud = null
+	if(hud_trait)
+		REMOVE_TRAIT(user, hud_trait, HELMET_TRAIT)
+		hud_trait = null
 
 /obj/item/clothing/head/helmet/item_ctrl_click(mob/user)
 	if(!has_helmet_strap)
@@ -64,7 +134,6 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/sec
-	var/flipped_visor = FALSE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -73,6 +142,8 @@
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 	desc_controls = "CTRL-Click to toggle the chinstrap, Alt-Click to flip the visor."
 	has_helmet_strap = TRUE
+	hud_attachable = TRUE
+	var/flipped_visor = FALSE
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -120,18 +191,16 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-//MONKESTATION EDIT START
 /obj/item/clothing/head/helmet/surplus
 	name = "surplus helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/head.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_righthand.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/helmet_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/helmet_righthand.dmi'
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-//MONKESTATION EDIT STOP
 
 /obj/item/clothing/head/helmet/press
 	name = "press helmet"
@@ -163,7 +232,10 @@
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK
+	flags_inv = HIDEEARS|HIDEHAIR
+	desc_controls = "Alt-Click to flip the visor."
+	hud_attachable = TRUE
+	var/flipped_visor = FALSE
 
 /datum/armor/helmet_alt
 	melee = 15
@@ -178,6 +250,24 @@
 /obj/item/clothing/head/helmet/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
+
+/obj/item/clothing/head/helmet/alt/click_alt(mob/user)
+	flipped_visor = !flipped_visor
+	balloon_alert(user, "visor flipped")
+	// base_icon_state is modified for seclight attachment component
+	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
+	icon_state = base_icon_state
+	if(flipped_visor)
+		flags_cover &= ~(HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
+		flags_inv &= ~(HIDEEARS|HIDEHAIR)
+		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
+	else
+		flags_cover |= (HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
+		flags_inv |= (HIDEEARS|HIDEHAIR)
+		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	user.update_worn_glasses()
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/marine
 	name = "tactical combat helmet"
@@ -253,8 +343,8 @@
 /obj/item/clothing/head/helmet/guardmanhelmet
 	name = "guardman's helmet"
 	desc = "Keeps your brain intact when fighting heretics"
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	icon_state = "guardman_helmet"
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
@@ -295,7 +385,7 @@
 
 /datum/armor/helmet_swat
 	melee = 40
-	bullet = 40 //monkestation edit, 30 to 40
+	bullet = 40
 	laser = 30
 	energy = 40
 	bomb = 50
@@ -310,16 +400,12 @@
 	icon_state = "swat"
 	base_icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
-	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT //monkestation edit
-
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
+	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT
+	flags_cover = HEADCOVERSEYES | PEPPERPROOF
 	desc_controls = "CTRL-Click to toggle the chinstrap."
 	has_helmet_strap = TRUE
 
-/obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload) //monkestation edit
+/obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
@@ -588,10 +674,24 @@
 	acid = 40
 	wound = 15
 
+/obj/item/clothing/head/helmet/laserproof
+	name = "reflector helmet"
+	desc = "A helmet that excels in protecting the wearer against energy projectiles, as well as reflecting them."
+	icon_state = "helmet_reflec"
+	armor_type = /datum/armor/armor_laserproof
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
+	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/head/helmet/toggleable
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
+	if(!try_toggle())
+		return
 	adjust_visor(user)
 
 ///Attempt to toggle the visor. Returns true if it does the thing.
@@ -614,8 +714,8 @@
 	icon_state = "riot"
 	base_icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down on"
-	alt_toggle_message = "You push the visor up on"
+	toggle_message = "You pull the visor down on the"
+	alt_toggle_message = "You push the visor up on the"
 	armor_type = /datum/armor/toggleable_riot
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
@@ -645,14 +745,16 @@
 	icon_state = "justice"
 	base_icon_state = "justice"
 	inhand_icon_state = "justice_helmet"
-	toggle_message = "You turn off the lights on"
-	alt_toggle_message = "You turn on the lights on"
+	toggle_message = "You turn off the lights on the"
+	alt_toggle_message = "You turn on the lights on the"
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	///Cooldown for toggling the visor.
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
+	///The type of looping sound datum we use
+	var/weewooloop_type = /datum/looping_sound/siren
 
 /obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
@@ -662,7 +764,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
 	. = ..()
-	weewooloop = new(src, FALSE, FALSE)
+	weewooloop = new weewooloop_type(src, FALSE, FALSE)
 
 /obj/item/clothing/head/helmet/toggleable/justice/Destroy()
 	QDEL_NULL(weewooloop)
@@ -680,3 +782,129 @@
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
 	icon_state = "justice2"
 	base_icon_state = "justice2"
+
+#define MEDICAL_HELMET_DEFAULT 0
+#define MEDICAL_HELMET_SHOUTING 1
+#define MEDICAL_HELMET_YELLING 2
+#define MEDICAL_HELMET_EXTREME 3
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical
+	name = "medical emergency helmet"
+	desc = "A fragile, circuitry embedded helmet that was an old R&D project to help medical personnel in emergency retrieval."
+	icon_state = "justice_medical"
+	base_icon_state = "justice_medical"
+	inhand_icon_state = null
+	weewooloop_type = /datum/looping_sound/siren/alt
+	var/mode = MEDICAL_HELMET_DEFAULT
+	COOLDOWN_DECLARE(forcesay_cooldown)
+	var/list/forcesay_phrases = list(
+		"Move! Out of the way",
+		"Medical emergency! Clear the way",
+		"Clear the way",
+		"Out of the way",
+		"Move out of the way",
+		"Medical emergency",
+	)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/examine_more(mob/user)
+	. = ..()
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/wearer = loc
+	if(wearer?.head == src)
+		return
+	if(mode == MEDICAL_HELMET_EXTREME)
+		. += "A small display on the inside of the helmet next to the amplifier control flashes a bright red [span_red("[mode]")]."
+	else
+		. += "A small display on the inside of the helmet next to the amplifier flashes a [mode]."
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
+	if(..())
+		return TRUE
+	switch(mode)
+		if(MEDICAL_HELMET_DEFAULT)
+			to_chat(user, span_notice("You set the amplifier control to the middle position."))
+			mode = MEDICAL_HELMET_SHOUTING
+		if(MEDICAL_HELMET_SHOUTING)
+			to_chat(user, span_notice("You set the amplifier control to the last position."))
+			mode = MEDICAL_HELMET_YELLING
+		if(MEDICAL_HELMET_YELLING)
+			to_chat(user, span_notice("You set the amplifier control to the first position."))
+			mode = MEDICAL_HELMET_DEFAULT
+		if(MEDICAL_HELMET_EXTREME)
+			to_chat(user, span_danger("You adjust amplifier control but nothing happens, probably because it's broken."))
+	return TRUE
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	mode = MEDICAL_HELMET_EXTREME
+	do_sparks(3, FALSE, src)
+	sleep(1 SECONDS)
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	balloon_alert(user, "safeties shorted!")
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/equipped(mob/M, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*" && mode != MEDICAL_HELMET_DEFAULT && up)
+		switch(mode)
+			if(MEDICAL_HELMET_SHOUTING)
+				message += "!"
+			if(MEDICAL_HELMET_YELLING, MEDICAL_HELMET_EXTREME)
+				message += "!!"
+		speech_args[SPEECH_MESSAGE] = message
+
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/visor_toggling()
+	. = ..()
+	if(up)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/process(seconds_per_tick)
+	if(!COOLDOWN_FINISHED(src, forcesay_cooldown))
+		return
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/wearer = loc
+	if(wearer.head != src)
+		return
+	if(!mode)
+		return
+	if(wearer.stat == DEAD)
+		return
+	COOLDOWN_START(src, forcesay_cooldown, 6 SECONDS)
+	wearer.say("[pick(forcesay_phrases)]", forced = "(Emergency Medical Helmet Line)")
+
+	if(mode != MEDICAL_HELMET_EXTREME)
+		return
+
+	if(ishuman(wearer))
+		var/mob/living/carbon/human/brain_ouchy_victim = wearer
+		brain_ouchy_victim.emote("twitch")
+		brain_ouchy_victim.apply_damage(25,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
+		do_sparks(3, FALSE, src)
+
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+#undef MEDICAL_HELMET_DEFAULT
+#undef MEDICAL_HELMET_SHOUTING
+#undef MEDICAL_HELMET_YELLING
+#undef MEDICAL_HELMET_EXTREME

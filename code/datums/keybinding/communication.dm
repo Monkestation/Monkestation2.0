@@ -1,6 +1,11 @@
 /datum/keybinding/client/communication
 	category = CATEGORY_COMMUNICATION
 
+/datum/keybinding/client/communication/down(client/user)
+	. = ..()
+	winset(user, "tgui_say.browser", "focus=true")
+	return TRUE
+
 /datum/keybinding/client/communication/say
 	hotkey_keys = list("T")
 	name = SAY_CHANNEL
@@ -18,6 +23,12 @@
 	name = OOC_CHANNEL
 	full_name = "Out Of Character Say (OOC)"
 	keybind_signal = COMSIG_KB_CLIENT_OOC_DOWN
+
+/datum/keybinding/client/communication/looc
+	hotkey_keys = list("I")
+	name = LOOC_CHANNEL
+	full_name = "Local Out Of Character Say (LOOC)"
+	keybind_signal = COMSIG_KB_CLIENT_LOOC_DOWN
 
 /datum/keybinding/client/communication/me
 	hotkey_keys = list("M")

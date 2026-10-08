@@ -30,11 +30,11 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/P)
+/obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(P.damage > 0 && P.damage_type == BRUTE)
+	if(proj.damage > 0 && proj.damage_type == BRUTE)
 		var/atom/T = get_turf(src)
 		smash(T)
 
@@ -49,7 +49,7 @@
 	throwforce = 1
 	amount_per_transfer_from_this = 5
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
-	possible_transfer_amounts = list(5)
+	has_variable_transfer_amount = FALSE
 	volume = 5
 	flags_1 = CONDUCT_1
 	spillable = TRUE
@@ -544,6 +544,7 @@
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
+	volume = 90
 	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/reagent_containers/cup/glass/flask/det

@@ -1,8 +1,6 @@
 SUBSYSTEM_DEF(statpanels)
 	name = "Stat Panels"
 	wait = 0.4 SECONDS
-	init_order = INIT_ORDER_STATPANELS
-	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	flags = SS_NO_INIT
@@ -18,6 +16,12 @@ SUBSYSTEM_DEF(statpanels)
 	var/mc_wait = 5
 	///how many full runs this subsystem has completed. used for variable rate refreshes.
 	var/num_fires = 0
+	/// The assoc list of job estimation data keyed to player ref. data format: list(estimation_string, ckey)
+	var/list/player_ready_data = list()
+	/// The assoc list of job estimation data keyed to player ref (for command players only). data format: list(estimation_string, ckey)
+	var/list/command_player_ready_data = list()
+	/// The assoc list of job estimation data keyed to player ref (for assistant players only). data format: list(estimation_string, ckey)
+	var/list/assistant_player_ready_data = list()
 
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
@@ -37,12 +41,18 @@ SUBSYSTEM_DEF(statpanels)
 		if(cached)
 			global_data += "Next Map: [cached.map_name]"
 
+		var/active_players = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE) //This is a list of all active players, including players who are dead
+		var/observing_players = length(GLOB.current_observers_list) //This is a list of all players that started as an observer-- dead and lobby players are not included.
+		var/timeinworld = "[time2text(world.timeofday, "DD of Month,")] [CURRENT_STATION_YEAR]"
+
 		global_data += list(
 			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "Secret"]",
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
+			"Connected: [length(GLOB.clients)] | Active: [active_players] | Observing: [observing_players]",
+			" ",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]",
 			"Round Time: [ROUND_TIME()]",
-			"Station Time: [station_time_timestamp()]",
+			"Station Time: [station_time_timestamp()], [timeinworld]",
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 
@@ -169,6 +179,15 @@ SUBSYSTEM_DEF(statpanels)
 
 	// Push update
 	target.stat_panel.send_message("update_interviews", data)
+	// Monkestation Addition: Token Manager START
+	var/list/token_data = list(
+		"accepted" = SStoken_manager.accepted_count || 0,
+		"pending" = length(SStoken_manager.pending_requests) || 0,
+		"rejected" = SStoken_manager.rejected_count || 0,
+		"timed_out" = SStoken_manager.timed_out_count || 0,
+	)
+	target.stat_panel.send_message("update_tokens", token_data)
+	// Monkestation Addition END
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()
@@ -223,7 +242,7 @@ SUBSYSTEM_DEF(statpanels)
 #endif
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), text_ref(sub_system))
-	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", text_ref(GLOB.cameranet))
+	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [SScameras.cameras.len] | Chunks: [SScameras.chunks.len]", text_ref(SScameras))
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)
@@ -265,6 +284,116 @@ SUBSYSTEM_DEF(statpanels)
 
 	else if(length(GLOB.sdql2_queries) && target.stat_tab == "SDQL2")
 		set_SDQL2_tab(target)
+
+#define INDEX_PLAYER_DATA 1
+#define INDEX_PLAYER_CKEY 2
+/// Returns the list of job estimation strings that get output to the stat panel. First to ready up get listed first. Command roles get displayed before all the rest.
+/datum/controller/subsystem/statpanels/proc/get_job_estimation(mob/dead/recipient)
+	var/list/job_estimation = list(
+		"",
+		"------------------",
+		"Job Estimation:",
+		"",
+	)
+	var/is_admin = check_rights_for(recipient.client, R_ADMIN)
+	for(var/player_ref, player_data in command_player_ready_data) // Command and silicons first
+		job_estimation += "[player_data[INDEX_PLAYER_DATA]][is_admin ? " ([player_data[INDEX_PLAYER_CKEY]])" : ""]"
+
+	for(var/player_ref, player_data in player_ready_data)
+		job_estimation += "[player_data[INDEX_PLAYER_DATA]][is_admin ? " ([player_data[INDEX_PLAYER_CKEY]])" : ""]"
+
+	for(var/player_ref, player_data in assistant_player_ready_data) // Assistants last
+		job_estimation += "[player_data[INDEX_PLAYER_DATA]][is_admin ? " ([player_data[INDEX_PLAYER_CKEY]])" : ""]"
+
+	return job_estimation
+#undef INDEX_PLAYER_DATA
+#undef INDEX_PLAYER_CKEY
+
+/// Adds a player to the ready estimation
+/datum/controller/subsystem/statpanels/proc/add_job_estimation(mob/dead/new_player/player)
+	if(isnull(player.client))
+		return
+
+	var/datum/preferences/prefs = player.client?.prefs
+	var/datum/job/player_job = prefs?.get_highest_priority_job()
+
+	// If a player does not have preferences (for some reason), don't add them
+	if(!player_job)
+		return
+
+	var/title = player_job.title
+
+	var/display
+	// people who have opted out of giving their name will show up as 'a mysterious [job title here]', unless they're command or AI
+	if(!prefs.read_preference(/datum/preference/toggle/ready_job) && !(player_job.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) && title != JOB_AI)
+		display = "a mysterious"
+	else
+		// If the job the player is selecting has a special name, that name should be displayed in the menu, otherwise it should use the normal name
+		switch(title)
+			if(JOB_AI)
+				display = prefs.read_preference(/datum/preference/name/ai)
+			if(JOB_CLOWN)
+				display = prefs.read_preference(/datum/preference/name/clown)
+			if(JOB_CYBORG)
+				display = prefs.read_preference(/datum/preference/name/cyborg)
+			if(JOB_MIME)
+				display = prefs.read_preference(/datum/preference/name/mime)
+			else
+				display = prefs.read_preference(/datum/preference/name/real_name)
+		display += " as"
+
+	var/player_ref = REF(player)
+	if(isnull(display) || isnull(player_ref))
+		return
+
+	/// The string as it appears in the stat panel
+	var/job_estimation_text = "* [display] [player.client?.prefs.alt_job_titles?[title] || title]"
+	// If our player is a member of Command or a Silicon, we want to sort them to the top of the list. Otherwise, just add them to the end of the list.
+	// Assistants show up after everyone else.
+	if(player_job.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND | DEPARTMENT_BITFLAG_SILICON))
+		command_player_ready_data[player_ref] = list(job_estimation_text, player.ckey)
+	else if(player_job.departments_bitflags & DEPARTMENT_BITFLAG_ASSISTANT)
+		assistant_player_ready_data[player_ref] = list(job_estimation_text, player.ckey)
+	else
+		player_ready_data[player_ref] = list(job_estimation_text, player.ckey)
+
+	RegisterSignal(player, COMSIG_JOB_PREF_UPDATED, PROC_REF(on_client_changes_job))
+
+/// Removes a player from the job estimation.
+/datum/controller/subsystem/statpanels/proc/remove_job_estimation(mob/dead/new_player/player)
+	if(isnull(player))
+		return
+
+	var/player_ref = REF(player)
+	player_ready_data -= player_ref
+
+	if(length(command_player_ready_data))
+		command_player_ready_data -= player_ref
+
+	if(length(assistant_player_ready_data))
+		assistant_player_ready_data -= player_ref
+
+	UnregisterSignal(player, list(COMSIG_JOB_PREF_UPDATED))
+
+/// Takes a mob or ckey an tries to update the job estimation
+/datum/controller/subsystem/statpanels/proc/update_job_estimation(mob/dead/new_player/player, ckey)
+	if(SSticker.HasRoundStarted())
+		return
+
+	if(player)
+		remove_job_estimation(player)
+		add_job_estimation(player)
+
+	else if(ckey) // if the player is ready, update their job estimation
+		var/mob/dead/new_player/new_player = get_mob_by_ckey(ckey)
+		if(istype(new_player) && (new_player.ready == PLAYER_READY_TO_PLAY))
+			remove_job_estimation(new_player)
+			add_job_estimation(new_player)
+
+/// Updates the mob's job if they change it through the occupations tab while readied.
+/datum/controller/subsystem/statpanels/proc/on_client_changes_job(mob/dead/new_player/source)
+	SIGNAL_HANDLER
+	update_job_estimation(source)
 
 /// Stat panel window declaration
 /client/var/datum/tgui_window/stat_panel

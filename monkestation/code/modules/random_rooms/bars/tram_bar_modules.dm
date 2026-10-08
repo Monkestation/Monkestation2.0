@@ -6,7 +6,7 @@
 /obj/item/stack/tile/fake_seafloor
 	name = "fake ocean floor tiles"
 	singular_name = "fake ocean floor tile"
-	icon = 'monkestation/icons/obj/tiles.dmi'
+	icon = 'icons/obj/tiles.dmi'
 	icon_state = "tile_seafloor"
 	inhand_icon_state = "tile-space"
 	turf_type = /turf/open/floor/fake_seafloor
@@ -15,7 +15,7 @@
 
 /turf/open/floor/fake_seafloor
 	name = "synthetic ocean floor"
-	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon = 'icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
 	floor_tile = /obj/item/stack/tile/fake_seafloor
@@ -31,7 +31,7 @@
 /obj/item/stack/tile/fakesand
 	name = "fake sand tiles"
 	singular_name = "fake sand tile"
-	icon = 'monkestation/icons/obj/tiles.dmi'
+	icon = 'icons/obj/tiles.dmi'
 	icon_state = "tile_sand"
 	inhand_icon_state = "tile-space"
 	turf_type = /turf/open/floor/fakesand

@@ -5,7 +5,7 @@
 	icon_screen = "nanite_chamber_control"
 	circuit = /obj/item/circuitboard/computer/nanite_chamber_control
 
-/obj/machinery/computer/nanite_chamber_control/Initialize()
+/obj/machinery/computer/nanite_chamber_control/Initialize(mapload)
 	. = ..()
 	find_chamber()
 
@@ -58,7 +58,7 @@
 
 	return data
 
-/obj/machinery/computer/nanite_chamber_control/ui_act(action, params)
+/obj/machinery/computer/nanite_chamber_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

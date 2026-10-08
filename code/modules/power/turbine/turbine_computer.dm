@@ -25,17 +25,17 @@
 		break
 
 /obj/machinery/computer/turbine_computer/multitool_act(mob/living/user, obj/item/tool)
-	var/obj/item/multitool/multitool = tool
-	if(!istype(multitool.buffer, /obj/machinery/power/turbine/core_rotor))
-		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!istype(buffer, /obj/machinery/power/turbine/core_rotor))
+		to_chat(user, span_notice("Wrong machine type in [tool] buffer..."))
 		return
 	if(turbine_core)
 		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
-	register_machine(multitool.buffer)
-	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
+	register_machine(buffer)
+	to_chat(user, span_notice("You link [src] to the console in [tool]'s buffer."))
 	return TRUE
 
 /obj/machinery/computer/turbine_computer/proc/register_machine(machine)
@@ -59,14 +59,14 @@
 	data["active"] = main_control.active
 	data["rpm"] = main_control.rpm ? main_control.rpm : 0
 	data["power"] = main_control.produced_energy ? main_control.produced_energy : 0
-	data["temp"] = main_control.compressor.input_turf?.air.temperature
+	data["temp"] = main_control.compressor?.input_turf?.air ? main_control.compressor.input_turf.air.temperature : 0
 	data["integrity"] = main_control.get_turbine_integrity()
 	data["parts_linked"] = main_control.all_parts_connected
 	data["parts_ready"] = main_control.all_parts_ready()
 
 	data["max_rpm"] = main_control.max_allowed_rpm
 	data["max_temperature"] = main_control.max_allowed_temperature
-	data["regulator"] = QDELETED(main_control.compressor) ? 0 : main_control.compressor.intake_regulator
+	data["regulator"] = main_control.compressor ? main_control.compressor.intake_regulator : 0
 
 	return data
 

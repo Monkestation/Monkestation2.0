@@ -96,7 +96,7 @@ Buildable meters
 /obj/item/pipe/quaternary/pipe/crafted/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	. = ..()
 	pipe_type = /obj/machinery/atmospherics/pipe/smart
-	pipe_color = COLOR_VERY_LIGHT_GRAY
+	pipe_color = ATMOS_COLOR_OMNI
 	p_init_dir = ALL_CARDINALS
 	setDir(SOUTH)
 	update()
@@ -159,10 +159,7 @@ Buildable meters
 	if(ispath(pipe_type,/obj/machinery/atmospherics/pipe/heat_exchanging))
 		resistance_flags |= FIRE_PROOF | LAVA_PROOF
 
-/obj/item/pipe/verb/flip()
-	set category = "Object"
-	set name = "Invert Pipe"
-	set src in view(1)
+GAME_VERB_SRC(/obj/item/pipe, flip, view(1), "Invert Pipe", "Object")
 
 	if ( usr.incapacitated() )
 		return

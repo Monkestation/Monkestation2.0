@@ -114,6 +114,7 @@
 		/obj/item/mod/module/clamp/loader,
 		/obj/item/mod/module/magnet,
 		/obj/item/mod/module/hydraulic,
+		/obj/item/mod/module/stamp,
 	)
 
 /obj/item/mod/control/pre_equipped/mining
@@ -152,7 +153,10 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
-		/obj/item/mod/module/visor/medhud, // monkestation addition
+		/obj/item/mod/module/defibrillator,
+		/obj/item/mod/module/thread_ripper,
+		/obj/item/mod/module/criminalcapture/patienttransport,
+		/obj/item/mod/module/jetpack
 	)
 
 /obj/item/mod/control/pre_equipped/research
@@ -177,7 +181,6 @@
 		/obj/item/mod/module/pepper_shoulders,
 		/obj/item/mod/module/criminalcapture,
 		/obj/item/mod/module/visor/sechud, // monkestation addition
-		/obj/item/mod/module/quick_cuff,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -192,7 +195,6 @@
 		/obj/item/mod/module/projectile_dampener,
 		/obj/item/mod/module/pepper_shoulders,
 		/obj/item/mod/module/visor/sechud, // monkestation addition
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack,
@@ -207,7 +209,6 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/pathfinder,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack/advanced,
@@ -233,10 +234,8 @@
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack,
 	)
 
@@ -252,10 +251,8 @@
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
@@ -272,13 +269,14 @@
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
+
+/obj/item/mod/control/pre_equipped/nuclear/unrestricted
+	req_access = null
 
 /obj/item/mod/control/pre_equipped/nuclear/no_jetpack
 
@@ -304,10 +302,8 @@
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
@@ -322,10 +318,8 @@
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/flamethrower,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flamethrower,
@@ -340,7 +334,6 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/quick_carry,
 		/obj/item/mod/module/visor/diaghud,
-		/obj/item/mod/module/quick_cuff,
 	)
 
 
@@ -366,7 +359,6 @@
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/energy_shield/wizard,
 		/obj/item/mod/module/emp_shield/advanced,
-		/obj/item/mod/module/quick_cuff,
 	)
 
 /obj/item/mod/control/pre_equipped/ninja
@@ -381,7 +373,6 @@
 		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/dna_lock/reinforced,
 		/obj/item/mod/module/emp_shield/pulse,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,
@@ -420,7 +411,6 @@
 		/obj/item/mod/module/flashlight,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
@@ -436,7 +426,6 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/quick_cuff,
 	)
 	/// The insignia type, insignias show what sort of member of the ERT you're dealing with.
 	var/insignia_type = /obj/item/mod/module/insignia
@@ -487,7 +476,6 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/quick_cuff,
 	)
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie
@@ -504,8 +492,6 @@
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight/darkness,
 		/obj/item/mod/module/dna_lock,
-		/obj/item/mod/module/quick_cuff,
-		/obj/item/mod/module/visor/night,
 		/obj/item/mod/module/shove_blocker,
 		/obj/item/mod/module/noslip,
 	)
@@ -536,7 +522,6 @@
 		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack,
@@ -550,7 +535,6 @@
 		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/quick_cuff,
 	)
 
 /obj/item/mod/control/pre_equipped/corporate
@@ -563,7 +547,6 @@
 		/obj/item/mod/module/hat_stabilizer,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/emp_shield/advanced,
-		/obj/item/mod/module/quick_cuff,
 	)
 
 /obj/item/mod/control/pre_equipped/chrono
@@ -615,7 +598,6 @@
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/anomaly_locked/kinesis/plus,
 		/obj/item/mod/module/shove_blocker,
-		/obj/item/mod/module/quick_cuff,
 		/obj/item/mod/module/rad_protection, // monkestation edit
 	)
 	default_pins = list(
@@ -623,6 +605,24 @@
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/anomaly_locked/kinesis/plus,
+	)
+
+/obj/item/mod/control/pre_equipped/blueshield
+	theme = /datum/mod_theme/blueshield
+	starting_frequency = MODLINK_FREQ_NANOTRASEN
+	applied_cell = /obj/item/stock_parts/power_store/cell/super
+	applied_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/projectile_dampener,
+		/obj/item/mod/module/quick_carry,
+		/obj/item/mod/module/holster,
+	)
+	default_pins = list(
+
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/projectile_dampener,
 	)
 
 //these exist for the prefs menu

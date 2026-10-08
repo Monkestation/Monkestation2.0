@@ -35,18 +35,22 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "smoke"
 	cooldown_time = 20 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
 	/// After this amount of time passses, bomb deactivates.
 	var/decay_time = 1 MINUTES
 	/// Static list of signals that activate the bomb.
 	var/static/list/boom_signals = list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
+	/// Blacklisted trap targets. used in PreActivate(atom/target)
+	var/list/blacklist = list(/obj/structure/closet/cardboard/agent) //evil fucked up boombox
 
 /datum/action/cooldown/mob_cooldown/explosive_booby_trap/PreActivate(atom/target)
 	if (!isobj(target))
 		return FALSE
 	if (!owner.Adjacent(target))
+		return FALSE
+	if(is_type_in_list(target, blacklist))
+		owner.balloon_alert(owner, "invalid target!")
 		return FALSE
 	return ..()
 

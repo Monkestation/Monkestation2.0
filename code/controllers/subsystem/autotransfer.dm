@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/controller/subsystem/autotransfer/proc/crew_transfer_passed()
 	if(!SSticker.IsRoundInProgress())
-		CRASH("Somehow tried to initiate crew transfer, even tho there is not ongoing round!")
+		CRASH("Somehow tried to initiate crew transfer, even though there is not ongoing round!")
 	SSshuttle.admin_emergency_no_recall = TRUE
 	if(SSshuttle.emergency?.mode == SHUTTLE_DISABLED || EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return

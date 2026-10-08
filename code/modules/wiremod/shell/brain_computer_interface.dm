@@ -15,7 +15,7 @@
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
-	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
+	), SHELL_CAPACITY_SMALL, starting_circuit = circuit, blacklisted_integrated_circuits = list(/obj/item/integrated_circuit/chemical))
 
 /obj/item/organ/internal/cyberimp/bci/on_insert(mob/living/carbon/receiver)
 	. = ..()
@@ -68,7 +68,7 @@
 /obj/item/circuit_component/equipment_action/bci/update_action()
 	bci_action.name = button_name.value
 	// Change nanite -> bci if we get a set of bci action icons instead of nanite action icons
-	bci_action.button_icon_state = "nanite_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
+	bci_action.button_icon_state = "nanite_[replacetextEx(LOWER_TEXT(icon_options.value), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"
@@ -163,6 +163,9 @@
 	))
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
+	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		return
+
 	var/sent_message = trim(message.value)
 	if (!sent_message)
 		return

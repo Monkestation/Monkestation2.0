@@ -52,6 +52,12 @@
 	description = "A cogwheel-shaped device of brass, with a glass lens floating, suspended in the center. Capable of making one become a \"Clock Cultist\"."
 	admin_note = "Clockwork Cultist (solo) antag granter."
 
+/datum/opposing_force_equipment/uplink/blood_cultist
+	item_type = /obj/item/antag_granter/blood_cultist
+	name = "Bloody Knife"
+	description = "A ancient knife, covered in blood, both fresh and dried. Capable of making one become a \"Blood Cultist\"."
+	admin_note = "Blood Cultist (solo) antag granter."
+
 //Services
 /*
 /datum/opposing_force_equipment/uplink/give_exploitables

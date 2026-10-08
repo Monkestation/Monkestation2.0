@@ -127,7 +127,7 @@
 "nC" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/defibrillator/loaded,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 13
 	},
 /obj/effect/turf_decal/tile/blue/anticorner{
@@ -550,7 +550,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/structure/rack,
 /obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/escape)
 "VO" = (

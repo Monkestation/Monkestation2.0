@@ -1,3 +1,7 @@
+import { capitalize } from 'common/string';
+import { Fragment } from 'react';
+import { resolveAsset } from '../assets';
+import nt_logo from '../assets/bg-nanotrasen.svg';
 import { useBackend, useLocalState } from '../backend';
 import {
   BlockQuote,
@@ -11,12 +15,8 @@ import {
   Section,
   Stack,
 } from '../components';
-import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
-import { capitalize } from 'common/string';
-import nt_logo from '../assets/bg-nanotrasen.svg';
-import { Fragment } from 'inferno';
+import { Window } from '../layouts';
 
 type ExplorationEventData = {
   name: string;
@@ -187,14 +187,14 @@ const SignalLostModal = (props) => {
       width={30}
       height={22}
       p={0}
-      style={{ 'border-radius': '5%' }}
+      style={{ borderRadius: '5%' }}
     >
       <img src={nt_logo} width={64} height={64} />
       <Box
         backgroundColor="black"
         textColor="red"
         fontSize={2}
-        style={{ 'border-radius': '-10%' }}
+        style={{ borderRadius: '-10%' }}
       >
         CONNECTION LOST
       </Box>
@@ -541,9 +541,9 @@ const TravelTargetSelectionScreen = (props: {
       dest.band_info[s] !== undefined && dest.band_info[s] !== 0;
     return Object.keys(all_bands).filter(band_check);
   };
-  const valid_destinations =
-    sites &&
-    sites.filter((destination) => !site || destination.ref !== site.ref);
+  const valid_destinations = sites?.filter(
+    (destination) => !site || destination.ref !== site.ref,
+  );
   return (
     (drone.drone_status === DroneStatusEnum.Travel && (
       <TravelDimmer drone={drone} />
@@ -870,7 +870,7 @@ const ExodroneConsoleContent = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <Stack vertical fill grow={2}>
+        <Stack vertical fill>
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item>

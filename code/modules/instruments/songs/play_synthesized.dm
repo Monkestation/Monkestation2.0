@@ -9,7 +9,7 @@
 	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
 	var/list/accents = list("n", "n", "n", "n", "n", "n", "n")
 	for(var/line in lines)
-		var/list/chords = splittext(lowertext(line), ",")
+		var/list/chords = splittext(LOWER_TEXT(line), ",")
 		for(var/chord in chords)
 			var/list/compiled_chord = list()
 			var/tempodiv = 1
@@ -60,14 +60,15 @@
 	var/channel_text = num2text(channel)
 	channels_playing[channel_text] = 100
 	last_channel_played = channel_text
+	var/channel_used = issilicon(player) ? CHANNEL_INSTRUMENTS_ROBOT : CHANNEL_INSTRUMENTS
 	for(var/i in hearing_mobs)
 		var/mob/M = i
 		if(player && HAS_TRAIT(player, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(/datum/status_effect/good_music)
-		if(!(M?.client?.prefs.read_preference(/datum/preference/toggle/sound_instruments)))
+		if(!(M?.client?.prefs?.channel_volume["[channel_used]"]))
 			continue
-		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, null, channel, null, copy, mixer_channel = mixing_channel)
+		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, null, channel, null, copy, mixer_channel = channel_used)
 		// Could do environment and echo later but not for now
 
 /**

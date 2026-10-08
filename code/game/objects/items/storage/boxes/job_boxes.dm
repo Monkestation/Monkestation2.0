@@ -11,7 +11,7 @@
 	/// Which internals tank are we going to use for this box?
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	/// What medipen should be present in this box?
-	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	var/medipen_type = /obj/item/reagent_containers/medipen
 	/// Are we crafted?
 	var/crafted = FALSE
 
@@ -30,10 +30,7 @@
 	if(!isnull(mask_type))
 		new mask_type(src)
 
-	if(!isplasmaman(loc))
-		new internal_type(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+	give_internals()
 
 	if(!isnull(medipen_type))
 		new medipen_type(src)
@@ -42,21 +39,27 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
-	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
+	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels) && !length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
 		new /obj/item/climbing_hook/emergency(src)
+
+/obj/item/storage/box/survival/proc/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	return new internal_type(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/survival/proc/wardrobe_removal()
-	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
+	if(isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
+		var/obj/item/mask = locate(mask_type) in src
+		var/obj/item/internals = locate(internal_type) in src
+		give_internals()
+		qdel(mask) // Get rid of the items that shouldn't be
+		qdel(internals)
 		return
-	var/obj/item/mask = locate(mask_type) in src
-	var/obj/item/internals = locate(internal_type) in src
-	new /obj/item/tank/internals/plasmaman/belt(src)
-	qdel(mask) // Get rid of the items that shouldn't be
-	qdel(internals)
 
 // Mining survival box
 /obj/item/storage/box/survival/mining
@@ -74,6 +77,12 @@
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
+/obj/item/storage/box/survival/engineer/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	return new internal_type(src)
+
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
@@ -86,7 +95,14 @@
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
+	medipen_type =  /obj/item/reagent_containers/medipen/atropine
+
+/obj/item/storage/box/survival/syndie/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	return new internal_type(src)
+
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
@@ -127,9 +143,10 @@
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-/obj/item/storage/box/survival/security/PopulateContents() //monkestation edit
+/obj/item/storage/box/survival/security/PopulateContents()
 	..() // we want the regular stuff too
-	new /obj/item/radio/off(src)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		new /obj/item/radio/off(src)
 
 // Medical survival box
 /obj/item/storage/box/survival/medical
@@ -216,7 +233,7 @@
 /obj/item/storage/box/hug/medical/PopulateContents()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new /obj/item/reagent_containers/medipen(src)
 
 //Clown survival box
 /obj/item/storage/box/survival/hug
@@ -316,3 +333,17 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
+
+// Syndie survival box
+/obj/item/storage/box/survival/operative
+	name = "operation-ready survival box"
+	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank and a spare neck gaiter."
+	icon_state = "syndiebox"
+	illustration = "extendedtank"
+	mask_type = /obj/item/clothing/mask/gas/sechailer/syndicate
+	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
+	medipen_type =  /obj/item/reagent_containers/medipen/atropine
+
+/obj/item/storage/box/survival/operative/PopulateContents()
+	..()
+	new /obj/item/tool_parcel(src)

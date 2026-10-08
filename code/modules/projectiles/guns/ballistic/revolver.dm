@@ -3,6 +3,7 @@
 	desc = "A suspicious revolver. Uses .357 ammo."
 	icon_state = "revolver"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
+	recoil = 0.6
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
 	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
@@ -15,27 +16,34 @@
 	var/spin_delay = 10
 	var/recent_spin = 0
 	var/last_fire = 0
-	gun_flags = GUN_SMOKE_PARTICLES
-	box_reload_delay = CLICK_CD_RAPID // honestly this is negligible because of the inherent delay of having to switch hands
 
 /obj/item/gun/ballistic/revolver/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
-	..()
-	last_fire = world.time
+	. = ..()
+	if(.)
+		last_fire = world.time
 
-
-/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
+/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
 		CRASH("revolver tried to chamber a round without a magazine!")
-	if(spin_cylinder)
-		chambered = magazine.get_round(TRUE)
+	if(chambered)
+		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
+	if (spin_cylinder)
+		chambered = magazine.get_round()
 	else
 		chambered = magazine.stored_ammo[1]
+		if (ispath(chambered))
+			chambered = new chambered(src)
+			magazine.stored_ammo[1] = chambered
+	if(chambered)
+		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
 	chamber_round()
 
 /obj/item/gun/ballistic/revolver/click_alt(mob/user)
+	if(suppressed) //probably want to remove the suppressor instead of spinning it.
+		return ..()
 	spin()
 	return CLICK_ACTION_SUCCESS
 
@@ -53,14 +61,10 @@
 			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
 
-/obj/item/gun/ballistic/revolver/verb/spin()
-	set name = "Spin Chamber"
-	set category = "Object"
-	set desc = "Click to spin your revolver's chamber."
+GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
+	var/mob/user = usr
 
-	var/mob/M = usr
-
-	if(M.stat || !in_range(M,src))
+	if(user.stat || !in_range(user, src))
 		return
 
 	if (recent_spin > world.time)
@@ -69,7 +73,8 @@
 
 	if(do_spin())
 		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
-		usr.visible_message(span_notice("[usr] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
+		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
+		balloon_alert(user, "chamber spun")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
 
@@ -92,8 +97,7 @@
 	. = ..()
 	var/live_ammo = get_ammo(FALSE, FALSE)
 	. += "[live_ammo ? live_ammo : "None"] of those are live rounds."
-	if (current_skin)
-		. += "It can be spun with <b>alt+click</b>"
+	. += span_notice("It can be spun with [EXAMINE_HINT("alt-click")].")
 
 /obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)
 	if(last_fire && last_fire + 15 SECONDS > world.time)
@@ -122,6 +126,7 @@
 	alternative_ammo_misfires = TRUE
 	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
+	misfire_probability_cap = 50
 
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list(
@@ -156,9 +161,7 @@
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
-
-/obj/item/gun/ballistic/revolver/mateba/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
@@ -187,6 +190,7 @@
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
@@ -277,9 +281,6 @@
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(span_danger("[user.name] fires [src] at [user.p_their()] head!"), span_userdanger("You fire [src] at your head!"), span_hear("You hear a gunshot!"))
 
-/obj/item/gun/ballistic/revolver/russian/give_manufacturer_examine()
-	return
-
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
@@ -353,10 +354,12 @@
 	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
+	inhand_icon_state = "takbok"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
-	suppressor_x_offset = 5
+	suppressor_x_offset = 8
+	suppressor_y_offset = 1
 	can_suppress = TRUE
 	fire_delay = 1 SECONDS
 	recoil = 3
@@ -388,6 +391,7 @@
 /obj/item/gun/ballistic/revolver/takbok/blueshield
 	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
 	icon_state = "takbok_blueshield"
+	inhand_icon_state = "takbok_blueshield"
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
 	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
@@ -421,7 +425,7 @@
 	name = "\improper .45 Long Revolver"
 	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
 	icon_state = "45revolver"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
 	obj_flags = UNIQUE_RENAME
 

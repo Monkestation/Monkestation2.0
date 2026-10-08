@@ -1,7 +1,7 @@
 /obj/effect/bnnuy
 	name = "white rabbit"
 	desc = span_big(span_hypnophrase("FEED YOUR HEAD."))
-	icon = 'monkestation/icons/effects/512x512.dmi'
+	icon = 'icons/effects/512x512.dmi'
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
@@ -19,8 +19,6 @@
 	var/image/hunter_image
 	/// Has the rabbit already whispered?
 	var/being_used = FALSE
-	/// Is this rabbit selected to drop the gun?
-	var/drop_gun = FALSE
 
 /obj/effect/bnnuy/Initialize(mapload, datum/antagonist/monsterhunter/hunter)
 	. = ..()
@@ -55,7 +53,7 @@
 	being_used = TRUE
 	spotted(user)
 	SEND_SIGNAL(hunter_antag, COMSIG_GAIN_INSIGHT)
-	icon = 'monkestation/icons/mob/rabbit.dmi'
+	icon = 'icons/mob/rabbit.dmi'
 	real_icon_state = "rabbit_hole"
 	pixel_x = 0
 	pixel_y = 0
@@ -78,13 +76,14 @@
 
 /obj/effect/bnnuy/proc/spotted(mob/living/user)
 	var/list/extra_logs = list()
-	if(hunter_antag?.rabbits_spotted == 0) //our first bunny
-		user.put_in_hands(new /obj/item/clothing/mask/cursed_rabbit(drop_location()))
-		extra_logs += "the cursed rabbit mask"
+	if(hunter_antag)
+		if(hunter_antag.rabbits_spotted == 0) //our first bunny
+			user.put_in_hands(new /obj/item/clothing/mask/cursed_rabbit(drop_location()))
+			extra_logs += "the cursed rabbit mask"
+		else if(hunter_antag.rabbits_spotted == 1) //our second bnnuy!
+			give_gun(user)
+			extra_logs += "the hunter's revolver"
 	user.put_in_hands(new /obj/item/rabbit_eye(drop_location()))
-	if(drop_gun)
-		give_gun(user)
-		extra_logs += "the hunter's revolver"
 	hunter_antag?.rabbits -= src
 	var/msg = "claimed a white rabbit at [AREACOORD(src)]"
 	if(length(extra_logs) > 0)
@@ -93,7 +92,7 @@
 
 /obj/effect/bnnuy/proc/give_gun(mob/living/user)
 	user.put_in_hands(new /obj/item/gun/ballistic/revolver/hunter_revolver(drop_location()))
-	var/datum/action/cooldown/spell/conjure_item/blood_silver/silverblood = new(user)
+	var/datum/action/cooldown/spell/conjure_item/blood_silver/silverblood = new
 	silverblood.StartCooldown()
 	silverblood.Grant(user)
 	hunter_antag.powers += silverblood

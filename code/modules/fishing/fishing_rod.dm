@@ -165,6 +165,14 @@
 	fishing_line = null
 	currently_hooked = null
 
+/obj/item/fishing_rod/proc/get_cast_range(mob/living/user)
+	. = max(cast_range + line?.cast_range, 1)
+	user = user || loc
+	if (!isliving(user) || !user.mind || !user.is_holding(src))
+		return
+	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
+	return max(., 1)
+
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
 	QDEL_NULL(fishing_line)
@@ -228,13 +236,14 @@
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
-	cast_projectile.range = cast_range
+	cast_projectile.range = get_cast_range(user)
+	cast_projectile.maximum_range = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
-	cast_projectile.impacted = list(user = TRUE)
-	cast_projectile.preparePixelProjectile(target, user)
+	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
+	cast_projectile.aim_projectile(target, user)
 	cast_projectile.fire()
 
 /// Called by hook projectile when hitting things
@@ -566,7 +575,7 @@
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
 
-/obj/projectile/fishing_cast/Impact(atom/hit_atom)
+/obj/projectile/fishing_cast/impact(atom/hit_atom)
 	. = ..()
 	owner.hook_hit(hit_atom)
 	qdel(src)

@@ -2,7 +2,7 @@
 	name = "Botany Arm Implant"
 	desc =  "A rather simple arm implant containing tools used in gardening and botanical research."
 	id = "ci-set-botany"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/botany
@@ -15,7 +15,7 @@
 	name = "Atmospheric Arm Implant"
 	desc =   "A set of atmospheric tools hidden behind a concealed panel on the user's arm."
 	id = "ci-set-atmospherics"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics
@@ -28,7 +28,7 @@
 	name = "Paramedic Arm Implant"
 	desc =   "A set of rescue tools hidden behind a concealed panel on the user's arm."
 	id = "ci-set-paramedic"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/paramedic
@@ -41,7 +41,7 @@
 	name = "Detective's Arm Implant"
 	desc =   "A set of detective's tools hidden behind a concealed panel on the user's arm."
 	id = "ci-set-detective"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/detective
@@ -54,7 +54,7 @@
 	name = "Janitorial Arm Implant"
 	desc =   "A set of janitor's tools hidden behind a concealed panel on the user's arm."
 	id = "ci-set-janitor"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/janitor
@@ -67,7 +67,7 @@
 	name = "Cook's Arm Implant"
 	desc =   "A set of cook's tools hidden behind a concealed panel on the user's arm."
 	id = "ci-set-cook"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/cook
@@ -80,7 +80,7 @@
 	name = "Drill Arm Implant"
 	desc =  "Just a big drill, implanted into your hand."
 	id = "ci-set-mining"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill
@@ -93,7 +93,7 @@
 	name = "Barber's Arm Implant"
 	desc =   "A set of barber's tools hidden behind a concealed panel on the user's arm."
 	id = "ci-set-barber"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/barber

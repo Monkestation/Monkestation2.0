@@ -31,6 +31,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if(!user.transferItemToLoc(attacking_item, src))
 				return
 			cell = attacking_item
+			if(cell.charge)
+				low_power_mode = FALSE
 			to_chat(user, span_notice("You insert the power cell."))
 		update_icons()
 		diag_hud_set_borgcell()
@@ -43,11 +45,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if((attacking_item.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(attacking_item, GLOB.blacklisted_borg_hats))
+	if((attacking_item.slot_flags & ITEM_SLOT_HEAD) && !isnull(skin.hat_offset) && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(attacking_item, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [attacking_item] on your head by yourself!") )
 			return
-		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
+		if(worn_hat && HAS_TRAIT(worn_hat, TRAIT_NODROP))
 			to_chat(user, span_warning("You can't seem to remove [src]'s existing headwear!"))
 			return
 		to_chat(user, span_notice("You begin to place [attacking_item] on [src]'s head..."))
@@ -56,6 +58,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if (user.temporarilyRemoveItemFromInventory(attacking_item, TRUE))
 				place_on_head(attacking_item)
 		return
+
+	if(istype(attacking_item, /obj/item/clothing/accessory/badge) && !isnull(skin.badge_offset))
+		to_chat(user, span_notice("You begin to decorate [src] with [attacking_item]..."))
+		to_chat(src, span_notice("[user] is pinning [attacking_item] onto you..."))
+		if(do_after(user, 3 SECONDS, target = src))
+			if (user.temporarilyRemoveItemFromInventory(attacking_item, TRUE))
+				pin_badge(attacking_item)
 
 	if(istype(attacking_item, /obj/item/defibrillator) && !(user.istate & ISTATE_HARM))
 		if(!opened)
@@ -116,14 +125,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You must close the cover to swipe an ID card!"))
 		else
 			if(allowed(usr))
-				locked = !locked
-				to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
-				update_icons()
-				if(emagged)
-					to_chat(user, span_notice("The cover interface glitches out for a split second."))
-					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
-				else
-					logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
+				toggle_cover(user)
 			else
 				to_chat(user, span_danger("Access denied."))
 		return
@@ -135,9 +137,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return
 		if(!src.model && U.require_model)
 			to_chat(user, span_warning("The cyborg must choose a model before it can be upgraded!"))
-			return
-		if(U.locked)
-			to_chat(user, span_warning("The upgrade is locked and cannot be used yet!"))
 			return
 		if(!user.canUnEquip(U))
 			to_chat(user, span_warning("The upgrade is stuck to you and you can't seem to let go of it!"))
@@ -175,9 +174,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_disk/floppy = attacking_item
-		floppy.forceMove(modularInterface)
-		modularInterface.inserted_disk = floppy
+		if(user.transferItemToLoc(attacking_item, modularInterface))
+			modularInterface.inserted_disk = attacking_item
 		return
 
 	return ..()
@@ -214,7 +212,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		cell.add_fingerprint(user)
 		user.put_in_active_hand(cell)
 		to_chat(user, span_notice("You remove \the [cell]."))
-		update_icons()
 		diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
@@ -298,13 +295,15 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	switch(severity)
-		if(1)
-			Stun(160)
-		if(2)
-			Stun(60)
+	if(!(. & EMP_PROTECT_SELF))
+		switch(severity)
+			if(EMP_HEAVY)
+				Stun(16 SECONDS)
+			if(EMP_LIGHT)
+				Stun(6 SECONDS)
+	if(!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/item/active_module in held_items)
+			active_module.emp_act(active_module)
 
 /mob/living/silicon/robot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -345,7 +344,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, span_danger("[src] is remotely controlled! Your emag attempt has triggered a system reset instead!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
-		ResetModel()
+		reset_model()
 		return TRUE
 
 	SetEmagged(1)
@@ -359,6 +358,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
+
+	model.rebuild_usable_modules()
 
 	INVOKE_ASYNC(src, PROC_REF(borg_emag_end), user)
 	return TRUE
@@ -422,3 +423,19 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!hitting_projectile.is_hostile_projectile() || hitting_projectile.damage <= 0)
 		return
 	spark_system.start()
+
+/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+	var/mob/living/silicon/robot/borg = src
+	var/datum/action/cooldown/cyborg_miner_shield/shield = locate(/datum/action/cooldown/cyborg_miner_shield) in borg.actions
+	if(!shield || !shield.active)
+		return ..()
+	if(!lavaland_equipment_pressure_check(get_turf(borg)))
+		balloon_alert(borg, "the shield didn't absorb the damage!")
+		return ..()
+	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)
+	balloon_alert(borg, "absorbed!")
+	borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
+	damage *= 0.5
+	if(!borg.cell.charge())
+		shield.Activate() // Turns it off.
+	return ..()

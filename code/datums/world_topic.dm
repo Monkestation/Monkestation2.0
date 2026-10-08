@@ -80,6 +80,9 @@
 		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
 			return
 
+	if(findtext(input[keyword], @"[s]"))
+		return
+
 	var/final_composed = span_announce("PR: [input[keyword]]")
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)

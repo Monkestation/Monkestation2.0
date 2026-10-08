@@ -43,7 +43,7 @@
 	var/crew_hud = DATA_HUD_CREW //MONKE, lets silicons tell who is crew.
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/builtInCamera = null
+	var/obj/machinery/camera/bodycamera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
 	///Whether we have been emagged
 	var/emagged = FALSE
@@ -69,6 +69,7 @@
 	var/static/list/traits_to_apply = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_ASHSTORM_IMMUNE,
+		TRAIT_CAN_HEAR_MUSIC,
 		TRAIT_LITERATE,
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
@@ -239,7 +240,10 @@
 
 	return
 
+#define CHECK_DEAD if(stat == DEAD) { return; };
+
 /mob/living/silicon/proc/statelaws(force = 0)
+	CHECK_DEAD
 	laws_sanity_check()
 	// Create a cache of our laws and lawcheck flags before we do anything else.
 	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
@@ -256,17 +260,20 @@
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:", forced = forced_log_message)
 	sleep(1 SECONDS)
+	CHECK_DEAD
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
 			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
+	CHECK_DEAD
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
 		var/num = ion_num()
 		if (length(law) <= 0)
 			continue
+		CHECK_DEAD
 		if (force || (law in lawcache_hackedcheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
 			sleep(1 SECONDS)
@@ -276,6 +283,7 @@
 		var/num = ion_num()
 		if (length(law) <= 0)
 			return
+		CHECK_DEAD
 		if (force || (law in lawcache_ioncheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
 			sleep(1 SECONDS)
@@ -285,6 +293,7 @@
 		var/law = lawcache_inherent[index]
 		if (length(law) <= 0)
 			continue
+		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
@@ -295,10 +304,13 @@
 
 		if (length(law) <= 0)
 			continue
+		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
 			sleep(1 SECONDS)
+
+#undef CHECK_DEAD
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
@@ -317,7 +329,7 @@
 		if (length(law) > 0)
 			if (!(law in hackedcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#aa0000'>[law]</font><BR>"}
 
 	for (var/index in 1 to length(laws.ion))
 		law_display = "Yes"
@@ -347,7 +359,9 @@
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
-	usr << browse(list, "window=laws")
+	var/datum/browser/browser = new(usr, "laws")
+	browser.set_content(list)
+	browser.open()
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)
@@ -409,16 +423,18 @@
 	diagsensor.show_to(src)
 	crewsensor.show_to(src)
 
-/mob/living/silicon/proc/toggle_sensors()
+/mob/living/silicon/proc/toggle_sensors(silent = FALSE)
 	if(incapacitated())
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
-		to_chat(src, span_notice("Sensor overlay deactivated."))
+		if(!silent)
+			to_chat(src, span_notice("Sensor overlay deactivated."))
 		remove_sensors()
 		return
 	add_sensors()
-	to_chat(src, span_notice("Sensor overlay activated."))
+	if(!silent)
+		to_chat(src, span_notice("Sensor overlay activated."))
 
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
@@ -430,7 +446,7 @@
 /mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick, times_fired)
 	return
 
-/mob/living/silicon/rust_heretic_act()
+/mob/living/silicon/rust_heretic_act(rust_strength)
 	adjustBruteLoss(500)
 
 /mob/living/silicon/on_floored_start()
@@ -482,6 +498,14 @@
 		create_modularInterface()
 	modularInterface.imprint_id(name = newname)
 
+/mob/living/silicon/can_track(mob/living/user)
+	//if their camera is online, it's safe to assume they are in cameranets
+	//since it takes a while for camera vis to update, this lets us bypass that so AIs can always see their borgs,
+	//without making cameras constantly update every time a borg moves.
+	if(builtInCamera && builtInCamera.can_use())
+		return TRUE
+	return ..()
+
 /mob/living/silicon/get_access()
 	return REGION_ACCESS_ALL_STATION
 
@@ -493,3 +517,9 @@
 	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 	for(var/borg_laws in law_list)
 		. += borg_laws
+
+/mob/living/silicon/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	return
+
+/mob/living/silicon/body_temperature_alerts()
+	return

@@ -128,6 +128,55 @@
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
 
+/datum/station_trait/announcement_duke
+	name = "Announcement Duke"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	show_in_report = TRUE
+	report_message = "The Duke himself is your announcer today."
+	blacklist = list(
+		/datum/station_trait/announcement_medbot,
+		/datum/station_trait/birthday,
+		/datum/station_trait/announcement_intern,
+		/datum/station_trait/announcement_dagoth,
+	)
+
+/datum/station_trait/announcement_duke/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/duke
+
+/datum/station_trait/announcement_dagoth
+	name = "Announcement Dagoth Ur"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	show_in_report = TRUE
+	report_message = "I am bestowing upon you my presence, Nerevar."
+	blacklist = list(
+		/datum/station_trait/announcement_medbot,
+		/datum/station_trait/birthday,
+		/datum/station_trait/announcement_intern,
+		/datum/station_trait/announcement_duke,
+	)
+
+/datum/station_trait/announcement_dagoth/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/dagoth
+
+/* disabled (its not my birthday, this has a weight of 0 and yet somehow still rolls)
+/datum/station_trait/announcement_veth_birthday
+	name = "Announcement Veth's Birthday"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 0
+	show_in_report = TRUE
+	report_message = "It's my birthday hehe"
+	blacklist = list(/datum/station_trait/announcement_medbot, /datum/station_trait/birthday, /datum/station_trait/announcement_duke, /datum/station_trait/announcement_dagoth, /datum/station_trait/announcement_intern)
+
+/datum/station_trait/announcement_veth_birthday/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/vethday
+*/
+
+
 /datum/station_trait/colored_assistants
 	name = "Colored Assistants"
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -355,8 +404,11 @@
 		humanspawned.equip_in_one_of_slots(silly_little_scarf, slots, qdel_on_fail = FALSE)
 
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
-	new_scryer.label = spawned.name
+	new_scryer.label = player_client?.prefs?.read_preference(/datum/preference/text/default_scryer_label) || spawned.real_name
 	new_scryer.update_name()
+	var/ringtone = player_client.prefs.read_preference(/datum/preference/choiced/call_ringtone)
+	if(ringtone)
+		new_scryer.set_ringtone(ringtone)
 
 	spawned.equip_to_slot_or_del(new_scryer, ITEM_SLOT_NECK, initial = FALSE)
 
@@ -455,6 +507,3 @@
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
 		ai_datum.total_positions = 3
-	if(!pure)
-		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-			secondary_ai_spawn.latejoin_active = TRUE

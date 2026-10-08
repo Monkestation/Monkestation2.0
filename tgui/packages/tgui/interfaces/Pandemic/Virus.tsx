@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from 'tgui/components';
 import { getColor } from './helpers';
-import { Data } from './types';
+import type { Data } from './types';
 
 /**
  * Displays info about the virus. Child elements display
@@ -49,7 +49,7 @@ const Info = (props) => {
           <Input
             placeholder="Input a name"
             value={name === 'Unknown' ? '' : name}
-            onChange={(_, value) =>
+            onChange={(value) =>
               act('rename_disease', {
                 index: index,
                 name: value,

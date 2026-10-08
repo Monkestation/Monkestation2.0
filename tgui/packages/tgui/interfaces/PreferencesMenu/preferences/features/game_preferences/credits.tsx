@@ -1,5 +1,5 @@
 import { multiline } from 'common/string';
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const feature_key_credits: FeatureToggle = {
   name: 'Feature ckey in credits',

@@ -1,11 +1,11 @@
-
+//should refactor this to be actions(?)
 /atom/movable/screen/blob
 	icon = 'icons/hud/blob.dmi'
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/blob/MouseEntered(location,control,params)
 	. = ..()
-	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
+	openToolTip(usr, src, params, title = name, content = desc, theme = "blob")
 
 /atom/movable/screen/blob/MouseExited()
 	closeToolTip(usr)
@@ -26,10 +26,10 @@
 	name = "Jump to Core"
 	desc = "Moves your camera to your blob core."
 
-/atom/movable/screen/blob/jump_to_core/MouseEntered(location,control,params)
+/atom/movable/screen/blob/jump_to_core/MouseEntered(location, control, params)
 	if(hud?.mymob && isovermind(hud.mymob))
-		var/mob/eye/blob/B = hud.mymob
-		if(!B.placed)
+		var/mob/eye/blob/overmind = hud.mymob
+		if(!overmind.placed)
 			name = "Place Blob Core"
 			desc = "Attempt to place your blob core at this location."
 		else
@@ -70,14 +70,33 @@
 
 /atom/movable/screen/blob/resource_blob/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	name = "Produce Resource Blob ([BLOB_STRUCTURE_RESOURCE_COST])"
-	desc = "Produces a resource blob for [BLOB_STRUCTURE_RESOURCE_COST] resources.<br>Resource blobs will give you resources every few seconds."
+	name = "Produce Resource Blob ([/obj/structure/blob/special/resource::point_cost])"
+	desc = "Produces a resource blob for [/obj/structure/blob/special/resource::point_cost] resources.<br>Resource blobs will give you resources every few seconds."
 
 /atom/movable/screen/blob/resource_blob/Click()
 	if(!isovermind(usr))
 		return FALSE
+
 	var/mob/eye/blob/blob = usr
-	blob.create_special(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
+	if(istype(blob, /mob/eye/blob/lesser)) //probably refactor all these to actual buttons so we can choose what to grant on the blob instead of a type check
+		var/obj/structure/blob/special/resource/node = locate() in get_turf(blob)
+		if(!node)
+			blob.balloon_alert(blob, "no resource blob here")
+			return
+		if(!node.blob_team)
+			blob.balloon_alert(blob, "unclaimed")
+			return
+		if(blob in node.give_to)
+			blob.balloon_alert(blob, "already gaining resources from this blob")
+			return
+		var/cost = node.point_cost
+		if(!blob.buy(cost))
+			blob.balloon_alert(blob, "not enough resources, need [cost]")
+			return
+		node.give_to += blob
+		node.balloon_alert(blob, "giving resources")
+	else
+		blob.create_special(/obj/structure/blob/special/resource, /obj/structure/blob/special/resource::point_cost, TRUE, BLOB_RESOURCE_MIN_DISTANCE)
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"
@@ -87,14 +106,14 @@
 
 /atom/movable/screen/blob/node_blob/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	name = "Produce Node Blob ([BLOB_STRUCTURE_NODE_COST])"
-	desc = "Produces a node blob for [BLOB_STRUCTURE_NODE_COST] resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
+	name = "Produce Node Blob ([/obj/structure/blob/special/node::point_cost])"
+	desc = "Produces a node blob for [/obj/structure/blob/special/node::point_cost] resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
 /atom/movable/screen/blob/node_blob/Click()
 	if(!isovermind(usr))
 		return FALSE
 	var/mob/eye/blob/blob = usr
-	blob.create_special(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
+	blob.create_special(/obj/structure/blob/special/node, /obj/structure/blob/special/node::point_cost, FALSE, BLOB_NODE_MIN_DISTANCE)
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
@@ -104,14 +123,14 @@
 
 /atom/movable/screen/blob/factory_blob/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	name = "Produce Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
-	desc = "Produces a factory blob for [BLOB_STRUCTURE_FACTORY_COST] resources.<br>Factory blobs will produce spores every few seconds."
+	name = "Produce Factory Blob ([/obj/structure/blob/special/factory::point_cost])"
+	desc = "Produces a factory blob for [/obj/structure/blob/special/factory::point_cost] resources.<br>Factory blobs will produce spores every few seconds."
 
 /atom/movable/screen/blob/factory_blob/Click()
 	if(!isovermind(usr))
 		return FALSE
 	var/mob/eye/blob/blob = usr
-	blob.create_special(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
+	blob.create_special(/obj/structure/blob/special/factory, /obj/structure/blob/special/factory::point_cost, TRUE, BLOB_FACTORY_MIN_DISTANCE)
 
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"
@@ -174,12 +193,15 @@
 	using.screen_loc = ui_zonesel
 	static_inventory += using
 
-	using = new /atom/movable/screen/blob/blobbernaut(null, src)
-	using.screen_loc = ui_belt
-	static_inventory += using
-
 	using = new /atom/movable/screen/blob/resource_blob(null, src)
 	using.screen_loc = ui_back
+	static_inventory += using
+
+	if(istype(owner, /mob/eye/blob/lesser))
+		return
+
+	using = new /atom/movable/screen/blob/blobbernaut(null, src)
+	using.screen_loc = ui_belt
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/node_blob(null, src)

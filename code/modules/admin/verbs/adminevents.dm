@@ -1,11 +1,20 @@
 // Admin Tab - Event Verbs
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, FALSE, "Subtle Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, FALSE, "Subtle Message", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+	if(QDELETED(target))
+		to_chat(user, span_boldwarning("That player doesn't exist anymore!"))
+		return
+
 	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
 	var/msg = input(user, "Message:", "Subtle PM to [target.key]") as text | null
 
 	if(!msg)
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
+		return
+
+	if(QDELETED(target))
+		to_chat(user, span_boldwarning("That player doesn't exist anymore!"))
 		return
 
 	target.balloon_alert(target, "you hear a voice")
@@ -19,7 +28,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, FALSE, "Subtle Me
 	admin_ticket_log(target, log_message) // MONKESTATION EDIT - tgui tickets
 	BLACKBOX_LOG_ADMIN_VERB("Subtle Message")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, FALSE, "Headset Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, FALSE, "Headset Message", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	user.admin_headset_message(target)
 
 /client/proc/admin_headset_message(mob/target in GLOB.mob_list, sender = null)
@@ -71,7 +81,8 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, FALSE, "Global Narrate", "Send a di
 	message_admins(span_adminnotice("[key_name_admin(user)] Sent a global narrate"))
 	BLACKBOX_LOG_ADMIN_VERB("Global Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, FALSE, "Local Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/locale in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, FALSE, "Local Narrate", /atom)
+	VERB_ARG_TYPED(locale, VERB_ARG_TYPE_ATOM, VERB_ARG_SOURCE_WORLD, /atom)
 	var/range = input(user, "Range:", "Narrate to mobs within how many tiles:", 7) as num | null
 	if(!range)
 		return
@@ -85,7 +96,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, FALSE, "Local Narr
 	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(user)] at [ADMIN_VERBOSEJMP(locale)]:</b> [msg]<BR>"))
 	BLACKBOX_LOG_ADMIN_VERB("Local Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, FALSE, "Direct Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, FALSE, "Direct Narrate", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/msg = input(user, "Message:", "Enter the text you wish to appear to your target:") as text | null
 	if( !msg )
 		return
@@ -149,7 +161,7 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, FALSE, "Cancel Shuttle", "Recall the shuttle
 	return
 
 ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers aren't getting out.", ADMIN_CATEGORY_EVENTS)
-	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
+	if(SSshuttle.evac_blockers["admin"])
 		to_chat(user, span_warning("Error, shuttle is already disabled."))
 		return
 
@@ -158,12 +170,8 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers ar
 
 	message_admins(span_adminnotice("[key_name_admin(user)] disabled the shuttle."))
 
-	SSshuttle.last_mode = SSshuttle.emergency.mode
-	SSshuttle.last_call_time = SSshuttle.emergency.timeLeft(1)
+	SSshuttle.registerEvacBlocker("admin")
 	SSshuttle.admin_emergency_no_recall = TRUE
-	SSshuttle.emergency.setTimer(0)
-	SSshuttle.emergency.mode = SHUTTLE_DISABLED
-	SSshuttle.admin_emergency_disabled = TRUE //monkestation edit
 	priority_announce(
 		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
 		title = "Uplink Failure",
@@ -181,16 +189,8 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, FALSE, "Enable Shuttle", "Those fuckers ARE 
 		return
 
 	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
+	SSshuttle.clearEvacBlocker("admin")
 	SSshuttle.admin_emergency_no_recall = FALSE
-	SSshuttle.emergency_no_recall = FALSE
-	SSshuttle.admin_emergency_disabled = FALSE //monkestation edit
-	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
-		SSshuttle.last_mode = SHUTTLE_IDLE
-
-	SSshuttle.emergency.mode = SSshuttle.last_mode
-	if(SSshuttle.last_call_time < 10 SECONDS && SSshuttle.last_mode != SHUTTLE_IDLE)
-		SSshuttle.last_call_time = 10 SECONDS //Make sure no insta departures.
-	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce(
 		text = "Emergency Shuttle uplink reestablished, shuttle enabled.",
 		title = "Uplink Restored",
@@ -205,16 +205,19 @@ ADMIN_VERB(hostile_environment, R_ADMIN, FALSE, "Hostile Environment", "Disable 
 			if (SSshuttle.hostile_environments["Admin"] == TRUE)
 				to_chat(user, span_warning("Error, admin hostile environment already enabled."))
 			else
-				message_admins(span_adminnotice("[key_name_admin(user)] Enabled an admin hostile environment"))
+				message_admins(span_adminnotice("[key_name_admin(user)] enabled an admin hostile environment"))
+				log_admin("[key_name(user)] enabled an admin hostile environment")
 				SSshuttle.registerHostileEnvironment("Admin")
 		if("Disable")
 			if (!SSshuttle.hostile_environments["Admin"])
 				to_chat(user, span_warning("Error, no admin hostile environment found."))
 			else
-				message_admins(span_adminnotice("[key_name_admin(user)] Disabled the admin hostile environment"))
+				message_admins(span_adminnotice("[key_name_admin(user)] disabled the admin hostile environment"))
+				log_admin("[key_name(user)] disabled the admin hostile environment")
 				SSshuttle.clearHostileEnvironment("Admin")
 		if("Clear All")
-			message_admins(span_adminnotice("[key_name_admin(user)] Disabled all current hostile environment sources"))
+			message_admins(span_adminnotice("[key_name_admin(user)] disabled all current hostile environment sources"))
+			log_admin("[key_name(user)] disabled all current hostile environment sources")
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 

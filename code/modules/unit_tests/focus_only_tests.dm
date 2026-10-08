@@ -38,3 +38,6 @@
 
 /// Checks that the contents of the fish_counts list are also present in fish_table
 /datum/unit_test/focus_only/fish_sources_tables
+
+/// Checks icon states generated at runtime are valid
+/datum/unit_test/focus_only/runtime_icon_states

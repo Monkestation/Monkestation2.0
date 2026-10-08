@@ -1,54 +1,26 @@
-@use 'sass:color';
-@use 'sass:meta';
+.theme-generic:root {
+  // Palette
+  --generic: #484455;
+  --accent: #4f56a5;
+  --accent-2: #daa520;
+  --border-color: #7b86ff;
 
-$generic: #484455;
-$accent: #4f56a5;
-$accent-2: #daa520;
-$border-color: #7b86ff;
+  // Base
+  --color-primary: var(--accent);
+  --color-bg: color-mix(in srgb, var(--generic) 55%, black);
 
-@use '../colors.scss' with (
-  $fg-map-keys: (),
-  $bg-map-keys: (),
-  $primary: $accent
-);
-@use '../base.scss' with (
-  $color-bg: color.scale($generic, $lightness: -45%),
-  $border-radius: 2px
-);
-
-.theme-generic {
   // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': $accent,
-      'color-transparent-text': rgba(227, 240, 255, 0.75),
-      'color-selected': $accent-2
-    )
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: (
-      'color-default-fill': $accent,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('../components/Section.scss');
+  --button-color-default: var(--accent);
+  --button-color-transparent: rgba(227, 240, 255, 0.75);
+  --button-background-selected: var(--accent-2);
+  --progress-bar-fill: var(--accent);
+  --progress-bar-background: rgba(0, 0, 0, 0.5);
+  --input-border-color: var(--border-color);
 
-  @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': #7b86ff)
-  );
+  // TitleBar
+  --titlebar-background: color-mix(in srgb, var(--generic) 75%, black);
 
   // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($generic, $lightness: -25%))
-  );
-  @include meta.load-css('../layouts/PopupWindow.scss');
-
   .Layout__content {
     background-image: none;
   }

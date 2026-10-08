@@ -61,8 +61,7 @@
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
 		var/datum/gas_mixture/our_mix = return_air()
-		our_mix.assert_gas(gas_type)
-		our_mix.gases[gas_type][MOLES] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+		our_mix.set_gas(gas_type,  ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)))
 
 /obj/item/tank/jetpack/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_jetpack))
@@ -103,6 +102,8 @@
 	update_icon(UPDATE_ICON_STATE)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
@@ -111,6 +112,7 @@
 	update_icon(UPDATE_ICON_STATE)
 	if(user)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	var/mob/user = get(loc, /mob/living)

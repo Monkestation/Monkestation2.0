@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const Abductor: Antagonist = {
   key: 'abductor',
@@ -18,7 +18,7 @@ const Abductor: Antagonist = {
       operate on whoever they bring back.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Abductor;

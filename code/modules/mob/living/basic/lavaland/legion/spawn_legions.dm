@@ -21,7 +21,7 @@
 	. = ..()
 	if (!.)
 		return
-	if (!isturf(owner.loc))
+	if (!isopenturf(owner.loc))
 		owner.balloon_alert(owner, "no room!")
 		return FALSE
 	return TRUE

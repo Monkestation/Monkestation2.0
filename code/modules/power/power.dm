@@ -28,6 +28,7 @@
 	if(isturf(loc))
 		var/turf/turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
+	connect_to_network()
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -74,6 +75,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
+	disconnect_from_network()
+	connect_to_network()
 	balloon_alert(user, "now operating on the [choice]")
 	return ITEM_INTERACT_SUCCESS
 

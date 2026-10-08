@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Button, NoticeBox, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -85,7 +85,7 @@ export const AuxBaseConsoleContent = (props) => {
       {!turrets.length ? (
         <NoticeBox>No connected turrets</NoticeBox>
       ) : (
-        <Table cellpadding="3" textAlign="center">
+        <Table textAlign="center">
           <Table.Row header>
             <Table.Cell>Unit</Table.Cell>
             <Table.Cell>Condition</Table.Cell>

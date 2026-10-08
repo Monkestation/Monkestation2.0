@@ -76,7 +76,7 @@
 		if(isnotpretty(x)) // Pretty filter stuff
 			var/log_message = "An NTSL script just tripped the pretty filter, setting variable [name] from [compare] to value [x]!"
 			message_admins(log_message)
-			logger.Log(LOG_NTSL, "[key_name(src)] [log_message] [loc_name(src)]")
+			logger.Log(LOG_CATEGORY_NTSL, "[key_name(src)] [log_message] [loc_name(src)]")
 			return FALSE
 	return x
 

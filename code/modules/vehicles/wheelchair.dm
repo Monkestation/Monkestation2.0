@@ -47,12 +47,20 @@
 
 /obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(!forced && !check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
+	if(!forced && !CHECK_MOVE_LOOP_FLAGS(src, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
 	update_appearance()
+
+/obj/vehicle/ridden/wheelchair/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+	if(force || !usr || usr == buckled_mob)
+		return ..()
+	if(!do_after(usr, 1 SECONDS, src))
+		to_chat(usr, span_warning("You need yourself and [src] to stand still in order to unbuckle [buckled_mob]!"))
+		return null
+	return ..()
 
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()

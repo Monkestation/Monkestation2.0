@@ -112,11 +112,6 @@
 #define DISABLE_DREAMLUAU
 #endif
 
-//#define DISABLE_DEMOS
-#ifdef UNIT_TESTS
-#define DISABLE_DEMOS
-#endif
-
 /// If this is uncommented, force our verb processing into just the 2% of a tick
 /// We normally reserve for it
 /// NEVER run this on live, it's for simulating highpop only
@@ -164,6 +159,11 @@
 #define DO_NOT_DEFER_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
+#endif
+
+// Checks if unit tests are being run locally or well, not
+#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#define RUNNING_LOCAL_TESTS
 #endif
 
 #ifdef TGS

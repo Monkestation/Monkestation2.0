@@ -27,7 +27,7 @@
 				warn_mob(mob)
 		else
 			mob.adjust_fire_stacks(disease.stage * multiplier)
-			mob.take_overall_damage(burn = ((disease.stage) * multiplier), required_bodytype = BODYTYPE_ORGANIC)
+			mob.take_overall_damage(burn = ((disease.stage) * multiplier))
 			mob.ignite_mob(silent = TRUE)
 			if(mob.on_fire) //check to make sure they actually caught on fire, or if it was prevented cause they were wet.
 				mob.visible_message(span_warning("[mob] catches fire!"), ignored_mobs = mob)

@@ -9,6 +9,8 @@
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON "atom_init_success_on"
 ///from base of atom/examine(): (/mob, list/examine_text)
 #define COMSIG_ATOM_EXAMINE "atom_examine"
+///from base of atom/examine_tags(): (/mob, list/examine_tags)
+#define COMSIG_ATOM_EXAMINE_TAGS "atom_examine_tags"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
 ///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
@@ -67,8 +69,6 @@
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
 ///from base of atom/Bumped(): (/atom/movable)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
-///from base of atom/handle_atom_del(): (atom/deleted)
-#define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
@@ -117,3 +117,28 @@
 #define COMSIG_ATOM_TIMESTOP_FREEZE "atom_timestop_freeze"
 /// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"
+
+/// The signal sent when an atom/movable should try to toggle their hiding.
+/// Gets called on the target, with (hiding, play_feedback = TRUE) as its args.
+/// Used for `/datum/element/can_hide`
+#define COMSIG_MOVABLE_TOGGLE_HIDING "movable_toggle_hiding"
+
+/// from base of atom/ratvar_act()
+#define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"
+
+/// /datum/component/clockwork_trap signals: ()
+#define COMSIG_CLOCKWORK_SIGNAL_RECEIVED "clock_received"
+
+/// from base of atom/eminence_act() : (mob/living/eminence/user)
+#define COMSIG_ATOM_EMINENCE_ACT "atom_eminence_act"
+
+///Called by either cell/proc/give or cell/proc/use
+#define COMSIG_CELL_CHANGE_POWER "cell_change_power"
+
+/// generic turf checker signal
+#define COMSIG_CHECK_TURF_GENERIC "check_turf_generic"
+
+/// From /atom/proc/update_atom_colour() : (color_changed)
+#define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
+	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls
+	#define COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE (1<<0)

@@ -56,31 +56,29 @@ Consuming extracts:
 	throw_speed = 3
 	throw_range = 6
 
-/obj/item/slime_cookie/proc/do_effect(mob/living/M, mob/user)
+/obj/item/slime_cookie/proc/do_effect(mob/living/effected, mob/user)
 	return
 
-/obj/item/slime_cookie/attack(mob/living/M, mob/user)
+/obj/item/slime_cookie/attack(mob/living/target_mob, mob/user)
 	var/fed = FALSE
-	if(M == user)
-		M.visible_message(span_notice("[user] eats [src]!"), span_notice("You eat [src]."))
+	if(target_mob == user)
+		target_mob.visible_message(span_notice("[user] eats [src]!"), span_notice("You eat [src]."))
 		fed = TRUE
 	else
-		M.visible_message(span_danger("[user] tries to force [M] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
-		if(do_after(user, 2 SECONDS, target = M))
+		target_mob.visible_message(span_danger("[user] tries to force [target_mob] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
+		if(do_after(user, 2 SECONDS, target = target_mob))
 			fed = TRUE
-			M.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
+			target_mob.visible_message(span_danger("[user] forces [target_mob] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
 	if(fed)
-		var/mob/living/carbon/human/H = M
-
-		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
-			to_chat(M, span_notice("Tastes like [taste]."))
-		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, TRUE)
+		if(!ishuman(target_mob) || !HAS_TRAIT(target_mob, TRAIT_AGEUSIA))
+			to_chat(target_mob, span_notice("Tastes like [taste]."))
+		playsound(get_turf(target_mob), 'sound/items/eatfood.ogg', 20, TRUE)
 		if(nutrition)
-			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
-		do_effect(M, user)
+			target_mob.reagents.add_reagent(/datum/reagent/consumable/nutriment, nutrition)
+		do_effect(target_mob, user)
 		qdel(src)
 		return
-	..()
+	return ..()
 
 /obj/item/slimecross/consuming/grey
 	colour = "grey"
@@ -224,30 +222,27 @@ Consuming extracts:
 	icon_state = "bluespace"
 	taste = "sugar and starlight"
 
-/obj/item/slime_cookie/bluespace/do_effect(mob/living/M, mob/user)
-	var/list/L = get_area_turfs(get_area(get_turf(M)))
+/obj/item/slime_cookie/bluespace/do_effect(mob/living/effected, mob/user)
+	var/list/area_turfs = get_area_turfs(get_area(effected))
 	var/turf/target
-	while (L.len && !target)
-		var/I = rand(1, L.len)
-		var/turf/T = L[I]
-		if (is_centcom_level(T.z))
-			L.Cut(I,I+1)
+	while(length(area_turfs) && !target)
+		var/turf/picked_turf = pick_n_take(area_turfs)
+		if(is_restricted_level(picked_turf.z))
 			continue
-		if(!T.density)
+		if(!picked_turf.density)
 			var/clear = TRUE
-			for(var/obj/O in T)
-				if(O.density)
+			for(var/obj/checked in picked_turf)
+				if(checked.density)
 					clear = FALSE
 					break
 			if(clear)
-				target = T
-		if (!target)
-			L.Cut(I,I+1)
+				target = picked_turf
+				break
 
 	if(target)
-		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		new /obj/effect/particle_effect/sparks(get_turf(M))
-		playsound(get_turf(M), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		do_teleport(effected, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+		new /obj/effect/particle_effect/sparks(get_turf(effected))
+		playsound(get_turf(effected), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/slimecross/consuming/sepia
 	colour = "sepia"

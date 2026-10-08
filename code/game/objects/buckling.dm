@@ -148,6 +148,7 @@
  * force - TRUE if we should ignore buckled_mob.can_buckle_to
  */
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+
 	if(!isliving(buckled_mob))
 		CRASH("Non-living [buckled_mob] thing called unbuckle_mob() for source.")
 	if(buckled_mob.buckled != src)
@@ -200,7 +201,7 @@
 			if(!living.buckled) //this somehow happens?
 				buckled_mobs -= m
 				continue
-		unbuckle_mob(m, force)
+		INVOKE_ASYNC(src, PROC_REF(unbuckle_mob), m, force)
 
 //Handle any extras after buckling
 //Called on buckle_mob()

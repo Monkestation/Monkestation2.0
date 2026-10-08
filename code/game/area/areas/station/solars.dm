@@ -14,8 +14,7 @@
 
 /area/station/solars/Initialize(mapload)
 	. = ..()
-	if(!SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT))
-		set_base_lighting(new_base_lighting_color = GLOB.starlight_color, new_alpha = 255)
+	set_base_lighting(new_base_lighting_color = GLOB.starlight_color, new_alpha = 255)
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"

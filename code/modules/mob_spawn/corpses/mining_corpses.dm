@@ -127,6 +127,7 @@
 /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human)
 	. = ..()
 	spawned_human.color = "#454545"
+	spawned_human.AddComponent(/datum/component/storm_hating)
 
 
 /datum/outfit/consumed_miner
@@ -181,13 +182,13 @@
 		r_pocket = pick_weight(list(
 			/obj/item/stack/marker_beacon = 20,
 			/obj/item/stack/spacecash/c1000 = 7,
-			/obj/item/reagent_containers/hypospray/medipen/survival = 2,
+			/obj/item/reagent_containers/medipen/survival = 2,
 			/obj/item/borg/upgrade/modkit/damage = 1,
 		))
 	if(prob(10))
 		l_pocket = pick_weight(list(
 			/obj/item/stack/spacecash/c1000 = 7,
-			/obj/item/reagent_containers/hypospray/medipen/survival = 2,
+			/obj/item/reagent_containers/medipen/survival = 2,
 			/obj/item/borg/upgrade/modkit/cooldown = 1,
 		))
 

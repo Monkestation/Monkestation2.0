@@ -8,13 +8,11 @@
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
 	blood_overlay_type = "shoe"
-	// var/offset = 0 MONKESTATION REMOVAL - dead code
 	var/equipped_before_drop = FALSE
 	///Whether these shoes have laces that can be tied/untied
 	var/can_be_tied = TRUE
@@ -55,6 +53,11 @@
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
+
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()
 
@@ -66,28 +69,11 @@
 	else if(tied == SHOES_KNOTTED)
 		. += "The shoelaces are all knotted together."
 
-/* MONKESTATION REMOVAL - dead code
-/obj/item/clothing/shoes/visual_equipped(mob/user, slot)
-	..()
-	if(offset && (slot_flags & slot))
-		user.pixel_y += offset
-		worn_y_dimension -= (offset * 2)
-		user.update_worn_shoes()
-		equipped_before_drop = TRUE
-*/
-
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
 	if(can_be_tied && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
-
-/* MONKESTATION REMOVAL - dead code
-/obj/item/clothing/shoes/proc/restore_offsets(mob/user)
-	equipped_before_drop = FALSE
-	user.pixel_y -= offset
-	worn_y_dimension = world.icon_size
-*/
 
 /obj/item/clothing/shoes/dropped(mob/user)
 	var/atom/movable/screen/alert/our_alert = our_alert_ref?.resolve()
@@ -95,10 +81,6 @@
 		our_alert_ref = null
 	if(our_alert?.owner == user)
 		user.clear_alert(ALERT_SHOES_KNOT)
-	/* MONKESTATION REMOVAL - dead code
-	if(offset && equipped_before_drop)
-		restore_offsets(user)
-	*/
 	. = ..()
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
@@ -106,6 +88,9 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_worn_shoes()
+
+/obj/item/clothing/shoes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "boots_worn")
 
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
@@ -206,7 +191,7 @@
 				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(GLOB.arm_zones))
 				if(ouchie)
 					ouchie.receive_damage(brute = 10)
-				L.stamina.adjust(-40)
+				L.stamina.adjust(-20)
 				L.Paralyze(10)
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's

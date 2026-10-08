@@ -41,7 +41,7 @@
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
-	var/bodypart_flags = NONE
+	var/bodypart_flags = BODYPART_VIRGIN
 
 	///Whether the bodypart (and the owner) is husked.
 	var/is_husked = FALSE
@@ -161,7 +161,7 @@
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
-	var/obj/item/stack/current_gauze
+	var/obj/item/stack/medical/gauze/current_gauze
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
@@ -214,6 +214,8 @@
 
 	///limb flags for the specific limb
 	var/limb_flags
+	/// The cached info about the blood this organ belongs to, set during on_removal()
+	var/list/blood_dna_info
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -242,12 +244,17 @@
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
+	else
+		blood_dna_info = list("UNKNOWN DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
 	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
+	if(current_gauze)
+		remove_gauze()
+
 	if(owner)
 		owner.remove_bodypart(src)
 		set_owner(null)
@@ -355,13 +362,42 @@
 		if(wound_desc)
 			check_list += "\t\t[wound_desc]"
 
-	for(var/obj/item/embedded_thing in embedded_objects)
-		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
-		check_list += "\t <a href='byond://?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
+	for(var/obj/item/embedded_thing as anything in embedded_objects)
+		var/harmless = embedded_thing.get_embed().is_harmless()
+		var/stuck_wordage = harmless ? "stuck to" : "embedded in"
+		var/embed_text = "\t <a href='byond://?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]'> There is [icon2html(embedded_thing, examiner)] \a [embedded_thing] [stuck_wordage] your [plaintext_zone]!</a>"
+		if (harmless)
+			check_list += span_italics(span_notice(embed_text))
+		else
+			check_list += span_boldwarning(embed_text)
 
 	if(current_gauze)
 		check_list += span_notice("\t There is some <a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[current_gauze.name]</a> wrapped around your [name].")
 
+/// Gets overlays to apply to the mob when damaged.
+/obj/item/bodypart/proc/get_bodypart_damage_state()
+	if(!dmg_overlay_type)
+		return
+
+	var/list/overlays
+	if(brutestate)
+		// divided into two overlays: one that gets colored and one that doesn't.
+		var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+		brute_blood_overlay.color = get_color_from_blood_list(blood_dna_info)
+		var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
+		if(brute_damage_overlay)
+			brute_blood_overlay.overlays += brute_damage_overlay
+		LAZYADD(overlays, brute_blood_overlay)
+
+	if(burnstate)
+		var/mutable_appearance/burn_overlay = mutable_appearance(
+			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon_state = "[dmg_overlay_type]_[body_zone]_0[burnstate]",
+			layer = -DAMAGE_LAYER,
+		)
+		LAZYADD(overlays, burn_overlay)
+
+	return overlays
 
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
@@ -438,7 +474,7 @@
 	for(var/obj/item/item_in_bodypart in src)
 		item_in_bodypart.forceMove(drop_loc)
 		if(violent_removal && owner)
-			item_in_bodypart.transfer_mob_blood_dna(owner)
+			item_in_bodypart.add_mob_blood(owner)
 
 	if(owner)
 		owner.update_body()
@@ -464,18 +500,6 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
-
-	// Limbs heal 1 damage per tick from the corresponding brute/burn kit passively
-	if(limb_flags & LIMB_KITTED_BRUTE)
-		if(brute_dam <= 0)
-			limb_flags &= ~LIMB_KITTED_BRUTE
-		else
-			heal_damage(1, 0)
-	if(limb_flags & LIMB_KITTED_BURN)
-		if(burn_dam <= 0)
-			limb_flags &= ~LIMB_KITTED_BURN
-		else
-			heal_damage(0, 1)
 
 /**
  * #receive_damage
@@ -597,11 +621,13 @@
 	if(can_inflict <= 0)
 		return FALSE
 	if(brute)
-		limb_flags &= ~LIMB_KITTED_BRUTE
 		set_brute_dam(brute_dam + brute)
 	if(burn)
-		limb_flags &= ~LIMB_KITTED_BURN
 		set_burn_dam(burn_dam + burn)
+
+	// gauze on the limb will be knocked off based on damage taken
+	if(!forced) //probaby got hit by something
+		check_gauze_removal(burn, brute)
 
 	if(owner)
 		if(can_be_disabled)
@@ -711,7 +737,7 @@
 		//monkestation edit start
 		if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
 			owner.cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
-			if(owner.stat == DEAD && !HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
+			if(owner.stat == DEAD && (!owner.mind || !HAS_TRAIT(owner.mind, TRAIT_DEFIB_BLACKLISTED)) && owner.health > 50)
 				owner.revive(FALSE)
 		//monkestation edit end
 
@@ -928,8 +954,9 @@
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/tbrute = round( (brute_dam/max_damage)*3, 1 )
-	var/tburn = round( (burn_dam/max_damage)*3, 1 )
+	var/tbrute = clamp(round((brute_dam/max_damage)*4, 1), 0, 3)
+	var/tburn = clamp(round((burn_dam/max_damage)*4, 1), 0, 3)
+
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
 		burnstate = tburn
@@ -942,6 +969,14 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(IS_ORGANIC_LIMB(src))
+		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
+		// Should be fine as this gets called before all the important stuff happens
+		if(bodypart_flags & ORGAN_VIRGIN)
+			blood_dna_info = owner.get_blood_dna_list()
+			// need to remove the synethic blood DNA that is initialized
+			// wash also adds the blood dna again
+			wash(CLEAN_TYPE_BLOOD)
+			bodypart_flags &= ~BODYPART_VIRGIN
 		if(owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
 			is_husked = TRUE
@@ -959,8 +994,6 @@
 		draw_color = (species_color) || (skin_tone && skintone2hex(skin_tone))
 	else
 		draw_color = null
-
-	damage_color = owner?.get_blood_type()?.color || COLOR_BLOOD
 
 	if(!is_creating || !owner)
 		return
@@ -1001,12 +1034,19 @@
 	recolor_external_organs()
 	return TRUE
 
+/obj/item/bodypart/wash(clean_types)
+	. = ..()
+
+	// always add the original dna to the organ after it's washed
+	if(IS_ORGANIC_LIMB(src) && (clean_types & CLEAN_TYPE_BLOOD))
+		add_blood_DNA(blood_dna_info)
+
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
 	SHOULD_CALL_PARENT(TRUE)
 
 	cut_overlays()
-	var/list/standing = get_limb_icon(TRUE)
+	var/list/standing = get_limb_icon(dropped = TRUE)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
@@ -1016,7 +1056,7 @@
 	add_overlay(standing)
 
 ///Generates an /image for the limb to be used as an overlay
-/obj/item/bodypart/proc/get_limb_icon(dropped)
+/obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 
@@ -1029,9 +1069,13 @@
 		image_dir = SOUTH
 		if(dmg_overlay_type)
 			if(brutestate)
-				var/image/bruteimage = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
-				bruteimage.color = damage_color
-				. += bruteimage
+				// divided into two overlays: one that gets colored and one that doesn't.
+				var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+				brute_blood_overlay.color = get_color_from_blood_list(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
+				var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
+				if(brute_damage_overlay)
+					brute_blood_overlay.overlays += brute_damage_overlay
+				. += brute_blood_overlay
 			if(burnstate)
 				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
@@ -1166,15 +1210,15 @@
 	if(embed in embedded_objects) // go away
 		return
 	// We don't need to do anything with projectile embedding, because it will never reach this point
-	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	embedded_objects += embed
+	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	refresh_bleed_rate()
 
 /// INTERNAL PROC, DO NOT USE
 /// Cleans up any attachment we have to the embedded object, removes it from our list
 /obj/item/bodypart/proc/_unembed_object(obj/item/unembed)
-	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
 	embedded_objects -= unembed
+	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
 	refresh_bleed_rate()
 
 /obj/item/bodypart/proc/embedded_object_changed(obj/item/embedded_source)
@@ -1226,8 +1270,8 @@
 	if(generic_bleedstacks > 0)
 		cached_bleed_rate += 0.5
 
-	for(var/obj/item/embeddies in embedded_objects)
-		if(!embeddies.isEmbedHarmless())
+	for(var/obj/item/embeddies as anything in embedded_objects)
+		if(!embeddies.get_embed().is_harmless())
 			cached_bleed_rate += 0.25
 
 	for(var/datum/wound/iter_wound as anything in wounds)
@@ -1365,23 +1409,23 @@
 
 /// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_external_description()
+	if (biological_state == BIO_INORGANIC)
+		return "membrane"
 	if (biological_state & BIO_FLESH)
 		return "flesh"
 	if (biological_state & BIO_WIRED)
 		return "wiring"
-	if (biological_state & BIO_INORGANIC)
-		return "membrane"
 
 	return "error"
 
 /// Returns the generic description of our BIO_INTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_internal_description()
+	if (biological_state == BIO_INORGANIC)
+		return "membrane"
 	if (biological_state & BIO_BONE)
 		return "bone"
 	if (biological_state & BIO_METAL)
 		return "metal"
-	if (biological_state & BIO_INORGANIC)
-		return "membrane"
 
 	return "error"
 

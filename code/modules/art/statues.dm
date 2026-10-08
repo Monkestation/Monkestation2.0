@@ -258,6 +258,15 @@
 	base_pixel_x = -12
 	name = "goliath"
 
+///////////Shrimp//////////////////////////////////////////////////
+/obj/structure/statue/shrimp
+	name = "Shrimp Statue" // Used in the shrimp restaurant space ruin.
+	desc = "A statue of a shrimp. Smells a bit shrimpy."
+	icon_state = "shrimp"
+	max_integrity = 542149 // vaguely leet for SHRIMP. vaguely. barely.
+	impressiveness = 100
+	abstract_type = /obj/structure/statue/shrimp //This one is uncarvable
+
 ///////////Other Stuff//////////////////////////////////////////////
 /obj/item/chisel
 	name = "chisel"
@@ -555,8 +564,6 @@ Moving interrupts
 	return ..()
 
 /obj/structure/statue/custom/proc/set_visuals(model_appearance)
-	if(content_ma)
-		QDEL_NULL(content_ma)
 	content_ma = new
 	content_ma.appearance = model_appearance
 	content_ma.pixel_x = 0

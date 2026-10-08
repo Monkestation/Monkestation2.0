@@ -6,7 +6,6 @@
 // - Quirk datums are stored and hold different effects, as well as being a vector for applying trait string
 PROCESSING_SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
-	init_order = INIT_ORDER_QUIRKS
 	flags = SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 	wait = 1 SECONDS
@@ -24,6 +23,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
 		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
 		list("Alcohol Tolerance", "Light Drinker"),
+		list("Drunken Resilience", "Light Drinker"),
 		list("Clown Enjoyer", "Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
@@ -35,26 +35,27 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
-		//list("Bilingual", "Foreigner"), //monkestation edit, commented out
-		//MONKESTATION ADDITION START
+		list("Common Second Language", "Foreigner"),
 		list("Listener", "Uncommon"),
 		list("Outsider", "Uncommon"),
 		list("Listener", "Mute"),
 		list("Listener", "Deaf"),
 		list("Polyglot", "Listener"),
 		list("Polyglot", "Bilingual"),
+		list("Polyglot", "Common Second Language"),
 		list("Lisp", "Mute"),
 		list("Polyglot", "Foreigner"),
 		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
 		list("Body Purist", "Bright Eyes"),
-		list("Hypoalgesia", "Hyperalgesia", "Analgesia"),
 		list("Kakologophobia", "Easily Offended"),
 		list("Deaf", "Hard Of Hearing"),
 		list("Paraplegic", "Hemiplegic", "Monoplegic"),
 		list("Prosthetic Limb", "Monoplegic"),
-		//MONKESTATION ADDITION END
+		list("Cyborg Pre-screened dogtag", "Unborgable"),
+		list("Revival Blacklist", "Uncloneable Neurons"),
+		list("Mute", "Fluffy Tongue")
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()

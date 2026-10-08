@@ -1,12 +1,12 @@
 // TAILS
 /datum/sprite_accessory/oni_tail
-	icon = 'monkestation/icons/mob/species/oni/oni_tail.dmi'
+	icon = 'icons/mob/species/oni/oni_tail.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /datum/sprite_accessory/oni_tail/none
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/oni_tail/spade
 	name = "Spade"
@@ -14,13 +14,13 @@
 
 // WINGS
 /datum/sprite_accessory/oni_wings
-	icon = 'monkestation/icons/mob/species/oni/oni_wings.dmi'
+	icon = 'icons/mob/species/oni/oni_wings.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /datum/sprite_accessory/oni_wings/none
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/oni_wings/normal
 	name = "Normal"
@@ -32,13 +32,13 @@
 
 // HORNS
 /datum/sprite_accessory/oni_horns
-	icon = 'monkestation/icons/mob/species/oni/oni_horns.dmi'
+	icon = 'icons/mob/species/oni/oni_horns.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /datum/sprite_accessory/oni_horns/none
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/oni_horns/oni
 	name = "Oni"

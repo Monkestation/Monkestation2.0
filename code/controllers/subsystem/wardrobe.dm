@@ -9,6 +9,10 @@ SUBSYSTEM_DEF(wardrobe)
 	name = "Wardrobe"
 	wait = 1 SECONDS // This is more like a queue then anything else
 	flags = SS_BACKGROUND
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/mapping,
+	)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // We're going to fill up our cache while players sit in the lobby
 	/// How much to cache outfit items
 	/// Multiplier, 2 would mean cache enough items to stock 1 of each preloaded order twice, etc
@@ -43,7 +47,7 @@ SUBSYSTEM_DEF(wardrobe)
 	load_outfits()
 	load_species()
 	load_storage_contents()
-	load_loadout_items()
+	// load_loadout_items()
 	hard_refresh_queue()
 	stock_hit = 0
 	stock_miss = 0
@@ -349,6 +353,7 @@ SUBSYSTEM_DEF(wardrobe)
 			canonize_type(a_really_small_box)
 		qdel(another_crate)
 
+/*
 /datum/controller/subsystem/wardrobe/proc/load_loadout_items()
 	for(var/obj/item/item_path as anything in GLOB.all_loadout_datums)
 		if(!ispath(item_path))
@@ -359,3 +364,4 @@ SUBSYSTEM_DEF(wardrobe)
 		for(var/i = 1 to 5)
 			canonize_type(item_path)
 		CHECK_TICK
+*/

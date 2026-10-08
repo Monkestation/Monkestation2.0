@@ -114,9 +114,7 @@
 	if(K)
 		K.duration = max(world.time + amount, K.duration)
 	else if(amount > 0)
-		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
-		if(K && prevent_drop)
-			K.prevent_drop = TRUE   //  passes flag to datum
+		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount, prevent_drop)
 
 	if(!ignores_diminish)
 		knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.05, 0.1)), 1)
@@ -612,6 +610,8 @@
 
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	update_stat()
+	SEND_SIGNAL(src, COMSIG_LIVING_FAKE_DEATH)
+
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
@@ -816,4 +816,4 @@
 
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()
-	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
+	return stat != DEAD && !HAS_TRAIT(src, TRAIT_FAKEDEATH)

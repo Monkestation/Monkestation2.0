@@ -25,6 +25,10 @@ ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.",
 		return
 
 	if(chosenmap == "Custom")
+		var/notice = tgui_alert(user, "If you are uploading a custom map, it is important to use the Clear-Custom-Maps verb once the map has loaded next round. ", "Notice", list("I Understand", "Stop")) || "Stop"
+		if(notice == "Stop")
+			return
+
 		message_admins("[key_name_admin(user)] is changing the map to a custom map")
 		log_admin("[key_name(user)] is changing the map to a custom map")
 		var/datum/map_config/virtual_map = new
@@ -37,9 +41,9 @@ ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.",
 			to_chat(user, span_warning("Filename must end in '.dmm': [map_file]"))
 			return
 
-		if(fexists("_maps/custom/[map_file]"))
-			fdel("_maps/custom/[map_file]")
-		if(!fcopy(map_file, "_maps/custom/[map_file]"))
+		if(fexists("data/custom_map/[map_file]"))
+			fdel("data/custom_map/[map_file]")
+		if(!fcopy(map_file, "data/custom_map/[map_file]"))
 			return
 		// This is to make sure the map works so the server does not start without a map.
 		var/datum/parsed_map/M = new (map_file)
@@ -63,12 +67,12 @@ ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.",
 			if(copytext("[config_file]", -5) != ".json")
 				to_chat(user, span_warning("Filename must end in '.json': [config_file]"))
 				return
-			if(fexists("data/custom_map_json/[config_file]"))
-				fdel("data/custom_map_json/[config_file]")
-			if(!fcopy(config_file, "data/custom_map_json/[config_file]"))
+			if(fexists("data/custom_map/[config_file]"))
+				fdel("data/custom_map/[config_file]")
+			if(!fcopy(config_file, "data/custom_map/[config_file]"))
 				return
 
-			json_value = virtual_map.LoadConfig("data/custom_map_json/[config_file]", TRUE)
+			json_value = virtual_map.LoadConfig("data/custom_map/[config_file]", TRUE)
 
 			if(!json_value)
 				to_chat(src, span_warning("Failed to load config: [config_file]. Check that the fields are filled out correctly. \"map_path\": \"custom\" and \"map_file\": \"your_map_name.dmm\""))
@@ -106,7 +110,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.",
 		if(SSmap_vote.set_next_map(virtual_map))
 			message_admins("[key_name_admin(user)] has changed the map to [virtual_map.map_name]")
 			SSmap_vote.admin_override = TRUE
-		fdel("data/custom_map_json/[config_file]")
+		fdel("data/custom_map/[config_file]")
 	else
 		var/datum/map_config/virtual_map = maprotatechoices[chosenmap]
 		message_admins("[key_name_admin(user)] is changing the map to [virtual_map.map_name]")
@@ -117,3 +121,23 @@ ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.",
 
 ADMIN_VERB(admin_revert_map, R_SERVER, FALSE, "Revert Map Vote", "Reverts the next map.", ADMIN_CATEGORY_SERVER)
 	SSmap_vote.revert_next_map()
+
+ADMIN_VERB(admin_clear_custom_maps, R_SERVER, FALSE, "Clear Custom Maps", "Clears admin uploaded maps from persistency.", ADMIN_CATEGORY_SERVER)
+	var/confirm = tgui_alert(user, "Clear Admin uploaded maps from server persistency?", "Confirm", list("Yes", "Cancel")) || "Cancel"
+	if(confirm == "Cancel")
+		return
+
+	// Nuke the custom files, shorter version without + f stopped working once I added the notice above.
+	var/list/files = flist("data/custom_map/")
+	for(var/f in files)
+		fdel("data/custom_map/" + f)
+	message_admins("[key_name_admin(user)] has cleared custom maps from persistency.")
+	log_admin("[key_name(user)] has cleared custom maps from persistency.")
+
+ADMIN_VERB(admin_list_custom_maps, R_SERVER, FALSE, "List Custom Maps", "Lists custom maps to check existence.", ADMIN_CATEGORY_SERVER)
+	var/list/files = flist("data/custom_map/")
+	if(!files)
+		to_chat(user, "No custom maps currently exist.")
+	else
+		for(var/f in files)
+			to_chat(user, "data/custom_map/" + f)

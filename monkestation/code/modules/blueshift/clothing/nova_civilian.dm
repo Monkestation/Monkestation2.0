@@ -1,11 +1,8 @@
 /obj/item/clothing/under/rank/civilian
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/civilian_digi.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer // Lawyers' suits are in TG's suits.dmi
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit // EXCEPT THIS ONE.
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/buttondown_slacks/worn/digi
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/civilian.dmi'
@@ -23,7 +20,6 @@
 	name = "head of personnel's naval jumpsuit"
 	desc = "A pale green naval suit and a rank badge denoting the Personnel Officer. Target, maximum firepower."
 	icon_state = "imphop"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/nova/parade
 	name = "head of personnel's male formal uniform"
@@ -51,7 +47,6 @@
 
 
 /obj/item/clothing/under/suit
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 /obj/item/clothing/under/suit/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/suits.dmi'
@@ -65,117 +60,114 @@
 /obj/item/clothing/under/suit/nova/recolorable
 	name = "recolorable suit"
 	desc = "A semi-formal suit, clean-cut with a matching vest and slacks."
-	icon_state = "recolorable_suit"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("recolorable_suit", "/obj/item/clothing/under/suit/nova/recolorable")
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/recolorable_suit
 	greyscale_config_worn = /datum/greyscale_config/recolorable_suit/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/recolorable_suit/worn/digi
 	greyscale_colors = "#a99780#ffffff#6e2727#ffc500"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/suit/nova/recolorable/skirt
 	name = "recolorable suitskirt"
 	desc = "A semi-formal suitskirt, clean-cut with a matching vest and skirt."
-	icon_state = "recolorable_suitskirt"
+	SETUP_MAP_ICONS("recolorable_suitskirt", "/obj/item/clothing/under/suit/nova/recolorable/skirt")
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 	body_parts_covered = CHEST|GROIN|LEGS
 	greyscale_config = /datum/greyscale_config/recolorable_suitskirt
 	greyscale_config_worn = /datum/greyscale_config/recolorable_suitskirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/recolorable_suitskirt/worn/digi
 
 /obj/item/clothing/under/suit/nova/recolorable/casual
 	name = "office casual suit"
 	desc = "A semi-formal suit, clean-cut with a matching vest and slacks."
-	icon_state = "fancysuit_casual"
+	SETUP_MAP_ICONS("fancysuit_casual", "/obj/item/clothing/under/suit/nova/recolorable/casual")
 	greyscale_config = /datum/greyscale_config/fancysuit_casual
 	greyscale_config_worn = /datum/greyscale_config/fancysuit_casual/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/fancysuit_casual/worn/digi
 	greyscale_colors = "#37373e#ffffff"
 
 /obj/item/clothing/under/suit/nova/recolorable/executive
 	name = "executive casual suit"
 	desc = "A formal suit, clean-cut with a matching vest, undershirt, tie and slacks."
-	icon_state = "fancysuit_executive"
+	SETUP_MAP_ICONS("fancysuit_executive", "/obj/item/clothing/under/suit/nova/recolorable/executive")
 	greyscale_config = /datum/greyscale_config/fancysuit_executive
 	greyscale_config_worn = /datum/greyscale_config/fancysuit_executive/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/fancysuit_executive/worn/digi
 	greyscale_colors = "#37373e#37373e#ffffff#ac3232"
 
 /obj/item/clothing/under/suit/nova/pencil
 	name = "pencilskirt and shirt"
 	desc = "A clean shirt with a tight-fitting pencilskirt."
-	icon_state = "pencilskirt_shirt"
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-
-	greyscale_colors = "#37373e#ffffff"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("pencilskirt_shirt", "/obj/item/clothing/under/suit/nova/pencil")
 	greyscale_config = /datum/greyscale_config/pencilskirt_withshirt
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_withshirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_withshirt/worn/digi
+	greyscale_colors = "#37373e#ffffff"
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/suit/nova/pencil/noshirt
 	name = "pencilskirt"
 	desc = "A tight-fitting pencilskirt, perfect to augment an undershirt."
-	icon_state = "pencilskirt"
-	greyscale_colors = "#37373e"
+	SETUP_MAP_ICONS("pencilskirt", "/obj/item/clothing/under/suit/nova/pencil/noshirt")
 	greyscale_config = /datum/greyscale_config/pencilskirt
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt/worn/digi
+	greyscale_colors = "#37373e"
 	body_parts_covered = GROIN|LEGS
 
 /obj/item/clothing/under/suit/nova/pencil/charcoal
 	name = "charcoal pencilskirt"
 	desc = "A clean white shirt with a tight-fitting charcoal pencilskirt."
+	SETUP_MAP_ICONS("pencilskirt_shirt", "/obj/item/clothing/under/suit/nova/pencil/charcoal")
 	greyscale_colors = "#303030#ffffff"
 
 /obj/item/clothing/under/suit/nova/pencil/navy
 	name = "navy pencilskirt"
 	desc = "A clean white shirt with a tight-fitting navy-blue pencilskirt."
+	SETUP_MAP_ICONS("pencilskirt_shirt", "/obj/item/clothing/under/suit/nova/pencil/navy")
 	greyscale_colors = "#112334#ffffff"
 
 /obj/item/clothing/under/suit/nova/pencil/burgandy
 	name = "burgandy pencilskirt"
 	desc = "A clean white shirt with a tight-fitting burgandy-red pencilskirt."
+	SETUP_MAP_ICONS("pencilskirt_shirt", "/obj/item/clothing/under/suit/nova/pencil/burgandy")
 	greyscale_colors = "#3e1111#ffffff"
 
 /obj/item/clothing/under/suit/nova/pencil/tan
 	name = "tan pencilskirt"
 	desc = "A clean white shirt with a tight-fitting tan pencilskirt."
+	SETUP_MAP_ICONS("pencilskirt_shirt", "/obj/item/clothing/under/suit/nova/pencil/tan")
 	greyscale_colors = "#8b7458#ffffff"
 
 /obj/item/clothing/under/suit/nova/pencil/green
 	name = "green pencilskirt"
 	desc = "A clean white shirt with a tight-fitting green pencilskirt."
+	SETUP_MAP_ICONS("pencilskirt_shirt", "/obj/item/clothing/under/suit/nova/pencil/green")
 	greyscale_colors = "#113e20#ffffff"
 
 /obj/item/clothing/under/suit/nova/pencil/black_really
 	name = "executive pencilskirt"
 	desc = "A sleek suit with a tight-fitting pencilskirt."
-	icon_state = "pencilskirt_suit"
-	greyscale_colors = "#37373e#37373e#ffffff#ac3232"
+	SETUP_MAP_ICONS("pencilskirt_suit", "/obj/item/clothing/under/suit/nova/pencil/black_really")
 	greyscale_config = /datum/greyscale_config/pencilskirt_withsuit
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_withsuit/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_withsuit/worn/digi
+	greyscale_colors = "#37373e#37373e#ffffff#ac3232"
 
 /obj/item/clothing/under/suit/nova/pencil/checkered
 	name = "checkered pencilskirt and shirt"
 	desc = "A clean shirt with a tight-fitting checkered pencilskirt."
-	icon_state = "pencilskirt_checkers_shirt"
-	greyscale_colors = "#37373e#232323#ffffff"
+	SETUP_MAP_ICONS("pencilskirt_checkers_shirt", "/obj/item/clothing/under/suit/nova/pencil/checkered")
 	greyscale_config = /datum/greyscale_config/pencilskirt_checkers_withshirt
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_checkers_withshirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_checkers_withshirt/worn/digi
+	greyscale_colors = "#37373e#232323#ffffff"
 
 /obj/item/clothing/under/suit/nova/pencil/checkered/noshirt
 	name = "checkered pencilskirt"
 	desc = "A tight-fitting checkered pencilskirt."
-	icon_state = "pencilskirt_checkers"
-	greyscale_colors = "#37373e#232323"
+	SETUP_MAP_ICONS("pencilskirt_checkers", "/obj/item/clothing/under/suit/nova/pencil/checkered/noshirt")
 	greyscale_config = /datum/greyscale_config/pencilskirt_checkers
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_checkers/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_checkers/worn/digi
+	greyscale_colors = "#37373e#232323"
 	body_parts_covered = GROIN|LEGS
 
 /*
@@ -198,7 +190,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
 
 /obj/item/clothing/under/suit/nova/inferno
 	name = "inferno suit"

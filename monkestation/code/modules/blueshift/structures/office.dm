@@ -51,12 +51,12 @@
 
 /datum/looping_sound/grandfatherclock
 	mid_sounds = list(
-		'monkestation/sound/ambience/clock/clock_ticking_1.ogg',
-		'monkestation/sound/ambience/clock/clock_ticking_2.ogg',
-		'monkestation/sound/ambience/clock/clock_ticking_3.ogg',
-		'monkestation/sound/ambience/clock/clock_ticking_4.ogg',
-		'monkestation/sound/ambience/clock/clock_ticking_5.ogg',
-		'monkestation/sound/ambience/clock/clock_ticking_6.ogg',
+		'sound/ambience/clock/clock_ticking_1.ogg',
+		'sound/ambience/clock/clock_ticking_2.ogg',
+		'sound/ambience/clock/clock_ticking_3.ogg',
+		'sound/ambience/clock/clock_ticking_4.ogg',
+		'sound/ambience/clock/clock_ticking_5.ogg',
+		'sound/ambience/clock/clock_ticking_6.ogg',
 	)
 	mid_length = 2 SECONDS
 	in_order = TRUE

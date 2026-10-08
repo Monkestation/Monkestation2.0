@@ -13,6 +13,8 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
+	astar_weight = 60
 
 /turf/open/misc/dirt/station
 	name = "dirt flooring" //FOR THE LOVE OF GOD USE THIS INSTEAD OF DIRT FOR STATION MAPS
@@ -20,6 +22,7 @@
 	baseturfs = /turf/open/floor/plating
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+	astar_weight = /turf/open::astar_weight
 
 /turf/open/misc/dirt/jungle
 	slowdown = 0.5
@@ -33,6 +36,7 @@
 	baseturfs = /turf/open/floor/plating
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+	astar_weight = /turf/open::astar_weight
 
 /turf/open/misc/dirt/dark/station/airless
 	initial_gas_mix = AIRLESS_ATMOS

@@ -3,6 +3,7 @@
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "prisoner_crime"
+	should_update_preview = FALSE
 
 /datum/preference/choiced/prisoner_crime/init_possible_values()
 	return assoc_to_keys(GLOB.prisoner_crimes) + "Random"

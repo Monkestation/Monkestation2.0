@@ -20,7 +20,7 @@
 	. = ..()
 	SSair.high_pressure_delta -= src
 
-/turf/cordon/rust_heretic_act()
+/turf/cordon/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/cordon/acid_act(acidpwr, acid_volume, acid_id)

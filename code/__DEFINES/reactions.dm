@@ -262,12 +262,24 @@
 /// How much radiation in consumed amount does a nuclear particle take from radiation when proto-nitrate breaks down BZ.
 #define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
 
-#define FUSION_TEMPERATURE_THRESHOLD 10000
-#define FUSION_TRITIUM_MOLES_USED 1
-#define FUSION_MOLE_THRESHOLD 250 //Mole count required (carbon dioxide/plasma) to start a fusion reaction
-#define PLASMA_BINDING_ENERGY 20000000
-#define FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
-#define PARTICLE_CHANCE_CONSTANT (-20000000)
-#define TOROID_VOLUME_BREAKEVEN 1000
-#define INSTABILITY_GAS_POWER_FACTOR 0.003
-#define FUSION_RAD_COEFFICIENT (-1000)
+// Plasmic Fusion Reactions
+// I added some comments explaining the variables as I understand them. Feel free to correct me if I’ve misinterpreted anything!
+/// The minimum temperature (in Kelvin) required to initiate the fusion reaction.
+#define PLASMIC_FUSION_TEMPERATURE_THRESHOLD 10000
+/// The fixed amount of Tritium consumed as a catalyst/fuel in every processing tick.
+#define PLASMIC_FUSION_TRITIUM_MOLES_USED 1
+/// The minimum moles of Plasma and CO2 required to maintain the reaction state.
+#define PLASMIC_FUSION_MOLE_THRESHOLD 250
+/// The energy constant (Joules/mole) released or absorbed during Plasma-to-Carbon conversion.
+#define PLASMIC_FUSION_PLASMA_BINDING_ENERGY 20000000
+/// Scaling coefficient that determines how much waste gas (Oxygen/N2O or BZ/Nitrium) is produced based on reaction energy.
+#define PLASMIC_FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
+/// A constant used in an asymptotic function to determine the probability of firing a nuclear particle.
+#define PLASMIC_FUSION_PARTICLE_CHANCE_CONSTANT (-20000000)
+/// The volume reference point used to calculate the phase space size (toroidal_size).
+#define PLASMIC_FUSION_TOROID_VOLUME_BREAKEVEN 1000
+/// Determines how much the specific fusion power of the gas mix contributes.
+#define PLASMIC_FUSION_INSTABILITY_GAS_POWER_FACTOR 0.003
+/// A base value modified by instability to determine the strength of the radiation pulse emitted.
+#define PLASMIC_FUSION_RAD_COEFFICIENT (-1000)
+

@@ -1,8 +1,9 @@
 /obj/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"
-	damage = 10
+	damage = 0
 	damage_type = STAMINA
+	stamina = 7
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
@@ -196,7 +197,7 @@
 
 /obj/effect/energy_snare/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(deploy)), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(deploy)), 0.5 SECONDS)
 
 /obj/effect/energy_snare/proc/deploy()
 	new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(loc))

@@ -1,8 +1,7 @@
-import { Flex, LabeledControls, RoundGauge, Section } from 'tgui/components';
-
-import { formatSiUnit } from 'tgui/format';
 import { toFixed } from 'common/math';
 import { useBackend } from 'tgui/backend';
+import { Flex, LabeledControls, RoundGauge, Section } from 'tgui/components';
+import { formatSiUnit } from 'tgui/format';
 
 type Data = {
   apc_energy: number;
@@ -46,7 +45,7 @@ export const HypertorusParameters = (props) => {
 
   let activity =
     heat_output / (heat_output < 0 ? heat_output_min : heat_output_max);
-  if (isNaN(activity) || !isFinite(activity)) {
+  if (Number.isNaN(activity) || !Number.isFinite(activity)) {
     activity = 0;
   }
 

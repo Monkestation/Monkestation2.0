@@ -9,7 +9,7 @@
 //amount: The amount of the required reagent that needs to be added.
 //base_quality_award: The quality awarded by following this step.
 //our_recipe: The parent recipe object,
-/datum/chewin_cooking/recipe_step/use_grill/New(var/set_heat, var/set_time, var/datum/chewin_cooking/recipe/our_recipe)
+/datum/chewin_cooking/recipe_step/use_grill/New(set_heat, set_time, datum/chewin_cooking/recipe/our_recipe)
 
 
 
@@ -21,7 +21,7 @@
 	..(our_recipe)
 
 
-/datum/chewin_cooking/recipe_step/use_grill/check_conditions_met(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_grill/check_conditions_met(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 
 	if(!istype(used_item, /obj/machinery/grill))
 		return CHEWIN_CHECK_INVALID
@@ -29,7 +29,7 @@
 	return CHEWIN_CHECK_VALID
 
 //Reagents are calculated prior to object creation
-/datum/chewin_cooking/recipe_step/use_grill/calculate_quality(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_grill/calculate_quality(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	var/obj/item/reagent_containers/cooking_container/container = tracker.holder_ref.resolve()
 
 	var/bad_cooking = 0
@@ -44,10 +44,10 @@
 	return clamp_quality(good_cooking)
 
 
-/datum/chewin_cooking/recipe_step/use_grill/follow_step(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_grill/follow_step(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	return CHEWIN_SUCCESS
 
-/datum/chewin_cooking/recipe_step/use_grill/is_complete(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_grill/is_complete(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 
 	var/obj/item/reagent_containers/cooking_container/container = tracker.holder_ref.resolve()
 

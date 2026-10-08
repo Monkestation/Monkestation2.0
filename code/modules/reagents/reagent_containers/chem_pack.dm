@@ -10,7 +10,7 @@
 	resistance_flags = ACID_PROOF
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	interaction_flags_click = NEED_DEXTERITY
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 	/// Whether this has been sealed shut
 	var/sealed = FALSE
 
@@ -44,3 +44,9 @@
 	if(sealed)
 		return
 	..()
+
+/obj/item/reagent_containers/chem_pack/saline
+	name = "intravenous saline bag"
+	desc = "A plastic pressure bag, or 'chem pack', for IV administration of drugs. This one contains a mixture of saline-glucose, iron, and tirimol to treat bloodloss."
+	list_reagents = list(/datum/reagent/medicine/salglu_solution = 55, /datum/reagent/iron = 35, /datum/reagent/medicine/c2/tirimol = 10)
+	sealed = TRUE

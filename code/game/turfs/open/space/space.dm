@@ -5,6 +5,8 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	turf_flags = NO_RUST
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -24,11 +26,12 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	light_inner_range = 0.1
 	light_outer_range = 4
 	light_falloff_curve = 5
-	//space_lit = TRUE
+	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
+	astar_weight = 500
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
@@ -60,9 +63,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
 		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
-
-	if(!SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT))
-		space_lit = TRUE
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
@@ -243,7 +243,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 			return TRUE
 	return FALSE
 
-/turf/open/space/rust_heretic_act()
+/turf/open/space/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/space/attempt_lattice_replacement()
@@ -256,7 +256,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	destination_z = dest_z
 
 /turf/open/space/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_SPACEWALK)
+	return HAS_TRAIT(crossing, TRAIT_SPACEWALK) || (locate(/obj/structure/lattice) in src)
 
 /turf/open/space/openspace
 	icon = 'icons/turf/floors.dmi'

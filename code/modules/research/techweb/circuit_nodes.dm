@@ -82,7 +82,6 @@
 		"chemical_splitter",
 		"chemical_mixer",
 		"chemical_filter",
-		"chemical_injector_bci",
 		"internal_chemical_tank",
 	)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

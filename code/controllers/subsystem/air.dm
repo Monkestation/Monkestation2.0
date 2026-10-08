@@ -1,9 +1,12 @@
 SUBSYSTEM_DEF(air)
 	name = "Atmospherics"
-	init_order = INIT_ORDER_AIR
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_DYNAMIC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
@@ -221,6 +224,7 @@ SUBSYSTEM_DEF(air)
 		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 
+
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
@@ -319,7 +323,7 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M)
 			atmos_machinery -= M
-		if(M.process_atmos() == PROCESS_KILL)
+		if(M.process_atmos(wait * 0.1) == PROCESS_KILL)
 			stop_processing_machine(M)
 		if(MC_TICK_CHECK)
 			return
@@ -556,8 +560,7 @@ SUBSYSTEM_DEF(air)
 			if(enemy_tile.current_cycle == -INFINITY)
 				continue
 			// .air instead of .return_air() because we can guarantee that the proc won't do anything
-			if(potential_diff.air.compare(enemy_tile.air, MOLES))
-				//testing("Active turf found. Return value of compare(): [T.air.compare(enemy_tile.air, MOLES)]")
+			if(potential_diff.air.compare(enemy_tile.air, FALSE))
 				if(!potential_diff.excited)
 					potential_diff.excited = TRUE
 					SSair.active_turfs += potential_diff
@@ -776,7 +779,6 @@ GLOBAL_LIST_EMPTY(colored_images)
 	strings_to_mix["[gas_string]-[gastype]"] = canonical_mix
 	gas_string = preprocess_gas_string(gas_string)
 
-	var/list/gases = canonical_mix.gases
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		canonical_mix.temperature = text2num(gas["TEMP"])
@@ -784,12 +786,12 @@ GLOBAL_LIST_EMPTY(colored_images)
 		gas -= "TEMP"
 	else // if we do not have a temp in the new gas mix lets assume room temp.
 		canonical_mix.temperature = T20C
+	var/list/cached_moles = canonical_mix.moles
 	for(var/id in gas)
 		var/path = id
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		ADD_GAS(path, gases)
-		gases[path][MOLES] = text2num(gas[id])
+		cached_moles[path] = text2num(gas[id])
 
 	if(istype(canonical_mix, /datum/gas_mixture/immutable))
 		return canonical_mix
@@ -881,6 +883,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	data["display_max"] = FALSE
 	#endif
 	data["showing_user"] = user.hud_used.atmos_debug_overlays
+	data["background"] = !!(flags & SS_BACKGROUND)
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -923,4 +926,13 @@ GLOBAL_LIST_EMPTY(colored_images)
 				user.client.images += GLOB.colored_images
 			else
 				user.client.images -= GLOB.colored_images
+			return TRUE
+		if("set_background")
+			var/status = params["status"]
+			if(isnull(status))
+				return
+			if(set_background_mode(status))
+				log_admin("[key_name(ui.user)] [status ? "enabled" : "disabled"] backgrounding for the Atmospherics subsystem.")
+				message_admins("[key_name_admin(ui.user)] [status ? "enabled" : "disabled"] backgrounding for the Atmospherics subsystem.")
+				SStgui.update_uis(src)
 			return TRUE

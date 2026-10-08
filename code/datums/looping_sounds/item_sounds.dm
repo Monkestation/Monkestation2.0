@@ -14,6 +14,14 @@
 	mid_length = 15
 	volume = 20
 
+/datum/looping_sound/siren/alt
+	mid_sounds = list('sound/items/weewoo2_start.ogg', 'sound/items/weewoo2_end.ogg')
+	in_order = TRUE
+	each_once = TRUE
+	mid_length = 5
+	volume = 30
+	extra_range = 3
+
 /datum/looping_sound/tape_recorder_hiss
 	mid_sounds = list('sound/items/taperecorder/taperecorder_hiss_mid.ogg' = 1)
 	start_sound = list('sound/items/taperecorder/taperecorder_hiss_start.ogg' = 1)

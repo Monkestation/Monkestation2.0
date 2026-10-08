@@ -218,7 +218,7 @@
  * * attack_modifiers - attack modifiers such as force, damage type, etc
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers) || SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers) || SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers, src)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(signal_return & COMPONENT_SKIP_ATTACK)
@@ -298,7 +298,7 @@
 	if(final_force <= 0)
 		return 0
 
-	var/damage = take_damage(final_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
+	var/damage = take_damage(final_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user))
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
@@ -340,6 +340,7 @@
 	if(user != src)
 		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
 		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+			LAZYADDASSOC(attack_modifiers, ATTACK_BLOCKED, TRUE)
 			return FALSE
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
@@ -365,7 +366,7 @@
 
 	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
 
-	return TRUE
+	return damage
 
 /**
  * Called when we take damage, used to cause effects such as a blood splatter.
@@ -373,14 +374,31 @@
  * Return TRUE if an effect was done, FALSE otherwise.
  */
 /mob/living/proc/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	if(damage_done > 0 && attacking_item.damtype == BRUTE && prob(25 + damage_done * 2))
-		attacking_item.add_mob_blood(src)
-		add_splatter_floor(get_turf(src))
-		if(get_dist(attacker, src) <= 1)
-			attacker.add_mob_blood(src)
+	if(damage_done <= 0 || attacking_item.damtype != BRUTE || !prob(25 + damage_done * 2))
+		return FALSE
+
+	attacking_item.add_mob_blood(src)
+	add_splatter_floor(get_turf(src))
+	if(get_dist(attacker, src) > 1)
 		return TRUE
 
-	return FALSE
+	if(!ishuman(attacker))
+		attacker.add_mob_blood(src)
+		return TRUE
+
+	var/bloodied_things = ITEM_SLOT_GLOVES
+	if(damage_done >= 20 || (damage_done >= 15 && prob(25)))
+		bloodied_things |= ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING
+		if(prob(33) && damage_done >= 10)
+			bloodied_things |= ITEM_SLOT_FEET
+		if(prob(33) && damage_done >= 24) // fireaxe damage, because heeeeere's johnny
+			bloodied_things |= ITEM_SLOT_MASK
+		if(prob(33) && damage_done >= 30) // esword damage
+			bloodied_things |= ITEM_SLOT_HEAD
+
+	var/mob/living/carbon/human/human_attacker = attacker
+	human_attacker.add_blood_DNA_to_items(get_blood_dna_list(), bloodied_things)
+	return TRUE
 
 /mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
 	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
@@ -481,6 +499,11 @@
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 

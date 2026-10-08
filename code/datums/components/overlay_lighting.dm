@@ -168,13 +168,7 @@
 
 ///Clears the affected_turfs lazylist, removing from its contents the effects of being near the light.
 /datum/component/overlay_lighting/proc/clean_old_turfs()
-#ifndef DISABLE_DEMOS
-	var/list/marked_turfs = SSdemo.marked_turfs
-#endif
 	for(var/turf/lit_turf as anything in affected_turfs)
-#ifndef DISABLE_DEMOS
-		marked_turfs?[lit_turf] = TRUE
-#endif
 		lit_turf.dynamic_lumcount -= lum_power
 	affected_turfs = null
 
@@ -184,14 +178,8 @@
 	if(!current_holder)
 		return
 	. = list()
-#ifndef DISABLE_DEMOS
-	var/list/marked_turfs = SSdemo.marked_turfs
-#endif
 	for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
 		lit_turf.dynamic_lumcount += lum_power
-#ifndef DISABLE_DEMOS
-		marked_turfs?[lit_turf] = TRUE
-#endif
 		. += lit_turf
 	if(length(.))
 		affected_turfs = .
@@ -472,6 +460,9 @@
 		return
 	if(current_holder)
 		remove_dynamic_lumi()
+		if(directional)
+			directional_offset_x = null
+			directional_offset_y = null
 	overlay_lighting_flags &= ~LIGHTING_ON
 	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		UnregisterSignal(current_holder, COMSIG_MOVABLE_MOVED)

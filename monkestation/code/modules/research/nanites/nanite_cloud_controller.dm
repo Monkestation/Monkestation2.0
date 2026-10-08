@@ -1,7 +1,7 @@
 /obj/machinery/computer/nanite_cloud_controller
 	name = "nanite programmer"
 	desc = "Stores and controls nanite cloud backups."
-	icon = 'monkestation/icons/obj/machines/research.dmi'
+	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
 	icon_keyboard = null
@@ -25,10 +25,11 @@
 
 	var/datum/nanite_program/current_program	//The nanite program currently in the programming (middle) section.
 
-/obj/machinery/computer/nanite_cloud_controller/Initialize()
+/obj/machinery/computer/nanite_cloud_controller/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 	linked_techweb = SSresearch.science_tech
+	AddComponent(/datum/component/gps, "Nanite Synchronization Signal")
 
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
 	QDEL_LIST(cloud_backups) //rip backups
@@ -209,7 +210,7 @@
 
 	return data
 
-/obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
+/obj/machinery/computer/nanite_cloud_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

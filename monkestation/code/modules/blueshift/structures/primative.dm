@@ -1,13 +1,9 @@
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
 /obj/item/proc/juice(datum/reagents/target_holder, mob/user)
-	if(on_juice() == -1 || !reagents?.total_volume)
+	if(on_juice() == -1)
 		return FALSE
 
-	for(var/datum/reagent/juice_typepath as anything in juice_results)
-		if(ispath(juice_typepath))
-			reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
-
+	target_holder.add_reagent_list(juice_results)
 	return TRUE
 
 ///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
@@ -20,7 +16,7 @@
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
 	if(reagents?.total_volume)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 		. = TRUE
 
 /datum/reagents/proc/convert_reagent(
@@ -381,8 +377,8 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 
 /obj/item/plate/oven_tray/material/fake_tin
 
-#define LARGE_MORTAR_STAMINA_MINIMUM 50 //What is the amount of stam damage that we prevent mortar use at
-#define LARGE_MORTAR_STAMINA_USE 70 //How much stam damage is given to people when the mortar is used
+#define LARGE_MORTAR_STAMINA_MINIMUM 25 //What is the amount of stam damage that we prevent mortar use at
+#define LARGE_MORTAR_STAMINA_USE 35 //How much stam damage is given to people when the mortar is used
 
 /obj/structure/large_mortar
 	name = "large mortar"
@@ -498,7 +494,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 
 		var/stamina_use = LARGE_MORTAR_STAMINA_USE
 		if(prob(user.mind.get_skill_modifier(/datum/skill/primitive, SKILL_PROBS_MODIFIER)))
-			stamina_use *= 0.5 //so it uses half the amount of stamina (35 instead of 70)
+			stamina_use *= 0.5 //so it uses half the amount of stamina
 
 		user.stamina.adjust(-stamina_use) //This is a bit more tiring than a normal sized mortar and pestle
 		user.mind.adjust_experience(/datum/skill/primitive, 5)
@@ -561,8 +557,8 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 #undef LARGE_MORTAR_STAMINA_MINIMUM
 #undef LARGE_MORTAR_STAMINA_USE
 
-#define MILLSTONE_STAMINA_MINIMUM 50 //What is the amount of stam damage that we prevent mill use at
-#define MILLSTONE_STAMINA_USE 100 //How much stam damage is given to people when the mill is used
+#define MILLSTONE_STAMINA_MINIMUM 25 //What is the amount of stam damage that we prevent mill use at
+#define MILLSTONE_STAMINA_USE 50 //How much stam damage is given to people when the mill is used
 
 /obj/structure/millstone
 	name = "millstone"
@@ -1475,7 +1471,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	return data
 
-/obj/item/glassblowing/blowing_rod/ui_act(action, params)
+/obj/item/glassblowing/blowing_rod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1635,7 +1631,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	to_chat(user, span_notice("You begin to [step_id] [src]."))
 	if(!do_after(user, actioning_speed, target = src))
 		fail_message("You interrupt an action!", user)
-		REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+		REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 		return FALSE
 
 	if(glass.steps_remaining)
@@ -1645,7 +1641,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			if(check_finished(glass))
 				glass.is_finished = TRUE
 
-	REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+	REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 	in_use = FALSE
 
 	to_chat(user, span_notice("You finish trying to [step_id] [src]."))
@@ -1690,7 +1686,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			balloon_alert(user, "already glassblowing!")
 			return FALSE
 
-		ADD_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+		ADD_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 		return user
 
 	var/obj/item/glassblowing/used_tool
@@ -1710,7 +1706,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		balloon_alert(user, "already in use!")
 		return FALSE
 
-	ADD_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+	ADD_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 	return used_tool
 
 /**

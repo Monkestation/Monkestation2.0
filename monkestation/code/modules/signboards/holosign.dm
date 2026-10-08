@@ -21,6 +21,9 @@
 	text_holder.appearance_flags &= ~RESET_COLOR // allow the text holoder to inherit our color
 	if(current_color)
 		INVOKE_ASYNC(src, PROC_REF(set_color), current_color)
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/holo_signboard,
+	))
 
 /obj/structure/signboard/holosign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -28,6 +31,8 @@
 	if(istype(held_item, /obj/item/card/emag))
 		context[SCREENTIP_CONTEXT_LMB] = "Short Out Locking Mechanisms"
 		. = CONTEXTUAL_SCREENTIP_SET
+	else if(!locked && istype(held_item?.GetID(), /obj/item/usb_cable))
+		context[SCREENTIP_CONTEXT_LMB] = "Connect USB Cable"
 	else if(!locked && istype(held_item?.GetID(), /obj/item/card/id))
 		context[SCREENTIP_CONTEXT_LMB] = registered_owner ? "Remove ID Lock" : "Lock To ID"
 		. = CONTEXTUAL_SCREENTIP_SET
@@ -136,17 +141,98 @@
 	update_appearance()
 
 /obj/structure/signboard/holosign/proc/sanitize_color(color)
+	testing("before sanitizing: [color]")
 	. = sanitize_hexcolor(color)
+	testing("sanitized color: [. || "(null)"]")
 	if(!. || . == "#000000")
 		return null
 
 /obj/structure/signboard/holosign/proc/set_color(new_color)
 	new_color = sanitize_color(new_color)
 	if(!new_color)
+		testing("signboard color invalid or null, removing")
 		current_color = null
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	else
+		testing("signboard color valid, adding")
 		current_color = new_color
 		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 	set_light_color(current_color || src::light_color)
 	update_appearance()
+
+/obj/item/circuit_component/holo_signboard
+	display_name = "Holographic Signboard"
+	desc = "Output text to a signboard, insert <br> in the message field to linebreak. Set the color to 0, 0, 0 to reset to default."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+	var/datum/port/input/message
+	var/datum/port/input/clear
+
+	var/datum/port/output/fail_reason
+	var/datum/port/output/on_fail
+
+	var/datum/port/input/red
+	var/datum/port/input/green
+	var/datum/port/input/blue
+	var/datum/port/input/set_color
+
+	var/obj/structure/signboard/holosign/connected_display
+
+/obj/item/circuit_component/holo_signboard/populate_ports()
+	message = add_input_port("Message", PORT_TYPE_STRING)
+	clear = add_input_port("Clear", PORT_TYPE_SIGNAL, trigger = PROC_REF(clear_received))
+
+	fail_reason = add_output_port("Fail Reason", PORT_TYPE_STRING)
+	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
+
+
+	red = add_input_port("Red", PORT_TYPE_NUMBER)
+	green = add_input_port("Green", PORT_TYPE_NUMBER)
+	blue = add_input_port("Blue", PORT_TYPE_NUMBER)
+	set_color = add_input_port("Set Color", PORT_TYPE_SIGNAL, trigger = PROC_REF(color_received))
+
+/obj/item/circuit_component/holo_signboard/register_usb_parent(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/structure/signboard/holosign))
+		connected_display = shell
+
+/obj/item/circuit_component/holo_signboard/input_received(datum/port/input/port)
+	if(!connected_display)
+		return
+	if(length(message.value) > connected_display.max_length) //5000 is a hell of a lot longer than 144.
+		fail_reason.set_output("Too long ([length(message.value)]/[connected_display.max_length]).")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+	if(is_ic_filtered(message.value))
+		fail_reason.set_output("Prohibited content.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	var/edited_message = replacetextEx_char(message.value, "<br>", "\n")
+	if(connected_display.set_text(edited_message))
+		investigate_log("Circuit USB ([parent.get_creator()]) set text to \"[connected_display.sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
+		if(is_soft_ic_filtered(message.value))
+			message_admins("A circuit component (by [parent.get_creator_admin()]) added a soft filtered message to a signboard. [ADMIN_COORDJMP(src)]")
+	else
+		fail_reason.set_output("Connection refused by external endpoint.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/holo_signboard/proc/clear_received(datum/port/input/port)
+	if(!connected_display.set_text(null))
+		fail_reason.set_output("Connection refused by external endpoint.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+
+
+/obj/item/circuit_component/holo_signboard/proc/color_received(datum/port/input/port)
+	red.set_value(clamp(red.value, 0, 255))
+	blue.set_value(clamp(blue.value, 0, 255))
+	green.set_value(clamp(green.value, 0, 255))
+	var/signboard_color = rgb(red.value, green.value, blue.value)
+	testing("color_recieved: signboard color: [signboard_color]")
+	if(signboard_color && signboard_color != rgb(0, 0, 0) && is_color_dark_with_saturation(signboard_color, 25))
+		fail_reason.set_output("Color too dark to display.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+	connected_display.set_color(signboard_color) //doesnt have a return so no need to check and error
+	investigate_log("Circuit USB ([parent.get_creator()]) set the color to [signboard_color || "(none)"]", INVESTIGATE_SIGNBOARD)
+

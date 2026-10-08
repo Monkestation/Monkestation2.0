@@ -20,16 +20,6 @@ export const MinigamesMenu = (props) => {
                 onClick={() => act('ctf')}
               />
             </Stack.Item>
-            <Stack.Item grow>
-              <Button
-                content="Mafia"
-                fluid
-                fontSize={3}
-                textAlign="center"
-                lineHeight="3"
-                onClick={() => act('mafia')}
-              />
-            </Stack.Item>
           </Stack>
           <Divider />
           <Stack>

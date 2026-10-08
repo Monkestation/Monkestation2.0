@@ -1,10 +1,9 @@
-import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
-  health: BooleanLike;
+  health: number;
 };
 
 export const ShipbreakerConsole = (props) => {
@@ -16,7 +15,6 @@ export const ShipbreakerConsole = (props) => {
       <Window.Content scrollable>
         <Section title="Ship Health">
           <ProgressBar
-            title="Health"
             value={health}
             maxValue={100}
             ranges={{

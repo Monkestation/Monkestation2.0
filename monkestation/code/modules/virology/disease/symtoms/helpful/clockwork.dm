@@ -61,7 +61,7 @@
 			switch(Oldlimb.slot) //i hate doing it this way, but the cleaner way runtimes and does not work
 				if(ORGAN_SLOT_BRAIN)
 					Oldlimb.name = "enigmatic gearbox"
-					Oldlimb.desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'"
+					Oldlimb.desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'."
 					Oldlimb.icon_state = "brain-clock"
 					Oldlimb.organ_flags = ORGAN_ROBOTIC
 					return TRUE
@@ -208,7 +208,7 @@
 					return TRUE
 	return FALSE
 
-/datum/symptom/robotic_adaptation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/robotic_adaptation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	disease.infectable_biotypes &= ~(biotypes)
 	if(disease.stage >= 3 && (replaceorgans || replacebody)) //sorry. no disease quartets allowed
 		to_chat(mob, "<span class='userdanger'>You feel lighter and springier as your innards lose their clockwork facade.</span>")

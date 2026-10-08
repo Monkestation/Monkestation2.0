@@ -27,4 +27,4 @@
 		var/datum/component/ghost_object_control/spiritholder = boi.GetComponent(/datum/component/ghost_object_control)
 		if(!(spiritholder.bound_spirit))
 			spiritholder.request_control(0.6)
-	COOLDOWN_START(src,plushiefact,3 MINUTE)
+	COOLDOWN_START(src, plushiefact, 3 MINUTES)

@@ -6,25 +6,59 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	/// Airlock's current construction state
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 	var/base_name = "Airlock"
+	var/created_name = null
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
-	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
+	/// Do we perform the extra checks required for multi-tile (large) airlocks
+	var/multi_tile = FALSE
+	/// The type path of the airlock once completed (solid version)
+	var/airlock_type = /obj/machinery/door/airlock
+	/// The type path of the airlock once completed (glass version)
 	var/glass_type = /obj/machinery/door/airlock/glass
-	var/glass = 0 // 0 = glass can be installed. 1 = glass is already installed.
-	var/created_name = null
-	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
+	/// FALSE = glass can be installed. TRUE = glass is already installed.
+	var/glass = FALSE
+	/// Whether to heat-proof the finished airlock
+	var/heat_proof_finished = FALSE
+	/// If you're changing the airlock material, what is the previous type
 	var/previous_assembly = /obj/structure/door_assembly
-	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
-	var/nomineral = FALSE //airlock with glass version, but cannot be modified with sheets
+	/// Airlocks with no glass version, also cannot be modified with sheets
+	var/noglass = FALSE
+	/// Airlock with glass version, but cannot be modified with sheets
+	var/nomineral = FALSE
+	/// What type of material the airlock drops when deconstructed
 	var/material_type = /obj/item/stack/sheet/iron
+	/// Amount of material the airlock drops when deconstructed
 	var/material_amt = 4
+
+/obj/structure/door_assembly/multi_tile
+	name = "large airlock assembly"
+	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	base_name = "large airlock"
+	glass_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	airlock_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	dir = EAST
+	multi_tile = TRUE
+	glass = TRUE
+	nomineral = TRUE
+	material_amt = 8
 
 /obj/structure/door_assembly/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	update_name()
+
+/obj/structure/door_assembly/multi_tile/Initialize(mapload)
+	. = ..()
+	set_bounds()
+	update_overlays()
+
+/obj/structure/door_assembly/multi_tile/Move()
+	. = ..()
+	set_bounds()
 
 /obj/structure/door_assembly/examine(mob/user)
 	. = ..()
@@ -65,28 +99,28 @@
 
 		if(mineral)
 			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			user.visible_message(span_notice("[user] welds the [mineral] plating off the airlock assembly."), span_notice("You start to weld the [mineral] plating off the airlock assembly..."))
-			if(attacking_item.use_tool(src, user, 40, volume=50))
+			user.visible_message(span_notice("[user] welds the [mineral] plating off \the [src]."), span_notice("You start to weld the [mineral] plating off \the [src]..."))
+			if(attacking_item.use_tool(src, user, 2 SECONDS, volume=50))
 				to_chat(user, span_notice("You weld the [mineral] plating off."))
 				new mineral_path(loc, 2)
 				var/obj/structure/door_assembly/PA = new previous_assembly(loc)
 				transfer_assembly_vars(src, PA)
 
 		else if(glass)
-			user.visible_message(span_notice("[user] welds the glass panel out of the airlock assembly."), span_notice("You start to weld the glass panel out of the airlock assembly..."))
-			if(attacking_item.use_tool(src, user, 40, volume=50))
+			user.visible_message(span_notice("[user] welds the glass panel out of \the [src]."), span_notice("You start to weld the glass panel out of \the [src]..."))
+			if(attacking_item.use_tool(src, user, 2 SECONDS, volume=50))
 				to_chat(user, span_notice("You weld the glass panel out."))
 				if(heat_proof_finished)
 					new /obj/item/stack/sheet/rglass(get_turf(src))
-					heat_proof_finished = 0
+					heat_proof_finished = FALSE
 				else
 					new /obj/item/stack/sheet/glass(get_turf(src))
 				glass = 0
 		else if(!anchored)
-			user.visible_message(span_warning("[user] disassembles the airlock assembly."), \
-								span_notice("You start to disassemble the airlock assembly..."))
+			user.visible_message(span_warning("[user] disassembles \the [src]."), \
+								span_notice("You start to disassemble \the [src]..."))
 			if(attacking_item.use_tool(src, user, 40, volume=50))
-				to_chat(user, span_notice("You disassemble the airlock assembly."))
+				to_chat(user, span_notice("You disassemble \the [src]."))
 				deconstruct(TRUE)
 
 	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
@@ -98,27 +132,27 @@
 					break
 
 			if(door_check)
-				user.visible_message(span_notice("[user] secures the airlock assembly to the floor."), \
-					span_notice("You start to secure the airlock assembly to the floor..."), \
+				user.visible_message(span_notice("[user] secures \the [src] to the floor."), \
+					span_notice("You start to secure \the [src] to the floor..."), \
 					span_hear("You hear wrenching."))
 
-				if(attacking_item.use_tool(src, user, 40, volume=100))
+				if(attacking_item.use_tool(src, user, 1 SECONDS, volume=100))
 					if(anchored)
 						return
-					to_chat(user, span_notice("You secure the airlock assembly."))
+					to_chat(user, span_notice("You secure \the [src]."))
 					name = "secured airlock assembly"
 					set_anchored(TRUE)
 			else
 				to_chat(user, "There is another door here!")
 
 		else
-			user.visible_message(span_notice("[user] unsecures the airlock assembly from the floor."), \
-				span_notice("You start to unsecure the airlock assembly from the floor..."), \
+			user.visible_message(span_notice("[user] unsecures \the [src] from the floor."), \
+				span_notice("You start to unsecure \the [src] from the floor..."), \
 				span_hear("You hear wrenching."))
-			if(attacking_item.use_tool(src, user, 40, volume=100))
+			if(attacking_item.use_tool(src, user, 2 SECONDS, volume=100))
 				if(!anchored)
 					return
-				to_chat(user, span_notice("You unsecure the airlock assembly."))
+				to_chat(user, span_notice("You unsecure \the [src]."))
 				name = "airlock assembly"
 				set_anchored(FALSE)
 
@@ -126,32 +160,32 @@
 		if(!attacking_item.tool_start_check(user, amount=1))
 			return
 
-		user.visible_message(span_notice("[user] wires the airlock assembly."), \
-							span_notice("You start to wire the airlock assembly..."))
-		if(attacking_item.use_tool(src, user, 40, amount=1))
+		user.visible_message(span_notice("[user] wires \the [src]."), \
+							span_notice("You start to wire \the [src]..."))
+		if(attacking_item.use_tool(src, user, 1 SECONDS, amount=1))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_WIRES)
 				return
 			state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
-			to_chat(user, span_notice("You wire the airlock assembly."))
+			to_chat(user, span_notice("You wire \the [src]."))
 			name = "wired airlock assembly"
 
 	else if((attacking_item.tool_behaviour == TOOL_WIRECUTTER) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
-		user.visible_message(span_notice("[user] cuts the wires from the airlock assembly."), \
-							span_notice("You start to cut the wires from the airlock assembly..."))
+		user.visible_message(span_notice("[user] cuts the wires from \the [src]."), \
+							span_notice("You start to cut the wires from \the [src]..."))
 
-		if(attacking_item.use_tool(src, user, 40, volume=100))
+		if(attacking_item.use_tool(src, user, 2 SECONDS, volume=100))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)
 				return
-			to_chat(user, span_notice("You cut the wires from the airlock assembly."))
+			to_chat(user, span_notice("You cut the wires from \the [src]."))
 			new/obj/item/stack/cable_coil(get_turf(user), 1)
 			state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 			name = "secured airlock assembly"
 
 	else if(istype(attacking_item, /obj/item/electronics/airlock) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 		attacking_item.play_tool_sound(src, 100)
-		user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."), \
-							span_notice("You start to install electronics into the airlock assembly..."))
-		if(do_after(user, 4 SECONDS, target = src))
+		user.visible_message(span_notice("[user] installs \the [attacking_item] into \the [src]."), \
+							span_notice("You start to install \the [attacking_item] into \the [src]..."))
+		if(do_after(user, 1 SECONDS, target = src))
 			if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 				return
 			if(!user.transferItemToLoc(attacking_item, src))
@@ -164,10 +198,10 @@
 
 
 	else if((attacking_item.tool_behaviour == TOOL_CROWBAR) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
-		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \
-								span_notice("You start to remove electronics from the airlock assembly..."))
+		user.visible_message(span_notice("[user] removes the electronics from \the [src]."), \
+								span_notice("You start to remove electronics from \the [src]..."))
 
-		if(attacking_item.use_tool(src, user, 40, volume=100))
+		if(attacking_item.use_tool(src, user, 2 SECONDS, volume=100))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
 				return
 			to_chat(user, span_notice("You remove the airlock electronics."))
@@ -189,17 +223,17 @@
 					if(!glass)
 						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
 							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
-							user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
-												span_notice("You start to install [G.name] into the airlock assembly..."))
-							if(do_after(user, 4 SECONDS, target = src))
+							user.visible_message(span_notice("[user] adds [G.name] to \the [src]."), \
+												span_notice("You start to install [G.name] into \the [src]..."))
+							if(do_after(user, 1 SECONDS, target = src))
 								if(G.get_amount() < 1 || glass)
 									return
 								if(G.type == /obj/item/stack/sheet/rglass)
-									to_chat(user, span_notice("You install [G.name] windows into the airlock assembly."))
+									to_chat(user, span_notice("You install [G.name] windows into \the [src]."))
 									heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
 									name = "near finished heat-proofed window airlock assembly"
 								else
-									to_chat(user, span_notice("You install regular glass windows into the airlock assembly."))
+									to_chat(user, span_notice("You install regular glass windows into \the [src]."))
 									name = "near finished window airlock assembly"
 								G.use(1)
 								glass = TRUE
@@ -212,12 +246,12 @@
 								return
 							if(G.get_amount() >= 2)
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
-								user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
-									span_notice("You start to install [G.name] into the airlock assembly..."))
-								if(do_after(user, 4 SECONDS, target = src))
+								user.visible_message(span_notice("[user] adds [G.name] to \the [src]."), \
+									span_notice("You start to install [G.name] into \the [src]..."))
+								if(do_after(user, 1 SECONDS, target = src))
 									if(G.get_amount() < 2 || mineral)
 										return
-									to_chat(user, span_notice("You install [M] plating into the airlock assembly."))
+									to_chat(user, span_notice("You install [M] plating into \the [src]."))
 									G.use(2)
 									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
 
@@ -353,10 +387,20 @@
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
+	else if(((state == AIRLOCK_ASSEMBLY_NEEDS_WIRES) || (state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 2 SECONDS, "cost" = 1)
+
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
+		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
+			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+			span_notice("You adapt a airlock circuit and slot it into the assembly."))
+			electronics = the_rcd.airlock_electronics.create_copy(electronics)
+			state = AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER
+			update_appearance()
+			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span_notice("You deconstruct [src]."))
 			qdel(src)

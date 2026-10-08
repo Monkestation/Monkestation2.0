@@ -11,10 +11,9 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 /// Builds the list of crew records for all crew members.
 /datum/manifest/proc/build()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/readied_player = i
+	for(var/mob/dead/new_player/readied_player as anything in GLOB.new_player_list)
 		if(readied_player.new_character)
-			log_manifest(readied_player.ckey,readied_player.new_character.mind,readied_player.new_character)
+			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
 			inject(readied_player.new_character)
 		CHECK_TICK
@@ -96,13 +95,19 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 
 /// Injects a record into the manifest.
-/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client)
+/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client, atom/appearance_proxy)
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
+	//if you're cargo, and not a boss, you're part of the Union.
+	if((person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO) && !(person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+		GLOB.cargo_union_employees += list(list(
+			CARGO_UNION_LEADER = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
+			CARGO_UNION_NAME = person.real_name,
+		))
 
 	var/assignment = person.mind.assigned_role.title
-	var/mutable_appearance/character_appearance = new(person.appearance)
+	var/mutable_appearance/character_appearance = new(appearance_proxy?.appearance || person.appearance)
 	var/person_gender = "Other"
 	if(person.gender == "male")
 		person_gender = "Male"
@@ -115,7 +120,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
-		blood_type = "[person.get_blood_type() || "None"]",
+		blood_type = person.get_bloodtype()?.name || "UNKNOWN",
 		character_appearance = character_appearance,
 		dna_string = record_dna.unique_enzymes,
 		fingerprint = md5(record_dna.unique_identity),
@@ -133,7 +138,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	var/datum/record/crew/crewfile = new (
 		age = person.age,
-		blood_type = "[person.get_blood_type() || "None"]",
+		blood_type = person.get_bloodtype()?.name || "UNKNOWN",
 		character_appearance = character_appearance,
 		dna_string = record_dna.unique_enzymes,
 		fingerprint = md5(record_dna.unique_identity),

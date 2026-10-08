@@ -2,6 +2,13 @@
 	group = "Engineering"
 	crate_type = /obj/structure/closet/crate/engineering
 
+/datum/supply_pack/engineering/breachcart
+	name = "Stocked Engineering Cart"
+	desc = "A fully stocked engineering cart full of everything you need to repair the station on the go. Engineering access needed to unlock."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/structure/closet/crate/trashcart/engineering/filled)
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"
 	desc = "Hull breaches again? Say no more with the Nanotrasen Anti-Breach Shield Projector! \
@@ -193,6 +200,8 @@
 	contains = list(/obj/machinery/satellite/meteor_shield = 3)
 	crate_name= "shield sat crate"
 
+/datum/supply_pack/engineering/shield_sat/available()
+	return ..() && !SSmapping.is_planetary()
 
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
@@ -203,6 +212,8 @@
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/shield_sat_control/available()
+	return ..() && !SSmapping.is_planetary()
 
 /// Engine Construction
 

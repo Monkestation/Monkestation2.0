@@ -29,9 +29,6 @@
 /obj/item/clothing/suit/jacket/det_suit/noir/armoured
 	armor_type = /datum/armor/heister
 
-/obj/item/clothing/head/frenchberet/armoured
-	armor_type = /datum/armor/cosmetic_sec
-
 /obj/item/clothing/under/suit/black/armoured
 	armor_type = /datum/armor/clothing_under/syndicate
 
@@ -108,9 +105,9 @@
 	to_chat(user, span_boldannounce("You start skimming through [src], and feel suddenly imparted with the knowledge of the following code words:"))
 
 	user.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	user.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
-	to_chat(user, "<b>Code Phrases</b>: [jointext(GLOB.syndicate_code_phrase, ", ")]")
-	to_chat(user, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+	user.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
+	to_chat(user, "<b>Code Phrases</b>: [span_blue("[jointext(GLOB.syndicate_code_phrase, ", ")]")]")
+	to_chat(user, "<b>Code Responses</b>: [span_orange("[jointext(GLOB.syndicate_code_response, ", ")]")]")
 	user.add_mob_memory(/datum/memory/key/codewords)
 	user.add_mob_memory(/datum/memory/key/codewords/responses)
 
@@ -132,10 +129,10 @@
 	else
 		attacked_mob.visible_message(span_notice("[user] teaches [attacked_mob] by beating [attacked_mob.p_them()] over the head with [src]!"), span_boldnotice("As [user] hits you with [src], you feel suddenly imparted with the knowledge of some [span_red("specific words")]."), span_hear("You hear smacking."))
 		attacked_mob.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-		attacked_mob.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+		attacked_mob.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
 		to_chat(attacked_mob, span_boldnotice("You feel suddenly imparted with the knowledge of the following code words:"))
 		to_chat(attacked_mob, "<b>Code Phrases</b>: [span_blue("[jointext(GLOB.syndicate_code_phrase, ", ")]")]")
-		to_chat(attacked_mob, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+		to_chat(attacked_mob, "<b>Code Responses</b>: [span_orange("[jointext(GLOB.syndicate_code_response, ", ")]")]")
 		attacked_mob.add_mob_memory(/datum/memory/key/codewords)
 		attacked_mob.add_mob_memory(/datum/memory/key/codewords/responses)
 		use_charge(user)
@@ -195,10 +192,28 @@
 /obj/item/antag_granter/clock_cultist
 	name = "brass contraption"
 	desc = "A cogwheel-shaped device of brass, with a glass lens floating, suspended in the center."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "vanguard_cogwheel"
 	antag_datum = /datum/antagonist/clock_cultist/solo
 	user_message = "A whirring fills your ears as <span class='brass'>knowledge of His Eminence fills your mind</span>."
+
+/obj/item/antag_granter/blood_cultist
+	name = "bloody knife"
+	desc = "A ancient knife, caked in blood, both fresh and dried."
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon_state = "render"
+	antag_datum = /datum/antagonist/cult
+	user_message = span_cult("Ancient, bloody knoweldge floods your mind as you look into the dagger.")
+
+/obj/item/antag_granter/blood_cultist/attack_self(mob/living/carbon/user, modifiers)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/obj/item/stack/sheet/runed_metal/ten/metal = new
+	var/obj/item/melee/cultblade/dagger/knoife = new
+	user.equip_conspicuous_item(metal)
+	user.equip_conspicuous_item(knoife)
 
 /obj/item/antag_granter/clock_cultist/attack_self(mob/user, modifiers)
 	. = ..()

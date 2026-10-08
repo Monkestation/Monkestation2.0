@@ -1,14 +1,14 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
-  Tooltip,
   Box,
-  Slider,
-  ProgressBar,
-  NoticeBox,
   Button,
   LabeledList,
+  NoticeBox,
+  ProgressBar,
   Section,
+  Slider,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -103,7 +103,8 @@ export const IVDrip = (props) => {
                     minValue={minTransferRate}
                     maxValue={maxTransferRate}
                     unit="units/sec."
-                    onDrag={(e, value) =>
+                    tickWhileDragging
+                    onChange={(_, value) =>
                       act('changeRate', {
                         rate: value,
                       })
@@ -114,7 +115,7 @@ export const IVDrip = (props) => {
             )}
             <LabeledList.Item
               label="Direction"
-              color={!mode && 'bad'}
+              color={mode ? undefined : 'bad'}
               buttons={
                 <Button
                   my={1}
@@ -162,7 +163,7 @@ export const IVDrip = (props) => {
                 >
                   <span
                     style={{
-                      'text-shadow': '1px 1px 0 black',
+                      textShadow: '1px 1px 0 black',
                     }}
                   >
                     {`${containerCurrentVolume} of ${containerMaxVolume} units`}

@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../../backend';
-import { Flex, Input, Section, Button } from '../../components';
+import { Button, Flex, Input, Section } from '../../components';
 
 type Data = {
   upperText: string;
@@ -80,7 +80,7 @@ export const StatusDisplayControls = (props) => {
               fluid
               maxLength={maxStatusLineLength}
               value={upperText}
-              onChange={(_, value) => setUpperText(value)}
+              onChange={(value) => setUpperText(value)}
             />
           </Flex.Item>
 
@@ -89,7 +89,7 @@ export const StatusDisplayControls = (props) => {
               fluid
               maxLength={maxStatusLineLength}
               value={lowerText}
-              onChange={(_, value) => setLowerText(value)}
+              onChange={(value) => setLowerText(value)}
             />
           </Flex.Item>
 

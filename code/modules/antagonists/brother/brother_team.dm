@@ -11,6 +11,10 @@
 	var/datum/bb_gear/chosen_gear
 	/// The index of GLOB.color_list_blood_brothers to use to generate the color.
 	var/static/next_color = 1
+	var/brothers_left = 2
+	var/brother_chance = 10
+	///List of people who rejected being our brother
+	var/list/rejected_brothers = list()
 
 /datum/team/brother_team/add_member(datum/mind/new_member)
 	. = ..()
@@ -37,6 +41,8 @@
 	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
 		return FALSE
 	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
+	var/datum/antagonist/brother/brother = new_brother.mind.has_antag_datum(/datum/antagonist/brother)
+	brother.brotherRank = members.len - 1
 	return TRUE
 
 /datum/team/brother_team/proc/update_name()
@@ -57,6 +63,8 @@
 
 /datum/team/brother_team/proc/forge_brother_objectives()
 	objectives = list()
+
+	add_objective(new /datum/objective/convert_brother)
 
 	var/is_hijacker = prob(10)
 	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (length(members) > 2) - is_hijacker))
@@ -82,6 +90,15 @@
 			add_objective(new /datum/objective/assassinate, needs_target = TRUE)
 	else
 		add_objective(new /datum/objective/steal, needs_target = TRUE)
+
+/datum/objective/convert_brother
+	name = "convert brother"
+	explanation_text = "Convert a brainwashable person using your flash on them directly. Any handheld flash will work if you lose or break your starting flash. Examine a flash for more details on conversion."
+	admin_grantable = FALSE
+	martyr_compatible = TRUE
+
+/datum/objective/convert_brother/check_completion()
+	return length(team?.members) > 1
 
 /datum/team/brother_team/proc/roll_for_color()
 	if(!isnull(color) || !length(members))

@@ -11,7 +11,7 @@
 	/// The current uplink flag of this uplink
 	var/uplink_flag = NONE
 	/// This uplink has progression
-	var/has_progression = TRUE
+	var/has_progression = FALSE
 	/// The amount of experience points this traitor has
 	var/progression_points = 0
 	/// The purchase log of this uplink handler
@@ -36,8 +36,6 @@
 	var/list/completed_objectives = list()
 	/// All objectives assigned by type to handle any duplicates
 	var/list/potential_duplicate_objectives = list()
-	/// Text of the final objective, once assigned. Used for uplink data and traitor greentext. Empty string means not yet reached.
-	var/final_objective = ""
 	/// Objectives that must be completed for traitor greentext. Set by the traitor datum.
 	var/list/primary_objectives
 	/// The role that this uplink handler is associated to.
@@ -52,6 +50,15 @@
 	var/datum/callback/can_replace_objectives
 	/// Callback which performs that operation
 	var/datum/callback/replace_objectives
+
+	/// Extra stuff that cannot be purchased by an uplink, regardless of flag.
+	var/list/locked_entries = list()
+	///how much contractor rep we have
+	var/contractor_rep = 0
+	///list of our contractor market items
+	var/list/contractor_market_items = list()
+	///list of purchased contractor items
+	var/list/purchased_contractor_items = list()
 
 /datum/uplink_handler/New()
 	. = ..()
@@ -258,8 +265,6 @@
 		objective.update_progression_reward()
 
 /datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
-	if(istype(to_abort, /datum/traitor_objective/ultimate))
-		return
 	if(to_abort.objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 	to_abort.fail_objective(penalty_cost = to_abort.telecrystal_penalty)
@@ -293,3 +298,22 @@
 	maximum_potential_objectives = 0
 	SStraitor.uplink_handlers -= src
 	on_update()
+
+///Add items to our locked_entries
+/datum/uplink_handler/proc/add_locked_entries(list/items_to_add)
+	for(var/datum/uplink_item/item as anything in items_to_add)
+		locked_entries |= item
+
+///Clear a handler's potential_objectives
+/**
+ * fail_active - should we also call fail_objective() their active_objectives
+ * regenerate_objectives - should we let their objectives regenerate or not
+ */
+/datum/uplink_handler/proc/clear_secondaries(fail_active = FALSE, regenerate_objectives = FALSE)
+	var/original_max = maximum_potential_objectives
+	if(!regenerate_objectives)
+		maximum_potential_objectives = 0 //janky, but it needs the least new code and should work with what this proc does
+
+	for(var/datum/traitor_objective/possible_objective in potential_objectives + (fail_active ? active_objectives : list()))
+		possible_objective.fail_objective()
+	maximum_potential_objectives = original_max

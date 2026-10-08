@@ -1,5 +1,4 @@
 /obj/item/clothing/under/rank/captain
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command_digi.dmi'
 	//NOTE - TG uses "captain.dmi"; because we have a few non-captain items going in here for ease of access, this will just be "command.dmi"
 
 /obj/item/clothing/under/rank/captain/nova
@@ -38,7 +37,6 @@
 /obj/item/clothing/under/rank/nanotrasen_consultant
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/command.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command_digi.dmi'
 	desc = "It's a green jumpsuit with some gold markings denoting the rank of \"Nanotrasen Consultant\"."
 	name = "nanotrasen consultant's jumpsuit"
 	icon_state = "nt_consultant"

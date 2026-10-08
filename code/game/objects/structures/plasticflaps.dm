@@ -9,6 +9,7 @@
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
+	astar_weight = 15
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE

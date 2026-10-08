@@ -71,7 +71,7 @@
 	var/atom/movable/pulling
 	var/grab_state = 0
 	/// The strongest grab we can acomplish
-	var/max_grab = GRAB_KILL
+	var/max_grab = GRAB_PASSIVE
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 
@@ -118,6 +118,12 @@
 	///can we grab this object?
 	var/cant_grab = FALSE
 
+	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
+	var/can_language_malfunction = TRUE
+
+	/// The weight for A* pathfinding added to turfs this atom is on.
+	var/astar_weight
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -147,7 +153,7 @@
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(src, render_target)
+			em_block = new(null, src)
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
@@ -187,6 +193,10 @@
 		if(MOVABLE_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
+	if(astar_weight && isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.astar_weight += astar_weight
+
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
@@ -198,7 +208,6 @@
 		if(((can_atmos_pass == ATMOS_PASS_DENSITY && density) || can_atmos_pass == ATMOS_PASS_NO) && isturf(loc))
 			can_atmos_pass = ATMOS_PASS_YES
 			air_update_turf(TRUE, FALSE)
-		loc.handle_atom_del(src)
 
 	if(opacity)
 		RemoveElement(/datum/element/light_blocking)
@@ -258,9 +267,11 @@
 	// This saves several hundred milliseconds of init time.
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
-			if(!em_block && !QDELETED(src))
+			if(em_block)
+				SET_PLANE(em_block, EMISSIVE_PLANE, src)
+			else if(!QDELETED(src))
 				render_target = ref(src)
-				em_block = new(src, render_target)
+				em_block = new(null, src)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
 	// EMISSIVE_BLOCK_GENERIC == 0
@@ -276,7 +287,7 @@
 	SET_PLANE(underlay_appearance, PLANE_SPACE, generate_for)
 	if(!generate_for.render_target)
 		generate_for.render_target = ref(generate_for)
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for.render_target)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for)
 	underlay_appearance.overlays += em_block
 	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
 	QDEL_NULL(em_block)
@@ -430,6 +441,8 @@
 			if(z_move_flags & ZMOVE_FEEDBACK)
 				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
 			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CAN_Z_MOVE, start, destination) & COMPONENT_CANT_Z_MOVE)
+		return FALSE
 	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || (movement_type & (FLYING|FLOATING)) || !has_gravity(start)))
 		return FALSE
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
@@ -854,9 +867,6 @@
 	if (!moving_diagonally && client_mobs_in_contents)
 		update_parallax_contents()
 
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	if(old_loc)
@@ -866,6 +876,12 @@
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
+
+	if(astar_weight)
+		if(old_turf)
+			old_turf.astar_weight -= astar_weight
+		if(new_turf)
+			new_turf.astar_weight += astar_weight
 
 	if (old_turf?.z != new_turf?.z)
 		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
@@ -983,15 +999,6 @@
 					if(!length(recursive_contents[channel]))
 						SSspatial_grid.add_grid_awareness(location, channel)
 			recursive_contents[channel] |= arrived.important_recursive_contents[channel]
-
-/**
- * Returns a bitfield containing flags both present in `flags` arg and the `processing_move_loop_flags` move_packet variable.
- * Has no use outside of procs called within the movement proc chain.
- */
-/atom/movable/proc/check_move_loop_flags(flags)
-	if(!move_packet)
-		return NONE
-	return flags & move_packet.processing_move_loop_flags
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
@@ -1124,7 +1131,9 @@
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
 	if(QDELING(src))
-		CRASH("Illegal forceMove() on qdeling [type]")
+		if(!isorgan(src))
+			CRASH("Illegal forceMove() on qdeling [type]")
+		return
 
 	if(destination)
 		. = doMove(destination)
@@ -1615,6 +1624,8 @@
  * - They are on the escape shuttle
  */
 /atom/movable/proc/randomize_language_if_on_station()
+	if(!can_language_malfunction)
+		return
 	var/turf/atom_turf = get_turf(src)
 	var/area/atom_area = get_area(src)
 

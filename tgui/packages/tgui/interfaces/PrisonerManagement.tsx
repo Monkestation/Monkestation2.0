@@ -1,3 +1,5 @@
+import type { BooleanLike } from 'common/react';
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -8,9 +10,6 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import type { BooleanLike } from 'common/react';
-
-import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 type byondRef = string;

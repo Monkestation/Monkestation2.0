@@ -2,6 +2,7 @@
 #define PLEXORA_SHUTDOWN_HARD 1
 #define PLEXORA_SHUTDOWN_HARDEST 2
 #define PLEXORA_SHUTDOWN_KILLDD 3
+#define PLEXORA_SHUTDOWN_OOM 4
 
 #define PLEXORA_DOWN -1
 #define PLEXORA_CKEYPOLL_FAILED 0
@@ -30,6 +31,14 @@
 #define PLEXORA_ERROR_NOTWITCHKEY "plx_twitchkeynotconfigured"
 // Topic call passed invalid smite
 #define PLEXORA_ERROR_INVALIDSMITE "plx_invalidsmite"
+// Topic call bad parameter
+#define PLEXORA_ERROR_BAD_PARAM "plx_badparam"
 
 #define PLEXORA_NOTIFYSIGNUP_ENROLL "enroll"
 #define PLEXORA_NOTIFYSIGNUP_UNENROLL "unenroll"
+
+#define PLEXORA_SERVERID_MRP "3ea482a2"
+#define PLEXORA_SERVERID_MONKESPAW "bd02300d"
+#define PLEXORA_SERVERID_MONKERIS "d212eb11"
+#define PLEXORA_SERVERID_VANDERLIN "8c2bf7ef"
+

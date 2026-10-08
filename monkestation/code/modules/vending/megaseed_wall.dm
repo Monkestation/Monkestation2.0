@@ -1,5 +1,5 @@
 /obj/machinery/vending/hydroseeds/wall
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "wallseeds"
 	icon_deny = "wallseeds-deny"
 	panel_type = "wallseeds-panel"

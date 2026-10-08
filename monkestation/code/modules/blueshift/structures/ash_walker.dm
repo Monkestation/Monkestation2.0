@@ -477,12 +477,13 @@
 
 	src_mixture.assert_gases(/datum/gas/carbon_dioxide, /datum/gas/oxygen, /datum/gas/nitrogen)
 
-	var/proportion = src_mixture.gases[/datum/gas/carbon_dioxide][MOLES]
+	var/list/cached_moles = src_mixture.moles
+	var/proportion = cached_moles[/datum/gas/carbon_dioxide]
 	if(proportion) //if there is carbon dioxide in the air, lets turn it into oxygen
-		src_mixture.gases[/datum/gas/carbon_dioxide][MOLES] -= proportion
-		src_mixture.gases[/datum/gas/oxygen][MOLES] += proportion
+		cached_moles[/datum/gas/carbon_dioxide] -= proportion
+		cached_moles[/datum/gas/oxygen] += proportion
 
-	src_mixture.gases[/datum/gas/nitrogen][MOLES] += MOLES_CELLSTANDARD //the nitrogen cycle-- plants (and bacteria) participate in the nitrogen cycle
+	cached_moles[/datum/gas/nitrogen] += MOLES_CELLSTANDARD //the nitrogen cycle-- plants (and bacteria) participate in the nitrogen cycle
 
 /obj/structure/plant_tank/wrench_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "[anchored ? "un" : ""]bolting")
@@ -572,7 +573,7 @@
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, span_warning("Your [W.name] is already full!"))
 				return
-			reagents.trans_to(W, W.max_fuel, transfered_by = user)
+			reagents.trans_to(W, W.max_fuel, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_appearance()
@@ -890,11 +891,11 @@
 		else
 			icon_state = "[planted_seed.icon_grow][planted_seed.growthstages]"
 
-		name = lowertext(planted_seed.plantname)
+		name = LOWER_TEXT(planted_seed.plantname)
 
 	else
 		icon_state = "[planted_seed.icon_grow]1"
-		name = lowertext("harvested [planted_seed.plantname]")
+		name = LOWER_TEXT("harvested [planted_seed.plantname]")
 
 	return ..()
 
@@ -984,7 +985,7 @@
 /**
  * a proc that will increase the amount of items the crop could produce (at a maximum of 6, from base of 3)
  */
-/obj/structure/simple_farm/proc/increase_yield(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/increase_yield(mob/user, silent = FALSE)
 	if(!allow_yield_increase())
 		if(!silent)
 			balloon_alert(user, "plant is at maximum yield")
@@ -1010,7 +1011,7 @@
 /**
  * a proc that will decrease the amount of time it takes to be ready for harvest (at a maximum of 30 seconds, from a base of 1 minute)
  */
-/obj/structure/simple_farm/proc/decrease_cooldown(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/decrease_cooldown(mob/user, silent = FALSE)
 	if(!allow_decrease_cooldown())
 		if(!silent)
 			balloon_alert(user, "already at maximum growth speed!")
@@ -1027,7 +1028,7 @@
 /**
  * a proc that will increase the potency the crop grows at
  */
-/obj/structure/simple_farm/proc/increase_potency(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/increase_potency(mob/user, silent = FALSE)
 	if(bonus_potency >= 50)
 		if(!silent)
 			balloon_alert(user, "plant is at maximum potency")
@@ -1058,7 +1059,7 @@
 /**
  * will create a harvest of the seeds product, with a chance to create a mutated version
  */
-/obj/structure/simple_farm/proc/create_harvest(var/obj/item/storage/bag/plants/plant_bag, var/mob/user)
+/obj/structure/simple_farm/proc/create_harvest(obj/item/storage/bag/plants/plant_bag, mob/user)
 	if(!planted_seed)
 		return
 
@@ -1097,9 +1098,12 @@
 	name = "\improper Ashland Clothing Storage"
 	desc = "A large container, filled with various clothes for the Ash Walkers."
 	product_ads = "Praise the Necropolis"
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
+	use_power = NO_POWER_USE
+	initial_language_holder = /datum/language_holder/ashwalker
+	vend_reply = "Glory to the Necropolis."
 
 	products = list( //Relatively normal to have, I GUESS
 		/obj/item/clothing/under/costume/gladiator/ash_walker/tribal = 15,
@@ -1116,7 +1120,7 @@
 		/obj/item/clothing/shoes/jackboots/ashwalker/legate = 12,
 		/obj/item/clothing/shoes/wraps/ashwalker/mundanewraps = 15,
 		/obj/item/clothing/shoes/wraps/ashwalker = 10,
-		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,,
+		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,
 		/obj/item/clothing/head/shamanash = 3,
 		/obj/item/clothing/neck/cloak/tribalmantle = 2,
 		/obj/item/clothing/gloves/military/claw = 5,

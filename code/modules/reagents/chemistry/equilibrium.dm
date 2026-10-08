@@ -381,7 +381,7 @@
 
 	//Give a chance of sounds
 	if(prob(5))
-		holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]"))
+		holder.my_atom.audible_message(span_notice("<img class='icon' src='\ref[holder.my_atom]'> [reaction.mix_message]"), push_appearance = holder.my_atom)
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 

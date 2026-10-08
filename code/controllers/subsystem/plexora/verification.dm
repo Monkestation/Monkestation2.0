@@ -3,7 +3,7 @@
 	if (!enabled || !fexists("[global.config.directory]/allowed_ckeys.txt"))
 		return
 	allowed_ckeys.Cut()
-	var/list/lines = world.file2list("[global.config.directory]/allowed_ckeys.txt")
+	var/list/lines = file2list("[global.config.directory]/allowed_ckeys.txt")
 	for(var/line in lines)
 		if(!length(line))
 			continue
@@ -55,10 +55,7 @@
 
 /* Discord Verification Window */
 
-/client/verb/verify_in_discord()
-	set category = "OOC"
-	set name = "Verify Discord Account"
-	set desc = "Verify your discord account with your BYOND account"
+GAME_VERB_DESC(/client, verify_in_discord, "Verify Discord Account", "Verify your discord account with your BYOND account", "OOC")
 
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(src, span_warning("This feature requires the SQL backend to be running."))

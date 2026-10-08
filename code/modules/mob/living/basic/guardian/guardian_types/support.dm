@@ -65,6 +65,8 @@
 //MONKESTATION ADDITION START
 /// Called by the healing_touch component to check if we want this attack to heal
 /mob/living/basic/guardian/support/proc/wants_to_heal(mob/living/source, mob/living/target)
+	if (!is_deployed())
+		return FALSE
 	var/is_right_clicking = (istate & ISTATE_SECONDARY)
 	if(is_right_clicking)
 		return TRUE

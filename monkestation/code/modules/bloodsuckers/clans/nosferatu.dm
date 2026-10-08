@@ -1,3 +1,5 @@
+
+//Note that the code for the nosferatu examine text is handled in code\modules\mob\living\carbon\human\examine.dm
 /datum/bloodsucker_clan/nosferatu
 	name = CLAN_NOSFERATU
 	description = "The Nosferatu Clan is unable to blend in with the crew, with no abilities such as Masquerade and Veil. \n\
@@ -10,6 +12,7 @@
 		lose your Masquerade ability, but gain the ability to Ventcrawl even while clothed."
 	blood_drink_type = BLOODSUCKER_DRINK_INHUMANELY
 	banned_powers = list(/datum/action/cooldown/bloodsucker/masquerade, /datum/action/cooldown/bloodsucker/veil)
+	joinable_clan = FALSE
 
 /datum/bloodsucker_clan/nosferatu/New(datum/antagonist/bloodsucker/owner_datum)
 	. = ..()

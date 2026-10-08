@@ -44,7 +44,7 @@
 /datum/symptom/pthroat/first_activate(mob/living/carbon/mob)
 	RegisterSignal(mob, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/symptom/pthroat/deactivate(mob/living/carbon/mob)
+/datum/symptom/pthroat/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	UnregisterSignal(mob, COMSIG_MOB_SAY)
 
 /datum/symptom/pthroat/proc/handle_speech(datum/source, list/speech_args)
@@ -54,7 +54,7 @@
 	var/list/split_message = splittext(message, " ") //List each word in the message
 	var/applied = 0
 	for (var/i in 1 to length(split_message))
-		if(prob(3 * multiplier)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
+		if(prob(3 * multiplier * power)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
 			if(findtext(split_message[i], "*") || findtext(split_message[i], ";") || findtext(split_message[i], ":"))
 				continue
 			split_message[i] = "HONK"

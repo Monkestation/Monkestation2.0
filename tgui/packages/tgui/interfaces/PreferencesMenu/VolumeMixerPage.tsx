@@ -1,20 +1,28 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Flex, Icon, Section, Slider } from '../../components';
-import { Channel, PreferencesMenuData } from './data';
+import {
+  Box,
+  Button,
+  Icon,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from '../../components';
+import type { Channel, PreferencesMenuData } from './data';
 
 export const VolumeMixerPage = () => {
   const { data } = useBackend<PreferencesMenuData>();
   const { channels } = data;
 
   return (
-    <Section title="Volume Mixers" height="100%" overflow="auto">
-      <Flex align="start" direction="row" wrap>
+    <Section title="Volume Mixers" overflow="auto">
+      <Stack align="start" direction="row" wrap>
         {channels.map((channel) => (
-          <Flex.Item key={channel.num} width={28} style={{ margin: '5px' }}>
+          <Stack.Item key={channel.num} width={28} style={{ margin: '5px' }}>
             <VolumeSlider channel={channel} />
-          </Flex.Item>
+          </Stack.Item>
         ))}
-      </Flex>
+      </Stack>
     </Section>
   );
 };
@@ -30,26 +38,35 @@ const VolumeSlider = (props: { channel: Channel }) => {
         padding: '5px 10px',
       }}
     >
-      <Box fontSize="1.25rem" mt={'0.5rem'}>
-        {channel.name}
-      </Box>
+      <Tooltip position="bottom" content={channel.desc}>
+        <Box
+          fontSize="1.25rem"
+          mt={'0.5rem'}
+          as="span"
+          style={{
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+          }}
+        >
+          {channel.name}
+        </Box>
+      </Tooltip>
       <Box mt="0.5rem">
-        <Flex>
-          <Flex.Item grow="1">
+        <Stack>
+          <Stack.Item grow={1}>
             <Slider
               minValue={0}
               maxValue={100}
               stepPixelSize={3.13}
               value={channel.volume}
-              onChange={(e, value) =>
+              onChange={(_, value) =>
                 act('volume', {
                   channel: channel.num,
                   volume: value,
                 })
               }
             />
-          </Flex.Item>
-          <Flex.Item>
+          </Stack.Item>
+          <Stack.Item>
             <Button
               width="30px"
               color="transparent"
@@ -98,8 +115,8 @@ const VolumeSlider = (props: { channel: Channel }) => {
                 }
               />
             </Button>
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Box>
     </Box>
   );

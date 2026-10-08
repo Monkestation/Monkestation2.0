@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 				make_new_altar(bible_smacked, user)
 				return ITEM_INTERACT_SUCCESS
 			for(var/obj/effect/rune/nearby_runes in range(2, user))
-				nearby_runes.invisibility = 0
+				nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		bible_smacked.balloon_alert(user, "floor smacked!")
 		return ITEM_INTERACT_SUCCESS
 
@@ -285,29 +285,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			. = ITEM_INTERACT_SUCCESS
 		if(.)
 			return .
-
-	if(istype(bible_smacked, /obj/item/cult_bastard) && !IS_CULTIST(user))
-		var/obj/item/cult_bastard/sword = bible_smacked
-		bible_smacked.balloon_alert(user, "exorcising...")
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 4 SECONDS, target = sword))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			for(var/obj/item/soulstone/stone in sword.contents)
-				stone.required_role = null
-				for(var/mob/living/basic/shade/shade in stone)
-					var/datum/antagonist/cult/cultist = shade.mind.has_antag_datum(/datum/antagonist/cult)
-					if(cultist)
-						cultist.silent = TRUE
-						cultist.on_removal()
-					shade.icon_state = "shade_holy"
-					shade.name = "Purified [shade.name]"
-				stone.release_shades(user)
-				qdel(stone)
-			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message(span_notice("[user] exorcises [sword]!"))
-			qdel(sword)
-			return ITEM_INTERACT_SUCCESS
-		return ITEM_INTERACT_BLOCKING
 	return NONE
 
 /obj/item/book/bible/booze

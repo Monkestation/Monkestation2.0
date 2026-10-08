@@ -6,6 +6,14 @@
 	result = /obj/item/paper_bin/bundlenatural
 	category = CAT_MISC
 
+/datum/crafting_recipe/clipboard
+	name = "Clipboard"
+	time = 3 SECONDS
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2, /obj/item/stack/rods = 1)
+	tool_paths = list(/obj/item/wirecutters)
+	result = /obj/item/clipboard
+	category = CAT_MISC
+
 /datum/crafting_recipe/skeleton_key
 	name = "Skeleton Key"
 	time = 3 SECONDS
@@ -51,4 +59,14 @@
 	time = 10 SECONDS
 	reqs = list(/obj/item/stack/sheet/plastic = 10)
 	tool_behaviors = list(TOOL_WELDER)
+	category = CAT_MISC
+
+/datum/crafting_recipe/cardboard_id
+	name = "Cardboard ID Card"
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	result = /obj/item/card/cardboard
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/cardboard = 1,
+	)
 	category = CAT_MISC

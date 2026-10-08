@@ -99,7 +99,8 @@
 	master.setCloneLoss(clone_loss)
 	master.setToxLoss(tox_loss)
 	master.setOxyLoss(oxy_loss)
-	master.setStaminaLoss(stamina_loss)
+	master.stamina.revitalize()
+	master.stamina.adjust(-stamina_loss)
 	master.setOrganLoss(ORGAN_SLOT_BRAIN, brain_loss)
 	rewind()
 

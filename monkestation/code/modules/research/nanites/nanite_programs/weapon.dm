@@ -63,6 +63,9 @@
 	use_rate = 10
 	rogue_types = list(/datum/nanite_program/glitch)
 
+/datum/nanite_program/meltdown/consume_nanites(amount, force)
+	. = ..(amount, force = TRUE)
+
 /datum/nanite_program/meltdown/active_effect()
 	host_mob.adjustFireLoss(3.5)
 

@@ -70,7 +70,7 @@
 
 	expand(current_size)
 
-	for (var/obj/machinery/power/singularity_beacon/singu_beacon in GLOB.machines)
+	for (var/obj/machinery/power/singularity_beacon/singu_beacon as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/singularity_beacon))
 		if (singu_beacon.active)
 			new_component.target = singu_beacon
 			break
@@ -475,3 +475,6 @@
 /// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
 	anchored = FALSE
+
+/obj/singularity/immovable
+	move_self = FALSE

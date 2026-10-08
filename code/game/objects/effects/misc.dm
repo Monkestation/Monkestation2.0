@@ -18,32 +18,6 @@
 /obj/effect/beam/singularity_pull()
 	return
 
-/obj/effect/spawner
-	name = "object spawner"
-
-// Brief explanation:
-// Rather then setting up and then deleting spawners, we block all atomlike setup
-// and do the absolute bare minimum
-// This is with the intent of optimizing mapload
-/obj/effect/spawner/Initialize(mapload)
-	SHOULD_CALL_PARENT(FALSE)
-	if(flags_1 & INITIALIZED_1)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
-
-	return INITIALIZE_HINT_QDEL
-
-/obj/effect/spawner/Destroy(force)
-	SHOULD_CALL_PARENT(FALSE)
-#ifndef DISABLE_DEMOS
-	// monkestation start: ensure we clean up some stuff with replays
-	demo_last_appearance = null
-	demo_last_loc = null
-#endif
-	// monkestation end
-	moveToNullspace()
-	return QDEL_HINT_QUEUE
-
 /obj/effect/list_container
 	name = "list container"
 
@@ -57,7 +31,7 @@
 	name = "thermite"
 	desc = "Looks hot."
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "2" //what?
+	icon_state = "medium" //what?
 	anchored = TRUE
 	opacity = TRUE
 	density = TRUE
@@ -95,3 +69,8 @@
 /obj/effect/abstract/marker/intercom
 	name = "intercom range marker"
 	color = COLOR_YELLOW
+
+/// Used by RangedReachCheck
+/obj/effect/abstract/reach_checker
+	pass_flags = PASSTABLE
+	invisibility = INVISIBILITY_ABSTRACT

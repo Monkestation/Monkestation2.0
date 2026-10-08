@@ -353,6 +353,8 @@
 					. = TRUE
 			else
 				I = L.get_active_held_item()
+				if(I)
+					I = I.get_proxy_attacker_for(holder, L) // Get the actual item that we want to use (e.g. borg apparatus's stored item).
 				if(isassembly(I))
 					var/obj/item/assembly/A = I
 					if(A.attachable)

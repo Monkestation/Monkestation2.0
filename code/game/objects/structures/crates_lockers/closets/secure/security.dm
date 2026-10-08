@@ -17,10 +17,14 @@
 	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
-	new /obj/item/storage/belt/sabre(src)
-	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/captain(src)
+	new /obj/item/storage/pipebox/fancy(src)
+
+/obj/structure/closet/secure_closet/captains/populate_contents_immediate()
+	. = ..()
+	new /obj/item/storage/belt/sabre(src)
+	new /obj/item/gun/energy/e_gun(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
@@ -36,10 +40,9 @@
 	new /obj/item/computer_disk/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/storage/box/ids(src)
-	new /obj/item/storage/box/ids(src)
+	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civilian(src)
@@ -47,6 +50,10 @@
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
 	new /obj/item/clothing/suit/space/hardsuit/hop(src) //monkestation addition
+
+/obj/structure/closet/secure_closet/hop/populate_contents_immediate()
+	. = ..()
+	new /obj/item/gun/energy/e_gun(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "head of security's locker"
@@ -59,6 +66,7 @@
 	new /obj/item/card/id/departmental_budget/sec(src)
 	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
+	new /obj/item/radio/headset/heads/hos/alt(src)
 	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)
 	new /obj/item/megaphone/sec(src)
@@ -69,8 +77,8 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
-	new /obj/item/ammo_box/magazine/m35(src) //monkestation edit: paco sec
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/gps/security(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -95,7 +103,8 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/door_remote/head_of_security(src)
-	new /obj/item/storage/box/bodycamera(src) //monkestation edit: Security Liability Act
+	new /obj/item/gps/security(src)
+	new /obj/item/bodycam_upgrade(src)
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
 	new /obj/item/megaphone/sec(src)
@@ -115,14 +124,22 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/clothing/mask/russian_balaclava(src) //monkestation edit
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/clothing/mask/balaclava(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
 /obj/structure/closet/secure_closet/security/sec/PopulateContents()
 	..()
 	new /obj/item/storage/belt/security/full(src)
+
+/obj/structure/closet/secure_closet/security/sec/blueshirt
+
+/obj/structure/closet/secure_closet/security/sec/blueshirt/PopulateContents()
+	..()
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
 
 /obj/structure/closet/secure_closet/security/cargo
 
@@ -131,12 +148,28 @@
 	new /obj/item/clothing/accessory/armband/cargo(src)
 	new /obj/item/encryptionkey/headset_cargo(src)
 
+/obj/structure/closet/secure_closet/security/cargo/blueshirt
+
+/obj/structure/closet/secure_closet/security/cargo/blueshirt/PopulateContents()
+	..()
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
+
 /obj/structure/closet/secure_closet/security/engine
 
 /obj/structure/closet/secure_closet/security/engine/PopulateContents()
 	..()
 	new /obj/item/clothing/accessory/armband/engine(src)
 	new /obj/item/encryptionkey/headset_eng(src)
+
+/obj/structure/closet/secure_closet/security/engine/blueshirt
+
+/obj/structure/closet/secure_closet/security/engine/blueshirt/PopulateContents()
+	..()
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
 
 /obj/structure/closet/secure_closet/security/science
 
@@ -145,12 +178,28 @@
 	new /obj/item/clothing/accessory/armband/science(src)
 	new /obj/item/encryptionkey/headset_sci(src)
 
+/obj/structure/closet/secure_closet/security/science/blueshirt
+
+/obj/structure/closet/secure_closet/security/science/blueshirt/PopulateContents()
+	..()
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
+
 /obj/structure/closet/secure_closet/security/med
 
 /obj/structure/closet/secure_closet/security/med/PopulateContents()
 	..()
 	new /obj/item/clothing/accessory/armband/medblue(src)
 	new /obj/item/encryptionkey/headset_med(src)
+
+/obj/structure/closet/secure_closet/security/med/blueshirt
+
+/obj/structure/closet/secure_closet/security/med/blueshirt/PopulateContents()
+	..()
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
 
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"
@@ -172,13 +221,14 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/detective/full(src)
-	new /obj/item/storage/belt/holster/detective/full(src) // Monkestation edit : Adding some substance to the detective role
+	new /obj/item/storage/belt/holster/detective/full(src)
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 	new /obj/item/clothing/head/fedora/inspector_hat(src)
-	new /obj/item/card/id/advanced/undercover(src) // Monkestation edit : Adding some substance to the detective role
-	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
+	new /obj/item/card/id/advanced/undercover(src)
+	new /obj/item/bodycam_upgrade(src)
+	new /obj/item/bodycam_upgrade(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
@@ -299,6 +349,9 @@
 	new /obj/item/storage/box/firingpins(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/rubbershot(src)
+
+/obj/structure/closet/secure_closet/armory2/populate_contents_immediate()
+	. = ..()
 	for(var/i in 1 to 3)
 		new /obj/item/gun/ballistic/shotgun/riot(src)
 
@@ -312,11 +365,14 @@
 	new /obj/item/storage/box/firingpins(src)
 	new /obj/item/gun/energy/ionrifle(src)
 	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser/thermal(src)
+
+/obj/structure/closet/secure_closet/armory3/populate_contents_immediate()
+	. = ..()
+	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
-	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser/thermal(src)
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
@@ -343,3 +399,29 @@
 	new /obj/item/clothing/under/rank/security/officer/skirt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/structure/closet/secure_closet/secmed
+	name = "security medical locker"
+	icon_state = "secmed"
+	req_access = list(ACCESS_SECURITY)
+
+/obj/structure/closet/secure_closet/secmed/PopulateContents()
+	..()
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/storage/bag/garment/brig_physician(src)
+	new /obj/item/bodycam_upgrade(src)
+	new /obj/item/clothing/suit/jacket/straight_jacket(src)
+	new /obj/item/clothing/mask/muzzle(src)
+	new /obj/item/clothing/glasses/blindfold(src)
+	new /obj/item/healthanalyzer(src)
+	new /obj/item/storage/backpack/duffelbag/secmed/surgery(src)
+	new /obj/item/defibrillator/loaded(src)
+	new /obj/item/sensor_device/security(src)
+	new /obj/item/reagent_containers/chem_pack/saline(src)
+	new /obj/item/reagent_containers/chem_pack/saline(src)
+	new /obj/item/storage/toolbox/repair (src)
+	new /obj/item/storage/medkit/regular(src)
+	new /obj/item/storage/medkit/brute(src)
+	new /obj/item/storage/medkit/fire(src)
+	new /obj/item/storage/medkit/toxin(src)
+	new /obj/item/storage/medkit/o2(src)

@@ -25,7 +25,7 @@
 
 	for(var/obj/item/item_path as anything in (subtypesof(/obj/item) - typesof(/obj/item/mod)))
 		var/cached_slot_flags = initial(item_path.slot_flags)
-		if(!cached_slot_flags || (cached_slot_flags & ITEM_SLOT_LPOCKET) || (cached_slot_flags & ITEM_SLOT_RPOCKET) || initial(item_path.item_flags) & ABSTRACT)
+		if(!cached_slot_flags || (cached_slot_flags & ITEM_SLOT_LPOCKET) || (cached_slot_flags & ITEM_SLOT_RPOCKET) || initial(item_path.item_flags) & ABSTRACT || HAS_TRAIT(item_path, TRAIT_NO_WORN_ICON))
 			continue
 
 
@@ -39,6 +39,8 @@
 
 		if(isnull(icon_state))
 			continue //no sprite for the item.
+		if(isnull(worn_icon))
+			continue // no worn sprite for the item.
 		if(icon_state in already_warned_icons)
 			continue
 
@@ -48,6 +50,8 @@
 				match_message += (match_message ? " & '[file_place]'" : " - Matching sprite found in: '[file_place]'")
 
 		if(worn_icon) //easiest to check since we override everything. this automatically includes downstream support.
+			if(isnull(worn_icon_state)) // no worn sprite for this item.
+				continue
 			if(!(icon_state in icon_states(worn_icon, 1)))
 				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'[match_message]")
 			continue

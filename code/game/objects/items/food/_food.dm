@@ -49,7 +49,7 @@
 	///If we want to still force feed food even on combat mode or harm intent - monkestation edit
 	var/force_feed_on_aggression = FALSE
 	///The food buffs the food has
-	var/food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+	var/food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/Initialize(mapload)
 	. = ..()

@@ -8,8 +8,8 @@
 	desc = "Contains a disk containing designs to make subpar, but accessible guns.."
 	spawn_path = /obj/item/disk/design_disk/fss
 
-/datum/bb_gear/devitt
-	name = "Devitt Mk3"
-	desc = "An ancient two man tank, comes with cannon and machinegun, but little ammo."
-	spawn_path = /obj/vehicle/sealed/mecha/devitt
-	player_minimum = 30
+// /datum/bb_gear/devitt
+// 	name = "Devitt Mk3"
+// 	desc = "An ancient two man tank, comes with cannon and machinegun, but little ammo."
+// 	spawn_path = /obj/vehicle/sealed/mecha/devitt
+// 	player_minimum = 30

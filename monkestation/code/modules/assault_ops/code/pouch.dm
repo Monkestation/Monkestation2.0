@@ -22,12 +22,8 @@
 	custom_price = PAYCHECK_CREW * 4
 	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
-		"Ammo Pouch" = list(
-			RESKIN_ICON_STATE = "ammopouch"
-		),
-		"Casing Pouch" = list(
-			RESKIN_ICON_STATE = "casingpouch"
-		),
+		"Ammo Pouch" = "ammopouch",
+		"Casing Pouch" = "casingpouch"
 	)
 
 /obj/item/storage/pouch/ammo/Initialize(mapload)
@@ -62,11 +58,11 @@
 	atom_storage.max_total_storage = 30
 	atom_storage.max_slots = 5
 	atom_storage.numerical_stacking = FALSE
-	atom_storage.can_hold = typecacheof(list(/obj/item/reagent_containers/hypospray))
+	atom_storage.can_hold = typecacheof(list(/obj/item/hypospray))
 
 /obj/item/storage/pouch/medpens/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen/blood_loss(src)
-	new /obj/item/reagent_containers/hypospray/medipen/oxandrolone(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
-	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+	new /obj/item/reagent_containers/medipen/blood_loss(src)
+	new /obj/item/reagent_containers/medipen/oxandrolone(src)
+	new /obj/item/reagent_containers/medipen/salacid(src)
+	new /obj/item/reagent_containers/medipen/salbutamol(src)
+	new /obj/item/reagent_containers/medipen/stimulants(src)

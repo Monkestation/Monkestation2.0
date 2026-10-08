@@ -553,7 +553,7 @@
 		player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			ADD_TRAIT(player_mind, TRAIT_DEFIB_BLACKLISTED, REF(src))
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
@@ -567,7 +567,7 @@
 	var/extra_detail = try_auto_call_shuttle() \
 		? "For the safety of our staff, we are expediting an emergency shuttle for remaining members of security and command." \
 		: "For the safety of our staff, we have blacklisted your station for new employment of security and command."
-	var/propaganda = pick(world.file2list("strings/anti_union_propaganda.txt"))
+	var/propaganda = pick(file2list("strings/anti_union_propaganda.txt"))
 
 	priority_announce(
 		"[message_header]\n\n[extra_detail]\n\n[propaganda]",
@@ -617,8 +617,7 @@
 /datum/team/revolution/proc/defeat_effects()
 	// If the revolution was quelled, make rev heads unable to be revived through pods
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
-		if(!isnull(rev_head.current))
-			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+		ADD_TRAIT(rev_head, TRAIT_DEFIB_BLACKLISTED, REF(src))
 
 	for(var/datum/objective/mutiny/head_tracker in objectives)
 		var/mob/living/head_of_staff = head_tracker.target?.current

@@ -5,7 +5,7 @@
 		return FALSE
 
 	var/obj/machinery/computer/cryopod/target_console
-	for(var/obj/machinery/computer/cryopod/cryo_console in GLOB.cryopod_computers)
+	for(var/obj/machinery/computer/cryopod/cryo_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cryopod))
 		target_console = cryo_console
 		var/turf/target_turf = get_turf(target_console)
 		if(is_station_level(target_turf.z)) //If we find a cryo console on station, send items to it first and foremost.

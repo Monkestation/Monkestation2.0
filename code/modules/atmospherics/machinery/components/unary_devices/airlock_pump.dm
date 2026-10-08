@@ -24,7 +24,8 @@
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
 	icon_state = "airlock_pump"
 	pipe_state = "airlock_pump"
-	use_power = ACTIVE_POWER_USE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	can_unwrench = TRUE
 	welded = FALSE
@@ -115,7 +116,7 @@
 			nodes[1] = target // Distro
 		if(connection_check(target, 2) && !nodes[2])
 			nodes[2] = target // Waste
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
@@ -176,6 +177,12 @@
 		to_chat(user, span_warning("You cannot unwrench [src], wait for the cycle completion!"))
 		return FALSE
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/set_on(active)
+	. = ..()
+	if(active)
+		update_use_power(ACTIVE_POWER_USE)
+	else
+		update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
@@ -299,7 +306,7 @@
 	stoplag(1 SECONDS) // Wait for closing animation
 	airlocks_animating = FALSE
 
-	on = TRUE
+	set_on(TRUE)
 	cycle_start_time = world.time
 
 	var/turf/local_turf = get_turf(src)
@@ -333,7 +340,6 @@
 		if(is_cycling_audible)
 			source_airlock.say("Decompressing airlock.")
 
-	update_appearance()
 	return TRUE
 
 
@@ -341,7 +347,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null, unbolt_only = FALSE)
 	if(!on)
 		return FALSE
-	on = FALSE
+	set_on(FALSE)
 
 	// In case we can open both sides safe_dock will do it for us
 	// it also handles its own messages. If we can't - procceed
@@ -361,7 +367,7 @@
 	if(message && is_cycling_audible)
 		unlocked_airlocks[1].say(message)
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/on_dock_request(requester_pressure = 0)
@@ -444,7 +450,7 @@
 	airlocks_animating = TRUE
 	stoplag(1 SECONDS) // Wait for closing animation
 	airlocks_animating = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	say("Docking complete.")
 	return TRUE
 

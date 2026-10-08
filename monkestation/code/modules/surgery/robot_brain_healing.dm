@@ -29,7 +29,7 @@
 	name = "fix posibrain (multitool)"
 	implements = list(
 		TOOL_MULTITOOL = 100,
-		TOOL_HEMOSTAT = 35,
+		TOOL_HEMOSTAT = 50,
 		/obj/item/pen = 15
 	)
 	repeatable = TRUE

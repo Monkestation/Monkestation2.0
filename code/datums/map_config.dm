@@ -48,14 +48,15 @@
 	/// List of additional areas that count as a part of the library
 	var/library_areas = list()
 
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
+	/// If TRUE, only unit tests with UNIT_TEST_DEBUG_MAP_ONLY will run on this map
+	var/is_unit_test_map = FALSE
+#endif
 
 	/// List of station traits that cannot be rolled on this map.
 	var/list/banned_station_traits
-
-	//List of particle_weather types for this map
-	var/list/particle_weathers = list() //Monkestation addition
 
 /**
  * Proc that simply loads the default map config, which should always be functional.
@@ -138,13 +139,15 @@
 	map_file = json["map_file"]
 	// "map_file": "MetaStation.dmm"
 	if (istext(map_file))
-		if (!fexists("_maps/[map_path]/[map_file]"))
+		var/map_dir = (map_path == "custom") ? "data/custom_map/" : "_maps/[map_path]"
+		if (!fexists("[map_dir]/[map_file]"))
 			log_world("Map file ([map_path]/[map_file]) does not exist!")
 			return
 	// "map_file": ["Lower.dmm", "Upper.dmm"]
 	else if (islist(map_file))
+		var/map_dir = (map_path == "custom") ? "data/custom_map/" : "_maps/[map_path]"
 		for (var/file in map_file)
-			if (!fexists("_maps/[map_path]/[file]"))
+			if (!fexists("[map_dir]/[file]"))
 				log_world("Map file ([map_path]/[file]) does not exist!")
 				return
 	else
@@ -172,14 +175,6 @@
 	else if (!isnull(traits))
 		log_world("map_config traits is not a list!")
 		return
-
-	//monkestation edit start
-	if ("particle_weathers" in json)
-		if(!islist(json["particle_weathers"]))
-			log_world("map_config \"particle_weathers\" field is missing or invalid!")
-			return
-		particle_weathers = json["particle_weathers"]
-	//monkestation edit end
 
 	var/temp = json["space_ruin_levels"]
 	if (isnum(temp))
@@ -231,6 +226,9 @@
 			stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
 			continue
 		LAZYADD(skipped_tests, path_real)
+
+	if("is_unit_test_map" in json)
+		is_unit_test_map = json["is_unit_test_map"]
 #endif
 
 	for(var/path_as_text in json["banned_station_traits"])
@@ -245,11 +243,12 @@
 #undef CHECK_EXISTS
 
 /datum/map_config/proc/GetFullMapPaths()
+	var/map_dir = (map_path == "custom") ? "data/custom_map/" : "_maps/[map_path]"
 	if (istext(map_file))
-		return list("_maps/[map_path]/[map_file]")
+		return list("[map_dir]/[map_file]")
 	. = list()
 	for (var/file in map_file)
-		. += "_maps/[map_path]/[file]"
+		. += "[map_dir]/[file]"
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == PATH_TO_NEXT_MAP_JSON || fcopy(config_filename, PATH_TO_NEXT_MAP_JSON)

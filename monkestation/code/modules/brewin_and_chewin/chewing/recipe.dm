@@ -428,116 +428,116 @@ Food quality is calculated based on the steps taken.
 
 //-----------------------------------------------------------------------------------
 //Add reagent step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_add_reagent(var/reagent_id, var/amount, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_add_reagent(reagent_id, amount, optional)
 	var/datum/chewin_cooking/recipe_step/add_reagent/step = new (reagent_id, amount, src)
 	return src.add_step(step, optional)
 
 //-----------------------------------------------------------------------------------
 //Add reagent choice step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_add_reagent_choice(var/list/reagent_ids, var/amount, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_add_reagent_choice(list/reagent_ids, amount, optional)
 	var/datum/chewin_cooking/recipe_step/add_reagent_choice/step = new (reagent_ids, amount, src)
 	return src.add_step(step, optional)
 
 //-----------------------------------------------------------------------------------
 //Add produce step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_add_produce_choice(var/list/produces, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_add_produce_choice(list/produces, optional)
 	var/datum/chewin_cooking/recipe_step/add_produce_choice/step = new (produces, src)
 	return src.add_step(step, optional)
 
 //-----------------------------------------------------------------------------------
 //Add item step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_add_item(var/item_type, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_add_item(item_type, optional)
 	var/datum/chewin_cooking/recipe_step/add_item/step = new (item_type, src)
 	return src.add_step(step, optional)
 //-----------------------------------------------------------------------------------
 //Use item step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_use_item(var/item_type, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_use_item(item_type, optional)
 	var/datum/chewin_cooking/recipe_step/use_item/step = new (item_type, src)
 	return src.add_step(step, optional)
 
 //-----------------------------------------------------------------------------------
 //Use item step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_add_produce(var/produce, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_add_produce(produce, optional)
 	var/datum/chewin_cooking/recipe_step/add_produce/step = new /datum/chewin_cooking/recipe_step/add_produce(produce, src)
 	return src.add_step(step, optional)
 //-----------------------------------------------------------------------------------
 //Use Tool step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_use_tool(var/type, var/quality, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_use_tool(type, quality, optional)
 	var/datum/chewin_cooking/recipe_step/use_tool/step = new (type, quality, src)
 	return src.add_step(step, optional)
 
 //-----------------------------------------------------------------------------------
 //Use Fryer step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_use_fryer(var/heat, var/time, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_use_fryer(heat, time, optional)
 	var/datum/chewin_cooking/recipe_step/use_fryer/step = new (heat, time, src)
 	return src.add_step(step, optional)
 
 //-----------------------------------------------------------------------------------
 //Use Stove step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_use_stove(var/heat, var/time, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_use_stove(heat, time, optional)
 	var/datum/chewin_cooking/recipe_step/use_stove/step = new (heat, time, src)
 	return src.add_step(step, optional)
 //-----------------------------------------------------------------------------------
 //Use Grill step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_use_grill(var/heat, var/time, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_use_grill(heat, time, optional)
 	var/datum/chewin_cooking/recipe_step/use_grill/step = new (heat, time, src)
 	return src.add_step(step, optional)
 //-----------------------------------------------------------------------------------
 //Use Stove step shortcut commands
-/datum/chewin_cooking/recipe/proc/create_step_use_oven(var/heat, var/time, var/optional)
+/datum/chewin_cooking/recipe/proc/create_step_use_oven(heat, time, optional)
 	var/datum/chewin_cooking/recipe_step/use_oven/step = new (heat, time, src)
 	return src.add_step(step, optional)
 //-----------------------------------------------------------------------------------
 //Customize the last step created
-/datum/chewin_cooking/recipe/proc/set_step_desc(var/new_description)
+/datum/chewin_cooking/recipe/proc/set_step_desc(new_description)
 	last_created_step.desc = new_description
 
-/datum/chewin_cooking/recipe/proc/set_step_max_quality(var/quality)
+/datum/chewin_cooking/recipe/proc/set_step_max_quality(quality)
 	last_created_step.flags |= CHEWIN_BASE_QUALITY_ENABLED
 	last_created_step.max_quality_award = quality
 
-/datum/chewin_cooking/recipe/proc/set_step_base_quality(var/quality)
+/datum/chewin_cooking/recipe/proc/set_step_base_quality(quality)
 	last_created_step.flags |= CHEWIN_MAX_QUALITY_ENABLED
 	last_created_step.base_quality_award = quality
 
-/datum/chewin_cooking/recipe/proc/set_step_custom_result_desc(var/new_description)
+/datum/chewin_cooking/recipe/proc/set_step_custom_result_desc(new_description)
 	last_created_step.custom_result_desc = new_description
 
-/datum/chewin_cooking/recipe/proc/set_step_custom_finish_text(var/new_finish_text)
+/datum/chewin_cooking/recipe/proc/set_step_custom_finish_text(new_finish_text)
 	last_created_step.finish_text = new_finish_text
 
-/datum/chewin_cooking/recipe/proc/set_step_custom_food_buff(var/new_food_buff)
+/datum/chewin_cooking/recipe/proc/set_step_custom_food_buff(new_food_buff)
 	last_created_step.custom_food_buff = new_food_buff
 
-/datum/chewin_cooking/recipe/proc/set_exact_type_required(var/boolean)
+/datum/chewin_cooking/recipe/proc/set_exact_type_required(boolean)
 	if((last_created_step.class == CHEWIN_ADD_ITEM) || (last_created_step.class == CHEWIN_USE_ITEM))
 		last_created_step?:exact_path = boolean
 		return TRUE
 	else
 		return FALSE
 
-/datum/chewin_cooking/recipe/proc/set_reagent_skip(var/boolean)
+/datum/chewin_cooking/recipe/proc/set_reagent_skip(boolean)
 	if((last_created_step.class == CHEWIN_ADD_ITEM) || (last_created_step.class == CHEWIN_ADD_PRODUCE))
 		last_created_step?:reagent_skip = boolean
 		return TRUE
 	else
 		return FALSE
 
-/datum/chewin_cooking/recipe/proc/set_exclude_reagents(var/list/exclude_list)
+/datum/chewin_cooking/recipe/proc/set_exclude_reagents(list/exclude_list)
 	if((last_created_step.class == CHEWIN_ADD_ITEM) || (last_created_step.class == CHEWIN_ADD_PRODUCE))
 		last_created_step?:exclude_reagents = exclude_list
 		return TRUE
 	else
 		return FALSE
 
-/datum/chewin_cooking/recipe/proc/set_inherited_quality_modifier(var/modifier)
+/datum/chewin_cooking/recipe/proc/set_inherited_quality_modifier(modifier)
 	if(last_created_step.class == CHEWIN_ADD_ITEM || last_created_step.class == CHEWIN_USE_TOOL || last_created_step.class == CHEWIN_ADD_PRODUCE)
 		last_created_step?:inherited_quality_modifier = modifier
 		return TRUE
 	else
 		return FALSE
 
-/datum/chewin_cooking/recipe/proc/set_remain_percent_modifier(var/modifier)
+/datum/chewin_cooking/recipe/proc/set_remain_percent_modifier(modifier)
 	if(last_created_step.class == CHEWIN_ADD_REAGENT)
 		last_created_step?:remain_percent = modifier
 		return TRUE
@@ -616,7 +616,7 @@ Food quality is calculated based on the steps taken.
 
 //-----------------------------------------------------------------------------------
 //Function that dynamically adds a step into a given recipe matrix.
-/datum/chewin_cooking/recipe/proc/add_step(var/datum/chewin_cooking/recipe_step/step, var/optional)
+/datum/chewin_cooking/recipe/proc/add_step(datum/chewin_cooking/recipe_step/step, optional)
 
 	//Required steps can't have exclusive options.
 	//If a given recipe needs to split into two branching required steps, it should be split into two different recipes.
@@ -678,7 +678,7 @@ Food quality is calculated based on the steps taken.
 
 //-----------------------------------------------------------------------------------
 //default function for creating a product
-/datum/chewin_cooking/recipe/proc/create_product(var/datum/chewin_cooking/recipe_pointer/pointer, var/mob/user)
+/datum/chewin_cooking/recipe/proc/create_product(datum/chewin_cooking/recipe_pointer/pointer, mob/user)
 	var/datum/chewin_cooking/recipe_tracker/parent = pointer.parent_ref.resolve()
 	var/obj/item/container = parent.holder_ref.resolve()
 	if(container)
@@ -815,7 +815,7 @@ Food quality is calculated based on the steps taken.
 
 //Extra Reagents in a recipe take away recipe quality for every extra unit added to the concoction.
 //Reagents are calculated in two areas. Here and /datum/chewin_cooking/recipe_step/add_reagent/calculate_quality
-/datum/chewin_cooking/recipe/proc/calculate_reagent_quality(var/datum/chewin_cooking/recipe_pointer/pointer)
+/datum/chewin_cooking/recipe/proc/calculate_reagent_quality(datum/chewin_cooking/recipe_pointer/pointer)
 	if(!GLOB.chewin_step_dictionary_ordered["[CHEWIN_ADD_REAGENT]"])
 		return 0
 	var/datum/chewin_cooking/recipe_tracker/parent = pointer.parent_ref.resolve()
@@ -838,7 +838,7 @@ Food quality is calculated based on the steps taken.
 
 
 //-----------------------------------------------------------------------------------
-/datum/chewin_cooking/proc/get_class_string(var/code)
+/datum/chewin_cooking/proc/get_class_string(code)
 	switch(code)
 		if(CHEWIN_ADD_ITEM)
 			return "Add Item"

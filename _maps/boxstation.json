@@ -20,10 +20,6 @@
 			"total_positions": 4,
 			"spawn_positions": 8
 		},
-		"Security Assistant": {
-			"total_positions": 4,
-			"spawn_positions": 8
-		},
 		"Security Officer": {
 			"total_positions": 8,
 			"spawn_positions": 18

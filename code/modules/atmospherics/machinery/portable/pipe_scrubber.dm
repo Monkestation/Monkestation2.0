@@ -1,4 +1,5 @@
 #define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
+#define PIPE_SCRUBBER_PUMP_MAX_PRESSURE 9000
 
 /obj/machinery/portable_atmospherics/pipe_scrubber
 	name = "pipe scrubber"
@@ -73,7 +74,7 @@
 		if(direction == PUMP_IN)
 			scrub(air_contents)
 		else
-			secondary_tank_contents.pump_gas_to(air_contents, PUMP_MAX_PRESSURE)
+			secondary_tank_contents.pump_gas_to(air_contents, PIPE_SCRUBBER_PUMP_MAX_PRESSURE)
 
 	if(!suppress_reactions)
 		if(max(air_contents.react(src), secondary_tank_contents.react(src)))
@@ -105,7 +106,7 @@
 
 /// Scrub gasses from own air_contents into secondary_tank_contents
 /obj/machinery/portable_atmospherics/pipe_scrubber/proc/scrub()
-	if(secondary_tank_contents.return_pressure() >= PUMP_MAX_PRESSURE)
+	if(secondary_tank_contents.return_pressure() >= PIPE_SCRUBBER_PUMP_MAX_PRESSURE)
 		return
 
 	var/transfer_moles = min(1, volume_rate / air_contents.volume) * air_contents.total_moles()
@@ -116,10 +117,11 @@
 		return
 
 	filtered.temperature = filtering.temperature
-	for(var/gas in filtering.gases & scrubbing)
+	for(var/gas in filtering.moles & scrubbing)
 		filtered.add_gas(gas)
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
+
+		filtered.moles[gas] = filtering.moles[gas] // Shuffle the "bad" gasses to the filtered mixture.
+		filtering.moles[gas] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
 
 	secondary_tank_contents.merge(filtered) // Store filtered out gasses.
@@ -142,9 +144,13 @@
 	data["reactionSuppressionEnabled"] = suppress_reactions
 
 	data["filterTypes"] = list()
-	for(var/gas_path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[gas_path]
-		data["filterTypes"] += list(list("gasId" = gas[META_GAS_ID], "gasName" = gas[META_GAS_NAME], "enabled" = (gas_path in scrubbing)))
+	var/cached_gas_info = GLOB.meta_gas_info
+	for(var/gas_path in cached_gas_info[META_GAS_ID])
+		data["filterTypes"] += list(list(
+			"gasId" = cached_gas_info[META_GAS_ID][gas_path],
+			"gasName" = cached_gas_info[META_GAS_NAME][gas_path],
+			"enabled" = (gas_path in scrubbing)
+		))
 
 	return data
 
@@ -182,3 +188,4 @@
 	update_appearance()
 
 #undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT
+#undef PIPE_SCRUBBER_PUMP_MAX_PRESSURE

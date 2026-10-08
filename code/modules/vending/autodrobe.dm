@@ -79,6 +79,7 @@
 				/obj/item/clothing/shoes/kris = 1,
 				/obj/item/clothing/gloves/kris = 1,
 				/obj/item/clothing/under/dress/hula = 1,
+				/obj/item/clothing/head/hats/adventurercap = 1,
 				//Monkestation Addition end
 			),
 		),

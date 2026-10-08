@@ -15,8 +15,9 @@
 		/obj/item/assembly/flash/handheld = 6,
 		/obj/item/food/donut/plain = 12,
 		/obj/item/storage/box/evidence = 6,
-		/obj/item/flashlight/seclite = 4,
+		/obj/item/flashlight/seclite = 6,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
+		/obj/item/restraints/legcuffs/beartrap/security = 4,
 		/obj/item/ammo_box/magazine/m35/rubber = 14,
 		/obj/item/clothing/mask/gas/sechailer = 6,
 		/obj/item/clothing/mask/whistle = 3,
@@ -33,12 +34,9 @@
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,
 		/obj/item/coin/antagtoken = 1,
-		// /obj/item/clothing/head/helmet/blueshirt = 1,
-		// /obj/item/clothing/suit/armor/vest/blueshirt = 1,
-		//moved to secdrobe
 		/obj/item/clothing/gloves/color/black/security/blu = 1,
 		/obj/item/clothing/gloves/tackler = 5,
-		/obj/item/grenade/stingbang = 1,
+		/obj/item/grenade/stingbang = 5,
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
 		/obj/item/holosign_creator/security = 2,
@@ -68,7 +66,7 @@
 /obj/item/security_voucher
 	name = "security voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a SecTech vendor."
-	icon = 'monkestation/icons/obj/items/security_voucher.dmi'
+	icon = 'icons/obj/items/security_voucher.dmi'
 	icon_state = "security_voucher_primary"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -83,10 +81,6 @@
 /obj/item/security_voucher/assistant
 	name = "security assistant voucher"
 	icon_state = "security_voucher_assistant"
-
-/obj/item/security_voucher/brig_physician
-	name = "security brig physician voucher"
-	icon_state = "security_voucher_brig_physician"
 
 /obj/machinery/vending/security/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/security_voucher))
@@ -105,8 +99,6 @@
 		voucher_set = /datum/voucher_set/security/utility
 	if(istype(voucher, /obj/item/security_voucher/assistant))
 		voucher_set = /datum/voucher_set/security/assistant
-	if(istype(voucher, /obj/item/security_voucher/brig_physician))
-		voucher_set = /datum/voucher_set/security/brig_physician
 	set_types = list()
 	for(var/datum/voucher_set/static_set as anything in subtypesof(voucher_set))
 		set_types[initial(static_set.name)] = new static_set

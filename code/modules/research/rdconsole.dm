@@ -92,8 +92,9 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = ..()
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		stored_research = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		stored_research = buffer
 	return TRUE
 
 /obj/machinery/computer/rdconsole/proc/enqueue_node(id, mob/user)

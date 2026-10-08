@@ -22,10 +22,9 @@ with our [practical tutorial](docs/tutorial-and-examples.md).
 
 ### Guides
 
-This project uses **Inferno** - a very fast UI rendering engine with a similar API to React. Take your time to read these guides:
+This project uses **React** - Take your time to read the guide:
 
-- [React guide](https://reactjs.org/docs/hello-world.html)
-- [Inferno documentation](https://infernojs.org/docs/guides/components) - highlights differences with React.
+- [React guide](https://react.dev/learn)
 
 If you were already familiar with an older, Ractive-based tgui, and want to
 translate concepts between old and new tgui, read this
@@ -33,12 +32,12 @@ translate concepts between old and new tgui, read this
 
 ### Other Documentation
 
-- [Component Reference](docs/component-reference.md) - UI building blocks
+- [Component Reference](https://tgstation.github.io/tgui-core) - UI building blocks
 - [Using TGUI and Byond API for custom HTML popups](docs/tgui-for-custom-html-popups.md)
 - [Chat Embedded Components](docs/chat-embedded-components.md)
 - [Writing Tests](docs/writing-tests.md)
 
-## Pre-requisites
+## Pre-requisite
 
 If you are using the tooling provided in this repo, everything is included! Feel
 free to skip this step.

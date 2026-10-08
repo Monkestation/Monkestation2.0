@@ -21,6 +21,7 @@
 	random_spawns_possible = FALSE
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS
 	antag_capacity_points = 2 //2 due to valid hunting tendencies of borgs, fine turning down to 1
+	oshan_normal_latejoin = TRUE
 
 /datum/job/cyborg/get_latejoin_spawn_point()
 	var/turf/open/picked_turf = get_random_open_turf_in_area()
@@ -59,3 +60,6 @@
 
 /datum/job/cyborg/get_radio_information()
 	return "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>"
+
+/datum/job/cyborg/get_lobby_icon()
+	return uni_icon('icons/mob/huds/hud.dmi', "hudcyborg")

@@ -30,7 +30,7 @@
 	spawn_types += multipler_unlocks[text_multi]
 
 /datum/symptom/spawn/proc/kill_mob(mob/living/basic/mob)
-	mob.visible_message(span_warning("The [mob] falls apart!"), span_warning("You fall apart"))
+	mob.visible_message(span_warning("The [mob] falls apart!"), span_warning("You fall apart!"))
 	mob.death()
 
 /datum/symptom/spawn/roach

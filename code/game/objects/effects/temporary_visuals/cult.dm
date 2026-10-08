@@ -17,6 +17,10 @@
 /obj/effect/temp_visual/cult/blood/out
 	icon_state = "bloodout"
 
+/obj/effect/temp_visual/cult/blood/long // For Necro Sect usage
+	name = "necromatic summon"
+	duration = 300
+
 /obj/effect/temp_visual/dir_setting/cult/phase  // The veil shifter teleport
 	icon = 'icons/effects/cult/effects.dmi'
 	name = "phase glow"
@@ -49,6 +53,13 @@
 /obj/effect/temp_visual/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
+	plane = FLOOR_PLANE
+
+/obj/effect/temp_visual/holy_grass
+	icon = 'icons/effects/religion_effects.dmi'
+	randomdir = FALSE
+	duration = 10
+	icon_state = "grass_convert"
 	plane = FLOOR_PLANE
 
 /obj/effect/temp_visual/cult/portal

@@ -5,15 +5,16 @@
 
 	//cycles colors
 	var/color_cycle = FALSE
-	var/list/hsv
+	var/image_color
 
-/datum/component/after_image/Initialize(count = 4, rest_time = 1, color_cycle = FALSE)
+/datum/component/after_image/Initialize(count = 4, rest_time = 1, color_cycle = FALSE, image_color)
 	..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.rest_time = rest_time
 	src.after_images = list()
 	src.color_cycle = color_cycle
+	src.image_color = image_color
 	if(count > 1)
 		for(var/number = 1 to count)
 			var/obj/effect/after_image/added_image = new /obj/effect/after_image(null)
@@ -67,12 +68,13 @@
 	targeted_image.active = TRUE
 	targeted_image.sync_with_parent(parent)
 	targeted_image.loc = null
+	targeted_image.density = FALSE
 
 	if(color_cycle)
-		if(!hsv)
-			hsv = rgb2hsv(rgb(255, 0, 0))
-		hsv = RotateHue(hsv, world.time - rest_time * 15)
-		targeted_image.color = hsv2rgb(hsv)
+		var/list/rgb_colors = RotateHue(rgb(255, 0, 0), world.time - rest_time * 15)
+		targeted_image.color = rgb_colors
+	else if(image_color)
+		targeted_image.add_atom_colour(image_color)
 
 	if(!isnull(dir_override))
 		targeted_image.setDir(dir_override)
@@ -88,7 +90,7 @@
 /obj/effect/after_image
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
+	density = FALSE
 	var/finalized_alpha = 100
 	var/active = FALSE
 	var/last_appearance_ref

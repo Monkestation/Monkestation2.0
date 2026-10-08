@@ -2,7 +2,7 @@
 	name = "satyr fluff"
 	desc = "A goat's fur"
 	icon_state = "satyr_fluff"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_satyr_fluff"
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -42,7 +42,7 @@
 	name = "satyr horns"
 	desc = "A goat's horns"
 	icon_state = "satyr_horns"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_satyr_horns"
 
@@ -68,7 +68,7 @@
 	name = "oni tail"
 	desc = "An Oni's tail. Put it back!"
 	icon_state = ""
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_oni_tail"
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -95,7 +95,7 @@
 	name = "oni wings"
 	desc = "An Oni's wings. Put it back!"
 	icon_state = ""
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_oni_wings"
 	zone = BODY_ZONE_CHEST
@@ -122,7 +122,7 @@
 	name = "oni horns"
 	desc = "An Oni's horns. Put them back!"
 	icon_state = ""
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_oni_horns"
 	zone = BODY_ZONE_HEAD

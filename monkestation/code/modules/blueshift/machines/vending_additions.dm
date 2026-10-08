@@ -76,28 +76,12 @@
 
 #undef MINIMUM_CLOTHING_STOCK
 
-/obj/machinery/vending/wardrobe/engi_wardrobe
-	products_monke = list(
-		/obj/item/radio/headset/headset_eng = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/trouser = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/utility = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem = 3,
-		/obj/item/clothing/under/misc/overalls = 3,
-		/obj/item/clothing/suit/toggle/jacket/engi = 3,
-		/obj/item/clothing/head/utility/hardhat/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/red = 2,
-	)
-
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	products_monke = list(
 		/obj/item/clothing/glasses/meson/engine = 2,
-		/obj/item/clothing/head/beret/atmos = 4,
 	)
 
-/obj/machinery/vending/wardrobe/cargo_wardrobe
+/obj/machinery/vending/access/wardrobe_cargo
 	products_monke = list(
 		/obj/item/clothing/under/rank/cargo/tech/nova/long = 3,
 		/obj/item/clothing/under/rank/cargo/tech/nova/gorka = 3,
@@ -115,7 +99,6 @@
 
 /obj/machinery/vending/wardrobe/robo_wardrobe
 	products_monke = list(
-		/obj/item/clothing/head/beret/science/fancy/robo = 2,
 		/obj/item/tank/internals/anesthetic = 2,
 		/obj/item/clothing/mask/breath = 2,
 		/obj/item/reagent_containers/cup/bottle/morphine = 2,
@@ -151,11 +134,6 @@
 		/obj/item/radio/headset/headset_srv = 3,
 	)
 
-/obj/machinery/vending/wardrobe/viro_wardrobe
-	products_monke = list(
-		/obj/item/clothing/head/beret/medical/virologist = 2,
-	)
-
 /obj/machinery/vending/wardrobe/det_wardrobe
 	products_monke = list(
 		/obj/item/clothing/head/fedora/beige = 2,
@@ -182,7 +160,7 @@
 			"icon" = "hat-cowboy",
 			"products" = list(
 				/obj/item/clothing/head/beret/badge = 5,
-				/obj/item/clothing/head/colourable_flatcap= 5,
+				/obj/item/clothing/head/flatcap/recolor= 5,
 				/obj/item/clothing/head/cowboy/nova/cattleman = 5,
 				/obj/item/clothing/head/cowboy/nova/cattleman/wide = 5,
 				/obj/item/clothing/head/cowboy/nova/wide = 5,

@@ -1,7 +1,9 @@
+import { afterEach, describe, expect, it, jest } from 'bun:test';
+
 import {
-  KeyEvent,
   addScrollableNode,
   canStealFocus,
+  KeyEvent,
   removeScrollableNode,
   setupGlobalEvents,
 } from './events';

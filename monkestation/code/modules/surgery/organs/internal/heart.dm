@@ -1,7 +1,7 @@
 /obj/item/organ/internal/heart/clockwork //this heart doesnt have the fancy bits normal cyberhearts do. However, it also doesnt fucking kill you when EMPd
 	name = "biomechanical pump"
 	desc = "A complex, multi-valved hydraulic pump, which fits perfectly where a heart normally would."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "heart-clock"
 	organ_flags = ORGAN_ROBOTIC
 
@@ -16,11 +16,13 @@
 /obj/item/organ/internal/heart/slime
 	name = "slime heart"
 
-	heart_bloodtype = /datum/blood_type/slime
+	heart_bloodtype = BLOOD_TYPE_TOX
 	/// Ability given to the owner of the organ
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	/// Ability given to the owner of the organ
 	var/datum/action/innate/retract_limb/retract_limb
+	/// UI to see amount of wetness stacks
+	var/atom/movable/screen/slime_stacks/slime_wetness_display
 
 /obj/item/organ/internal/heart/slime/Destroy()
 	QDEL_NULL(regenerate_limbs)
@@ -36,11 +38,16 @@
 		retract_limb = new
 	retract_limb.Grant(receiver)
 	RegisterSignal(receiver, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
+	if(receiver.hud_used)
+		on_hud_created(receiver)
+	else
+		RegisterSignal(receiver, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /obj/item/organ/internal/heart/slime/Remove(mob/living/carbon/heartless, special)
 	. = ..()
 	QDEL_NULL(regenerate_limbs)
 	QDEL_NULL(retract_limb)
+	QDEL_NULL(slime_wetness_display)
 	UnregisterSignal(heartless, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
 /obj/item/organ/internal/heart/slime/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
@@ -70,6 +77,22 @@
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_danger("You feel drained!"))
 
+	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
+	if(!slime_wetness || slime_wetness?.stacks != slime_wetness.stack_limit)
+		if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
+			slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+			if(slime_wetness?.stacks > (HYDROPHOBIA_WETNESS_STACKS - 1) && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
+				slime.balloon_alert(slime, "membrane restored!")
+				playsound(slime, 'sound/surgery/organ1.ogg', 80, TRUE)
+				slime.visible_message(
+					span_notice("[slime]'s body forms an oily outer membrance!"),
+					span_nicegreen("Your protective membrance regenerates!"),
+				)
+
+		update_hud(slime)
+
+
 	if(slime.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(slime)
 
@@ -92,9 +115,20 @@
 		if(!QDELETED(organ))
 			organ.forceMove(body.drop_location())
 	consumed_limb.drop_limb()
-	to_chat(body, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
+	body.visible_message(
+		span_danger("[body]'s [consumed_limb] rapidly loses its shape, painfully being drawn back into [body.p_their()] body!"),
+		span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!")
+	)
 	qdel(consumed_limb)
 	body.blood_volume += 20
+
+/obj/item/organ/internal/heart/slime/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+
+	var/datum/hud/slime_hud = source.hud_used
+	slime_wetness_display = new(null, slime_hud)
+	slime_hud.infodisplay += slime_wetness_display
+	slime_hud.show_hud(slime_hud.hud_version)
 
 /// REGENERATE LIMBS
 /datum/action/innate/regenerate_limbs
@@ -154,7 +188,7 @@
  */
 /datum/action/innate/retract_limb
 	name = "Retract Limb"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	button_icon_state = "retract_limb"
 	button_icon = SLIME_ACTIONS_ICON_FILE
 	background_icon_state = "bg_alien"
@@ -191,6 +225,9 @@
 	var/obj/item/bodypart/selected_limb = show_radial_menu(user, user, retractable_limbs)
 	if(isnull(selected_limb))
 		return
+	if(!do_after(user, 2 SECONDS))
+		selected_limb.balloon_alert(user, "focus interrupted!")
+		return
 	for(var/obj/item/organ/internal/organ in user.get_organs_for_zone(selected_limb.body_zone))
 		organ.Remove(user)
 		if(!QDELETED(organ))
@@ -199,6 +236,10 @@
 	var/brute = selected_limb.brute_dam
 	var/burn = selected_limb.burn_dam
 	selected_limb.drop_limb()
+	user.visible_message(
+		span_warning("[user]'s [selected_limb] is retracted into [user.p_their()] body with a quick, deliberate motion!"),
+		span_notice("You retract your [selected_limb] back into your body."),
+	)
 	qdel(selected_limb)
 	chest?.receive_damage(brute, burn, forced = TRUE, wound_bonus = CANT_WOUND)
 	user.blood_volume += 20
@@ -252,3 +293,16 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/obj/item/organ/internal/heart/synth/abandoned
+	name = "faulty hydraulic pump engine"
+	desc = "A strange and older version of a synth heart, it appears damaged, but still functional."
+	icon_state = "abandoned_heart_on"
+	base_icon_state = "abandoned_heart_off"
+	//Prob to craete sparks on life, when implanted in a person
+	var/spark_prob = 15
+
+/obj/item/organ/internal/heart/synth/abandoned/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(spark_prob, seconds_per_tick))
+		do_sparks(1, FALSE, owner)
+	return ..()
