@@ -337,13 +337,15 @@
 		slide_distance = 1
 	else if(lube & SUPER_DUPER_SLIDE)
 		slide_distance = 255
-	else if(HAS_TRAIT(slipper, TRAIT_CURSED))
+	else if(HAS_TRAIT(slipper, TRAIT_CURSED) && !(lube & WEAK_SLIDE))
 		// When cursed, all slips send you flying
 		lube |= SLIDE
 		slide_distance = rand(5, 9)
 	else if(HAS_TRAIT(slipper, TRAIT_NO_SLIP_SLIDE))
 		// Stops sliding
 		slide_distance = 0
+	else if(lube & WEAK_SLIDE)
+		slide_distance = rand(1, 2)
 
 	var/obj/buckled_obj
 	if(slipper.buckled)
@@ -373,6 +375,8 @@
 		// They need to be kept upright to maintain the combo effect (So don't knockdown)
 		slipper.Immobilize(1 SECONDS)
 		slipper.incapacitate(1 SECONDS)
+	else if(lube & WEAK_SLIDE)
+		slipper.stop_pulling()
 	else
 		slipper.bananeer(total_time = knockdown_amount * 0.1, stun_duration = knockdown_amount, height = (knockdown_amount * 0.5), flip_count = round(knockdown_amount * 0.1))
 		slipper.Paralyze(paralyze_amount)
@@ -386,7 +390,7 @@
 
 	if(slide_distance)
 		var/turf/target = get_ranged_target_turf(slipper, olddir, slide_distance)
-		if(lube & SLIDE)
+		if(lube & (SLIDE|WEAK_SLIDE))
 			slipper.AddComponent(/datum/component/force_move, target, TRUE, TRUE)
 		else if(lube & SLIDE_ICE)
 			slipper.AddComponent(/datum/component/force_move, target, FALSE, TRUE)//spinning would be bad for ice, fucks up the next dir
