@@ -161,9 +161,26 @@
 	wag_flags = NONE
 	organ_traits = list(TRAIT_FLOPPING)
 
+	// Fishlike reagents, you could serve it raw like fish
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/consumable/nutriment = 10,
+	)
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE
+	// Also just tastes like fish
+	food_tastes = list("fatty fish" = 1)
+	/// The fillet type this fish tail is processable into
+	var/fillet_type = /obj/item/food/fishmeat/fish_tail
+	/// The amount of fillets this gets processed into
+	var/fillet_amount = 5
+
 /obj/item/organ/external/tail/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
+	var/time_to_fillet = fillet_amount * 0.5 SECONDS
+	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, fillet_amount, time_to_fillet, screentip_verb = "Cut")
 
 /obj/item/organ/external/tail/fish/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
@@ -219,6 +236,9 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "gills"
 
+	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
+	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
+	food_tastes = list("gross fish" = 1)
 	safe_oxygen_min = 0 //We don't breathe this
 	///The required partial pressure of water_vapor for not drowing
 	var/safe_water_level = 29
@@ -345,6 +365,14 @@
 	organ_traits = list(TRAIT_STRONG_STOMACH, TRAIT_FISH_EATER)
 	disgust_metabolism = 2.5
 
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE
+	// Salty and putrid like it smells, yum
+	food_tastes = list(
+		"salt" = 1,
+		"putrid fish" = 1,
+	)
+
 /obj/item/organ/internal/stomach/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
@@ -357,6 +385,14 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "inky_tongue"
 	actions_types = list(/datum/action/cooldown/ink_spit)
+
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE
+	// Squid with a hint of the sea (from the ink)
+	food_tastes = list(
+		"squid" = 1,
+		"the sea" = 0.2,
+	)
 
 /obj/item/organ/internal/tongue/inky/Initialize(mapload)
 	. = ..()
@@ -375,6 +411,11 @@
 	liver_resistance = parent_type::liver_resistance * 1.5
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5, /datum/reagent/toxin/tetrodotoxin = 5)
 	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5, /datum/reagent/toxin/tetrodotoxin = 5)
+
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE
+	// Just fish, the toxin isn't obvious
+	food_tastes = list("fish" = 1)
 
 /obj/item/organ/internal/liver/fish/Initialize(mapload)
 	. = ..()
