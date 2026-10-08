@@ -113,7 +113,7 @@
 	else
 		switch(color_source)
 			if(ORGAN_COLOR_OVERRIDE)
-				draw_color = override_color(ownerlimb.draw_color)
+				draw_color = override_color(ownerlimb)
 			if(ORGAN_COLOR_INHERIT)
 				draw_color = ownerlimb.draw_color
 			if(ORGAN_COLOR_HAIR)
