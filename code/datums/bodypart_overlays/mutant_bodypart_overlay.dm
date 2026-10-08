@@ -122,10 +122,12 @@
 				var/mob/living/carbon/human/human_owner = ownerlimb.owner
 				var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as ownerlimb
 				//head hair color takes priority, owner hair color is a backup if we lack a head or something
-				if(my_head)
-					draw_color = my_head.hair_color
-				else
+				if(!my_head)
 					draw_color = human_owner.hair_color
+				else if(my_head.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR))
+					draw_color = my_head.fixed_hair_color || my_head.hair_color
+				else //inherit mutant color of the bodypart if the owner doesn't have hair.
+					draw_color = ownerlimb.draw_color
 			if(ORGAN_COLOR_ANIME)
 				if(!ishuman(ownerlimb.owner))
 					return

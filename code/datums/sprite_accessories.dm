@@ -2599,6 +2599,23 @@ MONKESTATION EDIT
 	name = "Large"
 	icon_state = "large"
 
+///Used for fish-infused tails, which come in different flavors.
+/datum/sprite_accessory/tails/fish
+	icon = 'icons/mob/species/human/fish_features.dmi'
+	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/tails/fish/default
+	name = "Fish"
+	icon_state = "fish"
+
+/datum/sprite_accessory/tails/fish/shark
+	name = "Shark"
+	icon_state = "shark"
+
+/datum/sprite_accessory/tails/fish/orca
+	name = "Orca"
+	icon_state = "orca"
+
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'

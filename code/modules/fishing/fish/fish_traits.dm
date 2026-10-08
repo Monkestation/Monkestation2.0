@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/list/guaranteed_inheritance_types
 	/// Depending on the value, fish with trait will be reported as more or less difficult in the catalog.
 	var/added_difficulty = 0
+	/// If set, the fish may return this infusion entry when get_infusion_entry is called instead of /datum/infuser_entry/fish
+	var/infusion_entry
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -264,6 +266,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Toxic"
 	catalog_description = "This fish contains toxins in its liver. Feeding it to predatory fishes or people is not reccomended."
 	diff_traits_inheritability = 25
+	infusion_entry = /datum/infuser_entry/ttx_healing
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_toxin))
@@ -350,6 +353,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	inheritability = 80
 	diff_traits_inheritability = 40
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
+	infusion_entry = /datum/infuser_entry/amphibious
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_DATUM_TRAIT)
@@ -378,3 +382,25 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+
+/datum/fish_trait/ink
+	name = "Ink Production"
+	catalog_description = "This fish possess a sac that produces ink."
+	diff_traits_inheritability = 70
+	infusion_entry = /datum/infuser_entry/squid
+
+/datum/fish_trait/ink/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(attacked_someone))
+
+/datum/fish_trait/ink/proc/attacked_someone(obj/item/fish/source, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(source.status == FISH_DEAD || HAS_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN))
+		return
+	if(!iscarbon(target) || target.get_bodypart(BODY_ZONE_HEAD))
+		target.adjust_temp_blindness_up_to(4 SECONDS, 8 SECONDS)
+		target.adjust_confusion_up_to(1.5 SECONDS, 4 SECONDS)
+	target.visible_message(span_warning("[target] is inked by [source]!"), span_userdanger("You've been inked by [source]!"))
+	playsound(target, SFX_DESECRATION, 50, TRUE)
+	ADD_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_DATUM_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_DATUM_TRAIT), 9 SECONDS)

@@ -83,15 +83,12 @@
 	var/fail_title = ""
 	var/fail_reason = ""
 	// Replace infusing_into with a [/datum/infuser_entry]
-	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
-		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
-			continue
-		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
-			if(entry.tier > max_tier_allowed)
-				fail_title = "Overcomplexity"
-				fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
-			infusing_into = entry
-			break
+	var/datum/infuser_entry/entry = infusing_from.get_infusion_entry()
+	if(entry)
+		if(entry.tier > max_tier_allowed)
+			fail_title = "Overcomplexity"
+			fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
+		infusing_into = entry
 	if(!infusing_into)
 		//no valid recipe, so you get a fly mutation
 		if(!fail_reason)
