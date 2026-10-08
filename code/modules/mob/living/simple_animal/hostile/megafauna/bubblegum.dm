@@ -68,6 +68,7 @@ Difficulty: Hard
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
+	//hardmode_reward = /obj/item/gem/bubblegum
 	rawr_sound = 'sound/magic/demon_dies.ogg' // MONKESTATION EDIT ADDITION
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
@@ -361,10 +362,6 @@ Difficulty: Hard
 	can_dry = FALSE
 	clean_type = CLEAN_TYPE_HARD_DECAL
 
-/obj/effect/decal/cleanable/blood/bubblegum/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	add_blood_DNA(list("DEMON BLOOD" = /datum/blood_type/animal))
-
 /obj/effect/decal/cleanable/blood/bubblegum/can_bloodcrawl_in()
 	return TRUE
 
@@ -376,10 +373,6 @@ Difficulty: Hard
 	base_name = ""
 	can_dry = FALSE
 	clean_type = CLEAN_TYPE_HARD_DECAL
-
-/obj/effect/decal/cleanable/blood/gibs/bubblegum/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	add_blood_DNA(list("DEMON BLOOD" = /datum/blood_type/animal))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum/can_bloodcrawl_in()
 	return TRUE

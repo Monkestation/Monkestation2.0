@@ -57,7 +57,7 @@
 			target.real_name = fields["name"]
 			target.dna.unique_enzymes = fields["UE"]
 			target.name = target.real_name
-			target.dna.human_blood_type = blood_name_to_blood_type(fields["blood_type"])
+			target.set_blood_type(fields["blood_type"])
 		if(fields["UI"]) //UI+UE
 			target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
 		if(fields["UF"])
@@ -127,11 +127,11 @@
 			if(!target.dna.previous["UE"])
 				target.dna.previous["UE"] = target.dna.unique_enzymes
 			if(!target.dna.previous["blood_type"])
-				target.dna.previous["blood_type"] = "[initial(target.dna.human_blood_type.name)]"
+				target.dna.previous["blood_type"] = target.get_bloodtype()
 			target.real_name = fields["name"]
 			target.dna.unique_enzymes = fields["UE"]
 			target.name = target.real_name
-			target.dna.human_blood_type = blood_name_to_blood_type(fields["blood_type"])
+			target.set_blood_type(fields["blood_type"])
 			target.dna.temporary_mutations[UE_CHANGED] = endtime
 		if(fields["UI"]) //UI+UE
 			if(!target.dna.previous["UI"])
@@ -593,3 +593,23 @@
 /obj/item/dnainjector/anticlever
 	name = "\improper DNA injector (Anti-Clever)"
 	remove_mutations = list(/datum/mutation/clever)
+
+/obj/item/dnainjector/acid_spit
+	name = "\improper DNA injector (Acid Spit)"
+	add_mutations = list(/datum/mutation/acid_spit)
+
+/obj/item/dnainjector/syndicate_xray
+	name = "\improper DNA injector (Refined X-Ray Vision)"
+	add_mutations = list(/datum/mutation/weaker_xray/syndicate)
+
+/obj/item/dnainjector/syndicate_laser_eyes
+	name = "\improper DNA injector (Stabilized Laser Eyes)"
+	add_mutations = list(/datum/mutation/laser_eyes/unstable/syndicate)
+
+/obj/item/dnainjector/syndicate_matter_eater
+	name = "\improper DNA injector (Refined Matter Eater)"
+	add_mutations = list(/datum/mutation/consumption/syndicate)
+
+/obj/item/dnainjector/syndicate_mending_touch
+	name = "\improper DNA injector (Corrupted Mending Touch)"
+	add_mutations = list(/datum/mutation/lay_on_hands/syndicate)

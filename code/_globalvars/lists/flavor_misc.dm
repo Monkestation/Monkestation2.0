@@ -38,31 +38,31 @@ GLOBAL_LIST_EMPTY(wings_open_list)
 GLOBAL_LIST_EMPTY(moth_wings_list)
 GLOBAL_LIST_EMPTY(moth_antennae_list)
 GLOBAL_LIST_EMPTY(moth_markings_list)
-GLOBAL_LIST_EMPTY(apid_antenna_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(ipc_screens_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(ipc_antennas_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(ipc_chassis_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(apid_wings_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(apid_antenna_list)
+GLOBAL_LIST_EMPTY(ipc_screens_list)
+GLOBAL_LIST_EMPTY(ipc_antennas_list)
+GLOBAL_LIST_EMPTY(ipc_chassis_list)
+GLOBAL_LIST_EMPTY(apid_wings_list)
 GLOBAL_LIST_EMPTY(caps_list)
 GLOBAL_LIST_EMPTY(pod_hair_list)
-GLOBAL_LIST_EMPTY(ethereal_horns_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(ethereal_tail_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(ethereal_horns_list)
+GLOBAL_LIST_EMPTY(ethereal_tail_list)
 GLOBAL_LIST_EMPTY(tails_list_monkey)
-GLOBAL_LIST_EMPTY(anime_top_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(anime_middle_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(anime_bottom_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(anime_top_list)
+GLOBAL_LIST_EMPTY(anime_middle_list)
+GLOBAL_LIST_EMPTY(anime_bottom_list)
 GLOBAL_LIST_EMPTY(anime_halo_list)
-GLOBAL_LIST_EMPTY(arachnid_appendages_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(arachnid_chelicerae_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(goblin_ears_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(goblin_nose_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(floran_leaves_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(satyr_fluff_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(satyr_tail_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(satyr_horns_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(oni_tail_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(oni_wings_list) //Monkestation Addition
-GLOBAL_LIST_EMPTY(oni_horns_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(arachnid_appendages_list)
+GLOBAL_LIST_EMPTY(arachnid_chelicerae_list)
+GLOBAL_LIST_EMPTY(goblin_ears_list)
+GLOBAL_LIST_EMPTY(goblin_nose_list)
+GLOBAL_LIST_EMPTY(floran_leaves_list)
+GLOBAL_LIST_EMPTY(satyr_fluff_list)
+GLOBAL_LIST_EMPTY(satyr_tail_list)
+GLOBAL_LIST_EMPTY(satyr_horns_list)
+GLOBAL_LIST_EMPTY(oni_tail_list)
+GLOBAL_LIST_EMPTY(oni_wings_list)
+GLOBAL_LIST_EMPTY(oni_horns_list)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",
@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Burnt Orange" = "#cc4400",
 	"Cyan Blue" = "#00ffff",
 	"Dark Blue" = "#6666ff",
-	"Dark Fuschia" = "#C70064", //Monkestation Edit: #CC0066 TO #C70064
+	"Dark Fuschia" = "#C70064",
 	"Dark Green" = "#37835b",
 	"Dark Red" = "#9c3030",
 	"Dull Yellow" = "#fbdf56",
@@ -84,9 +84,9 @@ GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Red" = "#ff4d4d",
 	"Seafoam Green" = "#00fa9a",
 	"White" = "#f2f2f2",
-	"Fuschia" = "#FF0066", //Monkestation Addition
-	"Dark Purple" = "#502A77", //Monkestation Addition
-	"Gray" = "#505050", //Monkestation Addition
+	"Fuschia" = "#FF0066",
+	"Dark Purple" = "#502A77",
+	"Gray" = "#505050",
 ))
 
 GLOBAL_LIST_INIT(color_list_lustrous, list(
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_SUPPLY,
 )))
 
-	//Backpacks
+//Backpacks
 #define DBACKPACK "Department Backpack"
 #define DDUFFELBAG "Department Duffel Bag"
 #define DSATCHEL "Department Satchel"
@@ -173,8 +173,8 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 #define GDUFFELBAG "Grey Duffel Bag"
 #define GSATCHEL "Grey Satchel"
 #define LSATCHEL "Leather Satchel"
-#define BSATCHEL "Black Leather Satchel" //MONKESTATION
-#define RSATCHEL "Retro Satchel" //MONKESTATION
+#define BSATCHEL "Black Leather Satchel"
+#define RSATCHEL "Retro Satchel"
 GLOBAL_LIST_INIT(backpacklist, list(
 	DBACKPACK,
 	DDUFFELBAG,
@@ -183,11 +183,11 @@ GLOBAL_LIST_INIT(backpacklist, list(
 	GDUFFELBAG,
 	GSATCHEL,
 	LSATCHEL,
-	BSATCHEL, //MONKESTATION
-	RSATCHEL, //MONKESTATION
+	BSATCHEL,
+	RSATCHEL,
 ))
 
-	//Suit/Skirt
+//Suit/Skirt
 #define PREF_SUIT "Jumpsuit"
 #define PREF_SKIRT "Jumpskirt"
 
@@ -271,19 +271,19 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"Experimentor Lab", "Ordnance", "Dormitories", "Pathology",
 	"Xenobiology", "Law Office","Detective's Office"))
 
-GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt"))
+GLOBAL_LIST_INIT(station_prefixes, file2list("strings/station_prefixes.txt"))
 
-GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt"))
+GLOBAL_LIST_INIT(station_names, file2list("strings/station_names.txt"))
 
-GLOBAL_LIST_INIT(station_suffixes, world.file2list("strings/station_suffixes.txt"))
+GLOBAL_LIST_INIT(station_suffixes, file2list("strings/station_suffixes.txt"))
 
-GLOBAL_LIST_INIT(greek_letters, world.file2list("strings/greek_letters.txt"))
+GLOBAL_LIST_INIT(greek_letters, file2list("strings/greek_letters.txt"))
 
-GLOBAL_LIST_INIT(phonetic_alphabet, world.file2list("strings/phonetic_alphabet.txt"))
+GLOBAL_LIST_INIT(phonetic_alphabet, file2list("strings/phonetic_alphabet.txt"))
 
-GLOBAL_LIST_INIT(numbers_as_words, world.file2list("strings/numbers_as_words.txt"))
+GLOBAL_LIST_INIT(numbers_as_words, file2list("strings/numbers_as_words.txt"))
 
-GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
+GLOBAL_LIST_INIT(wisdoms, file2list("strings/wisdoms.txt"))
 
 /proc/generate_number_strings()
 	var/list/L[198]
@@ -308,7 +308,7 @@ GLOBAL_LIST_INIT(admiral_messages, list(
 	"You knew the risks coming in.",
 ))
 
-GLOBAL_LIST_INIT(junkmail_messages, world.file2list("strings/junkmail.txt"))
+GLOBAL_LIST_INIT(junkmail_messages, file2list("strings/junkmail.txt"))
 
 // All valid inputs to status display post_status
 GLOBAL_LIST_INIT(status_display_approved_pictures, list(
@@ -363,6 +363,16 @@ GLOBAL_LIST_INIT(most_common_words, init_common_words())
 /proc/init_common_words()
 	. = list()
 	var/i = 1
-	for(var/word in world.file2list("strings/1000_most_common.txt"))
+	for(var/word in file2list("strings/1000_most_common.txt"))
 		.[word] = i
 		i += 1
+
+/// Body sizes. The names (keys) are what is actually stored in the database. Don't get crazy with changing them.
+GLOBAL_LIST_INIT(body_heights, list(
+	"Shortest" = HUMAN_HEIGHT_SHORTEST,
+	"Short" = HUMAN_HEIGHT_SHORT,
+	"Normal" = HUMAN_HEIGHT_MEDIUM,
+	"Tall" = HUMAN_HEIGHT_TALL,
+	"Taller" = HUMAN_HEIGHT_TALLER,
+	"Tallest" = HUMAN_HEIGHT_TALLEST,
+))

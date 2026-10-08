@@ -218,8 +218,8 @@
 		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
-		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE))
+		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)]" + (cuffs.breakout_while_moving ? ".)" : " and you need to stand still.)")))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check_continue))))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -228,7 +228,7 @@
 		breakouttime = 5 SECONDS
 		visible_message(span_warning("[src] is trying to break [cuffs]!"))
 		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check_continue))))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to break [cuffs]!"))
@@ -236,6 +236,17 @@
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		. = clear_cuffs(cuffs, cuff_break)
 	cuffs.item_flags &= ~BEING_REMOVED
+
+/mob/living/carbon/proc/cuff_resist_check_continue()
+	var/obj/item/handcuffs = get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+	if(handcuffs?.item_flags & BEING_REMOVED)
+		return TRUE
+
+	var/obj/item/legcuffs = get_item_by_slot(ITEM_SLOT_LEGCUFFED)
+	if(legcuffs?.item_flags & BEING_REMOVED)
+		return TRUE
+
+	return FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -444,7 +455,7 @@
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
-	bite.reagents?.trans_to(spew, amount, transfered_by = src)
+	bite.reagents?.trans_to(spew, amount, transferred_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -1307,10 +1318,6 @@
 	handcuffed = new_value
 	if(old_value)
 		if(!handcuffed)
-
-			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
-				src.remove_status_effect(/datum/status_effect/silver_cuffed)
-
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
@@ -1357,6 +1364,29 @@
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
+/// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
+/mob/living/carbon/proc/update_cached_blood_dna_info()
+	var/list/blood_dna_info = get_blood_dna_list()
+	for(var/obj/item/organ/organ in organs)
+		organ.blood_dna_info = blood_dna_info
+	for(var/obj/item/bodypart/bodypart in bodyparts)
+		bodypart.blood_dna_info = blood_dna_info
+
+/// Setter for changing a mob's blood type
+/mob/living/carbon/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(isnull(dna))
+		return
+
+	if(get_bloodtype() == new_blood_type) // already has this blood type, we don't need to do anything.
+		return
+
+	dna.blood_type = new_blood_type
+	if(update_cached_blood_dna_info)
+		update_cached_blood_dna_info()
+	SEND_SIGNAL(src, COMSIG_CARBON_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)
+
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
 	if(can_be_shoved_into)
@@ -1379,7 +1409,7 @@
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		return ..()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!can_bleed())
 		to_chat(src, span_notice("You get a headache."))
 		return
 	head.adjustBleedStacks(5)
@@ -1390,6 +1420,10 @@
 		return hit_zone
 	// When a limb is missing the damage is actually passed to the chest
 	return BODY_ZONE_CHEST
+
+/mob/living/carbon/get_bloodtype()
+	RETURN_TYPE(/datum/blood_type)
+	return dna?.blood_type
 
 /mob/living/carbon/death(gibbed)
 	if (stat == DEAD)
@@ -1434,7 +1468,7 @@
 		playsound(src, pick(butt.sound_effect), 50, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/carbon/proc/gib_fart(freq=0)
-	if (stat == DEAD && world.time - timeofdeath > 1 SECOND)
+	if (stat == DEAD && world.time - timeofdeath > 1 SECONDS)
 		return
 
 	if(HAS_TRAIT(src, TRAIT_LOUD_ASS))

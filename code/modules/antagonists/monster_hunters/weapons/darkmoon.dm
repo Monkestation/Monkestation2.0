@@ -34,7 +34,7 @@
 	. = ..()
 	balloon_alert(user, active ? "glows with power" : "turns dormant")
 	if(active)
-		playsound(src, 'monkestation/sound/weapons/moonlightsword.ogg', vol = 50)
+		playsound(src, 'sound/weapons/moonlightsword.ogg', vol = 50)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -66,7 +66,7 @@
 	var/obj/projectile/moonbeam/moon = new(proj_turf)
 	moon.aim_projectile(target, user, modifiers)
 	moon.firer = user
-	playsound(src, 'monkestation/sound/weapons/moonlightbeam.ogg', vol = 50)
+	playsound(src, 'sound/weapons/moonlightbeam.ogg', vol = 50)
 	moon.fire()
 
 /obj/projectile/moonbeam

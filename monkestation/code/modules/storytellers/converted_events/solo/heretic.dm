@@ -39,9 +39,9 @@
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 	)
-	required_enemies = 6
+	required_enemies = 5
 	weight = 5
-	min_players = 20
+	min_players = 40
 
 /datum/round_event_control/antagonist/heretic/get_weight()
 	. = ..()

@@ -51,6 +51,11 @@
 	/// Useful for final objectives as they don't need a reward.
 	var/needs_reward = TRUE
 
+	///a bitfield for what types of uplinks can gain this objective
+	var/valid_uplinks = UPLINK_TRAITORS //this is a secret tool that will help us later
+	///how much contractor rep this gives for completion
+	var/given_contractor_rep
+
 /// Returns a list of variables that can be changed by config, allows for balance through configuration.
 /// It is not recommended to finetweak any values of objectives on your server.
 /datum/traitor_objective/proc/supported_configuration_changes()

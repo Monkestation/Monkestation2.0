@@ -5,3 +5,5 @@
 #define ANNOUNCEMENT_TYPE_CAPTAIN "Captain"
 /// Make it sound like it's coming from the Syndicate
 #define ANNOUNCEMENT_TYPE_SYNDICATE "Syndicate"
+/// Make it sound like it's coming from the AI
+#define ANNOUNCEMENT_TYPE_AI "AI"

@@ -99,8 +99,9 @@ SUBSYSTEM_DEF(tgui)
 	var/window_id
 	var/datum/tgui_window/window
 	var/window_found = FALSE
+	var/window_limit = user.client.prefs.read_preference(/datum/preference/toggle/tgui_unlimited_windows) ? TGUI_WINDOW_UNLIMITED_LIMIT : TGUI_WINDOW_HARD_LIMIT
 	// Find a usable window
-	for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
+	for(var/i in 1 to window_limit)
 		window_id = TGUI_WINDOW_ID(i)
 		window = windows[window_id]
 		// As we are looping, create missing window datums
@@ -136,7 +137,8 @@ SUBSYSTEM_DEF(tgui)
 #endif
 	if(user.client)
 		user.client.tgui_windows = list()
-		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
+		var/window_limit = user.client.prefs.read_preference(/datum/preference/toggle/tgui_unlimited_windows) ? TGUI_WINDOW_UNLIMITED_LIMIT : TGUI_WINDOW_HARD_LIMIT
+		for(var/i in 1 to window_limit)
 			var/window_id = TGUI_WINDOW_ID(i)
 			user << browse(null, "window=[window_id]")
 

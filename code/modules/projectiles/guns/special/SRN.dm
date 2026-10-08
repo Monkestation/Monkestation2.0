@@ -1,11 +1,11 @@
 /obj/item/gun/ballistic/SRN_rocketlauncher
 	desc = "A rocket designed with the power of bluespace to send a singularity or tesla back to the shadow realm"
 	name = "Spatial Rift Nullifier"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	icon_state = "srnlauncher"
 	inhand_icon_state = "srnlauncher"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	item_flags = NONE
@@ -46,7 +46,7 @@
 	name = "\improper Spatial Rift Nullifier Rocket"
 	desc = "A prototype Spatial Rift Nullifier (SRN) Rocket. Fire at a rogue singularity or Tesla and pray it hits"
 	caliber = "84mm"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	base_icon_state = "srn_rocket"
 	icon_state = "srn_rocket"
 	projectile_type = /obj/projectile/bullet/SRN_rocket
@@ -62,7 +62,7 @@
 /// SRN Rocket Projectile
 /obj/projectile/bullet/SRN_rocket
 	name = "SRN rocket"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "srn_rocket"
 	hitsound = "sound/effects/meteorimpact.ogg"
 	damage = 10

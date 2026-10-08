@@ -73,7 +73,7 @@
 				return
 			var/png = "data/paintings/images/[chosen_portrait.md5].png"
 			var/icon/portrait_icon = new(png)
-			var/mob/living/ai = holder.mob
+			var/mob/living/silicon/ai/ai = holder.mob
 			var/w = portrait_icon.Width()
 			var/h = portrait_icon.Height()
 			var/mutable_appearance/MA = mutable_appearance(portrait_icon)
@@ -88,9 +88,7 @@
 			else
 				to_chat(ai, span_warning("Sorry, only 23x23 and 24x24 Portraits are accepted."))
 				return
-			ai.cut_overlays() //so people can't keep repeatedly select portraits to add stacking overlays
-			ai.icon_state = "ai-portrait-active"//background
-			ai.add_overlay(MA)
+			ai.set_core_display_icon(MA, ai.client)
 
 /datum/portrait_picker/proc/generate_matching_paintings_list()
 	matching_paintings = null

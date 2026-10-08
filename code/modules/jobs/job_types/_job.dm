@@ -233,17 +233,33 @@
 	return
 
 /mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
-	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
+	if(!used_pref)
+		return
+
 	var/obj/item/hat_to_use = null
 
-	// We want the last hat in the list to match the behaviour of humanoid loadouts
-	for (var/datum/loadout_item/head/item in loadout_datums)
-		if (ispath(item.item_path, /obj/item))
+	// We want the last hat in the list to match the behaviour of humanoid loadouts.
+	var/list/loadout_datums = loadout_list_to_datums(used_pref.loadout_list)
+	for(var/datum/loadout_item/head/item in loadout_datums)
+		if(ispath(item.item_path, /obj/item))
 			var/obj/item/hat = new item.item_path()
-			if (hat.slot_flags & ITEM_SLOT_HEAD)
+			if(hat.slot_flags & ITEM_SLOT_HEAD)
 				hat_to_use = hat
 
-	if (hat_to_use)
+	for(var/num in used_pref.special_loadout_list["unusual"])
+		var/list/unusuals = used_pref.extra_stat_inventory["unusual"]
+		var/unusual_idx = text2num(num)
+		if(length(unusuals) < unusual_idx)
+			stack_trace("tried to get unusual [unusual_idx] despite length being [length(unusuals)]")
+			continue
+		var/list/data = unusuals[unusual_idx]
+		var/item_path = text2path(data["unusual_type"])
+		var/obj/item/hat = SSwardrobe.provide_type(item_path)
+		hat.AddComponent(/datum/component/unusual_handler, data)
+		if(hat.slot_flags & ITEM_SLOT_HEAD)
+			hat_to_use = hat
+
+	if(hat_to_use)
 		place_on_head(hat_to_use)
 
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20

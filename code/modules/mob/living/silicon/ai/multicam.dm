@@ -151,7 +151,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	else
 		..()
 
-/mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE, reset_tracking = TRUE)
 	if (destination)
 		abstract_move(destination)
 	else
@@ -215,7 +215,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		return
 	if(!eyeobj)
 		return
-	if(multicam_screens.len >= max_multicams)
+	if(length(multicam_screens) >= max_multicams)
 		if(!silent)
 			to_chat(src, span_warning("Cannot place more than [max_multicams] multicamera windows."))
 		return
@@ -238,12 +238,13 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		start_multicam()
 
 /mob/living/silicon/ai/proc/start_multicam()
-	if(multicam_on || aiRestorePowerRoutine || !isturf(loc))
+	if(multicam_on || aiRestorePowerRoutine || !(isvalidAIloc(loc)))
 		return
 	if(!GLOB.ai_camera_room_landmark)
 		to_chat(src, span_warning("This function is not available at this time."))
 		return
 	multicam_on = TRUE
+	client.view_size.resetToDefault()
 	refresh_multicam()
 	to_chat(src, span_notice("Multiple-camera viewing mode activated."))
 
@@ -264,6 +265,8 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 			var/atom/movable/screen/movable/pic_in_pic/P = V
 			P.unshow_to(client)
 	reset_perspective()
+	if(view_range_boost > 0)
+		client?.view_size.setTo(view_range_boost)
 	to_chat(src, span_notice("Multiple-camera viewing mode deactivated."))
 
 

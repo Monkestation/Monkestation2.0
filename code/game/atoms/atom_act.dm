@@ -243,9 +243,5 @@
 	var/datum/antagonist/heretic/heretic_data = GET_HERETIC(src)
 	target.rust_heretic_act(heretic_data?.rust_strength)
 
-
-
-
-
-
-
+/atom/proc/rad_act(intensity)
+	return

@@ -24,7 +24,7 @@
 /obj/machinery/power/rad_collector //Still use this for compat reasons
 	name = "Particle Capture Array"
 	desc = "A device which uses a large plasma-glass sheet to 'catch' particles, harvesting their stored energy. Do not taunt. Can be loaded with a variety of gases to produce additional power."
-	icon = 'monkestation/icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "ca"
 	anchored = FALSE
 	density = TRUE
@@ -74,14 +74,14 @@
 	if(loaded_tank)
 		var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
 		if(active)
-			for(var/id in tank_mix.gases)
-				if(tank_mix.gases[id][MOLES] < 10) //Stops cheesing.
+			var/list/cached_moles = tank_mix.moles
+			for(var/gas_id, amount in cached_moles)
+				if(amount < 10) //Stops cheesing.
 					continue
-				power_coeff += (GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]) //250 (plasma), 2000 (hypernobi), etc etc
-				var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, tank_mix.gases[id][MOLES])
-				tank_mix.gases[id][MOLES] -= gasdrained
-				tank_mix.assert_gas(/datum/gas/hydrogen) //Produce Hydrogen. Mostly because it explodes.
-				tank_mix.gases[/datum/gas/hydrogen][MOLES] += gasdrained
+				power_coeff += (GLOB.meta_gas_info[META_GAS_SPECIFIC_HEAT][gas_id]) //250 (plasma), 2000 (hypernobi), etc etc
+				var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, amount)
+				cached_moles[gas_id] -= gasdrained
+				tank_mix.adjust_gas(/datum/gas/hydrogen, gasdrained) //Produce Hydrogen. Mostly because it explodes.
 				tank_mix.garbage_collect()
 		if(!tank_mix && loaded_tank)
 			investigate_log("<font color='red'>out of gas.</font>.", INVESTIGATE_ENGINE)
@@ -106,8 +106,8 @@
 	var/datum/gas_mixture/tank_mix = loaded_tank?.return_air()
 	var/fuel
 	if(loaded_tank)
-		fuel = tank_mix.gases[/datum/gas/plasma]
-	fuel = fuel ? fuel[MOLES] : 0
+		fuel = tank_mix.moles[/datum/gas/plasma]
+	fuel = fuel ? fuel : 0
 	investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_ENGINE)
 
 /obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user, silent)

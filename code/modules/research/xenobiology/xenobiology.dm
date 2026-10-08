@@ -3,7 +3,7 @@
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
+	icon = 'icons/obj/xenobiology/extracts.dmi'
 	icon_state = "grey_slime_extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -434,7 +434,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, span_warning("You vomit slippery oil."))
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			new /obj/effect/decal/cleanable/oil/slippery(get_turf(user))
+			new /obj/effect/decal/cleanable/blood/oil/slippery(get_turf(user))
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -803,18 +803,16 @@
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
-		to_chat(user, span_warning("The steroid only works on slimes!")) // monkestation edit: not baby slimes only, no
+		to_chat(user, span_warning("The steroid only works on slimes!"))
 		return ..()
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	// monkestation start: xenobio rework
-	if(M.ooze_production >= 50)
-		to_chat(user, span_warning("The slime is already producing too much ooze!"))
+	if(M.slime_extract_bonus >= 6)
+		to_chat(user, span_warning("The slime can't consume any more of the steroid."))
 		return
-	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more ooze."))
-	M.ooze_production = min(M.ooze_production + 20, 50)
-	// monkestation end
+	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more extracts."))
+	M.slime_extract_bonus += 3
 	qdel(src)
 
 /obj/item/slimepotion/enhancer

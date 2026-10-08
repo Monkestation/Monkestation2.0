@@ -37,6 +37,16 @@
 	name = "Battlecruiser Ally"
 	show_to_ghosts = FALSE
 
+/datum/antagonist/battlecruiser/ally/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/target = mob_override || owner.current
+	target.faction |= ROLE_SYNDICATE
+
+/datum/antagonist/battlecruiser/ally/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/target = mob_override || owner.current
+	target.faction -= ROLE_SYNDICATE
+
 /datum/antagonist/battlecruiser/captain
 	name = "Battlecruiser Captain"
 	antag_hud_name = "battlecruiser_lead"

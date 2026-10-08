@@ -92,3 +92,4 @@
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/blueshield
 	uniform = /obj/item/clothing/under/plasmaman/blueshield
+	gloves = /obj/item/clothing/gloves/tackler/combat

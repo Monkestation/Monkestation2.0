@@ -18,7 +18,7 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
 	var/obj/item/toy/plush/maternal_parent //who owns, see love()
-	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
+	var/static/list/breeding_blacklist = typecacheof(list(/obj/item/toy/plush/carpplushie/dehy_carp, /obj/item/toy/plush/shrimp/golden))
 	var/list/scorned = list() //who the plush hates
 	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
@@ -391,7 +391,8 @@
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_carp", "/obj/item/toy/plush/carpplushie")
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
@@ -422,7 +423,7 @@
 		return
 	var/obj/item/toy/plush/narplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clashing)
-		clash_of_the_plushies(P)
+		INVOKE_ASYNC(src, PROC_REF(clash_of_the_plushies), P)
 
 /obj/item/toy/plush/ratplush/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
 	clash_target = P
@@ -507,7 +508,7 @@
 	. = ..()
 	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
-		P.clash_of_the_plushies(src)
+		INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/item/toy/plush/ratplush, clash_of_the_plushies), src)
 
 // Worn sprite taken from Space Station 14. Bee hat sprite drawn by Ubaser.
 /obj/item/toy/plush/lizard_plushie
@@ -517,8 +518,8 @@
 	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
-	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	squeak_override = list('sound/voice/weh.ogg' = 1) // Monkestation Edit
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	worn_icon_state = "map_plushie_lizard"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
@@ -540,10 +541,14 @@
 // Preset lizard plushie that uses the original lizard plush green. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_lizard", "/obj/item/toy/plush/lizard_plushie/green")
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/lizard_plushie/greyscale
 	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_lizard", "/obj/item/toy/plush/lizard_plushie/greyscale")
 	greyscale_colors = "#d3d3d3#000000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -555,16 +560,19 @@
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
-	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
+	squeak_override = list('sound/voice/weh.ogg' = 1) // Monkestation Edit
 
 /obj/item/toy/plush/lizard_plushie/space/green
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_spacelizard", "/obj/item/toy/plush/lizard_plushie/space/green")
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "map_plushie_snake"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_snake", "/obj/item/toy/plush/snakeplushie")
 	greyscale_config = /datum/greyscale_config/plush_snake
 	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
@@ -594,7 +602,8 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "map_plushie_slime"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_slime", "/obj/item/toy/plush/slimeplushie")
 	greyscale_config = /datum/greyscale_config/plush_slime
 	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
@@ -671,7 +680,7 @@
 	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	worn_icon_state = "plushie_h"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
@@ -901,13 +910,18 @@
 	var/golden = FALSE
 	// Whether it has shrimp fried a man yet
 	var/suishrimp = FALSE
+	// How many men we've fried
+	var/suishrimp_count = 0
+
 
 /obj/item/toy/plush/shrimp/examine(mob/user)
 	. = ..()
+	if(suishrimp)
+		. += span_notice("[p_Theyre()] ready.") // i give up for now
+		return
 	if(has_fried)
 		. += span_notice("[p_Theyre()] all tuckered out.")
-	if(suishrimp)
-		. += span_notice("[p_Theyre()] ready.")
+		return
 	else
 		. += span_notice("[p_Theyre()] ready to fry some rice.")
 
@@ -928,8 +942,15 @@
 	new_rice.name = "bloody shrimp fried rice"
 	new_rice.desc = "A classic Japanese comfort food, made with sausage, veggies, worchestershire sauce, rice- oh, and of course, the blood of [user]."
 	new /obj/effect/temp_visual/shrimp_frying_rice(get_turf(user))
+	suishrimp_count++
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 
+	if(suishrimp_count == 1)
+		desc = "This shrimp has krilled a man."
+	if(suishrimp_count == 2)
+		desc = "This shrimp has krilled two men. And many more to come."
+	if(suishrimp_count > 3)
+		desc = "This shrimp has krilled [suishrimp_count] men. Nothing can stop its rampage."
 	return MANUAL_SUICIDE
 
 /obj/item/toy/plush/shrimp/golden
@@ -1055,8 +1076,10 @@
 
 	if(golden)
 		has_fried = FALSE
+		new_rice.food_quality = 100 // masterchef
 	else
 		has_fried = TRUE
+		new_rice.food_quality = 20 // medicorechef
 	target_reagents.remove_reagent(/datum/reagent/consumable/rice, 30)
 	playsound(get_turf(new_rice), 'sound/effects/kero.ogg', 75, frequency = 0.5)
 	user.do_attack_animation(interacting_with)
@@ -1079,3 +1102,31 @@
 	. = ..()
 	//Taken directly from Dream Maker Reference on 'animate()' with minor adjustment.
 	animate(src, time = 1.5 SECONDS, alpha = 0, easing = SINE_EASING)
+
+/obj/item/toy/plush/expie // Casualties: Unknown reference
+	name = "expie plushie"
+	desc = "A tag on it reads, \"Made with all natural glowfruit and geofruit stuffing!\""
+	icon_state = "expie"
+	attack_verb_continuous = list("experiments")
+	attack_verb_simple = list("experiment")
+	squeak_override = list(
+		'sound/misc/expie_bark.ogg' = 1
+	)
+
+/obj/item/toy/plush/expie/spinny_hat
+	name = "spinny expie plushie"
+	desc = "A normal expie plushie which has been given a bright lolipop and a spinny propeller hat."
+	icon_state = "expie_spinny_hat"
+
+/obj/item/toy/plush/expie/dune
+	name = "dune plushie"
+	desc = "A tag on it reads, \"Manufacturer is not responsible for bodily harm as a result of plushie usage.\""
+	icon_state = "dune"
+	attack_verb_continuous = list("chomps")
+	attack_verb_simple = list("chomp")
+
+/obj/item/toy/plush/expie/milky
+	name = "milky plushie"
+	desc = "A tag on it reads, \"Made with all natural geofruit milk fibers.\""
+	icon_state = "milky"
+

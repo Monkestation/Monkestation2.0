@@ -6,7 +6,7 @@
 /mob/living/basic/monkey_animatronic
 	name = "Monke"
 	desc = "A lovable and legally distinct mascot!"
-	icon = 'monkestation/icons/mob/basic/monkey_animatronic.dmi'
+	icon = 'icons/mob/basic/monkey_animatronic.dmi'
 	icon_state = "monkey_animatronic_1"
 	icon_living = "monkey_animatronic_1"
 	icon_dead = "monkey_animatronic_1"

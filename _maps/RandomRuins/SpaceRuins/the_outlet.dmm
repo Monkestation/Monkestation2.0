@@ -241,7 +241,7 @@
 	icon_state = "dirt-0"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	icon_state = "floor4"
 	},
 /turf/open/floor/iron,
@@ -696,7 +696,7 @@
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "rF" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/reagent_containers/syringe/lethal/execution,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -966,7 +966,7 @@
 	icon_state = "dirt-0"
 	},
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "ya" = (
@@ -2156,7 +2156,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-137"
 	},
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	icon_state = "floor7"
 	},
 /turf/open/floor/iron,

@@ -1,5 +1,5 @@
 /obj/item/bodypart/head/teratoma
-	icon_static =  'monkestation/icons/mob/species/teratoma/bodyparts.dmi'
+	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
@@ -12,7 +12,7 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/chest/teratoma
-	icon_static =  'monkestation/icons/mob/species/teratoma/bodyparts.dmi'
+	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
@@ -25,7 +25,7 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/arm/left/teratoma
-	icon_static =  'monkestation/icons/mob/species/teratoma/bodyparts.dmi'
+	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
@@ -37,7 +37,7 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/arm/right/teratoma
-	icon_static =  'monkestation/icons/mob/species/teratoma/bodyparts.dmi'
+	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
@@ -49,7 +49,7 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/leg/left/teratoma
-	icon_static =  'monkestation/icons/mob/species/teratoma/bodyparts.dmi'
+	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
@@ -61,7 +61,7 @@
 	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
 
 /obj/item/bodypart/leg/right/teratoma
-	icon_static =  'monkestation/icons/mob/species/teratoma/bodyparts.dmi'
+	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA

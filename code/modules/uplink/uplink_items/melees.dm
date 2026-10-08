@@ -41,7 +41,8 @@
 /datum/uplink_item/melees/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			all energy projectiles, but requires two hands to wield. It also struggles to protect you from tackles."
+			all energy projectiles along with better blocking of most other attacks, but requires two hands to wield. It also struggles to protect you from tackles. \
+			The grip is difficult to handle and cannot be operated by hulks, and its ridges make it impossible to hold with an anti-drop implant or sticky glue."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 	cost = 16
@@ -91,6 +92,7 @@
 	surplus = 5 // Rare but not impossible.
 	item = /obj/item/book/granter/martial/carp/true
 	lock_other_purchases = TRUE
+	cant_discount = TRUE
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/melees/edagger
@@ -98,3 +100,14 @@
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/pen/edagger
 	cost = 2
+
+/datum/uplink_item/melees/busterarm
+	name = "Buster Arm"
+	desc = "A box containing a combat-focused prosthetic left arm that can be attached on contact; It is intended for close combat and possesses immense strength. With it, the user\
+	can send people and heavy objects flying and even tear down solid objects like they're wet paper. To close the distance with ranged opponents, a grappling hook can be ejected\
+	from the arm which momentarily keeps victims in place. Due to its unorthodox nature, the box includes 3 monkey cubes to familiarize the user with the arm functions. Users are \
+	warned that the arm renders them unable to wear gloves."
+	item = /obj/item/storage/box/syndie_kit/buster
+	cost = 16
+	surplus = 0
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)

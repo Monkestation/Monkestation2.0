@@ -255,7 +255,7 @@
 		return
 
 	our_guy.add_movespeed_modifier(/datum/movespeed_modifier/reagent/twitch)
-	our_guy.next_move_modifier -= 0.3 // For the duration of this you move and attack faster
+	our_guy.next_move_modifier *= 0.7 // For the duration of this you move and attack faster
 
 	our_guy.sound_environment_override = SOUND_ENVIRONMENT_DIZZY
 
@@ -285,7 +285,7 @@
 	. = ..()
 
 	our_guy.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/twitch)
-	our_guy.next_move_modifier += (overdosed ? 0.5 : 0.3)
+	our_guy.next_move_modifier /= (overdosed ? 0.49 : 0.7)
 
 	our_guy.sound_environment_override = NONE
 
@@ -324,8 +324,6 @@
 				span_danger("You suddenly snap back to normal speeds. You feel like you've just been run over by a power loader.")
 			)
 		our_guy.stamina.adjust(-constant_dose_time)
-		if(!HAS_TRAIT(our_guy, TRAIT_TWITCH_ADAPTED))
-			our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3 * constant_dose_time) // Basically you might die
 
 	if(!our_guy.hud_used)
 		return
@@ -386,7 +384,7 @@
 
 	//RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets)) //This is the code that enables dodging bullets, it's disabled due to bullet immunity being extremely overpowered.
 
-	our_guy.next_move_modifier -= 0.2 // Overdosing makes you a liiitle faster but you know has some really bad consequences
+	our_guy.next_move_modifier *= 0.7 // Overdosing makes you a liiitle faster but you know has some really bad consequences
 
 	if(!our_guy.hud_used)
 		return
@@ -483,6 +481,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/dinitrogen_plasmide/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
+	. = ..()
 	if((our_guy.mob_biotypes & MOB_ROBOTIC))
 		var/cooling = 50 * REM * seconds_per_tick
 		our_guy.reagents?.chem_temp -= cooling

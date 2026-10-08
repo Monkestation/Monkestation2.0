@@ -1,6 +1,6 @@
 /datum/component/particle_spewer/fall_leaves
 	unusual_description = "gentle autumn"
-	icon_file = 'monkestation/icons/effects/particle.dmi'
+	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "leaf2"
 	burst_amount = 2
 	duration = 6 SECONDS

@@ -150,9 +150,34 @@
 						last_round_high_threat = TRUE
 						break //good indents
 
-		if(last_round_high_threat) //half weight if there was a high threat last round
-			. *= 0.5
+		if(last_round_high_threat) //4/5 weight if there was a high threat last round
+			. *= 0.8
 	return .
+
+/datum/round_event_control/antagonist/apply_config_var(variable, value)
+	. = ..()
+	if(.)
+		return
+	switch(variable)
+		if("extra_spawned_events")
+			if(!islist(value) && !isnull(value))
+				CRASH("extra_spawned_events must be a list or null (tried to set invalid for [type])")
+			extra_spawned_events = null
+			for(var/key, weight in fill_with_ones(value))
+				var/extra_path = text2path(key)
+				if(!extra_path)
+					CRASH("invalid event typepath '[key]' in extra_spawned_events for [type] in events.json")
+				LAZYSET(extra_spawned_events, extra_path, weight)
+			return TRUE
+		if("base_antags")
+			base_antags = value
+			return TRUE
+		if("maximum_antags")
+			maximum_antags = value
+			return TRUE
+		if("denominator")
+			denominator = value
+			return TRUE
 
 /datum/round_event_control/antagonist/proc/check_required_roles()
 	if(!length(required_roles))

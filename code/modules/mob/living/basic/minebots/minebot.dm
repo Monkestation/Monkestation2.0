@@ -42,7 +42,7 @@
 /mob/living/basic/mining_drone/Initialize(mapload)
 	. = ..()
 
-	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris/old)
+	var/static/list/death_drops = list(/obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
@@ -106,10 +106,8 @@
 	return ..()
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-
-	if(. ||( user.istate & ISTATE_HARM))
-		return
+	if(user.istate & ISTATE_HARM)
+		return ..()
 	set_combat_mode(!(istate & ISTATE_HARM))
 	balloon_alert(user, "now [(istate & ISTATE_HARM) ? "attacking wildlife" : "collecting loose ore"]")
 

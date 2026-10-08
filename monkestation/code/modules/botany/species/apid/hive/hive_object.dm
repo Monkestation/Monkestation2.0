@@ -150,4 +150,4 @@ GLOBAL_LIST_INIT(hive_exits, list())
 	name = "Hive Template"
 	width = 15
 	height = 15
-	mappath = "_maps/~monkestation/templates/hives.dmm"
+	mappath = "_maps/templates/hives.dmm"

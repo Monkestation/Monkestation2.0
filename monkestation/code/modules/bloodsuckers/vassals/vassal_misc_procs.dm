@@ -37,7 +37,7 @@
 		return_info = "[p_They()] bear[p_s()] the mark of another Bloodsucker"
 		return_state = "vassal_grey"
 
-	var/img_html = "<img class='icon' src='\ref['monkestation/icons/bloodsuckers/vampiric.dmi']?state=[return_state]'></img>"
+	var/img_html = "<img class='icon' src='\ref['icons/bloodsuckers/vampiric.dmi']?state=[return_state]'></img>"
 	return "\[" + span_warning("[img_html] [return_info]") + "\]"
 
 /// Used when your Master teaches you a new Power.

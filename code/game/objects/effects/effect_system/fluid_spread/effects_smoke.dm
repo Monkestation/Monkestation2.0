@@ -19,6 +19,8 @@
 	var/static/loc_connections = list(
 		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = PROC_REF(react_to_atmos_adjacency_changes)
 	)
+	/// ID of the fallback timer, used to ensure that the smoke does not far outlive its intended lifetime, in case of subsystem delay or whatnot.
+	var/fallback_timer
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
@@ -26,13 +28,23 @@
 	setDir(pick(GLOB.cardinals))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	SSsmoke.start_processing(src)
+	// Ensure that smoke does not live for much longer than 1.5x the length of its lifetime (rounded up to the nearest 2 seconds)
+	var/fallback_time = CEILING(initial(lifetime) * 1.5, 2 SECONDS)
+	fallback_timer = addtimer(CALLBACK(src, PROC_REF(anti_fog_measures)), fallback_time, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /obj/effect/particle_effect/fluid/smoke/Destroy()
 	SSsmoke.stop_processing(src)
-	if (spread_bucket)
+	if(spread_bucket)
 		SSsmoke.cancel_spread(src)
+	if(fallback_timer)
+		deltimer(fallback_timer)
+		fallback_timer = null
 	return ..()
 
+/obj/effect/particle_effect/fluid/smoke/proc/anti_fog_measures()
+	fallback_timer = null
+	if(!QDELETED(src))
+		kill_smoke()
 
 /**
  * Makes the smoke fade out and then deletes it.
@@ -267,7 +279,7 @@
 	name = "nanofrost smoke"
 	color = "#B2FFFF"
 	opacity = FALSE
-		/// The radius in which to chill every open turf.
+	/// The radius in which to chill every open turf.
 	var/blast = 0
 	/// The temperature to set the turfs air temperature to.
 	var/temperature = 253.15 // -20C
@@ -292,11 +304,10 @@
 		var/datum/gas_mixture/air = chilly.air
 		air.temperature = temperature
 
-		var/list/gases = air.gases
-		if(gases[/datum/gas/plasma])
-			air.assert_gas(/datum/gas/nitrogen)
-			gases[/datum/gas/nitrogen][MOLES] += gases[/datum/gas/plasma][MOLES]
-			gases[/datum/gas/plasma][MOLES] = 0
+		if(air.moles[/datum/gas/plasma])
+			var/mole_count = air.moles[/datum/gas/plasma]
+			air.adjust_gas(/datum/gas/nitrogen, mole_count)
+			air.adjust_gas(/datum/gas/plasma, -mole_count)
 			air.garbage_collect()
 
 		for(var/obj/effect/hotspot/fire in chilly)
@@ -313,7 +324,7 @@
 	// Extinguishes everything in the turf
 	for(var/mob/living/potential_tinder in chilly)
 		potential_tinder.extinguish_mob()
-	for(var/obj/item/potential_tinder in chilly)
+	for(var/obj/potential_tinder in chilly)
 		potential_tinder.extinguish()
 
 /obj/effect/particle_effect/fluid/smoke/freezing/process(seconds_per_tick)
@@ -431,16 +442,17 @@
 
 	var/where = "[AREACOORD(location)]"
 	var/contained = length(contained_reagents) ? "[contained_reagents.Join(", ", " \[", "\]")] @ [chemholder.chem_temp]K" : null
+	var/area/fluid_area = get_area(location)
 	if(carry.my_atom?.fingerprintslast) //Some reagents don't have a my_atom in some cases
 		var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 		var/more = ""
 		if(M)
 			more = "[ADMIN_LOOKUPFLW(M)] "
-		if(!istype(carry.my_atom, /obj/machinery/plumbing))
+		if(!istype(carry.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) // I like to be able to see my logs thank you
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. Key: [more ? more : carry.my_atom.fingerprintslast].")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last touched by [carry.my_atom.fingerprintslast].")
 	else
-		if(!istype(carry.my_atom, /obj/machinery/plumbing))
+		if(!istype(carry.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) // Deathmatch has way too much smoke to log
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 

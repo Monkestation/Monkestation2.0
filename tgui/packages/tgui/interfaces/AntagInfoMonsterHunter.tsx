@@ -122,7 +122,7 @@ const HuntersGuide = () => {
 const Rabbit = (props: { found?: boolean }) => {
   return (
     <DmIcon
-      icon="monkestation/icons/mob/rabbit.dmi"
+      icon="icons/mob/rabbit.dmi"
       icon_state={props.found ? 'dead_rabbit' : 'white_rabbit'}
       width="64px"
       height="64px"

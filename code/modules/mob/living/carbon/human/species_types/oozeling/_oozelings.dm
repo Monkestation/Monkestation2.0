@@ -22,13 +22,13 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_EASYDISMEMBER,
-		TRAIT_NOFIRE,
 		TRAIT_SPLEENLESS_METABOLISM,
 		TRAIT_FOOD_ABSORPTION,
 	)
 
+	inherent_biotypes = MOB_ORGANIC|MOB_SLIME|MOB_HUMANOID
 	meat = /obj/item/food/meat/slab/human/mutant/slime
-	exotic_bloodtype = /datum/blood_type/slime
+	exotic_bloodtype = BLOOD_TYPE_TOX
 	inert_mutation = /datum/mutation/acid_touch
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -48,7 +48,6 @@
 	/// Typepaths of the default oozeling actions to give.
 	var/static/list/default_actions = list(
 		/datum/action/cooldown/slime_washing,
-		/datum/action/cooldown/slime_hydrophobia,
 		/datum/action/innate/core_signal,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
@@ -110,20 +109,39 @@
 		return
 	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY && !IS_BLOODSUCKER(slime)) // bloodsuckers have snowflake nutrition handling
 		spec_slime_hunger(slime, seconds_per_tick)
-	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
-		spec_slime_wetness(slime, seconds_per_tick)
+	spec_slime_wetness(slime, seconds_per_tick)
+
+/// Checks if the oozeling is hydrophobic due to having 10 oozeling wet stacks.
+/datum/species/oozeling/proc/is_slime_hydrophobic(mob/living/carbon/human/slime)
+	if(!slime)
+		return FALSE
+
+	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+	if(!slime_wetness)
+		return FALSE
+
+	if(slime_wetness.stacks >= HYDROPHOBIA_WETNESS_STACKS)
+		return TRUE
+
+	return FALSE
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
-	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects // locate should be slightly faster in theory, as this has no subtypes hopefully, so we don't need to check ids
+	var/datum/status_effect/fire_handler/wet_stacks/wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
+
 	if(!wetness)
 		return
 
-	if(wetness.stacks > DAMAGE_WATER_STACKS)
-		remove_blood_volume(slime, 2 * seconds_per_tick)
+	if(water_damage_multiplier(slime) <= 0)
+		return
+
+	if(wetness.stacks >= DAMAGE_WATER_STACKS)
+		remove_blood_volume(slime, 10 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
+
 	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
 		remove_blood_volume(slime, seconds_per_tick)
@@ -141,6 +159,7 @@
 	if(slime.nutrition <= NUTRITION_LEVEL_STARVING)
 		if(!eating)
 			slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
+			slime.adjust_nutrition(3.5 * seconds_per_tick)
 		if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
 			to_chat(slime, span_danger("You're starving! Get some food!"))
 			slime.balloon_alert(slime, "you're starving!")
@@ -223,46 +242,10 @@
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	return NONE
 
-/datum/species/oozeling/handle_chemical(datum/reagent/chem, mob/living/carbon/human/slime, seconds_per_tick, times_fired)
-	// slimes use plasma to fix wounds, and if they have enough blood, organs
-	var/static/list/organs_we_mend = list(
-		ORGAN_SLOT_BRAIN,
-		ORGAN_SLOT_LUNGS,
-		ORGAN_SLOT_LIVER,
-		ORGAN_SLOT_STOMACH,
-		ORGAN_SLOT_EYES,
-		ORGAN_SLOT_EARS,
-	)
-	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
-		if(slime.getBruteLoss() || slime.getFireLoss())
-			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
-				var/list/to_heal = rand(2) ? list(BRUTE, BURN) : list(BURN, BRUTE) // Randomize what is healed first
-				slime.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, to_heal)
-				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
-			else
-				to_chat(slime, span_purple("Your membrane is too viscous to mend its wounds..."))
-		if(slime.blood_volume > BLOOD_VOLUME_SLIME_SPLIT)
-			slime.adjustOrganLoss(
-				pick(organs_we_mend),
-				-2 * seconds_per_tick,
-			)
-		if(SPT_PROB(5, seconds_per_tick))
-			to_chat(slime, span_purple("Your body's thirst for plasma is quenched, your inner and outer membrane using it to regenerate."))
-
-	else if(chem.type == /datum/reagent/water)
-		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
-			return ..()
-
-		remove_blood_volume(slime, 3 * seconds_per_tick)
-		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
-		if(SPT_PROB(25, seconds_per_tick))
-			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
-
-		return TRUE
-
-	return ..()
-
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
+	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
+		return FALSE
+	COOLDOWN_START(src, water_exposure_cooldown, 0.1 SECONDS)
 	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
 	if(check_clothes)
@@ -272,14 +255,15 @@
 			if(!quiet_if_protected)
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
-	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
+
+	slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+	if(is_slime_hydrophobic(slime))
 		if(!quiet_if_protected)
 			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return FALSE
-	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
-		return FALSE
-	COOLDOWN_START(src, water_exposure_cooldown, 0.1 SECONDS)
-	remove_blood_volume(slime, 30 * water_multiplier)
+
+	remove_blood_volume(slime, 40 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),
@@ -301,15 +285,9 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "burn",
-			SPECIES_PERK_NAME = "Incombustible",
-			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
 			SPECIES_PERK_NAME = "Fire Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
+			SPECIES_PERK_DESC = "[plural_form] have an outer membrane that is semi-resistant to flames, and burn damage. Water and prolonged flame exposure will errode this membrane.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,

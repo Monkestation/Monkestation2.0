@@ -90,13 +90,13 @@
 
 /obj/item/mod/module/welding/camera_vision/on_suit_activation()
 	. = ..()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_CAN_TRACK, PROC_REF(track_person))
 
 /obj/item/mod/module/welding/camera_vision/on_suit_deactivation(deleting = FALSE)
 	. = ..()
-	UnregisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_CAN_TRACK)
 
-/obj/item/mod/module/welding/camera_vision/proc/can_track(datum/source, mob/user)
+/obj/item/mod/module/welding/camera_vision/proc/track_person(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	return COMPONENT_CANT_TRACK
@@ -320,7 +320,7 @@
 	if(!.)
 		return
 	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
-		mod.wearer.say("Get over here!", forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), "Get over here!", forced = type)
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.aim_projectile(target, mod.wearer)
 	net.firer = mod.wearer
@@ -410,7 +410,7 @@
 	if(!.)
 		return
 	if(IS_SPACE_NINJA(mod.wearer))
-		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
 	mod.wearer.SetUnconscious(0)
 	mod.wearer.SetStun(0)

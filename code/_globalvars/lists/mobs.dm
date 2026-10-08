@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/carbon/human/consistent,
 	/mob/living/carbon/human/dummy,
 	/mob/living/carbon/human/dummy/consistent,
+	/mob/living/carbon/human/tutorial,
 	/mob/living/carbon/human/species,
 	/mob/living/silicon,
 	/mob/living/simple_animal,
@@ -91,7 +92,7 @@ GLOBAL_LIST_EMPTY(narcd_underages)
 GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
 /// List if all language typepaths learnable, IE, those with keys
 GLOBAL_LIST_INIT(all_languages, init_all_languages())
-// /List of language prototypes to reference, assoc "name" = typepath
+/// List of language prototypes to reference, assoc "name" = typepath
 GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
@@ -135,6 +136,18 @@ GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototyp
 			continue
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
+
+/// A list of all the possible blood types, keyed by id (which is just the name in most cases)
+GLOBAL_LIST_INIT(blood_types, init_blood_types())
+
+/// Initializes the list of blood type singletons
+/proc/init_blood_types()
+	. = list()
+	for(var/datum/blood_type/blood_type_path as anything in subtypesof(/datum/blood_type))
+		if(blood_type_path::root_abstract_type == blood_type_path) // Don't instantiate abstract blood types
+			continue
+		var/datum/blood_type/new_type = new blood_type_path()
+		.[new_type.id] = new_type
 
 /proc/init_species_prototypes()
 	var/list/species_list = list()
@@ -196,3 +209,7 @@ GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototyp
 		if(require_body && QDELETED(mind.current))
 			continue
 		. += mind
+
+///List of ckeys that have seen a blurb of a given key.
+GLOBAL_LIST_EMPTY(blurb_witnesses)
+GLOBAL_LIST_EMPTY(assault_operative_start)

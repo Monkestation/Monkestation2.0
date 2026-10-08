@@ -5,7 +5,7 @@
 	antag_datum = /datum/antagonist/nukeop
 	typepath = /datum/round_event/antagonist/nuclear_operative
 	shared_occurence_type = SHARED_HIGH_THREAT
-	repeated_mode_adjust = TRUE
+	repeated_mode_adjust = FALSE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,

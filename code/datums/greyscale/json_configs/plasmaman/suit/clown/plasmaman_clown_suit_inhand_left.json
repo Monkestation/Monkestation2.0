@@ -1,0 +1,21 @@
+{
+	"plasmaman_suit": [
+		{
+			"type": "icon_state",
+			"icon_state": "plasmaman_suit",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "buttons",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "clown_overalls",
+			"blend_mode": "overlay"
+		}
+	]
+}

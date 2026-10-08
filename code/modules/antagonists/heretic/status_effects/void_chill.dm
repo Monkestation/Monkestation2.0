@@ -4,7 +4,7 @@
  */
 /datum/status_effect/void_chill
 	id = "void_chill"
-	duration = 30 SECONDS
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/void_chill
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
@@ -15,6 +15,7 @@
 	var/stack_limit = 5
 	///icon for the overlay
 	var/image/stacks_overlay
+	COOLDOWN_DECLARE(chill_purge)
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
@@ -35,11 +36,21 @@
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
 	owner.remove_alt_appearance("heretic_status")
-	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_between_ticks)
-	owner.adjust_bodytemperature(-12 * stacks * seconds_between_ticks)
+	if(owner.has_reagent(/datum/reagent/water/holywater) || owner.can_block_magic())
+		//void chill is less effective
+		owner.adjust_bodytemperature(-3 KELVIN * stacks * seconds_between_ticks)
+		if(COOLDOWN_FINISHED(src, chill_purge))
+			COOLDOWN_START(src, chill_purge, 2 SECONDS)
+			to_chat(owner, span_notice("You feel holy protection warming you up."))
+			adjust_stacks(-1)
+	else
+		owner.adjust_bodytemperature(-6 KELVIN * stacks * seconds_between_ticks)
+
+	if (stacks == 0)
+		owner.remove_status_effect(/datum/status_effect/void_chill)
 
 /datum/status_effect/void_chill/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
@@ -75,8 +86,6 @@
 /datum/status_effect/void_chill/proc/adjust_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	update_movespeed(stacks)
-	if(stacks >= 5)
-		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 
 ///Updates the movespeed of owner based on the amount of stacks of the debuff
 /datum/status_effect/void_chill/proc/update_movespeed(stacks)
@@ -90,7 +99,7 @@
 
 /datum/movespeed_modifier/void_chill
 	variable = TRUE
-	multiplicative_slowdown = 0.1
+	multiplicative_slowdown = 0.5
 
 //---- Screen alert
 /atom/movable/screen/alert/status_effect/void_chill

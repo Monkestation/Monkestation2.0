@@ -35,9 +35,10 @@
 		last_lawchange_announce = world.time
 
 /mob/living/silicon/proc/set_zeroth_law(law, law_borg, announce = TRUE)
-	if(laws_sanity_check())
-		laws.set_zeroth_law(law, law_borg)
-		post_lawchange(announce)
+	if(!laws_sanity_check())
+		return
+	laws.set_zeroth_law(law, law_borg)
+	post_lawchange(announce)
 
 /mob/living/silicon/proc/add_inherent_law(law, announce = TRUE)
 	if(laws_sanity_check())

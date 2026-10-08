@@ -136,7 +136,7 @@
 		var/atom/throw_target = get_edge_target_turf(src, get_dir(M, src))
 		var/atom/throw_target_mob = get_edge_target_turf(M, get_dir(src, M))
 
-		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		playsound(src, 'sound/effects/boing1.ogg', 50)
 		src.throw_at(throw_target, 20, 3, force = 0)
 		if(has_status_effect(SUGAR_RUSH))
 			M.throw_at(throw_target_mob, 20, 3, force = 0)
@@ -275,7 +275,7 @@
 	if(has_status_effect(SUGAR_RUSH) || has_status_effect(HEN_RUSH))
 		visible_message("<span class='warning'>[src] bounces off  \the [O]!</span>")
 		var/atom/throw_target = get_edge_target_turf(src, turn(get_dir(O, src), rand(-1,1) * 45))
-		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		playsound(src, 'sound/effects/boing1.ogg', 50)
 		src.throw_at(throw_target, 20, 3, force = 0, gentle = TRUE)
 	return
 
@@ -284,7 +284,7 @@
 	if(has_status_effect(SUGAR_RUSH) || has_status_effect(HEN_RUSH))
 		visible_message("<span class='warning'>[src] bounces off  \the [T]!</span>")
 		var/atom/throw_target = get_edge_target_turf(src, turn(get_dir(T, src), rand(-1,1) * 45))
-		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		playsound(src, 'sound/effects/boing1.ogg', 50)
 		src.throw_at(throw_target, 20, 3, force = 0, gentle = TRUE)
 	return
 
@@ -408,6 +408,7 @@
 				M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
 								span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
 				to_chat(src, span_notice("You grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+				grabbed_human.share_blood_on_touch(src, grabbed_by_hands ? ITEM_SLOT_GLOVES : ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 			else
 				M.visible_message(span_warning("[src] grabs [M] passively!"), \
 								span_warning("[src] grabs you passively!"), null, null, src)
@@ -442,7 +443,7 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
-					C.grippedby(src)
+					INVOKE_ASYNC(C, PROC_REF(grippedby), src)
 
 			update_pull_movespeed()
 
@@ -485,12 +486,10 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-/mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
-	set name = "Pull"
-	set category = "Object"
-
-	if(istype(AM) && Adjacent(AM))
-		start_pulling(AM)
+GAME_VERB_CONTEXT(/mob/living, pulled, "Pull", "", "Object", /atom/movable)
+	VERB_ARG_TYPED(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable)
+	if(istype(thing_pulled) && Adjacent(thing_pulled))
+		start_pulling(thing_pulled)
 	else if(!(istate & ISTATE_HARM)) //Don;'t cancel pulls if misclicking in combat mode.
 		stop_pulling()
 
@@ -502,9 +501,8 @@
 	update_pull_movespeed()
 	update_pull_hud_icon()
 
-/mob/living/verb/stop_pulling1()
-	set name = "Stop Pulling"
-	set category = "IC"
+GAME_VERB(/mob/living, stop_pulling1, "Stop Pulling", "IC")
+
 	stop_pulling()
 
 //same as above
@@ -521,8 +519,9 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as null)
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob/living, succumb, "succumb")
+	VERB_ARG(whispered, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
+
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -595,9 +594,7 @@
 
 // MOB PROCS //END
 
-/mob/living/proc/mob_sleep()
-	set name = "Sleep"
-	set category = "IC"
+GAME_VERB(/mob/living, mob_sleep, "Sleep", "IC")
 
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
@@ -652,9 +649,7 @@
 		account = I.registered_account
 		return account
 
-/mob/living/proc/toggle_resting()
-	set name = "Rest"
-	set category = "IC"
+GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 
 	set_resting(!resting, FALSE)
 
@@ -1008,10 +1003,6 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
-/// Proc that only really gets called for humans, to handle bleeding overlays.
-/mob/living/proc/update_wound_overlays()
-	return
-
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 	if(lying_angle != 0)
 		lying_angle_on_movement(direct)
@@ -1023,7 +1014,7 @@
 		return
 
 	var/old_direction = dir
-	var/turf/T = loc
+	var/turf/old_loc = loc
 
 	if(pulling)
 		update_pull_movespeed()
@@ -1031,14 +1022,18 @@
 	. = ..()
 
 	if(moving_diagonally != FIRST_DIAG_STEP && isliving(pulledby))
-		var/mob/living/L = pulledby
-		L.set_pull_offsets(src, pulledby.grab_state)
+		var/mob/living/puller = pulledby
+		puller.set_pull_offsets(src, puller.grab_state)
 
 	if(active_storage && !((active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.hide_contents(src)
 
-	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
-		makeTrail(newloc, T, old_direction)
+	if(!buckled && !moving_diagonally && loc != old_loc)
+		var/blood_flow = get_bleed_rate()
+		var/health_check = body_position == LYING_DOWN && prob(getBruteLoss() * 200 / maxHealth)
+		var/bleeding_check = blood_flow > 3 && prob(blood_flow * 16)
+		if(health_check || bleeding_check)
+			make_blood_trail(newloc, old_loc, old_direction, direct)
 
 
 ///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
@@ -1050,66 +1045,6 @@
 
 /mob/living/carbon/alien/adult/lying_angle_on_movement(direct)
 	return
-
-/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity() || !isturf(start) || HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return
-
-	var/blood_exists = locate(/obj/effect/decal/cleanable/blood/trail_holder) in start
-
-	var/trail_type = getTrail()
-	if(!trail_type)
-		return
-
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-		return
-
-	var/bleed_amount = bleedDragAmount()
-	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
-	var/newdir = get_dir(target_turf, start)
-	if(newdir != direction)
-		newdir = newdir | direction
-		if(newdir == (NORTH|SOUTH))
-			newdir = NORTH
-		else if(newdir == (EAST|WEST))
-			newdir = EAST
-	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = turn(get_dir(target_turf, start), 180)
-	if(!blood_exists)
-		var/obj/effect/decal/cleanable/blood/trail_holder/new_blood = new /obj/effect/decal/cleanable/blood/trail_holder(start, get_static_viruses())
-		new_blood.add_mob_blood(src)
-		new_blood.update_appearance()
-
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in start)
-		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-			TH.existing_dirs += newdir
-			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-			TH.add_mob_blood(src)
-			TH.update_appearance()
-
-/mob/living/carbon/human/makeTrail(turf/target_turf, turf/start, direction)
-	if(!bleedDragAmount()) //why ruin the floors if we arent actually bleeding
-		return
-	return ..()
-
-///Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]
-/mob/living/proc/bleedDragAmount()
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	return max(1, brute_ratio * 2)
-
-/mob/living/carbon/bleedDragAmount()
-	var/bleed_amount = 0
-	for(var/i in all_wounds)
-		var/datum/wound/iter_wound = i
-		bleed_amount += iter_wound.drag_bleed_amount()
-	return bleed_amount
-
-/mob/living/proc/getTrail()
-	if(getBruteLoss() < 300)
-		return pick("ltrails_1", "ltrails_2")
-	else
-		return pick("trails_1", "trails_2")
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
@@ -1154,10 +1089,7 @@
 		return FALSE
 	return TRUE
 
-/mob/living/verb/resist()
-	set name = "Resist"
-	set category = "IC"
-
+/mob/living/proc/resist()
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
 
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
@@ -1313,9 +1245,9 @@
 
 /// Checks if this mob can be actively tracked by cameras / AI.
 /// Can optionally be passed a user, which is the mob who is tracking src.
-/mob/living/proc/can_track(mob/living/user)
+/atom/movable/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
 	if(!isnull(user) && src == user)
 		return FALSE
@@ -1328,12 +1260,18 @@
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
-	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
-		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
-	if(!GLOB.cameranet.checkCameraVis(src))
+	if(!SScameras.is_visible_by_cameras(src))
 		return FALSE
 	return TRUE
+
+/mob/living/can_track(mob/living/user)
+	. = ..()
+	if(!.)
+		return .
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
+		return FALSE
+	return .
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
@@ -2681,3 +2619,25 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/check_hit_limb_zone_name(hit_zone)
 	if(has_limbs)
 		return hit_zone
+
+/mob/living/proc/is_cat_enough(include_all_anime = FALSE)
+	if(iscat(src)) // there's nothing more cat than a cat
+		return TRUE
+
+	if(include_all_anime && HAS_TRAIT(src, TRAIT_ANIME))
+		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_CAT))
+		return TRUE
+
+	if(istype(get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/costume/kitty)) // combine with glue for hilarity
+		return TRUE
+
+	var/obj/item/organ/external/anime_head/anime_head = get_organ_slot(ORGAN_SLOT_EXTERNAL_ANIME_HEAD)
+	var/obj/item/organ/external/anime_bottom/anime_bottom = get_organ_slot(ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM)
+
+	var/list/cat_tails = list(/datum/sprite_accessory/anime_bottom/cat, /datum/sprite_accessory/anime_bottom/leopard, /datum/sprite_accessory/anime_bottom/catbig, /datum/sprite_accessory/anime_bottom/twocat) // if adding new cat tails, be sure to include them in this var list
+	if(istype(anime_head?.bodypart_overlay?.sprite_datum, /datum/sprite_accessory/anime_head/cat) && (anime_bottom?.bodypart_overlay?.sprite_datum?.type in cat_tails)) // cat ears AND tail? aight then, you're very much cat
+		return TRUE
+
+	return FALSE

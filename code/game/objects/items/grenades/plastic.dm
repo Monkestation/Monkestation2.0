@@ -186,7 +186,7 @@
 /obj/item/grenade/c4/explosivecharge
 	name = "breaching charge"
 	desc = "A brick of c-4 with company safety features. It cannot be stuck onto a living being or used on NanoTrasen property."
-	icon = 'monkestation/icons/obj/items/breachingcharge.dmi'
+	icon = 'icons/obj/items/breachingcharge.dmi'
 	icon_state = "breaching-charge0"
 
 /obj/item/grenade/c4/explosivecharge/examine(mob/user)
@@ -195,7 +195,7 @@
 		. += span_warning("The safety light is dark. The biological sensors are inactive and the clown-proof safety lock is disabled..")
 	else
 		. += span_notice("A green light indicates the biological sensors are active, and so is the clown-proof safety lock.")
-	
+
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		. += span_clown("Would make for a good prank.")
 
@@ -221,7 +221,7 @@
 			user.balloon_alert(user, "can't use this here!")
 			to_chat(user, span_warning("The [src.name]'s clown-proof safety lock prevents this!"))
 			return ITEM_INTERACT_BLOCKING
-		
+
 		var/turf/T = get_turf(interacting_with)
 		if(T && is_station_level(T.z) && !HAS_TRAIT(user, TRAIT_CLUMSY))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
@@ -240,16 +240,16 @@
 		user.temporarilyRemoveItemFromInventory(src)
 		target = bomb_target
 		active = TRUE
-		
+
 		var/mutable_appearance/MA = new(plastic_overlay)
 		MA.layer = ABOVE_MOB_LAYER
 		target.add_overlay(MA)
-		
+
 		to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
-		
+
 		addtimer(CALLBACK(src, PROC_REF(clown_prank)), det_time * 10)
 		return TRUE
-	
+
 	return ..()
 
 /obj/item/grenade/c4/explosivecharge/proc/clown_prank()
@@ -257,13 +257,13 @@
 		return
 
 	var/turf/T = get_turf(target)
-	
+
 	var/static/list/c4_layers = list(FLOAT_LAYER, HIGH_OBJ_LAYER, ABOVE_MOB_LAYER)
 	for(var/L in c4_layers)
 		target.cut_overlay(mutable_appearance(icon, "[inhand_icon_state]2", L), TRUE)
 
 	if(obj_flags & EMAGGED)
-		detonate() 
+		detonate()
 		spawn(1)
 			if(T)
 				playsound(T, 'sound/items/party_horn.ogg', 100, TRUE)
@@ -281,17 +281,17 @@
 
 	target.balloon_alert_to_viewers("HONK!")
 	playsound(target, 'sound/items/bikehorn.ogg', 100, TRUE)
-	
+
 	if(T)
 		var/obj/effect/decal/cleanable/confetti/P = new(T)
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, P), 2 SECONDS)
 
 	target.visible_message(span_warning("[src] lets out a loud honk and falls off!"))
-	
+
 	var/turf/drop_zone = get_step(T, REVERSE_DIR(aim_dir))
 	if(!drop_zone || drop_zone.density)
 		drop_zone = T
-		
+
 	src.forceMove(drop_zone)
 	active = FALSE
 	target = null
@@ -302,9 +302,9 @@
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message(span_suicide("[user] puts the [src] up to [user.p_their()] mouth! It looks like [user.p_theyre()] are trying to bite off the safety lock!"))
 	shout_syndicate_crap(user)
-	
+
 	var/suicide_power = (obj_flags & EMAGGED) ? 2 : 0
 	explosion(user, heavy_impact_range = suicide_power, explosion_cause = src)
-	
+
 	user.gib(1, 1)
 	qdel(src)

@@ -112,7 +112,7 @@
 	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 	var/armor_block = run_armor_check(attack_flag = MELEE)
 
-	playsound(src, 'monkestation/sound/weapons/bat_hit.ogg', 15, TRUE)
+	playsound(src, 'sound/weapons/bat_hit.ogg', 15, TRUE)
 	visible_message(
 		span_danger("[attacker] [atk_verb]ed [src]!"),
 		span_userdanger("You're [atk_verb]ed by [attacker]!"),

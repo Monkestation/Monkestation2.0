@@ -108,12 +108,12 @@
 		RND_CATEGORY_DEFOREST_BLOOD,
 	)
 
-/datum/design/organic_bloodbag_arachnid
-	name = "S Blood Pack"
-	id = "organic_bloodbag_arachnid"
+/datum/design/organic_bloodbag_hemolymph
+	name = "Hemolymph Blood Pack"
+	id = "organic_bloodbag_hemolymph"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 100)
-	build_path = /obj/item/reagent_containers/blood/spider
+	build_path = /obj/item/reagent_containers/blood/hemolymph
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_BLOOD,

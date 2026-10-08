@@ -15,7 +15,7 @@
 		attacker.visible_message(
 			span_notice("[attacker] forces [victim] to drink from \the [src]."),
 			span_notice("You put \the [src] up to [victim]'s mouth."))
-		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transfered_by = attacker, methods = INGEST)
+		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transferred_by = attacker, methods = INGEST)
 		playsound(victim.loc, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
 		return TRUE
 
@@ -24,7 +24,7 @@
 			span_notice("[victim] puts \the [src] up to [victim.p_their()] mouth."),
 			span_notice("You take a sip from \the [src]."),
 		)
-		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transfered_by = attacker, methods = INGEST)
+		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transferred_by = attacker, methods = INGEST)
 		playsound(victim.loc, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
 	return TRUE
 
@@ -39,11 +39,11 @@
 	return TRUE
 
 ///Bloodbag of Bloodsucker blood (used by Vassals only)
-/obj/item/reagent_containers/blood/o_minus/bloodsucker
+/obj/item/reagent_containers/blood/bloodsucker
 	name = "blood pack"
-	blood_type = /datum/blood_type/crew/bloodsucker
+	blood_type = BLOOD_TYPE_BLOODSUCKER
 
-/obj/item/reagent_containers/blood/o_minus/bloodsucker/examine(mob/user)
+/obj/item/reagent_containers/blood/bloodsucker/examine(mob/user)
 	. = ..()
 	if(user.mind.has_antag_datum(/datum/antagonist/ex_vassal) || user.mind.has_antag_datum(/datum/antagonist/vassal/revenge))
 		. += span_notice("Seems to be just about the same color as your Master's...")
@@ -100,11 +100,11 @@
 /obj/item/stake
 	name = "wooden stake"
 	desc = "A simple wooden stake carved to a sharp point."
-	icon = 'monkestation/icons/bloodsuckers/stakes.dmi'
+	icon = 'icons/bloodsuckers/stakes.dmi'
 	icon_state = "wood"
 	inhand_icon_state = "wood"
-	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
+	lefthand_file = 'icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'icons/bloodsuckers/bloodsucker_righthand.dmi'
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -232,9 +232,9 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	name = "\improper Archive of the Kindred"
 	starting_title = "the Archive of the Kindred"
 	desc = "Cryptic documents explaining hidden truths behind Undead beings. It is said only Curators can decipher what they really mean."
-	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
-	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
+	icon = 'icons/bloodsuckers/vamp_obj.dmi'
+	lefthand_file = 'icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'icons/bloodsuckers/bloodsucker_righthand.dmi'
 	icon_state = "kindred_book"
 	inhand_icon_state = "kindred_book"
 	starting_author = "dozens of generations of Curators"

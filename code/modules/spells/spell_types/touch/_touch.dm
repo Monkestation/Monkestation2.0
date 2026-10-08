@@ -196,9 +196,9 @@
  * Handles left-click interactions through the item interaction system.
  */
 /datum/action/cooldown/spell/touch/proc/on_hand_interact(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
-		SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-		return source.interact_with_atom(target, user, modifiers)
+	return source.interact_with_atom(target, user, modifiers)
 
 /**
  * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
@@ -206,9 +206,9 @@
  * Handles right-click interactions through the item interaction system.
  */
 /datum/action/cooldown/spell/touch/proc/on_hand_interact_secondary(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
-		SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-		return source.interact_with_atom_secondary(target, user, modifiers)
+	return source.interact_with_atom_secondary(target, user, modifiers)
 
 /**
  * Signal proc for [COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM] from our attached hand.
@@ -400,7 +400,6 @@
 	hand_spell.do_hand_hit(src, interacting_with, user)
 	if(QDELETED(src))
 		return ITEM_INTERACT_SUCCESS
-	return NONE
 
 /obj/item/melee/touch_attack/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
@@ -410,7 +409,6 @@
 	hand_spell.do_secondary_hand_hit(src, interacting_with, user)
 	if(QDELETED(src))
 		return ITEM_INTERACT_SUCCESS
-	return NONE
 
 /obj/item/melee/touch_attack/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return NONE

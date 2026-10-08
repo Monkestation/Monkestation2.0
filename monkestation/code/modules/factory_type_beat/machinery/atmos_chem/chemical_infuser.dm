@@ -49,7 +49,7 @@
 		for(var/datum/gas/gas as anything in chosen_recipe.required_gases)
 			var/datum/gas_mixture/mixture = airs[1]
 			mixture.assert_gas(gas)
-			var/gas_amount = mixture.gases[gas][MOLES]
+			var/gas_amount = mixture.moles[gas]
 			. += "[gas.name]: [gas_amount] / [chosen_recipe.required_gases[gas]]"
 
 /obj/machinery/atmospherics/components/unary/chemical_infuser/process_atmos()
@@ -60,7 +60,7 @@
 	for(var/datum/gas/gas as anything in chosen_recipe.required_gases)
 		var/datum/gas_mixture/mixture = airs[1]
 		mixture.assert_gas(gas)
-		var/gas_amount = mixture.gases[gas][MOLES]
+		var/gas_amount = mixture.moles[gas]
 		if(gas_amount < chosen_recipe.required_gases[gas])
 			passes_all_gases = FALSE
 			break

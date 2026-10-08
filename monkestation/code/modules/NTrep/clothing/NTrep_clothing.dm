@@ -2,8 +2,8 @@
 	name = "representative's suit"
 	desc = "Worn by those who work for the company. But don't let that fool you, they are pretty okay."
 	inhand_icon_state = "dg_suit"
-	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon = 'icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_jumpsuit"
 	can_adjust = FALSE
 
@@ -12,8 +12,8 @@
 	name = "representative's suitskirt"
 	desc = "Worn by those who work for the company. But don't let that fool you, they are pretty okay."
 	inhand_icon_state = "dg_suit"
-	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon = 'icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_jumpskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
@@ -21,31 +21,31 @@
 /obj/item/clothing/under/rank/centcom/nanotrasen_representative/turtleneck
 	name = "representative's turtleneck"
 	desc = "Comfortable and Authoritarian"
-	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon = 'icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "rep_turtleneck"
 	can_adjust = TRUE
 
 /obj/item/clothing/under/rank/centcom/nanotrasen_representative/skirtleneck
 	name = "representative's turtleneck"
 	desc = "Comfortable and Authoritarian "
-	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon = 'icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "rep_skirtleneck"
 	can_adjust = TRUE
 
 /obj/item/clothing/head/hats/nanotrasen_representative
 	name = "representative's hat"
 	desc = "Born to be obsessive and snotty."
-	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon = 'icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_hat"
 
 /obj/item/clothing/suit/armor/vest/nanotrasen_representative
 	name = "representative's armored vest"
 	desc = "The pen is mightier than the sword but a sword still hurts."
-	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon = 'icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_vest"
 
 /obj/item/clothing/suit/armor/vest/nanotrasen_representative/Initialize(mapload)
@@ -57,8 +57,8 @@
 	name = "representative's bathrobe"
 	desc = "For those who are lazy and fit right in this time and place."
 	inhand_icon_state = "dg_suit"
-	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon = 'icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
 	icon_state = "representative_bathrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/nanotrasen_representative_bathrobe

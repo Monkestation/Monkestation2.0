@@ -2,7 +2,7 @@
 	name = "interaction component"
 	desc = "will either right or left click with the given item."
 
-	icon = 'monkestation/icons/obj/mechcomp.dmi'
+	icon = 'icons/obj/mechcomp.dmi'
 	icon_state = "comp_collector"
 	base_icon_state = "comp_collector"
 

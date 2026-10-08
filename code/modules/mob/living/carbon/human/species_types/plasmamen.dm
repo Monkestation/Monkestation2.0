@@ -20,6 +20,7 @@
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_ORGANIC
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
+	mutanteyes = /obj/item/organ/internal/eyes/plasmaman
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/internal/liver/bone/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
@@ -91,11 +92,11 @@
 	if(!atmos_sealed && can_burn)
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
-			if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
+			if(environment.moles[/datum/gas/hypernoblium] >= 5)
 				if(H.on_fire && H.fire_stacks > 0)
 					H.adjust_fire_stacks(-10 * seconds_per_tick)
 			else if(!HAS_TRAIT(H, TRAIT_NOFIRE))
-				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
+				if(environment.moles[/datum/gas/oxygen] >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.25 * seconds_per_tick)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message(span_danger("[H]'s body reacts with the atmosphere and bursts into flames!"),span_userdanger("Your body reacts with the atmosphere and bursts into flame!"))

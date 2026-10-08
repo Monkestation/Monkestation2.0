@@ -106,15 +106,6 @@
 /obj/item/flatpacked_machine/proc/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 
-/obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
-	. = ..()
-	storable += /obj/item/flatpacked_machine
-
-/obj/item/borg/apparatus/circuit/Initialize(mapload)
-	. = ..()
-	storable += /obj/item/flatpacked_machine
-
-
 /obj/item/flatpacked_machine/generic
 	name = "generic flat-packed machine"
 	skips_deployable_component = TRUE

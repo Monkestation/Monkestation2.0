@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	if(!user.say(message, spans = span_list, sanitize = FALSE))
 		return
 
-	message = lowertext(message)
+	message = LOWER_TEXT(message)
 
 	var/list/mob/living/listeners = list()
 	//used to check if the speaker specified a name or a job to focus on

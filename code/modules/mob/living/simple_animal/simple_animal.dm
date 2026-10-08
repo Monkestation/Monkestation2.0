@@ -297,13 +297,13 @@
 	if(isturf(loc) && isopenturf(loc))
 		var/turf/open/ST = loc
 		if(ST.air)
-			var/ST_gases = ST.air.gases
+			var/ST_moles = ST.air.moles
 			ST.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
-			var/plas = ST_gases[/datum/gas/plasma][MOLES]
-			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
-			var/n2 = ST_gases[/datum/gas/nitrogen][MOLES]
-			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
+			var/plas = ST_moles[/datum/gas/plasma]
+			var/oxy = ST_moles[/datum/gas/oxygen]
+			var/n2 = ST_moles[/datum/gas/nitrogen]
+			var/co2 = ST_moles[/datum/gas/carbon_dioxide]
 
 			ST.air.garbage_collect()
 

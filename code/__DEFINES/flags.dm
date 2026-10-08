@@ -69,6 +69,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
+/// This atom does not need to generate its own preview icon for GAGS
+#define NO_NEW_GAGS_PREVIEW_1 (1<<21)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -155,8 +157,14 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_GHOSTS_DURING_ROUND (1<<19)
 /// This area does not allow virtual entities to enter.
 #define VIRTUAL_SAFE_AREA (1<<20)
+/// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
+#define QUIET_LOGS (1<<21)
+/// This area does not allow the Binary channel
+#define BINARY_JAMMING (1<<22)
 /// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
-#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<21)
+#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<23)
+///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
+#define AREA_BLOCKS_OUTGOING_RADIO (1<<24)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

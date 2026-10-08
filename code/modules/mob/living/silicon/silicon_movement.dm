@@ -4,6 +4,12 @@
 	if(builtInCamera?.can_use())
 		update_camera_location(old_loc)
 
+/obj/machinery/ai/data_core/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	for(var/mob/living/silicon/ai/internal_ai in contents)
+		if(internal_ai.builtInCamera?.can_use())
+			internal_ai.update_camera_location(old_loc)
+
 /mob/living/silicon/proc/update_camera_location(oldLoc)
 	oldLoc = get_turf(oldLoc)
 	if(!updating && oldLoc != get_turf(src))
@@ -19,6 +25,7 @@
 */
 /mob/living/silicon/proc/do_camera_update(oldLoc)
 	if(oldLoc != get_turf(src))
-		GLOB.cameranet.updatePortableCamera(builtInCamera, SILICON_CAMERA_BUFFER)
+		SScameras.camera_moved(builtInCamera, oldLoc, get_turf(src), SILICON_CAMERA_BUFFER)
 	updating = FALSE
+
 #undef SILICON_CAMERA_BUFFER

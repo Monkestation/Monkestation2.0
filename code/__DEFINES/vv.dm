@@ -89,7 +89,7 @@
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
 #define VV_HK_SPIN_ANIMATION "atom_spin"
 #define VV_HK_STOP_ALL_ANIMATIONS "stop_animations"
-#define VV_HK_SHAKE "shake" //Monkestation EDIT forced shaking
+#define VV_HK_SHAKE "shake"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
 #define VV_HK_SHOW_HIDDENPRINTS "show_hiddenprints"
@@ -98,13 +98,13 @@
 #define VV_HK_AUTO_RENAME "auto_rename"
 #define VV_HK_EDIT_FILTERS "edit_filters"
 #define VV_HK_EDIT_PARTICLES "edit_particles"
-#define VV_HK_EDIT_MOVABLE_PHYSICS "edit_movable_physics" //Monkestation EDIT PHYSICS
+#define VV_HK_EDIT_MOVABLE_PHYSICS "edit_movable_physics"
 #define VV_HK_EDIT_DISPLACEMENT_LARGE "edit_large_displacement"
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
 #define VV_HK_TEST_MATRIXES "test_matrixes"
 #define VV_HK_ADD_AI "add_ai"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
-#define VV_HK_ADJUST_ANIMATIONS "adjust_animations" //Monkestation EDIT CYBERNETIC
+#define VV_HK_ADJUST_ANIMATIONS "adjust_animations"
 
 // /atom/movable
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
@@ -168,6 +168,8 @@
 
 #define VV_HK_POSSESS_ITEM "possess_item"
 #define VV_HK_VIEW_DISEASE_DATA "disease_data"
+
+#define VV_HK_EXAMINE_GIFT "examine_gift"
 
 // Flags for debug_variable() that do little things to what we end up rendering
 

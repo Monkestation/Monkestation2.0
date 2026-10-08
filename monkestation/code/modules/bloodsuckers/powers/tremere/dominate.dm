@@ -18,8 +18,8 @@
 	background_icon_state = "tremere_power_off"
 	active_background_icon_state = "tremere_power_on"
 	base_background_icon_state = "tremere_power_off"
-	button_icon = 'monkestation/icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
-	background_icon = 'monkestation/icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
+	button_icon = 'icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
+	background_icon = 'icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_UNCONSCIOUS
 	level_current = 1
 	button_icon_state = "power_dominate"
@@ -252,7 +252,7 @@
 	user.death()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/get_vassal_duration()
-	return min(2 MINUTES * max(level_current, 1), 60 MINUTES - 1 SECOND)
+	return min(2 MINUTES * max(level_current, 1), 60 MINUTES - 1 SECONDS)
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/get_vassalize_cooldown()
 	return cooldown_time * 3

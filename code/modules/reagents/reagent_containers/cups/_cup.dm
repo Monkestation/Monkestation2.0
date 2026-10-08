@@ -23,7 +23,7 @@
 	. = ..()
 	if(drink_type)
 		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
-		. += span_notice("It is [lowertext(english_list(types))].")
+		. += span_notice("It is [LOWER_TEXT(english_list(types))].")
 
 /**
  * Checks if the mob actually liked drinking this cup.
@@ -88,7 +88,7 @@
 	var/obj/item/organ/internal/bladder/contained_bladder = target_mob.get_organ_slot(ORGAN_SLOT_BLADDER)
 	if(contained_bladder)
 		contained_bladder.consume_act(reagents, gulp_size * 0.2)
-	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
+	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
 	////playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE) // monkestation edit original
 	playsound(target_mob.loc,get_drink_sound(target_mob), rand(10,50), TRUE) // monkestation edit: synthesized drink sounds
@@ -137,7 +137,7 @@
 		var/obj/item/organ/internal/bladder/contained_bladder = chugger.get_organ_slot(ORGAN_SLOT_BLADDER)
 		if(contained_bladder)
 			contained_bladder.consume_act(reagents, gulp_size * 0.2)
-		reagents.trans_to(chugger, gulp_size, transfered_by = chugger, methods = INGEST)
+		reagents.trans_to(chugger, gulp_size, transferred_by = chugger, methods = INGEST)
 		checkLiked(fraction, chugger)
 		playsound(chugger.loc,get_drink_sound(chugger), rand(10,50), TRUE)
 		SEND_SIGNAL(chugger.reagents, COMSIG_DRANK_REAGENT, reagents, gulp_size)
@@ -169,7 +169,7 @@
 			to_chat(user, span_warning("[target] is full."))
 			return ITEM_INTERACT_BLOCKING
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 		target.update_appearance()
@@ -184,7 +184,7 @@
 			to_chat(user, span_warning("[src] is full."))
 			return ITEM_INTERACT_BLOCKING
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 		target.update_appearance()
@@ -209,7 +209,7 @@
 			to_chat(user, span_warning("[src] is full."))
 			return ITEM_INTERACT_BLOCKING
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
 		target.update_appearance()
@@ -247,7 +247,7 @@
 			to_chat(user, span_notice("[src] is full."))
 			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-		attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+		attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
 		qdel(attacking_egg)
 		return ITEM_INTERACT_SUCCESS
 
@@ -400,17 +400,17 @@
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
 	desc = "It's a bucket."
-	icon = 'icons/obj/service/janitor.dmi'
-	worn_icon = 'icons/mob/clothing/head/utility.dmi'
-	icon_state = "bucket"
-	inhand_icon_state = "bucket"
+	icon = 'icons/map_icons/items/_item.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
+	SETUP_MAP_ICONS("bucket", "/obj/item/reagent_containers/cup/bucket")
+	inhand_icon_state = "bucket"
 	greyscale_config = /datum/greyscale_config/buckets
 	greyscale_config_worn = /datum/greyscale_config/buckets_worn
 	greyscale_config_inhand_left = /datum/greyscale_config/buckets_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/buckets_inhands_right
+	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
+
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
@@ -443,6 +443,8 @@
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
+	icon = 'icons/obj/service/janitor.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
 	greyscale_colors = null
@@ -463,7 +465,7 @@
 		if(reagents.total_volume < 1)
 			to_chat(user, span_warning("[src] is out of water!"))
 		else
-			reagents.trans_to(O, 5, transfered_by = user)
+			reagents.trans_to(O, 5, transferred_by = user)
 			to_chat(user, span_notice("You wet [O] in [src]."))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
@@ -584,7 +586,7 @@
 					grinded.on_grind()
 					reagents.add_reagent_list(grinded.grind_results)
 					if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transferred_by = user)
 					to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
 					QDEL_NULL(grinded)
 					return ITEM_INTERACT_SUCCESS
@@ -593,7 +595,7 @@
 					grinded.on_grind()
 					reagents.add_reagent_list(grinded.grind_results)
 					if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transferred_by = user)
 					to_chat(user, span_notice("You break [grinded] into powder."))
 					QDEL_NULL(grinded)
 					return ITEM_INTERACT_SUCCESS

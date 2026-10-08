@@ -24,7 +24,7 @@ export const RandomizationButton = (props: {
 
   return (
     <Dropdown
-      backgroundColor={color}
+      color={color}
       {...dropdownProps}
       icon="dice-d20"
       selected="None"

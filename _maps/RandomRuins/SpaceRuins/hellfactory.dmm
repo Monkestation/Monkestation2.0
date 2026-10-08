@@ -1009,7 +1009,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "Sz" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "SF" = (
@@ -1019,7 +1019,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "UK" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "UN" = (

@@ -196,7 +196,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(glass)) //you can dip cigarettes into beakers
 		return NONE
 
-	if(glass.reagents.trans_to(src, chem_volume, transfered_by = user)) //if reagents were transfered, show the message
+	if(glass.reagents.trans_to(src, chem_volume, transferred_by = user)) //if reagents were transfered, show the message
 		to_chat(user, span_notice("You dip \the [src] into \the [glass]."))
 	//if not, either the beaker was empty, or the cigarette was full
 	else if(!glass.reagents.total_volume)
@@ -706,10 +706,38 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throwforce = 0
 	grind_results = list(/datum/reagent/carbon = 2)
 
+/obj/item/cigbutt/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
+
 /obj/item/cigbutt/cigarbutt
 	name = "cigar butt"
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
+
+/obj/item/clothing/mask/cigarette/cigar/intern
+	name = "the Classic"
+	desc = "Founded by Johnathan 'Unpaid' Internship, these cigars have been made with only the finest possible ingredients that have been hand-picked and crafted since 1728."
+	icon_state = "intern_cigaroff"
+	icon_on = "intern_cigaron"
+	icon_off = "intern_cigaroff"
+	smoketime = 30 MINUTES
+	chem_volume = 60
+	list_reagents = list(/datum/reagent/drug/nicotine = 35, /datum/reagent/determination = 3)
+
+//purple edition contains random chems, like a maint pill. but purple cigar form.
+/obj/item/clothing/mask/cigarette/cigar/intern/purple
+	name = "the Prohibition"
+	desc = "Like the Roaring 20's, these Cigars offer a taste of your wild side. Make sure to avoid the coppers!"
+	icon_state = "intern_cigar_purpleoff"
+	icon_on = "intern_cigar_purpleon"
+	icon_off = "intern_cigar_purpleoff"
+	smoketime = 30 MINUTES
+	chem_volume = 60
+
+/obj/item/clothing/mask/cigarette/cigar/intern/purple/Initialize(mapload)
+	list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(1,5), /datum/reagent/drug/nicotine = 20) // Called before init because init actually makes the chems and we need to know what chems we are making before we do that
+	return ..()
 
 /////////////////
 //SMOKING PIPES//
@@ -776,7 +804,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	packeditem = to_smoke.name
 	update_name()
 	if(to_smoke.reagents)
-		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transfered_by = user)
+		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transferred_by = user)
 	smoketime = round(reagents.total_volume/1.5) MINUTES
 	qdel(to_smoke)
 
@@ -842,7 +870,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape
 	name = "\improper E-Cigarette"
 	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
-	icon_state = "vape"
+	icon = 'icons/map_icons/clothing/mask.dmi'
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape")
 	worn_icon_state = "vape_worn"
 	greyscale_config = /datum/greyscale_config/vape
 	greyscale_config_worn = /datum/greyscale_config/vape/worn
@@ -1030,33 +1059,41 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	handle_reagents()
 
 /obj/item/clothing/mask/vape/red
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/red")
 	greyscale_colors = "#A02525"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/blue
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/blue")
 	greyscale_colors = "#294A98"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/purple
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/purple")
 	greyscale_colors = "#9900CC"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/green
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/green")
 	greyscale_colors = "#3D9829"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/yellow
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/yellow")
 	greyscale_colors = "#DAC20E"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/orange
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/orange")
 	greyscale_colors = "#da930e"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/black
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/black")
 	greyscale_colors = "#2e2e2e"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/vape/white
+	SETUP_MAP_ICONS("vape", "/obj/item/clothing/mask/vape/white")
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE

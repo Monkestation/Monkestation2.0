@@ -81,7 +81,7 @@
 		target.reagents.trans_to(owner.current, amount = 1, methods = INGEST) // Run transfer of 1 unit of reagent from them to me.
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', vol = 40, vary = TRUE) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 	total_blood_drank += blood_taken
-	if(target.mind && !IS_VASSAL(target)) // Checks if the target has a mind and is not a vassal
+	if(target.mind && !IS_BLOODSUCKER_OR_VASSAL(target)) // Checks if the target has a mind and is not another bloodsucker or vassal
 		blood_level_gain += blood_taken
 		total_blood_level_gain += blood_taken
 	return blood_taken
@@ -99,6 +99,8 @@
 	if(owner.current.am_staked())
 		return FALSE
 	if(!in_torpor && HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
+		return FALSE
+	if(HAS_TRAIT(owner.current, TRAIT_BLOODSILVER_CURSE))
 		return FALSE
 	var/in_coffin = istype(owner.current.loc, /obj/structure/closet/crate/coffin)
 	var/actual_regen = bloodsucker_regen_rate + additional_regen

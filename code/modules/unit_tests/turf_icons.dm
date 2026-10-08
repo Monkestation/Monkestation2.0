@@ -23,7 +23,6 @@
 	var/turf/initial_turf_type = run_loc_floor_bottom_left.type
 
 	for(var/turf/open/open_turf_path as anything in subtypesof(/turf/open))
-
 		var/damaged_dmi = initial(open_turf_path.damaged_dmi)
 		if(isnull(damaged_dmi))
 			continue

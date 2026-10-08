@@ -100,6 +100,11 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	var/reflects_projectiles = FALSE
 	/// The person who summoned the cosmic field.
 	var/datum/weakref/summoner
+	/// Projectile types to always allow through.
+	var/list/allowed_projectiles = list(
+		/obj/projectile/magic/star_ball,
+		/obj/projectile/bullet/bloodsilver,
+	)
 
 /obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
@@ -123,19 +128,30 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 
 /obj/effect/forcefield/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!isliving(mover))
+		if(isprojectile(mover))
+			var/obj/projectile/projectile = mover
+			if(isliving(projectile.firer))
+				var/mob/living/living_firer = projectile.firer
+				if(living_firer.has_status_effect(/datum/status_effect/star_mark))
+					return FALSE
 		return ..()
+
 	var/mob/living/living_mover = mover
 	if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
 		return ..()
+
 	// Being buckled/pulled by a cosmic heretic will allow you through cosmic fields EVEN IF you have a star mark
 	if(ismob(living_mover.buckled))
 		var/mob/living/fireman = living_mover.buckled
 		if(fireman.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
 			return ..()
+
 	if(living_mover.pulledby?.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
 		return ..()
+
 	if(living_mover.has_status_effect(/datum/status_effect/star_mark))
 		return FALSE
+
 	return ..()
 
 /obj/effect/forcefield/cosmic_field/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
@@ -144,7 +160,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	return ..()
 
 /obj/effect/forcefield/cosmic_field/proc/should_reflect_projectile(obj/projectile/bullet)
-	if(istype(bullet, /obj/projectile/magic/star_ball))
+	if(is_type_in_list(bullet, allowed_projectiles))
 		return FALSE
 	if(IS_WEAKREF_OF(bullet.firer, summoner))
 		return FALSE
@@ -184,7 +200,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	SIGNAL_HANDLER
 	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
-		if(!istype(bullet, /obj/projectile/magic/star_ball)) // Don't slow down star balls
+		if(!is_type_in_list(bullet, allowed_projectiles)) // Don't slow down star balls
 			try_reflect_projectile(bullet)
 		return
 
@@ -198,7 +214,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	SIGNAL_HANDLER
 	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
-		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't speed up star balls
+		if(is_type_in_list(bullet, allowed_projectiles)) // Don't speed up star balls
 			return
 		bullet.paused = FALSE
 		if(!HAS_TRAIT(bullet, TRAIT_REFLECTED_BY_COSMIC_FIELD)) // stays ourple if it's reflected instead of stopped

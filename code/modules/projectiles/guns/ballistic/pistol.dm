@@ -4,6 +4,7 @@
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm
+	recoil = 0.3
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
@@ -379,10 +380,10 @@
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
 	name = "\improper Whispering-Jester .45"
 	desc = "A .45 handgun that is designed by Rayne Corp for various people such as jesters, insurgents, and even stealth operatives. The handgun has a built in holosight, suppressor, and laser sight."
-	icon = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/item.dmi'
+	icon = 'icons/obj/weapons/guns/whispering_jester_45/item.dmi'
 	icon_state = "jester"
-	lefthand_file = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/lefthand.dmi'
-	righthand_file = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/righthand.dmi'
+	lefthand_file = 'icons/obj/weapons/guns/whispering_jester_45/lefthand.dmi'
+	righthand_file = 'icons/obj/weapons/guns/whispering_jester_45/righthand.dmi'
 	inhand_icon_state = "jester"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
@@ -393,17 +394,17 @@
 	bolt_type = BOLT_TYPE_OPEN
 	bolt_wording = "firearm"
 	fire_delay = 1
-	fire_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
-	suppressed_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_fire.ogg'
+	fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
+	suppressed_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg'
 	suppressed_volume = 60
-	dry_fire_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	rack_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	lock_back_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	bolt_drop_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	load_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	load_empty_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	eject_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
-	eject_empty_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	dry_fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	rack_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	lock_back_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	load_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	load_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	eject_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	eject_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
 
 //april fools edition
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota
@@ -445,7 +446,9 @@
 	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
-	can_suppress = FALSE
+	can_suppress = TRUE
+	suppressor_x_offset = 12
+	suppressor_y_offset = -2
 	fire_sound = 'monkestation/code/modules/security/sound/paco/paco_shot.ogg'
 	rack_sound = 'monkestation/code/modules/security/sound/paco/paco_rack.ogg'
 	lock_back_sound = 'monkestation/code/modules/security/sound/paco/paco_lock.ogg'
@@ -474,12 +477,14 @@
 
 /obj/item/gun/ballistic/automatic/pistol/paco/add_seclight_point() //Seclite functionality
 	AddComponent(/datum/component/seclite_attachable, \
-		light_overlay_icon = 'monkestation/icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "pacoflight", \
 		overlay_x = 15, \
 		overlay_y = 13)
 
 /obj/item/gun/ballistic/automatic/pistol/paco/click_alt(mob/user) //Some people like the stripe, some people don't. Gives you the option to do the unthinkable.
+	if(suppressed) //probably want to remove the suppressor instead of picking at it.
+		return ..()
 	if(!has_stripe || !TIMER_COOLDOWN_FINISHED(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
 		return CLICK_ACTION_BLOCKING
 	TIMER_COOLDOWN_START(src, COOLDOWN_STRIPE, 6 SECONDS)
@@ -504,7 +509,7 @@
 	desc = "The standard issue service pistol of blueshield agents."
 	burst_size = 4
 	fire_delay = 1
-	icon = 'monkestation/icons/obj/weapons/guns/tech9.dmi'
+	icon = 'icons/obj/weapons/guns/tech9.dmi'
 	icon_state = "tech9"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_light.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35

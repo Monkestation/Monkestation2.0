@@ -46,11 +46,10 @@
 	icon_state = "cowboyboots_black"
 
 /obj/item/clothing/shoes/high_heels
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/feet.dmi'
 	name = "high heels"
 	desc = "A fancy pair of high heels. Won't compensate for your below average height that much."
-	icon_state = "heels"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("heels", "/obj/item/clothing/shoes/high_heels")
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels/worn
 	greyscale_colors = "#FFFFFF"
@@ -58,21 +57,22 @@
 
 /obj/item/clothing/shoes/high_heels/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
 	//AddComponent(/datum/component/squeak, list('monkestation/code/modules/blueshift/sounds/effects/heel1.ogg' = 1, 'monkestation/code/modules/blueshift/sounds/effects/heel2.ogg' = 1), 50)
 
 /obj/item/clothing/shoes/fancy_heels
 	name = "fancy heels"
 	desc = "A pair of fancy high heels that are much smaller on your feet."
-	icon_state = "fancyheels"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/feet.dmi'
-	greyscale_colors = "#FFFFFF"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("fancyheels", "/obj/item/clothing/shoes/fancy_heels")
 	greyscale_config = /datum/greyscale_config/fancyheels
 	greyscale_config_worn = /datum/greyscale_config/fancyheels/worn
+	greyscale_colors = "#FFFFFF"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/fancy_heels/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
 	//AddComponent(/datum/component/squeak, list('monkestation/code/modules/blueshift/sounds/effects/heel1.ogg' = 1, 'monkestation/code/modules/blueshift/sounds/effects/heel2.ogg' = 1), 50)
 
 /obj/item/clothing/shoes/discoshoes
@@ -116,7 +116,8 @@
 /obj/item/clothing/shoes/wraps/cloth
 	name = "cloth foot wraps"
 	desc = "Boxer tape or bandages wrapped like a mummy, all left up to the choice of the wearer."
-	icon_state = "clothwrap"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("clothwrap", "/obj/item/clothing/shoes/wraps/cloth")
 	greyscale_config = /datum/greyscale_config/clothwraps
 	greyscale_config_worn = /datum/greyscale_config/clothwraps/worn
 	greyscale_colors = "#FFFFFF"
@@ -126,7 +127,8 @@
 /obj/item/clothing/shoes/wraps/colourable
 	name = "colourable foot wraps"
 	desc = "Ankle coverings. These ones have a customisable colour design."
-	icon_state = "legwrap"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("legwrap", "/obj/item/clothing/shoes/wraps/colourable")
 	greyscale_config = /datum/greyscale_config/legwraps
 	greyscale_config_worn = /datum/greyscale_config/legwraps/worn
 	greyscale_colors = "#FFFFFF"
@@ -154,69 +156,9 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/feet.dmi'
 	icon_state = "timbs"
 
-/obj/item/clothing/shoes/winterboots/christmas
-	name = "red christmas boots"
-	desc = "A pair of fluffy red christmas boots!"
-	icon_state = "christmas_boots"
-	greyscale_colors = "#cc0f0f#c4c2c2"
-	greyscale_config = /datum/greyscale_config/boots/christmasboots
-	greyscale_config_worn = /datum/greyscale_config/boots/christmasboots/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/shoes/winterboots/christmas/green
-	name = "green christmas boots"
-	desc = "A pair of fluffy green christmas boots!"
-	greyscale_colors = "#1a991a#c4c2c2"
-
 /obj/item/clothing/shoes/clown_shoes/pink
 	name = "pink clown shoes"
 	desc = "A particularly pink pair of punny shoes."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/feet.dmi'
 	icon_state = "pink_clown_shoes"
-
-//Modular overide to give jackboots laces
-/obj/item/clothing/shoes/jackboots
-	can_be_tied = TRUE
-
-/obj/item/clothing/shoes/colorable_laceups
-	name = "laceup shoes"
-	desc = "These don't seem to come pre-polished, how saddening."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	icon_state = "laceups"
-	greyscale_colors = "#383631"
-	greyscale_config = /datum/greyscale_config/laceup
-	greyscale_config_worn = /datum/greyscale_config/laceup/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-
-/obj/item/clothing/shoes/colorable_sandals
-	name = "sandals"
-	desc = "Rumor has it that wearing these with socks puts you on a no entry list in several sectors."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	icon_state = "sandals"
-	greyscale_colors = "#383631"
-	greyscale_config = /datum/greyscale_config/sandals
-	greyscale_config_worn = /datum/greyscale_config/sandals/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/shoes/jackboots/recolorable
-	icon = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	icon_state = "boots"
-	greyscale_colors = "#383631"
-	greyscale_config = /datum/greyscale_config/boots
-	greyscale_config_worn = /datum/greyscale_config/boots/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/shoes/wraps/cloth
-	name = "cloth foot wraps"
-	desc = "Boxer tape or bandages wrapped like a mummy, all left up to the choice of the wearer."
-	icon_state = "clothwrap"
-	greyscale_config = /datum/greyscale_config/clothwraps
-	greyscale_config_worn = /datum/greyscale_config/clothwraps/worn
-	greyscale_colors = "#FFFFFF"
-	body_parts_covered = FALSE
-	flags_1 = IS_PLAYER_COLORABLE_1

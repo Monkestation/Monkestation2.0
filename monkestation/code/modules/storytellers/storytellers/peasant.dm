@@ -2,6 +2,7 @@
 /datum/storyteller/peasant
 	name = "The Peasant"
 	desc = "The Peasant prefers plain, internal conflict and won't give overly chaotic events. A nice breather, hopefully less chaotic while still allowing things to happen."
+	star_colour = STARCOLOUR_ORANGESTAR
 	event_repetition_multiplier = 0.4
 	tag_multipliers = list(
 		TAG_CREW_ANTAG = 1.2,

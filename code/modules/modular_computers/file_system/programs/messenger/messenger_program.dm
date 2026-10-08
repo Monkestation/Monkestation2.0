@@ -82,8 +82,6 @@
 	viewing_messages_of = null
 
 /datum/computer_file/program/messenger/Destroy(force)
-	if(!QDELETED(computer))
-		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
 	remove_messenger(src)
 	return ..()
 
@@ -335,7 +333,7 @@
 			var/mob/living/usr_mob = usr
 			if(in_range(computer, usr_mob) && COOLDOWN_FINISHED(src, ringtone_set_cooldown))
 				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 30, TRUE, mixer_channel = CHANNEL_RINGTONES, extrarange = - 4)
-				COOLDOWN_START(src, ringtone_set_cooldown, 1 SECOND)
+				COOLDOWN_START(src, ringtone_set_cooldown, 1 SECONDS)
 
 			return TRUE
 

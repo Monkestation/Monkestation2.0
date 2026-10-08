@@ -83,7 +83,7 @@
 /datum/voucher_set/explorer/retro_laser
 	name = "Laser Gun Kit"
 	description = "Contains a low capacity but recharging laser gun, and a knife and flashlight to attach to it. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
-	icon = 'monkestation/icons/obj/guns/explorer.dmi'
+	icon = 'icons/obj/guns/explorer.dmi'
 	icon_state = "explorer"
 	set_items = list(
 		/obj/item/gun/energy/laser/explorer,
@@ -117,7 +117,7 @@
 /datum/voucher_set/explorer/breacher_kit
 	name = "Breaching Kit"
 	description = "Contains three breaching charges. Like c-4, but cannot be attached to living things."
-	icon = 'monkestation/icons/obj/items/breachingcharge.dmi'
+	icon = 'icons/obj/items/breachingcharge.dmi'
 	icon_state = "breaching-charge0"
 	set_items = list(
 		/obj/item/grenade/c4/explosivecharge,
@@ -259,7 +259,7 @@
 /datum/voucher_set/security/utility/citationinator
 	name = "Citationinator"
 	description = "A cheaply made plastic handheld doohickey, capable of issuing fines to ner-do-wells, and printing out a slip of paper with the details of the fine."
-	icon = 'monkestation/icons/obj/items/secass.dmi'
+	icon = 'icons/obj/items/secass.dmi'
 	icon_state = "doohickey_closed"
 	set_items = list(
 		/obj/item/citationinator,
@@ -437,7 +437,7 @@
 /datum/voucher_set/security/assistant/buddy_cop
 	name = "Buddy Cop Kit"
 	description = "Pair up with a security officer and help them in their day to day duties."
-	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "helmet"
 	set_items = list(
 		/obj/item/storage/box/security_kit/buddycop,

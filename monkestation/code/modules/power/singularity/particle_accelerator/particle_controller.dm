@@ -1,7 +1,7 @@
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Console"
 	desc = "This controls the density of the particles."
-	icon = 'monkestation/icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_box"
 	anchored = FALSE
 	density = TRUE
@@ -60,7 +60,7 @@
 /obj/machinery/particle_accelerator/control_box/update_icon_state()
 	. = ..()
 	if(active)
-		icon_state = "control_boxp1"
+		icon_state = "control_boxp[strength]"
 	else
 		if(use_power)
 			if(assembled)
@@ -297,7 +297,7 @@
 	data["strength"] = strength
 	return data
 
-/obj/machinery/particle_accelerator/control_box/ui_act(action, params)
+/obj/machinery/particle_accelerator/control_box/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 

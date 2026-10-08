@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
-	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE/*  | NO_BOH */
+	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE | AREA_BLOCKS_OUTGOING_RADIO /*  | NO_BOH */
 
 /area/centcom/heretic_sacrifice/Initialize(mapload)
 	if(!ambientsounds)

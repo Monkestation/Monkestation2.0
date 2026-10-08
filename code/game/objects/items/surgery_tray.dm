@@ -30,7 +30,6 @@
 		/obj/item/stack/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
-		/obj/item/breathing_bag,
 	)
 
 /obj/item/surgery_tray/deployed
@@ -208,6 +207,7 @@
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
 		/obj/item/breathing_bag,
+		/obj/item/autopsy_scanner,
 	))
 
 /obj/item/surgery_tray/craftable

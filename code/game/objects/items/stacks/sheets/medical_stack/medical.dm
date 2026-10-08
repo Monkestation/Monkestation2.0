@@ -180,7 +180,7 @@
 	stop_bleeding = 0.6
 	grind_results = list(/datum/reagent/medicine/antipathogenic/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/suture
-	heal_sound = 'monkestation/sound/items/snip.ogg'
+	heal_sound = 'sound/items/snip.ogg'
 
 /obj/item/stack/medical/suture/emergency
 	name = "emergency suture"

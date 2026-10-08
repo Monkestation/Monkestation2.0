@@ -91,7 +91,7 @@
 
 /proc/play_vox_word_legacy(word, ai_turf, mob/only_listener)
 
-	word = lowertext(word)
+	word = LOWER_TEXT(word)
 
 	var/datum/vox_voice/used_vox_voice = GLOB.vox_voices[/datum/vox_voice/normal::name]
 	if(used_vox_voice.sounds[word])

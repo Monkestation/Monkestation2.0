@@ -18,7 +18,7 @@
 	name = "Full Syndicate Surgery Medkit"
 	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
 			a syringe, and some sedatives."
-	item = /obj/item/storage/medkit/surgery_syndie
+	item = /obj/item/storage/medkit/surgery/syndie
 	cost = 3
 
 /datum/uplink_item/device_tools/combat_medkit
@@ -363,12 +363,26 @@
 
 /datum/uplink_item/device_tools/syndicate_hypospray
 	name = "Syndicate Hypospray"
-	desc = "A advanced hypospray, used to inject chemicals into yourself or other people, based off of stolen designs. Capable of loading large vials, and piercing armor."
+	desc = "An advanced hypospray based off stolen designs that injects chemicals into yourself or other people. Capable of loading large vials and piercing armor."
 	item = /obj/item/hypospray/combat
 	cost = 3
 
-/datum/uplink_item/device_tools/syndicate_hypospray
+/datum/uplink_item/device_tools/syndicate_hypospray_vials
 	name = "Syndicate Combat Hypospray Vials"
 	desc = "A box containing 6 bluespace vials, and a beaker full of premixed healing chems."
 	item = /obj/item/storage/box/evilmeds/evilhypos
 	cost = 1
+
+/datum/uplink_item/device_tools/jaws_of_death
+	name = "Jaws of Death"
+	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
+	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
+	item = /obj/item/crowbar/power/death
+	cost = 3
+
+/datum/uplink_item/device_tools/omnilathe
+	name = "Omnilathe"
+	desc = "A compact, deployable Omnilathe disguised as an emergency toolbox. Features an autolathe, ammo workbench, and can be upgraded with departmental techfab boards."
+	item = /obj/item/storage/toolbox/emergency/omnilathe
+	cost = 4
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

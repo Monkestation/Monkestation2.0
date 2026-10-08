@@ -1,0 +1,218 @@
+GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminence, if more then one are somehow spawned then this will remain equal to the first created one
+
+/mob/living/eminence //yes this should be a camera mob, that will not work because cameras are deaf
+	name = "Eminence"
+	real_name = "Eminence"
+	desc = "An entity forever bound to Ratvar, acting upon his will."
+	icon = 'icons/obj/clock_cult/clockwork_effects.dmi'
+	icon_state = "eminence"
+	mob_biotypes = MOB_SPIRIT
+	mouse_opacity = MOUSE_OPACITY_ICON
+	invisibility = INVISIBILITY_OBSERVER
+	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
+	see_invisible = SEE_INVISIBLE_LIVING
+	density = FALSE
+	move_force = INFINITY
+	move_resist = INFINITY
+	sight = SEE_SELF
+	status_flags = NONE
+	incorporeal_move = INCORPOREAL_MOVE_BASIC
+	initial_language_holder = /datum/language_holder/universal //lesser god, they CAN understand you
+	hud_possible = list(ANTAG_HUD)
+
+	//slight orange
+	lighting_cutoff_red = 35
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 0
+	///The list of actions we are granted, this REALLY should only be used once in a round so im not going to static it
+	var/list/granted_actions = list(
+		/datum/action/innate/clockcult/space_fold,
+		/datum/action/cooldown/clock_cult/eminence/purge_reagents,
+		/datum/action/cooldown/clock_cult/eminence/linked_abscond,
+		/datum/action/innate/clockcult/teleport_to_servant,
+		/datum/action/innate/clockcult/teleport_to_station,
+		/datum/action/innate/clockcult/eminence_abscond,
+		/datum/action/innate/clockcult/show_warpable_areas,
+		/datum/action/innate/clockcult/add_warp_area,
+	)
+	///We reference this from outside a bit so it gets its own ref
+	var/datum/action/control_host/cogscarab/control_action
+	///how many cogs we have
+	var/cogs = 0
+	///our interal radio
+	var/obj/item/radio/borg/eminence/internal_radio
+	///a weakref to our marked servant
+	var/datum/weakref/marked_servant
+	///cooldown declare for our command sound, its sent on say(), so we dont want sound spam issues
+	COOLDOWN_DECLARE(command_sound_cooldown)
+
+/mob/living/eminence/Initialize(mapload)
+	. = ..()
+	if(!GLOB.current_eminence)
+		GLOB.current_eminence = src
+	cogs = GLOB.clock_installed_cogs
+	AddElement(/datum/element/simple_flying)
+	internal_radio = new /obj/item/radio/borg/eminence(src)
+	add_traits(list(TRAIT_NO_MINDSWAP, TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED), INNATE_TRAIT)
+	grant_all_languages() //language refactor borked a bunch of stuff so this is needed
+	for(var/datum/action/our_action as anything in granted_actions)
+		our_action = new our_action(src)
+		our_action.Grant(src)
+
+/mob/living/eminence/mind_initialize()
+	. = ..()
+	if(control_action)
+		return
+
+	control_action = new(src)
+	control_action.Grant(src)
+
+/mob/living/eminence/Destroy()
+	QDEL_LIST(actions)
+	QDEL_NULL(internal_radio)
+	marked_servant = null
+	if(GLOB.current_eminence == src)
+		GLOB.current_eminence = null
+	return ..()
+
+/mob/living/eminence/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	var/turf/new_turf = get_turf(src)
+	if(!istype(new_turf, /turf/open/indestructible/reebe_void/void_edge))
+		return ..()
+
+	to_chat(src, span_brass("Going this far into the void would leave you forever lost."))
+	forceMove(old_loc)
+	return FALSE
+
+/mob/living/eminence/ClickOn(atom/clicked_on, params)
+	. = ..()
+	clicked_on.eminence_act(src)
+
+/mob/living/eminence/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode)
+	if(!message)
+		return
+
+	if(src.client)
+		if(client?.prefs.muted & MUTE_IC)
+			to_chat(src, span_boldwarning("You cannot send IC messages (muted)."))
+			return
+		if(!(ignore_spam || forced) && src.client?.handle_spam_prevention(message, MUTE_IC))
+			return
+
+	if(stat)
+		return
+
+	if(COOLDOWN_FINISHED(src, command_sound_cooldown))
+		send_clock_message(span_bigbrass(message), src, sent_sound = 'sound/effects/eminence_command.ogg')
+		COOLDOWN_START(src, command_sound_cooldown, 30 SECONDS)
+	else
+		send_clock_message(span_bigbrass(message), src)
+
+/mob/living/eminence/get_status_tab_items()
+	. = ..()
+	. += "Cogs: [cogs]"
+
+//and now: the great "list of things you dont care about"
+/mob/living/eminence/start_pulling(atom/movable/AM, state, force, supress_message)
+	return
+
+/mob/living/eminence/canUseStorage()
+	return FALSE
+
+/mob/living/eminence/ignite_mob(silent)
+	return
+
+/mob/living/eminence/fire_act()
+	return
+
+/mob/living/eminence/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta)
+	return
+
+/mob/living/eminence/can_z_move(direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	z_move_flags |= ZMOVE_IGNORE_OBSTACLES
+	return ..()
+
+/mob/living/eminence/rad_act(intensity) //theradiationdemonisnotrealtheradiationdemoncannothurtyou
+	return
+
+/mob/living/eminence/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	return FALSE
+
+/mob/living/eminence/dust(just_ash, drop_items, force)
+	if(!force)
+		return FALSE
+	return ..()
+
+/mob/living/eminence/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
+	return
+
+//eminence_act() stuff, might be a better way to do this
+/atom/proc/eminence_act(mob/living/eminence/user)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMINENCE_ACT, user)
+
+/mob/living/eminence_act(mob/living/eminence/user)
+	. = ..()
+	if(user != src && IS_CLOCK(src))
+		user.marked_servant = WEAKREF(src)
+		to_chat(user, "You mark [src].")
+
+/obj/structure/closet/eminence_act(mob/living/eminence/user)
+	. = ..()
+	if(do_after(user, 5 SECONDS, src))
+		open(user, TRUE)
+
+/obj/machinery/door/airlock/eminence_act(mob/living/eminence/user)
+	. = ..()
+	if(!do_after(user, 5 SECONDS, src))
+		return
+	if(seal)
+		to_chat(user, span_warning("The [src] has been sealed and wont open!"))
+		return
+	if(locked)
+		to_chat(user, span_warning("The airlock's bolts prevent it from being forced!"))
+		return
+	if(welded)
+		to_chat(user, span_warning("It's welded, it won't budge!"))
+		return
+	if(!density)
+		return
+
+	open(BYPASS_DOOR_CHECKS)
+
+/obj/machinery/door/window/eminence_act(mob/living/eminence/user)
+	. = ..()
+	if(!hasPower())
+		to_chat(user, span_warning("The [src] has no power and wont open!"))
+		return
+
+	open(BYPASS_DOOR_CHECKS)
+
+/obj/machinery/button/eminence_act(mob/living/eminence/user)
+	. = ..()
+	if(panel_open)
+		to_chat(user, span_warning("The panel is open and preventing you from accessing the [src]!"))
+		return
+
+	use_energy(5)
+	icon_state = "[skin]1"
+
+	if(device)
+		device.pulsed(user)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
+
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)
+
+/obj/machinery/light/eminence_act(mob/living/eminence/user)
+	. = ..()
+	break_light_tube()
+
+//Internal Radio
+/obj/item/radio/borg/eminence
+	name = "eminence internal listener"
+	translate_binary = TRUE
+	syndie = TRUE
+
+/obj/item/radio/borg/eminence/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)

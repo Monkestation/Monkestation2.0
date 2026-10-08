@@ -45,7 +45,7 @@
 /obj/projectile/bullet/fingergun_bullet
 	name = "imaginary bullet"
 	desc = "Bullets are not real idiot."
-	icon = 'monkestation/icons/obj/weapons/guns/fingergun_emote.dmi'
+	icon = 'icons/obj/weapons/guns/fingergun_emote.dmi'
 	icon_state = "projectile"
 	damage = 0
 	hitsound_wall = ""
@@ -62,7 +62,7 @@
 /obj/item/gun/ballistic/fingergun_emote
 	name = "finger gun"
 	desc = "''Ya' need a count?'' ''Nah sir.'' *abruptly gets shot in the head. ''Well.. that ain't good...'' *falls over backwards ''I should'a seen this comming.''"
-	icon = 'monkestation/icons/obj/weapons/guns/fingergun_emote.dmi'
+	icon = 'icons/obj/weapons/guns/fingergun_emote.dmi'
 	icon_state = "item"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'

@@ -277,6 +277,9 @@
 /datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT(source, TRAIT_BLOODSILVER_CURSE)) // no chem regeneration while under the effects of a bloodsilver bullet.
+		return
+
 	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs)
 
 	// If dead, we only regenerate up to half chem storage.

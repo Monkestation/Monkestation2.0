@@ -106,17 +106,11 @@
 	/// Weakref to the cyborg we're currently connected to.
 	var/datum/weakref/cyborg_holding_me
 
-
 /obj/item/borg/hydraulic_clamp/Initialize(mapload)
 	. = ..()
-	if(!istype(loc, /obj/item/robot_model))
-		return
-
-	var/obj/item/robot_model/holder_model = loc
-	cyborg_holding_me = WEAKREF(holder_model.robot)
-
-	RegisterSignal(holder_model.robot, COMSIG_LIVING_DEATH, PROC_REF(empty_contents))
-
+	if(iscyborg(loc))
+		cyborg_holding_me = WEAKREF(loc)
+		RegisterSignal(loc, COMSIG_LIVING_DEATH, PROC_REF(empty_contents))
 
 /obj/item/borg/hydraulic_clamp/Destroy()
 	var/mob/living/silicon/robot/robot_holder = cyborg_holding_me?.resolve()
@@ -316,7 +310,11 @@
 	id = "borg_upgrade_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/better_clamp
-	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.5
+	)
 	construction_time = 12 SECONDS
 	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_CARGO)
 
@@ -424,18 +422,6 @@
 
 /// Holders for the package wrap and the wrapping paper synthetizers.
 
-/datum/robot_energy_storage/package_wrap
-	name ="package wrapper synthetizer"
-	max_energy = 25
-	recharge_rate = 2
-
-
-/datum/robot_energy_storage/wrapping_paper
-	name ="wrapping paper synthetizer"
-	max_energy = 25
-	recharge_rate = 2
-
-
 /obj/item/stack/package_wrap/cyborg
 	name = "integrated package wrapper"
 	is_cyborg = TRUE
@@ -446,11 +432,10 @@
 	name = "integrated wrapping paper"
 	is_cyborg = TRUE
 	source = /datum/robot_energy_storage/wrapping_paper
-
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/stack/wrapping_paper/xmas/cyborg/use(used, transfer, check = FALSE) // Check is set to FALSE here, so the stack istn't deleted.
-	. = ..()
-
+	return ..()
 
 /// Some override that didn't belong anywhere else.
 

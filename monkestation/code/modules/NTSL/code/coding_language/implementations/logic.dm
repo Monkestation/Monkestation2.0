@@ -75,7 +75,7 @@
 /datum/n_function/default/lower/execute(this_obj, list/params)
 	var/string = length(params) >= 1 ? params[1] : null
 	if(istext(string))
-		return lowertext(string)
+		return LOWER_TEXT(string)
 
 ///Uppercase all characters
 /datum/n_function/default/upper
@@ -158,7 +158,7 @@
 	if(!istext(string))
 		return ""
 
-	return text("[][]", uppertext(copytext(string, 1, 2)), lowertext(copytext(string, 2)))
+	return text("[][]", uppertext(copytext(string, 1, 2)), LOWER_TEXT(copytext(string, 2)))
 
 /**
  * Number methods

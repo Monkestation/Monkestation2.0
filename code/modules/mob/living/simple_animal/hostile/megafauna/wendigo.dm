@@ -47,6 +47,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	death_message = "falls to the ground in a bloody heap, shaking the arena"
 	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
+	//hardmode_reward = /obj/item/gem/wendigo
 	rawr_sound = 'sound/magic/demon_dies.ogg' // MONKESTATION EDIT ADDITION
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting

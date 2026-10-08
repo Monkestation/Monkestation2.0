@@ -45,6 +45,10 @@
 	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
 	var/prevent_drop = FALSE
 
+/datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, prevent_drop)
+	src.prevent_drop = prevent_drop
+	return ..()
+
 /datum/status_effect/incapacitating/knockdown/on_apply()
 	. = ..()
 	if(!.)
@@ -813,7 +817,7 @@
 		owner.gib() //fuck you in particular
 		return
 	var/mob/living/carbon/human/H = owner
-	H.something_horrible(kill_either_way)
+	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)
 
 /atom/movable/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
@@ -930,7 +934,7 @@
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
-				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
+				INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, say), "AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
 

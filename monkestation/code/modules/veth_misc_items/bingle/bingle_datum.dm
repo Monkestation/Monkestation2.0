@@ -40,7 +40,7 @@ if too much trash on ground bingles roll
 	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 1 SECOND)
+		QDEL_IN(hosts_mind.current, 1 SECONDS)
 	var/mob/living/basic/bingle/lord/bungle = new(spawn_loc)
 	bungle.PossessByPlayer(spender_key)
 	if(isobserver(spender))

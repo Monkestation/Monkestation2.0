@@ -76,7 +76,6 @@
 	stamina = 10
 	sharpness = NONE
 	embed_type = null
-	speed = 0.8
 	stamina_falloff_tile = 0
 	damage_falloff_tile = 0
 	ricochets_max = 4
@@ -172,14 +171,15 @@
 
 /obj/projectile/bullet/uraniumpen
 	name ="uranium penetrator"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "uraniumpen"
 	damage = 35
+	armour_penetration = 75
 	projectile_piercing = (ALL & (~PASSMOB))
 
 /obj/projectile/bullet/pellet/trickshot
 	name = "trickshot pellet"
-	damage = 6
+	damage = 7
 	damage_falloff_tile = 0
 	ricochets_max = 5
 	ricochet_chance = 100

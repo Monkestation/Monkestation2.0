@@ -169,7 +169,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_BRONZE_TABLES S_OBJ(54) ///obj/structure/table/bronze
 #define SMOOTH_GROUP_ABDUCTOR_TABLES S_OBJ(55) ///obj/structure/table/abductor
 #define SMOOTH_GROUP_GLASS_TABLES S_OBJ(56) ///obj/structure/table/glass
-#define SMOOTH_GROUP_SANDSTONE_TABLES S_OBJ(57) ///obj/structure/table/sandstone //MONKESTATION EDIT
+#define SMOOTH_GROUP_SANDSTONE_TABLES S_OBJ(57) ///obj/structure/table/sandstone
 
 #define SMOOTH_GROUP_ALIEN_NEST S_OBJ(60) ///obj/structure/bed/nest
 #define SMOOTH_GROUP_ALIEN_RESIN S_OBJ(61) ///obj/structure/alien/resin
@@ -227,3 +227,17 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_group_variable) \
 	var/list/unwrapped = UNWRAP_SMOOTHING_GROUPS(smoothing_group_variable, unwrapped); \
 	assert_sorted(unwrapped, "[#smoothing_group_variable] ([type])"); \
+
+#define SMOOTH_ADAPTERS_WALLS list( \
+		/turf/closed/wall = "wall", \
+		/obj/structure/falsewall = "wall", \
+		/obj/machinery/door/airlock = "wall", \
+)
+
+// wall don't need adapter with another wall
+#define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
+		/obj/machinery/door/airlock = "wall", \
+		/turf/closed/wall = "wall", \
+)
+
+#define SMOOTH_ADAPTERS_ICON 'icons/obj/structures/window/adapters.dmi'

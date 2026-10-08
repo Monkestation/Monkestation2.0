@@ -2,7 +2,7 @@
 	name = "public nanite chamber"
 	desc = "A device that can rapidly implant cloud-synced nanites without an external operator."
 	circuit = /obj/item/circuitboard/machine/public_nanite_chamber
-	icon = 'monkestation/icons/obj/machines/nanite_chamber.dmi'
+	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
 	base_icon_state = "nanite_chamber"
 	layer = ABOVE_WINDOW_LAYER
@@ -19,10 +19,17 @@
 	var/busy = FALSE
 	var/busy_icon_state
 	var/message_cooldown = 0
+	var/nanites_given = 25 // 75 base with 2 t1 lasers
 
 /obj/machinery/public_nanite_chamber/Initialize(mapload)
 	. = ..()
 	occupant_typecache = GLOB.typecache_living
+
+/obj/machinery/public_nanite_chamber/RefreshParts()
+	. = ..()
+	nanites_given = 25
+	for(var/datum/stock_part/micro_laser/laser in component_parts) // (75 - 125 - 175 - 225)
+		nanites_given += laser.tier * 25
 
 /obj/machinery/public_nanite_chamber/RefreshParts()
 	. = ..()
@@ -61,7 +68,7 @@
 	if(attacker)
 		occupant.investigate_log("was injected with nanites with cloud ID [cloud_id] by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 		log_combat(attacker, occupant, "injected", null, "with nanites via [src]")
-	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
+	occupant.AddComponent(/datum/component/nanites, nanites_given, cloud_id)
 
 /obj/machinery/public_nanite_chamber/proc/change_cloud(mob/living/attacker)
 	if(machine_stat & (NOPOWER|BROKEN))

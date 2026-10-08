@@ -54,7 +54,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/yellow,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil/streak,
 /turf/open/misc/asteroid,
 /area/virtual_domain/safehouse)
 "x" = (

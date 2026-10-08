@@ -28,7 +28,7 @@
 	desc = "Pricy nitrile gloves made for plasmamen."
 	icon_state = "nitrile"
 	greyscale_colors = "#913b00"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED, TRAIT_STERILE)
 
 /obj/item/clothing/gloves/color/plasmaman/white
 	name = "white envirogloves"
@@ -132,4 +132,4 @@
 	desc = "A new pattern plasmaman nitril glove set to match that drippy security grey suit."
 	icon_state = "secmedplasma"
 	greyscale_colors = "#918F8C"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED, TRAIT_STERILE)

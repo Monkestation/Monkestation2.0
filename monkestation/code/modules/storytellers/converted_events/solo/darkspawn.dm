@@ -5,7 +5,7 @@
 	antag_datum = /datum/antagonist/darkspawn
 	typepath = /datum/round_event/antagonist/darkspawn
 	shared_occurence_type = SHARED_HIGH_THREAT
-	repeated_mode_adjust = TRUE
+	repeated_mode_adjust = FALSE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -26,6 +26,8 @@
 	)
 	required_enemies = 5
 	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,

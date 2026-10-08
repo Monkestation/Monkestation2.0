@@ -12,19 +12,18 @@
 /datum/preference/choiced/pod_hair/icon_for(value)
 	var/datum/sprite_accessory/pod_hair = GLOB.pod_hair_list[value]
 
-	if(pod_hair.icon_state == null || pod_hair.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
+	if(!pod_hair.icon_state || pod_hair.icon_state == SPRITE_ACCESSORY_NONE)
+		return uni_icon('icons/mob/landmarks.dmi', "x")
 
-	var/icon/icon_with_hair = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "pod_head_m")
+	var/datum/universal_icon/icon_with_hair = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "pod_head_m")
 
-	var/icon/icon_adj = icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_ADJ")
-	var/icon/icon_front = icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_FRONT")
-	icon_adj.Blend(icon_front, ICON_OVERLAY)
-	icon_with_hair.Blend(icon_adj, ICON_OVERLAY)
-	icon_with_hair.Scale(64, 64)
-	icon_with_hair.Crop(15, 64, 15 + 31, 64 - 31)
-	icon_with_hair.Blend(COLOR_GREEN, ICON_MULTIPLY)
+	var/datum/universal_icon/icon_adj = uni_icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_ADJ")
+	var/datum/universal_icon/icon_front = uni_icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_FRONT")
+	icon_adj.blend_icon(icon_front, ICON_OVERLAY)
+	icon_with_hair.blend_icon(icon_adj, ICON_OVERLAY)
+	icon_with_hair.scale(64, 64)
+	icon_with_hair.crop(15, 64 - 31, 15 + 31, 64)
+	icon_with_hair.blend_color(COLOR_GREEN, ICON_MULTIPLY)
 
 	return icon_with_hair
 
@@ -33,7 +32,6 @@
 
 /datum/preference/choiced/pod_hair/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["pod_hair"] = value
-
 
 /datum/preference/choiced/pod_hair/compile_constant_data()
 	var/list/data = ..()

@@ -3,7 +3,9 @@
 
 SUBSYSTEM_DEF(starlight)
 	name = "Starlight"
-	init_order = INIT_ORDER_STARLIGHT
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+	)
 	priority = FIRE_PRIORITY_STARLIGHT
 	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // running in the lobby allows us to handle the queue during pre-game

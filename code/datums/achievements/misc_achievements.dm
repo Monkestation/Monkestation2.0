@@ -218,3 +218,9 @@
 	desc = "Did you think you could get away with defiling the word of God?"
 	database_id = MEDAL_GODS_WRATH
 	icon_state = "godswrath"
+
+/datum/award/achievement/misc/jared_leto
+	name = "The Jared Leto of fruits"
+	desc = "Cantelopes dumb friend they insist on bringing to the party. The worst part of everything it is in."
+	database_id = MEDAL_JARED_LETO
+	icon_state = "jared_leto"

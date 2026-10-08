@@ -51,6 +51,27 @@
 /obj/structure/railing,
 /turf/open/floor/plating/ocean/rock,
 /area/ocean/dark)
+"dJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/pickaxe{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/pickaxe{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/pickaxe{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/pickaxe{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/mine/production)
 "en" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -86,10 +107,38 @@
 "fd" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/table,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 9
+	},
+/obj/item/gps/mining{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/mining_scanner{
+	pixel_x = -4
+	},
+/obj/item/mining_scanner{
+	pixel_x = 4
+	},
+/obj/item/storage/bag/ore{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/storage/bag/ore{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/mine/production)
@@ -378,7 +427,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/maintenance/service)
 "tw" = (
-/obj/machinery/suit_storage_unit,
+/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
@@ -408,6 +457,22 @@
 /area/mine/maintenance/service)
 "tZ" = (
 /obj/structure/cable,
+/obj/item/flashlight{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/flashlight{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/flashlight{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/flashlight{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "ul" = (
@@ -835,7 +900,7 @@
 /area/mine/production)
 "FS" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/suit_storage_unit,
+/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
@@ -932,6 +997,22 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "HG" = (
@@ -1286,13 +1367,41 @@
 "Yf" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/table,
-/obj/item/paper,
-/obj/item/pen,
 /obj/machinery/camera/autoname/directional/south{
 	network = list("mine")
 	},
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 1
+	},
+/obj/item/gps/mining{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/mining_scanner{
+	pixel_x = -4
+	},
+/obj/item/mining_scanner{
+	pixel_x = 4
+	},
+/obj/item/storage/bag/ore{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/storage/bag/ore{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/mine/production)
@@ -19509,7 +19618,7 @@ wE
 qK
 fB
 fL
-ML
+dJ
 fd
 uT
 fG

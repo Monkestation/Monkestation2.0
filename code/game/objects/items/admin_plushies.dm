@@ -206,7 +206,7 @@
 	name = "gabbie"
 	desc = "She looks a bit angry."
 	icon_state = "gabbie"
-	squeak_override = list('monkestation/sound/items/gabnoise.ogg' = 1)
+	squeak_override = list('sound/items/gabnoise.ogg' = 1)
 	gender = FEMALE
 	append_note = FALSE
 	pet_message = "Gabbie swears!"
@@ -214,6 +214,7 @@
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
+
 /datum/store_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -222,7 +223,7 @@
 /obj/item/toy/plush/admin/gabbie/examine(mob/user)
 	. = ..()
 	if (user?.ckey == "glyphee")
-		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("I look good!")]")
+		. += span_purple("<hr>[EXAMINE_HINT("I look good!")]")
 
 /obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food/deadmouse))
@@ -231,7 +232,7 @@
 		src.desc = "She still looks angry, but less hungry."
 		qdel(attacking_item)
 	else if(istype(attacking_item, /obj/item/reagent_containers/cocaine))
-		playsound(src.loc, 'monkestation/sound/items/sniff.ogg', 50)
+		playsound(src.loc, 'sound/items/sniff.ogg', 50)
 		to_chat(user, span_warning("Gabbie inhales the powder!"))
 		src.desc = "She still looks angry, but more high."
 		qdel(attacking_item)
@@ -347,7 +348,7 @@
 	name = "weegee"
 	desc = "He's staring into your soul..."
 	icon_state = "weegee"
-	squeak_override = list('monkestation/sound/items/weegee.ogg'=1)
+	squeak_override = list('sound/items/weegee.ogg'=1)
 	gender = MALE
 /datum/loadout_item/plushies/weegee
 	name = "Weegee Plush"
@@ -374,7 +375,7 @@
 	name = "QB"
 	desc = "Centcom...the horse is here."
 	icon_state = "horsey"
-	squeak_override = list('monkestation/sound/items/subuluwa.ogg'=1)
+	squeak_override = list('sound/items/subuluwa.ogg'=1)
 	gender = FEMALE
 /datum/loadout_item/plushies/horsey
 	name = "QB Plush"
@@ -521,7 +522,7 @@
 	. = ..()
 	var/holder_is_lucy = user?.ckey == plushckey
 	if (holder_is_lucy)
-		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("IT'S MEE!!!!")]")
+		. += span_purple("<hr>[EXAMINE_HINT("IT'S MEE!!!!")]")
 	if (shaved)
 		. += span_warning("OH GOD [holder_is_lucy ? "I'M" : "SHE'S"] BALD!")
 		if (brushed > 2)
@@ -649,14 +650,14 @@
 	desc = "Eugh, this asshole?"
 	icon_state = "aster"
 	squeak_override = list(
-		'monkestation/sound/items/aster1.ogg' = 1,
-		'monkestation/sound/items/aster2.ogg' = 1,
-		'monkestation/sound/items/aster3.ogg' = 1,
-		'monkestation/sound/items/aster4.ogg' = 1,
-		'monkestation/sound/items/aster5.ogg' = 1,
-		'monkestation/sound/items/aster6.ogg' = 1,
-		'monkestation/sound/items/aster7.ogg' = 1,
-		'monkestation/sound/items/aster8.ogg' = 1,
+		'sound/items/aster1.ogg' = 1,
+		'sound/items/aster2.ogg' = 1,
+		'sound/items/aster3.ogg' = 1,
+		'sound/items/aster4.ogg' = 1,
+		'sound/items/aster5.ogg' = 1,
+		'sound/items/aster6.ogg' = 1,
+		'sound/items/aster7.ogg' = 1,
+		'sound/items/aster8.ogg' = 1,
 	)
 	gender = MALE
 
@@ -681,7 +682,7 @@
 	name = "G.E.B.O.R."
 	desc = "One day, a changeling \"Accidentally\" got pushed into a plushie machine, and this happened to be the result!"
 	icon_state = "gebor"
-	squeak_override = list('monkestation/sound/items/gebor.ogg' = 1)
+	squeak_override = list('sound/items/gebor.ogg' = 1)
 	gender = FEMALE
 
 /datum/loadout_item/plushies/gebor
@@ -727,7 +728,7 @@
 	name = "Wolf"
 	desc = "A plushie of a shirtless man. Put some clothes on, weirdo!"
 	icon_state = "wolf"
-	squeak_override = list('monkestation/sound/items/wolfscream.ogg' = 1)
+	squeak_override = list('sound/items/wolfscream.ogg' = 1)
 	gender = MALE
 
 /obj/item/toy/plush/admin/jackary/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -754,7 +755,7 @@
 	desc = "Love wins."
 	icon = 'icons/obj/admin_plushies_expanded.dmi'
 	icon_state = "wolfnaster"
-	squeak_override = list('monkestation/sound/items/squee.ogg' = 1)
+	squeak_override = list('sound/items/squee.ogg' = 1)
 	gender = NEUTER
 
 /obj/item/toy/plush/admin/wolfnaster/click_alt(mob/user)

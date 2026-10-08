@@ -227,7 +227,8 @@
 			playsound(owner,'sound/weapons/bladeslice.ogg', 40)
 			if (owner_limb.can_bleed())
 				parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
-		owner.add_mood_event("embedded", /datum/mood_event/embedded)
+		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+			owner.add_mood_event("embedded", /datum/mood_event/embedded)
 		damage += parent.w_class * impact_pain_mult
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
@@ -252,10 +253,12 @@
 		attacking_item = parent,
 	)
 
-	owner.apply_damage(
-		damage = pain_stam_pct * damage,
-		damagetype = STAMINA,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+		owner.apply_damage(
+			damage = pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
+
 	return TRUE
 
 /// Proc which is called upon successfully embedding into someone/something, for children to override
@@ -354,11 +357,11 @@
 		sharpness = parent.get_sharpness() || SHARP_EDGED, // always sharp, even if the object isn't
 		attacking_item = parent,
 	)
-
-	owner.apply_damage(
-		damage = pain_stam_pct * damage,
-		damagetype = STAMINA,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+		owner.apply_damage(
+			damage = pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 
 	owner.emote("scream")
 
@@ -390,12 +393,13 @@
 		attacking_item = parent,
 	)
 
-	owner.apply_damage(
-		damage = pain_stam_pct * damage,
-		damagetype = STAMINA,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+		owner.apply_damage(
+			damage = pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
+		to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
 
-	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
 	jostle_effects()
 
 /// Effects which should occur when the owner moves, sometimes
@@ -459,10 +463,11 @@
 		attacking_item = parent,
 	)
 
-	owner.apply_damage(
-		damage = pain_stam_pct * damage,
-		damagetype = STAMINA,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+		owner.apply_damage(
+			damage = pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 
 	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] [pain_stam_pct < 1 ? "hurts!" : "weighs you down."]"))
 
@@ -526,10 +531,11 @@
 		attacking_item = parent,
 	)
 
-	owner.apply_damage(
-		damage = pain_stam_pct * damage,
-		damagetype = STAMINA,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+		owner.apply_damage(
+			damage = pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 
 	owner.visible_message(span_danger("[parent] falls out of [owner.name]'s [owner_limb.plaintext_zone]!"),
 		span_userdanger("[parent] falls out of your [owner_limb.plaintext_zone]!"))
@@ -576,10 +582,11 @@
 		attacking_item = parent,
 	)
 
-	owner.apply_damage(
-		damage = pain_stam_pct * damage,
-		damagetype = STAMINA,
-	)
+	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+		owner.apply_damage(
+			damage = pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 
 	owner.cause_wound_of_type_and_severity(WOUND_PIERCE, owner_limb, WOUND_SEVERITY_MODERATE)
 	playsound(owner, 'sound/effects/wounds/blood2.ogg', 50, TRUE)

@@ -73,7 +73,7 @@
 		loaded_projectile.ignore_source_check = TRUE
 
 	if(reagents && loaded_projectile.reagents)
-		reagents.trans_to(loaded_projectile, reagents.total_volume, transfered_by = user) //For chemical darts/bullets
+		reagents.trans_to(loaded_projectile, reagents.total_volume, transferred_by = user) //For chemical darts/bullets
 		qdel(reagents)
 
 	SEND_SIGNAL(src, COMSIG_CASING_READY_PROJECTILE, target, user, quiet, zone_override, fired_from)

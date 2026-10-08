@@ -133,6 +133,12 @@ Possible to do for anyone motivated enough:
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
+	///just play once god please don't spam it
+	var/play_once = TRUE
+	var/has_played = FALSE
+
+/obj/machinery/holopad/tutorial/everplaying
+	play_once = FALSE
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
@@ -174,10 +180,17 @@ Possible to do for anyone motivated enough:
 		replay_start()
 
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
-	if (!isliving(AM))
+	if(!isliving(AM))
+		return
+	if(has_played)
 		return
 	if(!replay_mode && (disk?.record))
 		replay_start()
+
+/obj/machinery/holopad/tutorial/replay_start()
+	. = ..()
+	if(play_once)
+		has_played = TRUE
 
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
@@ -327,7 +340,7 @@ Possible to do for anyone motivated enough:
 				last_request = world.time
 				to_chat(usr, span_info("You requested an AI's presence."))
 				var/area/area = get_area(src)
-				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
+				for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 					if(!AI.client)
 						continue
 					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='byond://?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
@@ -459,7 +472,7 @@ Possible to do for anyone motivated enough:
 		if(!LAZYLEN(holo_calls))
 			set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS, FALSE)
 
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /**
@@ -526,12 +539,12 @@ Possible to do for anyone motivated enough:
 
 	if(ringing != are_ringing)
 		ringing = are_ringing
-		update_appearance(UPDATE_ICON_STATE)
+		update_appearance(UPDATE_ICON)
 		return
 
 	if(outgoing_call)
 		outgoing_call.Check()
-		update_appearance(UPDATE_ICON_STATE)
+		update_appearance(UPDATE_ICON)
 
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
@@ -551,7 +564,7 @@ Possible to do for anyone motivated enough:
 		hologram.icon = work_off.icon
 		hologram.icon_state = work_off.icon_state
 		hologram.copy_overlays(work_off, TRUE)
-		hologram.makeHologram()
+		hologram.makeHologram(color_override = AI?.ai_holocolor)
 
 		if(AI)
 			AI.eyeobj.setLoc(get_turf(src)) //ensure the AI camera moves to the holopad
@@ -617,6 +630,23 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
 	return ..()
 
+/obj/machinery/holopad/update_overlays()
+	. = ..()
+
+	var/default_color = COLOR_AI_HOLOGRAM_BLUE
+	if(masters || replay_mode)
+		var/mutable_appearance/hololine_overlay = mutable_appearance(icon, "holopad1_mask")
+		for(var/mob/living/silicon/ai/AI as anything in masters)
+			if(istype(AI) && AI.ai_holocolor)
+				default_color = AI.ai_holocolor
+				break
+		hololine_overlay.color = default_color
+		. += hololine_overlay
+		. += emissive_appearance(icon, "holopad1_mask", src, alpha = src.alpha)
+	if(ringing)
+		. += mutable_appearance(icon, "holopad_ringing_mask")
+		. += emissive_appearance(icon, "holopad_ringing_mask", src, alpha = src.alpha)
+
 /obj/machinery/holopad/proc/set_holo(datum/owner, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, owner, h)
 	LAZYSET(holorays, owner, new /obj/effect/overlay/holoray(loc))
@@ -624,6 +654,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/mob/living/silicon/ai/AI = owner
 	if(istype(AI))
 		AI.current = src
+		if(AI.ai_holocolor)
+			var/obj/effect/overlay/holoray/ray = holorays[owner]
+			ray.color = AI.ai_holocolor
 	SetLightsAndPower()
 	update_holoray(owner, get_turf(loc))
 	return TRUE
@@ -907,10 +940,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		render_target = "holoray#[uid]"
 		uid++
 	// Let's GLOW BROTHER! (Doing it like this is the most robust option compared to duped overlays)
-	glow = new(src, render_target)
-	// We need to counteract the pixel offset to ensure we don't double offset (I hate byond)
-	glow.pixel_x = 32
-	glow.pixel_y = 32
+	glow = new(null, src)
 	add_overlay(glow)
 	LAZYADD(update_overlays_on_z, glow)
 

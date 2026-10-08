@@ -543,8 +543,8 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_carp", "/obj/item/nullrod/carp")
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
@@ -687,7 +687,7 @@
 /obj/item/nullrod/cross
 	name = "golden crucifix"
 	desc = "Resist the devil, and he will flee from you."
-	icon = 'monkestation/icons/obj/misc.dmi'
+	icon = 'icons/obj/misc.dmi'
 	icon_state = "cross"
 	inhand_icon_state = "cross"
 	force = 0 // How often we forget

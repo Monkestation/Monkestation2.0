@@ -35,8 +35,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
 	/// Paint jobs for this closet, crates are a subtype of closet so they override these values
 	var/list/paint_jobs = TRUE
-	/// Chance for an item inside to get ashed upon the destruction of the lock
-	var/ash_chance = 0
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
 	var/enable_door_overlay = TRUE
 	var/has_opened_overlay = TRUE
@@ -57,7 +55,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
-	var/cutting_tool = /obj/item/weldingtool
+	var/cutting_tool_behaviour = TOOL_WELDER
 	var/open_sound = 'sound/machines/closet_open.ogg'
 	var/close_sound = 'sound/machines/closet_close.ogg'
 	var/open_sound_volume = 35
@@ -84,6 +82,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/card_reader_installed = FALSE
 	/// access types for card reader
 	var/list/access_choices = TRUE
+	/// If TRUE, the closet will anchored by default, if it spawns on the station's z-level.
+	var/roundstart_anchor = TRUE
 
 /datum/armor/structure_closet
 	melee = 20
@@ -177,12 +177,24 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		opened = FALSE //nessassary because open() proc will early return if its true
 		if(open(special_effects = FALSE)) //closets which are meant to be open by default dont need to be animated open
 			return
+
+	if(mapload && can_roundstart_anchor())
+		set_anchored(TRUE)
+
 	update_appearance()
 
 /obj/structure/closet/LateInitialize(mapload_arg)
 	. = ..()
 	if(!opened)
 		take_contents()
+
+/obj/structure/closet/proc/can_roundstart_anchor()
+	if(!roundstart_anchor || !anchorable || !is_station_level(loc?.z))
+		return FALSE
+	var/area/current_area = get_area(src)
+	if(!current_area?.anchor_roundstart_lockers)
+		return FALSE
+	return TRUE
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -834,7 +846,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			update_appearance(bit_flag)
 
 	else if(opened)
-		if(istype(weapon, cutting_tool))
+		if(weapon.tool_behaviour == cutting_tool_behaviour && user.istate & ISTATE_HARM)
 			if(weapon.tool_behaviour == TOOL_WELDER)
 				if(!weapon.tool_start_check(user, amount=0))
 					return
@@ -844,13 +856,13 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 					if(!opened)
 						return
 					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."),
-									span_hear("You hear weaponelding."))
+									span_notice("You cut \the [src] apart with \the [weapon]."),
+									span_hear("You hear welding."))
 					deconstruct(TRUE)
 				return
 			else // for example cardboard box is cut weaponith weaponirecutters
 				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."))
+									span_notice("You cut \the [src] apart with \the [weapon]."))
 				deconstruct(TRUE)
 				return
 		if ((user.istate & ISTATE_HARM))
@@ -976,10 +988,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(attack_hand(user))
 		return ITEM_INTERACT_BLOCKING
 
-/obj/structure/closet/verb/verb_toggleopen()
-	set src in view(1)
-	set category = "Object"
-	set name = "Toggle Open"
+GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", "Object")
 
 	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
@@ -1039,14 +1048,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
-	for(var/obj/item/broken as anything in src.contents)
-		if(!istype(broken, /mob))
-			if(prob(ash_chance))
-				QDEL_NULL(broken)
-				new /obj/effect/decal/cleanable/ash(src.loc)
-				if(istype(broken, /obj/item/ammo_box))
-					if(prob(25))
-						explosion(src, 0, 0, 2, 0, 2)
 	open(force = TRUE, special_effects = FALSE)
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)

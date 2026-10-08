@@ -64,14 +64,14 @@
 
 /obj/item/grenade/stingbang
 	name = "stingbang"
-	icon_state = "timeg"
+	icon_state = "timeg_ass"
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
-	shrapnel_radius = 5
-	custom_premium_price = PAYCHECK_COMMAND * 3.5 // mostly gotten through cargo, but throw in one for the sec vendor ;)
+	shrapnel_radius = 6
+	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/grenade/stingbang/mega
 	name = "mega stingbang"

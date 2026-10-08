@@ -32,6 +32,7 @@
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
+	exotic_bloodtype = BLOOD_TYPE_OIL
 	meat = /obj/item/stack/sheet/plasteel{amount = 5}
 	skinned_type = /obj/item/stack/sheet/iron{amount = 10}
 	species_gibs = GIB_TYPE_ROBOTIC
@@ -43,6 +44,7 @@
 	mutantlungs = null
 	mutantappendix = null
 	mutantbladder = null
+	mutantspleen = null
 	mutanteyes = /obj/item/organ/internal/eyes/robotic
 	mutantears = /obj/item/organ/internal/ears/cybernetic
 	mutantbutt = /obj/item/organ/internal/butt/cyber

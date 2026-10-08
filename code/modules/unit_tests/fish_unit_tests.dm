@@ -78,7 +78,7 @@
 	diff_traits_inheritability = 100
 
 /datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_TESTING, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_TESTING, FISH_DATUM_TRAIT)
 	fish.grind_results[/datum/reagent] = 10
 
 /datum/fish_trait/dummy/two

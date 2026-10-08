@@ -102,10 +102,12 @@
 	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*disease.spreading_modifier) - 1))
 		ForceContractDisease(disease)
 
-/mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
+/mob/living/carbon/AirborneContractDisease(datum/disease/disease, force_spread)
 	if(internal)
 		return
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return
+	if(!disease.has_required_infectious_organ(src, ORGAN_SLOT_LUNGS))
 		return
 	..()
 
@@ -123,14 +125,15 @@
 	return TRUE
 
 
-/mob/living/carbon/human/CanContractDisease(datum/disease/D)
+/mob/living/carbon/human/CanContractDisease(datum/disease/disease)
 	if(dna)
-		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
+		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !disease.bypasses_immunity)
 			return FALSE
 
-	for(var/thing in D.required_organs)
-		if(!((locate(thing) in bodyparts) || (locate(thing) in organs)))
+	if(disease.required_organ)
+		if(!disease.has_required_infectious_organ(src, disease.required_organ))
 			return FALSE
+
 	return ..()
 
 /mob/living/proc/CanSpreadAirborneDisease()

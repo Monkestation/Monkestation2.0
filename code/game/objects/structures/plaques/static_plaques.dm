@@ -199,6 +199,22 @@
 	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be disabled. Beneath the image, someone has scratched the word \"PACKETS\"."
 	icon_state = "kiddieplaque"
 
+/obj/structure/sign/plaques/ai_password
+	name = "\improper AI default password"
+	desc = "This plaque contains the default password for AI control consoles onboard this station."
+	var/control_code = "BUG"
+
+/obj/structure/sign/plaques/ai_password/Initialize(mapload)
+	. = ..()
+	control_code = GLOB.ai_control_code
+
+/obj/structure/sign/plaques/ai_password/examine(mob/living/user)
+	. = ..()
+	if(Adjacent(user))
+		. += span_notice("The following digits are stamped into the plaque: [control_code]")
+	else
+		. += span_notice("You must be closer to read the code.")
+
 /obj/structure/sign/plaques/kiddie/devils_tooth
 	name = "\improper Devil's Tooth Plaque"
 	desc = "A plaque commemorating the fallen souls who had to die tunneling out this segment of the frozen ice planet that surrounds it. It's named \"Devil's Tooth\" because those who laid down their life here surely thought they were in hell."

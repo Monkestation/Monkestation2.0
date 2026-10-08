@@ -12,6 +12,13 @@
 
 /obj/machinery/rnd/production/circuit_imprinter/department/engineering
 	name = "department circuit imprinter (Engineering)"
-	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department/science
+	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department/engineering
 	allowed_department_flags = DEPARTMENT_BITFLAG_ENGINEERING
+	payment_department = ACCOUNT_ENG
+
+/obj/machinery/rnd/production/circuit_imprinter/department/netmin
+	name = "hardware printer"
+	desc = "Exclusively manufactures hardware for the Network Admin."
+	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department/netmin
+	allowed_department_flags = DEPARTMENT_BITFLAG_NETMIN
 	payment_department = ACCOUNT_ENG

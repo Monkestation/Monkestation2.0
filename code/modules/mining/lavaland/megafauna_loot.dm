@@ -260,7 +260,12 @@
 /obj/item/clothing/suit/hooded/hostile_environment
 	name = "H.E.C.K. suit"
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
-	icon_state = "hostile_env"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("hostile_env", "/obj/item/clothing/suit/hooded/hostile_environment")
+	greyscale_colors = "#4d4d4d#808080"
+	greyscale_config = /datum/greyscale_config/heck_suit
+	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
+
 	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
 	armor_type = /datum/armor/hooded_hostile_environment
 
@@ -272,9 +277,6 @@
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
 	allowed = null
-	greyscale_colors = "#4d4d4d#808080"
-	greyscale_config = /datum/greyscale_config/heck_suit
-	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /datum/armor/hooded_hostile_environment
@@ -303,10 +305,13 @@
 
 /obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
-	icon_state = "hostile_env"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("hostile_env", "/obj/item/clothing/head/hooded/hostile_environment")
+	greyscale_colors = "#4d4d4d#808080#ff3300"
+	greyscale_config = /datum/greyscale_config/heck_helmet
+	greyscale_config_worn = /datum/greyscale_config/heck_helmet/worn
+
 	w_class = WEIGHT_CLASS_NORMAL
 	armor_type = /datum/armor/hooded_hostile_environment
 
@@ -318,22 +323,20 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH
 	actions_types = list()
-	greyscale_colors = "#4d4d4d#808080#ff3300"
-	greyscale_config = /datum/greyscale_config/heck_helmet
-	greyscale_config_worn = /datum/greyscale_config/heck_helmet/worn
+
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	AddComponent(/datum/component/butchering/wearable, \
-	speed = 0.5 SECONDS, \
-	effectiveness = 150, \
-	bonus_modifier = 0, \
-	butcher_sound = null, \
-	disabled = null, \
-	can_be_blunt = TRUE, \
-	butcher_callback = CALLBACK(src, PROC_REF(consume)), \
+		speed = 0.5 SECONDS, \
+		effectiveness = 150, \
+		bonus_modifier = 0, \
+		butcher_sound = null, \
+		disabled = null, \
+		can_be_blunt = TRUE, \
+		butcher_callback = CALLBACK(src, PROC_REF(consume)), \
 	)
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/gags_recolorable)
@@ -726,7 +729,7 @@
 	user.stamina.adjust(-roll_stamcost)
 	user.Immobilize(0.8 SECONDS) // you dont get to adjust your roll
 	user.throw_at(where_to, range = roll_range, speed = 2, force = MOVE_FORCE_NORMAL, spin = roll_orientation)
-	playsound(user, 'monkestation/sound/effects/body-armor-rolling.ogg', 50, FALSE)
+	playsound(user, 'sound/effects/body-armor-rolling.ogg', 50, FALSE)
 	return ..()
 
 /*

@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(valid_cryopods)
 /obj/machinery/computer/cryopod
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
-	icon = 'monkestation/icons/obj/cryogenics.dmi'
+	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cellconsole_1"
 	icon_keyboard = null
 	icon_screen = null
@@ -138,7 +138,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
 	desc = "Suited for Cyborgs and Humanoids, the pod is a safe place for personnel affected by the Space Sleep Disorder to get some rest."
-	icon = 'monkestation/icons/obj/cryogenics.dmi'
+	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cryopod-open"
 	base_icon_state = "cryopod"
 	use_power = FALSE
@@ -692,7 +692,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	else
 		visible_message(span_infoplain("[user] starts putting [dropped] into the cryo pod."))
 
-	to_chat(dropped, span_warning("<b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"))
+	to_chat(dropped, span_warning("<b>If you ghost, log out or close your client now, your character will shortly be temporarily removed from the round. You may awaken from cryosleep by dragging yourself back into the cryopod after 15 minutes have passed.</b>"))
 
 	log_admin("[key_name(dropped)] entered a stasis pod.")
 	message_admins("[key_name_admin(dropped)] entered a stasis pod. [ADMIN_JMP(src)]")

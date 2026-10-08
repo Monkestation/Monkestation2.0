@@ -10,7 +10,7 @@
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/shotgunpump.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
@@ -131,7 +131,11 @@
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
+
 // Automatic Shotguns//
+/obj/item/gun/ballistic/shotgun/automatic
+	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/shotgun_shell_insert.ogg'
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
@@ -172,7 +176,6 @@
 	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
 	w_class = WEIGHT_CLASS_HUGE
-	semi_auto = TRUE
 	projectile_damage_multiplier = 1.2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
@@ -186,7 +189,7 @@
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 	name = "bounty cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubber shot/fire slug load."
-	//alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire   monkestation edit
+	alt_accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
@@ -202,7 +205,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
-	if(!chambered && magazine.contents.len)
+	if(!chambered && get_ammo())
 		rack()
 	else
 		toggle_tube(user)
@@ -243,6 +246,7 @@
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
+	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list()
 	mag_display = TRUE
@@ -513,7 +517,7 @@
 	desc = "Dear fucking god, what the fuck even is this!? Theres a green flag with a blue circle and a yellow diamond around it. Some text in the circle says: \"ORDEM E PROGRESSO.\""
 	icon_state = "shotgun_brazil"
 	slot_flags = NONE
-	icon = 'monkestation/icons/obj/guns/48x32guns.dmi'
+	icon = 'icons/obj/guns/48x32guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -524,9 +528,9 @@
 	unique_reskin = null
 	recoil = 5
 	weapon_weight = WEAPON_LIGHT
-	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
-	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
-	load_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	fire_sound = 'sound/weapons/gun/shotgun/quadfire.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/quadrack.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/quadinsert.ogg'
 	fire_sound_volume = 50
 	rack_sound_volume = 50
 	can_be_sawn_off = FALSE
@@ -554,38 +558,62 @@
 	death = 100
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/hundred
 
-
-//Mining autoshotgun!
-/obj/item/gun/ballistic/shotgun/autoshotgun
-	name = "20. Gauge Kinetic 'Fenrir' Auto Shotgun"
-	desc = "A fully automatic shotgun created using some spare polymer parts, procured from a undisclosed source. \
-	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \
-	20. Gauge shells, for sweeping up any unwanted fauna from a hostile environment."
+//auto shotgun parent
+/obj/item/gun/ballistic/shotgun/semiauto
+	name = "Semi-Auto Shotgun"
+	desc = "A semi-auto shotgun."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	inhand_icon_state = "protokshotgunauto"
-	worn_icon_state = "protokshotgunauto"
-	icon_state = "protokshotgunauto"
+	inhand_icon_state = "autoshotgun"
+	worn_icon_state = "autoshotgun"
+	icon_state = "autoshotgun"
 	slot_flags = ITEM_SLOT_BACK
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	burst_size = 1
 	fire_delay = 0
 	base_pixel_x = -2
 	pixel_x = -2
 	actions_types = list()
-	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_HEAVY
+	bolt_wording = "bolt"
 	mag_display = TRUE
-	empty_indicator = FALSE
-	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun
-	pin = /obj/item/firing_pin/wastes
-	bolt_type = BOLT_TYPE_STANDARD
+	casing_ejector = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/syndicate
+	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = TRUE
 	internal_magazine = FALSE
-	show_bolt_icon = FALSE
+	rack_sound = 'sound/weapons/gun/general/bolt_rack.ogg'
+
+//LEGALLY DISTINCT autoshotgun!
+/obj/item/gun/ballistic/shotgun/semiauto/syndicate
+	name = "Auto Shotgun"
+	desc = "A semi-automatic shotgun nicknamed the 'auto shotgun' by field agents. \
+	Compatible with 12 gauge shell magazines that hold 12 shots each."
+	projectile_wound_bonus = 15
+	special_mags = TRUE
+	tac_reloads = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/syndicate
+	show_bolt_icon = TRUE
+	can_suppress = TRUE
+	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
+	pbk_gentle = FALSE
+
+//Mining autoshotgun!
+/obj/item/gun/ballistic/shotgun/semiauto/kinetic
+	name = "20. Gauge Kinetic 'Fenrir' Auto Shotgun"
+	desc = "A fully automatic shotgun created using some spare polymer parts, procured from a undisclosed source. \
+	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \
+	20. Gauge shells, for sweeping up any unwanted fauna from a hostile environment."
+	inhand_icon_state = "protokshotgunauto"
+	worn_icon_state = "protokshotgunauto"
+	icon_state = "protokshotgunauto"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/kinetic
+	pin = /obj/item/firing_pin/wastes
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	pb_knockback = 0
-
+	show_bolt_icon = FALSE
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic
 	name = "Kinetic 'Slayer' Boomstick"

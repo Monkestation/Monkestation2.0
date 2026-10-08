@@ -1,7 +1,7 @@
 /obj/item/air_refresher
 	name = "air refresher"
 	desc = "A bottle packed with sickly strong fragrance, with an easy to use pressurized release nozzle."
-	icon = 'monkestation/icons/obj/air_refresher.dmi'
+	icon = 'icons/obj/air_refresher.dmi'
 	icon_state = "air_refresher"
 	inhand_icon_state = "cleaner"
 	worn_icon_state = "spraybottle"
@@ -36,7 +36,7 @@
 /obj/machinery/pollution_scrubber
 	name = "Pollution Scrubber"
 	desc = "A scrubber that will process the air and filter out any contaminants."
-	icon = 'monkestation/icons/obj/pollution_scrubber.dmi'
+	icon = 'icons/obj/pollution_scrubber.dmi'
 	icon_state = "scrubber"
 	var/scrub_amount = 2
 	var/on = FALSE

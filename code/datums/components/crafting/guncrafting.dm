@@ -60,6 +60,10 @@
 	name = "decloner part kit (lethal)"
 	desc = "An uttery baffling array of gun parts and technology that somehow turns a laser gun into a decloner. Haircut not included."
 
+/obj/item/weaponcrafting/gunkit/lasercannon
+	name = "laser cannon part kit (lethal)"
+	desc = "A suitcase containing the necessary gun parts to transform a standard laser gun into a laser cannon. Aim it carefully to avoid complaints from the crew."
+
 /obj/item/weaponcrafting/gunkit/ebow
 	name = "energy crossbow part kit (less lethal)"
 	desc = "Highly illegal weapons refurbishment kit that allows you to turn the standard proto-kinetic accelerator into a near-duplicate energy crossbow. Almost like the real thing!"

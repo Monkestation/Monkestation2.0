@@ -20,6 +20,7 @@
 		/obj/item/stack/sheet/titaniumglass = 2,
 		exotic_material = 2 // this needs to be refactored properly
 	)
+	pressure_resistance = 35
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()

@@ -143,6 +143,10 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
+	light_outer_range = 4
+	light_power = 1.4
+	light_color = LIGHT_COLOR_CYAN
+	light_on = TRUE
 
 /turf/open/indestructible/plating
 	icon_state = "plating"
@@ -331,6 +335,8 @@
 	if(lube & SLIDE_ICE)
 		// Ice slides only go 1 tile, this is so you will slip across ice until you reach a non-slip tile
 		slide_distance = 1
+	else if(lube & SUPER_DUPER_SLIDE)
+		slide_distance = 255
 	else if(HAS_TRAIT(slipper, TRAIT_CURSED))
 		// When cursed, all slips send you flying
 		lube |= SLIDE

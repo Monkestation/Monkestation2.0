@@ -18,6 +18,7 @@
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	density = FALSE
 	divable = FALSE
+	roundstart_anchor = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
 	var/pod_flags = NONE
 
@@ -139,13 +140,9 @@
 /obj/structure/closet/supplypod/deadmatch_missile
 	name = "cruise missile"
 	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
-	icon_state = "smissile"
-	decal = null
-	door = null
-	fin_mask = null
+	style = STYLE_RED_MISSILE
 	explosionSize = list(0,1,2,2)
 	effectShrapnel = TRUE
-	rubble_type = RUBBLE_THIN
 	specialised = TRUE
 	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.4 SECONDS)
 	effectMissile = TRUE

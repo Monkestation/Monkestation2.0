@@ -486,9 +486,9 @@
 
 /obj/item/nanite_injection_tentacle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!isliving(interacting_with))
+	if(!iscarbon(interacting_with))
 		return NONE
-	var/mob/living/guy_we_are_stabbing = interacting_with
+	var/mob/living/carbon/guy_we_are_stabbing = interacting_with
 	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(guy_we_are_stabbing))
 		guy_we_are_stabbing.balloon_alert(user, "incompatible")
 		return ITEM_INTERACT_BLOCKING
@@ -510,7 +510,7 @@
 			return
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
-		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.spray_blood(guy_we_are_stabbing.dir)
 		guy_we_are_stabbing.visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
@@ -519,7 +519,7 @@
 			return
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
-		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.spray_blood(guy_we_are_stabbing.dir)
 		guy_we_are_stabbing.visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))

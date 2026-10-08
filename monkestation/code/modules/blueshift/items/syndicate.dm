@@ -29,9 +29,6 @@
 /obj/item/clothing/suit/jacket/det_suit/noir/armoured
 	armor_type = /datum/armor/heister
 
-/obj/item/clothing/head/frenchberet/armoured
-	armor_type = /datum/armor/cosmetic_sec
-
 /obj/item/clothing/under/suit/black/armoured
 	armor_type = /datum/armor/clothing_under/syndicate
 
@@ -195,7 +192,7 @@
 /obj/item/antag_granter/clock_cultist
 	name = "brass contraption"
 	desc = "A cogwheel-shaped device of brass, with a glass lens floating, suspended in the center."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "vanguard_cogwheel"
 	antag_datum = /datum/antagonist/clock_cultist/solo
 	user_message = "A whirring fills your ears as <span class='brass'>knowledge of His Eminence fills your mind</span>."

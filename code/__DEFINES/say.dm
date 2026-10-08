@@ -115,6 +115,8 @@
 #define MAX_LABEL_LEN 64
 #define MAX_DESC_LEN 280
 #define MAX_AAS_LENGTH 168
+//Editing this will cause UI issues unless you also edit the CrimeWatcher.tsx UI.
+#define MAX_CRIME_NAME_LEN 39
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
@@ -124,4 +126,4 @@
 
 //Used in visible_message_flags, audible_message_flags and runechat_flags
 #define EMOTE_MESSAGE (1<<0)
-#define LOOC_MESSAGE (1<<1) //monke: looc
+#define LOOC_MESSAGE (1<<1)

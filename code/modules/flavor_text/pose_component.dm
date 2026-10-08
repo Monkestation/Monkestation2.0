@@ -5,7 +5,7 @@
 	var/pose_text
 
 	var/static/mutable_appearance/pose_overlay = mutable_appearance(
-		'monkestation/icons/misc/temporary_flavor_text_indicator.dmi',
+		'icons/misc/temporary_flavor_text_indicator.dmi',
 		"flavor",
 		FLY_LAYER,
 		appearance_flags = (APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART),
@@ -57,10 +57,7 @@
 	qdel(src)
 
 /// Verb that lets you set temporary pose / examine text.
-/mob/living/verb/set_examine()
-	set category = "IC"
-	set name = "Set Examine Text"
-	set desc = "Sets temporary text shown to people on examine. Can be used to pose your character, describe an injury, or anything you can think of."
+GAME_VERB_DESC(/mob/living, set_examine, "Set Examine Text", "Sets temporary text shown to people on examine. Can be used to pose your character, describe an injury, or anything you can think of.", "IC")
 
 	if(stat == DEAD || HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		to_chat(usr, span_warning("You can't do this right now!"))

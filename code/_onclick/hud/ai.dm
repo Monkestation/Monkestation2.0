@@ -11,7 +11,8 @@
 	icon_state = "ai_core"
 
 /atom/movable/screen/ai/aicore/Click()
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.view_core()
@@ -77,6 +78,17 @@
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.ai_roster()
+
+/atom/movable/screen/ai/dashboard
+	name = "Processing Dashboard"
+	icon_state = "dashboard"
+
+/atom/movable/screen/ai/dashboard/Click()
+	. = ..()
+	if(.)
+		return
+	var/mob/living/silicon/ai/AI = usr
+	AI.dashboard.ui_interact(AI)
 
 /atom/movable/screen/ai/alerts
 	name = "Show Alerts"
@@ -192,6 +204,11 @@
 //AI core
 	using = new /atom/movable/screen/ai/aicore(null, src)
 	using.screen_loc = ui_ai_core
+	static_inventory += using
+
+//Dashboard
+	using = new /atom/movable/screen/ai/dashboard(null, src)
+	using.screen_loc = ui_ai_dashboard
 	static_inventory += using
 
 //Camera list

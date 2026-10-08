@@ -5,16 +5,6 @@ The original authors are: cogwerks, pistoleer, spyguy, angriestibm, marquesas, a
 If you make a derivative work from this code, you must include this notification header alongside it.
 */
 
-/mob/living/proc/wrestling_help()
-	set name = "Recall Teachings"
-	set desc = "Remember how to wrestle."
-	set category = "Wrestling"
-
-	to_chat(usr, "<b><i>You flex your muscles and have a revelation...</i></b>")
-	to_chat(usr, "[span_notice("Clinch")]: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful.")
-	to_chat(usr, "[span_notice("Suplex")]: Shove someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor.")
-	to_chat(usr, "[span_notice("Advanced grab")]: Grab. Passively causes stamina damage when grabbing someone.")
-
 /datum/martial_art/wrestling
 	name = "Wrestling"
 	id = MARTIALART_WRESTLING
@@ -53,7 +43,7 @@ If you make a derivative work from this code, you must include this notification
 /datum/action/wrestle_slam
 	name = "Slam (Cinch)"
 	desc = "Slam a grappled opponent into the floor." //Monkestation Edit: Moves description from name to desc
-	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon = 'icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_slam"
 
 /datum/action/wrestle_slam/Trigger(trigger_flags)
@@ -66,7 +56,7 @@ If you make a derivative work from this code, you must include this notification
 /datum/action/wrestle_throw
 	name = "Throw (Cinch)"
 	desc = "Spin a cinched opponent around and throw them." //Monkestation Edit: adds desc
-	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon = 'icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_throw"
 
 /datum/action/wrestle_throw/Trigger(trigger_flags)
@@ -79,7 +69,7 @@ If you make a derivative work from this code, you must include this notification
 /datum/action/wrestle_kick
 	name = "Kick"
 	desc = "A powerful kick, sends people flying away from you. Also useful for escaping from bad situations." //Monkestation Edit: adds desc
-	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon = 'icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_kick"
 
 /datum/action/wrestle_kick/Trigger(trigger_flags)
@@ -92,7 +82,7 @@ If you make a derivative work from this code, you must include this notification
 /datum/action/wrestle_strike
 	name = "Strike"
 	desc = "Hit a neaby opponent with a quick attack." //Monkestation Edit: adds desc
-	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon = 'icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_strike"
 
 /datum/action/wrestle_strike/Trigger(trigger_flags)
@@ -105,7 +95,7 @@ If you make a derivative work from this code, you must include this notification
 /datum/action/wrestle_drop
 	name = "Drop"
 	desc = "Smash down onto an opponent." //Monkestation Edit: adds desc
-	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon = 'icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_drop"
 
 /datum/action/wrestle_drop/Trigger(trigger_flags)

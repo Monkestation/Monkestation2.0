@@ -127,7 +127,7 @@
 		return
 	var/datum/reagents/extra_reagents = new()
 	extra_reagents.add_reagent(pick(extra_ingredients), amount_added)
-	extra_reagents.trans_to(human, amount_added, transfered_by = src, methods = INJECT)
+	extra_reagents.trans_to(human, amount_added, transferred_by = src, methods = INJECT)
 	if (prob(20))
 		to_chat(human, span_warning("As you take a sip, you feel something bubbling in your stomach..."))
 
@@ -264,8 +264,7 @@
 	breather.emote("cough");
 	var/chosen_gas = pick_weight(gas_types)
 	var/datum/gas_mixture/mix_to_spawn = new()
-	mix_to_spawn.add_gas(pick(chosen_gas))
-	mix_to_spawn.gases[chosen_gas][MOLES] = gas_amount
+	mix_to_spawn.adjust_gas(pick(chosen_gas), gas_amount)
 	mix_to_spawn.temperature = breather.bodytemperature
 	log_atmos("[owner] coughed some gas into the air due to their corrupted lungs.", mix_to_spawn)
 	var/turf/open/our_turf = get_turf(breather)

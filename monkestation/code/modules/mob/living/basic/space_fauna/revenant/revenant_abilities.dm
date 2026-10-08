@@ -31,11 +31,11 @@
 	for(var/obj/structure/spacevine/vine in victim) //Fucking with botanists, the ability.
 		vine.add_atom_colour(COLOR_REVENANT_PLANTBLIGHT, TEMPORARY_COLOUR_PRIORITY)
 		new /obj/effect/temp_visual/revenant(vine.loc)
-		QDEL_IN(vine, 1 SECOND)
+		QDEL_IN(vine, 1 SECONDS)
 	for(var/obj/structure/glowshroom/shroom in victim)
 		shroom.add_atom_colour(COLOR_REVENANT_PLANTBLIGHT, TEMPORARY_COLOUR_PRIORITY)
 		new /obj/effect/temp_visual/revenant(shroom.loc)
-		QDEL_IN(shroom, 1 SECOND)
+		QDEL_IN(shroom, 1 SECONDS)
 	for(var/atom/movable/tray in victim)
 		if(!tray.GetComponent(/datum/component/plant_growing))
 			continue

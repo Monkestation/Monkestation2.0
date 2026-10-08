@@ -19,7 +19,7 @@
 		param = copytext(act, custom_param + length(act[custom_param]))
 		act = copytext(act, 1, custom_param)
 
-	act = lowertext(act)
+	act = LOWER_TEXT(act)
 
 	//MONKESTATION EDIT START
 	// not a fan of this but I don't think there's a less hacky way to do it without changing how emotes work
