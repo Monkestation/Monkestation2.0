@@ -269,3 +269,6 @@
 
 /// From /datum/component/edible/get_perceived_food_quality(): (datum/component/edible/edible, list/extra_quality)
 #define COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY "get_perceived_food_quality"
+
+/// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
+#define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"

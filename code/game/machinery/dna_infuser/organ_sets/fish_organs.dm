@@ -194,6 +194,7 @@
 	. = ..()
 	owner.AddElementTrait(TRAIT_WADDLING, type, /datum/element/waddling)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_location))
+	RegisterSignal(owner, COMSIG_LIVING_GIBBER_ACT, PROC_REF(on_gibber_processed))
 	check_location(owner, null)
 
 /obj/item/organ/external/tail/fish/on_remove(mob/living/carbon/owner, special)
@@ -201,7 +202,12 @@
 	REMOVE_TRAIT(owner, TRAIT_WADDLING, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water)
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_GIBBER_ACT))
+
+/obj/item/organ/external/tail/fish/proc/on_gibber_processed(mob/living/carbon/owner, mob/living/user, obj/machinery/gibber, list/results)
+	SIGNAL_HANDLER
+	for(var/iteration in 1 to fillet_amount * 0.5)
+		results += new fillet_type
 
 /obj/item/organ/external/tail/fish/proc/check_location(mob/living/carbon/source, atom/movable/old_loc, dir, forced)
 	SIGNAL_HANDLER
