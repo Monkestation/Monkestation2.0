@@ -310,6 +310,8 @@
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
 			return FALSE
+	else if(istype(target, /obj/item/fish)) // fish aren't edible here like on tg, so let them in directly for the fish infusion
+		return TRUE
 	else if(food_comp)
 		if(!(food_comp.foodtypes & GORE))
 			balloon_alert(user, "only creatures!")
