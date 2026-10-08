@@ -40,11 +40,11 @@
 			if(entry.purchasable_from & UPLINK_CONTRACTORS) purchasable_keys += "\[\[contractors\]\]"
 
 			if(entry.restricted_roles)
-				for (var/lock as anything in entry.restricted_roles)
-					purchasable_keys += "\[\[[initial(lock)]\]\]"
+				for (var/lock in entry.restricted_roles)
+					purchasable_keys += "\[\[[lock]\]\]"
 			if(entry.restricted_species)
-				for (var/lock as anything in entry.restricted_species)
-					purchasable_keys += "\[\[[initial(lock)]\]\]"
+				for (var/lock in entry.restricted_species)
+					purchasable_keys += "\[\[[lock]\]\]"
 
 			if(purchasable_keys)
 				purchasable_by = purchasable_keys.Join(", ")
@@ -58,7 +58,7 @@
 				"icon" = "autowiki-[filename].png",
 				"name" = escape_value(entry.name),
 				"desc" = escape_value(entry.desc),
-				"cost" = entry.cost_override_string ? entry.cost_override_string : "[initial(entry.cost)] TC",
+				"cost" = entry.cost_override_string ? entry.cost_override_string : "[entry.cost] TC",
 				"purchasable_by" = escape_value(purchasable_by),
 				"notes" = escape_value("[entry.limited_stock!=-1 ? "Limited stock of [entry.limited_stock]. " : ""][entry.illegal_tech ? "" : "Not eligible for illegal technology. "][entry.lock_other_purchases ? "locks all item purchases<br>" : ""]")
 			)) + "|-"
