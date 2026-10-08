@@ -1,0 +1,6144 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"an" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/west{
+	name = "centcom intercom";
+	desc = "A secure CentCom intercom linked directly to the station's frequencies. Intended for matters important enough to warrant skipping the paperwork.";
+	pixel_x = -33;
+	pixel_y = 4;
+	freerange = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"aB" = (
+/obj/machinery/vending/cigarette{
+	extended_inventory = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"aM" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"aY" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Medbay"
+	},
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"bv" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"by" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "bar"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"bz" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/structure/cable,
+/obj/item/wrench/medical,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"bE" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"bH" = (
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"bX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/grandfatherclock{
+	pixel_y = 15
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"bY" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/west{
+	name = "Relay Door Lock";
+	id = "ccpost_relaychamb";
+	req_access = list("nt_rep");
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"ca" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/space)
+"cg" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/surgery{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"ci" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"ck" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"cm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck{
+	pixel_y = 12;
+	pixel_x = -6
+	},
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/machinery/status_display/evac/directional/east,
+/obj/item/toy/figure/dsquad{
+	pixel_x = -7
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"cv" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -6;
+	pixel_y = 6;
+	layer = 4
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/machinery/duct,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"cw" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/iv_drip,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"cx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/closet/secure_closet/centcom_liaison,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"cG" = (
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/structure/sign/delam_procedure/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"cN" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table/reinforced,
+/obj/structure/sign/departments/exam_room/directional/south,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -6;
+	pixel_y = 6;
+	layer = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"cR" = (
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"da" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/ruin/space/has_grav/ccpost/quarters)
+"di" = (
+/obj/structure/cable,
+/obj/machinery/power/tracker,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/solars/ccpost/solars)
+"do" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/rack,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/multitool{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/airlock_painter/decal,
+/obj/item/crowbar,
+/obj/item/stack/cable_coil{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/flashlight,
+/obj/machinery/light/small/directional/south,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"dL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/hedge,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"dM" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"dQ" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_y = 7
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"dV" = (
+/obj/structure/table/wood,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"el" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"em" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/ccpost/commsroom)
+"et" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"ev" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"ez" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"eP" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "Communications Chamber";
+	dir = 4;
+	id_tag = "ccpost_comms"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"eS" = (
+/mob/living/basic/bot/medbot/autopatrol{
+	req_one_access = list("nt_rep")
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"eV" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"fa" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"fe" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"fh" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"fm" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
+/turf/open/floor/circuit/green/anim,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"fn" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"fF" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"fH" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"fI" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 5
+	},
+/obj/item/lighter{
+	pixel_x = 11;
+	pixel_y = -7
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"fK" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"fO" = (
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"fT" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"fW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"fY" = (
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/structure/flora/bush/flowers_yw/style_2,
+/obj/structure/railing,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"ga" = (
+/obj/effect/turf_decal/siding/dark/end,
+/obj/structure/closet/radiation,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/engineering)
+"gd" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"gf" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"gg" = (
+/obj/structure/billboard/nanotrasen,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"gl" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/vending/medical/syndicate_access,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"go" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Liaison Office";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/office)
+"gt" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"gx" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"gE" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/machinery/photocopier/gratis{
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"gH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"gK" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"gP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"he" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"hf" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "Engineering Foyer"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/engineering)
+"hg" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"hi" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_y = 3
+	},
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"hj" = (
+/obj/structure/curtain,
+/obj/machinery/shower/directional/north,
+/obj/item/soap/deluxe/centcom,
+/obj/structure/drain,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/ccpost/quarters)
+"hn" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"hr" = (
+/obj/structure/bed,
+/obj/item/bedsheet/centcom,
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/mob_spawn/ghost_role/human/ccpost/centcom_liaison{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/space/has_grav/ccpost/quarters)
+"hG" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"hK" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/computer/records/pathology{
+	dir = 8;
+	req_one_access = list("nt_rep")
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"hL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/north{
+	id = "ccpost_privone";
+	name = "Quarters Door Lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	req_access = list("nt_rep")
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"hO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"hP" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Outpost Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/duct,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"hQ" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"hS" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"ig" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"in" = (
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/structure/flora/bush/flowers_br/style_2,
+/obj/machinery/camera/autoname/directional/north{
+	c_tag = "CC Liaison Outpost - Breakroom";
+	network = list("ccpost")
+	},
+/obj/structure/sign/poster/official/pda_ad/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"ip" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"iA" = (
+/obj/structure/table_frame,
+/obj/item/stack/sheet/iron,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"iC" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/item/taperecorder{
+	layer = 5
+	},
+/obj/item/tape{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/obj/item/tape{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"iG" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/hedge,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"iS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"iU" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/east{
+	id = "ccpost_comms";
+	name = "Communications Doors Control";
+	req_access = list("nt_rep");
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/circuit/green/anim,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"iW" = (
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"jb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"jg" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "ccpost_entrance"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
+"jj" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "outpostsolar"
+	},
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/solars/ccpost/solars)
+"jm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/corner,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"jn" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"js" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"jv" = (
+/obj/structure/hedge,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"jy" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"jD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/ruin/space/has_grav/ccpost/office)
+"jE" = (
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/water;
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"jI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"jT" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/sign/departments/medbay/alt/directional/east,
+/obj/structure/hedge,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"ka" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"kb" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/storage/box/donkpockets{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"kd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fireaxecabinet/directional/south{
+	req_access = list("nt_rep")
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"ke" = (
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Lobby"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"kf" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"kg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"ki" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/obj/machinery/door/airlock/command/ce/glass{
+	name = "Relay Chamber";
+	id_tag = "ccpost_relaychamb"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"kk" = (
+/obj/structure/flora/bush/flowers_br/style_2,
+/obj/structure/railing,
+/turf/open/floor/grass,
+/area/space)
+"kt" = (
+/obj/structure/railing/wood{
+	dir = 1
+	},
+/obj/structure/flora/biolumi/mine/weaklight,
+/obj/machinery/light/directional/south,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/ccpost/medbay)
+"kz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"kA" = (
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/space)
+"kM" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/lime,
+/turf/template_noop,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"kP" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"lc" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/structure/flora/bush/flowers_br/style_2,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/ccpost/medbay)
+"lj" = (
+/obj/structure/closet/crate/bin,
+/obj/item/storage/bag/trash,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"ll" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/desk_bell{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"lu" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"lw" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"lx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"lD" = (
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/item/paper_bin{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/obj/item/pen/fountain{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"lF" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"lK" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/item/radio/intercom/directional/north{
+	frequency = 1337;
+	desc = "A secure CentCom intercom linked directly to Central Command. Every word spoken through it is expected to reach someone important.";
+	name = "centcom intercom";
+	freqlock = 1;
+	freerange = 1
+	},
+/turf/open/floor/circuit,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"ma" = (
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/east,
+/obj/structure/hedge,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "CC Liaison Outpost - Office";
+	network = list("ccpost")
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"mb" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/turf_decal/delivery,
+/obj/structure/sign/warning/electric_shock/directional/west,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"mc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"mf" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"mh" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/end,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/engineering)
+"mj" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/ruin/space/solars/ccpost/solars)
+"mn" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/small/directional/east,
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"mC" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/west,
+/obj/structure/sign/poster/official/obey/directional/north,
+/turf/open/floor/circuit/green/anim,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"mD" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"mN" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/defibrillator_mount/loaded/directional/east,
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"mQ" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"na" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"ni" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"no" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/hedge,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"nu" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ss13","ccpost");
+	c_tag = "CC Liaison Outpost - Comms Chamber"
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"nB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/machinery/photocopier/gratis{
+	pixel_y = -3
+	},
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"nJ" = (
+/obj/structure/dresser,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/space/has_grav/ccpost/quarters)
+"nM" = (
+/obj/structure/lattice,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space/solars/ccpost/solars)
+"ob" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"om" = (
+/obj/structure/flora/tree/jungle/small/style_2,
+/turf/open/floor/grass,
+/area/space)
+"ot" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"ou" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/structure/table/optable{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"oz" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/hedge,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"oE" = (
+/obj/machinery/atmospherics/components/tank/air{
+	piping_layer = 4;
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"oK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/noticeboard/directional/east,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"oL" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"oQ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/medbay)
+"oX" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"pa" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"pA" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"pF" = (
+/obj/structure/sign/poster/contraband/c20r/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"pI" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"pJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"pK" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 30
+	},
+/obj/item/stack/rods/ten,
+/obj/item/stack/sheet/glass/fifty,
+/obj/structure/sign/departments/maint/alt/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"pO" = (
+/obj/machinery/vending/autodrobe/all_access,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"qa" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/photocopier/gratis{
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/obj/item/radio/intercom/directional/east{
+	frequency = 1357;
+	name = "engineering intercom";
+	desc = "A secure CentCom intercom linked directly to the station's engineering department frequency. Intended for matters important enough to warrant skipping the paperwork.";
+	freqlock = 1;
+	freerange = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"qg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"qk" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/item/paper_bin{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/item/pen/fountain{
+	pixel_y = 6;
+	pixel_x = 3
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/table/reinforced,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"qo" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"qr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/sink/kitchen/directional/east,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"qy" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/plate/small{
+	dir = 4;
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/food/pizzaslice/donkpocket{
+	pixel_y = 11;
+	pixel_x = -2
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"qA" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"qC" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"qD" = (
+/obj/structure/chair/sofa/corp,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/north,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"qR" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/box,
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/engineering)
+"rf" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/ccpost/quarters)
+"rg" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Liaison Communications";
+	dir = 4;
+	id_tag = "ccpost_comms"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"rh" = (
+/obj/structure/sink/directional/west,
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/ccpost/quarters)
+"rn" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"rq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/public{
+	dir = 4;
+	name = "Cafeteria Storeroom"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"rs" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"rx" = (
+/obj/machinery/light/floor/has_bulb{
+	pixel_y = -13
+	},
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"rV" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"rY" = (
+/obj/item/flashlight/lamp/green{
+	pixel_y = 11;
+	pixel_x = 6;
+	light_on = 1
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 2;
+	pixel_x = -6;
+	layer = 5
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_x = -4;
+	pixel_y = 14;
+	layer = 4
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/space/has_grav/ccpost/quarters)
+"sc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/south{
+	name = "Quarters Door Lock";
+	id = "ccpost_privtwo";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	req_access = list("nt_rep")
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"sh" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "Exterior: Northwest";
+	network = list("ccpost")
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"sm" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Liaison Boardroom"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"sr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"sy" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/lobby)
+"sK" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/door/airlock/public/glass{
+	name = "Cafeteria";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"sL" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/item/clipboard{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/structure/table/reinforced,
+/obj/item/folder/white{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/structure/sign/poster/official/periodic_table/directional/north,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"sX" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/photocopier/gratis{
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted,
+/obj/machinery/light/directional/east,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"sY" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"tb" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"ti" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"tl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"tp" = (
+/obj/effect/area_lighting_helper,
+/turf/open/floor/circuit/green/anim,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"tr" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "ccpost_entrance"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
+"tF" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"tI" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/obj/machinery/telecomms/relay/preset/ruskie{
+	name = "CentCom Liaison Relay";
+	id = "CentCom Liaison Relay"
+	},
+/obj/structure/cable,
+/obj/structure/sign/flag/nanotrasen/directional/west,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/circuit,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"tL" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"tQ" = (
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/computer/apc_control{
+	dir = 4;
+	req_access = list("nt_rep")
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"uf" = (
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 1
+	},
+/obj/item/paper_bin{
+	pixel_y = 4;
+	pixel_x = -4
+	},
+/obj/item/pen/fountain{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/table/reinforced,
+/obj/item/stamp/denied{
+	layer = 5;
+	pixel_y = 1;
+	pixel_x = 9
+	},
+/obj/item/stamp/granted{
+	pixel_x = 9;
+	layer = 4;
+	pixel_y = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"ug" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"ul" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"uL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/green,
+/area/ruin/space/has_grav/ccpost/quarters)
+"uN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/curtain/bounty/start_closed,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/stairs{
+	icon_state = "stairs_wood";
+	icon = 'icons/obj/stairs.dmi';
+	dir = 8
+	},
+/area/ruin/space/has_grav/ccpost/quarters)
+"uU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"va" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"vl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"vn" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/warning/doors/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
+"vr" = (
+/obj/structure/cable,
+/obj/machinery/power/solar_control{
+	dir = 1;
+	id = "outpostsolar";
+	name = "Station Solar Control"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"vv" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"vy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"vU" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"wg" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"wj" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"wk" = (
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/circuitboard/computer/powermonitor{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/circuitboard/computer/powermonitor{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/bot,
+/obj/item/stack/cable_coil{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"wl" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "Breakroom";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"ws" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"wv" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Liaison Quarters";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/quarters)
+"wz" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"wE" = (
+/obj/structure/flora/bush/flowers_yw/style_2,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/space)
+"wF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/departments/engineering/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Central Hallway South"
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"wZ" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/neck/tie/bunnytie/centcom,
+/obj/item/clothing/under/costume/playbunny/centcom,
+/obj/item/clothing/shoes/heels/centcom,
+/obj/item/lipstick/random,
+/obj/item/clothing/suit/jacket/tailcoat/centcom,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"xj" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"xA" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"xG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/reagent_dispensers/water_cooler{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"xK" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/fax/messageadmins{
+	fax_name = "Central Command Liaison Office";
+	pixel_y = 4;
+	visible_to_network = 0
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/obj/structure/table/reinforced,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"xP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/centcom{
+	name = "Private Quarter #2";
+	dir = 4;
+	id_tag = "ccpost_privtwo"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/quarters)
+"yn" = (
+/turf/template_noop,
+/area/template_noop)
+"yo" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"yp" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"yw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/high_class_martini/directional/west,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Cafeteria Bar"
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"yI" = (
+/obj/machinery/washing_machine,
+/obj/machinery/button/door/directional/west{
+	name = "Restroom Door Lock";
+	id = "ccpost_bathroom";
+	req_access = list("nt_rep");
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/ccpost/quarters)
+"yK" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"yM" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/item/storage/bag/trash,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"yQ" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"yS" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "Engineering"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/engineering)
+"za" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_y = 11;
+	pixel_x = 9
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"zd" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"zo" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"zp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"zy" = (
+/obj/structure/chair/sofa/corp/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"zA" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"zG" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"zR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"zS" = (
+/obj/structure/chair/sofa/corp{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"zT" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/cerulean,
+/turf/template_noop,
+/area/ruin/space/solars/ccpost/solars)
+"zV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/hedge,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"zW" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/duct,
+/obj/machinery/camera/autoname/directional/north{
+	c_tag = "CC Liaison Outpost - Engineering";
+	network = list("ccpost")
+	},
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Ar" = (
+/obj/structure/sink/kitchen/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Az" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/toy/figure/syndie{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/obj/item/toy/balloon/syndicate{
+	pixel_y = 3;
+	pixel_x = 4;
+	layer = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/syndibunny{
+	pixel_y = -3;
+	pixel_x = -6
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"AF" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Bc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"Bu" = (
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/space)
+"BA" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/circuit/green/anim,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"BG" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"BJ" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"BM" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/office)
+"BQ" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"BZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"Cc" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 4;
+	networks = list("ss13","ccpost")
+	},
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"Ci" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Co" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Cp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/machinery/modular_computer/preset/civilian,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"Cu" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"CM" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sink/kitchen/directional/east,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"CN" = (
+/obj/machinery/vending/imported,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"Dk" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Do" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
+"Dz" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"DD" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"DF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"DK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"DT" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Ei" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"El" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Ev" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
+"Ew" = (
+/obj/structure/closet/crate,
+/obj/item/vending_refill/boozeomat,
+/obj/item/vending_refill/cola,
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/snack{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"EE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"EN" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"EO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"EV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"EW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"EY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"Fb" = (
+/obj/machinery/nuclearbomb/beer,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Ff" = (
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/clipboard{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/folder/yellow{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"Fi" = (
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/weldingtool/largetank,
+/obj/item/clothing/head/utility/welding,
+/obj/item/stack/cable_coil{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Fj" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Fk" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/item/taperecorder,
+/obj/structure/table/reinforced,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"Fu" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Fv" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"Fw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"FE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"FL" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"FN" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"FY" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"Ge" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/bedsheet/medical{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Gj" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Gk" = (
+/obj/machinery/power/smes/super/full,
+/obj/structure/cable,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Go" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Gq" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Gv" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Gy" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/storage/box/coffeepack{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/machinery/newscaster/directional/south,
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_y = -1;
+	pixel_x = 10
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"Gz" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/area_lighting_helper,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"GA" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"GB" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/entertainment/toy_figure,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"GN" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"GU" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"GX" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/personal/patient,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"GZ" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Cafeteria Storeroom";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/duct,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Hb" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"He" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 1;
+	pixel_y = 6;
+	network = list("ccpost")
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Hk" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Hp" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/cryo_cell,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Hq" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Hr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/enlist/directional/west,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Living Quarters"
+	},
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"Hs" = (
+/obj/structure/chair/sofa/corp/right,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"Hv" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Hy" = (
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
+/obj/item/stamp/centcom{
+	pixel_x = -6;
+	layer = 6
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"HE" = (
+/obj/effect/turf_decal/stripes/asteroid/corner,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"HF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"HG" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "Exterior: Southwest";
+	network = list("ccpost")
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"HH" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"HL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"HP" = (
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"HX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Id" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/closet/secure_closet/centcom_liaison,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"Ie" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"If" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/cerulean,
+/turf/template_noop,
+/area/template_noop)
+"Ij" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Io" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/floor/grass,
+/area/space)
+"Iz" = (
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"ID" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"IL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"IP" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Engineering Foyer"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"IW" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/cerulean,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "Exterior: Airlock Access"
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"IZ" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"Jo" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Jy" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Liaison Boardroom";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"JE" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "Medbay";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Kq" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/north{
+	id = "ccpost_entrance";
+	name = "Airlock Doors Lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	req_access = list("nt_rep");
+	pixel_y = 31;
+	pixel_x = 6
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/lobby)
+"KE" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"KG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/medbay)
+"KL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/maint{
+	dir = 4
+	},
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"KN" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/ccpost/office)
+"Lb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Lg" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/plumbed{
+	name = "CentCom Ceritified Drinking Water";
+	desc = "Independently reviewed by Central Command's Internal Quality Assurance Division. Any unusual taste, odor, discoloration, or aftereffects fall within approved operational tolerances."
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Ln" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/ccpost/office)
+"Lp" = (
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"Lv" = (
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"LA" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"LD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/sign/departments/restroom/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"LF" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"LH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
+/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"LL" = (
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_x = -4;
+	pixel_y = 14;
+	layer = 4
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 11;
+	pixel_x = 6;
+	light_on = 1
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 2;
+	pixel_x = -6;
+	layer = 5
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/space/has_grav/ccpost/quarters)
+"LT" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/machinery/light/floor/has_bulb{
+	pixel_y = -13
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"LW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/medbay)
+"LX" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"Ma" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "CC Liaison Outpost - Central Hallway North";
+	network = list("ccpost")
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Mg" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/vending_refill/donksoft,
+/obj/item/flashlight,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Mk" = (
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/floor/grass,
+/area/space)
+"Mt" = (
+/obj/structure/toilet{
+	pixel_y = 18
+	},
+/obj/structure/curtain,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/ccpost/quarters)
+"MB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/departments/engineering/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"MH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/centcom{
+	name = "Private Quarter #1";
+	dir = 4;
+	id_tag = "ccpost_privone"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/quarters)
+"MJ" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "Exterior: North"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"ML" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ccpost");
+	c_tag = "Exterior: Northeast"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"MO" = (
+/obj/effect/decal/cleanable/shreds,
+/obj/item/grown/bananapeel,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"MX" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Nd" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/hedge,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Ne" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
+"Nj" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Nk" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"No" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/healthanalyzer/advanced,
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/hud/health,
+/obj/machinery/light/directional/east,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Nu" = (
+/turf/open/floor/iron/dark/corner,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Nw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/binary/valve/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/valve/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"NA" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"NM" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"NQ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"NY" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Oe" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
+"Of" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/ruin/space/solars/ccpost/solars)
+"Ok" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Ol" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"OC" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/computer/message_monitor,
+/obj/item/paper/monitorkey,
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"OE" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/ccpost/quarters)
+"OF" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/solars/ccpost/solars)
+"OG" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/item/clipboard{
+	pixel_x = 5
+	},
+/obj/item/paper/fluff/ruins/ccpost/transmission/assignment{
+	pixel_x = 5
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"ON" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"OP" = (
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"OU" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/centcom{
+	name = "Breakroom";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"Pa" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/mop,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/soap/deluxe/centcom,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Pd" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark,
+/obj/item/folder/red{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Pe" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Ph" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Pi" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Pn" = (
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Pp" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Pr" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/item/folder/white{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Px" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/quarters)
+"PC" = (
+/obj/structure/closet/crate/bin,
+/obj/item/storage/bag/trash,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"PM" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/lime,
+/turf/template_noop,
+/area/ruin/space/solars/ccpost/solars)
+"PV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"QB" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ccpost");
+	c_tag = "Exterior: Southeast"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"QG" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"QI" = (
+/obj/structure/filingcabinet/medical{
+	pixel_x = -10;
+	pixel_y = 0
+	},
+/obj/structure/filingcabinet/security{
+	pixel_x = 11;
+	pixel_y = 0
+	},
+/obj/structure/filingcabinet,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"QK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"QM" = (
+/obj/machinery/door/airlock/bathroom{
+	name = "Restroom";
+	id_tag = "ccpost_bathroom"
+	},
+/obj/machinery/duct,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/quarters)
+"QP" = (
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"QR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"QT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"QV" = (
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Outpost Maintenance";
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"QW" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"QZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Rd" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"Ri" = (
+/obj/structure/window/reinforced/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/machinery/computer/crew,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/north{
+	name = "medical intercom";
+	desc = "A secure CentCom intercom linked directly to the station's medical department frequency. Intended for matters important enough to warrant skipping the paperwork.";
+	frequency = 1355;
+	freqlock = 1;
+	freerange = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"Rl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Rm" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Rq" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Rs" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Ry" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Rz" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"RH" = (
+/obj/structure/chair/sofa/corp{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"RO" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Sd" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Sy" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Sz" = (
+/obj/item/paper_bin{
+	pixel_y = 2
+	},
+/obj/item/pen{
+	pixel_y = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/structure/table/reinforced,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"SD" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/food/chocolatebar,
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"SE" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Treatment Centre"
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"SK" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"SQ" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/south{
+	name = "centcom intercom";
+	freerange = 1;
+	desc = "A secure CentCom intercom linked directly to the station's frequencies. Intended for matters important enough to warrant skipping the paperwork."
+	},
+/turf/open/floor/circuit,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"Tc" = (
+/obj/machinery/vending/coffee{
+	extended_inventory = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Td" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Te" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Tm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Tp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 0
+	},
+/obj/structure/sign/departments/telecomms/directional/west,
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Tq" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Tw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"TB" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/breakroom)
+"TD" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"TJ" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/closet/secure_closet/medical3{
+	name = "Medical Kits locker";
+	locked = 0
+	},
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/advanced,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"TL" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/stripes/blue/full,
+/obj/structure/cable,
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/commsroom)
+"TU" = (
+/obj/structure/closet/crate/engineering/electrical,
+/obj/effect/turf_decal/stripes/line,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/box/lights/bulbs,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"TY" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/item/toy/cards/deck{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"TZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 0
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Ua" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/ash{
+	pixel_x = 12;
+	pixel_y = -6
+	},
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"Uh" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"UN" = (
+/obj/structure/closet/crate/bin,
+/obj/item/storage/bag/trash,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "CC Liaison Outpost - Cafeteria";
+	network = list("ccpost")
+	},
+/obj/effect/mapping_helpers/apc/full_charge,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"UP" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"US" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark/corner,
+/obj/item/paper_bin{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Vl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Vo" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/lime,
+/turf/template_noop,
+/area/template_noop)
+"Vs" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/effect/area_lighting_helper{
+	set_alpha = 140;
+	name = "area lighting helper maint"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"VA" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"VO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"VV" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"VZ" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Wa" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Wh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 0
+	},
+/obj/structure/sign/departments/telecomms/directional/west,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Wn" = (
+/turf/closed/wall/rock,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Ws" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/space)
+"Wv" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/sign/warning/no_smoking/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	c_tag = "CC Liaison Outpost - Treatment Centre";
+	network = list("ccpost")
+	},
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Wy" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/structure/flora/bush/flowers_yw/style_2,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/ccpost/medbay)
+"WC" = (
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 6;
+	pixel_x = 2
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/light/directional/south,
+/obj/structure/table/reinforced,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/office)
+"WG" = (
+/obj/machinery/pipedispenser,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/engineering)
+"WL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/area_lighting_helper{
+	set_alpha = 170
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"WT" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"WW" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Xa" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 1
+	},
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Xd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"Xf" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "CC Liaison Outpost - Boardroom";
+	network = list("ccpost")
+	},
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Xs" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Xt" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	pixel_y = -1;
+	pixel_x = 6;
+	name = "Outpost Panic Lockdown";
+	req_access = list("nt_rep");
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Xx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/table/wood,
+/obj/machinery/microwave{
+	pixel_y = 7
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"XB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/stock_parts/manipulator,
+/obj/item/circuitboard/machine/autolathe,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"XE" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/light/directional/north,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/centralhallway)
+"XJ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/warning/vacuum/directional/north,
+/obj/structure/closet/emcloset,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/structure/sign/poster/official/safety_internals/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
+"XW" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"Yc" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Yh" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/ccpost/boardroom)
+"Yv" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/door/window/left/directional/south{
+	name = "Recovery Room"
+	},
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Yw" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/has_grav/ccpost/office)
+"YG" = (
+/obj/effect/turf_decal/siding/dark/end,
+/obj/effect/turf_decal/box,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/engineering)
+"YS" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/item/folder/blue{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/boardroom)
+"YU" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"YX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/office)
+"Zb" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/ccpost/asteroid)
+"Zh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+"Zp" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/ccpost/medbay)
+"Zs" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/quarters)
+"ZF" = (
+/obj/machinery/vending/donksofttoyvendor,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"ZJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"ZM" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/space/has_grav/ccpost/engineering)
+"ZP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ccpost_lockdown"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"ZU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/maintenance)
+"ZW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/ccpost/cafeteria)
+
+(1,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+"}
+(2,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+Iz
+bH
+bH
+yn
+yn
+yn
+yn
+"}
+(3,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+Iz
+Iz
+Wa
+HG
+Ci
+Iz
+Iz
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+Iz
+Iz
+bH
+yn
+yn
+yn
+yn
+"}
+(4,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+Iz
+Iz
+Iz
+Iz
+Wn
+Iz
+Iz
+Iz
+Iz
+yn
+yn
+yn
+yn
+yn
+Iz
+Iz
+Iz
+gg
+bH
+yn
+yn
+yn
+"}
+(5,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+NA
+NA
+NA
+NA
+NA
+NA
+Iz
+Iz
+Iz
+Iz
+yn
+yn
+yn
+Iz
+Iz
+Iz
+LT
+bH
+yn
+yn
+yn
+"}
+(6,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+RO
+RO
+NA
+oX
+qr
+yw
+Xx
+NA
+Nj
+Iz
+Az
+Iz
+Iz
+yn
+yn
+Iz
+bH
+Iz
+pa
+bH
+yn
+yn
+yn
+"}
+(7,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+RO
+RO
+Tc
+aB
+el
+ig
+Lv
+za
+NA
+Iz
+Fb
+Uh
+Iz
+Iz
+Iz
+yn
+yn
+bH
+Iz
+Iz
+bH
+yn
+yn
+yn
+"}
+(8,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+Wa
+sh
+Ci
+bH
+bH
+bH
+RO
+RO
+SD
+Ph
+fK
+by
+Sy
+Zh
+ZW
+gt
+Nj
+Iz
+bH
+oL
+bH
+Iz
+bH
+yn
+bH
+Iz
+Iz
+yn
+yn
+yn
+yn
+"}
+(9,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+bH
+bH
+Iz
+Wn
+Iz
+bH
+bH
+RO
+RO
+KE
+Ij
+Rq
+hS
+TY
+HF
+NA
+rq
+NA
+NA
+NA
+Iz
+bH
+Uh
+bH
+bH
+yn
+yn
+bH
+Iz
+yn
+yn
+yn
+yn
+"}
+(10,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+Iz
+Iz
+bH
+Iz
+Nj
+Iz
+Iz
+bH
+RO
+qy
+Ph
+xj
+xj
+ti
+mQ
+aM
+NA
+Ol
+PC
+dV
+NA
+Iz
+Iz
+Iz
+bH
+bH
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+"}
+(11,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+Iz
+Iz
+Iz
+Iz
+Iz
+Iz
+Nj
+Nj
+Iz
+NA
+NA
+FL
+xj
+Rs
+UP
+fK
+Td
+Td
+NA
+Ar
+sr
+cv
+NA
+Iz
+Iz
+bH
+bH
+yn
+yn
+yn
+yn
+yn
+PM
+yn
+yn
+yn
+"}
+(12,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+bH
+Iz
+Nj
+ck
+ck
+ck
+Nj
+Nj
+Nj
+Nj
+NA
+fh
+xj
+ez
+UN
+xj
+fK
+xj
+rs
+NA
+kb
+Gv
+lw
+NA
+LF
+LF
+ZP
+Rl
+ZP
+yn
+yn
+yn
+yn
+OF
+yn
+yn
+yn
+"}
+(13,1,1) = {"
+yn
+yn
+yn
+bH
+bH
+Iz
+Iz
+Nj
+ck
+tI
+ck
+Nj
+Px
+Px
+Px
+Px
+NA
+NA
+NA
+NA
+RO
+sK
+RO
+LF
+LF
+LF
+LF
+GZ
+LF
+LF
+ZF
+Sd
+KL
+ZP
+ZP
+yn
+yn
+jj
+nM
+jj
+yn
+yn
+"}
+(14,1,1) = {"
+yn
+yn
+bH
+bH
+Iz
+Iz
+Nj
+Nj
+ck
+tL
+ck
+Nj
+Px
+LL
+nJ
+Px
+rY
+nJ
+hQ
+fY
+Ie
+jI
+lj
+LF
+XB
+LF
+kz
+Gq
+ZU
+LF
+LF
+ZJ
+Sd
+GB
+ZP
+bH
+yn
+jj
+nM
+jj
+yn
+yn
+"}
+(15,1,1) = {"
+yn
+bH
+bH
+Iz
+Iz
+Nj
+ck
+ck
+ck
+ki
+ck
+ck
+Px
+hr
+uL
+Px
+hr
+uL
+hQ
+in
+Ie
+LX
+jI
+LF
+GA
+Sd
+hn
+Ew
+Gq
+Pa
+LF
+pF
+IL
+iA
+ZP
+bH
+bH
+jj
+nM
+jj
+yn
+yn
+"}
+(16,1,1) = {"
+yn
+Wa
+Iz
+Iz
+Nj
+Nj
+ck
+mC
+nu
+QW
+bY
+BA
+Px
+Px
+uN
+Px
+Px
+uN
+FE
+Hs
+Fw
+Gz
+ac
+LF
+pO
+ZJ
+LF
+LF
+MO
+LF
+LF
+ci
+wZ
+LF
+LF
+bH
+yn
+yn
+nM
+yn
+yn
+yn
+"}
+(17,1,1) = {"
+yn
+MJ
+Wn
+Nj
+Nj
+Nj
+ck
+lK
+zA
+TL
+IZ
+SQ
+Px
+Zs
+ws
+Px
+he
+ws
+hQ
+qD
+fI
+dQ
+sY
+LF
+LF
+Sd
+LF
+MX
+Vs
+Mg
+LF
+QV
+LF
+LF
+Iz
+bH
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(18,1,1) = {"
+yn
+ni
+Iz
+Iz
+Nj
+Nj
+ck
+iU
+BG
+Rd
+ob
+fm
+Px
+cx
+sc
+Px
+hL
+Id
+hQ
+zy
+RH
+vU
+TB
+LF
+TD
+Ua
+LF
+HH
+Gq
+jn
+Sd
+ZJ
+LF
+Nj
+Iz
+Ci
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(19,1,1) = {"
+yn
+bH
+bH
+Iz
+Nj
+Nj
+ck
+ck
+SK
+eP
+SK
+ck
+Px
+Px
+xP
+Px
+MH
+Px
+hQ
+hQ
+hQ
+hQ
+wl
+LF
+Sd
+LF
+LF
+Pn
+LF
+LF
+LF
+LF
+LF
+Nj
+Wn
+zd
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(20,1,1) = {"
+yn
+bH
+bH
+Iz
+Iz
+Nj
+Nj
+ck
+mn
+BZ
+em
+ck
+da
+Px
+jb
+Hr
+LD
+Px
+yI
+OE
+hj
+hQ
+xA
+LF
+Sd
+Sd
+LF
+gd
+LF
+pK
+mb
+Fi
+Xs
+Nj
+Iz
+bE
+yn
+yn
+Of
+yn
+yn
+yn
+"}
+(21,1,1) = {"
+yn
+yn
+bH
+Iz
+Iz
+Nj
+et
+et
+et
+rg
+et
+et
+et
+Px
+bX
+Lp
+yo
+QM
+rf
+rh
+Px
+hQ
+OU
+LF
+LF
+Ok
+Sd
+Pn
+hP
+QP
+NY
+kd
+Xs
+Iz
+bH
+bH
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(22,1,1) = {"
+yn
+yn
+gg
+bH
+Iz
+et
+et
+LH
+Wh
+TZ
+Tp
+nB
+et
+Px
+ON
+cm
+fW
+Px
+Mt
+Px
+gK
+iG
+Fu
+Nd
+LF
+LF
+LF
+LF
+LF
+Gk
+EN
+mf
+Xs
+Iz
+yn
+yn
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(23,1,1) = {"
+yn
+yn
+rx
+bH
+Iz
+et
+no
+DF
+jm
+pI
+QR
+gf
+zV
+gK
+mD
+gK
+wv
+gK
+gK
+gK
+XE
+vl
+Ry
+PV
+zo
+Xs
+Xa
+ga
+EE
+Fj
+Vl
+rn
+Xs
+Xs
+js
+If
+yn
+jj
+mj
+jj
+yn
+yn
+"}
+(24,1,1) = {"
+yn
+yn
+pa
+bH
+bH
+GN
+fa
+Nu
+US
+OG
+Xt
+Hq
+Yc
+gK
+Xd
+Lb
+Dz
+gH
+QZ
+Lb
+Nk
+wE
+Bu
+Io
+wF
+Xs
+qC
+YU
+Xs
+zW
+ZM
+Jo
+vr
+EE
+yn
+yn
+yn
+yn
+Of
+yn
+yn
+yn
+"}
+(25,1,1) = {"
+yn
+yn
+yn
+bH
+bH
+GN
+fa
+hg
+Pd
+tp
+YS
+Yh
+NQ
+sm
+Te
+mc
+EO
+EO
+AF
+EO
+ul
+Ws
+om
+kk
+yK
+hf
+LA
+VA
+yS
+Ei
+QT
+XW
+kf
+zR
+Of
+Of
+Of
+Of
+Of
+Of
+di
+yn
+"}
+(26,1,1) = {"
+yn
+yn
+yn
+yn
+bH
+GN
+fa
+GU
+He
+iC
+hi
+Rz
+WT
+gK
+kg
+qo
+ev
+qo
+Ma
+qo
+DD
+kA
+ca
+Mk
+MB
+Xs
+Hv
+IP
+Xs
+yp
+VO
+HP
+TU
+EE
+yn
+yn
+yn
+yn
+Of
+yn
+yn
+yn
+"}
+(27,1,1) = {"
+yn
+yn
+yn
+yn
+bH
+et
+dL
+EW
+GU
+Dk
+BQ
+lu
+oz
+gK
+gK
+mD
+go
+mD
+gK
+gK
+NM
+uU
+va
+iS
+Pi
+Xs
+qR
+YG
+EE
+rV
+HX
+do
+Xs
+Xs
+js
+Vo
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(28,1,1) = {"
+yn
+yn
+yn
+yn
+bH
+et
+et
+oK
+pJ
+gP
+Xf
+Tm
+et
+BM
+QI
+Ln
+jD
+KN
+CN
+BM
+gK
+jT
+Hb
+jT
+gK
+Co
+Co
+Co
+Xs
+Lg
+Nw
+fO
+Xs
+Iz
+bH
+yn
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(29,1,1) = {"
+yn
+yn
+yn
+bH
+HE
+Zb
+et
+et
+et
+Jy
+et
+et
+et
+BM
+Sz
+Bc
+YX
+HL
+yM
+BM
+Co
+Co
+JE
+Co
+Co
+LW
+KG
+Co
+WG
+QP
+lx
+tl
+vy
+mh
+bH
+bH
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(30,1,1) = {"
+yn
+yn
+yn
+HE
+DT
+sy
+sy
+jv
+Cp
+hO
+EV
+sy
+Ri
+iW
+gE
+QK
+ot
+fe
+WC
+BM
+Ge
+GX
+VZ
+bv
+CM
+Gj
+Pe
+Co
+Xs
+jE
+wk
+oE
+Xs
+Iz
+Iz
+Ci
+yn
+yn
+Of
+yn
+yn
+yn
+"}
+(31,1,1) = {"
+yn
+yn
+kM
+sy
+Oe
+sy
+vn
+jy
+wz
+Kq
+FY
+sy
+sL
+ug
+vv
+QK
+HL
+gx
+Gy
+BM
+fF
+Yv
+wg
+fH
+eS
+QG
+Cu
+kt
+Co
+Xs
+Xs
+Xs
+Xs
+Nj
+Wn
+zd
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(32,1,1) = {"
+yn
+yn
+zG
+tr
+Ev
+jg
+Do
+Ne
+ll
+pA
+qg
+sy
+qk
+Fk
+hK
+WL
+xG
+DK
+EY
+BM
+Pr
+fT
+ip
+wj
+hG
+bz
+aY
+Co
+Co
+Iz
+Iz
+Nj
+Nj
+Iz
+Iz
+bE
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(33,1,1) = {"
+yn
+yn
+IW
+sy
+Oe
+sy
+XJ
+tb
+ka
+tF
+ke
+sy
+uf
+Hy
+Cc
+Tw
+tQ
+Ff
+lD
+BM
+Wy
+TJ
+kP
+SE
+dM
+gl
+Hk
+Co
+Iz
+bH
+Iz
+Nj
+Nj
+Iz
+bH
+bH
+yn
+jj
+Of
+jj
+yn
+yn
+"}
+(34,1,1) = {"
+yn
+yn
+yn
+cR
+WW
+sy
+sy
+sy
+lF
+zS
+BJ
+sy
+xK
+an
+Fv
+fn
+Yw
+qA
+cG
+BM
+Zp
+Go
+OP
+Rm
+zp
+na
+lc
+Co
+Iz
+bH
+bH
+Iz
+Iz
+Iz
+bH
+yn
+yn
+yn
+nM
+yn
+yn
+yn
+"}
+(35,1,1) = {"
+yn
+yn
+yn
+yn
+cR
+ID
+ID
+sy
+sy
+sy
+sy
+sy
+OC
+eV
+sX
+ma
+qa
+yQ
+BM
+BM
+Co
+Hp
+Pp
+cw
+Tq
+El
+Co
+Co
+Nj
+Iz
+bH
+bH
+bH
+bH
+yn
+yn
+yn
+jj
+nM
+jj
+yn
+yn
+"}
+(36,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+Iz
+Nj
+Nj
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+BM
+Nj
+Co
+Wv
+OP
+VV
+OP
+cN
+Co
+Nj
+Nj
+Nj
+Iz
+Iz
+Iz
+yn
+yn
+yn
+yn
+jj
+nM
+jj
+yn
+yn
+"}
+(37,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+Iz
+Iz
+Nj
+Nj
+Nj
+Nj
+Nj
+Nj
+Nj
+Nj
+Nj
+Iz
+Iz
+Co
+mN
+FN
+ou
+cg
+No
+Co
+Iz
+Iz
+Wn
+Iz
+Iz
+yn
+yn
+yn
+yn
+yn
+jj
+nM
+jj
+yn
+yn
+"}
+(38,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+Iz
+Iz
+Iz
+Iz
+Nj
+Nj
+Nj
+Nj
+Iz
+bH
+bH
+Co
+Co
+oQ
+oQ
+oQ
+Co
+Co
+Iz
+ni
+QB
+bE
+Iz
+yn
+yn
+yn
+yn
+yn
+yn
+OF
+yn
+yn
+yn
+"}
+(39,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+bH
+bH
+Iz
+Iz
+Iz
+Wn
+Iz
+Iz
+Iz
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+Iz
+Iz
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+zT
+yn
+yn
+yn
+"}
+(40,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+bH
+bH
+bH
+ni
+ML
+bE
+bH
+Iz
+yn
+bH
+bH
+bH
+bH
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+"}
+(41,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+"}
+(42,1,1) = {"
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+yn
+"}
