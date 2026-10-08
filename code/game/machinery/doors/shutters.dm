@@ -12,6 +12,7 @@
 	open_sound = 'sound/machines/poddoors/shutters_open.ogg'
 	close_sound = 'sound/machines/poddoors/shutters_close.ogg'
 	door_align_type = /obj/machinery/door/poddoor/shutters
+	show_nav_computer_icon = FALSE
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"

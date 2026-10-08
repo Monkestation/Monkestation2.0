@@ -21,10 +21,12 @@
 	///How well the engine affects the ship's speed.
 	var/engine_power = 1
 	///Construction state of the Engine.
-	var/engine_state = ENGINE_WELDED //welding shmelding //i love welding
+	var/engine_state = ENGINE_WELDED //welding shmelding //i love welding //welding's the best
 
 	///The mobile ship we are connected to.
-	var/datum/weakref/connected_ship_ref
+	var/obj/docking_port/mobile/connected_ship = null
+
+	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_turf_added_to_shuttle))
 
 /datum/armor/power_shuttle_engine
 	melee = 100
@@ -35,34 +37,66 @@
 
 /obj/machinery/power/shuttle_engine/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+	register_context()
 	extra_reward += /obj/item/stack/scrap/plasma
+	if(!mapload)
+		engine_state = ENGINE_UNWRENCHED
+		anchored = FALSE
+
+/obj/machinery/power/shuttle_engine/Destroy(force)
+	if(engine_state == ENGINE_WELDED)
+		alter_engine_power(-engine_power)
+	unsync_ship()
+	return ..()
+
+/obj/machinery/power/shuttle_engine/on_construction(mob/user)
+	. = ..()
+	if(anchored)
+		engine_state = ENGINE_WRENCHED
+		connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
+		if(isnull(connected_ship))
+			AddElement(/datum/element/connect_loc, connections)
 
 /obj/machinery/power/shuttle_engine/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(!port)
 		return FALSE
-	connected_ship_ref = WEAKREF(port)
-	port.engine_list += src
-	port.current_engine_power += engine_power
+	connected_ship = port
+	connected_ship.engine_list += src
 	if(mapload)
-		port.initial_engine_power += engine_power
-
-/obj/machinery/power/shuttle_engine/Destroy()
+		connected_ship.initial_engine_power += engine_power
 	if(engine_state == ENGINE_WELDED)
-		alter_engine_power(-engine_power)
-	unsync_ship()
-	new /obj/item/stack/scrap/plasma(loc)
-	return ..()
+		alter_engine_power(engine_power)
+
+/obj/machinery/power/shuttle_engine/examine(mob/user)
+	. = ..()
+	switch(engine_state)
+		if(ENGINE_UNWRENCHED)
+			. += span_notice("\The [src] is unbolted from the floor. It needs to be wrenched to the floor to be installed.")
+		if(ENGINE_WRENCHED)
+			. += span_notice("\The [src] is bolted to the floor and can be unbolted with a wrench. It needs to be welded to the floor to finish installation.")
+		if(ENGINE_WELDED)
+			. += span_notice("\The [src] is welded to the floor and can be unwelded. It is currently fully installed.")
+/obj/machinery/power/shuttle_engine/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item?.tool_behaviour == TOOL_WELDER && engine_state == ENGINE_WRENCHED)
+		context[SCREENTIP_CONTEXT_LMB] = "Weld to Floor"
+	if(held_item?.tool_behaviour == TOOL_WELDER && engine_state == ENGINE_WELDED)
+		context[SCREENTIP_CONTEXT_LMB] = "Unweld from Floor"
+	if(held_item?.tool_behaviour == TOOL_WRENCH && engine_state == ENGINE_UNWRENCHED)
+		context[SCREENTIP_CONTEXT_LMB] = "Wrench to Floor"
+	if(held_item?.tool_behaviour == TOOL_WRENCH && engine_state == ENGINE_WRENCHED)
+		context[SCREENTIP_CONTEXT_LMB] = "Unwrench from Floor"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Called on destroy and when we need to unsync an engine from their ship.
  */
 /obj/machinery/power/shuttle_engine/proc/unsync_ship()
-	var/obj/docking_port/mobile/port = connected_ship_ref?.resolve()
-	if(port)
-		port.engine_list -= src
-		port.current_engine_power -= initial(engine_power)
-	connected_ship_ref = null
+	if(connected_ship)
+		connected_ship.engine_list -= src
+		connected_ship = null
+	RemoveElement(/datum/element/connect_loc, connections)
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
 /obj/machinery/power/shuttle_engine/can_be_unfasten_wrench(mob/user, silent)
@@ -77,10 +111,16 @@
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
 			connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
+			if(isnull(connected_ship))
+				AddElement(/datum/element/connect_loc, connections)
 			engine_state = ENGINE_WRENCHED
 		else
 			unsync_ship() //not part of the ship anymore
 			engine_state = ENGINE_UNWRENCHED
+
+/obj/machinery/power/shuttle_engine/proc/on_turf_added_to_shuttle(turf/source, obj/docking_port/mobile/port)
+	SIGNAL_HANDLER
+	connect_to_shuttle(port = port)
 
 /obj/machinery/power/shuttle_engine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -100,7 +140,7 @@
 				span_notice("You start to weld \the [src] to the floor..."), \
 				span_hear("You hear welding."))
 
-			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume = 50))
 				engine_state = ENGINE_WELDED
 				to_chat(user, span_notice("You weld \the [src] to the floor."))
 				alter_engine_power(engine_power)
@@ -113,7 +153,7 @@
 				span_notice("You start to cut \the [src] free from the floor..."), \
 				span_hear("You hear welding."))
 
-			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume = 50))
 				engine_state = ENGINE_WRENCHED
 				to_chat(user, span_notice("You cut \the [src] free from the floor."))
 				alter_engine_power(-engine_power)
@@ -121,11 +161,8 @@
 
 //Propagates the change to the shuttle.
 /obj/machinery/power/shuttle_engine/proc/alter_engine_power(mod)
-	if(!mod)
-		return
-	var/obj/docking_port/mobile/port = connected_ship_ref?.resolve()
-	if(port)
-		port.alter_engines(mod)
+	if(mod && connected_ship)
+		connected_ship.alter_engines(mod)
 
 /obj/machinery/power/shuttle_engine/heater
 	name = "engine heater"
@@ -156,10 +193,6 @@
 /obj/machinery/power/shuttle_engine/propulsion/burst
 	name = "burst engine"
 	desc = "An engine that releases a large bluespace burst to propel it."
-
-/obj/machinery/power/shuttle_engine/propulsion/burst/cargo
-	engine_state = ENGINE_UNWRENCHED
-	anchored = FALSE
 
 /obj/machinery/power/shuttle_engine/propulsion/burst/left
 	name = "left burst engine"
