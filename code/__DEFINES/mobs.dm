@@ -456,8 +456,6 @@
 #define SUPER_DUPER_SLIDE (1<<6)
 /// For mobs who are slippery, this requires the mob holding it to be lying down.
 #define SLIPPERY_WHEN_LYING_DOWN (1<<7)
-///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just makes you lose your grip.
-#define WEAK_SLIDE (1<<8)
 
 #define MAX_CHICKENS 50
 

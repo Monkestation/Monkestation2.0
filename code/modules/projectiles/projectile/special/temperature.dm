@@ -29,13 +29,6 @@
 	icon_state = "lava"
 	temperature =  60
 
-/obj/projectile/temp/hot/on_hit(atom/target, blocked = FALSE, pierce_hit)
-	. = ..()
-
-	if(isliving(target))
-		var/mob/living/living_target = target
-		living_target.adjust_wet_stacks(-10)
-
 /obj/projectile/temp/cryo
 	name = "cryo beam"
 	range = 3
