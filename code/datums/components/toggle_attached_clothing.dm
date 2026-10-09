@@ -33,7 +33,7 @@
 	var/datum/callback/on_removed
 	/// Optional callback triggered when the slot is already taken, passed the item taking it, return TRUE to wear our equipment over that item
 	var/datum/callback/overslot_check
-	/// If we've overslotted a hat or whatever, this is the item we've oversltoted.
+	/// If we've overslotted a hat or whatever, this is the item we've overslotted.
 	var/obj/item/overslotted
 
 /datum/component/toggle_attached_clothing/Initialize(

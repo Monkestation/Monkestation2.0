@@ -159,6 +159,7 @@
 		overslot_check = CALLBACK(src, PROC_REF(can_overslot)),\
 	)
 
+/// Override to disable overslotting.
 /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest/proc/can_overslot(obj/item/hat)
 	return TRUE
 

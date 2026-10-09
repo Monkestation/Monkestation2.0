@@ -47,6 +47,7 @@
 /obj/item/clothing/suit/hooded/proc/can_create_hood()
 	return TRUE
 
+/// Override to disable overslotting.
 /obj/item/clothing/suit/hooded/proc/can_overslot(obj/item/hat)
 	return TRUE
 
