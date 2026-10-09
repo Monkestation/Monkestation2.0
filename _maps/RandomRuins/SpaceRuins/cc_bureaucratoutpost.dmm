@@ -2006,7 +2006,7 @@
 /obj/machinery/fax/messageadmins{
 	fax_name = "Central Command Liaison Office";
 	pixel_y = 4;
-	visible_to_network = 0
+	fax_id = "central_command"
 	},
 /obj/structure/sign/flag/nanotrasen/directional/north,
 /obj/structure/table/reinforced,
@@ -2138,6 +2138,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "zp" = (
@@ -3277,6 +3278,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "NQ" = (
@@ -3424,7 +3426,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "Pn" = (
@@ -4139,7 +4140,6 @@
 "XE" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/cable,
-/obj/machinery/light/directional/north,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
