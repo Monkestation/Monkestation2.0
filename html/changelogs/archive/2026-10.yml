@@ -79,3 +79,12 @@
 2026-10-07:
   JohnFulpWillard:
   - balance: Vampires aren't forced to be Albino anymore.
+2026-10-08:
+  JohnFulpWillard:
+  - qol: Borgs can now unlock their cover in their self-examine text.
+  LettuceGuardian:
+  - rscadd: SWAT crates now come with differently styled gas masks. Total amount of
+      gas masks doesn't change, though.
+  Runian:
+  - rscadd: 'Standard-model cyborgs, upon conversion to Clockwork Cult, now get a
+      brass spear and the following scriptures: Abscond, Kindle, and Vanguard.'
