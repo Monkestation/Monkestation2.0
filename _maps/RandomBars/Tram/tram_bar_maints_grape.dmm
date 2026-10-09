@@ -230,7 +230,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "fn" = (
@@ -1088,7 +1088,7 @@
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "zh" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
@@ -1217,8 +1217,8 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "BX" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
@@ -1532,7 +1532,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "HF" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
