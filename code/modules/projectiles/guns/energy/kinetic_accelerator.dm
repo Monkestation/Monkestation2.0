@@ -572,7 +572,7 @@
 	name = "infernal repeater"
 	removable = FALSE
 	cost = 30
-	modifier = 10 // unlike the regular repeater this one's just plain faster: 0.6 seconds on a miss, 0.15 on a hit
+	modifier = 10 // unlike the regular repeater this one's just plain faster: 0.6 seconds on a miss, 0.15 on a hit. it's an exclusive thing that's also a boss drop, so like, let it be special, as a treat. also this is jank to match tg's behavior.
 
 /obj/item/borg/upgrade/modkit/lifesteal
 	name = "lifesteal crystal"
