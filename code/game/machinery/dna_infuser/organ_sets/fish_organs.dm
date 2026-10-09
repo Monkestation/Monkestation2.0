@@ -26,7 +26,7 @@
 		return
 	RegisterSignals(owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN), PROC_REF(check_tail))
 	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(update_wetness))
-	RegisterSignals(owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
+	RegisterSignal(owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
@@ -324,7 +324,6 @@
 /obj/item/organ/internal/lungs/fish/amphibious
 	name = "mutated semi-aquatic lungs"
 	desc = "DNA from an amphibious or semi-aquatic creature infused on a pair lungs. Enjoy breathing underwater without drowning outside water."
-	safe_oxygen_min = /obj/item/organ/internal/lungs::safe_oxygen_min
 	safe_water_level = 19
 	has_gills = FALSE
 	/**
