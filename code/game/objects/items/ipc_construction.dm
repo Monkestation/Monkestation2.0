@@ -11,11 +11,13 @@
 	w_class = WEIGHT_CLASS_GIGANTIC
 	interaction_flags_item = NONE
 
-	/// Arm parts of the IPC assembly.
+	/// Left arm part of the IPC assembly.
 	var/obj/item/bodypart/arm/left/ipc/left_arm = null
+    /// Right arm part of the IPC assembly.
 	var/obj/item/bodypart/arm/right/ipc/right_arm = null
-	//  Leg parts of the IPC assembly.
+	/// Left leg part of the IPC assembly.
 	var/obj/item/bodypart/leg/left/ipc/left_leg = null
+    /// Right leg part of the IPC assembly.
 	var/obj/item/bodypart/leg/right/ipc/right_leg = null
 	/// Head of the IPC assembly.
 	var/obj/item/bodypart/head/ipc/head = null
