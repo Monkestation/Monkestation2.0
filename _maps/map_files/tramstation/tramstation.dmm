@@ -39552,7 +39552,7 @@
 /obj/item/multitool,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /obj/machinery/camera/directional/north{
-	c_tag = "Secure - Tech Stortage"
+	c_tag = "Secure - Tech Storage"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
@@ -69430,10 +69430,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "uvR" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 9
-	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
