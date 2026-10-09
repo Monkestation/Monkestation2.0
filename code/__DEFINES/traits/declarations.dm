@@ -264,9 +264,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// The mob is not harmed by tetrodotoxin. Instead, it heals them like omnizine
 #define TRAIT_TETRODOTOXIN_HEALING "tetrodotoxin_healing"
 
-/// Mobs that hate showers, being sprayed with water etc.
-#define TRAIT_WATER_HATER "water_hater"
-/// Improved boons from showers and some features centered around water, should also suppress TRAIT_WATER_HATER
+/// Improved boons from showers and some features centered around water
 #define TRAIT_WATER_ADAPTATION "water_adaptation"
 /// Tells us that the mob urrently has the fire_handler/wet_stacks status effect
 #define TRAIT_IS_WET "is_wet"

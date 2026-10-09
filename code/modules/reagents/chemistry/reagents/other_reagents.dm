@@ -203,7 +203,7 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
-	if(!exposed_mob.is_cat_enough(include_all_anime = TRUE) || HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION))
+	if(!exposed_mob.is_cat_enough(include_all_anime = TRUE) || HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION)) // fish infused people don't fear water
 		return
 
 	var/mob/living/victim = exposed_mob
