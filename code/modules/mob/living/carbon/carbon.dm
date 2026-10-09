@@ -18,6 +18,7 @@
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. = ..()
 
+	real_bodypart_cache.Cut()
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
@@ -1003,6 +1004,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	bodyparts += new_bodypart
+	real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
@@ -1023,6 +1025,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	old_bodypart.on_removal()
 	bodyparts -= old_bodypart
+	real_bodypart_cache -= old_bodypart.body_zone
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
