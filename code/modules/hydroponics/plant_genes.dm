@@ -49,6 +49,7 @@
 /datum/plant_gene/core
 	/// The number value of our core gene.
 	var/value = 0
+	mutability_flags = PLANT_GENE_REMOVABLE
 
 /datum/plant_gene/core/get_name()
 	return "[name] [value]"
