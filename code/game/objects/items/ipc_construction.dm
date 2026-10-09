@@ -513,7 +513,6 @@
 			span_notice("You finish [src] into an inert IPC shell.")
 		)
 	qdel(src)
-	return .
 
 #undef IPC_CORE_OFF_SCREEN
 #undef IPC_CORE_UNCONNECTED_SCREEN
