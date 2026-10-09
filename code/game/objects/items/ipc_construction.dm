@@ -83,7 +83,7 @@
 	if(screen)
 		. += span_info("The screen is [screen_state >= IPC_CONSTRUCTION_WIRED ? "wired" : "unwired"] and [screen_state == IPC_CONSTRUCTION_SECURED ? "secured" : "unsecured"].")
 	if(check_completion())
-		. += span_info("It is ready to be finalized with a " + EXAMINE_HINT("multitool") + ".")
+		. += span_info("It is ready to be finalized with a [EXAMINE_HINT("multitool")].")
 		return
 	if(core_state != IPC_CONSTRUCTION_SECURED)
 		. += span_info("Install each chest component, add " + EXAMINE_HINT("cable") + ", then use a " + EXAMINE_HINT("screwdriver") + " to secure the chest cavity.")
