@@ -23,9 +23,14 @@ type User = {
   observer: number;
 };
 
+type IFace = {
+  layout: string;
+  name: string;
+};
+
 export type Config = {
   client: Client;
-  interface: string;
+  interface: IFace;
   refreshing: BinaryIO;
   status: number;
   title: string;

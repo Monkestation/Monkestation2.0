@@ -76,3 +76,49 @@
   hexakats:
   - balance: buffs the damage of laser guns to 25
   - balance: buffs the damage of hellfire laser guns to 30
+2026-10-07:
+  JohnFulpWillard:
+  - balance: Vampires aren't forced to be Albino anymore.
+2026-10-08:
+  JohnFulpWillard:
+  - qol: Borgs can now unlock their cover in their self-examine text.
+  LettuceGuardian:
+  - rscadd: SWAT crates now come with differently styled gas masks. Total amount of
+      gas masks doesn't change, though.
+  Runian:
+  - rscadd: 'Standard-model cyborgs, upon conversion to Clockwork Cult, now get a
+      brass spear and the following scriptures: Abscond, Kindle, and Vanguard.'
+2026-10-09:
+  Absolucy:
+  - sound: Removed the goddamn screaming from the slime compressor.
+  - qol: (MTandi) Updated smart fridge UI
+  - qol: (MTandi) smart fridge UI now groups items by type+name instead of just type
+  - qol: (MTandi) smart fridge UI now shows item names next to the images
+  - qol: (MTandi) smart fridge UI has a list view option
+  - qol: (AyIong) SmartFridge got another redesign, and you can dispense all amount
+      of product in one click (RMB on product)
+  - qol: (JohnFulpWillard) Smartfridges now lets you set how many pills you want to
+      vend, rather than popping out a second separate tgui window.
+  - qol: (JohnFulpWillard) Smartfridges and Vending machines no longer have a setting
+      to change the list/grid mode, it instead updates automatically as you swap the
+      mode in-game.
+  - qol: (Melbert) Vending Machines have a search bar
+  - qol: '(AyIong) Vending machines got new design with 2 layouts: List and Grid'
+  - bugfix: (MTandi) Smartfridges properly dispense `\Improper` items
+  - bugfix: (JohnFulpWillard) Smartfridges on grid mode (like botany's) will no longer
+      instantly spit out all the items it has when you try to set how many it should
+      spit out.
+  - code_imp: (SyncIt21) tone of code organization for smart fridges overall. changed
+      ui to typescript.
+  Runian:
+  - rscadd: 'Medical cyborgs can now select a new cyborg skin: Medical Kerfus.'
+  - image: Adds cyborg Medical Kerfus icon.
+  ThePooba:
+  - balance: Balanced PTL cash at high levels to be lower- it already had an asymptote
+      but it was too high because we are insane people
+  Tractor-Maam:
+  - refactor: ported the TG fixes of the Portable Chemical Mixer, allowing it to properly
+      mix chemicals again.
+  notghosti:
+  - bugfix: Restored boy, girl, boy malf, girl malf, box fort, hotdog, terminal, and
+      yes man displays to ai display
