@@ -198,6 +198,7 @@
 	dir = 5
 	},
 /obj/structure/closet/secure_closet/centcom_liaison,
+/obj/item/crowbar,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
 "cG" = (
@@ -226,7 +227,23 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "da" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Commander Hisses-With-Authority";
+	desc = "A remarkably well-decorated lizard plush, veteran of several classified campaigns and, according to outpost tradition, the highest-ranking officer present. He appears to be judging your posture.";
+	layer = 4;
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/hats/centcom_cap{
+	pixel_y = 6;
+	layer = 5;
+	pixel_x = 2
+	},
+/obj/item/radio{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/quarters)
 "di" = (
 /obj/structure/cable,
@@ -504,6 +521,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/office)
+"gz" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/ccpost/commsroom)
 "gE" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west{
@@ -545,6 +566,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/north,
+/obj/structure/closet/emcloset/wall/directional/west{
+	name = "Emergency O2 Supplies"
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
 "hf" = (
@@ -870,9 +894,6 @@
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "kd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fireaxecabinet/directional/south{
-	req_access = list("nt_rep")
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/engineering)
 "ke" = (
@@ -1815,6 +1836,9 @@
 "vn" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/sign/warning/doors/directional/north,
+/obj/item/beacon{
+	name = "Central Command Liaison Outpost Lobby"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/lobby)
 "vr" = (
@@ -1973,6 +1997,7 @@
 /obj/item/clothing/shoes/heels/centcom,
 /obj/item/lipstick/random,
 /obj/item/clothing/suit/jacket/tailcoat/centcom,
+/obj/item/clothing/head/playbunnyears/centcom,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/maintenance)
 "xj" = (
@@ -2020,7 +2045,6 @@
 	dir = 4;
 	id_tag = "ccpost_privtwo"
 	},
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron/dark,
@@ -2231,10 +2255,6 @@
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/box/syndibunny{
-	pixel_y = -3;
-	pixel_x = -6
-	},
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "AF" = (
@@ -2855,6 +2875,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/secure_closet/centcom_liaison,
+/obj/item/crowbar,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
 "Ie" = (
@@ -3172,7 +3193,6 @@
 	dir = 4;
 	id_tag = "ccpost_privone"
 	},
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron/dark,
@@ -3671,6 +3691,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/cafeteria)
+"RZ" = (
+/obj/structure/cable,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/commsroom)
 "Sd" = (
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/maintenance)
@@ -3850,6 +3875,8 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/box/lights/bulbs,
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/space/has_grav/ccpost/engineering)
 "TY" = (
@@ -4254,6 +4281,9 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/closet/emcloset/wall/directional/west{
+	name = "Emergency O2 Supplies"
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
 "ZF" = (
@@ -4610,8 +4640,8 @@ yn
 yn
 yn
 yn
-yn
-yn
+bH
+bH
 bH
 bH
 Wa
@@ -4653,11 +4683,11 @@ yn
 yn
 yn
 yn
-yn
 bH
-bH
-bH
-bH
+Iz
+Iz
+Iz
+Iz
 Iz
 Wn
 Iz
@@ -4696,13 +4726,13 @@ yn
 yn
 yn
 yn
-yn
-bH
 bH
 Iz
-Iz
-bH
-Iz
+ck
+ck
+ck
+ck
+ck
 Nj
 Iz
 Iz
@@ -4740,14 +4770,14 @@ yn
 yn
 yn
 yn
-yn
 Iz
-Iz
-Iz
-Iz
-Iz
-Iz
-Nj
+ck
+ck
+RZ
+RZ
+RZ
+ck
+ck
 Nj
 Iz
 NA
@@ -4783,15 +4813,15 @@ yn
 yn
 yn
 yn
-yn
 bH
 Iz
-Nj
 ck
+RZ
+gz
 ck
+gz
+RZ
 ck
-Nj
-Nj
 Nj
 Nj
 NA
@@ -4829,12 +4859,12 @@ yn
 bH
 bH
 Iz
-Iz
-Nj
+ck
+RZ
 ck
 tI
 ck
-Nj
+RZ
 Px
 Px
 Px
@@ -4873,12 +4903,12 @@ bH
 bH
 Iz
 Iz
-Nj
-Nj
 ck
+RZ
+gz
 tL
-ck
-Nj
+gz
+RZ
 Px
 LL
 nJ
