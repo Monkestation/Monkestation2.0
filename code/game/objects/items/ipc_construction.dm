@@ -95,7 +95,7 @@
 		. += span_info("Use [EXAMINE_HINT("cable")] to wire the installed screen.")
 		return
 	if(screen && screen_state != IPC_CONSTRUCTION_SECURED)
-		. += span_info("Use a " + EXAMINE_HINT("screwdriver") + " to secure the wired screen.")
+		. += span_info("Use a [EXAMINE_HINT("screwdriver")] to secure the wired screen.")
 		return
 	. += span_info("Attach all IPC limbs plus a secured head before installing the screen and finalizing the chassis.")
 
