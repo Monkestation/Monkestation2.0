@@ -89,7 +89,7 @@
 		. += span_info("Install each chest component, add [EXAMINE_HINT("cable")], then use a [EXAMINE_HINT("screwdriver")] to secure the chest cavity.")
 		return
 	if(check_body_completion() && !screen)
-		. += span_info("Install an " + EXAMINE_HINT("IPC screen") + ", then wire and secure it before finalizing the chassis with a " + EXAMINE_HINT("multitool") + ".")
+		. += span_info("Install an [EXAMINE_HINT("IPC screen")] then wire and secure it before finalizing the chassis with a [EXAMINE_HINT("multitool")].")
 		return
 	if(screen && screen_state == IPC_CONSTRUCTION_UNWIRED)
 		. += span_info("Use " + EXAMINE_HINT("cable") + " to wire the installed screen.")
