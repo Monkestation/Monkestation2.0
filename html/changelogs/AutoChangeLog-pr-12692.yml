@@ -1,0 +1,5 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - bugfix: "fixed exsanguinating unusuals being milk"
+  - bugfix: "disable dullahans because they are extremely broken"
