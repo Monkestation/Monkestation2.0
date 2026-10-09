@@ -157,7 +157,6 @@
 		. = FALSE
 	if(liver && !liver.Insert(receiver, TRUE, FALSE))
 		. = FALSE
-	return .
 
 /// Drops all bodyparts currently attached to this IPC core.
 /obj/item/ipc_core/proc/drop_all_parts(atom/drop_to = drop_location())
