@@ -261,7 +261,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
 	if(has_gills)
 		gills = new()
-		AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
+		AddElement(/datum/element/noticable_organ, "neck has a set of gills.", BODY_ZONE_PRECISE_MOUTH)
 	AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN)
 
 /obj/item/organ/internal/lungs/fish/Destroy()
@@ -402,7 +402,7 @@
 
 /obj/item/organ/internal/tongue/inky/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "Slick black ink seldom rivulets from %PRONOUN_their mouth.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "mouth seldom drips slick black ink.", BODY_ZONE_PRECISE_MOUTH)
 
 ///Organ from fish with the toxic trait. Allows the user to use tetrodotoxin as a healing chem instead of a toxin.
 /obj/item/organ/internal/liver/fish
