@@ -1230,6 +1230,9 @@
 /area/space)
 "ot" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad/tutorial/ccpost_advisor,
+/obj/item/disk/holodisk/ruin/space/ccpost/advisor,
+/obj/effect/turf_decal/box/blue,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/office)
 "ou" = (

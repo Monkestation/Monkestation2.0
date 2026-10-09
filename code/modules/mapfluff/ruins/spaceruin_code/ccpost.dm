@@ -69,3 +69,104 @@
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/implantcase/mindshield(src)
+
+// Central Command Advisor Hologram code
+
+/obj/machinery/holopad/tutorial/ccpost_advisor
+	play_once = FALSE
+	proximity_range = 2
+
+/obj/item/disk/holodisk/ruin/space/ccpost/advisor
+	name = "Central Command Liaison Manager"
+	preset_image_type = /datum/preset_holoimage/ccpost_advisor
+	preset_record_text = {"
+	NAME Liaison Manager Nina C. Trayson
+	SAY Remember, you are here to observe, verify, communicate and record.
+	DELAY 50
+	"}
+
+	var/static/list/advisor_tips = list(
+		"Remember, you are here to observe, verify, communicate and record.",
+		"A good report distinguishes confirmed information from speculation.",
+		"The Captain commands the station. You advise, observe, and report.",
+		"Not every irregularity requires Central Command intervention.",
+		"Maintain accurate records. Your replacement will thank you.",
+		"Professional communication is considerably cheaper than an Emergency Response Team.",
+		"If you cannot verify it, do not report it as fact.",
+		"Central Command appreciates concise reports. Central Command also appreciates correct reports.",
+		"Central Command reminds you that 'I saw it on the cameras' is not a recognized investigative methodology.",
+		"Your authority is derived from Central Command. Your good judgement, regrettably, is your own responsibility.",
+		"If the Captain disagrees with your recommendation, document it. Do not start a constitutional crisis.",
+		"Remember to take regular breaks. Fatigued bureaucrats produce approximately seventeen percent more paperwork.",
+		"Remember: an unfiled incident is statistically indistinguishable from an incident that never occurred.",
+		"Do not threaten the station with an Emergency Response Team. Emergency Response Teams are expensive."
+	)
+
+/obj/item/disk/holodisk/ruin/space/ccpost/advisor/proc/select_random_tip()
+	if(!record)
+		return
+
+	record.caller_name = "Liaison Manager Nina C. Trayson"
+	record.entries = list(
+		list(HOLORECORD_SAY, pick(advisor_tips)),
+		list(HOLORECORD_DELAY, 50)
+	)
+
+/obj/machinery/holopad/tutorial/ccpost_advisor/replay_start()
+	var/obj/item/disk/holodisk/ruin/space/ccpost/advisor/advisor_disk = disk
+	advisor_disk?.select_random_tip()
+
+	return ..()
+
+// Advisor Hologram Preset
+
+/datum/preset_holoimage/ccpost_advisor
+	outfit_type = /datum/outfit/centcom/ccpost_advisor
+	species_type = /datum/species/human
+
+/datum/preset_holoimage/ccpost_advisor/build_image()
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy("HOLODISK_PRESET")
+
+	mannequin.set_species(species_type)
+
+	// Character Appearance
+	mannequin.gender = FEMALE
+	mannequin.physique = FEMALE
+	mannequin.skin_tone = "caucasian1"
+
+	mannequin.set_haircolor("#443333", update = FALSE)
+	mannequin.set_hairstyle("Long Side Part", update = FALSE)
+	mannequin.set_hair_gradient_style("None", update = FALSE)
+
+	mannequin.eye_color_left = "#447766"
+	mannequin.eye_color_right = "#447766"
+
+	mannequin.set_facial_hairstyle("Shaved", update = FALSE)
+	mannequin.set_facial_hair_gradient_style("None", update = FALSE)
+
+	mannequin.underwear = "Bikini"
+	mannequin.underwear_color = "#333333"
+	mannequin.socks = "Stockings (Fishnet)"
+	mannequin.socks_color = "#902DD5"
+
+	mannequin.update_body()
+
+	// Mannequin Outfit
+	if(outfit_type)
+		mannequin.equipOutfit(outfit_type, TRUE)
+
+	mannequin.setDir(SOUTH)
+
+	. = image(mannequin)
+	unset_busy_human_dummy("HOLODISK_PRESET")
+
+// Advisor Hologram Outfit
+
+/datum/outfit/centcom/ccpost_advisor
+	name = "CentCom Liaison Manager"
+
+	uniform = /obj/item/clothing/under/rank/centcom/commander/skirt
+	shoes = /obj/item/clothing/shoes/jackboots/heel
+	ears = /obj/item/radio/headset/headset_cent/alt
+	glasses = /obj/item/clothing/glasses/sunglasses
+	head = /obj/item/clothing/head/beret/centcom_formal
