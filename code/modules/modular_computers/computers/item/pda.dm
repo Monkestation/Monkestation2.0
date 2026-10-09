@@ -471,3 +471,13 @@
 	if(iscyborg(silicon_owner))
 		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
+
+/obj/item/modular_computer/pda/silicon/cyborg/ninja
+	icon_state = "tablet-silicon-ninja"
+	device_theme = PDA_THEME_SYNDICATE
+
+/obj/item/modular_computer/pda/silicon/cyborg/ninja/Initialize(mapload)
+	. = ..()
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
+		robo.lamp_color = COLOR_GREEN // Ninja likes it green.

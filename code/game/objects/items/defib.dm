@@ -715,5 +715,10 @@ GAME_VERB_PROC(/obj/item/defibrillator, toggle_paddles, "Toggle Paddles", "Objec
 /obj/item/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
 
+/obj/item/shockpaddles/syndicate/cyborg/ninja
+	name = "ninja defibrillator paddles"
+	icon_state = "ninjapaddles0"
+	base_icon_state = "ninjapaddles"
+
 #undef HALFWAYCRITDEATH
 #undef DEFIB_CAN_HURT
