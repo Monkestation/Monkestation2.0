@@ -117,7 +117,7 @@
 	forced_smite_type = LIGHT_SMITE
 	spell_max_level = 1
 
-/datum/action/cooldown/spell/pointed/smite/light/New(Target)
+/datum/action/cooldown/spell/pointed/smite/light/New(Target, original = TRUE)
 	. = ..()
 	light_smites += /datum/smite/puzzle
 
