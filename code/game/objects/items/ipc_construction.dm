@@ -13,11 +13,11 @@
 
 	/// Left arm part of the IPC assembly.
 	var/obj/item/bodypart/arm/left/ipc/left_arm = null
-    /// Right arm part of the IPC assembly.
+	/// Right arm part of the IPC assembly.
 	var/obj/item/bodypart/arm/right/ipc/right_arm = null
 	/// Left leg part of the IPC assembly.
 	var/obj/item/bodypart/leg/left/ipc/left_leg = null
-    /// Right leg part of the IPC assembly.
+	/// Right leg part of the IPC assembly.
 	var/obj/item/bodypart/leg/right/ipc/right_leg = null
 	/// Head of the IPC assembly.
 	var/obj/item/bodypart/head/ipc/head = null
