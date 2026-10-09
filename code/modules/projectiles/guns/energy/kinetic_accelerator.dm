@@ -572,7 +572,7 @@
 	name = "infernal repeater"
 	removable = FALSE
 	cost = 30
-	modifier = -10
+	modifier = 10 // unlike the regular repeater this one's just plain faster: 0.6 seconds on a miss, 0.15 on a hit
 
 /obj/item/borg/upgrade/modkit/lifesteal
 	name = "lifesteal crystal"
