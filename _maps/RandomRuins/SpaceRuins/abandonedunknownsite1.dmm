@@ -494,18 +494,6 @@
 "bZ" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/abandonedscpsite/engineering)
-"ca" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/blood/splatter/oil,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/gibs/down{
-	pixel_y = 8;
-	pixel_x = 18
-	},
-/turf/open/floor/iron/dark/textured,
-/area/ruin/space/has_grav/abandonedscpsite/engineering)
 "cb" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/rubble,
@@ -1498,14 +1486,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/office2)
-"fJ" = (
-/obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/med/surgery{
-	pixel_y = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/space/has_grav/abandonedscpsite/czmedbay)
 "fK" = (
 /obj/item/flashlight/lamp{
 	light_on = 1;
@@ -6514,6 +6494,14 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/czbrig)
+"yv" = (
+/obj/structure/table/glass,
+/obj/item/surgery_tray{
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/abandonedscpsite/czmedbay)
 "yw" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Workshop"
@@ -6594,6 +6582,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/cafeteria)
+"yH" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/effect/decal/cleanable/blood/splatter{
+	icon_state = "gibbl5"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/abandonedscpsite/hczhall)
 "yK" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood,
@@ -7133,6 +7131,18 @@
 /mob/living/basic/space_fauna/plague_doc/minion_zombies/zombieprisoner,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
+"Ar" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/gibs/down{
+	pixel_y = 8;
+	pixel_x = 18
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/abandonedscpsite/engineering)
 "At" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -10443,6 +10453,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/czprison)
+"Ne" = (
+/obj/item/surgery_tray{
+	pixel_y = 6
+	},
+/obj/structure/table/glass,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/abandonedscpsite/czmedbay)
 "Nf" = (
 /obj/effect/decal/cleanable/garbage,
 /obj/effect/mapping_helpers/broken_floor,
@@ -12153,16 +12171,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/lounge)
-"Tz" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/blood/splatter/oil,
-/obj/effect/decal/cleanable/blood/splatter{
-	icon_state = "gibbl5"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/space/has_grav/abandonedscpsite/hczhall)
 "TA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13647,14 +13655,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/abandonedscpsite/prisoncafe)
-"Zh" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
-	pixel_y = 6
-	},
-/obj/structure/table/glass,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/space/has_grav/abandonedscpsite/czmedbay)
 "Zi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -15697,7 +15697,7 @@ BZ
 BZ
 BZ
 nK
-fJ
+yv
 sJ
 dL
 mr
@@ -16062,7 +16062,7 @@ lJ
 Vg
 RT
 yf
-Zh
+Ne
 FG
 eU
 IM
@@ -16355,7 +16355,7 @@ WM
 sb
 zQ
 Ir
-Tz
+yH
 ll
 LY
 TU
@@ -16672,7 +16672,7 @@ bZ
 mZ
 SC
 kt
-ca
+Ar
 LC
 VD
 bZ

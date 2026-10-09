@@ -18,7 +18,7 @@
 	active_msg = "You ready yourself to attempt to leap!"
 	var/obj/item/melee/cultblade/haunted/flinged_sword
 
-/datum/action/cooldown/spell/pointed/sword_fling/New(Target, to_fling)
+/datum/action/cooldown/spell/pointed/sword_fling/New(Target, original = TRUE, to_fling)
 	. = ..()
 	flinged_sword = to_fling
 

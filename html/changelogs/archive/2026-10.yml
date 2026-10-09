@@ -13,3 +13,78 @@
   notghosti:
   - code_imp: Refactors guns without manufacturers to use has_manufacturer instead
       of just returning the proc
+2026-10-03:
+  Absolucy:
+  - bugfix: Fixed voice barks being too quiet (or even inaudible) sometimes.
+  LettuceGuardian:
+  - bugfix: CIN and NRI webbing being able to be reskinned and turned invisible
+2026-10-04:
+  Absolucy, PapaMichael:
+  - bugfix: Fixed Runechat having a 1/256 chance of being dark and almost unreadable
+  LettuceGuardian:
+  - bugfix: fixed paco suppressors sometimes being invisible
+  - image: updated the paco suppressor sprite
+  - bugfix: revolver silencers being unable to be taken off
+  - image: Modified takbok suppressor sprites
+  Singul0:
+  - rscadd: Adds 4 new AI projects for you lots to tinker with! (Tray scanners, Engineering
+      Scan, Lights Controls, Advanced Tracking)
+  - balance: Adjusted human examine project cost to make the newly advanced tracking
+      easier to obtain 4K to 2K, reducing the strain to obtain advanced tracking from
+      9K to 7K.
+2026-10-05:
+  AberrantQuerist:
+  - image: Resprites NTRep, Blueshield, and Barber lockers.
+  - image: Resprites wooden and corporate doors.
+  Absolucy:
+  - bugfix: fixed stacks of 10 iron/glass (and other exact sheet amounts) getting
+      rejected by lathes, the silo, and flatpackers after boulder machines had been
+      used
+  Runian:
+  - bugfix: Heads with an active mind now drop all of their organs, including their
+      brain, onto the floor instead of being deleted when deconstructed, burnt, gutted,
+      etc.
+  - rscadd: Roundstart / latejoin cyborgs are now given their unusual hat. This overrides
+      their loadout hat.
+  Tractor-Maam:
+  - balance: Lowered Chameleon Bomb's price to 2TC (down from 4TC)
+  - balance: Chameleon Bombs can no longer be discounted (because anything under 4TC
+      isnt eligible for discount in the uplink)
+  ashallaryn:
+  - image: modified twintail long hairstyle sprites
+  - image: modified hime cut hairstyle sprites
+  - image: modified hime cut 2 hairstyle sprites
+  - image: modified hime updo hairstyle sprites
+  cheese, kiaroh:
+  - rscadd: adds the pickle lighter to the cigarette vendors
+  hexakats:
+  - balance: Nerfs the innate armor tribal claw gives
+  - qol: surgery trays can hold autopsy scanners now
+  - map: replaced surgery duffel bags on all maps with surgery trays
+  - map: tweaked theseus a little (moved trays to nicer spots and removed drapes that
+      spawn on the surgery tables)
+2026-10-06:
+  Absolucy:
+  - bugfix: Fixed oozeling core revives (and other DNA updates) sometimes changing
+      your gender.
+  Runian:
+  - bugfix: You can no longer teleport living beings via a cargo teleporter by teleporting
+      whatever they're buckled to.
+  Tractor-Maam:
+  - spellcheck: fixed a typo in the Advanced Tracking AI project
+  - code_imp: removed an unused define
+  hexakats:
+  - balance: buffs the damage of laser guns to 25
+  - balance: buffs the damage of hellfire laser guns to 30
+2026-10-07:
+  JohnFulpWillard:
+  - balance: Vampires aren't forced to be Albino anymore.
+2026-10-08:
+  JohnFulpWillard:
+  - qol: Borgs can now unlock their cover in their self-examine text.
+  LettuceGuardian:
+  - rscadd: SWAT crates now come with differently styled gas masks. Total amount of
+      gas masks doesn't change, though.
+  Runian:
+  - rscadd: 'Standard-model cyborgs, upon conversion to Clockwork Cult, now get a
+      brass spear and the following scriptures: Abscond, Kindle, and Vanguard.'

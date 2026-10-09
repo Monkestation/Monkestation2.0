@@ -1,0 +1,15 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "(MTandi) Updated smart fridge UI"
+  - qol: "(MTandi) smart fridge UI now groups items by type+name instead of just type"
+  - qol: "(MTandi) smart fridge UI now shows item names next to the images"
+  - qol: "(MTandi) smart fridge UI has a list view option"
+  - qol: "(AyIong) SmartFridge got another redesign, and you can dispense all amount of product in one click (RMB on product)"
+  - qol: "(JohnFulpWillard) Smartfridges now lets you set how many pills you want to vend, rather than popping out a second separate tgui window."
+  - qol: "(JohnFulpWillard) Smartfridges and Vending machines no longer have a setting to change the list/grid mode, it instead updates automatically as you swap the mode in-game."
+  - qol: "(Melbert) Vending Machines have a search bar"
+  - qol: "(AyIong) Vending machines got new design with 2 layouts: List and Grid"
+  - bugfix: "(MTandi) Smartfridges properly dispense `\\Improper` items"
+  - bugfix: "(JohnFulpWillard) Smartfridges on grid mode (like botany's) will no longer instantly spit out all the items it has when you try to set how many it should spit out."
+  - code_imp: "(SyncIt21) tone of code organization for smart fridges overall. changed ui to typescript."

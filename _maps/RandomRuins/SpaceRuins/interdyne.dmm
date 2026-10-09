@@ -543,11 +543,6 @@
 /obj/item/paper/fluff/ruins/interdyne/note_5,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
-"sJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/splatter/oil,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
 "tg" = (
 /obj/effect/gibspawner/human,
 /obj/structure/cable,
@@ -706,6 +701,10 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
+"Az" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
 "AC" = (
 /obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/mineral/plastitanium,
@@ -851,6 +850,11 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"FU" = (
+/obj/item/surgery_tray,
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "Go" = (
 /obj/machinery/chem_master,
 /obj/structure/cable,
@@ -971,6 +975,10 @@
 "KA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"KB" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "KP" = (
 /turf/open/misc/asteroid/airless{
@@ -1115,11 +1123,6 @@
 /obj/machinery/microwave,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"PD" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/structure/table/reinforced/rglass,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
 "PF" = (
 /obj/machinery/dna_scannernew,
 /turf/open/floor/mineral/plastitanium,
@@ -1134,10 +1137,6 @@
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
-"Qw" = (
-/obj/effect/decal/cleanable/blood/splatter/oil,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "QC" = (
 /obj/structure/chair{
@@ -1253,10 +1252,6 @@
 /obj/item/clothing/mask/chameleon/broken,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
-"Un" = (
-/obj/effect/decal/cleanable/blood/splatter/oil,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
 "UN" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/cable,
@@ -1280,6 +1275,11 @@
 /area/ruin/space/has_grav/interdyne)
 "VC" = (
 /obj/machinery/vending/boozeomat,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"VD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "VN" = (
@@ -1621,8 +1621,8 @@ Zi
 QR
 mD
 rW
-sJ
-Un
+VD
+Az
 fx
 Zi
 he
@@ -1864,7 +1864,7 @@ Rn
 Rn
 Zi
 GY
-Qw
+KB
 QD
 Zu
 bV
@@ -2023,7 +2023,7 @@ oO
 Zi
 py
 kk
-PD
+FU
 Zi
 Rn
 Rn

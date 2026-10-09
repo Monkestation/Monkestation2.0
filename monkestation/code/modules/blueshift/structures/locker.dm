@@ -19,7 +19,6 @@
 	name = "nanotrasen consultant's locker"
 	req_access = list(ACCESS_CENT_GENERAL)
 	icon_state = "cc"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi'
 
 /obj/structure/closet/secure_closet/nanotrasen_consultant/PopulateContents()
 	..()

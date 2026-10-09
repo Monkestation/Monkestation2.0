@@ -2,7 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 22
+	damage = 25
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -77,7 +77,7 @@
 	name = "hellfire laser"
 	icon_state = "heavylaser"
 	wound_bonus = 0
-	damage = 25
+	damage = 30
 	speed = 1.6
 	light_color = "#FF969D"
 

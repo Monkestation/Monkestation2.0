@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Medical cyborgs can now select a new cyborg skin: Medical Kerfus."
+  - image: "Adds cyborg Medical Kerfus icon."
