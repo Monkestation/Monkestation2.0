@@ -41,7 +41,7 @@
 	mutantappendix = null
 	mutantbladder = null
 	mutantspleen = null
-	mutanteyes = /obj/item/organ/internal/eyes/robotic
+	mutanteyes = /obj/item/organ/internal/eyes/synth
 	mutantears = /obj/item/organ/internal/ears/cybernetic
 	mutantbutt = /obj/item/organ/internal/butt/cyber
 	species_language_holder = /datum/language_holder/synthetic
