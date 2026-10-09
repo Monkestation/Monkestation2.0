@@ -408,3 +408,21 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
+
+/datum/design/board/shuttle
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SHUTTLE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/shuttle/flight_control
+	name = "Shuttle Flight Controls"
+	desc = "Allows for the construction of circuit boards used to build a console that enables shuttle flight"
+	id = "shuttle_control"
+	build_path = /obj/item/circuitboard/computer/shuttle/flight_control
+
+/datum/design/board/shuttle/shuttle_docker
+	name = "Shuttle Navigation Computer"
+	desc = "Allows for the construction of circuit boards used to build a console that enables the targetting of custom flight locations"
+	id = "shuttle_docker"
+	build_path = /obj/item/circuitboard/computer/shuttle/docker

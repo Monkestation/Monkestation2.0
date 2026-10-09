@@ -325,7 +325,7 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and shuttle frame rods."
 	icon_state = "borg_stack_apparatus"
 	whitelist_storables = list(
 		/obj/item/stack/sheet,

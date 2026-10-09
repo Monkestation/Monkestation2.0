@@ -445,10 +445,10 @@
 /obj/item/stack/tile/iron{
 	amount = 25
 	},
-/obj/item/circuitboard/machine/spaceship_navigation_beacon,
-/obj/item/circuitboard/machine/spaceship_navigation_beacon,
-/obj/item/circuitboard/machine/spaceship_navigation_beacon,
-/obj/item/circuitboard/machine/spaceship_navigation_beacon,
+/obj/item/folded_navigation_gigabeacon,
+/obj/item/folded_navigation_gigabeacon,
+/obj/item/folded_navigation_gigabeacon,
+/obj/item/folded_navigation_gigabeacon,
 /obj/item/tank/jetpack/mining,
 /obj/item/tank/jetpack/mining,
 /obj/item/flatpacked_machine/gps_beacon,
