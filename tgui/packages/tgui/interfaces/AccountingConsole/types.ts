@@ -10,6 +10,7 @@ export type Data = {
   max_advances: number;
   station_time: string;
   young_ian: BooleanLike;
+  union_mode: BooleanLike;
 };
 
 type PlayerAccount = {
@@ -33,6 +34,8 @@ export enum SCREENS {
   users,
   audit,
   ian,
+  union,
+  paperwork,
 }
 
 export enum SORTING {

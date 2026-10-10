@@ -18,7 +18,6 @@ export const FakeDesktopButton = (props: FakeDesktopButtonProps) => {
     <>
       <Stack.Item>
         <Button
-          color="transparent"
           onClick={() => {
             setScreenmode(ownerScreenMode);
             act('typesound');
