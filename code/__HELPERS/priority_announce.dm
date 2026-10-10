@@ -115,7 +115,7 @@
 	message.title = title
 	message.content = text
 
-	SScommunications.send_message(message, sanitize)// monkestation edit - sanitization
+	GLOB.communications_controller.send_message(message, sanitize)// monkestation edit - sanitization
 
 /**
  * Sends a minor annoucement to players.

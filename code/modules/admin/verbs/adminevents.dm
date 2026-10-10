@@ -279,11 +279,11 @@ ADMIN_VERB(run_weather, R_FUN, FALSE, "Run Weather", "Triggers specific weather 
 
 ADMIN_VERB(command_report_footnote, R_ADMIN, FALSE, "Command Report Footnote", "Adds a footnote to the roundstart command report.", ADMIN_CATEGORY_EVENTS)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
-	SScommunications.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
+	GLOB.communications_controller.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
 
 	command_report_footnote.message = tgui_input_text(user, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
 	if(!command_report_footnote.message)
-		SScommunications.block_command_report -= 1
+		GLOB.communications_controller.block_command_report -= 1
 		qdel(command_report_footnote)
 		return
 
@@ -292,8 +292,8 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, FALSE, "Command Report Footnote", "
 	if(!command_report_footnote.signature)
 		command_report_footnote.signature = "Classified"
 
-	SScommunications.command_report_footnotes += command_report_footnote
-	SScommunications.block_command_report--
+	GLOB.communications_controller.command_report_footnotes += command_report_footnote
+	GLOB.communications_controller.block_command_report--
 
 	message_admins("[user] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
 
@@ -303,8 +303,8 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, FALSE, "Command Report Footnote", "
 
 
 ADMIN_VERB(delay_command_report, R_FUN, FALSE, "Delay Command Report", "Prevents the roundstart command report from being sent; or forces it to send it delayed.", ADMIN_CATEGORY_EVENTS)
-	SScommunications.block_command_report = !SScommunications.block_command_report
-	message_admins("[key_name_admin(user)] has [(SScommunications.block_command_report ? "delayed" : "sent")] the roundstart command report.")
+	GLOB.communications_controller.block_command_report = !GLOB.communications_controller.block_command_report
+	message_admins("[key_name_admin(user)] has [(GLOB.communications_controller.block_command_report ? "delayed" : "sent")] the roundstart command report.")
 
 ADMIN_VERB(add_mob_ability, R_ADMIN, FALSE, "Add Mob Ability", "Adds an ability to a marked mob.", ADMIN_CATEGORY_EVENTS)
 	if(!isliving(user.holder.marked_datum))
