@@ -31,7 +31,7 @@
 	required_container = /obj/item/slime_extract/grey
 
 /datum/chemical_reaction/slime/slimespawn/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/mob/living/basic/slime/S = new(get_turf(holder.my_atom), /datum/slime_color/grey)
+	var/mob/living/basic/slime/S = new(get_turf(holder.my_atom), /datum/slime_type/grey)
 	S.visible_message(span_danger("Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!"))
 	..()
 
@@ -314,12 +314,11 @@
 
 /datum/chemical_reaction/slime/slimebloodlust/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	for(var/mob/living/basic/slime/slime in viewers(get_turf(holder.my_atom), null))
-		if(slime.has_slime_trait(/datum/slime_trait/docility)) //Undoes docility, but doesn't make rabid.
+		if(slime.hunger_disabled) // undoes docility, but doesn't make rabid
 			slime.visible_message(span_danger("[slime] forgets its training, becoming wild once again!"))
-			slime.remove_trait(/datum/slime_trait/docility)
-			slime.update_name()
+			slime.set_default_behavior()
 			continue
-		ADD_TRAIT(slime, TRAIT_SLIME_RABID, "bloodlust")
+		slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 		slime.visible_message(span_danger("The [slime] is driven into a frenzy!"))
 	..()
 

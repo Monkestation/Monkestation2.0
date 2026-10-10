@@ -1,0 +1,359 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"ac" = (
+/obj/structure/table/wood,
+/obj/item/toy/plush/ratplush,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"ad" = (
+/obj/machinery/door/window/left/directional/north,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"ae" = (
+/turf/closed/indestructible/reinforced,
+/area/misc/warped_room)
+"af" = (
+/obj/structure/sign/departments/restroom,
+/turf/closed/indestructible/reinforced,
+/area/misc/warped_room)
+"aL" = (
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	locked = 0
+	},
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aM" = (
+/obj/structure/sink/directional/west,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aN" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aO" = (
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aP" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aQ" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aR" = (
+/obj/structure/table/wood,
+/obj/item/toy/plush/narplush,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aS" = (
+/obj/machinery/processor,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aT" = (
+/obj/structure/table/wood,
+/obj/machinery/microwave,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aU" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aV" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aX" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/soda_cans/cola,
+/obj/item/knife/kitchen,
+/obj/item/kitchen/rollingpin,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aY" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"aZ" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"ba" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bb" = (
+/obj/machinery/light,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bc" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"be" = (
+/obj/structure/table/wood,
+/obj/item/paper,
+/obj/item/pen,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bf" = (
+/obj/structure/chair/wood,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bg" = (
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bh" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bi" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/under/color/random,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bj" = (
+/obj/structure/chair/stool,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bk" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bl" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bm" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/indestructible/hoteltile,
+/area/misc/warped_room)
+"bo" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bp" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bq" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/indestructible/hoteltile,
+/area/misc/warped_room)
+"bs" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+"bt" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/indestructible/hotelwood,
+/area/misc/warped_room)
+
+(1,1,1) = {"
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+"}
+(2,1,1) = {"
+ae
+aR
+aQ
+aO
+aP
+aO
+aN
+aM
+aL
+ae
+"}
+(3,1,1) = {"
+ae
+aU
+aO
+aO
+aO
+aO
+aT
+aO
+aS
+ae
+"}
+(4,1,1) = {"
+ae
+aO
+aO
+aO
+aO
+aO
+ad
+aO
+aV
+ae
+"}
+(5,1,1) = {"
+ae
+ba
+aO
+aO
+aO
+aO
+aZ
+aY
+aX
+ae
+"}
+(6,1,1) = {"
+ae
+ae
+bc
+ae
+aO
+aO
+aO
+aO
+bb
+ae
+"}
+(7,1,1) = {"
+ae
+aO
+aO
+ae
+aO
+aO
+aO
+aO
+aO
+ae
+"}
+(8,1,1) = {"
+ae
+ba
+aO
+ae
+aO
+bf
+be
+ac
+aQ
+ae
+"}
+(9,1,1) = {"
+ae
+bi
+bh
+ae
+aO
+bf
+bg
+bg
+aQ
+ae
+"}
+(10,1,1) = {"
+ae
+ae
+ae
+ae
+aO
+aO
+aO
+aO
+aO
+ae
+"}
+(11,1,1) = {"
+ae
+bk
+bj
+aO
+aO
+aO
+aO
+aO
+bb
+ae
+"}
+(12,1,1) = {"
+ae
+bl
+aO
+aO
+aO
+aO
+aO
+aO
+aO
+ae
+"}
+(13,1,1) = {"
+ae
+bp
+aO
+aO
+aO
+aO
+bo
+af
+bm
+ae
+"}
+(14,1,1) = {"
+ae
+bt
+bj
+aO
+bs
+bf
+ab
+ae
+bq
+ae
+"}
+(15,1,1) = {"
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+"}

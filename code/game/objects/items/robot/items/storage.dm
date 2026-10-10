@@ -408,7 +408,6 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 		/obj/item/gun/magic/artifact,
 		/obj/item/melee/artifact,
 		/obj/item/artifact_summon_wand,
-		/obj/item/slime_mutation_syringe,
 		/obj/item/borg_restart_board
 	)
 	blacklisted_storables = list(

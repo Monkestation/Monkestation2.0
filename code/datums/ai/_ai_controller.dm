@@ -366,7 +366,7 @@ multiple modular subtrees with behaviors
 		if(LAZYACCESS(planned_behaviors, current_behavior))
 			continue
 		var/list/arguments = list(src, FALSE)
-		var/list/stored_arguments = behavior_args[type]
+		var/list/stored_arguments = behavior_args[current_behavior.type]
 		if(stored_arguments)
 			arguments += stored_arguments
 		current_behavior.finish_action(arglist(arguments))

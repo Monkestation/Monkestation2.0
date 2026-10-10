@@ -37,7 +37,7 @@ Slimecrossing Armor
 	desc = "The lenses seem to glow slightly, and reflect light into dazzling colors."
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "prismglasses"
-	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
+	actions_types = list(/datum/action/item_action/change_prism_color,/datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
 
 /obj/structure/light_prism
@@ -59,12 +59,12 @@ Slimecrossing Armor
 	to_chat(user, span_notice("You dispel [src]."))
 	qdel(src)
 
-/datum/action/item_action/change_prism_colour
+/datum/action/item_action/change_prism_color
 	name = "Adjust Prismatic Lens"
 	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
-/datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
+/datum/action/item_action/change_prism_color/Trigger(trigger_flags)
 	if(!IsAvailable(feedback = TRUE))
 		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target

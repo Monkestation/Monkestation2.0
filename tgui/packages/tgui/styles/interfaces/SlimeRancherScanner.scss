@@ -1,0 +1,166 @@
+.SlimeRancherScanner {
+	.Window__contentPadding {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		align-items: start;
+		gap: 1rem;
+	}
+
+	@media (max-width: 620px) {
+		.Window__contentPadding {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	&__vitals,
+	&__mutations,
+	&__recipes {
+		display: grid;
+		gap: 1rem;
+	}
+
+	// room for the badge hanging off the top
+	&__mutations {
+		margin-top: 1rem;
+	}
+
+	&__badge {
+		margin-top: -2.1rem;
+		padding: 0.4rem 1.25rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		box-shadow:
+			inset 0 2px 0 oklch(1 0 0 / 0.25),
+			0 3px 0 var(--slime-shadow);
+	}
+
+	&__identity {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	&__identity-text {
+		min-width: 0;
+	}
+
+	&__portrait-well {
+		display: grid;
+		place-items: center;
+		flex: 0 0 88px;
+		width: 88px;
+		height: 88px;
+		border: 4px solid var(--slime-cyan);
+		border-radius: 50%;
+		background: var(--slime-housing);
+		box-shadow: 0 2px 0 var(--slime-shadow);
+	}
+
+	&__life-stage {
+		margin-top: 0.667rem;
+	}
+
+	&__meters,
+	&__meter {
+		display: grid;
+		gap: 0.333rem;
+		min-width: 0;
+	}
+
+	&__meters {
+		gap: 0.667rem;
+	}
+
+	&__meter > span:first-child {
+		font-weight: bold;
+	}
+
+	&__readings {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.667rem;
+
+		strong {
+			font-size: 1.333rem;
+		}
+	}
+
+	&__recipe {
+		padding: 0.667rem;
+		border-radius: 1.333rem;
+		background: oklch(0.98 0.015 85);
+		box-shadow: 0 2px 0 var(--slime-shadow);
+	}
+
+	&__recipe-heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.667rem;
+		margin-bottom: 0.667rem;
+	}
+
+	&__ready {
+		padding: 0.167rem 0.667rem;
+		border-radius: 999px;
+		background: var(--slime-good);
+		font-weight: bold;
+	}
+
+	&__requirements {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+		gap: 0.5rem;
+	}
+
+	&__requirement {
+		position: relative;
+		display: grid;
+		justify-items: center;
+		align-content: start;
+		gap: 0.25rem;
+		min-width: 0;
+		padding: 0.5rem 0.5rem 0.667rem;
+		border-radius: 1.25rem;
+		background: var(--slime-track);
+		font-size: 0.917rem;
+		font-weight: bold;
+		text-align: center;
+		overflow-wrap: anywhere;
+		box-shadow: inset 0 2px 3px var(--slime-shadow);
+
+		> img {
+			image-rendering: pixelated;
+		}
+
+		.ProgressBar {
+			justify-self: stretch;
+			min-height: 1.25rem;
+			font-size: 0.833rem;
+		}
+
+		&--done {
+			background: var(--slime-cyan);
+			box-shadow:
+				inset 0 2px 0 var(--slime-highlight),
+				0 2px 0 var(--slime-shadow);
+		}
+	}
+
+	&__completed {
+		position: absolute;
+		top: -0.4rem;
+		right: -0.4rem;
+		padding: 0.25rem;
+		border: 2px solid var(--slime-cream);
+		border-radius: 50%;
+		background: var(--slime-good);
+		box-shadow: 0 2px 0 var(--slime-shadow);
+	}
+}
+
+// needs the theme prefix to outweigh the theme's own .ProgressBar rule
+.theme-slime_rancher .SlimeRancherScanner__instability--locked {
+	--progress-bar-color: oklch(0.73 0.012 245);
+}

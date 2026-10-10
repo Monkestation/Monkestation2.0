@@ -28,18 +28,18 @@ Burning extracts:
 	return
 
 /obj/item/slimecross/burning/grey
-	colour = "grey"
+	slime_type = /datum/slime_type/grey
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
 	var/mob/living/basic/slime/S = new(get_turf(user))
 	S.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
-	SEND_SIGNAL(S, COMSIG_FRIENDSHIP_CHANGE, user, 110)
+	S.befriend(user)
 	S.bodytemperature = T0C + 400 //We gonna step on the gas.
 	..()
 
 /obj/item/slimecross/burning/orange
-	colour = "orange"
+	slime_type = /datum/slime_type/orange
 	effect_desc = "Expels pepperspray in a radius when activated."
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
@@ -53,7 +53,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/purple
-	colour = "purple"
+	slime_type = /datum/slime_type/purple
 	effect_desc = "Creates a clump of invigorating gel, it has healing properties and makes you feel good."
 
 /obj/item/slimecross/burning/purple/do_effect(mob/user)
@@ -62,7 +62,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/blue
-	colour = "blue"
+	slime_type = /datum/slime_type/blue
 	effect_desc = "Freezes the floor around you and chills nearby people."
 
 /obj/item/slimecross/burning/blue/do_effect(mob/user)
@@ -77,7 +77,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/metal
-	colour = "metal"
+	slime_type = /datum/slime_type/metal
 	effect_desc = "Instantly ignites adjacent walls as if thermite were applied to them."
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
@@ -93,18 +93,14 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/yellow
-	colour = "yellow"
+	slime_type = /datum/slime_type/yellow
 	effect_desc = "Shocks nearby people with a burst of energy, heavily disorienting them for a short while."
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message(span_danger("[src] explodes into an energy field, shocking others nearby!"))
-	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
+	playsound(src, 'sound/weapons/zapbang.ogg', 50, TRUE)
 	for(var/mob/living/victim in range(4, get_turf(user)) - user)
-		user.Beam(victim, icon_state = "sm_arc", time = 0.5 SECONDS)
-		// Shock immunity prevents negative effects
-		if (HAS_TRAIT(victim, TRAIT_SHOCKIMMUNE))
-			continue
-		victim.adjustFireLoss(10)
+		victim.electrocute_act(10, src, flags = SHOCK_NOGLOVES | SHOCK_NOSTUN | SHOCK_SUPPRESS_MESSAGE)
 		victim.set_confusion_if_lower(10 SECONDS)
 		victim.set_eye_blur_if_lower(10 SECONDS)
 		ADD_TRAIT(victim, TRAIT_POOR_AIM, type)
@@ -114,7 +110,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/darkpurple
-	colour = "dark purple"
+	slime_type = /datum/slime_type/darkpurple
 	effect_desc = "Creates a cloud of plasma."
 
 /obj/item/slimecross/burning/darkpurple/do_effect(mob/user)
@@ -124,7 +120,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/darkblue
-	colour = "dark blue"
+	slime_type = /datum/slime_type/darkblue
 	effect_desc = "Expels a burst of chilling smoke while also filling you with regenerative jelly."
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
@@ -138,7 +134,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/silver
-	colour = "silver"
+	slime_type = /datum/slime_type/silver
 	effect_desc = "Creates a few pieces of slime jelly laced food."
 
 /obj/item/slimecross/burning/silver/do_effect(mob/user)
@@ -157,7 +153,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/bluespace
-	colour = "bluespace"
+	slime_type = /datum/slime_type/bluespace
 	effect_desc = "Teleports anyone directly next to you."
 
 /obj/item/slimecross/burning/bluespace/do_effect(mob/user)
@@ -170,7 +166,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/sepia
-	colour = "sepia"
+	slime_type = /datum/slime_type/sepia
 	effect_desc = "Turns into a special camera that rewinds time when used."
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
@@ -179,7 +175,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/cerulean
-	colour = "cerulean"
+	slime_type = /datum/slime_type/cerulean
 	effect_desc = "Produces an extract cloning potion, which copies an extract, as well as its extra uses."
 
 /obj/item/slimecross/burning/cerulean/do_effect(mob/user)
@@ -188,7 +184,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/pyrite
-	colour = "pyrite"
+	slime_type = /datum/slime_type/pyrite
 	effect_desc = "Shatters all lights in the current room."
 
 /obj/item/slimecross/burning/pyrite/do_effect(mob/user)
@@ -202,7 +198,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/red
-	colour = "red"
+	slime_type = /datum/slime_type/red
 	effect_desc = "Makes nearby slimes rabid, and they'll also attack their friends."
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
@@ -216,12 +212,12 @@ Burning extracts:
 		else
 			S.clear_friends()
 		*/
-		ADD_TRAIT(S, TRAIT_SLIME_RABID, "burning-red")
+		S.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 		S.visible_message(span_danger("The [S] is driven into a dangerous frenzy!"))
 	..()
 
 /obj/item/slimecross/burning/green
-	colour = "green"
+	slime_type = /datum/slime_type/green
 	effect_desc = "The user gets a dull arm blade in the hand it is used in."
 
 /obj/item/slimecross/burning/green/do_effect(mob/user)
@@ -244,7 +240,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/pink
-	colour = "pink"
+	slime_type = /datum/slime_type/pink
 	effect_desc = "Creates a beaker of synthpax."
 
 /obj/item/slimecross/burning/pink/do_effect(mob/user)
@@ -253,7 +249,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/gold
-	colour = "gold"
+	slime_type = /datum/slime_type/gold
 	effect_desc = "Creates a gank squad of monsters that are friendly to the user."
 
 /obj/item/slimecross/burning/gold/do_effect(mob/user)
@@ -267,7 +263,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/oil
-	colour = "oil"
+	slime_type = /datum/slime_type/oil
 	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
@@ -284,7 +280,7 @@ Burning extracts:
 	qdel(src)
 
 /obj/item/slimecross/burning/black
-	colour = "black"
+	slime_type = /datum/slime_type/black
 	effect_desc = "Gives the user a one-time use slime transformation ability. They can transform back at will and do not lose any items." // monkestation edit: same here
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
@@ -298,7 +294,7 @@ Burning extracts:
 	return ..()
 
 /obj/item/slimecross/burning/lightpink
-	colour = "light pink"
+	slime_type = /datum/slime_type/lightpink
 	effect_desc = "Paxes everyone in sight."
 
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
@@ -308,7 +304,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/adamantine
-	colour = "adamantine"
+	slime_type = /datum/slime_type/adamantine
 	effect_desc = "Creates a mighty adamantine shield."
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
@@ -317,7 +313,7 @@ Burning extracts:
 	..()
 
 /obj/item/slimecross/burning/rainbow
-	colour = "rainbow"
+	slime_type = /datum/slime_type/rainbow
 	effect_desc = "Creates the Rainbow Knife, a kitchen knife that deals random types of damage."
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
