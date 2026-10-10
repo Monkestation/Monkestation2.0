@@ -61,7 +61,7 @@ GAME_VERB_DESC(/client, spend_antag_tokens, "Spend Antag Tokens", "Opens a ui to
 	client_token_holder.in_queue = new chosen_antagonist
 
 	var/current_antag_request = new /datum/token_request(mob, client_token_holder, "[chosen_antagonist.name]", tier, using_donor)
-	SStoken_manager.add_pending_request(current_antag_request)
+	GLOB.token_manager.add_pending_request(current_antag_request)
 	client_token_holder.current_antag_request = current_antag_request
 
 	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
