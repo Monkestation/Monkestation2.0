@@ -102,6 +102,8 @@
 		return TRUE
 
 	if(type == "verbs/request_typepaths")
+		if(!client?.holder)
+			return TRUE
 		var/parent_text = payload["parent"]
 		var/browse_type = text2path(parent_text)
 		if(isnull(browse_type))
