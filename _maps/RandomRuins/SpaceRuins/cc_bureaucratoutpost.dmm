@@ -1075,10 +1075,12 @@
 /area/ruin/space/has_grav/ccpost/commsroom)
 "ma" = (
 /obj/structure/sign/poster/official/nanotrasen_logo/directional/east,
-/obj/structure/hedge,
 /obj/machinery/camera/autoname/directional/east{
 	c_tag = "CC Liaison Outpost - Office";
 	network = list("ccpost")
+	},
+/obj/machinery/computer/ccpost_tasking{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/office)
@@ -4143,6 +4145,10 @@
 	name = "Outpost Panic Lockdown";
 	req_access = list("nt_rep");
 	id = "ccpost_lockdown"
+	},
+/obj/machinery/button/ccpost_escalation{
+	pixel_y = 6;
+	pixel_x = -6
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/boardroom)

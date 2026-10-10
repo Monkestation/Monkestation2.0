@@ -533,3 +533,4 @@
 	suffix = "cc_bureaucratoutpost.dmm"
 	name = "Central Command Liaison Outpost"
 	description = "A small Central Command monitoring and administrative installation positioned within the sector."
+	placement_weight = 2
