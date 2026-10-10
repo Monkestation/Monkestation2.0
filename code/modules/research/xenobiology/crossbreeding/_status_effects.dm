@@ -477,7 +477,7 @@
 
 /datum/status_effect/stabilized/grey/tick()
 	for(var/mob/living/basic/slime/new_friend in range(3, get_turf(owner)))
-		SEND_SIGNAL(new_friend, COMSIG_FRIENDSHIP_CHANGE, owner, 2)
+		new_friend.befriend(owner)
 	return ..()
 
 /datum/status_effect/stabilized/orange
@@ -690,27 +690,49 @@
 	colour = "bluespace"
 	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
 
+	/// thingy so we can do an immediate check after bluespace stabilization wears off
+	var/was_cooling_down = FALSE
+
+/datum/status_effect/stabilized/bluespace/on_apply()
+	. = ..()
+	if(.)
+		RegisterSignals(owner, list(COMSIG_LIVING_HEALTH_UPDATE, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)), PROC_REF(check_health))
+
+/datum/status_effect/stabilized/bluespace/on_remove()
+	. = ..()
+	UnregisterSignal(owner, list(COMSIG_LIVING_HEALTH_UPDATE, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)))
+
+/// Teleports the owner to safety when they drop into crit, unless on cooldown.
+/datum/status_effect/stabilized/bluespace/proc/check_health()
+	SIGNAL_HANDLER
+	if(owner.has_status_effect(/datum/status_effect/bluespacestabilization))
+		return
+	if(owner.stat < SOFT_CRIT && owner.health > owner.crit_threshold)
+		return
+	owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
+	do_sparks(5, FALSE, owner)
+	var/turf/safe_turf = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
+	var/range = 0
+	if(!safe_turf)
+		safe_turf = get_turf(owner)
+		range = 50
+	if(do_teleport(owner, safe_turf, range, channel = TELEPORT_CHANNEL_BLUESPACE))
+		to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
+		do_sparks(5, FALSE, owner)
+		owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
+		was_cooling_down = TRUE
+
 /datum/status_effect/stabilized/bluespace/tick()
 	if(owner.has_status_effect(/datum/status_effect/bluespacestabilization))
 		linked_alert.desc = "The stabilized bluespace extract is still aligning you with the bluespace axis."
 		linked_alert.icon_state = "slime_bluespace_off"
-		return ..()
+		was_cooling_down = TRUE
 	else
 		linked_alert.desc = "The stabilized bluespace extract will try to redirect you from harm!"
 		linked_alert.icon_state = "slime_bluespace_on"
-
-	if(owner.stat >= SOFT_CRIT)
-		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
-		do_sparks(5,FALSE,owner)
-		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
-		var/range = 0
-		if(!F)
-			F = get_turf(owner)
-			range = 50
-		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
-			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
-			do_sparks(5,FALSE,owner)
-			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
+		if(was_cooling_down)
+			check_health()
+		was_cooling_down = FALSE
 	return ..()
 
 /datum/status_effect/stabilized/sepia
@@ -981,6 +1003,7 @@
 	draining_ref = WEAKREF(draining)
 	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
 	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
+	owner.balloon_alert_to_viewers("hands melt around neck!")
 
 /datum/status_effect/stabilized/black/get_examine_text()
 	var/mob/living/draining = draining_ref?.resolve()

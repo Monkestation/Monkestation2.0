@@ -91,6 +91,10 @@ To add a crossbreed:
 	add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
 	if(colour == "rainbow")
 		rainbow_effect()
+	var/datum/slime_type/slime_type = GLOB.slime_colors_to_types[colour]
+	if(slime_type && slime_type::visual_effect)
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
+		add_visual_effect(slime_type::visual_effect)
 
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.
 	name = "result extract"

@@ -1404,3 +1404,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to a mob when it gets a required "operational datum" (components/elements). Sends out the source as the type of the element.
 #define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
+
+/// Doesn't squash mobs like roaches and stuff when walking over them
+#define TRAIT_CAREFUL_STEPS "careful_steps"
+/// Prevents shattering glass tables
+#define TRAIT_LIGHTWEIGHT "lightweight"
+/// Ate past its max hunger via the generic_mob_hunger component, wears off after a few minutes
+#define TRAIT_OVERFED "overfed"
+/// Currently has the rainbow color-cycle effect applied
+#define TRAIT_RAINBOWED "rainbowed"
+/// Weapon carries the starborne enchantment, just used to track "hey this thing is already enchanted", bc starborne uses an element
+#define TRAIT_STARBORNE "starborne"

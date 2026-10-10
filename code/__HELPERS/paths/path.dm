@@ -251,7 +251,7 @@
 		if(TURF_PATHING_PASS_NO)
 			return TRUE
 
-	var/static/list/directional_blocker_cache = typecacheof(list(/obj/structure/window, /obj/machinery/door/window, /obj/structure/railing, /obj/machinery/door/firedoor/border_only))
+	var/static/list/directional_blocker_cache = typecacheof(list(/obj/structure/window, /obj/machinery/door/window, /obj/structure/railing, /obj/machinery/door/firedoor/border_only, /obj/structure/slime_pen_barrier))
 	// Source border object checks
 	for(var/obj/border in src)
 		if(!directional_blocker_cache[border.type])
@@ -310,10 +310,10 @@
 	var/incapacitated = FALSE
 	/// Is our mob incorporeal
 	var/incorporeal_move = FALSE
-	/// monkestation addition: is our mob a xenofauna or slime
-	var/xenofauna_or_slime = FALSE
 	/// monkestation addition: do we have TRAIT_GOES_THROUGH_WOODEN_BARRICADES
 	var/goes_thru_barricades = FALSE
+	/// lets pathfinding treat pen barriers as walls for whatever they keep in
+	var/slime_pen_contained = FALSE
 	/// If our mob has a rider, what does it look like
 	var/datum/can_pass_info/rider_info = null
 	/// If our mob is buckled to something, what's it like
@@ -353,6 +353,7 @@
 	src.thrown = !!construct_from.throwing
 	src.anchored = construct_from.anchored
 	src.has_gravity = construct_from.has_gravity()
+	src.slime_pen_contained = is_slime_pen_contained(construct_from)
 	if(ismob(construct_from))
 		var/mob/living/mob_construct = construct_from
 		src.incapacitated = mob_construct.incapacitated()
@@ -366,8 +367,6 @@
 		src.can_ventcrawl = HAS_TRAIT(living_construct, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_construct, TRAIT_VENTCRAWLER_NUDE)
 		src.mob_size = living_construct.mob_size
 		src.incorporeal_move = living_construct.incorporeal_move
-		if(istype(living_construct, /mob/living/basic/slime) || istype(living_construct, /mob/living/basic/xenofauna))
-			src.xenofauna_or_slime = TRUE
 
 	if(iseyemob(construct_from))
 		src.camera_type = construct_from.type

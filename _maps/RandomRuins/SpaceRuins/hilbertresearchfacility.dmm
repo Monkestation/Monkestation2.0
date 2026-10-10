@@ -1,4 +1,29 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/mob/living/basic/slime/hilbert,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ab" = (
+/mob/living/basic/slime/hilbert,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ac" = (
+/mob/living/basic/slime/hilbert,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ad" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/slime/hilbert,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ae" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/engine,
@@ -373,13 +398,6 @@
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
 /turf/open/floor/carpet/black,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"jC" = (
-/mob/living/basic/slime{
-	current_color = /datum/slime_color/bluespace
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "jJ" = (
 /obj/item/reagent_containers/cup/beaker/bluespace{
@@ -909,12 +927,6 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"wY" = (
-/mob/living/basic/slime{
-	current_color = /datum/slime_color/bluespace
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xb" = (
 /obj/structure/table/reinforced/rglass,
@@ -2194,19 +2206,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"WC" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wideplating_new/dark{
-	dir = 10
-	},
-/obj/effect/decal/cleanable/dirt,
-/mob/living/basic/slime{
-	current_color = /datum/slime_color/bluespace
-	},
-/turf/open/floor/mineral/titanium/tiled/purple,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WI" = (
 /obj/structure/table/wood,
 /obj/item/food/cornchips/blue,
@@ -2338,13 +2337,6 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Ze" = (
-/mob/living/basic/slime{
-	current_color = /datum/slime_color/bluespace
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Zk" = (
 /obj/machinery/washing_machine,
@@ -3708,7 +3700,7 @@ Ok
 Bo
 Bo
 kw
-wY
+aa
 IU
 sO
 kw
@@ -3827,7 +3819,7 @@ JW
 yw
 VD
 lY
-jC
+ab
 kw
 tL
 Bo
@@ -3863,7 +3855,7 @@ MD
 Ok
 Bo
 Bo
-Ze
+ac
 La
 sO
 La
@@ -3945,7 +3937,7 @@ yK
 us
 Bo
 BF
-WC
+ad
 Bo
 Dk
 Dk

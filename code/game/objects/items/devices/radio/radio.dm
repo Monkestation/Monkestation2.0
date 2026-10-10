@@ -381,7 +381,7 @@
 	// Okay, the signal was never processed, send a mundane broadcast.
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
-	signal.levels = SSmapping.get_connected_levels(T)
+	signal.levels = get_telecomms_levels(T)
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
@@ -414,7 +414,7 @@
 	// deny checks
 	if (levels != RADIO_NO_Z_LEVEL_RESTRICTION)
 		var/turf/position = get_turf(src)
-		if(!position || !(position.z in levels))
+		if(!position || !((position.z in levels) || warped_room_in_levels(position, levels)))
 			return FALSE
 
 	if (input_frequency == FREQ_SYNDICATE && !syndie)

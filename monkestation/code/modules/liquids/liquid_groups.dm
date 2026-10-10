@@ -76,10 +76,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		add_to_group(created_liquid.my_turf)
 		cached_edge_turfs[created_liquid.my_turf] = list(NORTH, SOUTH, EAST, WEST)
 	SSliquids.active_groups |= src
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(removed_reagent))
 
 /datum/liquid_group/Destroy()
-	UnregisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT)
 	SSliquids.active_groups -= src
 	SSliquids.active_turf_group_queue -= src
 	SSliquids.arrayed_groups -= src /// Someone made a massive fucky wucky if this is happening
@@ -100,12 +98,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	always_evaporates = from.always_evaporates
 	evaporation_multiplier = from.evaporation_multiplier
 
-/datum/liquid_group/proc/removed_reagent(datum/reagents/source, datum/reagent/modified)
-	for(var/turf/member as anything in members)
-		if(QDELETED(member.liquids))
-			continue
-		modified.remove_from_member(member.liquids)
-
 ///GROUP CONTROLLING
 /datum/liquid_group/proc/add_to_group(turf/T)
 	if(QDELETED(T))
@@ -120,8 +112,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	members[T] = TRUE
 	T.liquids.liquid_group = src
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		reagent.add_to_member(T.liquids)
 
 	reagents.maximum_volume += 1000 /// each turf will hold 1000 units plus the base amount spread across the group
 	if(group_color)
@@ -137,9 +127,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(members)
 		members -= T
 	T.liquids?.liquid_group = null
-
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		reagent.remove_from_member(T.liquids)
 
 	if(QDELING(src))
 		return
@@ -168,10 +155,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	add_reagents(reagent_list = created_reagent_list, chem_temp = otherg.group_temperature)
 	cached_edge_turfs |= otherg.cached_edge_turfs
-
-	for(var/turf/liquid_turf as anything in members)
-		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-			reagent.add_to_member(liquid_turf.liquids)
 
 	for(var/turf/liquid_turf as anything in otherg.members)
 		otherg.remove_from_group(liquid_turf)

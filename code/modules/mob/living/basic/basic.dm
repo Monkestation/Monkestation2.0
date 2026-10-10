@@ -11,6 +11,9 @@
 
 	var/basic_mob_flags = NONE
 
+	/// Biomass credited when this creature is recycled. Positive values also allow vacuum capture and printing.
+	var/biomass_value = 0
+
 	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
 	///How much stamina the mob recovers per second
