@@ -257,6 +257,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		var/mob/living/living_target = target
 		check_heat(living_target)
 		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+		if(HAS_TRAIT(living_target, TRAIT_WATER_ADAPTATION)) //very mild healing for those with the water adaptation trait (fish infusion)
+			var/need_mob_update = living_target.adjustOxyLoss(-1 * SSMACHINES_DT, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			need_mob_update += living_target.adjustFireLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			need_mob_update += living_target.adjustToxLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			need_mob_update += living_target.adjustBruteLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			if(need_mob_update)
+				living_target.updatehealth()
 
 /**
  * Toggle whether shower is actually on and outputting water.

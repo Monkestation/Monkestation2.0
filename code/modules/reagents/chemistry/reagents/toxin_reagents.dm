@@ -996,7 +996,7 @@
 	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(R.type, remove_amt * REM * normalise_creation_purity() * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * remove_amt * REM * normalise_creation_purity() * seconds_per_tick)
 	return ..()
 
 //ACID
@@ -1265,6 +1265,7 @@
 	toxpwr = 0
 	taste_mult = 0
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	purge_multiplier = 0.15
 	var/list/traits_not_applied = list(
 		TRAIT_PARALYSIS_L_ARM = BODY_ZONE_L_ARM,
 		TRAIT_PARALYSIS_R_ARM = BODY_ZONE_R_ARM,
@@ -1273,6 +1274,16 @@
 	)
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(HAS_TRAIT(affected_mob, TRAIT_TETRODOTOXIN_HEALING)) // fish infused livers turn it into a healing chem
+		toxpwr = 0
+		silent_toxin = TRUE
+		remove_paralysis(affected_mob)
+		var/need_mob_update = affected_mob.adjustOxyLoss(-0.7 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += affected_mob.adjustToxLoss(-0.75 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustBruteLoss(-1.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustFireLoss(-1.35 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		. = ..()
+		return need_mob_update ? TRUE : .
 	//be ready for a cocktail of symptoms, including:
 	//numbness, nausea, vomit, breath loss, weakness, paralysis and nerve damage/impairment and eventually a heart attack if enough time passes.
 	switch(current_cycle)
@@ -1345,6 +1356,9 @@
 /datum/reagent/toxin/tetrodotoxin/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
+	remove_paralysis(affected_mob)
+
+/datum/reagent/toxin/tetrodotoxin/proc/remove_paralysis(mob/living/affected_mob)
 	// the initial() proc doesn't work for lists.
 	var/list/initial_list = list(
 		TRAIT_PARALYSIS_L_ARM = BODY_ZONE_L_ARM,
@@ -1357,7 +1371,7 @@
 
 /datum/reagent/toxin/tetrodotoxin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
-	if(current_cycle >= 28)
+	if(current_cycle >= 28 && !HAS_TRAIT(source, TRAIT_TETRODOTOXIN_HEALING))
 		return BREATHE_BLOCK_BREATH
 
 /datum/reagent/toxin/radiomagnetic_disruptor // MONKESTATION ADDITION: NANITE REMOVAL CHEM

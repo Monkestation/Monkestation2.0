@@ -159,6 +159,20 @@
 
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
 
+/obj/item/fish/squid
+	name = "squid"
+	desc = "An elongated mollusk with eight tentacles, natural camouflage and ink clouds to spray at predators. One of the most intelligent, well-equipped invertebrates out there."
+	icon_state = "squid"
+	sprite_width = 4
+	sprite_height = 5
+	stable_population = 6
+	average_size = 50
+	average_weight = 500 //They're quite lighter than they're long.
+	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	required_temperature_min = MIN_AQUARIUM_TEMP+5
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
+	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/ink, /datum/fish_trait/wary)
+
 /obj/item/fish/lanternfish
 	name = "lanternfish"
 	desc = "Typically found in areas below 6600 feet below the surface of the ocean, they live in complete darkness."

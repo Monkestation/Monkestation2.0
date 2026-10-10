@@ -454,6 +454,8 @@
 #define SLIPPERY_TURF (1<<5)
 /// Slipping on this will send them sliding for a long time
 #define SUPER_DUPER_SLIDE (1<<6)
+/// For mobs who are slippery, this requires the mob holding it to be lying down.
+#define SLIPPERY_WHEN_LYING_DOWN (1<<7)
 
 #define MAX_CHICKENS 50
 

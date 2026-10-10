@@ -116,6 +116,8 @@
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
 	var/list/added_traits
+	/// Multiplier of the amount purged by reagents such as calomel, multiver, syniver etc.
+	var/purge_multiplier = 1
 	///are we able to merge
 	var/can_merge = TRUE
 	///does it intoxicate IPCs and if so how much

@@ -320,16 +320,42 @@
 	enemy_turf = /turf/open/lava
 	/// particles applied
 	var/particles/applied_particles = /particles/droplets
+	///If the mob has the TRAIT_SLIPPERY_WHEN_WET trait, the mob gets this component while it's wet
+	var/datum/component/slippery/slipperiness
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
 	. = ..()
 	var/obj/effect/abstract/shared_particle_holder/particles = owner.add_shared_particles(applied_particles, get_particle_key())
 	if(particles)
 		adjust_particles(particles)
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_WET_FOR_LONGER), SIGNAL_REMOVETRAIT(TRAIT_WET_FOR_LONGER)), PROC_REF(update_wet_stack_modifier))
+	update_wet_stack_modifier()
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLIPPERY_WHEN_WET), PROC_REF(become_slippery))
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLIPPERY_WHEN_WET), PROC_REF(no_longer_slippery))
+	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
+		become_slippery()
+	ADD_TRAIT(owner, TRAIT_IS_WET, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
 	owner.remove_shared_particles(get_particle_key())
+	REMOVE_TRAIT(owner, TRAIT_IS_WET, TRAIT_STATUS_EFFECT(id))
+	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
+		no_longer_slippery()
+
+/datum/status_effect/fire_handler/wet_stacks/proc/update_wet_stack_modifier()
+	SIGNAL_HANDLER
+	stack_modifier = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? initial(stack_modifier) * 3.5 : initial(stack_modifier)
+
+/datum/status_effect/fire_handler/wet_stacks/proc/become_slippery()
+	SIGNAL_HANDLER
+	slipperiness = owner.AddComponent(/datum/component/slippery, 5 SECONDS, lube_flags = SLIPPERY_WHEN_LYING_DOWN)
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/fire_handler/wet_stacks/proc/no_longer_slippery()
+	SIGNAL_HANDLER
+	QDEL_NULL(slipperiness)
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/proc/get_particle_key()
 	return id
@@ -338,7 +364,8 @@
 	if(!check_enemy())
 		return TRUE
 
-	adjust_stacks(-0.5 * seconds_between_ticks)
+	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.035 : -0.5
+	adjust_stacks(decay * seconds_between_ticks)
 
 	if(stacks <= 0)
 		qdel(src)
