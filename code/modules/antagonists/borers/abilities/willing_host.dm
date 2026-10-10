@@ -11,26 +11,49 @@
 	With enough willing hosts will make your evolution and chemical points accumulate quicker.\n\
 	"
 
-/datum/action/cooldown/borer/willing_host/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/borer/willing_host/IsAvailable(feedback)
 	. = ..()
 	if(!.)
-		return FALSE
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	if(cortical_owner.human_host.is_willing_host(cortical_owner.human_host))
-		owner.balloon_alert(owner, "host already willing")
 		return
 
-	owner.balloon_alert(owner, "asking host...")
-	cortical_owner.chemical_storage -= chemical_cost
+	var/mob/living/basic/cortical_borer/user = owner
+	if(HAS_MIND_TRAIT(user.human_host, TRAIT_WILLING_HOST))
+		if(feedback)
+			owner.balloon_alert(owner, "host already willing")
+		return FALSE
 
-	var/host_choice = tgui_input_list(cortical_owner.human_host,"Do you accept to be a willing host?", "Willing Host Request", list("Yes", "No"))
+/datum/action/cooldown/borer/willing_host/check_conditions()
+	. = ..()
+	if(.)
+		return
+
+	var/mob/living/basic/cortical_borer/user = owner
+	if(!user.human_host.mind) // Consent requires a certain amount of intelligence, that they dont have.
+		owner.balloon_alert(owner, "host not willing!")
+		return COMPONENT_ACTION_BLOCK_TRIGGER
+
+/datum/action/cooldown/borer/willing_host/Activate(mob/living/basic/cortical_borer/user)
+	user.chemical_storage -= chemical_cost
+	owner.balloon_alert(owner, "asking host...")
+	var/mob/living/carbon/host = user.human_host
+	var/host_choice = tgui_input_list(host, "Do you accept to be a willing host?", "Willing Host Request", list("Yes", "No"))
+	if(!IsAvailable(TRUE) || check_conditions() || user.human_host != host)
+		return
+
 	if(host_choice != "Yes")
 		owner.balloon_alert(owner, "host not willing!")
-		StartCooldown()
-		return
+		return ..()
 
 	owner.balloon_alert(owner, "host willing!")
-	to_chat(cortical_owner.human_host, span_notice("You have accepted being a willing host!"))
-	GLOB.willing_hosts += cortical_owner.human_host.mind
-	cortical_owner.human_host.add_mood_event("borer", /datum/mood_event/has_borer) //If the host is being asked then they have a worm in their ear. The rest is done on insert/exit of the organ.
-	StartCooldown()
+	to_chat(host, span_notice("You have accepted being a willing host!"))
+	ADD_TRAIT(host.mind, TRAIT_WILLING_HOST, owner.tag)
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+	var/datum/antagonist/cortical_borer/antag = owner.mind.has_antag_datum(/datum/antagonist/cortical_borer)
+	if(antag)
+		var/datum/objective/borer/willing_hosts/objective = locate() in antag.objectives
+		if(objective)
+			objective.minds += host.mind
+			objective.check_completion()
+
+	host.add_mood_event("borer", /datum/mood_event/willing_borer) //If the host is being asked then they have a worm in their ear. The rest is done on insert/exit of the organ.
+	return ..()

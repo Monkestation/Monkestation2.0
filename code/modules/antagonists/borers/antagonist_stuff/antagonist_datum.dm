@@ -1,18 +1,27 @@
 /datum/antagonist/cortical_borer
 	name = "Cortical Borer"
 	job_rank = ROLE_CORTICAL_BORER
-	roundend_category = "enslaved cortical borers" // may look a bit confusing, but these borers are not a part of a hivemind. So they are probably enslaved
+	roundend_category = "enslaved cortical borers" // May look a bit confusing, but these borers are not a part of a hivemind. So they are probably enslaved
 	antagpanel_category = "Cortical Borers"
 	ui_name = "AntagInfoBorer"
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
-	antag_count_points = 0.5 //While a single borer can be helpful, if you have a lot on station things are bound to get chaotic and a few diveworms.
-	/// Our linked borer, used for the antagonist panel TGUI
-	var/mob/living/basic/cortical_borer/cortical_owner
-
+	antag_count_points = 0.5 // While a single borer can be helpful, if you have a lot on station things are bound to get chaotic and a few diveworms.
 	/// Borer mob type, used for antag token spawns.
 	var/borer_mob_type = /mob/living/basic/cortical_borer/neutered
+	/// The hivemind this borer belongs to, can be null
+	var/datum/team/cortical_borers/team
+
+/datum/antagonist/cortical_borer/Destroy(force)
+	if(team)
+		team.remove_member(owner)
+		team = null
+	return ..()
+
+// Lets the borers see who is a willing host
+/datum/antagonist/cortical_borer/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
 
 /datum/antagonist/cortical_borer/antag_token(datum/mind/hosts_mind, mob/spender)
 	var/list/vents = list()
@@ -36,17 +45,27 @@
 		message_admins(span_adminnotice("[spender] ([ckey(spender.key)]) tried spawning in as a borer, but no suitable vents were found!"))
 		return MAP_ERROR
 
-	if(isliving(spender) && hosts_mind)
+	if(isliving(spender))
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy(hosts_mind.current.loc)
 		QDEL_IN(hosts_mind.current, 1 SECONDS)
 
-	var/mob/dead/observer/new_borer = spender
 	var/vent = pick(vents)
 	var/mob/living/basic/cortical_borer/spawned_cb = new borer_mob_type(get_turf(vent))
-	spawned_cb.PossessByPlayer(new_borer.ckey)
+	spawned_cb.PossessByPlayer(spender.ckey)
+	var/datum/antagonist/cortical_borer/antag = spawned_cb.mind.has_antag_datum(/datum/antagonist/cortical_borer)
+	if(borer_mob_type == /mob/living/basic/cortical_borer/neutered)
+		var/datum/objective/borer/learn_chemicals/selfish/objective = new()
+		objective.owner = spawned_cb.mind
+		objective.update_explanation_text()
+		antag.objectives += objective
+		antag.update_static_data_for_all_viewers()
+	else
+		var/datum/team/cortical_borers/team = new()
+		team.create_objectives()
+		team.add_member(spawned_cb.mind, antag)
+
 	spawned_cb.move_into_vent(vent)
-	spawned_cb.mind.add_antag_datum(type)
 	notify_ghosts(
 		"Someone has become a borer due to spending an antag token ([spawned_cb])!",
 		source = spawned_cb,
@@ -56,10 +75,8 @@
 	message_admins("[ADMIN_LOOKUPFLW(spawned_cb)] has been made into a borer by using an antag token.")
 	to_chat(spawned_cb, span_warning("You are a cortical borer! You can fear someone to make them stop moving, but make sure to inhabit them! You only grow/heal/talk when inside a host!"))
 
-/datum/antagonist/cortical_borer/on_gain()
-	cortical_owner = owner.current
-	forge_objectives()
-	return ..()
+/datum/antagonist/cortical_borer/get_team()
+	return team
 
 /datum/antagonist/cortical_borer/get_preview_icon()
 	var/icon/preview = icon('icons/mob/borer/borer.dmi', "brainslug")
@@ -68,71 +85,21 @@
 	preview.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 	return preview
 
-/datum/antagonist/cortical_borer/hivemind
-	name = "Hivemind Cortical Borer"
-	roundend_category = "cortical borers"
+/datum/antagonist/cortical_borer/hivemind // Why yes this is specifically here only for token borers, why do you ask?
 	borer_mob_type = /mob/living/basic/cortical_borer/empowered
-
-	/// The team of borers
-	var/datum/team/cortical_borers/borers
-
-/datum/antagonist/cortical_borer/hivemind/forge_objectives()
-	var/datum/objective/custom/borer_objective_produce_eggs = new
-	borer_objective_produce_eggs.explanation_text = "We require [GLOB.objective_egg_borer_number] different borers to produce [GLOB.objective_egg_egg_number] eggs to spread widely in order to increase our chances of survival."
-
-	var/datum/objective/custom/borer_objective_willing_hosts = new
-	borer_objective_willing_hosts.explanation_text = "We require [GLOB.objective_willing_hosts] willing hosts to create a backbone for our continued survival, should our prey attempt to exterminate us."
-
-	var/datum/objective/custom/borer_objective_learn_chemicals = new
-	borer_objective_learn_chemicals.explanation_text = "We need to learn [GLOB.objective_blood_borer] chemicals from the bloodstreams of our hosts to acquire further chemical insight."
-
-	objectives += borer_objective_produce_eggs
-	objectives += borer_objective_willing_hosts
-	objectives += borer_objective_learn_chemicals
-
-/datum/antagonist/cortical_borer/hivemind/create_team(datum/team/cortical_borers/new_team)
-	if(!new_team)
-		for(var/datum/antagonist/cortical_borer/hivemind/borer in GLOB.antagonists)
-			if(!borer.owner)
-				stack_trace("Antagonist datum without owner in GLOB.antagonists: [borer]")
-				continue
-			if(borer.borers)
-				borers = borer.borers
-				return
-		borers = new /datum/team/cortical_borers
-		return
-	if(!istype(new_team))
-		stack_trace("Wrong team type passed to [type] initialization.")
-	borers = new_team
-
-/datum/antagonist/cortical_borer/hivemind/get_team()
-	return borers
 
 /datum/antagonist/cortical_borer/ui_static_data(mob/user)
 	var/list/data = list()
+	var/mob/living/basic/cortical_borer/cortical_owner = owner.current
+	data["ability"] = list()
+	if(!istype(cortical_owner))
+		return data + ..()
+
 	for(var/datum/action/cooldown/borer/ability as anything in cortical_owner.known_abilities)
 		var/list/ability_data = list()
 
 		ability_data["ability_name"] = initial(ability.name)
 		ability_data["ability_explanation"] = initial(ability.ability_explanation)
-/* Temporarily disabled -- Turn dis on once i figure out how to space stuff out properly in the TGUI
-		ability_data["ability_explanation"] += "Restrictions:"
-		if(ability.chemical_cost)
-			ability_data["ability_explanation"] += "<p>-To use this ability we need to use [ability.chemical_cost] of our internally synthesized chemicals. "
-		if(ability.stat_evo_points)
-			ability_data["ability_explanation"] += "-To make effective use of this ability we need to spend [ability.stat_evo_points] evolution points. "
-		if(ability.chemical_evo_points)
-			ability_data["ability_explanation"] += "-We have to use [ability.chemical_evo_points] chemical evolution points to use this ability. "
-
-		if(ability.requires_host)
-			ability_data["ability_explanation"] += "-We require a host to use this ability. "
-		if(ability.needs_living_host)
-			ability_data["ability_explanation"] += "-Our host requires to be alive in order for us to use this ability. "
-		if(ability.needs_dead_host)
-			ability_data["ability_explanation"] += "-Our host must be deceased in order for us to make effective use of this ability. "
-		if(ability.sugar_restricted)
-			ability_data["ability_explanation"] += "-We cannot use this ability when our host is under the effect of a highly dangerous chemical known as \"sugar\". "
-*/
 		ability_data["ability_icon"] = initial(ability.button_icon)
 		ability_data["ability_icon_state"] = initial(ability.button_icon_state)
 
@@ -144,8 +111,3 @@
 	return list(
 		get_asset_datum(/datum/asset/simple/borer_icons),
 	)
-
-
-// Lets the borers see who is a willing host
-/datum/antagonist/cortical_borer/apply_innate_effects(mob/living/mob_override)
-	add_team_hud(mob_override || owner.current)

@@ -17,7 +17,6 @@ export const BorerChem = (props) => {
             <Button
               key="reaction_lookup"
               icon="book"
-              disabled={!data.reagent_holder}
               content="Reaction search"
               tooltip="Look up recipes and reagents!"
               tooltipPosition="bottom-start"
