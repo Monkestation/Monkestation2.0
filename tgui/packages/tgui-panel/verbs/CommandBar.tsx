@@ -75,10 +75,7 @@ function serializeInput(verb: Verb, filled: string[], suffix = ''): string {
   return `${kebab} ${parts.join(' ')}${suffix}`;
 }
 
-function suffixForArg(
-  arg: VerbArg | undefined,
-  isLastArg: boolean,
-): string {
+function suffixForArg(arg: VerbArg | undefined, isLastArg: boolean): string {
   if (!arg) return '';
   if (isTextArg(arg) && !isLastArg) return ' "';
   return ' ';
@@ -576,7 +573,11 @@ export function CommandBar() {
           } else {
             selectVerb(verb);
           }
-        } else if (selectedVerb && displaySuggestions && !isCurrentArgTypepath) {
+        } else if (
+          selectedVerb &&
+          displaySuggestions &&
+          !isCurrentArgTypepath
+        ) {
           selectCurrentSuggestion();
         } else if (selectedVerb) {
           invokeVerb();
@@ -640,10 +641,7 @@ export function CommandBar() {
             serializeInput(
               selectedVerb,
               newFilled,
-              suffixForArg(
-                nextArg,
-                newFilled.length === verbArgs.length - 1,
-              ),
+              suffixForArg(nextArg, newFilled.length === verbArgs.length - 1),
             ),
           );
         }

@@ -1,5 +1,4 @@
 import { storage } from 'common/storage';
-import { fetchRetry } from 'tgui-core/http';
 import {
   ARG_SOURCE_LIST,
   ARG_TYPE_MESSAGE,
@@ -24,6 +23,7 @@ import {
   Table,
   TextArea,
 } from 'tgui-core/components';
+import { fetchRetry } from 'tgui-core/http';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
