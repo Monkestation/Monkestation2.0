@@ -1,3 +1,6 @@
+/// How far away a friend can open a slime's command menu from. Same as how far voice commands carry.
+#define SLIME_COMMAND_MENU_RANGE 7
+
 /**
  * # Obeys Commands Component
  * Manages a list of pet command datums, allowing you to boss it around
@@ -66,7 +69,11 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/living_parent = parent
-	if (IS_DEAD_OR_INCAP(living_parent) || !clicker.can_perform_action(living_parent))
+	// slimes take alt-click orders from across the room, since ur voice doesn't reach into pens
+	var/is_slime = isslime(living_parent)
+	if (IS_DEAD_OR_INCAP(living_parent) || !clicker.can_perform_action(living_parent, is_slime ? BYPASS_ADJACENCY : NONE))
+		return
+	if (is_slime && !can_see(living_parent, clicker, SLIME_COMMAND_MENU_RANGE))
 		return
 	if (!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return // Not our friend, can't boss us around
@@ -88,3 +95,5 @@
 		return
 	var/datum/pet_command/picked_command = available_commands[pick]
 	picked_command.try_activate_command(clicker)
+
+#undef SLIME_COMMAND_MENU_RANGE

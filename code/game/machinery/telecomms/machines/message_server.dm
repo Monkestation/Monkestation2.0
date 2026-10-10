@@ -174,7 +174,7 @@ GLOBAL_VAR(preset_station_message_server_key)
 	source = init_source
 	data = init_data
 	var/turf/T = get_turf(source)
-	levels = SSmapping.get_connected_levels(T)
+	levels = get_telecomms_levels(T)
 	if(!("reject" in data))
 		data["reject"] = TRUE
 

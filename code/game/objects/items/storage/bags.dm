@@ -549,6 +549,7 @@
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/slime_breeding_pellet,
 		/obj/item/slime_extract,
 		/obj/item/slimecross,
 		/obj/item/slimepotion,

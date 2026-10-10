@@ -48,3 +48,21 @@
 		var/dy = end.yi - start.yi
 		return round(delta_to_angle(dy, dx))
 	return null
+
+/// Connected levels, plus the ones a warped room's runes open onto.
+/proc/get_telecomms_levels(turf/position) as /list
+	var/list/levels = SSmapping.get_connected_levels(position)
+	var/datum/warped_room/room = get_warped_room(position)
+	if(!room)
+		return levels
+	levels = levels.Copy()
+	for(var/rune_level in room.rune_levels())
+		levels |= SSmapping.get_connected_levels(rune_level)
+	return levels
+
+/// Whether the turf is in a warped room with a rune on any of these levels.
+/proc/warped_room_in_levels(turf/position, list/levels)
+	var/datum/warped_room/room = get_warped_room(position)
+	if(!room)
+		return FALSE
+	return length(room.rune_levels() & levels) > 0

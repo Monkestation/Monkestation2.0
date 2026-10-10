@@ -4,6 +4,9 @@
 	. = ..()
 	if (succeeded != MOVELOOP_FAILURE)
 		return
+	var/datum/move_loop/has_target/dist_bound/loop = source
+	if (get_dist(loop.moving, loop.target) <= loop.distance)
+		return
 	var/datum/ai_controller/controller = source.extra_info
 	stop_moving_towards(controller)
 	controller.change_ai_movement_type(/datum/ai_movement/jps/adaptive) // we failed? it's JPS time
@@ -12,6 +15,8 @@
 
 /datum/ai_movement/jps/adaptive/post_move(datum/move_loop/source, succeeded)
 	. = ..()
+	if (succeeded != MOVELOOP_SUCCESS)
+		return
 	var/datum/move_loop/has_target/jps/loop = source
 	if(length(loop.movement_path))
 		return

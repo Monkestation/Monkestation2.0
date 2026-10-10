@@ -104,19 +104,20 @@ Chilling extracts:
 	effect_desc = "Removes all plasma gas in the area."
 
 /obj/item/slimecross/chilling/darkpurple/do_effect(mob/user)
-	var/area/A = get_area(get_turf(user))
-	if(A.outdoors)
+	var/area/area = get_area(get_turf(user))
+	if(area.outdoors)
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	var/filtered = FALSE
-	for(var/turf/open/T in A.get_turfs_from_all_zlevels())
-		var/datum/gas_mixture/G = T.air
-		if(istype(G))
-			G.assert_gas(/datum/gas/plasma)
-			G.moles[/datum/gas/plasma] = 0
-			filtered = TRUE
-			G.garbage_collect()
-			T.air_update_turf(FALSE, FALSE)
+	for(var/turf/open/turf in area.get_turfs_from_all_zlevels())
+		var/datum/gas_mixture/air = turf.air
+		if(!turf.air)
+			continue
+		air.assert_gas(/datum/gas/plasma)
+		air.moles[/datum/gas/plasma] = 0
+		filtered = TRUE
+		air.garbage_collect()
+		turf.air_update_turf(FALSE, FALSE)
 	if(filtered)
 		user.visible_message(span_notice("Cracks spread throughout [src], and some air is sucked in!"))
 	else
@@ -240,7 +241,7 @@ Chilling extracts:
 	var/slimesfound = FALSE
 	for(var/mob/living/basic/slime/S in view(get_turf(user), 7))
 		slimesfound = TRUE
-		S.add_trait(/datum/slime_trait/docility)
+		S.set_pacified_behavior()
 	if(slimesfound)
 		user.visible_message(span_notice("[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm."))
 	else
