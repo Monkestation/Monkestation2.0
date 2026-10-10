@@ -119,6 +119,8 @@ SUBSYSTEM_DEF(gamemode)
 	/// Are we able to run roundstart events
 	var/can_run_roundstart = TRUE
 	var/list/triggered_round_events = list()
+	/// Cooldown between latejoiners being made into antags
+	COOLDOWN_DECLARE(latejoin_antag_cooldown)
 
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
@@ -249,30 +251,34 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Gets candidates for antagonist roles.
 /datum/controller/subsystem/gamemode/proc/get_candidates(role, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, \
-														midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles)
+														midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles, list/candidate_pool)
 	var/list/candidates = list()
 	var/list/candidate_candidates = list() //lol
-	//should refactor this to use caching of whos valid for a given role
-	for(var/mob/player as anything in GLOB.player_list)
-		if(QDELETED(player) || player.mind?.picking)
-			continue
-		if(ready_newplayers && isnewplayer(player))
-			var/mob/dead/new_player/new_player = player
-			if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())
+	// avoid bullshit involving arrivals shuttle not being on-station
+	if(!isnull(candidate_pool))
+		candidate_candidates = candidate_pool
+	else
+		//should refactor this to use caching of whos valid for a given role
+		for(var/mob/player as anything in GLOB.player_list)
+			if(QDELETED(player))
+				continue
+			if(ready_newplayers && isnewplayer(player))
+				var/mob/dead/new_player/new_player = player
+				if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())
+					candidate_candidates += player
+			else if(observers && isobserver(player))
 				candidate_candidates += player
-		else if(observers && isobserver(player))
-			candidate_candidates += player
-		else if(living_players && isliving(player))
-			if(!ishuman(player) && !isAI(player))
-				continue
-			// I split these checks up to make the code more readable ~Lucy
-			var/is_on_station = is_station_level(player.z)
-			if(!is_on_station && !is_late_arrival(player))
-				continue
-			candidate_candidates += player
+			else if(living_players && isliving(player))
+				if(!ishuman(player) && !isAI(player))
+					continue
+				// I split these checks up to make the code more readable ~Lucy
+				var/is_on_station = is_station_level(player.z)
+				if(!is_on_station && !is_late_arrival(player))
+					continue
+				candidate_candidates += player
 
 	for(var/mob/candidate as anything in candidate_candidates)
-		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
+		if(QDELETED(candidate) || candidate.mind?.picking || !candidate.key || !candidate.client || (!observers && !candidate.mind))
 			continue
 		if(!observers)
 			if(isliving(candidate) && !HAS_MIND_TRAIT(candidate, TRAIT_JOINED_AS_CREW))
