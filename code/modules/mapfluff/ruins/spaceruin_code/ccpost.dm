@@ -1225,36 +1225,26 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 // DISPLAY NOTIFICATIONS
 
 /datum/ccpost_sector_network/proc/notify_registered_displays(spoken_message = null, urgent = FALSE, sound_volume = 0, physical_message = null)
-	var/obj/machinery/status_display/ccpost_remote_status/announcer
-
 	for(var/obj/machinery/status_display/ccpost_remote_status/display as anything in registered_displays)
 		if(QDELETED(display))
 			continue
 
 		SStgui.update_uis(display)
 
-		if(!announcer && !(display.machine_stat & (NOPOWER | BROKEN)))
-			announcer = display
+		if(display.machine_stat & (NOPOWER | BROKEN))
+			continue
 
-	if(!announcer)
-		return
+		if(sound_volume > 0)
+			playsound(display, 'sound/machines/terminal_alert.ogg', vol = sound_volume, vary = !urgent)
 
-	if(sound_volume > 0)
-		playsound(
-			announcer,
-			'sound/machines/terminal_alert.ogg',
-			vol = sound_volume,
-			vary = !urgent
-		)
+		if(physical_message)
+			if(urgent)
+				display.visible_message(span_warning("[display] [physical_message]"))
+			else
+				display.visible_message(span_notice("[display] [physical_message]"))
 
-	if(physical_message)
-		if(urgent)
-			announcer.visible_message(span_warning("[announcer] [physical_message]"))
-		else
-			announcer.visible_message(span_notice("[announcer] [physical_message]"))
-
-	if(spoken_message)
-		announcer.say(spoken_message)
+		if(spoken_message)
+			display.say(spoken_message)
 
 // SECTOR NOTICE HANDLING
 
