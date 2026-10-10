@@ -64,7 +64,7 @@
 	/// The list we compile at the end if successful to pass back
 	var/list/path
 	///An assoc list that serves as the closed list. Key is the turf, points to true if we've seen it before
-	var/list/found_turfs
+	var/alist/found_turfs
 
 	/// How far away we have to get to the end target before we can call it quits
 	var/mintargetdist = 0
@@ -85,7 +85,7 @@
 	src.diagonal_handling = diagonal_handling
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
-	found_turfs = list()
+	found_turfs = alist()
 
 /datum/pathfind/jps/Destroy(force)
 	. = ..()

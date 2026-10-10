@@ -455,7 +455,7 @@
 			return TRUE
 	return FALSE
 
-/turf/open/get_heuristic_slowdown(mob/traverser, travel_dir)
+/turf/open/get_heuristic_slowdown()
 	. = ..()
 	if(slowdown)
 		. += slowdown * 10

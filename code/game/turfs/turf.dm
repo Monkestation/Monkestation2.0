@@ -528,14 +528,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
-//  This Distance proc assumes that only cardinal movement is
-//  possible. It results in more efficient (CPU-wise) pathing
-//  for bots and anything else that only moves in cardinal dirs.
-/turf/proc/Distance_cardinal(turf/T)
-	if(!src || !T)
-		return FALSE
-	return abs(x - T.x) + abs(y - T.y)
-
 ////////////////////////////////////////////////////
 
 /turf/singularity_act()
@@ -817,20 +809,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /// Returns an additional distance factor based on slowdown and other factors.
-/turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
+/// A* adds this for both turfs of every step, see ASTAR_STEP_COST.
+/turf/proc/get_heuristic_slowdown()
 	. = astar_weight
 	var/area/current_area = loc
 	if(current_area?.astar_weight)
 		. += current_area.astar_weight
-
-// Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
-/turf/proc/heuristic_cardinal(turf/T, mob/traverser)
-	var/travel_dir = get_dir(src, T)
-	. = Distance_cardinal(T, traverser) + get_heuristic_slowdown(traverser, travel_dir) + T.get_heuristic_slowdown(traverser, travel_dir)
-
-/// A 3d-aware version of heuristic_cardinal that just... adds the Z-axis distance with a multiplier.
-/turf/proc/heuristic_cardinal_3d(turf/T, mob/traverser)
-	return heuristic_cardinal(T, traverser) + abs(z - T.z) * 5 // Weight z-level differences higher so that we try to change Z-level sooner
 
 /**Shake() and then explode a turf based on the passed vars
  * shake_duration: how long to shake the turf for before calling explosion()
