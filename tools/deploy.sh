@@ -48,3 +48,6 @@ cp -r monkestation/code/* $1/monkestation/code/
 if [ "$(uname -o)" = "Msys" ]; then
   cp ./*.dll $1/
 fi
+
+cp ./libdmeow.so $1/
+cp ./dmeow_sleep_verdicts.txt $1/

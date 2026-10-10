@@ -20,6 +20,10 @@ on:
       max_required_byond_client:
         required: true
         type: string
+      dmeow:
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   run_integration_tests:
@@ -28,8 +32,8 @@ jobs:
     #
     # Otherwise, it will output `Run Tests (map; max)`.
     # For example, `Run Tests (runtimestation; 515)`.
-    name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
-    runs-on: ubuntu-latest
+    name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }}${{ inputs.dmeow == false && '; no JIT' || '' }})
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
@@ -64,13 +68,32 @@ jobs:
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh "${{ inputs.map }}" "${{ inputs.map_config }}"
+        env:
+          DMEOW: ${{ inputs.dmeow && '1' || '0' }}
+      # skipped on the no-JIT round: compare_screenshots would treat a second
+      # set from the same map as coming from a different one
       - name: Upload screenshot tests
-        if: always()
+        if: always() && inputs.dmeow
         uses: actions/upload-artifact@v4
         with:
           name: test_artifacts_${{ inputs.map }}_${{ inputs.major || env.BYOND_MAJOR }}_${{ inputs.minor || env.BYOND_MINOR }}
           path: data/screenshots_new/
           retention-days: 1
+      - name: Write dmeow stats to the step summary
+        if: always()
+        run: |
+          echo "## dmeow stats (${{ inputs.map }}${{ inputs.dmeow == false && ', no JIT' || '' }})" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat ci_test/data/logs/ci/dmeow_stats.txt >> $GITHUB_STEP_SUMMARY || echo "no stats file written" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+      - name: Upload dmeow debug log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dmeow_debug_${{ inputs.map }}_${{ inputs.major || env.BYOND_MAJOR }}_${{ inputs.minor || env.BYOND_MINOR }}${{ inputs.dmeow == false && '_nojit' || '' }}
+          path: ci_test/data/logs/ci/
+          retention-days: 7
+          if-no-files-found: warn
       - name: On test fail, write a step summary
         if: always() && steps.run_tests.outcome == 'failure'
         run: |
