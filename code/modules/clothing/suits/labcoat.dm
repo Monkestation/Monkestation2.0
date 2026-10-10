@@ -156,7 +156,12 @@
 		destroy_on_removal = FALSE,\
 		parent_icon_state_suffix = "",\
 		down_overlay_state_suffix = "", \
+		overslot_check = CALLBACK(src, PROC_REF(can_overslot)),\
 	)
+
+/// Override to disable overslotting.
+/obj/item/clothing/suit/toggle/labcoat/paramedic/deforest/proc/can_overslot(obj/item/hat)
+	return TRUE
 
 /obj/item/clothing/head/hooded/winterhood/medical/deforest
 	name = "Deforest Hood"

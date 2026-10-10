@@ -29,6 +29,7 @@
 		on_created = CALLBACK(src, PROC_REF(on_hood_created)),\
 		on_deployed = CALLBACK(src, PROC_REF(on_hood_up)),\
 		on_removed = CALLBACK(src, PROC_REF(on_hood_down)),\
+		overslot_check = CALLBACK(src, PROC_REF(can_overslot)),\
 	)
 
 /obj/item/clothing/suit/hooded/Destroy()
@@ -44,6 +45,10 @@
 
 /// Override to only create the hood conditionally
 /obj/item/clothing/suit/hooded/proc/can_create_hood()
+	return TRUE
+
+/// Override to disable overslotting.
+/obj/item/clothing/suit/hooded/proc/can_overslot(obj/item/hat)
 	return TRUE
 
 /// Called when the hood is instantiated
