@@ -812,3 +812,62 @@
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
+
+// Central Command Liaison Outpost
+/area/ruin/space/has_grav/ccpost
+	name = "Central Command Liaison Outpost"
+
+/area/ruin/space/has_grav/ccpost/lobby
+	name = "Central Command Liaison Outpost Lobby"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/boardroom
+	name = "Central Command Liaison Outpost Boardroom"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/commsroom
+	name = "Central Command Liaison Outpost Communications"
+	ambience_index = AMBIENCE_ENGI
+
+/area/ruin/space/has_grav/ccpost/centralhallway
+	name = "Central Command Liaison Outpost Central Hallway"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/quarters
+	name = "Central Command Liaison Outpost Quarters"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/office
+	name = "Central Command Liaison Outpost Office"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/medbay
+	name = "Central Command Liaison Outpost Medbay"
+	ambience_index = AMBIENCE_MEDICAL
+
+/area/ruin/space/has_grav/ccpost/engineering
+	name = "Central Command Liaison Outpost Engineering"
+	ambience_index = AMBIENCE_ENGI
+
+/area/ruin/space/has_grav/ccpost/breakroom
+	name = "Central Command Liaison Outpost Breakroom"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/cafeteria
+	name = "Central Command Liaison Outpost Cafeteria"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/maintenance
+	name = "Central Command Liaison Outpost Maintenance"
+	ambience_index = AMBIENCE_MAINT
+
+/area/ruin/space/solars/ccpost/solars
+	name = "Central Command Liaison Outpost Solars"
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	sound_environment = SOUND_AREA_SPACE
+
+/area/ruin/space/has_grav/ccpost/asteroid
+	name = "Central Command Liaison Outpost Exterior"
+	sound_environment = SOUND_AREA_SPACE
+	area_flags = AREA_USES_STARLIGHT
