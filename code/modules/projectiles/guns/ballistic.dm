@@ -499,7 +499,7 @@
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	suppressed = S
-	if (w_class + S.w_class <= WEIGHT_CLASS_BULKY)
+	if (w_class + S.w_class < WEIGHT_CLASS_BULKY)
 		update_weight_class(w_class + S.w_class) //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
