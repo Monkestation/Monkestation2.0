@@ -163,7 +163,6 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/machinery/status_display/evac/directional/east,
 /obj/item/toy/figure/dsquad{
 	pixel_x = -7
 	},
@@ -369,7 +368,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/status_display/ccpost_remote_status/directional/east,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/ccpost/office)
 "fa" = (
@@ -941,11 +940,11 @@
 /turf/open/floor/grass,
 /area/space)
 "kt" = (
-/obj/structure/railing/wood{
+/obj/machinery/light/directional/south,
+/obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/flora/biolumi/mine/weaklight,
-/obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/ccpost/medbay)
 "kz" = (
@@ -1051,6 +1050,7 @@
 	pixel_x = -5
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/status_display/ccpost_remote_status/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/ccpost/office)
 "lF" = (
@@ -1177,6 +1177,7 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/hedge,
+/obj/machinery/status_display/ccpost_remote_status/directional/north,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "nu" = (
@@ -1258,6 +1259,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "oE" = (
@@ -2118,10 +2120,10 @@
 /area/ruin/space/has_grav/ccpost/office)
 "yQ" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/machinery/status_display/evac/directional/east,
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/ccpost/office)
 "yS" = (
@@ -2179,6 +2181,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/machinery/status_display/ccpost_remote_status/directional/east,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "zA" = (
@@ -2225,6 +2228,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "zW" = (
@@ -2288,7 +2292,7 @@
 /obj/effect/turf_decal/siding/dark/end{
 	dir = 8
 	},
-/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/status_display/ccpost_remote_status/directional/west,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/commsroom)
 "BG" = (
@@ -2502,6 +2506,7 @@
 	pixel_y = 12
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/office)
 "Fb" = (
@@ -3057,6 +3062,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/engineering)
+"Ll" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/breakroom)
 "Ln" = (
 /turf/open/floor/iron/dark/corner{
 	dir = 8
@@ -3451,6 +3463,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/machinery/status_display/evac/directional/south,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "Pn" = (
@@ -3837,6 +3851,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "TD" = (
@@ -3882,6 +3897,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/box/lights/tubes,
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/space/has_grav/ccpost/engineering)
 "TY" = (
@@ -4177,6 +4193,7 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/status_display/ccpost_remote_status/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "XJ" = (
@@ -4277,6 +4294,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "Zp" = (
@@ -4972,7 +4990,7 @@ hQ
 in
 Ie
 LX
-jI
+Ll
 LF
 GA
 Sd
