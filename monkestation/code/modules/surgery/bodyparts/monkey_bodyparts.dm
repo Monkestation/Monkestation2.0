@@ -45,6 +45,11 @@
 		feature_key = OFFSET_BELT,
 		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1)
 	)
+	worn_neck_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_NECK,
+		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1)
+	)
 	return ..()
 
 /obj/item/bodypart/arm/left/monkey

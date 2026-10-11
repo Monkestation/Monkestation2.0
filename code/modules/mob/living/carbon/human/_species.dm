@@ -750,6 +750,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			//MONKESTATION EDITS END
 
 	if(standing.len)
+		for(var/image/overlay in standing)
+			species_human.apply_height(overlay, ENTIRE_BODY)
 		species_human.overlays_standing[BODY_LAYER] = standing
 
 	species_human.apply_overlay(BODY_LAYER)
@@ -857,12 +859,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = source.dna.features["animehalocolor"]
 				else
 					accessory_overlay.color = forced_colour
-			standing += accessory_overlay
+			var/list/accessory_overlays = list(accessory_overlay)
 			if(accessory.is_emissive)
-				standing += emissive_appearance_copy(accessory_overlay, source)
+				accessory_overlays += emissive_appearance_copy(accessory_overlay, source)
 
 			if(length(accessory.body_slots) || length(accessory.external_slots) || istype(source, /mob/living/carbon/human/dummy/extra_tall))
-				standing += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
+				accessory_overlays += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
 
 			if(accessory.hasinner)
 				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
@@ -874,9 +876,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(accessory.center)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
 
-				standing += inner_accessory_overlay
+				accessory_overlays += inner_accessory_overlay
 				if(accessory.is_emissive)
-					standing += emissive_appearance_copy(accessory_overlay, source)
+					accessory_overlays += emissive_appearance_copy(accessory_overlay, source)
+
+			var/body_area = (bodypart == "ears" || bodypart == "caps") ? UPPER_BODY : ENTIRE_BODY
+			for(var/image/overlay in accessory_overlays)
+				source.apply_height(overlay, body_area)
+			standing += accessory_overlays
 
 		source.overlays_standing[layer] = standing.Copy()
 		standing = list()

@@ -261,7 +261,7 @@
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "sweatdrop", pixel_x = 10, pixel_y = 10)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+		human_user.apply_height(emote_animation, UPPER_BODY)
 	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
 	playsound(user, 'sound/effects/sweatdrop.ogg', vol = 50, vary = TRUE)
 
@@ -277,7 +277,7 @@
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "annoyed", pixel_x = 10, pixel_y = 10)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+		human_user.apply_height(emote_animation, UPPER_BODY)
 	flick_overlay_global(emote_animation, GLOB.clients, 5 SECONDS)
 	playsound(user, 'sound/effects/annoyed.ogg', vol = 50, vary = TRUE)
 
@@ -294,7 +294,7 @@
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "realize", pixel_x = 10, pixel_y = 15)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+		human_user.apply_height(emote_animation, UPPER_BODY)
 	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
 	playsound(user, 'sound/effects/realize.ogg', vol = 50, vary = TRUE)
 
@@ -310,7 +310,7 @@
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "question", pixel_x = 10, pixel_y = 15)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+		human_user.apply_height(emote_animation, UPPER_BODY)
 	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
 	playsound(user, 'sound/effects/question.ogg', vol = 50, vary = TRUE)
 
@@ -326,6 +326,6 @@
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "exclaim", pixel_x = 10, pixel_y = 15)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+		human_user.apply_height(emote_animation, UPPER_BODY)
 	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
 	playsound(user, 'sound/machines/chime.ogg', vol = 35, vary = TRUE)
