@@ -40,9 +40,9 @@
 	data["maxEnergy"] = cortical_owner.max_chemical_storage / CHEMICALS_PER_UNIT
 	data["borerTransferAmounts"] = available_injection_amounts
 	data["onCooldown"] = !COOLDOWN_FINISHED(src, injection_cooldown)
-	data["notEnoughChemicals"] = ((injection_amount * CHEMICALS_PER_UNIT) > cortical_owner.chemical_storage) ? TRUE : FALSE
+	data["notEnoughChemicals"] = ((injection_amount * CHEMICALS_PER_UNIT) > cortical_owner.chemical_storage)
 
-	var/chemicals[0]
+	var/list/chemicals = list()
 	for(var/reagent in known_chemicals)
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[reagent]
 		if(temp)
@@ -61,10 +61,14 @@
 			var/target = text2num(params["target"])
 			if(target in available_injection_amounts)
 				injection_amount = target
-				. = TRUE
+				return TRUE
+
 		if("inject")
 			if(!IsAvailable(TRUE) || !COOLDOWN_FINISHED(src, injection_cooldown))
 				return
+			if(cortical_owner.chemical_storage < injection_amount * CHEMICALS_PER_UNIT)
+				return
+
 			var/reagent_name = params["reagent"]
 			var/reagent = GLOB.name2reagent[reagent_name]
 			if(!known_chemicals.Find(reagent))
@@ -81,7 +85,8 @@
 			var/logging_text = "[key_name(cortical_owner)] injected [key_name(cortical_owner.human_host)] with [reagent_name] at [loc_name(human_turf)]"
 			cortical_owner.log_message(logging_text, LOG_GAME)
 			cortical_owner.human_host.log_message(logging_text, LOG_GAME)
-			. = TRUE
+			return TRUE
+
 		if("reaction_lookup")
 			if(!iscorticalborer(usr))
 				return

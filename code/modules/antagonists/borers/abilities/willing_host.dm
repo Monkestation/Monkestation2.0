@@ -11,7 +11,7 @@
 	With enough willing hosts will make your evolution and chemical points accumulate quicker.\n\
 	"
 
-/datum/action/cooldown/borer/willing_host/IsAvailable(feedback)
+/datum/action/cooldown/borer/willing_host/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return

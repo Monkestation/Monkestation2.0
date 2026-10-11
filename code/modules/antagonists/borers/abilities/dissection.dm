@@ -10,7 +10,7 @@
 	If successful, the rate at which one produces chemicals and evolution points \n\
 	"
 
-/datum/action/cooldown/borer/dissection/IsAvailable(feedback)
+/datum/action/cooldown/borer/dissection/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return

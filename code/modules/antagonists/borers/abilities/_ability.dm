@@ -51,7 +51,7 @@
 			RegisterSignal(grant_to, COMSIG_SUGAR_CHANGED, PROC_REF(update_status_on_signal))
 
 /// Use for conditions that can be properly expected and you can update with a signal/by directly calling build_all_button_icons(UPDATE_BUTTON_STATUS)
-/datum/action/cooldown/borer/IsAvailable(feedback)
+/datum/action/cooldown/borer/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return

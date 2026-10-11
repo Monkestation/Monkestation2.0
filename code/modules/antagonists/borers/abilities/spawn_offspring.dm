@@ -13,7 +13,7 @@
 	Be carefull as the egg is fragile and can be broken very easily by any human, along with being extremelly noticable\n\
 	"
 
-/datum/action/cooldown/borer/produce_offspring/IsAvailable(feedback)
+/datum/action/cooldown/borer/produce_offspring/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -97,7 +97,7 @@
 	If the egg hatches, a massivelly stronger than normal borer will be created. Surpassing all others.\n\
 	"
 
-/datum/action/cooldown/borer/empowered_offspring/IsAvailable(feedback)
+/datum/action/cooldown/borer/empowered_offspring/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return

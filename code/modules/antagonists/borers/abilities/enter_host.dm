@@ -107,6 +107,7 @@
 	ADD_TRAIT(user, TRAIT_WEATHER_IMMUNE, "borer_in_host")
 	StartCooldown()
 
+/// Checks if the provided mob is a host we can enter
 /datum/action/cooldown/borer/choosing_host/proc/valid_host(mob/living/carbon/target)
 	if(!ishuman(target)) // No non-human hosts
 		to_chat(owner, span_warning("[target] is not a human!"))

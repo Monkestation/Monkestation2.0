@@ -42,7 +42,7 @@
 		/datum/reagent/toxin/mindbreaker,
 	)
 
-/datum/action/cooldown/borer/upgrade_chemical/IsAvailable(feedback)
+/datum/action/cooldown/borer/upgrade_chemical/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
