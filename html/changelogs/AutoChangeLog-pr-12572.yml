@@ -1,4 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - refactor: "ported the TG fixes of the Portable Chemical Mixer, allowing it to properly mix chemicals again."
