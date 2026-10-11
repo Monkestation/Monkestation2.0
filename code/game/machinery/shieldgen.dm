@@ -417,6 +417,7 @@
 		if(F && (F.gen_primary == src || F.gen_secondary == src)) //it's ours, kill it.
 			qdel(F)
 
+/// Checks if we can connect to the provided generator
 /obj/machinery/power/shieldwallgen/proc/can_connect(obj/machinery/power/shieldwallgen/gen)
 	if(!gen.active)
 		return FALSE

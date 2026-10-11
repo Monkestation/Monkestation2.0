@@ -208,6 +208,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/spawner/lavabase_spawner)
 		CRASH("[src] tried initializing on non-mapload, this should never happen.")
 	INVOKE_ASYNC(src, PROC_REF(load))
 
+/// Loads the lavaland base
 /obj/effect/spawner/lavabase_spawner/proc/load()
 	var/datum/map_template/lava_base/chosen_base = /datum/map_template/lava_base
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_LAVALAND))

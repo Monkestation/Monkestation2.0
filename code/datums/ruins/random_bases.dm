@@ -3,6 +3,7 @@
 /datum/map_template/lava_base
 	name = "TG lavaland base"
 	mappath = BASE_PATH + "lavabase_tg.dmm" // "[BASE_PATH]lavabase_tg.dmm" is considered non-constant </3
+	should_place_on_top = FALSE
 
 /datum/map_template/lava_base/bee
 	name = "Bee lavaland base"
