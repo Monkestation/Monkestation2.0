@@ -8,7 +8,7 @@
 	medical_record_text = "Patient has a metabolism that captures calories from unknown sources."
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
 	maximum_process_stat = DEAD
-	species_blacklist = list(SPECIES_OOZELING)
+	species_blacklist = list(SPECIES_IPC, SPECIES_ETHEREAL, SPECIES_OOZELING)
 
 /datum/quirk/fat/process(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(quirk_holder, TRAIT_STASIS) || quirk_holder.stat == DEAD)
