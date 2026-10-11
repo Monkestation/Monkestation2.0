@@ -143,7 +143,8 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
-	light_outer_range = 3
+	light_outer_range = 4
+	light_power = 1.4
 	light_color = LIGHT_COLOR_CYAN
 	light_on = TRUE
 
@@ -454,7 +455,7 @@
 			return TRUE
 	return FALSE
 
-/turf/open/get_heuristic_slowdown(mob/traverser, travel_dir)
+/turf/open/get_heuristic_slowdown()
 	. = ..()
 	if(slowdown)
 		. += slowdown * 10

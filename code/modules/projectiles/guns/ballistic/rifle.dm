@@ -181,6 +181,8 @@
 	can_misfire = FALSE
 	can_be_sawn_off = FALSE
 	projectile_damage_multiplier = 0.75
+	has_manufacturer = FALSE
+
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_y = 11)
@@ -188,9 +190,6 @@
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
-
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/give_manufacturer_examine()
-	return
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"

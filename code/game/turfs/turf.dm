@@ -528,14 +528,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
-//  This Distance proc assumes that only cardinal movement is
-//  possible. It results in more efficient (CPU-wise) pathing
-//  for bots and anything else that only moves in cardinal dirs.
-/turf/proc/Distance_cardinal(turf/T)
-	if(!src || !T)
-		return FALSE
-	return abs(x - T.x) + abs(y - T.y)
-
 ////////////////////////////////////////////////////
 
 /turf/singularity_act()
@@ -702,21 +694,28 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (purge_ratio && iscarbon(M))
 		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
-/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
-	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/owner, obj/effect/decal/cleanable/vomit/vomit, purge_ratio = 0.1)
+	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
+
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
-	belly.reagents.trans_to(V, chemicals_lost, transferred_by = M)
-	//clear the stomach of anything even not food
+	if (vomit.reagents)
+		vomit.reagents.maximum_volume += chemicals_lost
+	else
+		vomit.create_reagents(chemicals_lost)
+
+	belly.reagents.trans_to(vomit, chemicals_lost, transferred_by = owner)
+	// Clear the stomach of anything even not food
 	for(var/bile in belly.reagents.reagent_list)
 		var/datum/reagent/reagent = bile
 		if(!belly.food_reagents[reagent.type])
 			belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
-		else
-			var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
-			if(bit_vol > 0)
-				belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
+			continue
+
+		var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
+		if(bit_vol > 0)
+			belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
@@ -810,20 +809,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /// Returns an additional distance factor based on slowdown and other factors.
-/turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
+/// A* adds this for both turfs of every step, see ASTAR_STEP_COST.
+/turf/proc/get_heuristic_slowdown()
 	. = astar_weight
 	var/area/current_area = loc
 	if(current_area?.astar_weight)
 		. += current_area.astar_weight
-
-// Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
-/turf/proc/heuristic_cardinal(turf/T, mob/traverser)
-	var/travel_dir = get_dir(src, T)
-	. = Distance_cardinal(T, traverser) + get_heuristic_slowdown(traverser, travel_dir) + T.get_heuristic_slowdown(traverser, travel_dir)
-
-/// A 3d-aware version of heuristic_cardinal that just... adds the Z-axis distance with a multiplier.
-/turf/proc/heuristic_cardinal_3d(turf/T, mob/traverser)
-	return heuristic_cardinal(T, traverser) + abs(z - T.z) * 5 // Weight z-level differences higher so that we try to change Z-level sooner
 
 /**Shake() and then explode a turf based on the passed vars
  * shake_duration: how long to shake the turf for before calling explosion()

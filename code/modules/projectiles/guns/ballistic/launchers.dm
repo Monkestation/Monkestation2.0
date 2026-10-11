@@ -228,10 +228,6 @@
 	drop_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_drop.ogg'
 	pickup_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_pickup.ogg'
 
-/obj/item/gun/ballistic/shotgun/china_lake/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 10, force_wielded = 10)
-
 /obj/item/gun/ballistic/shotgun/china_lake/examine(mob/user)
 	. = ..()
 	. += span_notice("The leaf sight is set for: <b>[target_range] tiles</b>.")

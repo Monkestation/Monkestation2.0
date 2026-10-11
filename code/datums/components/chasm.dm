@@ -47,8 +47,10 @@
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
 		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
+	else if(HAS_TRAIT(parent, TRAIT_CHASM_STOPPED)) // The lattice initialized before we could set our signals
+		on_chasm_stopped(parent)
 	var/turf/turf_parent = parent
-	if(!istype(turf_parent.loc, /area/deathmatch/fullbright)) // there are so so so many explosives in deathmatch and i dont think anyone is going to fish in the *death*match arena
+	if(!istype(turf_parent.loc, /area/deathmatch)) // there are so so so many explosives in deathmatch and i dont think anyone is going to fish in the *death*match arena
 		parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
 
 /datum/component/chasm/UnregisterFromParent()
@@ -141,6 +143,7 @@
 		return // We're already handling this
 
 	if(SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_CHASM_DROPPED, parent) & COMPONENT_NO_CHASM_DROP)
+		falling_atoms -= falling_ref
 		return
 
 	// Free (if possible) and drop all buckled mobs separately, so drivers can escape their doomed vehicle if they're not glued to it
@@ -196,6 +199,7 @@
 		storage = (locate() in parent) || new(parent)
 
 	if(storage.contains(dropped_thing))
+		falling_atoms -= falling_ref
 		return
 
 	dropped_thing.alpha = oldalpha

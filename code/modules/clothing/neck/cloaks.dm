@@ -1,7 +1,8 @@
 /obj/item/clothing/neck/polycloak
 	name = "Polycloak"
 	desc = "A cloak made for civilian use, capable of being colored."
-	icon_state = "cloak"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("cloak", "/obj/item/clothing/neck/polycloak")
 	worn_icon_state = "Wcloak"
 	greyscale_config = /datum/greyscale_config/polycloak
 	greyscale_config_worn = /datum/greyscale_config/polycloak_worn
@@ -11,7 +12,8 @@
 /obj/item/clothing/neck/boatcloak
 	name = "Boat Cloak"
 	desc = "A waterproof cloak meant to be worn on seabound vessels to protect clothing from the seawater."
-	icon_state = "boatcloak"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("boatcloak", "/obj/item/clothing/neck/boatcloak")
 	worn_icon_state = "wboatcloak"
 	greyscale_config = /datum/greyscale_config/boatcloak
 	greyscale_config_worn = /datum/greyscale_config/boatcloak_worn
@@ -142,7 +144,8 @@
 /obj/item/clothing/neck/admincloak
 	name = "admin cloak"
 	desc = "Weh!"
-	icon_state = "admincloak"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("admincloak", "/obj/item/clothing/neck/admincloak")
 	worn_icon_state = "wadmincloak"
 	greyscale_config = /datum/greyscale_config/admincloak
 	greyscale_config_worn = /datum/greyscale_config/admincloak_worn
@@ -253,12 +256,10 @@
 /obj/item/clothing/neck/linjacket
 	name = "ornate coat"
 	desc = "You'll hold this weight."
-	icon = 'icons/obj/clothing/necks.dmi'
-	worn_icon = 'icons/mob/clothing/neck.dmi'
-	icon_state = "linjacket"
-	worn_icon_state = "linjacket"
+	icon = 'icons/map_icons/clothing/neck.dmi'
+	SETUP_MAP_ICONS("linjacket", "/obj/item/clothing/neck/linjacket")
 	greyscale_config = /datum/greyscale_config/linjacket
-	greyscale_config_worn = /datum/greyscale_config/linjacket_worn
+	greyscale_config_worn = /datum/greyscale_config/linjacket/worn
 	greyscale_colors = "#283c55#c4c36d"
 	flags_1 = IS_PLAYER_COLORABLE_1
 

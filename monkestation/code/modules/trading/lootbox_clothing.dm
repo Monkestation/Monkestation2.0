@@ -17,18 +17,30 @@
 	name = "fishing hat"
 	add_element = FALSE
 
+/obj/item/clothing/head/beanie/durathread/lootbox
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
 //versions of clothing with low armor to get given by lootboxes
 /obj/item/clothing/head/beanie/durathread/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
 
+/obj/item/clothing/head/beret/durathread/lootbox
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
 /obj/item/clothing/head/beret/durathread/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
 
+/obj/item/clothing/head/beret/sec/lootbox
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
 /obj/item/clothing/head/beret/sec/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
+
+/obj/item/clothing/head/caphat/beret/lootbox
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/head/caphat/beret/lootbox/Initialize(mapload)
 	. = ..()
@@ -86,6 +98,9 @@
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
 
+/obj/item/clothing/head/hats/hos/beret/lootbox
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+
 /obj/item/clothing/head/hats/hos/beret/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
@@ -137,6 +152,9 @@
 /obj/item/clothing/head/wizard/black/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
+
+/obj/item/clothing/head/wizard/marisa/lootbox
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/head/wizard/marisa/lootbox/Initialize(mapload)
 	. = ..()

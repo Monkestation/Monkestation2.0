@@ -127,48 +127,6 @@
 	hud_trait = TRAIT_SECURITY_HUD
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
-/obj/item/clothing/glasses/hud/security/chameleon
-	name = "chameleon security HUD"
-	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
-	flash_protect = FLASH_PROTECTION_FLASH
-
-	// Yes this code is the same as normal chameleon glasses, but we don't
-	// have multiple inheritance, okay?
-	var/datum/action/item_action/chameleon/change/chameleon_action
-	action_slots = ALL
-
-/obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/glasses
-	chameleon_action.chameleon_name = "Glasses"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-// MONKESTATION ADDITION START
-/obj/item/clothing/glasses/hud/security/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon security HUD ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon security HUD ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "eyepatch HUD"
 	desc = "The cooler looking cousin of HUDSunglasses."

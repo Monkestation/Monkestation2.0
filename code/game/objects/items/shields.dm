@@ -343,6 +343,22 @@
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+/datum/armor/item_shield/improvised
+	melee = 40
+	bullet = 30
+	laser = 30
+
+/obj/item/shield/improvised
+	name = "improvised shield"
+	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
+	icon_state = "improvised"
+	inhand_icon_state = "improvised"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	max_integrity = 35
+	shield_break_leftover = /obj/item/stack/rods/two
+	armor_type = /datum/armor/item_shield/improvised
+	block_sound = 'sound/items/trayhit2.ogg'
+
 #undef BATON_BASH_COOLDOWN
 
 /obj/item/shield/energy/advanced

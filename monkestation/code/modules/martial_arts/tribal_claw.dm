@@ -19,10 +19,10 @@
 	//originally wanted to do inverse correlation but it donbt work :pensive:
 
 /datum/armor/scales
-	melee = 40
-	bullet = 40
-	laser = 40
-	wound = 50
+	melee = 20
+	bullet = 20
+	laser = 20
+	wound = 20
 
 /datum/martial_art/tribal_claw/teach(mob/living/carbon/human/target, make_temporary = FALSE)
 	. = ..()
@@ -153,10 +153,7 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/tribal_claw_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Tribal Claw"
-	set category = "Tribal Claw"
+GAME_VERB_PROC_DESC(/mob/living/carbon/human, tribal_claw_help, "Recall Teachings", "Remember the martial techniques of the Tribal Claw", "Tribal Claw")
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Tribal Claw...</i></b>")
 

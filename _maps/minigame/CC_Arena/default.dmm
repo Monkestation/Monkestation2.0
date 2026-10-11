@@ -8,6 +8,15 @@
 	},
 /turf/open/floor/holofloor/plating,
 /area/centcom/tdome/arena/actual)
+"q" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "D" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
@@ -22,12 +31,6 @@
 /area/centcom/tdome/arena/actual)
 "L" = (
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/holofloor/plating,
-/area/centcom/tdome/arena/actual)
-"M" = (
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
 /turf/open/floor/holofloor/plating,
 /area/centcom/tdome/arena/actual)
 "R" = (
@@ -139,8 +142,8 @@ a
 a
 a
 a
-M
 a
+q
 a
 a
 a

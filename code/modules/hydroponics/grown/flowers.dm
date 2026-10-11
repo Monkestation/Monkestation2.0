@@ -22,15 +22,17 @@
 	seed = /obj/item/seeds/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
-	icon_state = "map_flower"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_flower", "/obj/item/food/grown/poppy")
+	greyscale_config = /datum/greyscale_config/flower_simple
+	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
+	greyscale_colors = "#d23838"
+
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
-	greyscale_config = /datum/greyscale_config/flower_simple
-	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
-	greyscale_colors = "#d23838"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -48,15 +50,16 @@
 	possible_mutations = list(/datum/hydroponics/plant_mutation/trumpet)
 
 /obj/item/food/grown/poppy/lily
-	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "lily"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/lily
 
-	//Spacemans's Trumpet
+//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
 	name = "pack of spaceman's trumpet seeds"
 	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."
@@ -101,13 +104,14 @@
 	possible_mutations = list(/datum/hydroponics/plant_mutation/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
-	seed = /obj/item/seeds/poppy/geranium
-	icon_state = "geranium"
 	name = "geranium"
 	desc = "A beautiful blue flower."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "geranium"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/geranium
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -124,14 +128,11 @@
 
 ///Fraxinella Flowers.
 /obj/item/food/grown/poppy/geranium/fraxinella
-	seed = /obj/item/seeds/poppy/geranium/fraxinella
 	name = "fraxinella"
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/geranium/fraxinella
 
 // Harebell
 /obj/item/seeds/harebell

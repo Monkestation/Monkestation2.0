@@ -18,6 +18,9 @@ def red(text):
 def blue(text):
     return "\033[34m" + str(text) + "\033[0m"
 
+def yellow(text):
+    return "\033[33m" + str(text) + "\033[0m"
+
 schema = json.load(sys.stdin)
 file_reference = schema["file"]
 file_reference_basename = os.path.basename(file_reference)
@@ -25,11 +28,22 @@ scannable_directory = schema["scannable_directory"]
 subdirectories = schema["subdirectories"]
 FORBIDDEN_INCLUDES = schema["forbidden_includes"]
 excluded_files = schema["excluded_files"]
+no_error_on_empty = schema.get("no_error_on_empty", False)
 
 def post_error(string):
     print(red(f"Ticked File Enforcement [{file_reference}]: " + string))
     if on_github:
         print(f"::error file={file_reference},line=1,title=Ticked File Enforcement::{string}")
+
+def post_error(string):
+    print(red(f"Ticked File Enforcement [{file_reference}]: " + string))
+    if on_github:
+        print(f"::error file={file_reference},line=1,title=Ticked File Enforcement::{string}")
+
+def post_warn(string):
+    print(yellow(f"Ticked File Enforcement [{file_reference}]: " + string))
+    if on_github:
+        print(f"::warning file={file_reference},line=1,title=Ticked File Enforcement::{string}")
 
 for excluded_file in excluded_files:
     full_file_path = scannable_directory + excluded_file
@@ -68,8 +82,12 @@ for file_extension in file_extensions:
     scannable_files += glob.glob(compiled_directory, recursive=True)
 
 if len(scannable_files) == 0:
-    post_error(f"No files were found in {scannable_directory}. Ticked File Enforcement has failed!")
-    sys.exit(1)
+    if no_error_on_empty:
+        post_warn(f"No files were found in {scannable_directory}.")
+        sys.exit(0)
+    else:
+        post_error(f"No files were found in {scannable_directory}. Ticked File Enforcement has failed!")
+        sys.exit(1)
 
 for code_file in scannable_files:
     dm_path = ""

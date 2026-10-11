@@ -78,6 +78,7 @@
 /obj/item/screwdriver/power
 	name = "hand drill"
 	desc = "A simple powered hand drill."
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "drill"
 	belt_icon_state = null
 	inhand_icon_state = "drill"

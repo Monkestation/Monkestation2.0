@@ -171,8 +171,8 @@
 	new_record.name = "Log Recording #[record_number]"
 	new_record.experiment_source = inserted_tank.name
 	new_record.timestamp = station_time_timestamp()
-	for(var/gas_path in leaked_gas_buffer.gases)
-		new_record.gas_data[gas_path] = leaked_gas_buffer.gases[gas_path][MOLES]
+	for(var/gas_path, amount in leaked_gas_buffer.moles)
+		new_record.gas_data[gas_path] = amount
 
 	compressor_record += new_record
 	record_number += 1

@@ -324,6 +324,8 @@
 	icon_state = "disable_large"
 	damage = 0
 	stamina = 25
+	armor_flag = ENERGY
+	damage_type = STAMINA
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 
@@ -425,6 +427,8 @@
 	icon_state = "disable_bounce"
 	damage = 0
 	stamina = 25
+	armor_flag = ENERGY
+	damage_type = STAMINA
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 	ricochet_auto_aim_angle = 30
@@ -881,7 +885,7 @@
 	damage_type = STAMINA
 	stamina = 20
 	paralyze_timer = 5 SECONDS
-	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
+	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	ricochets_max = 4
 	ricochet_chance = 140
@@ -897,9 +901,14 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/projectile/lawbringer/detain/check_ricochet_flag(atom/reflecting_atom)
+	if((reflecting_atom.flags_ricochet & RICOCHET_HARD) || (reflecting_atom.flags_ricochet & RICOCHET_SHINY))
+		return TRUE
+	return FALSE
+
 /**
  * lawbringer execute mode:
- * It fires a 15 damage bullet
+ * It fires a 20 damage bullet
  */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute

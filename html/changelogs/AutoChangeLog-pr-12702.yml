@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "hoods now automatically overslot hats - as in, like, if ur wearing a hat, and flip a hood up, the hat will try to just go on top of the hood."

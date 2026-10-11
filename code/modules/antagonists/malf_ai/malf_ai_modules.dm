@@ -873,7 +873,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/upgrade_cameras/proc/on_update_sight(mob/source)
 	SIGNAL_HANDLER
 	// Dim blue, pretty
-	source.lighting_color_cutoffs = blend_cutoff_colors(source.lighting_color_cutoffs, list(5, 25, 35))
+	source.lighting_color_cutoffs = source.lighting_color_cutoffs ? blend_cutoff_colors(source.lighting_color_cutoffs, list(5, 25, 35)) : list(5, 25, 35)
 
 /// AI Turret Upgrade: Increases the health and damage of all turrets.
 /datum/ai_module/malf/upgrade/upgrade_turrets
