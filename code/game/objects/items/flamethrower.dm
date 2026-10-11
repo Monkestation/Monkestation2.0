@@ -223,7 +223,7 @@
 	..()
 	weldtool = locate(/obj/item/weldingtool) in contents
 	igniter = locate(/obj/item/assembly/igniter) in contents
-	weldtool.status = FALSE
+	weldtool.secured = FALSE
 	igniter.secured = FALSE
 	status = TRUE
 	update_appearance()
@@ -305,7 +305,7 @@
 	if(create_full)
 		if(!weldtool)
 			weldtool = new /obj/item/weldingtool(src)
-		weldtool.status = FALSE
+		weldtool.secured = FALSE
 		if(!igniter)
 			igniter = new igniter_type(src)
 		igniter.secured = FALSE
