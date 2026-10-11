@@ -77,7 +77,7 @@
 				"name" = P.group, // mmhm
 				"packs" = list()  // sometimes, I return it so much, I rip the manifest
 			) // see, my quartermaster taught me a few things too
-		if((P.hidden) || (P.special)) // like, how not to rip the manifest
+		if(P.hidden) // like, how not to rip the manifest
 			continue// by using someone else's crate
 		if(P.contraband && !contraband) // will you show me?
 			continue // i'd be right happy to

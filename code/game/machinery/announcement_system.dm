@@ -108,6 +108,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			message = "The arrivals shuttle has been damaged. Docking for repairs..."
 		if(AUTO_ANNOUNCE_NODE)
 			message = replacetext(node_message, "%NODE", target)
+		if(AUTO_ANNOUNCE_UNION)
+			message = target
 
 	broadcast(message, channels)
 
