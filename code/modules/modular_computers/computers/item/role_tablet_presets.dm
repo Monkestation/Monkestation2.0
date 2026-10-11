@@ -225,10 +225,11 @@
 /obj/item/modular_computer/pda/signal
 	name = "signal PDA"
 	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/signal")
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_config = /datum/greyscale,_config/tablet/stripe_thick
 	greyscale_colors = "#D99A2E#0EC220#727272"
 	starting_programs = list(
 		/datum/computer_file/program/ntnetmonitor,
+		/datum/computer_file/program/newscaster
 	)
 
 /**
