@@ -200,6 +200,7 @@
 	greyscale_config = /datum/greyscale_config/cin_surplus_chestrig/object
 	greyscale_config_worn = /datum/greyscale_config/cin_surplus_chestrig
 	greyscale_colors = CIN_WINTER_COLORS_COMPLIMENT
+	unique_reskin = null
 
 /obj/item/storage/belt/military/cin_surplus/desert
 	SETUP_MAP_ICONS("chestrig", "/obj/item/storage/belt/military/cin_surplus/desert")

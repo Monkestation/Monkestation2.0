@@ -141,9 +141,7 @@
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
 	syringes = list(new /obj/item/reagent_containers/syringe())
-
-/obj/item/gun/syringe/syndicate/prototype/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/syringe/dna
 	name = "modified compact syringe gun"
@@ -204,6 +202,8 @@
 	force = 4
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	pinless = TRUE
+	has_manufacturer = FALSE
+
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message(span_danger("[user] shoots the blowgun!"))
@@ -211,9 +211,6 @@
 	user.stamina.adjust(-20)
 	user.adjustOxyLoss(20)
 	return ..()
-
-/obj/item/gun/syringe/blowgun/give_manufacturer_examine()
-	return
 
 //Prepare thy coders for a PSYCHIC ATTACK.
 

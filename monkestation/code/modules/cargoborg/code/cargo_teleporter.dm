@@ -84,6 +84,8 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 			continue
 		if(length(movable_content.get_all_contents_type(/mob/living)))
 			continue
+		if(movable_content.buckled_mobs)
+			continue
 		if(movable_content.anchored)
 			continue
 		do_teleport(movable_content, moving_turf)

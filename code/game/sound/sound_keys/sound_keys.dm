@@ -199,6 +199,7 @@
 		'sound/voice/beepsky/creep.ogg',
 		'sound/voice/beepsky/god.ogg',
 		'sound/voice/beepsky/iamthelaw.ogg',
+		'sound/voice/beepsky/insult.ogg',
 		'sound/voice/beepsky/radio.ogg',
 		'sound/voice/beepsky/secureday.ogg',
 	)

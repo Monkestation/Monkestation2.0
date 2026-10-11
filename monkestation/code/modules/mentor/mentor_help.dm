@@ -29,7 +29,8 @@
 	)
 	return embed
 
-GAME_VERB(/client, mentorhelp, "Mentorhelp", "Mentor", message as text)
+GAME_VERB(/client, mentorhelp, "Mentorhelp", "Mentor")
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(usr?.client?.prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,

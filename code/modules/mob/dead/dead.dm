@@ -49,6 +49,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	. += "Players Ready: [SSticker.totalPlayersReady]"
 	if(client.holder)
 		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
+	if(length(SSstatpanels.player_ready_data) || length(SSstatpanels.assistant_player_ready_data) || length(SSstatpanels.command_player_ready_data))
+		. += SSstatpanels.get_job_estimation(src)
 
 #define SERVER_HOPPER_TRAIT "server_hopper"
 

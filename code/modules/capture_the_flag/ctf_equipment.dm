@@ -162,9 +162,7 @@
 	charge_sections = 5
 	ammo_x_offset = 2
 	shaded_charge = FALSE
-
-/obj/item/gun/energy/laser/instakill/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return

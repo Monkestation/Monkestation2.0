@@ -1,4 +1,6 @@
-GAME_VERB_PROC_DESC(/client, cmd_mass_modify_object_variables, "Mass Edit Variables", "(target) Edit all instances of a target item's variables", "Debug", atom/A, var_name)
+GAME_VERB_PROC_DESC(/client, cmd_mass_modify_object_variables, "Mass Edit Variables", "(target) Edit all instances of a target item's variables", "Debug")
+	VERB_ARG_TYPED(A, VERB_ARG_TYPE_ATOM, VERB_ARG_SOURCE_WORLD, /atom)
+	VERB_ARG(var_name, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	var/method = 0 //0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
 
