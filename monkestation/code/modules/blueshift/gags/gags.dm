@@ -31,7 +31,6 @@
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/beret/beret_badge_fancy_worn.json'
 
 
-
 //COWBOY
 /datum/greyscale_config/cowboy_wide
 	name = "Wide Brimmed Hat"
@@ -97,18 +96,6 @@
 /datum/greyscale_config/mushcap/worn
 	name = "Mushroom Cap Worn"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/mush_cap/mushcap_worn.json'
-
-// FLATCAP
-
-/datum/greyscale_config/flatcap
-	name = "Flat Cap"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/hats.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/flatcap/flatcap.json'
-
-/datum/greyscale_config/flatcap/worn
-	name = "Flat Cap (Worn)"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/hats.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/flatcap/flatcap_worn.json'
 
 // FLOWER PIN
 
@@ -1099,48 +1086,6 @@
 /*
 *	SHOES
 */
-// Boots
-
-/datum/greyscale_config/boots
-	name = "Colorable Boots"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/boots/boots.json'
-
-/datum/greyscale_config/boots/worn
-	name = "Colorable Boots (Worn)"
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/boots/boots_worn.json'
-
-/datum/greyscale_config/boots/christmasboots
-	name = "christmas_boots"
-	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/shoes.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/boots/christmas_boots.json'
-
-/datum/greyscale_config/boots/christmasboots/worn
-	name = "christmas_boots (Worn)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/feet.dmi'
-
-// Laceups
-
-/datum/greyscale_config/laceup
-	name = "Colorable Laceups"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/laceups/laceups.json'
-
-/datum/greyscale_config/laceup/worn
-	name = "Colorable Laceups (Worn)"
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/laceups/laceups_worn.json'
-
-// Sandals
-
-/datum/greyscale_config/sandals
-	name = "Colorable Sandals"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/sandals/sandals.json'
-
-/datum/greyscale_config/sandals/worn
-	name = "Colorable Sandals (Worn)"
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/sandals/sandals_worn.json'
-
 // WRAPS
 
 /datum/greyscale_config/clothwraps

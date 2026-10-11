@@ -29,9 +29,8 @@
 	)
 	return embed
 
-/client/verb/mentorhelp(message as text)
-	set category = "Mentor"
-	set name = "Mentorhelp"
+GAME_VERB(/client, mentorhelp, "Mentorhelp", "Mentor")
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(usr?.client?.prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,

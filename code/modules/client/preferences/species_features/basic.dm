@@ -1,19 +1,19 @@
 /proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory)
-	var/static/icon/head_icon
+	var/static/datum/universal_icon/head_icon
 	if (isnull(head_icon))
-		head_icon = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
-		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+		head_icon = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
-	var/icon/final_icon = new(head_icon)
-	if (!isnull(sprite_accessory))
+	var/datum/universal_icon/final_icon = head_icon.copy()
+	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
 		ASSERT(istype(sprite_accessory))
 
-		var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
-		head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
-		final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
+		var/datum/universal_icon/head_accessory_icon = uni_icon(sprite_accessory.icon, sprite_accessory.icon_state)
+		head_accessory_icon.blend_color(COLOR_DARK_BROWN, ICON_MULTIPLY)
+		final_icon.blend_icon(head_accessory_icon, ICON_OVERLAY)
 
-	final_icon.Crop(10, 19, 22, 31)
-	final_icon.Scale(32, 32)
+	final_icon.crop(10, 19, 22, 31)
+	final_icon.scale(32, 32)
 
 	return final_icon
 
@@ -97,39 +97,33 @@
 	return assoc_to_keys_features(GLOB.facial_hair_gradients_list)
 
 /datum/preference/choiced/facial_hair_gradient/icon_for(value)
-	var/datum/sprite_accessory/accessory = GLOB.facial_hair_gradients_list[value]
-
-	if(accessory.icon_state == null || accessory.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
-
-	var/static/icon/head_icon
+	var/static/datum/universal_icon/head_icon
 	if(isnull(head_icon))
-		head_icon = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
-		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+		head_icon = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/hair_accessory = GLOB.facial_hairstyles_list["Beard (Very Long)"]
 
-	var/static/icon/hair_icon
+	var/static/datum/universal_icon/hair_icon
 	if(isnull(hair_icon))
-		hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = SOUTH)
-		hair_icon.Blend("#080501", ICON_MULTIPLY)
+		hair_icon = uni_icon(hair_accessory.icon, hair_accessory.icon_state, dir = SOUTH)
+		hair_icon.blend_color("#080501", ICON_MULTIPLY)
 
-	var/icon/final_icon = new(head_icon)
-	var/icon/base_hair_icon = new(hair_icon)
-	var/icon/gradient_hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = SOUTH)
+	var/datum/universal_icon/final_icon = head_icon.copy()
+	var/datum/universal_icon/base_hair_icon = hair_icon.copy()
+	var/datum/universal_icon/gradient_hair_icon = uni_icon(hair_accessory.icon, hair_accessory.icon_state, dir = SOUTH)
 
-	var/icon/gradient_icon = icon(accessory.icon, accessory.icon_state)
-	gradient_icon.Blend(gradient_hair_icon, ICON_ADD)
-	gradient_icon.Blend("#42250a", ICON_MULTIPLY)
-	base_hair_icon.Blend(gradient_icon, ICON_OVERLAY)
+	var/datum/sprite_accessory/accessory = GLOB.facial_hair_gradients_list[value]
+	if(!isnull(accessory) && accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/gradient_icon = uni_icon(accessory.icon, accessory.icon_state)
+		gradient_icon.blend_icon(gradient_hair_icon, ICON_ADD)
+		gradient_icon.blend_color("#42250a", ICON_MULTIPLY)
+		base_hair_icon.blend_icon(gradient_icon, ICON_OVERLAY)
 
-	final_icon.Blend(base_hair_icon, ICON_OVERLAY)
+	final_icon.blend_icon(base_hair_icon, ICON_OVERLAY)
 
-	final_icon.Crop(10, 19, 22, 31)
-	final_icon.Scale(32, 32)
-
-
+	final_icon.crop(10, 19, 22, 31)
+	final_icon.scale(32, 32)
 
 	return final_icon
 
@@ -137,7 +131,7 @@
 	target.set_facial_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/facial_hair_gradient/create_default_value()
-	return "None"
+	return SPRITE_ACCESSORY_NONE
 
 /datum/preference/color/facial_hair_gradient
 	priority = PREFERENCE_PRIORITY_BODYPARTS
@@ -152,7 +146,7 @@
 /datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != "None"
+	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != SPRITE_ACCESSORY_NONE
 
 /datum/preference/color/hair_color
 	savefile_key = "hair_color"
@@ -201,12 +195,6 @@
 	return assoc_to_keys_features(GLOB.hair_gradients_list)
 
 /datum/preference/choiced/hair_gradient/icon_for(value)
-	var/datum/sprite_accessory/accessory = GLOB.hair_gradients_list[value]
-
-	if(accessory.icon_state == null || accessory.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
-
 	var/static/list/body_parts = list(
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
@@ -218,36 +206,38 @@
 		BODY_ZONE_R_LEG,
 	)
 
-	var/static/icon/body_icon
+	var/static/datum/universal_icon/body_icon
 	if(isnull(body_icon))
-		body_icon = icon('icons/effects/effects.dmi', "nothing")
-		for (var/body_part in body_parts)
+		body_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
+		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST || body_part == BODY_ZONE_HEAD ? "_m" : ""
-			body_icon.Blend(icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
-		body_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
-		var/icon/jumpsuit_icon = icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH)
-		jumpsuit_icon.Blend("#b3b3b3", ICON_MULTIPLY)
-		body_icon.Blend(jumpsuit_icon, ICON_OVERLAY)
+			body_icon.blend_icon(uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
+
+		body_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
+
+		var/datum/universal_icon/jumpsuit_icon = uni_icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH)
+		jumpsuit_icon.blend_color("#b3b3b3", ICON_MULTIPLY)
+		body_icon.blend_icon(jumpsuit_icon, ICON_OVERLAY)
 
 	var/datum/sprite_accessory/hair_accessory = GLOB.hairstyles_list["Very Long Hair 2"]
 
-	var/static/icon/hair_icon
+	var/static/datum/universal_icon/hair_icon
 	if(isnull(hair_icon))
-		hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = NORTH)
-		hair_icon.Blend("#080501", ICON_MULTIPLY)
+		hair_icon = uni_icon(hair_accessory.icon, hair_accessory.icon_state, dir = NORTH)
+		hair_icon.blend_color("#080501", ICON_MULTIPLY)
 
+	var/datum/universal_icon/final_icon = body_icon.copy()
+	var/datum/universal_icon/base_hair_icon = hair_icon.copy()
+	var/datum/universal_icon/gradient_hair_icon = uni_icon(hair_accessory.icon, hair_accessory.icon_state, dir = NORTH)
 
+	var/datum/sprite_accessory/accessory = GLOB.hair_gradients_list[value]
+	if(!isnull(accessory) && accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/gradient_icon = uni_icon(accessory.icon, accessory.icon_state)
+		gradient_icon.blend_icon(gradient_hair_icon, ICON_ADD)
+		gradient_icon.blend_color("#42250a", ICON_MULTIPLY)
+		base_hair_icon.blend_icon(gradient_icon, ICON_OVERLAY)
 
-	var/icon/final_icon = new(body_icon)
-	var/icon/base_hair_icon = new(hair_icon)
-	var/icon/gradient_hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = NORTH)
-
-	var/icon/gradient_icon = icon(accessory.icon, accessory.icon_state)
-	gradient_icon.Blend(gradient_hair_icon, ICON_ADD)
-	gradient_icon.Blend("#42250a", ICON_MULTIPLY)
-	base_hair_icon.Blend(gradient_icon, ICON_OVERLAY)
-
-	final_icon.Blend(base_hair_icon, ICON_OVERLAY)
+	final_icon.blend_icon(base_hair_icon, ICON_OVERLAY)
 
 	return final_icon
 
@@ -255,7 +245,7 @@
 	target.set_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/hair_gradient/create_default_value()
-	return "None"
+	return SPRITE_ACCESSORY_NONE
 
 /datum/preference/color/hair_gradient
 	priority = PREFERENCE_PRIORITY_BODYPARTS
@@ -270,4 +260,4 @@
 /datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != "None"
+	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != SPRITE_ACCESSORY_NONE

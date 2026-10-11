@@ -1093,6 +1093,7 @@
 	actions_types = list()
 	mag_display = TRUE
 	empty_indicator = TRUE
+	can_suppress = FALSE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/pksmgmag
 	pin = /obj/item/firing_pin/wastes
 	bolt_type = BOLT_TYPE_LOCKING

@@ -30,8 +30,6 @@ GLOBAL_LIST_INIT(ai_project_categories, list(
 
 ///How much is the AI download progress increased by per tick? Multiplied by a modifer on the AI if they have upgraded. Need to reach 100 to be downloaded
 #define AI_DOWNLOAD_PER_PROCESS 0.5
-///Check for tracked individual coming into view every X ticks
-#define AI_CAMERA_MEMORY_TICKS 15
 
 //Needs UI change to properly work!
 #define AI_MAX_CPUS_PER_RACK 4
@@ -49,9 +47,9 @@ GLOBAL_LIST_INIT(ai_project_categories, list(
 //20 free CPU. 10 are used for research, 10 are used for bitcoin
 //10 * AI_RESEARCH_PER_CPU = 85 bitcoin per tick. Modified for scaling 85*0.54=46
 //46 * AI_BITCOIN_PRICE = 2,3 credits per 2 seconds (2070 credits per 30 min)
-#define MAX_AI_BITCOIN_MINED_PER_TICK 375
+#define MAX_AI_BITCOIN_MINED_PER_TICK 100
 //Self explanatory, see MAX_AI_BITCOIN_MINED_PER_TICK * this = max money 1 AI can contribute per tick. (17,5 credits every 2 seconds, max 63k over 2 hours)
-#define AI_BITCOIN_PRICE 3.75
+#define AI_BITCOIN_PRICE 3.5
 
 ///The minimum speed an AI CPU can be set by an Overclocking station.
 #define MINIMUM_CPU_SPEED 1

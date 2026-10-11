@@ -88,7 +88,7 @@
 
 /datum/sprite_accessory/blank
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 //////////////////////
 // Hair Definitions //
@@ -126,7 +126,7 @@
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
-	icon_state = null
+	icon_state = "bald"
 
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"
@@ -355,6 +355,11 @@
 /datum/sprite_accessory/hair/drillhairextended
 	name = "Drill Hair (Extended)"
 	icon_state = "hair_drillhairextended"
+
+/datum/sprite_accessory/hair/einstein
+	icon = 'goon/icons/mob/sprite_accessories/human_hair.dmi'
+	name = "Einstein"
+	icon_state = "hair_einstein"
 
 /datum/sprite_accessory/hair/emo
 	name = "Emo"
@@ -1613,7 +1618,7 @@
 
 /datum/sprite_accessory/gradient/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/gradient/fadeup
 	name = "Fade Up"
@@ -1870,7 +1875,7 @@
 
 /datum/sprite_accessory/facial_hair/shaved
 	name = "Shaved"
-	icon_state = null
+	icon_state = "bald"
 	gender = NEUTER
 
 ///////////////////////////
@@ -1882,11 +1887,10 @@
 	use_static = FALSE
 	em_block = TRUE
 
-
 //MALE UNDERWEAR
 /datum/sprite_accessory/underwear/nude
 	name = "Nude"
-	icon_state = null
+	icon_state = SPRITE_ACCESSORY_NONE
 	gender = NEUTER
 
 /datum/sprite_accessory/underwear/male_briefs
@@ -2061,7 +2065,7 @@
 
 /datum/sprite_accessory/undershirt/nude
 	name = "Nude"
-	icon_state = null
+	icon_state = SPRITE_ACCESSORY_NONE
 	gender = NEUTER
 
 // please make sure they're sorted alphabetically and categorized
@@ -2371,7 +2375,7 @@
 
 /datum/sprite_accessory/socks/nude
 	name = "Nude"
-	icon_state = null
+	icon_state = SPRITE_ACCESSORY_NONE
 
 // please make sure they're sorted alphabetically and categorized
 
@@ -2546,7 +2550,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/body_markings/dtiger
 	name = "Dark Tiger Body"
@@ -2613,7 +2617,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/tails/monkey/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 	color_src = FALSE
 
 /datum/sprite_accessory/pod_hair
@@ -2686,7 +2690,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/horns/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/horns/simple
 	name = "Simple"
@@ -2730,7 +2734,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/ears/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
@@ -2750,7 +2754,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/wings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/wings
 	icon = 'icons/mob/species/wings.dmi'
@@ -2897,7 +2901,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/frills/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/frills/simple
 	name = "Simple"
@@ -2933,14 +2937,14 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/spines/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/spines_animated/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
-	icon = null //These datums exist for selecting legs on preference, and little else
+	icon = SPRITE_ACCESSORY_NONE //These datums exist for selecting legs on preference, and little else
 	em_block = TRUE
 
 /datum/sprite_accessory/legs/none
@@ -2966,7 +2970,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/moth_wings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/moth_wings/plain
 	name = "Plain"
@@ -3070,7 +3074,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/moth_antennae/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/moth_antennae/plain
 	name = "Plain"
@@ -3161,7 +3165,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/moth_markings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/moth_markings/reddish
 	name = "Reddish"

@@ -48,6 +48,9 @@
 
 	preferences.character_preview_view?.update_body()
 
+	if(!SSticker.HasRoundStarted())
+		SEND_SIGNAL(user, COMSIG_JOB_PREF_UPDATED)
+
 	return TRUE
 
 /datum/preference_middleware/jobs/proc/set_job_title(list/params, mob/user)
@@ -58,6 +61,8 @@
 		return FALSE
 
 	preferences.alt_job_titles[default_job_title] = new_job_title
+	if(!SSticker.HasRoundStarted())
+		SEND_SIGNAL(user, COMSIG_JOB_PREF_UPDATED)
 
 	return TRUE
 

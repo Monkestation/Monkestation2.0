@@ -26,7 +26,7 @@
 
 /datum/sprite_accessory/goblin_nose/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/goblin_nose/button
 	name = "Button"

@@ -69,6 +69,17 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
+/obj/item/bag_of_holding_inert/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly/signaler/anomaly/bluespace))
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			return
+		var/obj/item/storage/backpack/holding/doomsday_device = new(get_turf(src))
+		qdel(tool)
+		user.put_in_hands(doomsday_device)
+		playsound(doomsday_device, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(src)
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
@@ -785,7 +796,7 @@
 	new /obj/item/gun/ballistic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
+	new /obj/item/clothing/glasses/thermal/chameleon(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
@@ -907,7 +918,7 @@
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
-		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/shotgun/semiauto/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg,
@@ -934,7 +945,7 @@
 	atom_storage.max_slots = 2
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
-		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/shotgun/semiauto/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg,
@@ -971,7 +982,7 @@
 	atom_storage.set_holdable(list( //all the ammo for mining guns can be stored in here, but nothing else.
 		/obj/item/ammo_box/magazine/pksmgmag,
 		/obj/item/storage/box/kinetic,
-		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_box/magazine/autoshotgun/kinetic,
 		/obj/item/ammo_casing/shotgun/hydrakinetic,
 		/obj/item/storage/box/kinetic/autoshotgun,
 		/obj/item/storage/box/kinetic/autoshotgun/smallcase,

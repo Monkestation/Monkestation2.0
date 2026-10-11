@@ -3,13 +3,9 @@
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, \
 		and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
-	icon = 'icons/obj/clothing/under/plasmaman.dmi'
-	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
-	lefthand_file = 'icons/mob/inhands/clothing/plasmaman_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/plasmaman_righthand.dmi'
-	icon_state = "plasmaman_suit"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman")
 	worn_icon_state = "plasmaman_suit_w"
-	inhand_icon_state = "plasmaman_suit"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left
@@ -88,18 +84,21 @@
 	name = "cargo plasma envirosuit"
 	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, \
 		due to the logistical problems of differenciating the two with the length of their pant legs."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/cargo")
 	greyscale_colors = "#c99840#d0d7da#d0d7da#c99840#c99840#794421"
 	sleek_greyscale_colors = "#c99840#39393f#c99840#d0d7da#d0d7da"
 
 /obj/item/clothing/under/plasmaman/mining
 	name = "mining plasma envirosuit"
 	desc = "An air-tight khaki suit designed for operations on lavaland by plasmamen."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/mining")
 	greyscale_colors = "#717261#796755#9a428e#717261#717261#989898"
 	sleek_greyscale_colors = "#939393#39393f#939393#39393f#939393"
 
 /obj/item/clothing/under/plasmaman/chef
 	name = "chef's plasma envirosuit"
 	desc = "A white plasmaman envirosuit designed for cullinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/chef")
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/striped
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/striped
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/striped
@@ -110,6 +109,7 @@
 /obj/item/clothing/under/plasmaman/enviroslacks
 	name = "enviroslacks"
 	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nanotrasen for its detectives, lawyers, and bartenders alike."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/enviroslacks")
 	greyscale_colors = "#eeeeee#87502e#a747c0#eeeeee#eeeeee#747182"
 	sleek_greyscale_colors = "#6a84be#39393f#6a84be#39393f#6a84be"
 
@@ -128,6 +128,7 @@
 /obj/item/clothing/under/plasmaman/chaplain
 	name = "chaplain's plasma envirosuit"
 	desc = "An envirosuit specially designed for only the most pious of plasmamen."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/chaplain")
 	greyscale_colors = "#39393f#39393f#a747c0#39393f#39393f#18191e"
 	sleek_greyscale_colors = "#f1f1f1#39393f#f1f1f1#ffc518#dbaa14"
 
@@ -136,16 +137,18 @@
 	desc = "Made out of a modified voidsuit, this suit was Nanotrasen's first solution to the *logistical problems* that come with employing plasmamen. \
 		Due to the modifications, the suit is no longer space-worthy. \
 		Despite their limitations, these suits are still in used by historian and old-styled plasmamen alike."
+	icon = 'icons/obj/clothing/under/plasmaman.dmi'
+	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	icon_state = "prototype_envirosuit"
+	worn_icon_state = "prototype_envirosuit"
+	inhand_icon_state = "void_suit"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
-	icon_state = "prototype_envirosuit"
-	worn_icon_state = "prototype_envirosuit"
-	inhand_icon_state = "void_suit"
 
 /obj/item/clothing/under/plasmaman/curator/handle_style_change(style)
 	return
@@ -153,6 +156,7 @@
 /obj/item/clothing/under/plasmaman/janitor
 	name = "janitor's plasma envirosuit"
 	desc = "A grey and purple envirosuit designated for plasmamen janitors."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/janitor")
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/striped
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/striped
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/striped
@@ -163,12 +167,14 @@
 /obj/item/clothing/under/plasmaman/botany
 	name = "botany envirosuit"
 	desc = "A green and blue envirosuit designed to protect plasmamen from minor plant-related injuries."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/botany")
 	greyscale_colors = "#50d967#50d967#557efc#557efc#557efc#215740"
 	sleek_greyscale_colors = "#59c18a#39393f#557efc#39393f#557efc"
 
 /obj/item/clothing/under/plasmaman/mime
 	name = "mime envirosuit"
 	desc = "It's not very colourful."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/mime")
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/mime
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/mime
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/mime
@@ -181,6 +187,7 @@
 /obj/item/clothing/under/plasmaman/clown
 	name = "clown envirosuit"
 	desc = "<i>'HONK!'</i>"
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/clown")
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/clown
 	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/clown
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/clown
@@ -215,12 +222,14 @@
 /obj/item/clothing/under/plasmaman/bitrunner
 	name = "bitrunner envirosuit"
 	desc = "An envirosuit specially designed for plasmamen with bad posture."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/bitrunner")
 	greyscale_colors = "#39393f#39393f#c99840#39393f#39393f#915d2b"
 	sleek_greyscale_colors = "#c99840#39393f#c99840#39393f#c99840"
 
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
 	desc = "An orange envirosuit identifying and protecting a criminal plasmaman. Its suit sensors are stuck in the \"Fully On\" position."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/prisoner")
 	greyscale_colors = "#d15b1b#d15b1b#39393f#39393f#d15b1b#612313#eeeeee"
 	sleek_greyscale_colors = "#d15b1b#39393f#39393f#39393f#39393f"
 	greyscale_config = /datum/greyscale_config/plasmaman_suit/doublebelt
@@ -232,16 +241,18 @@
 /obj/item/clothing/under/plasmaman/plasma_bun // i would remove this if it wasn't for the fact the bunny wand would kill plasmamen without it - NK
 	name = "plasmabunny envirosuit"
 	desc = "A plasmaman envirosuit designed for bunny themed waiters, it appears to just be a normal envirosuit with a bunnysuit on top of it"
+	icon = 'icons/obj/clothing/under/plasmaman.dmi'
+	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	icon_state = "plasmabunny_envirosuit"
+	worn_icon_state = "plasmabunny_envirosuit"
+	inhand_icon_state = "plasmaman"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
-	icon_state = "plasmabunny_envirosuit"
-	worn_icon_state = "plasmabunny_envirosuit"
-	inhand_icon_state = "plasmaman"
 
 /obj/item/clothing/under/plasmaman/plasma_bun/handle_style_change(style)
 	return

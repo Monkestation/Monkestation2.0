@@ -3,9 +3,8 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
-
-	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
-	icon_state = "thermo_base"
+	icon = 'icons/map_icons/objects.dmi'
+	SETUP_MAP_ICONS("thermo_base", "/obj/machinery/atmospherics/components/unary/thermomachine")
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
@@ -127,11 +126,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	if(!initial(icon))
-		return
-	var/mutable_appearance/thermo_overlay = new(initial(icon))
-	var/image/pipe = get_pipe_image(thermo_overlay, "pipe", dir, pipe_color, piping_layer)
-	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
+	var/image/pipe = get_pipe_image('icons/obj/atmospherics/components/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
+	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
@@ -332,18 +328,21 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
+	SETUP_MAP_ICONS("thermo_1", "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on")
+	flags_1 = /obj/machinery/atmospherics/components/unary/thermomachine::flags_1 // we want this one to generate a preview
 	on = TRUE
-	icon_state = "thermo_base_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
-	icon_state = "thermo_base_1"
+	SETUP_MAP_ICONS("thermo_1", "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom")
 	greyscale_colors = COLOR_CYAN
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
@@ -351,9 +350,10 @@
 	target_temperature = COLD_ROOM_TEMP
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
+	SETUP_MAP_ICONS("thermo_1", "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on")
 	on = TRUE
-	icon_state = "thermo_base_1"
 
 #undef THERMOMACHINE_POWER_CONVERSION

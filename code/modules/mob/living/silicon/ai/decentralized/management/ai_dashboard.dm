@@ -325,7 +325,7 @@
 	if(isnull(owner_os))
 		owner_os = new /datum/ai_os(owner_turf)
 
-	var/current_cpu = owner_os.cpu_assigned[owner] ? owner_os.total_cpu * owner_os.cpu_assigned[owner] : 0
+	var/current_cpu = owner_os.cpu_assigned[owner] ? owner_os.cpu_assigned[owner] : 0
 	var/current_ram = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
 	current_ram += free_ram
 
@@ -350,7 +350,7 @@
 
 	var/remaining_cpu = current_cpu
 	for(var/I in cpu_usage)
-		remaining_cpu -= cpu_usage[I]
+		remaining_cpu -= cpu_usage[I] * current_cpu
 
 	if(remaining_cpu > 0 && contribute_spare_cpu)
 		var/points = max(round(AI_RESEARCH_PER_CPU * remaining_cpu * seconds_per_tick, 0.1), 0)
@@ -368,7 +368,7 @@
 	for(var/project_being_researched in cpu_usage)
 		if(!cpu_usage[project_being_researched])
 			continue
-		var/used_cpu = round(cpu_usage[project_being_researched] * seconds_per_tick * current_cpu, 1)
+		var/used_cpu = round(cpu_usage[project_being_researched] * current_cpu * seconds_per_tick, 1)
 		var/datum/ai_project/project = get_project_by_name(project_being_researched)
 		if(!project)
 			cpu_usage[project_being_researched] = 0

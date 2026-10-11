@@ -134,18 +134,20 @@
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
-	icon_state = "fancy_hat"
-	greyscale_colors = "#E3C937#782A81"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("fancy_hat", "/obj/item/clothing/head/costume/fancy")
 	greyscale_config = /datum/greyscale_config/fancy_hat
-	greyscale_config_worn = /datum/greyscale_config/fancy_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/fancy_hat/worn
+	greyscale_colors = "#E3C937#782A81"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/football_helmet
 	name = "football helmet"
-	icon_state = "football_helmet"
-	greyscale_colors = "#D74722"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("football_helmet", "/obj/item/clothing/head/costume/football_helmet")
 	greyscale_config = /datum/greyscale_config/football_helmet
-	greyscale_config_worn = /datum/greyscale_config/football_helmet_worn
+	greyscale_config_worn = /datum/greyscale_config/football_helmet/worn
+	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/tv_head
@@ -358,17 +360,17 @@
 /obj/item/clothing/head/playbunnyears
 	name = "bunny ears headband"
 	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
-	icon = 'icons/obj/clothing/hats.dmi'
-	worn_icon = 'icons/mob/clothing/head_32x48.dmi'
-	icon_state = "playbunny_ears"
-	greyscale_colors = "#39393f"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("playbunny_ears", "/obj/item/clothing/head/playbunnyears")
 	greyscale_config = /datum/greyscale_config/playbunnyears
 	greyscale_config_worn = /datum/greyscale_config/playbunnyears_worn
+	greyscale_colors = "#39393f"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/playbunnyears/syndicate
 	name = "blood-red bunny ears headband"
 	desc = "An unusually suspicious pair of bunny ears attached to a headband. The headband looks reinforced with plasteel... but why?"
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "syndibunny_ears"
 	clothing_flags = SNUG_FIT
 	armor_type = /datum/armor/playbunnyears_syndicate
@@ -389,6 +391,7 @@
 /obj/item/clothing/head/playbunnyears/centcom
 	name = "centcom bunny ears headband"
 	desc = "A pair of very professional bunny ears attached to a headband. The ears themselves came from an endangered species of green rabbits."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_centcom"
 	greyscale_colors = null
 	greyscale_config = null
@@ -397,6 +400,7 @@
 /obj/item/clothing/head/playbunnyears/british
 	name = "british bunny ears headband"
 	desc = "A pair of classy bunny ears attached to a headband. Worn to honor the crown."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_brit"
 	greyscale_colors = null
 	greyscale_config = null
@@ -405,6 +409,7 @@
 /obj/item/clothing/head/playbunnyears/communist
 	name = "really red bunny ears headband"
 	desc = "A pair of red and gold bunny ears attached to a headband. Commonly used by any collectivizing bunny waiters."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_communist"
 	greyscale_colors = null
 	greyscale_config = null
@@ -413,6 +418,7 @@
 /obj/item/clothing/head/playbunnyears/usa
 	name = "usa bunny ears headband"
 	desc = "A pair of star spangled bunny ears attached to a headband. The headband of a true patriot."
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_usa"
 	greyscale_colors = null
 	greyscale_config = null

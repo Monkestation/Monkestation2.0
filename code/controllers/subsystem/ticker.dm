@@ -1860,7 +1860,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/calculate_station_goal_bonus(list/rewards)
 	var/list/joined_player_list = unique_list(GLOB.joined_player_list)
 	var/total_crew = length(joined_player_list)
-	if(total_crew < 10) // prevent wrecking the economy on like MRP2
+	if(total_crew < 5) // prevent wrecking the economy on like MRP2 - Changed to allow lower crews but still need a crew - veth
 		return
 	var/completed = FALSE
 	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
