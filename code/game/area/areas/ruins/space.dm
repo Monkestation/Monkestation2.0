@@ -853,6 +853,10 @@
 	name = "Central Command Liaison Outpost Breakroom"
 	ambience_index = AMBIENCE_GENERIC
 
+/area/ruin/space/has_grav/ccpost/cargo
+	name = "Central Command Liaison Outpost Cargo bay"
+	ambience_index = AMBIENCE_GENERIC
+
 /area/ruin/space/has_grav/ccpost/cafeteria
 	name = "Central Command Liaison Outpost Cafeteria"
 	ambience_index = AMBIENCE_GENERIC

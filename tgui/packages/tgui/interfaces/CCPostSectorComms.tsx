@@ -1,0 +1,309 @@
+import { useBackend, useLocalState } from '../backend';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
+import { Window } from '../layouts';
+
+type SectorMessage = {
+  message_code: string;
+  installation_code: string;
+  installation_name: string;
+  installation_status: string;
+  sender_name: string;
+  sender_role: string;
+  message_type: string;
+  priority: string;
+  title: string;
+  body: string;
+  issued_at: string;
+  resolution_status: string;
+  responded_by?: string;
+  responded_at?: string;
+  response?: string;
+  allocation_cost: number;
+  allocation_reward: number;
+  allocation_change: number;
+};
+
+type Data = {
+  allocation: number;
+  available_allocation: number;
+  max_allocation: number;
+  inbox: SectorMessage[];
+  archive: SectorMessage[];
+  archive_count: number;
+};
+
+const statusColor = (status: string) => {
+  switch (status) {
+    case 'ONLINE':
+    case 'ROUTINE OPERATIONS':
+      return 'good';
+    case 'MAINTENANCE':
+    case 'UNDER REVIEW':
+      return 'average';
+    case 'COMMUNICATIONS DEGRADED':
+    case 'NO CONTACT':
+    case 'OFFLINE':
+    case 'CRITICAL':
+      return 'bad';
+    default:
+      return undefined;
+  }
+};
+
+const resolutionColor = (status: string) => {
+  switch (status) {
+    case 'AUTHORIZED':
+    case 'ACKNOWLEDGED':
+      return 'good';
+    case 'DENIED':
+    case 'EXPIRED':
+      return 'bad';
+    default:
+      return undefined;
+  }
+};
+
+export const CCPostSectorComms = (props) => {
+  const { data } = useBackend<Data>();
+  const [tab, setTab] = useLocalState('tab', 'inbox');
+  const {
+    allocation = 0,
+    available_allocation = 0,
+    max_allocation = 0,
+    inbox = [],
+    archive = [],
+    archive_count = 0,
+  } = data;
+
+  return (
+    <Window width={720} height={760} theme="ntos">
+      <Window.Content scrollable>
+        <Section title="Operational Allocation">
+          <Stack>
+            <Stack.Item grow>
+              <Box bold fontSize="18px">
+                {allocation} / {max_allocation} CU
+              </Box>
+            </Stack.Item>
+            <Stack.Item>
+              <Box color="label">Available: {available_allocation} CU</Box>
+            </Stack.Item>
+          </Stack>
+        </Section>
+
+        <Tabs>
+          <Tabs.Tab
+            icon="inbox"
+            selected={tab === 'inbox'}
+            onClick={() => setTab('inbox')}
+          >
+            Inbox ({inbox.length})
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="box-archive"
+            selected={tab === 'archive'}
+            onClick={() => setTab('archive')}
+          >
+            Archive ({archive_count})
+          </Tabs.Tab>
+        </Tabs>
+
+        {tab === 'inbox' && <Inbox messages={inbox} />}
+        {tab === 'archive' && <Archive messages={archive} />}
+
+      </Window.Content>
+    </Window>
+  );
+};
+
+const Inbox = ({ messages }: { messages: SectorMessage[] }) => {
+  if (!messages.length) {
+    return <NoticeBox>No pending sector communications.</NoticeBox>;
+  }
+
+  return (
+    <>
+      {messages.map((message) => (
+        <MessageCard key={message.message_code} message={message} archived={false} />
+      ))}
+    </>
+  );
+};
+
+const Archive = ({ messages }: { messages: SectorMessage[] }) => {
+  const { act } = useBackend<Data>();
+
+  return (
+    <Section
+      title={`Resolved Communications (${messages.length})`}
+      buttons={
+        <>
+          <Button
+            icon="print"
+            disabled={!messages.length}
+            onClick={() => act('print_archive')}
+          >
+            Print Archive
+          </Button>
+          <Button.Confirm
+            icon="trash"
+            color="danger"
+            disabled={!messages.length}
+            confirmContent="Clear archive?"
+            onClick={() => act('clear_archive')}
+          >
+            Clear Archive
+          </Button.Confirm>
+        </>
+      }
+    >
+      {!messages.length ? (
+        <NoticeBox>No resolved communications are currently archived.</NoticeBox>
+      ) : (
+        messages.map((message) => (
+          <MessageCard key={message.message_code} message={message} archived />
+        ))
+      )}
+    </Section>
+  );
+};
+
+
+const MessageCard = ({
+  message,
+  archived,
+}: {
+  message: SectorMessage;
+  archived: boolean;
+}) => {
+  const { act, data } = useBackend<Data>();
+  const { available_allocation = 0 } = data;
+
+  const isRequest = message.message_type === 'REQUEST';
+  const insufficientAllocation =
+    isRequest && message.allocation_cost > available_allocation;
+
+  return (
+    <Section
+      title={`${message.title} — ${message.message_code}`}
+      buttons={
+        archived ? (
+          <Button
+            icon="print"
+            onClick={() =>
+              act('print_message', { message_code: message.message_code })
+            }
+          >
+            Print
+          </Button>
+        ) : isRequest ? (
+          <>
+            <Button
+              icon="check"
+              color="good"
+              disabled={insufficientAllocation}
+              tooltip={
+                insufficientAllocation
+                  ? `Requires ${message.allocation_cost} CU; only ${available_allocation} CU is available.`
+                  : undefined
+              }
+              onClick={() =>
+                act('authorize', { message_code: message.message_code })
+              }
+            >
+              Authorize
+            </Button>
+            <Button
+              icon="xmark"
+              color="danger"
+              onClick={() => act('deny', { message_code: message.message_code })}
+            >
+              Deny
+            </Button>
+          </>
+        ) : (
+          <Button
+            icon="check"
+            onClick={() =>
+              act('acknowledge', { message_code: message.message_code })
+            }
+          >
+            Acknowledge
+          </Button>
+        )
+      }
+    >
+      <LabeledList>
+        <LabeledList.Item label="Installation">
+          {message.installation_name} ({message.installation_code})
+        </LabeledList.Item>
+        <LabeledList.Item label="Current Status">
+          <Box color={statusColor(message.installation_status)}>
+            {message.installation_status}
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Sender">
+          {message.sender_role} {message.sender_name}
+        </LabeledList.Item>
+        <LabeledList.Item label="Type">{message.message_type}</LabeledList.Item>
+        <LabeledList.Item label="Priority">{message.priority}</LabeledList.Item>
+        <LabeledList.Item label="Issued">{message.issued_at}</LabeledList.Item>
+
+        {!!message.allocation_cost && (
+          <LabeledList.Item label="Requested Allocation">
+            <Box color="average">{message.allocation_cost} CU</Box>
+          </LabeledList.Item>
+        )}
+
+        {!!message.allocation_reward && (
+          <LabeledList.Item label="Offered Transfer">
+            <Box color="good">+{message.allocation_reward} CU</Box>
+          </LabeledList.Item>
+        )}
+
+        {archived && (
+          <>
+            <LabeledList.Item label="Resolution">
+              <Box color={resolutionColor(message.resolution_status)}>
+                {message.resolution_status}
+              </Box>
+            </LabeledList.Item>
+            <LabeledList.Item label="Responded By">
+              {message.responded_by || 'N/A'}
+            </LabeledList.Item>
+            <LabeledList.Item label="Responded At">
+              {message.responded_at || 'N/A'}
+            </LabeledList.Item>
+            {!!message.allocation_change && (
+              <LabeledList.Item label="Liaison CU Change">
+                <Box color={message.allocation_change > 0 ? 'good' : 'bad'}>
+                  {message.allocation_change > 0 ? '+' : ''}
+                  {message.allocation_change} CU
+                </Box>
+              </LabeledList.Item>
+            )}
+          </>
+        )}
+      </LabeledList>
+
+      <Box mt={1.5}>{message.body}</Box>
+
+      {archived && message.response && (
+        <Box mt={1.5} p={1} backgroundColor="rgba(255, 255, 255, 0.04)">
+          <Box bold mb={0.5}>
+            Recorded Response
+          </Box>
+          {message.response}
+        </Box>
+      )}
+    </Section>
+  );
+};
