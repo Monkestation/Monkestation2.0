@@ -78,6 +78,7 @@
 	pixel_y = old_loc.pixel_y
 	invisibility = set_invis
 
+/// Holographic arrow a holopad projects when the AI points at something
 /obj/effect/temp_visual/point/holo
 	icon_state = "arrow_large_white"
 
