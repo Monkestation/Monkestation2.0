@@ -69,7 +69,7 @@
 	new /obj/item/clothing/under/rank/centcom/official/skirt(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/binoculars(src)
-	new /obj/item/implantcase/mindshield(src)
+	new /obj/item/implanter/mindshield(src)
 
 // Central Command Advisor Hologram code
 
