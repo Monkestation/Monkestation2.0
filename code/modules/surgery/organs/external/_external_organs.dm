@@ -417,3 +417,80 @@
 		return FALSE
 
 	return TRUE
+
+/obj/item/organ/external/head_quills
+	name = "feathery quills"
+	desc = "A bunch of feather quills."
+	icon_state = "vox_ruff_hawk"
+	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
+
+	preference = "feature_head_quills"
+	zone = BODY_ZONE_HEAD
+	slot =  ORGAN_SLOT_EXTERNAL_HEAD_QUILLS
+	dna_block = DNA_VOX_HEAD_QUILLS_BLOCK
+	use_mob_sprite_as_obj_sprite = TRUE
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/head_quills
+
+/datum/bodypart_overlay/mutant/head_quills
+	layers = EXTERNAL_ADJACENT
+	feature_key = "head_quills"
+
+/datum/bodypart_overlay/mutant/head_quills/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+		return FALSE
+
+	return TRUE
+
+/datum/bodypart_overlay/mutant/head_quills/get_global_feature_list()
+	return GLOB.head_quills_list
+
+/datum/bodypart_overlay/mutant/head_quills/get_image(image_layer, obj/item/bodypart/limb, layer_name)
+	if(!sprite_datum)
+		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
+
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, get_base_icon_state(), layer = image_layer)
+
+	if(sprite_datum.center)
+		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+	return appearance
+
+/obj/item/organ/external/face_quills
+	name = "feathery quills"
+	desc = "A bunch of feather quills."
+	icon_state = "vox_ruff_hawk"
+	icon = 'icons/mob/species/vox/vox_hair_vg.dmi'
+
+	preference = "feature_face_quills"
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_EXTERNAL_FACE_QUILLS
+	dna_block = DNA_VOX_FACE_QUILLS_BLOCK
+	use_mob_sprite_as_obj_sprite = TRUE
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/face_quills
+
+/datum/bodypart_overlay/mutant/face_quills
+	layers = EXTERNAL_ADJACENT
+	feature_key = "face_quills"
+
+/datum/bodypart_overlay/mutant/face_quills/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if((human.head?.flags_inv & HIDEFACIALHAIR) || (human.wear_mask?.flags_inv & HIDEFACIALHAIR))
+		return FALSE
+
+	return TRUE
+
+/datum/bodypart_overlay/mutant/face_quills/get_global_feature_list()
+	return GLOB.face_quills_list
+
+/datum/bodypart_overlay/mutant/face_quills/get_image(image_layer, obj/item/bodypart/limb, layer_name)
+	if(!sprite_datum)
+		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
+
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, get_base_icon_state(), layer = image_layer)
+
+	if(sprite_datum.center)
+		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+	return appearance
+

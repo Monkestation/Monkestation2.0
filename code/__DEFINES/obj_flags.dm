@@ -94,8 +94,12 @@
 #define HEADINTERNALS (1<<18)
 /// This clothing will never leave fibers.
 #define BLOCKS_FIBERS (1<<19)
+/// This clothing can only be worn by vox
+#define VOX_CLOTHING (1<<20)
 ///Sterile material, for medical modsuits
 #define STERILE (1<<22)
+
+
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
 #define CLOTHING_DAMAGED 1 // There's some damage on the clothing but it still has at least one functioning bodypart and can be equipped
