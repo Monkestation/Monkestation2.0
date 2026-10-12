@@ -1278,7 +1278,7 @@ GAME_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "AI Comm
 	if(!target_turf)
 		return FALSE
 	var/obj/machinery/holopad/best_pad
-	for(var/obj/machinery/holopad/pad as anything in SSmachines.get_machines_by_type(/obj/machinery/holopad))
+	for(var/obj/machinery/holopad/pad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad))
 		if(!pad.on_network || !pad.is_operational || pad.pointing)
 			continue
 		if(!pad.validate_location(target_turf))
