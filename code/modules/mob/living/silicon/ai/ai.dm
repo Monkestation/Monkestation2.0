@@ -1290,7 +1290,8 @@ GAME_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "AI Comm
 			best_pad = pad
 	if(!best_pad)
 		return FALSE
-	var/obj/visual = best_pad.holo_point(pointed_atom, invisibility)
+	// not passing our invisibility like tg does, our ai mob is invisible so the arrow would be too
+	var/obj/visual = best_pad.holo_point(pointed_atom)
 	if(!visual)
 		return FALSE
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual)
