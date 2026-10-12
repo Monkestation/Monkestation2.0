@@ -353,6 +353,12 @@
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
 
+/datum/supply_pack/goody/pet_mouse
+	name = "Pet Mouse"
+	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
+	cost = PAYCHECK_CREW * 1.5
+	contains = list(/obj/item/pet_carrier/small/mouse)
+
 /datum/supply_pack/goody/summoner_nifsoft
 	name = "Grimoire Caeruleam NIFSoft"
 	desc = "Contains a single Grimoire Caeruleam NIFSoft uploader disk."

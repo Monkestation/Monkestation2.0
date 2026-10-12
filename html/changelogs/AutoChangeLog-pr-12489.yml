@@ -1,0 +1,13 @@
+author: "Gboster, ArcaneMusic"
+delete-after: True
+changes:
+  - rscadd: "borers can now have seperate hives, hiveminds and objectives. Borer PVP is real"
+  - qol: "added ckeys to each borer on the round-end menu, and made it a bit more compact"
+  - qol: "borer abilities will now become red when unusuable due to needing a host/being sugared up/abilities own limiters. They will still appear usable when you don't have enough points/chems for them"
+  - balance: "borers no longer pop out of people if they die in them, instead they'll start dealing toxin/brain damage until removed"
+  - balance: "Dissection now replaces Reproduction in the neutered borer evolution tree instead of being a side-path"
+  - code_imp: "changed a lot of back-end borer code, pray everything works"
+  - admin: "borers no longer spawn in with teams nor objectives, if you are planning on spawning them in with those then use the event/tokens"
+  - rscadd: "(ArcaneMusic) You can now purchase pet mice as a cargo goodie."
+  - qol: "(ArcaneMusic) Pet carriers now have contextual screentips."
+  - bugfix: "(ArcaneMusic) The biopod pet carrier now doesn't randomly turn invisible."

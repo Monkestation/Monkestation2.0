@@ -25,5 +25,6 @@
 
 	spawned.layer = ABOVE_MOB_LAYER
 	spawned.pixel_y -= 12
+	spawned.color = rgb(211, 2, 2)
 	. = ..()
 

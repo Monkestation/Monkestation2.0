@@ -1,8 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "(hry-gh) chat storage should load more reliably"
-  - server: "(hry-gh) server operators can now properly disable the iframe chat storage solution by unsetting the STORAGE_CDN_IFRAME config"
-  - bugfix: "(UwU) fixed improper chat caching."
-  - qol: "(hry-gh) added chat messages when your chat storage has been reset"
-  - bugfix: "(hry-gh) if you've not been playing for awhile and came back, your chat storage may have been reset. this should no longer happen"
