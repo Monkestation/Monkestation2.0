@@ -127,7 +127,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	alert = FALSE //We're checking our messages!
 	update_icon()
 
-/obj/machinery/newscaster/proc/can_admin(var/obj/item/card/id/card)
+/obj/machinery/newscaster/proc/can_admin(obj/item/card/id/card)
 	if(!card)
 		return FALSE
 	for (var/access in admin_access)
@@ -135,7 +135,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 	return FALSE
 
-/obj/machinery/newscaster/proc/can_security(var/obj/item/card/id/card)
+/obj/machinery/newscaster/proc/can_security(obj/item/card/id/card)
 	if(!card)
 		return FALSE
 	for (var/access in security_access)
