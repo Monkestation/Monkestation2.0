@@ -6667,19 +6667,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/emergency_bed = 1
 	)
 
-/datum/ccpost_supply_package/medical/vending
-	id = "medical_vending"
-	name = "Medical Vending Restock"
-	desc = "Replacement stock cartridges for common Nanotrasen medical vending equipment."
-	cost = 8
-
-	contains = list(
-		/obj/item/vending_refill/medical = 1,
-		/obj/item/vending_refill/drugs = 1,
-		/obj/item/vending_refill/wallmed = 1
-	)
-
-
 // ENGINEERING
 
 /datum/ccpost_supply_package/engineering
