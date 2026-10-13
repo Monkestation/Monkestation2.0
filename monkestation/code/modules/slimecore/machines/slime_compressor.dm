@@ -48,8 +48,6 @@
 	var/base_complete = FALSE
 	var/cross_complete = FALSE
 
-	COOLDOWN_DECLARE(slime_scream_cooldown)
-
 /obj/machinery/slime_compressor/Initialize(mapload)
 	. = ..()
 	if(!length(recipe_choices))
@@ -367,37 +365,7 @@
 		say("Not enough energy!")
 		return FALSE
 
-	// Just put the thing here I suppose
-	if(COOLDOWN_FINISHED(src, slime_scream_cooldown))
-		screams_of_the_damned()
-		COOLDOWN_START(src, slime_scream_cooldown, 5 SECONDS)
-
 	return TRUE
-
-// I just carried this over from slime grinder
-/obj/machinery/slime_compressor/proc/screams_of_the_damned()
-	for(var/mob/living/victim in mobs_inside)
-		if(!isslime(victim))
-			continue
-		var/list/slime_blender = list(
-			'monkestation/code/modules/slimecore/sounds/slimeblender1.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender2.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender3.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender4.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender5.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender6.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender7.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender8.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender9.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender10.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender11.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender12.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender14.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender13.ogg',
-			'monkestation/code/modules/slimecore/sounds/slimeblender15.ogg',
-		)
-		playsound(src, pick(slime_blender), rand(35, 50), TRUE, mixer_channel = CHANNEL_VOICES)
-		playsound(src, 'sound/machines/blender.ogg', 80, TRUE, mixer_channel = CHANNEL_MACHINERY)
 
 #undef COMPRESSOR_BASE_EXTRACT_AMOUNT
 #undef COMPRESSOR_BASE_COMPRESS_TIME

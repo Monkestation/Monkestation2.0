@@ -1,14 +1,13 @@
 #define ICARUS_IGNITION_TIME (20 SECONDS)
 
+GLOBAL_DATUM_INIT(goldeneye, /datum/goldeneye, new)
+
 /**
  * GoldenEye defence network
  *
  * Contains: Subsystem, Keycard, Terminal and Objective
  */
-
-SUBSYSTEM_DEF(goldeneye)
-	name = "GoldenEye"
-	flags = SS_NO_INIT | SS_NO_FIRE
+/datum/goldeneye
 	/// A tracked list of all our keys.
 	var/list/goldeneye_keys = list()
 	/// A list of minds that have been extracted and thus cannot be extracted again.
@@ -22,32 +21,24 @@ SUBSYSTEM_DEF(goldeneye)
 	/// How long until ICARUS fires?
 	var/ignition_time = ICARUS_IGNITION_TIME
 
-/datum/controller/subsystem/goldeneye/Recover()
-	goldeneye_keys = SSgoldeneye.goldeneye_keys
-	goldeneye_extracted_minds = SSgoldeneye.goldeneye_extracted_minds
-	uploaded_keys = SSgoldeneye.uploaded_keys
-	required_keys = SSgoldeneye.required_keys
-	goldeneye_activated = SSgoldeneye.goldeneye_activated
-	ignition_time = SSgoldeneye.ignition_time
-
 /// A safe proc for adding a targets mind to the tracked extracted minds.
-/datum/controller/subsystem/goldeneye/proc/extract_mind(datum/mind/target_mind)
+/datum/goldeneye/proc/extract_mind(datum/mind/target_mind)
 	goldeneye_extracted_minds += target_mind
 
 /// A safe proc for registering a new key to the goldeneye system.
-/datum/controller/subsystem/goldeneye/proc/upload_key()
+/datum/goldeneye/proc/upload_key()
 	uploaded_keys++
 	check_condition()
 
 /// Checks our activation condition after an upload has occured.
-/datum/controller/subsystem/goldeneye/proc/check_condition()
+/datum/goldeneye/proc/check_condition()
 	if(uploaded_keys >= required_keys)
 		activate()
 		return
 	priority_announce("UNAUTHORISED KEYCARD UPLOAD DETECTED. [uploaded_keys]/[required_keys] KEYCARDS UPLOADED.", "GoldenEye Defence Network")
 
 /// Activates goldeneye.
-/datum/controller/subsystem/goldeneye/proc/activate()
+/datum/goldeneye/proc/activate()
 	var/message = "/// GOLDENEYE DEFENCE NETWORK BREACHED /// \n \
 	Unauthorised GoldenEye Defence Network access detected. \n \
 	ICARUS online. \n \
@@ -62,12 +53,12 @@ SUBSYSTEM_DEF(goldeneye)
 	addtimer(CALLBACK(src, PROC_REF(fire_icarus)), ignition_time)
 
 
-/datum/controller/subsystem/goldeneye/proc/fire_icarus()
+/datum/goldeneye/proc/fire_icarus()
 	var/datum/round_event_control/icarus_sunbeam/event_to_start = new()
 	event_to_start.run_event()
 
 /// Checks if a mind(target_mind) is a head and if they aren't in the goldeneye_extracted_minds list.
-/datum/controller/subsystem/goldeneye/proc/check_goldeneye_target(datum/mind/target_mind)
+/datum/goldeneye/proc/check_goldeneye_target(datum/mind/target_mind)
 	var/list/heads_list = SSjob.get_all_heads()
 	for(var/datum/mind/iterating_mind as anything in heads_list)
 		if(target_mind == iterating_mind) // We have a match, let's check if they've already been extracted.
@@ -95,7 +86,7 @@ SUBSYSTEM_DEF(goldeneye)
 
 /obj/item/goldeneye_key/Initialize(mapload)
 	. = ..()
-	SSgoldeneye.goldeneye_keys += src
+	GLOB.goldeneye.goldeneye_keys += src
 	goldeneye_tag = "G[rand(10000, 99999)]"
 	name = "\improper GoldenEye authentication keycard: [goldeneye_tag]"
 	AddComponent(/datum/component/stationloving/goldeneye)
@@ -104,7 +95,7 @@ SUBSYSTEM_DEF(goldeneye)
 	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/item/goldeneye_key/Destroy(force)
-	SSgoldeneye.goldeneye_keys -= src
+	GLOB.goldeneye.goldeneye_keys -= src
 	QDEL_NULL(beacon)
 	return ..()
 
@@ -152,7 +143,7 @@ SUBSYSTEM_DEF(goldeneye)
 	if(do_after(user, 10 SECONDS, src))
 		say("GOLDENEYE KEYCARD AUTHENTICATED!")
 		playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 100)
-		SSgoldeneye.upload_key()
+		GLOB.goldeneye.upload_key()
 		uploading = FALSE
 		// Remove its stationloving, so we can delete it.
 		qdel(inserting_key.GetComponent(/datum/component/stationloving/goldeneye))
@@ -170,7 +161,7 @@ SUBSYSTEM_DEF(goldeneye)
 	martyr_compatible = TRUE
 
 /datum/objective/goldeneye/check_completion()
-	return ..() || SSgoldeneye.goldeneye_activated
+	return ..() || GLOB.goldeneye.goldeneye_activated
 
 // Variant of stationloving that also allows it to be at the assop base, used by the goldeneye keycards.
 /datum/component/stationloving/goldeneye

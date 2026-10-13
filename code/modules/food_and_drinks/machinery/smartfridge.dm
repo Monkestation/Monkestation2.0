@@ -29,6 +29,7 @@
 	var/welded_down = FALSE
 	/// The tgui theme to use. Default is null, which means the Nanotrasen theme is used.
 	var/tgui_theme = null
+	layout_prefs_used = /datum/preference/choiced/tgui_layout/smartfridge
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -361,22 +362,28 @@
 /obj/machinery/smartfridge/ui_data(mob/user)
 	. = list()
 
-	var/listofitems = list()
-	for (var/I in src)
+	var/list/listofitems = list()
+	for (var/item in src)
 		// We do not vend our own components.
-		if(I in component_parts)
+		if(item in component_parts)
 			continue
 
-		var/atom/movable/O = I
-		if (!QDELETED(O))
-			var/md5name = md5(O.name) // This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
-			if (listofitems[md5name]) // which is fixed in a version we cannot use due to ie8 incompatibility
-				listofitems[md5name]["amount"]++ // The good news is, #30519 made smartfridge UIs non-auto-updating
-			else
-				listofitems[md5name] = list("name" = O.name, "type" = O.type, "amount" = 1)
-	sort_list(listofitems)
+		var/atom/movable/atom = item
+		if (QDELETED(atom))
+			continue
+		var/key = "[atom.type]-[atom.name]"
+		if (listofitems[key])
+			listofitems[key]["amount"]++
+		else
+			listofitems[key] = list(
+				"path" = key,
+				"name" = full_capitalize(atom.name),
+				"icon" = atom.icon,
+				"icon_state" = atom.icon_state,
+				"amount" = 1,
+			)
 
-	.["contents"] = listofitems
+	.["contents"] = sort_list(listofitems)
 	.["name"] = name
 	.["isdryer"] = FALSE
 
@@ -389,37 +396,29 @@
 
 /obj/machinery/smartfridge/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if(. || !ui.user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
+
 	switch(action)
 		if("Release")
-			var/desired = 0
+			var/desired = text2num(params["amount"])
+			if(isnull(desired))
+				return TRUE
 
-			if(!allow_ai_retrieve && isAI(usr))
-				to_chat(usr, span_warning("[src] does not seem to be configured to respect your authority!"))
-				return
-
-			if (params["amount"])
-				desired = text2num(params["amount"])
-			else
-				desired = tgui_input_number(usr, "How many items would you like to take out?", "Release", max_value = 50)
-				if(!desired)
-					return FALSE
-
-			if(QDELETED(src) || QDELETED(usr) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH)) // Sanity checkin' in case stupid stuff happens while we wait for input()
-				return FALSE
+			if(!allow_ai_retrieve && isAI(ui.user))
+				to_chat(ui.user, span_warning("[src] does not seem to be configured to respect your authority!"))
+				return TRUE
 
 			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				// Grab the first item in contents which name matches our passed name.
-				// format_text() is used here to strip \improper and \proper from both names,
-				// which is required for correct string comparison between them.
-				if(format_text(dispensed_item.name) == format_text(params["name"]))
-					if(dispensed_item in component_parts)
-						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
-					dispense(dispensed_item, usr)
-					desired--
+				var/item_name = "[dispensed_item.type]-[replacetext(replacetext(dispensed_item.name, "\proper", ""), "\improper", "")]"
+				if(params["path"] != item_name)
+					continue
+				if(dispensed_item in component_parts)
+					CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
+				dispense(dispensed_item, ui.user)
+				desired--
 
 			if (visible_contents)
 				update_appearance()
@@ -463,7 +462,6 @@
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
 	. = ..()
 	.["isdryer"] = TRUE
-	.["verb"] = "Take"
 	.["drying"] = drying
 
 /obj/machinery/smartfridge/drying_rack/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -471,36 +469,9 @@
 	if(. || !ui.user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
-	var/mob/living_mob = ui.user
-
 	switch(action)
 		if("Dry")
 			toggle_drying(FALSE)
-		if("Release")
-			var/amount = text2num(params["amount"])
-			if(isnull(amount) || !isnum(amount))
-				return TRUE
-			if(isAI(living_mob))
-				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
-				return TRUE
-
-			for(var/obj/item/dispensed_item in contents)
-				if(amount <= 0)
-					break
-				var/item_name = "[dispensed_item.type]-[replacetext(replacetext(dispensed_item.name, "\proper", ""), "\improper", "")]"
-				if(params["path"] != item_name)
-					continue
-				if(dispensed_item in component_parts)
-					CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
-				//dispense the item
-				if(!living_mob.put_in_hands(dispensed_item))
-					dispensed_item.forceMove(drop_location())
-					adjust_item_drop_location(dispensed_item)
-				use_energy(active_power_usage)
-				amount--
-			if (visible_contents)
-				update_appearance()
-			return TRUE
 
 	return FALSE
 
