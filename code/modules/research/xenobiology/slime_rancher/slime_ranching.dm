@@ -27,7 +27,7 @@
 		return
 
 	var/mutation_target = get_unlocked_mutation_type(weight_new_types = TRUE)
-	if(mutation_target && !blocks_reproduction && prob(mutation_chance))
+	if(mutation_target && prob(mutation_chance))
 		pending_ranch_mutation = mutation_target
 		start_ranch_mutation()
 		return
@@ -79,9 +79,6 @@
 
 /// Gets us ready to split once we've saved up this much ranch_progress, 0 means go back to making extracts
 /mob/living/basic/slime/proc/set_primed_split_cost(new_cost)
-	if(new_cost && blocks_reproduction)
-		balloon_alert_to_viewers("can't split!")
-		return
 	primed_split_cost = new_cost
 	if(new_cost)
 		pending_ranch_mutation = null
@@ -93,7 +90,7 @@
 /// Makes us want breeding pellets, unless we're already gonna split
 /mob/living/basic/slime/proc/on_check_wanted_pellet(mob/living/basic/slime/source, obj/item/meal)
 	SIGNAL_HANDLER
-	if(!primed_split_cost && !blocks_reproduction && istype(meal, /obj/item/slime_breeding_pellet))
+	if(!primed_split_cost && istype(meal, /obj/item/slime_breeding_pellet))
 		return COMPONENT_SLIME_WANTS_ITEM
 
 /// Pet command that tells the slime to split next (or to nvm that)

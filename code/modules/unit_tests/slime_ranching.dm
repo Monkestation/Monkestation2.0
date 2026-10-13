@@ -111,20 +111,3 @@
 	TEST_ASSERT(isnull(rancher.ai_controller.blackboard[BB_SLIME_EAT_TARGET]), "the released slime kept chasing its old target")
 	TEST_ASSERT(!length(rancher.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST]), "the released slime kept ignoring what it had given up on")
 	TEST_ASSERT(COOLDOWN_FINISHED(rancher, ranch_retry_cooldown), "the released slime still had to wait out its ranch retry cooldown")
-
-/// A radio in a warped room is on the z-levels of its runes for telecomms, even through a rune drawn inside another room.
-/datum/unit_test/warped_room_telecomms
-
-/datum/unit_test/warped_room_telecomms/Run()
-	var/obj/effect/warped_rune/rainbowspace/station_rune = allocate(/obj/effect/warped_rune/rainbowspace, run_loc_floor_bottom_left, /datum/slime_type/grey)
-	UNTIL(station_rune.room.exit_door)
-	var/obj/effect/warped_rune/rainbowspace/nested_rune = allocate(/obj/effect/warped_rune/rainbowspace, get_turf(station_rune.room.exit_door), /datum/slime_type/orange)
-	UNTIL(nested_rune.room.exit_door)
-	var/obj/item/radio/radio = allocate(/obj/item/radio, get_turf(nested_rune.room.exit_door))
-	var/list/station_levels = list(run_loc_floor_bottom_left.z)
-
-	TEST_ASSERT(radio.can_receive(FREQ_COMMON, station_levels), "a radio two rooms deep could not hear the level the outer rune is on")
-	TEST_ASSERT((run_loc_floor_bottom_left.z in get_telecomms_levels(get_turf(radio))), "a signal from two rooms deep did not start on the level the outer rune is on")
-
-	qdel(station_rune)
-	TEST_ASSERT(!radio.can_receive(FREQ_COMMON, station_levels), "the radio still heard that level after its only way out was erased")

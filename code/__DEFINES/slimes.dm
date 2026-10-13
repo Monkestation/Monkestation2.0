@@ -17,8 +17,6 @@
 #define SLIME_EVOLUTION_COST 100
 ///How many other slimes on our tile stop us from splitting
 #define SLIME_OVERCROWD_AMOUNT 2
-///How many transformative extracts one slime can hold
-#define SLIME_MAX_TRANSFORMATIONS 3
 
 ///The slime is not hungry. It might try to feed anyways.
 #define SLIME_HUNGER_NONE 0

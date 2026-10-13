@@ -39,7 +39,7 @@
 		set_nutrition(SLIME_STARTING_NUTRITION)
 		return
 
-	if(!stops_hunger && SPT_PROB(1.25, seconds_per_tick))
+	if(SPT_PROB(1.25, seconds_per_tick))
 		adjust_nutrition((life_stage == SLIME_LIFE_STAGE_ADULT ? -1 : -0.5) * seconds_per_tick)
 
 	if(nutrition < SLIME_STARVE_NUTRITION)

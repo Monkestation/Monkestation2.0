@@ -82,8 +82,7 @@
 	needs_growth = TRUE
 
 /datum/action/innate/slime/reproduce/IsAvailable(feedback = FALSE)
-	var/mob/living/basic/slime/slime_owner = owner
-	return ..() && !slime_owner.blocks_reproduction && !owner.has_status_effect(/datum/status_effect/slime_reproducing)
+	return ..() && !owner.has_status_effect(/datum/status_effect/slime_reproducing)
 
 /datum/action/innate/slime/reproduce/Activate()
 	var/mob/living/basic/slime/slime_owner = owner
@@ -99,11 +98,6 @@
 	if(life_stage != SLIME_LIFE_STAGE_ADULT)
 		if(feedback)
 			balloon_alert(src, "not adult!")
-		return FALSE
-
-	if(blocks_reproduction)
-		if(feedback)
-			balloon_alert(src, "can't split!")
 		return FALSE
 
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
@@ -173,31 +167,26 @@
 			continue
 		slime_friends += possible_friend
 
-	var/list/mob/living/basic/slime/family = list(src)
-	for(var/i in 1 to 1 + extra_babies)
-		var/mob/living/basic/slime/baby = new(drop_loc, slime_type.type)
-		// befriend first, it bails on friends whose ref is already in our faction
-		for(var/mob/living/slime_friend as anything in slime_friends)
-			baby.befriend(slime_friend)
-		baby.faction |= faction
-		baby.cores = max(cores, baby.cores)
-		baby.cat_slime = cat_slime
-		if(cleaner_slime)
-			baby.set_cleaner_slime(TRUE)
-		SEND_SIGNAL(src, COMSIG_SLIME_SPLIT, baby)
-		SSblackbox.record_feedback("tally", "slime_babies_born", 1, baby.slime_type.color)
-		step_away(baby, src)
-		family += baby
+	var/mob/living/basic/slime/baby = new(drop_loc, slime_type.type)
+	// befriend first, it bails on friends whose ref is already in our faction
+	for(var/mob/living/slime_friend as anything in slime_friends)
+		baby.befriend(slime_friend)
+	baby.faction |= faction
+	baby.cores = max(cores, baby.cores)
+	baby.cat_slime = cat_slime
+	if(cleaner_slime)
+		baby.set_cleaner_slime(TRUE)
+	SSblackbox.record_feedback("tally", "slime_babies_born", 1, baby.slime_type.color)
+	step_away(baby, src)
 
 	set_nutrition(SLIME_STARTING_NUTRITION)
-	for(var/mob/living/basic/slime/slime as anything in family)
+	for(var/mob/living/basic/slime/slime as anything in list(src, baby))
 		if(ckey) // Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 			slime.set_nutrition(new_nutrition)
 		slime.mutation_chance = mutation_chance ? clamp(mutation_chance + rand(-5, 5), 0, 100) : 0
 
-	if(!keeps_parent_adult)
-		set_life_stage(SLIME_LIFE_STAGE_BABY)
-		update_name()
-		regenerate_icons()
+	set_life_stage(SLIME_LIFE_STAGE_BABY)
+	update_name()
+	regenerate_icons()
 	amount_grown = 0
 	mutator_used = FALSE

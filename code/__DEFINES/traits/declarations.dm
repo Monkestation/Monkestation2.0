@@ -1415,5 +1415,3 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_OVERFED "overfed"
 /// Currently has the rainbow color-cycle effect applied
 #define TRAIT_RAINBOWED "rainbowed"
-/// Weapon carries the starborne enchantment, just used to track "hey this thing is already enchanted", bc starborne uses an element
-#define TRAIT_STARBORNE "starborne"

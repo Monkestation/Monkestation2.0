@@ -90,23 +90,6 @@
 	///How many extracts of the modtype have been applied.
 	var/applied_crossbreed_amount = 0
 
-	/// Transformative extracts stuck onto us, oldest first. Our babies get all of them.
-	var/list/datum/slime_transformation/transformations
-	/// Every transformation's color mixed into one, for the warping core drawn inside us.
-	var/transformation_color
-	/// Extra babies we make per split.
-	var/extra_babies = 0
-	/// A split leaves us an adult.
-	var/keeps_parent_adult = FALSE
-	/// Never splits and never mutates.
-	var/blocks_reproduction = FALSE
-	/// Added on top of every bit of charge we build up on our own.
-	var/extra_charge = 0
-	/// Nutrition doesn't drain over time.
-	var/stops_hunger = FALSE
-	/// Alpha we use instead of our color's whenever we aren't latched onto someone.
-	var/stealth_alpha
-
 	/// the pen currently tracking us, if any - null when we're not in one
 	var/datum/slime_pen/pen
 	COOLDOWN_DECLARE(pen_expiry_cooldown)
@@ -198,7 +181,6 @@
 	QDEL_NULL(evolve_action)
 	QDEL_NULL(reproduce_action)
 	QDEL_LIST(mutation_progress)
-	QDEL_LIST(transformations)
 	slime_type = null
 	equipped_hat?.forceMove(drop_location())
 
@@ -258,10 +240,7 @@
 	return ..()
 
 /mob/living/basic/slime/regenerate_icons()
-	if(stealth_alpha && !is_latched())
-		alpha = stealth_alpha
-	else
-		alpha = slime_type.transparent ? SLIME_TRANSPARENCY_ALPHA : src::alpha
+	alpha = slime_type.transparent ? SLIME_TRANSPARENCY_ALPHA : src::alpha
 	update_appearance(UPDATE_ICON)
 	return ..()
 
@@ -275,9 +254,6 @@
 	pixel_z = initial(pixel_z) + stack_pixel_z()
 	// whatever we just did, we moved out from under anyone sitting on us
 	dump_riders()
-	// not COMSIG_LIVING_SET_BUCKLED, that fires before buckled changes, so regenerate_icons() would still see the old meal
-	if(stealth_alpha)
-		regenerate_icons()
 
 /mob/living/basic/slime/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -298,10 +274,6 @@
 	. = ..()
 	if(stat == DEAD)
 		return
-	if(transformation_color)
-		var/mutable_appearance/warping_core = mutable_appearance('icons/obj/xenobiology/slimecrossing.dmi', "warping", MOB_BELOW_PIGGYBACK_LAYER)
-		warping_core.color = transformation_color
-		. += warping_core
 	if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
 		. += mutable_appearance(icon, "aslime-[current_mood]")
 	if(cat_slime)
@@ -353,8 +325,6 @@
 
 	if(overcrowded)
 		. += span_warning("It seems too overcrowded to properly reproduce!")
-	for(var/datum/slime_transformation/transformation as anything in transformations)
-		. += span_notice(transformation.desc)
 
 ///Changes the slime's current life state
 /mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)
@@ -464,7 +434,6 @@
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_SET_TYPE, "Set Slime Type")
-	VV_DROPDOWN_OPTION(VV_HK_SLIME_ADD_TRANSFORMATION, "Add Transformation")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_SET_LIFE_STAGE, "Set Life Stage")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_SET_BEHAVIOR, "Set Behavior")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_FILL_GROWTH, "Fill Growth")
@@ -475,8 +444,6 @@
 
 	if(href_list[VV_HK_SLIME_SET_TYPE])
 		admin_set_slime_type(usr)
-	if(href_list[VV_HK_SLIME_ADD_TRANSFORMATION])
-		admin_add_transformation(usr)
 	if(href_list[VV_HK_SLIME_SET_LIFE_STAGE])
 		admin_set_life_stage(usr)
 	if(href_list[VV_HK_SLIME_SET_BEHAVIOR])
@@ -503,32 +470,6 @@
 	name = "[slime_type.color] [life_stage] slime ([rand(1, 1000)])"
 	real_name = name
 	log_admin("[key_name(admin)] set [key_name(src)]'s slime type to [chosen_color].")
-
-/mob/living/basic/slime/proc/admin_add_transformation(mob/admin)
-	if(!admin || !check_rights(NONE))
-		return
-
-	var/list/types_by_name = list()
-	for(var/datum/slime_transformation/transformation_type as anything in subtypesof(/datum/slime_transformation))
-		if(locate(transformation_type) in transformations)
-			continue
-		types_by_name[replacetext("[transformation_type]", "/datum/slime_transformation/", "")] = transformation_type
-
-	if(!length(types_by_name))
-		tgui_alert(admin, "This slime already has every transformation.", "Add Transformation")
-		return
-	if(length(transformations) >= SLIME_MAX_TRANSFORMATIONS)
-		tgui_alert(admin, "This slime can't hold any more transformations.", "Add Transformation")
-		return
-
-	var/chosen_name = tgui_input_list(admin, "Which transformation?", "Add Transformation", types_by_name)
-	if(!chosen_name || QDELETED(src) || !check_rights(NONE))
-		return
-
-	if(!add_transformation(types_by_name[chosen_name], admin))
-		tgui_alert(admin, "The slime couldn't take that transformation.", "Add Transformation")
-		return
-	log_admin("[key_name(admin)] gave [key_name(src)] the [chosen_name] transformation.")
 
 /mob/living/basic/slime/proc/admin_set_life_stage(mob/admin)
 	if(!admin || !check_rights(NONE))

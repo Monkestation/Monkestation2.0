@@ -5,7 +5,7 @@
 		. |= mutation.needed_items
 	if(/obj/item/stack/ore/bluespace_crystal in .)
 		. |= /obj/item/stack/sheet/bluespace_crystal
-	if(!primed_split_cost && !blocks_reproduction)
+	if(!primed_split_cost)
 		. |= /obj/item/slime_breeding_pellet
 
 /// returns a list of mob types this slime can drain for mutations, finished quotas included -

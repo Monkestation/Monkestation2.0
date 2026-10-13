@@ -1364,50 +1364,6 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
 
-/**
- * Returns an alist (x, y, width, height) describing the box around the visible pixels of an icon state.
- *
- * Only the first frame facing south is measured.
- */
-/proc/get_icon_state_visible_bounds(icon_file, icon_state) as /alist
-	// unlike get_icon_dimensions this caches runtime generated icons too, one entry per icon for the rest of the round, bc GetPixel is slow as balls
-	var/static/alist/cached_bounds = alist()
-	var/alist/bounds_by_state = cached_bounds[icon_file]
-	if(isnull(bounds_by_state))
-		bounds_by_state = alist()
-		cached_bounds[icon_file] = bounds_by_state
-	var/alist/bounds = bounds_by_state["[icon_state]"]
-	if(bounds)
-		return bounds
-
-	var/icon/sprite = icon(icon_file, icon_state, SOUTH, 1)
-	var/icon_width = sprite.Width()
-	var/icon_height = sprite.Height()
-	var/left = icon_width + 1
-	var/right = 0
-	var/bottom = icon_height + 1
-	var/top = 0
-	for(var/x in 1 to icon_width)
-		for(var/y in 1 to icon_height)
-			if(isnull(sprite.GetPixel(x, y)))
-				continue
-			left = min(left, x)
-			right = max(right, x)
-			bottom = min(bottom, y)
-			top = max(top, y)
-
-	if(right < left)
-		bounds = alist("x" = 0, "y" = 0, "width" = icon_width, "height" = icon_height)
-	else
-		bounds = alist(
-			"x" = (left + right - 1 - icon_width) / 2,
-			"y" = (bottom + top - 1 - icon_height) / 2,
-			"width" = right - left + 1,
-			"height" = top - bottom + 1,
-		)
-	bounds_by_state["[icon_state]"] = bounds
-	return bounds
-
 /// Fikou's fix for making toast alerts look nice - resets offsets, transforms to fit
 /proc/get_small_overlay(atom/source)
 	var/mutable_appearance/alert_overlay = new(source)
