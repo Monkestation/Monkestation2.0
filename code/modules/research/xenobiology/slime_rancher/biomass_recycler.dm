@@ -28,6 +28,8 @@
 		/obj/item/food/monkeycube = 1,
 		/obj/item/stack/biomass = 1,
 		/obj/item/slime_breeding_pellet = 2,
+		/obj/item/slime_mutation_syringe/cleaner = 8,
+		/obj/item/slime_mutation_syringe/gooey_cat = 8,
 	)
 	/// Critters you can print right away, no unlocks needed.
 	var/static/list/baseline_species = list(

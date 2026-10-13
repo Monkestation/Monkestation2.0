@@ -181,6 +181,9 @@
 			baby.befriend(slime_friend)
 		baby.faction |= faction
 		baby.cores = max(cores, baby.cores)
+		baby.cat_slime = cat_slime
+		if(cleaner_slime)
+			baby.set_cleaner_slime(TRUE)
 		SEND_SIGNAL(src, COMSIG_SLIME_SPLIT, baby)
 		SSblackbox.record_feedback("tally", "slime_babies_born", 1, baby.slime_type.color)
 		step_away(baby, src)

@@ -6544,6 +6544,7 @@
 #include "code\modules\research\xenobiology\slime_rancher\biomass_recycler.dm"
 #include "code\modules\research\xenobiology\slime_rancher\extract_compressor.dm"
 #include "code\modules\research\xenobiology\slime_rancher\feeding_flora.dm"
+#include "code\modules\research\xenobiology\slime_rancher\mutation_syringe.dm"
 #include "code\modules\research\xenobiology\slime_rancher\slime_ai.dm"
 #include "code\modules\research\xenobiology\slime_rancher\slime_apology.dm"
 #include "code\modules\research\xenobiology\slime_rancher\slime_bouncing.dm"
