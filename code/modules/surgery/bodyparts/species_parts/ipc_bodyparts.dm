@@ -219,6 +219,7 @@
 	return ..()
 
 /obj/item/bodypart/chest/ipc
+	acceptable_bodytype = BODYTYPE_ROBOTIC
 	icon = 'icons/mob/species/ipc/bodyparts.dmi'
 	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'

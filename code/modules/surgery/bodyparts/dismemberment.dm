@@ -341,9 +341,12 @@
 
 ///Checks if you can attach a limb, returns TRUE if you can.
 /obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
-	// IPCs require robotic limbs, including during unconventional attachment.
-	if(isipc(new_limb_owner) && !(bodytype & BODYTYPE_ROBOTIC))
-		return FALSE
+	// Keep the species' chassis compatibility requirement even for special attachment
+	// or while its chest is missing/replaced.
+	if(isipc(new_limb_owner))
+		var/obj/item/bodypart/chest/chassis_type = new_limb_owner.dna.species.bodypart_overrides[BODY_ZONE_CHEST]
+		if(!(bodytype & initial(chassis_type.acceptable_bodytype)))
+			return FALSE
 
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE

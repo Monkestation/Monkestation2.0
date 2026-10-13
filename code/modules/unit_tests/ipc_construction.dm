@@ -3,6 +3,8 @@
 
 /datum/unit_test/ipc_robotic_limbs_only/Run()
 	var/mob/living/carbon/human/species/ipc/shell = allocate(/mob/living/carbon/human/species/ipc)
+	var/obj/item/bodypart/chest/chassis = shell.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_EQUAL(chassis.acceptable_bodytype, BODYTYPE_ROBOTIC, "The IPC chassis does not declare its robotic limb compatibility.")
 	var/obj/item/bodypart/original_arm = shell.get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/arm/left/organic_arm = allocate(/obj/item/bodypart/arm/left)
 	TEST_ASSERT(!organic_arm.can_attach_limb(shell), "An IPC accepted an organic limb.")

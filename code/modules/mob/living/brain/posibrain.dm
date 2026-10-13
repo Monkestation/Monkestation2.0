@@ -337,7 +337,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /// Attempts to install this MMI as the internal brain organ of an eligible IPC body.
 /obj/item/mmi/proc/attempt_become_ipc_organ(obj/item/bodypart/parent, mob/living/carbon/human/ipc, mob/living/installer)
-	if(!brainmob?.mind || !isipc(ipc) || !parent || parent != ipc.get_bodypart(BODY_ZONE_CHEST) || !(parent.bodytype & BODYTYPE_ROBOTIC) || ipc.get_organ_slot(ORGAN_SLOT_BRAIN) || ipc.mind)
+	if(!brainmob?.mind || !isipc(ipc) || !parent || parent != ipc.get_bodypart(BODY_ZONE_CHEST) || !parent.can_attach_limb(ipc) || ipc.get_organ_slot(ORGAN_SLOT_BRAIN) || ipc.mind)
 		return FALSE
 	var/holder_type = get_ipc_brain_holder_type()
 	var/obj/item/organ/internal/brain/positronic/holder = new holder_type()
