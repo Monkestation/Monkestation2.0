@@ -24,7 +24,33 @@
 #define CCPOST_BASE_TRANSIT_DELAY 60 SECONDS
 
 #define CCPOST_SHIPMENT_RETRY_DELAY 5 SECONDS
+
+#define CCPOST_FREIGHT_STATUS_NORMAL "NORMAL"
+#define CCPOST_FREIGHT_STATUS_DEGRADED "DEGRADED"
+#define CCPOST_FREIGHT_STATUS_PRIORITY "PRIORITY"
+#define CCPOST_FREIGHT_STATUS_MIXED "MIXED"
+
+#define CCPOST_INSTALLATION_MAINTENANCE "MAINTENANCE"
+#define CCPOST_INSTALLATION_UNDER_REVIEW "UNDER REVIEW"
+#define CCPOST_INSTALLATION_COMMS_DEGRADED "COMMUNICATIONS DEGRADED"
+#define CCPOST_INSTALLATION_NO_CONTACT "NO CONTACT"
+#define CCPOST_INSTALLATION_OFFLINE "OFFLINE"
+#define CCPOST_INSTALLATION_CRITICAL "CRITICAL"
+
+#define CCPOST_INSTALLATION_CODE_REL_A17 "NT-REL-A17"
+#define CCPOST_INSTALLATION_CODE_ADM_06 "NT-ADM-06"
+#define CCPOST_INSTALLATION_CODE_LOG_H09 "NT-LOG-H09"
+
+#define CCPOST_SUPPLY_CATEGORY_ADMINISTRATION "Administration"
+#define CCPOST_SUPPLY_CATEGORY_SUSTENANCE "Sustenance"
 #define CCPOST_SUPPLY_CATEGORY_MEDICAL "Medical"
+#define CCPOST_SUPPLY_CATEGORY_ENGINEERING "Engineering"
+#define CCPOST_SUPPLY_CATEGORY_MATERIALS "Materials"
+#define CCPOST_SUPPLY_CATEGORY_TECHNICAL "Technical"
+#define CCPOST_SUPPLY_CATEGORY_EMERGENCY "Emergency"
+#define CCPOST_SUPPLY_CATEGORY_SECURITY "Security"
+#define CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT "Entertainment"
+#define CCPOST_SUPPLY_CATEGORY_RESTRICTED "Restricted"
 
 
 /datum/ccpost_allocation_ledger_entry
@@ -42,7 +68,7 @@
 
 
 /datum/ccpost_freight_conditions
-	var/status = "NORMAL"
+	var/status = CCPOST_FREIGHT_STATUS_NORMAL
 
 	var/authorization_delay = CCPOST_BASE_AUTHORIZATION_DELAY
 	var/dispatch_delay = CCPOST_BASE_DISPATCH_DELAY
@@ -88,20 +114,56 @@
 		priority = TRUE
 
 	if(degraded && priority)
-		status = "MIXED"
+		status = CCPOST_FREIGHT_STATUS_MIXED
 
 	else if(degraded)
-		status = "DEGRADED"
+		status = CCPOST_FREIGHT_STATUS_DEGRADED
 
 	else if(priority)
-		status = "PRIORITY"
+		status = CCPOST_FREIGHT_STATUS_PRIORITY
 
 	else
-		status = "NORMAL"
+		status = CCPOST_FREIGHT_STATUS_NORMAL
 
 // Checks conditions of other installations within the sector, which has an affect on freight
 
-/datum/ccpost_logistics_network/proc/get_current_freight_conditions()
+/datum/ccpost_logistics_network/proc/apply_installation_loss_freight_effects(
+	datum/ccpost_freight_conditions/conditions,
+	datum/ccpost_supply_package/package = null
+)
+	if(!conditions)
+		return
+
+	var/datum/ccpost_sector_network/sector_network = GLOB.ccpost_sector_network
+
+	if(!sector_network)
+		return
+
+	for(var/datum/ccpost_sector_installation/installation as anything in sector_network.sector_installations)
+		if(QDELETED(installation) || !installation.destroyed)
+			continue
+
+		var/datum/ccpost_installation_loss_effect/effect = installation.loss_effect
+
+		if(!effect || !effect.has_logistics_effect())
+			continue
+
+		// Category-specific losses affect only matching shipments. The top-level
+		// Logistics status remains a sector-wide overview, so those effects are
+		// evaluated when a concrete package is actually requisitioned.
+		if(length(effect.logistics_categories))
+			if(!package || !(package.category in effect.logistics_categories))
+				continue
+
+		conditions.authorization_delay += effect.logistics_authorization_delay
+		conditions.dispatch_delay += effect.logistics_dispatch_delay
+		conditions.transit_multiplier *= effect.logistics_transit_multiplier
+
+		if(effect.summary)
+			conditions.add_reason("[installation.installation_name] has been lost. [effect.summary]")
+
+
+/datum/ccpost_logistics_network/proc/get_current_freight_conditions(datum/ccpost_supply_package/package = null)
 	var/datum/ccpost_freight_conditions/conditions = new
 
 	var/datum/ccpost_sector_network/sector_network = GLOB.ccpost_sector_network
@@ -111,32 +173,28 @@
 		return conditions
 
 	sector_network.ensure_started()
+	apply_installation_loss_freight_effects(conditions, package)
 
 	// --------------------------------------------------------
 	// RELAY STATION A-17
 	// Communications reliability affects authorization.
 	// --------------------------------------------------------
 
-	var/datum/ccpost_sector_installation/relay = sector_network.get_installation_by_code("NT-REL-A17")
+	var/datum/ccpost_sector_installation/relay = sector_network.get_installation_by_code(CCPOST_INSTALLATION_CODE_REL_A17)
 
-	if(relay)
-		if(relay.destroyed)
-			conditions.authorization_delay += 15 SECONDS
-			conditions.add_reason("Relay Station A-17 has been lost. Administrative traffic is being rerouted.")
+	if(relay && !relay.destroyed)
+		switch(relay.status)
+			if(CCPOST_INSTALLATION_COMMS_DEGRADED)
+				conditions.authorization_delay += 5 SECONDS
+				conditions.add_reason("Relay Station A-17 is reporting degraded communications.")
 
-		else
-			switch(relay.status)
-				if("COMMUNICATIONS DEGRADED")
-					conditions.authorization_delay += 5 SECONDS
-					conditions.add_reason("Relay Station A-17 is reporting degraded communications.")
+			if(CCPOST_INSTALLATION_NO_CONTACT, CCPOST_INSTALLATION_OFFLINE)
+				conditions.authorization_delay += 10 SECONDS
+				conditions.add_reason("Relay Station A-17 is unavailable. Authorization traffic is using alternate routes.")
 
-				if("NO CONTACT", "OFFLINE")
-					conditions.authorization_delay += 10 SECONDS
-					conditions.add_reason("Relay Station A-17 is unavailable. Authorization traffic is using alternate routes.")
-
-				if("CRITICAL")
-					conditions.authorization_delay += 15 SECONDS
-					conditions.add_reason("Relay Station A-17 is experiencing a critical operational incident.")
+			if(CCPOST_INSTALLATION_CRITICAL)
+				conditions.authorization_delay += 15 SECONDS
+				conditions.add_reason("Relay Station A-17 is experiencing a critical operational incident.")
 
 
 	// --------------------------------------------------------
@@ -144,30 +202,25 @@
 	// Administrative processing affects authorization.
 	// --------------------------------------------------------
 
-	var/datum/ccpost_sector_installation/administrative_annex = sector_network.get_installation_by_code("NT-ADM-06")
+	var/datum/ccpost_sector_installation/administrative_annex = sector_network.get_installation_by_code(CCPOST_INSTALLATION_CODE_ADM_06)
 
-	if(administrative_annex)
-		if(administrative_annex.destroyed)
-			conditions.authorization_delay += 15 SECONDS
-			conditions.add_reason("Administrative Annex 6 has been lost. Requisitions are being processed through alternate administrative channels.")
+	if(administrative_annex && !administrative_annex.destroyed)
+		switch(administrative_annex.status)
+			if(CCPOST_INSTALLATION_UNDER_REVIEW)
+				conditions.authorization_delay += 5 SECONDS
+				conditions.add_reason("Administrative Annex 6 is under Central Command review.")
 
-		else
-			switch(administrative_annex.status)
-				if("UNDER REVIEW")
-					conditions.authorization_delay += 5 SECONDS
-					conditions.add_reason("Administrative Annex 6 is under Central Command review.")
+			if(CCPOST_INSTALLATION_COMMS_DEGRADED)
+				conditions.authorization_delay += 5 SECONDS
+				conditions.add_reason("Administrative Annex 6 is experiencing communications degradation.")
 
-				if("COMMUNICATIONS DEGRADED")
-					conditions.authorization_delay += 5 SECONDS
-					conditions.add_reason("Administrative Annex 6 is experiencing communications degradation.")
+			if(CCPOST_INSTALLATION_NO_CONTACT, CCPOST_INSTALLATION_OFFLINE)
+				conditions.authorization_delay += 10 SECONDS
+				conditions.add_reason("Administrative Annex 6 is unavailable. Requisition processing has been rerouted.")
 
-				if("NO CONTACT", "OFFLINE")
-					conditions.authorization_delay += 10 SECONDS
-					conditions.add_reason("Administrative Annex 6 is unavailable. Requisition processing has been rerouted.")
-
-				if("CRITICAL")
-					conditions.authorization_delay += 15 SECONDS
-					conditions.add_reason("Administrative Annex 6 is experiencing a critical operational incident.")
+			if(CCPOST_INSTALLATION_CRITICAL)
+				conditions.authorization_delay += 15 SECONDS
+				conditions.add_reason("Administrative Annex 6 is experiencing a critical operational incident.")
 
 
 	// --------------------------------------------------------
@@ -175,40 +228,34 @@
 	// This is the installation most directly involved in freight.
 	// --------------------------------------------------------
 
-	var/datum/ccpost_sector_installation/logistics_station = sector_network.get_installation_by_code("NT-LOG-H09")
+	var/datum/ccpost_sector_installation/logistics_station = sector_network.get_installation_by_code(CCPOST_INSTALLATION_CODE_LOG_H09)
 
-	if(logistics_station)
-		if(logistics_station.destroyed)
-			conditions.dispatch_delay += 20 SECONDS
-			conditions.transit_multiplier *= 1.75
-			conditions.add_reason("Logistics Station H-9 has been lost. Freight is being routed through distant sector infrastructure.")
+	if(logistics_station && !logistics_station.destroyed)
+		switch(logistics_station.status)
+			if(CCPOST_INSTALLATION_MAINTENANCE)
+				conditions.dispatch_delay += 5 SECONDS
+				conditions.transit_multiplier *= 1.15
+				conditions.add_reason("Logistics Station H-9 is undergoing maintenance.")
 
-		else
-			switch(logistics_station.status)
-				if("MAINTENANCE")
-					conditions.dispatch_delay += 5 SECONDS
-					conditions.transit_multiplier *= 1.15
-					conditions.add_reason("Logistics Station H-9 is undergoing maintenance.")
+			if(CCPOST_INSTALLATION_COMMS_DEGRADED)
+				conditions.dispatch_delay += 5 SECONDS
+				conditions.transit_multiplier *= 1.25
+				conditions.add_reason("Logistics Station H-9 is reporting degraded communications.")
 
-				if("COMMUNICATIONS DEGRADED")
-					conditions.dispatch_delay += 5 SECONDS
-					conditions.transit_multiplier *= 1.25
-					conditions.add_reason("Logistics Station H-9 is reporting degraded communications.")
+			if(CCPOST_INSTALLATION_NO_CONTACT)
+				conditions.dispatch_delay += 10 SECONDS
+				conditions.transit_multiplier *= 1.4
+				conditions.add_reason("Contact with Logistics Station H-9 has been lost. Freight is being rerouted.")
 
-				if("NO CONTACT")
-					conditions.dispatch_delay += 10 SECONDS
-					conditions.transit_multiplier *= 1.4
-					conditions.add_reason("Contact with Logistics Station H-9 has been lost. Freight is being rerouted.")
+			if(CCPOST_INSTALLATION_OFFLINE)
+				conditions.dispatch_delay += 15 SECONDS
+				conditions.transit_multiplier *= 1.5
+				conditions.add_reason("Logistics Station H-9 is offline. Alternate freight infrastructure is in use.")
 
-				if("OFFLINE")
-					conditions.dispatch_delay += 15 SECONDS
-					conditions.transit_multiplier *= 1.5
-					conditions.add_reason("Logistics Station H-9 is offline. Alternate freight infrastructure is in use.")
-
-				if("CRITICAL")
-					conditions.dispatch_delay += 20 SECONDS
-					conditions.transit_multiplier *= 1.75
-					conditions.add_reason("Logistics Station H-9 is experiencing a critical operational incident.")
+			if(CCPOST_INSTALLATION_CRITICAL)
+				conditions.dispatch_delay += 20 SECONDS
+				conditions.transit_multiplier *= 1.75
+				conditions.add_reason("Logistics Station H-9 is experiencing a critical operational incident.")
 
 
 	// --------------------------------------------------------
@@ -998,8 +1045,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	data["transit_delay"] = round(current_conditions.get_transit_delay() / (1 SECONDS))
 	data["freight_reasons"] = current_conditions.reasons.Copy()
 
-	qdel(current_conditions)
-
 	var/list/catalog_data = list()
 	var/medical_recall_active = GLOB.ccpost_sector_network.is_medical_supply_recall_active()
 
@@ -1026,6 +1071,30 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		)
 		var/can_order_package = isnull(requisition_failure)
 
+		// Evaluate the concrete package as well as the sector-wide freight profile.
+		// Category-specific installation losses can therefore be shown before the
+		// Liaison spends CU on the requisition.
+		var/datum/ccpost_freight_conditions/package_conditions = network.get_current_freight_conditions(package)
+		var/package_authorization_delay = round(package_conditions.authorization_delay / (1 SECONDS))
+		var/package_dispatch_delay = round(package_conditions.dispatch_delay / (1 SECONDS))
+		var/package_transit_delay = round(package_conditions.get_transit_delay() / (1 SECONDS))
+		var/package_estimated_total_delay = package_authorization_delay + package_dispatch_delay + package_transit_delay
+		var/list/package_specific_reasons = package_conditions.reasons.Copy()
+
+		for(var/global_reason in current_conditions.reasons)
+			package_specific_reasons -= global_reason
+
+		var/has_package_specific_routing = FALSE
+
+		if(package_conditions.authorization_delay != current_conditions.authorization_delay)
+			has_package_specific_routing = TRUE
+		else if(package_conditions.dispatch_delay != current_conditions.dispatch_delay)
+			has_package_specific_routing = TRUE
+		else if(package_conditions.get_transit_delay() != current_conditions.get_transit_delay())
+			has_package_specific_routing = TRUE
+		else if(length(package_specific_reasons))
+			has_package_specific_routing = TRUE
+
 		catalog_data += list(list(
 			"id" = package.id,
 			"name" = package.name,
@@ -1033,10 +1102,22 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 			"category" = package.category,
 			"cost" = package.cost,
 			"recall_locked" = recall_locked,
-			"can_order" = can_order_package
+			"can_order" = can_order_package,
+			"requisition_failure" = requisition_failure,
+			"routing_status" = package_conditions.status,
+			"authorization_delay" = package_authorization_delay,
+			"dispatch_delay" = package_dispatch_delay,
+			"transit_delay" = package_transit_delay,
+			"estimated_total_delay" = package_estimated_total_delay,
+			"freight_reasons" = package_conditions.reasons.Copy(),
+			"package_specific_reasons" = package_specific_reasons,
+			"has_package_specific_routing" = has_package_specific_routing
 		))
 
+		qdel(package_conditions)
+
 	data["catalog"] = catalog_data
+	qdel(current_conditions)
 
 	var/list/shipment_data = list()
 
@@ -1509,7 +1590,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "administrative"
 	name = "Administrative Supplies"
 	desc = "Replacement paperwork, writing implements, and general administrative equipment."
-	category = "Administration"
+	category = CCPOST_SUPPLY_CATEGORY_ADMINISTRATION
 	cost = 4
 
 	contains = list(
@@ -1546,7 +1627,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "sustenance"
 	name = "Basic Sustenance Package"
 	desc = "A modest selection of pre-approved meals for remote installation personnel."
-	category = "Sustenance"
+	category = CCPOST_SUPPLY_CATEGORY_SUSTENANCE
 	cost = 5
 
 	contains = list(
@@ -1607,7 +1688,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "medical"
 	name = "Medical Resupply Package"
 	desc = "Basic medical supplies intended for routine injuries and oxygen-related emergencies."
-	category = "Medical"
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
 	cost = 8
 
 	contains = list(
@@ -1670,7 +1751,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "engineering"
 	name = "Engineering Maintenance Package"
 	desc = "Tools and replacement materials for routine outpost maintenance."
-	category = "Engineering"
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
 	cost = 9
 
 	contains = list(
@@ -1744,7 +1825,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "materials_construction"
 	name = "Construction Materials Package"
 	desc = "Bulk iron, glass, and plastic stock for routine construction, repairs, and approved installation improvements."
-	category = "Materials"
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
 	cost = 10
 
 	contains = list(
@@ -1757,7 +1838,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "materials_emergency"
 	name = "Emergency Repair Materials"
 	desc = "Reinforced construction stock and breach-control supplies intended for significant structural damage."
-	category = "Materials"
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
 	cost = 12
 
 	contains = list(
@@ -1774,7 +1855,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "technical_parts"
 	name = "Advanced Parts Package"
 	desc = "Contains a rapid part exchanger and supporting equipment for maintaining damaged machinery."
-	category = "Technical"
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
 	cost = 12
 
 	contains = list(
@@ -1790,7 +1871,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "technical_robotics"
 	name = "Robotics Utility Package"
 	desc = "Basic bot assemblies, sensors, and robotic components for constructing simple support machines."
-	category = "Technical"
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
 	cost = 15
 
 	contains = list(
@@ -1811,7 +1892,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "eva"
 	name = "Emergency EVA Package"
 	desc = "Basic equipment for emergency operations in depressurized environments."
-	category = "Emergency"
+	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
 	cost = 12
 
 	contains = list(
@@ -1825,7 +1906,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "emergency_firefighting"
 	name = "Firefighting Package"
 	desc = "Protective equipment and extinguishing gear for responding to major fires and heat hazards."
-	category = "Emergency"
+	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
 	cost = 10
 
 	contains = list(
@@ -1842,7 +1923,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "emergency_internals"
 	name = "Emergency Internals Package"
 	desc = "Breathing masks and portable oxygen supplies for atmospheric emergencies and evacuation."
-	category = "Emergency"
+	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
 	cost = 7
 
 	contains = list(
@@ -1856,7 +1937,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "emergency_mass_casualty"
 	name = "Mass Casualty Package"
 	desc = "A broad medical reserve intended for incidents producing more casualties than the outpost's routine stock can comfortably support."
-	category = "Emergency"
+	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
 	cost = 15
 
 	contains = list(
@@ -1877,7 +1958,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "security"
 	name = "Security Support Package"
 	desc = "Limited defensive equipment intended for protection of Central Command personnel and property."
-	category = "Security"
+	category = CCPOST_SUPPLY_CATEGORY_SECURITY
 	cost = 18
 
 	contains = list(
@@ -1933,7 +2014,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_centcom_bunny"
 	name = "CentCom Bunny Attire Package"
 	desc = "A complete set of approved Central Command hospitality attire for formal receptions, morale initiatives, and other duties which Human Resources has declined to explain."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 8
 
 	contains = list(
@@ -1949,7 +2030,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_cards"
 	name = "Card & Table Games Package"
 	desc = "Cards, dice, and a company-approved tabletop diversion for personnel with sufficient unallocated time."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 4
 
 	contains = list(
@@ -1963,7 +2044,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_lasertag"
 	name = "Laser Tag Recreation Package"
 	desc = "Two complete opposing laser-tag teams for structured recreational conflict that is considerably cheaper than actual security incidents."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 7
 
 	contains = list(
@@ -1979,7 +2060,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_morale"
 	name = "Corporate Morale Package"
 	desc = "A pre-approved assortment of recreational materials intended to maintain employee morale without meaningfully impacting productivity."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 6
 
 	contains = list(
@@ -1996,7 +2077,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_music"
 	name = "Music & Leisure Package"
 	desc = "A selection of portable musical instruments for sanctioned recreation and unsanctioned hallway concerts."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 8
 
 	contains = list(
@@ -2012,7 +2093,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_formal"
 	name = "Formal Social Package"
 	desc = "A small wardrobe of formal clothing suitable for receptions, ceremonies, and meetings where appearing expensive is operationally useful."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 8
 
 	contains = list(
@@ -2031,7 +2112,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_costumes"
 	name = "Costume Package"
 	desc = "An assortment of harmless theatrical costumes for morale events, dramatic reenactments, and regrettable photographs."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 6
 
 	contains = list(
@@ -2048,7 +2129,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "entertainment_plushies"
 	name = "Plushie Assortment"
 	desc = "A selection of soft corporate-approved companions for isolated personnel, decorative use, and entirely professional desk arrangements."
-	category = "Entertainment"
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 5
 
 	contains = list(
@@ -2064,7 +2145,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 // CONTRABAND
 
 /datum/ccpost_supply_package/contraband
-	category = "Restricted"
+	category = CCPOST_SUPPLY_CATEGORY_RESTRICTED
 	contraband = TRUE
 
 /datum/ccpost_supply_package/contraband/ert_equipment
@@ -2223,7 +2304,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	/// World time at which the current shipment stage should finish.
 	var/stage_ends_at = 0
 
-	var/freight_condition_status = "NORMAL"
+	var/freight_condition_status = CCPOST_FREIGHT_STATUS_NORMAL
 	var/list/freight_condition_reasons = list()
 
 	var/freight_spawned = FALSE
@@ -2368,7 +2449,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 	if(!reserve_allocation(package.cost))
 		return null
 
-	var/datum/ccpost_freight_conditions/current_conditions = get_current_freight_conditions()
+	var/datum/ccpost_freight_conditions/current_conditions = get_current_freight_conditions(package)
 
 	var/datum/ccpost_shipment/shipment = new
 
@@ -2401,7 +2482,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 
 	var/sector_suffix = ""
 
-	if(shipment.freight_condition_status != "NORMAL")
+	if(shipment.freight_condition_status != CCPOST_FREIGHT_STATUS_NORMAL)
 		sector_suffix = " Current sector freight status: [shipment.freight_condition_status]."
 
 	announce_freight_status("Requisition [shipment.shipment_code] for [package.name] has been queued for review.[sector_suffix]")
@@ -2562,4 +2643,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 #undef CCPOST_BASE_DISPATCH_DELAY
 #undef CCPOST_BASE_TRANSIT_DELAY
 #undef CCPOST_SHIPMENT_RETRY_DELAY
+#undef CCPOST_FREIGHT_STATUS_NORMAL
+#undef CCPOST_FREIGHT_STATUS_DEGRADED
+#undef CCPOST_FREIGHT_STATUS_PRIORITY
+#undef CCPOST_FREIGHT_STATUS_MIXED
+#undef CCPOST_INSTALLATION_MAINTENANCE
+#undef CCPOST_INSTALLATION_UNDER_REVIEW
+#undef CCPOST_INSTALLATION_COMMS_DEGRADED
+#undef CCPOST_INSTALLATION_NO_CONTACT
+#undef CCPOST_INSTALLATION_OFFLINE
+#undef CCPOST_INSTALLATION_CRITICAL
+#undef CCPOST_INSTALLATION_CODE_REL_A17
+#undef CCPOST_INSTALLATION_CODE_ADM_06
+#undef CCPOST_INSTALLATION_CODE_LOG_H09
+#undef CCPOST_SUPPLY_CATEGORY_ADMINISTRATION
+#undef CCPOST_SUPPLY_CATEGORY_SUSTENANCE
 #undef CCPOST_SUPPLY_CATEGORY_MEDICAL
+#undef CCPOST_SUPPLY_CATEGORY_ENGINEERING
+#undef CCPOST_SUPPLY_CATEGORY_MATERIALS
+#undef CCPOST_SUPPLY_CATEGORY_TECHNICAL
+#undef CCPOST_SUPPLY_CATEGORY_EMERGENCY
+#undef CCPOST_SUPPLY_CATEGORY_SECURITY
+#undef CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+#undef CCPOST_SUPPLY_CATEGORY_RESTRICTED

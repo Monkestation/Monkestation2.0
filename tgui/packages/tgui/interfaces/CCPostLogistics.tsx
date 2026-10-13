@@ -18,6 +18,15 @@ type SupplyPackage = {
   cost: number;
   can_order: boolean;
   recall_locked: boolean;
+  requisition_failure?: string;
+  routing_status: string;
+  authorization_delay: number;
+  dispatch_delay: number;
+  transit_delay: number;
+  estimated_total_delay: number;
+  freight_reasons: string[];
+  package_specific_reasons: string[];
+  has_package_specific_routing: boolean;
 };
 
 type Shipment = {
@@ -71,6 +80,37 @@ enum LogisticsTab {
   Shipments,
   Ledger,
 }
+
+const formatFreightDuration = (totalSeconds: number) => {
+  const seconds = Math.max(0, Math.round(totalSeconds));
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  if (!minutes) {
+    return `${remainingSeconds}s`;
+  }
+
+  return `${minutes}m ${remainingSeconds}s`;
+};
+
+const formatRequisitionFailure = (failure?: string) => {
+  switch (failure) {
+    case 'requisition authorization denied':
+      return 'This package requires a restricted procurement routing override.';
+    case 'restricted procurement suspended':
+      return 'Restricted procurement is suspended by Internal Compliance.';
+    case 'medical supply recall active':
+      return 'Medical requisitions are suspended during the active supply recall.';
+    case 'shipment queue full':
+      return 'Maximum active requisition capacity has been reached.';
+    case 'insufficient allocation':
+      return 'Insufficient Operational Allocation is available for this requisition.';
+    case 'invalid requisition':
+      return 'This requisition is no longer available.';
+    default:
+      return failure || 'This requisition is currently unavailable.';
+  }
+};
 
 export const CCPostLogistics = () => {
   const { data } = useBackend<Data>();
@@ -445,6 +485,9 @@ const RequisitionsTab = (props: {
                   pack.category === 'Restricted' &&
                   Boolean(restrictedProcurementSuspended);
                 const packageLocked = recallLocked || complianceLocked;
+                const requisitionFailure = pack.can_order
+                  ? undefined
+                  : formatRequisitionFailure(pack.requisition_failure);
 
                 return (
                   <Stack.Item key={pack.id}>
@@ -454,6 +497,7 @@ const RequisitionsTab = (props: {
                         <Button
                           icon={packageLocked ? 'lock' : 'cart-plus'}
                           disabled={!pack.can_order}
+                          tooltip={requisitionFailure}
                           onClick={() =>
                             act('order_package', {
                               package_id: pack.id,
@@ -484,7 +528,65 @@ const RequisitionsTab = (props: {
                             {pack.cost} CU
                           </Box>
                         </LabeledList.Item>
+
+                        <LabeledList.Item label="Estimated Delivery">
+                          <Box
+                            inline
+                            bold
+                            color={
+                              Boolean(pack.has_package_specific_routing)
+                                ? 'average'
+                                : undefined
+                            }
+                          >
+                            {formatFreightDuration(pack.estimated_total_delay)}
+                          </Box>
+                        </LabeledList.Item>
+
+                        {Boolean(pack.has_package_specific_routing) && (
+                          <>
+                            <LabeledList.Item label="Package Routing">
+                              <FreightConditionStatus
+                                status={pack.routing_status}
+                              />
+                            </LabeledList.Item>
+                            <LabeledList.Item label="Routing Breakdown">
+                              Authorization {pack.authorization_delay}s // Dispatch{' '}
+                              {pack.dispatch_delay}s // Transit {pack.transit_delay}s
+                            </LabeledList.Item>
+                          </>
+                        )}
                       </LabeledList>
+
+                      {Boolean(pack.has_package_specific_routing) && (
+                        <Box
+                          mt={1}
+                          p={1}
+                          backgroundColor="rgba(255, 255, 255, 0.04)"
+                        >
+                          <Box bold color="average" mb={0.5}>
+                            Package-Specific Sector Conditions
+                          </Box>
+                          {pack.package_specific_reasons.length ? (
+                            pack.package_specific_reasons.map((reason, index) => (
+                              <Box key={`${pack.id}-routing-${index}`}>
+                                • {reason}
+                              </Box>
+                            ))
+                          ) : (
+                            <Box color="label">
+                              This package currently follows a different freight
+                              profile from the sector-wide estimate.
+                            </Box>
+                          )}
+                        </Box>
+                      )}
+
+                      {!pack.can_order && requisitionFailure && (
+                        <NoticeBox danger mt={1}>
+                          Requisition unavailable: {requisitionFailure}
+                        </NoticeBox>
+                      )}
                     </Section>
                   </Stack.Item>
                 );

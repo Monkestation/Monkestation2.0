@@ -61,6 +61,9 @@ type Data = {
   inbox: SectorMessage[];
   archive: SectorMessage[];
   archive_count: number;
+  pending_count: number;
+  paperwork_pending: boolean;
+  unresolved_work_count: number;
   paperwork?: SectorPaperwork | null;
 };
 
@@ -122,6 +125,9 @@ export const CCPostSectorComms = (props) => {
     inbox = [],
     archive = [],
     archive_count = 0,
+    pending_count = 0,
+    paperwork_pending = false,
+    unresolved_work_count = 0,
     paperwork = null,
   } = data;
 
@@ -140,6 +146,16 @@ export const CCPostSectorComms = (props) => {
             </Stack.Item>
           </Stack>
         </Section>
+
+        {unresolved_work_count > 0 ? (
+          <NoticeBox>
+            UNRESOLVED SECTOR WORK: {pending_count} pending communication
+            {pending_count === 1 ? '' : 's'}
+            {paperwork_pending ? ' // 1 active administrative document' : ''}
+          </NoticeBox>
+        ) : (
+          <NoticeBox>NO UNRESOLVED SECTOR WORK</NoticeBox>
+        )}
 
         <Tabs>
           <Tabs.Tab
@@ -189,39 +205,173 @@ const Inbox = ({ messages }: { messages: SectorMessage[] }) => {
 
 const Archive = ({ messages }: { messages: SectorMessage[] }) => {
   const { act } = useBackend<Data>();
+  const [installationFilter, setInstallationFilter] = useLocalState(
+    'archiveInstallationFilter',
+    'ALL',
+  );
+  const [priorityFilter, setPriorityFilter] = useLocalState(
+    'archivePriorityFilter',
+    'ALL',
+  );
+  const [resolutionFilter, setResolutionFilter] = useLocalState(
+    'archiveResolutionFilter',
+    'ALL',
+  );
+
+  const installationCodes: string[] = [];
+
+  messages.forEach((message) => {
+    if (!installationCodes.includes(message.installation_code)) {
+      installationCodes.push(message.installation_code);
+    }
+  });
+
+  installationCodes.sort();
+
+  const priorities = ['Routine', 'Advisory', 'Important', 'Priority'];
+  const resolutions = ['ACKNOWLEDGED', 'AUTHORIZED', 'DENIED', 'EXPIRED'];
+
+  const filteredMessages = messages.filter((message) => {
+    if (
+      installationFilter !== 'ALL' &&
+      message.installation_code !== installationFilter
+    ) {
+      return false;
+    }
+
+    if (priorityFilter !== 'ALL' && message.priority !== priorityFilter) {
+      return false;
+    }
+
+    if (
+      resolutionFilter !== 'ALL' &&
+      message.resolution_status !== resolutionFilter
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+
+  const filtersActive =
+    installationFilter !== 'ALL' ||
+    priorityFilter !== 'ALL' ||
+    resolutionFilter !== 'ALL';
 
   return (
-    <Section
-      title={`Resolved Communications (${messages.length})`}
-      buttons={
-        <>
+    <>
+      <Section title="Archive Filters">
+        <Box bold mb={0.5}>
+          Installation
+        </Box>
+        <Box mb={1}>
           <Button
-            icon="print"
-            disabled={!messages.length}
-            onClick={() => act('print_archive')}
+            color={installationFilter === 'ALL' ? 'good' : undefined}
+            onClick={() => setInstallationFilter('ALL')}
           >
-            Print Archive
+            All
           </Button>
-          <Button.Confirm
-            icon="trash"
-            color="danger"
-            disabled={!messages.length}
-            confirmContent="Clear archive?"
-            onClick={() => act('clear_archive')}
+          {installationCodes.map((code) => (
+            <Button
+              key={`archive-installation-${code}`}
+              color={installationFilter === code ? 'good' : undefined}
+              onClick={() => setInstallationFilter(code)}
+            >
+              {code}
+            </Button>
+          ))}
+        </Box>
+
+        <Box bold mb={0.5}>
+          Priority
+        </Box>
+        <Box mb={1}>
+          <Button
+            color={priorityFilter === 'ALL' ? 'good' : undefined}
+            onClick={() => setPriorityFilter('ALL')}
           >
-            Clear Archive
-          </Button.Confirm>
-        </>
-      }
-    >
-      {!messages.length ? (
-        <NoticeBox>No resolved communications are currently archived.</NoticeBox>
-      ) : (
-        messages.map((message) => (
-          <MessageCard key={message.message_code} message={message} archived />
-        ))
-      )}
-    </Section>
+            All
+          </Button>
+          {priorities.map((priority) => (
+            <Button
+              key={`archive-priority-${priority}`}
+              color={priorityFilter === priority ? 'good' : undefined}
+              onClick={() => setPriorityFilter(priority)}
+            >
+              {priority}
+            </Button>
+          ))}
+        </Box>
+
+        <Box bold mb={0.5}>
+          Resolution
+        </Box>
+        <Box>
+          <Button
+            color={resolutionFilter === 'ALL' ? 'good' : undefined}
+            onClick={() => setResolutionFilter('ALL')}
+          >
+            All
+          </Button>
+          {resolutions.map((resolution) => (
+            <Button
+              key={`archive-resolution-${resolution}`}
+              color={resolutionFilter === resolution ? 'good' : undefined}
+              onClick={() => setResolutionFilter(resolution)}
+            >
+              {resolution}
+            </Button>
+          ))}
+        </Box>
+      </Section>
+
+      <Section
+        title={`Resolved Communications (${filteredMessages.length}/${messages.length})`}
+        buttons={
+          <>
+            {filtersActive && (
+              <Button
+                icon="rotate-left"
+                onClick={() => {
+                  setInstallationFilter('ALL');
+                  setPriorityFilter('ALL');
+                  setResolutionFilter('ALL');
+                }}
+              >
+                Reset Filters
+              </Button>
+            )}
+            <Button
+              icon="print"
+              disabled={!messages.length}
+              tooltip="Prints the complete archive, regardless of active screen filters."
+              onClick={() => act('print_archive')}
+            >
+              Print Full Archive
+            </Button>
+            <Button.Confirm
+              icon="trash"
+              color="danger"
+              disabled={!messages.length}
+              confirmContent="Clear complete archive?"
+              onClick={() => act('clear_archive')}
+            >
+              Clear Full Archive
+            </Button.Confirm>
+          </>
+        }
+      >
+        {!messages.length ? (
+          <NoticeBox>No resolved communications are currently archived.</NoticeBox>
+        ) : !filteredMessages.length ? (
+          <NoticeBox>No archived communications match the active filters.</NoticeBox>
+        ) : (
+          filteredMessages.map((message) => (
+            <MessageCard key={message.message_code} message={message} archived />
+          ))
+        )}
+      </Section>
+    </>
   );
 };
 

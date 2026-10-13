@@ -26,6 +26,17 @@
 #define CCPOST_PAPERWORK_AWAITING_REVIEW "AWAITING LIAISON REVIEW"
 #define CCPOST_PAPERWORK_AWAITING_RECEIPT "TRANSMITTED - AWAITING RECEIPT"
 
+#define CCPOST_INSTALLATION_CODE_REL_A17 "NT-REL-A17"
+#define CCPOST_INSTALLATION_CODE_OUT_K04 "NT-OUT-K04"
+#define CCPOST_INSTALLATION_CODE_MIN_RC12 "NT-MIN-RC12"
+#define CCPOST_INSTALLATION_CODE_LP_D03 "NT-LP-D03"
+#define CCPOST_INSTALLATION_CODE_ADM_06 "NT-ADM-06"
+#define CCPOST_INSTALLATION_CODE_LOG_H09 "NT-LOG-H09"
+#define CCPOST_INSTALLATION_CODE_MED_M12 "NT-MED-M12"
+#define CCPOST_INSTALLATION_CODE_SEC_S08 "NT-SEC-S08"
+
+#define CCPOST_NOTICE_TEMPLATE_MEDICAL_BATCH_RECALL "medical_batch_recall"
+
 // Sector notice template definitions
 
 /datum/ccpost_sector_notice_template
@@ -120,7 +131,7 @@
 	body = "Sector installations are reminded that discretionary purchases remain subject to departmental budget controls. Describing an expenditure as 'mission critical' does not automatically make it mission critical."
 
 /datum/ccpost_sector_notice_template/medical_batch_recall
-	template_id = "medical_batch_recall"
+	template_id = CCPOST_NOTICE_TEMPLATE_MEDICAL_BATCH_RECALL
 	category = "Medical"
 	source = "Central Medical Logistics"
 	priority = CCPOST_PRIORITY_IMPORTANT
@@ -242,12 +253,134 @@
 	var/contact_name = "Unknown Personnel"
 	var/contact_role = "Installation Duty Officer"
 
+/// Installation-specific acknowledgement text for Liaison aid decisions.
+/// Kept separate from message templates so every installation can maintain a
+/// consistent voice without duplicating response strings across each request.
+/datum/ccpost_installation_response_profile
+	var/authorized_response = "Authorization received. The approved resources will be applied to the outstanding operational requirement."
+	var/denied_response = "Denial received. Local personnel will continue with existing resources and record the outstanding requirement."
+	var/critical_authorized_response = "Emergency authorization received. The approved resources are being committed to immediate stabilization efforts. The incident remains active."
+	var/critical_denied_response = "Emergency support denied. Local personnel will continue containment with remaining on-site resources."
+
+/datum/ccpost_installation_response_profile/rel_a17
+	authorized_response = "Authorization received. A-17 will release the approved relay resources and begin the requested work immediately."
+	denied_response = "Denial received. A-17 will remain on local spares and reduced redundancy. The outstanding requirement has been entered into the relay maintenance record."
+	critical_authorized_response = "Emergency authorization received. A-17 is committing the approved resources to secure routing, emergency power, and relay stabilization. The incident remains active."
+	critical_denied_response = "Emergency support denied. A-17 will preserve the remaining authenticated relay paths and shed nonessential systems as required."
+
+/datum/ccpost_installation_response_profile/out_k04
+	authorized_response = "Authorization received. Kappa-4 will restore the affected monitoring or continuity reserve and update the watch record."
+	denied_response = "Denial received. Kappa-4 will redistribute local reserves and accept the resulting reduction in monitoring coverage."
+	critical_authorized_response = "Emergency authorization received. Kappa-4 is reinforcing protected sections, life support, and essential monitoring. The incident remains active."
+	critical_denied_response = "Emergency support denied. Kappa-4 is consolidating personnel and power around the protected section and will abandon nonessential monitoring as necessary."
+
+/datum/ccpost_installation_response_profile/min_rc12
+	authorized_response = "Authorization received. RC-12 will release the approved industrial support and return the affected systems to controlled service."
+	denied_response = "Denial received. RC-12 will continue on local spares and reduced throughput. Deferred maintenance has been entered into the platform log."
+	critical_authorized_response = "Emergency authorization received. RC-12 is committing the resources to atmosphere, structural isolation, and damage control. The incident remains active."
+	critical_denied_response = "Emergency support denied. RC-12 is abandoning nonessential machinery and concentrating remaining resources on atmosphere, structure, and personnel survival."
+
+/datum/ccpost_installation_response_profile/lp_d03
+	authorized_response = "Authorization received. Delta-3 will bring the approved monitoring hardware or reserve capacity online and restore coverage."
+	denied_response = "Denial received. Delta-3 will continue with reduced coverage and prioritize the highest-value monitoring channels."
+	critical_authorized_response = "Emergency authorization received. Delta-3 is reinforcing protected power, secure communications, and the remaining monitoring array. The incident remains active."
+	critical_denied_response = "Emergency support denied. Delta-3 will narrow the watch to essential channels and preserve local power for the remaining array."
+
+/datum/ccpost_installation_response_profile/adm_06
+	authorized_response = "Authorization received. Annex 6 will apply the approved resources to records continuity and close the associated deficiency once service is restored."
+	denied_response = "Denial received. Annex 6 will continue manual processing and record the resulting backlog against the current review period."
+	critical_authorized_response = "Emergency authorization received. Annex 6 is committing the resources to protected archives, secure storage, and continuity operations. The incident remains active."
+	critical_denied_response = "Emergency support denied. Annex 6 will preserve priority records and abandon nonessential processing where necessary."
+
+/datum/ccpost_installation_response_profile/log_h09
+	authorized_response = "Authorization received. H-9 will allocate the approved freight resources and restore the affected routing capacity."
+	denied_response = "Denial received. H-9 will maintain reduced freight throughput and reroute what traffic local capacity can still support."
+	critical_authorized_response = "Emergency authorization received. H-9 is committing the resources to manual routing, protected power, and secured freight operations. The incident remains active."
+	critical_denied_response = "Emergency support denied. H-9 will suspend nonessential freight movements and preserve local capacity for controlled emergency routing."
+
+/datum/ccpost_installation_response_profile/med_m12
+	authorized_response = "Authorization received. M-12 will apply the approved resources to validated storage and regional medical distribution."
+	denied_response = "Denial received. M-12 will conserve verified stock and continue operations within local refrigeration and storage limits."
+	critical_authorized_response = "Emergency authorization received. M-12 is committing the resources to refrigeration, protected stock, and essential treatment capacity. The incident remains active."
+	critical_denied_response = "Emergency support denied. M-12 will consolidate viable stock and treatment into the remaining protected areas and abandon compromised storage."
+
+/datum/ccpost_installation_response_profile/sec_s08
+	authorized_response = "Authorization received. S-8 will deploy the approved resources to restore patrol readiness, secure storage, or security-system redundancy."
+	denied_response = "Denial received. S-8 will redistribute local security reserves and accept the resulting reduction in regional coverage."
+	critical_authorized_response = "Emergency authorization received. S-8 is committing the resources to verified access control, protected communications, casualty support, and command continuity. The incident remains active."
+	critical_denied_response = "Emergency support denied. S-8 will consolidate verified personnel around secured sections and preserve only essential regional security functions."
+
+
+/// Permanent sector consequence applied after an installation is confirmed lost.
+/// Individual systems read only the fields relevant to them, keeping loss
+/// behavior data-driven rather than scattering installation-code checks around.
+/datum/ccpost_installation_loss_effect
+	var/summary
+
+	/// Freight effects. Empty logistics_categories means the effect applies to
+	/// every requisition; otherwise it applies only to listed package categories.
+	var/logistics_authorization_delay = 0
+	var/logistics_dispatch_delay = 0
+	var/logistics_transit_multiplier = 1
+	var/list/logistics_categories = list()
+
+	/// Sector-simulation effects. Interval multipliers above 1 slow generation.
+	var/sector_message_interval_multiplier = 1
+	var/sector_paperwork_interval_multiplier = 1
+	var/critical_chance_modifier = 0
+
+/datum/ccpost_installation_loss_effect/proc/has_logistics_effect()
+	return logistics_authorization_delay || logistics_dispatch_delay || logistics_transit_multiplier != 1
+
+/datum/ccpost_installation_loss_effect/rel_a17
+	summary = "Long-range authorization traffic is being rerouted through alternate infrastructure, increasing freight authorization times."
+	logistics_authorization_delay = 15 SECONDS
+
+/datum/ccpost_installation_loss_effect/out_k04
+	summary = "Regional monitoring and administrative coordination capacity has been reduced. Sector communications and routine paperwork will arrive less frequently."
+	sector_message_interval_multiplier = 1.25
+	sector_paperwork_interval_multiplier = 1.25
+
+/datum/ccpost_installation_loss_effect/min_rc12
+	summary = "Engineering and material requisitions must be sourced from more distant industrial suppliers, increasing their freight transit time."
+	logistics_transit_multiplier = 1.35
+	logistics_categories = list("Engineering", "Materials")
+
+/datum/ccpost_installation_loss_effect/lp_d03
+	summary = "Deep-space early-warning coverage has been reduced. Surviving installations face a slightly increased chance of Critical escalation."
+	critical_chance_modifier = 3
+
+/datum/ccpost_installation_loss_effect/adm_06
+	summary = "Regional administrative processing has been rerouted, increasing freight requisition authorization times."
+	logistics_authorization_delay = 15 SECONDS
+
+/datum/ccpost_installation_loss_effect/log_h09
+	summary = "Sector freight dispatch has been rerouted through distant infrastructure, significantly increasing dispatch and transit times."
+	logistics_dispatch_delay = 20 SECONDS
+	logistics_transit_multiplier = 1.75
+
+/datum/ccpost_installation_loss_effect/med_m12
+	summary = "Medical requisitions must be sourced from more distant distribution centers, increasing their freight transit time."
+	logistics_transit_multiplier = 1.5
+	logistics_categories = list("Medical")
+
+/datum/ccpost_installation_loss_effect/sec_s08
+	summary = "Regional Security coordination and response coverage has been degraded. Surviving installations face an increased chance of Critical escalation."
+	critical_chance_modifier = 5
+
+
 /datum/ccpost_sector_installation_template
 	var/installation_code
 	var/installation_name
 	var/installation_function
+	/// Player-facing description of the wider sector capability provided by this installation.
+	var/regional_dependency = "No unique regional dependency has been recorded for this installation."
 	var/initial_status = CCPOST_INSTALLATION_ONLINE
 	var/list/contact_types = list()
+
+	/// Typepaths for installation-specific configuration datums.
+	var/response_profile_type = /datum/ccpost_installation_response_profile
+	var/loss_effect_type = /datum/ccpost_installation_loss_effect
 
 /datum/ccpost_sector_contact/rel_a17/contact_1
 	contact_name = "Addust Johnson"
@@ -266,9 +399,12 @@
 	contact_role = "Relay Diagnostics Unit"
 
 /datum/ccpost_sector_installation_template/rel_a17
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	installation_name = "Relay Station A-17"
 	installation_function = "Long-range communications relay"
+	regional_dependency = "Provides long-range communications and authorization routing for the sector. Loss forces freight approvals through slower alternate communications infrastructure."
+	response_profile_type = /datum/ccpost_installation_response_profile/rel_a17
+	loss_effect_type = /datum/ccpost_installation_loss_effect/rel_a17
 	contact_types = list(
 		/datum/ccpost_sector_contact/rel_a17/contact_1,
 		/datum/ccpost_sector_contact/rel_a17/contact_2,
@@ -285,27 +421,25 @@
 	contact_role = "Operations Coordinator"
 
 /datum/ccpost_sector_contact/out_k04/contact_3
-	contact_name = "Jeff Gaiman"
+	contact_name = "Renee Kessler"
 	contact_role = "Command Duty Officer"
 
-/datum/ccpost_sector_contact/out_k04/contact_4
-	contact_name = "Signy Mallory"
-	contact_role = "Chief Security Officer"
-
 /datum/ccpost_sector_installation_template/out_k04
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	installation_name = "Outpost Kappa-4"
 	installation_function = "Administrative monitoring outpost"
+	regional_dependency = "Provides regional monitoring and administrative coordination. Loss reduces the frequency of routine sector communications and administrative paperwork."
 	initial_status = CCPOST_INSTALLATION_ROUTINE
+	response_profile_type = /datum/ccpost_installation_response_profile/out_k04
+	loss_effect_type = /datum/ccpost_installation_loss_effect/out_k04
 	contact_types = list(
 		/datum/ccpost_sector_contact/out_k04/contact_1,
 		/datum/ccpost_sector_contact/out_k04/contact_2,
-		/datum/ccpost_sector_contact/out_k04/contact_3,
-		/datum/ccpost_sector_contact/out_k04/contact_4
+		/datum/ccpost_sector_contact/out_k04/contact_3
 	)
 
 /datum/ccpost_sector_contact/min_rc12/contact_1
-	contact_name = "Imani Cross"
+	contact_name = "Sally Braun"
 	contact_role = "Platform Superintendent"
 
 /datum/ccpost_sector_contact/min_rc12/contact_2
@@ -317,10 +451,13 @@
 	contact_role = "Platform Operations Chief"
 
 /datum/ccpost_sector_installation_template/min_rc12
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	installation_name = "Mining Platform RC-12"
 	installation_function = "Mineral extraction and processing platform"
+	regional_dependency = "Provides nearby industrial extraction and material sourcing. Loss increases Engineering and Materials freight transit times."
 	initial_status = CCPOST_INSTALLATION_ROUTINE
+	response_profile_type = /datum/ccpost_installation_response_profile/min_rc12
+	loss_effect_type = /datum/ccpost_installation_loss_effect/min_rc12
 	contact_types = list(
 		/datum/ccpost_sector_contact/min_rc12/contact_1,
 		/datum/ccpost_sector_contact/min_rc12/contact_2,
@@ -340,9 +477,12 @@
 	contact_role = "Monitoring Supervisor"
 
 /datum/ccpost_sector_installation_template/lp_d03
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	installation_name = "Listening Post Delta-3"
 	installation_function = "Deep-space communications monitoring"
+	regional_dependency = "Provides deep-space monitoring and early-warning coverage. Loss increases the chance that operational problems at surviving installations escalate into Critical incidents."
+	response_profile_type = /datum/ccpost_installation_response_profile/lp_d03
+	loss_effect_type = /datum/ccpost_installation_loss_effect/lp_d03
 	contact_types = list(
 		/datum/ccpost_sector_contact/lp_d03/contact_1,
 		/datum/ccpost_sector_contact/lp_d03/contact_2,
@@ -362,10 +502,13 @@
 	contact_role = "Administrative Supervisor"
 
 /datum/ccpost_sector_installation_template/adm_06
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	installation_name = "Administrative Annex 6"
 	installation_function = "Regional records and compliance office"
+	regional_dependency = "Provides regional records, compliance, and requisition-processing support. Loss increases freight authorization times."
 	initial_status = CCPOST_INSTALLATION_UNDER_REVIEW
+	response_profile_type = /datum/ccpost_installation_response_profile/adm_06
+	loss_effect_type = /datum/ccpost_installation_loss_effect/adm_06
 	contact_types = list(
 		/datum/ccpost_sector_contact/adm_06/contact_1,
 		/datum/ccpost_sector_contact/adm_06/contact_2,
@@ -389,10 +532,13 @@
 	contact_role = "Quartermaster"
 
 /datum/ccpost_sector_installation_template/log_h09
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	installation_name = "Logistics Station H-9"
 	installation_function = "Freight routing and supply coordination"
+	regional_dependency = "Provides sector freight routing and supply coordination. Loss significantly increases freight dispatch and transit times."
 	initial_status = CCPOST_INSTALLATION_ROUTINE
+	response_profile_type = /datum/ccpost_installation_response_profile/log_h09
+	loss_effect_type = /datum/ccpost_installation_loss_effect/log_h09
 	contact_types = list(
 		/datum/ccpost_sector_contact/log_h09/contact_1,
 		/datum/ccpost_sector_contact/log_h09/contact_2,
@@ -401,7 +547,7 @@
 	)
 
 /datum/ccpost_sector_contact/med_m12/contact_1
-	contact_name = "Samantha Rosia"
+	contact_name = "Evelina Lee"
 	contact_role = "Medical Logistics Supervisor"
 
 /datum/ccpost_sector_contact/med_m12/contact_2
@@ -417,15 +563,50 @@
 	contact_role = "Medical Officer Super Private First Class"
 
 /datum/ccpost_sector_installation_template/med_m12
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	installation_name = "Medical Distribution Center M-12"
 	installation_function = "Regional medical supply and pharmaceutical distribution"
+	regional_dependency = "Provides regional medical and pharmaceutical distribution. Loss increases Medical freight transit times."
 	initial_status = CCPOST_INSTALLATION_ROUTINE
+	response_profile_type = /datum/ccpost_installation_response_profile/med_m12
+	loss_effect_type = /datum/ccpost_installation_loss_effect/med_m12
 	contact_types = list(
 		/datum/ccpost_sector_contact/med_m12/contact_1,
 		/datum/ccpost_sector_contact/med_m12/contact_2,
 		/datum/ccpost_sector_contact/med_m12/contact_3,
 		/datum/ccpost_sector_contact/med_m12/contact_4
+	)
+
+
+/datum/ccpost_sector_contact/sec_s08/contact_1
+	contact_name = "Jeff Gaiman"
+	contact_role = "Sector Security Coordinator"
+
+/datum/ccpost_sector_contact/sec_s08/contact_2
+	contact_name = "Samantha Rosia"
+	contact_role = "Security Intelligence Officer"
+
+/datum/ccpost_sector_contact/sec_s08/contact_3
+	contact_name = "Signy Mallory"
+	contact_role = "Patrol Operations Supervisor"
+
+/datum/ccpost_sector_contact/sec_s08/contact_4
+	contact_name = "SENTRY-8"
+	contact_role = "Security Analysis Unit"
+
+/datum/ccpost_sector_installation_template/sec_s08
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	installation_name = "Sector Security Outpost S-8"
+	installation_function = "Regional security coordination, patrol dispatch, and threat assessment"
+	regional_dependency = "Provides regional security coordination, patrol dispatch, and threat assessment. Loss increases the chance that operational problems at surviving installations escalate into Critical incidents."
+	initial_status = CCPOST_INSTALLATION_ROUTINE
+	response_profile_type = /datum/ccpost_installation_response_profile/sec_s08
+	loss_effect_type = /datum/ccpost_installation_loss_effect/sec_s08
+	contact_types = list(
+		/datum/ccpost_sector_contact/sec_s08/contact_1,
+		/datum/ccpost_sector_contact/sec_s08/contact_2,
+		/datum/ccpost_sector_contact/sec_s08/contact_3,
+		/datum/ccpost_sector_contact/sec_s08/contact_4
 	)
 
 
@@ -439,129 +620,148 @@
 
 /datum/ccpost_sector_paperwork_template/a17_relay_maintenance_certification
 	template_id = "a17_relay_maintenance_certification"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	title = "Relay Maintenance Certification Review"
 	body = "A-17 has completed a scheduled certification pass on one of the long-range relay segments. Local Engineering has signed off on the hardware inspection, but regional procedure requires Central Liaison acknowledgment before the certification can be closed and returned to the maintenance archive."
 
 /datum/ccpost_sector_paperwork_template/a17_routing_exception
 	template_id = "a17_routing_exception"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	title = "Communications Routing Exception"
 	body = "A burst of civilian and corporate traffic was temporarily routed through a secondary trunk during scheduled synchronization work. No messages are reported lost. A-17 requests Liaison review of the routing exception before the record is closed."
 
 /datum/ccpost_sector_paperwork_template/a17_signal_retention
 	template_id = "a17_signal_retention"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	title = "Signal Retention Authorization"
 	body = "A-17 has retained a routine diagnostic signal capture beyond the normal automated purge window because the recording may be useful for future alignment work. Central Liaison authorization is requested to retain the file in the regional technical archive."
 
 /datum/ccpost_sector_paperwork_template/kappa4_monitoring_coverage
 	template_id = "kappa4_monitoring_coverage"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	title = "Monitoring Coverage Review"
 	body = "Kappa-4 has adjusted several observation packages to remove overlapping coverage and improve monitoring of a previously low-priority approach corridor. The revised coverage map requires Central Liaison acknowledgment before the local watch schedule is finalized."
 
 /datum/ccpost_sector_paperwork_template/kappa4_equipment_custody
 	template_id = "kappa4_equipment_custody"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	title = "Monitoring Equipment Custody Record"
 	body = "A portable monitoring package has been transferred between secured equipment lockers following a local inventory reconciliation. No equipment is missing. Kappa-4 requests Liaison authorization to close the custody-transfer record."
 
 /datum/ccpost_sector_paperwork_template/kappa4_watch_variance
 	template_id = "kappa4_watch_variance"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	title = "Observation Schedule Variance"
 	body = "Kappa-4 temporarily consolidated two low-traffic observation periods after a routine staffing adjustment. Required monitoring coverage was maintained. Central Liaison acknowledgment is requested before the variance is entered into the permanent watch record."
 
 /datum/ccpost_sector_paperwork_template/rc12_production_variance
 	template_id = "rc12_production_variance"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	title = "Production Variance Certification"
 	body = "RC-12 reports a minor production variance after one processing line operated below projected throughput for part of the shift. Recovered output remains within contract tolerance. Liaison review is requested before the variance is certified and closed."
 
 /datum/ccpost_sector_paperwork_template/rc12_safety_acknowledgement
 	template_id = "rc12_safety_acknowledgement"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	title = "Industrial Safety Acknowledgment"
 	body = "A scheduled safety inspection identified a restricted-access industrial area requiring updated hazard markings and revised maintenance signage. Corrective work has been completed. Central Liaison acknowledgment is requested for the compliance record."
 
 /datum/ccpost_sector_paperwork_template/rc12_shipment_discrepancy
 	template_id = "rc12_shipment_discrepancy"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	title = "Mineral Shipment Discrepancy Review"
 	body = "A routine shipment reconciliation found a small difference between automated ore-weight records and the final freight manifest. Local staff attribute the variance to processing residue and container calibration. Liaison review is requested before the manifest is finalized."
 
 /datum/ccpost_sector_paperwork_template/delta3_intercept_retention
 	template_id = "delta3_intercept_retention"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	title = "Classified Intercept Retention"
 	body = "Delta-3 has flagged an otherwise low-priority encrypted intercept for extended retention because its transmission pattern may assist future signal comparison. No immediate threat is indicated. Central Liaison authorization is requested to retain the recording."
 
 /datum/ccpost_sector_paperwork_template/delta3_sensor_anomaly
 	template_id = "delta3_sensor_anomaly"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	title = "Sensor Anomaly Disposition"
 	body = "A short-lived sensor contact could not be reproduced during follow-up sweeps and is presently assessed as instrumentation noise. Delta-3 requests Liaison review before the event is reclassified and removed from active monitoring."
 
 /datum/ccpost_sector_paperwork_template/delta3_log_release
 	template_id = "delta3_log_release"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	title = "Monitoring Log Release Authorization"
 	body = "A completed monitoring log has reached the end of its restricted local review period. Delta-3 requests Central Liaison authorization to release the record into the standard classified archive and close the local handling entry."
 
 /datum/ccpost_sector_paperwork_template/annex6_personnel_discrepancy
 	template_id = "annex6_personnel_discrepancy"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	title = "Regional Personnel Record Discrepancy Review"
 	body = "A discrepancy has been identified between archived personnel-transfer records and current regional assignment records. The affected entries have been isolated from automated processing. Central Liaison review is requested before the records are returned to active circulation."
 
 /datum/ccpost_sector_paperwork_template/annex6_archive_release
 	template_id = "annex6_archive_release"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	title = "Archive Release Authorization"
 	body = "A closed regional operations file has completed its required retention hold and is eligible for transfer into the general corporate archive. Annex 6 requests Liaison authorization before the file is released from restricted archival status."
 
 /datum/ccpost_sector_paperwork_template/annex6_compliance_closure
 	template_id = "annex6_compliance_closure"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	title = "Compliance File Closure"
 	body = "A routine regional compliance review has been completed with no outstanding corrective actions. Annex 6 requests Central Liaison acknowledgment before the review file is formally closed and removed from the active docket."
 
 /datum/ccpost_sector_paperwork_template/h09_freight_exception
 	template_id = "h09_freight_exception"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	title = "Freight Routing Exception Authorization"
 	body = "Three freight consignments were manually rerouted around a temporary automated scheduling conflict. All consignments reached their intended destinations. H-9 requests Liaison acknowledgment before the routing exception is closed."
 
 /datum/ccpost_sector_paperwork_template/h09_cargo_loss_declaration
 	template_id = "h09_cargo_loss_declaration"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	title = "Minor Cargo Loss Declaration"
 	body = "A freight container arrived with a small quantity of low-value packing material missing from the recorded load. No controlled or operationally significant cargo is affected. Central Liaison review is requested before the loss declaration is finalized."
 
 /datum/ccpost_sector_paperwork_template/h09_dispatch_reconciliation
 	template_id = "h09_dispatch_reconciliation"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	title = "Dispatch Reconciliation Record"
 	body = "H-9 has reconciled a set of manual dispatch entries created during routine controller maintenance. All referenced freight has been accounted for. Liaison authorization is requested to merge the manual record into the automated routing archive."
 
 /datum/ccpost_sector_paperwork_template/med12_quarantine_release
 	template_id = "med12_quarantine_release"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	title = "Medical Stock Quarantine Release"
 	body = "A routine quality-control hold on a medical supply batch has concluded with no contamination or storage defects identified. M-12 requests Central Liaison authorization before the batch is released back into regional distribution inventory."
 
 /datum/ccpost_sector_paperwork_template/med12_coldchain_variance
 	template_id = "med12_coldchain_variance"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	title = "Cold-Chain Variance Review"
 	body = "One monitored shipment briefly approached the upper limit of its approved storage range during transfer. Local validation indicates the stock remains usable. Liaison review is requested before the variance is closed and the shipment cleared."
 
 /datum/ccpost_sector_paperwork_template/med12_inventory_certification
 	template_id = "med12_inventory_certification"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	title = "Regional Medical Inventory Certification"
 	body = "M-12 has completed a routine reconciliation of controlled regional medical stock. Physical counts and distribution records are within acceptable tolerance. Central Liaison acknowledgment is requested before the certification is entered into the permanent inventory record."
+
+
+/datum/ccpost_sector_paperwork_template/sec8_patrol_after_action
+	template_id = "sec8_patrol_after_action"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	title = "Sector Patrol After-Action Review"
+	body = "S-8 has completed the administrative review of a routine patrol interception involving an unregistered civilian vessel operating outside its declared route. No hostile activity was confirmed. Central Liaison acknowledgment is requested before the after-action file is closed and transferred to the regional security archive."
+
+/datum/ccpost_sector_paperwork_template/sec8_evidence_transfer
+	template_id = "sec8_evidence_transfer"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	title = "Restricted Evidence Transfer Authorization"
+	body = "A completed regional investigation has left several secured evidence containers eligible for transfer into long-term Central Security storage. Chain-of-custody records are complete. S-8 requests Liaison authorization before the evidence leaves local custody."
+
+/datum/ccpost_sector_paperwork_template/sec8_armory_reconciliation
+	template_id = "sec8_armory_reconciliation"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	title = "Regional Armory Reconciliation"
+	body = "S-8 has completed a scheduled reconciliation of controlled weapons, ammunition, and restricted security equipment. Physical inventory and authorization records are within acceptable tolerance. Central Liaison acknowledgment is requested before the certification is entered into the permanent security record."
 
 
 // Sector message template definitions
@@ -599,14 +799,14 @@
 
 /datum/ccpost_sector_message_template/relay_nominal_update
 	template_id = "relay_nominal_update"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	title = "Relay Operations Update"
 	body = "Primary and secondary relay channels are holding synchronization. We completed the scheduled alignment pass without finding anything that requires intervention. Traffic remains steady and, for once, uneventful."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
 
 /datum/ccpost_sector_message_template/a17_bandwidth_credit
 	template_id = "a17_bandwidth_credit"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	title = "Unused Relay Capacity Reconciliation"
 	body = "Commercial routing demand came in below forecast this cycle. The unused relay reservation has been released and Sector Communications has approved a small transfer back to Liaison-controlled operational funds."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
@@ -614,7 +814,7 @@
 
 /datum/ccpost_sector_message_template/a17_preventative_parts
 	template_id = "a17_preventative_parts"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Preventative Transmitter Service"
 	body = "Diagnostics are still green, but two transmitter couplings are approaching their recommended service limit. I'd rather replace them during a quiet window than explain why we waited until one failed. Requesting a small preventative maintenance allocation."
@@ -624,7 +824,7 @@
 
 /datum/ccpost_sector_message_template/a17_capacitor_reserve
 	template_id = "a17_capacitor_reserve"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Emergency Capacitor Reserve"
 	body = "Our spare pulse-capacitor stock is below the recommended reserve after last cycle's replacements. Nothing is failing right now. I am requesting authorization to replenish the reserve before that sentence becomes less reassuring."
@@ -634,14 +834,14 @@
 
 /datum/ccpost_sector_message_template/kappa4_quiet_shift
 	template_id = "kappa4_quiet_shift"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	title = "Monitoring Shift Summary"
 	body = "The current watch has been quiet. No abnormal traffic, no unscheduled dockings, and no equipment alarms worth elevating. The night crew has asked me to formally note that this is not a complaint."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
 
 /datum/ccpost_sector_message_template/kappa4_budget_return
 	template_id = "kappa4_budget_return"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	title = "Monitoring Budget Adjustment"
 	body = "A scheduled sensor package replacement was completed below projected cost. The unused portion has been cleared for return to sector operational allocation rather than being consumed by the end-of-cycle spending requirement."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
@@ -649,7 +849,7 @@
 
 /datum/ccpost_sector_message_template/kappa4_sensor_refresh
 	template_id = "kappa4_sensor_refresh"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Remote Sensor Refresh"
 	body = "Three external observation packages are still functional but have exceeded their preferred deployment hours. Replacing them now would avoid losing coverage one sensor at a time over the next few shifts. Requesting authorization for a refresh package."
@@ -659,7 +859,7 @@
 
 /datum/ccpost_sector_message_template/kappa4_backup_batteries
 	template_id = "kappa4_backup_batteries"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Backup Power Reserve"
 	body = "Our emergency battery rack passed inspection, but reserve capacity is lower than I'd like after repeated charge cycling. The outpost can continue normally without replacement. I'd prefer not to discover how long 'normally' lasts during an actual outage."
@@ -669,14 +869,14 @@
 
 /datum/ccpost_sector_message_template/rc12_production_update
 	template_id = "rc12_production_update"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	title = "Production Shift Report"
 	body = "Processing throughput is on target and the extraction crews are ahead of quota. The only unplanned downtime this shift involved a jammed ore gate and one supervisor insisting that kicking it counted as a repair procedure."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
 
 /datum/ccpost_sector_message_template/rc12_export_credit
 	template_id = "rc12_export_credit"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	title = "Production Surplus Reconciliation"
 	body = "Processed-material output exceeded the contracted requirement this cycle. A portion of the resulting operational surplus has been approved for redistribution to sector administrative support."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
@@ -684,7 +884,7 @@
 
 /datum/ccpost_sector_message_template/rc12_drill_spares
 	template_id = "rc12_drill_spares"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Extraction Head Spare Stock"
 	body = "We've used the last two spare extraction heads from local stores. The active units are fine, but the next hard failure will stop a line until replacement freight arrives. Requesting funding to restore minimum spare stock."
@@ -694,7 +894,7 @@
 
 /datum/ccpost_sector_message_template/rc12_dust_filters
 	template_id = "rc12_dust_filters"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Industrial Filtration Resupply"
 	body = "Ore dust loading is higher than forecast and we're consuming filtration cartridges faster than planned. There is no immediate atmospheric concern. I'd like to keep it that way. Requesting a replacement filter shipment."
@@ -704,14 +904,14 @@
 
 /datum/ccpost_sector_message_template/delta3_watch_update
 	template_id = "delta3_watch_update"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	title = "Deep-Space Watch Update"
 	body = "The current watch remains uneventful. No significant unidentified transmissions or anomalous traffic have been detected. We did isolate a repeating carrier burst, but it turned out to be a commercial beacon with a damaged timing circuit."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
 
 /datum/ccpost_sector_message_template/delta3_analysis_credit
 	template_id = "delta3_analysis_credit"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	title = "Signal Analysis Resource Release"
 	body = "A scheduled high-load analysis block was cancelled after the target signal was identified by another sector asset. The reserved processing allocation has been released for reassignment."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
@@ -719,7 +919,7 @@
 
 /datum/ccpost_sector_message_template/delta3_receiver_service
 	template_id = "delta3_receiver_service"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Receiver Cooling Service"
 	body = "Receiver bank two is within tolerance, but coolant efficiency has been trending down for three shifts. We can keep watching the sector as-is. I'm requesting service parts now so we don't have to choose between thermal limits and signal coverage later."
@@ -729,7 +929,7 @@
 
 /datum/ccpost_sector_message_template/delta3_storage_array
 	template_id = "delta3_storage_array"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Telemetry Archive Expansion"
 	body = "We're retaining more raw traffic captures than projected after the recent sector anomalies. I can start purging older low-priority recordings, or you can authorize another archive module and let us keep the full comparison set."
@@ -739,14 +939,14 @@
 
 /datum/ccpost_sector_message_template/annex6_records_update
 	template_id = "annex6_records_update"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	title = "Records Processing Update"
 	body = "The current filing backlog is within acceptable limits and all priority submissions have been indexed. Sixteen duplicate requisition forms were also identified and returned to their originating offices with professionally restrained annotations."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
 
 /datum/ccpost_sector_message_template/annex6_efficiency_credit
 	template_id = "annex6_efficiency_credit"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	title = "Administrative Cost Reconciliation"
 	body = "A records-storage contract was consolidated ahead of renewal and the resulting savings have been approved for partial return to sector operational allocation. Please do not interpret this as precedent for future procurement requests."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
@@ -754,7 +954,7 @@
 
 /datum/ccpost_sector_message_template/annex6_archive_media
 	template_id = "annex6_archive_media"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Archival Media Replenishment"
 	body = "Long-term archival media is below our preferred reserve after an unusually document-heavy cycle. We can continue by rotating older media early, but that creates exactly the kind of audit trail I would rather not explain later. Requesting replenishment."
@@ -764,7 +964,7 @@
 
 /datum/ccpost_sector_message_template/annex6_scanner_service
 	template_id = "annex6_scanner_service"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Bulk Scanner Service Contract"
 	body = "Two high-volume document scanners are beginning to misfeed under sustained load. They are technically still operational, which is accounting language for 'someone else will suffer later.' Requesting approval for preventative servicing."
@@ -774,14 +974,14 @@
 
 /datum/ccpost_sector_message_template/h09_lane_update
 	template_id = "h09_lane_update"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	title = "Freight Lane Status"
 	body = "All assigned freight lanes are processing within forecast tolerances. We cleared the morning queue early and have enough spare routing capacity to absorb normal fluctuations without touching contingency lanes."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
 
 /datum/ccpost_sector_message_template/h09_capacity_credit
 	template_id = "h09_capacity_credit"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	title = "Freight Capacity Reconciliation"
 	body = "Our latest routing reconciliation identified unused operational capacity allocated to this installation. Sector Logistics approved transfer of the surplus back to Liaison-controlled operational funds."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
@@ -789,7 +989,7 @@
 
 /datum/ccpost_sector_message_template/h09_preventative_actuators
 	template_id = "h09_preventative_actuators"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Dock Actuator Preventative Service"
 	body = "Two freight-dock actuators are starting to lag under load. They still pass inspection, but not by enough that I want to bet next week's traffic on them. Requesting replacement assemblies while we can schedule the work instead of reacting to it."
@@ -799,7 +999,7 @@
 
 /datum/ccpost_sector_message_template/h09_tracking_beacons
 	template_id = "h09_tracking_beacons"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Freight Beacon Replacement"
 	body = "Our reserve pallet of short-range cargo beacons is nearly empty after a bad batch was pulled from service. We can operate without a refill, but manual tagging will slow every exception case. Requesting authorization for replacement stock."
@@ -809,14 +1009,14 @@
 
 /datum/ccpost_sector_message_template/med12_inventory_update
 	template_id = "med12_inventory_update"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	title = "Regional Medical Inventory Update"
 	body = "Regional medical inventory is within target range. Cold storage is stable, controlled stock reconciled cleanly, and the outgoing queue is moving without exceptions. I am documenting that now before something decides to become interesting."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
 
 /datum/ccpost_sector_message_template/med12_surplus_credit
 	template_id = "med12_surplus_credit"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	title = "Medical Logistics Surplus Release"
 	body = "A planned emergency restock was cancelled after local demand came in below forecast. Central Medical Logistics has approved release of the unused operational allocation back into the sector pool."
 	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
@@ -824,7 +1024,7 @@
 
 /datum/ccpost_sector_message_template/med12_cold_chain_service
 	template_id = "med12_cold_chain_service"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Cold-Chain Preventative Service"
 	body = "Two pharmaceutical cold-storage compressors are still within tolerance, but their duty cycle is climbing faster than expected. I would rather service them while the medicine is cold and the technicians are calm. Requesting preventative maintenance allocation."
@@ -834,7 +1034,7 @@
 
 /datum/ccpost_sector_message_template/med12_sterile_packaging
 	template_id = "med12_sterile_packaging"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Sterile Packaging Reserve"
 	body = "Our sterile packaging reserve has fallen below the regional target after a larger-than-expected emergency shipment. Current orders are unaffected. Requesting a small replenishment before the next priority dispatch turns that into a problem."
@@ -844,7 +1044,7 @@
 
 /datum/ccpost_sector_message_template/a17_encrypted_uplink_anomaly
 	template_id = "a17_encrypted_uplink_anomaly"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Encrypted Uplink Interference"
 	body = "We are tracing short encrypted bursts riding the edge of our commercial bands. The traffic pattern resembles known Syndicate uplink activity, but I do not have enough to call it a confirmed traitor channel. We have isolated the affected repeater and are watching for another handshake."
@@ -852,14 +1052,14 @@
 
 /datum/ccpost_sector_message_template/a17_alignment_fault
 	template_id = "a17_alignment_fault"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	title = "Relay Alignment Drift"
 	body = "Array three has drifted out of preferred alignment twice this watch. Local technicians are compensating manually while diagnostics work through the actuator chain. Traffic is still moving, just with less redundancy than I would like."
 	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_COMMS_DEGRADED)
 
 /datum/ccpost_sector_message_template/kappa4_identity_discrepancy
 	template_id = "kappa4_identity_discrepancy"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Personnel Identity Discrepancy"
 	body = "We have two contradictory biometric records for the same member of staff and neither one is obviously corrupted. Until Security finishes the comparison, I have ordered controlled access and paired movement. Yes, someone already said 'changeling.' No, that does not make it confirmed."
@@ -867,14 +1067,14 @@
 
 /datum/ccpost_sector_message_template/kappa4_sensor_blindspot
 	template_id = "kappa4_sensor_blindspot"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	title = "External Sensor Blind Spot"
 	body = "A cluster of remote observation packages has dropped from the network. We still have overlapping coverage, but one approach corridor is being watched by fewer eyes than policy prefers. Local repair drones are en route."
 	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_COMMS_DEGRADED)
 
 /datum/ccpost_sector_message_template/rc12_cult_markings
 	template_id = "rc12_cult_markings"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Unauthorized Ritual Activity"
 	body = "Maintenance found fresh geometric markings, blood residue, and an improvised ritual site inside a disused extraction gallery. Security is treating it as possible cultist or heretic activity until proven otherwise. The gallery is sealed and nobody is volunteering to clean it."
@@ -882,7 +1082,7 @@
 
 /datum/ccpost_sector_message_template/rc12_labor_unrest
 	template_id = "rc12_labor_unrest"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Organized Labor Disruption"
 	body = "A group of workers attempted to seize a processing control room after distributing anti-corporate material across the lower decks. Security has contained the immediate disturbance. Central has asked us to treat the matter as possible revolutionary activity pending investigation."
@@ -890,7 +1090,7 @@
 
 /datum/ccpost_sector_message_template/delta3_nukeop_chatter
 	template_id = "delta3_nukeop_chatter"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Hostile Burst-Traffic Intercept"
 	body = "We intercepted a tightly compressed burst sequence using authentication behavior associated with hostile Syndicate field teams. It could be spoofed traffic. It could also be nuclear operative chatter. We are preserving the raw capture and narrowing the bearing now."
@@ -898,14 +1098,14 @@
 
 /datum/ccpost_sector_message_template/delta3_receiver_noise
 	template_id = "delta3_receiver_noise"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	title = "Receiver Noise Excursion"
 	body = "Receiver bank four is showing a persistent noise floor above calibration limits. We have moved priority watch traffic onto the cleaner arrays while engineering checks shielding and local power conditioning."
 	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_COMMS_DEGRADED)
 
 /datum/ccpost_sector_message_template/annex6_revolutionary_material
 	template_id = "annex6_revolutionary_material"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Unauthorized Political Material Review"
 	body = "Internal Compliance found coordinated anti-corporate material embedded in staff bulletins and payroll notices. The wording matches several known revolutionary recruitment patterns. Access to the publishing queue has been restricted while Personnel works out who approved any of it."
@@ -913,14 +1113,14 @@
 
 /datum/ccpost_sector_message_template/annex6_archive_mismatch
 	template_id = "annex6_archive_mismatch"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	title = "Archive Reconciliation Delay"
 	body = "Three regional record sets disagree on personnel transfer dates and nobody has yet found the original source document. The records are not lost, but they are currently proving that having three copies does not guarantee having one correct copy."
 	required_statuses = list(CCPOST_INSTALLATION_UNDER_REVIEW, CCPOST_INSTALLATION_MAINTENANCE)
 
 /datum/ccpost_sector_message_template/h09_manifest_sabotage
 	template_id = "h09_manifest_sabotage"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Freight Manifest Sabotage Review"
 	body = "Someone altered routing tags on six outbound containers and tried to bury the changes inside an automated reconciliation batch. Security is treating it as deliberate sabotage and possible traitor activity. The affected freight is isolated while we rebuild the manifests by hand."
@@ -928,14 +1128,14 @@
 
 /datum/ccpost_sector_message_template/h09_conveyor_fault
 	template_id = "h09_conveyor_fault"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	title = "Freight Conveyor Isolation"
 	body = "One of the transfer conveyors has been isolated after repeated motor faults. We are routing around it with manual handling and the secondary lane. Throughput is down, but nothing is stranded yet."
 	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_COMMS_DEGRADED)
 
 /datum/ccpost_sector_message_template/med12_recall_operations
 	template_id = "med12_recall_operations"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Medical Recall Operations"
 	body = "We are working the active batch recall now. Affected lots are being quarantined, shipment records are being cross-checked, and verified emergency stock remains available locally. Do not restart routine medical resupply from our channel until Central Medical Logistics clears the notice."
@@ -943,7 +1143,7 @@
 
 /datum/ccpost_sector_message_template/med12_bloodsucker_investigation
 	template_id = "med12_bloodsucker_investigation"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Unexplained Blood-Loss Cluster"
 	body = "Medical has admitted three staff with unexplained blood loss and matching puncture trauma. Security has restricted access to the residential wing while we rule out equipment injury, assault, or bloodsucker activity. I would prefer the boring explanation."
@@ -951,7 +1151,7 @@
 
 /datum/ccpost_sector_message_template/med12_changeling_quarantine
 	template_id = "med12_changeling_quarantine"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Biometric Quarantine Protocol"
 	body = "We have conflicting tissue and identity records from a restricted treatment room. The wing is under quarantine while pathology repeats the tests. Changeling contamination is one of the scenarios on the checklist, not a confirmed diagnosis."
@@ -959,14 +1159,14 @@
 
 /datum/ccpost_sector_message_template/med12_cold_storage_variance
 	template_id = "med12_cold_storage_variance"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	title = "Cold Storage Temperature Variance"
 	body = "One pharmaceutical vault is fluctuating outside preferred temperature margins. Nothing has crossed discard thresholds, but the affected stock is being held while engineering checks the cooling loop and calibration sensors."
 	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_COMMS_DEGRADED)
 
 /datum/ccpost_sector_message_template/a17_credential_spoof
 	template_id = "a17_credential_spoof"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Credential-Spoofed Relay Traffic"
 	body = "We caught a maintenance authorization using a valid employee credential several hours after that employee was confirmed off-station. Security is treating it as possible traitor access or identity theft while we revoke the affected keys and rebuild the relay permissions."
@@ -974,7 +1174,7 @@
 
 /datum/ccpost_sector_message_template/a17_identity_voice_mismatch
 	template_id = "a17_identity_voice_mismatch"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Authenticated Voiceprint Mismatch"
 	body = "A priority call arrived with valid credentials but a voiceprint that does not match the registered operator. The sender disconnected when challenged. Changeling impersonation is on the threat checklist, though a stolen credential remains the simpler explanation."
@@ -982,7 +1182,7 @@
 
 /datum/ccpost_sector_message_template/kappa4_revolutionary_meeting
 	template_id = "kappa4_revolutionary_meeting"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Unauthorized Staff Assembly"
 	body = "Security broke up an unauthorized staff meeting after anti-corporate slogans and improvised recruitment sheets were found in the room. No command personnel were harmed. We are reviewing the attendees for possible revolutionary organization rather than assuming every angry employee is part of a cell."
@@ -990,7 +1190,7 @@
 
 /datum/ccpost_sector_message_template/kappa4_ritual_material
 	template_id = "kappa4_ritual_material"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Restricted Occult Materials"
 	body = "A routine locker inspection turned up blood-marked diagrams, a ceremonial blade, and several pages of material that Security cannot identify. Possible cultist or heretic involvement has been referred upward. The owner insists it is a hobby. Nobody has found that reassuring."
@@ -998,7 +1198,7 @@
 
 /datum/ccpost_sector_message_template/rc12_bloodless_casualty
 	template_id = "rc12_bloodless_casualty"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Unexplained Exsanguination Case"
 	body = "A miner was recovered alive but severely blood-depleted from a locked auxiliary tunnel with no equipment failure sufficient to explain it. Medical is stabilizing them while Security checks the access logs. Bloodsucker activity is one possibility under review."
@@ -1006,7 +1206,7 @@
 
 /datum/ccpost_sector_message_template/rc12_syndicate_explosive
 	template_id = "rc12_syndicate_explosive"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Unauthorized Demolition Charge"
 	body = "Engineering recovered an improvised charge from a conveyor junction before it detonated. Several components resemble Syndicate procurement patterns. Security is treating this as deliberate sabotage and possible traitor activity while the processing line remains isolated."
@@ -1014,7 +1214,7 @@
 
 /datum/ccpost_sector_message_template/delta3_occult_signal
 	template_id = "delta3_occult_signal"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Nonstandard Ritual Broadcast"
 	body = "One receiver bank captured a repeating transmission made up of spoken phrases, geometric image bursts, and a carrier pattern with no recognized commercial purpose. Analysts flagged similarities to archived cultist and heretic incidents. We have isolated the recording from the general network."
@@ -1022,7 +1222,7 @@
 
 /datum/ccpost_sector_message_template/delta3_syndicate_dead_drop
 	template_id = "delta3_syndicate_dead_drop"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Suspected Syndicate Dead-Drop Traffic"
 	body = "We identified a burst schedule consistent with one-way dead-drop traffic: very short transmissions, irregular timing, and no acknowledgement packets. It may be a traitor uplink or contractor channel. Direction finding is in progress."
@@ -1030,7 +1230,7 @@
 
 /datum/ccpost_sector_message_template/annex6_credential_forgery
 	template_id = "annex6_credential_forgery"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Command Credential Forgery Review"
 	body = "Records staff found a command-level approval attached to a transfer order that the listed signatory denies issuing. The signature chain is technically valid. Internal Compliance is treating the case as possible traitor credential compromise until the signing key is accounted for."
@@ -1038,7 +1238,7 @@
 
 /datum/ccpost_sector_message_template/annex6_duplicate_employee
 	template_id = "annex6_duplicate_employee"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Duplicate Personnel Record Escalation"
 	body = "Two active personnel files now contain the same biometric identifiers but different assignment histories. Neither file appears to be a simple duplicate. Compliance has locked both records while Security investigates possible changeling impersonation or deliberate database tampering."
@@ -1046,7 +1246,7 @@
 
 /datum/ccpost_sector_message_template/h09_revolutionary_slowdown
 	template_id = "h09_revolutionary_slowdown"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Coordinated Freight Work Stoppage"
 	body = "Several freight teams abandoned assigned lanes simultaneously after receiving identical anti-corporate messages over local headsets. Supervisors are restoring minimum throughput while Security checks whether this is ordinary labor action or organized revolutionary activity."
@@ -1054,7 +1254,7 @@
 
 /datum/ccpost_sector_message_template/h09_syndicate_cache
 	template_id = "h09_syndicate_cache"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Unregistered Tactical Cargo Cache"
 	body = "A container entered our holding stack under a valid freight code but contained unregistered tactical equipment instead of the declared machine parts. The packing pattern resembles Syndicate field logistics. We are checking whether this was a traitor shipment or preparation for a larger hostile team."
@@ -1062,7 +1262,7 @@
 
 /datum/ccpost_sector_message_template/med12_occult_trauma
 	template_id = "med12_occult_trauma"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Anomalous Trauma Review"
 	body = "Medical received two patients with matching wounds that do not correspond to any tool or industrial process logged on-site. One patient keeps describing impossible geometric structures. Security has opened a possible heretic or cultist incident review while treatment continues."
@@ -1070,15 +1270,137 @@
 
 /datum/ccpost_sector_message_template/med12_syndicate_toxin
 	template_id = "med12_syndicate_toxin"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Unregistered Toxin Exposure"
 	body = "Toxicology identified an exposure pattern inconsistent with anything stocked by the facility. The compound profile overlaps with substances recovered in previous Syndicate sabotage cases. Pharmacy access is frozen while Security checks for a traitor or compromised shipment."
 	required_statuses = list(CCPOST_INSTALLATION_UNDER_REVIEW, CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_COMMS_DEGRADED)
 
+/datum/ccpost_sector_message_template/sec8_watch_summary
+	template_id = "sec8_watch_summary"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	title = "Sector Security Watch Summary"
+	body = "Regional security traffic is within normal parameters. Scheduled patrols have checked in, no priority warrants remain outstanding, and the current threat board contains nothing requiring wider action. I am documenting that now before somebody decides to improve the statistics."
+	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
+
+/datum/ccpost_sector_message_template/sec8_reserve_credit
+	template_id = "sec8_reserve_credit"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	title = "Security Reserve Reconciliation"
+	body = "A scheduled patrol deployment was cancelled after the originating threat report was downgraded. Central Security has released part of the unused operational reserve back into the sector allocation pool."
+	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
+	allocation_reward = 2
+
+/datum/ccpost_sector_message_template/sec8_patrol_equipment
+	template_id = "sec8_patrol_equipment"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	message_type = CCPOST_MESSAGE_REQUEST
+	title = "Patrol Equipment Reserve"
+	body = "Our patrol teams have drawn down the reserve supply of replacement armor components, portable barriers, and field communication equipment faster than forecast. Current coverage is unaffected. I would prefer to replenish the reserve before the next security incident makes that sentence inaccurate."
+	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
+	allocation_cost = 3
+	success_details = "Regional patrol equipment reserves have been restored to recommended readiness levels."
+
+/datum/ccpost_sector_message_template/sec8_evidence_capacity
+	template_id = "sec8_evidence_capacity"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	message_type = CCPOST_MESSAGE_REQUEST
+	title = "Secure Evidence Storage Expansion"
+	body = "Restricted evidence storage is approaching its approved capacity after several investigations closed at once. We can begin transferring older material early, but that creates additional handling and chain-of-custody work. Requesting a small secure-storage expansion instead."
+	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
+	allocation_cost = 2
+	success_details = "Additional secured evidence-storage capacity has been brought online."
+
+/datum/ccpost_sector_message_template/sec8_missing_patrol
+	template_id = "sec8_missing_patrol"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	priority = CCPOST_PRIORITY_IMPORTANT
+	title = "Patrol Craft Contact Loss"
+	body = "One regional patrol craft missed two scheduled check-ins and has not responded on its authenticated backup channel. We do not currently have evidence of hostile action. Search routing has been adjusted and nearby assets are checking the patrol's last confirmed corridor."
+	required_statuses = list(CCPOST_INSTALLATION_UNDER_REVIEW, CCPOST_INSTALLATION_COMMS_DEGRADED)
+
+/datum/ccpost_sector_message_template/sec8_armory_discrepancy
+	template_id = "sec8_armory_discrepancy"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	priority = CCPOST_PRIORITY_PRIORITY
+	title = "Controlled Armory Inventory Discrepancy"
+	body = "A restricted armory reconciliation has identified equipment movement without a matching authorization record. The affected storage section is locked down while Security reconstructs the access chain. Nothing is being declared stolen until the records and physical inventory agree."
+	required_statuses = list(CCPOST_INSTALLATION_UNDER_REVIEW, CCPOST_INSTALLATION_MAINTENANCE)
+
+/datum/ccpost_sector_message_template/sec8_credential_compromise
+	template_id = "sec8_credential_compromise"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	priority = CCPOST_PRIORITY_PRIORITY
+	title = "Security Credential Compromise Review"
+	body = "Multiple privileged security actions were authenticated through credentials whose assigned personnel deny performing them. Those credentials have been revoked and replacement keys are being issued from isolated systems. We are treating the event as deliberate compromise until proven otherwise."
+	required_statuses = list(CCPOST_INSTALLATION_UNDER_REVIEW, CCPOST_INSTALLATION_COMMS_DEGRADED)
+
+/datum/ccpost_sector_message_template/a17_backup_transmitter_calibration
+	template_id = "a17_backup_transmitter_calibration"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
+	priority = CCPOST_PRIORITY_ADVISORY
+	title = "Backup Transmitter Calibration"
+	body = "A secondary transmitter has been taken out of rotation for calibration after its timing drifted beyond our preferred tolerance. Primary traffic is unaffected and redundancy remains available, but maintenance will keep the unit isolated until the synchronization pass is complete."
+	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE)
+
+/datum/ccpost_sector_message_template/kappa4_sensor_power_cycle
+	template_id = "kappa4_sensor_power_cycle"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
+	priority = CCPOST_PRIORITY_ADVISORY
+	title = "Remote Sensor Power Cycling"
+	body = "Several exterior monitoring nodes are being power-cycled after intermittent synchronization faults. Coverage has been redistributed across the remaining array while technicians work through the affected units. No intrusion indicators have been confirmed."
+	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_COMMS_DEGRADED)
+
+/datum/ccpost_sector_message_template/delta3_passive_array_calibration
+	template_id = "delta3_passive_array_calibration"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
+	priority = CCPOST_PRIORITY_ADVISORY
+	title = "Passive Sensor Array Calibration"
+	body = "One passive sensor bank is undergoing a full calibration pass after accumulating enough baseline drift to affect low-confidence contacts. The remaining arrays are carrying the watch while the affected bank is kept out of analysis rotation."
+	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE)
+
+/datum/ccpost_sector_message_template/annex6_records_sync_failure
+	template_id = "annex6_records_sync_failure"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
+	priority = CCPOST_PRIORITY_ADVISORY
+	title = "Records Synchronization Failure"
+	body = "Remote archive synchronization is returning incomplete verification receipts. Annex 6 has moved nonessential record transfers into a local holding queue until the communications link can reliably confirm both sides of the transaction."
+	required_statuses = list(CCPOST_INSTALLATION_COMMS_DEGRADED)
+
+/datum/ccpost_sector_message_template/annex6_authorization_routing_delay
+	template_id = "annex6_authorization_routing_delay"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
+	priority = CCPOST_PRIORITY_ADVISORY
+	title = "Administrative Authentication Delays"
+	body = "Intermittent authentication failures are delaying routine administrative correspondence. Priority records remain available through redundant channels, but Annex 6 is holding low-priority approvals locally rather than risk duplicate or partially acknowledged transactions."
+	required_statuses = list(CCPOST_INSTALLATION_COMMS_DEGRADED)
+
+/datum/ccpost_sector_message_template/sec8_patrol_craft_service
+	template_id = "sec8_patrol_craft_service"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	priority = CCPOST_PRIORITY_ADVISORY
+	title = "Patrol Craft Maintenance Rotation"
+	body = "One regional patrol craft has entered its scheduled maintenance rotation for propulsion checks, armor inspection, and secure-radio servicing. Coverage has been redistributed among the remaining patrols until the craft is cleared back into service."
+	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE)
+
+/datum/ccpost_sector_message_template/sec8_sensor_auth_delay
+	template_id = "sec8_sensor_auth_delay"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	priority = CCPOST_PRIORITY_ADVISORY
+	title = "Regional Sensor Authentication Delay"
+	body = "Several remote security sensors are reporting through delayed authentication handshakes. The feeds remain available, but S-8 is treating unverified updates as advisory until the communications path can complete credential checks normally."
+	required_statuses = list(CCPOST_INSTALLATION_COMMS_DEGRADED)
+
+/datum/ccpost_sector_message_template/sec8_detainee_transfer
+	template_id = "sec8_detainee_transfer"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	title = "Regional Detainee Transfer Coordination"
+	body = "A low-risk detainee transfer between two regional facilities was completed without incident. Custody acknowledgements, transport logs, and destination intake records all match. S-8 has closed the movement from the active security board."
+	required_statuses = list(CCPOST_INSTALLATION_ONLINE, CCPOST_INSTALLATION_ROUTINE)
+
 /datum/ccpost_sector_message_template/a17_relay_repairs
 	template_id = "a17_relay_repairs"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Relay Array Component Request"
@@ -1091,7 +1413,7 @@
 
 /datum/ccpost_sector_message_template/a17_emergency_power
 	template_id = "a17_emergency_power"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Emergency Relay Power Support"
@@ -1104,7 +1426,7 @@
 
 /datum/ccpost_sector_message_template/a17_critical_stabilization
 	template_id = "a17_critical_stabilization"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Immediate Relay Stabilization Request"
@@ -1116,7 +1438,7 @@
 
 /datum/ccpost_sector_message_template/kappa4_monitoring_repairs
 	template_id = "kappa4_monitoring_repairs"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Monitoring Equipment Replacement"
 	body = "Our observation coverage is thinning out. Several packages are failing diagnostics and I am running the remaining units harder to compensate. We can continue like this, but every failed sensor leaves a larger blind spot. Requesting replacements."
@@ -1128,7 +1450,7 @@
 
 /datum/ccpost_sector_message_template/kappa4_life_support_backup
 	template_id = "kappa4_life_support_backup"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Outpost Continuity Support"
@@ -1141,7 +1463,7 @@
 
 /datum/ccpost_sector_message_template/kappa4_critical_continuity
 	template_id = "kappa4_critical_continuity"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Critical Outpost Continuity Request"
@@ -1153,7 +1475,7 @@
 
 /datum/ccpost_sector_message_template/rc12_processing_repairs
 	template_id = "rc12_processing_repairs"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Processing Equipment Assistance"
@@ -1166,7 +1488,7 @@
 
 /datum/ccpost_sector_message_template/rc12_pressure_seals
 	template_id = "rc12_pressure_seals"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Emergency Pressure-Seal Resupply"
@@ -1179,7 +1501,7 @@
 
 /datum/ccpost_sector_message_template/rc12_critical_stabilization
 	template_id = "rc12_critical_stabilization"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Critical Platform Stabilization"
@@ -1191,7 +1513,7 @@
 
 /datum/ccpost_sector_message_template/delta3_signal_repair
 	template_id = "delta3_signal_repair"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Signal Monitoring Array Assistance"
@@ -1204,7 +1526,7 @@
 
 /datum/ccpost_sector_message_template/delta3_backup_power
 	template_id = "delta3_backup_power"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Emergency Monitoring Power Request"
@@ -1217,7 +1539,7 @@
 
 /datum/ccpost_sector_message_template/delta3_critical_stabilization
 	template_id = "delta3_critical_stabilization"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Critical Listening Post Support"
@@ -1229,7 +1551,7 @@
 
 /datum/ccpost_sector_message_template/annex6_records_repair
 	template_id = "annex6_records_repair"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	message_type = CCPOST_MESSAGE_REQUEST
 	title = "Records Infrastructure Assistance"
 	body = "The Annex is processing a growing backlog after another archival server failure. The records are intact, but the remaining systems are well beyond comfortable load. I need replacement storage hardware before the backlog becomes a compliance incident of its own."
@@ -1241,7 +1563,7 @@
 
 /datum/ccpost_sector_message_template/annex6_cooling_support
 	template_id = "annex6_cooling_support"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Emergency Archive Cooling Support"
@@ -1254,7 +1576,7 @@
 
 /datum/ccpost_sector_message_template/annex6_critical_preservation
 	template_id = "annex6_critical_preservation"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Critical Records Preservation Request"
@@ -1266,7 +1588,7 @@
 
 /datum/ccpost_sector_message_template/h09_freight_repairs
 	template_id = "h09_freight_repairs"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Freight Routing Repair Assistance"
@@ -1279,7 +1601,7 @@
 
 /datum/ccpost_sector_message_template/h09_emergency_routing
 	template_id = "h09_emergency_routing"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Emergency Freight Control Support"
@@ -1292,7 +1614,7 @@
 
 /datum/ccpost_sector_message_template/h09_critical_stabilization
 	template_id = "h09_critical_stabilization"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Critical Logistics Stabilization"
@@ -1304,7 +1626,7 @@
 
 /datum/ccpost_sector_message_template/med12_storage_repair
 	template_id = "med12_storage_repair"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Medical Storage Recovery Assistance"
@@ -1317,7 +1639,7 @@
 
 /datum/ccpost_sector_message_template/med12_emergency_coldchain
 	template_id = "med12_emergency_coldchain"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_PRIORITY
 	title = "Emergency Cold-Chain Support"
@@ -1330,7 +1652,7 @@
 
 /datum/ccpost_sector_message_template/med12_critical_stabilization
 	template_id = "med12_critical_stabilization"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	message_type = CCPOST_MESSAGE_REQUEST
 	priority = CCPOST_PRIORITY_IMPORTANT
 	title = "Critical Medical Distribution Stabilization"
@@ -1340,6 +1662,44 @@
 	success_details = "Emergency medical-logistics resources have been committed to essential refrigeration, verified stock, protected treatment areas, and local containment efforts."
 	reactive_aid = TRUE
 
+
+/datum/ccpost_sector_message_template/sec8_security_system_repair
+	template_id = "sec8_security_system_repair"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	message_type = CCPOST_MESSAGE_REQUEST
+	priority = CCPOST_PRIORITY_PRIORITY
+	title = "Regional Security Systems Assistance"
+	body = "Our access-control and patrol coordination systems are operating with reduced redundancy after multiple hardware failures. Local Security is maintaining coverage manually, but every additional fault increases the number of systems depending on the same remaining controllers. Requesting replacement security hardware and technical support."
+	required_statuses = list(CCPOST_INSTALLATION_MAINTENANCE, CCPOST_INSTALLATION_UNDER_REVIEW, CCPOST_INSTALLATION_COMMS_DEGRADED)
+	allocation_cost = 5
+	success_status = CCPOST_INSTALLATION_ROUTINE
+	success_details = "Replacement access-control and patrol coordination hardware has restored normal regional security operations."
+	reactive_aid = TRUE
+
+/datum/ccpost_sector_message_template/sec8_emergency_lockdown
+	template_id = "sec8_emergency_lockdown"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	message_type = CCPOST_MESSAGE_REQUEST
+	priority = CCPOST_PRIORITY_PRIORITY
+	title = "Emergency Security Continuity Request"
+	body = "This transmission was queued before normal communications failed. S-8 is operating under local lockdown with patrol coordination and access control on emergency systems. We need protected communications, power-control hardware, and medical reserves if the outpost is expected to maintain regional security coverage."
+	required_statuses = list(CCPOST_INSTALLATION_NO_CONTACT, CCPOST_INSTALLATION_OFFLINE)
+	allocation_cost = 7
+	success_status = CCPOST_INSTALLATION_MAINTENANCE
+	success_details = "Emergency security-continuity equipment has restored limited access control, communications, and patrol coordination."
+	reactive_aid = TRUE
+
+/datum/ccpost_sector_message_template/sec8_critical_continuity
+	template_id = "sec8_critical_continuity"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	message_type = CCPOST_MESSAGE_REQUEST
+	priority = CCPOST_PRIORITY_IMPORTANT
+	title = "Critical Sector Security Support"
+	body = "S-8 is in a full security emergency. Verified personnel are consolidating into secured sections while we isolate compromised systems and keep the regional threat network alive. I need immediate continuity, medical, communications, and access-control support if this outpost is going to remain operational."
+	required_statuses = list(CCPOST_INSTALLATION_CRITICAL)
+	allocation_cost = 10
+	success_details = "Emergency security resources have been committed to protected communications, verified access control, casualty support, and regional command continuity."
+	reactive_aid = TRUE
 
 // Critical incident definitions
 
@@ -1409,7 +1769,7 @@
 
 /datum/ccpost_critical_incident/rel_a17_relay_array_failure
 	description = "catastrophic failure across the long-range relay array"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
 	recovery_details = "Emergency relay repairs have restored limited long-range capability. Damaged array sections remain isolated pending full repair."
 	request_text = "The long-range array is collapsing section by section. We have already isolated damaged emitters and the remaining trunk is carrying traffic without meaningful redundancy. I need emergency relay components and contractor routing now, before the last stable path fails with everything still on it."
@@ -1417,7 +1777,7 @@
 
 /datum/ccpost_critical_incident/rel_a17_syndicate_signal_intrusion
 	description = "a hostile Syndicate signal intrusion overriding authenticated relay traffic"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Compromised relay channels have been isolated and authenticated traffic restored through secured routing. Security specialists continue tracing the hostile intrusion."
 	request_text = "Our authenticated traffic is being overwritten by a hostile Syndicate signal and we can no longer trust every route leaving this station. We are cutting compromised channels and forcing verified traffic through isolated hardware, but the clean paths are disappearing. I need secure routing equipment and emergency processing support immediately."
@@ -1425,7 +1785,7 @@
 
 /datum/ccpost_critical_incident/rel_a17_changeling_identity_conflict
 	description = "suspected changeling infiltration following conflicting operator voiceprints and access records"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Conflicting operator identities have been isolated from privileged access and verified personnel have resumed essential relay operations. Identity review remains active."
 	request_text = "We have conflicting operator voiceprints, contradictory access records, and personnel we cannot reliably identify. Privileged relay controls are being locked down to the few identities we can verify, but that is leaving critical systems understaffed. I need continuity resources, secure authentication support, and emergency staffing capacity now."
@@ -1433,7 +1793,7 @@
 
 /datum/ccpost_critical_incident/rel_a17_hostile_boarding_blackout
 	description = "a coordinated communications blackout preceding suspected hostile boarding activity"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Limited communications have been restored and the immediate boarding threat has been contained. Security sweeps and access review remain underway."
 	request_text = "The blackout was not random. We lost external communications immediately before suspected hostile boarding activity and several internal routes are now contested or silent. We are holding the relay core and restoring one secure path at a time. I need emergency communications, access-control, and casualty-support resources now."
@@ -1441,7 +1801,7 @@
 
 /datum/ccpost_critical_incident/rel_a17_thaumaturgic_interference
 	description = "severe thaumaturgic interference consistent with Wizard Federation manipulation of the relay network"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	recovery_status = CCPOST_INSTALLATION_COMMS_DEGRADED
 	recovery_details = "Affected relay segments have been isolated and stable traffic restored through alternate channels. Thaumaturgic interference persists at reduced intensity."
 	request_text = "The relay network is being hit by interference that does not behave like any conventional fault. Channels are distorting, rerouting themselves, and dropping synchronization faster than we can isolate them. I need redundant processing, protected power, and replacement relay hardware before the interference takes the remaining stable paths."
@@ -1449,7 +1809,7 @@
 
 /datum/ccpost_critical_incident/rel_a17_wizard_signal_anomaly
 	description = "an unauthorized Wizard Federation transmission forcing repeated spatial and signal anomalies through the primary array"
-	installation_code = "NT-REL-A17"
+	installation_code = CCPOST_INSTALLATION_CODE_REL_A17
 	recovery_status = CCPOST_INSTALLATION_COMMS_DEGRADED
 	recovery_details = "Primary anomalous signal paths have been isolated and normal traffic rerouted. Residual spatial and signal anomalies remain under observation."
 	request_text = "An unauthorized Wizard transmission is driving spatial and signal anomalies through the primary array. Hardware is reporting from impossible locations and traffic is appearing on paths we physically disconnected. We are isolating the primary sections, but I need redundant relay equipment and emergency power support before the anomaly spreads through the remaining network."
@@ -1457,7 +1817,7 @@
 
 /datum/ccpost_critical_incident/out_k04_revolutionary_takeover
 	description = "armed revolutionary activity resulting in loss of local administrative control"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Verified Nanotrasen personnel have regained control of critical administrative and life-support areas. Remaining revolutionary activity is being contained and the outpost is under security review."
 	request_text = "Armed revolutionaries have taken administrative spaces and we have lost local control of several access and monitoring systems. Verified personnel are consolidating in the protected section and shutting hostile users out wherever we still can. We need emergency continuity, medical, and secure-control resources now or we may lose the outpost entirely."
@@ -1465,7 +1825,7 @@
 
 /datum/ccpost_critical_incident/out_k04_changeling_command_infiltration
 	description = "suspected changeling infiltration compromising the outpost command roster"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Verified personnel have re-established local command access and suspected compromised staff have been isolated. Identity verification remains underway."
 	request_text = "We cannot trust the command roster. Biometric records and personnel identities are conflicting, and at least one privileged account may belong to someone who is not who they claim to be. Verified staff are restricting access and operating from a reduced chain of command. We need secure authentication and continuity resources immediately."
@@ -1473,7 +1833,7 @@
 
 /datum/ccpost_critical_incident/out_k04_cultist_activity
 	description = "violent cultist activity compromising monitoring and security spaces"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Immediate cultist activity has been contained and compromised monitoring and security spaces have been secured. Central Security review continues."
 	request_text = "Cultist activity has breached monitoring and Security spaces and we are losing reliable coverage of occupied sections. Surviving personnel are abandoning compromised rooms and trying to hold the protected administrative core. We need emergency medical, security, and continuity resources now."
@@ -1481,7 +1841,7 @@
 
 /datum/ccpost_critical_incident/out_k04_heretic_anomaly
 	description = "a heretic-related anomaly spreading through occupied administrative areas"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "The affected administrative areas have been isolated and the immediate anomalous threat contained. Specialist review remains in progress."
 	request_text = "An anomalous event linked to suspected heretic activity is spreading through occupied administrative areas. We are evacuating personnel and sealing sections as soon as the anomaly reaches them, but we are running out of uncontaminated space and equipment. We need emergency isolation and continuity resources immediately."
@@ -1489,7 +1849,7 @@
 
 /datum/ccpost_critical_incident/out_k04_syndicate_infiltrator
 	description = "a hostile infiltrator incident involving Syndicate equipment and multiple casualties"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Local security has restored control of critical areas. Casualty treatment, evidence recovery, and hostile-infiltration review remain underway."
 	request_text = "We have a hostile infiltrator using Syndicate equipment inside the outpost and multiple personnel are already down. Local Security is trying to hold the remaining controlled spaces while Medical works from improvised positions. We need emergency medical, access-control, and continuity resources now."
@@ -1497,7 +1857,7 @@
 
 /datum/ccpost_critical_incident/out_k04_wizard_teleportation
 	description = "an unauthorized Wizard Federation teleportation event depositing hostile arcane phenomena inside the outpost"
-	installation_code = "NT-OUT-K04"
+	installation_code = CCPOST_INSTALLATION_CODE_OUT_K04
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Hostile arcane phenomena have been contained or isolated from occupied sections. Affected areas remain restricted pending specialist assessment."
 	request_text = "A Wizard Federation teleportation event has deposited hostile arcane phenomena inside occupied sections. Personnel and equipment are being displaced and we cannot guarantee that a secured room will remain secured. We need emergency isolation, redundant systems, and protected power immediately."
@@ -1505,7 +1865,7 @@
 
 /datum/ccpost_critical_incident/min_rc12_industrial_accident
 	description = "an uncontrolled industrial accident causing cascading processing-line failures"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
 	recovery_details = "Damaged processing lines have been isolated and essential platform services stabilized. Industrial repair operations remain underway."
 	request_text = "The processing lines are failing in sequence and we have crews abandoning machinery just to stay ahead of the cascade. Atmosphere, power, and structural isolation are now taking priority over production. We need emergency industrial repair material and life-support support now or there may not be a platform left to restart."
@@ -1513,7 +1873,7 @@
 
 /datum/ccpost_critical_incident/min_rc12_syndicate_sabotage
 	description = "coordinated Syndicate sabotage affecting excavation and ore-processing infrastructure"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Sabotaged excavation and processing systems have been isolated and local control restored. Repairs and a security investigation remain active."
 	request_text = "We have confirmed coordinated Syndicate sabotage across excavation and processing infrastructure. Controls we thought were safe are failing under load, and verified crews are working around systems we can no longer trust. We need emergency repair, security, and isolation resources immediately."
@@ -1521,7 +1881,7 @@
 
 /datum/ccpost_critical_incident/min_rc12_revolutionary_control_seizure
 	description = "violent revolutionary activity resulting in seizure of primary industrial controls"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Primary industrial controls have been retaken or isolated from hostile personnel. Production remains restricted while security review continues."
 	request_text = "Revolutionary personnel have seized primary industrial controls and several processing areas are no longer answering to verified supervisors. Loyal crews are isolating power and trying to prevent hostile control from reaching life-support and pressure systems. We need emergency continuity and secure-control resources now."
@@ -1529,7 +1889,7 @@
 
 /datum/ccpost_critical_incident/min_rc12_cult_or_heretic_activity
 	description = "cultist or heretic activity discovered within active excavation sectors"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Affected excavation sectors have been sealed and the immediate hostile activity contained. Specialist investigation remains underway."
 	request_text = "Hostile cultist or heretic activity has been confirmed inside active excavation sectors. We are sealing shafts and pulling crews back, but some personnel are still unaccounted for and industrial systems remain exposed. We need emergency medical, isolation, and continuity resources immediately."
@@ -1537,7 +1897,7 @@
 
 /datum/ccpost_critical_incident/min_rc12_bloodsucker_attack
 	description = "a suspected bloodsucker attack producing multiple exsanguinated casualties in maintenance tunnels"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Maintenance sectors have been secured and surviving personnel consolidated into controlled areas. Casualty and security review continue."
 	request_text = "We have multiple exsanguinated casualties in the maintenance tunnels and a suspected bloodsucker is still unaccounted for. Crews are abandoning isolated passages and consolidating around lit, controlled areas. We need emergency medical, security, and portable power resources now."
@@ -1545,7 +1905,7 @@
 
 /datum/ccpost_critical_incident/min_rc12_arcane_mineral_transmutation
 	description = "large-scale arcane transmutation associated with suspected Wizard Federation activity destabilizing stored mineral stock"
-	installation_code = "NT-MIN-RC12"
+	installation_code = CCPOST_INSTALLATION_CODE_MIN_RC12
 	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
 	recovery_details = "Unstable mineral stock has been isolated and affected processing lines shut down. Controlled industrial recovery remains underway."
 	request_text = "Stored mineral stock is undergoing large-scale transmutation and we cannot predict which material is stable enough to move. Processing lines are being shut down around affected storage, but the unstable stock is threatening nearby infrastructure. We need emergency containment, handling, and industrial support immediately."
@@ -1553,7 +1913,7 @@
 
 /datum/ccpost_critical_incident/lp_d03_nuclear_operatives
 	description = "a confirmed nuclear operative incursion against the listening post"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "The hostile nuclear operative incursion has been repelled or contained and surviving personnel have regained local control. Classified systems remain locked down during security sweeps and damage assessment."
 	request_text = "Liaison, this is Delta-3. We have confirmed nuclear operatives inside the post. Several secure sections are already lost and surviving personnel are consolidating around the monitoring core while classified systems are locked down. We need emergency medical, secure-power, and communications support immediately. If we lose this position, there may not be another transmission."
@@ -1561,7 +1921,7 @@
 
 /datum/ccpost_critical_incident/lp_d03_syndicate_boarding
 	description = "a hostile Syndicate boarding action following interception of classified burst traffic"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "The boarding action has been repelled or contained and classified systems remain secured. Security sweeps and intelligence review continue."
 	request_text = "We intercepted classified hostile traffic and were boarded almost immediately afterward. Multiple access points are compromised and surviving personnel are falling back around the secure monitoring core. We need emergency medical, access-control, and protected communications support now."
@@ -1569,7 +1929,7 @@
 
 /datum/ccpost_critical_incident/lp_d03_monitoring_blackout
 	description = "a total monitoring blackout coinciding with unidentified encrypted transmissions"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	recovery_status = CCPOST_INSTALLATION_COMMS_DEGRADED
 	recovery_details = "Emergency monitoring has been restored through isolated systems. The origin of the encrypted traffic remains unresolved and full coverage is not yet available."
 	request_text = "Our monitoring array went completely dark while unidentified encrypted transmissions appeared across emergency channels. We are bringing receivers back one isolated rack at a time, but we cannot tell what happened outside our remaining local sensors. We need emergency processing, power-conditioning, and secure communications support now."
@@ -1577,7 +1937,7 @@
 
 /datum/ccpost_critical_incident/lp_d03_heretic_signal_anomaly
 	description = "a heretic-related signal anomaly producing persistent nonstandard sensor returns"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	recovery_status = CCPOST_INSTALLATION_COMMS_DEGRADED
 	recovery_details = "The affected monitoring array has been isolated and limited coverage restored. Persistent anomalous sensor returns remain under investigation."
 	request_text = "We have persistent sensor returns that do not match any physical contact and the anomaly is spreading across monitoring channels. Operators are isolating affected racks, but we are losing sector coverage with every system we disconnect. We need redundant processing and protected monitoring hardware immediately."
@@ -1585,7 +1945,7 @@
 
 /datum/ccpost_critical_incident/lp_d03_changeling_infiltration
 	description = "suspected changeling infiltration following conflicting watch-officer biometric records"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Verified personnel have regained control of the listening post and biometric revalidation is underway. Classified access remains restricted."
 	request_text = "Watch-officer biometrics are conflicting and we can no longer trust every person with access to classified monitoring systems. Verified personnel are locking down credentials and operating with a reduced watch team. We need secure authentication, medical, and continuity resources now."
@@ -1593,7 +1953,7 @@
 
 /datum/ccpost_critical_incident/lp_d03_wizard_sensor_distortion
 	description = "a Wizard Federation transmission event causing repeated impossible sensor contacts and localized spatial distortion"
-	installation_code = "NT-LP-D03"
+	installation_code = CCPOST_INSTALLATION_CODE_LP_D03
 	recovery_status = CCPOST_INSTALLATION_COMMS_DEGRADED
 	recovery_details = "Affected monitoring systems have been isolated and partial coverage restored. Residual spatial and signal distortion remains under observation."
 	request_text = "A Wizard Federation transmission is producing impossible sensor contacts and localized spatial distortion throughout the post. Equipment is reporting movement where nothing exists and some compartments are no longer spatially consistent. We need redundant monitoring, protected power, and emergency isolation resources immediately."
@@ -1601,7 +1961,7 @@
 
 /datum/ccpost_critical_incident/adm_06_revolutionary_records_seizure
 	description = "armed revolutionary activity resulting in seizure of records and personnel-control systems"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Verified Nanotrasen personnel have regained access to priority archives and personnel-control systems. Remaining revolutionary activity is being contained and the Annex is under security review."
 	request_text = "Liaison, armed personnel have seized part of the Annex and we have lost access to several records and personnel-control systems. Loyal staff are evacuating priority archives and sealing the sections we still hold. Authorize emergency continuity, medical, and secure-records resources now or we risk losing both the facility and the records inside it."
@@ -1609,7 +1969,7 @@
 
 /datum/ccpost_critical_incident/adm_06_syndicate_records_infiltration
 	description = "coordinated Syndicate infiltration compromising secure corporate records"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Compromised systems have been isolated and priority archives secured. The extent of hostile access and data exposure remains under investigation."
 	request_text = "We have confirmed coordinated Syndicate access to secure corporate records and cannot yet determine how much data has been exposed. Priority archives are being isolated from the network while verified staff work from sealed systems. We need emergency secure-storage, authentication, and continuity resources immediately."
@@ -1617,7 +1977,7 @@
 
 /datum/ccpost_critical_incident/adm_06_changeling_records_conflict
 	description = "suspected changeling infiltration following extensive duplicate personnel records and biometric conflicts"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Personnel records have been frozen for reconciliation and verified staff have restored control of critical archive functions. Identity verification remains underway."
 	request_text = "Personnel records are duplicating, biometrics are conflicting, and we no longer know which identities inside the Annex can be trusted. Verified staff are freezing personnel-control changes and moving priority records onto isolated systems. We need secure authentication and continuity resources now."
@@ -1625,7 +1985,7 @@
 
 /datum/ccpost_critical_incident/adm_06_cultist_archive_activity
 	description = "violent cultist activity inside restricted archival areas"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Restricted archival areas have been secured and compromised records or materials isolated. Central Security and specialist review continue."
 	request_text = "Cultist activity has breached restricted archival areas and several secure collections are no longer under verified control. Staff are evacuating irreplaceable records and sealing contaminated sections wherever possible. We need emergency medical, secure-storage, and access-control resources immediately."
@@ -1633,7 +1993,7 @@
 
 /datum/ccpost_critical_incident/adm_06_heretic_records_anomaly
 	description = "a heretic-related containment incident involving anomalous records, structures, and missing personnel"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "The immediate anomalous activity has been contained and affected records and structures sealed. Missing-personnel and specialist investigations remain active."
 	request_text = "We have anomalous records and structures inside secured archival space, and personnel are missing from areas that should be physically accounted for. Staff are withdrawing from affected sections and sealing every boundary that still behaves normally. We need emergency isolation and continuity resources now."
@@ -1641,7 +2001,7 @@
 
 /datum/ccpost_critical_incident/adm_06_wizard_archive_raid
 	description = "a suspected Wizard Federation raid resulting in the disappearance and reappearance of secured archival material"
-	installation_code = "NT-ADM-06"
+	installation_code = CCPOST_INSTALLATION_CODE_ADM_06
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Displaced archival material has been quarantined and priority records secured. Provenance and integrity verification remain underway."
 	request_text = "Secured archival material is disappearing and reappearing in locations it was never transferred to, and we have evidence of a Wizard Federation raid. We cannot certify the integrity of anything that has been displaced. We need emergency quarantine, secure-storage, and verification resources immediately."
@@ -1649,7 +2009,7 @@
 
 /datum/ccpost_critical_incident/log_h09_syndicate_routing_sabotage
 	description = "coordinated Syndicate sabotage collapsing automated freight routing"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
 	recovery_details = "Emergency manual routing has been established and damaged automation isolated. Freight operations remain reduced while repairs and security review continue."
 	request_text = "Automated freight routing is collapsing under confirmed Syndicate sabotage. We are assigning lanes manually where consoles still answer, but compromised controllers are creating dangerous movements faster than staff can catch them. We need emergency routing hardware, protected power, and security support now."
@@ -1657,7 +2017,7 @@
 
 /datum/ccpost_critical_incident/log_h09_hostile_freight_raid
 	description = "an armed hostile raid targeting secured freight and supply reserves"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "The hostile raid has been repelled or contained and secured reserves are being accounted for. Security sweeps and loss assessment remain underway."
 	request_text = "Armed hostiles are inside the freight complex and targeting secured reserves. Several storage areas are contested and routing staff are falling back behind hardened access points. We need emergency medical, access-control, and continuity resources now before the remaining reserves and dispatch systems are lost."
@@ -1665,7 +2025,7 @@
 
 /datum/ccpost_critical_incident/log_h09_revolutionary_cargo_seizure
 	description = "revolutionary activity resulting in seizure of cargo control and dispatch systems"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Dispatch control has been restored to verified personnel and compromised cargo lanes locked down. Security review remains active."
 	request_text = "Revolutionary personnel have seized cargo control and parts of dispatch. Verified routing staff are cutting compromised lanes and trying to keep hostile users away from hazardous and secured freight. We need emergency secure-control, continuity, and access resources immediately."
@@ -1673,7 +2033,7 @@
 
 /datum/ccpost_critical_incident/log_h09_changeling_routing_infiltration
 	description = "suspected changeling infiltration among routing personnel during a major freight emergency"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Verified routing personnel have resumed restricted operations while identity checks continue. Privileged freight-control access remains limited."
 	request_text = "We have conflicting identities among routing staff during an active freight emergency and cannot trust every person with dispatch access. Verified personnel are restricting controls while trying to keep essential cargo moving. We need secure authentication, emergency staffing, and continuity resources now."
@@ -1681,7 +2041,7 @@
 
 /datum/ccpost_critical_incident/log_h09_hazardous_freight_reaction
 	description = "a chain reaction involving misrouted hazardous freight and damaged loading infrastructure"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
 	recovery_details = "Hazardous freight has been contained and damaged loading areas isolated. Controlled routing has resumed at reduced capacity."
 	request_text = "Misrouted hazardous freight has triggered a chain reaction across damaged loading infrastructure. We are evacuating lanes, isolating cargo we can still identify, and fighting secondary failures around the docks. We need emergency containment, handling, and structural resources immediately."
@@ -1689,7 +2049,7 @@
 
 /datum/ccpost_critical_incident/log_h09_wizard_freight_displacement
 	description = "Wizard Federation spatial interference repeatedly displacing freight containers and personnel between secured routing zones"
-	installation_code = "NT-LOG-H09"
+	installation_code = CCPOST_INSTALLATION_CODE_LOG_H09
 	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
 	recovery_details = "Spatial events have subsided enough for controlled routing to resume. Affected lanes remain closed while displaced freight and personnel are accounted for."
 	request_text = "Spatial interference is moving freight containers and personnel between secured routing zones without any valid transfer path. We have suspended automated routing, but cargo is still appearing where it should not exist. We need emergency isolation, tracking, and protected-power resources now."
@@ -1697,7 +2057,7 @@
 
 /datum/ccpost_critical_incident/med_m12_cold_chain_failure
 	description = "a cascading medical cold-chain and life-support infrastructure failure"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
 	recovery_details = "Essential refrigeration and environmental control have been restored. Some medical stock remains quarantined or unavailable while validation continues."
 	request_text = "Cold storage and life-support failures are cascading through M-12. Staff are moving viable stock by hand and abandoning storage areas as environmental control drops out. We need emergency refrigeration, power-conditioning, and life-support resources now or the sector is going to lose critical medical inventory with this facility."
@@ -1705,7 +2065,7 @@
 
 /datum/ccpost_critical_incident/med_m12_changeling_infiltration
 	description = "suspected changeling infiltration following severe tissue, identity, and casualty discrepancies"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Suspect personnel and biological material have been isolated. Identity verification, casualty review, and medical containment remain underway."
 	request_text = "We have tissue, identity, and casualty records that no longer agree with each other, and suspected changeling infiltration inside a medical distribution center. Verified staff are isolating personnel and biological material while keeping critical stock secured. We need emergency quarantine, authentication, and continuity resources now."
@@ -1713,7 +2073,7 @@
 
 /datum/ccpost_critical_incident/med_m12_bloodsucker_casualties
 	description = "a suspected bloodsucker attack producing multiple unexplained exsanguinated casualties"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Treatment and storage areas have been secured and surviving personnel consolidated. Casualty investigation and security review remain active."
 	request_text = "We have multiple unexplained exsanguinated casualties and a suspected bloodsucker still active somewhere inside M-12. Personnel are consolidating treatment and storage into controlled areas while unsecured corridors are abandoned. We need emergency medical, security, and portable-power resources immediately."
@@ -1721,7 +2081,7 @@
 
 /datum/ccpost_critical_incident/med_m12_cult_or_heretic_activity
 	description = "violent cultist or heretic activity compromising treatment and storage areas"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Compromised treatment and storage areas have been sealed and viable stock transferred to secured sections. Specialist review continues."
 	request_text = "Cultist or heretic activity has compromised treatment and medical-storage areas. Staff are moving patients and verified stock into the remaining secured sections while hostile or anomalous areas are sealed off. We need emergency medical continuity, isolation, and protected-power resources now."
@@ -1729,7 +2089,7 @@
 
 /datum/ccpost_critical_incident/med_m12_syndicate_medical_sabotage
 	description = "coordinated Syndicate sabotage involving contaminated or deliberately compromised medical stock"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Suspect medical stock has been quarantined and verified inventory moved into secured storage. Sabotage and contamination review remain active."
 	request_text = "We have confirmed coordinated sabotage involving contaminated or deliberately compromised medical stock. Distribution is being halted batch by batch while verified inventory is moved behind controlled access. We need emergency quarantine, validation, and secure-storage resources immediately."
@@ -1737,11 +2097,60 @@
 
 /datum/ccpost_critical_incident/med_m12_wizard_medical_transmutation
 	description = "an apparent Wizard Federation transmutation event rendering multiple secured medical supply batches biologically unrecognizable"
-	installation_code = "NT-MED-M12"
+	installation_code = CCPOST_INSTALLATION_CODE_MED_M12
 	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
 	recovery_details = "Transmuted stock has been quarantined and unaffected supplies transferred into validated storage. Specialist analysis remains underway."
 	request_text = "Multiple secured medical batches have been transmuted into material our systems cannot biologically identify. We are quarantining everything affected and transferring untouched stock away from the event, but validated storage is running out. We need emergency quarantine, analysis, and secure-storage resources now."
 	aid_details = "Emergency quarantine, analysis, and secure-storage resources have been committed to isolate transmuted stock and preserve unaffected medical inventory."
+
+
+/datum/ccpost_critical_incident/sec_s08_syndicate_assault
+	description = "a coordinated Syndicate assault targeting Sector Security command and communications"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
+	recovery_details = "The immediate hostile assault has been contained and verified Security personnel retain control of command areas. Central Security sweeps and casualty accounting remain underway."
+	request_text = "We have a coordinated Syndicate assault inside the outpost. Hostiles are targeting command, communications, and secured equipment rather than fighting for territory. Verified Security personnel are consolidating around the remaining controlled sections. We need emergency medical, access-control, communications, and continuity resources now."
+	aid_details = "Emergency medical, access-control, protected-communications, and continuity resources have been committed to reinforce verified Security personnel and preserve regional command capability."
+
+/datum/ccpost_critical_incident/sec_s08_armory_seizure
+	description = "hostile personnel seizing part of the regional armory and security-control network"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
+	recovery_details = "Verified Security personnel have regained control of restricted armory systems and compromised equipment is being accounted for. Access review and weapons reconciliation remain active."
+	request_text = "Hostile personnel have seized part of the armory and we cannot account for every restricted weapon or access credential. Verified staff are locking down the remaining stores and cutting compromised security controls from the network. We need emergency authentication, medical, and secure-control resources immediately."
+	aid_details = "Emergency authentication, medical, and secure-control resources have been committed to protect remaining armory stores and restore verified access to security systems."
+
+/datum/ccpost_critical_incident/sec_s08_revolutionary_mutiny
+	description = "organized revolutionary activity causing an internal security mutiny"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
+	recovery_details = "Verified Nanotrasen personnel have restored control of essential Security functions. Remaining revolutionary activity is being contained and personnel loyalty review remains active."
+	request_text = "We have an organized mutiny inside a Security installation. Multiple personnel have turned weapons and access privileges against command staff, and we cannot assume every local team is still loyal. Verified officers are holding the remaining secured sections. We need emergency medical, authentication, and continuity resources now."
+	aid_details = "Emergency medical, authentication, and continuity resources have been committed so verified Nanotrasen personnel can preserve controlled sections and restore essential Security functions."
+
+/datum/ccpost_critical_incident/sec_s08_changeling_command_compromise
+	description = "suspected changeling infiltration compromising Security command identities and privileged access"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
+	recovery_details = "Privileged access has been restricted to verified personnel and suspect identities isolated. Security command verification and biological review remain underway."
+	request_text = "Command identities no longer agree with our biometrics, voiceprints, or access history, and suspected changeling infiltration has reached privileged Security staff. We are stripping authority down to the few identities we can verify. We need secure authentication, medical isolation, and continuity resources immediately."
+	aid_details = "Secure authentication, medical-isolation, and continuity resources have been committed so verified personnel can maintain regional Security functions while identity checks continue."
+
+/datum/ccpost_critical_incident/sec_s08_wizard_breach
+	description = "a Wizard Federation attack disrupting secured areas, access control, and regional threat monitoring"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	recovery_status = CCPOST_INSTALLATION_MAINTENANCE
+	recovery_details = "The immediate thaumaturgic attack has subsided and secured areas are being re-established. Damaged access-control and monitoring systems remain under specialist review."
+	request_text = "We have active Wizard Federation interference inside secured areas. Doors, personnel, and equipment are moving without valid access events, and parts of the regional threat network are producing impossible telemetry. We need protected power, redundant communications, medical support, and emergency isolation resources now."
+	aid_details = "Protected power, redundant communications, medical support, and emergency isolation resources have been committed to preserve verified Security operations while thaumaturgic effects are contained."
+
+/datum/ccpost_critical_incident/sec_s08_security_network_compromise
+	description = "a hostile intrusion compromising regional security credentials, patrol routing, and automated access control"
+	installation_code = CCPOST_INSTALLATION_CODE_SEC_S08
+	recovery_status = CCPOST_INSTALLATION_UNDER_REVIEW
+	recovery_details = "Compromised Security systems have been isolated and essential patrol coordination restored through verified channels. Credential reconstruction and intrusion tracing remain active."
+	request_text = "The regional Security network is compromised. Patrol orders, access permissions, and threat notices are being altered through credentials that should be valid, which means we cannot trust automated routing or every authenticated command. We are moving essential coordination onto isolated systems. We need secure processing, authentication, and continuity resources immediately."
+	aid_details = "Secure processing, authentication, and continuity resources have been committed to establish isolated patrol coordination and rebuild trusted access-control channels."
 
 
 // CENTRAL COMMAND REMOTE OVERSIGHT NETWORK
@@ -1802,6 +2211,32 @@
 
 	return TRUE
 
+
+/// TRUE when this notice carries a player-facing mechanical sector effect, even
+/// after that effect has expired. This lets Remote Oversight distinguish
+/// historical operational notices from purely informational traffic.
+/datum/ccpost_sector_notice/proc/has_operational_effect()
+	if(logistics_effect_duration <= 0)
+		return FALSE
+
+	if(logistics_authorization_delay)
+		return TRUE
+
+	if(logistics_dispatch_delay)
+		return TRUE
+
+	if(logistics_transit_multiplier != 1)
+		return TRUE
+
+	return blocks_medical_supplies
+
+
+/datum/ccpost_sector_notice/proc/get_operational_effect_seconds_remaining()
+	if(!has_operational_effect() || !logistics_effect_expires_at)
+		return 0
+
+	return max(0, round((logistics_effect_expires_at - world.time) / (1 SECONDS)))
+
 // Sector Installation History
 
 /// Compact administrative history entry retained on each remote installation.
@@ -1832,6 +2267,11 @@
 	var/installation_code
 	var/installation_name
 	var/installation_function
+	var/regional_dependency
+
+	/// Most recent authenticated installation-originated communication or telemetry contact.
+	var/last_authenticated_contact
+	var/last_authenticated_contact_at = 0
 
 	/// Broad operational status visible to Central Command.
 	var/status
@@ -1886,6 +2326,10 @@
 	/// Job title of the selected installation representative.
 	var/contact_role = "Installation Duty Officer"
 
+	/// Installation-specific configuration copied from the immutable template.
+	var/datum/ccpost_installation_response_profile/response_profile
+	var/datum/ccpost_installation_loss_effect/loss_effect
+
 	/// Temporary percentage-point increase to this installation's escalation risk
 	/// caused by denied Operational Allocation requests. This decays as the
 	/// installation survives later status cycles and clears when assistance is
@@ -1923,8 +2367,19 @@
 	installation_code = template.installation_code
 	installation_name = template.installation_name
 	installation_function = template.installation_function
+	regional_dependency = template.regional_dependency
 	status = template.initial_status
 	status_since = station_time_timestamp()
+	last_authenticated_contact = station_time_timestamp()
+	last_authenticated_contact_at = world.time
+
+	if(template.response_profile_type)
+		var/response_profile_type = template.response_profile_type
+		response_profile = new response_profile_type
+
+	if(template.loss_effect_type)
+		var/loss_effect_type = template.loss_effect_type
+		loss_effect = new loss_effect_type
 
 	if(length(template.contact_types))
 		var/contact_type = pick(template.contact_types)
@@ -1936,6 +2391,8 @@
 		qdel(chosen_contact)
 
 /datum/ccpost_sector_installation/Destroy()
+	QDEL_NULL(response_profile)
+	QDEL_NULL(loss_effect)
 	QDEL_LIST(history)
 	return ..()
 
@@ -2045,6 +2502,10 @@
 	/// Successful processing normally returns two CU to the Liaison Outpost.
 	var/allocation_reward = 2
 
+	/// Physical authenticated copies printed for this request. Copies are retained
+	/// as objects when the request closes, but are visibly marked VOID.
+	var/list/issued_copies = list()
+
 /datum/ccpost_sector_paperwork_request/New(
 	_paperwork_code,
 	datum/ccpost_sector_installation/installation,
@@ -2065,6 +2526,29 @@
 	issued_at = station_time_timestamp()
 
 
+/datum/ccpost_sector_paperwork_request/proc/register_physical_copy(obj/item/paper/ccpost_sector_paperwork/paperwork)
+	if(!paperwork)
+		return
+
+	issued_copies |= paperwork
+
+
+/datum/ccpost_sector_paperwork_request/proc/invalidate_physical_copies(reason)
+	for(var/obj/item/paper/ccpost_sector_paperwork/paperwork as anything in issued_copies)
+		if(QDELETED(paperwork))
+			continue
+
+		paperwork.mark_void(reason)
+
+	issued_copies = list()
+
+
+/datum/ccpost_sector_paperwork_request/Destroy()
+	invalidate_physical_copies("Administrative request closed.")
+	issued_copies = null
+	return ..()
+
+
 /// Physical, machine-identifiable paperwork generated by Sector Communications.
 /// The hidden paperwork code prevents renamed, rewritten, or photocopied generic
 /// paper from satisfying an active administrative request.
@@ -2073,6 +2557,27 @@
 	desc = "An authenticated administrative document transmitted from a remote Nanotrasen installation for Central Command Liaison review."
 
 	var/paperwork_code
+	var/voided = FALSE
+	var/void_reason
+
+
+/obj/item/paper/ccpost_sector_paperwork/proc/mark_void(reason = "The originating administrative request is no longer active.")
+	if(voided)
+		return
+
+	voided = TRUE
+	void_reason = reason
+	name = "VOID - [name]"
+	desc = "A voided sector administrative document. It is retained for reference only and cannot satisfy an active Liaison paperwork request."
+	add_raw_text("<hr><center><b>VOID - DOCUMENT NO LONGER VALID</b></center><br><small>[reason]</small>")
+	update_appearance()
+
+
+/obj/item/paper/ccpost_sector_paperwork/examine(mob/user)
+	. = ..()
+
+	if(voided)
+		. += span_warning("This administrative document is VOID: [void_reason]")
 
 
 // Shared Sector Network
@@ -2133,10 +2638,15 @@
 	/// Prevents the exact same transmission template repeating immediately.
 	var/last_sector_message_template_id
 
-	/// Short rolling history used to keep ordinary installation traffic varied.
+	/// Prevents one installation dominating ordinary communications.
+	var/last_sector_message_installation_code
+
+	/// Short rolling histories keep both installations and individual templates varied.
+	var/list/recent_sector_message_installation_codes = list()
 	var/list/recent_sector_message_template_ids = list()
 
-	/// Number of recently issued ordinary templates avoided when alternatives exist.
+	/// Number of recently used installations/templates avoided when alternatives exist.
+	var/max_recent_sector_message_installations = 5
 	var/max_recent_sector_message_templates = 8
 
 
@@ -2260,16 +2770,102 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	schedule_next_sector_paperwork()
 
+
+/// Records the most recent authenticated contact from a remote installation.
+/datum/ccpost_sector_network/proc/record_installation_contact(datum/ccpost_sector_installation/installation)
+	if(!installation || installation.destroyed)
+		return
+
+	installation.last_authenticated_contact = station_time_timestamp()
+	installation.last_authenticated_contact_at = world.time
+
+
+/datum/ccpost_sector_network/proc/get_pending_sector_message_count()
+	var/pending_count = 0
+
+	for(var/datum/ccpost_sector_message/message as anything in sector_messages)
+		if(QDELETED(message))
+			continue
+
+		if(message.resolution_status == CCPOST_MESSAGE_PENDING)
+			pending_count++
+
+	return pending_count
+
+
+/// Returns the cumulative communication-delay multiplier from permanently lost
+/// sector installations. Multipliers are capped to keep the network active.
+/datum/ccpost_sector_network/proc/get_sector_message_interval_multiplier()
+	var/multiplier = 1
+
+	for(var/datum/ccpost_sector_installation/installation as anything in sector_installations)
+		if(QDELETED(installation) || !installation.destroyed || !installation.loss_effect)
+			continue
+
+		multiplier *= max(1, installation.loss_effect.sector_message_interval_multiplier)
+
+	return clamp(multiplier, 1, 2)
+
+
+/// Returns the cumulative paperwork-delay multiplier from permanently lost
+/// sector installations.
+/datum/ccpost_sector_network/proc/get_sector_paperwork_interval_multiplier()
+	var/multiplier = 1
+
+	for(var/datum/ccpost_sector_installation/installation as anything in sector_installations)
+		if(QDELETED(installation) || !installation.destroyed || !installation.loss_effect)
+			continue
+
+		multiplier *= max(1, installation.loss_effect.sector_paperwork_interval_multiplier)
+
+	return clamp(multiplier, 1, 2)
+
+
+/// Permanent early-warning/security losses raise the chance that later
+/// operational problems escalate into a Critical incident.
+/datum/ccpost_sector_network/proc/get_sector_loss_critical_chance_modifier()
+	var/modifier = 0
+
+	for(var/datum/ccpost_sector_installation/installation as anything in sector_installations)
+		if(QDELETED(installation) || !installation.destroyed || !installation.loss_effect)
+			continue
+
+		modifier += max(0, installation.loss_effect.critical_chance_modifier)
+
+	return modifier
+
+
+/// Refreshes systems whose timing or freight state changes immediately when an
+/// installation is permanently lost.
+/datum/ccpost_sector_network/proc/apply_installation_loss_effects(datum/ccpost_sector_installation/installation)
+	if(!installation?.destroyed || !installation.loss_effect)
+		return
+
+	var/datum/ccpost_installation_loss_effect/effect = installation.loss_effect
+
+	if(effect.has_logistics_effect() && GLOB.ccpost_logistics_network)
+		GLOB.ccpost_logistics_network.refresh_logistics_outputs()
+
+	if(effect.sector_message_interval_multiplier != 1)
+		schedule_next_sector_message()
+
+	if(effect.sector_paperwork_interval_multiplier != 1)
+		schedule_next_sector_paperwork()
+
+
 // SECTOR INSTALLATION MESSAGE GENERATION
 
 /datum/ccpost_sector_network/proc/schedule_next_sector_message(
-	minimum_delay = 4 MINUTES,
-	maximum_delay = 7 MINUTES
+	minimum_delay = 3 MINUTES,
+	maximum_delay = 6 MINUTES
 )
 	if(sector_message_timer)
 		deltimer(sector_message_timer)
 
-	sector_message_timer = addtimer(CALLBACK(src, PROC_REF(issue_sector_message)), rand(minimum_delay, maximum_delay), TIMER_STOPPABLE)
+	var/delay = rand(minimum_delay, maximum_delay)
+	delay = round(delay * get_sector_message_interval_multiplier(), 1 SECONDS)
+
+	sector_message_timer = addtimer(CALLBACK(src, PROC_REF(issue_sector_message)), delay, TIMER_STOPPABLE)
 
 
 
@@ -2282,7 +2878,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(sector_paperwork_timer)
 		deltimer(sector_paperwork_timer)
 
-	sector_paperwork_timer = addtimer(CALLBACK(src, PROC_REF(issue_sector_paperwork)), rand(minimum_delay, maximum_delay), TIMER_STOPPABLE)
+	var/delay = rand(minimum_delay, maximum_delay)
+	delay = round(delay * get_sector_paperwork_interval_multiplier(), 1 SECONDS)
+
+	sector_paperwork_timer = addtimer(CALLBACK(src, PROC_REF(issue_sector_paperwork)), delay, TIMER_STOPPABLE)
 
 
 /// Administrative paperwork is only generated while an installation is stable
@@ -2301,6 +2900,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		return FALSE
 
 	var/expired_code = active_sector_paperwork.paperwork_code
+	active_sector_paperwork.invalidate_physical_copies(reason)
 
 	for(var/obj/machinery/computer/ccpost_sector_comms/terminal as anything in registered_comms_terminals)
 		if(QDELETED(terminal))
@@ -2409,6 +3009,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		chosen_template
 	)
 
+	record_installation_contact(source_installation)
 	last_sector_paperwork_template_id = chosen_template.template_id
 
 	// The first available Sector Communications Terminal physically prints the
@@ -2515,6 +3116,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		confirmation.allocation_change = credited_amount
 		notify_comms_terminals(confirmation)
 
+	completed_paperwork.invalidate_physical_copies("Administrative request completed and archived.")
 	active_sector_paperwork = null
 	qdel(completed_paperwork)
 
@@ -3249,6 +3851,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			sector_messages.Cut(removal_index, removal_index + 1)
 			qdel(oldest_resolved_message)
 
+	if(installation.status != CCPOST_INSTALLATION_NO_CONTACT && installation.status != CCPOST_INSTALLATION_OFFLINE)
+		record_installation_contact(installation)
+
 	return new_message
 
 
@@ -3288,47 +3893,93 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		schedule_next_sector_message()
 		return
 
-	var/list/candidates = eligible_templates.Copy()
-	var/list/fresh_candidates = list()
+	// Select the installation first so installations with larger template pools
+	// do not receive proportionally more airtime than their neighbors.
+	var/list/installation_candidates = list()
 
-	// Prefer templates which have not appeared in the recent rolling history.
-	// If current installation states leave no fresh alternatives, fall back to
-	// the full eligible pool so communications never stall.
-	for(var/datum/ccpost_sector_message_template/template as anything in candidates)
+	for(var/datum/ccpost_sector_message_template/template as anything in eligible_templates)
+		var/datum/ccpost_sector_installation/installation = get_installation_by_code(
+			template.installation_code
+		)
+
+		if(!installation || installation.destroyed)
+			continue
+
+		installation_candidates |= installation
+
+	if(!length(installation_candidates))
+		schedule_next_sector_message()
+		return
+
+	var/list/fresh_installations = list()
+
+	for(var/datum/ccpost_sector_installation/installation as anything in installation_candidates)
+		if(installation.installation_code in recent_sector_message_installation_codes)
+			continue
+
+		fresh_installations += installation
+
+	if(length(fresh_installations))
+		installation_candidates = fresh_installations
+	else if(length(installation_candidates) > 1 && last_sector_message_installation_code)
+		for(var/datum/ccpost_sector_installation/installation as anything in installation_candidates)
+			if(installation.installation_code != last_sector_message_installation_code)
+				continue
+
+			installation_candidates.Remove(installation)
+			break
+
+	var/datum/ccpost_sector_installation/chosen_installation = pick(installation_candidates)
+	var/list/template_candidates = list()
+
+	for(var/datum/ccpost_sector_message_template/template as anything in eligible_templates)
+		if(template.installation_code != chosen_installation.installation_code)
+			continue
+
+		template_candidates += list(template)
+
+	if(!length(template_candidates))
+		schedule_next_sector_message()
+		return
+
+	// Once an installation has been selected, prefer one of its templates which
+	// has not appeared in the recent rolling template history.
+	var/list/fresh_templates = list()
+
+	for(var/datum/ccpost_sector_message_template/template as anything in template_candidates)
 		if(template.template_id in recent_sector_message_template_ids)
 			continue
 
-		fresh_candidates += list(template)
+		fresh_templates += list(template)
 
-	if(length(fresh_candidates))
-		candidates = fresh_candidates
-	else if(length(candidates) > 1 && last_sector_message_template_id)
-		for(var/datum/ccpost_sector_message_template/template as anything in candidates)
+	if(length(fresh_templates))
+		template_candidates = fresh_templates
+	else if(length(template_candidates) > 1 && last_sector_message_template_id)
+		for(var/datum/ccpost_sector_message_template/template as anything in template_candidates)
 			if(template.template_id != last_sector_message_template_id)
 				continue
 
-			candidates.Remove(template)
+			template_candidates.Remove(template)
 			break
 
-	var/datum/ccpost_sector_message_template/chosen_template = pick(candidates)
+	var/datum/ccpost_sector_message_template/chosen_template = pick(template_candidates)
 	var/chosen_template_id = chosen_template.template_id
+	var/chosen_installation_code = chosen_installation.installation_code
 
 	last_sector_message_template_id = chosen_template_id
+	last_sector_message_installation_code = chosen_installation_code
+
 	recent_sector_message_template_ids.Insert(1, chosen_template_id)
+	recent_sector_message_installation_codes.Insert(1, chosen_installation_code)
 
 	if(length(recent_sector_message_template_ids) > max_recent_sector_message_templates)
 		recent_sector_message_template_ids.Cut(max_recent_sector_message_templates + 1)
 
-	var/datum/ccpost_sector_installation/installation = get_installation_by_code(
-		chosen_template.installation_code
-	)
-
-	if(!installation)
-		schedule_next_sector_message()
-		return
+	if(length(recent_sector_message_installation_codes) > max_recent_sector_message_installations)
+		recent_sector_message_installation_codes.Cut(max_recent_sector_message_installations + 1)
 
 	var/datum/ccpost_sector_message/new_message = create_sector_message(
-		installation,
+		chosen_installation,
 		chosen_template
 	)
 
@@ -3336,7 +3987,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	maybe_start_installation_followup(new_message)
 
 	schedule_next_sector_message()
-
 
 /datum/ccpost_sector_network/proc/find_sector_message(message_code)
 	if(!message_code)
@@ -3372,6 +4022,33 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	return TRUE
 
 
+/// Returns the installation-specific acknowledgement recorded after a Liaison
+/// authorizes or denies Operational Allocation.
+/datum/ccpost_sector_network/proc/get_aid_decision_response(
+	datum/ccpost_sector_installation/installation,
+	authorized = TRUE,
+	critical = FALSE
+)
+	var/datum/ccpost_installation_response_profile/profile = installation?.response_profile
+
+	if(!profile)
+		if(authorized)
+			return critical ? "Emergency assistance authorized. Installation remains CRITICAL pending incident resolution." : "Requested operational assistance authorized."
+
+		return critical ? "Emergency assistance denied. Local personnel remain responsible for containment." : "Requested operational assistance denied."
+
+	if(authorized)
+		if(critical && profile.critical_authorized_response)
+			return profile.critical_authorized_response
+
+		return profile.authorized_response
+
+	if(critical && profile.critical_denied_response)
+		return profile.critical_denied_response
+
+	return profile.denied_response
+
+
 /datum/ccpost_sector_network/proc/apply_authorized_sector_request(
 	datum/ccpost_sector_message/message
 )
@@ -3389,10 +4066,13 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	// previous refusals is considered addressed. Historical denial count remains.
 	installation.aid_denial_risk = 0
 
+	var/critical_aid = installation.status == CCPOST_INSTALLATION_CRITICAL && (CCPOST_INSTALLATION_CRITICAL in message.valid_statuses)
+	message.response = get_aid_decision_response(installation, TRUE, critical_aid)
+
 	// Critical assistance is support, not an instant resolution. The installation
 	// remains CRITICAL and the original incident stays active until the later
 	// Critical recovery roll determines whether the installation survives.
-	if(installation.status == CCPOST_INSTALLATION_CRITICAL && (CCPOST_INSTALLATION_CRITICAL in message.valid_statuses))
+	if(critical_aid)
 		installation.critical_aid_authorized = TRUE
 		installation.critical_aid_authorized_by = message.responded_by
 		installation.critical_aid_authorized_at = station_time_timestamp()
@@ -3419,7 +4099,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		else
 			installation.condition_details += " Local personnel remain responsible for containing the incident."
 
-		message.response = "Emergency assistance authorized. Installation remains CRITICAL pending incident resolution."
 
 		notify_registered_displays(
 			null,
@@ -3531,6 +4210,28 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 // ADMINISTRATIVE PAPERWORK SLOT
 
+/obj/machinery/computer/ccpost_sector_comms/examine(mob/user)
+	. = ..()
+
+	var/datum/ccpost_sector_network/network = GLOB.ccpost_sector_network
+
+	if(!network)
+		return
+
+	network.ensure_started()
+
+	var/pending_messages = network.get_pending_sector_message_count()
+	var/paperwork_pending = network.validate_active_sector_paperwork(FALSE) ? 1 : 0
+	var/unresolved_work = pending_messages + paperwork_pending
+	var/communication_label = pending_messages == 1 ? "communication" : "communications"
+	var/paperwork_label = paperwork_pending ? "one active administrative document" : "no active administrative paperwork"
+
+	if(unresolved_work)
+		. += span_notice("Unresolved sector work: [pending_messages] pending [communication_label] and [paperwork_label].")
+	else
+		. += span_notice("No unresolved Sector Communications work is currently recorded.")
+
+
 /obj/machinery/computer/ccpost_sector_comms/item_interaction(
 	mob/living/user,
 	obj/item/tool,
@@ -3540,6 +4241,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		return NONE
 
 	var/obj/item/paper/ccpost_sector_paperwork/paperwork = tool
+
+	if(paperwork.voided)
+		balloon_alert(user, "document is void")
+		return ITEM_INTERACT_BLOCKING
 
 	if(!GLOB.ccpost_sector_network.validate_active_sector_paperwork())
 		balloon_alert(user, "no active paperwork request")
@@ -3639,6 +4344,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	paperwork.name = "administrative document [request.paperwork_code]"
 	paperwork.add_raw_text(build_sector_paperwork_print_text(request))
 	paperwork.update_appearance()
+	request.register_physical_copy(paperwork)
 
 	playsound(src, 'sound/machines/printer.ogg', vol = 50, vary = FALSE)
 	visible_message(span_notice("[src] prints an incoming sector administrative document."))
@@ -3895,10 +4601,17 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		else
 			archive_data += list(message_data)
 
+	var/list/paperwork_data = paperwork_to_ui_data()
+	var/pending_count = length(inbox_data)
+	var/paperwork_pending = paperwork_data ? TRUE : FALSE
+
 	data["inbox"] = inbox_data
 	data["archive"] = archive_data
 	data["archive_count"] = length(archive_data)
-	data["paperwork"] = paperwork_to_ui_data()
+	data["paperwork"] = paperwork_data
+	data["pending_count"] = pending_count
+	data["paperwork_pending"] = paperwork_pending
+	data["unresolved_work_count"] = pending_count + (paperwork_pending ? 1 : 0)
 
 	return data
 
@@ -4118,7 +4831,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			message.resolution_status = CCPOST_MESSAGE_AUTHORIZED
 			message.responded_by = user.name
 			message.responded_at = station_time_timestamp()
-			message.response = "Requested operational assistance authorized."
 
 			var/datum/ccpost_sector_installation/authorized_installation = GLOB.ccpost_sector_network.get_installation_by_code(message.installation_code)
 			var/authorized_critical = authorized_installation?.status == CCPOST_INSTALLATION_CRITICAL
@@ -4144,12 +4856,17 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			message.resolution_status = CCPOST_MESSAGE_DENIED
 			message.responded_by = user.name
 			message.responded_at = station_time_timestamp()
-			message.response = "Requested operational assistance denied."
 
 			var/datum/ccpost_sector_installation/denied_installation = GLOB.ccpost_sector_network.get_installation_by_code(message.installation_code)
+			var/denied_critical = denied_installation?.status == CCPOST_INSTALLATION_CRITICAL && (CCPOST_INSTALLATION_CRITICAL in message.valid_statuses)
+
+			message.response = GLOB.ccpost_sector_network.get_aid_decision_response(
+				denied_installation,
+				FALSE,
+				denied_critical
+			)
 
 			if(denied_installation && message.allocation_cost > 0)
-				var/denied_critical = denied_installation.status == CCPOST_INSTALLATION_CRITICAL
 				GLOB.ccpost_sector_network.register_aid_denial(denied_installation, message, user)
 				GLOB.ccpost_sector_network.adjust_installation_trust(
 					denied_installation,
@@ -4209,10 +4926,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(!notice)
 		return
 
-	if(notice.template_id != "medical_batch_recall")
+	if(notice.template_id != CCPOST_NOTICE_TEMPLATE_MEDICAL_BATCH_RECALL)
 		return
 
-	var/datum/ccpost_sector_installation/medical_center = get_installation_by_code("NT-MED-M12")
+	var/datum/ccpost_sector_installation/medical_center = get_installation_by_code(CCPOST_INSTALLATION_CODE_MED_M12)
 
 	if(!medical_center || medical_center.destroyed)
 		return
@@ -4246,7 +4963,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		GLOB.ccpost_logistics_network.refresh_logistics_outputs()
 
 	var/recall_active = is_medical_supply_recall_active()
-	var/datum/ccpost_sector_installation/medical_center = get_installation_by_code("NT-MED-M12")
+	var/datum/ccpost_sector_installation/medical_center = get_installation_by_code(CCPOST_INSTALLATION_CODE_MED_M12)
 
 	if(recall_active)
 		medical_supply_recall_was_active = TRUE
@@ -4471,7 +5188,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(base_chance <= 0)
 		return 0
 
-	return min(95, base_chance + installation.aid_denial_risk)
+	return min(95, base_chance + installation.aid_denial_risk + get_sector_loss_critical_chance_modifier())
 
 // NO CONTACT / OFFLINE NOTICES
 
@@ -4594,6 +5311,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	else
 		installation.incident_summary = "an unresolved station-wide security emergency"
 	installation.status_since = station_time_timestamp()
+	record_installation_contact(installation)
 
 	// A new Critical incident begins with no Liaison emergency allocation
 	// committed to it. Previous post-incident state is superseded.
@@ -4720,6 +5438,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	apply_installation_status_metadata(installation)
 
+	if(installation.telemetry == "ACTIVE" || installation.telemetry == "DEGRADED")
+		record_installation_contact(installation)
+
 	var/support_text
 
 	if(installation.ert_dispatched && installation.critical_aid_authorized)
@@ -4818,6 +5539,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	installation.condition_details = "Confirmed installation loss following [installation.incident_summary]."
 	installation.status_since = station_time_timestamp()
 
+	if(installation.loss_effect?.summary)
+		installation.condition_details += " Sector consequence: [installation.loss_effect.summary]"
+
 	var/spoken_update
 
 	if(installation.ert_dispatched && installation.critical_aid_authorized)
@@ -4856,14 +5580,20 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		spoken_update = "Central Command priority alert. [installation.installation_name] has been confirmed lost. The installation is classified as destroyed. All remote telemetry has terminated."
 
 	clear_installation_followup(installation)
+	var/loss_history_details = "Remote telemetry terminated following [installation.incident_summary]. Final recorded Central response: [installation.response_status]."
+
+	if(installation.loss_effect?.summary)
+		loss_history_details += " Permanent sector consequence: [installation.loss_effect.summary]"
+
 	add_installation_history(
 		installation,
 		"EMERGENCY",
 		"Installation confirmed lost",
-		"Remote telemetry terminated following [installation.incident_summary]. Final recorded Central response: [installation.response_status]."
+		loss_history_details
 	)
 
 	create_installation_loss_notice(installation)
+	apply_installation_loss_effects(installation)
 
 	notify_registered_displays(
 		spoken_update,
@@ -4890,13 +5620,18 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	else
 		response_text = "No Emergency Response Team or Liaison emergency allocation was committed prior to the confirmed loss."
 
+	var/consequence_text = ""
+
+	if(installation.loss_effect?.summary)
+		consequence_text = " Regional contingency measures are now active: [installation.loss_effect.summary]"
+
 	create_dynamic_sector_notice(
 		"installation_loss_[installation.installation_code]",
 		"Emergency Operations",
 		"Central Emergency Management",
 		CCPOST_PRIORITY_IMPORTANT,
 		"Confirmed Installation Loss: [installation.installation_name]",
-		"[installation.installation_name] ([installation.installation_code]) has been confirmed destroyed following [installation.incident_summary]. [response_text] The installation is classified as permanently non-operational and all remote telemetry has terminated. Nearby Nanotrasen installations are instructed to maintain present operations and await further direction. Unscheduled recovery operations are not authorized."
+		"[installation.installation_name] ([installation.installation_code]) has been confirmed destroyed following [installation.incident_summary]. [response_text][consequence_text] The installation is classified as permanently non-operational and all remote telemetry has terminated. Nearby Nanotrasen installations are instructed to maintain present operations and await further direction. Unscheduled recovery operations are not authorized."
 	)
 
 
@@ -4999,6 +5734,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		selected_installation.status_since = station_time_timestamp()
 
 	apply_installation_status_metadata(selected_installation)
+
+	if(selected_installation.telemetry == "ACTIVE" || selected_installation.telemetry == "DEGRADED")
+		record_installation_contact(selected_installation)
 
 	if(status_changed)
 		add_installation_history(
@@ -5266,17 +6004,23 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	print_text += "<hr>"
 	print_text += "<b>Installation:</b> [installation.installation_name] ([installation.installation_code])<br>"
 	print_text += "<b>Function:</b> [installation.installation_function]<br>"
+	print_text += "<b>Regional Dependency:</b> [installation.regional_dependency]<br>"
 	print_text += "<b>Named Contact:</b> [contact_role] [contact_name]<br>"
 	print_text += "<b>Relationship Assessment:</b> [relationship]<br>"
 	print_text += "<b>Operational Status:</b> [installation.status]<br>"
 	print_text += "<b>Condition:</b> [installation.condition]<br>"
 	print_text += "<b>Telemetry:</b> [installation.telemetry]<br>"
+	print_text += "<b>Last Authenticated Contact:</b> [installation.last_authenticated_contact]<br>"
 	print_text += "<b>Last Status Change:</b> [installation.status_since]<br>"
 	print_text += "<b>Central Response:</b> [installation.response_status]<br>"
 	print_text += "<b>Active Follow-Up:</b> [followup_text]<br>"
 	print_text += "<hr>"
 	print_text += "<b>Incident:</b> [installation.incident_summary]<br>"
 	print_text += "<b>Remarks:</b> [installation.condition_details]<br>"
+
+	if(installation.destroyed && installation.loss_effect?.summary)
+		print_text += "<b>Permanent Sector Consequence:</b> [installation.loss_effect.summary]<br>"
+
 	print_text += "<hr>"
 	print_text += "<b>Retained Administrative History</b><br><br>"
 
@@ -5383,6 +6127,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	var/list/sector_notice_data = list()
 
 	for(var/datum/ccpost_sector_notice/notice as anything in GLOB.ccpost_sector_network.sector_notices)
+		var/has_operational_effect = notice.has_operational_effect()
+		var/operational_effect_active = has_operational_effect && notice.has_active_logistics_effect()
+
 		sector_notice_data += list(
 			list(
 				"notice_code" = notice.notice_code,
@@ -5391,7 +6138,11 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 				"priority" = notice.priority,
 				"title" = notice.title,
 				"body" = notice.body,
-				"issued_at" = notice.issued_at
+				"issued_at" = notice.issued_at,
+				"has_operational_effect" = has_operational_effect,
+				"operational_effect_active" = operational_effect_active,
+				"operational_effect_seconds" = notice.get_operational_effect_seconds_remaining(),
+				"operational_effect_summary" = notice.logistics_effect_summary
 			)
 		)
 
@@ -5420,6 +6171,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 				"code" = installation.installation_code,
 				"name" = installation.installation_name,
 				"function" = installation.installation_function,
+				"regional_dependency" = installation.regional_dependency,
+				"last_authenticated_contact" = installation.last_authenticated_contact,
+				"last_contact_seconds_ago" = installation.last_authenticated_contact_at ? max(0, round((world.time - installation.last_authenticated_contact_at) / (1 SECONDS))) : 0,
+				"loss_consequence" = installation.loss_effect?.summary,
 				"contact_name" = installation.contact_name,
 				"contact_role" = installation.contact_role,
 				"status" = installation.status,
@@ -5467,3 +6222,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_remote_status, 
 #undef CCPOST_MESSAGE_EXPIRED
 #undef CCPOST_PAPERWORK_AWAITING_REVIEW
 #undef CCPOST_PAPERWORK_AWAITING_RECEIPT
+#undef CCPOST_INSTALLATION_CODE_REL_A17
+#undef CCPOST_INSTALLATION_CODE_OUT_K04
+#undef CCPOST_INSTALLATION_CODE_MIN_RC12
+#undef CCPOST_INSTALLATION_CODE_LP_D03
+#undef CCPOST_INSTALLATION_CODE_ADM_06
+#undef CCPOST_INSTALLATION_CODE_LOG_H09
+#undef CCPOST_INSTALLATION_CODE_MED_M12
+#undef CCPOST_INSTALLATION_CODE_SEC_S08
+#undef CCPOST_NOTICE_TEMPLATE_MEDICAL_BATCH_RECALL

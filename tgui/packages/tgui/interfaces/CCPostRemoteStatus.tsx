@@ -28,6 +28,10 @@ type SectorNotice = {
   title: string;
   body: string;
   issued_at: string;
+  has_operational_effect: boolean;
+  operational_effect_active: boolean;
+  operational_effect_seconds: number;
+  operational_effect_summary?: string;
 };
 
 type InstallationHistoryEntry = {
@@ -41,6 +45,10 @@ type SectorInstallation = {
   code: string;
   name: string;
   function: string;
+  regional_dependency: string;
+  last_authenticated_contact: string;
+  last_contact_seconds_ago: number;
+  loss_consequence?: string;
   contact_name: string;
   contact_role: string;
   status: string;
@@ -76,6 +84,60 @@ const formatTimer = (seconds: number) => {
   const secs = remaining % 60;
 
   return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+};
+
+const formatNoticeDuration = (totalSeconds: number) => {
+  const seconds = Math.max(0, Math.floor(totalSeconds || 0));
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  if (!minutes) {
+    return `${remainingSeconds}s`;
+  }
+
+  return `${minutes}m ${remainingSeconds}s`;
+};
+
+const formatRelativeContact = (secondsAgo: number) => {
+  const seconds = Math.max(0, Math.floor(secondsAgo || 0));
+
+  if (seconds < 15) {
+    return 'just now';
+  }
+
+  if (seconds < 60) {
+    return `${seconds}s ago`;
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) {
+    return `${minutes}m ago`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return remainingMinutes ? `${hours}h ${remainingMinutes}m ago` : `${hours}h ago`;
+};
+
+const installationAttentionRank = (installation: SectorInstallation) => {
+  if (installation.destroyed) {
+    return 0;
+  }
+
+  switch (installation.status) {
+    case 'CRITICAL':
+      return 1;
+    case 'NO CONTACT':
+    case 'OFFLINE':
+      return 2;
+    case 'COMMUNICATIONS DEGRADED':
+      return 3;
+    case 'UNDER REVIEW':
+    case 'MAINTENANCE':
+      return 4;
+    default:
+      return 5;
+  }
 };
 
 const getAlertColor = (alertLevel: string) => {
@@ -254,6 +316,93 @@ export const CCPostRemoteStatus = () => {
     ) || sector_installations[0];
   const activeRecordCode = activeRecordInstallation?.code || '';
 
+  const [noticeCategoryFilter, setNoticeCategoryFilter] = useLocalState(
+    'noticeCategoryFilter',
+    'ALL',
+  );
+  const [noticePriorityFilter, setNoticePriorityFilter] = useLocalState(
+    'noticePriorityFilter',
+    'ALL',
+  );
+  const [noticeSourceFilter, setNoticeSourceFilter] = useLocalState(
+    'noticeSourceFilter',
+    'ALL',
+  );
+  const [noticeImpactFilter, setNoticeImpactFilter] = useLocalState(
+    'noticeImpactFilter',
+    'ALL',
+  );
+  const [installationView, setInstallationView] = useLocalState(
+    'installationView',
+    'ALL',
+  );
+
+  const noticeCategories = Array.from(
+    new Set(sector_notices.map((notice) => notice.category)),
+  ).sort();
+  const noticeSources = Array.from(
+    new Set(sector_notices.map((notice) => notice.source)),
+  ).sort();
+  const noticePriorities = ['Routine', 'Advisory', 'Important', 'Priority'];
+
+  const filteredNotices = sector_notices.filter((notice) => {
+    if (noticeCategoryFilter !== 'ALL' && notice.category !== noticeCategoryFilter) {
+      return false;
+    }
+    if (noticePriorityFilter !== 'ALL' && notice.priority !== noticePriorityFilter) {
+      return false;
+    }
+    if (noticeSourceFilter !== 'ALL' && notice.source !== noticeSourceFilter) {
+      return false;
+    }
+    if (noticeImpactFilter === 'ACTIVE' && !notice.operational_effect_active) {
+      return false;
+    }
+    if (
+      noticeImpactFilter === 'EXPIRED' &&
+      (!notice.has_operational_effect || notice.operational_effect_active)
+    ) {
+      return false;
+    }
+    if (noticeImpactFilter === 'INFORMATIONAL' && notice.has_operational_effect) {
+      return false;
+    }
+    return true;
+  });
+
+  const noticeFiltersActive =
+    noticeCategoryFilter !== 'ALL' ||
+    noticePriorityFilter !== 'ALL' ||
+    noticeSourceFilter !== 'ALL' ||
+    noticeImpactFilter !== 'ALL';
+
+  const filteredInstallations = sector_installations
+    .filter((installation) => {
+      if (installationView === 'OPERATIONAL') {
+        return (
+          !installation.destroyed &&
+          (installation.status === 'ONLINE' ||
+            installation.status === 'ROUTINE OPERATIONS')
+        );
+      }
+      if (installationView === 'ATTENTION') {
+        return (
+          !installation.destroyed &&
+          installation.status !== 'ONLINE' &&
+          installation.status !== 'ROUTINE OPERATIONS'
+        );
+      }
+      if (installationView === 'DESTROYED') {
+        return Boolean(installation.destroyed);
+      }
+      return true;
+    })
+    .slice()
+    .sort((a, b) => {
+      const rankDifference = installationAttentionRank(a) - installationAttentionRank(b);
+      return rankDifference || a.name.localeCompare(b.name);
+    });
+
   return (
     <Window
       theme="ntos"
@@ -276,7 +425,7 @@ export const CCPostRemoteStatus = () => {
             selected={tab === 'notices'}
             onClick={() => setTab('notices')}
           >
-            Sector Notices ({sector_notices.length})
+            Sector Notices ({filteredNotices.length}/{sector_notices.length})
           </Tabs.Tab>
 
           <Tabs.Tab
@@ -366,40 +515,173 @@ export const CCPostRemoteStatus = () => {
               REQUIRE LOCAL ACTION
             </NoticeBox>
 
-            {sector_notices.length === 0 && (
+            <Section
+              title={`Notice Filters (${filteredNotices.length}/${sector_notices.length})`}
+              buttons={
+                noticeFiltersActive ? (
+                  <Button
+                    icon="rotate-left"
+                    onClick={() => {
+                      setNoticeCategoryFilter('ALL');
+                      setNoticePriorityFilter('ALL');
+                      setNoticeSourceFilter('ALL');
+                      setNoticeImpactFilter('ALL');
+                    }}
+                  >
+                    Reset Filters
+                  </Button>
+                ) : undefined
+              }
+            >
+              <Box bold mb={0.5}>
+                Category
+              </Box>
+              <Box mb={1}>
+                <Button
+                  color={noticeCategoryFilter === 'ALL' ? 'good' : undefined}
+                  onClick={() => setNoticeCategoryFilter('ALL')}
+                >
+                  All
+                </Button>
+                {noticeCategories.map((category) => (
+                  <Button
+                    key={`notice-category-${category}`}
+                    color={noticeCategoryFilter === category ? 'good' : undefined}
+                    onClick={() => setNoticeCategoryFilter(category)}
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </Box>
+
+              <Box bold mb={0.5}>
+                Priority
+              </Box>
+              <Box mb={1}>
+                <Button
+                  color={noticePriorityFilter === 'ALL' ? 'good' : undefined}
+                  onClick={() => setNoticePriorityFilter('ALL')}
+                >
+                  All
+                </Button>
+                {noticePriorities.map((priority) => (
+                  <Button
+                    key={`notice-priority-${priority}`}
+                    color={noticePriorityFilter === priority ? 'good' : undefined}
+                    onClick={() => setNoticePriorityFilter(priority)}
+                  >
+                    {priority}
+                  </Button>
+                ))}
+              </Box>
+
+              <Box bold mb={0.5}>
+                Source
+              </Box>
+              <Box mb={1}>
+                <Button
+                  color={noticeSourceFilter === 'ALL' ? 'good' : undefined}
+                  onClick={() => setNoticeSourceFilter('ALL')}
+                >
+                  All
+                </Button>
+                {noticeSources.map((source) => (
+                  <Button
+                    key={`notice-source-${source}`}
+                    color={noticeSourceFilter === source ? 'good' : undefined}
+                    onClick={() => setNoticeSourceFilter(source)}
+                  >
+                    {source}
+                  </Button>
+                ))}
+              </Box>
+
+              <Box bold mb={0.5}>
+                Operational Impact
+              </Box>
+              <Box>
+                {[
+                  ['ALL', 'All'],
+                  ['ACTIVE', 'Active Effect'],
+                  ['EXPIRED', 'Expired Effect'],
+                  ['INFORMATIONAL', 'Informational Only'],
+                ].map(([value, label]) => (
+                  <Button
+                    key={`notice-impact-${value}`}
+                    color={noticeImpactFilter === value ? 'good' : undefined}
+                    onClick={() => setNoticeImpactFilter(value)}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </Box>
+            </Section>
+
+            {sector_notices.length === 0 ? (
               <Section>
                 <Box color="label">No sector notices currently available.</Box>
               </Section>
+            ) : !filteredNotices.length ? (
+              <NoticeBox>No sector notices match the active filters.</NoticeBox>
+            ) : (
+              filteredNotices.map((notice) => (
+                <Section
+                  key={notice.notice_code}
+                  title={`${notice.notice_code} // ${notice.title}`}
+                >
+                  <LabeledList>
+                    <LabeledList.Item label="Issued">
+                      {notice.issued_at}
+                    </LabeledList.Item>
+
+                    <LabeledList.Item label="Source">
+                      {notice.source}
+                    </LabeledList.Item>
+
+                    <LabeledList.Item label="Category">
+                      {notice.category}
+                    </LabeledList.Item>
+
+                    <LabeledList.Item label="Priority">
+                      <Box color={getNoticeColor(notice.priority)}>
+                        {notice.priority.toUpperCase()}
+                      </Box>
+                    </LabeledList.Item>
+
+                    {Boolean(notice.has_operational_effect) && (
+                      <LabeledList.Item label="Operational Impact">
+                        <Box
+                          bold
+                          color={notice.operational_effect_active ? 'average' : 'label'}
+                        >
+                          {notice.operational_effect_active
+                            ? `ACTIVE EFFECT - ${formatNoticeDuration(
+                                notice.operational_effect_seconds,
+                              )} remaining`
+                            : 'EFFECT EXPIRED'}
+                        </Box>
+                      </LabeledList.Item>
+                    )}
+                  </LabeledList>
+
+                  <Box mt={2}>{notice.body}</Box>
+
+                  {Boolean(notice.has_operational_effect) &&
+                    notice.operational_effect_summary && (
+                      <Box
+                        mt={1.5}
+                        p={1}
+                        backgroundColor="rgba(255, 255, 255, 0.04)"
+                      >
+                        <Box bold mb={0.5}>
+                          Sector Effect
+                        </Box>
+                        {notice.operational_effect_summary}
+                      </Box>
+                    )}
+                </Section>
+              ))
             )}
-
-            {sector_notices.map((notice) => (
-              <Section
-                key={notice.notice_code}
-                title={`${notice.notice_code} // ${notice.title}`}
-              >
-                <LabeledList>
-                  <LabeledList.Item label="Issued">
-                    {notice.issued_at}
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Source">
-                    {notice.source}
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Category">
-                    {notice.category}
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Priority">
-                    <Box color={getNoticeColor(notice.priority)}>
-                      {notice.priority.toUpperCase()}
-                    </Box>
-                  </LabeledList.Item>
-                </LabeledList>
-
-                <Box mt={2}>{notice.body}</Box>
-              </Section>
-            ))}
           </>
         )}
 
@@ -409,6 +691,30 @@ export const CCPostRemoteStatus = () => {
               CENTRAL COMMAND SECTOR INSTALLATION NETWORK - REMOTE TELEMETRY
               ONLY
             </NoticeBox>
+
+            <Section title="Installation View">
+              <Box>
+                {[
+                  ['ALL', 'All'],
+                  ['ATTENTION', 'Needs Attention'],
+                  ['OPERATIONAL', 'Operational'],
+                  ['DESTROYED', 'Destroyed'],
+                ].map(([value, label]) => (
+                  <Button
+                    key={`installation-view-${value}`}
+                    color={installationView === value ? 'good' : undefined}
+                    onClick={() => setInstallationView(value)}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </Box>
+              <Box mt={1} color="label">
+                Showing {filteredInstallations.length} of {sector_installations.length}{' '}
+                registered installations. Attention sorting places confirmed losses
+                and active operational problems first.
+              </Box>
+            </Section>
 
             <Section title="Network Summary">
               <LabeledList>
@@ -434,7 +740,7 @@ export const CCPostRemoteStatus = () => {
               </LabeledList>
             </Section>
 
-            {sector_installations.map((installation) => (
+            {filteredInstallations.map((installation) => (
               <Section
                 key={installation.code}
                 title={`${installation.code} // ${installation.name}`}
@@ -455,6 +761,10 @@ export const CCPostRemoteStatus = () => {
                 <LabeledList>
                   <LabeledList.Item label="Function">
                     {installation.function}
+                  </LabeledList.Item>
+
+                  <LabeledList.Item label="Regional Dependency">
+                    {installation.regional_dependency}
                   </LabeledList.Item>
 
                   <LabeledList.Item label="Operational Status">
@@ -481,6 +791,13 @@ export const CCPostRemoteStatus = () => {
                     </Box>
                   </LabeledList.Item>
 
+                  <LabeledList.Item label="Last Authenticated Contact">
+                    {installation.last_authenticated_contact}{' '}
+                    <Box inline color="label">
+                      ({formatRelativeContact(installation.last_contact_seconds_ago)})
+                    </Box>
+                  </LabeledList.Item>
+
                   {installation.response_status !== 'NONE' && (
                     <LabeledList.Item label="Central Response">
                       <Box
@@ -502,6 +819,12 @@ export const CCPostRemoteStatus = () => {
                   <LabeledList.Item label="Remarks">
                     {installation.condition_details}
                   </LabeledList.Item>
+
+                  {!!installation.destroyed && !!installation.loss_consequence && (
+                    <LabeledList.Item label="Permanent Sector Consequence">
+                      <Box color="bad">{installation.loss_consequence}</Box>
+                    </LabeledList.Item>
+                  )}
 
                   <LabeledList.Item label="Last Status Change">
                     {installation.status_since}
@@ -578,6 +901,9 @@ export const CCPostRemoteStatus = () => {
                         <LabeledList.Item label="Function">
                           {activeRecordInstallation.function}
                         </LabeledList.Item>
+                        <LabeledList.Item label="Regional Dependency">
+                          {activeRecordInstallation.regional_dependency}
+                        </LabeledList.Item>
                         <LabeledList.Item label="Current Status">
                           <Box
                             color={getInstallationColor(
@@ -603,6 +929,14 @@ export const CCPostRemoteStatus = () => {
                             )}
                           >
                             {activeRecordInstallation.telemetry}
+                          </Box>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Last Authenticated Contact">
+                          {activeRecordInstallation.last_authenticated_contact}{' '}
+                          <Box inline color="label">
+                            ({formatRelativeContact(
+                              activeRecordInstallation.last_contact_seconds_ago,
+                            )})
                           </Box>
                         </LabeledList.Item>
                         <LabeledList.Item label="Named Contact">
@@ -639,6 +973,14 @@ export const CCPostRemoteStatus = () => {
                         <LabeledList.Item label="Remarks">
                           {activeRecordInstallation.condition_details}
                         </LabeledList.Item>
+                        {!!activeRecordInstallation.destroyed &&
+                          !!activeRecordInstallation.loss_consequence && (
+                            <LabeledList.Item label="Permanent Sector Consequence">
+                              <Box color="bad">
+                                {activeRecordInstallation.loss_consequence}
+                              </Box>
+                            </LabeledList.Item>
+                          )}
                         <LabeledList.Item label="Last Status Change">
                           {activeRecordInstallation.status_since}
                         </LabeledList.Item>
