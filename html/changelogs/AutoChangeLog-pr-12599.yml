@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Fixes hard deletion in medical cyborg's deployable roller bed."
