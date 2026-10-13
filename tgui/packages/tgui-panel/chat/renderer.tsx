@@ -6,6 +6,7 @@
 
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { Tooltip } from 'tgui/components';
 import { store } from 'tgui/events/store';
@@ -424,7 +425,7 @@ class ChatRenderer {
               working_value = true;
             } else if (working_value === '$false') {
               working_value = false;
-            } else if (!Number.isNaN(working_value)) {
+            } else if (!Number.isNaN(Number(working_value))) {
               const parsed_float = parseFloat(working_value);
               if (!Number.isNaN(parsed_float)) {
                 working_value = parsed_float;
@@ -452,13 +453,17 @@ class ChatRenderer {
           }
 
           const reactRoot = createRoot(childNode);
-          /* eslint-disable react/no-danger */
-          reactRoot.render(
-            <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-          );
-          /* eslint-enable react/no-danger */
+          // `flushSync()` because of a chat scroll issue where whether or not
+          // the line wraps was being decided before the name loaded
+          flushSync(() => {
+            /* eslint-disable react/no-danger */
+            reactRoot.render(
+              <Element {...outputProps}>
+                <span dangerouslySetInnerHTML={oldHtml} />
+              </Element>,
+            );
+            /* eslint-enable react/no-danger */
+          });
         }
 
         // Highlight text
