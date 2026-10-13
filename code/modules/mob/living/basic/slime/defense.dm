@@ -5,12 +5,6 @@
 /// Chance per try to wrestle a slime off somebody else
 #define SLIME_WRESTLE_HELPER_CHANCE 80
 
-/mob/living/basic/slime/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	adjust_power_level(-SLIME_MAX_POWER) // oh no, the power!
-
 ///If a slime is attack with an empty hand, shoves included, try to wrestle them off the mob they are on
 /mob/living/basic/slime/proc/on_attack_hand(mob/living/basic/slime/defender_slime, mob/living/attacker)
 	SIGNAL_HANDLER
@@ -39,9 +33,6 @@
 		use_sheet(tool, user)
 		return ITEM_INTERACT_SUCCESS
 
-	if(check_item_passthrough(tool, user))
-		return ITEM_INTERACT_SUCCESS
-
 	try_discipline_slime(tool)
 
 	if(!istype(tool, /obj/item/storage/bag/xeno))
@@ -49,19 +40,6 @@
 
 	use_xeno_bag(tool, user)
 	return ITEM_INTERACT_SUCCESS
-
-///Checks if an item harmlessly passes through the slime
-/mob/living/basic/slime/proc/check_item_passthrough(obj/item/attacking_item, mob/living/user)
-	if(attacking_item.force <= 0)
-		return FALSE
-
-	if(!prob(25))
-		return FALSE
-
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, span_danger("[attacking_item] passes right through [src]!"))
-	return TRUE
 
 ///Attempts to use the item to discipline the unruly slime
 /mob/living/basic/slime/proc/try_discipline_slime(obj/item/attacking_item)

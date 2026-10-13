@@ -3,13 +3,6 @@
 ///This slime is an adult
 #define SLIME_LIFE_STAGE_ADULT "adult"
 
-///This lowest charge a slime can have
-#define SLIME_MIN_POWER 0
-///Dangerous levels of charge
-#define SLIME_MEDIUM_POWER 5
-///The highest level of charge a slime can have
-#define SLIME_MAX_POWER 10
-
 ///The maximum amount of nutrition a slime can contain
 #define SLIME_MAX_NUTRITION 200
 ///The starting nutrition of a slime

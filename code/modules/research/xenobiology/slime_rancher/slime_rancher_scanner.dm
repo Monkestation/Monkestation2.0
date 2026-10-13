@@ -114,7 +114,6 @@
 		"health" = round(slime.health, 1),
 		"max_health" = slime.maxHealth,
 		"nutrition" = floor(slime.nutrition),
-		"powerlevel" = slime.powerlevel,
 		"cores" = slime.cores,
 		"growth" = slime.amount_grown,
 		"ranch_progress" = floor(slime.ranch_progress),
@@ -135,7 +134,6 @@
 	return list(
 		"max_growth" = SLIME_EVOLUTION_THRESHOLD,
 		"max_crossbreed_progress" = SLIME_EXTRACT_CROSSING_REQUIRED,
-		"max_powerlevel" = SLIME_MAX_POWER,
 		"max_nutrition" = SLIME_MAX_NUTRITION,
 		"extract_cost" = SLIME_RANCH_EXTRACT_COST,
 		"nutrition_starving" = SLIME_STARVE_NUTRITION,

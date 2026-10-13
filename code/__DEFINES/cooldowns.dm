@@ -58,7 +58,6 @@
 
 // mob cooldowns
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
-#define COOLDOWN_SLIME_SHOCK_KNOCKDOWN "slime_shock_knockdown"
 
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_1 (1<<0)

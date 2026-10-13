@@ -41,7 +41,6 @@ type Mutation = {
 type BuiltInNumberData = {
   max_growth: number;
   max_crossbreed_progress: number;
-  max_powerlevel: number;
   max_nutrition: number;
   nutrition_starving: number;
   nutrition_hungry: number;
@@ -64,7 +63,6 @@ type SlimeInfoData = {
   health: number;
   max_health: number;
   nutrition: number;
-  powerlevel: number;
   cores: number;
   growth: number;
   ranch_progress: number;
@@ -174,8 +172,6 @@ function Vitals() {
     max_nutrition,
     nutrition_starving,
     nutrition_hungry,
-    powerlevel,
-    max_powerlevel,
     cores,
     growth,
     max_growth,
@@ -283,11 +279,6 @@ function Vitals() {
       </Box>
       <hr className="SlimeRancher__rule" />
       <SlimePips label="Growth" value={growth} maxValue={max_growth} />
-      <SlimePips
-        label="Electric charge"
-        value={powerlevel}
-        maxValue={max_powerlevel}
-      />
       {!!crossbreed_modification && (
         <SlimePips
           label={`Core mutation: ${crossbreed_modification}`}

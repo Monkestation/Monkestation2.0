@@ -1,6 +1,3 @@
-#define SLIME_EXTRA_SHOCK_COST 3
-#define SLIME_BASE_SHOCK_PERCENTAGE 10
-#define SLIME_SHOCK_PERCENTAGE_PER_LEVEL 7
 /// Moves a human-sized worn hat down onto the slime's head, fits both baby and adult sprites
 #define SLIME_HAT_PIXEL_Y -5
 
@@ -20,13 +17,12 @@
 	maxHealth = 150
 	health = 150
 	mob_biotypes = MOB_SLIME
-	melee_damage_lower = 7
-	melee_damage_upper = 17
-	wound_bonus = -45
+	melee_damage_lower = 5
+	melee_damage_upper = 15
 	can_buckle_to = FALSE
 	can_be_held = TRUE
 
-	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //Healed by fire
+	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) //Healed by fire
 	unsuitable_cold_damage = 15
 	unsuitable_heat_damage = 0
 	bodytemp_heat_damage_limit = INFINITY
@@ -66,8 +62,6 @@
 	var/cores = 1
 	///Chance of mutating, should be between 25 and 35
 	var/mutation_chance = 30
-	///1-10 controls how much electricity they are generating
-	var/powerlevel = SLIME_MIN_POWER
 	///Controls how long the slime has been overfed, if 10, grows or reproduces
 	var/amount_grown = 0
 	/// No hunger
@@ -168,7 +162,7 @@
 		for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
 			possible_slime_types[slime_type] = new slime_type
 
-	set_life_stage(new_life_stage, TRUE)
+	set_life_stage(new_life_stage)
 	set_slime_type(new_type)
 	set_nutrition(SLIME_STARTING_NUTRITION)
 
@@ -357,44 +351,16 @@
 /mob/living/basic/slime/examine(mob/user)
 	. = ..()
 
-	switch(powerlevel)
-		if(SLIME_MIN_POWER to SLIME_EXTRA_SHOCK_COST)
-			. += span_notice("It is flickering gently with harmless levels of electrical activity.")
-
-		if(SLIME_EXTRA_SHOCK_COST to SLIME_MEDIUM_POWER)
-			. += span_warning("It is glowing brightly with medium levels electrical activity.")
-
-		if(SLIME_MEDIUM_POWER to SLIME_MAX_POWER)
-			. += span_boldwarning("It is glowing alarmingly with high levels of electrical activity.")
-
-		if(SLIME_MAX_POWER)
-			. += span_danger("It is radiating with massive levels of electrical activity!")
 	if(overcrowded)
 		. += span_warning("It seems too overcrowded to properly reproduce!")
 	for(var/datum/slime_transformation/transformation as anything in transformations)
 		. += span_notice(transformation.desc)
 
 ///Changes the slime's current life state
-/mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY, initial = FALSE)
+/mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)
 	// how high they sit depends on our size, and so does who's allowed up there at all
 	dump_riders()
 	life_stage = new_life_stage
-	if(life_stage == SLIME_LIFE_STAGE_ADULT)
-		health /= 0.75
-		maxHealth /= 0.75
-		melee_damage_lower *= 2
-		melee_damage_upper *= 2
-		obj_damage = 15
-		wound_bonus = -90
-
-	else if(!initial)
-		health *= 0.75
-		maxHealth *= 0.75
-		melee_damage_lower *= 0.5
-		melee_damage_upper *= 0.5
-		obj_damage = initial(obj_damage)
-		wound_bonus = initial(wound_bonus)
-
 	update_mob_action_buttons()
 
 /// Sets the slime's type, name and its icons.
@@ -432,39 +398,6 @@
 		our_slime.stop_feeding()
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(iscyborg(target))
-		var/mob/living/silicon/robot/borg_target = target
-		borg_target.flash_act()
-		do_sparks(5, TRUE, borg_target)
-		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE
-		if(prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
-			our_slime.adjust_power_level(-SLIME_EXTRA_SHOCK_COST)
-			borg_target.apply_damage(our_slime.powerlevel * rand(6, 10), BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
-			borg_target.visible_message(span_danger("\The [our_slime] shocks [borg_target]!"), span_userdanger("\The [our_slime] shocks you!"))
-		else
-			borg_target.visible_message(span_danger("\The [our_slime] fails to hurt [borg_target]!"), span_userdanger("\The [our_slime] failed to hurt you!"))
-
-		return COMPONENT_HOSTILE_NO_ATTACK
-
-	if(iscarbon(target) && our_slime.powerlevel > SLIME_MIN_POWER)
-		var/mob/living/carbon/carbon_target = target
-		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE  // 17 at level 1, 80 at level 10
-		if(!prob(stunprob))
-			return NONE // normal attack
-
-		carbon_target.visible_message(span_danger("\The [our_slime] shocks [carbon_target]!"), span_userdanger("\The [our_slime] shocks you!"))
-
-		do_sparks(5, TRUE, carbon_target)
-		var/power = our_slime.powerlevel + rand(0,3)
-		if(TIMER_COOLDOWN_FINISHED(carbon_target, COOLDOWN_SLIME_SHOCK_KNOCKDOWN))
-			carbon_target.Knockdown(power * 0.5 SECONDS)
-			TIMER_COOLDOWN_START(carbon_target, COOLDOWN_SLIME_SHOCK_KNOCKDOWN, 10 SECONDS)
-		carbon_target.set_stutter_if_lower(power * 2 SECONDS)
-		SEND_SIGNAL(our_slime, COMSIG_SLIME_SHOCKED, carbon_target)
-		if (prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
-			adjust_power_level(-SLIME_EXTRA_SHOCK_COST)
-			carbon_target.apply_damage(min(our_slime.powerlevel * rand(6, 10), 25), BURN, spread_damage = TRUE, wound_bonus = CANT_WOUND)
-
 	if(isslime(target))
 		if(target == our_slime)
 			return COMPONENT_HOSTILE_NO_ATTACK
@@ -474,14 +407,6 @@
 			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
 				span_danger("You pull [target_slime] off!"))
 			return NONE // normal attack
-
-		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
-		if(target_slime.nutrition >= 100) //steal some nutrition. negval handled in life()
-			var/stolen_nutrition = min(is_adult_slime ? 90 : 50, target_slime.nutrition)
-			target_slime.adjust_nutrition(-stolen_nutrition)
-			our_slime.adjust_nutrition(stolen_nutrition)
-		if(target_slime.health > 0)
-			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
 
 ///Spawns a crossed slimecore item
 /mob/living/basic/slime/proc/spawn_corecross()
@@ -541,7 +466,6 @@
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_SET_TYPE, "Set Slime Type")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_ADD_TRANSFORMATION, "Add Transformation")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_SET_LIFE_STAGE, "Set Life Stage")
-	VV_DROPDOWN_OPTION(VV_HK_SLIME_SET_POWER, "Set Power Level")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_SET_BEHAVIOR, "Set Behavior")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_FILL_GROWTH, "Fill Growth")
 	VV_DROPDOWN_OPTION(VV_HK_SLIME_FORCE_SPLIT, "Force Split")
@@ -555,8 +479,6 @@
 		admin_add_transformation(usr)
 	if(href_list[VV_HK_SLIME_SET_LIFE_STAGE])
 		admin_set_life_stage(usr)
-	if(href_list[VV_HK_SLIME_SET_POWER])
-		admin_set_power_level(usr)
 	if(href_list[VV_HK_SLIME_SET_BEHAVIOR])
 		admin_set_behavior(usr)
 	if(href_list[VV_HK_SLIME_FILL_GROWTH])
@@ -615,26 +537,11 @@
 	var/chosen_stage = tgui_input_list(admin, "Which life stage?", "Set Life Stage", list(SLIME_LIFE_STAGE_BABY, SLIME_LIFE_STAGE_ADULT), default = life_stage)
 	if(!chosen_stage || QDELETED(src) || !check_rights(NONE))
 		return
-	// set_life_stage scales health and damage from the current numbers, so doing it twice would stack
-	if(chosen_stage == life_stage)
-		return
-
 	set_life_stage(chosen_stage)
 	amount_grown = 0
 	update_name()
 	regenerate_icons()
 	log_admin("[key_name(admin)] set [key_name(src)]'s life stage to [chosen_stage].")
-
-/mob/living/basic/slime/proc/admin_set_power_level(mob/admin)
-	if(!admin || !check_rights(NONE))
-		return
-
-	var/new_power = tgui_input_number(admin, "Power level?", "Set Power Level", default = powerlevel, max_value = SLIME_MAX_POWER, min_value = SLIME_MIN_POWER, round_value = TRUE)
-	if(isnull(new_power) || QDELETED(src) || !check_rights(NONE))
-		return
-
-	adjust_power_level(new_power - powerlevel)
-	log_admin("[key_name(admin)] set [key_name(src)]'s power level to [new_power].")
 
 /mob/living/basic/slime/proc/admin_set_behavior(mob/admin)
 	if(!admin || !check_rights(NONE))
@@ -671,7 +578,4 @@
 		return
 	log_admin("[key_name(admin)] forced [key_name(src)] to split.")
 
-#undef SLIME_EXTRA_SHOCK_COST
-#undef SLIME_BASE_SHOCK_PERCENTAGE
-#undef SLIME_SHOCK_PERCENTAGE_PER_LEVEL
 #undef SLIME_HAT_PIXEL_Y
