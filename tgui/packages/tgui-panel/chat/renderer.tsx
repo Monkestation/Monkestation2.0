@@ -216,25 +216,12 @@ class ChatRenderer {
       const matchWord = setting.matchWord;
       const matchCase = setting.matchCase;
       const enabled = setting.enabled;
-      const allowedRegex = /^[a-zа-яё0-9_\-$/^[\s\]\\]+$/gi;
-      const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
+      const regexEscapeCharacters = /[.*+?^${}()|[\]\\/]/g;
       const lines = String(text)
         .split(',')
         .map((str) => str.trim())
-        .filter((str) => {
-          // Must be longer than one character
-          if (!str || str.length <= 1) return false;
-
-          // Must be alphanumeric (with some punctuation)
-          const isValidFormat =
-            allowedRegex.test(str) ||
-            (str.charAt(0) === '/' && str.charAt(str.length - 1) === '/');
-
-          // Reset lastIndex so it does not mess up the next word
-          allowedRegex.lastIndex = 0;
-
-          return isValidFormat;
-        });
+        // Must be longer than one character
+        .filter((str) => str.length > 1);
       let highlightWords;
       let highlightRegex;
       // Nothing to match, reset highlighting
@@ -272,10 +259,13 @@ class ChatRenderer {
         if (regexStr) {
           highlightRegex = new RegExp(`(${regexStr})`, flags);
         } else {
-          const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
-            '|',
-          )})${matchWord ? '\\b' : ''}`;
-          highlightRegex = new RegExp(pattern, flags);
+          const words = `(${highlightWords.join('|')})`;
+          // not \b, it only knows ascii letters - "José" or a term ending in "?" would never count as a whole word
+          const wordCharacter = '[\\p{L}\\p{N}_]';
+          const pattern = matchWord
+            ? `(?<!${wordCharacter})${words}(?!${wordCharacter})`
+            : words;
+          highlightRegex = new RegExp(pattern, `${flags}u`);
         }
       } catch {
         // We just reset it if it's invalid.
