@@ -1,8 +1,0 @@
-author: "Runian, SarmentiCampbell"
-delete-after: True
-changes:
-  - rscadd: "3 new ninja cyborg model. They're functionally syndicate cyborg models, except they're green and renamed."
-  - rscdel: "Ninja cyborgs no longer have a syndicate pinpointer."
-  - bugfix: "Getting emagged or changing your initial cyborg model to syndicate now correctly recolors your modular interface."
-  - bugfix: "Ninja cyborgs no longer lose ion thrusters if they initially had it via upgrades."
-  - image: "New icons for ninja cyborgs, ninja cyborg defib paddles, ninja cyborg hypospray, and ninja cyborg energy saw."

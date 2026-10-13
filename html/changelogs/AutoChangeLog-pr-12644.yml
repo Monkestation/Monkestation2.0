@@ -1,9 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Cyborgs can no longer slap-craft an endless amount of flamethrowers via their own welder."
-  - bugfix: "Exploding an empty fuel canister no longer causes a runtime."
-  - bugfix: "The charge overlay for welding tools now correctly update upon self-refuel."
-  - bugfix: "Electric welding tools, like their regular counterpart, now keep their tool behavior when off."
-  - code_imp: "Self-refueling/recharging capabilities for welding tools can be applied to all welding tool types."
-  - code_imp: "Electric welding tools no longer use the cell component and now handles all of it internally."

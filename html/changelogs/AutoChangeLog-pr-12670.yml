@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Clown cyborgs can now correctly use their picket sign's item action button to change its text at will."
