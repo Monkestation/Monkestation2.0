@@ -126,6 +126,17 @@ Possible to do for anyone motivated enough:
 	req_access = list(ACCESS_SYNDICATE)
 	key = "syndicate"
 
+/datum/proximity_monitor/tutorial_holopad
+
+/datum/proximity_monitor/tutorial_holopad/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
+	SIGNAL_HANDLER
+
+	var/turf/host_turf = get_turf(host)
+	if(old_loc && host_turf && old_loc.z == host_turf.z && get_dist(old_loc, host_turf) <= current_range)
+		return
+
+	hasprox_receiver?.HasProximity(arrived)
+
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
@@ -143,31 +154,12 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
 	if(proximity_range)
-		proximity_monitor = new(src, proximity_range)
+		proximity_monitor = new /datum/proximity_monitor/tutorial_holopad(src, proximity_range)
 	if(mapload)
 		var/obj/item/disk/holodisk/new_disk = locate(/obj/item/disk/holodisk) in src.loc
 		if(new_disk && !disk)
 			new_disk.forceMove(src)
 			disk = new_disk
-
-/obj/machinery/holopad/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(!loc)
-		return
-	// move any relevant holograms, basically non-AI, and rays with the pad
-	for(var/mob/living/user as anything in holorays)
-		var/obj/effect/overlay/holoray/ray = holorays[user]
-		ray.abstract_move(loc)
-	var/list/non_call_masters = masters?.Copy()
-	for(var/datum/holocall/holocall as anything in holo_calls)
-		if(!holocall.user || !LAZYACCESS(masters, holocall.user))
-			continue
-		non_call_masters -= holocall.user
-		// moving the eye moves the holo which updates the ray too
-		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - old_loc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - old_loc.y), 1, world.maxy), z))
-	for(var/datum/holo_master as anything in non_call_masters)
-		var/obj/effect/holo = masters[holo_master]
-		update_holoray(holo_master, holo.loc)
 
 /obj/machinery/holopad/tutorial/attack_hand(mob/user, list/modifiers)
 	if(!istype(user))
@@ -182,9 +174,15 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if(!isliving(AM))
 		return
+
+	var/mob/living/triggering_mob = AM
+	if(!triggering_mob.client)
+		return
+
 	if(has_played)
 		return
-	if(!replay_mode && (disk?.record))
+
+	if(!replay_mode && disk?.record)
 		replay_start()
 
 /obj/machinery/holopad/tutorial/replay_start()

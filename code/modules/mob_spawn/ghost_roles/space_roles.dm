@@ -349,9 +349,9 @@
 	you_are_text = "You are a low-ranking Central Command official assigned to a remote bureaucratic outpost."
 	flavour_text = "Your duty is to observe station operations, maintain communications with station command, investigate noteworthy incidents, and provide Central Command with accurate reports. You are stationed here as an observer and liaison, not as the station's commanding authority."
 	important_text = "DO NOT abandon the outpost without good reason. You may monitor and communicate with the station, request information, and provide recommendations, but you do not directly command station personnel. Do not use your position to interfere with normal station operations or manufacture conflict."
-	outfit = /datum/outfit/centcom_liaison
+	outfit = /datum/outfit/centcom/centcom_liaison
 
-/datum/outfit/centcom_liaison
+/datum/outfit/centcom/centcom_liaison
 	name = "CentCom Liaison"
 	uniform = /obj/item/clothing/under/rank/centcom/official
 	head = /obj/item/clothing/head/beret/centcom_formal
@@ -374,7 +374,7 @@
 	id_trim = /datum/id_trim/job/centcom_liaison
 
 /// code to fix the centcom id not spawning with the ghostrole player's name, equipped human -> wear id -> id card -> registered name -> John Smith CentCom Liaison
-/datum/outfit/centcom_liaison/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)
+/datum/outfit/centcom/centcom_liaison/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -383,5 +383,5 @@
 		id_card.registered_name = equipped_human.real_name
 		id_card.update_label()
 		id_card.update_icon()
-	
+
 	return ..()

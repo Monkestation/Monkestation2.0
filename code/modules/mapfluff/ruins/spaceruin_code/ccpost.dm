@@ -69,104 +69,15 @@
 	new /obj/item/clothing/under/rank/centcom/official/skirt(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/binoculars(src)
-	new /obj/item/implanter/mindshield(src)
+
 
 // Central Command Advisor Hologram code
-
-// Custom proximity monitor for the advisor.
-// A player triggers once when entering the radius, and cannot trigger again
-// until they have actually left the radius and re-entered.
-
-/datum/proximity_monitor/ccpost_advisor
-	/// Players who have triggered the advisor before.
-	var/list/triggered_mobs = list()
-
-/datum/proximity_monitor/ccpost_advisor/on_entered(
-	atom/source,
-	atom/movable/arrived,
-	turf/old_loc
-)
-	SIGNAL_HANDLER
-
-	if(!isliving(arrived))
-		return
-
-	var/mob/living/nearby_mob = arrived
-
-	// Only actual player-controlled mobs trigger Nina.
-	if(!nearby_mob.client)
-		return
-
-	var/turf/holopad_turf = get_turf(host)
-	if(!holopad_turf)
-		return
-
-	var/turf/old_turf = get_turf(old_loc)
-
-	// If this player has triggered Nina before, only allow another trigger
-	// if they came from OUTSIDE the proximity radius.
-	if(nearby_mob in triggered_mobs)
-		if(old_turf && old_turf.z == holopad_turf.z && get_dist(old_turf, holopad_turf) <= current_range)
-			return
-
-	else
-		triggered_mobs += nearby_mob
-		RegisterSignal(
-			nearby_mob,
-			COMSIG_QDELETING,
-			PROC_REF(clear_triggered_mob)
-		)
-
-	hasprox_receiver?.HasProximity(nearby_mob)
-
-/datum/proximity_monitor/ccpost_advisor/proc/clear_triggered_mob(mob/living/tracked_mob)
-	SIGNAL_HANDLER
-
-	triggered_mobs -= tracked_mob
-	UnregisterSignal(tracked_mob, COMSIG_QDELETING)
-
-/datum/proximity_monitor/ccpost_advisor/Destroy()
-	for(var/mob/living/tracked_mob as anything in triggered_mobs)
-		UnregisterSignal(tracked_mob, COMSIG_QDELETING)
-
-	triggered_mobs.Cut()
-
-	return ..()
-
 
 // Central Command Advisor Holopad
 
 /obj/machinery/holopad/tutorial/ccpost_advisor
 	play_once = FALSE
 	proximity_range = 2
-
-/obj/machinery/holopad/tutorial/ccpost_advisor/Initialize(mapload)
-	// Prevent the parent tutorial holopad from creating its normal
-	// proximity monitor.
-	var/advisor_proximity_range = proximity_range
-	proximity_range = 0
-
-	. = ..()
-
-	proximity_range = advisor_proximity_range
-
-	// Install Nina's custom proximity monitor.
-	if(proximity_range)
-		proximity_monitor = new /datum/proximity_monitor/ccpost_advisor(src, proximity_range)
-
-/obj/machinery/holopad/tutorial/ccpost_advisor/HasProximity(atom/movable/proximity_check_mob)
-	if(!isliving(proximity_check_mob))
-		return
-
-	var/mob/living/nearby_mob = proximity_check_mob
-
-	if(!nearby_mob.client)
-		return
-
-	if(replay_mode || !disk?.record)
-		return
-
-	replay_start()
 
 
 // Central Command Advisor Holodisk
@@ -2071,7 +1982,7 @@
 					"role" = "Communications Supervisor"
 				),
 				list(
-					"name" = "Marcus Vale",
+					"name" = "Chip Shafer",
 					"role" = "Senior Relay Technician"
 				),
 				list(
@@ -2100,8 +2011,8 @@
 					"role" = "Operations Coordinator"
 				),
 				list(
-					"name" = "Amelia Trent",
-					"role" = "Duty Officer"
+					"name" = "Jeff Gaiman",
+					"role" = "Command Duty Officer"
 				)
 			)
 		),
@@ -2117,11 +2028,11 @@
 					"role" = "Platform Superintendent"
 				),
 				list(
-					"name" = "Garrick Holt",
+					"name" = "Erebus Heretak",
 					"role" = "Senior Mining Foreman"
 				),
 				list(
-					"name" = "Rhea Navarro",
+					"name" = "Jeanna Lafortune",
 					"role" = "Platform Operations Chief"
 				)
 			)
@@ -2184,7 +2095,7 @@
 					"role" = "Routing Supervisor"
 				),
 				list(
-					"name" = "Erin Calder",
+					"name" = "Victor Graham",
 					"role" = "Logistics Operations Officer"
 				),
 				list(
@@ -2201,16 +2112,20 @@
 			"initial_status" = "ROUTINE OPERATIONS",
 			"contacts" = list(
 				list(
-					"name" = "Frank DuFresne",
+					"name" = "Janet Smith",
 					"role" = "Medical Logistics Supervisor"
 				),
 				list(
-					"name" = "Dr. Livia Serrano",
+					"name" = "Dr. Jack Anderson",
 					"role" = "Pharmaceutical Compliance Officer"
 				),
 				list(
 					"name" = "Owen Kess",
 					"role" = "Cold-Chain Operations Coordinator"
+				),
+				list(
+					"name" = "Frank DuFresne",
+					"role" = "Medical Officer Super Private First Class"
 				)
 			)
 		)
