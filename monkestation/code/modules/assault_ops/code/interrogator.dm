@@ -137,7 +137,7 @@
 	if(human_occupant.stat == DEAD && !HAS_TRAIT(human_occupant, TRAIT_SUICIDED))
 		balloon_alert_to_viewers("occupant is dead!")
 		return
-	if(!SSgoldeneye.check_goldeneye_target(human_occupant.mind)) // Preventing abuse by method of duplication.
+	if(!GLOB.goldeneye.check_goldeneye_target(human_occupant.mind)) // Preventing abuse by method of duplication.
 		balloon_alert_to_viewers("no GoldenEye data!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100)
 		return
@@ -229,7 +229,7 @@
 		new_key = new
 	new_key.extract_name = human_occupant.real_name
 	// Add them to the goldeneye extracted list. This list is capable of having nulls.
-	SSgoldeneye.extract_mind(human_occupant.mind)
+	GLOB.goldeneye.extract_mind(human_occupant.mind)
 	var/obj/structure/closet/supplypod/pod = new
 	new /obj/effect/pod_landingzone(landingzone, pod, new_key)
 

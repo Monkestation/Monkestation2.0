@@ -1,8 +1,6 @@
-SUBSYSTEM_DEF(token_manager)
-	name = "Token Manager"
-	flags = SS_NO_INIT | SS_NO_FIRE
+GLOBAL_DATUM_INIT(token_manager, /datum/token_manager, new)
 
-
+/datum/token_manager
 	/// List of all pending token requests - list of /datum/token_request
 	var/list/pending_requests = list()
 	/// Count of accepted tokens this round
@@ -12,33 +10,32 @@ SUBSYSTEM_DEF(token_manager)
 	/// Count of timed out tokens this round
 	var/timed_out_count = 0
 
-
 /// Adds the request to the subsystem
-/datum/controller/subsystem/token_manager/proc/add_pending_request(datum/token_request/request)
+/datum/token_manager/proc/add_pending_request(datum/token_request/request)
 	pending_requests += request
 	update_stat_panel()
 
 /// Removes the request from the subsystem
-/datum/controller/subsystem/token_manager/proc/remove_pending_request(datum/token_request/request)
+/datum/token_manager/proc/remove_pending_request(datum/token_request/request)
 	pending_requests -= request
 	update_stat_panel()
 
 /// Updates the accepted stat panel
-/datum/controller/subsystem/token_manager/proc/record_accepted()
+/datum/token_manager/proc/record_accepted()
 	accepted_count++
 	update_stat_panel()
 
 /// Updates the rejected stat panel
-/datum/controller/subsystem/token_manager/proc/record_rejected()
+/datum/token_manager/proc/record_rejected()
 	rejected_count++
 	update_stat_panel()
 
 /// Updates the timeout state panel
-/datum/controller/subsystem/token_manager/proc/record_timeout()
+/datum/token_manager/proc/record_timeout()
 	timed_out_count++
 	update_stat_panel()
 
-/datum/controller/subsystem/token_manager/proc/update_stat_panel()
+/datum/token_manager/proc/update_stat_panel()
 	var/list/data = list(
 		"accepted" = accepted_count,
 		"pending" = length(pending_requests),
@@ -50,7 +47,7 @@ SUBSYSTEM_DEF(token_manager)
 		admin_client << output(json_encode(data), "statbrowser:update_tokens")
 
 /// Alerts all admins that a token request is about to timeout (1 minute warning)
-/datum/controller/subsystem/token_manager/proc/alert_admins_timeout_warning(datum/token_request/request)
+/datum/token_manager/proc/alert_admins_timeout_warning(datum/token_request/request)
 	if(QDELETED(request) || request.handled || !(request in pending_requests))
 		return // Request was already handled
 
@@ -63,7 +60,7 @@ SUBSYSTEM_DEF(token_manager)
 
 
 /// Pulls the info from the request
-/datum/controller/subsystem/token_manager/proc/get_pending_requests_for_panel()
+/datum/token_manager/proc/get_pending_requests_for_panel()
 	var/list/requests_data = list()
 	for(var/datum/token_request/request as anything in pending_requests)
 		if(QDELETED(request))
@@ -92,20 +89,20 @@ SUBSYSTEM_DEF(token_manager)
 // ============================================================
 
 /// Gets the current round time as a formatted string
-/datum/controller/subsystem/token_manager/proc/get_round_time()
+/datum/token_manager/proc/get_round_time()
 	if(!SSticker?.round_start_time)
 		return "Not Started"
 	var/elapsed = world.time - SSticker.round_start_time
 	return DisplayTimeText(elapsed)
 
 /// Gets the raw round time in deciseconds
-/datum/controller/subsystem/token_manager/proc/get_round_time_raw()
+/datum/token_manager/proc/get_round_time_raw()
 	if(!SSticker?.round_start_time)
 		return 0
 	return world.time - SSticker.round_start_time
 
 /// Compiles all round statistics into a list for TGUI. These stats are used to determine token acceptance, so is handy to have them all in the same place.
-/datum/controller/subsystem/token_manager/proc/get_round_statistics()
+/datum/token_manager/proc/get_round_statistics()
 
 	return list(
 		// Time
@@ -133,17 +130,17 @@ SUBSYSTEM_DEF(token_manager)
 // TGUI Integration
 // ============================================================
 
-/datum/controller/subsystem/token_manager/ui_interact(mob/user, datum/tgui/ui)
+/datum/token_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TokenManager")
 		ui.open()
 		ui.set_autoupdate(TRUE) // Auto-update for live time display
 
-/datum/controller/subsystem/token_manager/ui_state(mob/user)
+/datum/token_manager/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
 
-/datum/controller/subsystem/token_manager/ui_data(mob/user)
+/datum/token_manager/ui_data(mob/user)
 	var/list/data = list()
 
 	// Token statistics
@@ -158,7 +155,7 @@ SUBSYSTEM_DEF(token_manager)
 
 	return data
 
-/datum/controller/subsystem/token_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/token_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -243,7 +240,7 @@ SUBSYSTEM_DEF(token_manager)
 	src.timeout_time = world.time + 5 MINUTES
 
 	// Set up the 1-minute warning timer (fires at 4 minutes)
-	warning_timer = addtimer(CALLBACK(SStoken_manager, TYPE_PROC_REF(/datum/controller/subsystem/token_manager, alert_admins_timeout_warning), src), 4 MINUTES, TIMER_STOPPABLE)
+	warning_timer = addtimer(CALLBACK(GLOB.token_manager, TYPE_PROC_REF(/datum/token_manager, alert_admins_timeout_warning), src), 4 MINUTES, TIMER_STOPPABLE)
 
 	// Set up the timeout timer
 	timeout_timer = addtimer(CALLBACK(src, PROC_REF(timeout)), 5 MINUTES, TIMER_STOPPABLE)
@@ -256,7 +253,7 @@ SUBSYSTEM_DEF(token_manager)
 	if(timeout_timer)
 		deltimer(timeout_timer)
 		timeout_timer = null
-	SStoken_manager.remove_pending_request(src)
+	GLOB.token_manager.remove_pending_request(src)
 	holder_ref = null
 	requester_client = null
 	return ..()
@@ -289,5 +286,5 @@ SUBSYSTEM_DEF(token_manager)
 // Admin Verb
 // ============================================================
 ADMIN_VERB(token_manager, R_ADMIN, FALSE, "Token Manager", "TGUI Token Manager", ADMIN_CATEGORY_MAIN)
-	SStoken_manager.ui_interact(user.mob)
+	GLOB.token_manager.ui_interact(user.mob)
 	BLACKBOX_LOG_ADMIN_VERB("Token Manager")

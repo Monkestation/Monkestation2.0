@@ -1,0 +1,4 @@
+author: "Runian"
+delete-after: True
+changes:
+  - bugfix: "Syndicate Surplus Crate's uplink entry description now accurately states its content's total worth is 75 telecrystals."
