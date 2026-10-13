@@ -524,7 +524,8 @@ class ChatRenderer {
         this.rootNode!.appendChild(fragment);
       }
       if (this.scrollTracking) {
-        setTimeout(() => this.scrollToBottom());
+        // has to happen RIGHT NOW, don't use a timeout or it fucks up with big messages
+        this.scrollToBottom();
       }
     }
     // Notify listeners that we have processed the batch
