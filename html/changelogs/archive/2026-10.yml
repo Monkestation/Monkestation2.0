@@ -185,3 +185,9 @@
       upgrades.
   - image: New icons for ninja cyborgs, ninja cyborg defib paddles, ninja cyborg hypospray,
       and ninja cyborg energy saw.
+2026-10-13:
+  Tractor-Maam:
+  - spellcheck: changed "holochasis" to "holochassis" in the pAI action restriction
+      alert.
+  mcbalaam:
+  - rscadd: AIs can now point to things using holopads
