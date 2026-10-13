@@ -319,6 +319,47 @@ Runs the event
 		return shared_occurences[shared_occurence_type]
 	return occurrences
 
+/// Applies variable from the events.json config
+/datum/round_event_control/proc/apply_config_var(variable, value)
+	. = FALSE
+	switch(variable)
+		if("weight")
+			weight = value
+			return TRUE
+		if("min_players")
+			min_players = value
+			return TRUE
+		if("max_occurrences")
+			max_occurrences = value
+			return TRUE
+		if("earliest_start")
+			earliest_start = value * (1 MINUTES)
+			return TRUE
+		if("track")
+			if(value in SSgamemode.event_tracks)
+				track = value
+				return TRUE
+		if("cost")
+			cost = value
+			return TRUE
+		if("reoccurence_penalty_multiplier")
+			reoccurence_penalty_multiplier = value
+			return TRUE
+		if("shared_occurence_type")
+			if(!isnull(value))
+				value = "[value]"
+			shared_occurence_type = value
+			return TRUE
+		if("repeated_mode_adjust")
+			repeated_mode_adjust = value
+			return TRUE
+		if("required_enemies")
+			required_enemies = value
+			return TRUE
+		if("checks_antag_cap")
+			checks_antag_cap = value
+			return TRUE
+
 /// Prints the action buttons for this event.
 /datum/round_event_control/proc/get_href_actions()
 	if(SSticker.HasRoundStarted())

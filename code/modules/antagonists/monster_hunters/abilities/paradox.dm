@@ -13,7 +13,7 @@
 	///where the user originally was
 	var/turf/original_loc
 
-/datum/action/cooldown/paradox/New(Target)
+/datum/action/cooldown/paradox/New(Target, original = TRUE)
 	..()
 	chessmark = GLOB.wonderland_marks["Wonderchess landmark"]
 	landmark =  GLOB.wonderland_marks["Wonderland landmark"]

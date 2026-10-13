@@ -123,6 +123,9 @@
 	///whether AI is anchored or not, used for checks
 	var/is_anchored = TRUE
 
+	///List of mobs targeted in the improved targeting project, used for stat-panel updates.
+	var/target_list
+
 	///Command report cooldown
 	COOLDOWN_DECLARE(command_report_cd) // monkestation edit
 
@@ -142,17 +145,12 @@
 	VAR_FINAL/setting_waypoint = FALSE
 
 	var/datum/ai_dashboard/dashboard
-	//override for the can_download, checked first in case we have other code in can_download
+	/// Override for the can_download, checked first in case we have other code in can_download
 	var/can_download = TRUE
-	//Can we (simple) examine humans?
+	/// Can we (simple) examine humans?
 	var/canExamineHumans = FALSE
-
-	//Do we have access to camera tracking?
-	var/canCameraMemoryTrack = FALSE
-	//The person we are tracking
-	var/cameraMemoryTarget = null
-	//We only check every X ticks
-	var/cameraMemoryTickCount = 0
+	/// Can we see engineering-based scan? (atmos, and power)
+	var/canEngineeringScan = FALSE
 
 	///Did we get the death prompt?
 	var/is_dying = FALSE
@@ -441,6 +439,15 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose
 				"src=[REF(src)];track_ipc=[text_ref(connected_ipc)]",
 			))
 		// monkestation edit end PR #5133
+	if(target_list)
+		for(var/mob/tracked_mob in target_list)
+			if(QDELETED(tracked_mob))
+				continue
+			. += list(list("[tracked_mob.name]: ",
+				"Loc: [get_area_name(tracked_mob, TRUE)] | \
+				Coordinates: [tracked_mob.x], [tracked_mob.y], [tracked_mob.z]",
+				"src=[REF(src)];track_target=[text_ref(tracked_mob)]",
+			))
 	. += list(list("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 
 	var/obj/machinery/ai/data_core/ai_location = loc
@@ -538,6 +545,11 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 		if(!connected_ipc)
 			return
 		ai_tracking_tool.set_tracked_target(connected_ipc)
+	if(href_list["track_target"])
+		var/mob/living/carbon/human/target_lock = locate(href_list["track_target"]) in target_list
+		if(!target_lock)
+			return
+		ai_tracking_tool.set_tracked_target(target_lock)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
@@ -1258,6 +1270,32 @@ GAME_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "AI Comm
 		return
 	jobtitles = !jobtitles
 	to_chat(src, "<b>You are now [jobtitles ? "displaying" : "hiding"] speaker's job titles.</b>")
+
+/mob/living/silicon/ai/point_at(atom/pointed_atom)
+	if(pointed_atom in src)
+		return FALSE
+	var/turf/target_turf = get_turf(pointed_atom)
+	if(!target_turf)
+		return FALSE
+	var/obj/machinery/holopad/best_pad
+	for(var/obj/machinery/holopad/pad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad))
+		if(!pad.on_network || !pad.is_operational || pad.pointing)
+			continue
+		if(!pad.validate_location(target_turf))
+			continue
+		var/turf/pad_turf = get_turf(pad)
+		if(!SScameras.is_visible_by_cameras(pad_turf))
+			continue
+		if(!best_pad || get_dist(pad_turf, target_turf) < get_dist(get_turf(best_pad), target_turf))
+			best_pad = pad
+	if(!best_pad)
+		return FALSE
+	// not passing our invisibility like tg does, our ai mob is invisible so the arrow would be too
+	var/obj/visual = best_pad.holo_point(pointed_atom)
+	if(!visual)
+		return FALSE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual)
+	return TRUE
 
 #undef CALL_BOT_COOLDOWN
 #undef MAX_SPRINT

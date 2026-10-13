@@ -288,7 +288,7 @@
 	///boolean, if the chameleon projector is active
 	var/active = FALSE
 
-/datum/action/cooldown/spell/pointed/disguise/New(Target)
+/datum/action/cooldown/spell/pointed/disguise/New(Target, original = TRUE)
 	. = ..()
 	handler = new()
 
