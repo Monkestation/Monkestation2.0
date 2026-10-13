@@ -88,3 +88,106 @@
   Runian:
   - rscadd: 'Standard-model cyborgs, upon conversion to Clockwork Cult, now get a
       brass spear and the following scriptures: Abscond, Kindle, and Vanguard.'
+2026-10-09:
+  Absolucy:
+  - sound: Removed the goddamn screaming from the slime compressor.
+  - qol: (MTandi) Updated smart fridge UI
+  - qol: (MTandi) smart fridge UI now groups items by type+name instead of just type
+  - qol: (MTandi) smart fridge UI now shows item names next to the images
+  - qol: (MTandi) smart fridge UI has a list view option
+  - qol: (AyIong) SmartFridge got another redesign, and you can dispense all amount
+      of product in one click (RMB on product)
+  - qol: (JohnFulpWillard) Smartfridges now lets you set how many pills you want to
+      vend, rather than popping out a second separate tgui window.
+  - qol: (JohnFulpWillard) Smartfridges and Vending machines no longer have a setting
+      to change the list/grid mode, it instead updates automatically as you swap the
+      mode in-game.
+  - qol: (Melbert) Vending Machines have a search bar
+  - qol: '(AyIong) Vending machines got new design with 2 layouts: List and Grid'
+  - bugfix: (MTandi) Smartfridges properly dispense `\Improper` items
+  - bugfix: (JohnFulpWillard) Smartfridges on grid mode (like botany's) will no longer
+      instantly spit out all the items it has when you try to set how many it should
+      spit out.
+  - code_imp: (SyncIt21) tone of code organization for smart fridges overall. changed
+      ui to typescript.
+  Runian:
+  - rscadd: 'Medical cyborgs can now select a new cyborg skin: Medical Kerfus.'
+  - image: Adds cyborg Medical Kerfus icon.
+  ThePooba:
+  - balance: Balanced PTL cash at high levels to be lower- it already had an asymptote
+      but it was too high because we are insane people
+  Tractor-Maam:
+  - refactor: ported the TG fixes of the Portable Chemical Mixer, allowing it to properly
+      mix chemicals again.
+  notghosti:
+  - bugfix: Restored boy, girl, boy malf, girl malf, box fort, hotdog, terminal, and
+      yes man displays to ai display
+2026-10-10:
+  Absolucy:
+  - bugfix: (hry-gh) chat storage should load more reliably
+  - server: (hry-gh) server operators can now properly disable the iframe chat storage
+      solution by unsetting the STORAGE_CDN_IFRAME config
+  - bugfix: (UwU) fixed improper chat caching.
+  - qol: (hry-gh) added chat messages when your chat storage has been reset
+  - bugfix: (hry-gh) if you've not been playing for awhile and came back, your chat
+      storage may have been reset. this should no longer happen
+  - balance: Heretic no longer requires 40 FUCKING PEOPLE to roll.
+  ThePooba:
+  - bugfix: fixed exsanguinating unusuals being milk
+  - bugfix: disable dullahans because they are extremely broken
+2026-10-11:
+  Absolucy:
+  - qol: hoods now automatically overslot hats - as in, like, if ur wearing a hat,
+      and flip a hood up, the hat will try to just go on top of the hood.
+  - qol: The Navigate verb should be slightly faster now.
+2026-10-12:
+  Gboster, ArcaneMusic:
+  - rscadd: borers can now have seperate hives, hiveminds and objectives. Borer PVP
+      is real
+  - qol: added ckeys to each borer on the round-end menu, and made it a bit more compact
+  - qol: borer abilities will now become red when unusuable due to needing a host/being
+      sugared up/abilities own limiters. They will still appear usable when you don't
+      have enough points/chems for them
+  - balance: borers no longer pop out of people if they die in them, instead they'll
+      start dealing toxin/brain damage until removed
+  - balance: Dissection now replaces Reproduction in the neutered borer evolution
+      tree instead of being a side-path
+  - code_imp: changed a lot of back-end borer code, pray everything works
+  - admin: borers no longer spawn in with teams nor objectives, if you are planning
+      on spawning them in with those then use the event/tokens
+  - rscadd: (ArcaneMusic) You can now purchase pet mice as a cargo goodie.
+  - qol: (ArcaneMusic) Pet carriers now have contextual screentips.
+  - bugfix: (ArcaneMusic) The biopod pet carrier now doesn't randomly turn invisible.
+  Runian:
+  - map: The blue wiring in Tramstation's engineering now starts connected to the
+      engineering's engine.
+  - bugfix: Clown cyborgs can now correctly use their picket sign's item action button
+      to change its text at will.
+  - bugfix: Cyborgs can no longer slap-craft an endless amount of flamethrowers via
+      their own welder.
+  - bugfix: Exploding an empty fuel canister no longer causes a runtime.
+  - bugfix: The charge overlay for welding tools now correctly update upon self-refuel.
+  - bugfix: Electric welding tools, like their regular counterpart, now keep their
+      tool behavior when off.
+  - code_imp: Self-refueling/recharging capabilities for welding tools can be applied
+      to all welding tool types.
+  - code_imp: Electric welding tools no longer use the cell component and now handles
+      all of it internally.
+  - image: Oily splatters are now the same color as oily blood - less black and more
+      grey.
+  Runian, SarmentiCampbell:
+  - rscadd: 3 new ninja cyborg model. They're functionally syndicate cyborg models,
+      except they're green and renamed.
+  - rscdel: Ninja cyborgs no longer have a syndicate pinpointer.
+  - bugfix: Getting emagged or changing your initial cyborg model to syndicate now
+      correctly recolors your modular interface.
+  - bugfix: Ninja cyborgs no longer lose ion thrusters if they initially had it via
+      upgrades.
+  - image: New icons for ninja cyborgs, ninja cyborg defib paddles, ninja cyborg hypospray,
+      and ninja cyborg energy saw.
+2026-10-13:
+  Tractor-Maam:
+  - spellcheck: changed "holochasis" to "holochassis" in the pAI action restriction
+      alert.
+  mcbalaam:
+  - rscadd: AIs can now point to things using holopads

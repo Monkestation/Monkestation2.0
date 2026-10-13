@@ -77058,13 +77058,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
-"wEZ" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
 "wFq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -107385,7 +107378,7 @@ aac
 aac
 aac
 dvu
-wEZ
+dvu
 aac
 aac
 aac

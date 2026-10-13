@@ -27,7 +27,7 @@
 				continue
 			TEST_FAIL("[powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
 
-		if(!powernets.avail && !(locate(/obj/machinery/power/terminal) in powernets.nodes)) //No power roundstart, so check for an SMES connection (Solars, Turbine).
+		if(!powernets.avail && !(locate(/obj/machinery/power/terminal) in powernets.nodes) && !(locate(/obj/machinery/power/smes) in powernets.nodes)) //No power roundstart, so check for an SMES connection (Solars, Turbine).
 			var/obj/structure/cable/random_cable = powernets.cables[1]
 			//Check if they're a station area
 			var/area/cable_area = get_area(random_cable)
