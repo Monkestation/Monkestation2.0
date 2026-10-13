@@ -40,6 +40,7 @@
 
 /obj/item/slime_mutation_syringe/cleaner
 	name = "cleaner slime mutation syringe"
+	icon_state = "cleaner_syringe"
 
 /obj/item/slime_mutation_syringe/cleaner/already_applied(mob/living/basic/slime/target)
 	return target.cleaner_slime
@@ -50,6 +51,7 @@
 
 /obj/item/slime_mutation_syringe/gooey_cat
 	name = "gooey cat slime mutation syringe"
+	icon_state = "gooey_cat_syringe"
 
 /obj/item/slime_mutation_syringe/gooey_cat/already_applied(mob/living/basic/slime/target)
 	return target.cat_slime
