@@ -1,9 +1,11 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useLocalState, useSharedState } from '../backend';
 import {
   Box,
+  Button,
   LabeledList,
   NoticeBox,
   Section,
+  Stack,
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
@@ -28,10 +30,19 @@ type SectorNotice = {
   issued_at: string;
 };
 
+type InstallationHistoryEntry = {
+  timestamp: string;
+  category: string;
+  title: string;
+  details: string;
+};
+
 type SectorInstallation = {
   code: string;
   name: string;
   function: string;
+  contact_name: string;
+  contact_role: string;
   status: string;
   status_since: string;
   condition: string;
@@ -41,6 +52,11 @@ type SectorInstallation = {
   response_status: string;
   ert_dispatched: boolean;
   destroyed: boolean;
+  trust_label: string;
+  followup_active: boolean;
+  followup_subject?: string;
+  followup_status: string;
+  history: InstallationHistoryEntry[];
 };
 
 type Data = {
@@ -155,18 +171,45 @@ const getTelemetryColor = (telemetry: string) => {
   }
 };
 
+const getRelationshipColor = (relationship: string) => {
+  switch (relationship) {
+    case 'TRUSTED':
+      return 'good';
+    case 'COOPERATIVE':
+      return 'blue';
+    case 'PROFESSIONAL':
+      return 'label';
+    case 'GUARDED':
+      return 'average';
+    case 'STRAINED':
+      return 'bad';
+    default:
+      return 'label';
+  }
+};
+
 const getResponseColor = (response: string) => {
   switch (response) {
     case 'ERT OPERATION COMPLETE':
     case 'INCIDENT STABILIZED':
+    case 'ERT + LIAISON RECOVERY':
+    case 'ERT RECOVERY / AID DENIED':
+    case 'LIAISON-SUPPORTED RECOVERY':
+    case 'RECOVERY DESPITE AID DENIAL':
       return 'good';
 
     case 'ERT DISPATCHED':
     case 'NO ERT DISPATCHED':
+    case 'ERT + LIAISON AID':
+    case 'LIAISON AID AUTHORIZED':
       return 'average';
 
     case 'ERT OPERATION FAILED':
     case 'INSTALLATION LOST':
+    case 'ERT + AID FAILED':
+    case 'ERT FAILED / AID DENIED':
+    case 'LIAISON AID INSUFFICIENT':
+    case 'AID DENIED / INSTALLATION LOST':
       return 'bad';
 
     default:
@@ -175,7 +218,7 @@ const getResponseColor = (response: string) => {
 };
 
 export const CCPostRemoteStatus = () => {
-  const { data } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   const [tab, setTab] = useSharedState('tab', 'station');
 
   const {
@@ -202,6 +245,14 @@ export const CCPostRemoteStatus = () => {
   const destroyedInstallations = sector_installations.filter(
     (installation) => installation.destroyed,
   ).length;
+
+  const [selectedRecordInstallation, setSelectedRecordInstallation] =
+    useLocalState('recordInstallation', sector_installations[0]?.code || '');
+  const activeRecordInstallation =
+    sector_installations.find(
+      (installation) => installation.code === selectedRecordInstallation,
+    ) || sector_installations[0];
+  const activeRecordCode = activeRecordInstallation?.code || '';
 
   return (
     <Window
@@ -234,6 +285,14 @@ export const CCPostRemoteStatus = () => {
             onClick={() => setTab('installations')}
           >
             Sector Installations
+          </Tabs.Tab>
+
+          <Tabs.Tab
+            icon="clock-rotate-left"
+            selected={tab === 'records'}
+            onClick={() => setTab('records')}
+          >
+            Installation Records
           </Tabs.Tab>
         </Tabs>
 
@@ -404,6 +463,12 @@ export const CCPostRemoteStatus = () => {
                     </Box>
                   </LabeledList.Item>
 
+                  <LabeledList.Item label="Relationship Assessment">
+                    <Box color={getRelationshipColor(installation.trust_label)} bold>
+                      {installation.trust_label}
+                    </Box>
+                  </LabeledList.Item>
+
                   <LabeledList.Item label="Condition">
                     <Box color={getConditionColor(installation.condition)}>
                       {installation.condition}
@@ -444,6 +509,184 @@ export const CCPostRemoteStatus = () => {
                 </LabeledList>
               </Section>
             ))}
+          </>
+        )}
+
+        {tab === 'records' && (
+          <>
+            <NoticeBox>
+              SHIFT ADMINISTRATIVE RECORDS — RELATIONSHIP ASSESSMENTS ARE
+              QUALITATIVE AND REFLECT LIAISON INTERACTIONS, NOT CORPORATE LOYALTY
+              OR LEGAL AUTHORITY
+            </NoticeBox>
+
+            {!sector_installations.length ? (
+              <Section>
+                <Box color="label">No installation records are available.</Box>
+              </Section>
+            ) : (
+              <Stack>
+                <Stack.Item minWidth="185px" shrink={0} basis={0}>
+                  <Tabs vertical>
+                    {sector_installations.map((installation) => (
+                      <Tabs.Tab
+                        key={`record-tab-${installation.code}`}
+                        selected={activeRecordCode === installation.code}
+                        onClick={() =>
+                          setSelectedRecordInstallation(installation.code)
+                        }
+                      >
+                        {installation.name}
+                      </Tabs.Tab>
+                    ))}
+                  </Tabs>
+                </Stack.Item>
+
+                <Stack.Item grow>
+                  {!!activeRecordInstallation && (
+                    <Section
+                      title={`${activeRecordInstallation.code} // ${activeRecordInstallation.name}`}
+                      buttons={
+                        <>
+                          <Button
+                            icon="print"
+                            onClick={() =>
+                              act('print_installation_record', {
+                                installation_code: activeRecordInstallation.code,
+                              })
+                            }
+                          >
+                            Print Record
+                          </Button>
+                          <Button.Confirm
+                            icon="trash"
+                            color="danger"
+                            disabled={!activeRecordInstallation.history.length}
+                            confirmContent="Clear retained history?"
+                            onClick={() =>
+                              act('clear_installation_history', {
+                                installation_code: activeRecordInstallation.code,
+                              })
+                            }
+                          >
+                            Clear History
+                          </Button.Confirm>
+                        </>
+                      }
+                    >
+                      <LabeledList>
+                        <LabeledList.Item label="Function">
+                          {activeRecordInstallation.function}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Current Status">
+                          <Box
+                            color={getInstallationColor(
+                              activeRecordInstallation.status,
+                            )}
+                          >
+                            {activeRecordInstallation.status}
+                          </Box>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Condition">
+                          <Box
+                            color={getConditionColor(
+                              activeRecordInstallation.condition,
+                            )}
+                          >
+                            {activeRecordInstallation.condition}
+                          </Box>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Telemetry">
+                          <Box
+                            color={getTelemetryColor(
+                              activeRecordInstallation.telemetry,
+                            )}
+                          >
+                            {activeRecordInstallation.telemetry}
+                          </Box>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Named Contact">
+                          {activeRecordInstallation.contact_role}{' '}
+                          {activeRecordInstallation.contact_name}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Relationship Assessment">
+                          <Box
+                            color={getRelationshipColor(
+                              activeRecordInstallation.trust_label,
+                            )}
+                            bold
+                          >
+                            {activeRecordInstallation.trust_label}
+                          </Box>
+                        </LabeledList.Item>
+                        {activeRecordInstallation.response_status !== 'NONE' && (
+                          <LabeledList.Item label="Central Response">
+                            <Box
+                              color={getResponseColor(
+                                activeRecordInstallation.response_status,
+                              )}
+                            >
+                              {activeRecordInstallation.response_status}
+                            </Box>
+                          </LabeledList.Item>
+                        )}
+                        {activeRecordInstallation.incident_summary !==
+                          'No active incident.' && (
+                          <LabeledList.Item label="Incident">
+                            {activeRecordInstallation.incident_summary}
+                          </LabeledList.Item>
+                        )}
+                        <LabeledList.Item label="Remarks">
+                          {activeRecordInstallation.condition_details}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Last Status Change">
+                          {activeRecordInstallation.status_since}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Active Follow-Up">
+                          {activeRecordInstallation.followup_active ? (
+                            <>
+                              <Box bold>
+                                {activeRecordInstallation.followup_subject ||
+                                  'Active matter'}
+                              </Box>
+                              <Box color="label">
+                                {activeRecordInstallation.followup_status}
+                              </Box>
+                            </>
+                          ) : (
+                            <Box color="label">No active case.</Box>
+                          )}
+                        </LabeledList.Item>
+                      </LabeledList>
+
+                      <Box mt={1.5} bold>
+                        Recent Administrative History
+                      </Box>
+
+                      {!activeRecordInstallation.history.length ? (
+                        <Box mt={1} color="label">
+                          No notable history has been recorded this shift.
+                        </Box>
+                      ) : (
+                        activeRecordInstallation.history.map((entry, index) => (
+                          <Box
+                            key={`${activeRecordInstallation.code}-${entry.timestamp}-${index}`}
+                            mt={1}
+                            p={1}
+                            backgroundColor="rgba(255, 255, 255, 0.04)"
+                          >
+                            <Box bold>
+                              {entry.timestamp} — {entry.category}: {entry.title}
+                            </Box>
+                            <Box mt={0.5}>{entry.details}</Box>
+                          </Box>
+                        ))
+                      )}
+                    </Section>
+                  )}
+                </Stack.Item>
+              </Stack>
+            )}
           </>
         )}
       </Window.Content>

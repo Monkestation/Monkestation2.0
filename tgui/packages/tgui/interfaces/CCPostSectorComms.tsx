@@ -15,6 +15,7 @@ type SectorMessage = {
   installation_code: string;
   installation_name: string;
   installation_status: string;
+  installation_trust_label: string;
   sender_name: string;
   sender_role: string;
   message_type: string;
@@ -31,6 +32,28 @@ type SectorMessage = {
   allocation_change: number;
 };
 
+type SectorPaperwork = {
+  paperwork_code: string;
+  installation_code: string;
+  installation_name: string;
+  installation_status: string;
+  installation_trust_label: string;
+  sender_name: string;
+  sender_role: string;
+  type: string;
+  priority: string;
+  title: string;
+  body: string;
+  issued_at: string;
+  status: string;
+  submitted_by?: string;
+  submitted_at?: string;
+  allocation_reward: number;
+  document_inserted: boolean;
+  document_name?: string;
+  stamp_verified: boolean;
+};
+
 type Data = {
   allocation: number;
   available_allocation: number;
@@ -38,6 +61,7 @@ type Data = {
   inbox: SectorMessage[];
   archive: SectorMessage[];
   archive_count: number;
+  paperwork?: SectorPaperwork | null;
 };
 
 const statusColor = (status: string) => {
@@ -55,6 +79,23 @@ const statusColor = (status: string) => {
       return 'bad';
     default:
       return undefined;
+  }
+};
+
+const relationshipColor = (relationship: string) => {
+  switch (relationship) {
+    case 'TRUSTED':
+      return 'good';
+    case 'COOPERATIVE':
+      return 'blue';
+    case 'PROFESSIONAL':
+      return 'label';
+    case 'GUARDED':
+      return 'average';
+    case 'STRAINED':
+      return 'bad';
+    default:
+      return 'label';
   }
 };
 
@@ -81,6 +122,7 @@ export const CCPostSectorComms = (props) => {
     inbox = [],
     archive = [],
     archive_count = 0,
+    paperwork = null,
   } = data;
 
   return (
@@ -114,11 +156,18 @@ export const CCPostSectorComms = (props) => {
           >
             Archive ({archive_count})
           </Tabs.Tab>
+          <Tabs.Tab
+            icon="file-signature"
+            selected={tab === 'paperwork'}
+            onClick={() => setTab('paperwork')}
+          >
+            Paperwork ({paperwork ? 1 : 0})
+          </Tabs.Tab>
         </Tabs>
 
         {tab === 'inbox' && <Inbox messages={inbox} />}
         {tab === 'archive' && <Archive messages={archive} />}
-
+        {tab === 'paperwork' && <PaperworkPanel paperwork={paperwork} />}
       </Window.Content>
     </Window>
   );
@@ -176,6 +225,159 @@ const Archive = ({ messages }: { messages: SectorMessage[] }) => {
   );
 };
 
+const PaperworkPanel = ({
+  paperwork,
+}: {
+  paperwork?: SectorPaperwork | null;
+}) => {
+  const { act } = useBackend<Data>();
+
+  if (!paperwork) {
+    return (
+      <NoticeBox>
+        No administrative paperwork is currently awaiting Liaison review.
+      </NoticeBox>
+    );
+  }
+
+  const awaitingReview = paperwork.status === 'AWAITING LIAISON REVIEW';
+  const awaitingReceipt =
+    paperwork.status === 'TRANSMITTED - AWAITING RECEIPT';
+
+  return (
+    <Section
+      title={`${paperwork.title} — ${paperwork.paperwork_code}`}
+      buttons={
+        awaitingReview ? (
+          <>
+            <Button
+              icon="print"
+              disabled={paperwork.document_inserted}
+              tooltip={
+                paperwork.document_inserted
+                  ? 'Eject the inserted document before printing another copy.'
+                  : 'Print another authenticated copy of the active document.'
+              }
+              onClick={() => act('reprint_paperwork')}
+            >
+              Reprint
+            </Button>
+            <Button
+              icon="eject"
+              disabled={!paperwork.document_inserted}
+              onClick={() => act('eject_paperwork')}
+            >
+              Eject
+            </Button>
+            <Button
+              icon="paper-plane"
+              color="good"
+              disabled={
+                !paperwork.document_inserted || !paperwork.stamp_verified
+              }
+              tooltip={
+                !paperwork.document_inserted
+                  ? 'Insert the active administrative document first.'
+                  : !paperwork.stamp_verified
+                    ? 'An official Central Command stamp is required.'
+                    : undefined
+              }
+              onClick={() => act('transmit_paperwork')}
+            >
+              Transmit
+            </Button>
+          </>
+        ) : null
+      }
+    >
+      <LabeledList>
+        <LabeledList.Item label="Installation">
+          {paperwork.installation_name} ({paperwork.installation_code})
+        </LabeledList.Item>
+        <LabeledList.Item label="Current Status">
+          <Box color={statusColor(paperwork.installation_status)}>
+            {paperwork.installation_status}
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Relationship Assessment">
+          <Box
+            color={relationshipColor(paperwork.installation_trust_label)}
+            bold
+          >
+            {paperwork.installation_trust_label}
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Sender">
+          {paperwork.sender_role} {paperwork.sender_name}
+        </LabeledList.Item>
+        <LabeledList.Item label="Type">{paperwork.type}</LabeledList.Item>
+        <LabeledList.Item label="Priority">
+          {paperwork.priority}
+        </LabeledList.Item>
+        <LabeledList.Item label="Reference">
+          {paperwork.paperwork_code}
+        </LabeledList.Item>
+        <LabeledList.Item label="Issued">
+          {paperwork.issued_at}
+        </LabeledList.Item>
+        <LabeledList.Item label="Processing Status">
+          <Box color={awaitingReceipt ? 'average' : undefined}>
+            {paperwork.status}
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Completion Compensation">
+          <Box color="good">+{paperwork.allocation_reward} CU</Box>
+        </LabeledList.Item>
+        {awaitingReview && (
+          <>
+            <LabeledList.Item label="Document Slot">
+              {paperwork.document_inserted
+                ? paperwork.document_name || 'Document inserted'
+                : 'EMPTY'}
+            </LabeledList.Item>
+            <LabeledList.Item label="Stamp Verification">
+              <Box color={paperwork.stamp_verified ? 'good' : 'average'}>
+                {paperwork.stamp_verified
+                  ? 'CENTCOM AUTHORIZED'
+                  : 'CENTCOM STAMP REQUIRED'}
+              </Box>
+            </LabeledList.Item>
+          </>
+        )}
+        {paperwork.submitted_by && (
+          <LabeledList.Item label="Submitted By">
+            {paperwork.submitted_by}
+          </LabeledList.Item>
+        )}
+        {paperwork.submitted_at && (
+          <LabeledList.Item label="Submitted At">
+            {paperwork.submitted_at}
+          </LabeledList.Item>
+        )}
+      </LabeledList>
+
+      <Box mt={1.5}>{paperwork.body}</Box>
+
+      {awaitingReview && (
+        <Box mt={1.5} p={1} backgroundColor="rgba(255, 255, 255, 0.04)">
+          <Box bold mb={0.5}>
+            Required Action
+          </Box>
+          Review the printed document, apply an official Central Command
+          authorization stamp, insert it into the Sector Communications
+          Terminal, and transmit it back to the originating installation.
+        </Box>
+      )}
+
+      {awaitingReceipt && (
+        <NoticeBox mt={1.5}>
+          Document transmitted. Awaiting authenticated receipt confirmation from{' '}
+          {paperwork.installation_name}.
+        </NoticeBox>
+      )}
+    </Section>
+  );
+};
 
 const MessageCard = ({
   message,
@@ -248,6 +450,11 @@ const MessageCard = ({
         <LabeledList.Item label="Current Status">
           <Box color={statusColor(message.installation_status)}>
             {message.installation_status}
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Relationship Assessment">
+          <Box color={relationshipColor(message.installation_trust_label)} bold>
+            {message.installation_trust_label}
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Sender">
