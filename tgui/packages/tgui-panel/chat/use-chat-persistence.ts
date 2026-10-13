@@ -1,9 +1,10 @@
-import { storage, type StorageDiagnostic } from 'common/storage';
+import { type StorageDiagnostic, storage } from 'common/storage';
 import DOMPurify from 'dompurify';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
+import { store } from '../events/store';
 import { settingsLoadedAtom } from '../settings/atoms';
-import { chatLoadedAtom, versionAtom } from './atom';
+import { chatLoadedAtom, currentPageAtom, versionAtom } from './atom';
 import { MESSAGE_SAVE_INTERVAL } from './constants';
 import { saveChatToStorage } from './helpers';
 import { startChatStateMigration } from './migration';
@@ -30,6 +31,11 @@ export function useChatPersistence() {
       async function fetchChat(): Promise<void> {
         console.log('Initializing chat');
         await loadChatFromStorage();
+
+        // nothing got restored, do this so like, the chat doesn't get stuck blank
+        if (!chatRenderer.page) {
+          chatRenderer.changePage(store.get(currentPageAtom));
+        }
 
         setLoaded(true);
         chatRenderer.onStateLoaded();

@@ -10,7 +10,7 @@ import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { Tooltip } from 'tgui/components';
 import { createLogger } from 'tgui/logging';
-import { settingsAtom } from 'tgui-panel/settings/atoms';
+import { defaultSettings, settingsAtom } from 'tgui-panel/settings/atoms';
 import { store } from '../events/store';
 import { scrollTrackingAtom } from './atom';
 import {
@@ -66,6 +66,12 @@ const createReconnectedNode = () => {
   const node = document.createElement('div');
   node.className = 'Chat__reconnected';
   return node;
+};
+
+// Removes job formatting
+const stripColoredNames = (inputHtml) => {
+  const spanRegex = /(<span[\w| |\t|=]*['|"][\w| ]*)(?:job__[a-z]+)(['|"]>)/gi;
+  return inputHtml.replace(spanRegex, '$1$2');
 };
 
 const handleImageError = (e) => {
@@ -133,6 +139,7 @@ class ChatRenderer {
     this.events = new EventEmitter();
     this.scrollNode = null;
     this.scrollTracking = true;
+    this.coloredNames = defaultSettings.coloredNames;
     this.lastScrollHeight = 0;
     this.handleScroll = (type) => {
       const node = this.scrollNode;
@@ -399,7 +406,9 @@ class ChatRenderer {
         }
         // Payload is HTML
         else if (message.html) {
-          node.innerHTML = message.html;
+          node.innerHTML = this.coloredNames
+            ? message.html
+            : stripColoredNames(message.html);
         } else {
           logger.error('Error: message is missing text payload', message);
         }
