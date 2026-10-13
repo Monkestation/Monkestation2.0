@@ -9,9 +9,10 @@ import { classes } from 'common/react';
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { Tooltip } from 'tgui/components';
-import { store } from 'tgui/events/store';
 import { createLogger } from 'tgui/logging';
 import { settingsAtom } from 'tgui-panel/settings/atoms';
+import { store } from '../events/store';
+import { scrollTrackingAtom } from './atom';
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
@@ -120,7 +121,6 @@ class ChatRenderer {
   lastScrollHeight: number;
   highlightParsers: Array<any> | null;
   handleScroll: (type: any) => void;
-  ensureScrollTracking: () => void;
   coloredNames: boolean;
 
   constructor() {
@@ -147,13 +147,8 @@ class ChatRenderer {
         this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
-        this.events.emit('scrollTrackingChanged', scrollTracking);
+        store.set(scrollTrackingAtom, scrollTracking);
         logger.debug('tracking', this.scrollTracking);
-      }
-    };
-    this.ensureScrollTracking = () => {
-      if (this.scrollTracking) {
-        this.scrollToBottom();
       }
     };
     // Periodic message pruning
