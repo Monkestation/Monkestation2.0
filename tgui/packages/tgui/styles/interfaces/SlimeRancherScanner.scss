@@ -53,7 +53,7 @@
 		border: 4px solid var(--slime-cyan);
 		border-radius: 50%;
 		background: var(--slime-housing);
-		box-shadow: 0 2px 0 var(--slime-shadow);
+		box-shadow: inset 0 3px 4px oklch(0 0 0 / 0.4);
 	}
 
 	&__life-stage {
@@ -88,8 +88,8 @@
 	&__recipe {
 		padding: 0.667rem;
 		border-radius: 1.333rem;
-		background: oklch(0.98 0.015 85);
-		box-shadow: 0 2px 0 var(--slime-shadow);
+		background: var(--slime-track);
+		box-shadow: inset 0 2px 3px var(--slime-shadow);
 	}
 
 	&__recipe-heading {
@@ -117,18 +117,15 @@
 	&__requirement {
 		position: relative;
 		display: grid;
+		grid-template-rows: auto 1fr;
 		justify-items: center;
-		align-content: start;
+		align-items: start;
 		gap: 0.25rem;
 		min-width: 0;
-		padding: 0.5rem 0.5rem 0.667rem;
-		border-radius: 1.25rem;
-		background: var(--slime-track);
 		font-size: 0.917rem;
 		font-weight: bold;
 		text-align: center;
 		overflow-wrap: anywhere;
-		box-shadow: inset 0 2px 3px var(--slime-shadow);
 
 		> img {
 			image-rendering: pixelated;
@@ -140,18 +137,15 @@
 			font-size: 0.833rem;
 		}
 
-		&--done {
-			background: var(--slime-cyan);
-			box-shadow:
-				inset 0 2px 0 var(--slime-highlight),
-				0 2px 0 var(--slime-shadow);
+		.ProgressBar__content {
+			text-align: center;
 		}
 	}
 
 	&__completed {
 		position: absolute;
-		top: -0.4rem;
-		right: -0.4rem;
+		top: -0.25rem;
+		right: calc(50% - 24px - 0.5rem);
 		padding: 0.25rem;
 		border: 2px solid var(--slime-cream);
 		border-radius: 50%;
@@ -163,4 +157,8 @@
 // needs the theme prefix to outweigh the theme's own .ProgressBar rule
 .theme-slime_rancher .SlimeRancherScanner__instability--locked {
 	--progress-bar-color: oklch(0.73 0.012 245);
+}
+
+.theme-slime_rancher .SlimeRancherScanner__requirement .ProgressBar {
+	background: var(--slime-cream);
 }

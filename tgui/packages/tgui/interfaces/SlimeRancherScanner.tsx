@@ -105,15 +105,12 @@ function RequirementIcon(props: { requirement: Requirement }) {
 
 function RequirementCell(props: {
   requirement: Requirement;
-  done: BooleanLike;
   children?: ReactNode;
 }) {
-  const { requirement, done, children } = props;
+  const { requirement, children } = props;
 
   return (
-    <Box
-      className={`SlimeRancherScanner__requirement${done ? ' SlimeRancherScanner__requirement--done' : ''}`}
-    >
+    <Box className="SlimeRancherScanner__requirement">
       <RequirementIcon requirement={requirement} />
       <span>{requirement.name}</span>
       {children}
@@ -136,7 +133,7 @@ function MutationRow(props: { mutation: Mutation }) {
       </Box>
       <Box className="SlimeRancherScanner__requirements">
         {mutation.items.map((item) => (
-          <RequirementCell key={item.name} requirement={item} done={item.done}>
+          <RequirementCell key={item.name} requirement={item}>
             {!!item.done && (
               <Icon name="check" className="SlimeRancherScanner__completed" />
             )}
@@ -145,7 +142,7 @@ function MutationRow(props: { mutation: Mutation }) {
         {mutation.drains.map((drain) => {
           const done = drain.drained >= drain.total;
           return (
-            <RequirementCell key={drain.name} requirement={drain} done={done}>
+            <RequirementCell key={drain.name} requirement={drain}>
               <ProgressBar
                 value={drain.drained}
                 maxValue={drain.total}
