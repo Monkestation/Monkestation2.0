@@ -356,6 +356,9 @@
 
 /datum/slime_transformation/pink/on_apply(mob/living/user)
 	our_slime.cat_slime = TRUE
+	// 0.5% chance for a witch hat, because cute
+	if(!our_slime.equipped_hat && prob(0.5))
+		our_slime.equip_hat(new /obj/item/clothing/head/wizard/marisa)
 
 /obj/item/slimecross/transformative/oil
 	slime_type = /datum/slime_type/oil
