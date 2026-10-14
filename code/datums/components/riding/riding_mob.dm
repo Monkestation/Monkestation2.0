@@ -326,7 +326,7 @@
 	var/mob/living/silicon/robot/robot_parent = parent
 	if(isnull(robot_parent.skin.ride_offset))
 		return
-	if(!(dir in GLOB.cardinals)) // Dir can be NONE if moving between z-levels.
+	if(!(dir in GLOB.cardinals)) // Dir is NONE if moving between z-levels.
 		return
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
