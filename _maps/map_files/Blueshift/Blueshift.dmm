@@ -68621,6 +68621,12 @@
 "nko" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/abandon_arcade)
+"nkr" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/obj/item/toy/plush/argemia,
+/turf/open/space/basic,
+/area/space/nearstation)
 "nku" = (
 /obj/structure/chair/office,
 /obj/structure/cable,
@@ -172882,7 +172888,7 @@ fZI
 fZI
 bfP
 tPk
-iqz
+nkr
 wQY
 qLU
 qLU
