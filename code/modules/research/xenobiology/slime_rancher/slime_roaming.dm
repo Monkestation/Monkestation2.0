@@ -101,6 +101,8 @@
 
 /// Walks to the spot, then remembers the area for a bit so the next few hops go somewhere new
 /datum/ai_behavior/slime_chase/roam
+	// the spot's next to whoever we're after, and anywhere within 1 of it includes their own tile, since calm slimes can slip under people
+	required_distance = 0
 
 /datum/ai_behavior/slime_chase/roam/perform(seconds_per_tick, datum/ai_controller/basic_controller/slime/controller, target_key)
 	. = ..()

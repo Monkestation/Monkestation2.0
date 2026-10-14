@@ -176,7 +176,12 @@
 	RegisterSignal(src, COMSIG_SLIME_ATE_ITEM, PROC_REF(on_slime_happy_yay))
 	RegisterSignal(src, COMSIG_LIVING_BEFRIENDED, PROC_REF(on_befriended))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
-	RegisterSignals(src, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_PET_TARGET), COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_PET_TARGET)), PROC_REF(on_blackboard_key_changed))
+	RegisterSignals(src, list(
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_PET_TARGET),
+		COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_PET_TARGET),
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_SLIME_ROAM_TARGET),
+		COMSIG_AI_BLACKBOARD_KEY_SET(BB_SLIME_ROAM_TARGET),
+	), PROC_REF(on_blackboard_key_changed))
 	RegisterSignals(src, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_SLIME_ROAM_PLAYER), COMSIG_AI_BLACKBOARD_KEY_SET(BB_SLIME_ROAM_PLAYER)), PROC_REF(on_seek_changed))
 
 	ai_controller.set_blackboard_key(BB_SLIME_EVOLVE, evolve_action)
@@ -195,17 +200,34 @@
 	SIGNAL_HANDLER
 	update_ai_movement_type()
 
-/// Cleaners and slimes with a pet target use A* movement.
+/// Pet targets and cleaners use adaptive movement, and a cleaner wandering off somewhere goes straight to A*.
 /mob/living/basic/slime/proc/update_ai_movement_type()
 	var/picked_type = /datum/ai_movement/basic_avoidance
 	// the controller drops anything further than max_target_distance, which is 14 by default and would kill every long trip
 	var/leash = initial(ai_controller.max_target_distance)
-	if(cleaner_slime || ai_controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+	if(ai_controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		// A* feels janky chasing someone who keeps moving, so this walks straight until it can't
+		picked_type = /datum/ai_movement/basic_avoidance/adaptive/follow
+		leash = SLIME_SEEK_PATH_LENGTH
+	else if(ai_controller.blackboard_key_exists(BB_SLIME_ROAM_TARGET))
 		picked_type = /datum/ai_movement/astar/slime
 		leash = SLIME_SEEK_PATH_LENGTH
+	else if(cleaner_slime)
+		picked_type = /datum/ai_movement/basic_avoidance/adaptive
+		leash = SLIME_SEEK_PATH_LENGTH
 	ai_controller.max_target_distance = leash
-	if(!istype(ai_controller.ai_movement, picked_type))
-		ai_controller.change_ai_movement_type(picked_type)
+
+	var/datum/ai_movement/current = ai_controller.ai_movement
+	if(current.type == picked_type)
+		return
+	// the adaptive pair swaps halves by itself, so its A* half still counts as picked
+	var/datum/ai_movement/basic_avoidance/adaptive/walk_half = SSai_movement.movement_types[picked_type]
+	if(istype(walk_half) && current.type == walk_half.fallback_type)
+		return
+	// the old datum would still think we're walking with it otherwise
+	if(current.moving_controllers[ai_controller])
+		current.stop_moving_towards(ai_controller)
+	ai_controller.change_ai_movement_type(picked_type)
 
 ///Random slime subtype
 /mob/living/basic/slime/random
@@ -276,7 +298,7 @@
 /mob/living/basic/slime/proc/is_calm()
 	if(is_latched() || (istate & ISTATE_HARM) || was_recently_attacked())
 		return FALSE
-	return !ai_controller?.blackboard[BB_SLIME_RABID] && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	return !ai_controller?.blackboard[BB_SLIME_RABID] && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET] && !ai_controller?.blackboard[BB_SLIME_EAT_TARGET]
 
 /// Whether we and other can share a tile, which takes both sides being out of combat.
 /mob/living/basic/slime/proc/can_slip_past(atom/movable/other)
