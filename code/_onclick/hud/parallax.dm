@@ -19,15 +19,14 @@
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, src)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/stars(null, src) //monkestation edit
-		/* monkestation removal
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, src)
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/stars(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, src)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/nebula(null, src)
 		if(SSparallax.random_layer)
 			C.parallax_layers_cached += new SSparallax.random_layer(null, src)
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, src)
-		*/ //monkestation removal end
+
+
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -83,22 +82,22 @@
 
 	switch(parallax_selection)
 		if (PARALLAX_INSANE)
-			C.parallax_layers_max = 5
+			C.parallax_layers_max = 6
 			C.do_parallax_animations = TRUE
 			return TRUE
 
 		if(PARALLAX_HIGH)
-			C.parallax_layers_max = 4
+			C.parallax_layers_max = 5
 			C.do_parallax_animations = TRUE
 			return TRUE
 
 		if (PARALLAX_MED)
-			C.parallax_layers_max = 3
+			C.parallax_layers_max = 4
 			C.do_parallax_animations = TRUE
 			return TRUE
 
 		if (PARALLAX_LOW)
-			C.parallax_layers_max = 1
+			C.parallax_layers_max = 2
 			C.do_parallax_animations = FALSE
 			return TRUE
 
@@ -321,7 +320,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 //monkestation edit start
 /atom/movable/screen/parallax_layer/layer_1
-	icon_state = "dyable" // monkestation edit
+	icon_state = "dyable"
 	blend_mode = BLEND_OVERLAY
 	speed = 0.5
 	layer = 1
@@ -333,44 +332,30 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/stars
 	icon_state = "stars"
 	blend_mode = BLEND_OVERLAY
-	layer = 1
 	speed = 0.5
-//monkestation edit end
-/* monkestation removal start
-	icon_state = "layer1"
-	speed = 0.6
 	layer = 1
 
 /atom/movable/screen/parallax_layer/layer_2
-	icon_state = "layer2"
+	icon_state = "stars2"
 	speed = 1
 	layer = 2
 
 /atom/movable/screen/parallax_layer/layer_3
-	icon_state = "layer3"
+	icon_state = "stars3"
 	speed = 1.4
 	layer = 3
 
-/atom/movable/screen/parallax_layer/random
-	blend_mode = BLEND_OVERLAY
-	speed = 3
-	layer = 3
-
-/atom/movable/screen/parallax_layer/random/space_gas
-	icon_state = "space_gas"
-
-/atom/movable/screen/parallax_layer/random/space_gas/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/parallax_layer/layer_3/Initialize(mapload)
 	. = ..()
-	add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
+	var/month_day = text2num(time2text(world.realtime, "DD"))
+	if(month_day >= 17 && month_day <= 20) // This is a reference to the game Star Control 2, published 1992. Shows an extra green star between the 17th and 20th of each month.
+		icon_state = "stars3_quasi"
 
-/atom/movable/screen/parallax_layer/random/asteroids
-	icon_state = "asteroids"
-	layer = 4
 /atom/movable/screen/parallax_layer/planet
 	icon_state = "planet"
 	blend_mode = BLEND_OVERLAY
 	absolute = TRUE //Status of seperation
-	speed = 3
+	speed = 2
 	layer = 30
 
 /atom/movable/screen/parallax_layer/planet/Initialize(mapload, datum/hud/hud_owner)
@@ -400,6 +385,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move
-*/ //monkestation removal end
+
+/atom/movable/screen/parallax_layer/random
+	blend_mode = BLEND_OVERLAY
+	speed = 3
+	layer = 3
+
+/atom/movable/screen/parallax_layer/random/asteroids
+	icon_state = "asteroids"
+	layer = 31
+	speed = 3
 
 #undef PARALLAX_ICON_SIZE
