@@ -105,6 +105,10 @@
 
 /datum/ai_planning_subtree/slime_target/stack/should_scan(datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	var/datum/ai_behavior/slime_find_target/mess_finder = GET_AI_BEHAVIOR(/datum/ai_behavior/slime_find_target/mess)
+	if(slime_pawn.cleaner_slime && mess_finder.has_candidates(controller))
+		controller.clear_blackboard_key(target_key)
+		return FALSE
 	if(isslime(slime_pawn.buckled) || slime_pawn.wants_to_stack())
 		return TRUE
 	controller.clear_blackboard_key(target_key)

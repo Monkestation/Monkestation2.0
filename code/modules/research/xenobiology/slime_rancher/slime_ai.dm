@@ -341,9 +341,8 @@
 
 	var/list/candidates = list()
 	for(var/atom/candidate as anything in get_candidates(controller))
-		if(controller.is_ignoring(candidate) || (pen && !pen.turfs[get_turf(candidate)]) || !is_valid_target(controller, candidate))
-			continue
-		candidates += candidate
+		if(is_candidate(controller, candidate, pen))
+			candidates += candidate
 	if(!length(candidates))
 		finish_action(controller, FALSE)
 		return
@@ -372,6 +371,21 @@
 		controller.ignore_target(candidate, SLIME_CHASE_GIVE_UP_TIME)
 		return
 	controller.set_blackboard_key(target_key, candidate)
+
+/// Whether a candidate isn't ignored, isn't outside our pen, and passes is_valid_target().
+/datum/ai_behavior/slime_find_target/proc/is_candidate(datum/ai_controller/basic_controller/slime/controller, atom/candidate, datum/slime_pen/pen)
+	if(controller.is_ignoring(candidate) || (pen && !pen.turfs[get_turf(candidate)]))
+		return FALSE
+	return is_valid_target(controller, candidate)
+
+/// Whether there's anything around we'd go for, without actually picking it.
+/datum/ai_behavior/slime_find_target/proc/has_candidates(datum/ai_controller/basic_controller/slime/controller)
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	var/datum/slime_pen/pen = must_be_reachable ? slime_pawn.pen : null
+	for(var/atom/candidate as anything in get_candidates(controller))
+		if(is_candidate(controller, candidate, pen))
+			return TRUE
+	return FALSE
 
 /// Everything nearby that could be a target.
 /datum/ai_behavior/slime_find_target/proc/get_candidates(datum/ai_controller/controller)
@@ -577,6 +591,7 @@
 	finish_action(controller, slime_pawn.eat_wanted_item(meal), target_key)
 
 /datum/ai_behavior/slime_chase/clean
+	action_cooldown = 0
 
 /datum/ai_behavior/slime_chase/clean/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
