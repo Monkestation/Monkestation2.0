@@ -193,7 +193,7 @@
 "oX" = (/obj/structure/table/wood,/obj/effect/turf_decal/siding/wood{dir = 9},/obj/effect/turf_decal/siding/wood,/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,/turf/open/floor/wood/large,/area/ruin/space/has_grav/ccpost/cafeteria)
 "pa" = (/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/misc/asteroid,/area/ruin/space/has_grav/ccpost/asteroid)
 "pA" = (/obj/effect/turf_decal/loading_area{dir = 1},/obj/structure/sign/departments/cargo/directional/east,/turf/open/floor/iron,/area/ruin/space/has_grav/ccpost/cargo)
-"pF" = (/obj/structure/sign/poster/contraband/c20r/directional/north,/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/maintenance)
+"pF" = (/obj/structure/sign/poster/contraband/c20r/directional/north,/obj/item/gps/spaceruin{gpstag = "Bureaucrat Installation"},/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/maintenance)
 "pI" = (/obj/structure/chair/office/light{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark/side{dir = 4},/area/ruin/space/has_grav/ccpost/boardroom)
 "pK" = (/obj/structure/closet/crate,/obj/item/stack/sheet/iron/fifty,/obj/item/stack/sheet/mineral/plasma{amount = 30},/obj/item/stack/rods/ten,/obj/item/stack/sheet/glass/fifty,/obj/structure/sign/departments/maint/alt/directional/north,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/engineering)
 "pO" = (/obj/machinery/vending/autodrobe/all_access,/obj/effect/decal/cleanable/dirt,/obj/structure/window/reinforced/spawner/directional/south,/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/maintenance)
