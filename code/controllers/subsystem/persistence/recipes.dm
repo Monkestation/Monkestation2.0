@@ -36,4 +36,4 @@
 			file_data["[R.type]"] = recipe_data
 
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))

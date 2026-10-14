@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/file_data = list()
 	file_data["data"] = saved_maps
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
