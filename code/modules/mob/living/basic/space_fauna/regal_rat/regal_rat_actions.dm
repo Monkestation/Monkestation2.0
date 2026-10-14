@@ -124,9 +124,10 @@
 		return FALSE
 
 	var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
-	// Change name
+	// Every rat in the army gets its own name, like monkeys do
 	if (nearby_mouse.name == "mouse")
-		nearby_mouse.name = initial(rat_path.name)
+		nearby_mouse.name = pick(GLOB.random_rat_names)
+		nearby_mouse.real_name = nearby_mouse.name
 	// Buffs our combat stats to that of a rat
 	nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
 	nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
