@@ -24,6 +24,10 @@
 #define BB_SLIME_CLEAN_TARGET "BB_slime_clean_target"
 ///Slime we're walking over to sit on, or the one we're already sitting on
 #define BB_SLIME_STACK_TARGET "BB_slime_stack_target"
+///Turf a cleaner slime is wandering over to, to look for messes there
+#define BB_SLIME_ROAM_TARGET "BB_slime_roam_target"
+///Player a cleaner slime is wandering towards, getting as close as it can
+#define BB_SLIME_ROAM_PLAYER "BB_slime_roam_player"
 
 /// Set on a monkey that wandered into a slime pen, so it screeches less
 #define BB_MONKEY_PENNED "BB_monkey_penned"

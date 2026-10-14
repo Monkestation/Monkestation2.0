@@ -6,6 +6,8 @@
 	icon = 'icons/obj/xenobiology/slime_rancher/slimes.dmi'
 	icon_state = "grey-baby"
 	pass_flags = PASSTABLE | PASSGRILLE
+	generic_canpass = FALSE
+	layer = MOB_BELOW_PIGGYBACK_LAYER
 	gender = NEUTER
 	faction = list(FACTION_SLIME, FACTION_NEUTRAL)
 
@@ -110,6 +112,8 @@
 	COOLDOWN_DECLARE(nuzzle_cooldown)
 	COOLDOWN_DECLARE(bounce_cooldown)
 	COOLDOWN_DECLARE(stack_cooldown)
+	COOLDOWN_DECLARE(player_seek_cooldown)
+	COOLDOWN_DECLARE(player_seek_timeout)
 
 	/// The hat sitting on our head, put on through the strip menu
 	var/obj/item/equipped_hat
@@ -173,6 +177,7 @@
 	RegisterSignal(src, COMSIG_LIVING_BEFRIENDED, PROC_REF(on_befriended))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignals(src, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_PET_TARGET), COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_PET_TARGET)), PROC_REF(on_blackboard_key_changed))
+	RegisterSignals(src, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_SLIME_ROAM_PLAYER), COMSIG_AI_BLACKBOARD_KEY_SET(BB_SLIME_ROAM_PLAYER)), PROC_REF(on_seek_changed))
 
 	ai_controller.set_blackboard_key(BB_SLIME_EVOLVE, evolve_action)
 	ai_controller.set_blackboard_key(BB_SLIME_REPRODUCE, reproduce_action)
@@ -190,11 +195,15 @@
 	SIGNAL_HANDLER
 	update_ai_movement_type()
 
-/// Cleaners and slimes with a pet target use the adaptive movement.
+/// Cleaners and slimes with a pet target use A* movement.
 /mob/living/basic/slime/proc/update_ai_movement_type()
 	var/picked_type = /datum/ai_movement/basic_avoidance
+	// the controller drops anything further than max_target_distance, which is 14 by default and would kill every long trip
+	var/leash = initial(ai_controller.max_target_distance)
 	if(cleaner_slime || ai_controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
-		picked_type = /datum/ai_movement/basic_avoidance/adaptive
+		picked_type = /datum/ai_movement/astar/slime
+		leash = SLIME_SEEK_PATH_LENGTH
+	ai_controller.max_target_distance = leash
 	if(!istype(ai_controller.ai_movement, picked_type))
 		ai_controller.change_ai_movement_type(picked_type)
 
@@ -262,6 +271,28 @@
 		hop_off_stack()
 	if(forced || !isturf(loc))
 		dump_riders()
+
+/// Not fighting, hunting, latched or getting hit, so people can walk through us.
+/mob/living/basic/slime/proc/is_calm()
+	if(is_latched() || (istate & ISTATE_HARM) || was_recently_attacked())
+		return FALSE
+	return !ai_controller?.blackboard[BB_SLIME_RABID] && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+
+/// Whether we and other can share a tile, which takes both sides being out of combat.
+/mob/living/basic/slime/proc/can_slip_past(atom/movable/other)
+	if(!isliving(other) || !is_calm())
+		return FALSE
+	var/mob/living/other_living = other
+	if(isslime(other_living))
+		var/mob/living/basic/slime/other_slime = other_living
+		return other_slime.is_calm()
+	return !(other_living.istate & ISTATE_HARM) // i hate istates btw
+
+/mob/living/basic/slime/CanAllowThrough(atom/movable/mover, border_dir)
+	return ..() || can_slip_past(mover)
+
+/mob/living/basic/slime/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
+	return ..() || can_slip_past(blocker)
 
 /mob/living/basic/slime/update_icon_state()
 	var/icon_prefix = replacetext(slime_type.color, " ", "-")

@@ -18,17 +18,21 @@
 
 // "GET A JOB" nope I'm hopping around :3
 /mob/living/basic/slime/proc/bounce_off(mob/living/person)
-	// we're about to lunge out from under them, and they'd just hover there
-	dump_riders()
 	COOLDOWN_START(src, bounce_cooldown, rand(SLIME_BOUNCE_COOLDOWN_MIN, SLIME_BOUNCE_COOLDOWN_MAX))
 	set_temporary_mood(SLIME_MOOD_CAT)
-	playsound(src, 'sound/effects/attackblob.ogg', 25, TRUE, -3)
 	manual_emote(pick(
 		"boings off of [person].",
 		"bounces right off [person] and wobbles.",
 		"hops into [person], then bounces away giggling.",
 		"flumps against [person] and ricochets!",
 	))
+	flump_against(person)
+
+/// Lunges into person with a squish and springs back to where we were.
+/mob/living/basic/slime/proc/flump_against(mob/living/person)
+	// we're about to lunge out from under them, and they'd just hover there
+	dump_riders()
+	playsound(src, 'sound/effects/attackblob.ogg', 25, TRUE, -3)
 
 	var/start_x = pixel_x
 	var/start_y = pixel_y

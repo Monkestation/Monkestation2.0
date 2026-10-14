@@ -24,6 +24,7 @@
 		/datum/ai_planning_subtree/slime_target/clean,
 		/datum/ai_planning_subtree/slime_target/nuzzle,
 		/datum/ai_planning_subtree/slime_target/bounce,
+		/datum/ai_planning_subtree/slime_target/roam,
 		/datum/ai_planning_subtree/slime_target/stack,
 	)
 	// idling cancels every action, which would unlatch a whole pen the moment the xenobiologist walks off
@@ -118,6 +119,8 @@
 		BB_SLIME_BOUNCE_TARGET,
 		BB_SLIME_CLEAN_TARGET,
 		BB_SLIME_STACK_TARGET,
+		BB_SLIME_ROAM_TARGET,
+		BB_SLIME_ROAM_PLAYER,
 		BB_ACTIVE_PET_COMMAND,
 		BB_CURRENT_PET_TARGET,
 		BB_TEMPORARY_IGNORE_LIST,
@@ -350,13 +353,17 @@
 	var/atom/picked = pick_target(controller, candidates)
 	if(!must_be_reachable || slime_pawn.Adjacent(picked))
 		controller.set_blackboard_key(target_key, picked)
-	else if(get_dist(slime_pawn, picked) > 1)
+	else if(get_dist(slime_pawn, picked) > 1 || slime_pawn.z != picked.z)
 		// the path search is async, so the target only lands once it comes back
-		SSpathfinder.pathfind(slime_pawn, picked, max_distance = SLIME_REACH_DISTANCE, mintargetdist = 1, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, picked)))
+		request_path(controller, target_key, picked)
 	else
 		// right next to it, but a pen fence is in the way
 		controller.ignore_target(picked, SLIME_CHASE_GIVE_UP_TIME)
 	finish_action(controller, TRUE)
+
+/// Starts the path search that decides whether a candidate is reachable. on_path_found() gets the result.
+/datum/ai_behavior/slime_find_target/proc/request_path(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate)
+	SSpathfinder.pathfind(controller.pawn, candidate, max_distance = SLIME_REACH_DISTANCE, mintargetdist = 1, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate)))
 
 /// Runs when pathfinding finishes. We go for the target if the path actually gets us next to it.
 /datum/ai_behavior/slime_find_target/proc/on_path_found(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate, list/path)
@@ -456,9 +463,22 @@
 /datum/ai_behavior/slime_find_target/mess/get_candidates(datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	. = list()
+	var/list/messy_turfs = list()
+	var/other_cleaner_around = FALSE
 	for(var/atom/movable/candidate in oview(scan_range, slime_pawn))
 		if(slime_pawn.can_dissolve(candidate))
 			. += candidate
+			messy_turfs[candidate.loc] = TRUE
+		else if(isslime(candidate))
+			var/mob/living/basic/slime/other_slime = candidate
+			other_cleaner_around ||= other_slime.cleaner_slime
+
+	if(!controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
+		return
+	// off to find someone, so we walk past messes unless it's a proper disaster nobody else is around to handle
+	if(length(messy_turfs) < 15 || other_cleaner_around)
+		return list()
+	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
 
 /datum/ai_behavior/slime_find_target/mess/pick_target(datum/ai_controller/controller, list/candidates)
 	return get_closest_atom(/atom/movable, candidates, controller.pawn)
