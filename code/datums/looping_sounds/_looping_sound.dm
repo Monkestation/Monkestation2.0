@@ -62,6 +62,10 @@
 	var/direct
 	/// Sound channel to play on, random if not provided
 	var/sound_channel
+	///If we want to reserve a random channel when we start playing sounds. Good for when there could be several sources of the same looping sound heard by the same
+	var/reserve_random_channel = FALSE
+	///If we reserve a random sound channel, store the channel number here so we can clean it up later.
+	var/reserved_channel
 	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds like grav-gen)
 	var/use_sound_tokens = FALSE
 	///The sound token instance for this looping sound.
@@ -106,6 +110,10 @@
 		set_parent(on_behalf_of)
 	if(timer_id || loop_started)
 		return
+
+	if(!use_sound_tokens && !sound_channel && reserve_random_channel)
+		sound_channel = SSsounds.reserve_sound_channel()
+		reserved_channel = sound_channel
 	on_start()
 
 /**
@@ -126,6 +134,11 @@
 		timer_id = null
 	loop_started = FALSE
 	native_repeat_active = FALSE
+
+	if(reserved_channel)
+		sound_channel = null
+		SSsounds.free_sound_channel(reserved_channel)
+		reserved_channel = null
 
 /// The proc that handles starting the actual core sound loop.
 /datum/looping_sound/proc/start_sound_loop()
@@ -181,13 +194,13 @@
 		if(!soundfile) // Null end_sound, stopping the token already silenced us
 			return
 		if(delete_when_finished) // Not kept as our token, or we'd keep reusing it after it deletes itself
-			playsoundtoken(parent, soundfile, volume_override || volume, SOUND_RANGE + extra_range, falloff_exponent, falloff_distance)
+			playsoundtoken(parent, soundfile, volume_override || volume, SOUND_RANGE + extra_range, falloff_exponent, falloff_distance, mixer_channel = sound_channel)
 			return
 		if(sound_token_instance)
 			sound_token_instance.set_volume(volume_override || volume, FALSE) // Don't update, we'll do that after
 			sound_token_instance.update_sound(soundfile, TRUE, repeat_sound)
 		else
-			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance, _repeating = repeat_sound)
+			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance, _repeating = repeat_sound, _mixer_channel = sound_channel)
 		return
 	var/sound/sound_to_play = sound(soundfile)
 
