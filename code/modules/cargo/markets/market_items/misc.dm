@@ -168,3 +168,13 @@
 	price_max = PAYCHECK_CREW * 3
 	stock_max = 3
 	availability_prob = 25
+
+/datum/market_item/misc/jazz_tape
+	name = "Boombox tape (Jazz)"
+	desc = "Due to the interstellar regulations on freeform jazz, it's hard to find any of the good stuff these days.\
+		This, my friend, is real jazz, performed by the infamous 'Franky Boomer'. Boombox not included."
+	item = /obj/item/music_tape/jazz
+	price_min = PAYCHECK_CREW * 2
+	price_max = PAYCHECK_CREW * 10 //The price is also freeform.
+	stock_max = 1
+	availability_prob = 30

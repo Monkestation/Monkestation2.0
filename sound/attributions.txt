@@ -165,3 +165,18 @@ kero.ogg is taken from Fulpstation
 https://github.com/fulpstation/fulpstation/pull/1109
 
 sound/mecha/tank_treads.ogg is made by 77Pacer -- https://freesound.org/s/425271/ -- License: Creative Commons 0
+
+sound/music/boombox/industrial_crush.ogg by ArcaneMusic, License: Creative Commons 0, made in FL studio.
+    SS13 original, accept no substitutes
+
+sound/music/boombox/bainmack-rock.ogg by Bainmack -- https://freesound.org/people/bainmack/sounds/621165/ -- License: Creative Commons 0
+    Slight cleanup by ArcaneMusic
+
+sound/music/boombox/groovepad-hiphop.ogg by Cloud10 -- https://freesound.org/people/Cloud-10/sounds/536250/ -- License: Creative Commons 0
+    Volume adjustment and cleanup for looping by ArcaneMusic
+
+sound/music/boombox/frankyboomer-jazz.ogg by Cloud10 -- https://freesound.org/people/FrankyBoomer/sounds/261100/ -- License: Creative Commons 0
+    Volume adjustment and cleanup for looping by ArcaneMusic
+
+sound/music/boombox/bubblegum-pop.ogg by Seth_makes_sounds -- https://freesound.org/people/Seth_Makes_Sounds/sounds/686610/ -- License: Creative Commons 0
+    Volume tweak and trimming by ArcaneMusic
