@@ -60,7 +60,7 @@
 	if(isnull(their_turf) || isnull(source_turf))
 		return
 	var/distance = get_dist(source_turf, their_turf)
-	return ceil(. - CALCULATE_SOUND_VOLUME(., distance, max_distance, falloff_distance, falloff_exponent))
+	return ceil(. - CALCULATE_SOUND_VOLUME_RATIO(., distance, max_distance, falloff_distance, falloff_exponent) * .)
 
 /datum/media_source/object/get_priority(mob/target)
 	var/datum/preferences/prefs = target?.client?.prefs
