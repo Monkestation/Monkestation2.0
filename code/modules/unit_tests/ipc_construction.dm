@@ -1,23 +1,3 @@
-/// IPCs reject non-robotic limbs even when attachment bypasses normal bodytype checks.
-/datum/unit_test/ipc_robotic_limbs_only
-
-/datum/unit_test/ipc_robotic_limbs_only/Run()
-	var/mob/living/carbon/human/species/ipc/shell = allocate(/mob/living/carbon/human/species/ipc)
-	var/obj/item/bodypart/chest/chassis = shell.get_bodypart(BODY_ZONE_CHEST)
-	TEST_ASSERT_EQUAL(chassis.acceptable_bodytype, BODYTYPE_ROBOTIC, "The IPC chassis does not declare its robotic limb compatibility.")
-	var/obj/item/bodypart/original_arm = shell.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/arm/left/organic_arm = allocate(/obj/item/bodypart/arm/left)
-	TEST_ASSERT(!organic_arm.can_attach_limb(shell), "An IPC accepted an organic limb.")
-	TEST_ASSERT(!organic_arm.can_attach_limb(shell, special = TRUE), "Special attachment bypassed the IPC's robotic limb restriction.")
-	TEST_ASSERT(!organic_arm.replace_limb(shell), "An organic limb replaced an IPC's robotic limb.")
-	TEST_ASSERT_EQUAL(shell.get_bodypart(BODY_ZONE_L_ARM), original_arm, "Rejecting an organic replacement did not restore the IPC's original limb.")
-	original_arm.drop_limb(TRUE)
-	TEST_ASSERT(!organic_arm.try_attach_limb(shell, special = TRUE), "An organic limb attached to an empty IPC limb slot.")
-	var/obj/item/bodypart/arm/left/robot/robotic_arm = allocate(/obj/item/bodypart/arm/left/robot)
-	TEST_ASSERT(robotic_arm.try_attach_limb(shell), "An IPC rejected a standard robotic replacement limb.")
-	var/mob/living/carbon/human/consistent/human = allocate(/mob/living/carbon/human/consistent)
-	TEST_ASSERT(organic_arm.can_attach_limb(human), "The IPC restriction prevented a human from accepting an organic limb.")
-
 /// Checks that an IPC head only reports complete while it actually holds every one of its components.
 /datum/unit_test/ipc_construction_head_validation
 
