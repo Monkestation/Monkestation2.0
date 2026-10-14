@@ -121,10 +121,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 		if(living_mob.flash_act(affect_silicon = TRUE))
 			living_mob.log_message("was AOE flashed by an automated portable flasher", LOG_ATTACK)
-			if(iscyborg(living_mob) && !living_mob.is_blind())
-				living_mob.set_temp_blindness_if_lower(strength)
-			else
-				living_mob.Paralyze(strength)
+			living_mob.Paralyze(strength)
 			flashed = TRUE
 
 	if(flashed)
