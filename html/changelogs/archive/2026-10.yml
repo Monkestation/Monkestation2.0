@@ -191,3 +191,14 @@
       alert.
   mcbalaam:
   - rscadd: AIs can now point to things using holopads
+2026-10-14:
+  Absolucy:
+  - bugfix: hardsuits and egosuits now properly overslot hats too
+  - balance: Monster hunters should actually roll more than once a month now.
+  Runian:
+  - bugfix: Fixes hard deletion in medical cyborg's deployable roller bed.
+  - bugfix: Syndicate Surplus Crate's uplink entry description now accurately states
+      its content's total worth is 75 telecrystals.
+  SmArtKar:
+  - admin: Converted the Spawn verb into a TGUI input, featuring for dynamic search
+      and RegEx support.
