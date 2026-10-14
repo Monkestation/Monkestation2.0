@@ -104,7 +104,7 @@
 "gK" = (/turf/closed/wall/r_wall,/area/ruin/space/has_grav/ccpost/centralhallway)
 "gM" = (/obj/effect/turf_decal/siding/wood/corner{dir = 8},/obj/structure/railing{dir = 8},/obj/structure/railing,/turf/open/floor/grass,/area/ruin/space/has_grav/ccpost/centralhallway)
 "gP" = (/obj/effect/turf_decal/siding/wood{dir = 4},/obj/effect/turf_decal/siding/wood{dir = 8},/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/wood/large,/area/ruin/space/has_grav/ccpost/boardroom)
-"gU" = (/obj/effect/turf_decal/bot,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/space/has_grav/ccpost/cargo)
+"gU" = (/obj/effect/turf_decal/bot,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/space/has_grav/ccpost/cargo)
 "gW" = (/obj/effect/turf_decal/siding/dark/corner{dir = 1},/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/ccpost/lobby)
 "he" = (/obj/effect/turf_decal/siding/wood{dir = 10},/obj/machinery/airalarm/directional/south,/obj/effect/mapping_helpers/apc/full_charge,/turf/open/floor/wood/large,/area/ruin/space/has_grav/ccpost/office)
 "hf" = (/obj/structure/cable,/obj/machinery/door/airlock/centcom{name = "Engineering Foyer"},/obj/effect/mapping_helpers/airlock/cyclelink_helper,/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/duct,/obj/machinery/door/firedoor,/obj/effect/mapping_helpers/airlock/access/all/admin/general,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/ccpost/engineering)
@@ -130,7 +130,6 @@
 "jb" = (/obj/effect/turf_decal/siding/wood{dir = 9},/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/north,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/effect/mapping_helpers/apc/full_charge,/turf/open/floor/wood/tile,/area/ruin/space/has_grav/ccpost/quarters)
 "jg" = (/obj/machinery/door/airlock/external/ruin{id_tag = "ccpost_entrance"},/obj/effect/mapping_helpers/airlock/locked,/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/obj/machinery/door/poddoor/preopen{id = "ccpost_lockdown"},/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/lobby)
 "jj" = (/obj/structure/cable,/obj/machinery/power/solar{id = "outpostsolar"},/turf/open/floor/iron/solarpanel/airless,/area/ruin/space/solars/ccpost/solars)
-"jm" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark/corner,/area/ruin/space/has_grav/ccpost/boardroom)
 "jn" = (/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/east,/obj/effect/mapping_helpers/apc/full_charge,/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/maintenance)
 "jq" = (/obj/effect/turf_decal/tile/brown/opposingcorners,/turf/open/floor/iron,/area/ruin/space/has_grav/ccpost/cargo)
 "js" = (/obj/structure/lattice,/turf/template_noop,/area/template_noop)
@@ -419,7 +418,7 @@
 "Nj" = (/turf/closed/mineral/random/stationside/asteroid/porus,/area/ruin/space/has_grav/ccpost/asteroid)
 "Nk" = (/obj/structure/cable,/obj/effect/turf_decal/siding/wood{dir = 10},/turf/open/floor/wood/large,/area/ruin/space/has_grav/ccpost/centralhallway)
 "Nu" = (/turf/open/floor/iron/dark/corner,/area/ruin/space/has_grav/ccpost/boardroom)
-"Nw" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/duct,/obj/machinery/atmospherics/components/binary/valve/layer4{dir = 4},/obj/machinery/atmospherics/components/binary/valve/on{dir = 4},/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/engineering)
+"Nw" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/duct,/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/engineering)
 "NA" = (/turf/closed/wall/r_wall,/area/ruin/space/has_grav/ccpost/cafeteria)
 "NM" = (/obj/effect/turf_decal/tile/dark/opposingcorners,/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/duct,/obj/machinery/firealarm/directional/north,/obj/machinery/light/directional/north,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/ccpost/centralhallway)
 "NQ" = (/obj/effect/turf_decal/siding/wood,/obj/effect/turf_decal/siding/wood{dir = 1},/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/wood/large,/area/ruin/space/has_grav/ccpost/boardroom)
@@ -457,7 +456,6 @@
 "QW" = (/obj/effect/turf_decal/siding/dark{dir = 8},/obj/effect/turf_decal/siding/dark{dir = 4},/obj/structure/cable,/turf/open/floor/iron/dark/herringbone,/area/ruin/space/has_grav/ccpost/commsroom)
 "QZ" = (/obj/effect/turf_decal/siding/wood{dir = 8},/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/west,/obj/effect/mapping_helpers/apc/full_charge,/turf/open/floor/wood/large,/area/ruin/space/has_grav/ccpost/centralhallway)
 "Rd" = (/obj/effect/turf_decal/siding/dark{dir = 4},/obj/effect/turf_decal/siding/dark{dir = 8},/obj/structure/cable,/turf/open/floor/iron/dark/herringbone,/area/ruin/space/has_grav/ccpost/commsroom)
-"Rl" = (/obj/effect/spawner/structure/window/reinforced,/obj/effect/spawner/structure/window/reinforced,/obj/machinery/door/poddoor/preopen{id = "ccpost_lockdown"},/turf/open/floor/plating,/area/ruin/space/has_grav/ccpost/maintenance)
 "Rm" = (/obj/effect/turf_decal/tile/blue/half/contrasted{dir = 4},/turf/open/floor/iron/white/textured,/area/ruin/space/has_grav/ccpost/medbay)
 "Rq" = (/obj/effect/turf_decal/tile/neutral/opposingcorners,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/ccpost/cafeteria)
 "Rs" = (/obj/effect/turf_decal/tile/neutral/opposingcorners,/obj/structure/cable,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/ccpost/cafeteria)
@@ -497,7 +495,7 @@
 "US" = (/obj/structure/table/reinforced,/obj/effect/turf_decal/siding/dark/corner,/obj/item/paper_bin{pixel_y = 4; pixel_x = 3},/obj/item/pen{pixel_x = 4; pixel_y = 5},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/ccpost/boardroom)
 "Vl" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/duct,/turf/open/floor/iron/dark/herringbone,/area/ruin/space/has_grav/ccpost/engineering)
 "Vo" = (/obj/structure/lattice,/obj/structure/lattice/catwalk,/obj/structure/marker_beacon/lime,/turf/template_noop,/area/template_noop)
-"Vu" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark/corner{dir = 8},/area/ruin/space/has_grav/ccpost/cargo)
+"Vu" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark/corner{dir = 8},/area/ruin/space/has_grav/ccpost/cargo)
 "VA" = (/obj/effect/turf_decal/siding/dark,/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/duct,/turf/open/floor/iron/dark/herringbone,/area/ruin/space/has_grav/ccpost/engineering)
 "VO" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/duct,/turf/open/floor/iron/dark/herringbone,/area/ruin/space/has_grav/ccpost/engineering)
 "VV" = (/obj/effect/turf_decal/tile/blue/half/contrasted{dir = 8},/turf/open/floor/iron/white/textured,/area/ruin/space/has_grav/ccpost/medbay)
@@ -550,7 +548,7 @@ ynynynynynynynynynynbHbHIzIzNjNjNjNjIzIzIzHEpapaDTDjaWFrDofVCOrDRDsyBFtFwzJqwzIz
 ynynynynynynynynbHIzIzIzIzNjNjNjNjNjNjNjetetGNGNGNetetaQHwjygWXJbpsywzYFwzHKwzwzIzyn
 ynynynynynynynbHIzckckckckckckckckckNjetetaNfafafaaOetetyMvnaPXJMrsymyLBEtLuJvwzIzyn
 ynynynynynynbHIzckckRZRZRZckmClKaKckcketaLDFNuhgGUEWMketEVgbNetbXhsykeBNjqBNpAwzIzyn
-ynynynynynynbHIzckRZgzckgzcknuzABGSKmnetWhjmUSPdHeGUaJetCpOesykasysyZtoUFFoUCywzcRyn
+ynynynynynynbHIzckRZgzckgzcknuzABGSKmnetWhNuUSPdHeGUaJetCpOesykasysyZtoUFFoUCywzcRyn
 ynynynynynynbHIzckRZcktItLkiQWaGRdePBZrgTZpIOGaHiCDkgPJyhOKqfrKqzSDjVugUaIoUBNllIDyn
 ynynynynynynbHIzckRZgzckgzckbYIZobSKemetTpQRXtYShiBQXfetZsOKaFFYBJhAxUEAlFBNGullIDyn
 ynynynynynynWaIzckckRZRZRZckaESQfmckcketnBgfHqYhRzluTmetsysysysysysyBMHOjqAfSallIDyn
@@ -574,7 +572,7 @@ ynynIzIzIzFbIzNANANANALFZUGqMOGqafLFLFhPLFEEXsySXsEEXsWGXsCoCoIzIzNjNjIzniynynyn
 ynynynIzAzUhbHIzIzIzLFLFLFPaLFMgjnLFpKQPGkFjzWEiyprVLgQPjEXsIzbHbHIzNjWnQBynynynynyn
 ynynynIzIzIzoLbHIzIzLFZFLFLFLFLFSdLFmbNYENVlZMaeVOHXNwlxwkXsIzIzbHbHIzIzbEynynynynyn
 ynynynynIzIzbHUhIzbHZPSdaapFciQVZJLFFikdmfabJoXWHPadfOtloEXsNjNjIzbHIzIzIzynynynynyn
-ynynynynynIzIzbHbHbHRlKLSdILwZLFLFLFXsXsXsXsvrkfTUXsXsvyXsXsNjNjIzbHIzynynynynynynyn
+ynynynynynIzIzbHbHbHZPKLSdILwZLFLFLFXsXsXsXsvrkfTUXsXsvyXsXsNjNjIzbHIzynynynynynynyn
 ynynynynynynbHbHbHynZPZPGBiALFLFNjNjNjIzIzXsEEzREEXsIzmhIzNjIzIzIzbHynynynynynynynyn
 ynynynynynynynynynynynZPZPZPLFIzIzWnIzbHynjsynOfynjsbHbHIzWnIzbHbHynynynynynynynynyn
 ynynbHIzIzIzynynynynynynbHbHbHbHCizdbEbHynIfynOfynVoynbHCizdbEbHynynynynynynynynynyn
