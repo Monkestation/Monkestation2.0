@@ -425,7 +425,7 @@
 		var/label = "[occupant.name] ([++index])"
 		choices[label] = copy_appearance_filter_overlays(occupant.appearance)
 		occupant_refs[label] = WEAKREF(occupant)
-	var/selection = show_radial_menu(user, nozzle, choices, custom_check = CALLBACK(src, PROC_REF(can_continue_menu), user), require_near = TRUE, tooltips = TRUE)
+	var/selection = show_radial_menu(user, nozzle, choices, custom_check = CALLBACK(src, PROC_REF(can_continue_menu), user), require_near = TRUE, tooltips = TRUE, autopick_single_option = FALSE)
 	var/mob/living/selected = occupant_refs[selection]?.resolve()
 	if(selected?.loc != src)
 		return
