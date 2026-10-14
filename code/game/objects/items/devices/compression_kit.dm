@@ -28,11 +28,16 @@
 	if(!isitem(interacting_with))
 		return NONE
 
+	var/obj/item/target_item = interacting_with
+
+	if(HAS_TRAIT(interacting_with, TRAIT_NODROP))
+		to_chat(user, span_warning("[src] is unable to compress [target_item]!"))
+		return ITEM_INTERACT_BLOCKING
+
 	if(is_type_in_typecache(interacting_with, blacklist_typecache))
 		to_chat(user, span_warning("[src] is unable to compress [target_item]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	var/obj/item/target_item = interacting_with
 	if(charges <= 0)
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(user, span_warning("The bluespace compression kit is out of charges! Recharge it with bluespace crystals."))
