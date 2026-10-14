@@ -53,6 +53,8 @@
 
 /datum/status_effect/slime_leech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_POST_UPDATE_TRANSFORM)
+	if(!QDELETED(our_slime))
+		animate(our_slime, pixel_y = initial(our_slime.pixel_y), time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT), flags = ANIMATION_PARALLEL)
 	our_slime = null
 
 /datum/status_effect/slime_leech/tick(seconds_between_ticks)
