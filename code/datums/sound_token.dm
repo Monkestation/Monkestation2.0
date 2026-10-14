@@ -268,7 +268,7 @@
 	var/offset = elapsed * freq_factor * pitch_factor
 	if(repeating && sound_duration)
 		offset %= sound_duration
-	return offset
+	return offset / (1 SECONDS) // sound offset is in seconds, everything above is in deciseconds
 
 ///Update tracked cells; happens on movement. We need to check if anyone is now out of cell range and kick them out.
 /datum/sound_token/proc/update_tracked_cells()
