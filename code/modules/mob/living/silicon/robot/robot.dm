@@ -119,6 +119,13 @@
 	if(istype(model, /obj/item/robot_model/syndicate) || (emagged && !centcom))
 		modularInterface.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
+	else if(istype(model, /obj/item/robot_model/ninja))
+		modularInterface.device_theme = PDA_THEME_SYNDICATE
+		modularInterface.icon_state = "tablet-silicon-ninja"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
 	else
 		modularInterface.device_theme = PDA_THEME_NTOS
 		modularInterface.icon_state = "tablet-silicon"
