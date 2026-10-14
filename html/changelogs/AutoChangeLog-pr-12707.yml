@@ -1,0 +1,8 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Ce office on tram no longer has stacking filing cabinets"
+  - map: "Tech storage camera on tram is no longer named tech shortage"
+  - map: "boxstation ranch given a incubator nest"
+  - map: "Blueshift ranch given chicken scanners"
+  - map: "Icebox lower service distro was fixed."
