@@ -73,10 +73,11 @@
 /obj/item/compression_kit/item_interaction(mob/living/user, obj/item/bs, list/modifiers)
 	. = ..()
 	var/static/list/bs_typecache = typecacheof(list(/obj/item/stack/ore/bluespace_crystal, /obj/item/stack/sheet/bluespace_crystal))
-	if(!is_type_in_typecache(bs, bs_typecache) && bs.use(1))
+	if(!is_type_in_typecache(bs, bs_typecache))
 		return NONE
 
 	charges += 2
+	bs.use(1)
 	to_chat(user, span_notice("You insert [bs] into [src]. It now has [charges] charges."))
 	return ITEM_INTERACT_SUCCESS
 
