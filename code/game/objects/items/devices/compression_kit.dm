@@ -76,8 +76,11 @@
 	if(!is_type_in_typecache(bs, bs_typecache))
 		return NONE
 
+	if(!bs.use(1))
+		return ITEM_INTERACT_BLOCKING
+
 	charges += 2
-	bs.use(1)
+
 	to_chat(user, span_notice("You insert [bs] into [src]. It now has [charges] charges."))
 	return ITEM_INTERACT_SUCCESS
 
