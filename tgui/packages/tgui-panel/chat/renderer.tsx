@@ -125,6 +125,8 @@ class ChatRenderer {
   scrollNode: HTMLElement | null;
   scrollTracking: boolean;
   lastScrollHeight: number;
+  lastOffsetHeight: number;
+  resizeObserver: ResizeObserver;
   highlightParsers: Array<any> | null;
   handleScroll: (type: any) => void;
   coloredNames: boolean;
@@ -141,9 +143,25 @@ class ChatRenderer {
     this.scrollTracking = true;
     this.coloredNames = defaultSettings.coloredNames;
     this.lastScrollHeight = 0;
+    this.lastOffsetHeight = 0;
+    this.resizeObserver = new ResizeObserver(() => {
+      const node = this.scrollNode;
+      if (!node) {
+        return;
+      }
+      this.lastOffsetHeight = node.offsetHeight;
+      if (this.scrollTracking) {
+        this.scrollToBottom();
+      }
+    });
     this.handleScroll = (type) => {
       const node = this.scrollNode;
       if (!node) {
+        return;
+      }
+      // pane got resized (music player popping in, etc) and the observer hasn't re-pinned us yet,
+      // so we're "far from the bottom" for no reason and would turn tracking off
+      if (node.offsetHeight !== this.lastOffsetHeight) {
         return;
       }
       const height = node.scrollHeight;
@@ -178,6 +196,9 @@ class ChatRenderer {
     // Find scrollable parent
     this.scrollNode = document.getElementById('chat-pane');
     this.scrollNode?.addEventListener('scroll', this.handleScroll);
+    if (this.scrollNode) {
+      this.resizeObserver.observe(this.scrollNode);
+    }
     setTimeout(() => {
       this.scrollToBottom();
     });

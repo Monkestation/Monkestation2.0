@@ -9,7 +9,7 @@
 export const IMPL_HUB_STORAGE = 1;
 export const IMPL_IFRAME_INDEXED_DB = 2;
 
-type StorageImplementation =
+export type StorageImplementation =
   | typeof IMPL_HUB_STORAGE
   | typeof IMPL_IFRAME_INDEXED_DB;
 
@@ -182,9 +182,8 @@ class IFrameIndexedDbBackend implements StorageBackend {
  * Web Storage Proxy object, which selects the best backend available
  * depending on the environment.
  */
-class StorageProxy implements StorageBackend {
+class StorageProxy {
   private backendPromise: Promise<StorageBackend>;
-  public impl: StorageImplementation = IMPL_IFRAME_INDEXED_DB;
   private diagnostics: StorageDiagnostic[] = [];
   private listener?: (diagnostic: StorageDiagnostic) => void;
 
@@ -301,6 +300,10 @@ class StorageProxy implements StorageBackend {
         document.addEventListener('byondstorageupdated', listener);
       });
     })();
+  }
+
+  async getImpl(): Promise<StorageImplementation> {
+    return (await this.backendPromise).impl;
   }
 
   async get(key: string): Promise<any> {
