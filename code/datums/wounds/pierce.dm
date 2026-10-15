@@ -102,7 +102,7 @@
 	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 	if(limb.can_bleed())
-		if(!HAS_TRAIT(victim, TRAIT_RESISTCOLD) && victim.get_skin_temperature() < victim.bodytemp_cold_damage_limit)
+		if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
 			adjust_blood_flow(-0.1 * seconds_per_tick)
 			if(SPT_PROB(2.5, seconds_per_tick))
 				to_chat(victim, span_notice("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))

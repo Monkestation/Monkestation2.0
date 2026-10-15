@@ -90,6 +90,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor_type = /datum/armor/toggle_deckard
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 
 
 
@@ -148,6 +150,8 @@
 /obj/item/clothing/suit/armor/vest/det_suit/runner
 	name = "joyful coat"
 	desc = "<i>\"You look like a good Joe.\"</i>"
+	heat_protection = CHEST|ARMS|GROIN|LEGS
+	cold_protection = CHEST|GROIN|ARMS|LEGS
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	blood_overlay_type = "coat"
@@ -155,6 +159,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/jacket/croptop
+	cold_protection = CHEST|ARMS
 	name = "crop top turtleneck"
 	desc = "A comfy looking turtleneck that exposes your midriff, fashionable but makes the point of a sweater moot."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
@@ -237,7 +242,7 @@
 	greyscale_config_worn = /datum/greyscale_config/warm_coat/worn
 	greyscale_colors = "#7a5f4f#d9cec7"
 	flags_1 = IS_PLAYER_COLORABLE_1
-
+	cold_protection = CHEST|GROIN|ARMS
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

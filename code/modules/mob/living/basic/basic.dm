@@ -94,23 +94,13 @@
 	var/list/weather_immunities
 //MONKESTATION EDIT END
 
-	//MONKESTATION EDIT START - These variables were changed as part of a temperature overhaul by
-	// Borbop, in #3301.
-	// WHEN PORTING THESE OVER:
-	// * `minimum_survivable_temperature` -> `bodytemp_cold_damage_limit`
-	// * `maximum_survivable_temperature` -> `bodytemp_heat_damage_limit`
-	// * If either one has a value of `0`, set it to `-1`.
-	/* //MONKESTATION EDIT ORIGINAL
 	///Minimal body temperature without receiving damage
 	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
 	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
-	*/
-	bodytemp_cold_damage_limit = NPC_DEFAULT_MIN_TEMP
-	bodytemp_heat_damage_limit = NPC_DEFAULT_MAX_TEMP
-	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
-	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
 
 /mob/living/basic/Initialize(mapload)
@@ -138,6 +128,7 @@
 		speak_emote = string_list(speak_emote)
 
 	apply_atmos_requirements()
+	apply_temperature_requirements()
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
 /mob/living/basic/proc/apply_atmos_requirements()
@@ -147,36 +138,11 @@
 	habitable_atmos = string_assoc_list(habitable_atmos)
 	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
 
-/mob/living/basic/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	if((bodytemperature < bodytemp_cold_damage_limit) && unsuitable_cold_damage)
-		adjust_health(unsuitable_cold_damage * seconds_per_tick)
-
-	if((bodytemperature > bodytemp_heat_damage_limit) && unsuitable_heat_damage)
-		adjust_health(unsuitable_heat_damage * seconds_per_tick)
-
-/mob/living/basic/body_temperature_alerts()
-	if((bodytemperature < bodytemp_cold_damage_limit) && unsuitable_cold_damage)
-		switch(unsuitable_cold_damage)
-			if(1 to 5)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
-			if(5 to 10)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
-			if(10 to INFINITY)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
-		. = TRUE
-
-	if((bodytemperature > bodytemp_heat_damage_limit) && unsuitable_heat_damage)
-		switch(unsuitable_heat_damage)
-			if(1 to 5)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
-			if(5 to 10)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 2)
-			if(10 to INFINITY)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
-		. = TRUE
-
-	if(!.)
-		clear_alert(ALERT_TEMPERATURE)
+/// Ensures this mob can take temperature damage if it's supposed to
+/mob/living/basic/proc/apply_temperature_requirements()
+	if((unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0) || (minimum_survivable_temperature <= 0 && maximum_survivable_temperature >= INFINITY))
+		return
+	AddElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -270,11 +236,16 @@
 		if(NAMEOF(src, habitable_atmos), NAMEOF(src, unsuitable_atmos_damage))
 			RemoveElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
 			. = TRUE
+		if(NAMEOF(src, minimum_survivable_temperature), NAMEOF(src, maximum_survivable_temperature), NAMEOF(src, unsuitable_cold_damage), NAMEOF(src, unsuitable_heat_damage))
+			RemoveElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+			. = TRUE
 	. = ..()
 
 	switch(vname)
 		if(NAMEOF(src, habitable_atmos), NAMEOF(src, unsuitable_atmos_damage))
 			apply_atmos_requirements()
+		if(NAMEOF(src, minimum_survivable_temperature), NAMEOF(src, maximum_survivable_temperature), NAMEOF(src, unsuitable_cold_damage), NAMEOF(src, unsuitable_heat_damage))
+			apply_temperature_requirements()
 		if(NAMEOF(src, speed))
 			datum_flags |= DF_VAR_EDITED
 			set_varspeed(vval)
@@ -340,11 +311,14 @@
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
 
-/mob/living/basic/update_cached_insulation()
-	return
+/mob/living/basic/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
-/mob/living/basic/get_insulation(temperature)
-	return temperature_insulation
+/mob/living/basic/get_body_temp_heat_damage_limit()
+	return maximum_survivable_temperature
+
+/mob/living/basic/get_body_temp_cold_damage_limit()
+	return minimum_survivable_temperature
 
 //MONKESTATION EDIT START
 /mob/living/basic/proc/get_scream_sound()

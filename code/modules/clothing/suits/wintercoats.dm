@@ -1,5 +1,6 @@
 // Wintercoat
 /obj/item/clothing/suit/hooded/wintercoat
+	cold_protection = CHEST|GROIN|ARMS
 	name = "winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	icon = 'icons/obj/clothing/suits/wintercoat.dmi'
@@ -37,7 +38,7 @@
 	icon_state = "hood_winter"
 	worn_icon = 'icons/mob/clothing/head/winterhood.dmi'
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood

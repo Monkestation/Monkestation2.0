@@ -7,9 +7,9 @@
 	base_icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/head_helmet
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
@@ -371,9 +371,10 @@
 	icon_state = "swatsyndie"
 	inhand_icon_state = "swatsyndie_helmet"
 	armor_type = /datum/armor/helmet_swat
+	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	strip_delay = 80
@@ -395,6 +396,8 @@
 	wound = 15
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
+	cold_protection = HEAD
+	heat_protection = HEAD
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
@@ -416,9 +419,9 @@
 	icon_state = "thunderdome"
 	inhand_icon_state = "thunderdome_helmet"
 	armor_type = /datum/armor/helmet_thunderdome
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
 	dog_fashion = null
@@ -434,8 +437,8 @@
 	acid = 90
 
 /obj/item/clothing/head/helmet/thunderdome/holosuit
-	max_heat_protection_temperature = null
-	min_cold_protection_temperature = null
+	cold_protection = null
+	heat_protection = null
 	armor_type = /datum/armor/thunderdome_holosuit
 
 /datum/armor/thunderdome_holosuit
@@ -638,7 +641,7 @@
 	icon_state = "rus_ushanka"
 	inhand_icon_state = "rus_ushanka"
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/helmet_rus_ushanka
 

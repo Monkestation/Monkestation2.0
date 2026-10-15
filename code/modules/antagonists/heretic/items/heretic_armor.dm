@@ -10,6 +10,7 @@
 	inhand_icon_state = null
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEBELT
 	body_parts_covered = CHEST | GROIN | LEGS | FEET | ARMS
+	cold_protection = FULL_BODY
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION
 	transparent_protection = HIDEGLOVES | HIDESUITSTORAGE | HIDEJUMPSUIT | HIDESHOES | HIDENECK
@@ -103,6 +104,8 @@
 	armor_type = /datum/armor/eldritch_armor/ash
 	flags_inv = HIDEBELT
 	body_parts_covered = FULL_BODY
+	cold_protection = FULL_BODY
+	heat_protection = FULL_BODY
 	// heat_protection = FULL_BODY
 	max_heat_protection_temperature = 50000
 	// cold_protection = FULL_BODY
@@ -333,6 +336,7 @@
 // Cosmic
 // Allows you to toggle gravity for yourself at will
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	name = "\improper Starwoven Cloak"
 	desc = "Gleaming gems conjure forth wisps of power, turning about to illuminate the wearer in a dim radiance. \
 			Gazing upon the robe, you cannot help but feel noticed."
@@ -1239,7 +1243,7 @@
 	if(isliving(wearer))
 		wearer.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
 		// due to how temperature works, we need to make sure they don't freeze the moment they put the hood down after coming inside from a spacewalk
-		if(wearer.bodytemperature <= wearer.bodytemp_cold_damage_limit)
-			wearer.adjust_bodytemperature(INFINITY, max_temp = wearer.standard_body_temperature)
+		if(wearer.bodytemperature <= wearer.get_body_temp_cold_damage_limit())
+			wearer.adjust_bodytemperature(INFINITY, max_temp = wearer.get_body_temp_normal())
 		wearer.balloon_alert(wearer, "cloak revealed")
 		wearer.visible_message(span_notice("A kaleidoscope of colours collapses around [wearer], a cloak appearing suddenly around [wearer.p_their()] person!"))

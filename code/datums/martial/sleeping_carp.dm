@@ -375,6 +375,8 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 	return FALSE
 
 /obj/item/clothing/gloves/the_sleeping_carp
+	cold_protection = HANDS
+	heat_protection = HANDS
 	name = "carp gloves"
 	desc = "This gloves are capable of making people use The Sleeping Carp."
 	icon_state = "black"

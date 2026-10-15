@@ -72,7 +72,7 @@ Burning extracts:
 	for(var/mob/living/carbon/M in range(5, get_turf(user)))
 		if(M == user)
 			continue
-		M.adjust_bodytemperature(-INFINITY, min_temp = M.bodytemp_cold_damage_limit + 5 KELVIN)
+		M.bodytemperature = BODYTEMP_COLD_DAMAGE_LIMIT + 10 //Not quite cold enough to hurt.
 		to_chat(M, span_danger("You feel a chill run down your spine, and the floor feels a bit slippery with frost..."))
 	..()
 

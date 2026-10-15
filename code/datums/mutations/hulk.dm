@@ -35,8 +35,7 @@
 		part.variable_color = "#00aa00"
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
-	owner.physiology?.cold_mod *= HULK_COLD_DAMAGE_MOD
-	owner.bodytemp_cold_damage_limit += BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER
+	owner.physiology?.cold_mod *= 2 //hulks are vulnerable to cold temperatures for some reason, idk low body fat?
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(statchange))
@@ -49,7 +48,6 @@
 
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
 		owner.physiology?.cold_mod *= (GET_MUTATION_SYNCHRONIZER(src) * 1.5)
-		owner.bodytemp_cold_damage_limit -= (BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER * GET_MUTATION_SYNCHRONIZER(src))
 
 	if(GET_MUTATION_POWER(src) <= 1)
 		return
@@ -68,7 +66,6 @@
 
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
 		owner.physiology?.cold_mod /= (GET_MUTATION_SYNCHRONIZER(src) * 1.5)
-		owner.bodytemp_cold_damage_limit += (BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER * GET_MUTATION_SYNCHRONIZER(src))
 
 	if(GET_MUTATION_POWER(src) <= 1)
 		return
@@ -140,8 +137,7 @@
 		part.variable_color = null
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")
-	owner.physiology?.cold_mod /= HULK_COLD_DAMAGE_MOD
-	owner.bodytemp_cold_damage_limit -= BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER
+	owner.physiology?.cold_mod /= 2
 	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
