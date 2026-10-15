@@ -2,7 +2,7 @@
 	page = "Template:Autowiki/Content/VendingMachines"
 
 /datum/autowiki/vending/generate()
-	var/output = ""
+	var/output = "<tabber>"
 
 	var/list/cached_products = list()
 
@@ -27,6 +27,8 @@
 
 		var/filename = SANITIZE_FILENAME(escape_value(format_text(vending_machine.name)))
 
+		output += "|-| [escape_value(format_text(vending_machine.name))]= "
+
 		output += include_template("Autowiki/VendingMachine", list(
 			"icon" = escape_value(filename),
 			"name" = escape_value(format_text(vending_machine.name)),
@@ -42,15 +44,12 @@
 
 	qdel(parent)
 
-	return output
+	return output+"</tabber>"
 
 /datum/autowiki/vending/proc/format_product_list(list/product_list)
 	var/output = ""
 
 	for (var/obj/product_path as anything in product_list)
-		output += include_template("Autowiki/VendingMachineProduct", list(
-			"name" = escape_value(capitalize(format_text(initial(product_path.name)))),
-			"amount" = product_list[product_path],
-		))
+		output += "<li>[product_list[product_path]]x [escape_value(capitalize(format_text(initial(product_path.name))))]</li>"
 
 	return output
