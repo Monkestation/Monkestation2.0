@@ -2,9 +2,8 @@
 	unusual_description = "exsanguinating"
 	icon_file = 'icons/mob/effects/bleed_overlays.dmi'
 	particle_state = "head_2"
-	burst_amount = 1
+	burst_amount = 2
 	duration = 6 SECONDS
-	random_bursts = TRUE
 	spawn_interval = 4 SECONDS
 
 /datum/component/particle_spewer/bloodydrip/animate_particle(obj/effect/abstract/particle/spawned)

@@ -202,3 +202,15 @@
   SmArtKar:
   - admin: Converted the Spawn verb into a TGUI input, featuring for dynamic search
       and RegEx support.
+2026-10-15:
+  Runian:
+  - qol: Unlocking an APC via right-click hotkey as an AI/Cyborg no longer open the
+      APC's menu.
+  - bugfix: Cyborgs that are in low power mode can no longer use certain hotkeys such
+      as shocking, bolting, or opening airlocks remotely.
+  notghosti:
+  - map: Ce office on tram no longer has stacking filing cabinets
+  - map: Tech storage camera on tram is no longer named tech shortage
+  - map: boxstation ranch given a incubator nest
+  - map: Blueshift ranch given chicken scanners
+  - map: Icebox lower service distro was fixed.

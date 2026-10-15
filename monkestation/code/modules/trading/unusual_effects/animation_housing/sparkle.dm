@@ -5,7 +5,7 @@
 	unusual_description = "shiny"
 	duration = 0.7 SECONDS
 	spawn_interval = 0.3 SECONDS
-	burst_amount = 0
+	burst_amount = 1
 	offsets = FALSE
 
 /datum/component/particle_spewer/sparkle/animate_particle(obj/effect/abstract/particle/spawned)
@@ -22,5 +22,3 @@
 	first.Scale(0.1 * 0.1)
 	first.Turn(rand(-90, 90))
 	animate(transform = first, time = 0.3 SECONDS)
-
-	QDEL_IN(spawned, duration)
