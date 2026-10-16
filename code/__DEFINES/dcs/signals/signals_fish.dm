@@ -33,3 +33,6 @@
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"
 
 #define COMSIG_FISHING_LINE_SNAPPED "fishing_line_snapped"
+
+/// From /obj/item/fish_analyzer/proc/analyze_status: (fish, user)
+#define COMSIG_FISH_ANALYZER_ANALYZE_STATUS "fish_analyzer_analyze_status"
