@@ -622,6 +622,7 @@
 		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
 	)
 
+/// Blows up in the thrower's hand when overcharged
 /obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	active_arm?.dismember()
@@ -630,6 +631,7 @@
 	user.flash_act(1, 1)
 	qdel(src)
 
+/// Whether the thrown lavaloop gets the bonus against the target, only big mobs count
 /obj/item/fish/lavaloop/proc/on_fish_land(mob/living/target, bonus_value)
 	if(!istype(target))
 		return FALSE

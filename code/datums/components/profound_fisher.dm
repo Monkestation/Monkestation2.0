@@ -23,6 +23,7 @@
 	QDEL_NULL(our_rod)
 	return ..()
 
+/// Lets the mob fish in the spot by just attacking it, no rod needed
 /datum/component/profound_fisher/proc/pre_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
 
@@ -37,6 +38,7 @@
 		INVOKE_ASYNC(src, PROC_REF(pretend_fish), target)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
+/// Fakes a whole fishing session for npc mobs, waiting a bit before spawning the reward
 /datum/component/profound_fisher/proc/pretend_fish(atom/target)
 	var/fishing_type
 	for(var/type in npc_fishing_preset)

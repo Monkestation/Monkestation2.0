@@ -335,6 +335,7 @@ GLOBAL_LIST(fishing_property_cache)
 
 	return final_table
 
+/// Called when there's an explosion on a fishing spot that uses this source
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!explosive_malus)
 		explosive_spawn(location, severity)
@@ -346,12 +347,14 @@ GLOBAL_LIST(fishing_property_cache)
 	var/peak_severity = max(exploded_turfs[turf], severity)
 	exploded_turfs[turf] = peak_severity
 
+/// Spawns the loot for every turf that exploded this tick, with less loot the more turfs exploded
 /datum/fish_source/proc/post_explosion_spawn()
 	var/multiplier = 1/(length(exploded_turfs)**0.5)
 	for(var/turf/turf as anything in exploded_turfs)
 		explosive_spawn(turf, exploded_turfs[turf], multiplier)
 	exploded_turfs = null
 
+/// Spawns loot on the location based on how strong the explosion was, fish come out dead
 /datum/fish_source/proc/explosive_spawn(location, severity, multiplier = 1)
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))

@@ -41,6 +41,7 @@
 	var/aquarium_zone_min_px = 2
 	var/aquarium_zone_max_px = 31
 	var/aquarium_zone_min_py = 10
+	/// The highest pixel y the fish can swim to
 	var/aquarium_zone_max_py = 28
 
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
@@ -83,6 +84,7 @@
 	. = ..()
 	LAZYREMOVEASSOC(tracked_fish_by_type, gone.type, gone)
 
+/// Starts processing the aquarium to feed the fish once something is put in the feed storage
 /obj/structure/aquarium/proc/start_autofeed(datum/source, new_reagent, amount, reagtemp, data, no_react)
 	SIGNAL_HANDLER
 	START_PROCESSING(SSobj, src)

@@ -18,6 +18,7 @@
 	sources |= source
 	return ..()
 
+/// Called when another source tries to add this effect while it's already on the owner
 /datum/status_effect/grouped/proc/merge_with_existing(datum/status_effect/grouped/existing, source)
 	return
 

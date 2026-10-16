@@ -578,6 +578,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 		return
 	return attempt_pickup(user)
 
+/// Tries to pick up the item, skip_grav skips the heavy gravity delay
 /obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
 	. = TRUE
 

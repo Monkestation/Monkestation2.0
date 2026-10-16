@@ -129,6 +129,7 @@
 
 	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
 
+/// Updates the beauty this content gives to its aquarium when the fish dies or comes back to life
 /datum/component/aquarium_content/proc/on_fish_status_changed(obj/item/fish/source)
 	SIGNAL_HANDLER
 	var/old_beauty = beauty
@@ -180,6 +181,7 @@
 	if(istype(movable_parent.loc, /obj/structure/aquarium))
 		on_inserted(movable_parent.loc)
 
+/// Checks if this can go in the aquarium, unique contents can't share it with another of the same type
 /datum/component/aquarium_content/proc/is_ready_to_insert(datum/source, obj/structure/aquarium/aquarium)
 	SIGNAL_HANDLER
 	//This is kinda awful but we're unaware of other fish
@@ -340,6 +342,7 @@
 	vc_obj.pixel_x = base_px
 	vc_obj.pixel_y = base_py
 
+/// Removes the content from the aquarium when it leaves it
 /datum/component/aquarium_content/proc/on_removed(obj/structure/aquarium/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(parent != gone)

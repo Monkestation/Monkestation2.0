@@ -96,6 +96,7 @@
 
 	return data
 
+/// Adds the info of the given fish to the ui data
 /obj/item/fish_analyzer/proc/extract_fish_info(list/data, obj/item/fish/fishie, obj/structure/aquarium/aquarium)
 	var/list/fish_traits = list()
 	var/list/fish_evolutions = list()

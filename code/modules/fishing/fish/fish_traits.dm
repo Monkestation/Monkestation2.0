@@ -221,6 +221,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	if(source.status == FISH_DEAD)
 		addtimer(CALLBACK(src, PROC_REF(revive), WEAKREF(source)), rand(1 MINUTES, 2 MINUTES))
 
+/// Brings the fish back to life if it's still dead
 /datum/fish_trait/revival/proc/revive(datum/weakref/fish_ref)
 	var/obj/item/fish/source = fish_ref.resolve()
 	if(QDELETED(source) || source.status != FISH_DEAD)
@@ -420,6 +421,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	ADD_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS, FISH_DATUM_TRAIT)
 	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 
+/// Makes alive fish with electrogenesis hit harder and shock whoever they hit
 /datum/fish_trait/electrogenesis/proc/on_item_attack(obj/item/fish/fish, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 

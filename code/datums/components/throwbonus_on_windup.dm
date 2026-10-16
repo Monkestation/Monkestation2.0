@@ -33,6 +33,7 @@
 	src.windup_increment_speed = windup_increment_speed
 	src.throw_text = throw_text
 
+/// Starts tracking the holder when the item is picked up
 /datum/component/throwbonus_on_windup/proc/on_equip(datum/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
 
@@ -44,6 +45,7 @@
 	if(equipper.throw_mode)
 		start_windup()
 
+/// Starts charging up the throw bonus and shows the windup bar
 /datum/component/throwbonus_on_windup/proc/start_windup()
 
 	throwforce_bonus = initial(throwforce_bonus)
@@ -77,6 +79,7 @@
 	holder = null
 	return ..()
 
+/// Starts or stops the windup when throw mode is toggled
 /datum/component/throwbonus_on_windup/proc/throw_change(datum/source, throw_mode)
 	SIGNAL_HANDLER
 
@@ -85,6 +88,7 @@
 	else
 		end_windup()
 
+/// Stops the windup if the item isn't in the active hand anymore
 /datum/component/throwbonus_on_windup/proc/on_hands_swap(mob/living/source)
 	SIGNAL_HANDLER
 
@@ -105,6 +109,7 @@
 	our_bar.recalculate_position(min(throwforce_bonus, maximum_bonus))
 	throwforce_bonus += windup_increment_speed
 
+/// Stops the windup and forgets the holder once the item leaves their hands
 /datum/component/throwbonus_on_windup/proc/on_move(obj/item/source, atom/entering_loc)
 	SIGNAL_HANDLER
 	end_windup()
@@ -114,10 +119,12 @@
 	holder = null
 	UnregisterSignal(our_holder, list(COMSIG_LIVING_THROW_MODE_TOGGLE, COMSIG_MOB_SWAP_HANDS))
 
+/// Stops the windup and removes the bar
 /datum/component/throwbonus_on_windup/proc/end_windup()
 	QDEL_NULL(our_bar)
 	STOP_PROCESSING(SSfastprocess, src)
 
+/// Applies the charged bonus to whatever living thing the item hits
 /datum/component/throwbonus_on_windup/proc/on_thrown(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 
@@ -149,6 +156,7 @@
 	///the current count we are at
 	var/current_count = 0
 
+/// Moves the bar overlay to show the current charge
 /obj/effect/overlay/windup_bar/proc/recalculate_position(input_count)
 	current_count = input_count
 	update_appearance(UPDATE_OVERLAYS)

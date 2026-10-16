@@ -55,6 +55,7 @@
 
 	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
 
+/// Lists the fishes you can catch here when examining it closer with enough fishing skill
 /datum/component/fishing_spot/proc/on_examined_more(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
@@ -97,6 +98,7 @@
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
 
+/// Spawns loot from the fish source when the spot is hit by an explosion
 /datum/component/fishing_spot/proc/explosive_fishing(atom/location, severity)
 	SIGNAL_HANDLER
 	fish_source.spawn_reward_from_explosion(location, severity)

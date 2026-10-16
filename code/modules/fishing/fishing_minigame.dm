@@ -269,6 +269,7 @@
 	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
 	interrupt()
 
+/// Interrupts the fishing if the user moves away
 /datum/fishing_challenge/proc/on_user_move(datum/source)
 	SIGNAL_HANDLER
 
@@ -327,6 +328,7 @@
 	if(!QDELETED(src))
 		qdel(src)
 
+/// Waits a random time before the fish bites, penalty adds time to the current wait instead
 /datum/fishing_challenge/proc/start_baiting_phase(penalty = FALSE)
 	var/wait_time
 	if(penalty)
@@ -398,6 +400,7 @@
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
 		reward.adjust_health(reward.health - damage)
 
+/// Starts the minigame, the starting completion depends on how fast you reacted to the bite
 /datum/fishing_challenge/proc/start_minigame_phase(auto_reel = FALSE)
 	if(auto_reel)
 		completion *= 1.3

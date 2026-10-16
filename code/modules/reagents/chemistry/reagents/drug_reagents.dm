@@ -780,10 +780,12 @@
 	RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
 	RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
 
+/// Removes the bait trait when the reagents are cleared
 /datum/reagent/drug/kronkaine/proc/on_reagents_clear(datum/reagents/reagents)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
 
+/// Removes the bait trait when the kronkaine is removed
 /datum/reagent/drug/kronkaine/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
 	SIGNAL_HANDLER
 	if(deleted_reagent == src)

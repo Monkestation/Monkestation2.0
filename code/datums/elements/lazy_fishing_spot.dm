@@ -52,6 +52,7 @@
 
 	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
 
+/// Lists the fishes you can catch here when examining it closer with enough fishing skill
 /datum/element/lazy_fishing_spot/proc/on_examined_more(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
@@ -72,6 +73,7 @@
 
 	examine_text += span_info("You can catch the following fish here: [english_list(known_fishes)].")
 
+/// Spawns loot from the fish source when the spot is hit by an explosion
 /datum/element/lazy_fishing_spot/proc/explosive_fishing(atom/location, severity)
 	SIGNAL_HANDLER
 	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]

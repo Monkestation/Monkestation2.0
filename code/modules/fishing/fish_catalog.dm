@@ -62,6 +62,7 @@
 	.["fish_info"] = fish_info
 	.["sponsored_by"] = AQUARIUM_COMPANY
 
+/// Returns the name of the bait (or bait type) a fish likes
 /obj/item/book/manual/fish_catalog/proc/bait_description(bait)
 	if(ispath(bait))
 		var/obj/bait_item = bait
@@ -81,6 +82,7 @@
 		//Here we handle descriptions of traits fish use as qualifiers
 		return "something special"
 
+/// Builds the list of tips on how and where to catch the given fish type
 /obj/item/book/manual/fish_catalog/proc/build_fishing_tips(fish_type)
 	var/obj/item/fish/fishy = fish_type
 	. = list()

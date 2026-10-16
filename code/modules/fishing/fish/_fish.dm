@@ -615,6 +615,7 @@
 	if(flopping)
 		flop_animation()
 
+/// Zaps nearby things with weak tesla arcs if the fish is alive and fed
 /obj/item/fish/proc/try_electrogenesis()
 	if(status == FISH_DEAD || is_hungry())
 		return

@@ -109,6 +109,7 @@
 
 	w_class = WEIGHT_CLASS_TINY
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+	/// How much beauty this prop adds to the aquarium it's in
 	var/beauty = 150
 
 /obj/item/aquarium_prop/Initialize(mapload)

@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		),
 	)
 
+/// Spawns the detritus at the spawn location, either a default item or something that fell in the chasm
 /datum/chasm_detritus/proc/dispense_detritus(atom/spawn_location, turf/fishing_spot)
 	if(prob(default_contents_chance))
 		var/default_spawn = pick(default_contents[default_contents_key])

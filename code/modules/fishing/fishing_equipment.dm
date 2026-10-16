@@ -65,16 +65,19 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(line_equipped))
 
+/// Starts listening for hooked items when the line is put on a rod
 /obj/item/fishing_line/auto_reel/proc/line_equipped(datum/source, obj/item/fishing_rod/rod)
 	SIGNAL_HANDLER
 	RegisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM, PROC_REF(on_hooked_item))
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
 
+/// Stops listening for hooked items when the line is taken off the rod
 /obj/item/fishing_line/auto_reel/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(old_loc, COMSIG_FISHING_ROD_HOOKED_ITEM)
 
+/// Yanks hooked items towards the user instead of reeling them in slowly
 /obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 	if(!ismovable(target))
@@ -96,6 +99,7 @@
 	else
 		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
+/// Makes the user catch the yanked item when it reaches them
 /obj/item/fishing_line/auto_reel/proc/catch_it_chucklenut(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	var/mob/living/user = throwingdatum.initial_target.resolve()
@@ -104,6 +108,7 @@
 	if(user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
 		return COMSIG_HIT_PREVENTED
 
+/// Stops listening for the yanked item once it lands
 /obj/item/fishing_line/auto_reel/proc/clear_hitby_signal(obj/item/item)
 	UnregisterSignal(item, COMSIG_ATOM_PREHITBY)
 

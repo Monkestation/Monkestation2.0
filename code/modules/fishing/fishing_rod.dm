@@ -19,7 +19,9 @@
 	var/ui_description = "A classic fishing rod, with no special qualities."
 
 	var/obj/item/bait
+	/// The fishing line installed on the rod
 	var/obj/item/fishing_line/line = /obj/item/fishing_line
+	/// The hook installed on the rod
 	var/obj/item/fishing_hook/hook = /obj/item/fishing_hook
 
 	/// Currently hooked item for item reeling
@@ -137,6 +139,7 @@
 	else
 		QDEL_NULL(fishing_line)
 
+/// Used by the reeling do_after to stop if the line got deleted
 /obj/item/fishing_rod/proc/fishing_line_check()
 	return !QDELETED(fishing_line)
 

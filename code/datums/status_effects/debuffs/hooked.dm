@@ -6,9 +6,11 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/hooked
 
+/// Tries to remove the hook from the owner
 /datum/status_effect/grouped/hooked/proc/try_unhook()
 	return do_after(owner, 2 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(still_exists)), interaction_key = DOAFTER_SOURCE_REMOVING_HOOK)
 
+/// Used to stop the unhooking do_after if the status effect is gone
 /datum/status_effect/grouped/hooked/proc/still_exists()
 	return !QDELETED(src)
 
@@ -21,6 +23,7 @@
 /datum/status_effect/grouped/hooked/merge_with_existing(datum/status_effect/grouped/hooked/existing, datum/beam/fishing_line/source)
 	existing.RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
 
+/// Removes the status effect from the fishing line that just got deleted
 /datum/status_effect/grouped/hooked/proc/on_fishing_line_deleted(datum/source)
 	SIGNAL_HANDLER
 	owner.remove_status_effect(type, source)

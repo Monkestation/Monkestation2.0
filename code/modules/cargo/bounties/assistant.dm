@@ -238,6 +238,7 @@ monkestation end*/
 			return FALSE
 	return can_ship_fish(fishie)
 
+/// Extra checks for the fish that can be shipped for this bounty
 /datum/bounty/item/assistant/fish/proc/can_ship_fish(obj/item/fish/fishie)
 	return TRUE
 
