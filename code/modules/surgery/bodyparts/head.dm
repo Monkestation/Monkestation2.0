@@ -216,7 +216,11 @@
 /obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
 
-	. += get_hair_and_lips_icon(dropped)
+	var/list/hair_and_lips = get_hair_and_lips_icon(dropped)
+	if(!dropped && !isnull(owner))
+		for(var/image/hair_overlay in hair_and_lips)
+			owner.apply_height(hair_overlay, ENTIRE_BODY)
+	. += hair_and_lips
 	// We need to get the eyes if we are dropped (ugh)
 	if(dropped)
 		// eyes
