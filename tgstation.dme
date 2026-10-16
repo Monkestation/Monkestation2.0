@@ -1270,6 +1270,7 @@
 #include "code\datums\components\mirv.dm"
 #include "code\datums\components\mob_chain.dm"
 #include "code\datums\components\mob_harvest.dm"
+#include "code\datums\components\moon_blade_channel.dm"
 #include "code\datums\components\multi_area_bound.dm"
 #include "code\datums\components\multi_hit.dm"
 #include "code\datums\components\multiple_lives.dm"
