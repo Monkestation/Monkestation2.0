@@ -1995,6 +1995,7 @@
 #include "code\datums\status_effects\debuffs\flash_blur.dm"
 #include "code\datums\status_effects\debuffs\genetic_damage.dm"
 #include "code\datums\status_effects\debuffs\hallucination.dm"
+#include "code\datums\status_effects\debuffs\hooked.dm"
 #include "code\datums\status_effects\debuffs\jitteriness.dm"
 #include "code\datums\status_effects\debuffs\lungless.dm"
 #include "code\datums\status_effects\debuffs\pacifism.dm"

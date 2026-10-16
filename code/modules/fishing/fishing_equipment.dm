@@ -8,9 +8,10 @@
 
 /obj/item/fishing_line
 	name = "fishing line reel"
-	desc = "Simple fishing line."
+	desc = "A fishing line. In spite of its simplicity, the added length will make fishing a speck easier."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
+	w_class = WEIGHT_CLASS_SMALL
 	///A list of traits that this fishing line has, checked by fish traits and the minigame.
 	var/list/fishing_line_traits
 	/// Color of the fishing line
@@ -42,24 +43,17 @@
 
 /obj/item/fishing_line/sinew
 	name = "fishing sinew"
-	desc = "An all-natural fishing line made of stretched out sinew."
+	desc = "An all-natural fishing line made of stretched out sinew. Usable to fish in extreme enviroments."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_sinew"
 	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#d1cca3"
 
-/datum/crafting_recipe/sinew_line
-	name = "Sinew Fishing Line Reel"
-	result = /obj/item/fishing_line/sinew
-	reqs = list(/obj/item/stack/sheet/sinew = 2)
-	time = 2 SECONDS
-	category = CAT_TOOLS
-
 // Hooks
 
 /obj/item/fishing_hook
 	name = "simple fishing hook"
-	desc = "A simple fishing hook."
+	desc = "A simple fishing hook. Don't expect to hook onto anything without one."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
@@ -89,6 +83,13 @@
 /obj/item/fishing_hook/proc/get_hook_bonus_multiplicative(fish_type)
 	return FISHING_DEFAULT_HOOK_BONUS_MULTIPLICATIVE
 
+///Check if tha target can be caught by the hook
+/obj/item/fishing_hook/proc/can_be_hooked(atom/target)
+	return isitem(target)
+
+///Any special effect when hooking a target that's not managed by the fishing rod.
+/obj/item/fishing_hook/proc/hook_attached(atom/target, obj/item/fishing_rod/rod)
+	return
 
 /**
  * Is there a reason why this hook couldn't fish in target_fish_source?
@@ -138,6 +139,14 @@
 	chasm_detritus_type = /datum/chasm_detritus/restricted/bodies
 	custom_premium_price = PAYCHECK_CREW * 6 //Monkestation edit
 
+/obj/item/fishing_hook/rescue/can_be_hooked(atom/target)
+	return ..() || isliving(target)
+
+/obj/item/fishing_hook/rescue/hook_attached(atom/target, obj/item/fishing_rod/rod)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.apply_status_effect(/datum/status_effect/grouped/hooked, rod.fishing_line)
+
 // This hook can only fish in chasms.
 /obj/item/fishing_hook/rescue/reason_we_cant_fish(datum/fish_source/target_fish_source)
 	if(istype(target_fish_source, /datum/fish_source/chasm))
@@ -159,13 +168,6 @@
 	desc = "A simple hook carved from sharpened bone"
 	icon_state = "hook_bone"
 
-/datum/crafting_recipe/bone_hook
-	name = "Goliath Bone Hook"
-	result = /obj/item/fishing_hook/bone
-	reqs = list(/obj/item/stack/sheet/bone = 1)
-	time = 2 SECONDS
-	category = CAT_TOOLS
-
 /obj/item/fishing_hook/stabilized
 	name = "gyro-stabilized hook"
 	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the bait both and up and down when reeling in, otherwise keeping it in place."
@@ -181,8 +183,17 @@
 	name = "jawed hook"
 	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever gets caught in its jaws."
 	icon_state = "jaws"
+	w_class = WEIGHT_CLASS_NORMAL
 	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_KILL
 	rod_overlay_icon_state = "hook_jaws_overlay"
+
+/obj/item/fishing_hook/jaws/can_be_hooked(atom/target)
+	return ..() || isliving(target)
+
+/obj/item/fishing_hook/jaws/hook_attached(atom/target, obj/item/fishing_rod/rod)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.apply_status_effect(/datum/status_effect/grouped/hooked/jaws, rod.fishing_line)
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"
@@ -202,7 +213,7 @@
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
-	new /obj/item/fishing_rod(src)
+	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
 
@@ -218,7 +229,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //It can still hold a fishing rod
 
 /obj/item/storage/toolbox/fishing/small/PopulateContents()
-	new /obj/item/fishing_rod(src)
+	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
 
