@@ -160,17 +160,17 @@
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
 
-/datum/sprite_accessory/hair/bedhead_glorppy
+/datum/sprite_accessory/hair/monke/bedhead_glorppy
 	name = "Bedhead (Glorppy ver.)"
 	icon_state = "hair_bedhead_glorppy"
 
-/datum/sprite_accessory/hair/bedhead_nestia
+/datum/sprite_accessory/hair/monke/bedhead_nestia
 	name = "Bedhead (Nestia ver.)"
 	icon_state = "hair_bedhead_nestia"
 
-/datum/sprite_accessory/hair/badlycut
+/datum/sprite_accessory/hair/shorter_long_bedhead
 	name = "Shorter Long Bedhead"
-	icon_state = "hair_verybadlycut"
+	icon_state = "hair_shorter_long_bedhead"
 
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
