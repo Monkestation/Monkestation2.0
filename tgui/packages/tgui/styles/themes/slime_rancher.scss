@@ -1,0 +1,304 @@
+.theme-slime_rancher {
+	--slime-housing: oklch(0.28 0.035 245);
+	--slime-cream: oklch(0.95 0.025 85);
+	--slime-ink: oklch(0.3 0.035 245);
+	--slime-cyan: oklch(0.76 0.105 205);
+	--slime-raspberry: oklch(0.51 0.17 355);
+	--slime-good: oklch(0.75 0.13 145);
+	--slime-caution: oklch(0.82 0.13 80);
+	--slime-danger: oklch(0.7 0.15 30);
+	--slime-track: oklch(0.87 0.025 85);
+	--slime-highlight: oklch(1 0 0 / 0.55);
+	--slime-shadow: oklch(0.2 0.035 245 / 0.22);
+	--slime-shell: oklch(0.55 0.13 252);
+	--slime-cell: oklch(0.45 0.115 254);
+	--slime-cell-deep: oklch(0.39 0.1 254);
+	--slime-cell-inset: oklch(0.2 0.08 254 / 0.45);
+	--slime-teal: oklch(0.82 0.1 200);
+	--slime-shell-text: oklch(0.9 0.04 240);
+	--slime-scroll-track: oklch(0.24 0.035 245);
+	--color-base: var(--slime-housing);
+	--color-text: var(--slime-cream);
+	--titlebar-background: var(--slime-housing);
+	--titlebar-text: var(--slime-cream);
+	--button-background-danger: var(--slime-raspberry);
+
+	.Window {
+		background: var(--slime-housing);
+	}
+
+	.Layout__content {
+		background-image: none;
+	}
+
+	.TitleBar {
+		border-bottom-color: var(--slime-cyan);
+		box-shadow: none;
+	}
+
+	.Window__contentPadding {
+		margin: 1rem;
+		height: auto;
+	}
+
+	.Layout__content {
+		color: var(--slime-ink);
+		font-size: 1rem;
+		line-height: 1.4;
+		font-variant-numeric: tabular-nums;
+		// chromium skips ::-webkit-scrollbar while scrollbar-color is set, and reset.scss sets it on body
+		scrollbar-color: auto;
+
+		&::-webkit-scrollbar {
+			width: 16px;
+		}
+
+		&::-webkit-scrollbar-track {
+			margin: 6px 0;
+			border-radius: 999px;
+			background: var(--slime-scroll-track);
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border: 4px solid var(--slime-scroll-track);
+			border-radius: 999px;
+			background: var(--slime-cyan);
+		}
+	}
+
+	h1,
+	h2,
+	p {
+		margin: 0;
+	}
+
+	h1 {
+		font-size: 1.5rem;
+		line-height: 1.25;
+		text-wrap: balance;
+	}
+
+	h2 {
+		font-size: 1.167rem;
+		line-height: 1.4;
+	}
+
+	.ProgressBar {
+		--progress-bar-color: var(--slime-cyan);
+		min-height: 1.833rem;
+		padding: 0 0.667rem;
+		overflow: hidden;
+		border: 0;
+		border-radius: 999px;
+		background: var(--slime-track);
+		color: var(--slime-ink);
+		font-weight: bold;
+		box-shadow: inset 0 1px 2px var(--slime-shadow);
+	}
+
+	.ProgressBar--color--good {
+		--progress-bar-color: var(--slime-good);
+	}
+
+	.ProgressBar--color--average {
+		--progress-bar-color: var(--slime-caution);
+	}
+
+	.ProgressBar--color--bad {
+		--progress-bar-color: var(--slime-danger);
+	}
+
+	.ProgressBar__fill {
+		border-radius: inherit;
+		box-shadow: inset 0 1px 0 var(--slime-highlight);
+		// probably good enough
+		transition:
+			width 700ms ease-out,
+			background-color 120ms ease-out;
+	}
+
+	.NoticeBox {
+		margin: 0;
+		padding: 0.667rem 1rem;
+		border-radius: 1.333rem;
+		background: var(--slime-caution);
+		color: var(--slime-ink);
+		font-weight: normal;
+		font-style: normal;
+	}
+
+	.NoticeBox--type--danger {
+		background: var(--slime-danger);
+		font-weight: bold;
+	}
+
+	.NoticeBox--type--info {
+		background: oklch(0.9 0.035 205);
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--slime-cyan);
+		outline-offset: 2px;
+	}
+
+	.Tooltip {
+		border-radius: 1rem;
+		background: var(--slime-housing);
+		color: var(--slime-cream);
+		backdrop-filter: none;
+		box-shadow: 0 2px 6px var(--slime-shadow);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.TitleBar__close,
+		.TitleBar__statusIcon,
+		.Tooltip.Floating--animated,
+		.ProgressBar,
+		.ProgressBar__fill {
+			transition: none;
+		}
+	}
+}
+
+// shared building blocks for every window in this theme
+.SlimeRancher {
+	&__card {
+		padding: 1rem;
+		border-radius: 2rem;
+		background: var(--slime-cream);
+		box-shadow:
+			inset 0 2px 0 var(--slime-highlight),
+			0 3px 0 var(--slime-shadow);
+	}
+
+	&__chip {
+		display: inline-block;
+		padding: 0.167rem 0.667rem;
+		border-radius: 999px;
+		background: var(--slime-cyan);
+		font-weight: bold;
+	}
+
+	&__heading {
+		justify-self: start;
+		padding: 0.333rem 1rem;
+		border-radius: 999px;
+		background: var(--slime-raspberry);
+		color: var(--slime-cream);
+	}
+
+	&__well {
+		display: grid;
+		gap: 0.167rem;
+		padding: 0.667rem 1rem;
+		border-radius: 1.333rem;
+		background: var(--slime-track);
+	}
+
+	&__name {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5em;
+		min-width: 0;
+		overflow-wrap: anywhere;
+		font-weight: bold;
+	}
+
+	&__swatch {
+		flex: 0 0 0.8em;
+		width: 0.8em;
+		height: 0.8em;
+		border-radius: 50%;
+		background: var(--slime-color);
+		box-shadow: 0 0 0 1px var(--slime-shadow);
+
+		// the backend's rainbow color is gray, so this one needs its own spectrum
+		&--rainbow {
+			background: linear-gradient(120deg,
+				oklch(0.7 0.17 25), oklch(0.85 0.14 85),
+				oklch(0.78 0.14 145), oklch(0.76 0.105 205),
+				oklch(0.65 0.16 295), oklch(0.72 0.16 355));
+		}
+	}
+
+	&__portrait {
+		position: relative;
+		width: 64px;
+		height: 64px;
+
+		&--transparent {
+			opacity: 0.7;
+		}
+	}
+
+	&__sprite {
+		position: absolute;
+		top: 0;
+		left: 0;
+		image-rendering: pixelated;
+	}
+
+	&__rule {
+		height: 0.5rem;
+		margin: 0;
+		border: 0;
+		background-image: radial-gradient(circle, var(--slime-rule-dot, oklch(0.8 0.035 85)) 0.2rem, transparent 0.22rem);
+		background-position: center;
+		background-repeat: repeat-x;
+		background-size: 0.9rem 0.5rem;
+	}
+
+	&__pips {
+		display: grid;
+		gap: 0.333rem;
+		min-width: 0;
+	}
+
+	&__pips-label {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.5rem;
+		overflow-wrap: anywhere;
+	}
+
+	&__pips-track {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: minmax(0, 1fr);
+		gap: 0.25rem;
+
+		> span {
+			height: 0.9rem;
+			border-radius: 0.35rem;
+			background: var(--slime-pip-off, var(--slime-track));
+			box-shadow: inset 0 1px 2px var(--slime-shadow);
+		}
+
+		> .SlimeRancher__pip--on {
+			background: var(--slime-pip-on, var(--slime-cyan));
+			box-shadow:
+				inset 0 1px 0 var(--slime-highlight),
+				0 1px 0 var(--slime-shadow);
+		}
+	}
+
+	&__empty {
+		grid-column: 1 / -1;
+		display: grid;
+		justify-items: center;
+		gap: 1rem;
+		padding: 2rem;
+		border-radius: 2rem;
+		background: var(--slime-cream);
+		text-align: center;
+		box-shadow:
+			inset 0 2px 0 var(--slime-highlight),
+			0 3px 0 var(--slime-shadow);
+
+		> .Icon {
+			padding: 1rem;
+			border-radius: 50%;
+			background: var(--slime-cyan);
+		}
+	}
+}

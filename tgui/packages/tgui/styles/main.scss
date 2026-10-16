@@ -81,6 +81,10 @@
 @include meta.load-css('./themes/generic-yellow.scss');
 @include meta.load-css('./themes/generic.scss');
 
+@include meta.load-css('./themes/slime_rancher.scss');
+@include meta.load-css('./interfaces/SlimeRancherScanner.scss');
+@include meta.load-css('./interfaces/SlimePen.scss');
+
 // NT Theme
 .Layout__content {
   background-image: url('assets/bg-nanotrasen.svg');
