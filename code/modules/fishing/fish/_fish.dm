@@ -627,7 +627,7 @@
 		fish_zap_range = 5
 		fish_zap_power = electrogenesis_power
 		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
-	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 MEGA JOULES, zap_flags = fish_zap_flags)
+	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, zap_flags = fish_zap_flags)
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

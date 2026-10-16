@@ -33,7 +33,10 @@
 	desc = "You're being caught like a fish by some asshat! Click to safely remove the hook or move away far enough to snap it off."
 	icon_state = "hooked"
 
-/atom/movable/screen/alert/status_effect/hooked/Click()
+/atom/movable/screen/alert/status_effect/hooked/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
 	if(!owner.can_resist())
 		return
 	owner.balloon_alert(owner, "removing hook...")
