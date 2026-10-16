@@ -1,6 +1,6 @@
 import { createSearch } from 'common/string';
 import { useState } from 'react';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import {
@@ -89,7 +89,7 @@ export const FishAnalyzer = (props) => {
                   width="150px"
                   placeholder="Search Fish..."
                   value={searchText}
-                  onInput={(e, value) => {
+                  onChange={(value) => {
                     setSearchText(value);
                   }}
                   fluid
