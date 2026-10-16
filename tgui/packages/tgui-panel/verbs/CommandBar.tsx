@@ -8,6 +8,7 @@ import {
 } from 'common/verb-constants';
 import { useAtomValue } from 'jotai';
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { throttle } from 'tgui-core/timer';
 
 import { settingsAtom } from '../settings/atoms';
 import {
@@ -90,6 +91,26 @@ function skipTokens(raw: string, count: number): number {
   while (pos < raw.length && raw[pos] === ' ') pos++;
   return pos;
 }
+
+function typingStatusParams(text: string) {
+  const firstSpace = text.indexOf(' ');
+  if (firstSpace < 0) {
+    return { verb: text, argument_length: -1 };
+  }
+  const argument = text.slice(firstSpace + 1);
+  const argumentLength = argument.startsWith('"')
+    ? argument.length - 1
+    : argument.length;
+  return { verb: text.slice(0, firstSpace), argument_length: argumentLength };
+}
+
+let lastTypingStatus = '';
+
+const sendTypingStatus = throttle((text: string) => {
+  if (text === lastTypingStatus) return;
+  lastTypingStatus = text;
+  Byond.topic({ commandbar_typing: 1, ...typingStatusParams(text) });
+}, 1000);
 
 const MODES = ['Command', 'Say', 'Me', 'OOC'] as const;
 type Mode = (typeof MODES)[number];
@@ -246,6 +267,10 @@ export function CommandBar() {
   useEffect(() => {
     Byond.sendMessage('verbs/request_verbs');
   }, []);
+
+  useEffect(() => {
+    sendTypingStatus(input);
+  }, [input]);
 
   // Wait for the stored mode, otherwise we can enter Say before it loads
   useEffect(() => {
