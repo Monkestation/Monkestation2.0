@@ -36,6 +36,10 @@
 		return FALSE
 	return ..()
 
+/datum/ai_controller/basic_controller/slime/get_access()
+	var/mob/living/basic/slime/slime_pawn = pawn
+	return slime_pawn.get_access()
+
 /// Ignores a target until duration runs out. Never shortens an existing, longer ignore.
 /datum/ai_controller/basic_controller/slime/proc/ignore_target(atom/target, duration)
 	var/expires_at = world.time + duration

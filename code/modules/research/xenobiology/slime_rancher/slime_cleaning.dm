@@ -50,6 +50,11 @@
 	ai_controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
 	update_ai_movement_type()
 
+/mob/living/basic/slime/get_access()
+	. = ..()
+	if(cleaner_slime)
+		. |= ACCESS_MAINT_TUNNELS
+
 /mob/living/basic/slime/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, cleaner_slime)) // special setter bc it messes with AI stuff
