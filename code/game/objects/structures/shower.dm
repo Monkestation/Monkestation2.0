@@ -330,14 +330,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		new /obj/item/stock_parts/water_recycler(drop_location())
 	qdel(src)
 
-/obj/machinery/shower/proc/check_heat(mob/living/L)
+/// Freezes or burns whoever is under the shower if the water is too cold or too hot
+/obj/machinery/shower/proc/check_heat(mob/living/living)
 	if(current_temperature == SHOWER_FREEZING)
-		L.adjust_bodytemperature(-80, 80)
-		to_chat(L, span_warning("[src] is freezing!"))
+		living.adjust_bodytemperature(-80, 80)
+		to_chat(living, span_warning("[src] is freezing!"))
 	else if(current_temperature == SHOWER_BOILING)
-		L.adjust_bodytemperature(35, 0, 500)
-		L.adjustFireLoss(5)
-		to_chat(L, span_danger("[src] is searing!"))
+		living.adjust_bodytemperature(35, 0, 500)
+		living.adjustFireLoss(5)
+		to_chat(living, span_danger("[src] is searing!"))
 
 
 /obj/structure/showerframe

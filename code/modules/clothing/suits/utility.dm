@@ -55,11 +55,11 @@
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/suit/utility/fire/firefighter
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/utility/fire/heavy

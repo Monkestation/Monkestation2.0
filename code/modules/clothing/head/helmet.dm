@@ -396,8 +396,6 @@
 	wound = 15
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
-	cold_protection = HEAD
-	heat_protection = HEAD
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
@@ -407,6 +405,8 @@
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF
 	desc_controls = "CTRL-Click to toggle the chinstrap."
 	has_helmet_strap = TRUE
+	cold_protection = HEAD
+	heat_protection = HEAD
 
 /obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload)
 	. = ..()

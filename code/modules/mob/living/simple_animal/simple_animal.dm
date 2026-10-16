@@ -341,16 +341,7 @@
 		. = FALSE
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	var/atom/A = loc
-	if(isturf(A))
-		var/areatemp = get_temperature(environment)
-		var/temp_delta = areatemp - bodytemperature
-		if(abs(temp_delta) > 5)
-			if(temp_delta < 0)
-				if(!on_fire)
-					adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, temp_delta, 0))
-			else
-				adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, 0, temp_delta))
+	normalize_temperature(environment, seconds_per_tick)
 
 	if(!environment_air_is_safe() && unsuitable_atmos_damage)
 		adjustHealth(unsuitable_atmos_damage * seconds_per_tick)
@@ -359,6 +350,20 @@
 	else
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
+
+/// Moves our body temperature towards the temperature of the turf we are on
+/mob/living/simple_animal/proc/normalize_temperature(datum/gas_mixture/environment, seconds_per_tick)
+	if(!isturf(loc))
+		return
+	var/areatemp = get_temperature(environment)
+	var/temp_delta = areatemp - bodytemperature
+	if(abs(temp_delta) <= 5)
+		return
+	if(temp_delta < 0)
+		if(!on_fire)
+			adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, temp_delta, 0))
+	else
+		adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, 0, temp_delta))
 
 /mob/living/simple_animal/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	if(butcher_results || guaranteed_butcher_results)

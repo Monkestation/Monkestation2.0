@@ -258,8 +258,6 @@
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/hostile_environment
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	name = "H.E.C.K. suit"
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
@@ -270,9 +268,9 @@
 
 	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
 	armor_type = /datum/armor/hooded_hostile_environment
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_flags = THICKMATERIAL|HEADINTERNALS

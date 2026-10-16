@@ -123,11 +123,10 @@
 	icon_state = "pillow_[variation]_t"
 
 /obj/item/clothing/suit/pillow_suit
-	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
 	name = "pillow suit"
 	desc = "Part man, part pillow. All CARNAGE!"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
-	//a pillow suit must be hella warm
+	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
 	allowed = list(/obj/item/pillow) //moar pillow carnage
 	icon = 'icons/obj/pillow.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'

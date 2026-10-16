@@ -306,9 +306,9 @@
 		if(!HAS_TRAIT(iced, TRAIT_FROZEN) && !(iced.resistance_flags & FREEZE_PROOF))
 			iced.AddElement(/datum/element/frozen)
 
-	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
-			L.apply_status_effect(/datum/status_effect/freon)
+	for(var/mob/living/freezer in src)
+		if(freezer.bodytemperature <= 50)
+			freezer.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return TRUE
 

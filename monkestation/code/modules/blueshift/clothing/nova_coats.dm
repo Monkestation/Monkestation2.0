@@ -159,7 +159,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/jacket/croptop
-	cold_protection = CHEST|ARMS
 	name = "crop top turtleneck"
 	desc = "A comfy looking turtleneck that exposes your midriff, fashionable but makes the point of a sweater moot."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
@@ -169,6 +168,7 @@
 	greyscale_colors = "#1d1b1b"
 
 	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 

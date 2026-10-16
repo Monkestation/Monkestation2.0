@@ -1,6 +1,5 @@
 /****************Explorer's Suit and Mask****************/
 /obj/item/clothing/suit/hooded/explorer
-	cold_protection = CHEST|GROIN|LEGS|ARMS
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
 	icon_state = "explorer"
@@ -10,6 +9,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
@@ -111,14 +111,14 @@
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 
 /obj/item/clothing/suit/hooded/cloak/goliath
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
 	name = "goliath cloak"
 	icon_state = "goliath_cloak"
 	desc = "A staunch, practical cape made out of numerous monster materials, it is coveted amongst exiles & hermits."
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()

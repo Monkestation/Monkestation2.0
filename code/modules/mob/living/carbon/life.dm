@@ -491,17 +491,17 @@
  * Account for the insulation and max temperature change range for the mob
  *
  * vars:
- * * M The mob/living/carbon that is sharing body heat
+ * * target The mob/living/carbon that is sharing body heat
  */
-/mob/living/carbon/proc/share_bodytemperature(mob/living/carbon/M)
-	var/temp_diff = bodytemperature - M.bodytemperature
+/mob/living/carbon/proc/share_bodytemperature(mob/living/carbon/target)
+	var/temp_diff = bodytemperature - target.bodytemperature
 	if(temp_diff > 0) // you are warm share the heat of life
-		M.adjust_bodytemperature((temp_diff * 0.5), use_insulation=TRUE, use_steps=TRUE) // warm up the giver
-		adjust_bodytemperature((temp_diff * -0.5), use_insulation=TRUE, use_steps=TRUE) // cool down the reciver
+		target.adjust_bodytemperature((temp_diff * 0.5), use_insulation = TRUE, use_steps = TRUE) // warm up the giver
+		adjust_bodytemperature((temp_diff * -0.5), use_insulation = TRUE, use_steps = TRUE) // cool down the reciver
 
 	else // they are warmer leech from them
-		adjust_bodytemperature((temp_diff * -0.5) , use_insulation=TRUE, use_steps=TRUE) // warm up the reciver
-		M.adjust_bodytemperature((temp_diff * 0.5), use_insulation=TRUE, use_steps=TRUE) // cool down the giver
+		adjust_bodytemperature((temp_diff * -0.5), use_insulation = TRUE, use_steps = TRUE) // warm up the reciver
+		target.adjust_bodytemperature((temp_diff * 0.5), use_insulation = TRUE, use_steps = TRUE) // cool down the giver
 
 /**
  * Adjust the body temperature of a mob
@@ -515,7 +515,7 @@
  * * use_steps (optional) Use the body temp divisors and max change rates
  * * capped (optional) default True used to cap step mode
  */
-/mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
+/mob/living/carbon/adjust_bodytemperature(amount, min_temp = 0, max_temp = INFINITY, use_insulation = FALSE, use_steps = FALSE, capped = TRUE)
 	if(HAS_TRAIT(src, TRAIT_HYPOTHERMIC) && amount > 0) //Prevent warming up
 		return
 	// apply insulation to the amount of change

@@ -21,9 +21,9 @@
 		hit_mob.adjust_bodytemperature((thermal_protection * temperature) + temperature)
 
 	else if(isliving(target))
-		var/mob/living/L = target
+		var/mob/living/living_target = target
 		// the new body temperature is adjusted by the bullet's effect temperature
-		L.adjust_bodytemperature((1 - blocked) * temperature)
+		living_target.adjust_bodytemperature((1 - blocked) * temperature)
 
 	if(isobj(target))
 		var/obj/objectification = target

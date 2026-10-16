@@ -213,13 +213,15 @@
 	return ..()
 
 /datum/status_effect/bonechill/tick()
-	if(prob(50))
-		owner.adjustFireLoss(1)
-		owner.set_jitter_if_lower(6 SECONDS)
-		owner.adjust_bodytemperature(-10)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/humi = owner
-			humi.adjust_coretemperature(-10)
+	if(!prob(50))
+		return
+
+	owner.adjustFireLoss(1)
+	owner.set_jitter_if_lower(6 SECONDS)
+	owner.adjust_bodytemperature(-10)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/humi = owner
+		humi.adjust_coretemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)

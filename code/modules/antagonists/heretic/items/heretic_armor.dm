@@ -10,11 +10,10 @@
 	inhand_icon_state = null
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEBELT
 	body_parts_covered = CHEST | GROIN | LEGS | FEET | ARMS
-	cold_protection = FULL_BODY
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION
 	transparent_protection = HIDEGLOVES | HIDESUITSTORAGE | HIDEJUMPSUIT | HIDESHOES | HIDENECK
-	// cold_protection = FULL_BODY
+	cold_protection = FULL_BODY
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
@@ -104,11 +103,9 @@
 	armor_type = /datum/armor/eldritch_armor/ash
 	flags_inv = HIDEBELT
 	body_parts_covered = FULL_BODY
-	cold_protection = FULL_BODY
 	heat_protection = FULL_BODY
-	// heat_protection = FULL_BODY
 	max_heat_protection_temperature = 50000
-	// cold_protection = FULL_BODY
+	cold_protection = FULL_BODY
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | LAVA_PROOF | FREEZE_PROOF
 	actions_types = list(/datum/action/item_action/toggle/flames)
@@ -336,7 +333,6 @@
 // Cosmic
 // Allows you to toggle gravity for yourself at will
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	name = "\improper Starwoven Cloak"
 	desc = "Gleaming gems conjure forth wisps of power, turning about to illuminate the wearer in a dim radiance. \
 			Gazing upon the robe, you cannot help but feel noticed."
@@ -344,7 +340,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic
 	armor_type = /datum/armor/eldritch_armor/cosmic
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
-	// cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	actions_types = list(/datum/action/item_action/toggle/gravity, /datum/action/cooldown/spell/jaunt/space_crawl)
 	/// If our robes are making us weightless
@@ -397,7 +393,7 @@
 	icon_state = "cosmic_armor"
 	armor_type = /datum/armor/eldritch_armor/cosmic
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
-	// cold_protection = HEAD
+	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic/Initialize(mapload)
