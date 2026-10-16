@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE, COLOR_RED, COLOR_BLUE, COLOR_GREEN, COLOR_MAGENTA)) //monkestation addition
+GLOBAL_VAR_INIT(starlight_color, pick(100;COLOR_SPACE_BLUE, 75;COLOR_BLUE, 25;COLOR_TEAL, 25;COLOR_CYAN, 10;COLOR_PURPLE, 10;COLOR_MAGENTA, 10;COLOR_GREEN, 5;COLOR_ORANGE, 5;COLOR_RED,)) //monkestation addition
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
