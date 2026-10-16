@@ -586,9 +586,10 @@
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
 
-/obj/projectile/fishing_cast/impact(atom/hit_atom)
+/obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	owner.hook_hit(hit_atom)
+	if(blocked < 100)
+		owner.hook_hit(target)
 	qdel(src)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
