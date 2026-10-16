@@ -225,7 +225,7 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 
-/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	var/turf/approx = get_turf(fisherman) //todo pass the parent
 	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))
@@ -286,7 +286,7 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
 
-/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	if(!istype(get_area(fisherman), /area/station/holodeck))
 		return "You need to be inside the Holodeck to catch holographic fish."
