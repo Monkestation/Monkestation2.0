@@ -39,7 +39,7 @@
 			continue
 		if(HAS_TRAIT(dancer, TRAIT_DISCO_DANCER))
 			continue
-		dance(dancer, rand(1, 4))
+		dance(dancer, rand(1, 3))
 
 /obj/machinery/jukebox/disco/proc/dance_setup()
 	var/turf/cen = get_turf(src)
@@ -184,8 +184,6 @@
 			dance2(dancer)
 		if(3)
 			start_dance3(dancer)
-		if(4)
-			dance4(dancer)
 
 /mob/proc/dance_flip()
 	if(dir == WEST)
@@ -229,12 +227,4 @@
 	dancer.setDir(dir)
 	dancer.set_resting(!dancer.resting, silent = TRUE, instant = TRUE)
 
-/obj/machinery/jukebox/disco/proc/dance4(mob/living/dancer, dance_length = 1.5 SECONDS)
-	var/matrix/initial_matrix = matrix(dancer.transform)
-	animate(dancer, transform = matrix(dancer.transform).Turn(180), time = 2, loop = 0)
-	dancer.emote("spin")
-	addtimer(CALLBACK(src, PROC_REF(dance4_revert), dancer, initial_matrix), dance_length, TIMER_CLIENT_TIME)
 
-/obj/machinery/jukebox/disco/proc/dance4_revert(mob/living/dancer, matrix/starting_matrix)
-	animate(dancer, transform = starting_matrix, time = 5, loop = 0)
-	REMOVE_TRAIT(dancer, TRAIT_DISCO_DANCER, REF(src))
