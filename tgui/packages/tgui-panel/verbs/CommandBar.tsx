@@ -197,6 +197,7 @@ export function CommandBar() {
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
   const [filledArgs, setFilledArgs] = useState<string[]>([]);
   const [mode, setMode] = useState<Mode>('Say');
+  const [modeLoaded, setModeLoaded] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const historyRef = useRef<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -232,8 +233,12 @@ export function CommandBar() {
 
   useEffect(() => {
     const loadStoredValues = async () => {
-      const storedMode = await storage.get('tgui-commandbar-mode');
-      if (storedMode !== undefined) setMode(storedMode);
+      try {
+        const storedMode = await storage.get('tgui-commandbar-mode');
+        if (storedMode !== undefined) setMode(storedMode);
+      } finally {
+        setModeLoaded(true);
+      }
     };
     loadStoredValues();
   }, []);
@@ -242,11 +247,13 @@ export function CommandBar() {
     Byond.sendMessage('verbs/request_verbs');
   }, []);
 
+  // Wait for the stored mode, otherwise we can enter Say before it loads
   useEffect(() => {
+    if (!modeLoaded) return;
     if (mode !== 'Command') {
       enterChatMode(mode);
     }
-  }, [initializeSignal]);
+  }, [initializeSignal, modeLoaded]);
 
   useEffect(() => {
     if (focusSignal > 0) {
