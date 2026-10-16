@@ -48,6 +48,7 @@
 /obj/item/gun/ballistic/shotgun/riot //for spawn in the armory
 	name = "riot shotgun"
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
+	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
 	fire_delay = 8
@@ -64,15 +65,8 @@
 /obj/item/gun/ballistic/shotgun/riot/sol
 	name = "\improper Renoster Shotgun"
 	desc = "A twelve gauge shotgun with a six shell capacity underneath. Made for and used by SolFed's various military branches."
-
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
 	icon_state = "renoster"
-
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "renoster"
-
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
 	inhand_icon_state = "renoster"
 
 	inhand_x_dimension = 32
@@ -120,8 +114,8 @@
 // Shotgun but EVIL!
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil
-	desc = "A twleve guage shotgun with an eight shell capacity underneath. This one is painted in a tacticool black."
-
+	desc = "A twelve guage shotgun with an eight shell capacity underneath. This one is painted in a tacticool black."
+	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "renoster_evil"
 	worn_icon_state = "renoster_evil"
 	inhand_icon_state = "renoster_evil"
@@ -144,6 +138,7 @@
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
+	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun_combat"
 	fire_delay = 8
@@ -170,8 +165,6 @@
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
 	icon_state = "cycler"
 	inhand_icon_state = "bulldog"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
@@ -233,6 +226,7 @@
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
+	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
@@ -561,8 +555,8 @@
 //auto shotgun parent
 /obj/item/gun/ballistic/shotgun/semiauto
 	name = "Semi-Auto Shotgun"
-	desc = "A semi-auto shotgun."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	desc = "A semi-auto shotgun! Something compels you to bug report upon seeing this."
+	icon_state = "flatgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "autoshotgun"
@@ -641,5 +635,5 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
-	pb_knockback = 0 //you may have your point blank, but you dont get a fling    Why tf are they worried about this when half the mining guns instantly kill you
+	pb_knockback = 0
 

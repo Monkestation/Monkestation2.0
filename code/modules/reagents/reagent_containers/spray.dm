@@ -318,7 +318,7 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 /obj/item/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagents in a given area."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'

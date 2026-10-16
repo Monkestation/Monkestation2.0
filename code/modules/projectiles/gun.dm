@@ -4,8 +4,11 @@
 /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "revolver"
+	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/misc/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/misc/righthand.dmi'
+	worn_icon = 'icons/obj/guns/ballistic/misc/onmob.dmi'
+	icon_state = "flatgun"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	flags_1 = CONDUCT_1

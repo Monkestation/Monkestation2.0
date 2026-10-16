@@ -72,6 +72,7 @@
 /obj/item/gun/ballistic/automatic/c20r
 	name = "\improper C-20r SMG"
 	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "c20r"
 	inhand_icon_state = "c20r"
 	fire_sound = 'sound/weapons/gun/smg/gunshot_c20.ogg'
@@ -311,7 +312,7 @@
 	name = "\improper Bogseo Heavy Submachine Gun"
 	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the hefty .585 cartridge. \
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
+	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "bogseo"
 	worn_icon_state = "bogseo"
 	inhand_icon_state = "bogseo"
@@ -364,7 +365,7 @@
 	desc = "A short barrel, further compacted conversion of the 'Lanca' rifle to fire pistol caliber .27-54 cartridges. \
 		Due to the intended purpose of the weapon, and less than optimal ranged performance of the projectile, it has \
 		nothing more than basic glow-sights as opposed to the ranged scope Lanca users might be used to."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_48.dmi'
+	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
 	icon_state = "miecz"
 	inhand_icon_state = "c20r"
 	worn_icon_state = "gun"
@@ -1087,7 +1088,7 @@
 	name = "proto-kinetic 'Rapier' smg"
 	desc = "Using partial ballistic technology and kinetic acceleration, the Mining Research department has managed to make the kinetic accelerator full auto. \
 	While the technology is promising, it is held back by certain factors, specifically limited ammo and no mod capacity, but that shouldn't be an issue with its performance."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/ballistic/mining/48x32.dmi'
 	icon_state = "pksmg"
 	burst_size = 2
 	actions_types = list()
@@ -1118,7 +1119,7 @@
 	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
 	to kill a beast. Has a fixed unremovable 150 round magazine with a special loading port on the outside, forcing you to \
 	top off and reload using stripper clips."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon = 'icons/obj/guns/ballistic/mining/48x32.dmi'
 	icon_state = "kineticlmg"
 	inhand_icon_state = "kineticlmg"
 	base_icon_state = "kineticlmg"

@@ -110,6 +110,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	name = "\improper .38 revolver"
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
+	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "c38"
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	w_class = WEIGHT_CLASS_SMALL
@@ -117,7 +118,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/c38/detective
 	name = "\improper Colt Detective Special"
 	desc = "A classic, if not outdated, law enforcement firearm. Uses .38 Special rounds. \nSome spread rumors that if you loosen the barrel with a wrench, you can \"improve\" it."
-
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_38
 	initial_fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
@@ -146,12 +146,13 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 /obj/item/gun/ballistic/revolver/syndicate
 	name = "\improper Syndicate Revolver"
+	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/syndicate/cowboy
 	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
-	//There's already a cowboy sprite in there!
+	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
 	icon_state = "lucky"
 
 /obj/item/gun/ballistic/revolver/syndicate/nuclear
@@ -160,6 +161,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
+	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "mateba"
 	has_manufacturer = FALSE
 
@@ -174,6 +176,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/nagant
 	name = "\improper Nagant revolver"
 	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
+	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "nagant"
 	can_suppress = TRUE
 
@@ -296,6 +299,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	name = "\improper Syndicate Revolver"
 	clumsy_check = FALSE
+	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
@@ -352,7 +356,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/takbok
 	name = "\improper Takbok Revolver"
 	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
 	inhand_icon_state = "takbok"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
@@ -390,6 +393,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 // Blueshields custom takbok revolver.
 /obj/item/gun/ballistic/revolver/takbok/blueshield
 	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
+	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "takbok_blueshield"
 	inhand_icon_state = "takbok_blueshield"
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
@@ -425,7 +429,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	name = "\improper .45 Long Revolver"
 	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
 	icon_state = "45revolver"
-	icon = 'icons/obj/guns/guns.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
 	obj_flags = UNIQUE_RENAME
 
@@ -445,6 +448,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	the wielder the dexterity to spin the revolver to eject the casings. Why it was designed to \
 	only eject the casings when spun, we cant be sure, but the Mining Research Director said \
 	that 'it will be really cool trust me'."
+	icon = 'icons/obj/guns/ballistic/mining/48x32.dmi'
 	icon_state = "miningbigiron"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/govmining
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
@@ -472,6 +476,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/handcannon
 	name = "\improper NT-500 'The Corporate Layoff'"
 	desc = "A revolver made for a NT Admiral, its said that its dealt with hundreds, if not thousands of employees."
+	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "handcannon"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/handcannon

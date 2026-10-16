@@ -465,7 +465,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -1497,7 +1497,7 @@
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger_inhand"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'

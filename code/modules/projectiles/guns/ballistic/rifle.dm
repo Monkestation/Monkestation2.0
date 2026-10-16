@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/rifle
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
-	icon_state = "moistnugget"
+	icon_state = "flatgun"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = "moistnugget"
@@ -205,6 +205,7 @@
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
+	icon_state = "moistnugget"
 	var/guns_left = 30
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
@@ -259,6 +260,7 @@
 	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
 		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
 		It is also able to be suppressed....somehow."
+	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "sniper"
 	weapon_weight = WEAPON_HEAVY
 	inhand_icon_state = "sniper"
@@ -371,7 +373,6 @@
 	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
 	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
 	icon_state = "brushgun"
-	icon = 'icons/obj/guns/guns.dmi'
 	bolt_wording = "Lever"
 	bolt_type = BOLT_TYPE_STANDARD
 	cartridge_wording = "bullet"
@@ -398,11 +399,11 @@
 	or just having a damn good time, but we found this laying on a table surrounded by about six researchers, \
 	and the Mining Research Director, all passed out on the floor with beers and sodas. Fires an absolutely massive round that \
 	is sure to stop pretty much anything in its tracks that would even warrent it."
+	icon = 'icons/obj/guns/ballistic/mining/48x32.dmi'
 	icon_state = "fatmac"
 	w_class = WEIGHT_CLASS_HUGE
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	inhand_icon_state = "fatmac"
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "fatmac"
