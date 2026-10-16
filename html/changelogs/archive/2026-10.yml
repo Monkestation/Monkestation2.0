@@ -214,3 +214,7 @@
   - map: boxstation ranch given a incubator nest
   - map: Blueshift ranch given chicken scanners
   - map: Icebox lower service distro was fixed.
+2026-10-16:
+  Absolucy:
+  - bugfix: fixed an off-by-one error with unusual particle effects.
+  - code_imp: hopefully made unusual particles less server-intensive.

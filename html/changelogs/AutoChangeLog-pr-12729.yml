@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "fixed an off-by-one error with unusual particle effects."
-  - code_imp: "hopefully made unusual particles less server-intensive."
