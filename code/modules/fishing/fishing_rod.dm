@@ -589,8 +589,8 @@
 /obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(blocked < 100)
+		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
 		owner.hook_hit(target)
-	qdel(src)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	if(owner.hook)
@@ -600,11 +600,10 @@
 	our_line = owner.create_fishing_line(src)
 
 /obj/projectile/fishing_cast/Destroy()
-	. = ..()
 	QDEL_NULL(our_line)
 	owner?.casting = FALSE
-
-
+	owner = null
+	return ..()
 
 /datum/beam/fishing_line
 	// Is the fishing rod held in left side hand
