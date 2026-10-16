@@ -317,6 +317,18 @@
 	cost = PAYCHECK_CREW * 8
 	contains = list(/obj/item/fishing_rod/telescopic)
 
+/datum/supply_pack/goody/fish_analyzer
+	name = "Fish Analyzer"
+	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
+	cost = PAYCHECK_CREW * 2.5
+	contains = list(/obj/item/fish_analyzer)
+
+/datum/supply_pack/goody/fish_catalog
+	name = "Fishing Catalog"
+	desc = "A catalog containing all the fishy info you'll ever need."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/book/manual/fish_catalog)
+
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug"
 	desc = "A bog standard coffee mug, for drinking coffee."
@@ -387,9 +399,3 @@
 	cost = PAYCHECK_COMMAND * 2.5
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/mod/module/megaphone)
-
-/datum/supply_pack/goody/fish_analyzer
-	name = "Fish Analyzer"
-	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
-	cost = CARGO_CRATE_VALUE * 2.5
-	contains = list(/obj/item/fish_analyzer)
