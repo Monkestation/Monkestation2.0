@@ -501,6 +501,10 @@
 	var/mob/living/friend = target
 	if(!isliving(friend) || !friend.client || friend.stat != CONSCIOUS || friend.incapacitated())
 		return FALSE
+	// roaming cleaners have a station to clean, they only say hi in passing
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(slime_pawn.cleaner_slime && isnull(slime_pawn.pen) && get_dist(slime_pawn, friend) > 1)
+		return FALSE
 	return (friend in controller.blackboard[BB_FRIENDS_LIST]) && can_see(controller.pawn, friend, scan_range)
 
 /// anyone on their feet who's actually playing, friend or not. grudges are left alone, those get dealt with elsewhere
@@ -518,6 +522,9 @@
 	if(!isliving(person) || isslime(person) || !person.client || person.stat != CONSCIOUS || person.body_position != STANDING_UP)
 		return FALSE
 	if(person in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		return FALSE
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(slime_pawn.cleaner_slime && isnull(slime_pawn.pen) && get_dist(slime_pawn, person) > 1)
 		return FALSE
 	return can_see(controller.pawn, person, scan_range)
 

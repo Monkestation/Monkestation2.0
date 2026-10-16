@@ -1,6 +1,3 @@
-/// How far (in path steps) a slime will walk in one hop
-#define SLIME_ROAM_PATH_LENGTH 50
-
 /datum/ai_movement/astar/slime
 	maximum_length = SLIME_SEEK_PATH_LENGTH
 
@@ -17,7 +14,7 @@
 /// Picks the next spot to wander to. Usually somewhere we haven't been lately, now and then towards a player.
 /datum/ai_behavior/slime_find_target/roam
 	action_cooldown = 4 SECONDS
-	scan_range = 20
+	scan_range = 40
 	must_be_reachable = TRUE
 
 /datum/ai_behavior/slime_find_target/roam/perform(seconds_per_tick, datum/ai_controller/basic_controller/slime/controller, target_key)
@@ -46,14 +43,22 @@
 	// we give up after a minute, or straight away if there's no path to them
 	COOLDOWN_START(slime_pawn, player_seek_timeout, 1 MINUTES)
 
-// the AI shuts off on floors with no living players, but someone we're out looking for is somewhere else by definition
+// the AI shuts off on floors with no living players, but someone we're out looking for is somewhere else by definition.
+// roaming cleaners hop floors on their own too, and would get stuck on any floor nobody's on
 /datum/ai_controller/basic_controller/slime/get_expected_ai_status()
 	. = ..()
-	if(. != AI_STATUS_OFF || !blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
+	if(. != AI_STATUS_OFF)
 		return
 	var/mob/living/basic/slime/slime_pawn = pawn
-	if(isnull(slime_pawn.client) && slime_pawn.stat != DEAD)
+	if(!isnull(slime_pawn.client) || slime_pawn.stat == DEAD)
+		return
+	if(blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
 		return AI_STATUS_ON
+	if(!slime_pawn.cleaner_slime || !isnull(slime_pawn.pen))
+		return
+	for(var/z_level in SSmapping.get_connected_levels(get_turf(slime_pawn)))
+		if(length(SSmobs.clients_by_zlevel[z_level]))
+			return AI_STATUS_ON
 
 /mob/living/basic/slime/proc/on_seek_changed(datum/source)
 	SIGNAL_HANDLER
@@ -71,7 +76,7 @@
 		return
 
 	var/turf/here = get_turf(controller.pawn)
-	for(var/i in 1 to 12)
+	for(var/i in 1 to 20)
 		var/turf/candidate = locate(here.x + rand(-scan_range, scan_range), here.y + rand(-scan_range, scan_range), here.z)
 		if(isnull(candidate) || get_dist(here, candidate) < 8)
 			continue
@@ -89,8 +94,7 @@
 	return !controller.is_ignoring(get_area(destination))
 
 /datum/ai_behavior/slime_find_target/roam/request_path(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate)
-	var/max_length = controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER) ? SLIME_SEEK_PATH_LENGTH : SLIME_ROAM_PATH_LENGTH
-	if(!SSpathfinder.astar_pathfind(controller.pawn, candidate, max_distance = max_length, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate))))
+	if(!SSpathfinder.astar_pathfind(controller.pawn, candidate, max_distance = SLIME_SEEK_PATH_LENGTH, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate))))
 		controller.ignore_target(candidate, SLIME_CHASE_GIVE_UP_TIME)
 
 /datum/ai_behavior/slime_find_target/roam/on_path_found(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate, list/path)
@@ -123,5 +127,3 @@
 		"boops into [sought] and jiggles proudly.",
 	))
 	slime_pawn.flump_against(sought)
-
-#undef SLIME_ROAM_PATH_LENGTH
