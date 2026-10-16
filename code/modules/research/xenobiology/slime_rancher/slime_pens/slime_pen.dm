@@ -1,8 +1,8 @@
 GLOBAL_LIST_EMPTY(slime_pens)
 
-/// Is this slime in a pen? (or it left one less than 10 minutes ago, close enough)
+/// Is this slime in a pen? (or it left one less than 10 minutes ago, close enough - cleaners skip the grace period)
 /mob/living/basic/slime/proc/is_ranched()
-	return pen || !COOLDOWN_FINISHED(src, pen_expiry_cooldown)
+	return pen || (!cleaner_slime && !COOLDOWN_FINISHED(src, pen_expiry_cooldown))
 
 /// slime food doesn't need to screech in your ear for the whole shift
 /datum/idle_behavior/idle_monkey/penned

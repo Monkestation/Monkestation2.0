@@ -47,7 +47,6 @@
 
 /obj/item/slime_mutation_syringe/cleaner/apply_mutation(mob/living/basic/slime/target)
 	target.set_cleaner_slime(TRUE)
-	COOLDOWN_RESET(target, pen_expiry_cooldown) // you prolly WANT cleaner slimes to split outside of pens
 
 /obj/item/slime_mutation_syringe/gooey_cat
 	name = "gooey cat slime mutation syringe"
