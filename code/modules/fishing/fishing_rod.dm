@@ -366,9 +366,7 @@
 		if("slot_action")
 			// Simple click with empty hand to remove, click with item to insert/switch
 			var/obj/item/held_item = user.get_active_held_item()
-			if(held_item == src)
-				return
-			use_slot(params["slot"], user, held_item)
+			use_slot(params["slot"], user, held_item == src ? null : held_item)
 			return TRUE
 
 /// Ideally this will be replaced with generic slotted storage datum + display
@@ -408,6 +406,9 @@
 					line = new_item
 		user.put_in_hands(current_item)
 		balloon_alert(user, "[slot] swapped")
+
+	if(new_item)
+		SEND_SIGNAL(new_item, COMSIG_FISHING_EQUIPMENT_SLOTTED, src)
 
 	update_icon()
 	playsound(src, 'sound/items/click.ogg', 50, TRUE)

@@ -271,7 +271,7 @@
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5 //For beginners
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
@@ -284,7 +284,7 @@
 		/obj/item/fish/holo/checkered = 5,
 		/obj/item/fish/holo/halffish = 5,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY
 
 /datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
