@@ -177,7 +177,7 @@
 			if(4 to INFINITY)
 				bandage_condition = "clean"
 
-		condition += " underneath a dressing of [bandage_condition] [limb.current_gauze.name]"
+		condition += " underneath a dressing of [bandage_condition] [limb.current_gauze.name]."
 	else
 		switch(infestation)
 			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
@@ -241,22 +241,13 @@
 	new burn common procs
 */
 
-/// if someone is using ointment or mesh on our burns
-/datum/wound/burn/flesh/proc/treat_burn_flesh_wound(obj/item/stack/medical/I, mob/user)
-	user.visible_message(span_notice("[user] begins applying [I] to [victim]'s [limb.plaintext_zone]..."), span_notice("You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
-	if (I.amount <= 0)
+/// Checks if the wound is in a state that ointment or flesh will help
+/datum/wound/burn/flesh/proc/can_be_ointmented_or_meshed()
+	if(infestation > 0 && sanitization < infestation)
 		return TRUE
-	if(!I.try_heal(victim, user, TRUE))
+	if(flesh_damage > 0 && flesh_healing <= flesh_damage)
 		return TRUE
-	user.visible_message(span_green("[user] applies [I] to [victim]."), span_green("You apply [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
-	sanitization += I.sanitization
-	flesh_healing += I.flesh_regeneration
-
-	if((infestation <= 0 || sanitization >= infestation) && (flesh_damage <= 0 || flesh_healing > flesh_damage))
-		to_chat(user, span_notice("You've done all you can with [I], now you must wait for the flesh on [victim]'s [limb.plaintext_zone] to recover."))
-		return TRUE
-	else
-		return try_treating(I, user)
+	return FALSE
 
 /// Paramedic UV penlights
 /datum/wound/burn/flesh/proc/uv(obj/item/flashlight/pen/medical_pen, mob/user)
@@ -292,15 +283,7 @@
 	return TRUE
 
 /datum/wound/burn/flesh/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/medical))
-		var/obj/item/stack/medical/medical_item = I
-		if(istype(I, /obj/item/stack/medical/mesh))
-			var/obj/item/stack/medical/mesh/mesh_check = I
-			if(!mesh_check.is_open)
-				to_chat(user, span_warning("You need to open [mesh_check] first."))
-				return
-		return treat_burn_flesh_wound(medical_item, user)
-	else if(istype(I, /obj/item/flashlight/pen))
+	if(istype(I, /obj/item/flashlight/pen))
 		return uv(I, user)
 
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
