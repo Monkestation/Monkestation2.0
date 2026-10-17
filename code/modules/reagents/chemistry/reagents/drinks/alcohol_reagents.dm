@@ -208,7 +208,7 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
 	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
-	drinker.adjust_bodytemperature(COLD_DRINK * REM * seconds_per_tick, min_temp = drinker.standard_body_temperature)
+	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
 	..()
@@ -710,7 +710,7 @@
 	liquid_fire_power = 8
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
-	drinker.adjust_bodytemperature(WARM_DRINK * REM * seconds_per_tick, max_temp = drinker.standard_body_temperature + 4 KELVIN) //310.15 is the normal bodytemp.
+	drinker.adjust_bodytemperature(15 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash
@@ -810,7 +810,7 @@
 	liquid_fire_power = 0
 
 /datum/reagent/consumable/ethanol/honeybee_mead/on_mob_life(mob/living/carbon/bee, seconds_per_tick, times_fired)
-	bee.adjust_bodytemperature(WARM_DRINK * REM * seconds_per_tick, max_temp = bee.standard_body_temperature)
+	bee.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, bee.get_body_temp_normal())
 	if(prob(0.6))
 		new /mob/living/basic/bee/friendly(get_turf(bee))
 	return ..()
@@ -928,7 +928,7 @@
 	liquid_fire_power = 4
 
 /datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	drinker.adjust_bodytemperature(2 * WARM_DRINK * REM * seconds_per_tick, max_temp = drinker.standard_body_temperature + 4 KELVIN) //310.15 is the normal bodytemp.
+	drinker.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/barefoot
@@ -1120,7 +1120,7 @@
 	liquid_fire_power = 2
 
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	drinker.adjust_bodytemperature(2.5 * WARM_DRINK * REM * seconds_per_tick, max_temp = drinker.standard_body_temperature + 8 KELVIN) //310.15 is the normal bodytemp.
+	drinker.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/red_mead
@@ -1154,7 +1154,7 @@
 	liquid_fire_power = 0
 
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	drinker.adjust_bodytemperature(2 * COLD_DRINK * REM * seconds_per_tick, min_temp = T0C) //310.15 is the normal bodytemp.
+	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, T0C) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/grog
@@ -1802,7 +1802,7 @@
 
 /datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
-	drinker.adjust_bodytemperature(WARM_DRINK * REM * seconds_per_tick, max_temp = drinker.standard_body_temperature)
+	drinker.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, drinker.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/ethanol/alexander
@@ -2320,7 +2320,7 @@
 
 /datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	// Heats the user up while the reagent is in the body. Occasionally makes you burst into flames.
-	drinker.adjust_bodytemperature(2.5 * WARM_DRINK * REM * seconds_per_tick)
+	drinker.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
 	if (SPT_PROB(2.5, seconds_per_tick))
 		drinker.adjust_fire_stacks(1)
 		drinker.ignite_mob()
@@ -2725,7 +2725,7 @@
 	liquid_fire_power = 4
 
 /datum/reagent/consumable/ethanol/gin_garden/on_mob_life(mob/living/carbon/doll, seconds_per_tick, times_fired)
-	doll.adjust_bodytemperature(COLD_DRINK * REM * seconds_per_tick, min_temp = doll.standard_body_temperature)
+	doll.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/ethanol/wine_voltaic
@@ -3139,7 +3139,7 @@
 
 /datum/reagent/consumable/ethanol/blue_blazer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjust_bodytemperature(2 * WARM_DRINK * REM * seconds_per_tick, max_temp = affected_mob.standard_body_temperature + 4 KELVIN) //310.15 is the normal bodytemp.
+	affected_mob.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/ethanol/hot_toddy
 	name = "Hot Toddy"
@@ -3153,7 +3153,7 @@
 
 /datum/reagent/consumable/ethanol/hot_toddy/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjust_bodytemperature(1.75 * WARM_DRINK * REM * seconds_per_tick, max_temp = affected_mob.standard_body_temperature + 4 KELVIN) //310.15 is the normal bodytemp.
+	affected_mob.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/ethanol/tizirian_sour
 	name = "Tizirian Sour"

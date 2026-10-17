@@ -87,7 +87,9 @@
 	// All evolutions over 2 (3,4,5) are spess proof
 	if(evolution_level > 2)
 		ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-		src.bodytemp_cold_damage_limit = -1
+		RemoveElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+		minimum_survivable_temperature = 0
+		apply_temperature_requirements()
 		src.pressure_resistance = 200
 		src.habitable_atmos = null
 

@@ -35,10 +35,8 @@
 
 	if(source.is_touching_rust())
 		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-		source.add_homeostasis_level(type, source.standard_body_temperature, 2.5 KELVIN)
 	else
 		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-		source.remove_homeostasis_level(type)
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -69,3 +67,5 @@
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume = min(source.blood_volume + (2.5 * delta_time), BLOOD_VOLUME_NORMAL)
 		// source.adjust_blood_volume(2.5 * delta_time, maximum = BLOOD_VOLUME_NORMAL)
+	// Slowly regulates your body temp
+	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature) / 5)

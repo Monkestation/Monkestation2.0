@@ -6,8 +6,8 @@
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 	unsuitable_heat_damage = 20
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"

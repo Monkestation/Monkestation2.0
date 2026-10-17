@@ -164,7 +164,10 @@
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * seconds_per_tick)
 	affected_mob.adjustPlasma(20 * REM * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(COLD_DRINK * REM * seconds_per_tick, min_temp = affected_mob.standard_body_temperature)
+	affected_mob.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, affected_mob.get_body_temp_normal())
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/humi = affected_mob
+		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	return ..()
 
 /datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)

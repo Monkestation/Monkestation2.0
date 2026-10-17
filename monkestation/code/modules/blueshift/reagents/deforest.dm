@@ -367,11 +367,11 @@
 	if((our_guy.mob_biotypes & MOB_ROBOTIC) || HAS_TRAIT(our_guy, TRAIT_STABLEHEART))
 		var/heating = mob_heating_muliplier * REM * seconds_per_tick
 		our_guy.reagents?.chem_temp += heating
-		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit)
+		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 		if(!ishuman(our_guy))
 			return
 		var/mob/living/carbon/human/human = our_guy
-		human.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit)
+		human.adjust_coretemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	else
 		our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1 * REM * seconds_per_tick)
 
@@ -408,11 +408,11 @@
 	if((our_guy.mob_biotypes & MOB_ROBOTIC) || HAS_TRAIT(our_guy, TRAIT_STABLEHEART))
 		var/heating = (mob_heating_muliplier * 2) * REM * seconds_per_tick
 		our_guy.reagents?.chem_temp += heating
-		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit - 5)
+		our_guy.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 		if(!ishuman(our_guy))
 			return
 		var/mob/living/carbon/human/human = our_guy
-		human.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit - 5)
+		human.adjust_coretemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	else
 		our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	our_guy.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
@@ -485,7 +485,7 @@
 	if((our_guy.mob_biotypes & MOB_ROBOTIC))
 		var/cooling = 50 * REM * seconds_per_tick
 		our_guy.reagents?.chem_temp -= cooling
-		our_guy.adjust_bodytemperature(-1 * cooling * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = our_guy.bodytemp_cold_damage_limit + 5)
+		our_guy.adjust_bodytemperature(-1 * cooling * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = our_guy.get_body_temp_cold_damage_limit() + 5)
 		our_guy.adjustFireLoss(-1.5)
 
 /datum/reagent/dinitrogen_plasmide/on_mob_metabolize(mob/living/affected_mob)
