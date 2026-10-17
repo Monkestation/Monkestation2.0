@@ -218,3 +218,17 @@
   Absolucy:
   - bugfix: fixed an off-by-one error with unusual particle effects.
   - code_imp: hopefully made unusual particles less server-intensive.
+2026-10-17:
+  Absolucy:
+  - rscadd: (SmArtKar) Blood-drunk miner now drops an infernal PKA with an in-built
+      improved rapid repeater modification.
+  - bugfix: PKA cooldown upgrades now no longer care about what order they're shoved
+      into the PKA.
+  hexakats:
+  - bugfix: You can no longer shrink modsuit control units
+  - refactor: replaced attackby with item_interaction for the BCK
+  - balance: The syndicate musket no longer fits in bags.
+  - balance: The syndicate musket no longer deals stamina damage.
+  notghosti:
+  - bugfix: Advanced carp, (Space dragon rift carp) health is fixed, and is now no
+      longer weaker then a regular carp.

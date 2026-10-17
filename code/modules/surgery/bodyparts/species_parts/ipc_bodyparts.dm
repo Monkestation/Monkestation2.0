@@ -20,6 +20,14 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 	/// IPC antennae stored in the head during construction or after beheading.
@@ -242,6 +250,14 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/arm/left/ipc
@@ -264,6 +280,14 @@
 	dmg_overlay_type = "synth"
 
 	disabling_threshold_percentage = 1
+
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -288,6 +312,14 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/left/ipc
@@ -310,6 +342,14 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/right/ipc
@@ -331,5 +371,13 @@
 	step_sounds = list('sound/effects/servostep.ogg')
 
 	disabling_threshold_percentage = 1
+
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)

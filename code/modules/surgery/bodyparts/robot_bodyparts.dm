@@ -1,11 +1,3 @@
-#define ROBOTIC_LIGHT_BRUTE_MSG "marred"
-#define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
-#define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
-
-#define ROBOTIC_LIGHT_BURN_MSG "scorched"
-#define ROBOTIC_MEDIUM_BURN_MSG "charred"
-#define ROBOTIC_HEAVY_BURN_MSG "smoldering"
-
 //For ye whom may venture here, split up arm / hand sprites are formatted as "l_hand" & "l_arm".
 //The complete sprite (displayed when the limb is on the ground) should be named "borg_l_arm".
 //Failure to follow this pattern will cause the hand's icons to be missing due to the way get_limb_icon() works to generate the mob's icons using the aux_zone var.
@@ -454,11 +446,3 @@
 	brute_modifier = 0.5
 	burn_modifier = 0.5
 	is_emissive = TRUE
-
-#undef ROBOTIC_LIGHT_BRUTE_MSG
-#undef ROBOTIC_MEDIUM_BRUTE_MSG
-#undef ROBOTIC_HEAVY_BRUTE_MSG
-
-#undef ROBOTIC_LIGHT_BURN_MSG
-#undef ROBOTIC_MEDIUM_BURN_MSG
-#undef ROBOTIC_HEAVY_BURN_MSG
