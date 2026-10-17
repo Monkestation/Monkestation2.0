@@ -34,7 +34,10 @@
 /datum/bodypart_overlay/mutant/satyr_fluff/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/satyr_fluff/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/satyr_fluff/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 
@@ -59,7 +62,10 @@
 /datum/bodypart_overlay/mutant/satyr_horns/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/satyr_horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/satyr_horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 //ONI STUFF
@@ -88,7 +94,10 @@
 /datum/bodypart_overlay/mutant/oni_tail/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_tail/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/oni_wings
@@ -115,7 +124,10 @@
 /datum/bodypart_overlay/mutant/oni_wings/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_wings/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/oni_horns
@@ -142,5 +154,8 @@
 /datum/bodypart_overlay/mutant/oni_horns/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE

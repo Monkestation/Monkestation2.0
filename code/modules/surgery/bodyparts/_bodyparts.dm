@@ -109,8 +109,8 @@
 	var/species_color = ""
 	///Limbs need this information as a back-up incase they are generated outside of a carbon (limbgrower)
 	var/should_draw_greyscale = TRUE
-	///An "override" color that can be applied to ANY limb, greyscale or not.
-	var/variable_color = ""
+	/// An assoc list of priority (as a string because byond) -> color, used to override draw_color.
+	var/list/color_overrides
 	/// Color of the damage overlay
 	var/damage_color = COLOR_BLOOD
 
@@ -216,6 +216,8 @@
 	var/limb_flags
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
+	/// A potential texturing overlay to put on the limb
+	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -241,6 +243,10 @@
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_loss))
 
 	RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
+
+	if(texture_bodypart_overlay)
+		texture_bodypart_overlay = new texture_bodypart_overlay()
+		add_bodypart_overlay(texture_bodypart_overlay)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
@@ -855,7 +861,7 @@
 				SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD),
 				SIGNAL_ADDTRAIT(TRAIT_NOBLOOD),
 				))
-		UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_LIVING_SET_BODY_POSITION))
+		UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_LIVING_SET_BODY_POSITION, COMSIG_COMPONENT_CLEAN_ACT))
 		UnregisterSignal(old_owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 		check_removal_composition(old_owner)
 	if(owner)
@@ -879,6 +885,7 @@
 
 		RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(refresh_bleed_rate))
+		RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_owner_clean))
 		check_adding_composition(owner)
 
 	refresh_bleed_rate()
@@ -988,12 +995,7 @@
 			is_husked = FALSE
 			is_invisible = FALSE
 
-	if(variable_color)
-		draw_color = variable_color
-	else if(should_draw_greyscale)
-		draw_color = (species_color) || (skin_tone && skintone2hex(skin_tone))
-	else
-		draw_color = null
+	update_draw_color()
 
 	if(!is_creating || !owner)
 		return
@@ -1027,12 +1029,31 @@
 		skin_tone = ""
 		species_color = ""
 
-	draw_color = variable_color
-	if(should_draw_greyscale) //Should the limb be colored?
-		draw_color ||= species_color || (skin_tone ? skintone2hex(skin_tone) : null)
+	update_draw_color()
 
 	recolor_external_organs()
 	return TRUE
+
+/// Updates draw_color from the highest priority color override, or our species/skin tone color
+/obj/item/bodypart/proc/update_draw_color()
+	draw_color = null
+	if(LAZYLEN(color_overrides))
+		var/priority
+		for (var/override_priority in color_overrides)
+			if (text2num(override_priority) > priority)
+				priority = text2num(override_priority)
+				draw_color = color_overrides[override_priority]
+		return
+	if(should_draw_greyscale)
+		draw_color = species_color || (skin_tone ? skintone2hex(skin_tone) : null)
+
+/// Adds a color override to the limb with the given priority, the highest priority override is used as draw_color
+/obj/item/bodypart/proc/add_color_override(new_color, color_priority)
+	LAZYSET(color_overrides, "[color_priority]", new_color)
+
+/// Removes the color override with the given priority
+/obj/item/bodypart/proc/remove_color_override(color_priority)
+	LAZYREMOVE(color_overrides, "[color_priority]")
 
 /obj/item/bodypart/wash(clean_types)
 	. = ..()
@@ -1041,7 +1062,12 @@
 	if(IS_ORGANIC_LIMB(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
 
-//to update the bodypart's icon when not attached to a mob
+/// Called when limb's current owner gets washed
+/obj/item/bodypart/proc/on_owner_clean(mob/living/carbon/source, clean_types)
+	SIGNAL_HANDLER
+	wash(clean_types)
+
+/// To update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -1054,6 +1080,24 @@
 		img.pixel_x = px_x
 		img.pixel_y = px_y
 	add_overlay(standing)
+
+/obj/item/bodypart/update_atom_colour()
+	. = ..()
+	for(var/i in 1 to COLOUR_PRIORITY_AMOUNT)
+		var/list/checked_color = atom_colours[i]
+		if (!checked_color)
+			remove_color_override(LIMB_COLOR_ATOM_COLOR + i)
+			continue
+		var/actual_color = checked_color[ATOM_COLOR_VALUE_INDEX]
+		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
+			var/color_filter = checked_color[ATOM_COLOR_VALUE_INDEX]
+			actual_color = apply_matrix_to_color(COLOR_WHITE, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
+		add_color_override(actual_color, LIMB_COLOR_ATOM_COLOR + i)
+	update_limb()
+	if (owner)
+		owner.update_body_parts()
+	else
+		update_icon_dropped()
 
 ///Generates an /image for the limb to be used as an overlay
 /obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on)
@@ -1070,7 +1114,7 @@
 		if(dmg_overlay_type)
 			if(brutestate)
 				// divided into two overlays: one that gets colored and one that doesn't.
-				var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+				var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
 				brute_blood_overlay.color = get_color_from_blood_list(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
 				var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 				if(brute_damage_overlay)
@@ -1107,9 +1151,7 @@
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
 		. += aux
 
-	draw_color = variable_color
-	if(should_draw_greyscale) //Should the limb be colored outside of a forced color?
-		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
+	update_draw_color()
 
 	if(is_husked)
 		huskify_image(thing_to_husk = limb)
@@ -1161,7 +1203,7 @@
 	if(!is_husked)
 		//Draw external organs like horns and frills
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-			if(!dropped && !overlay.can_draw_on_bodypart(owner)) //if you want different checks for dropped bodyparts, you can insert it here
+			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
 			//Some externals have multiple layers for background, foreground and between
 			for(var/external_layer in overlay.all_layers)
@@ -1174,6 +1216,8 @@
 					if(overlay.get_extended_overlay(external_layer, src))
 						for(var/mutable_appearance/item as anything in overlay.get_extended_overlay(external_layer, src))
 							. += item
+			for(var/datum/layer in .)
+				overlay.modify_bodypart_appearance(layer)
 
 	return .
 
