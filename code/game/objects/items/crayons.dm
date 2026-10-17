@@ -991,6 +991,7 @@
 	user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 	return ITEM_INTERACT_SUCCESS
 
+/// Lets the user pick a new style for a robotic limb, returns FALSE if the limb isnt robotic
 /obj/item/toy/crayon/spraycan/proc/color_limb(obj/item/bodypart/limb, mob/living/user)
 	if(!IS_ROBOTIC_LIMB(limb))
 		return FALSE
