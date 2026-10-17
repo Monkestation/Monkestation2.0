@@ -32,7 +32,7 @@
 		return
 	owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.variable_color = "#00aa00"
+		part.add_color_override("#00aa00", LIMB_COLOR_HULK)
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
 	owner.physiology?.cold_mod *= HULK_COLD_DAMAGE_MOD
@@ -137,7 +137,7 @@
 		return
 	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.variable_color = null
+		part.remove_color_override(LIMB_COLOR_HULK)
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")
 	owner.physiology?.cold_mod /= HULK_COLD_DAMAGE_MOD
