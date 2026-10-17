@@ -46,6 +46,8 @@
 
 /// Try and fire off the scheduled event
 /datum/scheduled_event/proc/try_fire()
+	// avvoids issue with eepy ban stuff
+	SSgamemode.remove_scheduled_event(src, FALSE)
 	/// Remove our fake occurence pre-emptively for the checks.
 	remove_occurence()
 
@@ -57,8 +59,10 @@
 
 	///Trigger the event and remove the scheduled datum
 	message_admins("Scheduled Event: [event] successfully triggered.")
-	SSgamemode.remove_scheduled_event(src, FALSE)
-	SSgamemode.TriggerEvent(event, ignores_checks)
+	if(SSgamemode.TriggerEvent(event, ignores_checks) == EVENT_INTERRUPTED && !QDELETED(src))
+		message_admins("Scheduled Event: [event] was interrupted and has been refunded.")
+		SSgamemode.refund_scheduled_event(src)
+		return
 	qdel(src)
 
 /datum/scheduled_event/Destroy()

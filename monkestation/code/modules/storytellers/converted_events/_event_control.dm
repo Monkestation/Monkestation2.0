@@ -99,6 +99,8 @@
 	var/list/preferred_events
 	/// Do we always spawn our full amount, regardless of being over antag cap
 	var/always_spawn_full_amount = FALSE
+	/// The candidate pool passed to run_event(), held just long enough for the new event to take it in New().
+	var/list/next_candidate_pool
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
@@ -126,7 +128,7 @@
 /datum/round_event_control/antagonist/generate_image(list/mobs)
 	SScredits.generate_major_icon(mobs, event_icon_state)
 
-/datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE, list/candidate_pool)
 	. = ..()
 	if(!.)
 		return
@@ -134,9 +136,21 @@
 		return FALSE
 
 	var/antag_amt = get_antag_amount()
-	var/list/candidates = get_candidates()
+	var/list/candidates = get_candidates(candidate_pool)
 	if(length(candidates) < antag_amt)
 		return FALSE
+
+/datum/round_event_control/antagonist/run_event(random = FALSE, announce_chance_override = null, admin_forced = FALSE, event_cause, list/candidate_pool)
+	// New() is the only thing between here and the event's setup() that we can hand anything to
+	next_candidate_pool = candidate_pool
+	. = ..()
+	next_candidate_pool = null
+
+/datum/round_event_control/antagonist/get_href_actions()
+	// firing or scheduling one of these with no latejoiner would just grab someone already aboard, unprompted
+	if(track == EVENT_TRACK_LATEJOIN)
+		return "<a href='byond://?src=[REF(src)];action=force_next'>Force Next</a>"
+	return ..()
 
 /datum/round_event_control/antagonist/get_weight()
 	. = ..()
@@ -205,14 +219,14 @@
 			return i
 	return amount
 
-/datum/round_event_control/antagonist/proc/get_candidates()
+/datum/round_event_control/antagonist/proc/get_candidates(list/candidate_pool)
 	var/round_started = SSticker.HasRoundStarted()
 	var/new_players_arg = round_started ? FALSE : TRUE
 	var/living_players_arg = round_started ? TRUE : FALSE
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 
 	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
-													restricted_roles = restricted_roles, required_roles = required_roles)
+													restricted_roles = restricted_roles, required_roles = required_roles, candidate_pool = candidate_pool)
 	candidates = trim_candidates(candidates)
 	return candidates
 
