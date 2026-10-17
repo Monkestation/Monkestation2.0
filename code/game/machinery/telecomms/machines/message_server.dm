@@ -126,8 +126,8 @@
 		var/datum/data_tablet_msg/log_message = new(PDAsignal.format_target(), PDAsignal.format_sender(), PDAsignal.format_message(), PDAsignal.format_photo_path())
 		pda_msgs += log_message
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
-		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
-		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
+		var/datum/data_rc_msg/msg = new(signal.data["recipient_department"], signal.data["sender_department"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
+		if(signal.data["sender_department"]) // don't log messages not from a department but allow them to work
 			rc_msgs += msg
 	signal.data["reject"] = FALSE
 
