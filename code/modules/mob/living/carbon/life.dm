@@ -398,6 +398,8 @@
 				throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	if(HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
+		return
 	var/areatemp = get_temperature(environment)
 
 	if(stat != DEAD) // If you are dead your body does not stabilize naturally

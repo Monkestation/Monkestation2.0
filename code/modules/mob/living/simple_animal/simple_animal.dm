@@ -353,7 +353,7 @@
 
 /// Moves our body temperature towards the temperature of the turf we are on
 /mob/living/simple_animal/proc/normalize_temperature(datum/gas_mixture/environment, seconds_per_tick)
-	if(!isturf(loc))
+	if(!isturf(loc) || HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
 		return
 	var/areatemp = get_temperature(environment)
 	var/temp_delta = areatemp - bodytemperature

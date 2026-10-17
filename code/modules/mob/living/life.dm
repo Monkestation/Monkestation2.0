@@ -97,6 +97,9 @@
 
 // Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	// Prevents environmental temperature equalization, only direct temperature changes work.
+	if(HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
+		return
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 

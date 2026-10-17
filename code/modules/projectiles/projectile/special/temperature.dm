@@ -12,6 +12,10 @@
 
 /obj/projectile/temp/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
+	if(isliving(target) && temperature && blocked < 100)
+		var/mob/living/living_hit = target
+		living_hit.apply_status_effect(/datum/status_effect/thermally_destabilized)
+
 	if(iscarbon(target))
 		var/mob/living/carbon/hit_mob = target
 		var/thermal_protection = 1 - hit_mob.get_insulation_protection(hit_mob.bodytemperature + temperature)

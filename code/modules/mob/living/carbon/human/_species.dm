@@ -1618,12 +1618,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(istype(humi.loc, /obj/machinery/cryo_cell))
 		return
 
+	// Thermal stasis stops all natural body temperature changes, only direct changes work
+	var/thermal_stasis = HAS_TRAIT(humi, TRAIT_THERMAL_STASIS)
+
 	// Only stabilise core temp when alive and not in statis
-	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED))
+	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED) && !thermal_stasis)
 		body_temperature_core(humi, seconds_per_tick, times_fired)
 
 	// These do run in statis
-	body_temperature_skin(humi, seconds_per_tick, times_fired)
+	if(!thermal_stasis)
+		body_temperature_skin(humi, seconds_per_tick, times_fired)
 	body_temperature_alerts(humi, seconds_per_tick, times_fired)
 
 	// Do not cause more damage in statis
