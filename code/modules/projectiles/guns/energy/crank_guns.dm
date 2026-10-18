@@ -53,7 +53,7 @@
 	inhand_icon_state = "musket_syndie"
 	worn_icon_state = "las_musket_syndie"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/syndicate)
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/musket/syndicate/Initialize(mapload) //it takes two hand slots and costs 12 tc, they deserve fast recharging
 	. = ..()
