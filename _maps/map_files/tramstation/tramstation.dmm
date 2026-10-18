@@ -75584,6 +75584,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/holopad,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "whi" = (

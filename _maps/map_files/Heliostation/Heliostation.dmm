@@ -50728,6 +50728,9 @@
 	},
 /area/station/science/xenobiology)
 "mtb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /obj/effect/turf_decal/box/white{
 	color = "#D381C9"
 	},
@@ -125772,7 +125775,7 @@ leU
 eAL
 vXP
 vMu
-vMu
+mtb
 woK
 cRu
 isk
@@ -126028,7 +126031,7 @@ qvG
 cnz
 iXW
 nTf
-mtb
+cpA
 cpA
 pza
 cut
