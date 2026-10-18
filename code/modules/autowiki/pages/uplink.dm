@@ -67,7 +67,7 @@
 				"desc" = escape_value(entry.desc),
 				"cost" = entry.cost_override_string ? entry.cost_override_string : "[entry.cost] TC",
 				"purchasable_by" = escape_value(purchasable_by),
-				"notes" = escape_value("[entry.limited_stock! =- 1 ? "Limited stock of [entry.limited_stock]. " : ""][entry.illegal_tech ? "" : "Not eligible for illegal technology. "][entry.lock_other_purchases ? "Locks all item purchases<br>" : ""]")
+				"notes" = escape_value("[entry.limited_stock != -1 ? "Limited stock of [entry.limited_stock]. " : ""][entry.illegal_tech ? "" : "Not eligible for illegal technology. "][entry.lock_other_purchases ? "Locks all item purchases<br>" : ""]")
 			)) + "|-"
 
 			upload_icon(getFlatIcon(object, no_anim = TRUE), filename)
