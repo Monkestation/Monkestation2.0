@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "fixed tremere revival vassalization not working on oozeling cores."

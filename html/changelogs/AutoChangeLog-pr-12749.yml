@@ -1,0 +1,7 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - sound: "the monster hunter's red queen card ping now ACTUALLY comes from the direction of the nearest rabbit and sounds muffled when it's to the south"
+  - sound: "the card ping should actually be audible now"
+  - qol: "the red queen card cooldown is 3 seconds instead of 7, and a new ping cuts off the last one"
+  - bugfix: "monster hunters can see white rabbits through walls again, this has been broken for a good while and idk why"

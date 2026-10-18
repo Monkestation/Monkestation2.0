@@ -68,7 +68,8 @@
 		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
-			modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
+			if (modkit_upgrade.removable)
+				modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
 
@@ -83,7 +84,9 @@
 	var/list/display_names = list()
 	var/list/items = list()
 	for(var/modkits_length in 1 to length(modkits))
-		var/obj/item/thing = modkits[modkits_length]
+		var/obj/item/borg/upgrade/modkit/thing = modkits[modkits_length]
+		if (!thing.removable)
+			continue
 		display_names["[thing.name] ([modkits_length])"] = REF(thing)
 		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
 		if(length(thing.overlays))
@@ -140,6 +143,16 @@
 	kinetic_projectile.kinetic_gun = src //do something special on-hit, easy!
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
 		modkit_upgrade.modify_projectile(kinetic_projectile)
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/bdm
+	name = "infernal proto-kinetic accelerator"
+	icon_state = "kineticgun_evil"
+	inhand_icon_state = "kineticgun_evil"
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/bdm/Initialize(mapload)
+	. = ..()
+	var/obj/item/borg/upgrade/modkit/cooldown/repeater/bdm/repeater_mod = new()
+	repeater_mod.install(src)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
@@ -269,6 +282,8 @@
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
 	var/minebot_exclusive = FALSE
+	/// Can it be removed?
+	var/removable = TRUE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
 	. = ..()
@@ -290,10 +305,12 @@
 	. = TRUE
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/basic/mining_drone))
-			to_chat(user, span_notice("The modkit you're trying to install is only rated for minebot use."))
+			if (user)
+				to_chat(user, span_notice("The modkit you're trying to install is only rated for minebot use."))
 			return FALSE
 	else if(istype(KA.loc, /mob/living/basic/mining_drone))
-		to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
+		if (user)
+			to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
 		return FALSE
 	if(denied_type)
 		var/number_of_denied = 0
@@ -301,20 +318,24 @@
 			if(istype(modkit_upgrade, denied_type))
 				number_of_denied++
 			if(number_of_denied >= maximum_of_type)
-				. = FALSE
-				break
-	if(KA.get_remaining_mod_capacity() >= cost)
-		if(.)
-			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
-				return
-			to_chat(user, span_notice("You install the modkit."))
-			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
-			KA.modkits |= src
-		else
-			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
-	else
+				if (user)
+					to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
+				return FALSE
+
+	if(KA.get_remaining_mod_capacity() < cost)
 		to_chat(user, span_notice("You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar or right click with an empty hand to remove existing modkits."))
-		. = FALSE
+		return FALSE
+
+	if(transfer_to_loc)
+		if (user && !user.transferItemToLoc(src, KA))
+			return FALSE
+		else if (!user)
+			forceMove(KA)
+
+	if (user)
+		to_chat(user, span_notice("You install the modkit."))
+		playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
+	KA.modkits |= src
 
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -367,8 +388,8 @@
 
 	var/new_recharge_time = initial(KA.recharge_time)
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-		if(istype(modkit_upgrade, src))
-			new_recharge_time -= modifier
+		if(istype(modkit_upgrade, /obj/item/borg/upgrade/modkit/cooldown))
+			new_recharge_time -= modkit_upgrade.modifier
 
 	return new_recharge_time
 
@@ -546,6 +567,12 @@
 	if(valid_repeat)
 		KA.cell.use(KA.cell.charge)
 		KA.attempt_reload(KA.recharge_time * 0.25) //If you hit, the cooldown drops to 0.75 seconds.
+
+/obj/item/borg/upgrade/modkit/cooldown/repeater/bdm
+	name = "infernal repeater"
+	removable = FALSE
+	cost = 30
+	modifier = 10 // unlike the regular repeater this one's just plain faster: 0.6 seconds on a miss, 0.15 on a hit. it's an exclusive thing that's also a boss drop, so like, let it be special, as a treat. also this is jank to match tg's behavior.
 
 /obj/item/borg/upgrade/modkit/lifesteal
 	name = "lifesteal crystal"
