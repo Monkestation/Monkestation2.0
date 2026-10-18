@@ -165,3 +165,9 @@ kero.ogg is taken from Fulpstation
 https://github.com/fulpstation/fulpstation/pull/1109
 
 sound/mecha/tank_treads.ogg is made by 77Pacer -- https://freesound.org/s/425271/ -- License: Creative Commons 0
+
+knife1.ogg
+https://freesound.org/people/LeonsFlashlight/sounds/135015
+
+knifedrop3.ogg
+https://freesound.org/people/crcavol/sounds/154634
