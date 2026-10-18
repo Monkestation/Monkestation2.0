@@ -1,7 +1,7 @@
 /obj/item/gun/energy/e_gun/advtaser/mounted
 	name = "mounted taser"
 	desc = "An arm mounted dual-mode weapon that fires electrodes and disabler shots."
-	icon_state = "taser"
+	icon_state = "mtaser"
 	inhand_icon_state = "armcannonstun4"
 	display_empty = FALSE
 	force = 5

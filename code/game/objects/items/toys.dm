@@ -469,8 +469,8 @@
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
@@ -1500,8 +1500,8 @@
 	icon = 'icons/obj/guns/ballistic/48x32.dmi'
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger_inhand"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	COOLDOWN_DECLARE(foamfinger_cooldown)
 

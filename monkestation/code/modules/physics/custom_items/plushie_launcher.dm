@@ -49,8 +49,8 @@
 	desc = "High speed lizards coming your way!"
 	icon_state = "shotgun"
 	worn_icon_state = null
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand_64.dmi'
 	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64

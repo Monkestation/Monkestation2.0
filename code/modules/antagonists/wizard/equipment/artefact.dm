@@ -208,8 +208,8 @@
 	desc = "Simply hit the button on the side and this will instantly be filled with a new reagent! Warning: User not immune to effects."
 	icon_state = "chemsprayer_janitor"
 	inhand_icon_state = "chemsprayer_janitor"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	reagent_flags = NONE
 	volume = 1200
 	has_variable_transfer_amount = FALSE

@@ -13,8 +13,8 @@
 	name = "blast cannon"
 	desc = "A surprisingly portable device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
 	icon_state = "blastcannon_empty"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand_64.dmi'
 	inhand_x_dimension = 64
 	base_pixel_x = -2
 	pixel_x = -2

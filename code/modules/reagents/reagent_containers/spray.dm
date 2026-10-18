@@ -321,8 +321,8 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 	icon = 'icons/obj/guns/ballistic/48x32.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	stream_mode = 1
@@ -358,8 +358,8 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 	desc = "A utility used to spray large amounts of cleaning reagents in a given area. It regenerates space cleaner by itself but it's unable to be fueled by normal means."
 	icon_state = "chemsprayer_janitor"
 	inhand_icon_state = "chemsprayer_janitor"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/space_cleaner = 1000)
 	volume = 1000

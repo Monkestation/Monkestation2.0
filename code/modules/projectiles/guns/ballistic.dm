@@ -693,8 +693,8 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	desc = sawn_desc
 	update_weight_class(WEIGHT_CLASS_NORMAL)
 	//The file might not have a "gun" icon, let's prepare for this
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	inhand_icon_state = "gun"

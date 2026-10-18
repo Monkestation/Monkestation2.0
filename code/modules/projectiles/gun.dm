@@ -65,9 +65,6 @@
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 	/// True if a gun dosen't need a pin, mostly used for abstract guns like tentacles and meathooks
 	var/pinless = FALSE

@@ -84,8 +84,8 @@
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
 	inhand_icon_state = "dragnet"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/energy/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/energy/righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	modifystate = FALSE
 	w_class = WEIGHT_CLASS_NORMAL

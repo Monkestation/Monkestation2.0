@@ -167,8 +167,8 @@
 	icon_state = "musket"
 	inhand_icon_state = "musket"
 	worn_icon_state = "musket"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand_64.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'

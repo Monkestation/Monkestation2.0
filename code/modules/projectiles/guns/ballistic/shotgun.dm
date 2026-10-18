@@ -230,8 +230,8 @@
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	weapon_weight = WEAPON_MEDIUM
@@ -421,8 +421,8 @@
 	icon_state = "hookshotgun"
 	worn_icon_state = "gun"
 	inhand_icon_state = "hookshotgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/bounty
@@ -547,7 +547,7 @@
 	. = ..()
 
 	. += "Appears constructed to fire all six shots at once, as a volley.\
-		The firing system looks... `fragile`."
+		The firing system looks... fragile."
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/brazil/death
 	name = "Force of Nature"
@@ -567,8 +567,8 @@
 	name = "Semi-Auto Shotgun"
 	desc = "A semi-auto shotgun! Something compels you to bug report upon seeing this."
 	icon_state = "flatgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	inhand_icon_state = "autoshotgun"
 	worn_icon_state = "autoshotgun"
 	icon_state = "autoshotgun"
@@ -627,8 +627,8 @@
 	icon_state = "protokshotgun"
 	inhand_icon_state = "protokshotgun"
 	worn_icon_state = "protokshotgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	recoil = 3
 	force = 20
 	inhand_x_dimension = 32
@@ -646,4 +646,3 @@
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
 	pb_knockback = 0
-
