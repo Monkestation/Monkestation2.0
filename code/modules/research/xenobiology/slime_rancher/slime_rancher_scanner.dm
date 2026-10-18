@@ -18,6 +18,9 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// The slime we're currently locked onto, so the panel keeps updating as it eats
 	var/mob/living/basic/slime/slime
+	/// Last count of loose extracts around the slime, refreshed on a cooldown since ui_data runs constantly
+	var/nearby_extracts = 0
+	COOLDOWN_DECLARE(extract_recount_cooldown)
 
 /obj/item/slime_rancher_scanner/Initialize(mapload)
 	. = ..()
@@ -61,6 +64,7 @@
 		return
 	unset_slime()
 	slime = new_slime
+	COOLDOWN_RESET(src, extract_recount_cooldown)
 	RegisterSignal(slime, COMSIG_QDELETING, PROC_REF(unset_slime))
 	RegisterSignal(slime, COMSIG_SLIME_UPDATE_MOOD, PROC_REF(on_slime_mood_change))
 	balloon_alert(user, "scanned [slime]")
@@ -99,6 +103,10 @@
 	if(isnull(slime))
 		return list("scanned" = FALSE)
 
+	if(COOLDOWN_FINISHED(src, extract_recount_cooldown))
+		COOLDOWN_START(src, extract_recount_cooldown, 5 SECONDS)
+		nearby_extracts = slime.count_nearby_extracts()
+
 	var/sprite_icon = get_icon_dmi_path(slime)
 	var/list/data = list(
 		"scanned" = TRUE,
@@ -115,6 +123,7 @@
 		"max_health" = slime.maxHealth,
 		"nutrition" = floor(slime.nutrition),
 		"cores" = slime.cores,
+		"nearby_extracts" = nearby_extracts,
 		"growth" = slime.amount_grown,
 		"ranch_progress" = floor(slime.ranch_progress),
 		"split_cost" = slime.primed_split_cost,
@@ -136,6 +145,7 @@
 		"max_crossbreed_progress" = SLIME_EXTRACT_CROSSING_REQUIRED,
 		"max_nutrition" = SLIME_MAX_NUTRITION,
 		"extract_cost" = SLIME_RANCH_EXTRACT_COST,
+		"extract_cap" = SLIME_RANCH_NEARBY_EXTRACT_CAP,
 		"nutrition_starving" = SLIME_STARVE_NUTRITION,
 		"nutrition_hungry" = SLIME_HUNGER_NUTRITION,
 	)

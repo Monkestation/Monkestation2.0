@@ -76,6 +76,8 @@
 
 /// Health an adult slime has to drain to secrete one extract (or roll a mutation)
 #define SLIME_RANCH_EXTRACT_COST 50
+/// A ranching slime won't secrete extracts while this many are already lying around nearby
+#define SLIME_RANCH_NEARBY_EXTRACT_CAP 80
 /// Health a slime told to split by a friend has to drain first
 #define SLIME_RANCH_COMMAND_SPLIT_COST 50
 /// Health a slime that ate a breeding pellet has to drain first

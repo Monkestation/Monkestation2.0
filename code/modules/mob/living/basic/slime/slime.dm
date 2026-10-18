@@ -103,6 +103,7 @@
 	/// Slime type a ranch mutation already rolled, held onto until that mutation actually happens
 	var/datum/slime_type/pending_ranch_mutation
 	COOLDOWN_DECLARE(ranch_retry_cooldown)
+	COOLDOWN_DECLARE(extract_crowded_alert_cooldown)
 	/// Slime type we rolled to become when the current reproduction wind-up finishes
 	var/datum/slime_type/queued_mutation
 

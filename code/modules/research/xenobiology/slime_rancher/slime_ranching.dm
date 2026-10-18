@@ -9,6 +9,15 @@
 	ranch_progress += drained
 	try_ranch_outcome()
 
+/// Loose extracts lying around us, stops counting once it hits the cap
+/mob/living/basic/slime/proc/count_nearby_extracts()
+	var/count = 0
+	for(var/obj/item/slime_extract/extract in range(7, drop_location()))
+		count++
+		if(count >= SLIME_RANCH_NEARBY_EXTRACT_CAP)
+			break
+	return count
+
 /// checks whether we've banked enough to split, mutate, or pop out an extract
 /mob/living/basic/slime/proc/try_ranch_outcome()
 	if(has_status_effect(/datum/status_effect/slime_reproducing))
@@ -33,6 +42,12 @@
 		return
 
 	ranch_progress -= SLIME_RANCH_EXTRACT_COST
+	if(count_nearby_extracts() >= SLIME_RANCH_NEARBY_EXTRACT_CAP)
+		if(COOLDOWN_FINISHED(src, extract_crowded_alert_cooldown))
+			// randomized so a whole capped pen doesn't complain in one synchronized chorus
+			COOLDOWN_START(src, extract_crowded_alert_cooldown, rand(1 MINUTES, 2 MINUTES))
+			balloon_alert_to_viewers("too crowded for extracts!")
+		return
 	squish_out_extract()
 	for(var/i in 1 to cores)
 		var/obj/item/slime_extract/extract = new slime_type.core_type(drop_location())
