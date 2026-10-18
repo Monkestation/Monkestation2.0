@@ -8,8 +8,6 @@
 	name = "\improper Lionhunter's Rifle"
 	desc = "An antique looking rifle that looks immaculate despite being clearly very old."
 	slot_flags = ITEM_SLOT_BACK
-	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
-	worn_icon = 'icons/mob/clothing/back/lionhunter.dmi'
 	icon_state = "lionhunter"
 	inhand_icon_state = "lionhunter"
 	worn_icon_state = "lionhunter"

@@ -43,7 +43,6 @@
 /obj/item/gun/ballistic/automatic/pistol/clandestine
 	name = "\improper Ansem pistol"
 	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "pistol_evil"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
 	empty_indicator = TRUE
@@ -111,7 +110,6 @@
 /obj/item/gun/ballistic/automatic/pistol/aps
 	name = "\improper Stechkin APS machine pistol"
 	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm_aps
@@ -205,7 +203,6 @@
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil
 	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. This one is painted tacticool black."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "wespe_evil"
 	pin = /obj/item/firing_pin/implant/pindicate
 
@@ -372,7 +369,6 @@
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
 	name = "\improper Whispering-Jester .45"
 	desc = "A .45 handgun that is designed by Rayne Corp for various people such as jesters, insurgents, and even stealth operatives. The handgun has a built in holosight, suppressor, and laser sight."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "jester"
 	inhand_icon_state = "jester"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -429,11 +425,8 @@
 /obj/item/gun/ballistic/automatic/pistol/paco //Sec pistol, Paco from CEV Eris.
 	name = "\improper FS HG .35 Auto \"Paco\""
 	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines."
-	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "paco"
 	inhand_icon_state = "paco"
-	lefthand_file = 'icons/obj/guns/ballistic/nanotrasen/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/nanotrasen/righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
 	can_suppress = TRUE

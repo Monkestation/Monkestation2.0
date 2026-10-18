@@ -322,7 +322,7 @@
 /obj/item/gun/energy/printer
 	name = "cyborg lmg"
 	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
+	icon = 'icons/obj/guns/ballistic/48x32.dmi'
 	icon_state = "l6_cyborg"
 	cell_type = /obj/item/stock_parts/power_store/cell/secborg
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
@@ -401,7 +401,7 @@
 /obj/item/gun/energy/marksman_revolver
 	name = "marksman revolver"
 	desc = "Uses electric pulses to fire microscopic pieces of metal at incredibly high speeds. Alternate fire flips a coin that can be targeted for extra firepower."
-	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
+	icon = 'icons/obj/guns/ballistic/48x32.dmi'
 	icon_state = "revolver"
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'

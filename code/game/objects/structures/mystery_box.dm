@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 /obj/mystery_box_item
 	name = "???"
 	desc = "Who knows what it'll be??"
-	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
+	icon = 'icons/obj/guns/ballistic/48x32.dmi'
 	icon_state = "revolver"
 	pixel_y = -8
 	uses_integrity = FALSE

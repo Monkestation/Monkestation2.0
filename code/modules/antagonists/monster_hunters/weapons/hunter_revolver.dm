@@ -1,11 +1,8 @@
 /obj/item/gun/ballistic/revolver/hunter_revolver
 	name = "\improper Hunter's Revolver"
 	desc = "A large revolver, with an impossibly sharp silver blade at the end of its handle."
-	icon = 'icons/obj/weapons/guns/redeemer.dmi'
 	icon_state = "redeemer"
 	inhand_icon_state = "redeemer"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	base_pixel_x = -8
 	pixel_x = -8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

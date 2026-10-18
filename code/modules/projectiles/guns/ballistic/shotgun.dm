@@ -3,8 +3,8 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	worn_icon_state = null
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand_64.dmi'
 	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -48,7 +48,6 @@
 /obj/item/gun/ballistic/shotgun/riot //for spawn in the armory
 	name = "riot shotgun"
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
-	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
 	fire_delay = 8
@@ -65,6 +64,8 @@
 /obj/item/gun/ballistic/shotgun/riot/sol
 	name = "\improper Renoster Shotgun"
 	desc = "A twelve gauge shotgun with a six shell capacity underneath. Made for and used by SolFed's various military branches."
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	icon_state = "renoster"
 	worn_icon_state = "renoster"
 	inhand_icon_state = "renoster"
@@ -115,7 +116,6 @@
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil
 	desc = "A twelve guage shotgun with an eight shell capacity underneath. This one is painted in a tacticool black."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "renoster_evil"
 	worn_icon_state = "renoster_evil"
 	inhand_icon_state = "renoster_evil"
@@ -138,7 +138,6 @@
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
-	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun_combat"
 	fire_delay = 8
@@ -163,6 +162,8 @@
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube
 	name = "cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
 	icon_state = "cycler"
 	inhand_icon_state = "bulldog"
 	inhand_x_dimension = 32
@@ -226,7 +227,6 @@
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
@@ -510,10 +510,10 @@
 	name = "six-barreled \"TRABUCO\" shotgun"
 	desc = "Dear fucking god, what the fuck even is this!? Theres a green flag with a blue circle and a yellow diamond around it. Some text in the circle says: \"ORDEM E PROGRESSO.\""
 	icon_state = "shotgun_brazil"
+	worn_icon_state = "dshotgun"
+	inhand_icon_state = "shotgun_brazil"
 	slot_flags = NONE
 	icon = 'icons/obj/guns/48x32guns.dmi'
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15 //blunt edge and really heavy
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/six
@@ -538,6 +538,16 @@
 	user.throw_at(throw_target, knockback_distance, 2)
 	if(prob(death))
 		user.gib()
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/examine_more(mob/user)
+	. = ..()
+
+	. += "Appears constructed to fire all six shots at once, as a volley.\
+		The firing system looks... `fragile`."
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/brazil/death
 	name = "Force of Nature"

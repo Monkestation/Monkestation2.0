@@ -17,12 +17,8 @@
 		Seen commonly amongst the Marsians who produce the weapon, with many different shapes and sizes to fit \
 		the wide variety of modders the planet is home to."
 	base_icon_state = "hyeseong"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/saibasan/guns48x.dmi'
 	icon_state = "hyeseong_kill"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/saibasan/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/saibasan/guns_righthand.dmi'
 	inhand_icon_state = "hyeseong_kill"
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/saibasan/guns_worn.dmi'
 	worn_icon_state = "hyeseong_kill"
 	modifystate = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/cybersun_big_kill)
@@ -242,7 +238,6 @@
 //Short version of the above modular rifle, has less charge and different modes
 /obj/item/gun/energy/modular_laser_rifle/carbine
 	name = "\improper Hoshi modular laser carbine"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/saibasan/guns32x.dmi'
 	icon_state = "hoshi_kill"
 	inhand_icon_state = "hoshi_kill"
 	worn_icon_state = "hoshi_kill"
@@ -546,10 +541,7 @@
 	name = "\improper Lawbringer"
 	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v8 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	cell_type = /obj/item/stock_parts/power_store/cell/lawbringer
-	icon = 'monkestation/code/modules/security/icons/lawbringer.dmi'
 	icon_state = "lawbringer"
-	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	verb_say = "states"
 	force = 10

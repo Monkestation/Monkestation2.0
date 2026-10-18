@@ -88,7 +88,6 @@
 	name = "syndicate rebar crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
 			features a built in scope. Compatible with all known crossbow ammunition."
-	icon = 'icons/obj/guns/ballistic/syndicate/48x32.dmi'
 	base_icon_state = "rebarxbowsyndie"
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"

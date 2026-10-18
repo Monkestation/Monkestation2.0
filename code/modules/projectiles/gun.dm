@@ -4,10 +4,10 @@
 /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
-	lefthand_file = 'icons/obj/guns/ballistic/misc/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/misc/righthand.dmi'
-	worn_icon = 'icons/obj/guns/ballistic/misc/onmob.dmi'
+	icon = 'icons/obj/guns/ballistic/48x32.dmi'
+	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
+	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	worn_icon = 'icons/obj/guns/ballistic/onmob.dmi'
 	icon_state = "flatgun"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -25,6 +25,9 @@
 	action_slots = ALL
 	alternate_worn_layer = HANDS_LAYER+0.05
 	appearance_flags = KEEP_TOGETHER
+
+	pickup_sound = 'sound/items/handling/gun_pickup.ogg'
+	drop_sound = 'sound/items/handling/gun_drop.ogg'
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE

@@ -1,7 +1,6 @@
 /obj/item/gun/syringe
 	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon = 'icons/obj/guns/ballistic/misc/48x32.dmi'
 	icon_state = "medicalsyringegun"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -216,7 +215,6 @@
 /obj/item/gun/syringe/shot_gun
 	name = "double-barreled 'shot' gun"
 	desc = "Fuck yeah, cheers bro! \n\nThis bad-boy is loaded with shot glasses! Just make sure they're full unless you want your patrons swallowing shards of broken glass."
-	icon = 'icons/obj/guns/ballistic/nanotrasen/48x32.dmi'
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
