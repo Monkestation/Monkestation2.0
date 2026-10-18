@@ -44,7 +44,7 @@
 
 	qdel(parent)
 
-	return output+"</tabber>"
+	return output + "</tabber>"
 
 /datum/autowiki/vending/proc/format_product_list(list/product_list)
 	var/output = ""

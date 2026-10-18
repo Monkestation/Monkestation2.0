@@ -8,8 +8,10 @@
 	categories.len = 31
 
 	for (var/datum/uplink_item/entry as anything in subtypesof(/datum/uplink_item))
-		if(!ispath(entry.category)) continue
-		if(entry.category.weight < 0) continue
+		if(!ispath(entry.category))
+			continue
+		if(entry.category.weight < 0)
+			continue
 
 		if(!categories[entry.category.weight+1])
 			categories[entry.category.weight+1] = list()
@@ -33,11 +35,16 @@
 			entry = new entry ()
 			var/list/purchasable_keys = list()
 			var/purchasable_by = ""
-			if(entry.purchasable_from & UPLINK_TRAITORS) purchasable_keys += "\[\[traitors\]\]"
-			if(entry.purchasable_from & UPLINK_NUKE_OPS) purchasable_keys += "\[\[nuclear operatives\]\]"
-			if(entry.purchasable_from & UPLINK_CLOWN_OPS) purchasable_keys += "\[\[clown operatives\]\]"
-			if(entry.purchasable_from & UPLINK_SPY) purchasable_keys += "\[\[spy missions\]\]"
-			if(entry.purchasable_from & UPLINK_CONTRACTORS) purchasable_keys += "\[\[contractors\]\]"
+			if(entry.purchasable_from & UPLINK_TRAITORS)
+				purchasable_keys += "\[\[traitors\]\]"
+			if(entry.purchasable_from & UPLINK_NUKE_OPS)
+				purchasable_keys += "\[\[nuclear operatives\]\]"
+			if(entry.purchasable_from & UPLINK_CLOWN_OPS)
+				purchasable_keys += "\[\[clown operatives\]\]"
+			if(entry.purchasable_from & UPLINK_SPY)
+				purchasable_keys += "\[\[spy missions\]\]"
+			if(entry.purchasable_from & UPLINK_CONTRACTORS)
+				purchasable_keys += "\[\[contractors\]\]"
 
 			if(entry.restricted_roles)
 				for (var/lock in entry.restricted_roles)
@@ -60,7 +67,7 @@
 				"desc" = escape_value(entry.desc),
 				"cost" = entry.cost_override_string ? entry.cost_override_string : "[entry.cost] TC",
 				"purchasable_by" = escape_value(purchasable_by),
-				"notes" = escape_value("[entry.limited_stock!=-1 ? "Limited stock of [entry.limited_stock]. " : ""][entry.illegal_tech ? "" : "Not eligible for illegal technology. "][entry.lock_other_purchases ? "locks all item purchases<br>" : ""]")
+				"notes" = escape_value("[entry.limited_stock!=-1 ? "Limited stock of [entry.limited_stock]. " : ""][entry.illegal_tech ? "" : "Not eligible for illegal technology. "][entry.lock_other_purchases ? "Locks all item purchases<br>" : ""]")
 			)) + "|-"
 
 			upload_icon(getFlatIcon(object, no_anim = TRUE), filename)
