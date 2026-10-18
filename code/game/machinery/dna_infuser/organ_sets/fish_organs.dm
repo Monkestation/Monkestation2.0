@@ -22,7 +22,7 @@
 		TRAIT_EXPANDED_FOV, //fish vision
 		TRAIT_WATER_ADAPTATION,
 		)
-	limb_overlay = /datum/bodypart_overlay/texture/fishscale
+	limb_texture = /datum/bodypart_texture/fishscale
 	/// Are we at all five organs?
 	var/color_active = FALSE
 
@@ -292,6 +292,7 @@
 /datum/bodypart_overlay/mutant/tail/fish
 	feature_key = "fish_tail"
 	color_source = ORGAN_COLOR_OVERRIDE
+	mesh_in_suits = TRUE
 
 /datum/bodypart_overlay/mutant/tail/fish/override_color(obj/item/bodypart/bodypart_owner)
 	//If the owner uses mutant colors, inherit the color of the bodypart
@@ -302,15 +303,6 @@
 
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return GLOB.tails_list_fish
-
-/datum/bodypart_overlay/mutant/tail/fish/get_image(image_layer, obj/item/bodypart/limb, layer_name)
-	var/mutable_appearance/appearance = ..()
-	// We add all appearances the parent bodypart has to the tail to inherit scales and fancy effects
-	// but most other organs don't want to inherit those so we do it here and not on parent
-	for (var/datum/bodypart_overlay/texture/texture in limb?.bodypart_overlays)
-		if(texture.can_draw_on_bodypart(limb))
-			texture.modify_bodypart_appearance(appearance)
-	return appearance
 
 
 ///Lungs that replace the need of oxygen with water vapor or being wet
