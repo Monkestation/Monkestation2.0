@@ -94,8 +94,11 @@
 	return !controller.is_ignoring(get_area(destination))
 
 /datum/ai_behavior/slime_find_target/roam/request_path(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate)
-	if(!SSpathfinder.astar_pathfind(controller.pawn, candidate, max_distance = SLIME_SEEK_PATH_LENGTH, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate))))
-		controller.ignore_target(candidate, SLIME_CHASE_GIVE_UP_TIME)
+	if(SSpathfinder.astar_pathfind(controller.pawn, candidate, max_distance = SLIME_SEEK_PATH_LENGTH, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate))))
+		return
+	controller.ignore_target(candidate, SLIME_CHASE_GIVE_UP_TIME)
+	// refused before searching means they're too far off, same as on_path_found finding nothing
+	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
 
 /datum/ai_behavior/slime_find_target/roam/on_path_found(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate, list/path)
 	// no path means they're out of reach, so we stop looking instead of standing around for the rest of the minute
