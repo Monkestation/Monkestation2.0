@@ -83,7 +83,7 @@
 /datum/voucher_set/explorer/retro_laser
 	name = "Laser Gun Kit"
 	description = "Contains a low capacity but recharging laser gun, and a knife and flashlight to attach to it. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
-	icon = 'icons/obj/guns/explorer.dmi'
+	icon = 'icons/obj/guns/energy/48x32.dmi'
 	icon_state = "explorer"
 	set_items = list(
 		/obj/item/gun/energy/laser/explorer,

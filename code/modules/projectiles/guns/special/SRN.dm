@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/SRN_rocketlauncher
 	desc = "A rocket designed with the power of bluespace to send a singularity or tesla back to the shadow realm"
 	name = "Spatial Rift Nullifier"
-	icon = 'icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/ballistic/48x32.dmi'
 	icon_state = "srnlauncher"
 	inhand_icon_state = "srnlauncher"
 	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
