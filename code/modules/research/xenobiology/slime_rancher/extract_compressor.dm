@@ -42,7 +42,7 @@
 	/// Hum that plays while a cycle runs.
 	var/datum/looping_sound/extract_compressor/soundloop
 
-	/// world.time of the last process tick, to count cycle_progress.
+	/// REALTIMEOFDAY of the last process tick, so cycles count real seconds even when the server is lagging.
 	var/last_process
 
 	/// "[effect]|[slime_type]" -> crossbreed path, built once from every non-abstract slimecross.
@@ -52,7 +52,7 @@
 	. = ..()
 	build_lookups()
 	soundloop = new(src)
-	last_process = world.time
+	last_process = REALTIMEOFDAY
 	register_context()
 
 /obj/machinery/extract_compressor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -388,7 +388,7 @@
 		return
 
 	cycle_progress = 1 // 0 means idle, so a fresh cycle starts just past that
-	last_process = world.time
+	last_process = REALTIMEOFDAY
 	var/datum/slime_type/extract_type = GLOB.slime_types_by_extract[color_extracts[1].type]
 	if(extract_type == /datum/slime_type/rainbow)
 		running_particle_key = "extract_compressor_rainbow"
@@ -428,11 +428,11 @@
 		return PROCESS_KILL
 	if(!is_operational)
 		soundloop.stop()
-		last_process = world.time
+		last_process = REALTIMEOFDAY
 		return
 	soundloop.start()
-	cycle_progress += world.time - last_process
-	last_process = world.time
+	cycle_progress += REALTIMEOFDAY - last_process
+	last_process = REALTIMEOFDAY
 	use_energy(active_power_usage)
 	if(cycle_progress >= cycle_length)
 		finish_cycle()
