@@ -37,7 +37,7 @@
 	var/can_transmit = TRUE
 	/// The card we inhabit
 	var/obj/item/pai_card/card
-	/// The current chasis that will appear when in holoform
+	/// The current chassis that will appear when in holoform
 	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
 	var/encrypt_mod = FALSE
@@ -101,7 +101,7 @@
 		"Internal GPS" = 35,
 		"Universal Translator" = 35,
 	)
-	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
+	/// List of all possible chassis. TRUE means the pAI can be picked up in this chassis.
 	var/static/list/possible_chassis = list(
 		"bat" = FALSE,
 		"butterfly" = FALSE,
@@ -136,7 +136,7 @@
 // See software.dm for Topic()
 /mob/living/silicon/pai/can_perform_action(atom/movable/target, action_bitflags)
 	if(!(action_bitflags & ALLOW_PAI))
-		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
+		to_chat(src, span_warning("Your holochassis does not allow you to do this!"))
 		return FALSE
 	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
 	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
