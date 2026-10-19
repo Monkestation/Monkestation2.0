@@ -232,3 +232,17 @@
   notghosti:
   - bugfix: Advanced carp, (Space dragon rift carp) health is fixed, and is now no
       longer weaker then a regular carp.
+2026-10-18:
+  Absolucy:
+  - sound: the monster hunter's red queen card ping now ACTUALLY comes from the direction
+      of the nearest rabbit and sounds muffled when it's to the south
+  - sound: the card ping should actually be audible now
+  - qol: the red queen card cooldown is 3 seconds instead of 7, and a new ping cuts
+      off the last one
+  - bugfix: monster hunters can see white rabbits through walls again, this has been
+      broken for a good while and idk why
+  - bugfix: fixed tremere revival vassalization not working on oozeling cores.
+  - bugfix: Fixed an issue with Discount Godzilla getting a blank ID and a PDA with
+      no owner.
+  notghosti:
+  - bugfix: IPC Examine limb examine text now should reflect their mechanical status

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue with Discount Godzilla getting a blank ID and a PDA with no owner."
