@@ -13,3 +13,4 @@
 	icon = 'monkestation/code/modules/factory_type_beat/icons/mining_machines.dmi'
 	icon_state = "gyrotron-3000"
 	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER)
+	overlay_flags = NONE
