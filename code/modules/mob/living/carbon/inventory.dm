@@ -357,6 +357,8 @@
 		update_inv_ears()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_worn_glasses()
+	if(wear_neck)
+		update_worn_neck()
 	update_worn_head()
 
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)

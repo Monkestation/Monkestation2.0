@@ -87,6 +87,23 @@
 
 	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)
 
+		//We need to be sure that the buckled mobs can teleport too
+	if(teleatom.has_buckled_mobs())
+		for(var/mob/living/rider in teleatom.buckled_mobs)
+			//just in case it fails, but the mob gets unbuckled anyways even if it passes
+			teleatom.unbuckle_mob(rider, TRUE, FALSE)
+
+			var/rider_success = do_teleport(rider, destturf, precision, channel=channel, no_effects=TRUE)
+			if(!rider_success)
+				continue
+
+			if(get_turf(rider) != destturf) //precision made them teleport somewhere else
+				to_chat(rider, span_warning("As you reorient your senses, you realize you aren't riding [teleatom] anymore!"))
+				continue
+
+			// [mob/living].forceMove() forces mobs to unbuckle, so we need to buckle them again
+			teleatom.buckle_mob(rider, force=TRUE)
+
 	return TRUE
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
@@ -156,13 +173,12 @@
 	if(!floor_gas_mixture)
 		return
 
-	var/list/floor_gases = floor_gas_mixture.gases
 	var/static/list/gases_to_check = list(
 		/datum/gas/oxygen = list(16, 100),
 		/datum/gas/nitrogen,
 		/datum/gas/carbon_dioxide = list(0, 10)
 	)
-	if(!check_gases(floor_gases, gases_to_check))
+	if(!floor_gas_mixture.check_gases(gases_to_check))
 		return FALSE
 
 	// Aim for goldilocks temperatures and pressure

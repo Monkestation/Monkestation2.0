@@ -19,9 +19,6 @@
 		return
 	if(check_stun_immunity(CANKNOCKDOWN))
 		return
-	var/chance = STAMINA_SCALING_STUN_BASE + (STAMINA_SCALING_STUN_SCALER * stamina.current * STAMINA_STUN_THRESHOLD_MODIFIER)
-	if(!prob(chance))
-		return
 	visible_message(
 		span_danger("[src] slumps over, too weak to continue fighting..."),
 		span_userdanger("You're too exhausted to continue fighting..."),
@@ -34,15 +31,20 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_STUN)
 
 	addtimer(CALLBACK(src, PROC_REF(exit_stamina_stun)), STAMINA_STUN_TIME)
-	stamina.pause(STAMINA_STUN_TIME + 2 SECONDS)
+	stamina.stop()
 
 /mob/living/carbon/exit_stamina_stun()
+	if(!HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Not in stamcrit currently
+		return
+
 	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 	REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	filters -= FILTER_STAMINACRIT
-	stamina.adjust_grace_period(0.5 SECONDS)
-	stamina.current = (stamina.maximum * STAMINA_STUN_THRESHOLD_MODIFIER) + 10
+
+	stamina.resume()
+	if (stamina.current < 15)
+		stamina.adjust(15 - stamina.current) //Brings you up to at least 15 stamina after exiting stamcrit - you will still be in stamina damage slowdown for about 5 seconds
 
 /mob/living/carbon/adjust_disgust(amount)
 	disgust = clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)

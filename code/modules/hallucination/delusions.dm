@@ -230,6 +230,22 @@
 
 	return ..()
 
+/datum/hallucination/delusion/preset/changeling
+	dynamic_delusion = TRUE
+	random_hallucination_weight = 1
+	delusion_name = "Changeling"
+	affects_others = TRUE
+	affects_us = TRUE
+
+/datum/hallucination/delusion/preset/changeling/make_delusion_image(mob/over_who)
+	delusion_appearance = get_dynamic_human_appearance(
+		outfit_path = /datum/outfit/changeling,
+		r_hand = /obj/item/shield/changeling,
+		l_hand = /obj/item/melee/arm_blade,
+	)
+
+	return ..()
+
 /// Hallucination used by the path of moon heretic to turn everyone into a lunar mass
 /datum/hallucination/delusion/preset/moon
 	delusion_icon_file = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'

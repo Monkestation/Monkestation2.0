@@ -30,7 +30,7 @@
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
-	wine_power = 30
+	distill_reagent = /datum/reagent/consumable/ethanol/maraschino
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue

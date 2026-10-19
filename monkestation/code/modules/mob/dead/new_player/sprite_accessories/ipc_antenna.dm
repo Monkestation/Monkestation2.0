@@ -1,11 +1,11 @@
 /datum/sprite_accessory/ipc_antennas
-	icon = 'monkestation/icons/mob/species/ipc/ipc_antennas.dmi'
+	icon = 'icons/mob/species/ipc/ipc_antennas.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR_SECONDARY
 
 /datum/sprite_accessory/ipc_antennas/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/ipc_antennas/angled
 	name = "Angled"

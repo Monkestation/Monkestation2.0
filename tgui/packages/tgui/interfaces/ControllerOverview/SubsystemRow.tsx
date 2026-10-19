@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from '../../components';
 import { SORTING_TYPES } from './contants';
-import { SortType, SubsystemData } from './types';
+import { SortType, type SubsystemData } from './types';
 
 type Props = {
   max: number;
@@ -47,13 +47,13 @@ export const SubsystemRow = (props: Props) => {
   let rangeDisplay = {};
   if (showBars) {
     if (sortType === SortType.Cost) {
-      valueDisplay = value.toFixed(2) + 'ms';
+      valueDisplay = `${value.toFixed(2)}ms`;
       rangeDisplay = {
         average: [75, 124.99],
         bad: [125, Infinity],
       };
     } else {
-      valueDisplay = value.toFixed(2) + '%';
+      valueDisplay = `${value.toFixed(2)}%`;
       rangeDisplay = {
         average: [10, 24.99],
         bad: [25, Infinity],

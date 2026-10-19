@@ -14,6 +14,11 @@
 	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 
+	/// List of items that can't be inserted/deconstructed.
+	var/static/list/banned_items = typecacheof(list(
+		/obj/item/organ/internal/brain,
+	))
+
 /obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
@@ -42,6 +47,10 @@
 	if(user.istate & ISTATE_HARM)
 		return ..()
 	if(!is_insertion_ready(user))
+		return ..()
+	if(!can_deconstruct(weapon))
+		to_chat(user, span_warning("The [name] rejects \the [weapon]!"))
+		balloon_alert(user, "cannot insert that!")
 		return ..()
 	if(!user.transferItemToLoc(weapon, src))
 		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
@@ -214,6 +223,14 @@
 		return FALSE
 	stored_research.unhide_node(SSresearch.techweb_node_by_id(node_to_discover.id))
 	stored_research.update_node_status(SSresearch.techweb_node_by_id(node_to_discover.id))
+	return TRUE
+
+/obj/machinery/rnd/destructive_analyzer/proc/can_deconstruct(obj/item)
+	if(is_type_in_typecache(item, banned_items))
+		return FALSE
+	for(var/obj/content as anything in item.get_all_contents())
+		if(is_type_in_typecache(content, banned_items))
+			return FALSE
 	return TRUE
 
 #undef DESTRUCTIVE_ANALYZER_DESTROY_POINTS

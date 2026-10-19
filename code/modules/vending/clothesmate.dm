@@ -155,6 +155,7 @@
 				/obj/item/clothing/under/costume/kimono/purple = 2,
 				/obj/item/clothing/shoes/sandal/alt = 4,
 				/obj/item/clothing/mask/kitsune = 3,
+				/obj/item/clothing/mask/rebellion = 6,
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/suit/hooded/dinojammies = 3,
 				/obj/item/clothing/suit/costume/irs = 20,
@@ -192,7 +193,7 @@
 		/obj/item/clothing/under/costume/jabroni = 1,
 		/obj/item/clothing/under/costume/geisha = 1,
 		/obj/item/clothing/under/rank/centcom/officer/replica = 1,
-		/obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1,
+		/obj/item/clothing/under/rank/centcom/officer/skirt/replica = 1,
 	)
 	premium = list(/obj/item/clothing/under/suit/checkered = 1,
 		/obj/item/clothing/head/costume/mailman = 1,

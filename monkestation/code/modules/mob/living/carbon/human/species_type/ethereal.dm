@@ -11,7 +11,7 @@
 	external_organs = list(
 		/obj/item/organ/external/ethereal_horns = "None",
 		/obj/item/organ/external/tail/ethereal = "None")
-	exotic_bloodtype = /datum/blood_type/crew/ethereal
+	exotic_bloodtype = BLOOD_TYPE_ETHEREAL
 	inert_mutation = /datum/mutation/overload
 
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
@@ -103,9 +103,10 @@
 
 	return randname
 
-/datum/species/ethereal/randomize_features(mob/living/carbon/human/human_mob)
-	var/datum/color_palette/generic_colors/palette = human_mob.dna.color_palettes[/datum/color_palette/generic_colors]
-	palette.ethereal_color = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
+/datum/species/ethereal/randomize_features()
+	var/list/features = ..()
+	features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
+	return features
 
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/ethereal)
 	. = ..()

@@ -83,8 +83,6 @@ GLOBAL_PROTECT(protected_ranks)
 				flag = R_SOUND
 			if("SPAWN")
 				flag = R_SPAWN
-			if("AUTOADMIN")
-				flag = R_AUTOADMIN
 			if("DBRANKS")
 				flag = R_DBRANKS
 			if("ADVANCEDCALL")
@@ -206,7 +204,7 @@ GLOBAL_PROTECT(protected_ranks)
 	var/list/rank_names = splittext(rank_name, "+")
 	var/list/ranks = list()
 
-	for (var/datum/admin_rank/rank as anything in GLOB.admin_ranks)
+	for (var/datum/admin_rank/rank in GLOB.admin_ranks)
 		if (rank.name in rank_names)
 			rank_names -= rank.name
 			ranks += rank

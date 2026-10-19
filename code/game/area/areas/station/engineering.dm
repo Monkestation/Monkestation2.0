@@ -85,18 +85,14 @@
 	icon_state = "grav_gen"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/engineering/transit_tube
+	name = "\improper Transit Tube"
+	icon_state = "transit_tube"
+
 /area/station/engineering/storage
 	name = "Engineering Storage"
 	icon_state = "engine_storage"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
-
-/area/station/engineering/storage_shared
-	name = "Shared Engineering Storage"
-	icon_state = "engine_storage_shared"
-
-/area/station/engineering/transit_tube
-	name = "\improper Transit Tube"
-	icon_state = "transit_tube"
 
 /area/station/engineering/storage/tech
 	name = "Technical Storage"
@@ -105,6 +101,16 @@
 /area/station/engineering/storage/tcomms
 	name = "Telecomms Storage"
 	icon_state = "tcom_storage"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+/area/station/engineering/storage_shared
+	name = "Shared Engineering Storage"
+	icon_state = "engine_storage_shared"
+
+
+/area/station/engineering/shipbreaker_hut
+	name = "Shipbreaker Hut"
+	icon_state = "engine_break"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /*

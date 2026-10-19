@@ -62,11 +62,11 @@
 	cached_target = null
 	return ..()
 
-/obj/item/gun/blastcannon/handle_atom_del(atom/A)
-	if(A == bomb)
+/obj/item/gun/blastcannon/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == bomb)
 		bomb = null
 		update_appearance()
-	return ..()
 
 /obj/item/gun/blastcannon/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -193,7 +193,7 @@
 	SSexplosions.shake_the_room(start_turf, max(heavy, medium, light, 0), (capped_heavy * 15) + (capped_medium * 20), capped_heavy, capped_medium)
 
 	var/obj/projectile/blastwave/blastwave = new(loc, heavy, medium, light)
-	blastwave.preparePixelProjectile(target, start_turf, params2list(modifiers), spread)
+	blastwave.aim_projectile(target, start_turf, params2list(modifiers), spread)
 	blastwave.fire()
 	cached_firer = null
 	cached_target = null
@@ -314,7 +314,7 @@
 /obj/projectile/blastwave/is_hostile_projectile()
 	return TRUE
 
-/obj/projectile/blastwave/Range()
+/obj/projectile/blastwave/reduce_range()
 	. = ..()
 	if(QDELETED(src))
 		return

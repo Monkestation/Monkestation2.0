@@ -1,3 +1,5 @@
+import { type BooleanLike, classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -11,9 +13,6 @@ import {
   Table,
   Tabs,
 } from '../components';
-import { BooleanLike } from 'common/react';
-import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -136,7 +135,7 @@ const Controls = () => {
             <Box
               lineHeight={1.9}
               style={{
-                'text-shadow': '1px 1px 0 black',
+                textShadow: '1px 1px 0 black',
               }}
             >
               {`${parseFloat(biomass.toFixed(2))} units`}
@@ -168,7 +167,7 @@ const Controls = () => {
               <Box
                 lineHeight={1.9}
                 style={{
-                  'text-shadow': '1px 1px 0 black',
+                  textShadow: '1px 1px 0 black',
                 }}
               >
                 {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
@@ -202,7 +201,7 @@ const Item = (props: Props) => {
 
   const minAmount = is_reagent ? Math.min(Math.max(space, 1), 10) : 1;
 
-  const [amount, setAmount] = useLocalState('amount-' + id, minAmount);
+  const [amount, setAmount] = useLocalState(`amount-${id}`, minAmount);
 
   const disabled =
     processing ||
@@ -221,7 +220,7 @@ const Item = (props: Props) => {
         <span
           className={classes(['design32x32', id])}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />{' '}
         <b>{name}</b>
@@ -233,14 +232,13 @@ const Item = (props: Props) => {
           width="40px"
           minValue={1}
           maxValue={maxAmount}
-          onChange={(_, value) => setAmount(value)}
+          onChange={(value) => setAmount(value)}
         />
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
           align="right"
           width={5}
-          pr={0}
           disabled={disabled}
           onClick={() =>
             act('create', {

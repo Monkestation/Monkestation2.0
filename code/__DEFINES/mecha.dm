@@ -19,9 +19,16 @@
 #define MMI_COMPATIBLE (1<<10)
 /// Can click from any direction and perform stuff
 #define OMNIDIRECTIONAL_ATTACKS (1<<11)
+//making this a high bitshift to be sure it wont conflict for a while
+///a mech with this flag cannot have its stock parts removed
+#define NOT_ABLE_TO_REMOVE_STOCK_PARTS (1<<12)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)
+
+//EQUIPMENT FLAGS
+///equipment with this flag cannot be removed from a mech
+#define NOT_ABLE_TO_REMOVE_FROM_MECHA (1<<0)
 
 #define MECHA_FRONT_ARMOUR "mechafront"
 #define MECHA_SIDE_ARMOUR "mechaside"
@@ -58,7 +65,6 @@
 #define MECHA_AMMO_PUNCHING_GLOVE "Punching glove"
 #define MECHA_AMMO_BANANA_PEEL "Banana peel"
 #define MECHA_AMMO_MOUSETRAP "Mousetrap"
-//monke edit start
 #define MECHA_AMMO_PIPEGUN "Improvised shell"
 #define MECHA_AMMO_PEASHOOTER "Peashooter bullet"
 #define MECHA_AMMO_ISG "IED grenades"
@@ -67,4 +73,3 @@
 #define MECHA_AMMO_ATR "20x160mm"
 #define MECHA_AMMO_FLAME "Flames"
 #define MECHA_AMMO_SENTINEL "Sentinel Cannon Shell"
-//monke edit end

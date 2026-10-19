@@ -132,6 +132,17 @@
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
 
+/obj/item/storage/fancy/donut_box/random
+	name = "variety donut box"
+	spawn_type = null
+
+/obj/item/storage/fancy/donut_box/random/PopulateContents()
+	var/list/donuts = sort_list(subtypesof(/obj/item/food/donut))
+	for(var/i = 1 to spawn_count)
+		var/thing_in_box = pick(donuts)
+		new thing_in_box(src)
+	..()
+
 #undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
@@ -206,6 +217,13 @@
 	///Do we not have our own handling for cig overlays?
 	var/display_cigs = TRUE
 
+/obj/item/storage/fancy/cigarettes/Initialize(mapload)
+	. = ..()
+	atom_storage.display_contents = FALSE
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	register_context()
+	AddElement(/datum/element/trash_if_empty)
+
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
@@ -219,12 +237,6 @@
 	name = "discarded cigarette packet"
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
 	atom_storage.max_slots = 0
-
-/obj/item/storage/fancy/cigarettes/Initialize(mapload)
-	. = ..()
-	atom_storage.display_contents = FALSE
-	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
-	register_context()
 
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
 	if(..() == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -440,6 +452,8 @@
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 	custom_premium_price = PAYCHECK_COMMAND
+	///If this box has special sprite for its cigars
+	var/cigar_overlay = TRUE
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
@@ -452,7 +466,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
-	if(!open_status)
+	if(!open_status || !cigar_overlay)
 		return
 	var/cigar_position = 1 //generate sprites for cigars in the box
 	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
@@ -474,6 +488,26 @@
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
 	custom_premium_price = PAYCHECK_COMMAND * 2.25
+
+/obj/item/storage/fancy/cigarettes/cigars/intern
+	name = "\improper premium Classic cigar case"
+	desc = "A case of incredibly expensive cigars, manufactured the same since 1728."
+	icon_state = "intern_cigar_box"
+	base_icon_state = "intern_cigar_box"
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
+	custom_premium_price = PAYCHECK_COMMAND * 4 // 400
+	discountable = FALSE
+	spawn_count = 6
+	cigar_overlay = FALSE
+
+/obj/item/storage/fancy/cigarettes/cigars/intern/contraband
+	name = "\improper premium Prohibition cigar case"
+	desc = "A case of incredibly expensive, illict cigars. Take a ride on the wild side, why don't you?"
+	icon_state = "intern_cigar_box_purple"
+	base_icon_state = "intern_cigar_box_purple"
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern/purple
+	custom_premium_price = PAYCHECK_COMMAND * 5 // 500
 
 /*
  * Heart Shaped Box w/ Chocolates

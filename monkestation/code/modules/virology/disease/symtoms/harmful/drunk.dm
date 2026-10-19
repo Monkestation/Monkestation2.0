@@ -11,5 +11,5 @@
 	if(ismouse(mob) || !mob.reagents)
 		return
 	to_chat(mob, span_notice("You feel like you had one hell of a party!"))
-	if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/vermouth) < multiplier*5)
-		mob.reagents.add_reagent(/datum/reagent/consumable/ethanol/vermouth, multiplier*5)
+	if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/vermouth) < multiplier * 5)
+		mob.reagents.add_reagent(/datum/reagent/consumable/ethanol/vermouth, multiplier * power * 5)

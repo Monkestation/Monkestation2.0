@@ -2,6 +2,7 @@
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "antag_opt_in_status_pref"
+	should_update_preview = FALSE
 
 /datum/preference/choiced/antag_opt_in_status/init_possible_values()
 	return list(OPT_IN_YES_TEMP, OPT_IN_YES_KILL, OPT_IN_YES_ROUND_REMOVE, OPT_IN_NOT_TARGET)

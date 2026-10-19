@@ -163,7 +163,7 @@
 		/obj/item/t_scanner,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
-		/obj/item/tank/internals/oxygen, //monkestation edit
+		/obj/item/tank/internals,
 		/obj/item/storage/bag/rebar_quiver,
 		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
@@ -208,8 +208,8 @@
 /obj/item/clothing/suit/toggle/suspenders
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
-	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "suspenders"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("suspenders", "/obj/item/clothing/suit/toggle/suspenders")
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
@@ -278,7 +278,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/medipen,
+		/obj/item/hypospray,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/retractor,
 		/obj/item/scalpel,

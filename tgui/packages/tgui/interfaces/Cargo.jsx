@@ -1,5 +1,5 @@
-import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
@@ -8,9 +8,9 @@ import {
   Flex,
   Icon,
   Input,
-  RestrictedInput,
   LabeledList,
   NoticeBox,
+  RestrictedInput,
   Section,
   Stack,
   Table,
@@ -226,9 +226,13 @@ export const CargoCatalog = (props) => {
                 <Stack.Item grow>
                   <Input
                     fluid
+                    expensive
                     placeholder="Search..."
                     value={searchText}
-                    onInput={(e, value) => {
+                    onChange={(value) => {
+                      if (value === undefined) {
+                        return;
+                      }
                       if (value === searchText) {
                         return;
                       }
@@ -241,13 +245,6 @@ export const CargoCatalog = (props) => {
                         setActiveSupplyName(supplies[0]?.name);
                       }
                       setSearchText(value);
-                    }}
-                    onChange={(e, value) => {
-                      // Allow edge cases like the X button to work
-                      const onInput = e.target?.props?.onInput;
-                      if (onInput) {
-                        onInput(e, value);
-                      }
                     }}
                   />
                 </Stack.Item>
@@ -390,7 +387,7 @@ const CargoCartButtons = (props) => {
       <Box inline mx={1}>
         {cart.length === 0 && 'Cart is empty'}
         {cart.length === 1 && '1 item'}
-        {cart.length >= 2 && cart.length + ' items'}{' '}
+        {cart.length >= 2 && `${cart.length} items`}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
       {!requestonly && !!can_send && !!can_approve_requests && (
@@ -444,7 +441,7 @@ const CargoCart = (props) => {
                     minValue={0}
                     maxValue={50}
                     value={entry.amount}
-                    onEnter={(e, value) =>
+                    onEnter={(value) =>
                       act('modify', {
                         order_name: entry.object,
                         amount: value,
@@ -487,7 +484,7 @@ const CargoCart = (props) => {
             <Button
               color="green"
               style={{
-                'line-height': '28px',
+                lineHeight: '28px',
                 padding: '0 12px',
               }}
               content="Confirm the order"

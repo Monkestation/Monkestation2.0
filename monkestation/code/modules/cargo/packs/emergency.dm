@@ -1,14 +1,3 @@
-// as i have no idea where to put new box types, boxes of oxygen candles go here
-/obj/item/storage/box/oxygen_candles
-	name = "box of oxygen candles"
-	desc = "A box full of emergency oxygen candles."
-	icon_state = "internals"
-	illustration = "firecracker"
-
-/obj/item/storage/box/oxygen_candles/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/oxygen_candle(src)
-
 //also boxed emergency space suits cus why not
 /obj/item/storage/box/emergency_eva
 	name = "boxed space suit and helmet"

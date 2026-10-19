@@ -53,7 +53,12 @@
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
 
-	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
+	var/stamina_damage = 60 //1 hit slows, 2 hit stam crits
+
+/mob/living/simple_animal/bot/secbot/Initialize(mapload)
+	. = ..()
+	// Beepsky hates people scanning them
+	RegisterSignal(src, COMSIG_MOVABLE_SPY_STEALING, PROC_REF(retaliate_async))
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
@@ -143,7 +148,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	SSmove_manager.stop_looping(src)
+	GLOB.move_manager.stop_looping(src)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
@@ -163,11 +168,11 @@
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
-/mob/living/simple_animal/bot/secbot/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == weapon)
+/mob/living/simple_animal/bot/secbot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == weapon)
 		weapon = null
 		update_appearance()
-	return ..()
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/secbot/ui_data(mob/user)
@@ -198,6 +203,10 @@
 			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
 		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
+
+/mob/living/simple_animal/bot/secbot/proc/retaliate_async(datum/source, mob/user, ...)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(retaliate), user)
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()
@@ -269,15 +278,15 @@
 	update_appearance()
 	return TRUE
 
-/mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return
 
-	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(Proj.is_hostile_projectile() && Proj.damage < src.health && ishuman(Proj.firer))
-				retaliate(Proj.firer)
+	if(istype(proj, /obj/projectile/beam) || istype(proj, /obj/projectile/bullet))
+		if((proj.damage_type == BURN) || (proj.damage_type == BRUTE))
+			if(proj.is_hostile_projectile() && proj.damage < src.health && ishuman(proj.firer))
+				retaliate(proj.firer)
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag)
 	if(!(bot_mode_flags & BOT_MODE_ON))
@@ -340,7 +349,7 @@
 		if(human_target.check_block(src, 0, "\the [name]", MELEE_ATTACK))
 			return
 	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE))
-		current_target.stamina.adjust_to(-stamina_damage, current_target.stamina.maximum * 0.29)
+		current_target.stamina.adjust(-stamina_damage * 0.5)
 	else
 		current_target.stamina.adjust(-stamina_damage)
 	// monkestation end
@@ -363,7 +372,7 @@
 	switch(mode)
 
 		if(BOT_IDLE) // idle
-			SSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if((mode == BOT_IDLE) && bot_mode_flags & BOT_MODE_AUTOPATROL) // didn't start hunting during look_for_perp, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -371,7 +380,7 @@
 		if(BOT_HUNT) // hunting for perp
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				SSmove_manager.stop_looping(src)
+				GLOB.move_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -389,7 +398,7 @@
 
 			// not next to perp
 			var/turf/olddist = get_dist(src, target)
-			SSmove_manager.move_to(src, target, 1, 4)
+			GLOB.move_manager.move_to(src, target, 1, 4)
 			if((get_dist(src, target)) >= (olddist))
 				frustration++
 			else
@@ -531,7 +540,7 @@
 			new /obj/item/assembly/prox_sensor(Tsec)
 			drop_part(baton_type, Tsec)
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)

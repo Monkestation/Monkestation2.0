@@ -164,13 +164,12 @@
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
-/// Parent Type for arms, should not appear in game.
+/// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	max_damage = 50
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
@@ -181,12 +180,6 @@
 	unarmed_damage_high = 8
 	unarmed_stun_threshold = 10
 
-	/// Can these legs be digitigrade? See digitigrade.dm
-	var/can_be_digitigrade = FALSE
-	///Set limb_id to this when in "digi mode". MUST BE UNIQUE LIKE ALL LIMB IDS
-	var/digitigrade_id
-	/// Used solely by digitigrade limbs to remember what their old limb ID was.
-	var/old_limb_id
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 	///our step sound

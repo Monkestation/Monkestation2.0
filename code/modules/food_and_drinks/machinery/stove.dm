@@ -21,10 +21,14 @@
 	. = ..()
 	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)
 
-/obj/machinery/stove/attack_robot(mob/user)
+/obj/machinery/stove/attack_robot_secondary(mob/user, list/modifiers)
 	. = ..()
-	attack_hand(user)
-	return TRUE
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!user.Adjacent(src))
+		return
+	attack_hand_secondary(user) // Allows interaction with the stove.
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 // Soup pot for cooking soup
 // Future addention ideas:
@@ -39,7 +43,6 @@
 	volume = 200
 	possible_transfer_amounts = list(20, 50, 100, 200)
 	amount_per_transfer_from_this = 50
-	amount_list_position = 2
 	reagent_flags = REFILLABLE | DRAINABLE
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	w_class = WEIGHT_CLASS_BULKY

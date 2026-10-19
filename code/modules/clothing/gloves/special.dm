@@ -97,29 +97,46 @@
 
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
-	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
+	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip. Its sterile material makes it great for surgery."
 	icon_state = "latex"
 	inhand_icon_state = "latex_gloves"
 	greyscale_colors = null
 	siemens_coefficient = 0.3
 	armor_type = /datum/armor/latex_gloves
-	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_STERILE)
 	resistance_flags = NONE
 
 /datum/armor/latex_gloves
 	bio = 100
 
+/obj/item/clothing/gloves/latex/surgical
+	name = "black latex gloves"
+	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
+			quicker and with higher success along with the faster use time of various chemical related items."
+	icon_state = "surgeonlatex"
+	clothing_traits = list(TRAIT_FASTMED, TRAIT_STERILE)
+	custom_premium_price = PAYCHECK_CREW * 6
+
 /obj/item/clothing/gloves/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
+	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items. Its sterile material makes it great for surgery."
 	icon_state = "nitrile"
 	inhand_icon_state = "greyscale_gloves"
 	armor_type = /datum/armor/nitrile
 	greyscale_colors = "#99eeff"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED, TRAIT_STERILE)
 
 /datum/armor/nitrile
 	bio = 100
+
+/obj/item/clothing/gloves/latex/nitrile/deforest
+	name = "Deforest Gloves"
+	desc = "A pair of high-visibility gloves designed by Deforest Medical for search and rescue, reinforced with thicker cut-resistant fabrics and lined with a heat insulation layer, these gloves can hold their own in most environments. A special neural lining increases the medical skill of the wearer similar to that of advanced latex gloves."
+	icon_state = "hivisgloves"
+
+/obj/item/clothing/gloves/latex/nitrile/deforest/cosmetic
+	desc = "A pair of high-visibility gloves designed by Deforest Medical for search and rescue, reinforced with thicker cut-resistant fabrics and lined with a heat insulation layer, these gloves can hold their own in most environments. This variant lacks the neural lining and does not increase wearer skill."
+	clothing_traits = NONE
 
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
@@ -148,3 +165,34 @@
 	siemens_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	clothing_flags = THICKMATERIAL
+
+/obj/item/clothing/gloves/crueltysquad_gloves
+	name = "CSIJ level I gloves"
+	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."
+	icon_state = "crueltysquad_gloves"
+
+/obj/item/clothing/gloves/civilprotection_gloves
+	name = "civil protection gloves"
+	desc = "Armored gloves for beating anticitizens."
+	icon_state = "civilprotection_gloves"
+
+/obj/item/clothing/gloves/infinity_gloves
+	name = "infinity wristbands"
+	desc = "The bands are oddly moist... let's hope it's not blood."
+	icon_state = "infinity_wrist"
+
+/obj/item/clothing/gloves/infinity_gloves/equipped(mob/living/carbon/user, slot)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(slot == ITEM_SLOT_GLOVES)
+		var/obj/item/bodypart/user_active_arm = user.get_active_hand()
+		user_active_arm.unarmed_damage_low += 0.2
+		user_active_arm.unarmed_damage_high += 0.1
+
+/obj/item/clothing/gloves/admiral // Loadout version of the Abraxis Centcom Admiral gloves
+	name = "black gloves"
+	icon = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::icon
+	worn_icon = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::worn_icon
+	icon_state = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::icon_state
+	alternate_worn_layer = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::alternate_worn_layer

@@ -10,7 +10,6 @@
 		"Unmarked Takbok Revolver Gunset" = /obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield,
 		"Custom Hellfire Laser Rifle" = /obj/item/gun/energy/laser/hellgun/blueshield,
 		"Bogseo Submachinegun Gunset" = /obj/item/storage/toolbox/guncase/skyrat/xhihao_large_case/bogseo,
-		"Tech-9" = /obj/item/storage/toolbox/guncase/skyrat/pistol/tech_9,
 		"S.A.Y.A. Arm Defense System Cyberset" = /obj/item/storage/box/shield_blades,
 	)
 
@@ -59,5 +58,5 @@
 	icon_state = "cyber_implants"
 
 /obj/item/storage/box/shield_blades/PopulateContents()
-	new /obj/item/autosurgeon/organ/shield_blade(src)
-	new /obj/item/autosurgeon/organ/shield_blade/l(src)
+	new /obj/item/autosurgeon/shield_blade(src)
+	new /obj/item/autosurgeon/shield_blade/l(src)

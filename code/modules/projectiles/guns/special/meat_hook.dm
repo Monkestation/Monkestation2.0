@@ -37,12 +37,12 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
 	damage = 20
-	stamina = 20
+	stamina = 10
 	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain
-	var/knockdown_time = (0.5 SECONDS)
+	var/knockdown_time = 0.5 SECONDS
 	///what iconstate do we use for our chain
 	var/chain_iconstate = "chain"
 
@@ -52,22 +52,30 @@
 	..()
 	//TODO: root the firer until the chain returns
 
+/obj/projectile/hook/proc/hooked_target_turf(mob/living/firer, mob/living/target)
+	return get_turf(firer)
+
 /obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(ismovable(target))
 		var/atom/movable/A = target
 		if(A.anchored)
 			return
-		A.visible_message(span_danger("[A] is snagged by [firer]'s hook!"))
-		//Should really be a movement loop, but I don't want to support moving 5 tiles a tick
-		//It just looks bad
-		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		on_movable_hit(firer, target)
 		if (isliving(target))
-			var/mob/living/fresh_meat = target
-			fresh_meat.Knockdown(knockdown_time)
+			on_living_hit(firer, target)
 			return
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
+
+/obj/projectile/hook/proc/on_movable_hit(mob/living/firer, atom/movable/target)
+	target.visible_message(span_danger("[target] is snagged by [firer]'s hook!"))
+	//Should really be a movement loop, but I don't want to support moving 5 tiles a tick
+	//It just looks bad
+	new /datum/forced_movement(target, hooked_target_turf(firer, target), 5, TRUE)
+
+/obj/projectile/hook/proc/on_living_hit(mob/living/firer, mob/living/fresh_meat)
+	fresh_meat.Knockdown(knockdown_time)
 
 /obj/projectile/hook/Destroy()
 	qdel(chain)
@@ -83,13 +91,13 @@
 
 /obj/projectile/hook/bounty
 	damage = 0
-	stamina = 40
+	stamina = 20
 
 /// non-damaging version for contractor MODsuits
 /obj/item/gun/magic/hook/contractor
 	name = "SCORPION hook"
 	desc = "A hardlight hook used to non-lethally pull targets much closer to the user."
-	icon = 'monkestation/icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "contractor_hook"
 	inhand_icon_state = "" //nah
 	ammo_type = /obj/item/ammo_casing/magic/hook/contractor
@@ -100,7 +108,7 @@
 /obj/projectile/hook/contractor
 	icon_state = "contractor_hook"
 	damage = 0
-	stamina = 30
+	stamina = 15
 	chain_iconstate = "contractor_chain"
 
 /obj/item/gun/magic/hook/contractor/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)

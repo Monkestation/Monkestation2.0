@@ -19,8 +19,9 @@
 		return
 	var/turf/location = get_turf(src)
 	if(location)
-		new /obj/effect/hotspot(location)
+		var/obj/effect/hotspot/fire_hotspot = new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
+		QDEL_IN(fire_hotspot, 2.5 SECONDS)
 
 /// Incendiary bullet that more closely resembles a real flamethrower sorta deal, no visible bullet, just flames.
 /obj/projectile/bullet/incendiary/fire
@@ -30,12 +31,12 @@
 	pass_flags = PASSTABLE | PASSMOB
 	sharpness = NONE
 	shrapnel_type = null
-	embedding = null
+	embed_type = null
 	impact_effect_type = null
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
 	armor_flag = BOMB
-	speed = 1.2
+	speed = 0.8
 	wound_bonus = 30
 	bare_wound_bonus = 30
 	wound_falloff_tile = -4
@@ -53,7 +54,7 @@
 	damage = 8
 	range = 10
 	damage_walls = TRUE // melt the walls
-	speed = 1.4
+	speed = 1.1
 	bare_wound_bonus = 45
 	fire_stacks = 5
 
@@ -95,7 +96,7 @@
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return
-	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
+	var/turf/throw_at_turf = get_turf_in_angle(angle, current_turf, 7)
 	var/thrown_items = 0
 
 	for(var/iter in current_turf.contents)

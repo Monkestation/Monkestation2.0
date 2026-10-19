@@ -9,7 +9,7 @@
 
 /obj/item/smithed_part/weapon_part/axe_blade/finish_weapon()
 	sharpness = SHARP_EDGED
-	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	embed_type = /datum/embedding/axe_blade
 	armour_penetration = 50 * (smithed_quality / 100)
 
 	tool_behaviour = TOOL_SAW
@@ -18,3 +18,9 @@
 	throwforce = force * 1.75
 	w_class = WEIGHT_CLASS_SMALL
 	..()
+
+/datum/embedding/axe_blade
+	embed_chance = 35
+	pain_mult = 4
+	fall_chance = 10
+	ignore_throwspeed_threshold = TRUE

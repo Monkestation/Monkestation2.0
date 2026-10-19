@@ -13,6 +13,7 @@
 		/obj/item/electronics/airalarm,
 		/obj/item/electronics/firealarm,
 		/obj/item/electronics/apc,
+		/obj/item/electronics/airlock,
 	))//A typecache of circuits consumable for material
 
 /obj/item/electroadaptive_pseudocircuit/Initialize(mapload)
@@ -46,8 +47,7 @@
 	circuits--
 	maptext = MAPTEXT(circuits)
 	icon_state = "[initial(icon_state)]_recharging"
-	var/recharge_time = min(600, circuit_cost * 5)  //40W of cost for one fabrication = 20 seconds of recharge time; this is to prevent spamming
-	addtimer(CALLBACK(src, PROC_REF(recharge)), recharge_time)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), 1 SECONDS)
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 
 /obj/item/electroadaptive_pseudocircuit/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -64,6 +64,5 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/electroadaptive_pseudocircuit/proc/recharge()
-	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
 	recharging = FALSE
 	icon_state = initial(icon_state)

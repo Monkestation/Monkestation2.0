@@ -187,6 +187,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(target != GLOBAL_PROC && !target.CanProcCall(procname))
 		to_chat(usr, "Proccall on [target.type]/proc/[procname] is disallowed!", confidential = TRUE)
 		return
+
 	var/current_caller = GLOB.AdminProcCaller
 	var/user_identifier = usr ? usr.client?.ckey : GLOB.AdminProcCaller
 	var/is_remote_handler = usr == GLOB.AdminProcCallHandler
@@ -241,7 +242,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	return (GLOB.AdminProcCaller && GLOB.AdminProcCaller == usr?.client?.ckey) || (GLOB.AdminProcCallHandler && usr == GLOB.AdminProcCallHandler)
 #endif
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, FALSE, "Atom ProcCall", datum/thing as null | area | mob | obj | turf)
+ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, FALSE, "Atom ProcCall", /datum)
+	VERB_ARG_TYPED(thing, VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /datum)
 	var/procname = input(user, "Proc name, eg: fake_blood","Proc:", null) as text | null
 	if(!procname)
 		return

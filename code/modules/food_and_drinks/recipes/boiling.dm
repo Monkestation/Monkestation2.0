@@ -3,7 +3,7 @@
 		/obj/item/food/spaghetti/raw = 1
 	)
 	required_reagents = list(
-		/datum/reagent/water = 50
+		/datum/reagent/water = 25
 	)
 	resulting_food_path = /obj/item/food/spaghetti/boiledspaghetti
 	ingredient_reagent_multiplier = 0
@@ -13,7 +13,7 @@
 		/obj/item/food/uncooked_rice = 1
 	)
 	required_reagents = list(
-		/datum/reagent/water = 50
+		/datum/reagent/water = 25
 	)
 	resulting_food_path = /obj/item/food/boiledrice
 	ingredient_reagent_multiplier = 0
@@ -26,10 +26,10 @@
 	non_craftable = TRUE
 
 /datum/crafting_recipe/food/stove/boiledspaghetti
-	reqs = list(/datum/reagent/water = 50, /obj/item/reagent_containers/cup/soup_pot, /obj/item/food/spaghetti/raw = 1)
+	reqs = list(/datum/reagent/water = 25, /obj/item/reagent_containers/cup/soup_pot, /obj/item/food/spaghetti/raw = 1)
 	result = /obj/item/food/spaghetti/boiledspaghetti
 
 /datum/crafting_recipe/food/stove/boiledrice
-	reqs = list(/datum/reagent/water = 50, /obj/item/reagent_containers/cup/soup_pot, /obj/item/food/uncooked_rice = 1)
+	reqs = list(/datum/reagent/water = 25, /obj/item/reagent_containers/cup/soup_pot, /obj/item/food/uncooked_rice = 1)
 	result = /obj/item/food/boiledrice
 	category = CAT_SALAD

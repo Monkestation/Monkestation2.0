@@ -11,7 +11,7 @@ import {
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type AvailableTargets = {
   name: string;

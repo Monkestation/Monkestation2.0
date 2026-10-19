@@ -2,7 +2,7 @@
  * Base class for underfloor plumbing machines that mess with floor liquids.
  */
 /obj/machinery/plumbing/floor_pump
-	icon = 'monkestation/icons/obj/structures/drains.dmi'
+	icon = 'icons/obj/structures/drains.dmi'
 	base_icon_state = "active_input"
 	icon_state = "active_input"
 	anchored = FALSE
@@ -281,7 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/plumbing/floor_pump/input/on/waste, 0
 
 /obj/machinery/plumbing/floor_pump/output/should_regulator_permit(turf/affected_turf)
 	// 0 means keep pumping forever.
-	return !height_regulator || affected_turf.liquids.liquid_group.expected_turf_height < height_regulator
+	return !height_regulator || (affected_turf?.liquids?.liquid_group && (affected_turf.liquids.liquid_group.expected_turf_height < height_regulator))
 
 /obj/machinery/plumbing/floor_pump/output/process()
 	over_pressure = FALSE

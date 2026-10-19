@@ -1,0 +1,22 @@
+{
+	"lava_cat_hood": [
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_hood_main",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_hood_under",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lava_cat_hood_stripes",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	]
+}

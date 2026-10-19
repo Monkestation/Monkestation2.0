@@ -118,7 +118,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
-	I.set_buffer(src)
+	multitool_set_buffer(I, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 

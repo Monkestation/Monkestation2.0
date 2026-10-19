@@ -1,17 +1,19 @@
-import { useBackend, useLocalState } from '../backend';
-import { filter, sortBy, map, reduce } from 'common/collections';
+import { filter, map, reduce, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
-import { Window } from '../layouts';
+import { toTitleCase } from 'tgui-core/string';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
-  Section,
-  NoticeBox,
-  Collapsible,
-  Input,
-  ImageButton,
   Button,
+  Collapsible,
+  ImageButton,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
 } from '../components';
+import { Window } from '../layouts';
 
 export const StackCraft = () => {
   return (
@@ -35,7 +37,7 @@ const Recipes = (props) => {
     <Section
       fill
       scrollable
-      title={'Amount: ' + amount}
+      title={`Amount: ${amount}`}
       buttons={
         <>
           {searchActive && (
@@ -44,7 +46,7 @@ const Recipes = (props) => {
               width={12.5}
               value={searchText}
               placeholder={'Find recipe'}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={(value) => setSearchText(value)}
             />
           )}
           <Button
@@ -108,7 +110,7 @@ const filterRecipeList = (recipeList, titleFilter) => {
  * @param recipe recipe to check
  */
 const isRecipeList = (recipe) => {
-  return recipe['ref'] === undefined;
+  return recipe.ref === undefined;
 };
 
 /**
@@ -139,37 +141,45 @@ const Multipliers = (props) => {
 
   const finalResult = [];
 
-  for (const multiplier of multipliers) {
+  for (let i = 0; i < multipliers.length; i++) {
+    const multiplier = multipliers[i];
     if (max_available_multiplier >= multiplier) {
       finalResult.push(
-        <ImageButton.Item
+        <Button
           bold
-          fontSize={0.85}
-          width={'32px'}
-          content={multiplier * recipe.result_amount + 'x'}
+          key={i}
+          color="transparent"
+          fontSize={0.75}
+          width="32px"
           onClick={() =>
             act('make', {
               ref: recipe.ref,
               multiplier: multiplier,
             })
           }
-        />,
+        >
+          {`${multiplier * recipe.result_amount}x`}
+        </Button>,
       );
     }
   }
 
   if (multipliers.indexOf(max_available_multiplier) === -1) {
     finalResult.push(
-      <ImageButton.Item
-        width={'32px'}
-        content={max_available_multiplier * recipe.result_amount + 'x'}
+      <Button
+        width="32px"
+        bold
+        color="transparent"
+        fontSize={0.75}
         onClick={() =>
           act('make', {
             ref: recipe.ref,
             multiplier: max_available_multiplier,
           })
         }
-      />,
+      >
+        {`${max_available_multiplier * recipe.result_amount}x`}
+      </Button>,
     );
   }
 
@@ -187,10 +197,10 @@ const RecipeListBox = (props) => {
           key={title}
           title={title}
           contentStyle={{
-            'margin-top': '0',
-            'background-color': 'rgba(62, 97, 137, 0.15)',
+            marginTop: '0',
+            backgroundColor: 'rgba(62, 97, 137, 0.15)',
             border: '1px solid rgba(255, 255, 255, 0.1)',
-            'border-top': 'none',
+            borderTop: 'none',
           }}
         >
           <Box p={1} pb={0.25}>
@@ -215,15 +225,26 @@ const RecipeBox = (props) => {
   const sheetSuffix = required_amount > 1 ? 's' : '';
   const buttonName = `${resAmountLabel}${title}`;
   const tooltipContent = `${required_amount} sheet${sheetSuffix}`;
+  const reqSheets = `${required_amount} sheet${sheetSuffix}`;
 
   const max_possible_multiplier = calculateMultiplier(recipe, amount);
 
   return (
     <ImageButton
-      image={image}
+      fluid
+      base64={image}
+      imageSize={32}
       disabled={!max_possible_multiplier}
-      content={buttonName}
       tooltip={tooltipContent}
+      buttons={
+        max_result_amount > 1 &&
+        max_possible_multiplier > 1 && (
+          <Multipliers
+            recipe={recipe}
+            max_possible_multiplier={max_possible_multiplier}
+          />
+        )
+      }
       onClick={() =>
         act('make', {
           ref: ref,
@@ -231,12 +252,12 @@ const RecipeBox = (props) => {
         })
       }
     >
-      {max_result_amount > 1 && max_possible_multiplier > 1 && (
-        <Multipliers
-          recipe={recipe}
-          max_possible_multiplier={max_possible_multiplier}
-        />
-      )}
+      <Stack textAlign={'left'}>
+        <Stack.Item grow>{toTitleCase(buttonName)}</Stack.Item>
+        <Stack.Item align={'center'} fontSize={0.8} color={'gray'}>
+          {reqSheets}
+        </Stack.Item>
+      </Stack>
     </ImageButton>
   );
 };

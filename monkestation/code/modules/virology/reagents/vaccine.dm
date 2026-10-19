@@ -13,6 +13,7 @@
 	drinker.immune_system.ApplyVaccine(data["antigen"], 5, 30 MINUTES)
 
 /datum/reagent/vaccine/on_merge(list/mix_data)
+	. = ..()
 	if(data && mix_data)
 		if(data["antigen"] || mix_data["antigen"])
 			var/list/mix1 = data["antigen"]

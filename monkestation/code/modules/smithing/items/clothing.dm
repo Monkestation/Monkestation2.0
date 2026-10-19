@@ -148,7 +148,6 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	slot_flags = ITEM_SLOT_HEAD
 
 	base_name = "helmet"
@@ -171,6 +170,8 @@
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-
 	base_name = "shoes"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+
+/obj/item/clothing/smithed_clothes/shoes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "smithed_shoes_worn")

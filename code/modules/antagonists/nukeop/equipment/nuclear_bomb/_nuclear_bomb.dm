@@ -62,7 +62,6 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
-	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
@@ -75,7 +74,6 @@ GLOBAL_VAR(station_nuke_source)
 	if(!exploded)
 		// If we're not exploding, set the alert level back to normal
 		toggle_nuke_safety()
-	GLOB.nuke_list -= src
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
 	return ..()
@@ -131,7 +129,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(weapon, /obj/item/screwdriver/nuke))
+			if(istype(weapon, /obj/item/screwdriver/nuke) || istype(weapon, /obj/item/screwdriver/cyborg/nuke))
 				to_chat(user, span_notice("You start removing [src]'s front panel's screws..."))
 				if(weapon.use_tool(src, user, 6 SECONDS, volume = 100))
 					deconstruction_state = NUKESTATE_UNSCREWED

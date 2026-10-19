@@ -189,13 +189,10 @@
 	var/spin_delay = 10 SECONDS
 
 /obj/item/pickaxe/drill/implant/click_alt(mob/user)
-	spin()
+	spin_drill()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/pickaxe/drill/implant/verb/spin()
-	set name = "Spin Drillbit"
-	set category = "Object"
-	set desc = "Click to spin your drill's head. It won't do practically anything, but it's pretty cool anyway."
+GAME_VERB_DESC(/obj/item/pickaxe/drill/implant, spin_drill, "Spin Drillbit", "Click to spin your drill's head. It won't do practically anything, but it's pretty cool anyway.", "Object")
 
 	var/mob/user = usr
 

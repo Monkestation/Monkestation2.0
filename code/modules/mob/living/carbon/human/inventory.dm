@@ -218,9 +218,7 @@
 		if(ITEM_SLOT_OCLOTHING)
 			if(wear_suit)
 				return
-
 			wear_suit = I
-
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_worn_undersuit()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
@@ -233,6 +231,8 @@
 				return
 			w_uniform = I
 			update_suit_sensors()
+			if(I.flags_inv & (HIDETAIL|HIDEMUTWINGS))
+				update_body_parts()
 			update_worn_undersuit()
 		if(ITEM_SLOT_LPOCKET)
 			l_store = I
@@ -276,11 +276,15 @@
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_worn_undersuit()
+			if(I.flags_inv & HIDEGLOVES)
+				update_worn_gloves()
 			update_worn_oversuit()
 	else if(I == w_uniform)
 		w_uniform = null
 		update_suit_sensors()
 		if(!QDELETED(src))
+			if(I.flags_inv & (HIDETAIL|HIDEMUTWINGS))
+				update_body_parts()
 			update_worn_undersuit()
 		if(invdrop)
 			if(r_store && !can_equip(r_store, ITEM_SLOT_RPOCKET, TRUE, ignore_equipped = TRUE))
@@ -389,6 +393,8 @@
 	if(!worn_neck_item)
 		return
 	if((worn_neck_item.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(worn_neck_item.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
+		update_body_parts()
+	if((worn_neck_item.flags_inv & HIDEMUTWINGS))
 		update_body_parts()
 	if(worn_neck_item.flags_inv & HIDEEYES)
 		update_worn_glasses()

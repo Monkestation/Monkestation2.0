@@ -40,10 +40,10 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/pepperball/projectiles.dmi'
 	icon_state = "pepperball"
 	damage = 0
-	stamina = 5
+	stamina = 2.5
 	shrapnel_type = null
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	var/contained_reagent = /datum/reagent/consumable/condensedcapsaicin
 	var/reagent_volume = 5

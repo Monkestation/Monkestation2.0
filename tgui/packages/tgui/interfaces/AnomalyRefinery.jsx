@@ -1,12 +1,12 @@
 import { useBackend, useSharedState } from '../backend';
 import {
+  Box,
   Button,
   Icon,
+  LabeledList,
   Modal,
   Section,
   Stack,
-  LabeledList,
-  Box,
 } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
@@ -98,7 +98,7 @@ const CoreCompressorContent = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label={'Required Radius'}>
               {requiredRadius
-                ? requiredRadius + ' tiles'
+                ? `${requiredRadius} tiles`
                 : 'Implosion not possible.'}
             </LabeledList.Item>
           </LabeledList>
@@ -139,9 +139,11 @@ const CoreCompressorContent = (props) => {
                   ' Kelvin'}
               </Box>
               <Box height={2} width="100%">
-                {(gasList[1].total_moles
-                  ? String(gasList[1].pressure.toFixed(2))
-                  : '-') + ' kPa'}
+                {`${
+                  gasList[1].total_moles
+                    ? String(gasList[1].pressure.toFixed(2))
+                    : '-'
+                } kPa`}
               </Box>
             </Stack.Item>
             <Stack.Item>
@@ -164,9 +166,11 @@ const CoreCompressorContent = (props) => {
                   ' Kelvin'}
               </Box>
               <Box height={2} width="100%">
-                {(gasList[1].total_moles
-                  ? String(gasList[0].pressure.toFixed(2))
-                  : '-') + ' kPa'}
+                {`${
+                  gasList[1].total_moles
+                    ? String(gasList[0].pressure.toFixed(2))
+                    : '-'
+                } kPa`}
               </Box>
             </Stack.Item>
           </Stack>

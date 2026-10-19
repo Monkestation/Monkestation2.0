@@ -89,6 +89,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(spacemove_react))
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, PROC_REF(block_starting_visuals))
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(ignore_ending_block))
+	RegisterSignal(user, COMSIG_CARBON_PRE_SPRINT, PROC_REF(pre_sprint_react))
 
 	setup_trail(user)
 
@@ -100,6 +101,7 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
 	UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
 	UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
+	UnregisterSignal(user, COMSIG_CARBON_PRE_SPRINT)
 
 	if(trail)
 		QDEL_NULL(trail)
@@ -150,3 +152,9 @@
 /datum/component/jetpack/proc/ignore_ending_block(datum/source)
 	SIGNAL_HANDLER
 	return DRIFT_ALLOW_INPUT
+
+/datum/component/jetpack/proc/pre_sprint_react(mob/user)
+	SIGNAL_HANDLER
+
+	if (user.movement_type & FLOATING)
+		return INTERRUPT_SPRINT

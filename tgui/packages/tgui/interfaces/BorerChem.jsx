@@ -4,7 +4,6 @@ import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
-import { RecipeLookup } from './common/RecipeLookup';
 
 export const BorerChem = (props) => {
   const { act, data } = useBackend();
@@ -18,18 +17,17 @@ export const BorerChem = (props) => {
             <Button
               key="reaction_lookup"
               icon="book"
-              disabled={!data.reagent_holder}
               content="Reaction search"
               tooltip="Look up recipes and reagents!"
               tooltipPosition="bottom-start"
               onClick={() => act('reaction_lookup')}
-            />
+            />,
           ]}
         >
           <LabeledList>
             <LabeledList.Item label="Storage">
               <ProgressBar value={data.energy / data.maxEnergy}>
-                {toFixed(data.energy) + ' units'}
+                {`${toFixed(data.energy)} units`}
               </ProgressBar>
             </LabeledList.Item>
           </LabeledList>

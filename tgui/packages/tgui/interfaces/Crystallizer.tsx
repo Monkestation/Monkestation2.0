@@ -1,3 +1,7 @@
+import { toFixed } from 'common/math';
+
+import type { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,12 +10,8 @@ import {
   ProgressBar,
   Section,
 } from '../components';
-
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
 import { getGasColor } from '../constants';
-import { toFixed } from 'common/math';
-import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 type Data = {
   on: BooleanLike;
@@ -86,7 +86,9 @@ const Controls = (props) => {
             unit="moles/s"
             minValue={0}
             maxValue={250}
-            onDrag={(e, value) =>
+            stepPixelSize={1}
+            tickWhileDragging
+            onChange={(value) =>
               act('gas_input', {
                 gas_input: value,
               })
@@ -132,7 +134,7 @@ const Requirements = (props) => {
               bad: [logScale(5000), Infinity],
             }}
           >
-            {toFixed(internal_temperature) + ' K'}
+            {`${toFixed(internal_temperature)} K`}
           </ProgressBar>
         </LabeledList.Item>
       </LabeledList>
@@ -155,7 +157,7 @@ const Gases = (props) => {
               minValue={0}
               maxValue={1000}
             >
-              {toFixed(amount, 2) + ' moles'}
+              {`${toFixed(amount, 2)} moles`}
             </ProgressBar>
           </LabeledList.Item>
         ))}

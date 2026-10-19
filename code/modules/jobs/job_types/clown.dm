@@ -28,6 +28,7 @@
 		/obj/item/food/pie/cream = 50,
 		/obj/item/clothing/head/nanner_crown = 30,
 		/obj/item/clothing/shoes/clown_shoes/combat = 10,
+		/obj/item/grenade/c4/explosivecharge = 10, // trust me bro
 		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
 		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
 	)

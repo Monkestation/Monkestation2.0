@@ -283,7 +283,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_kill
 	projectile_type = /obj/projectile/beam/cybersun_laser
-	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(28, STANDARD_CELL_CHARGE)
 	select_name = "Kill"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
 
@@ -307,7 +307,7 @@
 	icon_state = "sniper"
 	damage = 30
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	speed = 0.4
+	speed = 2.5
 	light_outer_range = 2
 	light_color = COLOR_VERY_SOFT_YELLOW
 	wound_falloff_tile = 0.1
@@ -323,7 +323,9 @@
 /obj/projectile/beam/cybersun_laser/disable
 	icon_state = "disable_large"
 	damage = 0
-	stamina = 35
+	stamina = 25
+	armor_flag = ENERGY
+	damage_type = STAMINA
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 
@@ -338,7 +340,7 @@
 	name = "plasma grenade"
 	icon_state = "grenade"
 	damage = 50
-	speed = 2
+	speed = 0.5
 	range = 6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = COLOR_PALE_GREEN
@@ -366,7 +368,7 @@
 	name = "plasma globule"
 	icon_state = "flare"
 	damage = 10
-	speed = 2.5
+	speed = 0.4
 	bare_wound_bonus = 55 // Lasers have a wound bonus of 40, this is a bit higher
 	wound_bonus = -50 // However we do not very much against armor
 	range = 2
@@ -393,7 +395,7 @@
 	icon_state = "because_it_doesnt_miss"
 	damage = 10
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	speed = 0.8
+	speed = 1.25
 	light_color = COLOR_SCIENCE_PINK
 	range = 9
 
@@ -409,7 +411,7 @@
 	icon_state = "hellfire"
 	damage = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	speed = 0.6
+	speed = 1.6
 	wound_bonus = -15
 	light_color = COLOR_SOFT_RED
 
@@ -417,14 +419,16 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_disabler
 	projectile_type = /obj/projectile/beam/cybersun_laser/disable_bounce
-	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(14, STANDARD_CELL_CHARGE)
 	select_name = "Disable"
 	harmful = FALSE
 
 /obj/projectile/beam/cybersun_laser/disable_bounce
 	icon_state = "disable_bounce"
 	damage = 0
-	stamina = 45
+	stamina = 25
+	armor_flag = ENERGY
+	damage_type = STAMINA
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 	ricochet_auto_aim_angle = 30
@@ -443,14 +447,14 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_launcher
 	projectile_type = /obj/projectile/beam/cybersun_laser/flare
-	e_cost = LASER_SHOTS(5, 1000)
+	e_cost = LASER_SHOTS(3, STANDARD_CELL_CHARGE)
 	select_name = "Flare"
 
 /obj/projectile/beam/cybersun_laser/flare
 	name = "plasma flare"
 	icon_state = "flare"
 	damage = 15
-	speed = 2
+	speed = 0.5
 	range = 6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = COLOR_PALE_GREEN
@@ -595,7 +599,7 @@
 
 	//placeholder code for figuring out a way of making this not an if string
 	//ammo selector v8
-	var/fixed_message = "[lowertext(raw_message)]"
+	var/fixed_message = "[LOWER_TEXT(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
 		selectammo(DETAIN, speaker)
 		return TRUE
@@ -866,7 +870,7 @@
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	e_cost = 600 //20%, 5 shots
 	pellets = 4
 	variance = 50
@@ -879,9 +883,9 @@
 	light_system = OVERLAY_LIGHT
 	damage = 0
 	damage_type = STAMINA
-	stamina = 40
+	stamina = 20
 	paralyze_timer = 5 SECONDS
-	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
+	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	ricochets_max = 4
 	ricochet_chance = 140
@@ -891,15 +895,20 @@
 	ricochet_decay_chance = 1
 	ricochet_shoots_firer = FALSE //something something biometrics
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/projectile/lawbringer/detain/check_ricochet_flag(atom/reflecting_atom)
+	if((reflecting_atom.flags_ricochet & RICOCHET_HARD) || (reflecting_atom.flags_ricochet & RICOCHET_SHINY))
+		return TRUE
+	return FALSE
+
 /**
  * lawbringer execute mode:
- * It fires a 15 damage bullet
+ * It fires a 20 damage bullet
  */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
@@ -983,8 +992,7 @@
 	damage = 25
 	damage_type = BRUTE
 	icon_state = "blastwave"
-	speed = 1
-	pixel_speed_multiplier = 0.5
+	speed = 0.5
 	eyeblur = 10
 	jitter = 10 SECONDS
 	knockdown = 1
@@ -1043,7 +1051,7 @@
 				to_chat(target, span_reallybig(span_clown("Your blasted right off your shoes!!")))
 				M.visible_message(span_warning("[M] is is sent rocketing off their shoes!"))
 			playsound(src, 'sound/items/airhorn.ogg', 100, TRUE, -1)
-			var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+			var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 			M.throw_at(throw_target, 200, 8)
 
 /**
@@ -1068,7 +1076,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/new_target = target
-		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+		var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 		new_target.throw_at(throw_target, 4, 1)
 
 /**
@@ -1077,7 +1085,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 	select_name = "tideshot"
 	e_cost = 250 //8%, 12 shots
 	harmful = FALSE
@@ -1088,12 +1096,12 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	damage_type = STAMINA
-	stamina = 20 // not for use on the employed
+	stamina = 10 // not for use on the employed
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1
@@ -1110,7 +1118,7 @@
 				to_chat(target, span_warning("As the beam hits you, body seems to crumple under its uselessness."))
 				SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
 				playsound(src, 'sound/weapons/taserhit.ogg', 80, TRUE, -1)
-				C.stamina.adjust(-100)
+				C.stamina.adjust(-50)
 				C.Paralyze(10 SECONDS)
 				C.set_jitter_if_lower(40 SECONDS)
 				C.set_stutter(40 SECONDS)
@@ -1140,20 +1148,6 @@
 		"Compact Combat Shotgun" = /obj/item/gun/ballistic/shotgun/automatic/combat/compact,
 	)
 	return selectable_guns
-
-
-// Steal Objective, not just for Lawbringer but all their guns
-/datum/objective_item/steal/hosgun
-	name = "the head of security's personal weapon"
-	targetitem = /obj/item/choice_beacon/hos
-	excludefromjob = list(JOB_HEAD_OF_SECURITY)
-	altitems = list(/obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos)
-	item_owner = list(JOB_HEAD_OF_SECURITY)
-	exists_on_map = TRUE
-
-/obj/item/choice_beacon/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
-
 
 //THE MANUAL//
 /obj/item/paper/guides/lawbringer

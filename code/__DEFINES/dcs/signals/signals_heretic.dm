@@ -14,8 +14,16 @@
 /// From /obj/item/melee/sickly_blade/ranged_interact_with_atom (without proximity) : (mob/living/source, mob/living/target)
 #define COMSIG_HERETIC_RANGED_BLADE_ATTACK "ranged_blade_attack"
 
+/// For [/datum/status_effect/protective_blades] to signal when it is triggered
+#define COMSIG_BLADE_BARRIER_TRIGGERED "blade_barrier_triggered"
+
+/// at the end of determine_drafted_knowledge
+#define COMSIG_HERETIC_SHOP_SETUP "heretic_shop_finished"
+
 /// Sent to the heretic's mind when the choose a path: (datum/antagonist/heretic, path)
 #define COMSIG_HERETIC_PATH_CHOSEN "path_chosen"
 
-/// For [/datum/status_effect/protective_blades] to signal when it is triggered
-#define COMSIG_BLADE_BARRIER_TRIGGERED "blade_barrier_triggered"
+/// called on the antagonist datum, upgrades the passive to level 2
+#define COMSIG_HERETIC_PASSIVE_UPGRADE_FIRST "heretic_passive_upgrade_first"
+/// called on the antagonist datum, upgrades the passive to level 3
+#define COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL "heretic_passive_upgrade_final"

@@ -114,6 +114,13 @@
 /obj/machinery/sleeper/mouse_drop_receive(atom/target, mob/user, params)
 	if(!iscarbon(target))
 		return
+	target.visible_message(span_warning(
+		"[user] starts buckling [target] to [src]!"),
+		span_userdanger("[user] starts buckling you to [src]!"),
+		span_hear("You hear metal clanking."),
+	)
+	if(!do_after(user, 1 SECONDS, target))
+		return
 	close_machine(target)
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
@@ -213,7 +220,7 @@
 				data["occupant"]["statstate"] = "bad"
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
-		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["minHealth"] = mob_occupant.dead_threshold
 		data["occupant"]["bruteLoss"] = mob_occupant.getBruteLoss()
 		data["occupant"]["oxyLoss"] = mob_occupant.getOxyLoss()
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()

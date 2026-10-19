@@ -205,7 +205,7 @@
 	desc = "Assumes a shadowy form that can crawl through vents and squeeze through the cracks in doors."
 	lore_description = ""
 	icon_state = "crawling_shadows"
-	willpower_cost = 3
+	willpower_cost = 2
 	shadow_flags = ALL_DARKSPAWN_CLASSES
 	menu_tab = STORE_UTILITY
 	learned_abilities = list(/datum/action/cooldown/spell/shapeshift/crawling_shadows)

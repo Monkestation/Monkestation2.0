@@ -6,7 +6,7 @@
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_MOODLET_BASED
-	mail_goodies = list(/obj/item/storage/secure/briefcase)
+	mail_goodies = list(/obj/item/storage/briefcase/secure)
 	/// A weak reference to our heirloom.
 	var/datum/weakref/heirloom
 	/// If we had the heirloom the last time we checked or not

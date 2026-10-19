@@ -1,17 +1,17 @@
 /// Minimum cooldown time before we start trying to do effect emotes again.
-#define MIN_EMOTE_COOLDOWN		(10 SECONDS)
+#define MIN_EMOTE_COOLDOWN (10 SECONDS)
 /// Maximum cooldown time before we start trying to do effect emotes again.
-#define MAX_EMOTE_COOLDOWN		(45 SECONDS)
+#define MAX_EMOTE_COOLDOWN (45 SECONDS)
 /// How many seconds are shaved off each tick while holy water is in the victim's system.
-#define HOLY_WATER_CURE_RATE	(5 SECONDS)
-#define CURE_PROTECTION_TIME (1 MINUTE) // Cure protection time limit.
+#define HOLY_WATER_CURE_RATE (5 SECONDS)
+#define CURE_PROTECTION_TIME (1 MINUTES) // Cure protection time limit.
 #define MAX_BLIGHT_STAGES 5 // Max stage blight can reach, each stage increases severity of effects.
 #define CHANCE_TO_WORSEN 5 // Chance the blight increases stage
 
 /datum/status_effect/revenant_blight
 	id = "revenant_blight"
 	duration = 5 MINUTES
-	tick_interval = 1 SECOND // Simulate disease activation(2sec) while making it fire 2x more.
+	tick_interval = 1 SECONDS // Simulate disease activation(2sec) while making it fire 2x more.
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	remove_on_fullheal = TRUE
@@ -76,14 +76,14 @@
 		if(SPT_PROB(1.5 * stage, seconds_between_ticks))
 			to_chat(owner, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
 			owner.adjust_confusion(4 SECONDS)
-			owner.stamina.adjust(-21 * seconds_between_ticks)
+			owner.stamina.adjust(-10.5 * seconds_between_ticks)
 			new /obj/effect/temp_visual/revenant(owner.loc)
 		if(stagedamage < stage)
 			stagedamage++
 			owner.adjustToxLoss(1 * stage * seconds_between_ticks) //should, normally, do about 30 toxin damage.
 			new /obj/effect/temp_visual/revenant(owner.loc)
 		if(SPT_PROB(25, seconds_between_ticks))
-			owner.stamina.adjust(-(stage * 2) * seconds_between_ticks)
+			owner.stamina.adjust(-(stage) * seconds_between_ticks)
 
 	switch(stage)
 		if(2)
@@ -100,7 +100,7 @@
 				finalstage = TRUE
 				ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, TRAIT_STATUS_EFFECT(id))
 				to_chat(owner, span_revenbignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
-				owner.stamina.adjust(-22.5 * seconds_between_ticks, forced = TRUE)
+				owner.stamina.adjust(-11.25 * seconds_between_ticks, forced = TRUE)
 				new /obj/effect/temp_visual/revenant(owner.loc)
 				if(ishuman(owner))
 					var/mob/living/carbon/human/human = owner

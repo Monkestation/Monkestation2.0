@@ -13,6 +13,37 @@
 	custom_materials = list(/datum/material/iron = 200)
 	custom_price = PAYCHECK_COMMAND
 
+/obj/item/autopsy_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	if(!user.can_read(src) || user.is_blind())
+		return ITEM_INTERACT_BLOCKING
+
+	var/mob/living/scanned = interacting_with
+
+	if(scanned.stat != DEAD && !HAS_TRAIT(scanned, TRAIT_FAKEDEATH)) // good job, you found a loophole
+		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
+		return ITEM_INTERACT_BLOCKING
+
+	. = ITEM_INTERACT_SUCCESS
+
+	// Clumsiness/brain damage check
+	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
+		user.visible_message(span_warning("[user] analyzes the floor's vitals!"), \
+							span_notice("You stupidly try to analyze the floor's vitals!"))
+		to_chat(user, "[span_info("Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")]\
+				\n[span_info("Key: <font color='#00cccc'>Suffocation</font>/<font color='#00cc66'>Toxin</font>/<font color='#ffcc33'>Burn</font>/<font color='#ff3333'>Brute</font>")]\
+				\n[span_info("\tDamage specifics: <font color='#66cccc'>0</font>-<font color='#00cc66'>0</font>-<font color='#ff9933'>0</font>-<font color='#ff3333'>0</font>")]\
+				\n[span_info("Body temperature: ???")]")
+		return
+
+	user.visible_message(span_notice("[user] scans [scanned]'s cadaver."))
+	to_chat(user, span_deadsay("[icon2html(src, user)] ANALYZING CADAVER."))
+
+	healthscan(user, scanned, advanced = TRUE)
+
+	add_fingerprint(user)
+
 /obj/item/autopsy_scanner/proc/scan_cadaver(mob/living/carbon/human/user, mob/living/carbon/scanned)
 	if(scanned.stat != DEAD)
 		return
@@ -59,15 +90,12 @@
 		else
 			autopsy_information += "Unknown causes.</br>"
 	else
-		var/datum/blood_type/blood_id = scanned.get_blood_type()
-		if(blood_id)
+		var/datum/blood_type/blood_type = scanned.get_bloodtype()
+		if(blood_type)
 			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type = scanned.dna.human_blood_type
-			if(blood_id != /datum/reagent/blood)
-				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
-				blood_type = reagents ? reagents.name : blood_id
-				autopsy_information += "Blood Type: [blood_type]<br>"
-				autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]) %<br>"
+			if (blood_type.get_type())
+				autopsy_information += "[blood_type.get_blood_name()] Type: [blood_type.get_type()]<br>"
+			autopsy_information += "[blood_type.get_blood_name()] Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"

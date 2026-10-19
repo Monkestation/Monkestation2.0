@@ -1,13 +1,12 @@
-import { BooleanLike, classes } from 'common/react';
-import { Component } from 'inferno';
-
+import { type BooleanLike, classes } from 'common/react';
+import type { ReactNode } from 'react';
+import { Component } from 'react';
 import {
   Box,
   Button,
   Dimmer,
   Flex,
   Icon,
-  NoticeBox,
   Section,
   Stack,
   Tooltip,
@@ -15,10 +14,9 @@ import {
 import {
   calculateProgression,
   getDangerLevel,
-  Rank,
+  type Rank,
 } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
-import type { InfernoNode } from 'inferno';
 
 export type Objective = {
   id: number;
@@ -32,7 +30,6 @@ export type Objective = {
   ui_buttons?: ObjectiveUiButton[];
   objective_state: ObjectiveState;
   original_progression: number;
-  final_objective: BooleanLike;
 };
 
 export type ObjectiveUiButton = {
@@ -67,8 +64,8 @@ export class ObjectiveMenu extends Component<
   ObjectiveMenuProps,
   ObjectiveMenuState
 > {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       draggingObjective: null,
       objectiveX: 0,
@@ -120,7 +117,7 @@ export class ObjectiveMenu extends Component<
     });
   }
 
-  handleObjectiveAdded(event: MouseEvent) {
+  handleObjectiveAdded() {
     const { draggingObjective } = this.state as ObjectiveMenuState;
     if (!draggingObjective) {
       return;
@@ -274,7 +271,7 @@ export class ObjectiveMenu extends Component<
             left={`${objectiveX - 180}px`}
             top={`${objectiveY}px`}
             style={{
-              'pointer-events': 'none',
+              pointerEvents: 'none',
             }}
           >
             {ObjectiveFunction(draggingObjective, false)}
@@ -305,12 +302,9 @@ const ObjectiveFunction = (
       contractorRep={objective.contractor_rep}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
-      hideTcRep={objective.final_objective}
-      finalObjective={objective.final_objective}
+      hideTcRep={false}
       canAbort={
-        !!handleAbort &&
-        !objective.final_objective &&
-        objective.objective_state === ObjectiveState.Active
+        !!handleAbort && objective.objective_state === ObjectiveState.Active
       }
       grow={grow}
       handleCompletion={(event) => {
@@ -353,17 +347,16 @@ type ObjectiveElementProps = {
   telecrystalReward: number;
   progressionReward: number;
   contractorRep?: number;
-  uiButtons?: InfernoNode;
+  uiButtons?: ReactNode;
   objectiveState?: ObjectiveState;
   originalProgression: number;
   telecrystalPenalty: number;
   grow: boolean;
   hideTcRep: BooleanLike;
-  finalObjective: BooleanLike;
   canAbort: BooleanLike;
 
-  handleCompletion?: (event: MouseEvent) => void;
-  handleAbort?: (event: MouseEvent) => void;
+  handleCompletion?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleAbort?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const ObjectiveElement = (props: ObjectiveElementProps) => {
@@ -383,7 +376,6 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
     originalProgression,
     hideTcRep,
     grow,
-    finalObjective,
     ...rest
   } = props;
 
@@ -431,7 +423,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                   icon="trash"
                   color="transparent"
                   tooltip="Abort Objective"
-                  onClick={handleAbort}
+                  onClick={(evt) => handleAbort?.(evt)}
                 />
               </Stack.Item>
             )}
@@ -446,13 +438,6 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
               Failing this objective will deduct {telecrystalPenalty} TC.
             </Box>
           )}
-          {finalObjective && objectiveState === ObjectiveState.Inactive && (
-            <NoticeBox mt={1}>
-              Taking this objective will lock you out of getting anymore
-              objectives! Furthermore, you will be unable to abort this
-              objective.
-            </NoticeBox>
-          )}
         </Box>
       </Flex.Item>
       <Flex.Item>
@@ -464,9 +449,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                   <Box
                     style={{
                       border: '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
-                      'border-bottom': objectiveFinished ? 'none' : undefined,
+                      borderLeft: 'none',
+                      borderRight: 'none',
+                      borderBottom: objectiveFinished ? 'none' : undefined,
                     }}
                     className={dangerLevel.gradient}
                     py={0.5}
@@ -474,7 +459,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     textAlign="center"
                   >
                     {telecrystalReward} TC,
-                    {contractorRep ? ' ' + contractorRep + ' REP,' : ''}
+                    {contractorRep ? ` ${contractorRep} REP,` : ''}
                     <Box ml={1} as="span">
                       {calculateProgression(progressionReward)} Threat Level
                       {Math.abs(progressionDiff) > 10 && (
@@ -528,10 +513,10 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     inline
                     className={dangerLevel.gradient}
                     style={{
-                      'border-radius': '0',
+                      borderRadius: '0',
                       border: '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
+                      borderLeft: 'none',
+                      borderRight: 'none',
                     }}
                     position="relative"
                     width="100%"
@@ -551,7 +536,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                       top={0}
                     />
                     <Button
-                      onClick={handleCompletion}
+                      onClick={(evt) => handleCompletion?.(evt)}
                       color={objectiveFailed ? 'bad' : 'good'}
                       style={{
                         border: '1px solid rgba(0, 0, 0, 0.65)',

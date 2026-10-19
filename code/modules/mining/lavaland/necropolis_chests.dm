@@ -8,6 +8,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	can_install_electronics = FALSE
 	paint_jobs = null
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously. You need a skeleton key to open it."
@@ -83,10 +84,10 @@
 	name = "\improper Ancient Sarcophagus"
 	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
 	icon_state = "necro_bubblegum"
+	base_icon_state = "necro_bubblegum"
 	lid_icon_state = "necro_bubblegum_lid"
 	lid_x = -26
 	lid_y = 2
-
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)
@@ -107,8 +108,8 @@
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
 
-/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/projectile/P)
-	if(istype(P, /obj/projectile/colossus))
+/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/projectile/proj)
+	if(istype(proj, /obj/projectile/colossus))
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 

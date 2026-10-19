@@ -38,8 +38,8 @@ Difficulty: Medium
 	rapid_melee = 5 // starts fast because the saw's closed. gets reduced appropriately when extended, see their transform_weapon ability
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group)
-	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group)
+	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator/bdm, /obj/item/crusher_trophy/miner_eye, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group)
+	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator/bdm, /obj/item/disk/design_disk/modkit_disc/blood_drunk_group)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -52,6 +52,8 @@ Difficulty: Medium
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	//hardmode_reward = /obj/item/gem/blood_miner
+	rawr_sound = 'sound/magic/demon_dies.ogg' // MONKESTATION EDIT ADDITION
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
 	/// Dash ability
@@ -104,7 +106,7 @@ Difficulty: Medium
 
 /obj/projectile/kinetic/miner
 	damage = 20
-	speed = 0.9
+	speed = 1.1
 	icon_state = "ka_tracer"
 	range = 4
 

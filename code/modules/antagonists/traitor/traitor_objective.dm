@@ -51,6 +51,11 @@
 	/// Useful for final objectives as they don't need a reward.
 	var/needs_reward = TRUE
 
+	///a bitfield for what types of uplinks can gain this objective
+	var/valid_uplinks = UPLINK_TRAITORS //this is a secret tool that will help us later
+	///how much contractor rep this gives for completion
+	var/given_contractor_rep
+
 /// Returns a list of variables that can be changed by config, allows for balance through configuration.
 /// It is not recommended to finetweak any values of objectives on your server.
 /datum/traitor_objective/proc/supported_configuration_changes()
@@ -212,7 +217,7 @@
 	save_objective()
 	handler.on_update() // Trigger an update to the UI
 	var/datum/antagonist/traitor/tator = handler.owner?.has_antag_datum(/datum/antagonist/traitor)
-	tator?.antag_count_points += 1 //would like to make this better in the future but this is just for proof of concept
+	tator?.adjust_antag_count_points(1) //would like to make this better in the future but this is just for proof of concept
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
 /datum/traitor_objective/proc/finish_objective(mob/user)

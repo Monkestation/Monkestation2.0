@@ -18,10 +18,10 @@
 	var/health_required = -100
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(toxpwr && affected_mob.health > health_required)
 		affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		. = TRUE
-	..()
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
@@ -223,15 +223,15 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(SPT_PROB(5, seconds_per_tick))
-		if(!HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) && !HAS_TRAIT(affected_mob, TRAIT_TOXIMMUNE))
+	. = ..()
+	if(!HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) && !HAS_TRAIT(affected_mob, TRAIT_TOXIMMUNE))
+		if(SPT_PROB(3, seconds_per_tick))
 			to_chat(affected_mob, span_danger("Your insides are burning!"))
-		affected_mob.adjustToxLoss(rand(20, 60), FALSE, required_biotype = affected_biotype)
-		. = TRUE
 	else if(SPT_PROB(23, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(5)
-		. = TRUE
-	..()
+		affected_mob.heal_bodypart_damage(5 * REM * seconds_per_tick)
+
+	affected_mob.adjustToxLoss(rand(1, 4) * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	return TRUE
 
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
@@ -540,13 +540,13 @@
 	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
 	silent_toxin = TRUE
 	color = "#6E2828"
-	data = 45 // monkestation edit
+	data = 23
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.stamina.adjust(-data * REM * seconds_per_tick, 0)
-	data = max(data - 3, 9) // monkestation edit
+	data = max(data - 3, 9)
 	..()
 	. = TRUE
 
@@ -1120,8 +1120,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
-	affected_mob.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
-	return ..()
+	. = ..()
+	INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), "oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.stamina.adjust(-7.5 * REM * seconds_per_tick, 0)
@@ -1168,7 +1168,7 @@
 	return ..()
 
 /datum/reagent/toxin/morbital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.stamina.adjust(-10 * REM * seconds_per_tick, 0)
+	affected_mob.stamina.adjust(-5 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(10, seconds_per_tick))
 		switch(rand(1, 3))
 			if(1)
@@ -1288,14 +1288,14 @@
 		if(12 to 20)
 			silent_toxin = FALSE
 			toxpwr = 0.5
-			affected_mob.stamina.adjust(-2.5 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-1.25 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(20, seconds_per_tick))
 				affected_mob.losebreath += 1 * REM * seconds_per_tick
 			if(SPT_PROB(40, seconds_per_tick))
 				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
 			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
 			affected_mob.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
-			affected_mob.stamina.adjust(-2 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-1 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(4, seconds_per_tick))
 				paralyze_limb(affected_mob)
 			if(SPT_PROB(10, seconds_per_tick))
@@ -1309,7 +1309,7 @@
 			affected_mob.set_slurring_if_lower(3 SECONDS * REM * seconds_per_tick)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("you feel horribly weak."))
-			affected_mob.stamina.adjust(-5 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-2.5 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(8, seconds_per_tick))
 				paralyze_limb(affected_mob)
 			if(SPT_PROB(10, seconds_per_tick))
@@ -1318,7 +1318,7 @@
 			toxpwr = 1.5
 			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, BRAIN_DAMAGE_DEATH)
 			affected_mob.set_silence_if_lower(3 SECONDS * REM * seconds_per_tick)
-			affected_mob.stamina.adjust(-5 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-2.5 * REM * seconds_per_tick, 0)
 			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
 			if(SPT_PROB(15, seconds_per_tick))
 				paralyze_limb(affected_mob)

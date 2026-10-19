@@ -10,8 +10,6 @@
 	layer = FLY_LAYER
 	/// ID linked to the holopay
 	var/obj/item/card/id/linked_card
-	/// Max range at which the hologram can be projected before it deletes
-	var/max_holo_range = 4
 	/// The holopay shop icon displayed in the UI
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
@@ -205,34 +203,7 @@
 	add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))
-	/// Start checking if the source projection is in range
-	track(linked_card)
 	return TRUE
-
-/obj/structure/holopay/proc/track(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
-	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
-	for(var/atom/movable/location in locations)
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
-
-/obj/structure/holopay/proc/untrack(atom/movable/thing)
-	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
-	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
-	for(var/atom/movable/location in locations)
-		UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
-
-/**
- * A periodic check to see if the projecting card is nearby.
- * Deletes the holopay if not.
- */
-/obj/structure/holopay/proc/handle_move(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
-	if(ismovable(old_loc))
-		untrack(old_loc)
-	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
-		dissipate()
-		return
-	if(ismovable(source.loc))
-		track(source.loc)
 
 /**
  * Creates holopay vanishing effects.

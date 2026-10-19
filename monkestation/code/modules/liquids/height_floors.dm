@@ -3,7 +3,7 @@
 	singular_name = "elevated floor tile"
 	turf_type = /turf/open/floor/elevated
 	merge_type = /obj/item/stack/tile/elevated
-	icon = 'monkestation/icons/obj/items/tiles.dmi'
+	icon = 'icons/obj/items/tiles.dmi'
 	icon_state = "elevated"
 
 /obj/item/stack/tile/lowered
@@ -11,7 +11,7 @@
 	singular_name = "lowered floor tile"
 	turf_type = /turf/open/floor/lowered
 	merge_type = /obj/item/stack/tile/lowered
-	icon = 'monkestation/icons/obj/items/tiles.dmi'
+	icon = 'icons/obj/items/tiles.dmi'
 	icon_state = "lowered"
 
 /obj/item/stack/tile/lowered/iron
@@ -19,7 +19,7 @@
 	singular_name = "lowered floor tile"
 	turf_type = /turf/open/floor/lowered
 	merge_type = /obj/item/stack/tile/lowered
-	icon = 'monkestation/icons/obj/items/tiles.dmi'
+	icon = 'icons/obj/items/tiles.dmi'
 	icon_state = "lowered"
 
 /obj/item/stack/tile/lowered/iron/pool
@@ -27,17 +27,17 @@
 	singular_name = "pool floor tile"
 	turf_type = /turf/open/floor/lowered/iron/pool
 	merge_type = /obj/item/stack/tile/lowered/iron/pool
-	icon = 'monkestation/icons/obj/items/tiles.dmi'
+	icon = 'icons/obj/items/tiles.dmi'
 	icon_state = "pool"
 
 
-/turf/open/floor/iron/pool/rust_heretic_act()
+/turf/open/floor/iron/pool/rust_heretic_act(rust_strength)
 	return
 
 /turf/open/floor/elevated
 	name = "elevated floor"
 	floor_tile = /obj/item/stack/tile/elevated
-	icon = 'monkestation/icons/turf/elevated_iron.dmi'
+	icon = 'icons/turf/elevated_iron.dmi'
 	icon_state = "elevated_plasteel-0"
 	base_icon_state = "elevated_plasteel-0"
 	smoothing_flags = SMOOTH_CORNERS
@@ -46,13 +46,13 @@
 	liquid_height = 30
 	turf_height = 30
 
-/turf/open/floor/elevated/rust_heretic_act()
+/turf/open/floor/elevated/rust_heretic_act(rust_strength)
 	return
 
 /turf/open/floor/lowered
 	name = "lowered floor"
 	floor_tile = /obj/item/stack/tile/lowered
-	icon = 'monkestation/icons/turf/lowered_iron.dmi'
+	icon = 'icons/turf/lowered_iron.dmi'
 	icon_state = "lowered_plasteel-0"
 	base_icon_state = "lowered_plasteel-0"
 	smoothing_flags = SMOOTH_CORNERS
@@ -62,5 +62,5 @@
 	turf_height = -30
 
 
-/turf/open/floor/lowered/rust_heretic_act()
+/turf/open/floor/lowered/rust_heretic_act(rust_strength)
 	return

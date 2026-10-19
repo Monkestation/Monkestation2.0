@@ -59,11 +59,11 @@
 	product = /obj/item/food/grown/tomato/blue
 	yield = 2
 	icon_grow = "bluetomato-grow"
-	possible_mutations = list(/datum/hydroponics/plant_mutation/bluespace_tomato)
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/lube = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 	graft_gene = /datum/plant_gene/trait/slip
+	infusion_mutations = list(/datum/hydroponics/plant_mutation/infusion/bluespace_tomato)
 
 /obj/item/food/grown/tomato/blue
 	seed = /obj/item/seeds/tomato/blue
@@ -71,7 +71,7 @@
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
 	bite_consumption_mod = 2
-	splat_type = /obj/effect/decal/cleanable/oil
+	splat_type = /obj/effect/decal/cleanable/blood/oil
 	distill_reagent = /datum/reagent/consumable/laughter
 
 // Bluespace Tomato

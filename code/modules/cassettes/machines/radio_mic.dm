@@ -44,3 +44,13 @@
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
+
+/obj/item/radio/radio_mic/set_broadcasting(new_broadcasting, actual_setting = TRUE)
+	. = ..()
+	// if we get hit by a disruptor wave, automatically restart after 1 minute or so.
+	if(!new_broadcasting && !actual_setting)
+		addtimer(CALLBACK(src, PROC_REF(restart_broadcasting)), 1 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/item/radio/radio_mic/proc/restart_broadcasting()
+	set_broadcasting(TRUE)
+	balloon_alert_to_viewers("antenna rebooted")

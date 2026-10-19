@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(polling)
 	name = "Polling"
 	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 	wait = 1 SECONDS
-	runlevels = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	/// List of polls currently ongoing, to be checked on next fire()
 	var/list/datum/candidate_poll/currently_polling
 	/// Number of polls performed since the start
@@ -100,6 +100,10 @@ SUBSYSTEM_DEF(polling)
 		else
 			surrounding_image = image(chat_text_border_icon)
 
+	var/surrounding_icon
+	if(surrounding_image)
+		surrounding_icon = icon2html(surrounding_image, group, extra_classes = "bigicon")
+
 	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.client)
 			continue
@@ -190,9 +194,6 @@ SUBSYSTEM_DEF(polling)
 				volume *= sfx_volume * 0.01
 			SEND_SOUND(candidate_mob, sound('sound/misc/prompt.ogg', volume = volume))
 			// monkestation end
-			var/surrounding_icon
-			if(surrounding_image)
-				surrounding_icon = ma2html(surrounding_image, candidate_mob, extra_classes = "bigicon")
 			var/final_message =  boxed_message("<span style='text-align:center;display:block'>[surrounding_icon] <span style='font-size:1.2em'>[span_ooc(question)]</span> [surrounding_icon]\n[act_jump]      [act_signup]      [act_never]</span>")
 			to_chat(candidate_mob, final_message)
 
@@ -362,3 +363,31 @@ SUBSYSTEM_DEF(polling)
 		return FALSE
 
 	return next_poll_to_finish
+
+//POLLING MENTORS
+/datum/controller/subsystem/polling/proc/poll_mentor_ghost_candidates(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	ignore_category = null,
+	flash_window = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	amount_to_pick = 0,
+	chat_text_border_icon,
+	announce_chosen = TRUE,
+	show_candidate_amount = TRUE
+)
+	var/list/candidates = list()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		return candidates
+
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
+		if(is_mentor(ghost)) //REMEMBER TO UNCOMMENT THIS
+			candidates += ghost
+
+	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flash_window, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen, show_candidate_amount)

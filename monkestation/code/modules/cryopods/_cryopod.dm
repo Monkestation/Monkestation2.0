@@ -12,7 +12,6 @@
 * since time_entered, which is world.time when the occupant moves in.
 * ~ Zuhayr
 */
-GLOBAL_LIST_EMPTY(cryopod_computers)
 
 GLOBAL_LIST_EMPTY(ghost_records)
 
@@ -24,7 +23,7 @@ GLOBAL_LIST_EMPTY(valid_cryopods)
 /obj/machinery/computer/cryopod
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
-	icon = 'monkestation/icons/obj/cryogenics.dmi'
+	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cellconsole_1"
 	icon_keyboard = null
 	icon_screen = null
@@ -51,12 +50,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 /obj/machinery/computer/cryopod/Initialize(mapload)
 	. = ..()
-	GLOB.cryopod_computers += src
 	radio = new radio(src)
 	radio.lossless = TRUE
 
 /obj/machinery/computer/cryopod/Destroy()
-	GLOB.cryopod_computers -= src
 	QDEL_NULL(radio)
 	return ..()
 
@@ -141,7 +138,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
 	desc = "Suited for Cyborgs and Humanoids, the pod is a safe place for personnel affected by the Space Sleep Disorder to get some rest."
-	icon = 'monkestation/icons/obj/cryogenics.dmi'
+	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cryopod-open"
 	base_icon_state = "cryopod"
 	use_power = FALSE
@@ -226,8 +223,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	return ..()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
-	for(var/cryo_console in GLOB.cryopod_computers)
-		var/obj/machinery/computer/cryopod/console = cryo_console
+	for(var/obj/machinery/computer/cryopod/console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cryopod))
 		if(get_area(console) == get_area(src))
 			control_computer_weakref = WEAKREF(console)
 			break
@@ -339,6 +335,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 					update_objective.owner.announce_objectives()
 			qdel(objective)
 
+	SEND_SIGNAL(mob_occupant.mind, COMSIG_MIND_CRYOED, mob_occupant)
+
 /// This function can not be undone; do not call this unless you are sure.
 /// Handles despawning the player.
 /obj/machinery/cryopod/proc/despawn_occupant()
@@ -408,6 +406,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
 	human_occupant?.save_persistent_scars(target_ckey = human_occupant.ckey || stored_ckey)
+	handle_objectives()
 
 	mob_occupant.ghostize(can_reenter_corpse = FALSE)
 	ADD_TRAIT(mob_occupant, TRAIT_NO_TRANSFORM, REF(src))
@@ -449,7 +448,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(account)
 			GLOB.lottery_ticket_owners -= account
 
-	handle_objectives()
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)
@@ -694,7 +692,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	else
 		visible_message(span_infoplain("[user] starts putting [dropped] into the cryo pod."))
 
-	to_chat(dropped, span_warning("<b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"))
+	to_chat(dropped, span_warning("<b>If you ghost, log out or close your client now, your character will shortly be temporarily removed from the round. You may awaken from cryosleep by dragging yourself back into the cryopod after 15 minutes have passed.</b>"))
 
 	log_admin("[key_name(dropped)] entered a stasis pod.")
 	message_admins("[key_name_admin(dropped)] entered a stasis pod. [ADMIN_JMP(src)]")
@@ -759,9 +757,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cryopod/prison, 18)
 /obj/effect/mob_spawn/ghost_role/proc/find_control_computer()
 	if(!computer_area)
 		return
-	for(var/cryo_console in GLOB.cryopod_computers)
-		var/obj/machinery/computer/cryopod/console = cryo_console
-		var/area/area = get_area(cryo_console) // Define moment
+	for(var/obj/machinery/computer/cryopod/console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cryopod))
+		var/area/area = get_area(console) // Define moment
 		if(area.type == computer_area)
 			return console
 

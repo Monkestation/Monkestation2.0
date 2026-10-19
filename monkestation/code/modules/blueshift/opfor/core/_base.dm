@@ -489,7 +489,7 @@
 
 	for(var/client/staff as anything in GLOB.admins)
 		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
-			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+			staff.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
 		window_flash(staff)
 
 	COOLDOWN_START(src, request_update_cooldown, OPFOR_REQUEST_UPDATE_COOLDOWN)
@@ -510,7 +510,7 @@
 
 	for(var/client/staff as anything in GLOB.admins)
 		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
-			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+			staff.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
 		window_flash(staff, ignorepref = TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(add_to_ping_ss)), 2 MINUTES) // this is not responsible for the notification itself, but only for adding the ticket to the list of those to notify.
@@ -1097,10 +1097,8 @@
 	QDEL_NULL(opposing_force)
 	return ..()
 
-/mob/verb/opposing_force()
-	set name = "Opposing Force"
-	set category = "OOC"
-	set desc = "View your opposing force panel, or request one."
+GAME_VERB_DESC(/mob, opposing_force, "Opposing Force", "View your opposing force panel, or request one.", "OOC")
+
 	// Mind checks
 	if(!mind)
 		var/fail_message = "You have no mind!"

@@ -4,5 +4,6 @@
 	invocation = "RAAAAAAAAWR!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
+	keep_name = TRUE
 
 	possible_shapes = list(/mob/living/simple_animal/hostile/asteroid/polarbear/lesser)

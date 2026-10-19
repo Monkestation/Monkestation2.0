@@ -90,6 +90,12 @@
 	icon_state = "scisecurecrate"
 	base_icon_state = "scisecurecrate"
 
+/obj/structure/closet/crate/secure/ai
+	name = "secure artificial intelligence crate"
+	desc = "A crate with a lock on it, painted in the scheme of the station's research director."
+	icon_state = "aicrate"
+	base_icon_state = "aicrate"
+
 /obj/structure/closet/crate/secure/owned
 	name = "private crate"
 	desc = "A crate cover designed to only open for who purchased its contents."
@@ -141,3 +147,26 @@
 		update_appearance()
 	else if(!silent)
 		to_chat(user, span_warning("Bank account does not match with buyer!"))
+
+/obj/structure/closet/crate/secure/gear/blueshirt
+	name = "\improper Blue Shirt Uniform Crate"
+	desc = "Contains an alternative outfit for the station's private security force. Has enough outfits for five security officers. Originally produced for a now defunct research station."
+	req_access = list(ACCESS_BRIG)
+
+/obj/structure/closet/crate/secure/gear/blueshirt/PopulateContents()
+	. = ..()
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/head/helmet/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/suit/armor/vest/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)
+	new /obj/item/clothing/under/rank/security/officer/blueshirt(src)

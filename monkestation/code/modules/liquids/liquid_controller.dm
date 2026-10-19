@@ -65,16 +65,6 @@ SUBSYSTEM_DEF(liquids)
 				liquid_group.work_on_split_queue()
 				liquid_group.cleanse_members()
 
-	if(!length(temperature_queue))
-		for(var/datum/liquid_group/liquid_group as anything in active_groups)
-			if(MC_TICK_CHECK)
-				return
-			if(QDELETED(liquid_group))
-				temperature_queue -= active_groups
-				continue
-			var/list/turfs = liquid_group.fetch_temperature_queue()
-			temperature_queue += turfs
-
 	if(run_type == SSLIQUIDS_RUN_TYPE_GROUPS)
 		if(!length(group_process_work_queue))
 			group_process_work_queue |= active_groups
@@ -97,22 +87,6 @@ SUBSYSTEM_DEF(liquids)
 						evaporation_queue |= listed_turf
 				group_process_work_queue -= liquid_group
 
-
-		run_type = SSLIQUIDS_RUN_TYPE_TEMPERATURE
-
-	if(run_type == SSLIQUIDS_RUN_TYPE_TEMPERATURE)
-		list_clear_nulls(temperature_queue)
-		if(length(temperature_queue))
-			for(var/turf/open/temperature_turf as anything in temperature_queue)
-				if(MC_TICK_CHECK)
-					return
-				temperature_queue -= temperature_turf
-				if(QDELETED(temperature_turf.liquids))
-					continue
-				if(QDELETED(temperature_turf.liquids.liquid_group))
-					QDEL_NULL(temperature_turf.liquids)
-					continue
-				temperature_turf.liquids.liquid_group.act_on_queue(temperature_turf)
 		run_type = SSLIQUIDS_RUN_TYPE_EVAPORATION
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_EVAPORATION && !debug_evaporation)
@@ -237,7 +211,6 @@ SUBSYSTEM_DEF(liquids)
 				if(liquid_group.reagents_per_turf > LIQUID_HEIGHT_DIVISOR)
 					liquid_group.process_cached_edges()
 				cached_edge_work_queue -= liquid_group
-
 
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
 

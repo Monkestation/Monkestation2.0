@@ -15,10 +15,13 @@
 	badness = EFFECT_DANGER_ANNOYING
 	base_message_chance = 100
 	max_chance = 20
-	/// Cooldown between stun headaches effects (monkestation addition)
+	/// Cooldown between stun headaches effects
 	COOLDOWN_DECLARE(effect_cooldown)
 
 /datum/symptom/headache/activate(mob/living/carbon/mob)
+	if(HAS_TRAIT(mob, TRAIT_SOOTHED_HEADACHE))
+		return
+
 	if(round(multiplier) == 2 & prob(50))
 		if(prob(50) & COOLDOWN_FINISHED(src, effect_cooldown))
 			to_chat(mob, span_userdanger("[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]"))
@@ -26,7 +29,7 @@
 			COOLDOWN_START(src, effect_cooldown, rand(10 SECONDS, 30 SECONDS))
 		else
 			to_chat(mob, span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"))
-			mob.stamina.adjust(-50)
+			mob.stamina.adjust(-25)
 	else
 		if(prob(base_message_chance))
 			to_chat(mob, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))

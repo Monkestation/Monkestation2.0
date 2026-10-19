@@ -1,14 +1,13 @@
 SUBSYSTEM_DEF(blackmarket)
 	name = "Blackmarket"
 	flags = SS_BACKGROUND
-	init_order = INIT_ORDER_DEFAULT
 
 	/// Descriptions for each shipping methods.
-	var/shipping_method_descriptions = list(
-		SHIPPING_METHOD_LAUNCH="Launches the item at the station from space, cheap but you might not receive your item at all.",
-		SHIPPING_METHOD_LTSRBT="Long-To-Short-Range-Bluespace-Transceiver, a machine that receives items outside the station and then teleports them to the location of the uplink.",
-		SHIPPING_METHOD_TELEPORT="Teleports the item in a random area in the station, you get 60 seconds to get there first though.",
-		SHIPPING_METHOD_AT_FEET="Teleports the item to your feet."
+	var/list/shipping_method_descriptions = list(
+		SHIPPING_METHOD_LAUNCH = "Launches the item at the station from space, cheap but you might not receive your item at all.",
+		SHIPPING_METHOD_LTSRBT = "Long-To-Short-Range-Bluespace-Transceiver, a machine that receives items outside the station and then teleports them to the location of the uplink.",
+		SHIPPING_METHOD_TELEPORT = "Teleports the item in a random area in the station, you get 60 seconds to get there first though.",
+		SHIPPING_METHOD_AT_FEET = "Teleports the item to your feet.",
 	)
 
 	/// List of all existing markets.
@@ -22,17 +21,19 @@ SUBSYSTEM_DEF(blackmarket)
 	for(var/market in subtypesof(/datum/market) - /datum/market/auction - /datum/market/restock) //monkestation edit - MODULAR_GUNS
 		markets[market] += new market
 
-	for(var/item in subtypesof(/datum/market_item))
-		var/datum/market_item/I = new item()
-		if(!I.item)
+	for(var/datum/market_item/item as anything in subtypesof(/datum/market_item))
+		if(!initial(item.item))
+			continue
+		if(!prob(initial(item.availability_prob)))
 			continue
 
-		for(var/M in I.markets)
-			if(!markets[M])
-				stack_trace("SSblackmarket: Item [I] available in market that does not exist.")
+		var/datum/market_item/item_instance = new item()
+		for(var/potential_market in item_instance.markets)
+			if(!markets[potential_market])
+				stack_trace("SSblackmarket: Item [item_instance] available in market that does not exist.")
 				continue
-			markets[M].add_item(item)
-		qdel(I)
+			// If this fails the market item will just be GC'd
+			markets[potential_market].add_item(item_instance)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/blackmarket/fire(resumed)

@@ -6,7 +6,7 @@
 	element_flags = ELEMENT_BESPOKE | COMPONENT_DUPE_HIGHLANDER
 	argument_hash_start_idx = 2
 
-	///the invisiblity trait applied, like TRAIT_T_RAY_VISIBLE
+	///the invisibility trait applied, like TRAIT_T_RAY_VISIBLE
 	var/invisibility_trait
 	///level of invisibility applied when under a tile. Could be INVISIBILITY_OBSERVER if you still want it to be visible to ghosts
 	var/invisibility_level
@@ -36,7 +36,10 @@
 /datum/element/undertile/proc/hide(atom/movable/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 
-	source.invisibility = underfloor_accessibility < UNDERFLOOR_VISIBLE ? invisibility_level : 0
+	if(underfloor_accessibility < UNDERFLOOR_VISIBLE)
+		source.SetInvisibility(invisibility_level, id=type)
+	else
+		source.RemoveInvisibility(type)
 
 	var/turf/T = get_turf(source)
 

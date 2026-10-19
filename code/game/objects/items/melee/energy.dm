@@ -113,13 +113,9 @@
 	SIGNAL_HANDLER
 
 	if(active)
-		if(embedding)
-			updateEmbedding()
 		heat = active_heat
 		START_PROCESSING(SSobj, src)
 	else
-		if(embedding)
-			disableEmbedding()
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
@@ -173,6 +169,10 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /// Energy swords.
+/datum/embedding/esword
+	embed_chance = 75
+	impact_pain_mult = 10
+
 /obj/item/melee/energy/sword
 	name = "energy sword"
 	desc = "May the force be within you."
@@ -190,7 +190,7 @@
 	armour_ignorance = 5
 	block_chance = 50
 	block_sound = 'sound/weapons/block_blade.ogg'
-	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
+	embed_type = /datum/embedding/esword
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
@@ -223,6 +223,9 @@
 		return
 	attack_self(user)
 
+/obj/item/melee/energy/sword/cyborg/ninja
+	sword_color_icon = "green"
+
 /obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
@@ -242,6 +245,9 @@
 
 /obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
+
+/obj/item/melee/energy/sword/cyborg/saw/ninja
+	icon_state = "esaw_ninja"
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber

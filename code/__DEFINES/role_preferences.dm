@@ -17,8 +17,8 @@
 #define ROLE_COMMANDO_OPERATIVE "Commando Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
-#define ROLE_BLOODLING "Bloodling" // monkestation edit
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
+#define ROLE_BLOODLING "Bloodling"
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
 #define ROLE_DARKSPAWN "Darkspawn"
@@ -28,6 +28,7 @@
 #define ROLE_DARKSPAWN_FIGHTER "Fighter"
 #define ROLE_DARKSPAWN_WARLOCK "Warlock"
 #define ROLE_DARKSPAWN_SCOUT "Scout"
+#define ROLE_SPY "Spy"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -63,6 +64,7 @@
 #define ROLE_BINGLE "Bingle"
 #define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
 #define ROLE_WILLING_HOST "Willing Host"
+#define ROLE_ABANDONED_IPC "Abandoned IPC"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -72,6 +74,7 @@
 #define ROLE_ANOMALY_GHOST "Ectoplasmic Anomaly Ghost"
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_DEATHSQUAD "Deathsquad"
+#define ROLE_DEVIL "Devil"
 #define ROLE_DRONE "Drone"
 #define ROLE_EMAGGED_BOT "Malfunctioning Bot"
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
@@ -84,13 +87,15 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
+#define ROLE_HOLY_SUMMONED "Holy Summoned"
+#define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
 #define ROLE_POSIBRAIN "Posibrain"
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
-#define ROLE_BLOODLING_THRALL "Bloodling Thrall" // monkestation edit
+#define ROLE_BLOODLING_THRALL "Bloodling Thrall"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -103,10 +108,12 @@
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SYNDICATE_MONKEY "Syndicate Monkey Agent"
 
+#define ROLE_WISHGRANTER_AVATAR "Wishgranter Avatar"
+
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_ASHWALKER "Ash Walker"
-#define ROLE_BAR_DRONE "Bardrone" // monkestation addition
+#define ROLE_BAR_DRONE "Bardrone"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_FREE_MINER "Free Miner"
@@ -161,6 +168,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ASSAULT_OPERATIVE = 14,
 	ROLE_BLOODLING = 15,
 	ROLE_DARKSPAWN = 14,
+	ROLE_SPY = 0,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
@@ -187,6 +195,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 //monkestation edit start
 	ROLE_PLAGUERAT = 0,
 	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
+	ROLE_DEVIL = 0,
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
 	ROLE_FORBIDDENCALLING = 0,
@@ -197,6 +206,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TERATOMA = 0,
 	ROLE_JUNIOR_LONE_OPERATIVE = 0,
 	ROLE_BINGLE = 0,
+	ROLE_ABANDONED_IPC = 0,
 //darkspawns role classes
 	ROLE_DARKSPAWN_WARLOCK = 0,
 	ROLE_DARKSPAWN_SCOUT = 0,
@@ -214,9 +224,18 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,
 	ROLE_SENTIENCE = 0,
+	ROLE_SOULTRAPPED_HERETIC = 0,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
 #define BEOVERFLOW 1
 #define BERANDOMJOB 2
 #define RETURNTOLOBBY 3
+
+#ifdef ROLE_VAMPIRE
+#define VAMPIRE_ANTAG_DATUM /datum/antagonist/vampire
+#define VAMPIRE_ROUNDSTART_EVENT /datum/round_event_control/antagonist/vampire/roundstart
+#else
+#define VAMPIRE_ANTAG_DATUM /datum/antagonist/bloodsucker
+#define VAMPIRE_ROUNDSTART_EVENT /datum/round_event_control/antagonist/bloodsucker/roundstart
+#endif

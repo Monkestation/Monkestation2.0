@@ -267,6 +267,7 @@ multiple modular subtrees with behaviors
 		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
 		SSai_controllers.ai_controllers_by_status[ai_status] -= src
+		SSai_controllers.currentrun -= src
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -283,7 +284,7 @@ multiple modular subtrees with behaviors
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
 	if(!able_to_run())
-		SSmove_manager.stop_looping(pawn) //stop moving
+		GLOB.move_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
 	if(!LAZYLEN(current_behaviors) && idle_behavior)
@@ -378,6 +379,7 @@ multiple modular subtrees with behaviors
 	//remove old status, if we've got one
 	if(ai_status)
 		SSai_controllers.ai_controllers_by_status[ai_status] -= src
+		SSai_controllers.currentrun -= src
 	ai_status = new_ai_status
 	SSai_controllers.ai_controllers_by_status[new_ai_status] += src
 	switch(ai_status)

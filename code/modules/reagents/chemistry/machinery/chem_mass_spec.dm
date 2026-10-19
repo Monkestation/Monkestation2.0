@@ -242,7 +242,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 	return data
 
-/obj/machinery/chem_mass_spec/ui_act(action, params)
+/obj/machinery/chem_mass_spec/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

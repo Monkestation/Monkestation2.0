@@ -36,7 +36,7 @@
 
 	on = TRUE
 	update_icon_state()
-	spawn(-1)
+	ASYNC
 		while(on)
 			if(length(loc.contents) > 1)
 				for(var/atom/movable/AM as anything in loc.contents - src)

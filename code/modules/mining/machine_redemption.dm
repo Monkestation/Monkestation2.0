@@ -77,9 +77,9 @@
 	var/point_upgrade_temp = 1
 	var/ore_multiplier_temp = 1
 	for(var/datum/stock_part/matter_bin/B in component_parts)
-		ore_multiplier_temp = 0.65 + (0.35 * B.tier)
+		ore_multiplier_temp = 0.80 + (0.20 * B.tier)
 	for(var/datum/stock_part/micro_laser/L in component_parts)
-		point_upgrade_temp = 0.65 + (0.35 * L.tier)
+		point_upgrade_temp = 0.80 + (0.20 * L.tier)
 	point_upgrade = point_upgrade_temp
 	ore_multiplier = round(ore_multiplier_temp, 0.01)
 

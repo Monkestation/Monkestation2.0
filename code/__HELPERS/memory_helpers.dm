@@ -118,6 +118,15 @@
 	qdel(memories[memory_type])
 	memories -= memory_type
 
+/// Helder to wipe the passed memory type ONLY from our list of memories
+/datum/mind/proc/wipe_memories_except_keys()
+	for(var/memmory in memories)
+		var/datum/memory/prime_memory = memories[memmory]
+		if(prime_memory.story_value == STORY_VALUE_KEY)
+			continue
+		qdel(prime_memory)
+		memories -= memmory
+
 /// Helper to create quick copies of all of our memories
 /// Quick copies aren't full copies - just basic copies containing necessities.
 /// They cannot be used in stories.

@@ -16,7 +16,7 @@
 /datum/config_entry/string/roundend_webhook_name
 
 /datum/config_entry/string/roundend_webhook_description
-	default = @"[Join Server!](http://play.monkestation.com:7420)"
+	default = @"[Join Server!](https://hub.monkestation.com/connect/3ea482a2)"
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/roundend_webhook_content
@@ -98,6 +98,9 @@
 	if(!is_http_protocol(str_val))
 		return FALSE
 	return ..()
+
+// The current server ID as defined in the plexora config
+/datum/config_entry/string/plexora_server_id
 
 /datum/config_entry/flag/require_discord_verification
 

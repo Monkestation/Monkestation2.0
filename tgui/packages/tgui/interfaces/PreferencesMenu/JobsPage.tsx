@@ -1,14 +1,24 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode, Inferno } from 'inferno';
-import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
+import type { ReactNode } from 'react';
 import {
+  Box,
+  Button,
+  Collapsible,
+  Dropdown,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
+import { useBackend } from '../../backend';
+import {
+  CharacterMode,
   createSetPreference,
-  Job,
+  type Job,
   JoblessRole,
   JobPriority,
-  PreferencesMenuData,
+  type PreferencesMenuData,
 } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -50,11 +60,18 @@ const PriorityButton = (props: {
 
 type CreateSetPriority = (priority: JobPriority | null) => () => void;
 
-const createSetPriorityCache: Record<string, CreateSetPriority> = {};
+const createSetPriorityCacheChar: Record<string, CreateSetPriority> = {};
+const createSetPriorityCacheOver: Record<string, CreateSetPriority> = {};
 
 const createCreateSetPriorityFromName = (
   jobName: string,
+  pageType: JobsPageType,
 ): CreateSetPriority => {
+  const createSetPriorityCache =
+    pageType === JobsPageType.Character
+      ? createSetPriorityCacheChar
+      : createSetPriorityCacheOver;
+
   if (createSetPriorityCache[jobName] !== undefined) {
     return createSetPriorityCache[jobName];
   }
@@ -73,6 +90,7 @@ const createCreateSetPriorityFromName = (
       act('set_job_preference', {
         job: jobName,
         level: priority,
+        type: pageType,
       });
     };
 
@@ -85,8 +103,20 @@ const createCreateSetPriorityFromName = (
   return createSetPriority;
 };
 
-const PriorityHeaders = () => {
+const PriorityHeaders = (props: { isFilter: boolean }) => {
   const className = 'PreferencesMenu__Jobs__PriorityHeader';
+
+  if (props.isFilter) {
+    return (
+      <Stack>
+        <Stack.Item grow />
+
+        <Stack.Item className={className}>Off</Stack.Item>
+
+        <Stack.Item className={className}>On</Stack.Item>
+      </Stack>
+    );
+  }
 
   return (
     <Stack>
@@ -96,7 +126,7 @@ const PriorityHeaders = () => {
 
       <Stack.Item className={className}>Low</Stack.Item>
 
-      <Stack.Item className={className}>Medium</Stack.Item>
+      <Stack.Item className={className}>Med</Stack.Item>
 
       <Stack.Item className={className}>High</Stack.Item>
     </Stack>
@@ -105,21 +135,21 @@ const PriorityHeaders = () => {
 
 const PriorityButtons = (props: {
   createSetPriority: CreateSetPriority;
-  isOverflow: boolean;
+  isBoolean: boolean;
   priority: JobPriority;
 }) => {
-  const { createSetPriority, isOverflow, priority } = props;
+  const { createSetPriority, isBoolean, priority } = props;
 
   return (
     <Stack
       style={{
-        'align-items': 'center',
+        alignItems: 'center',
         height: '100%',
-        'justify-content': 'flex-end',
-        'padding-left': '0.3em',
+        justifyContent: 'flex-end',
+        paddingLeft: '0.3em',
       }}
     >
-      {isOverflow ? (
+      {isBoolean ? (
         <>
           <PriorityButton
             name="Off"
@@ -172,26 +202,39 @@ const PriorityButtons = (props: {
   );
 };
 
-const JobRow = (props: { className?: string; job: Job; name: string }) => {
+const JobRow = (props: {
+  className?: string;
+  job: Job;
+  name: string;
+  pageType: JobsPageType;
+  altTitleMode: boolean;
+}) => {
   const { data } = useBackend<PreferencesMenuData>();
-  const { className, job, name } = props;
+  const { className, job, name, pageType, altTitleMode } = props;
 
+  const isFilter =
+    pageType === JobsPageType.Character &&
+    data.character_preferences.misc.character_role_select_mode ===
+      CharacterMode.Filters;
   const isOverflow = data.overflow_role === name;
-  const priority = data.job_preferences[name];
+  const jobPrefs =
+    pageType === JobsPageType.Overall
+      ? data.job_preferences_overall
+      : data.job_preferences_character;
+  const priority = jobPrefs[name];
 
-  const createSetPriority = createCreateSetPriorityFromName(name);
+  const createSetPriority = createCreateSetPriorityFromName(name, pageType);
 
   const { act } = useBackend<PreferencesMenuData>();
 
-  const experienceNeeded =
-    data.job_required_experience && data.job_required_experience[name];
+  const experienceNeeded = data?.job_required_experience?.[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
   const alt_title_selected = data.job_alt_titles[name]
     ? data.job_alt_titles[name]
     : name;
 
-  let rightSide: InfernoNode;
+  let rightSide: ReactNode;
 
   if (experienceNeeded) {
     const { experience_type, required_playtime } = experienceNeeded;
@@ -224,19 +267,14 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
     rightSide = (
       <PriorityButtons
         createSetPriority={createSetPriority}
-        isOverflow={isOverflow}
+        isBoolean={isOverflow || isFilter}
         priority={priority}
       />
     );
   }
 
   return (
-    <Box
-      className={className}
-      style={{
-        'margin-top': 0,
-      }}
-    >
+    <Box className={className}>
       <Stack>
         <Tooltip content={job.description} position="right">
           <Stack.Item
@@ -244,17 +282,18 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
             className="job-name"
             width="70%"
             style={{
-              'padding-left': '0.3em',
+              paddingLeft: '0.3em',
             }}
           >
-            {' '}
-            {!job.alt_titles ? (
-              name
+            {!job.alt_titles || !altTitleMode ? (
+              <Box color="white" backgroundColor="#1b1b1baa" p={0.5}>
+                {name}
+              </Box>
             ) : (
               <Dropdown
                 width="100%"
                 options={job.alt_titles}
-                displayText={alt_title_selected}
+                selected={alt_title_selected}
                 onSelected={(value) =>
                   act('set_job_title', { job: name, new_title: value })
                 }
@@ -263,7 +302,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
           </Stack.Item>
         </Tooltip>
 
-        <Stack.Item width="40%" className="options" /* SKYRAT EDIT */>
+        <Stack.Item grow className="options">
           {rightSide}
         </Stack.Item>
       </Stack>
@@ -271,8 +310,13 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   );
 };
 
-const Department: Inferno.SFC<{ department: string }> = (props) => {
-  const { children, department: name } = props;
+const Department: React.FC<{
+  department: string;
+  children?: React.ReactNode;
+  pageType: JobsPageType;
+  altTitleMode: boolean;
+}> = (props) => {
+  const { children, department: name, pageType, altTitleMode } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
   return (
@@ -299,23 +343,24 @@ const Department: Inferno.SFC<{ department: string }> = (props) => {
         );
 
         return (
-          <Box>
-            <Stack vertical fill>
-              {jobsForDepartment.map(([name, job]) => {
-                return (
-                  <JobRow
-                    className={classes([
-                      className,
-                      name === department.head && 'head',
-                    ])}
-                    key={name}
-                    job={job}
-                    name={name}
-                  />
-                );
-              })}
-            </Stack>
-
+          <Box className={className}>
+            {/* <Stack vertical> this stack was disabled to get rid of the inter-child spacing */}
+            {jobsForDepartment.map(([name, job]) => {
+              return (
+                <JobRow
+                  className={classes([
+                    className,
+                    name === department.head && 'head',
+                  ])}
+                  key={name}
+                  job={job}
+                  name={name}
+                  pageType={pageType}
+                  altTitleMode={altTitleMode}
+                />
+              );
+            })}
+            {/* </Stack> */}
             {children}
           </Box>
         );
@@ -333,7 +378,7 @@ const Gap = (props: { amount: number }) => {
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-const JoblessRoleDropdown = (props) => {
+const JoblessRoleDropdown = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const selected = data.character_preferences.misc.joblessrole;
 
@@ -352,85 +397,299 @@ const JoblessRoleDropdown = (props) => {
     },
   ];
 
+  const selection = options?.find(
+    (option) => option.value === selected,
+  )?.displayText;
+
   return (
     <Box position="absolute" right={1} width="25%">
       <Dropdown
         width="100%"
-        selected={selected}
+        selected={selection}
         onSelected={createSetPreference(act, 'joblessrole')}
         options={options}
-        displayText={
-          <Box pr={1}>
-            {options.find((option) => option.value === selected)!.displayText}
-          </Box>
-        }
       />
     </Box>
   );
 };
 
-export const JobsPage = () => {
+const ModeDropdown = () => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const selected = data.character_preferences.misc.character_role_select_mode;
+
+  const options = [
+    {
+      displayText: `Mode: Simple`, // -- Choose one character and set occupations in occupations settings
+      value: CharacterMode.Simple,
+    },
+    {
+      displayText: `Mode: Character Filters`, // -- Choose at least one character, set occupations in occupation settings and set occupation filters in character settings
+      value: CharacterMode.Filters,
+    },
+    {
+      displayText: `Mode: Per Character Priorities`, // -- Choose one character and set occupations in character settings  (old version)
+      value: CharacterMode.PerCharacterPriorities,
+    },
+  ];
+
+  const selection = options?.find(
+    (option) => option.value === selected,
+  )?.displayText;
+
   return (
-    <>
+    <Box width="25%">
+      <Dropdown
+        width="100%"
+        selected={selection}
+        onSelected={createSetPreference(act, 'character_role_select_mode')}
+        options={options}
+      />
+      <Collapsible title="???" width="20%">
+        <Box
+          width="300%"
+          p={1}
+          style={{
+            border: '2px dashed grey',
+          }}
+        >
+          In the occupations windows you can pick which jobs you want and select
+          your character(s). If you've never played before it's recommended to
+          start as an Assistant to learn the basic controls. After that an
+          occupation like Botanist, Scientist or Station Engineer is recommended
+          to give you some tasks to do and mechanics to learn.
+          <br />
+          <br />
+          There are three different modes you can pick from which determine how
+          your occupations and character are picked.
+          <h3>Mode: Simple</h3>
+          You have one set of job priorities. Only one character can be enabled
+          at a time.
+          <br /> <br />
+          1. Set job priorities in Player Occupations <br />
+          2. Pick one enabled character
+          <h3>Mode: Character Filters</h3>
+          You have one set of job priorities. Multiple characters can be enabled
+          at a time and each character can have different jobs enabled or
+          disabled. When you join the round the game will pick a job for you (or
+          take your chosen job if latejoining) then pick an enabled character
+          which has that job enabled. If the game cannot find one it will pick
+          your default character.
+          <br /> <br />
+          1. Set job priorities in Player Occupations <br />
+          2. Set job filters in Character Occupations <br />
+          3. Pick 0 or more enabled characters <br />
+          4. Pick one default character
+          <h3>Mode: Per Character Priorities (legacy mode)</h3>
+          Each character has their own set of job priorities. Only one character
+          can be enabled at a time.
+          <br /> <br />
+          1. Set job priorities in Character Occupations <br />
+          2. Pick one enabled character
+        </Box>
+      </Collapsible>
+    </Box>
+  );
+};
+
+const CharacterSelect = (props: { type: JobsPageType }) => {
+  const { type } = props;
+  const { data } = useBackend<PreferencesMenuData>();
+  const mode = data.character_preferences.misc.character_role_select_mode;
+  const profiles = data.character_profiles;
+
+  if (type !== JobsPageType.Overall) {
+    return;
+  }
+
+  return (
+    <Stack justify="center" wrap>
+      {profiles.map((profile, slot) => (
+        <CharacterButton
+          key={slot}
+          slot={slot}
+          profile={profile}
+          multiSelect={mode === CharacterMode.Filters}
+        />
+      ))}
+    </Stack>
+  );
+};
+
+const CharacterButton = (props: {
+  slot: number;
+  profile: string | null;
+  multiSelect: boolean;
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const { slot, profile, multiSelect } = props;
+  const enabled_chars = data.enabled_characters;
+
+  const selected = multiSelect
+    ? enabled_chars.includes(slot + 1)
+    : data.active_slot === slot + 1;
+
+  if (profile === null) {
+    return;
+  }
+
+  return (
+    <Stack.Item my={0.25}>
+      <Button
+        selected={selected}
+        onClick={() => {
+          if (multiSelect) {
+            act('set_character_enabled', {
+              slot: slot + 1,
+              enabled: !selected,
+            });
+          } else {
+            act('change_slot', {
+              slot: slot + 1,
+            });
+          }
+        }}
+        fluid
+      >
+        {multiSelect && (
+          <Icon
+            name={selected ? 'check-square-o' : 'square-o'}
+            style={{ float: 'left', padding: '4px 4px 4px 2px' }}
+          />
+        )}
+        {profile}
+        {data.default_character === slot + 1 && multiSelect && ' (default)'}
+      </Button>
+    </Stack.Item>
+  );
+};
+
+export enum JobsPageType {
+  Overall = 1,
+  Character = 2,
+}
+
+export const JobsPage = (props: { type: JobsPageType }) => {
+  const { type } = props;
+  const { act, data } = useBackend<PreferencesMenuData>();
+
+  const mode = data.character_preferences.misc.character_role_select_mode;
+
+  const visible =
+    (type === JobsPageType.Overall &&
+      mode !== CharacterMode.PerCharacterPriorities) ||
+    (type === JobsPageType.Character && mode !== CharacterMode.Simple);
+
+  const isFilter =
+    type === JobsPageType.Character && mode === CharacterMode.Filters;
+
+  const altTitleMode = !(
+    type === JobsPageType.Overall && mode === CharacterMode.Filters
+  );
+
+  const contents = (
+    <Stack vertical>
       <JoblessRoleDropdown />
-
-      <Stack vertical fill>
-        <Gap amount={22} />
-
+      <ModeDropdown />
+      <CharacterSelect type={type} />
+      {visible && (
         <Stack.Item>
-          <Stack fill className="PreferencesMenu__Jobs">
-            <Stack.Item mr={1}>
+          <Stack className="PreferencesMenu__Jobs">
+            <Stack.Item>
               <Gap amount={36} />
-
-              <PriorityHeaders />
-
-              <Department department="Engineering">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Science">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Silicon">
-                <Gap amount={12} />
-              </Department>
-
-              <Department department="Assistant" />
+              <PriorityHeaders isFilter={isFilter} />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Engineering"
+              />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Science"
+              />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Silicon"
+              />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Assistant"
+              />
+              <Gap amount={10} />
+              <Button
+                onClick={() => {
+                  act('toggle_all_jobs', { type: type });
+                }}
+              >
+                Toggle All
+              </Button>{' '}
+              <br />
+              {mode === CharacterMode.Filters && (
+                <Button
+                  onClick={() => {
+                    act('set_default_character');
+                  }}
+                >
+                  Set Default Character
+                </Button>
+              )}
             </Stack.Item>
 
-            <Stack.Item mr={1}>
-              <PriorityHeaders />
+            <Stack.Item>
+              <Gap amount={10} />
+              <PriorityHeaders isFilter={isFilter} />
 
-              <Department department="Captain">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Service">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Cargo" />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Captain"
+              />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Service"
+              />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Cargo"
+              />
             </Stack.Item>
 
             <Stack.Item>
               <Gap amount={36} />
+              <PriorityHeaders isFilter={isFilter} />
 
-              <PriorityHeaders />
-
-              <Department department="Security">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Medical">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Central Command" />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Security"
+              />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Medical"
+              />
+              <Department
+                pageType={type}
+                altTitleMode={altTitleMode}
+                department="Central Command"
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
-      </Stack>
-    </>
+      )}
+    </Stack>
   );
+
+  if (type === JobsPageType.Overall) {
+    return (
+      <Section title="Player Occupations" maxHeight="100%" overflowY="scroll">
+        {contents}
+      </Section>
+    );
+  }
+  return <Section>{contents}</Section>;
 };

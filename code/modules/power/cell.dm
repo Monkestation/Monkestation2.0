@@ -232,27 +232,12 @@
 /obj/item/stock_parts/power_store/cell/emproof/slime
 	name = "EMP-proof slime core"
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
-	icon = 'icons/mob/simple/slimes.dmi'
-	icon_state = "yellow_slime_extract"
+	icon = /obj/item/slime_extract/yellow::icon
+	icon_state = /obj/item/slime_extract/yellow::icon_state
 	custom_materials = null
 	maxcharge = STANDARD_CELL_CHARGE * 5
 	charge_light_type = null
 	connector_type = "slimecore"
-
-/obj/item/stock_parts/power_store/cell/beam_rifle
-	name = "beam rifle capacitor"
-	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
-	maxcharge = STANDARD_CELL_CHARGE * 50
-	chargerate = STANDARD_CELL_CHARGE * 5 //Extremely energy intensive
-
-/obj/item/stock_parts/power_store/cell/beam_rifle/corrupt()
-	return
-
-/obj/item/stock_parts/power_store/cell/beam_rifle/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	charge = clamp((charge-(10000/severity)),0,maxcharge)
 
 /obj/item/stock_parts/power_store/cell/emergency_light
 	name = "miniature power cell"

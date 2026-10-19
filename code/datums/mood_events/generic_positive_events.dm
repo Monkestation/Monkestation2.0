@@ -374,8 +374,8 @@
 	description = "This hat fills me with whimsical joy!"
 	mood_change = 2
 
-/datum/mood_event/has_borer
-	description = "i feel content, the melody completes me."
+/datum/mood_event/willing_borer
+	description = "I feel content, the melody completes me."
 	mood_change = 5
 
 /datum/mood_event/thrall_darkspawn
@@ -386,3 +386,7 @@
 /datum/mood_event/sling
 	description = span_velvet("<b>The keys to reality are within my grasp.</b>\n")
 	mood_change = 20
+
+/datum/mood_event/wishgranter
+	description = span_hierophant("MY POWER IS LIMITLESS... IT'S ALL MINE!")
+	mood_change = 50

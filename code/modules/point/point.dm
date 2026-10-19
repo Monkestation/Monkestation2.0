@@ -22,6 +22,8 @@
 	var/turf/our_tile = get_turf(src)
 	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
 
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual)
+
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
@@ -76,6 +78,14 @@
 	pixel_y = old_loc.pixel_y
 	invisibility = set_invis
 
+/// Holographic arrow a holopad projects when the AI points at something
+/obj/effect/temp_visual/point/holo
+	icon_state = "arrow_large_white"
+
+/obj/effect/temp_visual/point/holo/Initialize(mapload, set_invis = 0)
+	. = ..()
+	makeHologram()
+
 #undef POINT_TIME
 
 /**
@@ -91,9 +101,8 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
-	set name = "Point To"
-	set category = "Object"
+GAME_VERB_CONTEXT(/mob, pointed, "Point To", "Object", null, /atom)
+	VERB_ARG_TYPED(A, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
 
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE

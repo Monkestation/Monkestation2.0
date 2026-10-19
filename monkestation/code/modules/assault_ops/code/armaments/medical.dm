@@ -21,27 +21,27 @@
 	subcategory = "Chemical Autoinjectors"
 
 /datum/armament_entry/assault_operatives/medical/injector/bloodloss
-	item_type = /obj/item/reagent_containers/hypospray/medipen/blood_loss
+	item_type = /obj/item/reagent_containers/medipen/blood_loss
 	cost = 1
 
 /datum/armament_entry/assault_operatives/medical/injector/atropine
-	item_type = /obj/item/reagent_containers/hypospray/medipen/atropine
+	item_type = /obj/item/reagent_containers/medipen/atropine
 	cost = 2
 
 /datum/armament_entry/assault_operatives/medical/injector/salacid
-	item_type = /obj/item/reagent_containers/hypospray/medipen/salacid
+	item_type = /obj/item/reagent_containers/medipen/salacid
 	cost = 1
 
 /datum/armament_entry/assault_operatives/medical/injector/oxandrolone
-	item_type = /obj/item/reagent_containers/hypospray/medipen/oxandrolone
+	item_type = /obj/item/reagent_containers/medipen/oxandrolone
 	cost = 1
 
 /datum/armament_entry/assault_operatives/medical/injector/stimulant
-	item_type = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	item_type = /obj/item/reagent_containers/medipen/stimulants
 	cost = 2
 
 /datum/armament_entry/assault_operatives/medical/injector/stimulant_hypo
-	item_type = /obj/item/reagent_containers/hypospray/combat
+	item_type = /obj/item/hypospray/combat
 	cost = 3
 
 /datum/armament_entry/assault_operatives/medical/injector/bag

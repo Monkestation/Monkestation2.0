@@ -12,7 +12,7 @@
 
 /obj/item/ammo_box/magazine/internal/rocketlauncher
 	name = "rocket launcher internal magazine"
-	ammo_type = /obj/item/ammo_casing/caseless/rocket
+	ammo_type = /obj/item/ammo_casing/rocket
 	caliber = CALIBER_84MM
 	max_ammo = 1
 
@@ -23,7 +23,7 @@
 	max_ammo = 3
 	multiload = FALSE
 
-/obj/item/ammo_box/magazine/internal/grenadelauncher/kinetic
+/obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/kinetic
 	name = "kinetic rotary grenade launcher"
 	ammo_type = /obj/item/ammo_casing/a40mm/kinetic
 	caliber = CALIBER_40MM_KINETIC

@@ -150,6 +150,18 @@
 		'sound/misc/desecration-03.ogg',
 	)
 
+/datum/sound_effect/writing_pen
+	key = SFX_WRITING_PEN
+	file_paths = list(
+		'sound/effects/writing_pen/writing_pen1.ogg',
+		'sound/effects/writing_pen/writing_pen2.ogg',
+		'sound/effects/writing_pen/writing_pen3.ogg',
+		'sound/effects/writing_pen/writing_pen4.ogg',
+		'sound/effects/writing_pen/writing_pen5.ogg',
+		'sound/effects/writing_pen/writing_pen6.ogg',
+		'sound/effects/writing_pen/writing_pen7.ogg',
+	)
+
 /datum/sound_effect/im_here
 	key = SFX_IM_HERE
 	file_paths = list(
@@ -187,6 +199,7 @@
 		'sound/voice/beepsky/creep.ogg',
 		'sound/voice/beepsky/god.ogg',
 		'sound/voice/beepsky/iamthelaw.ogg',
+		'sound/voice/beepsky/insult.ogg',
 		'sound/voice/beepsky/radio.ogg',
 		'sound/voice/beepsky/secureday.ogg',
 	)
@@ -454,19 +467,19 @@
 /datum/sound_effect/button_click
 	key = SFX_BUTTON_CLICK
 	file_paths = list(
-		'monkestation/sound/effects/hl2/button-click.ogg',
+		'sound/effects/hl2/button-click.ogg',
 	)
 
 /datum/sound_effect/button_fail
 	key = SFX_BUTTON_FAIL
 	file_paths = list(
-		'monkestation/sound/effects/hl2/button-fail.ogg',
+		'sound/effects/hl2/button-fail.ogg',
 	)
 
 /datum/sound_effect/lightswitch
 	key = SFX_LIGHTSWITCH
 	file_paths = list(
-		'monkestation/sound/effects/hl2/lightswitch.ogg',
+		'sound/effects/hl2/lightswitch.ogg',
 	)
 
 /datum/sound_effect/portal_close
@@ -634,4 +647,12 @@
 		'sound/machines/djstation/tape_asmr17.ogg',
 		'sound/machines/djstation/tape_asmr18.ogg',
 		'sound/machines/djstation/tape_asmr19.ogg',
+	)
+
+/datum/sound_effect/void_deflect
+	key = SFX_VOID_DEFLECT
+	file_paths = list(
+		'sound/magic/voiddeflect01.ogg',
+		'sound/magic/voiddeflect02.ogg',
+		'sound/magic/voiddeflect03.ogg',
 	)

@@ -170,7 +170,7 @@
 	projectile_type = /obj/projectile/bileworm_acid
 	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target, original = TRUE)
 	firing_directions = GLOB.cardinals.Copy()
 	return ..()
 

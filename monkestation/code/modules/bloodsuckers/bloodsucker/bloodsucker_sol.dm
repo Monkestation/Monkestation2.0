@@ -53,8 +53,8 @@
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
-	/// Checks - Not daylight & Has more than 10 Brute/Burn & not already in Torpor
-	if((total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache) || length(user.get_missing_limbs()) > 0) && !is_in_torpor())
+	/// Checks - Not already in torpor and has over 10 damage, bad organs, missing limbs, or wounds
+	if((total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache) || length(user.get_missing_limbs()) > 0 || length(user.all_wounds) > 0) && !is_in_torpor())
 		torpor_begin()
 
 /datum/antagonist/bloodsucker/proc/check_end_torpor()
@@ -74,10 +74,8 @@
 	else
 		if(total_brute <= 10)
 			torpor_end()
-	//monkestation edit
 	if(COOLDOWN_FINISHED(src, bloodsucker_torpor_max_time))
 		torpor_end() // YOUR TAKING TOO LONG
-	//monkestation end
 /datum/antagonist/bloodsucker/proc/is_in_torpor()
 	if(QDELETED(owner.current))
 		return FALSE
@@ -93,10 +91,8 @@
 	// Without this, you'll just keep dying while you recover.
 	current.add_traits(torpor_traits, TORPOR_TRAIT)
 	current.set_timed_status_effect(0 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	//monkestation edit
 	// Failsafe to prevent players taking too long in torpor
 	COOLDOWN_START(src, bloodsucker_torpor_max_time, BLOODSUCKER_TORPOR_MAX_TIME)
-	//monkestation end
 	// Disable ALL Powers
 	DisableAllPowers()
 
@@ -114,6 +110,5 @@
 	if(!HAS_TRAIT(current, TRAIT_MASQUERADE))
 		ADD_TRAIT(current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 	heal_vampire_organs()
-	current.pain_controller?.remove_all_pain()
 	current.update_stat()
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_EXIT_TORPOR)

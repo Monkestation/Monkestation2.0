@@ -203,16 +203,16 @@
 		freeze_atom(i)
 	freeze_turf(target)
 
-/datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
-	P.paused = TRUE
+/datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/proj)
+	proj.paused = TRUE
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/P)
-	P.paused = FALSE
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/proj)
+	proj.paused = FALSE
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
 	frozen_mobs += victim
 	victim.apply_status_effect(/datum/status_effect/time_stopped)
-	SSmove_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
+	GLOB.move_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
 		animal_victim.toggle_ai(AI_OFF)

@@ -1,9 +1,14 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
-	init_order = INIT_ORDER_EVENTS
+	dependencies = list(
+		/datum/controller/subsystem/processing/station,
+	)
 	runlevels = RUNLEVEL_GAME
 
-	var/list/control = list() //list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
+	///list of all datum/round_event_control instances.
+	var/list/control = list()
+	///same as above but keyed to the typepath of the event
+	var/alist/control_by_type = alist()
 	var/list/running = list() //list of all existing /datum/round_event
 	var/list/currentrun = list()
 
@@ -20,6 +25,7 @@ SUBSYSTEM_DEF(events)
 			qdel(event) //highly iffy on this as it does cause issues for admins sometimes
 			continue
 		control += event //add it to the list of all events (controls)
+		control_by_type[event_type] = event
 	// Instantiate our holidays list if it hasn't been already
 	if(isnull(GLOB.holidays))
 		fill_holidays()

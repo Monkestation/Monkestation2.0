@@ -1,8 +1,8 @@
 /datum/component/particle_spewer/snow
 	unusual_description = "snowstorm"
-	icon_file = 'monkestation/code/modules/outdoors/icons/effects/particles/particle.dmi'
+	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "cross"
-	burst_amount = 8
+	burst_amount = 9
 	duration = 2 SECONDS
 	random_bursts = TRUE
 	spawn_interval = 0.3 SECONDS

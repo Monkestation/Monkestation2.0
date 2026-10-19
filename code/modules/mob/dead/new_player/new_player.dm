@@ -16,6 +16,8 @@
 	var/ineligible_for_roles = FALSE
 	/// Used to track if the player's jobs menu sent a message saying it successfully mounted.
 	var/jobs_menu_mounted = FALSE
+	/// What is our temp assignment, used for round start antag calculation
+	var/datum/job/temp_assignment
 
 
 /mob/dead/new_player/Initialize(mapload)
@@ -34,7 +36,8 @@
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
-
+	if(temp_assignment)
+		temp_assignment = null
 	return ..()
 
 /mob/dead/new_player/mob_negates_gravity()
@@ -61,10 +64,60 @@
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
 
-/mob/dead/new_player/verb/_join_game()
-	set name = "Join Game"
-	set category = "IC"
+// This gets called both when the client disconnects and when the client is shoved into their spawn mob.
+/mob/dead/new_player/become_uncliented()
+	SSstatpanels.remove_job_estimation(src)
+
+GAME_VERB(/mob/dead/new_player, _join_game, "Join Game", "IC")
 	join_game(FALSE)
+
+GAME_VERB(/mob/dead/new_player, observe, "Observe", "IC")
+
+	if (!(SSticker.current_state > GAME_STATE_STARTUP) && !check_rights())
+		to_chat(src, span_warning("Please wait for the server to finish initializing!"))
+		return
+
+	make_me_an_observer()
+
+/mob/dead/new_player/proc/enter_tutorial()
+	if(QDELETED(src) || QDELETED(client))
+		ready = PLAYER_NOT_READY
+		return FALSE
+
+	if(interview_safety(src, "attempting to enter tutorial"))
+		qdel(client)
+		return FALSE
+
+	var/this_is_like_playing_right = tgui_alert(src, "Are you sure you wish to enter tutorial? You may return to lobby if you try to leave the tutorial chamber", "Tutorial", list("Yes", "No"))
+	if(QDELETED(src) || QDELETED(client))
+		return FALSE
+
+	if(this_is_like_playing_right != "Yes")
+		ready = PLAYER_NOT_READY
+		return FALSE
+
+	//creates the tutorial body and spawns them in CC
+	var/obj/effect/landmark/tutorial_start/obs_start = locate(/obj/effect/landmark/tutorial_start) in GLOB.landmarks_list
+	to_chat(src, span_notice("Now teleporting."))
+
+	if(!obs_start)
+		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
+		stack_trace("There's no freaking tutorial landmark available on yet! you're accessing the tutorial before the CC is initialised")
+		return
+
+	var/mob/living/carbon/human/tutorial/tutorial_body = new(get_turf(obs_start))
+	spawning = TRUE
+
+	tutorial_body.PossessByPlayer(key)
+	tutorial_body.client = client
+
+	if(tutorial_body?.client?.prefs)
+		tutorial_body.client.prefs.apply_prefs_to(tutorial_body)
+		tutorial_body.dna.species.give_important_for_life(tutorial_body)
+	tutorial_body.equipOutfit(/datum/outfit/ghost_player)
+
+	QDEL_NULL(mind)
+	qdel(src)
 
 /mob/dead/new_player/proc/join_game(from_lobby_menu = FALSE, params = null)
 	if(isnull(client))
@@ -194,8 +247,6 @@
 			return "[jobtitle] is not compatible with some antagonist role assigned to you."
 		if(JOB_UNAVAILABLE_DONOR_RANK) //MONKESTATION EDIT
 			return "The [jobtitle] job requires a higher donator rank than you have or it is out of season. Go to to https://www.patreon.com/dukeook \"Duke of Ook's Monke Content Creation Fund\" to learn more."
-		if(JOB_UNAVAILABLE_CONDITIONS_UNMET)
-			return "Conditions for [jobtitle] unmet."
 
 	return GENERIC_JOB_UNAVAILABLE_ERROR
 
@@ -253,7 +304,7 @@
 	var/atom/destination
 	var/obj/effect/oshan_launch_point/player/picked_point
 
-	if(length(GLOB.oshan_launch_points))
+	if(length(GLOB.oshan_launch_points) && !mind.assigned_role.oshan_normal_latejoin)
 		picked_point = pick(GLOB.oshan_launch_points)
 		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 	else
@@ -311,7 +362,8 @@
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, chosen_rank)
 		else
-			announce_arrival(humanc, chosen_rank)
+			if(!HAS_TRAIT(character, TRAIT_STOWAWAY))
+				announce_arrival(humanc, chosen_rank)
 		AddEmploymentContract(humanc)
 
 		humanc.increment_scar_slot()
@@ -367,10 +419,10 @@
 	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
 		// transfer_to sets mind to null
 		var/datum/mind/preserved_mind = mind
-		preserved_mind.original_character_slot_index = client.prefs.default_slot
+		preserved_mind.original_character_slot_index = client.prefs.active_slot
 		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
 		preserved_mind.set_original_character(spawning_mob)
-	LAZYADD(persistent_client.joined_as_slots, "[client.prefs.default_slot]")
+	LAZYADD(persistent_client.joined_as_slots, "[client.prefs.active_slot]")
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .
@@ -453,9 +505,10 @@
 	if (I)
 		I.ui_interact(src)
 
-	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
-	add_verb(src, /mob/dead/new_player/proc/open_interview)
-	add_verb(client, /client/verb/fix_tgui_panel)
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel. See interface/interface.dm
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
+	add_verb(src, GLOB.important_interface_verbs)
+
 
 /client/proc/register_for_interview()
 	// First we detain them by removing all the verbs they have on client
@@ -473,6 +526,6 @@
 	if (I)
 		I.ui_interact(mob)
 
-	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel. See interface/interface.dm
 	add_verb(mob, /mob/dead/new_player/proc/open_interview)
-	add_verb(src, /client/verb/fix_tgui_panel)
+	add_verb(mob, GLOB.important_interface_verbs)

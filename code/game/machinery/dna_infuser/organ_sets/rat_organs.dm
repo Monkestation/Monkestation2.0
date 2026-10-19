@@ -15,14 +15,14 @@
 /obj/item/organ/internal/eyes/night_vision/rat
 	name = "mutated rat-eyes"
 	desc = "Rat DNA infused into what was once a normal pair of eyes."
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("eyes", "/obj/item/organ/internal/eyes/night_vision/rat")
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = RAT_COLORS
+
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	eye_color_left = "#000000"
 	eye_color_right = "#000000"
-
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "eyes"
-	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = RAT_COLORS
 	low_light_cutoff = list(16, 11, 0)
 	medium_light_cutoff = list(30, 20, 5)
 	high_light_cutoff = list(45, 35, 10)
@@ -36,12 +36,12 @@
 /obj/item/organ/internal/stomach/rat
 	name = "mutated rat-stomach"
 	desc = "Rat DNA infused into what was once a normal stomach."
-	disgust_metabolism = 3
-
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "stomach"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("stomach", "/obj/item/organ/internal/stomach/rat")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+
+	disgust_metabolism = 3
 	/// Multiplier of [physiology.hunger_mod].
 	hunger_modifier = 10
 
@@ -54,9 +54,8 @@
 /obj/item/organ/internal/heart/rat
 	name = "mutated rat-heart"
 	desc = "Rat DNA infused into what was once a normal heart."
-
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("heart", "/obj/item/organ/internal/heart/rat")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 
@@ -87,12 +86,13 @@
 /obj/item/organ/internal/tongue/rat
 	name = "mutated rat-tongue"
 	desc = "Rat DNA infused into what was once a normal tongue."
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "tongue"
-	say_mod = "squeaks"
-	modifies_speech = TRUE
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("tongue", "/obj/item/organ/internal/tongue/rat")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+	say_mod = "squeaks"
+	modifies_speech = TRUE
+
 	liked_foodtypes = DAIRY //mmm, cheese. doesn't especially like anything else
 	disliked_foodtypes = NONE //but a rat can eat anything without issue
 	toxic_foodtypes = NONE
@@ -104,7 +104,7 @@
 
 /obj/item/organ/internal/tongue/rat/modify_speech(datum/source, list/speech_args)
 	. = ..()
-	var/message = lowertext(speech_args[SPEECH_MESSAGE])
+	var/message = LOWER_TEXT(speech_args[SPEECH_MESSAGE])
 	if(message == "hi" || message == "hi.")
 		speech_args[SPEECH_MESSAGE] = "Cheesed to meet you!"
 	if(message == "hi?")

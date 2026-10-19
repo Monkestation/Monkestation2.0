@@ -145,6 +145,16 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Colorable Bowtie Collar"
 	item_path = /obj/item/clothing/neck/tie/bunnytie/tied
 
+/datum/loadout_item/neck/tie/bunnytie/captain
+	name = "Captain's Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/captain
+	restricted_roles = list(JOB_CAPTAIN)
+
+/datum/loadout_item/neck/tie/bunnytie/security
+	name = "Head of Security's Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/security
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+
 /datum/loadout_item/neck/straw_coat
 	name = "Straw Coat"
 	item_path = /obj/item/clothing/neck/straw_coat
@@ -203,6 +213,15 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Rainbow Bow Tie"
 	item_path = /obj/item/clothing/neck/bowtie/rainbow
 
+/datum/loadout_item/neck/knight_cloak // Non donator version of the knight cloak
+	name = "Knight Cloak (alt)"
+	item_path = /obj/item/clothing/neck/knightcloak/alt
+
+/datum/loadout_item/neck/hornet_cloak // Non donator version of the hornet cloak
+	name = "Hornet Cloak (alt)"
+	item_path = /obj/item/clothing/neck/hornetcloak/alt
+
+
 /datum/loadout_item/neck/modlink
 	name = "MODlink Scryer"
 	item_path = /obj/item/clothing/neck/link_scryer/loaded
@@ -228,7 +247,6 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 
 /datum/loadout_item/neck/donator/knight_cloak
 	name = "Knight Cloak"
-	restricted_roles = list(JOB_MIME)
 	item_path = /obj/item/clothing/neck/knightcloak
 
 /datum/loadout_item/neck/donator/hornet_cloak

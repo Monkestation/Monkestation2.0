@@ -29,6 +29,7 @@
 	rpg_title = "Defeated Miniboss"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CANNOT_OPEN_SLOTS
 	antag_capacity_points = 0.5 //prisoners should not be doing things unless its REAL bad
+	oshan_normal_latejoin = TRUE
 
 /datum/job/prisoner/New()
 	. = ..()

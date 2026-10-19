@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Stack, Grid } from '../components';
-import { EditableText } from './common/EditableText';
+import { Box, Button, LabeledList, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
+import { EditableText } from './common/EditableText';
 
 export const ArmoryAuthorizationComputer = (props) => {
   const { act, data } = useBackend();
@@ -32,27 +32,29 @@ export const ArmoryAuthorizationComputer = (props) => {
               of Security, Warden, or Captain. Alternatively, 3 Security
               Officers can provide authorization.
             </Box>
-            <Grid>
-              <Grid.Column>
-                <Button
-                  fluid
-                  icon="exclamation-triangle"
-                  color="good"
-                  content="AUTHORIZE"
-                  disabled={is_authorized || authorizations_remaining === 0}
-                  onClick={() => act('authorize')}
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Button
-                  fluid
-                  icon="minus"
-                  color="bad"
-                  content="REPEAL"
-                  onClick={() => act('repeal')}
-                />
-              </Grid.Column>
-            </Grid>
+            <Table>
+              <Table.Row>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    icon="exclamation-triangle"
+                    color="good"
+                    content="AUTHORIZE"
+                    disabled={is_authorized || authorizations_remaining === 0}
+                    onClick={() => act('authorize')}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    icon="minus"
+                    color="bad"
+                    content="REPEAL"
+                    onClick={() => act('repeal')}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            </Table>
             <Section
               title="Authorizations"
               level={3}
@@ -83,18 +85,19 @@ export const ArmoryAuthorizationComputer = (props) => {
             <Section title="Reason" level={4}>
               <Stack vertical>
                 {valid_reasons.map((legal_reason) => {
-                  const isSelected = legal_reason === selected_reason;
+                  const isSelected = legal_reason.title === selected_reason;
                   return (
                     // eslint-disable-next-line react/jsx-key
-                    <Stack.Item>
+                    <Stack.Item key={legal_reason}>
                       <Button
                         color={isSelected ? 'good' : 'average'}
                         disabled={!is_authorized || armory_open}
                         onClick={() =>
-                          act('reason_select', { reason: legal_reason })
+                          act('reason_select', { reason: legal_reason.title })
                         }
+                        tooltip={legal_reason.tooltip}
                       >
-                        {legal_reason}
+                        {legal_reason.title}
                       </Button>
                     </Stack.Item>
                   );
@@ -112,26 +115,28 @@ export const ArmoryAuthorizationComputer = (props) => {
                 </Stack.Item>
               </Stack>
             </Section>
-            <Grid>
-              <Grid.Column>
-                <Button
-                  fluid
-                  color="good"
-                  onClick={() => act('open_armory')}
-                  disabled={!is_authorized}
-                  content="OPEN"
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Button
-                  fluid
-                  color="bad"
-                  onClick={() => act('close_armory')}
-                  disabled={!is_authorized}
-                  content="CLOSE"
-                />
-              </Grid.Column>
-            </Grid>
+            <Table>
+              <Table.Row>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    color="good"
+                    onClick={() => act('open_armory')}
+                    disabled={!is_authorized}
+                    content="OPEN"
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    color="bad"
+                    onClick={() => act('close_armory')}
+                    disabled={!is_authorized}
+                    content="CLOSE"
+                  />
+                </Table.Cell>
+              </Table.Row>
+            </Table>
           </Section>
         </Section>
       </Window.Content>

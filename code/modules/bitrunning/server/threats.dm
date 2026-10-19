@@ -65,6 +65,8 @@
 /obj/machinery/quantum_server/proc/setup_glitch(datum/antagonist/bitrunning_glitch/forced_role)
 	if(!validate_mutation_candidates())
 		return
+	if(bitrunning_network == BITRUNNER_DOMAIN_TUTORIAL)
+		return
 
 	var/mob/living/mutation_target = get_mutation_target()
 	if(isnull(mutation_target))

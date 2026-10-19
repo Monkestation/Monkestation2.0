@@ -1,6 +1,6 @@
 #define MINIMUM_MONSTERS_REQUIRED 2
 
-/datum/round_event_control/antagonist/solo/monsterhunter
+/datum/round_event_control/antagonist/monsterhunter
 	name = "Monster Hunters"
 	track = EVENT_TRACK_MAJOR
 	antag_flag = ROLE_MONSTERHUNTER
@@ -20,21 +20,21 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
-		JOB_BRIG_PHYSICIAN,
 		JOB_BRIDGE_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
 	)
 	min_players = 10 //no required enemies due to instead needing enemy antags
-	weight = 25
+	weight = 35 // THIS LOOKS SCARIER THAN IT ACTUALLY IS. THIS IS JUST SO IT COMPETES LESS WITH THE ~30 OTHER MAJOR EVENTS WHENEVER THE PREY CHECKS PASS
 	maximum_antags = 1
 	prompted_picking = TRUE
 	max_occurrences = 1
+	checks_antag_cap = FALSE
 
-
-/datum/round_event_control/antagonist/solo/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -43,6 +43,6 @@
 	if(MINIMUM_MONSTERS_REQUIRED > count)
 		return FALSE
 
-	return ..()
+	return TRUE
 
 #undef MINIMUM_MONSTERS_REQUIRED

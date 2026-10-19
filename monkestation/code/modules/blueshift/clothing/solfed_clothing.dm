@@ -7,7 +7,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/goofsec/uniforms.dmi'
 	icon_state = "peacekeeper"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/goofsec/uniforms_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/goofsec/uniforms_worn_digi.dmi'
 	worn_icon_state = "peacekeeper"
 	armor_type = /datum/armor/clothing_under/rank_security
 	inhand_icon_state = null
@@ -24,7 +23,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/goofsec/uniforms.dmi'
 	icon_state = "emt"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/goofsec/uniforms_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/goofsec/uniforms_worn_digi.dmi'
 	worn_icon_state = "emt"
 	armor_type = /datum/armor/clothing_under/rank_medical
 	inhand_icon_state = null

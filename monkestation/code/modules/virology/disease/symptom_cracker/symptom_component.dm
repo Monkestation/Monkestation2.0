@@ -161,7 +161,3 @@
 	current_extrapolator = null
 
 	cleanup_puzzle()
-
-/mob/living/carbon/human/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/symptom_genes, dna.species, 3)

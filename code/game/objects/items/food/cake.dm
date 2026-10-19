@@ -82,7 +82,7 @@
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
 	slice_type = /obj/item/food/cakeslice/brain
-	food_buffs = STATUS_EFFECT_FOOD_STAM_LARGE
+	food_buffs = STATUS_EFFECT_STAM_REGEN_LARGE
 
 /obj/item/food/cakeslice/brain
 	name = "brain cake slice"
@@ -96,7 +96,7 @@
 	)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
-	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/cake/cheese
 	name = "cheese cake"
@@ -665,3 +665,36 @@
 	)
 	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
 	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE
+
+/obj/item/food/cake/yellow_cake
+	name = "yellow cake"
+	desc = "A chalky yellow cake.. has a weird aura about it."
+	icon_state = "yellow_cake"
+	food_reagents = list(
+		/datum/reagent/uranium = 18,
+		/datum/reagent/consumable/sugar = 12,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/toxin/polonium = 12,
+	)
+	tastes = list("uranium" = 2, "chalk" = 4)
+	foodtypes = GRAIN | DAIRY | SUGAR | GROSS
+	slice_type = /obj/item/food/cakeslice/yellow_cake
+
+/obj/item/food/cake/yellow_cake/make_processable()
+	. = ..()
+	radiation_pulse(src, 50)
+
+/obj/item/food/cakeslice/yellow_cake
+	name = "yellow cake slice"
+	desc = "A chalky yellow cake.. has a weird aura about it."
+	icon_state = "yellow_cake_slice"
+	food_reagents = list(
+		/datum/reagent/uranium = 3,
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/toxin/polonium = 2,
+	)
+	tastes = list("uranium" = 2, "chalk" = 4)
+	foodtypes = GRAIN | DAIRY | SUGAR | GROSS

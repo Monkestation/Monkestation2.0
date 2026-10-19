@@ -1,3 +1,5 @@
+import type { Region } from '../common/AccessConfig';
+
 export type AccessData = {
   name: string;
   number: number;
@@ -14,14 +16,14 @@ export type MainData = {
   mecha_flags: number;
   internal_damage: number;
   internal_damage_keys: string[];
-  mechflag_keys: string[];
+  mechflag_keys: Record<string, number>;
 
   can_use_overclock: boolean;
   overclock_mode: boolean;
   overclock_temp_percentage: number;
 
   one_access: boolean;
-  regions: string[];
+  regions: Region[];
   accesses: string[];
 
   manipulator_rating: number;

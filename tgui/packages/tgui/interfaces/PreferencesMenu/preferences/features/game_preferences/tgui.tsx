@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const tgui_fancy: FeatureToggle = {
   name: 'Enable fancy TGUI',
@@ -32,6 +32,14 @@ export const tgui_lock: FeatureToggle = {
   name: 'Lock TGUI to main monitor',
   category: 'UI',
   description: 'Locks TGUI windows to your main monitor.',
+  component: CheckboxInput,
+};
+
+export const tgui_unlimited_windows: FeatureToggle = {
+  name: 'Uncap TGUI window limit',
+  category: 'UI',
+  description:
+    'Disables the window limit for TGUI windows. Having more than 9 windows open can tank performance on lower end computers.',
   component: CheckboxInput,
 };
 

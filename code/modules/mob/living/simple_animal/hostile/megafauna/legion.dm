@@ -58,6 +58,7 @@
 	elimination = TRUE
 	appearance_flags = LONG_GLIDE
 	mouse_opacity = MOUSE_OPACITY_ICON
+	rawr_sound = 'sound/magic/RATTLEMEBONES.ogg' // MONKESTATION EDIT ADDITION
 	var/size = LEGION_LARGE
 	/// Create Skulls ability
 	var/datum/action/cooldown/mob_cooldown/create_legion_skull/create_legion_skull

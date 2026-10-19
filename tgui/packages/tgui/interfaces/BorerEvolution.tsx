@@ -1,7 +1,7 @@
 // THIS IS A MONKESTATION UI FILE
 
 import { useBackend } from '../backend';
-import { Section, Stack, Button, BlockQuote } from '../components';
+import { BlockQuote, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const borerColor = {
@@ -100,7 +100,7 @@ const EvolutionList = (props) => {
                       ` By taking this, you cannot take other T3+ gneomes.`
                     : toLearn.desc
                 }
-                onClick={() => act('evolve', { path: toLearn.path })}
+                onClick={() => act('evolve', { name: toLearn.name })}
               />
               {!!toLearn.gainFlavor && (
                 <BlockQuote>

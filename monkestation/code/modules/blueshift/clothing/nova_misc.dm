@@ -2,7 +2,6 @@
 //MISC FILES = UNSORTED FILES. EVEN TG HATES THIS ONE.
 
 /obj/item/clothing/under/misc
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/misc_digi.dmi'
 
 /obj/item/clothing/under/misc/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/misc.dmi'
@@ -18,7 +17,6 @@
 	name = "tacticasual uniform"
 	desc = "A white wifebeater on top of some cargo pants. For when you need to carry various beers."
 	icon_state = "tac_s"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/misc/nova/mechanic
 	name = "mechanic's overalls"
@@ -63,7 +61,6 @@
 /obj/item/clothing/suit/toggle/trackjacket
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	name = "track jacket"
 	desc = "A black jacket with blue stripes for the athletic. It is also popular among russian delinquents."
 	icon_state = "trackjacket"
@@ -110,7 +107,8 @@
 /obj/item/clothing/suit/toggle/jacket/cardigan
 	name = "cardigan"
 	desc = "It's like, half a jacket."
-	icon_state = "cardigan"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("cardigan", "/obj/item/clothing/suit/toggle/jacket/cardigan")
 	greyscale_config = /datum/greyscale_config/cardigan
 	greyscale_config_worn = /datum/greyscale_config/cardigan/worn
 	greyscale_colors = "#FFFFFF"
@@ -293,7 +291,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "ensuit"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/trenchbrown
 	name = "brown trenchcoat"
@@ -314,12 +311,11 @@
 /obj/item/clothing/suit/apron/chef/colorable_apron
 	name = "apron"
 	desc = "A basic apron."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/suit/suit.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/suit/suit.dmi'
-	icon_state = "apron"
-	greyscale_colors = "#ffffff"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("apron", "/obj/item/clothing/suit/apron/chef/colorable_apron")
 	greyscale_config = /datum/greyscale_config/apron
 	greyscale_config_worn = /datum/greyscale_config/apron/worn
+	greyscale_colors = "#ffffff"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/apron/overalls/Initialize(mapload)
@@ -345,7 +341,8 @@
 /obj/item/clothing/suit/warm_sweater
 	name = "warm sweater"
 	desc = "A comfortable warm-looking sweater."
-	icon_state = "warm_sweater"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("warm_sweater", "/obj/item/clothing/suit/warm_sweater")
 	greyscale_config = /datum/greyscale_config/warm_sweater
 	greyscale_config_worn = /datum/greyscale_config/warm_sweater/worn
 	greyscale_colors = "#867361"
@@ -355,7 +352,8 @@
 /obj/item/clothing/suit/heart_sweater
 	name = "heart sweater"
 	desc = "A comfortable warm-looking sweater. It even has a heart pattern on it, how cute."
-	icon_state = "heart_sweater"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("heart_sweater", "/obj/item/clothing/suit/heart_sweater")
 	greyscale_config = /datum/greyscale_config/heart_sweater
 	greyscale_config_worn = /datum/greyscale_config/heart_sweater/worn
 	greyscale_colors = "#867361#8f3a3a"

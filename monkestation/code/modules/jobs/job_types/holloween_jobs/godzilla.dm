@@ -30,7 +30,7 @@
 	)
 
 	rpg_title = "Lizardman"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_SPOOKTOBER
+	job_flags = STATION_JOB_FLAGS
 	job_holiday_flags = list(HALLOWEEN)
 	job_donor_bypass = ACCESS_COMMAND_RANK
 
@@ -47,6 +47,4 @@
 	r_pocket = /obj/item/megaphone
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
-
-/datum/outfit/job/godzilla/post_equip(mob/living/carbon/human/H, visualsOnly)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/dinojammies(H), ITEM_SLOT_OCLOTHING)
+	suit = /obj/item/clothing/suit/hooded/dinojammies

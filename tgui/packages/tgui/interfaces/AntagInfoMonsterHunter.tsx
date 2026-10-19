@@ -1,17 +1,17 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Dimmer,
+  DmIcon,
+  Flex,
+  Icon,
   Section,
   Stack,
-  Icon,
-  Flex,
-  DmIcon,
-  Dimmer,
 } from '../components';
 import { Window } from '../layouts';
-import { Objective } from './common/Objectives';
+import type { Objective } from './common/Objectives';
 
 type HunterWeapon = {
   id: string;
@@ -122,7 +122,7 @@ const HuntersGuide = () => {
 const Rabbit = (props: { found?: boolean }) => {
   return (
     <DmIcon
-      icon="monkestation/icons/mob/rabbit.dmi"
+      icon="icons/mob/rabbit.dmi"
       icon_state={props.found ? 'dead_rabbit' : 'white_rabbit'}
       width="64px"
       height="64px"

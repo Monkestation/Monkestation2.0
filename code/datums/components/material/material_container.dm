@@ -95,7 +95,7 @@
 		var/datum/material/M = I
 		var/amt = materials[I] / SHEET_MATERIAL_AMOUNT
 		if(amt)
-			examine_texts += span_notice("It has [amt] sheets of [lowertext(M.name)] stored.")
+			examine_texts += span_notice("It has [amt] sheets of [LOWER_TEXT(M.name)] stored.")
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
 	var/old_flags = mat_container_flags
@@ -269,7 +269,9 @@
 	var/list/chat_msgs = list()
 
 	//differs from held_item when using TK
-	var/active_held = user.get_active_held_item()
+	var/obj/item/active_held = user.get_active_held_item()
+	//omni tools can act as any tool so get its real behaviour
+	active_held = active_held.get_proxy_attacker_for(held_item)
 	var/static/list/storage_items
 	if(isnull(storage_items))
 		storage_items = list(
@@ -279,7 +281,7 @@
 		)
 
 	//1st iteration consumes all items that do not have contents inside
-	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration si its empty now)
+	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration so its empty now)
 	for(var/i in 1 to 2)
 		//no point inserting more items
 		if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
@@ -302,15 +304,12 @@
 			//can't allow abstract, hologram items
 			if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1))
 				continue
-			//untouchable, move it out the way, code copied from recycler
-			if(target_item.resistance_flags & INDESTRUCTIBLE)
-				target_item.forceMove(get_turf(parent))
-				continue
 			//user defined conditions
 			if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 				continue
-			//item is either not allowed for redemption, not in the allowed types
-			if((target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
+			//item is either not allowed for redemption, or not in the allowed types, such as INDESTRUCTIBLE items
+			if((target_item.item_flags & NO_MAT_REDEMPTION) || (target_item.resistance_flags & INDESTRUCTIBLE) \
+					|| (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
 				if(!(mat_container_flags & MATCONTAINER_SILENT) && i == 1) //count only child items the 1st time around
 					var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 					var/list/item_data = status_data[target_item.name] || list()
@@ -470,6 +469,10 @@
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
 	SIGNAL_HANDLER
+
+	// Only insert stacks with left click
+	if((mat_container_flags & MATCONTAINER_ONLY_STACKS) && !isstack(weapon))
+		return
 
 	//Allows you to attack the machine with iron sheets for e.g.
 	if (!(mat_container_flags & MATCONTAINER_ANY_INTENT) && (user.istate & ISTATE_HARM))
@@ -723,7 +726,7 @@
 			"name" = material.name,
 			"ref" = REF(material),
 			"amount" = amount,
-			"color" = material.greyscale_colors
+			"color" = material.greyscale_colors,
 		))
 
 	return data

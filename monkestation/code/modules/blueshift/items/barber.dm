@@ -170,7 +170,7 @@
 
 /obj/projectile/bullet/hair_tie/syndicate
 	damage = 10 //getting hit with this one fucking sucks
-	stamina = 30
+	stamina = 15
 	eyeblur = 2 SECONDS
 	jitter = 8 SECONDS
 
@@ -283,7 +283,7 @@
 /obj/machinery/vending/barbervend
 	name = "Fab-O-Vend"
 	desc = "It would seem it vends dyes, and other stuff to make you pretty."
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "barbervend"
 	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
 	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
@@ -307,7 +307,7 @@
 		/obj/item/lipstick/quantum = 1,
 		/obj/item/razor = 1,
 		/obj/item/storage/box/perfume = 1,
-		/obj/item/secateurs = 1, //monkestation edit: plant
+		/obj/item/secateurs = 1,
 	)
 	refill_canister = /obj/item/vending_refill/barbervend
 	default_price = PAYCHECK_CREW
@@ -321,7 +321,6 @@
 /obj/structure/closet/secure_closet/barber
 	name = "barber's locker"
 	icon_state = "barber"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi'
 	req_access = list(ACCESS_SERVICE)
 
 /obj/structure/closet/secure_closet/barber/PopulateContents()

@@ -90,6 +90,10 @@
 			return TRUE
 
 		else if(isliving(player_mind.current))
+			if(isAI(player_mind.current))
+				var/mob/living/silicon/ai/AI = player_mind.current
+				if(AI.is_dying)
+					return FALSE
 			return (player_mind.current.stat != DEAD)
 
 	return FALSE
@@ -257,16 +261,20 @@
 	return atom_to_find.loc
 
 ///Send a message in common radio when a player arrives
-/proc/announce_arrival(mob/living/carbon/human/character, rank)
+/proc/announce_arrival(mob/living/carbon/human/character, rank, announce_to_ghosts = TRUE)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
-	var/area/player_area = get_area(character)
-	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if (announce_to_ghosts)
+		var/area/player_area = get_area(character)
+
+		deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(!character.mind)
 		return
 	if(!GLOB.announcement_systems.len)
 		return
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
+		return
+	if(HAS_TRAIT(character, TRAIT_STOWAWAY))
 		return
 
 	var/obj/machinery/announcement_system/announcer
@@ -313,7 +321,7 @@
 
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
-	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
 		var/area/apc_area = current_apc.area
@@ -333,8 +341,8 @@
 	if(selected_tip)
 		message = selected_tip
 	else
-		var/list/randomtips = world.file2list("strings/tips.txt")
-		var/list/memetips = world.file2list("strings/sillytips.txt")
+		var/list/randomtips = file2list("strings/tips.txt")
+		var/list/memetips = file2list("strings/sillytips.txt")
 		if(length(randomtips) && prob(95))
 			message = pick(randomtips)
 		else if(length(memetips))
@@ -347,3 +355,53 @@
 	else
 		message = copytext(message, 2)
 	to_chat(target, custom_boxed_message("purple_box", span_purple("<b>[source]: </b>[message]")))
+
+///Checks to see if `atom/source` is behind `atom/target`
+/proc/check_behind(atom/source, atom/target)
+	// Let's see if source is behind target
+	// "Behind" is defined as 3 tiles directly to the back of the target
+	// x . .
+	// x > .
+	// x . .
+
+	// No tactical spinning allowed
+	if(HAS_TRAIT(target, TRAIT_SPINNING))
+		return TRUE
+
+	// We'll take "same tile" as "behind" for ease
+	if(target.loc == source.loc)
+		return TRUE
+
+	// We'll also assume lying down is behind, as mob directions when lying are unclear
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.body_position == LYING_DOWN)
+			return TRUE
+
+	// Exceptions aside, let's actually check if they're, yknow, behind
+	var/dir_target_to_source = get_dir(target, source)
+	if(target.dir & REVERSE_DIR(dir_target_to_source))
+		return TRUE
+
+	return FALSE
+
+/// Returns a list of all minds that the target mind shares a team with.
+/proc/get_all_team_members(datum/mind/mind) as /list
+	. = list()
+	for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+		var/datum/team/team = antag_datum.get_team()
+		if(team)
+			. |= team.members
+
+/// Used to get a random closed and non-secure locker on the station z-level, created for the Stowaway trait.
+/proc/get_unlocked_closed_locker()
+	var/list/eligible_lockers = list()
+	for(var/obj/structure/closet/closet as anything in GLOB.closets)
+		if(QDELETED(closet) || closet.opened || istype(closet, /obj/structure/closet/secure_closet))
+			continue
+		var/turf/closet_turf = get_turf(closet)
+		if(!closet_turf || !is_station_level(closet_turf.z) || !is_safe_turf(closet_turf, dense_atoms = TRUE))
+			continue
+		eligible_lockers += closet
+	if(length(eligible_lockers))
+		return pick(eligible_lockers)

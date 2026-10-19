@@ -86,7 +86,7 @@
 	name = "clammy white gloves"
 	desc = "Sticky, cold, and wet."
 
-/obj/item/clothing/gloves/color/white/Initialize(mapload)
+/obj/item/clothing/gloves/color/white/cluwne/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 

@@ -83,11 +83,14 @@
 /datum/atom_hud/borer
 	hud_icons = list(BORER_HUD)
 
+/datum/atom_hud/data/human/simian
+	hud_icons = list(SIMIAN_HUD)
+
 /datum/atom_hud/ai_detector/show_to(mob/new_viewer)
 	. = ..()
 	if(!new_viewer || hud_users_all_z_levels.len != 1)
 		return
-	for(var/mob/eye/ai_eye/eye as anything in GLOB.aiEyes)
+	for(var/mob/eye/camera/ai/eye as anything in GLOB.camera_eyes)
 		eye.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
@@ -630,3 +633,17 @@ MONKE, crew hud for silicon.
 		holder.icon_state = null
 		set_hud_image_inactive(CREW_HUD)
 		return
+
+///Simian HUDs
+/mob/living/proc/hud_add_simian_alpha()
+	var/image/holder = hud_list[SIMIAN_HUD]
+	if(!holder)
+		return
+	holder.pixel_z = get_cached_height() - world.icon_size
+	holder.icon_state = "hudsimian"
+
+/mob/living/proc/hud_remove_simian_alpha()
+	var/image/holder = hud_list[SIMIAN_HUD]
+	if(!holder)
+		return
+	holder.icon_state = ""

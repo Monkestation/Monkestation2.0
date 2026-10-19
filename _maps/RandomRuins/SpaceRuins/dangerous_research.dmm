@@ -74,7 +74,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "aZ" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/structure/table,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
@@ -296,7 +296,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
@@ -499,11 +499,11 @@
 "gT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/reagent_containers/hypospray/medipen/morphine{
+/obj/item/reagent_containers/medipen/morphine{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/hypospray/medipen/morphine,
+/obj/item/reagent_containers/medipen/morphine,
 /obj/item/reagent_containers/cup/bottle/morphine,
 /obj/item/reagent_containers/syringe,
 /obj/structure/sign/warning/directional/north,
@@ -1079,7 +1079,7 @@
 /obj/structure/closet/crate/medical,
 /obj/item/stack/medical/suture/emergency,
 /obj/item/stack/medical/gauze/twelve,
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+/obj/item/reagent_containers/medipen/blood_loss,
 /obj/effect/spawner/random/medical/injector,
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 4
@@ -1765,7 +1765,7 @@
 "xR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wallframe/camera,
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2613,7 +2613,7 @@
 	},
 /obj/item/wallframe/camera,
 /obj/item/stack/cable_coil,
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "IU" = (
@@ -2730,7 +2730,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "JY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/dim/directional/east,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4

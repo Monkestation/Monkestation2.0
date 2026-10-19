@@ -46,7 +46,8 @@
 
 /obj/item/organ/external/wings/functional/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	handle_flight(owner)
+	if(wings_open)
+		handle_flight(owner)
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
@@ -97,7 +98,7 @@
 		buckled_obj.unbuckle_mob(human)
 		step(buckled_obj, olddir)
 	else
-		human.AddComponent(/datum/component/force_move, get_ranged_target_turf(human, olddir, 4), TRUE)
+		human.AddComponent(/datum/component/force_move, get_ranged_target_turf(human, olddir, 4), TRUE, TRUE)
 	return TRUE
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
@@ -141,6 +142,16 @@
 	VAR_PRIVATE/wings_open = FALSE
 	///Feature render key for opened wings
 	var/open_feature_key = "wingsopen"
+
+/datum/bodypart_overlay/mutant/wings/functional/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.w_uniform?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_neck?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+
+	return ..()
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)

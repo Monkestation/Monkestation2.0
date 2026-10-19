@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/red_hardhat
 	name = "Red Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/red
+	item_path = /obj/item/clothing/head/utility/hardhat/fire
 
 /datum/loadout_item/head/white_hardhat
 	name = "White Hardhat"
@@ -307,6 +307,16 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Colorable Bunny Ears"
 	item_path = /obj/item/clothing/head/playbunnyears
 
+/datum/loadout_item/head/hats/caphat/bunnyears_captain
+	name = "Captain's Bunny Ears"
+	item_path = /obj/item/clothing/head/hats/caphat/bunnyears_captain
+	restricted_roles = list(JOB_CAPTAIN)
+
+/datum/loadout_item/head/playbunnyears/hos
+	name = "Head of Security's Bunny Ears"
+	item_path = /obj/item/clothing/head/playbunnyears/hos
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+
 /datum/loadout_item/head/propeller_hat
 	name = "Rainbow Propeller Hat"
 	item_path = /obj/item/clothing/head/soft/propeller_hat
@@ -335,7 +345,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/nursehat
 	name = "Nurse Hat"
 	item_path = /obj/item/clothing/head/costume/nursehat
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_GENETICIST, JOB_CHEMIST, JOB_VIROLOGIST)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_GENETICIST, JOB_CHEMIST, JOB_VIROLOGIST, JOB_BRIG_PHYSICIAN)
 
 /*
 *	JOB BERETS
@@ -345,17 +355,17 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/engi_beret
 	name = "Engineering Beret"
 	item_path = /obj/item/clothing/head/beret/engi
-	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER, JOB_SIGNAL_TECHNICIAN)
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER, JOB_NETWORK_ADMIN)
 
 /datum/loadout_item/head/cargo_beret
 	name = "Supply Beret"
 	item_path = /obj/item/clothing/head/beret/cargo
-	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_LATEJOIN_EXPLORER)
+	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_EXPLORER)
 
 /datum/loadout_item/head/beret_med
 	name = "Medical Beret"
 	item_path = /obj/item/clothing/head/beret/medical
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/head/beret_paramedic
 	name = "Paramedic Beret"
@@ -435,7 +445,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/constable
 	name = "Constable Helmet"
 	item_path = /obj/item/clothing/head/costume/constable
-	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /// EVERYTHING NOVA RELATED
@@ -455,7 +465,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/pflatcap //BUYABLE
 	name = "Poly Flat Cap"
-	item_path = /obj/item/clothing/head/colourable_flatcap
+	item_path = /obj/item/clothing/head/flatcap/recolor
 
 /datum/loadout_item/head/mothcap //BUYABLE
 	name = "Mothic Softcap"
@@ -610,6 +620,22 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Winter Cowboy Hat"
 	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
 
+/datum/loadout_item/head/deforest_hat //BUYABLE
+	name = "Deforest Hat"
+	item_path = /obj/item/clothing/head/soft/paramedic/deforest
+
+/datum/loadout_item/head/deforest_beret //BUYABLE
+	name = "Deforest Beret"
+	item_path = /obj/item/clothing/head/beret/medical/deforest
+
+/datum/loadout_item/head/warning_cone //BUYABLE
+	name = "Warning Cone"
+	item_path = /obj/item/clothing/head/cone
+
+/datum/loadout_item/head/bear_pelt //BUYABLE
+	name = "Bear Pelt"
+	item_path = /obj/item/clothing/head/costume/bearpelt
+
 /*
 *	JOB-LOCKED
 */
@@ -723,12 +749,15 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/beret_robo
 	name = "Roboticist Beret"
-	item_path = /obj/item/clothing/head/beret/science/fancy/robo
+	item_path = /obj/item/clothing/head/beret/science/robo
 	restricted_roles = list(JOB_ROBOTICIST)
 	requires_purchase = FALSE
-
 
 // Legacy unpaintable cowboy hat because it fits a character better
 /datum/loadout_item/head/cowboyhat_legacy  //BUYABLE
 	name = "Cowboy Hat (Legacy)"
 	item_path = /obj/item/clothing/head/costume/cowboyhat_old
+
+/datum/loadout_item/head/henchmen_hat
+	name = "Henchmen Cap"
+	item_path = /obj/item/clothing/head/henchmen_hat

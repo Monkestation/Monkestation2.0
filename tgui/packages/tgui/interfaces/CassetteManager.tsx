@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
-import { Section, Table, Button } from '../components';
+import { Button, Section, Table } from '../components';
 import { Window } from '../layouts';
+
 type CassetteDetails = {
   submitter_name: string;
   tape_name: string;

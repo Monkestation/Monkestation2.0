@@ -7,6 +7,7 @@
 	earliest_start = 0 MINUTES
 	category = EVENT_CATEGORY_HOLIDAY
 	description = "Hides surprise filled easter eggs in maintenance."
+	roundstart = TRUE
 
 /datum/round_event/easter/announce(fake)
 	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
@@ -64,6 +65,10 @@
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/costume/bunnyhead/regular //the real bunny hat
+	slowdown = 0
+	desc = "Considerably more cute than 'Frank'. It looks old."
 
 /obj/item/clothing/suit/costume/bunnysuit
 	name = "Easter Bunny Suit"

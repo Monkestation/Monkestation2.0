@@ -82,17 +82,6 @@
 			potential_victim.visible_message(span_alert("[potential_victim] is violently sucked into the [src]!"))
 			add_prisoner(potential_victim, fug_antag)
 
-/// Psyker gear
-/obj/item/reagent_containers/hypospray/medipen/gore
-	name = "gore autoinjector"
-	desc = "A ghetto-looking autoinjector filled with gore, aka dirty kronkaine. You probably shouldn't take this while on the job, but it is a super-stimulant. Don't take two at once."
-	volume = 15
-	amount_per_transfer_from_this = 15
-	list_reagents = list(/datum/reagent/drug/kronkaine/gore = 15)
-	icon_state = "maintenance"
-	base_icon_state = "maintenance"
-	label_examine = FALSE
-
 //Captain's special mental recharge gear
 
 /obj/item/clothing/suit/armor/reactive/psykerboost

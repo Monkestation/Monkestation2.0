@@ -41,7 +41,7 @@
 	belt = /obj/item/modular_computer/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
 	skillchips = list(/obj/item/skillchip/job/janitor)
-	backpack_contents = list(/obj/item/access_key)
+	backpack_contents = list(/obj/item/access_key, /obj/item/generic_beacon/liquid_pump)
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/human_equipper, visuals_only)
 	. = ..()

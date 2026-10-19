@@ -39,13 +39,12 @@
 		return
 	var/equip_time = attire.equip_delay_other
 
+	if(!user.Adjacent(sharp_dresser)) // Stop TK from moving item locations
+		return
+
 	attire.item_start_equip(sharp_dresser, attire, user)
 
 	if(!do_after(user, equip_time, sharp_dresser))
-		return
-
-	if(!user.Adjacent(sharp_dresser)) // Due to teleporting shenanigans
-		user.put_in_hands(attire)
 		return
 
 	user.temporarilyRemoveItemFromInventory(attire)

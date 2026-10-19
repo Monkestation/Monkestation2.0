@@ -48,13 +48,6 @@
 	required_lifespan = list(60, 80)
 	required_potency = list(-INFINITY, 20)
 
-/datum/hydroponics/plant_mutation/bluespace_banana
-	mutates_from = list(/obj/item/seeds/banana)
-	created_product = /obj/item/food/grown/banana/bluespace
-	created_seed = /obj/item/seeds/banana/bluespace
-	required_production = list(20, 60)
-	required_potency = list(70, INFINITY)
-
 /datum/hydroponics/plant_mutation/koi_beans
 	mutates_from = list(/obj/item/seeds/soya)
 	created_product = /obj/item/food/grown/koibeans
@@ -216,10 +209,11 @@
 	required_production = list(20, INFINITY)
 
 /datum/hydroponics/plant_mutation/holy_melon
-	mutates_from = list(/obj/item/seeds/watermelon)
+	mutates_from = list(/obj/item/seeds/watermelon/honeydew)
 	created_product = /obj/item/food/grown/holymelon
 	created_seed = /obj/item/seeds/watermelon/holy
-	required_lifespan = list(80, INFINITY)
+	required_potency = list(30, 50)
+	required_endurance = list(60, 80)
 
 /datum/hydroponics/plant_mutation/galaxy_thistle
 	mutates_from = list(/obj/item/seeds/starthistle)
@@ -352,12 +346,6 @@
 	created_seed = /obj/item/seeds/tomato/killer
 	required_lifespan = list(50, 90)
 
-/datum/hydroponics/plant_mutation/bluespace_tomato
-	mutates_from = list(/obj/item/seeds/tomato/blue)
-	created_product = /obj/item/food/grown/tomato/blue/bluespace
-	created_seed = /obj/item/seeds/tomato/blue/bluespace
-	required_potency = list(120, INFINITY)
-
 /datum/hydroponics/plant_mutation/steel_towercap
 	mutates_from = list(/obj/item/seeds/tower)
 	created_product = /obj/item/grown/log/steel
@@ -425,3 +413,11 @@
 	created_seed = /obj/item/seeds/watermelon/honeydew
 	required_yield = list(20, INFINITY)
 	required_lifespan = list(60, INFINITY)
+
+/datum/hydroponics/plant_mutation/fleshmass
+	mutates_from = list(/obj/item/seeds/poppy)
+	created_product = /obj/item/food/grown/fleshmass
+	created_seed = /obj/item/seeds/fleshmass
+	required_endurance = list(20, INFINITY)
+	required_lifespan = list(60, INFINITY)
+	required_yield = list(80, 120)

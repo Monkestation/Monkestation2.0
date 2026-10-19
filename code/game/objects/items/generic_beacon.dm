@@ -1,7 +1,7 @@
 /obj/item/generic_beacon
 	name = "A beacon for direct delivery of big things"
 	desc = "delivers the thing"
-	icon = 'monkestation/icons/obj/beacon.dmi'
+	icon = 'icons/obj/beacon.dmi'
 	icon_state = "music_beacon"
 	var/list/spawnables = list(/obj/item/, /obj/machinery/)
 	var/used = FALSE
@@ -40,3 +40,9 @@
 	desc = "Grillin aint easy but someones gotta do it."
 	icon_state = "fire_beacon"
 	spawnables = list(/obj/item/wrench, /obj/machinery/grill)
+
+/obj/item/generic_beacon/liquid_pump // for when the admins press the spawn liquid button a few too many times
+	name = "liquid pump beacon"
+	desc = "N.T. liquid pump beacon, toss it down for an express delivery that defloods the worst of janitorial emergnecies. It comes with a free wrench to move it after deployment."
+	icon_state = "pump_beacon"
+	spawnables = list(/obj/item/wrench, /obj/structure/liquid_pump)

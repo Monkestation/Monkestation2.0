@@ -122,14 +122,15 @@
 		terminal.master = null
 		terminal = null
 
-/obj/machinery/power/apc/proc/energy_fail(duration)
-	for(var/obj/machinery/failing_machine in area.contents)
-		if(failing_machine.critical_machine)
-			return
+/obj/machinery/power/apc/proc/energy_fail(duration, forced = FALSE)
+	if(forced == FALSE)
+		for(var/obj/machinery/failing_machine in area.contents)
+			if(failing_machine.critical_machine)
+				return
 
-	for(var/mob/living/silicon/ai as anything in GLOB.ai_list)
-		if(get_area(ai) == area)
-			return
+		for(var/mob/living/silicon/ai as anything in GLOB.ai_list)
+			if(get_area(ai) == area)
+				return
 
 	failure_timer = max(failure_timer, round(duration))
 	update()

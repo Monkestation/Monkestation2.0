@@ -87,9 +87,10 @@
 	COOLDOWN_START(other, lunge, 10 SECONDS)
 	if(isliving(user))
 		var/mob/living/living = user
-		living.stamina?.adjust(-50) // cost of a lunge
+		living.stamina?.adjust(-25) // cost of a lunge
+	if(!user.Adjacent(interacting_with)) // If we do not reach the target don't hit it.
+		return
 	attack(interacting_with, user)
-	return
 
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield
@@ -126,7 +127,7 @@
 	to_chat(user, span_notice("You stop blocking with your blades."))
 
 /obj/item/mantis_blade/shield/attack(mob/living/target, mob/living/user)
-	if(in_stance)
+	if(in_stance && iscarbon(target))
 		user.disarm(target)
 	else
 		return . = ..()
@@ -148,8 +149,8 @@
 	. = ..()
 	r_hand = owner.get_held_items_for_side(RIGHT_HANDS, FALSE)
 	l_hand = owner.get_held_items_for_side(LEFT_HANDS, FALSE)
-	r_hand.block_chance += 65
-	l_hand.block_chance += 65
+	r_hand.block_chance += 50
+	l_hand.block_chance += 50
 	ADD_TRAIT(owner, TRAIT_CANT_ATTACK, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shield_blades)
 	owner.balloon_alert_to_viewers("starts blocking!")

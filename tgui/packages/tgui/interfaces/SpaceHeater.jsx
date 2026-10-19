@@ -53,7 +53,7 @@ export const SpaceHeater = (props) => {
                     bad: [-Infinity, 0.3],
                   }}
                 >
-                  {data.powerLevel + '%'}
+                  {`${data.powerLevel}%`}
                 </ProgressBar>
               )) ||
                 'None'}
@@ -85,14 +85,14 @@ export const SpaceHeater = (props) => {
                   unit="°C"
                   minValue={data.minTemp}
                   maxValue={data.maxTemp}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('target', {
                       target: value,
                     })
                   }
                 />
               )) ||
-                data.targetTemp + '°C'}
+                `${data.targetTemp}°C`}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
               {(!data.open && 'Auto') || (

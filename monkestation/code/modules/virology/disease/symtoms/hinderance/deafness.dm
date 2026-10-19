@@ -14,7 +14,7 @@
 	to_chat(mob, span_userdanger("Your ears pop and begin ringing loudly!"))
 	ears.deaf = min(20, ears.deaf + 15)
 
-	if(prob(multiplier * 5))
+	if(prob(multiplier * power * 5))
 		if(ears.damage < ears.maxHealth)
 			to_chat(mob, span_userdanger("Your ears pop painfully and start bleeding!"))
 			// Just absolutely murder me man

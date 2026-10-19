@@ -46,6 +46,7 @@
 	name = "sparkles"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
 /obj/effect/overlay/vis

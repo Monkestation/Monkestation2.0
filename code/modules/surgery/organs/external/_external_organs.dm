@@ -10,6 +10,11 @@
 	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	visual = TRUE
 
+	/// The savefile_key of the preference this relates to. Used for the preferences UI.
+	var/preference
+	///With what DNA block do we mutate in mutate_feature() ? For genetics
+	var/dna_block
+
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
 	///Reference to the limb we're inside of
@@ -79,7 +84,7 @@
 	add_to_limb(ownerlimb)
 
 	if(external_bodytypes)
-		limb.synchronize_bodytypes(receiver)
+		receiver.synchronize_bodytypes()
 
 	receiver.update_body_parts()
 
@@ -123,7 +128,7 @@
 		ownerlimb.external_organs -= src
 		ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 		if(ownerlimb.owner && external_bodytypes)
-			ownerlimb.synchronize_bodytypes(ownerlimb.owner)
+			ownerlimb.owner.synchronize_bodytypes()
 	ownerlimb = null
 	return ..()
 
@@ -237,15 +242,9 @@
 	desc = "Take a closer look at that snout!"
 	icon_state = "snout"
 
-	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
-	visual = TRUE
-	cosmetic_only = TRUE
-
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
-	layers = list(BODY_ADJ_LAYER)
 
-	feature_key = "snout"
 	preference = "feature_lizard_snout"
 	external_bodytypes = BODYTYPE_SNOUTED
 
@@ -253,6 +252,25 @@
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
+
+	/// Offset to apply to equipment worn on the mouth we give to the head.
+	var/datum/worn_feature_offset/worn_mask_offset
+
+/obj/item/organ/external/snout/add_to_limb(obj/item/bodypart/head/bodypart)
+	. = ..()
+	if(isnull(bodypart.worn_mask_offset))
+		worn_mask_offset = bodypart.worn_mask_offset = new(
+			attached_part = bodypart,
+			feature_key = OFFSET_FACEMASK,
+			offset_x = list("east" = 1, "west" = -1),
+		)
+
+/obj/item/organ/external/snout/remove_from_limb()
+	var/obj/item/bodypart/head/head_part = ownerlimb
+	if(worn_mask_offset)
+		QDEL_NULL(worn_mask_offset)
+		head_part.worn_mask_offset = null
+	return ..()
 
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT

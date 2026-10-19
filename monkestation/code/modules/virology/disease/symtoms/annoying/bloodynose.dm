@@ -14,5 +14,4 @@
 		else
 			var/obj/effect/decal/cleanable/blood/blood= locate(/obj/effect/decal/cleanable/blood) in get_turf(mob)
 			if(blood==null)
-				blood = new /obj/effect/decal/cleanable/blood(get_turf(mob))
-			blood.diseases |= virus_copylist(mob.diseases)
+				blood = new /obj/effect/decal/cleanable/blood(get_turf(mob), mob.get_static_viruses(), mob.get_blood_dna_list())

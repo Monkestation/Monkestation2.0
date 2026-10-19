@@ -53,6 +53,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/obj/item/shard_type
 	///What type of debris the tile will leave behind when shattered.
 	var/obj/effect/decal/debris_type
+	/// How resistant the material is to rusting when applied to a turf
+	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	/// How likely this mineral is to be found in a boulder during mining.
 	var/mineral_rarity = MATERIAL_RARITY_COMMON
 	/// How many points per units of ore does this grant?
@@ -152,7 +154,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(alpha < 255)
 		T.AddElement(/datum/element/turf_z_transparency)
 		setup_glow(T)
-	return
+	T.rust_resistance = mat_rust_resistance
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother

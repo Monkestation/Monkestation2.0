@@ -29,15 +29,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
-	if(defib)
-		QDEL_NULL(defib)
-	. = ..()
-
-/obj/machinery/defibrillator_mount/handle_atom_del(atom/A)
-	if(A == defib)
-		defib = null
-		end_processing()
+	QDEL_NULL(defib)
 	return ..()
+
+/obj/machinery/defibrillator_mount/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == defib)
+		// Make sure processing ends before the defib is nulled
+		end_processing()
+		defib = null
+		update_appearance()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()
@@ -107,19 +108,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 	else if(defib && attacking_item == defib.paddles)
 		defib.paddles.snap_back()
 		return
-	var/obj/item/card/id = attacking_item.GetID()
-	if(id)
-		if(check_access(id) || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
-			if(!defib)
-				to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
-				return
-			clamps_locked = !clamps_locked
-			to_chat(user, span_notice("Clamps [clamps_locked ? "" : "dis"]engaged."))
-			update_appearance()
-		else
-			to_chat(user, span_warning("Insufficient access."))
+	if(!attacking_item.GetID() || (!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)) //anyone can toggle the clamps in red alert!
+		to_chat(user, span_warning("Insufficient access."))
 		return
-	..()
+	if(!defib)
+		to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
+		return
+	clamps_locked = !clamps_locked
+	to_chat(user, span_notice("Clamps [clamps_locked ? "" : "dis"]engaged."))
+	update_appearance()
 
 /obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
 	..()

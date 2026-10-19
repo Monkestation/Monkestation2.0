@@ -6,7 +6,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	stat_allowed = SOFT_CRIT
 
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
@@ -31,7 +31,7 @@
 	key = "glasses"
 	key_third_person = "glasses"
 	message = "pushes up their glasses."
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
 	var/obj/eyes_slot = user.get_item_by_slot(ITEM_SLOT_EYES)
@@ -130,6 +130,10 @@ monkestation edit end */
 	message = "salutes."
 	message_param = "salutes to %t."
 	hands_use_check = TRUE
+	muzzle_ignore = TRUE
+	sound = 'sound/creatures/salute.ogg'
+	cooldown = 1 SECONDS
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
@@ -247,6 +251,7 @@ monkestation edit end */
 //MonkeStation Edit Start
 //Butt-Based Farts
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
 	if(issilicon(user))
 		var/list/ignored_mobs = list()
 		for(var/mob/anything in GLOB.player_list)
@@ -257,27 +262,26 @@ monkestation edit end */
 			ignored_mobs |= anything
 		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!", ignored_mobs = ignored_mobs)
 		playsound(user, pick(
-			'monkestation/sound/effects/robot_farts/rbf1.ogg',
-			'monkestation/sound/effects/robot_farts/rbf2.ogg',
-			'monkestation/sound/effects/robot_farts/rbf3.ogg',
-			'monkestation/sound/effects/robot_farts/rbf4.ogg',
-			'monkestation/sound/effects/robot_farts/rbf5.ogg',
-			'monkestation/sound/effects/robot_farts/rbf6.ogg',
-			'monkestation/sound/effects/robot_farts/rbf7.ogg',
-			'monkestation/sound/effects/robot_farts/rbf8.ogg',
-			'monkestation/sound/effects/robot_farts/rbf9.ogg',
-			'monkestation/sound/effects/robot_farts/rbf10.ogg',
-			'monkestation/sound/effects/robot_farts/rbf11.ogg',
-			'monkestation/sound/effects/robot_farts/rbf12.ogg',
-			'monkestation/sound/effects/robot_farts/rbf13.ogg',
-			'monkestation/sound/effects/robot_farts/rbf14.ogg',
-			'monkestation/sound/effects/robot_farts/rbf15.ogg',
-			'monkestation/sound/effects/robot_farts/rbf16.ogg',
-			'monkestation/sound/effects/robot_farts/rbf17.ogg',
-			'monkestation/sound/effects/robot_farts/rbf18.ogg',
+			'sound/effects/robot_farts/rbf1.ogg',
+			'sound/effects/robot_farts/rbf2.ogg',
+			'sound/effects/robot_farts/rbf3.ogg',
+			'sound/effects/robot_farts/rbf4.ogg',
+			'sound/effects/robot_farts/rbf5.ogg',
+			'sound/effects/robot_farts/rbf6.ogg',
+			'sound/effects/robot_farts/rbf7.ogg',
+			'sound/effects/robot_farts/rbf8.ogg',
+			'sound/effects/robot_farts/rbf9.ogg',
+			'sound/effects/robot_farts/rbf10.ogg',
+			'sound/effects/robot_farts/rbf11.ogg',
+			'sound/effects/robot_farts/rbf12.ogg',
+			'sound/effects/robot_farts/rbf13.ogg',
+			'sound/effects/robot_farts/rbf14.ogg',
+			'sound/effects/robot_farts/rbf15.ogg',
+			'sound/effects/robot_farts/rbf16.ogg',
+			'sound/effects/robot_farts/rbf17.ogg',
+			'sound/effects/robot_farts/rbf18.ogg',
 		), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
 		return
-	. = ..()
 	if(user.stat == CONSCIOUS)
 		if((!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user)))
 			to_chat(user, "<span class='warning'>You don't have a butt!</span>")
@@ -291,7 +295,7 @@ monkestation edit end */
 	key = "glow"
 	key_third_person = "glows"
 	message = "glows brightly!"
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
 	if(!isethereal(user))
@@ -307,7 +311,7 @@ monkestation edit end */
 	key = "flare"
 	key_third_person = "flares"
 	message = "flares up to a dazzling intensity!"
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	sound = "sound/mobs/humanoids/ethereal/ethereal_hiss.ogg"
 
 /datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
@@ -324,7 +328,7 @@ monkestation edit end */
 	key = "flicker"
 	key_third_person = "flicker"
 	message = "flickers."
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	sound = "sound/effects/sparks/sparks4.ogg"
 
 /datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)

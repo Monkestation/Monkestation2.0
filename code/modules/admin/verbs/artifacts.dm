@@ -40,7 +40,7 @@ ADMIN_VERB(open_artifactpanel, R_ADMIN, FALSE, "Artifact Panel", "Opens the arti
 			"fault" = component.chosen_fault?.name,
 		))
 
-/datum/artifactpanel/ui_act(action, params)
+/datum/artifactpanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -84,9 +84,9 @@
 	if(!isturf(proj_turf))
 		return
 	var/obj/projectile/knives/knife = new(proj_turf)
-	knife.preparePixelProjectile(target, user, modifiers)
+	knife.aim_projectile(target, user, modifiers)
 	knife.firer = user
-	knife.hammer_synced = src
+	knife.fired_from = src
 	playsound(user, 'sound/weapons/fwoosh.ogg', 100, TRUE)
 	knife.fire()
 
@@ -107,40 +107,41 @@
 	bare_wound_bonus = 10
 	hitsound = 'sound/weapons/guillotine.ogg'
 	hitsound_wall = 'sound/weapons/guillotine.ogg'
-	var/obj/item/kinetic_crusher/knives/hammer_synced
 
 //we have more copy pasted crusher code here because the damage from a projectile is different from a melee strike
-/obj/projectile/knives/on_hit(atom/target, Firer, blocked = 0, pierce_hit)
+/obj/projectile/knives/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(isliving(target))
-		var/mob/living/living_target = target
-		var/datum/status_effect/crusher_mark/crusher_mark = living_target.has_status_effect(/datum/status_effect/crusher_mark)
-		if(!crusher_mark || !living_target.remove_status_effect(/datum/status_effect/crusher_mark))
-			return
-		var/datum/status_effect/crusher_damage/mark_damage = living_target.has_status_effect(/datum/status_effect/crusher_damage)
-		if(!mark_damage)
-			mark_damage = living_target.apply_status_effect(/datum/status_effect/crusher_damage)
-		var/target_health = living_target.health
-		for(var/thing in hammer_synced.trophies)
-			var/obj/item/crusher_trophy/trophy = thing
-			trophy.on_mark_detonation(target, firer)
-		if(!QDELETED(living_target))
-			if(!QDELETED(mark_damage))
-				mark_damage.total_damage += target_health - living_target.health //we did some damage, but let's not assume how much we did
-			new /obj/effect/temp_visual/kinetic_blast(get_turf(living_target))
-			var/backstabbed = FALSE
-			var/combined_damage = hammer_synced.detonation_damage
-			var/backstab_dir = get_dir(firer, living_target)
-			var/def_check = living_target.getarmor(type = BOMB)
-			if((firer.dir & backstab_dir) && (living_target.dir & backstab_dir))
-				backstabbed = TRUE
-				combined_damage += hammer_synced.backstab_bonus
-				playsound(firer, 'sound/weapons/kenetic_accel.ogg', 50, TRUE)
+	if(!istype(fired_from, /obj/item/kinetic_crusher))
+		return
+	var/obj/item/kinetic_crusher/used_crusher = fired_from
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	var/datum/status_effect/crusher_mark/crusher_mark = living_target.has_status_effect(/datum/status_effect/crusher_mark)
+	if(!living_target.remove_status_effect(crusher_mark))
+		return
+	// Detonation effect
+	var/datum/status_effect/crusher_damage/mark_damage = living_target.has_status_effect(/datum/status_effect/crusher_damage) || living_target.apply_status_effect(/datum/status_effect/crusher_damage)
+	var/target_health = living_target.health
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher.trophies)
+		crusher_trophy.on_mark_detonation(target, firer)
+	if(QDELETED(living_target))
+		return
+	if(!QDELETED(mark_damage))
+		mark_damage.total_damage += target_health - living_target.health //we did some damage, but let's not assume how much we did
+	new /obj/effect/temp_visual/kinetic_blast(get_turf(living_target))
+	var/backstabbed = FALSE
+	var/combined_damage = used_crusher.detonation_damage
+	var/backstab_dir = get_dir(firer, living_target)
+	var/def_check = living_target.getarmor(type = BOMB)
+	// Backstab bonus
+	if((firer.dir & backstab_dir) && (living_target.dir & backstab_dir))
+		backstabbed = TRUE
+		combined_damage += used_crusher.backstab_bonus
+		playsound(firer, 'sound/weapons/kenetic_accel.ogg', 50, TRUE)
 
-			if(!QDELETED(mark_damage))
-				mark_damage.total_damage += combined_damage
+	if(!QDELETED(mark_damage))
+		mark_damage.total_damage += combined_damage
 
-
-			SEND_SIGNAL(firer, COMSIG_LIVING_CRUSHER_DETONATE, living_target, src, backstabbed)
-			living_target.apply_damage(combined_damage, BRUTE, blocked = def_check)
-	. = ..()
+	SEND_SIGNAL(firer, COMSIG_LIVING_CRUSHER_DETONATE, living_target, src, backstabbed)
+	living_target.apply_damage(combined_damage, BRUTE, blocked = def_check)

@@ -48,10 +48,12 @@
 		/obj/item/stack/rods = 8,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	parts = list(
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 20 SECONDS
@@ -238,5 +240,17 @@
 		/obj/item/stack/rods = 1,
 	)
 	tool_behaviors = list(TOOL_CROWBAR)
+	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/tether_anchor
+	name = "Tether Anchor"
+	result = /obj/item/tether_anchor
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/cable_coil = 15
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT

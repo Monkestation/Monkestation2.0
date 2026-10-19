@@ -99,6 +99,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 /datum/store_manager/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet_batched/loadout_store),
+		get_asset_datum(/datum/asset/json/loadout_store),
 	)
 
 /// Select [path] item to [category_slot] slot.
@@ -124,88 +125,14 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 /datum/store_manager/ui_data(mob/user)
 	var/list/data = list()
 
-	var/list/all_selected_paths = list()
+	/* var/list/all_selected_paths = list()
 	for(var/path in owner?.prefs?.loadout_list)
-		all_selected_paths += path
+		all_selected_paths += path */
 	data["user_is_donator"] = !!(owner.persistent_client.patreon.is_donator() || owner.persistent_client.twitch.is_donator() || is_admin(owner))
 	data["owned_items"] = user.client.prefs.inventory
 	data["total_coins"] = user.client.prefs.metacoins
 
 	return data
-
-/datum/store_manager/ui_static_data()
-	var/list/data = list()
-
-	// [name] is the name of the tab that contains all the corresponding contents.
-	// [title] is the name at the top of the list of corresponding contents.
-	// [contents] is a formatted list of all the possible items for that slot.
-	//  - [contents.path] is the path the singleton datum holds
-	//  - [contents.name] is the name of the singleton datum
-	//  - [contents.item_cost], the total cost of this item
-
-	var/list/loadout_tabs = list()
-	loadout_tabs += list(list("name" = "Belt", "title" = "Belt Slot Items", "contents" = list_to_data(GLOB.store_belts)))
-	loadout_tabs += list(list("name" = "Ears", "title" = "Ear Slot Items", "contents" = list_to_data(GLOB.store_ears)))
-	loadout_tabs += list(list("name" = "Glasses", "title" = "Glasses Slot Items", "contents" = list_to_data(GLOB.store_glasses)))
-	loadout_tabs += list(list("name" = "Gloves", "title" = "Glove Slot Items", "contents" = list_to_data(GLOB.store_gloves)))
-	loadout_tabs += list(list("name" = "Head", "title" = "Head Slot Items", "contents" = list_to_data(GLOB.store_head)))
-	loadout_tabs += list(list("name" = "Mask", "title" = "Mask Slot Items", "contents" = list_to_data(GLOB.store_masks)))
-	loadout_tabs += list(list("name" = "Neck", "title" = "Neck Slot Items", "contents" = list_to_data(GLOB.store_neck)))
-	loadout_tabs += list(list("name" = "Shoes", "title" = "Shoe Slot Items", "contents" = list_to_data(GLOB.store_shoes)))
-	loadout_tabs += list(list("name" = "Suit", "title" = "Suit Slot Items", "contents" = list_to_data(GLOB.store_suits)))
-	loadout_tabs += list(list("name" = "Jumpsuit", "title" = "Uniform Slot Items", "contents" = list_to_data(GLOB.store_jumpsuits)))
-	loadout_tabs += list(list("name" = "Formal", "title" = "Uniform Slot Items (cont)", "contents" = list_to_data(GLOB.store_undersuits)))
-	loadout_tabs += list(list("name" = "Misc. Under", "title" = "Uniform Slot Items (cont)", "contents" = list_to_data(GLOB.store_miscunders)))
-	loadout_tabs += list(list("name" = "Accessory", "title" = "Uniform Accessory Slot Items", "contents" = list_to_data(GLOB.store_accessory)))
-	loadout_tabs += list(list("name" = "Inhand", "title" = "In-hand Items", "contents" = list_to_data(GLOB.store_inhand_items)))
-	loadout_tabs += list(list("name" = "Toys", "title" = "Toys!", "contents" = list_to_data(GLOB.store_toys)))
-	loadout_tabs += list(list("name" = "Plushies", "title" = "Adorable little plushies!", "contents" = list_to_data(GLOB.store_plushies)))
-	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items", "contents" = list_to_data(GLOB.store_pockets)))
-
-	data["loadout_tabs"] = loadout_tabs
-
-	return data
-
-/*
- * Takes an assoc list of [typepath]s to [singleton datum]
- * And formats it into an object for TGUI.
- *
- * - list[name] is the name of the datum.
- * - list[path] is the typepath of the item.
- */
-/datum/store_manager/proc/list_to_data(list_of_datums)
-	if(!LAZYLEN(list_of_datums))
-		return
-
-	var/list/formatted_list = new(length(list_of_datums))
-	var/array_index = 1
-	for(var/datum/store_item/item as anything in list_of_datums)
-		if(item.hidden)
-			formatted_list.len--
-			continue
-		var/obj/item/item_type = item.item_path
-		var/list/formatted_item = list(
-			"name" = item.name,
-			"path" = item.item_path,
-			"cost" = item.item_cost,
-			"desc" = item_type::desc,
-			"job_restricted" = null,
-		)
-		if((item_type::icon_preview && item_type::icon_state_preview) || !(item_type::greyscale_config && item_type::greyscale_colors))
-			formatted_item["icon"] = item_type::icon_preview || item_type::icon
-			formatted_item["icon_state"] = item_type::icon_state_preview || item_type::icon_state
-		else
-			formatted_item["icon"] = sanitize_css_class_name("[item_type]")
-
-		var/datum/loadout_item/selected = GLOB.all_loadout_datums[item_type]
-		if(length(selected?.restricted_roles))
-			formatted_item["job_restricted"] = selected.restricted_roles.Join(", ")
-
-		formatted_list[array_index++] = formatted_item
-
-	return formatted_list
-
-
 
 /*
  * Generate a list of singleton store_item datums from all subtypes of [type_to_generate]

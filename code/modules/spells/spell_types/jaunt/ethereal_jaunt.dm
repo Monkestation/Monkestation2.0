@@ -257,3 +257,7 @@
 	if (locate(/obj/effect/blessing) in .)
 		to_chat(user, span_warning("Holy energies block your path!"))
 		return null
+
+/// Red coloured variant
+/obj/effect/dummy/phased_mob/spell_jaunt/red
+	// phased_mob_icon_state = "red_1"

@@ -55,3 +55,8 @@
 
 /// deprecated
 #define COMSIG_BITRUNNER_SPAWN_GLITCH "bitrunner_spawn_glitch"
+
+// bitrunning tutorial
+
+/// tutorial completion checks
+#define COMGSIG_BITRUNNING_TUTORIAL_DONE "bitrunning_tutorial_done"

@@ -80,7 +80,7 @@
 	name = "diagnostic HUD implant"
 	desc = "These cybernetic eye implants will display a diagnostic HUD over everything you see."
 	icon_state = "eye_implant_diagnostic"
-	HUD_type = DATA_HUD_DIAGNOSTIC_ADVANCED
+	HUD_type = DATA_HUD_DIAGNOSTIC_BASIC
 
 /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate
 	name = "Contraband Security HUD Implant"

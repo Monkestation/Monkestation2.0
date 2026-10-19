@@ -145,6 +145,11 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	item_path = /obj/item/clothing/suit/jacket/silk
 	item_cost = 5000
 
+/datum/store_item/suit/jacket/deforest
+	name = "Deforest Jacket"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
+	item_cost = 5000
+
 /*
 *	COSTUMES
 */
@@ -295,6 +300,14 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/jacket/tailcoat_bar
 	name = "Bartender's Tailcoat"
 	item_path = /obj/item/clothing/suit/jacket/tailcoat/bartender
+
+/datum/store_item/suit/armor/vest/capcarapace/tailcoat_captain
+	name = "Captain's Tailcoat"
+	item_path = /obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain
+
+/datum/store_item/suit/armor/vest/hos_tailcoat
+	name = "Head of Security's Tailcoat"
+	item_path = /obj/item/clothing/suit/armor/hos_tailcoat
 
 /*
 *	FAMILIES
@@ -656,10 +669,6 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	name = "Mojave University Hoodie"
 	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/branded/mu
 
-/datum/store_item/suit/peacekeeper_jacket/badge
-	name = "Badged Peacekeeper Jacket"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket/badge
-
 /datum/store_item/suit/offdep_jacket
 	name = "Off-Department Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/assistant
@@ -692,3 +701,8 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	name = "Colourable Sleeveless Crop-Top Jacket"
 	item_path = /obj/item/clothing/suit/crop_jacket/sleeveless
 	item_cost = 2500
+
+/datum/store_item/suit/henchmen_coat
+	name = "Henchmen Coat"
+	item_path = /obj/item/clothing/suit/jacket/henchmen_coat
+	item_cost = 20000

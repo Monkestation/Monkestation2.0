@@ -31,7 +31,10 @@
 		trigger_organ_action()
 
 /obj/item/organ/internal/monster_core/regenerative_core/on_triggered_internal()
-	owner.revive(HEAL_ALL)
+	if(lavaland_equipment_pressure_check(get_turf(owner)))
+		owner.revive(HEAL_ALL)
+	else
+		owner.heal_and_revive(40, needs_organs = FALSE)
 	qdel(src)
 
 /// Log applications and apply moodlet.

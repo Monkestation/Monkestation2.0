@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -50,7 +50,7 @@ export const ChemDebugSynthesizer = (props) => {
                   maxValue={beakerMaxVolume}
                   step={1}
                   stepPixelSize={2}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('amount', {
                       amount: value,
                     })
@@ -63,7 +63,7 @@ export const ChemDebugSynthesizer = (props) => {
                   maxValue={120}
                   step={1}
                   stepPixelSize={2}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('purity', {
                       amount: value,
                     })
@@ -88,7 +88,7 @@ export const ChemDebugSynthesizer = (props) => {
             <>
               <Box>
                 <AnimatedNumber value={beakerCurrentVolume} />
-                {' / ' + beakerMaxVolume + ' u'}
+                {` / ${beakerMaxVolume} u`}
               </Box>
               {beakerContents.length > 0 ? (
                 <LabeledList>

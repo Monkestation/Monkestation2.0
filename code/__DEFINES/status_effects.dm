@@ -61,6 +61,7 @@
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 #define STASIS_ADMIN "stasis_admin"
 #define STASIS_LEGION_EATEN "stasis_eaten"
+#define STASIS_ELDRITCH_ETHER "stasis_eldritch_ether"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 
@@ -137,8 +138,7 @@
 #define set_dizzy(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness)
 #define set_dizzy_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness, TRUE)
 
-//#define adjust_rebuked_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/staggered, up_to) // MONKESTATION EDIT OLD
-#define adjust_rebuked_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/rebuked, up_to) // MONKESTATION EDIT NEW
+#define adjust_rebuked_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/rebuked, up_to)
 
 #define adjust_jitter(duration) adjust_timed_status_effect(duration, /datum/status_effect/jitter)
 #define adjust_jitter_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/jitter, up_to)
@@ -211,6 +211,8 @@
 #define PETRIFICATION_SPIT /datum/status_effect/ranching/cockatrice_eaten
 ///makes you a mime and gives you the wall ability for the duration
 #define MIME_EGG /datum/status_effect/ranching/mime
+///used by interdiction lenses and judicial marks
+#define STATUS_EFFECT_INTERDICTION /datum/status_effect/interdiction
 
 #define adjust_static_vision(duration) adjust_timed_status_effect(duration, /datum/status_effect/static_vision)
 #define adjust_static_vision_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/static_vision, up_to)

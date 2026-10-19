@@ -62,7 +62,7 @@
 		M.visible_message(span_warning("[user] fed [M] from [src]."), \
 			span_warning("[user] fed you from [src]."))
 		log_combat(user, M, "fed", reagents.get_reagent_log_string())
-	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
+	reagents.trans_to(M, 10, transferred_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
 
@@ -76,7 +76,7 @@
 			to_chat(user, span_warning("[src] is full!"))
 			return ITEM_INTERACT_BLOCKING
 
-		var/trans = interacting_with.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = interacting_with.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [interacting_with]."))
 		return ITEM_INTERACT_SUCCESS
 
@@ -88,7 +88,7 @@
 		if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
 			to_chat(user, span_warning("you can't add anymore to [interacting_with]!"))
 			return ITEM_INTERACT_BLOCKING
-		var/trans = src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] units of the condiment to [interacting_with]."))
 
 		var/datum/reagent/main_reagent = reagents.get_master_reagent_id()
@@ -481,7 +481,7 @@
 				if (overlay_colored)
 					I.color = mix_color_from_reagents(reagents.reagent_list)
 				interacting_with.overlays += I
-			src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
+			src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transferred_by = user)
 			qdel(src)
 			return ITEM_INTERACT_SUCCESS
 	return ..()

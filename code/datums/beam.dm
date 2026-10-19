@@ -40,6 +40,8 @@
 	var/override_target_pixel_x = null
 	/// If set will be used instead of targets's pixel_y in offset calculations
 	var/override_target_pixel_y = null
+	/// The layer of our beam.
+	var/beam_layer
 
 /datum/beam/New(
 	origin,
@@ -55,6 +57,7 @@
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
+	beam_layer = ABOVE_ALL_MOB_LAYER,
 )
 	src.origin = origin
 	src.target = target
@@ -68,6 +71,7 @@
 	src.override_origin_pixel_y = override_origin_pixel_y
 	src.override_target_pixel_x = override_target_pixel_x
 	src.override_target_pixel_y = override_target_pixel_y
+	src.beam_layer = beam_layer
 	if(time < INFINITY)
 		QDEL_IN(src, time)
 
@@ -203,8 +207,71 @@
 
 /obj/effect/ebeam/singularity_pull()
 	return
+
 /obj/effect/ebeam/singularity_act()
 	return
+
+/obj/effect/ebeam/Process_Spacemove(movement_dir, continuous_move)
+	return
+
+/// A beam subtype used for advanced beams, to react to atoms entering the beam
+/obj/effect/ebeam/reacting
+	/// If TRUE, atoms that exist in the beam's loc when inited count as "entering" the beam
+	var/react_on_init = FALSE
+
+/obj/effect/ebeam/reacting/Initialize(mapload, beam_owner)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
+		COMSIG_TURF_CHANGE = PROC_REF(on_turf_change),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	if(!isturf(loc) || isnull(owner) || mapload || !react_on_init)
+		return
+
+	for(var/atom/movable/existing as anything in loc)
+		beam_entered(existing)
+
+/obj/effect/ebeam/reacting/proc/on_entered(datum/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_entered(entered)
+
+/obj/effect/ebeam/reacting/proc/on_exited(datum/source, atom/movable/exited)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_exited(exited)
+
+/obj/effect/ebeam/reacting/proc/on_turf_change(datum/source, path, new_baseturfs, flags, list/datum/callback/post_change_callbacks)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_turfs_changed(post_change_callbacks)
+
+/// Some atom entered the beam's line
+/obj/effect/ebeam/reacting/proc/beam_entered(atom/movable/entered)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_ENTERED, src, entered)
+
+/// Some atom exited the beam's line
+/obj/effect/ebeam/reacting/proc/beam_exited(atom/movable/exited)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_EXITED, src, exited)
+
+/// Some turf the beam covers has changed to a new turf type
+/obj/effect/ebeam/reacting/proc/beam_turfs_changed(list/datum/callback/post_change_callbacks)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_TURFS_CHANGED, post_change_callbacks)
 
 /**
  * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.**
@@ -218,9 +285,68 @@
  * maxdistance: how far the beam will go before stopping itself. Used mainly for two things: preventing lag if the beam may go in that direction and setting a range to abilities that use beams.
  * beam_type: The type of your custom beam. This is for adding other wacky stuff for your beam only. Most likely, you won't (and shouldn't) change it.
  */
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=INFINITY,maxdistance=INFINITY,beam_type=/obj/effect/ebeam, beam_color = null, emissive = TRUE, override_origin_pixel_x = null, override_origin_pixel_y = null, override_target_pixel_x = null, override_target_pixel_y = null)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y )
+/atom/proc/Beam(atom/BeamTarget, icon_state="b_beam", icon='icons/effects/beam.dmi', time = INFINITY, maxdistance = INFINITY, beam_type = /obj/effect/ebeam, beam_color = null, emissive = TRUE, override_origin_pixel_x = null, override_origin_pixel_y = null, override_target_pixel_x = null, override_target_pixel_y = null, beam_layer = null)
+	var/datum/beam/newbeam = new(src, BeamTarget, icon, icon_state, time, maxdistance, beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, beam_layer)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam
 
+/// For beams that might be from a held item.
+/datum/beam/held
+	/// Is the fishing rod held in left side hand?
+	var/lefthand = FALSE
 
+	// Make these inline with final sprites.
+	var/righthand_s_px = 13
+	var/righthand_s_py = 16
+
+	var/righthand_e_px = 18
+	var/righthand_e_py = 16
+
+	var/righthand_w_px = -20
+	var/righthand_w_py = 18
+
+	var/righthand_n_px = -14
+	var/righthand_n_py = 16
+
+	var/lefthand_s_px = -13
+	var/lefthand_s_py = 15
+
+	var/lefthand_e_px = 24
+	var/lefthand_e_py = 18
+
+	var/lefthand_w_px = -17
+	var/lefthand_w_py = 16
+
+	var/lefthand_n_px = 13
+	var/lefthand_n_py = 15
+
+/datum/beam/held/Start()
+	update_offsets(origin.dir)
+	. = ..()
+	RegisterSignal(origin, COMSIG_ATOM_DIR_CHANGE, PROC_REF(handle_dir_change))
+
+/datum/beam/held/Destroy()
+	UnregisterSignal(origin, COMSIG_ATOM_DIR_CHANGE)
+	. = ..()
+
+/datum/beam/held/proc/handle_dir_change(atom/movable/source, olddir, newdir)
+	SIGNAL_HANDLER
+	update_offsets(newdir)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/beam, redrawing))
+
+/datum/beam/held/proc/update_offsets(user_dir)
+	switch(user_dir)
+		if(SOUTH)
+			override_origin_pixel_x = lefthand ? lefthand_s_px : righthand_s_px
+			override_origin_pixel_y = lefthand ? lefthand_s_py : righthand_s_py
+		if(EAST)
+			override_origin_pixel_x = lefthand ? lefthand_e_px : righthand_e_px
+			override_origin_pixel_y = lefthand ? lefthand_e_py : righthand_e_py
+		if(WEST)
+			override_origin_pixel_x = lefthand ? lefthand_w_px : righthand_w_px
+			override_origin_pixel_y = lefthand ? lefthand_w_py : righthand_w_py
+		if(NORTH)
+			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
+			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
+	override_origin_pixel_x += origin.pixel_x
+	override_origin_pixel_y += origin.pixel_y

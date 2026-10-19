@@ -7,8 +7,10 @@
 		"paicard",
 		"mecha_camera",
 		"botnavbeacon",
+		"mini_soulcatcher",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/adv_robotics
 	id = "adv_robotics"
@@ -17,6 +19,7 @@
 	prereq_ids = list("neural_programming", "robotics", "cyborg")
 	design_ids = list(
 		"mmi_posi",
+		"ecto_sniffer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -37,13 +40,16 @@
 /datum/techweb_node/adv_bots
 	id = "adv_bots"
 	display_name = "Advanced Bots Research"
-	description = "Grants access to a special launchpad designed for bots."
+	description = "Grants access to special launchpads designed for bots big and small."
 	prereq_ids = list("robotics")
 	design_ids = list(
 		"botpad",
 		"botpad_remote",
+		"mechpad",
+		"mechpad_console"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/neural_programming
 	id = "neural_programming"
@@ -52,6 +58,7 @@
 	prereq_ids = list("biotech", "datatheory")
 	design_ids = list(
 		"skill_station",
+		"soulcatcher_device",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -62,12 +69,18 @@
 	description = "AI unit research."
 	prereq_ids = list("adv_robotics")
 	design_ids = list(
-		"aicore",
 		"borg_ai_control",
 		"intellicard",
 		"mecha_tracking_ai_control",
+		"server_cabinet",
+		"ai_data_core",
+		"ai_core_display",
+		"ai_server_overview",
+		"ai_overclocking",
+		"ram1",
+		"basic_ai_cpu",
+		"ai_resource_distribution",
 		"aifixer",
-		"aiupload",
 		"reset_module",
 		"asimov_module",
 		"default_module",
@@ -85,6 +98,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR)
 
 /datum/techweb_node/ai_adv
 	id = "ai_adv"
@@ -121,6 +135,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_COMMAND)
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR * 3)
 
 //Any kind of point adjustment needs to happen before SSresearch sets up the whole node tree, it gets cached
 /datum/techweb_node/ai/New()

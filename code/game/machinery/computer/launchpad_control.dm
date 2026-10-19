@@ -60,15 +60,17 @@
 
 /obj/machinery/computer/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-	if(!istype(multi.buffer, /obj/machinery/launchpad))
+
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/launchpad))
 		return ITEM_INTERACT_BLOCKING
 
 	if(LAZYLEN(launchpads) > maximum_pads)
 		to_chat(user, span_warning("[src] cannot handle any more connections!"))
 		return ITEM_INTERACT_BLOCKING
 
-	launchpads |= multi.buffer
-	multi.set_buffer(null)
+	launchpads |= buffer
+	multitool_set_buffer(multi, null)
 	to_chat(user, span_notice("You upload the data from the [multi.name]'s buffer."))
 	return ITEM_INTERACT_SUCCESS
 
@@ -150,10 +152,16 @@
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
-			current_pad.set_offset(
-				x = current_pad.x_offset + plus_x,
-				y = current_pad.y_offset + plus_y
-			)
+			if(plus_x || plus_y)
+				current_pad.set_offset(
+					x = current_pad.x_offset + plus_x,
+					y = current_pad.y_offset + plus_y,
+				)
+			else
+				current_pad.set_offset(
+					x = 0,
+					y = 0,
+				)
 			. = TRUE
 		if("rename")
 			. = TRUE

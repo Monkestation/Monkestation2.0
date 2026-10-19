@@ -692,13 +692,17 @@
 /obj/item/stack/ore/gold,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"IK" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/structure/cable,
+/obj/effect/turf_decal/lunar_sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "IP" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/machinery/light/small/blacklight/directional{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -731,9 +735,8 @@
 "Ku" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/super/full,
+/obj/item/inducer,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "KK" = (
@@ -988,6 +991,13 @@
 	},
 /turf/closed/wall/mineral/iron,
 /area/shuttle/pirate)
+"YD" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "YK" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/chair/wood{
@@ -1107,9 +1117,9 @@ lt
 lt
 lt
 jx
-Od
-Rp
-fO
+Uw
+YD
+IK
 IP
 DM
 JL

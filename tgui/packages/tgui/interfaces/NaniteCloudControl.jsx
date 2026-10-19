@@ -4,16 +4,16 @@ import {
   Box,
   Button,
   Collapsible,
-  Grid,
+  Dropdown,
+  Flex,
+  Input,
   LabeledList,
   NoticeBox,
   NumberInput,
   Section,
-  Flex,
-  Tabs,
   Stack,
-  Dropdown,
-  Input,
+  Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -28,7 +28,7 @@ export const NaniteCodes = (props) => {
             width="47px"
             minValue={0}
             maxValue={9999}
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('set_code', {
                 target_code: 'activation',
                 code: value,
@@ -42,7 +42,7 @@ export const NaniteCodes = (props) => {
             width="47px"
             minValue={0}
             maxValue={9999}
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('set_code', {
                 target_code: 'deactivation',
                 code: value,
@@ -56,7 +56,7 @@ export const NaniteCodes = (props) => {
             width="47px"
             minValue={0}
             maxValue={9999}
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('set_code', {
                 target_code: 'kill',
                 code: value,
@@ -71,7 +71,7 @@ export const NaniteCodes = (props) => {
               width="47px"
               minValue={0}
               maxValue={9999}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_code', {
                   target_code: 'trigger',
                   code: value,
@@ -98,7 +98,7 @@ export const NaniteDelays = (props) => {
             width="57px"
             minValue={0}
             maxValue={3600}
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('set_restart_timer', {
                 delay: value,
               })
@@ -112,7 +112,7 @@ export const NaniteDelays = (props) => {
             width="57px"
             minValue={0}
             maxValue={3600}
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('set_shutdown_timer', {
                 delay: value,
               })
@@ -128,7 +128,7 @@ export const NaniteDelays = (props) => {
                 width="57px"
                 minValue={0}
                 maxValue={3600}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_trigger_timer', {
                     delay: value,
                   })
@@ -142,7 +142,7 @@ export const NaniteDelays = (props) => {
                 width="57px"
                 minValue={0}
                 maxValue={3600}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_timer_trigger_delay', {
                     delay: value,
                   })
@@ -181,7 +181,7 @@ export const NaniteExtraNumber = (props) => {
       minValue={min}
       maxValue={max}
       unit={unit}
-      onChange={(e, val) =>
+      onChange={(val) =>
         act('set_extra_setting', {
           target_setting: name,
           value: val,
@@ -199,7 +199,7 @@ export const NaniteExtraText = (props) => {
     <Input
       value={value}
       width="200px"
-      onInput={(e, val) =>
+      onChange={(val) =>
         act('set_extra_setting', {
           target_setting: name,
           value: val,
@@ -266,9 +266,9 @@ export const NaniteProgrammerContent = (props) => {
   return (
     <Section title={name} fill scrollable>
       <Section title="Info" level={2}>
-        <Grid>
-          <Grid.Column>{desc}</Grid.Column>
-          <Grid.Column size={0.7}>
+        <Table>
+          <Table.Cell>{desc}</Table.Cell>
+          <Table.Cell size={0.7}>
             <LabeledList>
               <LabeledList.Item label="Use Rate">{use_rate}</LabeledList.Item>
               {!!can_trigger && (
@@ -282,8 +282,8 @@ export const NaniteProgrammerContent = (props) => {
                 </>
               )}
             </LabeledList>
-          </Grid.Column>
-        </Grid>
+          </Table.Cell>
+        </Table>
       </Section>
       <Section
         title="Settings"
@@ -299,14 +299,14 @@ export const NaniteProgrammerContent = (props) => {
           />
         }
       >
-        <Grid>
-          <Grid.Column>
+        <Table>
+          <Table.Cell>
             <NaniteCodes />
-          </Grid.Column>
-          <Grid.Column>
+          </Table.Cell>
+          <Table.Cell>
             <NaniteDelays />
-          </Grid.Column>
-        </Grid>
+          </Table.Cell>
+        </Table>
         {!!has_extra_settings && (
           <Section title="Special" level={3}>
             <LabeledList>
@@ -360,9 +360,9 @@ export const NaniteInfoBox = (props) => {
         </Box>
       }
     >
-      <Grid>
-        <Grid.Column mr={1}>{desc}</Grid.Column>
-        <Grid.Column size={0.5}>
+      <Table>
+        <Table.Cell mr={1}>{desc}</Table.Cell>
+        <Table.Cell size={0.5}>
           <LabeledList>
             <LabeledList.Item label="Use Rate">{use_rate}</LabeledList.Item>
             {!!can_trigger && (
@@ -376,10 +376,10 @@ export const NaniteInfoBox = (props) => {
               </>
             )}
           </LabeledList>
-        </Grid.Column>
-      </Grid>
-      <Grid>
-        <Grid.Column>
+        </Table.Cell>
+      </Table>
+      <Table>
+        <Table.Cell>
           <Section title="Codes" level={3} mr={1}>
             <LabeledList>
               <LabeledList.Item label="Activation">
@@ -396,8 +396,8 @@ export const NaniteInfoBox = (props) => {
               )}
             </LabeledList>
           </Section>
-        </Grid.Column>
-        <Grid.Column>
+        </Table.Cell>
+        <Table.Cell>
           <Section title="Delays" level={3} mr={1}>
             <LabeledList>
               <LabeledList.Item label="Restart">
@@ -418,8 +418,8 @@ export const NaniteInfoBox = (props) => {
               )}
             </LabeledList>
           </Section>
-        </Grid.Column>
-      </Grid>
+        </Table.Cell>
+      </Table>
       <Section title="Extra Settings" level={3}>
         <LabeledList>
           {extra_settings.map((setting) => {
@@ -453,7 +453,7 @@ export const NaniteCloudBackupList = (props) => {
     <Button
       fluid
       key={backup.cloud_id}
-      content={'Backup #' + backup.cloud_id}
+      content={`Backup #${backup.cloud_id}`}
       textAlign="center"
       onClick={() =>
         act('set_view', {
@@ -473,7 +473,7 @@ export const NaniteCloudBackupDetails = (props) => {
   const cloud_programs = data.cloud_programs || [];
   return (
     <Section
-      title={'Backup #' + current_view}
+      title={`Backup #${current_view}`}
       level={2}
       buttons={
         !!has_program && (
@@ -574,7 +574,7 @@ export const NaniteProgramHub = (props) => {
   const { act, data } = useBackend();
   const { detail_view, has_program, programs = {} } = data;
   const [selectedCategory, setSelectedCategory] = useSharedState('category');
-  const programsInCategory = (programs && programs[selectedCategory]) || [];
+  const programsInCategory = programs?.[selectedCategory] || [];
   return (
     <Section
       fill
@@ -735,7 +735,7 @@ export const NaniteCloudControl = (props) => {
                       maxValue={100}
                       stepPixelSize={4}
                       width="39px"
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('update_new_backup_value', {
                           value: value,
                         })

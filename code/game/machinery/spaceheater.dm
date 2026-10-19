@@ -222,6 +222,7 @@
 		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
 		SStgui.update_uis(src)
 		return TRUE
+
 	return ..()
 
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)

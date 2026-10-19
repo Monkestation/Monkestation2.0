@@ -1,4 +1,5 @@
 /mob/living/carbon/human/species/monkey
+	name = "monkey" // For getting name via typepath.
 	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
@@ -154,3 +155,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 			organ.transform = organ.transform.Scale(7,1)
 			organ.name = "wide " + organ.name
 	return ..()
+
+/mob/living/carbon/human/species/monkey/simian
+	race = /datum/species/monkey/simian
+	ai_controller = null

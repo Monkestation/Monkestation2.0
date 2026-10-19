@@ -89,6 +89,11 @@
 	// virus resistant so infections take longer
 	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
 		infestation += infestation_rate * 0.1 * seconds_per_tick
+	else if(HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY))
+		infestation += 0.05
+		sanitization = max(sanitization - 0.15, 0)
+		if(infestation_rate <= 0.15 && prob(50))
+			infestation_rate += 0.001
 	else
 		infestation += infestation_rate * seconds_per_tick
 

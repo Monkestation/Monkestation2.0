@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from 'tgui/components';
 import { SOFTWARE_DESC } from './constants';
-import { PaiData } from './types';
+import type { PaiData } from './types';
 
 /**
  * Renders a list of available software and the ram with which to download it
@@ -89,10 +89,10 @@ const ListItem = (props) => {
 
   return (
     <Table.Row className="candystripe">
-      <Table.Cell collapsible>
+      <Table.Cell collapsing>
         <Box color="label">{name}</Box>
       </Table.Cell>
-      <Table.Cell collapsible>
+      <Table.Cell collapsing>
         <Box color={ram < cost && 'bad'} textAlign="right">
           {!purchased && cost}{' '}
           <Icon
@@ -101,7 +101,7 @@ const ListItem = (props) => {
           />
         </Box>
       </Table.Cell>
-      <Table.Cell collapsible>
+      <Table.Cell collapsing>
         <Button
           fluid
           mb={0.5}

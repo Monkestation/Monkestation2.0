@@ -1,4 +1,4 @@
-/obj/item/circuit_component/chem/bci/bloodstream
+/obj/item/circuit_component/chem/bci/bloodstream //currently unobtainable because of one EepyKitten, feel free to add it back and remove the medical circuit blacklist on BCIs if you somehow make it balanced - NK
 	display_name = "Chemical Pump Integration"
 	desc  = "A component that integrates directly into your veins to inject you with a reagents."
 	energy_usage_per_input = 1

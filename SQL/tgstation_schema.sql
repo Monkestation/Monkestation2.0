@@ -281,6 +281,20 @@ CREATE TABLE `library_action` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `cassette_purchases`
+--
+CREATE TABLE IF NOT EXISTS `cassette_purchases` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cassette_id` VARCHAR(32) NOT NULL,
+  `cassette_name` VARCHAR(64) NOT NULL,
+  `buyer_ckey` VARCHAR(32),
+  `purchase_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `server_id` VARCHAR(50),
+  PRIMARY KEY (`id`),
+  KEY `idx_cassette_id` (`cassette_id`),
+  KEY `idx_purchase_date` (`purchase_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Table structure for table `messages`
 --
 

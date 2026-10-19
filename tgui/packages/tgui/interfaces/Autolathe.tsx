@@ -1,22 +1,21 @@
+import { type BooleanLike, classes } from 'common/react';
+import { capitalize } from 'common/string';
 import { useBackend } from '../backend';
 import {
-  LabeledList,
-  Section,
-  ProgressBar,
-  Collapsible,
-  Stack,
-  Icon,
   Box,
-  Tooltip,
   Button,
+  Collapsible,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
-import { capitalize } from 'common/string';
-import { Design, MaterialMap } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
-import { BooleanLike, classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Material } from './Fabrication/Types';
+import type { Design, Material, MaterialMap } from './Fabrication/Types';
 
 type AutolatheDesign = Design & {
   customMaterials: BooleanLike;
@@ -286,10 +285,9 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
         ])}
       >
         <Button.Input
-          content={`[Max: ${maxmult}]`}
+          buttonText={`[Max: ${maxmult}]`}
           color={'transparent'}
-          maxValue={maxmult}
-          onCommit={(_e, value: string) =>
+          onCommit={(value: string) =>
             act('make', {
               id: design.id,
               multiplier: value,

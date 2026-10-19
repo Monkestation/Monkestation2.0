@@ -1,3 +1,5 @@
+import type { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Button,
   Dropdown,
@@ -8,9 +10,6 @@ import {
   Table,
   Tooltip,
 } from '../components';
-import type { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Lobby = {

@@ -12,6 +12,8 @@
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 	living_flags = ALWAYS_DEATHGASP
+	max_grab = GRAB_KILL
+	life_subsystem_type = /datum/controller/subsystem/mobs/carbons
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
@@ -73,6 +75,8 @@
 		/obj/item/bodypart/leg/right,
 		/obj/item/bodypart/leg/left,
 	)
+	/// Alist of (non-stump) bodyparts by their bodyzone for quick get_bodypart access
+	var/alist/real_bodypart_cache = alist()
 
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()
@@ -110,7 +114,7 @@
 	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
 	var/last_top_offset
 
-	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
+	/// A bitfield of "bodytypes", updated by /mob/living/carbon/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 
 	var/is_leaning = FALSE
@@ -118,3 +122,6 @@
 	COOLDOWN_DECLARE(bleeding_message_cd)
 
 	var/next_smell = 0 /// Cooldown for the next smell
+
+	/// Timer used to make the carbon fart shortly after they die
+	var/death_fart_timerid

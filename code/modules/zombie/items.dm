@@ -12,6 +12,9 @@
 	sharpness = SHARP_EDGED
 
 /obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(attack_modifiers?[ATTACK_BLOCKED])
+		return
+
 	if(ishuman(target))
 		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))
@@ -20,8 +23,8 @@
 /proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST)
 	CHECK_DNA_AND_SPECIES(target)
 
-	// Can't zombify with no head
-	if(!target.get_bodypart(BODY_ZONE_HEAD))
+	// Can't zombify with no head though ipcs and oozelings can have no heads. Funny.
+	if(!target.get_bodypart(BODY_ZONE_HEAD) && !(isoozeling(target) || isipc(target)))
 		return
 
 	if(HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
@@ -56,7 +59,7 @@
 	infection = target.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
-		infection.Insert(target)
+		infection.Follow_Insert(target, ORGAN_SLOT_BRAIN)
 		to_chat(user, span_alien("You see [target] twitch for a moment as [target.p_their()] head is covered in \a [infection] - [target.p_theyve()] been infected."))
 
 /obj/item/mutant_hand/zombie/suicide_act(mob/living/user)

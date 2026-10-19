@@ -1,7 +1,7 @@
 import { Flex } from '../../components';
-import { Design, MaterialMap } from './Types';
-import { MaterialIcon } from './MaterialIcon';
 import { formatSiUnit } from '../../format';
+import { MaterialIcon } from './MaterialIcon';
+import type { Design, MaterialMap } from './Types';
 
 export type MaterialCostSequenceProps = {
   /**
@@ -26,12 +26,12 @@ export type MaterialCostSequenceProps = {
   amount?: number;
 
   /**
-   * The `align-items` flex property provided to the generated list.
+   * The `alignItems` flex property provided to the generated list.
    */
   align?: string;
 
   /**
-   * The `justify-content` flex property provided to the generated list.
+   * The `justifyContent` flex property provided to the generated list.
    */
   justify?: string;
 

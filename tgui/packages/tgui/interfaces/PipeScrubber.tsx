@@ -1,5 +1,5 @@
 import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
 import {
@@ -38,7 +38,7 @@ type Filter = {
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };

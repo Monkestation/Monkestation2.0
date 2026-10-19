@@ -51,7 +51,7 @@
 	var/title = "Acolyte"
 	var/span = "cult italic"
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/cult/master))
-		span = "cultlarge"
+		span = "cult_large"
 		title = "Master"
 	else if(!ishuman(user))
 		title = "Construct"

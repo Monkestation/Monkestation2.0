@@ -67,7 +67,7 @@ export const ExosuitControlConsole = (props) => {
                     'good'
                   }
                 >
-                  {(typeof mech.charge === 'number' && mech.charge + '%') ||
+                  {(typeof mech.charge === 'number' && `${mech.charge}%`) ||
                     'Not Found'}
                 </Box>
               </LabeledList.Item>
@@ -75,7 +75,7 @@ export const ExosuitControlConsole = (props) => {
                 {(typeof mech.airtank === 'number' && (
                   <AnimatedNumber
                     value={mech.airtank}
-                    format={(value) => toFixed(value, 2) + ' kPa'}
+                    format={(value) => `${toFixed(value, 2)} kPa`}
                   />
                 )) ||
                   'Not Equipped'}

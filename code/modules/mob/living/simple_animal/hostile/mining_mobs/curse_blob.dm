@@ -46,7 +46,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
 	if(our_loop)
 		return
-	our_loop = SSmove_manager.force_move(src, move_target, delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	our_loop = GLOB.move_manager.force_move(src, move_target, delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!our_loop)
 		return
 	RegisterSignal(move_target, COMSIG_MOB_STATCHANGE, PROC_REF(stat_change))
@@ -102,8 +102,8 @@
 	if(mover == set_target)
 		return FALSE
 	if(isprojectile(mover))
-		var/obj/projectile/P = mover
-		if(P.firer == set_target)
+		var/obj/projectile/proj = mover
+		if(proj.firer == set_target)
 			return FALSE
 
 #define IGNORE_PROC_IF_NOT_TARGET(X) /mob/living/simple_animal/hostile/asteroid/curseblob/##X(AM) { if (AM == set_target) return ..(); }
@@ -120,10 +120,9 @@ IGNORE_PROC_IF_NOT_TARGET(attack_larva)
 
 IGNORE_PROC_IF_NOT_TARGET(attack_animal)
 
-
-/mob/living/simple_animal/hostile/asteroid/curseblob/bullet_act(obj/projectile/Proj)
-	if(Proj.firer != set_target)
-		return
+/mob/living/simple_animal/hostile/asteroid/curseblob/bullet_act(obj/projectile/proj)
+	if(proj.firer != set_target)
+		return BULLET_ACT_BLOCK
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L)

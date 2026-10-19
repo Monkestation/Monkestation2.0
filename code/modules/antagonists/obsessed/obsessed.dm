@@ -14,6 +14,7 @@
 	stinger_sound = 'sound/ambience/antag/creepalert.ogg'
 	antag_count_points = 3
 	var/datum/brain_trauma/special/obsessed/trauma
+	var/protection = FALSE // used to tell what flavor to text to give.
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current
@@ -32,10 +33,15 @@
 	play_stinger()
 	owner.announce_objectives()
 
-/datum/antagonist/obsessed/Destroy()
-	if(trauma)
-		qdel(trauma)
-	. = ..()
+/datum/antagonist/obsessed/greet()
+	to_chat(owner, "<span class='userdanger'>You are the Obsessed!</span>")
+	if(protection)
+		to_chat(owner, "<span class='bold'>Realization floods over you and everything that's happened this shift makes sense.</span>")
+		to_chat(owner, "<span class='bold'>[trauma.obsession.name] has no idea how much danger they're in and you're the only person that can be there for them.</span>")
+		to_chat(owner, "<span class='bold'>Nobody else can be trusted, they are all liars and will use deceit to stab you and [trauma.obsession.name] in the back as soon as they can.</span>")
+	to_chat(owner, "<span class='boldannounce'>This role does NOT enable you to otherwise surpass what's deemed creepy behavior per the rules.</span>")//ironic if you know the history of the antag
+	play_stinger()
+	owner.announce_objectives()
 
 /datum/antagonist/obsessed/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
@@ -74,11 +80,7 @@
 
 /datum/antagonist/obsessed/forge_objectives(datum/mind/obsessionmind)
 	var/list/objectives_left = list("spendtime", "polaroid", "hug")
-	var/datum/objective/assassinate/obsessed/kill = new
-	kill.owner = owner
-	kill.target = obsessionmind
 	var/obj/family_heirloom
-
 	for(var/datum/quirk/quirky in obsessionmind.current.quirks)
 		if(istype(quirky, /datum/quirk/item_quirk/family_heirloom))
 			var/datum/quirk/item_quirk/family_heirloom/heirloom_quirk = quirky
@@ -122,7 +124,21 @@
 				jealous.target = obsessionmind//will reroll into a coworker on the objective itself
 				objectives += jealous
 
-	objectives += kill//finally add the assassinate last, because you'd have to complete it last to greentext.
+
+	var/final_pick = rand(1,2)
+	switch(final_pick) // determines the fate of the obsession.
+		if(1)
+			var/datum/objective/assassinate/obsessed/kill = new
+			kill.owner = owner
+			kill.target = obsessionmind
+			objectives += kill //Kill the obsession
+		if(2)
+			var/datum/objective/protect/obsessed/yandere = new
+			yandere.owner = owner
+			yandere.target = obsessionmind
+			objectives += yandere
+			protection = TRUE
+
 	for(var/datum/objective/O in objectives)
 		O.update_explanation_text()
 
@@ -279,3 +295,30 @@
 		explanation_text = "Steal [target.name]'s family heirloom, [steal_target] they cherish."
 	else
 		explanation_text = "Free Objective"
+
+
+//New objectives Yandere aka protect
+/datum/objective/protect/obsessed //just a creepy version of protect
+
+/datum/objective/protect/obsessed/update_explanation_text()
+	..()
+	if(target?.current)
+		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] from any harm."
+	else
+		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
+		explanation_text = "Free Objective"
+
+/datum/antagonist/obsessed/antag_token(datum/mind/hosts_mind, mob/spender)
+	if(isliving(spender) && hosts_mind)
+		var/mob/living/carbon/C = hosts_mind.current
+		if(!istype(C))
+			message_admins("Tokener isn't a carbon mob, aborting...")
+			CRASH("Obsessed antag token was spent on a noncarbon.")
+		if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
+			message_admins("Tokener doesn't have a brain for a brain trauma, aborting...")
+			CRASH("Couldn't find a brain trauma for obsessed antag token")
+		C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
+	if(isobserver(spender))
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
+		new_mob.equipOutfit(/datum/outfit/job/assistant)
+		new_mob.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP

@@ -1,5 +1,5 @@
 import { multiline } from 'common/string';
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const spin_flip_hats: FeatureToggle = {
   name: 'Lose hat stacks when spinning or flipping',

@@ -3,7 +3,6 @@
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
 	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
 	/// Who are we moving towards?
@@ -112,3 +111,7 @@
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
 	amount_to_scale = 12
+
+/obj/effect/temp_visual/circle_wave/void_armor
+	color = COLOR_CYAN
+	amount_to_scale = 4

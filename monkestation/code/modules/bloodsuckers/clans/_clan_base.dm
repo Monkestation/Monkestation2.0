@@ -17,7 +17,7 @@
 	///The clan objective that is required to greentext.
 	var/datum/objective/bloodsucker/clan_objective
 	///The icon of the radial icon to join this clan.
-	var/join_icon = 'monkestation/icons/bloodsuckers/clan_icons.dmi'
+	var/join_icon = 'icons/bloodsuckers/clan_icons.dmi'
 	///Same as join_icon, but the state
 	var/join_icon_state = "caitiff"
 	///Description shown when trying to join the clan.

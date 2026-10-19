@@ -158,7 +158,7 @@
 		return
 	var/atom/movable/fired_organ = pop(organ_list)
 	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
-	projectile.preparePixelProjectile(target, mod.wearer)
+	projectile.aim_projectile(target, mod.wearer)
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
@@ -406,6 +406,7 @@
 	)
 
 /obj/item/surgical_processor/cmo // Include the weaker surgeries in the given research unless we have mutiple surgeries showing up.
+	desc = "A handheld version of the surgical processor module, functioning as what is effectively advanced surgical drapes.\nUse on an operating computer to download the surgeries on it.\n<center><b>These are your surgical drapes.</center></b>"
 	loaded_surgeries = list(
 		/datum/surgery/healing/burn/upgraded,
 		/datum/surgery/healing/burn/upgraded/femto,

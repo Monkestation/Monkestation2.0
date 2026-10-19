@@ -118,6 +118,10 @@
 	if(temp_delta < 0 && on_fire)
 		return
 
+	// Prevents homeostasis and environmental temperature equalization only direct temperature changes work.
+	if(HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
+		return
+
 	var/thermal_protection = get_insulation(loc_temp)
 	var/protection_modifier = 1
 	if(bodytemperature > standard_body_temperature + 2 KELVIN)
@@ -157,7 +161,7 @@
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
 	for(var/datum/reagent/consumable/bits in reagents.reagent_list)
-		fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
+		fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**
@@ -191,3 +195,12 @@
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
 	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
+
+/// Proc used for custom metabolization of reagents, if any
+/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick, times_fired)
+
+/// Proc used for custom reagent exposure effects, if any
+/mob/living/proc/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	return

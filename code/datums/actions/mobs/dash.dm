@@ -33,6 +33,9 @@
 				if(T.is_blocked_turf(TRUE))
 					valid = FALSE
 					continue
+				for(var/atom/structure in T.contents)
+					if(!isliving(structure) && !structure.CanAllowThrough(owner) && structure != owner)
+						valid = FALSE
 			if(valid)
 				accessable_turfs[check_turf] = turf_dist_to_target
 	var/turf/target_turf

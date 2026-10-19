@@ -165,7 +165,7 @@
 	else if(!ismob(scanned_atom))
 
 		log_entry_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(scanned_atom)
-
+		SEND_SIGNAL(scanned_atom, COMSIG_ON_REAGENT_SCAN, user)
 		// Only get reagents from non-mobs.
 		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
 			LAZYADD(log_entry_data[DETSCAN_CATEGORY_DRINK], list(present_reagent.name = present_reagent.volume))

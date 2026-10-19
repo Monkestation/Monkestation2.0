@@ -22,9 +22,9 @@
 	. = ..()
 	if(!MF)
 		MF = GLOB.mafia_game
-	if(!MF)
-		MF = create_mafia_game()
-	MF.ui_interact(user)
+//	if(!MF)
+//		MF = create_mafia_game()
+//	MF.ui_interact(user)
 
 /area/centcom/mafia
 	name = "Mafia Minigame"

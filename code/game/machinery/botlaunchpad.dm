@@ -24,7 +24,7 @@
 /obj/machinery/botpad/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
-	multitool.set_buffer(src)
+	multitool_set_buffer(multitool, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 

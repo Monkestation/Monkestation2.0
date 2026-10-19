@@ -23,7 +23,7 @@
 	return ..()
 
 /obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/multitool/M)
-	M.set_buffer(src)
+	multitool_set_buffer(M, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -123,8 +123,9 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	. = ITEM_INTERACT_BLOCKING
-	if(istype(multi_tool.buffer, /obj/machinery/mineral/stacking_unit_console))
-		console = multi_tool.buffer
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/mineral/stacking_unit_console))
+		console = buffer
 		console.machine = src
 		to_chat(user, span_notice("You link [src] to the console in [multi_tool]'s buffer."))
 		return ITEM_INTERACT_SUCCESS

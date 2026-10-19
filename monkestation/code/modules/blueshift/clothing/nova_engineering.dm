@@ -1,5 +1,4 @@
 /obj/item/clothing/under/rank/engineering
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/engineering_digi.dmi'
 
 /obj/item/clothing/under/rank/engineering/engineer/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/engineering.dmi'

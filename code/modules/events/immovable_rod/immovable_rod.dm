@@ -47,9 +47,9 @@
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
 
 	if(special_target)
-		SSmove_manager.home_onto(src, special_target)
+		GLOB.move_manager.home_onto(src, special_target)
 	else
-		SSmove_manager.move_towards(src, real_destination)
+		GLOB.move_manager.move_towards(src, real_destination)
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
@@ -115,7 +115,7 @@
 				return
 
 			visible_message(span_danger("[src] phases into reality."))
-			SSmove_manager.home_onto(src, special_target)
+			GLOB.move_manager.home_onto(src, special_target)
 
 		if(loc == target_turf)
 			complete_trajectory()
@@ -187,7 +187,7 @@
 	// If we Bump into the tram front or back, push the tram. Otherwise smash the object as usual.
 	if(isobj(clong))
 		if(istramwall(clong) && !special_target)
-			rod_vs_tram_battle(clong)
+			rod_vs_tram_battle()
 			return ..()
 
 		var/obj/clong_obj = clong
@@ -219,14 +219,18 @@
 				transform = transform.Scale(1.005, 1.005)
 				name = "[initial(name)] of sentient slaying +[num_sentient_mobs_hit]"
 
-	if(iscarbon(smeared_mob))
-		var/mob/living/carbon/smeared_carbon = smeared_mob
+	var/mob/living/carbon/smeared_carbon = smeared_mob
+	if(istype(smeared_carbon))
 		smeared_carbon.adjustBruteLoss(100)
 		var/obj/item/bodypart/penetrated_chest = smeared_carbon.get_bodypart(BODY_ZONE_CHEST)
 		penetrated_chest?.receive_damage(60, wound_bonus = 20, sharpness=SHARP_POINTY)
 
 	if(smeared_mob.density || prob(10))
 		EX_ACT(smeared_mob, EXPLODE_HEAVY)
+		if (istype(smeared_carbon))
+			smeared_carbon.gib_fart()
+	else if (istype(smeared_carbon))
+		smeared_carbon.impact_fart()
 
 /obj/effect/immovablerod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -272,7 +276,7 @@
  * Stops your rod's automated movement. Sit... Stay... Good rod!
  */
 /obj/effect/immovablerod/proc/sit_stay_good_rod()
-	SSmove_manager.stop_looping(src)
+	GLOB.move_manager.stop_looping(src)
 
 /**
  * Allows your rod to release restraint level zero and go for a walk.
@@ -286,7 +290,7 @@
 /obj/effect/immovablerod/proc/go_for_a_walk(walkies_location = null)
 	if(walkies_location)
 		special_target = walkies_location
-		SSmove_manager.home_onto(src, special_target)
+		GLOB.move_manager.home_onto(src, special_target)
 		return
 
 	complete_trajectory()
@@ -302,26 +306,79 @@
  */
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
 	destination_turf = get_edge_target_turf(src, direction)
-	SSmove_manager.move_towards(src, destination_turf)
+	GLOB.move_manager.move_towards(src, destination_turf)
 
 /**
  * Rod will push the tram to a landmark if it hits the tram from the front/back
  * while flying parallel.
  */
 /obj/effect/immovablerod/proc/rod_vs_tram_battle()
-	var/obj/structure/industrial_lift/tram/industrial_lift = locate() in src.loc
+	var/obj/structure/transport/linear/tram/transport_module = locate() in src.loc
 
-	if(isnull(industrial_lift))
+	if(isnull(transport_module))
 		return
 
-	var/datum/lift_master/tram/lift_master = industrial_lift.lift_master_datum
+	var/datum/transport_controller/linear/tram/tram_controller = transport_module.transport_controller_datum
 
-	if(isnull(lift_master))
+	if(isnull(tram_controller))
 		return
 
-	var/push_target = lift_master.rod_collision(src)
+	var/push_target = tram_controller.rod_collision(src)
 
 	if(!push_target)
 		return
 
 	go_for_a_walk(push_target)
+
+/obj/effect/immovablerod/of_asclepius
+	name = "\improper Immovable Rod of Asclepius"
+	desc = "A wooden rod about the size of you with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
+	icon_state = "goodrod"
+	/// Stores if we currently have a snake on us
+	var/has_snek = TRUE
+
+/obj/effect/immovablerod/of_asclepius/penetrate(mob/living/smeared_mob)
+	smeared_mob.visible_message(span_danger("[smeared_mob] is blessed by [src]!") , span_userdanger("[src] blesses you!") , span_danger("You hear a CLANG!"))
+	num_mobs_hit++
+	if(smeared_mob.client)
+		num_sentient_mobs_hit++
+		if(iscarbon(smeared_mob))
+			num_sentient_people_hit++
+
+	if(dnd_style_level_up)
+		transform = transform.Scale(1.005, 1.005)
+		name = "[initial(name)] of blessing +[num_mobs_hit]"
+
+	var/mob/living/carbon/blessed_carbon = smeared_mob
+	if(istype(blessed_carbon))
+		blessed_carbon.blood_volume = max(BLOOD_VOLUME_NORMAL, blessed_carbon.blood_volume)
+		for(var/obj/item/organ/internal/internal_target in blessed_carbon.organs)
+			internal_target.apply_organ_damage(-internal_target.damage * 0.5)
+		blessed_carbon.gain_trauma(/datum/brain_trauma/severe/pacifism)
+	else
+		ADD_TRAIT(smeared_mob, TRAIT_PACIFISM, MAGIC_TRAIT)
+
+	smeared_mob.do_strange_reagent_revival(100)
+
+/obj/effect/immovablerod/of_asclepius/suplex_rod(mob/living/strongman)
+	if(!has_snek)
+		to_chat(strongman, span_notice("You stare at the [src], what a fine piece of lumber."))
+		return FALSE
+
+	var/list/chems = list(
+		/datum/reagent/medicine/sal_acid,
+		/datum/reagent/medicine/c2/convermol,
+		/datum/reagent/medicine/oxandrolone,
+	)
+	var/mob/living/basic/snake/snek = new(get_turf(strongman), pick(chems))
+	snek.name = "Asclepius's Snake"
+	snek.real_name = "Asclepius's Snake"
+	snek.desc = "A mystical snake previously trapped upon the Immovable Rod of Asclepius, now freed of the ride. Unlike the average snake, its bites contain chemicals with minor healing properties."
+	strongman.visible_message(
+		span_boldwarning("[strongman] reaches for [snek]'s tail and pulls them off of [src]!"),
+		span_warning("You reach for [snek]'s tail and pull them off of Mr. [name]'s wild ride!")
+	)
+	has_snek = FALSE
+	icon_state += "_snakeless"
+	desc = "A wooden rod about the size of you. Something about it seems to inspire in you the responsibilty and duty to help others."
+	return TRUE

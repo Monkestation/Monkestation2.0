@@ -217,8 +217,6 @@
 
 	uplink_type = null
 
-	implant_explosive_implant = FALSE
-
 /datum/outfit/syndicate/commando/plasmaman
 	name = "Syndicate Commando Operative (Plasmaman)"
 	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie

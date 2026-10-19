@@ -1,11 +1,20 @@
 // Admin Tab - Event Verbs
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, FALSE, "Subtle Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, FALSE, "Subtle Message", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+	if(QDELETED(target))
+		to_chat(user, span_boldwarning("That player doesn't exist anymore!"))
+		return
+
 	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
 	var/msg = input(user, "Message:", "Subtle PM to [target.key]") as text | null
 
 	if(!msg)
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
+		return
+
+	if(QDELETED(target))
+		to_chat(user, span_boldwarning("That player doesn't exist anymore!"))
 		return
 
 	target.balloon_alert(target, "you hear a voice")
@@ -19,7 +28,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, FALSE, "Subtle Me
 	admin_ticket_log(target, log_message) // MONKESTATION EDIT - tgui tickets
 	BLACKBOX_LOG_ADMIN_VERB("Subtle Message")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, FALSE, "Headset Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, FALSE, "Headset Message", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	user.admin_headset_message(target)
 
 /client/proc/admin_headset_message(mob/target in GLOB.mob_list, sender = null)
@@ -71,7 +81,8 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, FALSE, "Global Narrate", "Send a di
 	message_admins(span_adminnotice("[key_name_admin(user)] Sent a global narrate"))
 	BLACKBOX_LOG_ADMIN_VERB("Global Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, FALSE, "Local Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/locale in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, FALSE, "Local Narrate", /atom)
+	VERB_ARG_TYPED(locale, VERB_ARG_TYPE_ATOM, VERB_ARG_SOURCE_WORLD, /atom)
 	var/range = input(user, "Range:", "Narrate to mobs within how many tiles:", 7) as num | null
 	if(!range)
 		return
@@ -85,7 +96,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, FALSE, "Local Narr
 	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(user)] at [ADMIN_VERBOSEJMP(locale)]:</b> [msg]<BR>"))
 	BLACKBOX_LOG_ADMIN_VERB("Local Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, FALSE, "Direct Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, FALSE, "Direct Narrate", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/msg = input(user, "Message:", "Enter the text you wish to appear to your target:") as text | null
 	if( !msg )
 		return
@@ -149,7 +161,7 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, FALSE, "Cancel Shuttle", "Recall the shuttle
 	return
 
 ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers aren't getting out.", ADMIN_CATEGORY_EVENTS)
-	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
+	if(SSshuttle.evac_blockers["admin"])
 		to_chat(user, span_warning("Error, shuttle is already disabled."))
 		return
 
@@ -158,12 +170,8 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers ar
 
 	message_admins(span_adminnotice("[key_name_admin(user)] disabled the shuttle."))
 
-	SSshuttle.last_mode = SSshuttle.emergency.mode
-	SSshuttle.last_call_time = SSshuttle.emergency.timeLeft(1)
+	SSshuttle.registerEvacBlocker("admin")
 	SSshuttle.admin_emergency_no_recall = TRUE
-	SSshuttle.emergency.setTimer(0)
-	SSshuttle.emergency.mode = SHUTTLE_DISABLED
-	SSshuttle.admin_emergency_disabled = TRUE //monkestation edit
 	priority_announce(
 		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
 		title = "Uplink Failure",
@@ -181,16 +189,8 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, FALSE, "Enable Shuttle", "Those fuckers ARE 
 		return
 
 	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
+	SSshuttle.clearEvacBlocker("admin")
 	SSshuttle.admin_emergency_no_recall = FALSE
-	SSshuttle.emergency_no_recall = FALSE
-	SSshuttle.admin_emergency_disabled = FALSE //monkestation edit
-	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
-		SSshuttle.last_mode = SHUTTLE_IDLE
-
-	SSshuttle.emergency.mode = SSshuttle.last_mode
-	if(SSshuttle.last_call_time < 10 SECONDS && SSshuttle.last_mode != SHUTTLE_IDLE)
-		SSshuttle.last_call_time = 10 SECONDS //Make sure no insta departures.
-	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce(
 		text = "Emergency Shuttle uplink reestablished, shuttle enabled.",
 		title = "Uplink Restored",
@@ -279,11 +279,11 @@ ADMIN_VERB(run_weather, R_FUN, FALSE, "Run Weather", "Triggers specific weather 
 
 ADMIN_VERB(command_report_footnote, R_ADMIN, FALSE, "Command Report Footnote", "Adds a footnote to the roundstart command report.", ADMIN_CATEGORY_EVENTS)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
-	SScommunications.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
+	GLOB.communications_controller.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
 
 	command_report_footnote.message = tgui_input_text(user, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
 	if(!command_report_footnote.message)
-		SScommunications.block_command_report -= 1
+		GLOB.communications_controller.block_command_report -= 1
 		qdel(command_report_footnote)
 		return
 
@@ -292,8 +292,8 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, FALSE, "Command Report Footnote", "
 	if(!command_report_footnote.signature)
 		command_report_footnote.signature = "Classified"
 
-	SScommunications.command_report_footnotes += command_report_footnote
-	SScommunications.block_command_report--
+	GLOB.communications_controller.command_report_footnotes += command_report_footnote
+	GLOB.communications_controller.block_command_report--
 
 	message_admins("[user] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
 
@@ -303,8 +303,8 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, FALSE, "Command Report Footnote", "
 
 
 ADMIN_VERB(delay_command_report, R_FUN, FALSE, "Delay Command Report", "Prevents the roundstart command report from being sent; or forces it to send it delayed.", ADMIN_CATEGORY_EVENTS)
-	SScommunications.block_command_report = !SScommunications.block_command_report
-	message_admins("[key_name_admin(user)] has [(SScommunications.block_command_report ? "delayed" : "sent")] the roundstart command report.")
+	GLOB.communications_controller.block_command_report = !GLOB.communications_controller.block_command_report
+	message_admins("[key_name_admin(user)] has [(GLOB.communications_controller.block_command_report ? "delayed" : "sent")] the roundstart command report.")
 
 ADMIN_VERB(add_mob_ability, R_ADMIN, FALSE, "Add Mob Ability", "Adds an ability to a marked mob.", ADMIN_CATEGORY_EVENTS)
 	if(!isliving(user.holder.marked_datum))

@@ -281,11 +281,12 @@
 
 /obj/item/flashlight/pen
 	name = "penlight"
-	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into. It can also be used to create a hologram to alert people of incoming medical assistance."
+	desc = "A high-powered UV penlight intended to help stave off infection in the field on seriously burned patients. Probably really bad to look into. It can also be used to create a hologram to alert people of incoming medical assistance."
 	dir = EAST
 	icon_state = "penlight"
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	light_outer_range = 2
@@ -1021,8 +1022,8 @@
 		return FALSE
 	var/datum/gas_mixture/environment = loc?.return_air()
 	var/affected_pressure = environment.return_pressure()
-	if(!light_on && (affected_pressure < ONE_ATMOSPHERE))
-		user.balloon_alert(user, "no pressure!")
+	if(!light_on && (affected_pressure < ONE_ATMOSPHERE - 1))
+		user.balloon_alert(user, "[affected_pressure < HAZARD_LOW_PRESSURE? "no" : "low"] pressure!")
 		return FALSE
 	. = ..()
 	if(light_on)

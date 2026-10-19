@@ -203,6 +203,26 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_path = /obj/item/clothing/head/hats/fez
 	item_cost = 5000
 
+/datum/store_item/head/deforest_hat
+	name = "Deforest Cap"
+	item_path = /obj/item/clothing/head/soft/paramedic/deforest
+	item_cost = 1500
+
+/datum/store_item/head/deforest_beret
+	name = "Deforest Beret"
+	item_path = /obj/item/clothing/head/beret/medical/deforest
+	item_cost = 1500
+
+/datum/store_item/head/warning_cone
+	name = "Warning Cone"
+	item_path = /obj/item/clothing/head/cone
+	item_cost = 1000
+
+/datum/store_item/head/bear_pelt
+	name = "Bear Pelt"
+	item_path = /obj/item/clothing/head/costume/bearpelt
+	item_cost = 5000
+
 /*
 *	HALLOWEEN
 */
@@ -302,6 +322,16 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_path = /obj/item/clothing/head/playbunnyears
 	item_cost = 5000
 
+/datum/store_item/head/hats/caphat/bunnyears_captain
+	name = "Captain's Bunny Ears"
+	item_path = /obj/item/clothing/head/hats/caphat/bunnyears_captain
+	item_cost = 2500
+
+/datum/store_item/head/playbunnyears/hos
+	name = "Head of Security's Bunny Ears"
+	item_path = /obj/item/clothing/head/playbunnyears/hos
+	item_cost = 2500
+
 /datum/store_item/head/propeller_hat
 	name = "Rainbow Propeller Hat"
 	item_path = /obj/item/clothing/head/soft/propeller_hat
@@ -393,7 +423,7 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 
 /datum/store_item/head/pflatcap //BUYABLE
 	name = "Poly Flat Cap"
-	item_path = /obj/item/clothing/head/colourable_flatcap
+	item_path = /obj/item/clothing/head/flatcap/recolor
 	item_cost = 2500
 
 /datum/store_item/head/mothcap //BUYABLE
@@ -616,3 +646,8 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	name = "Cowboy Hat (Legacy)"
 	item_path = /obj/item/clothing/head/costume/cowboyhat_old
 	item_cost = 3000
+
+/datum/store_item/head/henchmen_hat
+	name = "Henchmen Cap"
+	item_path = /obj/item/clothing/head/henchmen_hat
+	item_cost = 15000

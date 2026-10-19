@@ -8,7 +8,7 @@
 					/obj/item/circuitboard/computer/slime_market,
 					/obj/item/circuitboard/machine/slime_market_pad,
 					/obj/item/circuitboard/machine/biomass_recycler,
-					/obj/item/vacuum_pack)
+					/obj/item/vacuum_pack/backpack)
 	crate_name = "xenobiology starter crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 

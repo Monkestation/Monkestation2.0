@@ -38,6 +38,8 @@ GLOBAL_LIST_INIT(ai_hologram_icons, list(
 	AI_HOLOGRAM_RATVAR = 'icons/mob/silicon/ai.dmi',
 	AI_HOLOGRAM_SPIDER = 'icons/mob/simple/animal.dmi',
 	AI_HOLOGRAM_XENO = 'icons/mob/nonhuman-player/alien.dmi',
+	AI_HOLOGRAM_ROBOT = 'icons/mob/silicon/robots.dmi',
+	AI_HOLOGRAM_DRONE = 'icons/mob/silicon/drone.dmi',
 ))
 
 // New items need to also be added to ai_hologram_icons list
@@ -60,6 +62,8 @@ GLOBAL_LIST_INIT(ai_hologram_icon_state, list(
 	AI_HOLOGRAM_RATVAR = "clock",
 	AI_HOLOGRAM_SPIDER = "guard",
 	AI_HOLOGRAM_XENO = "alienq",
+	AI_HOLOGRAM_ROBOT = "robot_old",
+	AI_HOLOGRAM_DRONE = "drone_repair",
 ))
 
 
@@ -70,6 +74,9 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Banned",
 	"Bliss",
 	"Blue",
+	"Boxfort",
+	"Boy",
+	"Boy-malf",
 	"Clown",
 	"Database",
 	"Dorf",
@@ -77,6 +84,8 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Fracktail",
 	"Fuzzy",
 	"Gentoo",
+	"Girl",
+	"Girl-malf",
 	"Glitchman",
 	"Gondola",
 	"Goon",
@@ -85,9 +94,9 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Heartline",
 	"Helios",
 	"House",
+	"Hotdog",
 	"Inverted",
 	"Matrix",
-	"Monkestation",
 	"Monochrome",
 	"Murica",
 	"Nanotrasen",
@@ -102,13 +111,21 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Steve",
 	"Syndicat Meow",
 	"TEC",
-	"Tenna", 
+	"Tenna",
+	"Terminal",
 	"Text",
 	"Too Deep",
 	"Triumvirate-M",
 	"Triumvirate",
-	"Weird",
-	"Randomgod", // monkestation addition
+	"Weird", // monkestation additions start below this line
+	"Yes-Man",
+	"Monkestation",
+	"Facepunch",
+	"Kitty",
+	"Sus",
+	"Marionette",
+	"Company",
+	"Randomgod", // why in gods green earth is AI core images stored in preferences?? who did this??? why???
 )))
 
 /// A form of resolve_ai_icon that is guaranteed to never sleep.
@@ -121,9 +138,11 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	else
 		if(input == "Random")
 			input = pick(GLOB.ai_core_display_screens - "Random")
-		return "ai-[lowertext(input)]"
+		return "ai-[LOWER_TEXT(input)]"
 
 /proc/resolve_ai_icon(input)
+	if(istype(input, /mutable_appearance))
+		return input
 	if (input == "Portrait")
 		var/datum/portrait_picker/tgui = new(usr)//create the datum
 		tgui.ui_interact(usr)//datum has a tgui component, here we open the window

@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 /proc/generate_orion_events()
 	. = list()
 	for(var/path in subtypesof(/datum/orion_event))
-		var/datum/orion_event/new_event = new path(src)
+		var/datum/orion_event/new_event = new path()
 		.[new_event] = new_event.weight
 
 /obj/machinery/computer/arcade/orion_trail

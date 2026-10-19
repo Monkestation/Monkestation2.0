@@ -1,9 +1,9 @@
 import {
   CheckboxInput,
-  FeatureChoiced,
-  FeatureToggle,
+  type FeatureChoiced,
   FeatureDropdownInput,
   FeatureIconnedDropdownInput,
+  type FeatureToggle,
 } from '../base';
 
 export const language: FeatureChoiced = {
@@ -21,5 +21,11 @@ export const language_speakable: FeatureToggle = {
 export const language_skill: FeatureChoiced = {
   name: 'Language Skill',
   description: 'The percentage of the language you can understand.',
+  component: FeatureDropdownInput,
+};
+
+export const csl_strength: FeatureChoiced = {
+  name: 'Language Skill',
+  description: 'The percentage of Common you can understand.',
   component: FeatureDropdownInput,
 };

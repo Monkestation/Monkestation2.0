@@ -12,10 +12,10 @@ import {
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
 import { CrimeWatcher } from './CrimeWatcher';
-import { RecordPrint } from './RecordPrint';
 import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
 import { getSecurityRecord } from './helpers';
-import { SecurityRecordsData } from './types';
+import { RecordPrint } from './RecordPrint';
+import type { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
 export const SecurityRecordView = (props) => {
@@ -69,6 +69,14 @@ const RecordInfo = (props) => {
 
   const hasValidCrimes = !!crimes.find((crime) => !!crime.valid);
 
+  function handleChange(value: number) {
+    act('edit_field', {
+      crew_ref: crew_ref,
+      field: 'age',
+      value: value,
+    });
+  }
+
   return (
     <Stack fill vertical>
       <Stack.Item grow>
@@ -101,7 +109,6 @@ const RecordInfo = (props) => {
               {name}
             </Table.Cell>
           }
-          wrap
         >
           <LabeledList>
             <LabeledList.Item
@@ -149,13 +156,8 @@ const RecordInfo = (props) => {
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_age}
-                onEnter={(event, value) =>
-                  act('edit_field', {
-                    crew_ref: crew_ref,
-                    field: 'age',
-                    value: value,
-                  })
-                }
+                onEnter={handleChange}
+                onChange={handleChange}
                 value={age}
               />
             </LabeledList.Item>

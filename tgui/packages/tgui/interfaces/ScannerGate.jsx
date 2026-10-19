@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NumberInput, Section } from '../components';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 import { Window } from '../layouts';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 const DISEASE_THEASHOLD_LIST = [
   'Positive',
@@ -330,7 +330,7 @@ const ScannerGateNanites = (props) => {
               minValue={1}
               maxValue={100}
               stepPixelSize={2}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_nanite_cloud', {
                   new_cloud: value,
                 })

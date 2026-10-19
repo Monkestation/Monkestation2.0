@@ -11,7 +11,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/uniform.dmi'
 	icon_state = "tacticool_hawaiian_orange"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/tachawaiian/blue
 	name = "blue tactical hawaiian outfit"
@@ -31,7 +30,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/uniform.dmi'
 	icon_state = "texas"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/under/doug_dimmadome
 	name = "dimmadome formal outfit"
@@ -39,7 +37,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/uniform.dmi'
 	icon_state = "doug_dimmadome"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/under/pants/tactical
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/shorts_pants_shirts.dmi'
@@ -51,7 +48,8 @@
 /obj/item/clothing/under/sweater
 	name = "cableknit sweater"
 	desc = "Why trade style for comfort? Now you can go commando down south and still be cozy up north."
-	icon_state = "cableknit_sweater"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("cableknit_sweater", "/obj/item/clothing/under/sweater")
 	greyscale_config = /datum/greyscale_config/cableknit_sweater
 	greyscale_config_worn = /datum/greyscale_config/cableknit_sweater/worn
 	greyscale_colors = "#b2a484"
@@ -62,14 +60,17 @@
 
 /obj/item/clothing/under/sweater/black
 	name = "black cableknit sweater"
+	SETUP_MAP_ICONS("cableknit_sweater", "/obj/item/clothing/under/sweater/black")
 	greyscale_colors = "#4f4f4f"
 
 /obj/item/clothing/under/sweater/red
 	name = "red cableknit sweater"
+	SETUP_MAP_ICONS("cableknit_sweater", "/obj/item/clothing/under/sweater/red")
 	greyscale_colors = "#9a0000"
 
 /obj/item/clothing/under/sweater/keyhole
 	name = "keyhole sweater"
 	desc = "So let me get this straight. They cut cleavage out of something meant to keep you warm..? Why? \"Now you can go commando down south and be freezing cold on your chest\" isn't a good motto!"
-	icon_state = "keyhole_sweater"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("keyhole_sweater", "/obj/item/clothing/under/sweater/keyhole")
 	greyscale_colors = "#c5699c"

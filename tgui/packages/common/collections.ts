@@ -120,7 +120,7 @@ export const sortBy =
     }
     let length = array.length;
     // Iterate over the array to collect criteria to sort it by
-    let mappedArray: {
+    const mappedArray: {
       criteria: unknown[];
       value: T;
     }[] = [];
@@ -185,17 +185,17 @@ export const reduce = (reducerFn, initialValue) => (array) => {
  * invoked with one argument: value.
  */
 export const uniqBy =
-  <T extends unknown>(iterateeFn?: (value: T) => unknown) =>
+  <T>(iterateeFn?: (value: T) => unknown) =>
   (array: T[]): T[] => {
     const { length } = array;
     const result: T[] = [];
     const seen: unknown[] = iterateeFn ? [] : result;
     let index = -1;
     // prettier-ignore
-    outer:
-    while (++index < length) {
-      let value: T | 0 = array[index];
+    outer: while (++index < length) {
+      const value: T | 0 = array[index];
       const computed = iterateeFn ? iterateeFn(value) : value;
+      // biome-ignore lint/suspicious/noSelfCompare: im lazy and a future refactor will nuke this anyways
       if (computed === computed) {
         let seenIndex = seen.length;
         while (seenIndex--) {

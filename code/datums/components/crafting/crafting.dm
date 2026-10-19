@@ -62,10 +62,10 @@
 			if(!ispath(structure_path, required_structure_path) || R.blacklist.Find(structure_path))
 				continue
 
-				needed_amount -= structures[required_structure_path]
-				requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
-				if(needed_amount <= 0)
-					break
+			needed_amount -= structures[required_structure_path]
+			requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
+			if(needed_amount <= 0)
+				break
 
 		// We didn't find the required item
 		if(needed_amount > 0)
@@ -469,6 +469,7 @@
 		result.forceMove(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
+	result.add_fingerprint(user, FALSE)
 	recipe.on_craft_completion(user, result)
 	return TRUE
 
@@ -491,6 +492,7 @@
 					result.forceMove(user.drop_location())
 				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
+				result.add_fingerprint(user, FALSE)
 				crafting_recipe.on_craft_completion(user, result)
 			else
 				to_chat(user, span_warning("Construction failed[result]"))

@@ -8,17 +8,21 @@
 		var/rh_icon = trick_weapon::righthand_file
 		var/icon_state = trick_weapon::icon_state
 		var/base_icon_state = trick_weapon::base_icon_state
+		var/inhand_icon_change = trick_weapon::inhand_icon_change
 		var/active_icon_state = "[base_icon_state]_active"
 		// make sure the icon states are set
 		TEST_ASSERT(base_icon_state, "[trick_weapon] does not have a base_icon_state")
 		TEST_ASSERT_EQUAL(icon_state, base_icon_state, "[trick_weapon] has a different base_icon_state ([base_icon_state]) and icon_state ([icon_state]) specified")
 		// make sure base obj icons exist
 		TEST_ASSERT(icon_exists(icon, base_icon_state), "[trick_weapon] has a non-existent base icon ([base_icon_state] in [icon])")
-		TEST_ASSERT(icon_exists(icon, active_icon_state), "[trick_weapon] has a non-existent active icon ([active_icon_state] in [icon])")
+		if(inhand_icon_change)
+			TEST_ASSERT(icon_exists(icon, active_icon_state), "[trick_weapon] has a non-existent active icon ([active_icon_state] in [icon])")
 		// make sure lefthand held icons exist
 		TEST_ASSERT(icon_exists(lh_icon, base_icon_state), "[trick_weapon] has a non-existent base lefthand held icon ([base_icon_state] in [lh_icon])")
-		TEST_ASSERT(icon_exists(lh_icon, active_icon_state), "[trick_weapon] has a non-existent active lefthand held icon ([active_icon_state] in [lh_icon])")
+		if(inhand_icon_change)
+			TEST_ASSERT(icon_exists(lh_icon, active_icon_state), "[trick_weapon] has a non-existent active lefthand held icon ([active_icon_state] in [lh_icon])")
 		// make sure righthand held icons exist
 		TEST_ASSERT(icon_exists(rh_icon, base_icon_state), "[trick_weapon] has a non-existent base righthand held icon ([base_icon_state] in [rh_icon])")
-		TEST_ASSERT(icon_exists(rh_icon, active_icon_state), "[trick_weapon] has a non-existent active righthand held icon ([active_icon_state] in [rh_icon])")
+		if(inhand_icon_change)
+			TEST_ASSERT(icon_exists(rh_icon, active_icon_state), "[trick_weapon] has a non-existent active righthand held icon ([active_icon_state] in [rh_icon])")
 

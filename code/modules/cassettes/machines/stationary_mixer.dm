@@ -93,6 +93,7 @@
 	if(busy)
 		balloon_alert(user, "busy!")
 		return
+	tgui_alert(user, "Please ahelp before creating a tape and check for available admins. Failure to do so will result in your tape being denied.", "Notice", list("I Understand"))
 	var/action = tgui_input_list(user, "What would you like to do with this tape?", html_decode(tape.cassette_data.name), list("Add Track", "Remove Track", "View Tracks", "Change Design", "Eject Tape"))
 	if(!action || !tape || busy)
 		return

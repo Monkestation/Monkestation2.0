@@ -3,13 +3,13 @@
 	roundend_category = "Monster Hunters"
 	antagpanel_category = "Monster Hunter"
 	job_rank = ROLE_MONSTERHUNTER
-	hud_icon = 'monkestation/icons/mob/huds/antag_hud.dmi'
+	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_hud_name = "hunter"
 	preview_outfit = /datum/outfit/monsterhunter
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoMonsterHunter"
-	stinger_sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg'
+	stinger_sound = 'sound/ambience/antag/monster_hunter.ogg'
 	var/list/datum/action/powers = list()
 	/// Have we chosen a weapon yet?
 	var/weapon_claimed = FALSE
@@ -20,6 +20,8 @@
 	var/list/obj/effect/bnnuy/rabbits = list()
 	///the red card tied to this trauma if any
 	var/obj/item/rabbit_locator/locator
+	///tracks the hunter and whatever they're inside, so the rabbit images follow them
+	var/datum/movement_detector/rabbit_tracker
 	///have we triggered the apocalypse
 	var/apocalypse = FALSE
 	///a list of our prey
@@ -29,6 +31,7 @@
 		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOSOFTCRIT,
+		TRAIT_RUSTIMMUNE,
 	)
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
@@ -49,7 +52,7 @@
 	current_mob.update_sight()
 	current_mob.faction |= FACTION_RABBITS
 	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(setup_bnuuy_images))
-	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(update_bnnuy_visibility))
+	rabbit_tracker = new(current_mob, CALLBACK(src, PROC_REF(update_bnnuy_visibility)))
 
 /datum/antagonist/monsterhunter/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -57,7 +60,8 @@
 	current_mob.remove_traits(granted_traits, HUNTER_TRAIT)
 	current_mob.faction -= FACTION_RABBITS
 	current_mob.update_sight()
-	UnregisterSignal(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(current_mob, COMSIG_MOB_LOGIN)
+	QDEL_NULL(rabbit_tracker)
 
 /datum/antagonist/monsterhunter/on_gain()
 	owner.special_role = ROLE_MONSTERHUNTER
@@ -76,11 +80,7 @@
 		card.moveToNullspace()
 		grant_drop_ability(card)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
-	for(var/i in 1 to 5)
-		var/turf/rabbit_hole = get_safe_random_station_turf_equal_weight()
-		rabbits += new /obj/effect/bnnuy(rabbit_hole, src)
-	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
-	gun_holder.drop_gun = TRUE
+	spawn_rabbits()
 	var/datum/action/cooldown/spell/track_monster/track = new
 	track.Grant(owner.current)
 	powers += track
@@ -95,6 +95,59 @@
 	to_chat(owner.current, span_userdanger("Your hunt has ended: You enter retirement once again, and are no longer a Monster Hunter."))
 	owner.special_role = null
 	return ..()
+
+/datum/antagonist/monsterhunter/proc/spawn_rabbits(amount = 5)
+	// not static bc we'll only be running this like. once the entire round.
+	var/list/forbidden_area_typecache = typecacheof(list(
+		/area/graveyard,
+		/area/station/ai_monitored,
+		/area/station/command/secure_bunker,
+		/area/station/engineering/atmospherics_engine,
+		/area/station/engineering/shipbreaker_hut,
+		/area/station/engineering/supermatter,
+		/area/station/maintenance,
+		/area/station/science/ordnance/bomb,
+		/area/station/science/ordnance/burnchamber,
+		/area/station/science/ordnance/freezerchamber,
+		/area/station/science/xenobiology/cell,
+		/area/station/solars,
+	))
+
+	var/list/turf_groups = noise_turfs_station_equal_weight(4, forbidden_area_typecache)
+	main_loop:
+		while(length(rabbits) < amount && length(turf_groups))
+			var/idx = rand(1, length(turf_groups))
+			var/list/chosen_group = turf_groups[idx]
+			var/turf/chosen_location = pick_n_take(chosen_group)
+			if(!length(chosen_group))
+				turf_groups.Cut(idx, idx + 1)
+
+			// gotta make sure we're an open, floor turf
+			if(chosen_location.density || isgroundlessturf(chosen_location))
+				continue
+
+			// make sure it's got at least 3x3 open space
+			for(var/turf/nearby_turf as anything in RANGE_TURFS(1, chosen_location))
+				if(!isopenturf(nearby_turf))
+					continue main_loop
+
+			// ensure there's no dense objects on the turf
+			for(var/obj/checked_object in chosen_location)
+				if(checked_object.density)
+					continue main_loop
+
+			// We don't want them close to each other - at least 1 tile of seperation
+			if(locate(/obj/effect/bnnuy) in range(1, chosen_location))
+				continue
+
+			log_game("Generated monster hunter rabbit at [AREACOORD(chosen_location)]")
+			testing("Generated monster hunter rabbit at [AREACOORD(chosen_location)]")
+			rabbits += new /obj/effect/bnnuy(chosen_location, src)
+
+	var/rabbit_count = length(rabbits)
+	if(rabbit_count < amount)
+		message_admins("WARNING: there may not be enough monster hunter rabbits (there should be [amount], but there's only [rabbit_count])")
+		CRASH("WARNING: there may not be enough monster hunter rabbits (there should be [amount], but there's only [rabbit_count])")
 
 /datum/antagonist/monsterhunter/proc/load_wonderland()
 	var/static/wonderland_loaded = FALSE
@@ -114,14 +167,13 @@
 	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
 		if(QDELETED(bnnuy))
 			continue
-		owner.current?.client?.images |= bnnuy.hunter_image
+		bnnuy.update_far_image(owner.current)
 
-/datum/antagonist/monsterhunter/proc/update_bnnuy_visibility(mob/living/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
+/datum/antagonist/monsterhunter/proc/update_bnnuy_visibility(atom/movable/tracked, atom/movable/mover, atom/old_loc, dir)
 	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
 		if(QDELETED(bnnuy))
 			continue
-		bnnuy.update_mouse_opacity(source)
+		bnnuy.update_far_image(tracked)
 
 /datum/antagonist/monsterhunter/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -204,8 +256,8 @@
 
 /datum/antagonist/monsterhunter/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/hunter = new
-	var/icon/white_rabbit = icon('monkestation/icons/mob/rabbit.dmi', "white_rabbit")
-	var/icon/red_rabbit = icon('monkestation/icons/mob/rabbit.dmi', "killer_rabbit")
+	var/icon/white_rabbit = icon('icons/mob/rabbit.dmi', "white_rabbit")
+	var/icon/red_rabbit = icon('icons/mob/rabbit.dmi', "killer_rabbit")
 	var/icon/hunter_icon = render_preview_outfit(/datum/outfit/monsterhunter, hunter)
 
 	var/icon/final_icon = hunter_icon
@@ -331,10 +383,10 @@
 	if(bloodsucker)
 		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
 	else if(heretic)
-		if(heretic.heretic_path == PATH_START)
+		if(!heretic.heretic_path || heretic.heretic_path.route == PATH_START)
 			explanation_text = "Slay the monster known as [target_name], a heretic."
 		else
-			explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path]."
+			explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path.route]."
 	else if(target.has_antag_datum(/datum/antagonist/changeling))
 		explanation_text = "Slay the monster known as [target_name], a changeling."
 	else
@@ -356,7 +408,7 @@
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"
-	worn_icon = 'monkestation/icons/mob/mask.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	worn_icon_state = "monoclerabbit"
 
 /datum/antagonist/monsterhunter/roundend_report()

@@ -13,7 +13,6 @@
 
 /datum/reagent/medicine/lidocaine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.cause_pain(BODY_ZONES_ALL, -1 * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART,3 * REM * seconds_per_tick, 80)
 
 //Inverse Medicines//
@@ -31,7 +30,7 @@
 	. = ..()
 	to_chat(affected_mob, span_userdanger("Your body aches with unimaginable pain!"))
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART,3 * REM * seconds_per_tick, 85)
-	affected_mob.stamina?.adjust(-5 * REM * seconds_per_tick, 0)
+	affected_mob.stamina?.adjust(-2.5 * REM * seconds_per_tick, 0)
 	if(prob(30))
 		INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/mob, emote), "scream")
 
@@ -153,7 +152,7 @@
 
 	our_guy.add_mood_event("tweaking", /datum/mood_event/stimulant_heavy/sundowner, name)
 
-	our_guy.stamina?.adjust(10 * REM * seconds_per_tick)
+	our_guy.stamina?.adjust(5 * REM * seconds_per_tick)
 	our_guy.AdjustSleeping(-20 * REM * seconds_per_tick)
 	our_guy.adjust_drowsiness(-5 * REM * seconds_per_tick)
 
@@ -256,7 +255,7 @@
 		return
 
 	our_guy.add_movespeed_modifier(/datum/movespeed_modifier/reagent/twitch)
-	our_guy.next_move_modifier -= 0.3 // For the duration of this you move and attack faster
+	our_guy.next_move_modifier *= 0.7 // For the duration of this you move and attack faster
 
 	our_guy.sound_environment_override = SOUND_ENVIRONMENT_DIZZY
 
@@ -286,7 +285,7 @@
 	. = ..()
 
 	our_guy.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/twitch)
-	our_guy.next_move_modifier += (overdosed ? 0.5 : 0.3)
+	our_guy.next_move_modifier /= (overdosed ? 0.49 : 0.7)
 
 	our_guy.sound_environment_override = NONE
 
@@ -325,8 +324,6 @@
 				span_danger("You suddenly snap back to normal speeds. You feel like you've just been run over by a power loader.")
 			)
 		our_guy.stamina.adjust(-constant_dose_time)
-		if(!HAS_TRAIT(our_guy, TRAIT_TWITCH_ADAPTED))
-			our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3 * constant_dose_time) // Basically you might die
 
 	if(!our_guy.hud_used)
 		return
@@ -387,7 +384,7 @@
 
 	//RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets)) //This is the code that enables dodging bullets, it's disabled due to bullet immunity being extremely overpowered.
 
-	our_guy.next_move_modifier -= 0.2 // Overdosing makes you a liiitle faster but you know has some really bad consequences
+	our_guy.next_move_modifier *= 0.7 // Overdosing makes you a liiitle faster but you know has some really bad consequences
 
 	if(!our_guy.hud_used)
 		return
@@ -482,6 +479,14 @@
 	process_flags = ORGANIC | SYNTHETIC
 	overdose_threshold = 60 // it takes a lot, if youre really messed up you CAN hit this but its unlikely
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/dinitrogen_plasmide/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
+	. = ..()
+	if((our_guy.mob_biotypes & MOB_ROBOTIC))
+		var/cooling = 50 * REM * seconds_per_tick
+		our_guy.reagents?.chem_temp -= cooling
+		our_guy.adjust_bodytemperature(-1 * cooling * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = our_guy.bodytemp_cold_damage_limit + 5)
+		our_guy.adjustFireLoss(-1.5)
 
 /datum/reagent/dinitrogen_plasmide/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()

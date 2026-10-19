@@ -13,7 +13,7 @@
 				/obj/item/reagent_containers/cooking_container/pan = 10,
 				/obj/item/reagent_containers/cooking_container/pot = 10,
 				/obj/item/reagent_containers/cooking_container/bowl = 10,
-				/obj/item/reagent_containers/cooking_container/oven = 10,
+				/obj/item/plate/oven_tray = 10,
 				/obj/item/reagent_containers/cooking_container/board = 10,
 				/obj/item/storage/bag/tray = 8,
 				/obj/item/reagent_containers/cup/soup_pot = 3,

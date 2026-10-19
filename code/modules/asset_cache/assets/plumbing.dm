@@ -42,7 +42,7 @@
 		'monkestation/code/modules/slimecore/icons/slime_grinder.dmi' = list(
 			"slime_grinder_backdrop",
 		),
-		'monkestation/icons/obj/structures/drains.dmi' = list(
+		'icons/obj/structures/drains.dmi' = list(
 			"active_input",
 			"active_output",
 		),

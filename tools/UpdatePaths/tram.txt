@@ -1,0 +1,11 @@
+#comment Repathing for Transport Subsystem
+
+/obj/structure/industrial_lift/tram/purple : /obj/structure/transport/linear/tram, /obj/structure/thermoplastic/light
+/obj/structure/industrial_lift/@SUBTYPES : /obj/structure/transport/linear/@SUBTYPES{@OLD}
+/obj/effect/landmark/lift_id/@SUBTYPES : /obj/effect/landmark/transport/transport_id/@SUBTYPES{@OLD}
+/obj/effect/landmark/tram/nav/@SUBTYPES : /obj/effect/landmark/transport/nav_beacon/tram/nav/@SUBTYPES{@OLD}
+/turf/open/floor/noslip/tram_plate : /turf/open/floor/tram/plate{@OLD}
+/turf/open/floor/noslip/tram_plate/energized : /turf/open/floor/tram/plate/energized{@OLD}
+/turf/open/floor/noslip/tram_platform : /turf/open/floor/tram{@OLD}
+/obj/machinery/button/tram : /obj/machinery/button/transport/tram{@OLD}
+/obj/effect/landmark/tram/platform/@SUBTYPES : /obj/effect/landmark/transport/nav_beacon/tram/platform/@SUBTYPES{@OLD}

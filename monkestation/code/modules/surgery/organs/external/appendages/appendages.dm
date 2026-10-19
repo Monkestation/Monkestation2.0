@@ -2,7 +2,7 @@
 	name = "arachnid appendages"
 	desc = "Extra legs that go on your back, don't actually work for walking sadly."
 	icon_state = "arachnid_appendages"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_arachnid_appendages"
 	zone = BODY_ZONE_CHEST

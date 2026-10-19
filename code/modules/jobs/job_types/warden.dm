@@ -29,7 +29,7 @@
 		/datum/job_department/security,
 		)
 
-	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
+	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/restraints/handcuffs, /obj/item/assembly/flash/handheld, /obj/item/clothing/mask/whistle, /obj/item/food/donut/bungo, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/citationinator)
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 15,
@@ -58,8 +58,8 @@
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security
-	head = /obj/item/clothing/head/hats/warden/red
-	shoes = /obj/item/clothing/shoes/jackboots/sec
+	head = /obj/item/clothing/head/hats/warden
+	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/assembly/flash/handheld
 	r_pocket = /obj/item/restraints/handcuffs
 

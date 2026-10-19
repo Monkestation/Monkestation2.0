@@ -188,7 +188,7 @@
 /area/ruin/space/ruined_hull_1)
 "yc" = (
 /obj/item/weldingtool/largetank/empty,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ruined_hull_1)
 "yQ" = (

@@ -110,7 +110,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
+	custom_materials = null
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	///List of portal pairs created by this hand tele
@@ -506,7 +506,9 @@
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
 ///Bleed and make blood splatters at tele start and end points
-/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
+	if(user.can_bleed(BLOOD_COVER_TURFS) != BLEED_SPLATTER)
+		return FALSE
 	var/mob/living/carbon/carbon_user = user
 	carbon_user.add_splatter_floor(old_location)
 	carbon_user.add_splatter_floor(new_location)

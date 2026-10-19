@@ -99,11 +99,11 @@
 		/// Draw this head as missing eyes
 		show_eyeless = FALSE
 
-		/// Can this head be dismembered normally?
-		can_dismember = FALSE
+		/// Can this head be dismembered when not hardcrit/dead?
+		can_always_dismember = FALSE
 
 /obj/item/bodypart/head/Destroy()
-	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
+	QDEL_NULL(brainmob) //order is sensitive, see warning in Exited() below
 	QDEL_NULL(brain)
 	QDEL_NULL(eyes)
 	QDEL_NULL(ears)
@@ -116,21 +116,21 @@
 	QDEL_NULL(worn_face_offset)
 	return ..()
 
-/obj/item/bodypart/head/handle_atom_del(atom/head_atom)
-	if(head_atom == brain)
+/obj/item/bodypart/head/Exited(atom/movable/gone, direction)
+	if(gone == brain)
 		brain = null
 		update_icon_dropped()
 		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
 			message_admins("Brainmob: ([ADMIN_LOOKUPFLW(brainmob)]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
 			brainmob.log_message(", brainmob, was left stranded in [src] without a brain", LOG_GAME)
-	if(head_atom == brainmob)
+	if(gone == brainmob)
 		brainmob = null
-	if(head_atom == eyes)
+	if(gone == eyes)
 		eyes = null
 		update_icon_dropped()
-	if(head_atom == ears)
+	if(gone == ears)
 		ears = null
-	if(head_atom == tongue)
+	if(gone == tongue)
 		tongue = null
 	return ..()
 
@@ -141,7 +141,7 @@
 			. += span_info("The brain has been removed from [src].")
 		else if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
 			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
-		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+		else if(brainmob?.health <= brainmob?.dead_threshold)
 			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
 		else if(brainmob)
 			if(brainmob.key || brainmob.get_ghost(FALSE, TRUE))
@@ -163,7 +163,7 @@
 			. += span_info("[real_name]'s tongue has been removed.")
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
-	if(!can_dismember || owner.stat < HARD_CRIT)
+	if(!can_always_dismember && !HAS_TRAIT(owner, TRAIT_DEATHCOMA) && (owner.body_position == STANDING_UP || owner.health >= (owner.maxHealth * 0.5)))
 		return FALSE
 	return ..()
 
@@ -171,17 +171,19 @@
 	var/atom/drop_loc = drop_location()
 	for(var/obj/item/head_item in src)
 		if(head_item == brain)
+			var/obj/item/organ/internal/brain/dropped_brain = brain
 			if(user)
 				user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
 			if(brainmob)
+				var/mob/living/brain/brainmob_to_transfer = brainmob
 				brainmob.container = null
-				brainmob.forceMove(brain)
-				brain.brainmob = brainmob
-				brainmob = null
+				brainmob = null // brainmob needs to be null before the brain is moved.
+				brainmob_to_transfer.forceMove(dropped_brain) // brain variable becomes null here after it is moved.
+				dropped_brain.brainmob = brainmob_to_transfer
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, span_warning("[brain] was damaged in the process!"))
-				brain.set_organ_damage(brain.maxHealth)
-			brain.forceMove(drop_loc)
+				dropped_brain.set_organ_damage(dropped_brain.maxHealth)
+			dropped_brain.forceMove(drop_loc)
 			brain = null
 			update_icon_dropped()
 		else
@@ -211,7 +213,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/bodypart/head/get_limb_icon(dropped)
+/obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
 
 	. += get_hair_and_lips_icon(dropped)

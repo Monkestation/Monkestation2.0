@@ -69,6 +69,17 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
+/obj/item/bag_of_holding_inert/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly/signaler/anomaly/bluespace))
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			return
+		var/obj/item/storage/backpack/holding/doomsday_device = new(get_turf(src))
+		qdel(tool)
+		user.put_in_hands(doomsday_device)
+		playsound(doomsday_device, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(src)
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
@@ -161,12 +172,29 @@
 	icon_state = "backpack-medical"
 	inhand_icon_state = "medicalpack"
 
+/obj/item/storage/backpack/medic/deforest
+	name = "Deforest Backpack"
+	desc = "A Deforest Medical backpack, widened straps and gel padding allows the bag to remain comfortable when loaded to the brim, making it comfortable to carry even in the roughest environments."
+	icon_state = "deforest-backpack"
+	inhand_icon_state = "deforest_backpack"
+
 /obj/item/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
-	alternate_worn_layer = (HEAD_LAYER-0.5)
+	alternate_worn_layer = ABOVE_HEAD_LAYER
+
+/obj/item/storage/backpack/security/private
+	name = "private security backpack"
+	icon_state = "backpack-private-security"
+	inhand_icon_state = "privatesecuritypack"
+
+/obj/item/storage/backpack/secmed
+	name = "security medical backpack"
+	desc = "A security-grade backpack, now in security grey!"
+	icon_state = "backpack-secmed"
+	inhand_icon_state = "backpack-secmed"
 
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
@@ -211,14 +239,13 @@
 	icon_state = "backpack-virology"
 	inhand_icon_state = "viropack"
 
-//MONKESTATION EDIT START// adds generic backpack and touches up the sprites
 /obj/item/storage/backpack/ert
 	name = "emergency response team backpack"
 	desc = "A spacious backpack with lots of pockets."
 	icon_state = "ert_plain"
 	inhand_icon_state = "securitypack"
 	resistance_flags = FIRE_PROOF
-	alternate_worn_layer = (HEAD_LAYER-0.5)
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 
 /obj/item/storage/backpack/ert/Initialize(mapload)
 	. = ..()
@@ -258,7 +285,6 @@
 	name = "emergency response team backpack"
 	desc = "A spacious backpack with lots of pockets"
 	icon_state = "ert_generic"
-//MONKESTATION EDIT STOP
 
 /obj/item/storage/backpack/saddlepack
 	name = "saddlepack"
@@ -316,8 +342,6 @@
 	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
-		blood_dna = list("MEAT DNA" = "MT+"),\
-		diseases = null,\
 	)
 
 /*
@@ -366,13 +390,13 @@
 	icon_state = "devilwing"
 	inhand_icon_state = "devilwing"
 
-/obj/item/storage/backpack/satchel/blackleather //MONKESTATION EDIT
+/obj/item/storage/backpack/satchel/blackleather
 	name = "black leather satchel"
 	desc = "It's a fancy satchel made with plastic imitation leather."
 	icon_state = "satchel-blackleather"
 	inhand_icon_state = "satchel-blackleather"
 
-/obj/item/storage/backpack/satchel/retro //MONKESTATION EDIT
+/obj/item/storage/backpack/satchel/retro
 	name = "retro satchel"
 	desc = "A satchel commonly worn during planetary surveys."
 	icon_state = "satchel-retro"
@@ -390,6 +414,12 @@
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-medical"
 	inhand_icon_state = "satchel-med"
+
+/obj/item/storage/backpack/satchel/med/deforest
+	name = "Deforest Satchel"
+	desc = "A Deforest Medical satchel, reinforced and cross-stitched with insulated padding, the bag is designed to take a beating well still being light enough to carry easily when loaded down."
+	icon_state = "deforest-satchel"
+	inhand_icon_state = "deforest_satchel"
 
 /obj/item/storage/backpack/satchel/vir
 	name = "virologist satchel"
@@ -426,6 +456,17 @@
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-security"
 	inhand_icon_state = "satchel-sec"
+
+/obj/item/storage/backpack/satchel/sec/private
+	name = "private security satchel"
+	icon_state = "satchel-private-security"
+	inhand_icon_state = "satchel-private-sec"
+
+/obj/item/storage/backpack/satchel/secmed
+	name = "security medical satchel"
+	desc = "A security-grade satchel, now in security grey!"
+	icon_state = "satchel-secmed"
+	inhand_icon_state = "satchel-secmed"
 
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"
@@ -505,6 +546,10 @@
 	. = ..()
 	AddComponent(/datum/component/curse_of_hunger, add_dropdel = TRUE)
 
+/obj/item/storage/backpack/duffelbag/cursed/Destroy()
+	emptyStorage()
+	. = ..()
+
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
 	desc = "A large duffel bag for holding extra captainly goods."
@@ -557,8 +602,6 @@
 	icon_state = "duffel-virology"
 	inhand_icon_state = "duffel-virology"
 
-
-
 /obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
@@ -578,11 +621,16 @@
 	icon_state = "duffel-security"
 	inhand_icon_state = "duffel-sec"
 
-/obj/item/storage/backpack/duffelbag/sec/surgery
-	name = "surgical duffel bag"
-	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
+/obj/item/storage/backpack/duffelbag/secmed
+	name = "security medical duffelbag"
+	desc = "A large duffel bag for holding extra supplies, now in security grey!"
+	icon_state = "duffel-secmed"
+	inhand_icon_state = "duffel-secmed"
 
-/obj/item/storage/backpack/duffelbag/sec/surgery/PopulateContents()
+/obj/item/storage/backpack/duffelbag/secmed/surgery
+	desc = "A large duffel bag for holding extra supplies, now in security grey! - this one has a material inlay with space for various sharp-looking tools."
+
+/obj/item/storage/backpack/duffelbag/secmed/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
 	new /obj/item/retractor(src)
@@ -748,7 +796,7 @@
 	new /obj/item/gun/ballistic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
+	new /obj/item/clothing/glasses/thermal/chameleon(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
@@ -769,10 +817,7 @@
 	new /obj/item/gun/ballistic/automatic/c20r/toy(src)
 	new /obj/item/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
-	// MONKESTATION EDIT START
-	// MONKESTATION EDIT ORIGINAL new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
 	new /obj/item/grenade/chem_grenade/large/bioterrorfoam(src)
-	// MONKESTATION EDIT END
 	if(prob(5))
 		new /obj/item/food/pizza/pineapple(src)
 
@@ -794,8 +839,16 @@
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka(src)
-	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+	new /obj/item/reagent_containers/medipen/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
+
+/obj/item/storage/backpack/duffelbag/henchmen_traitor_outfits
+
+/obj/item/storage/backpack/duffelbag/henchmen_traitor_outfits/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/storage/box/syndicate/henchmen_traitor_outfit = 5,
+	)
+	generate_items_inside(items_inside, src)
 
 // For ClownOps.
 /obj/item/storage/backpack/duffelbag/clown/syndie/Initialize(mapload)
@@ -865,7 +918,7 @@
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
-		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/shotgun/semiauto/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg,
@@ -892,7 +945,7 @@
 	atom_storage.max_slots = 2
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
-		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/shotgun/semiauto/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 		/obj/item/gun/ballistic/automatic/proto/pksmg,
@@ -929,7 +982,7 @@
 	atom_storage.set_holdable(list( //all the ammo for mining guns can be stored in here, but nothing else.
 		/obj/item/ammo_box/magazine/pksmgmag,
 		/obj/item/storage/box/kinetic,
-		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_box/magazine/autoshotgun/kinetic,
 		/obj/item/ammo_casing/shotgun/hydrakinetic,
 		/obj/item/storage/box/kinetic/autoshotgun,
 		/obj/item/storage/box/kinetic/autoshotgun/smallcase,
@@ -960,3 +1013,21 @@
 	))
 
 	atom_storage.max_total_storage = 100
+
+/obj/item/storage/backpack/xenobiologist
+	name = "xenobio backpack"
+	desc = "A backpack specially designed with a seal to keep ooze from leaking in."
+	icon_state = "backpack-xenobio"
+	inhand_icon_state = "xenopack"
+
+/obj/item/storage/backpack/satchel/xenobiologist
+	name = "xenobiologist satchel"
+	desc = "Useful for holding various extracts."
+	icon_state = "satchel-xenobio"
+	inhand_icon_state = "satchel-xenobio"
+
+/obj/item/storage/backpack/duffelbag/xenobiologist
+	name = "xenobiologist's duffel bag"
+	desc = "A large duffel bag for holding extra hazardous components."
+	icon_state = "duffel-xenobio"
+	inhand_icon_state = "duffel-xenobio"

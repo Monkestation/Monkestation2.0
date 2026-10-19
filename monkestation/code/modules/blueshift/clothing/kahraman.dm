@@ -83,7 +83,8 @@
 		/obj/item/knife,
 		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/shovel,
 		/obj/item/survivalcapsule,
 		/obj/item/storage/bag/ore,
@@ -207,7 +208,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing.dmi'
 	icon_state = "jumpsuit"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn_digi.dmi'
 	worn_icon_state = "jumpsuit"
 	has_sensor = SENSOR_COORDS
 	random_sensor = FALSE
@@ -225,7 +225,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing.dmi'
 	icon_state = "boots"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn_digi.dmi'
 	armor_type = /datum/armor/colonist_clothing
 	resistance_flags = NONE
 

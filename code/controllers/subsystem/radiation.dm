@@ -21,6 +21,8 @@ SUBSYSTEM_DEF(radiation)
 		var/atom/source = pulse_information.source_ref?.resolve()
 		if (isnull(source))
 			processing.Cut(1, 2)
+			if (MC_TICK_CHECK)
+				return
 			continue
 
 		pulse(source, pulse_information)

@@ -139,7 +139,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/peashooter_breech
-	name = "Peahooter Breech"
+	name = "Peashooter Breech"
 	result = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
 	reqs = list(/obj/item/pipe = 2,
 		/obj/item/stock_parts/manipulator = 1,

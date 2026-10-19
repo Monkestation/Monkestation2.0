@@ -1,3 +1,5 @@
+/// Stores an override value for the order cooldown to be used by the Dpt. Order Cooldown button in the secrets menu. When null, the override is not active.
+GLOBAL_VAR(department_cd_override)
 
 ///cooldown for each department, assoc type 2 cooldown. global, so rebuilding the console doesn't refresh the cd
 GLOBAL_LIST_INIT(department_order_cooldowns, list(
@@ -195,14 +197,19 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	UnregisterSignal(subsystem, COMSIG_SUPPLY_SHUTTLE_BUY)
 
 /obj/machinery/computer/department_orders/proc/calculate_cooldown(credits)
-	//minimum almost the lowest value of a crate
-	var/min = CARGO_CRATE_VALUE * 1.6
-	//maximum fairly expensive crate at 3000
-	var/max = CARGO_CRATE_VALUE * 15
-	credits = clamp(credits, min, max)
-	var/time_y = (credits - min)/(max - min) + 1 //convert to between 1 and 2
-	time_y = 5 MINUTES * time_y
-	GLOB.department_order_cooldowns[type] = world.time + time_y
+	if(isnull(GLOB.department_cd_override))
+		//minimum almost the lowest value of a crate
+		var/min = CARGO_CRATE_VALUE * 1.6
+		//maximum fairly expensive crate at 3000
+		var/max = CARGO_CRATE_VALUE * 15
+		credits = clamp(credits, min, max)
+		var/time_y = (credits - min)/(max - min) + 1 //convert to between 1 and 2
+		time_y = 5 MINUTES * time_y
+		GLOB.department_order_cooldowns[type] = world.time + time_y
+	else
+		var/time_y = GLOB.department_cd_override SECONDS
+		GLOB.department_order_cooldowns[type] = world.time + time_y
+
 
 /obj/machinery/computer/department_orders/process()
 	. = ..()

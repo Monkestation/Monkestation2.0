@@ -3,7 +3,7 @@
 /obj/item/ammo_box/magazine/m75
 	name = "specialized magazine (.75)"
 	icon_state = "75"
-	ammo_type = /obj/item/ammo_casing/caseless/a75
+	ammo_type = /obj/item/ammo_casing/a75
 	caliber = CALIBER_75
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	max_ammo = 8
@@ -12,7 +12,7 @@
 /obj/item/ammo_box/magazine/ignifist
 	name = "Ignifist 30 Rocket"
 	icon_state = "ignifist"
-	ammo_type = /obj/item/ammo_casing/caseless/ignifist
+	ammo_type = /obj/item/ammo_casing/ignifist
 	caliber = CALIBER_60MM
 	max_ammo = 1
 	multiple_sprites = AMMO_BOX_FULL_EMPTY

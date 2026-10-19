@@ -1,6 +1,6 @@
-/datum/action/cooldown/spell/pointed/mind_transfer //monkestation edit: replaced in-game with an AOE spell
-	name = "Single Target Mind Swap" //monkestation edit: added single target
-	desc = "This spell allows the user to switch bodies with a target next to him."
+/datum/action/cooldown/spell/pointed/mind_transfer
+	name = "Single Target Mind Swap"
+	desc = "This spell allows the user to switch bodies with a target next to them."
 	button_icon_state = "mindswap"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 
@@ -114,8 +114,6 @@
 	var/datum/mind/mind_to_swap = to_swap.mind
 	if(to_swap.can_block_magic(antimagic_flags) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/wizard) \
-		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
-		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key?[1] == "@" \
 	)

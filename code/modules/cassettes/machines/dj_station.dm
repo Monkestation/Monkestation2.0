@@ -245,41 +245,10 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			return TRUE
 		if("play")
 			. = TRUE
-			if(is_ejecting)
-				balloon_alert(user, "currently inserting/ejecting tape!")
-				return
-			if(!playing || !music_endpoint)
-				balloon_alert(user, "no track set!")
-				return
-			if(broadcasting)
-				balloon_alert(user, "song already playing!")
-				return
-			PLAY_CASSETTE_SOUND(SFX_DJSTATION_PLAY)
-			song_start_time = REALTIMEOFDAY
-			broadcasting = TRUE
-			update_appearance(UPDATE_OVERLAYS)
-			INVOKE_ASYNC(src, PROC_REF(play_to_all_listeners))
-			SStgui.update_uis(src)
-			log_music("[key_name(user)] began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
-			message_admins("[ADMIN_LOOKUPFLW(user)] began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"])")
-			begin_processing()
+			play(user)
 		if("stop")
 			. = TRUE
-			if(!playing || !broadcasting)
-				balloon_alert(user, "not playing!")
-				return
-			if(is_ejecting)
-				balloon_alert(user, "currently inserting/ejecting tape!")
-				return
-			end_processing()
-			PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
-			broadcasting = FALSE
-			COOLDOWN_START(src, next_song_timer, song_cooldown)
-			update_appearance(UPDATE_OVERLAYS)
-			song_start_time = 0
-			INVOKE_ASYNC(src, PROC_REF(stop_for_all_listeners))
-			SStgui.update_uis(src)
-			log_music("[key_name(user)] stopped playing song \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
+			stop(user)
 		if("set_track")
 			. = TRUE
 			if(switching_tracks)
@@ -336,7 +305,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			// fake loading time in case there's already a download cached and it returns immediately
 			if(!COOLDOWN_FINISHED(src, fake_loading_time))
 				// waow that was fast, are you failed,
-				if(info["status"] == FLOXY_STATUS_FAILED)
+				if(info?["status"] == FLOXY_STATUS_FAILED)
 					SSfloxy.delete_media(info["id"], hard = TRUE, force = TRUE)
 					info = SSfloxy.download_and_wait(found_track.url, timeout = 30 SECONDS, discard_failed = TRUE)
 				else
@@ -351,6 +320,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 					log_floxy("Floxy did not return a music endpoint for [found_track.url]")
 					stack_trace("Floxy did not return a music endpoint for [found_track.url]")
 					balloon_alert(user, "the loader mechanism malfunctioned!")
+				log_floxy("endpoint for [playing.url]: [music_endpoint]")
 				var/list/metadata = info["metadata"]
 				if(metadata)
 					if(metadata["title"])
@@ -380,6 +350,58 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			SStgui.update_uis(src)
 			switch_sound.stop()
 
+/obj/machinery/dj_station/proc/play(mob/user, force = FALSE)
+	if(!user && usr)
+		user = usr
+
+	if(!force)
+		if(is_ejecting)
+			if(user)
+				balloon_alert(user, "currently inserting/ejecting tape!")
+			return FALSE
+		if(!playing || !music_endpoint)
+			if(user)
+				balloon_alert(user, "no track set!")
+			return FALSE
+		if(broadcasting)
+			if(user)
+				balloon_alert(user, "song already playing!")
+			return FALSE
+	PLAY_CASSETTE_SOUND(SFX_DJSTATION_PLAY)
+	song_start_time = REALTIMEOFDAY
+	broadcasting = TRUE
+	update_appearance(UPDATE_OVERLAYS)
+	INVOKE_ASYNC(src, PROC_REF(play_to_all_listeners))
+	SStgui.update_uis(src)
+	log_music("[key_name(user)] [force ? "forcefully ": ""]began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
+	message_admins("[ADMIN_LOOKUPFLW(user)] [force ? "forcefully ": ""]began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"])")
+	begin_processing()
+	return TRUE
+
+/obj/machinery/dj_station/proc/stop(mob/user, force = FALSE)
+	if(!user && usr)
+		user = usr
+
+	if(!force)
+		if(!playing || !broadcasting)
+			if(user)
+				balloon_alert(user, "not playing!")
+			return FALSE
+		if(is_ejecting)
+			if(user)
+				balloon_alert(user, "currently inserting/ejecting tape!")
+			return FALSE
+	end_processing()
+	PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
+	broadcasting = FALSE
+	COOLDOWN_START(src, next_song_timer, song_cooldown)
+	update_appearance(UPDATE_OVERLAYS)
+	song_start_time = 0
+	INVOKE_ASYNC(src, PROC_REF(stop_for_all_listeners))
+	SStgui.update_uis(src)
+	log_music("[key_name(user)] [force ? "forcefully ": ""] stopped playing song \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
+	return TRUE
+
 // It cannot be stopped.
 /obj/machinery/dj_station/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	return
@@ -389,13 +411,12 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 
 // Funny.
 /obj/machinery/dj_station/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
-	SHOULD_CALL_PARENT(FALSE)
+	. = ..()
 	visible_message(span_warning("[hitting_projectile] bounces harmlessly off of [src]!"))
 	// doesn't actually do any damage, this is meant to annoy people when they try to shoot it bc someone played pickle rick
 	hitting_projectile.damage = 0
 	hitting_projectile.stamina = 0
 	hitting_projectile.reflect(src)
-	return BULLET_ACT_FORCE_PIERCE
 
 // TODO: clean all of this shit up
 /obj/machinery/dj_station/proc/play_to_all_listeners()

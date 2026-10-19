@@ -37,6 +37,12 @@
 		return
 	. += span_notice("It is currently maintaining <b>[length(signs)]/[max_signs]</b> projections.")
 
+/obj/item/holosign_creator/emp_act(severity)
+	. = ..()
+	for(var/obj/structure/holosign/sign as anything in signs)
+		if(prob(90 / severity))
+			qdel(sign)
+
 /obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE
@@ -57,7 +63,7 @@
 	if(target_holosign)
 		return ITEM_INTERACT_BLOCKING
 	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(holocreator_busy)
 		balloon_alert(user, "busy making a hologram!")
 		return ITEM_INTERACT_BLOCKING
@@ -238,7 +244,7 @@
 	icon_state = "signmaker_med"
 	holosign_type = /obj/structure/holosign/barrier/medical
 	creation_time = 3 SECONDS
-	max_signs = 3
+	max_signs = 6
 
 /obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"

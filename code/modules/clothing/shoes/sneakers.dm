@@ -1,17 +1,28 @@
 /obj/item/clothing/shoes/sneakers
 	dying_key = DYE_REGISTRY_SNEAKERS
-	icon_state = "sneakers"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers")
 	inhand_icon_state = "sneakers_back"
 	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
-	greyscale_colors = "#2d2d33#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
-	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sneakers_worn/digitigrade
-	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
+	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
+	greyscale_colors = "#2d2d33#ffffff"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
+
+/obj/item/clothing/shoes/sneakers/get_general_color(icon/base_icon)
+	var/colors = SSgreyscale.ParseColorString(greyscale_colors)
+	return colors ? colors[1] : ..()
+
+/obj/item/clothing/shoes/sneakers/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "sneakers_worn")
+
+/obj/item/clothing/shoes/sneakers/random
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1 // same icon/color as base type
 
 /obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
 	. = ..()
@@ -21,20 +32,21 @@
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	desc = "A pair of black shoes."
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1 // same icon/color as base type
 	custom_price = PAYCHECK_CREW
 
-
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 /obj/item/clothing/shoes/sneakers/brown
 	name = "brown shoes"
 	desc = "A pair of brown shoes."
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/brown")
 	greyscale_colors = "#472c21#ffffff"
 
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/blue")
 	greyscale_colors = "#4f88df#ffffff"
 	armor_type = /datum/armor/sneakers_blue
 
@@ -43,26 +55,29 @@
 
 /obj/item/clothing/shoes/sneakers/green
 	name = "green shoes"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/green")
 	greyscale_colors = "#3bca5a#ffffff"
 
 /obj/item/clothing/shoes/sneakers/yellow
 	name = "yellow shoes"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/yellow")
 	greyscale_colors = "#deb63d#ffffff"
 
 /obj/item/clothing/shoes/sneakers/purple
 	name = "purple shoes"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/purple")
 	greyscale_colors = "#7e1980#ffffff"
 
 /obj/item/clothing/shoes/sneakers/red
 	name = "red shoes"
 	desc = "Stylish red shoes."
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/red")
 	greyscale_colors = "#a52f29#ffffff"
 
 /obj/item/clothing/shoes/sneakers/white
 	name = "white shoes"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/white")
 	greyscale_colors = "#ffffff#ffffff"
-	icon_preview = 'icons/obj/previews.dmi'
-	icon_state_preview = "shoes_cloth"
 	armor_type = /datum/armor/sneakers_white
 
 /datum/armor/sneakers_white
@@ -71,6 +86,7 @@
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "rain_bow"
 	inhand_icon_state = "rainbow_sneakers"
 
@@ -80,28 +96,23 @@
 	greyscale_config_inhand_right = null
 	greyscale_config_worn = null
 	flags_1 = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
-	icon_preview = 'icons/obj/previews.dmi'
-	icon_state_preview = "prisonshoes"
-	greyscale_colors = "#d15b1b#ffffff"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/orange")
 	greyscale_config = /datum/greyscale_config/sneakers_orange
-	greyscale_config_worn = /datum/greyscale_config/sneakers_orange_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sneakers_orange_worn/digitigrade
-	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange_inhand_right
+	greyscale_config_worn = /datum/greyscale_config/sneakers_orange/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange/inhand_right
+	greyscale_colors = "#d15b1b#ffffff"
 	flags_1 = NONE
 	var/obj/item/restraints/handcuffs/attached_cuffs
 
 /obj/item/clothing/shoes/sneakers/orange/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, (slot_flags|ITEM_SLOT_HANDCUFFED))
-
-/obj/item/clothing/shoes/sneakers/orange/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == attached_cuffs)
-		moveToNullspace(attached_cuffs)
-	return ..()
 
 /obj/item/clothing/shoes/sneakers/orange/Destroy()
 	QDEL_NULL(attached_cuffs)
@@ -167,14 +178,17 @@
 
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/mime")
 	greyscale_colors = "#ffffff#ffffff"
 
 /obj/item/clothing/shoes/sneakers/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	greyscale_colors = "#2d2d33#ffffff"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/marisa")
 	greyscale_config = /datum/greyscale_config/sneakers_marisa
 	greyscale_config_worn = /datum/greyscale_config/sneakers_marisa/worn
+	greyscale_colors = "#2d2d33#ffffff"
 	strip_delay = 5
 	equip_delay_other = 50
 	can_be_tied = FALSE
@@ -183,4 +197,12 @@
 /obj/item/clothing/shoes/sneakers/cyborg
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/cyborg")
 	greyscale_colors = "#4e4e4e#4e4e4e"
+
+/obj/item/clothing/shoes/sneakers/secred
+	name = "security red sneakers"
+	desc = "A nice set of sneakers in security red. These even have the custom fabric used by medical white! Sweet!"
+	SETUP_MAP_ICONS("sneakers", "/obj/item/clothing/shoes/sneakers/secred")
+	greyscale_colors = "#a52f29#918f8c"
+	armor_type = /datum/armor/sneakers_white

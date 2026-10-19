@@ -59,6 +59,10 @@
 		/datum/reagent/reaction_agent,
 		/datum/reagent/spider_extract,
 		/datum/reagent/toxin/fakebeer, // monkestation edit
+		/datum/reagent/healium,
+		/datum/reagent/tatp,
+		/datum/reagent/rdx,
+		/datum/reagent/lube/superlube,
 	))
 
 /obj/item/seeds/random/lesser/pick_reagent()

@@ -541,9 +541,9 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/suit/digicoat_glitched
-	name = "Glitched Digicoat"
-	item_path = /obj/item/clothing/suit/toggle/digicoat/glitched
+/datum/loadout_item/suit/digicoat_hacked
+	name = "Hacked Digicoat"
+	item_path = /obj/item/clothing/suit/toggle/digicoat/hacked
 	donator_only = TRUE
 	requires_purchase = FALSE
 

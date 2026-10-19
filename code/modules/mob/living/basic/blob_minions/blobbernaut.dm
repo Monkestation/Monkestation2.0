@@ -45,29 +45,29 @@
 
 /mob/living/basic/blob_minion/blobbernaut/minion/Life(seconds_per_tick, times_fired)
 	. = ..()
-	if (!.)
+	if(!.)
 		return FALSE
+
 	var/damage_sources = 0
 	var/list/blobs_in_area = range(2, src)
-
-	if (!(locate(/obj/structure/blob) in blobs_in_area))
+	if(!(locate(/obj/structure/blob) in blobs_in_area))
 		damage_sources++
 
-	if (orphaned)
+	if(orphaned)
 		damage_sources++
 	else
 		var/particle_colour = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_BLACK
-		if (locate(/obj/structure/blob/special/core) in blobs_in_area)
+		if(locate(/obj/structure/blob/special/node/core) in blobs_in_area)
 			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_CORE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
 			heal_effect.color = particle_colour
 
-		if (locate(/obj/structure/blob/special/node) in blobs_in_area)
+		if(locate(/obj/structure/blob/special/node) in blobs_in_area)
 			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_NODE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
 			heal_effect.color = particle_colour
 
-	if (damage_sources == 0)
+	if(damage_sources == 0)
 		return FALSE
 
 	// take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
@@ -83,17 +83,19 @@
 /mob/living/basic/blob_minion/blobbernaut/minion/proc/assign_key(ckey, datum/blobstrain/blobstrain)
 	key = ckey
 	flick("blobbernaut_produce", src)
-	health = maxHealth / 2 // Start out injured to encourage not beelining away from the blob
+	health = trunc(maxHealth * 0.75) // Start out injured to encourage not beelining away from the blob
 	SEND_SOUND(src, sound('sound/effects/blobattack.ogg'))
 	SEND_SOUND(src, sound('sound/effects/attackblob.ogg'))
-	to_chat(src, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed."))
+	to_chat(src, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, \
+								[span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed."))
 	to_chat(src, span_infoplain("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally"))
 	to_chat(src, span_infoplain("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
-	to_chat(src, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
+	to_chat(src, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent \
+								[blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
 
 /// Set our attack damage based on blob's properties
 /mob/living/basic/blob_minion/blobbernaut/minion/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
-	if (isnull(overmind))
+	if(isnull(overmind))
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		attack_verb_continuous = initial(attack_verb_continuous)

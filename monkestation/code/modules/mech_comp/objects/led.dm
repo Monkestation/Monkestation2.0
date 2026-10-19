@@ -28,7 +28,7 @@
 	set_light(l_color = col)
 
 /obj/item/mcobject/led/proc/set_color_config(mob/user, obj/item/tool)
-	var/col = input(user, "Select a color", "Configure Component", light_color) as null|color
+	var/col = tgui_color_picker(user, "Select a color", "Configure Component", light_color)
 	if(!col)
 		return
 

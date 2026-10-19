@@ -24,7 +24,6 @@
 /// Standard BYOND global, seriously do not use without an earthshakingly good reason
 #define GLOBAL_REAL_VAR(X) var/global/##X;
 
-
 /// Standard typed BYOND global, seriously do not use without an earthshakingly good reason
 #define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X;
 

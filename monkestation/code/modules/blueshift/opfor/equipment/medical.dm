@@ -3,17 +3,17 @@
 
 /datum/opposing_force_equipment/medical/twitch
 	name = "TWitch Sensory Stimulant Injector"
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/twitch
+	item_type = /obj/item/reagent_containers/medipen/deforest/twitch
 	description = "A special type of injector containing 10u of TWitch alongside some other chems. Overdosing on this can lead to heart implosion, but give you super speed."
 	admin_note = "TWitch no longer gives the user bullet immunity on OD, it just gives a speed boost."
 
 /datum/opposing_force_equipment/medical/demoneye
 	name = "DemonEye Steroid Injector"
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/demoneye
+	item_type = /obj/item/reagent_containers/medipen/deforest/demoneye
 
 /datum/opposing_force_equipment/medical/stimpack
 	name = "Stimulant Medipen"
-	item_type = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	item_type = /obj/item/reagent_containers/medipen/stimulants
 
 /datum/opposing_force_equipment/medical/cheese_kit
 	name = "Civil Defense Medical Kit"

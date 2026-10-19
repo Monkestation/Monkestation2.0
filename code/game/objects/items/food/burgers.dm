@@ -187,7 +187,7 @@
 	)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
-	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/burger/brain
 	name = "brainburger"
@@ -498,7 +498,7 @@
 	foodtypes = GRAIN | MEAT
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	venue_value = FOOD_PRICE_NORMAL
-	food_buffs = STATUS_EFFECT_FOOD_STAM_LARGE
+	food_buffs = STATUS_EFFECT_STAM_REGEN_LARGE
 
 /obj/item/food/burger/empoweredburger
 	name = "empowered burger"
@@ -565,7 +565,7 @@
 	tastes = list("bun" = 2, "pork patty" = 4)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
-	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/burger/mcguffin
 	name = "mcguffin"
@@ -596,7 +596,7 @@
 	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
 	foodtypes = GRAIN | MEAT | FRIED
 	venue_value = FOOD_PRICE_NORMAL
-	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/burger/cheese
 	name = "cheese burger"

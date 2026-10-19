@@ -522,3 +522,8 @@
 	description = "A sizably large cluster of asteroids, frequented by independent miners."
 	always_place = TRUE //its just some fucking rocks man... come on...
 
+/datum/map_template/ruin/space/shrimp
+	id = "shrimp"
+	suffix = "shrimp.dmm"
+	name = "Shrimp Restaurant"
+	description = "An exquisite shrimp fried rice restaurant that mysteriously shut down a few days ago. Something about 'new ownership'."

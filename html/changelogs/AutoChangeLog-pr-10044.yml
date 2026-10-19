@@ -1,4 +1,0 @@
-author: "Absolucy, SirNightKnight"
-delete-after: True
-changes:
-  - image: "The ThinkTronic MechComp Dispenser now has its own unique sprite!\n/:cl\n## Pre-Merge Checklist\n- [x] You tested this on a local server.\n- [x] This code did not runtime during testing.\n- [x] You documented all of your changes."

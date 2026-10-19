@@ -20,9 +20,9 @@
 	severity = 1
 
 /datum/symptom/adaptation/undead/OnAdd(datum/disease/acute/disease)
-	.=..()
+	. = ..()
 	disease.process_dead = TRUE
 
 /datum/symptom/adaptation/undead/OnRemove(datum/disease/acute/disease)
 	disease.process_dead = FALSE
-	.=..()
+	return ..()

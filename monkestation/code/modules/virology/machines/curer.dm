@@ -6,6 +6,12 @@
 
 	var/obj/item/reagent_containers/cup/tube/container = null
 
+/obj/machinery/computer/curer/Destroy()
+	if(!QDELETED(container))
+		container.forceMove(drop_location())
+	container = null
+	return ..()
+
 /obj/machinery/computer/curer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/cup/tube))
 		if(!container && tool.forceMove(src))
@@ -45,10 +51,10 @@
 			var/code = ""
 			for(var/V in GLOB.all_antigens) if(text2num(V) & B.data["antibodies"]) code += GLOB.all_antigens[V]
 			dat += "<BR>Antibodies: [code]"
-			dat += "<BR><A href='byond://?src=\ref[src];antibody=1'>Begin antibody production</a>"
+			dat += "<BR><A href='byond://?src=[REF(src)];antibody=1'>Begin antibody production</a>"
 		else
 			dat += "<BR>Please check container contents."
-		dat += "<BR><A href='byond://?src=\ref[src];eject=1'>Eject container</a>"
+		dat += "<BR><A href='byond://?src=[REF(src)];eject=1'>Eject container</a>"
 	else
 		dat = "Please insert a container."
 

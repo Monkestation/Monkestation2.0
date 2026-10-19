@@ -54,8 +54,6 @@
 	var/authorization_override = FALSE
 	/// Tracks whether the station is in full danger mode to unlock combat mechs
 	var/red_alert = FALSE
-	/// ID card of the person using the machine for the purpose of tracking access
-	var/obj/item/card/id/id_card = new()
 	/// Combined boolean value of red alert, auth override, and the users access for the sake of smaller if statements. if this is true, combat parts are available
 	var/combat_parts_allowed = FALSE
 	/// List of categories that all contains combat parts, everything in the category will be classified as combat parts
@@ -74,6 +72,8 @@
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 	)
+	/// The direction we send finished products. If null, puts them on our own tile
+	var/drop_direction
 
 /obj/machinery/mecha_part_fabricator/emagged
 	obj_flags = parent_type::obj_flags | EMAGGED
@@ -87,10 +87,6 @@
 	RefreshParts() // Recalculating local material sizes if the fab isn't linked
 	if(stored_research)
 		update_menu_tech()
-	return ..()
-
-/obj/machinery/mecha_part_fabricator/Destroy()
-	QDEL_NULL(id_card)
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/object, mob/living/user, params)
@@ -112,6 +108,15 @@
 		return
 	return ..()
 
+/obj/machinery/mecha_part_fabricator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
+		return
+	var/direction = get_dir(src, over_location)
+	if(!direction)
+		return
+	drop_direction = direction
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+
 /// Updates the various authorization checks used to determine if combat parts are available to the current user
 /obj/machinery/mecha_part_fabricator/proc/check_auth_changes(mob/user)
 	red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
@@ -121,14 +126,13 @@
 
 /// made as a lazy check to allow silicons full access always
 /obj/machinery/mecha_part_fabricator/proc/head_or_sillicon(mob/user)
-	if(!issilicon(user))
-		if(isliving(user))
-			var/mob/living/living_user = user
-			id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!id_card)
-				return FALSE
-			return (ACCESS_COMMAND in id_card.access)
-	return issilicon(user)
+	if(issilicon(user))
+		return TRUE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/obj/item/card/id/id_card = living_user.get_idcard(hand_first = TRUE)
+		return (ACCESS_COMMAND in id_card?.access)
+	return FALSE
 
 
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user)
@@ -153,8 +157,9 @@
 	)
 
 /obj/machinery/mecha_part_fabricator/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		connect_techweb(tool.buffer)
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		connect_techweb(buffer)
 	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/on_techweb_update()
@@ -199,14 +204,12 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
-	if(panel_open)
-		. += span_notice("Alt-click to rotate the output direction.")
+	. += span_notice("[EXAMINE_HINT("Alt-click")] to rotate the output direction.")
+	. += span_notice("[EXAMINE_HINT("Click-drag")] in a direciton to set it to output in that direction")
 
 /obj/machinery/mecha_part_fabricator/click_alt(mob/living/user)
-	if(!panel_open)
-		return CLICK_ACTION_BLOCKING
-	dir = turn(dir, -90)
-	balloon_alert(user, "rotated to [dir2text(dir)].")
+	drop_direction = null
+	balloon_alert(user, "drop direction reset")
 	return CLICK_ACTION_SUCCESS
 
 /**
@@ -306,8 +309,12 @@
 
 /obj/machinery/mecha_part_fabricator/process()
 	// If there's a stored part to dispense due to an obstruction, try to dispense it.
+	var/turf/exit
 	if(stored_part)
-		var/turf/exit = get_step(src,(dir))
+		if(isnull(drop_direction))
+			exit = loc
+		else
+			exit = get_step(src,(drop_direction))
 		if(exit.density)
 			return TRUE
 
@@ -342,10 +349,12 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
 	var/obj/item/I = new D.build_path(src)
-
+	var/turf/exit
 	being_built = null
-
-	var/turf/exit = get_step(src,(dir))
+	if(isnull(drop_direction))
+		exit = loc
+	else
+		exit = get_step(src,(drop_direction))
 	if(exit.density)
 		say("Error! The part outlet is obstructed.")
 		desc = "It's trying to dispense the fabricated [D.name], but the part outlet is obstructed."

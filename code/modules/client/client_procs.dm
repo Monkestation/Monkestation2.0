@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 #ifndef TESTING
-	if (lowertext(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
+	if (LOWER_TEXT(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
 		return
 #endif
 
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				to_chat(src, span_danger("[msg]"))
 				return
 
-		var/stl = CONFIG_GET(number/second_topic_limit)
+		var/stl = max(CONFIG_GET(number/second_topic_limit), CONFIG_GET(number/tgui_max_chunk_count))
 		if (stl)
 			var/second = round(world.time, 1 SECONDS)
 			if (!topiclimiter)
@@ -115,7 +115,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
+		if(current_ticket && !usr.client.holder)
+			if(!COOLDOWN_FINISHED(src, current_ticket.client_message_cooldown))
+				to_chat(usr, span_warning("You must wait [COOLDOWN_TIMELEFT(src, current_ticket.client_message_cooldown) * 0.1] seconds before sending another message."))
+				return
+		current_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
+		if(current_ticket)
+			COOLDOWN_START(src, current_ticket.client_message_cooldown, 3 SECONDS)
+		current_ticket?.currently_typing -= ckey
 		return
 
 	if(href_list["commandbar_typing"])
@@ -302,10 +310,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	prefs.last_id = computer_id //these are gonna be used for banning
 
 	if(fexists(roundend_report_file()))
-		add_verb(src, /client/proc/show_previous_roundend_report)
+		ASSIGN_GAME_VERB(src, /client, show_previous_roundend_report)
 
 	if(fexists("data/server_last_roundend_report.html"))
-		add_verb(src, /client/proc/show_servers_last_roundend_report)
+		ASSIGN_GAME_VERB(src, /client, show_servers_last_roundend_report)
 
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
@@ -352,15 +360,20 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	. = ..() //calls mob.Login()
 
+
 	// Admin Verbs need the client's mob to exist. Must be after ..()
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorization
 	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
+	var/datum/admins/deadmin_datum = GLOB.deadmins[ckey]
 	if (!isnull(admin_datum))
 		admin_datum.associate(src)
 		connecting_admin = TRUE
-	else if(GLOB.deadmins[ckey])
-		add_verb(src, /client/proc/readmin)
+	else if(deadmin_datum && prefs.read_preference(/datum/preference/toggle/autoadmin))
+		connecting_admin = TRUE
+		deadmin_datum.activate()
+	else if(deadmin_datum)
+		ASSIGN_GAME_VERB(src, /client, readmin)
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
@@ -576,13 +589,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+	update_ambience_pref(prefs?.channel_volume["[CHANNEL_AMBIENCE]"])
 
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = get_exp_living(TRUE)
+
+	if(((player_age != -1) && living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src)))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -885,6 +901,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/check_overwatch()
 	var/failed = FALSE
+	var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
+	var/living_minutes = get_exp_living(TRUE)
 	SSoverwatch.CollectClientData(src)
 	failed = SSoverwatch.HandleClientAccessCheck(src)
 	SSoverwatch.HandleASNbanCheck(src)
@@ -901,11 +919,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(string)
 				string += ", "
 			string += "Mobile Hostspot IP"
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src) && living_minutes < required_living_minutes)
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
-	if(ckey in GLOB.interviews.approved_ckeys)
+	if((ckey in GLOB.interviews.approved_ckeys) || living_minutes >= required_living_minutes)
 		return FALSE
 
 	return failed
@@ -992,11 +1010,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (interviewee)
 		return
 	if(CONFIG_GET(flag/see_own_notes))
-		add_verb(src, /client/proc/self_notes)
+		ASSIGN_GAME_VERB(src, /client, self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
-		add_verb(src, /client/proc/self_playtime)
+		ASSIGN_GAME_VERB(src, /client, self_playtime)
 	if(!CONFIG_GET(flag/forbid_preferences_export))
-		add_verb(src, /client/proc/export_preferences)
+		ASSIGN_GAME_VERB(src, /client, export_preferences)
 
 
 #undef UPLOAD_LIMIT
@@ -1129,6 +1147,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	mob.hud_used.screentip_text.update_view()
 	apply_clickcatcher()
 	mob.reload_fullscreen()
+
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
@@ -1189,6 +1208,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
 
+	var/list/panel_verbs = list()
+	for(var/procpath/verb_to_init as anything in verbstoprocess)
+		if(!verb_to_init || verb_to_init.hidden)
+			continue
+		if(!SSverbs.verbs_by_verb_path[verb_to_init] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+			continue
+		panel_verbs += list(SSverbs.serialize_verb(verb_to_init))
+	tgui_panel?.window?.send_message("verbs/init", list("verbs" = panel_verbs))
+
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())
 		return
@@ -1219,8 +1247,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
-		holder.filteriffic = new /datum/filter_editor(in_atom)
-		holder.filteriffic.ui_interact(mob)
+		holder.filterrific = new /datum/filter_editor(in_atom)
+		holder.filterrific.ui_interact(mob)
 
 ///opens the particle editor UI for the in_atom object for this client
 /client/proc/open_particle_editor(atom/movable/in_atom)
@@ -1297,28 +1325,22 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)
 
-/client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
-	set category = "OOC"
-	set desc = "Stop Current Sounds"
+GAME_VERB_DESC(/client, stop_client_sounds, "Stop Sounds", "Stop Current Sounds", "OOC")
+	current_ambient_sound = null
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	media_player?.stop()
 	GLOB.lobby_media.remove_listener(mob)
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
+GAME_VERB(/client, toggle_fullscreen, "Toggle Fullscreen", "OOC")
 
 	fullscreen = !fullscreen
 
 	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
-/client/verb/toggle_status_bar()
-	set name = "Toggle Status Bar"
-	set category = "OOC"
+GAME_VERB(/client, toggle_status_bar, "Toggle Status Bar", "OOC")
 
 	show_status_bar = !show_status_bar
 

@@ -12,6 +12,8 @@
 	default_button_position = DEFAULT_BLOODSPELLS
 	var/list/spells = list()
 	var/channeling = FALSE
+	/// If the magic has been enhanced somehow, likely due to a crimson medallion.
+	var/magic_enhanced = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -29,7 +31,7 @@
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
 		var/list/position_list = list()
-		for(var/possible_position in 1 to MAX_BLOODCHARGE)
+		for(var/possible_position in 1 to magic_enhanced ? ENHANCED_BLOODCHARGE : MAX_BLOODCHARGE)
 			position_list += possible_position
 		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
 			if(blood_spell.positioned)
@@ -39,7 +41,7 @@
 			if(!moving_button)
 				continue
 			var/first_available_slot = position_list[1]
-			var/our_x = position[1] + first_available_slot * world.icon_size // Offset any new buttons into our list
+			var/our_x = position[1] + first_available_slot * ICON_SIZE_X // Offset any new buttons into our list
 			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
 			blood_spell.positioned = first_available_slot
 
@@ -50,10 +52,10 @@
 		rune = TRUE
 		break
 	if(rune)
-		limit = MAX_BLOODCHARGE
+		limit = magic_enhanced ? ENHANCED_BLOODCHARGE : MAX_BLOODCHARGE
 	if(length(spells) >= limit)
 		if(rune)
-			to_chat(owner, span_cultitalic("You cannot store more than [MAX_BLOODCHARGE] spells. <b>Pick a spell to remove.</b>"))
+			to_chat(owner, span_cultitalic("You cannot store more than [limit] spells. <b>Pick a spell to remove.</b>"))
 		else
 			to_chat(owner, span_cultitalic("<b><u>You cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells without an empowering rune! Pick a spell to remove.</b></u>"))
 		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
@@ -86,10 +88,15 @@
 	else
 		to_chat(owner, span_cultitalic("You are already invoking blood magic!"))
 		return
-	if(do_after(owner, 100 - rune*60, target = owner))
+	var/spell_carving_timer = 10 SECONDS
+	if(rune)
+		spell_carving_timer = 4 SECONDS
+	if(magic_enhanced)
+		spell_carving_timer *= 0.5
+	if(do_after(owner, spell_carving_timer, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.bleed(40 - rune*32)
+			H.bleed(rune ? 8 : 40)
 		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner)
 		new_spell.Grant(owner, src)
 		spells += new_spell
@@ -427,7 +434,7 @@
 /obj/item/melee/blood_magic/stun/cast_spell(mob/living/target, mob/living/carbon/user)
 	if(!istype(target) || IS_CULTIST(target))
 		return
-	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
+	var/datum/antagonist/cult/cultist = GET_CULTIST(user)
 	var/datum/team/cult/cult_team = cultist.get_team()
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),
@@ -540,7 +547,7 @@
 		)
 		to_chat(user, span_userdanger("[target] carefully dodges your [src], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
 		target.balloon_alert(user, "miss!")
-		playsound(target, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(target, 'sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
 	return FALSE
 
@@ -943,18 +950,23 @@
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
 	var/blood_to_gain = 0
 	var/turf/our_turf = get_turf(target)
-	if(our_turf)
-		for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf,2))
-			if(blood_around_us.decal_reagent == /datum/reagent/blood)
-				blood_to_gain += max(blood_around_us.bloodiness * 0.12 * BLOOD_PER_UNIT_MODIFIER, 1)
-				new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
-				qdel(blood_around_us)
-		if(blood_to_gain)
-			user.Beam(our_turf,icon_state="drainbeam", time = 15)
-			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
-			playsound(our_turf, 'sound/magic/enter_blood.ogg', 50)
-			to_chat(user, span_cultitalic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
-			uses += max(1, round(blood_to_gain))
+	if(!our_turf)
+		return
+	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf, 2))
+		// NON-MODULE CHANGE for blood
+		if(blood_around_us.decal_reagent == /datum/reagent/blood || blood_around_us.reagents?.has_reagent(/datum/reagent/blood))
+			blood_to_gain += max(blood_around_us.bloodiness * 0.6 * BLOOD_TO_UNITS_MULTIPLIER, 1)
+			new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
+			qdel(blood_around_us)
+
+	if(!blood_to_gain)
+		return
+
+	user.Beam(our_turf,icon_state="drainbeam", time = 15)
+	new /obj/effect/temp_visual/cult/sparks(get_turf(user))
+	playsound(our_turf, 'sound/magic/enter_blood.ogg', 50)
+	to_chat(user, span_cultitalic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
+	uses += max(1, round(blood_to_gain))
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(IS_CULTIST(user))

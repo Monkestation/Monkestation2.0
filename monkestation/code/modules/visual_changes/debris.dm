@@ -57,7 +57,7 @@
 	INVOKE_ASYNC(src, PROC_REF(on_impact), source, proj)
 
 /datum/element/debris/proc/on_impact(datum/source, obj/projectile/P)
-	var/angle = !isnull(P.Angle) ? P.Angle : round(get_angle(P.starting, source), 1)
+	var/angle = !isnull(P.angle) ? P.angle : round(get_angle(P.starting, source), 1)
 	var/x_component = sin(angle) * debris_velocity
 	var/y_component = cos(angle) * debris_velocity
 	var/x_component_smoke = sin(angle) * -15
@@ -68,7 +68,7 @@
 	smoke_visuals = new(source, /particles/impact_smoke)
 	smoke_visuals.particles.position = list(position_offset, position_offset)
 	smoke_visuals.particles.velocity = list(x_component_smoke, y_component_smoke)
-	if(debris && !((ENERGY == P.armor_flag) || (BULLET == P.armor_flag)))
+	if(debris && !((ENERGY == P.armor_flag) || (BIO == P.armor_flag)))
 		debris_visuals = new(source, /particles/debris)
 		debris_visuals.particles.position = generator(GEN_CIRCLE, position_offset, position_offset)
 		debris_visuals.particles.velocity = list(x_component, y_component)

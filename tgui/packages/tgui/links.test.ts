@@ -1,3 +1,5 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from 'bun:test';
+
 import { captureExternalLinks } from './links';
 
 describe('captureExternalLinks', () => {
@@ -28,7 +30,7 @@ describe('captureExternalLinks', () => {
       parentElement: document.body,
     };
     const byond = { sendMessage: jest.fn() };
-    // @ts-ignore
+    // @ts-expect-error
     global.Byond = byond;
 
     const evt = { target: externalLink, preventDefault: jest.fn() };
@@ -48,7 +50,7 @@ describe('captureExternalLinks', () => {
       parentElement: document.body,
     };
     const byond = { sendMessage: jest.fn() };
-    // @ts-ignore
+    // @ts-expect-error
     global.Byond = byond;
 
     const evt = { target: byondLink, preventDefault: jest.fn() };
@@ -65,7 +67,7 @@ describe('captureExternalLinks', () => {
       parentElement: document.body,
     };
     const byond = { sendMessage: jest.fn() };
-    // @ts-ignore
+    // @ts-expect-error
     global.Byond = byond;
 
     const evt = { target: wwwLink, preventDefault: jest.fn() };

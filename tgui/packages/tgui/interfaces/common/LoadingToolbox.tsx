@@ -1,4 +1,4 @@
-import { Stack, Icon, Dimmer } from '../../components';
+import { Dimmer, Icon, Stack } from '../../components';
 
 type LoadingScreenProps = {
   CustomText?: string;

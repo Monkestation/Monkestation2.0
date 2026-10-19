@@ -58,8 +58,8 @@
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
 
-
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"

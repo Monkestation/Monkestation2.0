@@ -27,6 +27,8 @@
 	/// If TRUE, this action button will be shown to observers / other mobs who view from this action's owner's eyes.
 	/// Used in [/mob/proc/show_other_mob_action_buttons]
 	var/show_to_observers = TRUE
+	/// If TRUE, then observers can trigger this action at any time.
+	var/allow_observer_click = FALSE
 
 	/// The style the button's tooltips appear to be
 	var/buttontooltipstyle = ""
@@ -369,6 +371,7 @@
 /datum/action/proc/create_button()
 	var/atom/movable/screen/movable/action_button/button = new()
 	button.linked_action = src
+	button.allow_observer_click = allow_observer_click
 	build_button_icon(button, ALL, TRUE)
 	return button
 
@@ -426,6 +429,16 @@
 /// Checks if our action is actively selected. Used for selecting icons primarily.
 /datum/action/proc/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return FALSE
+
+/datum/action/proc/begin_creating_bind(mob/user)
+	if(user != owner)
+		return
+	if(!isnull(full_key))
+		full_key = null
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
+		return
+	full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/proc/keydown(mob/source, key, client/client, full_key)
 	SIGNAL_HANDLER

@@ -1,19 +1,30 @@
+// Make sure to add important verbs here to stick when the player is in an interview.
+GLOBAL_LIST_INIT(important_interface_verbs, list(
+	/client/verb/wiki,
+	/client/verb/forum,
+	/client/verb/rules,
+	/client/verb/github,
+	//report issue omitted
+	/client/verb/changelog,
+	/client/verb/hotkeys_help,
+	/client/verb/fix_tgui_panel,
+	/client/verb/refresh_tgui
+))
+
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki()
-	set name = "wiki"
-	set desc = "Type what you want to know about.  This will open the wiki in your web browser. Type nothing to go to the main page."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, wiki, "wiki")
+
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
-		src << link(wikiurl) // monkestation edit
+		if(tgui_alert(src, "This will open the wiki in your browser. Are you sure?",, list("Yes","No"))!="Yes")
+			return
+		src << link(wikiurl)
 	else
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
 	return
 
-/client/verb/forum()
-	set name = "forum"
-	set desc = "Visit the forum."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, forum, "forum")
+
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
 		if(tgui_alert(src, "This will open the forum in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -23,10 +34,8 @@
 		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
 	return
 
-/client/verb/rules()
-	set name = "rules"
-	set desc = "Show Server Rules."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, rules, "rules")
+
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
 		if(tgui_alert(src, "This will open the rules in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -36,10 +45,8 @@
 		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
 	return
 
-/client/verb/github()
-	set name = "github"
-	set desc = "Visit Github"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, github, "github")
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
 		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -49,10 +56,8 @@
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 	return
 
-/client/verb/reportissue()
-	set name = "report-issue"
-	set desc = "Report an issue"
-	set hidden = TRUE
+GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	var/issue_key = CONFIG_GET(string/issue_key)
 	if(!issue_key)
@@ -63,7 +68,7 @@
 		to_chat(src, span_warning("You are not currently allowed to make a bug report through this system."))
 		return
 	var/message = "This will start reporting an issue, gathering some information from the server and your client, before submitting it to github."
-	if(GLOB.revdata.testmerge.len)
+	if(length(GLOB.revdata.testmerge))
 		message += "<br>The following experimental changes are active and may be the cause of any new or sudden issues:<br>"
 		message += GLOB.revdata.GetTestMergeInfo(header = FALSE, hide_silent = FALSE)
 	// We still use tgalert here because some people were concerned that if someone wanted to report that tgui wasn't working
@@ -87,13 +92,13 @@
 		local_template = replacetext(local_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
 
 	// Insert testmerges
-	if(GLOB.revdata.testmerge.len)
+	if(length(GLOB.revdata.testmerge))
 		var/list/all_tms = list()
 		for(var/entry in GLOB.revdata.testmerge)
 			var/datum/tgs_revision_information/test_merge/tm = entry
 			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
 		var/all_tms_joined = all_tms.Join("\n") // for some reason this can't go in the []
-		local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
+		local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\nMaster commit: [GLOB.revdata.originmastercommit]\nCurrent commit: [GLOB.revdata.commit]\n[all_tms_joined]")
 
 	//Collect client info:
 	var/issue_title = input(src, "Please give the issue a title, you will be given another textbox to describe it in detail.","Issue Title") as text|null
@@ -111,7 +116,7 @@
 	Key:[ckey]\n\
 	\
 	"
-	var/issue_body = "Reporting client info: [client_info]\n\n[local_template]"
+	var/issue_body = "[client_info]\n\n[local_template]"
 	var/list/body_structure = list(
 		"title" = issue_title,
 		"body" = issue_body
@@ -155,9 +160,8 @@
 	SEND_SOUND(src, 'sound/misc/compiler-stage2.ogg')
 	to_chat(src, span_notice("Bug submitted successfully."))
 
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
+GAME_VERB(/client, changelog, "Changelog", "OOC")
+
 	if(!GLOB.changelog_tgui)
 		GLOB.changelog_tgui = new /datum/changelog()
 
@@ -167,11 +171,20 @@
 		prefs.save_preferences()
 		winset(src, "infobuttons.changelog", "font-style=;")
 
-/client/verb/hotkeys_help()
-	set name = "Hotkeys Help"
-	set category = "OOC"
+GAME_VERB(/client, hotkeys_help, "Hotkeys Help", "OOC")
 
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
+
+GAME_VERB(/client, show_tickets, "Tickets", "Admin")
+
+	if(!holder)
+		if(current_ticket && current_ticket.state == AHELP_ACTIVE)
+			current_ticket.TicketPanel()
+			return
+		to_chat(src, span_danger("You have no open tickets!"))
+		return
+
+	GLOB.ahelp_tickets.ui_interact(mob)

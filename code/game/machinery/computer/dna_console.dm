@@ -302,8 +302,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/dna_console/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		stored_research = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		stored_research = buffer
 	return TRUE
 
 /obj/machinery/computer/dna_console/click_alt(mob/user)
@@ -434,7 +435,6 @@
 			data["subjectStatus"] = scanner_occupant.stat
 		data["subjectHealth"] = scanner_occupant.health
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
-		data["isMonkey"] = ismonkey(scanner_occupant)
 		data["subjectUNI"] = scanner_occupant.dna.unique_identity
 		data["subjectUF"] = scanner_occupant.dna.unique_features
 		data["storage"]["occupant"] = tgui_occupant_mutations
@@ -1034,6 +1034,10 @@
 			if(!original)
 				return
 
+			if(length(original.sources) && get_mutation_class(original) == SCANNER_MUTATION_CLASS_OTHER)
+				say("ERROR: This mutation is anomalous, and cannot be saved.")
+				return
+
 			diskette.mutations += original.make_copy()
 
 			to_chat(usr,span_notice("Mutation successfully stored to disk."))
@@ -1346,7 +1350,7 @@
 				"UE"=scanner_occupant.dna.unique_enzymes,
 				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
-				"blood_type"="[GLOB.blood_types[scanner_occupant.dna.human_blood_type]]")
+				"blood_type"=scanner_occupant.get_bloodtype()?.name)
 
 			return
 
@@ -1833,7 +1837,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.human_blood_type = blood_name_to_blood_type(buffer_slot["blood_type"])
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1851,7 +1855,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.human_blood_type = blood_name_to_blood_type(buffer_slot["blood_type"])
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1888,7 +1892,9 @@
 		//    this DNA can not be bad
 		//   is done via genetic damage bursts, so genetic damage immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
-	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
+	if(HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) || !scanner_occupant.has_dna()) // what is there to modify if there is no genes? - NK
+		return FALSE
+	if(!HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level >= 3))
 		return TRUE
 
 	return FALSE

@@ -77,10 +77,6 @@
 ///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
 #define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
-///defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
-#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
-///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
-#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
@@ -149,6 +145,17 @@
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 
+/// From /mob/living/carbon/human/get_visible_name(): (list/identity)
+#define COMSIG_HUMAN_GET_VISIBLE_NAME "human_get_visible_name"
+	/// Index for the visible face name.
+	#define VISIBLE_NAME_FACE 1
+	/// Index for the visible ID name.
+	#define VISIBLE_NAME_ID 2
+	/// Index for the priority of a forced name override.
+	#define VISIBLE_NAME_FORCED 3
+/// From /mob/living/carbon/human/get_id_name(); sent only while the mob has TRAIT_UNKNOWN: (list/identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
+
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
@@ -171,3 +178,19 @@
 #define COMSIG_MUTATION_GAINED "mutation_gained"
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
+
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting)
+#define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
+#define COMSIG_HUMAN_PUNCHED "human_punched"
+
+#define COMSIG_CARBON_EQUIP_EARS "carbon_ears_equip"
+#define COMSIG_CARBON_UNEQUIP_EARS "carbon_ears_unequip"
+
+///Sent to carbon when they pickup something (/obj/item)
+#define COMSIG_CARBON_ITEM_PICKED_UP "carbon_item_picked_up"
+#define COMSIG_HUMAN_BEGIN_DUEL "human_begin_duel"
+#define COMSIG_HUMAN_END_DUEL "human_end_duel"
+
+/// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"

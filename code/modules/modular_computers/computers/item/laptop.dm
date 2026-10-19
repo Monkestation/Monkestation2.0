@@ -53,10 +53,7 @@
 	else
 		return ..()
 
-/obj/item/modular_computer/laptop/verb/open_computer()
-	set name = "Toggle Open"
-	set category = "Object"
-	set src in view(1)
+GAME_VERB_SRC(/obj/item/modular_computer/laptop, open_computer, view(1), "Toggle Open", "Object")
 
 	try_toggle_open(usr)
 
@@ -77,8 +74,9 @@
 
 	toggle_open(user)
 
-
 /obj/item/modular_computer/laptop/click_alt(mob/user)
+	if(remove_id(user))
+		return CLICK_ACTION_SUCCESS
 	if(!screen_on)
 		return CLICK_ACTION_BLOCKING
 	try_toggle_open(user) // Close it.

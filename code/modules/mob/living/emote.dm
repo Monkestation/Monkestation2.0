@@ -71,7 +71,7 @@
 	key = "collapse"
 	key_third_person = "collapses"
 	message = "collapses!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/collapse/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -360,11 +360,11 @@
 	if(!issilicon(user))
 		return
 	return pick(
-		'monkestation/sound/voice/screams/silicon/robotAUGH1.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH2.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH3.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH4.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH5.ogg')
+		'sound/voice/screams/silicon/robotAUGH1.ogg',
+		'sound/voice/screams/silicon/robotAUGH2.ogg',
+		'sound/voice/screams/silicon/robotAUGH3.ogg',
+		'sound/voice/screams/silicon/robotAUGH4.ogg',
+		'sound/voice/screams/silicon/robotAUGH5.ogg')
 monkestation edit end */
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
@@ -404,7 +404,7 @@ monkestation edit end */
 	key_third_person = "sighs"
 	message = "sighs."
 	message_mime = "acts out an exaggerated silent sigh."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/sigh/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
@@ -482,7 +482,7 @@ monkestation edit end */
 	key = "surrender"
 	key_third_person = "surrenders"
 	message = "puts their hands on their head and falls to the ground, they surrender%s!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
 	. = ..()

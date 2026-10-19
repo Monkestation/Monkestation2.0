@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
 		user.visible_message(span_notice("[user] drops [weapon] into [src]."), span_notice("You dissolve [weapon] in [src]."))
-		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transfered_by = user)
+		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transferred_by = user)
 		qdel(weapon)
 		return
 	// Make sure we have cooking oil
@@ -144,6 +144,11 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 	use_energy(active_power_usage)
 */
+
+/obj/machinery/deepfryer/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == frying)
+		reset_frying()
 
 /obj/machinery/deepfryer/proc/blow_up()
 	visible_message(span_userdanger("[src] blows up from the entropic reaction!"))

@@ -3,13 +3,13 @@
 
 /datum/round_event_control/wizard/shuffleloc //Somewhere an AI is crying
 	name = "Change Places!"
-	weight = 2
+	weight = 1
 	typepath = /datum/round_event/wizard/shuffleloc
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
 	description = "Shuffles everyone around on the station."
 	min_wizard_trigger_potency = 0
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
@@ -84,7 +84,7 @@
 	name = "Change Minds!"
 	weight = 1
 	typepath = /datum/round_event/wizard/shuffleminds
-	max_occurrences = 3
+	max_occurrences = 0 //admin only, replaced with the swappers event
 	earliest_start = 0 MINUTES
 	description = "Shuffles the minds of everyone around the station, except for the wizard."
 

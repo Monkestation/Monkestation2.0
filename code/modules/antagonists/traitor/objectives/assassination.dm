@@ -112,6 +112,8 @@
 	var/target_area = get_area(possible_target.current)
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
 		return FALSE
+	if(possible_target.assigned_role.job_flags & JOB_CANNOT_BE_TARGET)
+		return FALSE
 	//removes heads of staff from being targets from non heads of staff assassinations, and vice versa
 	if(heads_of_staff)
 		if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))

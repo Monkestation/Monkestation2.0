@@ -4,7 +4,7 @@
 	if(map)
 		return
 	///we load a blank map before we edit it each tile is a 2x2 pixel so map size is 510
-	map = icon('monkestation/icons/misc/map_files.dmi', "blank_map")
+	map = icon('icons/misc/map_files.dmi', "blank_map")
 
 	var/turf_color
 	///brutal

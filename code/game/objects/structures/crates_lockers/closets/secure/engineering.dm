@@ -12,6 +12,7 @@
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/holosign_creator/atmos(src)
+	new /obj/item/storage/box/smart_metalfoam(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/door_remote/chief_engineer(src)
 	new /obj/item/storage/lockbox/medal/engineering(src)
@@ -39,12 +40,12 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/inducer = 2,
 		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/electronics/apc = 3,
 		/obj/item/multitool = 3)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/structure/closet/secure_closet/engineering_electrical/populate_contents_immediate()
 	. = ..()
@@ -64,6 +65,8 @@
 		new /obj/item/clothing/head/utility/welding(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weldingtool(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/cup/fuelcanister/full(src)
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
@@ -118,7 +121,7 @@
 
 /obj/structure/closet/secure_closet/shipbreaker/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/storage/toolbox/electrical = 1,
 		/obj/item/melee/sledgehammer = 1,
 		/obj/item/weldingtool/electric/raynewelder = 1,
@@ -126,7 +129,7 @@
 		/obj/item/storage/toolbox/mechanical = 1,
 		/obj/item/tank/jetpack/void = 1,
 		/obj/item/extinguisher = 1,)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/structure/closet/secure_closet/shipbreaker/populate_contents_immediate()
 	. = ..()

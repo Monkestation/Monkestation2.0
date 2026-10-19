@@ -155,7 +155,7 @@
 
 ///Returns a list of chemical_reaction datums that have the input STRING as a product
 /proc/get_reagent_type_from_product_string(string)
-	var/input_reagent = replacetext(lowertext(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+	var/input_reagent = replacetext(LOWER_TEXT(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
 	if (isnull(input_reagent))
 		return
 
@@ -180,30 +180,28 @@
 	else
 		return null
 
-///Returns a random reagent object minus blacklisted reagents
+///Returns a random reagent path minus blacklisted reagents
 /proc/get_random_reagent_id()
-	var/static/list/random_reagents = list()
-	if(!random_reagents.len)
+	var/static/list/random_reagents
+	if(!length(random_reagents))
+		random_reagents = list()
 		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
 			if(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
 				random_reagents += reagent_path
-	var/picked_reagent = pick(random_reagents)
-	return picked_reagent
+	return pick(random_reagents)
 
-///Returns a random reagent object minus blacklisted reagents
+///Returns a random reagent path
 /proc/get_random_reagent_id_unrestricted()
-	var/static/list/random_reagents = list()
-	if(!random_reagents.len)
-		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
-			random_reagents += reagent_path
-	var/picked_reagent = pick(random_reagents)
-	return picked_reagent
+	var/static/list/random_reagents
+	if(!length(random_reagents))
+		random_reagents = subtypesof(/datum/reagent)
+	return pick(random_reagents)
 
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		if(ckey(chem_name) == ckey(lowertext(R.name)))
+		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
 			return X
 
 ///Takes a type in and returns a list of associated recipes

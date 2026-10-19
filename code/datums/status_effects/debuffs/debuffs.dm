@@ -45,6 +45,10 @@
 	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
 	var/prevent_drop = FALSE
 
+/datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, prevent_drop)
+	src.prevent_drop = prevent_drop
+	return ..()
+
 /datum/status_effect/incapacitating/knockdown/on_apply()
 	. = ..()
 	if(!.)
@@ -432,9 +436,9 @@
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
-	new /obj/effect/temp_visual/bleed/explode(owner.loc)
-	for(var/d in GLOB.alldirs)
-		owner.do_splatter_effect(d)
+	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
+	for(var/splatter_dir in GLOB.alldirs)
+		owner.create_splatter(splatter_dir)
 	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
@@ -558,7 +562,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
-	C.preparePixelProjectile(owner, spawn_turf)
+	C.aim_projectile(owner, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -587,7 +591,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
 	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
-	pro.preparePixelProjectile(owner, spawn_turf)
+	pro.aim_projectile(owner, spawn_turf)
 	pro.fire()
 
 /datum/status_effect/gonbola_pacify
@@ -614,6 +618,7 @@
 	tick_interval = 10
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 	var/stun = TRUE
+	var/cause_hypnotism = TRUE
 	var/hypnosis_type = /datum/brain_trauma/hypnosis
 
 /atom/movable/screen/alert/status_effect/trance
@@ -629,7 +634,8 @@
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
+	if(cause_hypnotism)
+		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
@@ -654,7 +660,7 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
@@ -671,6 +677,10 @@
 /// Only difference is the resulting trauma can't be cured via nanites/viruses.
 /datum/status_effect/trance/hardened
 	hypnosis_type = /datum/brain_trauma/hypnosis/hardened
+
+///Just for the effects and not the trauma.
+/datum/status_effect/trance/no_hypno
+	cause_hypnotism = FALSE
 
 /datum/status_effect/spasms
 	id = "spasms"
@@ -807,7 +817,7 @@
 		owner.gib() //fuck you in particular
 		return
 	var/mob/living/carbon/human/H = owner
-	H.something_horrible(kill_either_way)
+	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)
 
 /atom/movable/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
@@ -924,7 +934,7 @@
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
-				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
+				INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, say), "AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
 

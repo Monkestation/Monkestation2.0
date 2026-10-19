@@ -228,16 +228,18 @@
 
 
 
-/obj/item/seeds/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
-	if(istype(Proj, /obj/projectile/energy/flora/yield))
-		var/rating = 1
-		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
-			adjust_yield(1 * rating)
-		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
-			adjust_yield(1 * rating)
-	else
+/obj/item/seeds/bullet_act(obj/projectile/proj) //Works with the Somatoray to modify plant variables.
+	if(!istype(proj, /obj/projectile/energy/flora/yield))
 		return ..()
-
+	var/rating = 1
+	if(istype(loc, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/H = loc
+		rating = H.rating
+	if(yield == 0)//Oh god don't divide by zero you'll doom us all.
+		adjust_yield(1 * rating)
+	else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+		adjust_yield(1 * rating)
+	return BULLET_ACT_HIT
 
 // Harvest procs
 /obj/item/seeds/proc/getYield()
@@ -345,7 +347,7 @@
 				var/amount = max(1, round(grown_edible_volume * potency_rate * reagents_add[rid] * fitting_proportion, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
 				var/list/data
 				if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-					data = list("blood_type" = /datum/blood_type/crew/human/o_minus)
+					data = list("blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS))
 				if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 					data = grown_edible.tastes // apple tastes of apple.
 				T.reagents.add_reagent(rid, amount, data)
@@ -578,7 +580,7 @@
 					return
 				if(!user.can_perform_action(src))
 					return
-				name = "[lowertext(newplantname)]"
+				name = "[LOWER_TEXT(newplantname)]"
 				plantname = newplantname
 			if("Seed Description")
 				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)

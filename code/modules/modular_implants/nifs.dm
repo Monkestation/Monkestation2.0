@@ -87,7 +87,7 @@
 
 	//Software Variables
 	///How many programs can the NIF store at once?
-	var/max_nifsofts = 5
+	var/max_nifsofts = 20
 	///What programs are currently loaded onto the NIF?
 	var/list/loaded_nifsofts = list()
 	///What programs come already installed on the NIF?
@@ -298,7 +298,7 @@
 					linked_mob.adjust_disgust(25)
 				if(2)
 					to_chat(linked_mob, span_warning("You feel a wave of fatigue roll over you!"))
-					linked_mob.stamina?.adjust(-50)
+					linked_mob.stamina?.adjust(-25)
 
 		if(NIF_CALIBRATION_STAGE_FINISHED to INFINITY)
 			send_message("The calibration process is complete.")
@@ -470,7 +470,7 @@
 /datum/component/nif_examine/proc/add_examine(mob/nif_user, mob/looker, list/examine_texts)
 	SIGNAL_HANDLER
 
-	examine_texts += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT(nif_examine_text)]")
+	examine_texts += span_purple("<hr>[EXAMINE_HINT(nif_examine_text)]")
 
 ///Checks to see if a human with a NIF has the nifsoft_to_find type of NIFSoft installed?
 /mob/living/carbon/human/proc/find_nifsoft(datum/nifsoft/nifsoft_to_find)
@@ -491,14 +491,14 @@
 
 	insert_all_icons("nif", 'monkestation/code/modules/blueshift/icons/chat.dmi')
 
-/obj/item/autosurgeon/organ/nif
+/obj/item/autosurgeon/nif
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/standard
 	uses = 1
 
 /obj/item/organ/internal/cyberimp/brain/nif/debug
 	is_calibrated = TRUE
 
-/obj/item/autosurgeon/organ/nif/debug
+/obj/item/autosurgeon/nif/debug
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/debug
 	uses = 1
 
@@ -513,7 +513,7 @@
 	illustration = "disk_kit"
 
 /obj/item/storage/box/nif_ghost_box/PopulateContents()
-	new /obj/item/autosurgeon/organ/nif/ghost_role(src)
+	new /obj/item/autosurgeon/nif/ghost_role(src)
 	new /obj/item/disk/nifsoft_uploader/soulcatcher(src)
 	new /obj/item/disk/nifsoft_uploader/money_sense(src)
 

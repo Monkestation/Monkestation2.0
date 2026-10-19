@@ -52,7 +52,7 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = REGALRAT_INTERACTION)
 	AddComponent(\
@@ -93,9 +93,9 @@
 
 /mob/living/basic/regal_rat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
-	if(stat == DEAD || isnull(environment) || isnull(environment.gases[/datum/gas/miasma]))
+	if(stat == DEAD || isnull(environment) || isnull(environment.moles[/datum/gas/miasma]))
 		return
-	var/miasma_percentage = environment.gases[/datum/gas/miasma][MOLES] / environment.total_moles()
+	var/miasma_percentage = environment.moles[/datum/gas/miasma] / environment.total_moles()
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
