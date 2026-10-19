@@ -1,6 +1,7 @@
 /// Makes any heretic blade the parent holds channel the moon amulet's effect instead of doing damage
 /datum/component/moon_blade_channel
 	dupe_mode = COMPONENT_DUPE_SOURCES
+	/// List of possible sounds.
 	var/static/list/possible_sounds = list(
 		'sound/items/SitcomLaugh1.ogg',
 		'sound/items/SitcomLaugh2.ogg',
