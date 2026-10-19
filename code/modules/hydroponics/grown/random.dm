@@ -58,6 +58,7 @@
 		/datum/reagent/prefactor_b,
 		/datum/reagent/reaction_agent,
 		/datum/reagent/spider_extract,
+		/datum/reagent/toxin/fakebeer, // monkestation edit
 	))
 
 /obj/item/seeds/random/lesser/pick_reagent()
