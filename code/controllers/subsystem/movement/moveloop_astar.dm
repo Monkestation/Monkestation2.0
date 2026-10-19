@@ -69,7 +69,9 @@
 	// the path starts where we asked from, and we kept walking the old one while A* thought about it
 	if(length(path) && moving)
 		var/current_index = path.Find(get_turf(moving))
-		path.Cut(1, max(current_index, 1) + 1)
+		if(!current_index)
+			return ..(null)
+		path.Cut(1, current_index + 1)
 	return ..()
 
 /datum/move_loop/has_target/jps/astar/move()
@@ -86,6 +88,10 @@
 	var/turf/old_turf = get_turf(moving)
 	// stairs only lift you when you walk off the top step, so a step up is a flat step that way
 	var/turf/flat_step = next_step.z == old_turf.z ? next_step : locate(next_step.x, next_step.y, old_turf.z)
+	if(get_dist(old_turf, flat_step) > 1)
+		movement_path = null
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE
 	moving.Move(flat_step, get_dir(moving, flat_step))
 	if(QDELETED(moving))
 		return MOVELOOP_FAILURE
