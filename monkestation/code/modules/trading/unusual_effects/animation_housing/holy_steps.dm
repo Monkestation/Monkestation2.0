@@ -1,7 +1,7 @@
 /datum/component/particle_spewer/movement/holy_steps
 	unusual_description = "holy treads"
 	duration = 5 SECONDS
-	burst_amount = 25
+	burst_amount = 26
 	icon_file = 'goon/icons/effects/particles.dmi'
 	particle_state = "starsmall"
 

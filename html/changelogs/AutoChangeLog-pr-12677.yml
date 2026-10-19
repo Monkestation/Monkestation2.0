@@ -1,0 +1,5 @@
+author: "AberrantQuerist"
+delete-after: True
+changes:
+  - balance: "Gene splicer takes into account if traits are removable."
+  - balance: "Plant force exceeding 25 will increase chances of unpreventable backfiring."
