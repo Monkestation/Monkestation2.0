@@ -18,10 +18,10 @@
 	m180.Turn(180)
 	animate(L, transform = m180, time = 3)
 
-/datum/reagent/australium/reagent_fire(obj/item/reagent_containers/host)
-	for(var/datum/reagent/listed_reagent in host.reagents.reagent_list)
+/datum/reagent/australium/reagent_fire(datum/reagents/holder)
+	for(var/datum/reagent/listed_reagent in holder.reagent_list)
 		if(!(isnull(listed_reagent.inverse_chem) || listed_reagent.inverse_chem == /datum/reagent/inverse ))
 			var/listed_volume = listed_reagent.volume
 			var/datum/reagent/inverse_reagent = listed_reagent.inverse_chem
-			host.reagents.remove_reagent(listed_reagent.type, listed_volume)
-			host.reagents.add_reagent(inverse_reagent, listed_volume)
+			holder.remove_reagent(listed_reagent.type, listed_volume)
+			holder.add_reagent(inverse_reagent, listed_volume)
