@@ -116,7 +116,7 @@
 /obj/projectile/beam/laser/musket/syndicate
 	name = "resonant laser"
 	damage = 30
-	stamina = 32.5
+	stamina = 0
 	weak_against_armour = FALSE
 	armour_penetration = 45 //less powerful than armor piercing rounds
 	wound_bonus = 10
