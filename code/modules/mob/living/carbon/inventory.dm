@@ -129,7 +129,9 @@
 
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
-	return item.on_equipped(src, slot, initial)
+	. = item.on_equipped(src, slot, initial)
+	// The item only counts as equipped from here on, so the slots it hides have to be redrawn now
+	update_obscured_slots(item.flags_inv)
 
 /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.

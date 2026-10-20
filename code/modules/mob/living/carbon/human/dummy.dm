@@ -112,7 +112,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/has_equipped(obj/item/item, slot, initial = FALSE)
 	item.item_flags |= IN_INVENTORY
-	return item.visual_equipped(src, slot, initial)
+	. = item.visual_equipped(src, slot, initial)
+	update_obscured_slots(item.flags_inv)
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
