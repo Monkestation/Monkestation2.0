@@ -3,28 +3,29 @@
 	limb_id = SPECIES_SATYR
 	is_dimorphic = TRUE
 	head_flags = HEAD_HAIR | HEAD_FACIAL_HAIR | HEAD_EYESPRITES | HEAD_EYECOLOR | HEAD_EYEHOLES | HEAD_DEBRAIN
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_DIGITIGRADE
 
 /obj/item/bodypart/chest/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
 	is_dimorphic = TRUE
-	acceptable_bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	acceptable_bodytype = BODYTYPE_ORGANIC
+	acceptable_bodyshape = BODYSHAPE_DIGITIGRADE
 
 /obj/item/bodypart/arm/left/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_DIGITIGRADE
 
 /obj/item/bodypart/arm/right/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_DIGITIGRADE
 
 /obj/item/bodypart/leg/left/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
-	bodytype = BODYTYPE_DIGITIGRADE | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_DIGITIGRADE
 	bodypart_traits = list(TRAIT_HARD_SOLES, TRAIT_NON_IMPORTANT_SHOE_BLOCK)
 	step_sounds = list(
 		'sound/effects/footstep/hardclaw1.ogg',
@@ -37,7 +38,7 @@
 /obj/item/bodypart/leg/right/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
-	bodytype = BODYTYPE_DIGITIGRADE | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_DIGITIGRADE
 	bodypart_traits = list(TRAIT_HARD_SOLES, TRAIT_NON_IMPORTANT_SHOE_BLOCK)
 	step_sounds = list(
 		'sound/effects/footstep/hardclaw1.ogg',
