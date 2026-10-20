@@ -49,6 +49,10 @@
 	var/list/inbuilt_modules = list()
 	/// Allowed items in the chestplate's suit storage.
 	var/list/allowed_suit_storage = list()
+	///	associated list with parts to assemble a sprite from code. Check CERULEAN_MODSUIT_GEN_FILE for existing parts to pick from. Sprites at the top of the list load first.
+	var/list/cerulean_tail_palette
+	/// the color given for the flippers which female physique Ceruleans have, when the modsuit is sealed. FLIPPERS autogenerates
+	var/cerulean_flipper_palette = FLIPPERS
 	/// List of skins with their appropriate clothing flags.
 	var/list/skins = list(
 		"standard" = list(

@@ -11,6 +11,7 @@
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
+	bodyshapes_with_variations = NONE
 
 
 /datum/armor/eva_plasmaman

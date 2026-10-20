@@ -8,8 +8,6 @@
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -49,6 +47,8 @@
 	var/mutable_appearance/accessory_overlay
 	/// A weak reference to the current accessory that's providing armor.
 	var/datum/weakref/current_armored_accessory
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK|CLOTHING_CERULEAN_MASK_LEGS
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 
 /datum/armor/clothing_under
 	bio = 10
@@ -177,7 +177,7 @@
 
 /obj/item/clothing/under/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
-	return replace_icon_legs(base_icon, legs)
+	return apply_icon_mask(base_icon, LEGS_MASK, legs)
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()

@@ -76,6 +76,7 @@
 	var/thermal_on = FALSE
 	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
+	cerulean_flipper_palette = FLIPPERS
 
 /datum/armor/suit_space
 	bio = 100

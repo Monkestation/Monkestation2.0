@@ -187,6 +187,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	palette.mutant_color_secondary = COLOR_VIBRANT_LIME
 	palette.ethereal_color = COLOR_WHITE
 	target.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
+	target.dna.features["fish_tail_color"] = "#8AC7ED"
 	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly
 	// In practice this doesn't matter, but this is for the sake of 100%(ish) consistency
 	var/static/consistent_UF

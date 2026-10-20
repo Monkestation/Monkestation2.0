@@ -8,6 +8,7 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /datum/armor/under_syndicate
 	melee = 10
@@ -42,6 +43,7 @@
 	armor_type = /datum/armor/syndicate_bloodred
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/syndicate_bloodred
 	melee = 10
@@ -72,6 +74,7 @@
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/syndicate_tacticool
 	stubborn_stains = TRUE
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 
 /datum/armor/syndicate_tacticool
 	bio = 10
@@ -118,6 +121,7 @@
 	icon_state = "tactical_suit"
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/camo
 	name = "camouflage fatigues"
@@ -125,6 +129,7 @@
 	icon_state = "camogreen"
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/floortilecamo
 	name = "floor-tile camouflage fatigues"
@@ -133,8 +138,8 @@
 	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
 	flags_inv = HIDEMUTWINGS
-	supports_variations_flags = NONE
 	ignore_mob_height_adjustments = TRUE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
@@ -143,6 +148,7 @@
 	can_adjust = FALSE
 	armor_type = /datum/armor/syndicate_soviet
 	resistance_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/syndicate_soviet
 	melee = 10
@@ -153,6 +159,7 @@
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
 	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
@@ -161,6 +168,7 @@
 	can_adjust = FALSE
 	armor_type = /datum/armor/syndicate_rus_army
 	resistance_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/syndicate_rus_army
 	melee = 5
@@ -174,6 +182,7 @@
 	icon_state = "scrubswine"
 	can_adjust = FALSE
 	armor_type = /datum/armor/syndicate_scrubs
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/syndicate_scrubs
 	melee = 10

@@ -28,17 +28,19 @@
 	SIGNAL_HANDLER
 
 	var/datum/status_effect/organ_set_bonus/set_bonus = receiver.has_status_effect(bonus_type)
+	var/visuals_only = isdummy(receiver) //todo: COMSIG_ORGAN_IMPLANTED signals: movement_flags & VISUAL_ONLY
 	if(!set_bonus)
 		set_bonus = receiver.apply_status_effect(bonus_type)
-	set_bonus.set_organs(set_bonus.organs + 1)
+	set_bonus.set_organs(set_bonus.organs + 1, target, visuals_only)
 
 /datum/element/organ_set_bonus/proc/on_removed(obj/item/organ/target, mob/living/carbon/loser)
 	SIGNAL_HANDLER
 
 	//get status effect or remove it
 	var/datum/status_effect/organ_set_bonus/set_bonus = loser.has_status_effect(bonus_type)
+	var/visuals_only = isdummy(loser)
 	if(set_bonus)
-		set_bonus.set_organs(set_bonus.organs - 1)
+		set_bonus.set_organs(set_bonus.organs - 1, target, visuals_only)
 
 /datum/status_effect/organ_set_bonus
 	id = "organ_set_bonus"
@@ -62,17 +64,17 @@
 	/// Color priority for limb texture
 	var/color_overlay_priority
 
-/datum/status_effect/organ_set_bonus/proc/set_organs(new_value)
+/datum/status_effect/organ_set_bonus/proc/set_organs(new_value, obj/item/organ/organ, visuals_only)
 	organs = new_value
 	if(!organs) //initial value but won't kick in without calling the setter
 		qdel(src)
 	if(organs >= organs_needed)
 		if(!bonus_active)
-			INVOKE_ASYNC(src, PROC_REF(enable_bonus))
+			INVOKE_ASYNC(src, PROC_REF(enable_bonus), organ, visuals_only)
 	else if(bonus_active)
-		INVOKE_ASYNC(src, PROC_REF(disable_bonus))
+		INVOKE_ASYNC(src, PROC_REF(disable_bonus), organ, visuals_only)
 
-/datum/status_effect/organ_set_bonus/proc/enable_bonus()
+/datum/status_effect/organ_set_bonus/proc/enable_bonus(obj/item/organ/inserted_organ, visuals_only)
 	SHOULD_CALL_PARENT(TRUE)
 	if(required_biotype)
 		if(!(owner.mob_biotypes & required_biotype))
@@ -101,7 +103,7 @@
 	carbon_owner.update_body()
 	return TRUE
 
-/datum/status_effect/organ_set_bonus/proc/disable_bonus()
+/datum/status_effect/organ_set_bonus/proc/disable_bonus(obj/item/organ/removed_organ, visuals_only)
 	SHOULD_CALL_PARENT(TRUE)
 	bonus_active = FALSE
 	if(length(bonus_traits))

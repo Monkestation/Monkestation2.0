@@ -52,3 +52,13 @@
 	unit_name = "cat ears"
 	export_types = list(/obj/item/organ/internal/ears/cat)
 
+/datum/export/organ/fish_tail
+	cost = CARGO_CRATE_VALUE * 1.5
+	unit_name = "fish tail"
+	export_types = list(/obj/item/organ/external/tail/fish)
+
+/datum/export/organ/fish_tail/big
+	cost = CARGO_CRATE_VALUE * 2
+	unit_name = "huge fish tail"
+	export_types = list(/obj/item/organ/external/tail/fish/cerulean)
+

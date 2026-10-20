@@ -2628,6 +2628,19 @@ MONKESTATION EDIT
 	center = TRUE
 	dimension_x = 36
 
+//cerulean species fish tails
+/datum/sprite_accessory/tails/fish/cerulean
+	name = "Cerulean"
+	icon = 'icons/mob/species/cerulean/cerulean_tails.dmi'
+	icon_state = "default"
+	gender_specific = TRUE
+	locked = TRUE
+
+/datum/sprite_accessory/tails/fish/cerulean/skeleton
+	name = "Cerulean Skeleton"
+	icon_state = "skeleton"
+	color_src = NONE
+
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'

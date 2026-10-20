@@ -280,6 +280,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STRONG_STOMACH "strong_stomach"
 /// Mobs with this trait enjoy seafood, even when raw
 #define TRAIT_FISH_EATER "fish_eater"
+/// Do not allow legs to be attached to a mob with this trait
+#define TRAIT_BLOCK_ATTACHING_LEGS "block_attaching_legs"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -860,6 +862,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Required by the waddling element since there are multiple sources of it.
 #define TRAIT_WADDLING "trait_waddling"
+/// To be used combined with TRAIT_FLOPPING, to make a mob flop exclusively when laying on the floor.
+#define TRAIT_FLOOR_FLOPPING "trait_floor_flopping"
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"

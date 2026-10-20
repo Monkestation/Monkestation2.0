@@ -702,6 +702,15 @@
 	taste_description = "flowers"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
+/datum/reagent/mutationtoxin/cerulean
+	name = "Cerulean Mutation Toxin"
+	description = "A fishy toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/human/cerulean
+	taste_description = "salt and fish oil"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
 /datum/reagent/mutationtoxin/jelly
 	name = "Imperfect Mutation Toxin"
 	description = "A jellyfying toxin."

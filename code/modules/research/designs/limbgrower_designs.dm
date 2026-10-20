@@ -133,6 +133,13 @@
 	build_path = /obj/item/organ/external/tail/cat
 	category = list(RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_INITIAL) // Monkestation Edit:
 
+/datum/design/oversized_fish_tail
+	name = /obj/item/organ/external/tail/fish/cerulean::name
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
+	build_path = /obj/item/organ/external/tail/fish/cerulean
+	category = list(SPECIES_CERULEAN)
+
 /datum/design/cat_ears
 	name = "Cat Ears"
 	id = "catears"
@@ -149,6 +156,13 @@
 	build_path = /obj/item/organ/internal/lungs/plasmaman
 	category = list(SPECIES_PLASMAMAN)
 
+/datum/design/fish_lungs
+	name = /obj/item/organ/internal/lungs/fish::name
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/lungs/fish
+	category = list(SPECIES_CERULEAN)
+
 /datum/design/plasmaman_tongue
 	name = "Plasma Bone Tongue"
 	id = "plasmamantongue"
@@ -157,6 +171,13 @@
 	build_path = /obj/item/organ/internal/tongue/bone/plasmaman
 	category = list(SPECIES_PLASMAMAN)
 
+/datum/design/fish_tongue
+	name = /obj/item/organ/internal/tongue/fish::name
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/tongue/fish
+	category = list(SPECIES_CERULEAN)
+
 /datum/design/plasmaman_liver
 	name = "Reagent Processing Crystal"
 	id = "plasmamanliver"
@@ -164,6 +185,13 @@
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/toxin/plasma = 20)
 	build_path = /obj/item/organ/internal/liver/bone/plasmaman
 	category = list(SPECIES_PLASMAMAN)
+
+/datum/design/fish_liver
+	name = /obj/item/organ/internal/liver/fish::name
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/liver/fish
+	category = list(SPECIES_CERULEAN)
 
 /datum/design/plasmaman_stomach
 	name = "Digestive Crystal"
@@ -180,6 +208,13 @@
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity = 20)
 	build_path = /obj/item/organ/internal/stomach/ethereal
 	category = list(SPECIES_ETHEREAL)
+
+/datum/design/fish_stomach
+	name = /obj/item/organ/internal/stomach/fish::name
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/stomach/fish
+	category = list(SPECIES_CERULEAN)
 
 /datum/design/ethereal_tongue
 	name = "Electrical Discharger"
@@ -268,3 +303,12 @@
 	desc = "Contains designs for ethereal organs for the limbgrower - Ethereal tongue and stomach."
 	id = "limbdesign_ethereal"
 	build_path = /obj/item/disk/design_disk/limbs/ethereal
+
+/obj/item/disk/design_disk/limbs/cerulean
+	name = "Cerulean Organ Design Disk"
+	blueprints = list(/datum/design/fish_stomach, /datum/design/fish_liver, /datum/design/fish_lungs, /datum/design/fish_tongue, /datum/design/oversized_fish_tail)
+
+/datum/design/limb_disk/cerulean
+	name = "Cerulean Organ Design Disk"
+	desc = "Contains designs for fish organs for the limbgrower - Fish liver, lungs, stomach and large tail."
+	build_path = /obj/item/disk/design_disk/limbs/cerulean

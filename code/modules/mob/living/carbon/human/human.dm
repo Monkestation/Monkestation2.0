@@ -1095,6 +1095,35 @@
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
 
+#define COLOR_AMP_DARKER 0.33
+
+/mob/living/carbon/human/species/cerulean
+	race = /datum/species/human/cerulean
+
+/mob/living/carbon/human/species/cerulean/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.mutant_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src, excluded_zones = (GLOB.all_body_zones - BODY_ZONE_HEAD))
+
+/mob/living/carbon/human/species/cerulean/abyss/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	dna.features["fish_tail_color"] = sanitize_hexcolor(rgb(
+		min(255, hex2num(copytext(copytext(dna.features["fish_tail_color"], 2), 1, 3)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(dna.features["fish_tail_color"], 2), 3, 5)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(dna.features["fish_tail_color"], 2), 5, 7)) * COLOR_AMP_DARKER),
+	))
+	dna.features["horns"] = /datum/sprite_accessory/horns/angler::name
+	dna.species.mutantlungs = /obj/item/organ/internal/lungs/fish/amphibious
+	dna.species.mutant_organs = list(
+		/obj/item/organ/external/tail/fish/cerulean/abyss = /datum/sprite_accessory/tails/fish/cerulean::name,
+		/obj/item/organ/external/horns = /datum/sprite_accessory/horns/angler::name,
+		/obj/item/organ/external/frills = /datum/sprite_accessory/frills/aquatic::name,
+	)
+	dna.species.regenerate_organs(src, excluded_zones = GLOB.limb_zones)
+
+#undef COLOR_AMP_DARKER
+
 /mob/living/carbon/human/species/moth
 	race = /datum/species/moth
 
@@ -1118,6 +1147,18 @@
 
 /mob/living/carbon/human/species/skeleton/fragile
 	race = /datum/species/skeleton/fragile
+
+/mob/living/carbon/human/species/skeleton/cerulean/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	for(var/zone in GLOB.leg_zones)
+		dna.species.bodypart_overrides -= zone
+	dna.features["fish_tail_color"] = "#fee5ca"
+	dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.mutant_organs[/obj/item/organ/external/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
+	dna.species.mutant_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src)
+	if(has_gravity() && !buckled)
+		set_resting(TRUE, silent = TRUE, instant = TRUE)
 
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail
