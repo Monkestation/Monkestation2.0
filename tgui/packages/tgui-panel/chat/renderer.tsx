@@ -128,7 +128,7 @@ class ChatRenderer {
   lastOffsetHeight: number;
   resizeObserver: ResizeObserver;
   highlightParsers: Array<any> | null;
-  handleScroll: (type: any) => void;
+  handleScroll: () => void;
   coloredNames: boolean;
 
   constructor() {
@@ -154,7 +154,7 @@ class ChatRenderer {
         this.scrollToBottom();
       }
     });
-    this.handleScroll = (type) => {
+    this.handleScroll = () => {
       const node = this.scrollNode;
       if (!node) {
         return;
@@ -199,6 +199,8 @@ class ChatRenderer {
     if (this.scrollNode) {
       this.resizeObserver.observe(this.scrollNode);
     }
+    // messages grow after landing (icons loading, xN badges)
+    this.resizeObserver.observe(this.rootNode!);
     setTimeout(() => {
       this.scrollToBottom();
     });
@@ -342,8 +344,10 @@ class ChatRenderer {
     }
     if (node) {
       this.rootNode!.appendChild(fragment);
-      node.scrollIntoView();
     }
+    // empty pages fire no scroll event
+    this.scrollToBottom();
+    this.handleScroll();
   }
 
   getCombinableMessage(predicate) {
@@ -641,6 +645,8 @@ class ChatRenderer {
     this.messages = this.messages.filter(
       (message) => message.node !== 'pruned',
     );
+    // no scroll event if we were already at the top
+    this.handleScroll();
     logger.log(`Cleared chat`);
   }
 
