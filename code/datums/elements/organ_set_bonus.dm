@@ -57,8 +57,10 @@
 	var/required_biotype = MOB_ORGANIC
 	/// A list of traits added to the mob upon bonus activation, can be of any length.
 	var/list/bonus_traits = list()
-	/// Limb overlay to apply upon activation
-	var/limb_overlay
+	/// Limb texture to apply upon activation
+	var/limb_texture
+	/// Color priority for limb texture
+	var/color_overlay_priority
 
 /datum/status_effect/organ_set_bonus/proc/set_organs(new_value)
 	organs = new_value
@@ -82,12 +84,20 @@
 		owner.add_traits(bonus_traits, REF(src))
 	if(bonus_activate_text)
 		to_chat(owner, bonus_activate_text)
-	if(!iscarbon(owner) || !limb_overlay)
+	if(!iscarbon(owner) || !limb_texture)
 		return TRUE
+
 	var/mob/living/carbon/carbon_owner = owner
-	for(var/obj/item/bodypart/limb in carbon_owner.bodyparts)
-		limb.add_bodypart_overlay(new limb_overlay())
-		limb.variable_color = COLOR_WHITE
+	RegisterSignal(carbon_owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
+	RegisterSignal(carbon_owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
+
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		if (!(limb.bodytype & BODYTYPE_ORGANIC))
+			continue
+		limb.add_bodypart_texture(limb_texture, update = FALSE)
+		if (color_overlay_priority)
+			limb.add_color_override(COLOR_WHITE, color_overlay_priority)
+
 	carbon_owner.update_body()
 	return TRUE
 
@@ -98,12 +108,38 @@
 		owner.remove_traits(bonus_traits, REF(src))
 	if(bonus_deactivate_text)
 		to_chat(owner, bonus_deactivate_text)
-	if(!iscarbon(owner) || QDELETED(owner) || !limb_overlay)
+	if(!iscarbon(owner) || !limb_texture)
 		return
+
 	var/mob/living/carbon/carbon_owner = owner
-	for(var/obj/item/bodypart/limb in carbon_owner.bodyparts)
-		var/overlay = locate(limb_overlay) in limb.bodypart_overlays
-		if(overlay)
-			limb.remove_bodypart_overlay(overlay)
-			limb.variable_color = null
+	UnregisterSignal(carbon_owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+
+	if(QDELETED(carbon_owner))
+		return
+
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		limb.remove_bodypart_texture(limb_texture, update = FALSE)
+		if (color_overlay_priority)
+			limb.remove_color_override(color_overlay_priority)
+
 	carbon_owner.update_body()
+
+/// Adds our limb texture to limbs attached while the bonus is active
+/datum/status_effect/organ_set_bonus/proc/texture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	if (!(limb.bodytype & BODYTYPE_ORGANIC))
+		return
+
+	// Not updating because enable/disable_bonus() call it down the line, and calls coming from comsigs update the owner's body themselves
+	limb.add_bodypart_texture(limb_texture, update = FALSE)
+	if(color_overlay_priority)
+		limb.add_color_override(COLOR_WHITE, color_overlay_priority)
+
+/// Removes our limb texture from limbs that get removed while the bonus is active
+/datum/status_effect/organ_set_bonus/proc/untexture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	limb.remove_bodypart_texture(limb_texture, update = FALSE)
+	if(color_overlay_priority)
+		limb.remove_color_override(color_overlay_priority)

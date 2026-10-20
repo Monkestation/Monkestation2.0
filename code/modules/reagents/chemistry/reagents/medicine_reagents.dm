@@ -402,7 +402,7 @@
 	for(var/datum/reagent/target_reagent in affected_mob.reagents.reagent_list)
 		if(istype(target_reagent, /datum/reagent/medicine/calomel))
 			continue
-		affected_mob.reagents.remove_reagent(target_reagent.type, 3 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(target_reagent.type, target_reagent.purge_multiplier * 3 * REM * seconds_per_tick)
 	var/toxin_amount = round(affected_mob.health / 40, 0.1)
 	affected_mob.adjustToxLoss(toxin_amount * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	..()
@@ -432,12 +432,12 @@
 	var/toxin_chem_amount = 0
 	for(var/datum/reagent/toxin/target_reagent in affected_mob.reagents.reagent_list)
 		toxin_chem_amount += 1
-		affected_mob.reagents.remove_reagent(target_reagent.type, 5 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(target_reagent.type, target_reagent.purge_multiplier * 5 * REM * seconds_per_tick)
 	var/toxin_amount = round(affected_mob.getBruteLoss() / 15, 0.1) + round(affected_mob.getFireLoss() / 30, 0.1) - 3
 	affected_mob.adjustToxLoss(toxin_amount * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	if(toxin_chem_amount == 0)
 		for(var/datum/reagent/medicine/ammoniated_mercury/target_reagent in affected_mob.reagents.reagent_list)
-			affected_mob.reagents.remove_reagent(target_reagent.type, 1 * REM * seconds_per_tick)
+			affected_mob.reagents.remove_reagent(target_reagent.type, target_reagent.purge_multiplier * 1 * REM * seconds_per_tick)
 	..()
 	return TRUE
 
@@ -476,7 +476,7 @@
 	affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(R != src)
-			affected_mob.reagents.remove_reagent(R.type, 2 * REM * seconds_per_tick)
+			affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * 2 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 
@@ -1267,7 +1267,7 @@
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	for(var/datum/reagent/drug/R in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(R.type, 5 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * 5 * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness_up_to(4 SECONDS * REM * seconds_per_tick, 30 SECONDS)
 
 	if(HAS_TRAIT_FROM(affected_mob, TRAIT_INCAPACITATED, STAMINA))
