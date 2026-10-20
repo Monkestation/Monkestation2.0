@@ -45429,9 +45429,6 @@
 /area/station/commons/vacant_room/commissary)
 "mIy" = (
 /obj/structure/table/glass,
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 4
-	},
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 8;
 	pixel_y = 2
@@ -45444,6 +45441,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/white/textured_edge,
 /area/station/science/xenobiology)
 "mIB" = (

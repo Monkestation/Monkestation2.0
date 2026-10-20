@@ -12714,11 +12714,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "edf" = (
 /obj/machinery/biomass_recycler,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
+/obj/item/stack/biomass/twenty,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "edg" = (
@@ -15285,12 +15281,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_10k,
 /obj/effect/mapping_helpers/apc/full_charge,
-/obj/machinery/biomass_recycler,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
-/obj/item/stack/biomass,
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "eUW" = (
@@ -19733,7 +19724,8 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "guJ" = (
-/obj/machinery/chem_master,
+/obj/machinery/status_display/ai/directional/east,
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "guV" = (
@@ -61664,6 +61656,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
+"tRB" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "tRD" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -118645,7 +118642,7 @@ aQD
 whv
 fRT
 iqY
-cUt
+tRB
 yiS
 cBg
 jEe
@@ -120180,8 +120177,8 @@ fJl
 oeH
 xCE
 edf
-guJ
-eai
+fRT
+fRT
 iqY
 fRT
 jdJ
@@ -120190,7 +120187,7 @@ iqY
 eai
 xgT
 eUV
-xCE
+guJ
 oeH
 fJl
 ksa

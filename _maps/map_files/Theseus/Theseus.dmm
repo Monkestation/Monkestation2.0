@@ -40651,12 +40651,7 @@
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},

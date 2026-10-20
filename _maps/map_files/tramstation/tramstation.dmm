@@ -15498,16 +15498,10 @@
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 10
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "dOx" = (

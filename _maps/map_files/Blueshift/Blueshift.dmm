@@ -115959,13 +115959,11 @@
 "wjN" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/table/glass,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = 10;
 	pixel_y = -1
 	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "wjR" = (

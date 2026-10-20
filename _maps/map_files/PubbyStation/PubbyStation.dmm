@@ -151,12 +151,10 @@
 	},
 /obj/machinery/reagentgrinder,
 /obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 4
-	},
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "aas" = (
@@ -368,7 +366,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "aaV" = (
@@ -385,9 +382,6 @@
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "aaW" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "aaX" = (
@@ -527,10 +521,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 2
 	},
-/turf/open/floor/stone,
-/area/station/science/xenobiology)
-"abp" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "abq" = (
@@ -694,9 +684,6 @@
 /area/station/science/xenobiology)
 "abH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "abI" = (
@@ -102575,7 +102562,7 @@ abr
 abq
 aaW
 aaV
-abp
+aaW
 abo
 abn
 abm
@@ -102832,7 +102819,7 @@ abA
 abq
 aaW
 aaV
-abp
+aaW
 abo
 abz
 abv
@@ -103089,7 +103076,7 @@ aaI
 abd
 abH
 aaV
-abp
+aaW
 aaP
 abG
 abF
@@ -103346,7 +103333,7 @@ abQ
 abq
 aaW
 aaV
-abp
+aaW
 abo
 abP
 abM
@@ -103603,7 +103590,7 @@ aca
 abq
 aaW
 abZ
-abp
+aaW
 abX
 abU
 abT
@@ -103860,7 +103847,7 @@ abE
 abq
 aaW
 aaV
-abp
+aaW
 abo
 abk
 abj
@@ -104374,7 +104361,7 @@ abS
 abq
 aaW
 aaV
-abp
+aaW
 abo
 acx
 abB
@@ -104631,7 +104618,7 @@ abh
 abq
 aaW
 aaV
-abp
+aaW
 abo
 aaM
 aaK
@@ -104888,7 +104875,7 @@ abr
 abq
 abH
 aaV
-abp
+aaW
 abo
 abn
 abm
@@ -105145,7 +105132,7 @@ abA
 abd
 aaW
 aaV
-abp
+aaW
 aaP
 abz
 abv

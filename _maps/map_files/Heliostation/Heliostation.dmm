@@ -11367,12 +11367,9 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 5
 	},
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/structure/sign/xenobio_guide/directional/north,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/white/textured,
 /area/station/science/xenobiology)
 "beH" = (

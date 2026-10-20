@@ -43321,7 +43321,7 @@
 	maxHealth = 200;
 	wound_bonus = 10;
 	health = 200;
-	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
+	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."),"emote_hear"=list("honks","squeaks"),"emote_sound"=list('sound/items/bikehorn.ogg'),"emote_chance"=5)
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)
@@ -50084,9 +50084,6 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 5
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -50097,6 +50094,7 @@
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno")
 	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "pDF" = (
