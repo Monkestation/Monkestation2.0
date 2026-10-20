@@ -41,6 +41,7 @@
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
+	initial_language_holder = /datum/language_holder/carp
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	bodytemp_cold_damage_limit = -1
 	bodytemp_heat_damage_limit = 1500
