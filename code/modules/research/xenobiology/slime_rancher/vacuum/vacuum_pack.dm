@@ -257,7 +257,7 @@
 		if(feedback)
 			balloon_alert(user, "hold the nozzle with the pack worn")
 		return FALSE
-	if(user.stat != CONSCIOUS || !user.can_perform_action(nozzle, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
+	if(user.stat != CONSCIOUS || !user.can_perform_action(nozzle, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		if(feedback)
 			balloon_alert(user, "cannot use nozzle!")
 		return FALSE
