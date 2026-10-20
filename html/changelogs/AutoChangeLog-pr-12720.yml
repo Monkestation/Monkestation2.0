@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Moon heretic robes now channel the moonlight amulet's effect thru your blade (the brain damage / sanity damage) on its own, so the amulet isn't required to use it anymore, altho the amulet still gives you bonuses"
+  - bugfix: "Fixed the Resplendent Regalia's hit message for the wearer"

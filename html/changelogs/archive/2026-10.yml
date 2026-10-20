@@ -191,3 +191,69 @@
       alert.
   mcbalaam:
   - rscadd: AIs can now point to things using holopads
+2026-10-14:
+  Absolucy:
+  - bugfix: hardsuits and egosuits now properly overslot hats too
+  - balance: Monster hunters should actually roll more than once a month now.
+  Runian:
+  - bugfix: Fixes hard deletion in medical cyborg's deployable roller bed.
+  - bugfix: Syndicate Surplus Crate's uplink entry description now accurately states
+      its content's total worth is 75 telecrystals.
+  SmArtKar:
+  - admin: Converted the Spawn verb into a TGUI input, featuring for dynamic search
+      and RegEx support.
+2026-10-15:
+  Runian:
+  - qol: Unlocking an APC via right-click hotkey as an AI/Cyborg no longer open the
+      APC's menu.
+  - bugfix: Cyborgs that are in low power mode can no longer use certain hotkeys such
+      as shocking, bolting, or opening airlocks remotely.
+  notghosti:
+  - map: Ce office on tram no longer has stacking filing cabinets
+  - map: Tech storage camera on tram is no longer named tech shortage
+  - map: boxstation ranch given a incubator nest
+  - map: Blueshift ranch given chicken scanners
+  - map: Icebox lower service distro was fixed.
+2026-10-16:
+  Absolucy:
+  - bugfix: fixed an off-by-one error with unusual particle effects.
+  - code_imp: hopefully made unusual particles less server-intensive.
+2026-10-17:
+  Absolucy:
+  - rscadd: (SmArtKar) Blood-drunk miner now drops an infernal PKA with an in-built
+      improved rapid repeater modification.
+  - bugfix: PKA cooldown upgrades now no longer care about what order they're shoved
+      into the PKA.
+  hexakats:
+  - bugfix: You can no longer shrink modsuit control units
+  - refactor: replaced attackby with item_interaction for the BCK
+  - balance: The syndicate musket no longer fits in bags.
+  - balance: The syndicate musket no longer deals stamina damage.
+  notghosti:
+  - bugfix: Advanced carp, (Space dragon rift carp) health is fixed, and is now no
+      longer weaker then a regular carp.
+2026-10-18:
+  Absolucy:
+  - sound: the monster hunter's red queen card ping now ACTUALLY comes from the direction
+      of the nearest rabbit and sounds muffled when it's to the south
+  - sound: the card ping should actually be audible now
+  - qol: the red queen card cooldown is 3 seconds instead of 7, and a new ping cuts
+      off the last one
+  - bugfix: monster hunters can see white rabbits through walls again, this has been
+      broken for a good while and idk why
+  - bugfix: fixed tremere revival vassalization not working on oozeling cores.
+  - bugfix: Fixed an issue with Discount Godzilla getting a blank ID and a PDA with
+      no owner.
+  notghosti:
+  - bugfix: IPC Examine limb examine text now should reflect their mechanical status
+2026-10-20:
+  AberrantQuerist:
+  - balance: Gene splicer takes into account if traits are removable.
+  - balance: Plant force exceeding 25 will increase chances of unpreventable backfiring.
+  Absolucy:
+  - bugfix: fixed "ghost" entries with grouped stuff in the lootpanel when searching
+  Kmla2:
+  - code_imp: changes how the uplink is sorted, hopefully shouldn't affect anything
+      in-game
+  SmArtKar:
+  - image: Carp infusion now changes how your skin looks to reflect your fishy nature
