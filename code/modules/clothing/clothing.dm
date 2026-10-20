@@ -10,10 +10,14 @@
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0 //Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = FALSE //but separated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = NONE //flags that are added/removed when an item is adjusted up/down
-	var/visor_flags_inv = NONE //same as visor_flags, but for flags_inv
-	var/visor_flags_cover = NONE //same as above, but for flags_cover
+	///Whether the visor (or the mask) is pushed up / out of the way
+	var/up = FALSE
+	///Flags that are added/removed when an item is adjusted up/down
+	var/visor_flags = NONE
+	///Same as visor_flags, but for flags_inv
+	var/visor_flags_inv = NONE
+	///Same as above, but for flags_cover
+	var/visor_flags_cover = NONE
 	///What to toggle when toggled with adjust_visor()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
 	///Sound this item makes when its visor is flipped down
@@ -620,6 +624,7 @@ BLIND     // can't see anything
 /obj/item/clothing/proc/can_use(mob/user)
 	return istype(user) && !user.incapacitated()
 
+/// Leaves shreds of the clothing behind when it gets destroyed
 /obj/item/clothing/proc/spawn_shreds()
 	new /obj/effect/decal/cleanable/shreds(get_turf(src), name)
 
