@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "fixed \"ghost\" entries with grouped stuff in the lootpanel when searching"
