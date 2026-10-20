@@ -216,6 +216,8 @@
 	var/limb_flags
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
+	/// A potential texturing overlay to put on the limb
+	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -241,6 +243,10 @@
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_loss))
 
 	RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
+
+	if(texture_bodypart_overlay)
+		texture_bodypart_overlay = new texture_bodypart_overlay()
+		add_bodypart_overlay(texture_bodypart_overlay)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
@@ -1188,6 +1194,8 @@
 					if(has_height)
 						owner.apply_height(extended_overlay, ENTIRE_BODY)
 					. += extended_overlay
+			for(var/datum/layer in .)
+				overlay.modify_bodypart_appearance(layer)
 
 	return .
 
