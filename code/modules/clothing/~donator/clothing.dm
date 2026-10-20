@@ -954,6 +954,8 @@
 	icon = 'icons/donator/obj/clothing/masks.dmi'
 	worn_icon = 'icons/donator/mob/clothing/mask.dmi'
 	icon_state = "death"
+	actions_types = null
+	adjustable = FALSE
 
 // Donation reward for 1ceres
 /obj/item/clothing/glasses/rosecolored

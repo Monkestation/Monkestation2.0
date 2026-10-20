@@ -453,6 +453,8 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "poob_mask"
 	inhand_icon_state = null
+	actions_types = null
+	adjustable = FALSE
 	flags_inv = HIDEFACE
 
 /obj/item/clothing/suit/toggle/menacing_jacket

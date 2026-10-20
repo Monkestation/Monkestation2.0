@@ -66,6 +66,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "sec_bandana_default"
 	actions_types = null
+	adjustable = FALSE
 
 	var/obj/item/clothing/suit/armor/secduster/suit
 
