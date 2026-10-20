@@ -41,7 +41,7 @@
 	)
 	required_enemies = 5
 	weight = 5
-	min_players = 40
+	min_players = 30
 
 /datum/round_event_control/antagonist/heretic/get_weight()
 	. = ..()

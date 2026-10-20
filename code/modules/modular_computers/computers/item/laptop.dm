@@ -53,10 +53,7 @@
 	else
 		return ..()
 
-/obj/item/modular_computer/laptop/verb/open_computer()
-	set name = "Toggle Open"
-	set category = "Object"
-	set src in view(1)
+GAME_VERB_SRC(/obj/item/modular_computer/laptop, open_computer, view(1), "Toggle Open", "Object")
 
 	try_toggle_open(usr)
 

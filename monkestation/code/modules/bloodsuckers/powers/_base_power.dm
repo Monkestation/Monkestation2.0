@@ -43,7 +43,7 @@
 	var/stupid_looping_timer_id
 
 // Modify description to add cost.
-/datum/action/cooldown/bloodsucker/New(Target)
+/datum/action/cooldown/bloodsucker/New(Target, original = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	desc = get_power_desc()

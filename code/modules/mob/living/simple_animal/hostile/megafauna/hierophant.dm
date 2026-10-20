@@ -456,7 +456,7 @@ Difficulty: Hard
 		var/list/stored_nearby = list()
 		for(var/mob/living/L in view(7,src))
 			stored_nearby += L // store the people to grant the achievements to once we die
-		hierophant_burst(null, get_turf(src), 10)
+		INVOKE_ASYNC(src, PROC_REF(hierophant_burst), null, get_turf(src), 10)
 		set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
 		..(force_grant = stored_nearby)
 

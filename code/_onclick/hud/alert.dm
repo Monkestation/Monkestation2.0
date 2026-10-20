@@ -599,7 +599,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
-	living_owner.succumb(whispered = length(last_whisper) > 0)
+	INVOKE_GAME_VERB(living_owner, usr, /mob/living, succumb, whisper = length(last_whisper) > 0)
 
 #undef FASTSUCCUMB_NO
 #undef FASTSUCCUMB_WAIT

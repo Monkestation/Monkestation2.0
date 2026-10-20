@@ -321,7 +321,6 @@
 /obj/structure/closet/secure_closet/barber
 	name = "barber's locker"
 	icon_state = "barber"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi'
 	req_access = list(ACCESS_SERVICE)
 
 /obj/structure/closet/secure_closet/barber/PopulateContents()

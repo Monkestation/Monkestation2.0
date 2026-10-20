@@ -31,31 +31,43 @@
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
+	hackables = "safety protocols"
 	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id
+	/// icon_state to use in update_icon_state
+	var/base_icon = "mulebot"
+	/// what we're transporting
+	var/atom/movable/load
+	/// who's riding us
+	var/mob/living/passenger
+	/// this is turf to navigate to (location of beacon)
+	var/turf/target
+	/// this the direction to unload onto/load from
+	var/loaddir = 0
+	/// tag of home delivery beacon
+	var/home_destination = ""
 
-	var/base_icon = "mulebot" /// icon_state to use in update_icon_state
-	var/atom/movable/load /// what we're transporting
-	var/mob/living/passenger /// who's riding us
-	var/turf/target /// this is turf to navigate to (location of beacon)
-	var/loaddir = 0 /// this the direction to unload onto/load from
-	var/home_destination = "" /// tag of home delivery beacon
-
-	var/reached_target = TRUE ///true if already reached the target
+	///true if already reached the target
+	var/reached_target = TRUE
 	///Number of times retried a blocked path
 	var/blockcount = 0
+	/// true if auto return to home beacon after unload
+	var/auto_return = TRUE
+	/// true if auto-pickup at beacon
+	var/auto_pickup = TRUE
+	/// true if bot will announce an arrival to a location.
+	var/report_delivery = TRUE
 
-	var/auto_return = TRUE /// true if auto return to home beacon after unload
-	var/auto_pickup = TRUE /// true if auto-pickup at beacon
-	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
-
-	var/obj/item/stock_parts/power_store/cell/cell /// Internal Powercell
-	var/cell_move_power_usage = 1///How much power we use when we move.
-	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
-
-
+	/// Internal Powercell
+	var/obj/item/stock_parts/power_store/cell/cell
+	///How much power we use when we move.
+	var/cell_move_power_usage = 1
+	///The amount of steps we should take until we rest for a time.
+	var/num_steps = 0
+	/// If speed is overridden, it will be equal to this
+	var/override_speed = 0
 
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
@@ -247,6 +259,7 @@
 	var/list/data = list()
 	data["on"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
+	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["mode"] = mode ? "[mode]" : "Ready"
 	data["modeStatus"] = ""
@@ -260,6 +273,8 @@
 	data["load"] = get_load_name()
 	data["destination"] = destination ? destination : null
 	data["home"] = home_destination
+	if(issilicon(user) || isobserver(user))
+		data["speed"] = (bot_cover_flags & BOT_COVER_EMAGGED) ? (override_speed || speed) : null
 	data["destinations"] = GLOB.deliverybeacontags
 	data["cell"] = cell ? TRUE : FALSE
 	data["cellPercent"] = cell ? cell.percent() : null
@@ -308,6 +323,9 @@
 		if("go")
 			if(mode == BOT_IDLE)
 				start()
+		if("gear")
+			if(bot_cover_flags & BOT_COVER_EMAGGED)
+				shift_gear(user)
 		if("home")
 			if(mode == BOT_IDLE || mode == BOT_DELIVER)
 				start_home()
@@ -386,7 +404,7 @@
 
 	var/obj/structure/closet/crate/crate = AM
 	if(!istype(crate))
-		if(!wires.is_cut(WIRE_LOADCHECK))
+		if(!wires.is_cut(WIRE_LOADCHECK) && !(bot_cover_flags & BOT_COVER_HACKED))
 			buzz(SIGH)
 			return // if not hacked, only allow crates to be loaded
 		crate = null
@@ -463,7 +481,6 @@
 	if(load)
 		. += "Current Load: [get_load_name()]"
 
-
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
 	if(path && length(path))
@@ -493,7 +510,10 @@
 
 	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
 	if(!speed)//Devide by zero man bad
+		override_speed = speed
 		return
+	if(override_speed) // if we can move and speed is overridden
+		speed = override_speed
 	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
 	datum_flags &= ~DF_ISPROCESSING // hacky fix since /mob/living already registers this to another subsystem
 	START_PROCESSING(SSfastprocess, src)
@@ -634,7 +654,7 @@
 			// not loaded
 			if(auto_pickup) // find a crate
 				var/atom/movable/AM
-				if(wires.is_cut(WIRE_LOADCHECK)) // if hacked, load first unanchored thing we find
+				if(wires.is_cut(WIRE_LOADCHECK) || bot_cover_flags & BOT_COVER_HACKED) // if hacked, load first unanchored thing we find
 					for(var/atom/movable/A in get_step(loc, loaddir))
 						if(!A.anchored)
 							AM = A
@@ -659,7 +679,7 @@
 	if(mind || !isliving(M)) //if there's a sentience controlling the bot, they aren't allowed to harm folks.
 		return ..()
 	var/mob/living/L = M
-	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
+	if(wires.is_cut(WIRE_AVOIDANCE) || override_speed == 1) // usually just bumps, but if the avoidance wire is cut or overridden speed is high, knocks them over.
 		if(iscyborg(L))
 			visible_message(span_danger("[src] bumps into [L]!"))
 		else if(L.Knockdown(8 SECONDS))
@@ -669,7 +689,7 @@
 
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
-	if (!(bot_cover_flags & BOT_COVER_EMAGGED) && !wires.is_cut(WIRE_AVOIDANCE))
+	if ((!(bot_cover_flags & BOT_COVER_EMAGGED) && (!wires.is_cut(WIRE_AVOIDANCE) || !(bot_cover_flags & BOT_COVER_HACKED))))
 		if (!has_status_effect(/datum/status_effect/careful_driving))
 			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
 		apply_status_effect(/datum/status_effect/careful_driving)
@@ -701,6 +721,17 @@
 		target_dir_change = TRUE, \
 		transfer_blood_dna = TRUE, \
 		max_blood = 4)
+
+/// Switches speed
+/mob/living/simple_animal/bot/mulebot/proc/shift_gear(mob/user)
+	if(!issilicon(user) && !isAdminGhostAI(user))
+		return
+	if(!speed) // if speed is zero, we can't move
+		return
+	if(override_speed > 1)
+		override_speed--
+	else
+		override_speed = 3
 
 // player on mulebot attempted to move
 /mob/living/simple_animal/bot/mulebot/relaymove(mob/living/user, direction)
@@ -819,7 +850,7 @@
 		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 		AM.forceMove(src)
 
-	else if(!wires.is_cut(WIRE_LOADCHECK))
+	else if(!wires.is_cut(WIRE_LOADCHECK) && !(bot_cover_flags & BOT_COVER_HACKED))
 		buzz(SIGH)
 		return // if not hacked, only allow ghosts to be loaded
 

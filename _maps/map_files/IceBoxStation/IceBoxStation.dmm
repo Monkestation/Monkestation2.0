@@ -13428,7 +13428,7 @@
 	network = list("ss13","medbay");
 	pixel_x = 22
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -39785,7 +39785,7 @@
 	},
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
@@ -58048,7 +58048,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "rKZ" = (
@@ -58996,6 +58996,8 @@
 /area/mine/eva)
 "sbX" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/icemoon/underground/explored)
 "sbZ" = (
@@ -63442,10 +63444,6 @@
 	dir = 1
 	},
 /area/station/security/processing)
-"twj" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
 "twt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -72092,6 +72090,8 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "wgs" = (
@@ -184181,8 +184181,8 @@ vKn
 tlF
 tux
 nNe
-twj
-twj
+fRG
+fRG
 jre
 fbm
 bIM
@@ -184439,7 +184439,7 @@ kgs
 wSs
 qzN
 dWc
-twj
+fRG
 jre
 jre
 jDo
@@ -184696,7 +184696,7 @@ jre
 iQf
 xqA
 jre
-twj
+fRG
 jre
 cND
 fRG

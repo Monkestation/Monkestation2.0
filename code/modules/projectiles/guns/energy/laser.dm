@@ -197,12 +197,10 @@
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
 	inhand_icon_state = null
+	has_manufacturer = FALSE
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
-
-/obj/item/gun/energy/laser/bluetag/give_manufacturer_examine()
-	return
 
 /obj/item/gun/energy/laser/redtag
 	name = "laser tag gun"
@@ -216,12 +214,10 @@
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
 	inhand_icon_state = null
+	has_manufacturer = FALSE
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
-
-/obj/item/gun/energy/laser/redtag/give_manufacturer_examine()
-	return
 
 //Inferno and Cryo Pistols
 

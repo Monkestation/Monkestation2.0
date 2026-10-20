@@ -186,9 +186,7 @@
 
 	update_power()
 
-/obj/item/defibrillator/proc/toggle_paddles()
-	set name = "Toggle Paddles"
-	set category = "Object"
+GAME_VERB_PROC(/obj/item/defibrillator, toggle_paddles, "Toggle Paddles", "Object")
 	on = !on
 
 	var/mob/living/carbon/user = usr
@@ -716,6 +714,11 @@
 
 /obj/item/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
+
+/obj/item/shockpaddles/syndicate/cyborg/ninja
+	name = "ninja defibrillator paddles"
+	icon_state = "ninjapaddles0"
+	base_icon_state = "ninjapaddles"
 
 #undef HALFWAYCRITDEATH
 #undef DEFIB_CAN_HURT

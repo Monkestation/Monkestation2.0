@@ -223,6 +223,9 @@
 		return
 	attack_self(user)
 
+/obj/item/melee/energy/sword/cyborg/ninja
+	sword_color_icon = "green"
+
 /obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
@@ -242,6 +245,9 @@
 
 /obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
+
+/obj/item/melee/energy/sword/cyborg/saw/ninja
+	icon_state = "esaw_ninja"
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber

@@ -62,7 +62,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/shoot_with_empty_chamber(mob/living/user)
 	if(chambered || !magazine || !length(magazine.contents))
 		return ..()
-	drop_bolt(user)
+	INVOKE_ASYNC(src, PROC_REF(drop_bolt), user)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
 	. = ..()
@@ -111,6 +111,4 @@
 	recoil = 0
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
-
-/obj/item/gun/ballistic/rifle/boltaction/harpoon/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE

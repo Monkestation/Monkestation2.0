@@ -21,14 +21,30 @@
 
 /obj/item/compression_kit/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
+	var/static/list/blacklist_typecache = typecacheof(list(
+		/obj/item/mod,
+	))
+
 	if(!isitem(interacting_with))
 		return NONE
+
 	var/obj/item/target_item = interacting_with
+
+	if(HAS_TRAIT(interacting_with, TRAIT_NODROP))
+		to_chat(user, span_warning("[src] is unable to compress [target_item]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(is_type_in_typecache(interacting_with, blacklist_typecache))
+		to_chat(user, span_warning("[src] is unable to compress [target_item]!"))
+		return ITEM_INTERACT_BLOCKING
+
 	if(charges <= 0)
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(user, span_warning("The bluespace compression kit is out of charges! Recharge it with bluespace crystals."))
 		return ITEM_INTERACT_BLOCKING
 	var/pre_compress = SEND_SIGNAL(target_item, COMSIG_ITEM_PRE_COMPRESS, user, src)
+
+
 	if(pre_compress & COMPONENT_STOP_COMPRESSION)
 		if(!(pre_compress & COMPONENT_HANDLED_MESSAGE))
 			to_chat(user, span_warning("[src] is unable to compress [target_item]!"))
@@ -54,12 +70,19 @@
 	to_chat(user, span_boldnotice("You successfully compress [target_item]! [src] now has [charges] charges."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/compression_kit/attackby(obj/item/stack/bs, mob/user, params)
+/obj/item/compression_kit/item_interaction(mob/living/user, obj/item/bs, list/modifiers)
 	. = ..()
 	var/static/list/bs_typecache = typecacheof(list(/obj/item/stack/ore/bluespace_crystal, /obj/item/stack/sheet/bluespace_crystal))
-	if(is_type_in_typecache(bs, bs_typecache) && bs.use(1))
-		charges += 2
-		to_chat(user, span_notice("You insert [bs] into [src]. It now has [charges] charges."))
+	if(!is_type_in_typecache(bs, bs_typecache))
+		return NONE
+
+	if(!bs.use(1))
+		return ITEM_INTERACT_BLOCKING
+
+	charges += 2
+
+	to_chat(user, span_notice("You insert [bs] into [src]. It now has [charges] charges."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/compression_kit/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return !HAS_TRAIT(storage_holder, TRAIT_BYPASS_COMPRESS_CHECK)
