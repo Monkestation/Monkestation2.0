@@ -38,6 +38,7 @@
 	limb.bodytype &= ~BODYTYPE_DIGITIGRADE
 	return ..()
 
+/// Starts watching what the new owner equips
 /datum/component/digitigrade_limb/proc/on_attach(obj/item/bodypart/limb, mob/living/carbon/new_limb_owner)
 	SIGNAL_HANDLER
 
@@ -48,6 +49,7 @@
 		if(equipped_item(new_limb_owner, equipped, new_limb_owner.get_slot_by_item(equipped)))
 			LAZYOR(squashing_us, REF(equipped))
 
+/// Stops watching the old owner and resets the limb
 /datum/component/digitigrade_limb/proc/on_remove(obj/item/bodypart/limb, mob/living/carbon/old_limb_owner)
 	SIGNAL_HANDLER
 
@@ -57,6 +59,7 @@
 	LAZYNULL(squashing_us)
 	update_limb_id()
 
+/// Squishes the limb if the newly equipped item does that
 /datum/component/digitigrade_limb/proc/equipped_item(mob/living/carbon/equipper, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
@@ -64,6 +67,7 @@
 		LAZYOR(squashing_us, REF(equipped_item))
 		update_limb_id()
 
+/// Unsquishes the limb if the item that got removed was squishing it
 /datum/component/digitigrade_limb/proc/unequipped_item(mob/living/carbon/equipper, obj/item/equipped_item)
 	SIGNAL_HANDLER
 
@@ -71,6 +75,7 @@
 	update_limb_id()
 
 // Snowflake case for updating whether our jumpsuit should squish us
+/// Jumpsuits only squish while they are visible, so recheck it when coverage changes
 /datum/component/digitigrade_limb/proc/coverage_changed(mob/living/carbon/equipper, added_slots, removed_slots)
 	SIGNAL_HANDLER
 
@@ -92,6 +97,7 @@
 			LAZYOR(squashing_us, uniform_ref)
 			update_limb_id()
 
+/// Returns TRUE if the item, in the slot it is worn in, squishes digitigrade legs
 /datum/component/digitigrade_limb/proc/item_squishes_limb(obj/item/equipped_item, mob/living/carbon/equipper)
 	if(!(equipped_item.body_parts_covered & (LEGS|FEET)))
 		return FALSE
@@ -116,6 +122,7 @@
 	free_id = initial(replacement.limb_id)
 	replacement.TakeComponent(src)
 
+/// Swaps the limb id and bodyshape depending on if anything is squishing us, and updates sprites if it changed
 /datum/component/digitigrade_limb/proc/update_limb_id(sprite_update = TRUE)
 	var/obj/item/bodypart/limb = parent
 	var/old_id = limb.limb_id
