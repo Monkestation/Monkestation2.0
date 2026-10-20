@@ -96,6 +96,11 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	else
 		REMOVE_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
 
+// Pulled down it just stops showing on the mob, the item sprite stays the same
+/obj/item/clothing/mask/floortilebalaclava/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state)
+
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
