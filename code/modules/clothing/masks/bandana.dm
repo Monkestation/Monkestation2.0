@@ -33,7 +33,6 @@
 /obj/item/clothing/mask/bandana/visor_toggling()
 	. = ..()
 	if(up)
-		worn_icon_state += "_up"
 		undyeable = TRUE
 	else
 		undyeable = initial(undyeable)
