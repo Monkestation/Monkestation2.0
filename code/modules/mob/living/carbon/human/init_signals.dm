@@ -12,7 +12,6 @@
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), SIGNAL_REMOVETRAIT(TRAIT_NOHUNGER)), PROC_REF(on_nohunger))
 
 	RegisterSignal(src, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(check_pocket_weght))
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), PROC_REF(refresh_obscured))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_INVISIBLE_MAN), SIGNAL_REMOVETRAIT(TRAIT_INVISIBLE_MAN)), PROC_REF(invisible_man_toggle))
 
 /// Gaining [TRAIT_HEAVY_BLEEDER] doubles our bleed_mod.
