@@ -9,7 +9,13 @@
 
 /datum/ai_planning_subtree/slime_target/roam/should_scan(datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	return slime_pawn.cleaner_slime && isnull(slime_pawn.pen) && !slime_pawn.is_latched() && slime_pawn.stat == CONSCIOUS
+	if(!slime_pawn.cleaner_slime || !isnull(slime_pawn.pen) || slime_pawn.is_latched() || slime_pawn.stat != CONSCIOUS)
+		return FALSE
+	var/datum/ai_behavior/slime_find_target/mess_finder = GET_AI_BEHAVIOR(/datum/ai_behavior/slime_find_target/mess)
+	if(mess_finder.has_candidates(controller))
+		controller.clear_blackboard_key(target_key)
+		return FALSE
+	return TRUE
 
 /// Picks the next spot to wander to. Usually somewhere we haven't been lately, now and then towards a player.
 /datum/ai_behavior/slime_find_target/roam
