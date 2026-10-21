@@ -7,7 +7,7 @@
 	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
 	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
-	worn_icon = 'icons/mob/inhands/ballistic/onmob.dmi'
+	worn_icon = 'icons/mob/clothing/guns/ballistic.dmi'
 	icon_state = "flatgun"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"

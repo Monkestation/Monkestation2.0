@@ -5,7 +5,7 @@
 	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	lefthand_file = 'icons/mob/inhands/energy/lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/energy/righthand.dmi'
-	worn_icon = 'icons/mob/inhands/energy/onmob.dmi'
+	worn_icon = 'icons/mob/clothing/guns/energy.dmi'
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/power_store/cell/cell
