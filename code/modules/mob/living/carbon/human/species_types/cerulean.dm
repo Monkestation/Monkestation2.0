@@ -130,12 +130,12 @@
 	var/obj/item/organ/internal/lungs/cerulean_lungs = cerulean.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if (cerulean_lungs.breathe_always[/datum/gas/oxygen])//early return for ie amphibious lungs. siren shimai have this
 		return
-	cerulean.equip_in_one_of_slots(
-		equipping = SSwardrobe.provide_type(/obj/item/vaporizer/with_cell, cerulean),
-		slots = list(LOCATION_RPOCKET, LOCATION_LPOCKET, LOCATION_HANDS, LOCATION_BACKPACK),
-		qdel_on_fail = FALSE,
-		indirect_action = TRUE,
-	)
+	cerulean.equip_in_one_of_slots(SSwardrobe.provide_type(/obj/item/vaporizer/with_cell, cerulean), list(
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_HANDS = ITEM_SLOT_HANDS,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+	), qdel_on_fail = FALSE)
 
 /// The inverse multiplyer indicating how much blood compared to default_blood_volume() needs to exist for a clean detachment surgery
 #define CLEAN_CUT_MULT 0.5
