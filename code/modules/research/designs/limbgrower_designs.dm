@@ -135,6 +135,7 @@
 
 /datum/design/oversized_fish_tail
 	name = /obj/item/organ/external/tail/fish/cerulean::name
+	id = "oversizedfishtail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/external/tail/fish/cerulean
@@ -158,6 +159,7 @@
 
 /datum/design/fish_lungs
 	name = /obj/item/organ/internal/lungs/fish::name
+	id = "fishlungs"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/internal/lungs/fish
@@ -173,6 +175,7 @@
 
 /datum/design/fish_tongue
 	name = /obj/item/organ/internal/tongue/fish::name
+	id = "fishtongue"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/internal/tongue/fish
@@ -188,6 +191,7 @@
 
 /datum/design/fish_liver
 	name = /obj/item/organ/internal/liver/fish::name
+	id = "fishliver"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/internal/liver/fish
@@ -211,6 +215,7 @@
 
 /datum/design/fish_stomach
 	name = /obj/item/organ/internal/stomach/fish::name
+	id = "fishstomach"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/internal/stomach/fish
@@ -310,5 +315,6 @@
 
 /datum/design/limb_disk/cerulean
 	name = "Cerulean Organ Design Disk"
+	id = "limbdesign_cerulean"
 	desc = "Contains designs for fish organs for the limbgrower - Fish liver, lungs, stomach and large tail."
 	build_path = /obj/item/disk/design_disk/limbs/cerulean

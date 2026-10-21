@@ -158,8 +158,6 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	id = null
 
-	skillchips = list(/obj/item/skillchip/musical)
-
 /datum/outfit/pirate/siren/pre_equip(mob/living/carbon/human/pre_equipped, visuals_only)
 	. = ..()
 	if(rand(0,5) == 1)

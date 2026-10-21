@@ -195,11 +195,10 @@
 	rank = "Coruscant"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren
-	name = /obj/machinery/experimental_cloner::name
-	desc = /obj/machinery/experimental_cloner::desc
+	name = "experimental cloning pod"
+	desc = "An early prototype of the currently-outlawed cloning pods used by Nanotrasen executives. I wonder if it still works?"
 	deletes_on_zero_uses_left = FALSE
 	mob_species = /datum/species/human/cerulean
-	allow_custom_character = NONE
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_1"
 	fluff_spawn = /obj/effect/decal/cleanable/greenglow
@@ -234,22 +233,14 @@
 	. = ..()
 	var/datum/language_holder/language_holder = spawned_mob.get_language_holder()
 	language_holder.selected_language = /datum/language/common //sing for them
-	spawned_mob.add_personalities(list(
-		//some sugar
-		/datum/personality/creative,
-		/datum/personality/brave,
-		/datum/personality/extrovert,
-		//some salt
-		/datum/personality/apathetic,
-		/datum/personality/pessimistic))
-	spawned_mob.add_traits(list(TRAIT_TRUE_NIGHT_VISION, TRAIT_LUMINESCENT_EYES), SPECIES_TRAIT)
+	ADD_TRAIT(spawned_mob, TRAIT_TRUE_NIGHT_VISION, SPECIES_TRAIT)
 	load_features(spawned_mob)
 	load_identity(spawned_mob)
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/proc/load_features(mob/living/carbon/human/siren)
 	siren.dna.species.mutantheart = /obj/item/organ/internal/heart/carp
 	siren.dna.species.mutantlungs = /obj/item/organ/internal/lungs/fish/amphibious
-	siren.dna.species.mutant_organs = list(
+	siren.dna.species.external_organs = list(
 		/obj/item/organ/external/tail/fish/cerulean/abyss = /datum/sprite_accessory/tails/fish/cerulean::name,
 		/obj/item/organ/external/horns = /datum/sprite_accessory/horns/angler::name,
 		/obj/item/organ/external/frills = /datum/sprite_accessory/frills/aquatic::name,
@@ -259,8 +250,8 @@
 		min(255, hex2num(copytext(copytext(siren.dna.features["fish_tail_color"], 2), 3, 5)) * COLOR_AMP_DARKER),
 		min(255, hex2num(copytext(copytext(siren.dna.features["fish_tail_color"], 2), 5, 7)) * COLOR_AMP_DARKER),
 	))
-	siren.dna.features["horns"] = siren.dna.species.mutant_organs[/obj/item/organ/external/horns]
-	siren.dna.features["frills"] = siren.dna.species.mutant_organs[/obj/item/organ/external/frills]
+	siren.dna.features["horns"] = siren.dna.species.external_organs[/obj/item/organ/external/horns]
+	siren.dna.features["frills"] = siren.dna.species.external_organs[/obj/item/organ/external/frills]
 	for(var/obj/item/organ/special_organ as anything in list(
 		/obj/item/organ/internal/heart/carp,
 		/obj/item/organ/internal/lungs/fish/amphibious,
@@ -269,18 +260,21 @@
 		/obj/item/organ/external/frills,
 	))
 		special_organ = new special_organ.type
-		special_organ.Insert(siren, TRUE, DELETE_IF_REPLACED)
+		special_organ.Insert(siren, TRUE, FALSE)
+	// the eyes of the sisters glow in the dark
+	var/obj/item/organ/internal/eyes/siren_eyes = siren.get_organ_slot(ORGAN_SLOT_EYES)
+	siren_eyes?.overlay_ignore_lighting = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/proc/load_identity(mob/living/carbon/human/siren)
 	siren.set_facial_hairstyle(/datum/sprite_accessory/facial_hair/shaved::name)
 	siren.set_hairstyle(pick(list(
-		/datum/sprite_accessory/hair/sadako::name,
-		/datum/sprite_accessory/hair/moneypiece::name,
-		/datum/sprite_accessory/hair/frizzysidecut::name,
-		/datum/sprite_accessory/hair/coily::name,
-		/datum/sprite_accessory/hair/wolfcut::name,
-		/datum/sprite_accessory/hair/shortwavy::name,
-		/datum/sprite_accessory/hair/sidecutbang::name,
+		/datum/sprite_accessory/hair/longest2::name,
+		/datum/sprite_accessory/hair/longfringe::name,
+		/datum/sprite_accessory/hair/sidecut::name,
+		/datum/sprite_accessory/hair/curls::name,
+		/datum/sprite_accessory/hair/messy::name,
+		/datum/sprite_accessory/hair/shoulderlength::name,
+		/datum/sprite_accessory/hair/halfshaved::name,
 		//more when i think of it
 	)))
 	siren.set_haircolor(sanitize_hexcolor(rgb(
@@ -295,12 +289,14 @@
 		min(255, hex2num(copytext(copytext(siren.dna.features["fish_tail_color"], 2), 5, 7)) * COLOR_AMP_BRIGHT),
 	)))
 	var/list/eyecolors = list("#ff0000", "#04ff58", "#ffe600", "#d400ff")
-	siren.set_eye_color(pick(eyecolors), pick(eyecolors))
-	siren.update_eyes()
+	siren.eye_color_left = pick(eyecolors)
+	siren.eye_color_right = pick(eyecolors)
+	var/obj/item/organ/internal/eyes/siren_eyes = siren.get_organ_slot(ORGAN_SLOT_EYES)
+	siren_eyes?.refresh()
 	siren.gender = (rand(0, 10) > 3) ? FEMALE : PLURAL //despite physique always she/her or they/them. why? because they're sisters of course. 🏳️‍⚧️
-	siren.undershirt = /datum/sprite_accessory/clothing/undershirt/sports_bra::name
-	siren.underwear = /datum/sprite_accessory/clothing/underwear/female_lace::name
-	siren.socks = /datum/sprite_accessory/clothing/socks/fishnet_knee::name
+	siren.undershirt = /datum/sprite_accessory/undershirt/sports_bra::name
+	siren.underwear = /datum/sprite_accessory/underwear/female_lace::name
+	siren.socks = /datum/sprite_accessory/socks/fishnet_knee::name
 	siren.set_resting(FALSE, TRUE, TRUE)
 
 #undef COLOR_AMP_BRIGHT

@@ -32,16 +32,14 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "bV" = (
-/obj/structure/platform,
-/obj/item/boombox{
+/obj/item/walkman{
 	pixel_y = 7
 	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "cQ" = (
-/obj/structure/platform,
 /obj/structure/railing/corner/end/flip,
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "da" = (
 /obj/structure/lattice,
@@ -77,7 +75,6 @@
 /turf/template_noop,
 /area/template_noop)
 "ea" = (
-/obj/structure/steps/directional/south,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -105,26 +102,11 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "heart";
-	sticker_type = /obj/item/sticker/heart;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "star";
-	sticker_type = /obj/item/sticker/star;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = -4;
-	pixel_y = -5
-	},
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/pirate/siren)
 "fq" = (
-/obj/structure/platform,
 /obj/structure/railing/corner/end,
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "fr" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
@@ -148,7 +130,7 @@
 	name = "Toggle Port Airlocks"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/storage/box/bandages{
+/obj/item/stack/medical/gauze{
 	pixel_x = 6;
 	pixel_y = 9
 	},
@@ -167,11 +149,10 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "ho" = (
-/obj/structure/platform,
 /obj/structure/railing/corner/end{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "if" = (
 /obj/machinery/door/airlock/external/glass/ruin,
@@ -231,12 +212,11 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "lb" = (
-/obj/structure/platform,
-/obj/item/music_tape/rock{
+/obj/item/cassette_tape/random{
 	pixel_y = 12;
 	pixel_x = -5
 	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "lo" = (
 /obj/structure/lattice,
@@ -337,8 +317,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/tank/air/layer4{
-	dir = 4
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4;
+	piping_layer = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
@@ -374,7 +355,6 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "rJ" = (
-/obj/structure/steps/directional/north,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -401,7 +381,7 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "sd" = (
-/obj/machinery/computer/experimental_cloner,
+/obj/machinery/computer/terminal,
 /turf/open/floor/circuit/red/off,
 /area/shuttle/pirate/siren)
 "sm" = (
@@ -524,20 +504,6 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "star";
-	sticker_type = /obj/item/sticker/star;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "heart";
-	sticker_type = /obj/item/sticker/heart;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = -4;
-	pixel_y = -5
-	},
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/pirate/siren)
 "vp" = (
@@ -653,20 +619,6 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "heart";
-	sticker_type = /obj/item/sticker/heart;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "star";
-	sticker_type = /obj/item/sticker/star;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = -4;
-	pixel_y = -5
-	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/pirate/siren)
 "yg" = (
@@ -771,12 +723,11 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "AE" = (
-/obj/structure/platform,
 /obj/machinery/camera/preset/siren_pirates{
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "Bc" = (
 /obj/effect/turf_decal/siding/dark/inner_corner{
@@ -794,7 +745,6 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Bn" = (
-/obj/structure/steps/directional/north,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -964,12 +914,11 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "HG" = (
-/obj/structure/platform,
-/obj/item/music_tape/hiphop{
+/obj/item/cassette_tape/random{
 	pixel_y = -7;
 	pixel_x = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "HJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -994,11 +943,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "IG" = (
-/obj/structure/platform,
-/obj/effect/overlay/spotlight{
-	alpha = 155
-	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "IO" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -1020,7 +965,7 @@
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/obj/item/rag{
+/obj/item/reagent_containers/cup/rag{
 	pixel_x = 7;
 	pixel_y = -5
 	},
@@ -1113,11 +1058,10 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Ol" = (
-/obj/structure/platform,
 /obj/structure/railing/corner/end/flip{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "OP" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
@@ -1164,12 +1108,11 @@
 /turf/open/floor/circuit/red,
 /area/shuttle/pirate/siren)
 "Pz" = (
-/obj/structure/platform,
 /obj/machinery/camera/preset/siren_pirates{
 	dir = 5
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "PI" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -1359,11 +1302,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/plastitanium/pod/dark,
+/turf/open/floor/pod/dark,
 /area/shuttle/pirate/siren)
 "Tx" = (
-/obj/structure/platform,
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/shuttle/pirate/siren)
 "TD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -1390,20 +1332,6 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "star";
-	sticker_type = /obj/item/sticker/star;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/effect/mapping_helpers/sticker_placer{
-	icon_state = "heart";
-	sticker_type = /obj/item/sticker/heart;
-	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
-	pixel_x = -4;
-	pixel_y = -5
-	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/pirate/siren)
 "Vj" = (
@@ -1437,7 +1365,6 @@
 	pixel_x = 14;
 	pixel_y = 2
 	},
-/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /obj/item/melee/energy/sword/pirate{
 	pixel_x = 26;
 	pixel_y = 9
@@ -1503,7 +1430,6 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "XV" = (
-/obj/structure/steps/directional/south,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -1551,7 +1477,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/pod/dark,
+/turf/open/floor/pod/dark,
 /area/shuttle/pirate/siren)
 "ZH" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,

@@ -110,7 +110,7 @@
 		return
 	to_chat(src, span_warning("[src] overloads, spewing out a cloud of hot steam!"))
 	playsound(src, 'sound/effects/spray.ogg', rand(50, 80), TRUE)
-	tile.atmos_spawn_air("[GAS_WATER_VAPOR]=[clamp(cell.maxcharge * 0.1, 1, 100)];[TURF_TEMPERATURE(1000)]")
+	tile.atmos_spawn_air("water_vapor=[clamp(cell.maxcharge * 0.1, 1, 100)];TEMP=1000")
 	for(var/mob/living/nearby_mob in range(4, tile))
 		nearby_mob.set_jitter_if_lower(rand(5 SECONDS, 15 SECONDS))
 		nearby_mob.set_eye_blur_if_lower(rand(3 SECONDS, 7 SECONDS))

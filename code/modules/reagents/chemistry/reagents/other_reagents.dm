@@ -709,7 +709,6 @@
 	race = /datum/species/human/cerulean
 	taste_description = "salt and fish oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/mutationtoxin/jelly
 	name = "Imperfect Mutation Toxin"

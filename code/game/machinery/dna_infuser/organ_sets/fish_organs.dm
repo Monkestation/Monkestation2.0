@@ -443,26 +443,13 @@
 	desc = "Interestingly, a fish-tongue isn't much unlike the humanoid variety."
 	say_mod = "blubs"
 	organ_traits = list(TRAIT_CARPOTOXIN_IMMUNE)
-	liked_foodtypes = MEAT | EGG | SEAFOOD
-	foodtype_flags = RAW | SEAFOOD | GORE
-	languages_native = list(/datum/language/carptongue)
-
-/obj/item/organ/internal/tongue/fish
-	name = "mutated fish-tongue"
-	desc = "Interestingly, a fish-tongue isn't much unlike the humanoid variety."
-	say_mod = "blubs"
-	organ_traits = list(TRAIT_CARPOTOXIN_IMMUNE)
-	liked_foodtypes = MEAT | EGG | SEAFOOD
+	liked_foodtypes = MEAT | SEAFOOD
 	foodtype_flags = RAW | SEAFOOD | GORE
 	languages_native = list(/datum/language/carptongue)
 
 /obj/item/organ/internal/tongue/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
-
-/obj/item/organ/internal/tongue/fish/get_possible_languages()
-	. = ..()
-	. += /datum/language/carptongue
 
 ///Organ from fish with the ink production trait.
 /obj/item/organ/internal/tongue/fish/inky

@@ -65,7 +65,7 @@
 	requires_power = FALSE
 
 /area/shuttle/pirate/siren
-	default_gravity = ZERO_GRAVITY
+	has_gravity = FALSE
 	area_flags = NO_GRAVITY
 
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////

@@ -35,6 +35,8 @@
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
+	give_species_extras()
+
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
@@ -48,6 +50,11 @@
 
 	return new internal_type(src)
 
+/// Gives whatever extra stuff the species of whoever is holding us needs to survive
+/obj/item/storage/box/survival/proc/give_species_extras()
+	if(iscerulean(loc) && !(locate(/obj/item/reagent_containers/cup/glass/waterbottle) in src))
+		new /obj/item/reagent_containers/cup/glass/waterbottle(src)
+
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
@@ -60,6 +67,7 @@
 		qdel(mask) // Get rid of the items that shouldn't be
 		qdel(internals)
 		return
+	give_species_extras()
 
 // Mining survival box
 /obj/item/storage/box/survival/mining

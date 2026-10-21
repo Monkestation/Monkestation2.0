@@ -14,9 +14,10 @@
 	for(var/zone in GLOB.leg_zones)
 		spawned.dna.species.bodypart_overrides -= zone
 	spawned.dna.features["fish_tail_color"] = "#fee5ca"
+	spawned.dna.features["fish_tail"] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
 	spawned.dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
-	spawned.dna.species.mutant_organs[/obj/item/organ/external/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
-	spawned.dna.species.mutant_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
+	spawned.dna.species.external_organs[/obj/item/organ/external/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
+	spawned.dna.species.external_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
 	spawned.dna.species.regenerate_organs(spawned, excluded_zones = GLOB.arm_zones)
 
 /obj/effect/mob_spawn/corpse/human/cerulean
@@ -25,9 +26,9 @@
 /obj/effect/mob_spawn/corpse/human/cerulean/special(mob/living/carbon/human/spawned, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned.dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
-	spawned.dna.species.mutant_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
+	spawned.dna.species.external_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
 	var/obj/item/organ/internal/lungs/fish = new
-	fish.Insert(spawned, TRUE, DELETE_IF_REPLACED)
+	fish.Insert(spawned, TRUE, FALSE)
 	spawned.dna.species.regenerate_organs(spawned, excluded_zones = GLOB.arm_zones)
 
 /obj/effect/mob_spawn/corpse/human/zombie

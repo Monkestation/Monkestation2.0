@@ -1,20 +1,17 @@
 /datum/species/human/cerulean
 	name = "\improper Cerulean"
 	id = SPECIES_CERULEAN
-	mutant_organs = list(/obj/item/organ/external/tail/fish/cerulean = /datum/sprite_accessory/tails/fish/cerulean::name)
+	external_organs = list(/obj/item/organ/external/tail/fish/cerulean = /datum/sprite_accessory/tails/fish/cerulean::name)
 	mutanttongue = /obj/item/organ/internal/tongue/fish
 	mutantlungs = /obj/item/organ/internal/lungs/fish
 	mutantstomach = /obj/item/organ/internal/stomach/fish
 	mutantliver = /obj/item/organ/internal/liver/fish
+	breathid = "water_vapor"
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
-	)
-	survival_box_overrides = list(
-		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/hypospray/medipen,
-		SURVIVAL_EXTRA_TYPE = /obj/item/reagent_containers/cup/glass/waterbottle,
 	)
 	character_preview_load_all_organs = TRUE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
@@ -26,10 +23,6 @@
 		/obj/item/ammo_casing/harpoon,
 		/obj/item/toy/seashell,
 	)
-
-/datum/species/human/cerulean/get_physical_attributes()
-	return "Ceruleans struggle with the pull of gravity yet are otherwise similar to humans. \
-		They are slightly more durable, and adore Martian culinary culture, though not much else..."
 
 /datum/species/human/cerulean/get_species_description()
 	return "Ceruleans are descendants of humans and vastly altered \"Animalids\" \
@@ -97,7 +90,7 @@
 	preview_human.set_haircolor("#C2DFED", update = FALSE)
 	preview_human.set_hairstyle(/datum/sprite_accessory/hair/highponytail::name, update = TRUE)
 	preview_human.dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
-	preview_human.dna.species.mutant_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
+	preview_human.dna.species.external_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
 	regenerate_organs(preview_human, excluded_zones = GLOB.leg_zones)
 	preview_human.update_body(is_creating = TRUE)
 
@@ -116,7 +109,7 @@
 	. = ..()
 	var/obj/item/bodypart/chest/cerulean_chest = cerulean.get_bodypart()
 	if(cerulean_chest)
-		cerulean_chest.wing_types = list(/obj/item/organ/external/wings/dragon)
+		cerulean_chest.wing_types = list(/obj/item/organ/external/wings/functional/dragon)
 	if (cerulean.has_gravity())
 		cerulean.set_resting(TRUE, silent = TRUE, instant = TRUE)
 	//apply a free wet stack to prevent the choking screen alert to appear for a second on mob creation
@@ -144,9 +137,6 @@
 		indirect_action = TRUE,
 	)
 
-/datum/species/human/cerulean/get_breath_type()
-	return GAS_WATER_VAPOR //overwrite this proc because safe_water_min is on a lungs subtype. remind me to revive #91453
-
 /// The inverse multiplyer indicating how much blood compared to default_blood_volume() needs to exist for a clean detachment surgery
 #define CLEAN_CUT_MULT 0.5
 
@@ -165,20 +155,19 @@
 		TRAIT_FREE_FLOAT_MOVEMENT,
 		TRAIT_FLOPPING,
 		TRAIT_FLOOR_FLOPPING,
-		TRAIT_SWIMMER,
 		TRAIT_BLOCK_ATTACHING_LEGS,
 	)
 
-/obj/item/organ/external/tail/fish/cerulean/on_mob_insert(mob/living/carbon/owner, special)
+/obj/item/organ/external/tail/fish/cerulean/on_insert(mob/living/carbon/owner, special)
 	. = ..()
 	get_your_sealegs(owner, special)
 
-/obj/item/organ/external/tail/fish/cerulean/on_mob_remove(mob/living/carbon/owner, special)
+/obj/item/organ/external/tail/fish/cerulean/on_remove(mob/living/carbon/owner, special)
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN))
 	if(special)
 		return
-	var/limb_name = "\improper [bodypart_owner.name]"
+	var/limb_name = "\improper [ownerlimb.name]"
 	var/tail_name = "\improper [name]"
 	owner.apply_damage(rand(35, 45), def_zone = BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
@@ -195,7 +184,7 @@
 	owner.visible_message(span_danger("[src] detaches from [owner]'s [limb_name], spilling out liters of [LOWER_TEXT(owner.get_bloodtype()?.get_blood_name())]!"))
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT) //do this early so we can fling it
 	throw_at(get_edge_target_turf(owner, REVERSE_DIR(owner.dir))) //ok so it doesnt actually fling it it just spins but idk hwo to fling
-	playsound(src, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', rand(50, 75), TRUE)
+	playsound(src, 'sound/effects/cartoon_splat.ogg', rand(50, 75), TRUE)
 
 /obj/item/organ/external/tail/fish/cerulean/on_surgical_removal(mob/living/user, obj/item/bodypart/limb, obj/item/tool)
 	. = ..()
@@ -212,7 +201,7 @@
 /obj/item/organ/external/tail/fish/cerulean/proc/splatter_check(mob/living/carbon/owner)
 	if(isnull(owner))
 		return FALSE
-	return (owner.blood_volume && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && owner.blood_volume >= (owner.default_blood_volume * CLEAN_CUT_MULT))
+	return (owner.blood_volume && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && owner.blood_volume >= (BLOOD_VOLUME_NORMAL * CLEAN_CUT_MULT))
 
 /// if legs are present remove them silently if special = true, not so silently else
 /obj/item/organ/external/tail/fish/cerulean/proc/get_your_sealegs(mob/living/carbon/owner, special)
@@ -244,7 +233,7 @@
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/get_global_feature_list()
 	var/static/list/glob_feature_list = list()
 	if(!length(glob_feature_list))
-		glob_feature_list = SSaccessories.feature_list[feature_key]
+		glob_feature_list = ..()
 	var/list/feature_list = glob_feature_list.Copy()
 	for(var/accessory in feature_list)
 		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
@@ -291,7 +280,7 @@
 /obj/item/organ/external/tail/fish/cerulean/skeletal
 	name = "skeletal oversized fish tail"
 	desc = "A hugely sized fish tail skeleton."
-	post_init_icon_state = null
+	SETUP_MAP_ICONS("/obj/item/organ/external/tail/fish", "/obj/item/organ/external/tail/fish")
 	greyscale_config = null
 	greyscale_colors = null
 

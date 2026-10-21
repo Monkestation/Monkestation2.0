@@ -272,6 +272,7 @@
 
 /datum/design/cerulean_vaporizer
 	name = /obj/item/vaporizer::name
+	id = "cerulean_vaporizer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = /obj/item/vaporizer::custom_materials
 	build_path = /obj/item/vaporizer
