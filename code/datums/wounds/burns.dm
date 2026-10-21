@@ -282,9 +282,9 @@
 
 	return TRUE
 
-/datum/wound/burn/flesh/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/flashlight/pen))
-		return uv(I, user)
+/datum/wound/burn/flesh/treat(obj/item/tool, mob/user)
+	if(istype(tool, /obj/item/flashlight/pen))
+		return uv(tool, user)
 
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
 /datum/wound/burn/flesh/on_stasis(seconds_per_tick, times_fired)
