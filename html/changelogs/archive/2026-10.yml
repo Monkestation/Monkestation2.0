@@ -246,3 +246,20 @@
       no owner.
   notghosti:
   - bugfix: IPC Examine limb examine text now should reflect their mechanical status
+2026-10-20:
+  AberrantQuerist:
+  - balance: Gene splicer takes into account if traits are removable.
+  - balance: Plant force exceeding 25 will increase chances of unpreventable backfiring.
+  Absolucy:
+  - bugfix: fixed "ghost" entries with grouped stuff in the lootpanel when searching
+  Kmla2:
+  - code_imp: changes how the uplink is sorted, hopefully shouldn't affect anything
+      in-game
+  SmArtKar:
+  - image: Carp infusion now changes how your skin looks to reflect your fishy nature
+2026-10-21:
+  Absolucy:
+  - balance: Moon heretic robes now channel the moonlight amulet's effect thru your
+      blade (the brain damage / sanity damage) on its own, so the amulet isn't required
+      to use it anymore, altho the amulet still gives you bonuses
+  - bugfix: Fixed the Resplendent Regalia's hit message for the wearer
