@@ -17,11 +17,13 @@
 	desc = "An advanced energy-based laser cannon that fires heavily concentrated beams of light which pass through glass and thin metal."
 	icon_state = "lasercannon"
 	inhand_icon_state = null
+	worn_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
 	fire_delay = 10
 	ammo_x_offset = 3
 	weapon_weight = WEAPON_HEAVY
 	shaded_charge = FALSE
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
@@ -102,6 +104,7 @@
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
 	inhand_icon_state = null
+	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
