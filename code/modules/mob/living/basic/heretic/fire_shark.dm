@@ -22,6 +22,7 @@
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
+	initial_language_holder = /datum/language_holder/carp
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
