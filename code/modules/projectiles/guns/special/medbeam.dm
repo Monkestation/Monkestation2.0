@@ -2,6 +2,8 @@
 	name = "Medical Beamgun"
 	desc = "Don't cross the streams!"
 	icon = 'icons/obj/chronos.dmi'
+	lefthand_file = 'icons/mob/inhands/energy/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/energy/righthand.dmi'
 	icon_state = "chronogun"
 	inhand_icon_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL

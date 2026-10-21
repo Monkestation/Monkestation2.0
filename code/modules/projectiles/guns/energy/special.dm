@@ -68,6 +68,8 @@
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	icon_state = "meteor_gun"
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
