@@ -23842,9 +23842,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "gri" = (
@@ -41981,9 +41978,8 @@
 /area/station/security/checkpoint/supply)
 "lXA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "lXC" = (
@@ -49170,13 +49166,18 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/left)
 "okh" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/structure/chair/sofa/left{
 	dir = 1
 	},
 /obj/effect/landmark/start/scientist,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "okn" = (
@@ -68210,6 +68211,9 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/scientist,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "tYK" = (
@@ -130446,13 +130450,13 @@ jpW
 rBE
 nri
 dUT
-fip
-fip
-fip
-fip
-fip
-fip
-fip
+dUT
+dUT
+dUT
+dUT
+dUT
+dUT
+dUT
 dUT
 aaa
 qVr
