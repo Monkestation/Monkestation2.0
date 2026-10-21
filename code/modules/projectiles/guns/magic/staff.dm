@@ -1,5 +1,6 @@
 /obj/item/gun/magic/staff
 	slot_flags = ITEM_SLOT_BACK
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	ammo_type = /obj/item/ammo_casing/magic/nothing
 	worn_icon_state = null
 	icon_state = "staff"

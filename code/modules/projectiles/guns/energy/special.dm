@@ -88,6 +88,7 @@
 	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/belt.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	automatic_charge_overlays = FALSE
 

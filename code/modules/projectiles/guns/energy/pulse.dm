@@ -2,8 +2,8 @@
 	name = "pulse rifle"
 	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
 	icon_state = "pulse"
-	inhand_icon_state = null
-	worn_icon_state = null
+	inhand_icon_state = "pulse"
+	worn_icon_state = "pulse"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	modifystate = TRUE
@@ -46,7 +46,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "pulse_carbine"
-	worn_icon_state = "gun"
+	worn_icon_state = "pulse"
 	inhand_icon_state = null
 	cell_type = /obj/item/stock_parts/power_store/cell/pulse/carbine
 
