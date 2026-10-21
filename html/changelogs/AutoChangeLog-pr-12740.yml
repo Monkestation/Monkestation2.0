@@ -1,0 +1,4 @@
+author: "ashallaryn"
+delete-after: True
+changes:
+  - image: "modified oozeling \"retract limb\" \"regrow limb\" \"toggle core signal\" and \"toggle cleaning\" HUD button icons"

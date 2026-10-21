@@ -17,8 +17,8 @@
 		imp_in.balloon_alert(imp_in, "no teleport pads detected!")
 		return
 
-	home.Retrieve(imp_in)
-	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
+	if(home.Retrieve(imp_in))
+		on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
 
 /obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(!..())
