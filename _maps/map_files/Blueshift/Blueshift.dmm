@@ -122367,6 +122367,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"xvu" = (
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/mob/living/basic/slime,
+/turf/open/floor/iron,
+/area/station/science/xenobiology)
 "xvy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -223718,7 +223723,7 @@ cNd
 fGl
 aaE
 suT
-gPU
+xvu
 gPU
 leV
 fDT
