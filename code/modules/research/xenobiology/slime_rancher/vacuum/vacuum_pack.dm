@@ -60,8 +60,9 @@
 /obj/item/vacuum_pack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
-	nozzle = new(src)
-	RegisterSignal(nozzle, COMSIG_MOVABLE_MOVED, PROC_REF(on_nozzle_moved))
+	if(!nozzle)
+		nozzle = new(src)
+		RegisterSignal(nozzle, COMSIG_MOVABLE_MOVED, PROC_REF(on_nozzle_moved))
 	extract_bin = new extract_bin_type(src)
 	RegisterSignal(src, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
 
@@ -607,6 +608,23 @@
 	for(var/datum/vacuum_upgrade/upgrade_type as anything in subtypesof(/datum/vacuum_upgrade))
 		upgrades[upgrade_type] = new upgrade_type(src)
 	recalculate_stats()
+
+/// Lives inside a cyborg's nozzle module instead of on a back.
+/obj/item/vacuum_pack/cyborg
+
+/obj/item/vacuum_pack/cyborg/Initialize(mapload)
+	var/is_module = istype(loc, /obj/item/vacuum_nozzle/cyborg)
+	if(is_module)
+		nozzle = loc
+	. = ..()
+	if(is_module)
+		RegisterSignal(nozzle, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
+
+/obj/item/vacuum_pack/cyborg/is_worn_by(mob/user)
+	return user.is_holding(nozzle)
+
+/obj/item/vacuum_pack/cyborg/retract_nozzle()
+	stop_extract_pulls()
 
 /datum/design/vacuum_pack
 	name = "Slime Vacuum Pack"

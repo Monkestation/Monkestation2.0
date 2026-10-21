@@ -18,9 +18,10 @@
 
 /obj/item/vacuum_nozzle/Initialize(mapload)
 	. = ..()
-	if(!istype(loc, /obj/item/vacuum_pack))
-		return INITIALIZE_HINT_QDEL
-	src.pack = loc
+	if(!pack)
+		if(!istype(loc, /obj/item/vacuum_pack))
+			return INITIALIZE_HINT_QDEL
+		src.pack = loc
 	register_item_context()
 
 /obj/item/vacuum_nozzle/Destroy()
@@ -142,6 +143,19 @@
 		return
 	INVOKE_ASYNC(pack, TYPE_PROC_REF(/obj/item/vacuum_pack, select_turf_target), target_turf, source)
 	return COMSIG_MOB_CANCEL_CLICKON
+
+/// Cyborg module version, carries its own pack inside.
+/obj/item/vacuum_nozzle/cyborg
+
+/obj/item/vacuum_nozzle/cyborg/Initialize(mapload)
+	pack = new /obj/item/vacuum_pack/cyborg(src)
+	return ..()
+
+/obj/item/vacuum_nozzle/cyborg/Destroy()
+	// the pack qdels its nozzle in Destroy, so unlink first or we qdel loop
+	pack.nozzle = null
+	QDEL_NULL(pack)
+	return ..()
 
 /// Shrinking copy of a creature flying into the nozzle.
 /obj/effect/temp_visual/vacuum_intake

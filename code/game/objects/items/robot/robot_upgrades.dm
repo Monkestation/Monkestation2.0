@@ -1206,8 +1206,7 @@
 		/obj/item/mod/module/circuit,
 	)
 
-// LUCY TODO: get vacpacks working for borgs
-/* /obj/item/borg/upgrade/science_xenobiology
+/obj/item/borg/upgrade/science_xenobiology
 	name = "science xenobiology upgrade"
 	desc = "An upgrade for science cyborgs that enables them to perform work in xenobiology."
 	icon_state = "module_science"
@@ -1215,7 +1214,7 @@
 	model_type = list(/obj/item/robot_model/science)
 	model_flags = BORG_MODEL_SCIENCE
 	items_to_add = list(
-		/obj/item/vacuum_pack,
+		/obj/item/vacuum_nozzle/cyborg,
 		/obj/item/storage/bag/xeno,
 		/obj/item/construction/plumbing/research
-	) */
+	)

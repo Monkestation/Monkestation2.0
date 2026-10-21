@@ -1205,8 +1205,7 @@
 	)
 /obj/item/borg/upgrade/science_apparatus_improvement/circuits
 
-// LUCY TODO: get vacpacks working for borgs
-/* /datum/design/borg_upgrade_science_xenobiology
+/datum/design/borg_upgrade_science_xenobiology
 	name = "Xenobiology Tools"
 	id = "borg_upgrade_science_xenobiology"
 	build_type = MECHFAB
@@ -1220,7 +1219,7 @@
 	construction_time = 12 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SCIENCE
-	) */
+	)
 
 /datum/design/borg_upgrade_selfrepair
 	name = "Self-Repair Module"
