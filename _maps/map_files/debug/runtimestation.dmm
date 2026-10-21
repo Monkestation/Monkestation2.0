@@ -1561,6 +1561,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "ga" = (
@@ -1731,6 +1732,10 @@
 /obj/item/paper/guides/jobs/security/labor_camp,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"gT" = (
+/obj/machinery/growing/tray,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "gW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/radiation/rad_area/directional/north,
@@ -1797,6 +1802,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science)
+"jq" = (
+/obj/machinery/smartfridge/disks,
+/obj/item/disk/plantgene,
+/obj/item/disk/plantgene,
+/obj/item/disk/plantgene,
+/obj/item/disk/plantgene,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "jE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -1885,6 +1898,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"md" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "mz" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -1948,6 +1965,9 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"oe" = (
+/turf/closed/wall/r_wall,
+/area/station/service/hydroponics)
 "ou" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating,
@@ -2021,6 +2041,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"qI" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/chem_master,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "qQ" = (
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
@@ -2106,6 +2133,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"uc" = (
+/obj/machinery/vending/hydroseeds{
+	onstation = 0
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "ud" = (
 /obj/machinery/cassette_deck,
 /obj/structure/table/wood,
@@ -2178,6 +2212,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"wa" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/service/hydroponics)
 "wb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -2232,6 +2270,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"yz" = (
+/obj/machinery/growing/tray,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
@@ -2308,6 +2351,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"Bo" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2458,6 +2508,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
+"HA" = (
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/iron,
@@ -2528,6 +2582,10 @@
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"LU" = (
+/obj/machinery/biogenerator/admin,
+/turf/closed/wall/r_wall,
+/area/station/service/hydroponics)
 "LW" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -2564,6 +2622,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
+"MX" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/plantgenes,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "MY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -2611,6 +2674,14 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/station/science)
+"PI" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "PM" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -2662,6 +2733,9 @@
 /obj/structure/centcom_item_spawner/gun_and_ammo_creator,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"RL" = (
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "RM" = (
 /obj/structure/closet/secure_closet/hop{
 	locked = 0
@@ -2715,6 +2789,12 @@
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
+"Uw" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/obj/machinery/growing/tray,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "UK" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2728,6 +2808,24 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"Vm" = (
+/obj/structure/sink/directional/east,
+/obj/structure/table,
+/obj/item/screwdriver{
+	pixel_y = 10;
+	pixel_x = 0
+	},
+/obj/item/multitool{
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/item/plant_analyzer{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/machinery/splicer,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "Vr" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -2764,6 +2862,12 @@
 /obj/structure/money_bot,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"WL" = (
+/obj/machinery/composters,
+/obj/item/clothing/gloves/botanic_leather,
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "WT" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -2859,6 +2963,12 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"Zp" = (
+/obj/machinery/vending/hydronutrients{
+	onstation = 0
+	},
+/turf/open/floor/iron/smooth,
+/area/station/service/hydroponics)
 "ZD" = (
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/iron,
@@ -5581,12 +5691,12 @@ aa
 dY
 gC
 eh
-dY
-aa
-aa
-aa
-aa
-aa
+oe
+oe
+oe
+oe
+oe
+oe
 aa
 aa
 aa
@@ -5673,12 +5783,12 @@ aa
 en
 ek
 eh
-dY
-aa
-aa
-aa
-aa
-aa
+wa
+jq
+MX
+Vm
+WL
+oe
 aa
 aa
 aa
@@ -5765,12 +5875,12 @@ dY
 dY
 ek
 eh
-dY
-aa
-aa
-aa
-aa
-aa
+wa
+RL
+RL
+RL
+RL
+LU
 aa
 aa
 aa
@@ -5855,14 +5965,14 @@ eh
 eh
 eV
 eh
-ek
-eh
-dY
-aa
-aa
-aa
-aa
-aa
+gu
+gu
+PI
+Bo
+gT
+yz
+Uw
+oe
 aa
 aa
 aa
@@ -5949,12 +6059,12 @@ ei
 Qi
 fZ
 eh
-dY
-aa
-aa
-aa
-aa
-aa
+wa
+HA
+RL
+RL
+RL
+oe
 aa
 aa
 aa
@@ -6041,12 +6151,12 @@ eh
 rn
 eh
 eh
-dY
-aa
-aa
-aa
-aa
-aa
+wa
+qI
+uc
+Zp
+md
+oe
 aa
 aa
 aa
@@ -6135,10 +6245,10 @@ Ir
 wU
 wU
 wU
-aa
-aa
-aa
-aa
+oe
+oe
+oe
+oe
 aa
 aa
 aa
