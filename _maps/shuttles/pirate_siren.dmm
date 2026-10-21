@@ -32,7 +32,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "bV" = (
-/obj/item/walkman{
+/obj/item/boombox{
 	pixel_y = 7
 	},
 /turf/open/floor/wood,
@@ -212,7 +212,7 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "lb" = (
-/obj/item/cassette_tape/random{
+/obj/item/music_tape/rock{
 	pixel_y = 12;
 	pixel_x = -5
 	},
@@ -914,7 +914,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "HG" = (
-/obj/item/cassette_tape/random{
+/obj/item/music_tape/hiphop{
 	pixel_y = -7;
 	pixel_x = 4
 	},

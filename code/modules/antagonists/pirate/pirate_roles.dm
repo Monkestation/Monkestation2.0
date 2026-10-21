@@ -289,10 +289,7 @@
 		min(255, hex2num(copytext(copytext(siren.dna.features["fish_tail_color"], 2), 5, 7)) * COLOR_AMP_BRIGHT),
 	)))
 	var/list/eyecolors = list("#ff0000", "#04ff58", "#ffe600", "#d400ff")
-	siren.eye_color_left = pick(eyecolors)
-	siren.eye_color_right = pick(eyecolors)
-	var/obj/item/organ/internal/eyes/siren_eyes = siren.get_organ_slot(ORGAN_SLOT_EYES)
-	siren_eyes?.refresh()
+	siren.set_eye_color(pick(eyecolors), pick(eyecolors))
 	siren.gender = (rand(0, 10) > 3) ? FEMALE : PLURAL //despite physique always she/her or they/them. why? because they're sisters of course. 🏳️‍⚧️
 	siren.undershirt = /datum/sprite_accessory/undershirt/sports_bra::name
 	siren.underwear = /datum/sprite_accessory/underwear/female_lace::name

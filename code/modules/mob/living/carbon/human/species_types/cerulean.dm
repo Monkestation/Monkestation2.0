@@ -105,7 +105,7 @@
 	LAZYSET(features, "fish_tail_color", pick(GLOB.carp_colors - COLOR_CARP_SILVER))
 	return features
 
-/datum/species/human/cerulean/on_species_gain(mob/living/carbon/human/cerulean, datum/species/old_species, pref_load, regenerate_icons)
+/datum/species/human/cerulean/on_species_gain(mob/living/carbon/human/cerulean, datum/species/old_species, pref_load)
 	. = ..()
 	var/obj/item/bodypart/chest/cerulean_chest = cerulean.get_bodypart()
 	if(cerulean_chest)
