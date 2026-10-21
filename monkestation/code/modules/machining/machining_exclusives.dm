@@ -2,11 +2,12 @@
 /obj/item/pulsepack
 	name = "Backpack pulse generator"
 	desc = "A pack that converts extreme amounts of power into pre pulse fusion products. Unable to be minaturized due to a lack of technology."
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
 	worn_icon_state = "pulsepack"
 	icon_state = "holsteredp"
-	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	inhand_icon_state = "pepperbackpacksec" //close enough
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
