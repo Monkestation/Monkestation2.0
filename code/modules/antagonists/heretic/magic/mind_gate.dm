@@ -62,7 +62,7 @@
 
 	//If our moon heretic has their level 3 passive, we channel the amulet effect
 	var/datum/status_effect/heretic_passive/moon/our_passive = living_owner.has_status_effect(/datum/status_effect/heretic_passive/moon)
-	if(our_passive?.amulet)
-		our_passive.amulet.channel_amulet(owner, cast_on)
+	if(our_passive?.channels_amulet)
+		channel_moon_amulet(owner, cast_on)
 
 	return TRUE
