@@ -62143,13 +62143,14 @@
 /area/station/command/heads_quarters/hos)
 "lUo" = (
 /obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
 /turf/open/floor/plating,
 /area/station/maintenance/xenobio_disposals)
 "lUA" = (
@@ -119353,11 +119354,12 @@
 /area/station/service/abandoned_gambling_den)
 "wRH" = (
 /obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
 /turf/open/floor/plating,
 /area/station/maintenance/xenobio_disposals)
 "wRI" = (
