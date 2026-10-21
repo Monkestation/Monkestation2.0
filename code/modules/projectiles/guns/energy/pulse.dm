@@ -2,8 +2,8 @@
 	name = "pulse rifle"
 	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
 	icon_state = "pulse"
-	inhand_icon_state = "pulse"
-	worn_icon_state = "pulse"
+	inhand_icon_state = null
+	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	modifystate = TRUE
