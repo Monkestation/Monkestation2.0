@@ -6810,6 +6810,9 @@
 "bdO" = (
 /obj/structure/transport/linear/public,
 /obj/effect/turf_decal/caution/stand_clear/red,
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 10
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/xenobiology)
 "bdQ" = (
@@ -20533,9 +20536,7 @@
 /area/station/security/brig)
 "fpK" = (
 /obj/structure/transport/linear/public,
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 6
-	},
+/obj/effect/turf_decal/trimline/dark_red/warning,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/xenobiology)
 "fpQ" = (
@@ -29339,6 +29340,13 @@
 "ief" = (
 /turf/closed/wall/r_wall,
 /area/station/command/teleporter)
+"iej" = (
+/obj/structure/transport/linear/public,
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 1
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/station/science/xenobiology)
 "ieq" = (
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/effect/decal/cleanable/dirt,
@@ -64388,7 +64396,7 @@
 	specific_transport_id = "tram_xeno_lift"
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 1
+	dir = 9
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/xenobiology)
@@ -67517,7 +67525,11 @@
 /area/station/hallway/secondary/construction/engineering)
 "tOc" = (
 /obj/structure/transport/linear/public,
-/turf/open/space/basic,
+/obj/effect/turf_decal/caution/stand_clear/red,
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 6
+	},
+/turf/open/floor/plating/elevatorshaft,
 /area/station/science/xenobiology)
 "tOe" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -128150,7 +128162,7 @@ whn
 whn
 rpU
 mUT
-mgH
+iej
 fpK
 gCY
 pbt
@@ -128407,7 +128419,7 @@ whn
 whn
 kHX
 asv
-tOc
+mgH
 tOc
 rLd
 pbt
