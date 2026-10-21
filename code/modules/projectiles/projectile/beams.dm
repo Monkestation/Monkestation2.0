@@ -143,7 +143,7 @@
 	icon_state = "purple_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	light_color = COLOR_STRONG_VIOLET
-	damage = 6
+	damage = 7.2
 
 /obj/projectile/beam/scatter/pathetic
 	name = "extremely weak laser pellet"
