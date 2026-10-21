@@ -72,7 +72,7 @@
 /obj/item/clothing/suit/jacket/leather/armored
 	desc = "Its leather is so thick, you can hardly tell there's padding beneath it. its also <b>really loud!</b>"
 	icon = /obj/item/clothing/suit/toggle/jacket/sweater::icon
-	icon_state = /obj/item/clothing/suit/toggle/jacket/sweater::icon_state
+	icon_state = "/obj/item/clothing/suit/toggle/jacket/sweater"
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_state = "leatherjacket_p"
 	armor_type = /datum/armor/wintercoat_security

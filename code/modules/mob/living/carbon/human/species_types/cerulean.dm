@@ -147,6 +147,7 @@
 /obj/item/organ/external/tail/fish/cerulean
 	name = "oversized fish tail"
 	desc = "A hugely sized and scaled fish tail, clearly severed from something much larger than a mere space carp."
+	SETUP_MAP_ICONS("fish_tail", "/obj/item/organ/external/tail/fish/cerulean")
 	external_bodyshapes = BODYSHAPE_CERULEAN
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean
 	w_class = WEIGHT_CLASS_BULKY
@@ -249,11 +250,12 @@
 /obj/item/organ/external/tail/fish/cerulean/abyss
 	name = "translucent oversized fish tail"
 	desc = "A hugely sized and scaled fish tail, it is partially translucent and shows the skeleton inside."
+	SETUP_MAP_ICONS("fish_tail", "/obj/item/organ/external/tail/fish/cerulean/abyss")
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss
 
 /// apply an emissive for the skeleton
-/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
-	var/list/created_overlays = ..()
+/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss/get_extended_overlay(obj/item/bodypart/limb, layer_index, layer_real)
+	var/list/created_overlays = ..() || list()
 	created_overlays += mutable_appearance(sprite_datum.icon, "abyss_skeleton", offset_spokesman = limb, alpha = 105, layer = layer_real)
 	created_overlays += emissive_appearance(sprite_datum.icon, "abyss_skeleton", offset_spokesman = limb, alpha = 35, layer = layer_real)
 	return created_overlays
@@ -266,7 +268,7 @@
 	limb.remove_bodypart_texture(/datum/bodypart_texture/cerulean_abyss, FALSE)
 
 /// apply the bodypart texture (mask) to the limb and its visual organ aka fish tail
-/datum/bodypart_texture/cerulean_abyss/modify_bodypart_appearance(image/appearance)
+/datum/bodypart_texture/cerulean_abyss/modify_bodypart_appearance(image/appearance, overlay_flags)
 	var/icon/new_appearance = new(appearance.icon)
 	new_appearance.Blend(icon(/datum/sprite_accessory/tails/fish/cerulean::icon, "abyss_mask"), ICON_SUBTRACT)
 	appearance.icon = new_appearance

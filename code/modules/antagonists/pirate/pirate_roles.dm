@@ -268,13 +268,13 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/proc/load_identity(mob/living/carbon/human/siren)
 	siren.set_facial_hairstyle(/datum/sprite_accessory/facial_hair/shaved::name)
 	siren.set_hairstyle(pick(list(
-		/datum/sprite_accessory/hair/longest2::name,
-		/datum/sprite_accessory/hair/longfringe::name,
-		/datum/sprite_accessory/hair/sidecut::name,
-		/datum/sprite_accessory/hair/curls::name,
-		/datum/sprite_accessory/hair/messy::name,
-		/datum/sprite_accessory/hair/shoulderlength::name,
-		/datum/sprite_accessory/hair/halfshaved::name,
+		/datum/sprite_accessory/hair/sadako::name,
+		/datum/sprite_accessory/hair/moneypiece::name,
+		/datum/sprite_accessory/hair/frizzysidecut::name,
+		/datum/sprite_accessory/hair/coily::name,
+		/datum/sprite_accessory/hair/wolfcut::name,
+		/datum/sprite_accessory/hair/shortwavy::name,
+		/datum/sprite_accessory/hair/sidecutbang::name,
 		//more when i think of it
 	)))
 	siren.set_haircolor(sanitize_hexcolor(rgb(

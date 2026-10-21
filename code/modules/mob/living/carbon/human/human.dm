@@ -13,11 +13,10 @@
 	setup_human_dna()
 
 	create_carbon_reagents()
+	physiology = new() // before the species, so species and organ modifiers can apply on spawn
 	set_species(dna.species.type)
 
 	prepare_huds() //Prevents a nasty runtime on human init
-
-	physiology = new()
 
 	. = ..()
 

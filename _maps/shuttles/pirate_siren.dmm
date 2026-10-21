@@ -102,6 +102,20 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/pirate/siren)
 "fq" = (
@@ -504,6 +518,20 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/pirate/siren)
 "vp" = (
@@ -619,6 +647,20 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/pirate/siren)
 "yg" = (
@@ -1332,6 +1374,20 @@
 	id = "pirateshutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/pirate/siren)
 "Vj" = (
