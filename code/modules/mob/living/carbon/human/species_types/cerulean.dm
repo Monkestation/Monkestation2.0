@@ -13,6 +13,10 @@
 		BODY_ZONE_HEAD = /obj/item/bodypart/head,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
+	survival_box_overrides = list(
+		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/medipen,
+		SURVIVAL_EXTRA_TYPE = /obj/item/reagent_containers/cup/glass/waterbottle,
+	)
 	character_preview_load_all_organs = TRUE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/cerulean

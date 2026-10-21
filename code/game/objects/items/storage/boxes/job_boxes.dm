@@ -35,8 +35,6 @@
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
-	give_species_extras()
-
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
@@ -50,24 +48,26 @@
 
 	return new internal_type(src)
 
-/// Gives whatever extra stuff the species of whoever is holding us needs to survive
-/obj/item/storage/box/survival/proc/give_species_extras()
-	if(iscerulean(loc) && !(locate(/obj/item/reagent_containers/cup/glass/waterbottle) in src))
-		new /obj/item/reagent_containers/cup/glass/waterbottle(src)
-
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
-/obj/item/storage/box/survival/proc/wardrobe_removal()
-	if(isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
-		var/obj/item/mask = locate(mask_type) in src
-		var/obj/item/internals = locate(internal_type) in src
-		give_internals()
-		qdel(mask) // Get rid of the items that shouldn't be
-		qdel(internals)
+/obj/item/storage/box/survival/proc/apply_overrides()
+	if(!ishuman(loc) || QDELING(src))
 		return
-	give_species_extras()
+	var/mob/living/carbon/human/owner = loc
+	if(!length(owner.dna.species.survival_box_overrides))
+		return
+	var/list/items_to_clear = list(
+		locate(mask_type) in src,
+		locate(internal_type) in src,
+		locate(medipen_type) in src,
+	)
+	QDEL_LIST(items_to_clear)
+	var/list/survival_box_overrides = owner.dna.species.survival_box_overrides.Copy()
+	for(var/survival_types in survival_box_overrides)
+		var/item_to_add = survival_box_overrides[survival_types]
+		new item_to_add(src)
 
 // Mining survival box
 /obj/item/storage/box/survival/mining

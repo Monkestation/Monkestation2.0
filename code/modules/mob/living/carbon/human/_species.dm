@@ -67,6 +67,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	  * Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts] below.
 	  */
 	var/list/mutant_bodyparts = list()
+	///A list to override what gets put in a species' survival box. keys are defined in code\__DEFINES\survival_box.dm
+	var/list/survival_box_overrides = list()
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
 	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
