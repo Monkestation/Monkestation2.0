@@ -206,8 +206,8 @@
 	name = "\improper China Lake 40mm"
 	desc = "Oh, they're goin' ta have to glue you back together...IN HELL!"
 	desc_controls = "ALT-Click to set range. Can be reloaded by CLICK-DRAGGING grenades onto the launcher."
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/china_lake
 	var/target_range = 10
 	var/minimum_target_range = 5

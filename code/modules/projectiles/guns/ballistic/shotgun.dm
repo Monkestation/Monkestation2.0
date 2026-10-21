@@ -3,8 +3,8 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	worn_icon_state = null
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand_64.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand_64.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -64,8 +64,8 @@
 /obj/item/gun/ballistic/shotgun/riot/sol
 	name = "\improper Renoster Shotgun"
 	desc = "A twelve gauge shotgun with a six shell capacity underneath. Made for and used by SolFed's various military branches."
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	icon_state = "renoster"
 	worn_icon_state = "renoster"
 	inhand_icon_state = "renoster"
@@ -162,8 +162,8 @@
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube
 	name = "cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	icon_state = "cycler"
 	inhand_icon_state = "bulldog"
 	inhand_x_dimension = 32
@@ -230,8 +230,8 @@
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	weapon_weight = WEAPON_MEDIUM
@@ -421,8 +421,8 @@
 	icon_state = "hookshotgun"
 	worn_icon_state = "gun"
 	inhand_icon_state = "hookshotgun"
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/bounty
@@ -567,8 +567,8 @@
 	name = "Semi-Auto Shotgun"
 	desc = "A semi-auto shotgun! Something compels you to bug report upon seeing this."
 	icon_state = "flatgun"
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_icon_state = "autoshotgun"
 	worn_icon_state = "autoshotgun"
 	icon_state = "autoshotgun"
@@ -627,8 +627,8 @@
 	icon_state = "protokshotgun"
 	inhand_icon_state = "protokshotgun"
 	worn_icon_state = "protokshotgun"
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	recoil = 3
 	force = 20
 	inhand_x_dimension = 32

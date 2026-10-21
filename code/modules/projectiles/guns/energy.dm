@@ -2,10 +2,10 @@
 	icon_state = "energy"
 	name = "energy gun"
 	desc = "A basic energy-based gun."
-	icon = 'icons/obj/guns/energy/48x32.dmi'
-	lefthand_file = 'icons/obj/guns/energy/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/energy/righthand.dmi'
-	worn_icon = 'icons/obj/guns/energy/onmob.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
+	lefthand_file = 'icons/mob/inhands/energy/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/energy/righthand.dmi'
+	worn_icon = 'icons/mob/inhands/energy/onmob.dmi'
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/power_store/cell/cell

@@ -83,7 +83,7 @@
 /datum/voucher_set/explorer/retro_laser
 	name = "Laser Gun Kit"
 	description = "Contains a low capacity but recharging laser gun, and a knife and flashlight to attach to it. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
-	icon = 'icons/obj/guns/energy/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "explorer"
 	set_items = list(
 		/obj/item/gun/energy/laser/explorer,
@@ -193,7 +193,7 @@
 /datum/voucher_set/security/primary/disabler
 	name = "Disabler"
 	description = "The standard issue energy gun of Nanotrasen security forces. Comes with it's own holster."
-	icon = 'icons/obj/guns/energy/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "disabler"
 	set_items = list(
 		/obj/item/storage/belt/holster/energy/disabler,
@@ -204,7 +204,7 @@
 	name = "Hybrid Taser"
 	description = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	description = "The standard issue energy gun of Nanotrasen security forces. Comes with it's own holster."
-	icon = 'icons/obj/guns/energy/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "advtaser"
 	set_items = list(
 		/obj/item/gun/energy/e_gun/advtaser,
@@ -214,7 +214,7 @@
 	name = "Disabler SMG"
 	description = "An automatic disabler variant, as opposed to the conventional model, boasts a higher ammunition capacity at the cost of slightly reduced beam effectiveness."
 	description = "The standard issue energy gun of Nanotrasen security forces. Comes with it's own holster."
-	icon = 'icons/obj/guns/energy/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "disabler_smg"
 	set_items = list(
 		/obj/item/gun/energy/disabler/smg,

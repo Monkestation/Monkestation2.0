@@ -340,7 +340,7 @@
 /obj/item/borg/paperplane_crossbow
 	name = "paper plane crossbow"
 	desc = "Be careful, don't aim for the eyes- Who am I kidding, <i>definitely</i> aim for the eyes!"
-	icon = 'icons/obj/guns/energy/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "crossbow"
 	/// How many planes does the crossbow currently have in its internal magazine?
 	var/planes = 4

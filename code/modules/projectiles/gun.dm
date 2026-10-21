@@ -4,10 +4,10 @@
 /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/guns/ballistic/48x32.dmi'
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
-	worn_icon = 'icons/obj/guns/ballistic/onmob.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
+	worn_icon = 'icons/mob/inhands/ballistic/onmob.dmi'
 	icon_state = "flatgun"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"

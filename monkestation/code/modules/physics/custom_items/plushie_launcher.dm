@@ -1,10 +1,10 @@
 /obj/item/plushie_launcher
 	name = "weh cannon"
 	desc = "High speed lizards coming your way!"
-	icon = 'icons/obj/guns/ballistic/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
 	icon_state = "revolver"
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	///the spawned path of our plushie
@@ -49,8 +49,8 @@
 	desc = "High speed lizards coming your way!"
 	icon_state = "shotgun"
 	worn_icon_state = null
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand_64.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand_64.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64

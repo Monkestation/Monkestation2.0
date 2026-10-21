@@ -1,6 +1,7 @@
 /obj/item/gun/ballistic/revolver/joel
 	name = "\improper Bolt Action pistol"
 	desc = "The most powerful handgun in Olathe. It's best not to waste the only bullet. Examine again for more information."
+	icon_state = "joelgun"
 	load_sound = 'sound/items/lisa/gunload.ogg'
 	eject_sound = 'sound/items/lisa/empty.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c22

@@ -130,7 +130,6 @@
 	mag_display = FALSE
 	show_bolt_icon = FALSE
 
-
 /obj/item/gun/ballistic/automatic/pistol/stickman/equipped(mob/user, slot)
 	..()
 	to_chat(user, span_notice("As you try to manipulate [src], it slips out of your possession.."))
@@ -276,7 +275,7 @@
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. \
 		Uses plasma power packs. \
 		Spews an inaccurate stream of searing plasma out the magnetic barrel so long as it has power and the trigger is pulled."
-	icon = 'icons/obj/guns/energy/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "slonce"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/incinerate.ogg'
 	fire_sound_volume = 40 // This thing is comically loud otherwise
@@ -327,7 +326,7 @@
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. \
 		Uses plasma power packs. \
 		Fires relatively accurate globs of searing plasma."
-	icon = 'icons/obj/guns/energy/48x32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "gwiazda"
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/burn.ogg'

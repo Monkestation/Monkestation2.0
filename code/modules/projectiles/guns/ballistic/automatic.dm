@@ -987,9 +987,9 @@
 	name = "\improper Wyłom Anti-Materiel Rifle"
 	desc = "A massive, outdated beast of an anti materiel rifle that was once in use by CIN military forces. Fires the devastating .60 Strela caseless round, \
 		the massively overperforming penetration of which being the reason this weapon was discontinued."
-	icon = 'icons/obj/guns/ballistic/64x.dmi'
-	lefthand_file = 'icons/obj/guns/ballistic/lefthand_64.dmi'
-	righthand_file = 'icons/obj/guns/ballistic/righthand_64.dmi'
+	icon = 'icons/obj/weapons/guns/64x.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	base_pixel_x = -16 // This baby is 64 pixels wide
 	pixel_x = -16
 	inhand_x_dimension = 64
