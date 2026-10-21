@@ -364,7 +364,7 @@
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 	if(force_drop)
-		for(var/obj/item/item in slipper.held_items)
+		for(var/obj/item/item as anything in slipper.get_held_items())
 			slipper.accident(item)
 
 	var/olddir = slipper.dir

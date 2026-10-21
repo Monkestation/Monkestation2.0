@@ -42,7 +42,7 @@
 				continue
 
 			var/mob/living/carbon/human/human = pot_target
-			for(var/obj/item/item as anything in human.held_items)
+			for(var/obj/item/item as anything in human.get_held_items())
 				if(QDELETED(item))
 					continue
 				if(!istype(item, scared_item_path))

@@ -123,7 +123,7 @@
 	playsound(get_turf(unjaunter), 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1)
 	new /obj/effect/temp_visual/space_explosion(get_turf(unjaunter))
 	if(iscarbon(unjaunter))
-		for(var/obj/item/space_crawl/space_hand in unjaunter.held_items)
+		for(var/obj/item/space_crawl/space_hand as anything in unjaunter.get_held_items_of_type(/obj/item/space_crawl))
 			unjaunter.temporarilyRemoveItemFromInventory(space_hand, force = TRUE)
 			qdel(space_hand)
 	if(unjaunter.bodytemperature <= unjaunter.bodytemp_cold_damage_limit) // workaround for RESISTCOLD jank
