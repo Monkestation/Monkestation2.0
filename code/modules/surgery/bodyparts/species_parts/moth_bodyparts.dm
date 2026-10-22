@@ -160,7 +160,7 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/left/moth/inner/drop_limb(special, dismembered, violent, move_to_floor)
+/obj/item/bodypart/arm/left/moth/inner/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(special)
 		return ..()
 	return FALSE
@@ -184,7 +184,7 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/right/moth/inner/drop_limb(special, dismembered, violent, move_to_floor)
+/obj/item/bodypart/arm/right/moth/inner/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(special)
 		return ..()
 	return FALSE

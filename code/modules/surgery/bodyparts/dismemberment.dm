@@ -256,13 +256,13 @@
 	head.tongue = src
 	..()
 
-/obj/item/bodypart/chest/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/chest/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(special)
 		return ..()
 	//if this is not a special drop, this is a mistake
 	return FALSE
 
-/obj/item/bodypart/arm/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/arm/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 
@@ -295,7 +295,7 @@
 	new_arm_owner.update_worn_gloves()
 
 
-/obj/item/bodypart/leg/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/leg/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
@@ -306,7 +306,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE, violent = violent)
 	return ..()
 
-/obj/item/bodypart/head/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/head/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
