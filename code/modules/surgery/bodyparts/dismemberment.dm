@@ -82,7 +82,7 @@
 
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE)
+/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE, move_to_floor = TRUE)
 	if(!owner)
 		return
 	var/atom/drop_loc = owner.drop_location()
@@ -137,7 +137,7 @@
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
 
-	if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!drop_loc && move_to_floor) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
@@ -165,7 +165,10 @@
 		qdel(src)
 		return
 
-	forceMove(drop_loc)
+	if(move_to_floor)
+		forceMove(drop_loc)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_POST_REMOVED, phantom_owner, special, dismembered)
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
 
 /**

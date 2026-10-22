@@ -893,7 +893,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
  * - cycle_dir: A cardinal (NORTH, SOUTH, EAST, WEST) direction. Defaults to WEST, which is forwards.
  * - climb: If TRUE, wrapping will also shift rows/columns.
  * - silent: If applicable and TRUE, will output messages to the mob.
- * - intial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
+ * - initial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
  */
 /mob/proc/cycle_hand(cycle_dir = WEST, climb = TRUE, silent = FALSE, initial_index = active_hand_index)
 	if(!(cycle_dir in GLOB.cardinals))

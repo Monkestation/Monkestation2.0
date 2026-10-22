@@ -41,9 +41,9 @@
 		UnregisterSignal(old_owner, COMSIG_MOB_SWAP_HANDS)
 		on_inactive_hand(old_owner)
 
-/obj/item/bodypart/arm/set_disabled(new_disabled)
+/obj/item/bodypart/arm/set_disabled(new_disabled, update_limbs = TRUE)
 	. = ..()
-	if(isnull(.) || !owner)
+	if(isnull(.) || !owner || !update_limbs)
 		return
 
 	if(!.)

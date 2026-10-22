@@ -1806,6 +1806,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
+		if(old_part.bodypart_flags & BODYPART_ABSTRACT) // handled by the bodypart that owns it
+			continue
 
 		var/path = new_species.bodypart_overrides?[old_part.body_zone]
 		var/obj/item/bodypart/new_part

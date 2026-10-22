@@ -327,6 +327,8 @@
 		return TRUE
 	return fire_gun(target, user, user.Adjacent(target), params)
 
+#define AKIMBO_PENALTY_SCALING 0.75
+
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
 		return
@@ -377,19 +379,30 @@
 			return
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
-	var/loop_counter = 0
 	if(ishuman(user) && (user.istate & ISTATE_HARM))
 		var/mob/living/carbon/human/H = user
+		// We need to iterate once to get the total spread
+		// While we're at it let's cache the guns
+		var/list/obj/item/gun/valid_guns = list()
 		for(var/obj/item/gun/gun as anything in H.get_held_items_of_type(/obj/item/gun))
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))
+				valid_guns += gun
 				if(!(HAS_TRAIT(H, TRAIT_AKIMBO)))
-					bonus_spread += dual_wield_spread
-				loop_counter++
-				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
+					bonus_spread += gun.dual_wield_spread * (1 + AKIMBO_PENALTY_SCALING * (length(valid_guns) + 1))
+
+		var/gun_count = length(valid_guns)
+		if(gun_count)
+			if(!(HAS_TRAIT(H, TRAIT_AKIMBO)))
+				bonus_spread += src.dual_wield_spread // no scaling since it's technically the first shot
+			for(var/i in 1 to gun_count)
+				var/obj/item/gun/gun = valid_guns[i]
+				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), i)
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
+
+#undef AKIMBO_PENALTY_SCALING
 
 /obj/item/gun/proc/check_botched(mob/living/user, atom/target)
 	if(clumsy_check)
