@@ -28,6 +28,8 @@
 	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
+	/// It's like a client, but persists! Persistent clients will stick to a mob until the client in question is logged into a different mob.
+	var/datum/persistent_client/persistent_client
 
 	/// Percentage of how much rgb to max the lighting plane at
 	/// This lets us brighten it without washing out color
@@ -131,6 +133,8 @@
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
+	/// How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
+	var/default_hand_amount = 2
 
 	//HUD things
 
@@ -145,17 +149,11 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
-
 	///A weakref to the last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
 	var/datum/weakref/LAssailant = null
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
-
-	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = FALSE
 
 	///Used by admins to possess objects. All mobs should have this var
 	var/obj/control_object
@@ -211,5 +209,6 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
-	/// User is thinking in character. Used to revert to thinking state after stop_typing
-	var/thinking_IC = FALSE
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area

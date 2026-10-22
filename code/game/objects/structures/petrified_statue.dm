@@ -36,8 +36,9 @@
 /obj/structure/statue/petrified/contents_explosion(severity, target)
 	return
 
-/obj/structure/statue/petrified/handle_atom_del(atom/A)
-	if(A == petrified_mob)
+/obj/structure/statue/petrified/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == petrified_mob)
 		petrified_mob = null
 
 /obj/structure/statue/petrified/Destroy()
@@ -60,7 +61,7 @@
 		petrified_mob.remove_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
 		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= FACTION_MIMIC
-		petrified_mob = null
+		petrified_mob.forceMove(loc)
 	return ..()
 
 /obj/structure/statue/petrified/deconstruct(disassembled = TRUE)

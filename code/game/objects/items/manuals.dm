@@ -136,13 +136,13 @@
 				<h2>Basic ingredients preparation:</h2>
 
 				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
-				6u egg yolk + 12 egg white + 15u flour + 5u sugar for cake batter.<br>
-				Doughs can be transformed by using a knife and rolling pin.<br>
-				All doughs can be microwaved.<br>
+				6u egg yolk + 12 egg white (3 eggs) + 15u flour + 5u sugar for cake batter.<br>
+				Doughs can be transformed by using a rolling pin(flat dough) and knife(dough slice).<br>
+				All doughs can be baked.<br>
 				<b>Bowl:</b> Add water to it for soup preparation.<br>
 				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
-				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.<br>
-				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
+				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to 40u milk and 10u soy milk to prepare cheese (sliceable) or tofu.<br>
+				<b>Rice:</b> Mix 10u rice with 10u water, then boil in a soup pot with 25u water.
 
 				<h2>Custom food:</h2>
 				Add ingredients to a base item to prepare a custom meal.<br>
@@ -161,8 +161,22 @@
 				<h2>Table Craft:</h2>
 				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
+				<h2>Griddle:</h2>
+				Use it to cook food ingredients (raw meats, eggs, toast, etc...).
+				It can cook up to 7 ingredients at once.
+				Do be careful not to leave them on an active griddle for to long!
+
+				<h2>Stove:</h2>
+				Use it to boil food ingredients (rice, spaghetti, vegetables, meat, etc...) in a Soup Pot.
+
+				<h2>Oven:</h2>
+				Use it to bake food ingredients (doughs, some vegetables, etc...)
+
+				<h2>Range:</h2>
+				A combination of both the Stove and Oven, it can perform the tasks of both at the same time!
+
 				<h2>Microwave:</h2>
-				Use it to cook or boil food ingredients (meats, doughs, egg, donkpocket, etc...).
+				Use it to microwave some food ingredients (egg, donkpocket, etc...).
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
@@ -176,14 +190,14 @@
 
 
 				<h2>Example recipes:</h2>
-				<b>Vanilla Cake</b>: Microwave cake batter.<br>
+				<b>Vanilla Cake</b>: Bake cake batter.<br>
 				<b>Burger:</b> 1 bun + 1 meat steak<br>
 				<b>Bread:</b> Microwave dough.<br>
 				<b>Waffles:</b> 2 pastry base<br>
 				<b>Popcorn:</b> Microwave corn.<br>
 				<b>Meat Steak:</b> Microwave meat.<br>
 				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
-				<b>Boiled Spaghetti:</b>Raw Spaghetti + 50u water at 450+K<br>
+				<b>Boiled Spaghetti:</b>Raw Spaghetti + 25u water at 450+K<br>
 				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 
@@ -235,49 +249,56 @@
 
 // Wiki books that are linked to the configured wiki link.
 
+/// The size of the window that the wiki books open in.
+#define BOOK_WINDOW_BROWSE_SIZE "970x710"
+/// This macro will resolve to code that will open up the associated wiki page in the window.
+#define WIKI_PAGE_IFRAME(title, wikiurl, link_identifier) {"
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<title>[html_encode(title)]</title>
+		<style>
+			body {
+				margin: 0;
+			}
+			p {
+				margin: 8px;
+			}
+			iframe {
+				border: 0;
+				margin-left: -177px;
+				margin-top: -80px;
+				width: calc(100% + 177px);
+				height: calc(100% + 80px);
+				display: none;
+			}
+			body.loaded p {
+				display: none;
+			}
+			body.loaded iframe {
+				display: inline;
+			}
+		</style>
+	</head>
+	<body>
+		<p>You start skimming through the manual...</p>
+		<iframe src="[wikiurl]/[link_identifier]?useskin=vector" onload="document.body.classList.add('loaded')"></iframe>
+	</body>
+</html>
+"}
+
 // A book that links to the wiki
 /obj/item/book/manual/wiki
 	var/page_link = ""
-	window_size = "970x710"
+	window_size = BOOK_WINDOW_BROWSE_SIZE
 
-/obj/item/book/manual/wiki/attack_self()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(!wikiurl)
+/obj/item/book/manual/wiki/display_content(mob/living/user)
+	var/wiki_url = CONFIG_GET(string/wikiurl)
+	if(!wiki_url)
+		user.balloon_alert(user, "this book is empty!")
 		return
-	usr.client << link("[wikiurl]/[page_link]")
-	return ..()
-
-/*
-/obj/item/book/manual/wiki/proc/initialize_wikibook()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(wikiurl)
-		var/wikiinfo = {"
-
-			<html>
-			<head>
-			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-			<style>
-				iframe {
-					display: none;
-				}
-			</style>
-			</head>
-			<body>
-			<script type="text/javascript">
-				function pageloaded(myframe) {
-					document.getElementById("loading").style.display = "none";
-					myframe.style.display = "inline";
-			}
-			</script>
-			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
-			</body>
-
-			</html>
-
-			"}
-		book_data.set_content(wikiinfo, trusted = TRUE)
-*/
+	credit_book_to_reader(user)
+	DIRECT_OUTPUT(user, browse(WIKI_PAGE_IFRAME(name, wiki_url, page_link), "window=manual;size=[BOOK_WINDOW_BROWSE_SIZE]")) // if you change this GUARANTEE that it works.
 
 //MONKESTATION EDIT BEGIN - basically there isn't a single thing that's not touched below this line. Just going to make this abundantly obvious that we have a lot of changes, between names of some manuals being changed to reflect different jobs to all of the links to the wiki. There's basically zero excuse for me to not leave an edit comment on here.
 
@@ -286,21 +307,21 @@
 	icon_state ="chemistrybook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemistry Textbook"
-	page_link = "en/guides/medical/guide-to-chemistry"
+	page_link = "Guide_to_Chemistry"
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
 	icon_state ="bookEngineering"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Station Repairs and Construction"
-	page_link = "en/guides/engineering/guide-to-construction"
+	page_link = "Guide_to_construction"
 
 /obj/item/book/manual/wiki/engineering_guide
 	name = "Engineering Textbook"
 	icon_state ="bookEngineering2"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Engineering Textbook"
-	page_link = "en/jobs/engineering/station-engineer"
+	page_link = "Station_Engineer"
 
 /obj/item/book/manual/wiki/security_space_law
 	name = "Space Law"
@@ -308,7 +329,7 @@
 	icon_state = "bookSpaceLaw"
 	starting_author = "Nanotrasen"
 	starting_title = "Space Law"
-	page_link = "en/guides/security/space-laws"
+	page_link = "Space_law"
 
 /obj/item/book/manual/wiki/security_space_law/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] pretends to read \the [src] intently... then promptly dies of laughter!"))
@@ -319,7 +340,7 @@
 	icon_state = "bookInfections"
 	starting_author = "Infections Encyclopedia"
 	starting_title = "Pathology 101 - Curing Problems"
-	page_link = "en/guides/medical/guide-to-pathology"
+	page_link = "Guide_to_pathology"
 
 /obj/item/book/manual/wiki/telescience
 	name = "Teleportation Science - Bluespace for dummies!"
@@ -340,7 +361,7 @@
 	icon_state ="bookDetective"
 	starting_author = "Nanotrasen"
 	starting_title = "The Film Noir: Proper Procedures for Investigations"
-	page_link = "en/jobs/security/detective" //currently do not have a detectives' guide, pointed to the job page for now 10/18/24
+	page_link = "Detective" //currently do not have a detectives' guide, pointed to the job page for now 10/18/24
 
 /obj/item/book/manual/wiki/barman_recipes
 	name = "Barman Recipes: Mixing Drinks and Changing Lives"
@@ -354,14 +375,14 @@
 	icon_state = "borgbook"
 	starting_author = "XISC"
 	starting_title = "Robotics for Dummies"
-	page_link = "en/guides/science/guide-to-robotics"
+	page_link = "Guide_to_robotics"
 
 /obj/item/book/manual/wiki/research_and_development
 	name = "Research and Development 101"
 	icon_state = "rdbook"
 	starting_author = "Dr. L. Ight"
 	starting_title = "Research and Development 101"
-	page_link = "en/guides/science/guide-to-rnd"
+	page_link = "Guide_to_rnd"
 
 /obj/item/book/manual/wiki/cooking_to_serve_man
 	name = "To Serve Man"
@@ -376,42 +397,49 @@
 	icon_state = "book3"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Subspace Telecommunications And You"
-	page_link = "en/guides/engineering/guide-to-telcom"
+	page_link = "Guide_to_telcom"
 
 /obj/item/book/manual/wiki/atmospherics
 	name = "Lexica Atmosia"
 	icon_state = "book5"
 	starting_author = "the City-state of Atmosia"
 	starting_title = "Lexica Atmosia"
-	page_link = "en/guides/engineering/guide-to-atmospherics"
+	page_link = "Guide_to_atmospherics"
+
+/obj/item/book/manual/wiki/virology
+	name = "Biological Warfare for Dummies"
+	icon_state = "book5"
+	starting_author = "The Plague Doctors Guild"
+	starting_title = "Biological Warfare for Dummies"
+	page_link = "Guide_to_pathology"
 
 /obj/item/book/manual/wiki/medicine
 	name = "Medical Space Compendium, Volume 638"
 	icon_state = "book8"
 	starting_author = "Medical Journal"
 	starting_title = "Medical Space Compendium, Volume 638"
-	page_link = "en/guides/medical/guide-to-medicine"
+	page_link = "Guide_to_medicine"
 
 /obj/item/book/manual/wiki/surgery
 	name = "Brain Surgery for Dummies"
 	icon_state = "book4"
 	starting_author = "Dr. F. Fran"
 	starting_title = "Brain Surgery for Dummies"
-	page_link = "en/guides/medical/guide-to-surgery"
+	page_link = "Guide_to_surgery"
 
 /obj/item/book/manual/wiki/grenades
 	name = "DIY Chemical Grenades"
 	icon_state = "book2"
 	starting_author = "W. Powell"
 	starting_title = "DIY Chemical Grenades"
-	page_link = "en/guides/medical/guide-to-grenades"
+	page_link = "Guide_to_grenades"
 
 /obj/item/book/manual/wiki/ordnance
 	name = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
 	icon_state = "book6"
 	starting_author = "Cuban Pete"
 	starting_title = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
-	page_link = "en/guides/science/guide-to-ordnance"
+	page_link = "Guide_to_ordnance"
 
 /obj/item/book/manual/wiki/ordnance/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
@@ -440,14 +468,14 @@
 	icon_state ="plumbingbook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemical Factories Without Narcotics"
-	page_link = "en/guides/medical/guide-to-plumbing"
+	page_link = "Guide_to_plumbing"
 
 /obj/item/book/manual/wiki/cytology
 	name = "Unethically Grown Organics"
 	icon_state ="cytologybook"
 	starting_author = "Kryson"
 	starting_title = "Unethically Grown Organics"
-	page_link = "en/guides/science/guide-to-cytology"
+	page_link = "Guide_to_cytology"
 
 /obj/item/book/manual/wiki/tgc
 	name = "Tactical Game Cards - Player's Handbook"
@@ -461,13 +489,16 @@
 	icon_state = "book6"
 	starting_author = "Dr. Mobius"
 	starting_title = "Artifact Science!"
-	page_link = "en/guides/science/guide-to-artsci"
+	page_link = "Guide_to_artsci"
 
 /obj/item/book/manual/wiki/banned //manual specific for... well, handing a funny book to people that might be on the verge of breaking rules but we can have a funny way of handling those situations.
 	name = "How to Avoid Getting Banned"
 	icon_state = "bookSpaceLaw"
 	starting_author = "God"
 	starting_title = "How to Avoid Getting Banned"
-	page_link = "en/info/how-to-avoid-getting-banned"
+	page_link = "How_to_avoid_getting_banned"
 
 //MONKESTATION EDIT END
+
+#undef BOOK_WINDOW_BROWSE_SIZE
+#undef WIKI_PAGE_IFRAME

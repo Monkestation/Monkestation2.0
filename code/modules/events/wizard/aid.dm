@@ -9,7 +9,7 @@
 	earliest_start = 0 MINUTES
 	description = "Wizard no longer needs robes to cast spells."
 	min_wizard_trigger_potency = 4
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 /datum/round_event/wizard/robelesscasting/start()
 
@@ -37,7 +37,7 @@
 	earliest_start = 0 MINUTES
 	description = "Levels up the wizard's spells."
 	min_wizard_trigger_potency = 0
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 /datum/round_event/wizard/improvedcasting/start()
 	for(var/mob/living/caster as anything in GLOB.mob_living_list)

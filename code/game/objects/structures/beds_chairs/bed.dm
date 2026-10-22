@@ -84,11 +84,17 @@
 /obj/structure/bed/medical/anchored
 	anchored = TRUE
 
+/obj/structure/bed/medical/anchored/Initialize(mapload) //loaded subtype for mapping use
+	. = ..()
+	update_appearance()
+
 /obj/structure/bed/medical/emergency
 	name = "emergency medical bed"
 	desc = "A compact medical bed. This emergency version can be folded and carried for quick transport."
 	icon_state = "emerg_down"
 	base_icon_state = "emerg"
+	build_stack_type = /obj/item/stack/sheet/iron
+	build_stack_amount = 1
 	foldable_type = /obj/item/emergency_bed
 
 /obj/structure/bed/medical/Initialize(mapload)
@@ -112,11 +118,11 @@
 	if(!isnull(foldable_type))
 		. += span_notice("You can fold it up with a Right-click.")
 
-/obj/structure/bed/medical/AltClick(mob/user)
-	. = ..()
+/obj/structure/bed/medical/click_alt(mob/living/user)
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
 	set_density(TRUE)
@@ -216,17 +222,28 @@
 /obj/item/emergency_bed/attack_self(mob/user)
 	deploy_bed(user, user.loc)
 
-/obj/item/emergency_bed/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/emergency_bed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_bed(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	if(isliving(interacting_with))
+		var/mob/living/patient = interacting_with
+		if(patient.buckled)
+			return NONE
+		patient.visible_message(span_warning("[user] starts buckling [patient] to [src]!"),\
+			span_userdanger("[user] starts buckling you to [src]!"),\
+			span_hear("You hear metal clanking."))
+		if(!do_after(user, 2 SECONDS))
+			return NONE
+		deploy_bed(user, get_turf(patient), patient)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(isopenturf(target))
-		deploy_bed(user, target)
-
-/obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location)
+/obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location, mob/living/patient)
 	var/obj/structure/bed/medical/emergency/deployed = new /obj/structure/bed/medical/emergency(location)
 	deployed.add_fingerprint(user)
+	if(patient)
+		deployed.user_buckle_mob(patient, user, FALSE)
 	qdel(src)
 
 /obj/item/emergency_bed/silicon // ROLLER ROBO DA!
@@ -335,3 +352,9 @@
 	if(target == goldilocks)
 		target.pixel_y -= 14
 		goldilocks = null
+
+/obj/structure/bed/silk
+	name = "silk bed"
+	icon = 'icons/obj/silk_structures.dmi'
+	icon_state = "bed"
+	build_stack_type = /obj/item/stack/sheet/silk

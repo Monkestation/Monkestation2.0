@@ -27,6 +27,7 @@
 	bodytemp_heat_damage_limit = (T0C + 100)
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
+	blood_volume = BLOOD_VOLUME_NORMAL
 	faction = list(FACTION_CLOWN)
 	ai_controller = /datum/ai_controller/basic_controller/clown
 	speed = 1.4 //roughly close to simpleanimal clowns
@@ -49,7 +50,7 @@
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
 	//im not putting dynamic humans or whatever its called here because this is the base path of nonhuman clownstrosities
 	if(waddles)
-		AddElement(/datum/element/waddling)
+		AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	if(length(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
@@ -66,6 +67,11 @@
 	var/obj/item/food/grown/banana/bunch/unripe_bunch = target
 	unripe_bunch.start_ripening()
 	log_combat(src, target, "explosively ripened")
+
+/mob/living/basic/clown/get_bloodtype()
+	if (check_holidays(APRIL_FOOLS))
+		return get_blood_type(BLOOD_TYPE_CLOWN)
+	return ..()
 
 /mob/living/basic/clown/lube
 	name = "Living Lube"
@@ -370,7 +376,6 @@
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	force_threshold = 10 //lots of fat to cushion blows.
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
@@ -395,8 +400,8 @@
 	spit.Grant(src)
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
-
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0)
+	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
 
 /mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
 	if(!check_edible(item))
@@ -453,7 +458,7 @@
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
-/mob/living/basic/clown/mutant/glutton/proc/tamed(mob/living/tamer)
+/mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 
@@ -470,7 +475,6 @@
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "regurgitate"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 
 /datum/action/cooldown/regurgitate/set_click_ability(mob/on_who)

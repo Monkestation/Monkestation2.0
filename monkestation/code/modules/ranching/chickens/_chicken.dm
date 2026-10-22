@@ -9,14 +9,14 @@
 	maxHealth = 15
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 
-	icon = 'monkestation/icons/mob/ranching/chickens.dmi'
+	icon = 'icons/mob/ranching/chickens.dmi'
 	icon_state = "chicken_white"
 	icon_living = "chicken_white"
 	icon_dead = "dead_state"
 	held_state = "chicken_white"
-	head_icon = 'monkestation/icons/mob/pets_held.dmi'
-	held_lh = 'monkestation/icons/mob/pets_held_lh.dmi'
-	held_rh = 'monkestation/icons/mob/pets_held_rh.dmi'
+	head_icon = 'icons/mob/pets_held.dmi'
+	held_lh = 'icons/mob/pets_held_lh.dmi'
+	held_rh = 'icons/mob/pets_held_rh.dmi'
 
 	speak_emote = list("clucks","croons")
 
@@ -39,11 +39,11 @@
 	chat_color = "#FFDC9B"
 
 	egg_type = /obj/item/food/egg
-	mutation_list = list(/datum/mutation/ranching/chicken/spicy, /datum/mutation/ranching/chicken/brown)
+	mutation_list = list(/datum/ranching_mutation/chicken/spicy, /datum/ranching_mutation/chicken/brown)
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
-	head_icon = 'monkestation/icons/mob/pets_held_large.dmi'
+	head_icon = 'icons/mob/pets_held_large.dmi'
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	health = maxHealth
@@ -80,7 +80,6 @@
 			name = real_name = "[breed_name_female]"
 		else
 			name = real_name = "[breed_name] Hen"
-	update_name_tag()
 
 	build_initial_planning_tree()
 
@@ -100,7 +99,7 @@
 /mob/living/basic/chicken/update_overlays()
 	. = ..()
 	if(is_marked)
-		.+= mutable_appearance('monkestation/icons/effects/ranching.dmi', "marked", FLOAT_LAYER, src, plane = src.plane)
+		.+= mutable_appearance('icons/effects/ranching.dmi', "marked", FLOAT_LAYER, src, plane = src.plane)
 
 /mob/living/basic/chicken/pass_stats(atom/child, mutant = FALSE)
 	var/obj/item/food/egg/layed_egg = child
@@ -145,10 +144,10 @@
 	disliked_foods = null
 	return ..()
 
-/mob/living/basic/chicken/AltClick(mob/user)
-	. = ..()
+/mob/living/basic/chicken/click_alt(mob/living/user)
 	is_marked = !is_marked
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/chicken/attack_hand(mob/living/carbon/human/user)
 	..()
@@ -161,7 +160,7 @@
 		adjust_happiness(-1, user)
 
 /mob/living/basic/chicken/attackby(obj/item/given_item, mob/user, params)
-	for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+	for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 		if(!length(mutation.nearby_items))
 			continue
 		if(given_item.type in mutation.nearby_items)
@@ -194,7 +193,7 @@
 		else
 			var/turf/vomited_turf = get_turf(src)
 			vomited_turf.add_vomit_floor(src, VOMIT_TOXIC)
-			to_chat(user, "<span class='warning'>[name] can't keep the food down, it vomits all over the floor!</span>")
+			to_chat(user, span_warning("[name] can't keep the food down, it vomits all over the floor!"))
 			adjust_happiness(-15, user)
 			current_feed_amount -= 3
 	else
@@ -211,7 +210,7 @@
 	eggs_left += rand(0, 2)
 	current_feed_amount++
 	total_times_eaten ++
-	for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+	for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 		if(!istype(mutation))
 			continue
 
@@ -228,7 +227,7 @@
 			listed_reagent.feed_interaction(src, listed_reagent.volume, user)
 			consumed_reagents |= listed_reagent.type
 
-			for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+			for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 				if(!istype(mutation))
 					continue
 
@@ -240,7 +239,7 @@
 		var/obj/item/food/listed_food = new listed_item
 		consumed_food |= listed_food.type
 
-		for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+		for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 			if(!istype(mutation))
 				continue
 

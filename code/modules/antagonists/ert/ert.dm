@@ -13,7 +13,7 @@
 	suicide_cry = "FOR NANOTRASEN!!"
 	count_against_dynamic_roll_chance = FALSE
 	// Not 'true' antags, this disables certain interactions that assume the owner is a baddie
-	antag_flags = FLAG_FAKE_ANTAG
+	antag_flags = ANTAG_FAKE
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
@@ -237,7 +237,7 @@
 		H.equipOutfit(plasmaman_outfit)
 		H.open_internals(H.get_item_for_held_index(2))
 	H.equipOutfit(outfit)
-
+	ADD_TRAIT(H?.mind, TRAIT_CAN_HYPNO, JOB_TRAIT)
 
 /datum/antagonist/ert/greet()
 	if(!ert_team)

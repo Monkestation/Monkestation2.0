@@ -127,7 +127,14 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#0070B7#FFCE5B"
+	greyscale_colors = "#41579a#e6a345"
+
+/obj/item/clothing/head/hats/caphat/armored
+	name = "captain's campaign hat"
+	desc = "For the Captains who do not shy away from action. Uses reinforced fabric to offer sufficient protection."
+	icon_state = "caphelmet"
+	armor_type = /datum/armor/vest_capcarapace
+	dog_fashion = null
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -136,6 +143,14 @@
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor_type = /datum/armor/hats_hopcap
 	dog_fashion = /datum/dog_fashion/head/hop
+
+/obj/item/clothing/head/hopcap/beret
+	name = "head of personnel's beret"
+	desc = "A fancy beret designed by NT's Personnel division for their favorite head's head."
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	icon_state = "beret_badge"
+	greyscale_colors = "#3e5c88#88242D"
 
 //Chaplain
 /datum/armor/hats_hopcap
@@ -159,53 +174,6 @@
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
 	icon_state = "bishopmitre"
 
-//Detective
-/obj/item/clothing/head/fedora/det_hat
-	name = "detective's fedora"
-	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
-	armor_type = /datum/armor/fedora_det_hat
-	icon_state = "detective"
-	inhand_icon_state = "det_hat"
-	var/candy_cooldown = 0
-	dog_fashion = /datum/dog_fashion/head/detective
-	///Path for the flask that spawns inside their hat roundstart
-	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
-
-/datum/armor/fedora_det_hat
-	melee = 25
-	bullet = 5
-	laser = 25
-	energy = 35
-	fire = 30
-	acid = 50
-	wound = 5
-
-/obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
-
-	new flask_path(src)
-
-/obj/item/clothing/head/fedora/det_hat/examine(mob/user)
-	. = ..()
-	. += span_notice("Alt-click to take a candy corn.")
-
-/obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	. = ..()
-	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(candy_cooldown < world.time)
-		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
-		candy_cooldown = world.time+1200
-	else
-		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
-
-/obj/item/clothing/head/fedora/det_hat/minor
-	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
-
 ///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
 /obj/item/clothing/head/fedora/inspector_hat
 	name = "inspector's fedora"
@@ -214,6 +182,7 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	dog_fashion = /datum/dog_fashion/head/detective
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
 	///an assoc list of phrase = item (like gun = revolver)
@@ -246,7 +215,7 @@
 	var/prefix_index = findtext(raw_message, prefix)
 	if(prefix_index != 1)
 		return FALSE
-	
+
 	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
 	var/obj/item/result = items_by_phrase[the_phrase]
 	if(!result)
@@ -290,12 +259,12 @@
 		return
 	user.put_in_inactive_hand(items_by_phrase[phrase])
 
-/obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/living/user)
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
-	if(!new_prefix)
-		return
+	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
 	prefix = new_prefix
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -381,8 +350,8 @@
 
 /obj/item/clothing/head/hats/warden
 	name = "warden's police hat"
-	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
-	icon_state = "policehelm"
+	desc = "It's an old armored hat previously issued to the Warden of a security force. Protects the head from impacts."
+	icon_state = "wardenhat_police"
 	armor_type = /datum/armor/hats_warden
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
@@ -397,27 +366,20 @@
 	acid = 60
 	wound = 6
 
-/obj/item/clothing/head/hats/warden/police
+/obj/item/clothing/head/hats/warden/spacepol
 	name = "police officer's hat"
 	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
 
+/obj/item/clothing/head/hats/warden/blue
+	name = "warden's hat"
+	desc = "A blue warden's hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
+	icon_state = "wardenhat_blue"
+
 /obj/item/clothing/head/hats/warden/red
 	name = "warden's hat"
-	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
-	icon_state = "wardenhat"
-	armor_type = /datum/armor/warden_red
-	strip_delay = 60
+	desc = "A red warden's hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
+	icon_state = "wardenhat_red"
 	dog_fashion = /datum/dog_fashion/head/warden_red
-
-/datum/armor/warden_red
-	melee = 40
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 30
-	acid = 60
-	wound = 6
 
 /obj/item/clothing/head/hats/warden/drill
 	name = "warden's campaign hat"
@@ -527,6 +489,11 @@
 	greyscale_colors = "#8D008F"
 	flags_1 = NONE
 
+/obj/item/clothing/head/beret/science/robo
+	name = "robotics beret"
+	desc = "A sleek black beret designed with high-durability nano-mesh fiber - or so the roboticists claim."
+	greyscale_colors = "#3E3E48"
+
 /obj/item/clothing/head/beret/science/rd
 	desc = "A purple badge with the insignia of the Research Director attached. For the paper-shuffler in you!"
 	icon_state = "beret_badge"
@@ -549,7 +516,30 @@
 /obj/item/clothing/head/beret/medical/cmo
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
-	greyscale_colors = "#5EB8B8"
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#5EB8B8#c9cbcb"
+
+/obj/item/clothing/head/beret/medical/virologist
+	name = "virologist beret"
+	desc = "Sneezing in this expensive beret would be a waste of a good beret."
+	greyscale_colors = "#198019"
+
+/obj/item/clothing/head/beret/medical/chemist
+	name = "chemist beret"
+	desc = "Not acid-proof!"
+	greyscale_colors = "#D15B1B"
+
+/obj/item/clothing/head/beret/medical/deforest
+	name = "Deforest Beret"
+	desc = "A Deforest Medical beret, velvet fabrics and directly infused dyes prevent age from tarnishing the striking presence of Deforest rescue personnel."
+	greyscale_colors = NONE
+	greyscale_config = NONE
+	greyscale_config_worn = NONE
+	icon_state = "deforest_beret"
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"
@@ -571,11 +561,30 @@
 	icon_state = "surgicalcapcmo"
 	desc = "The CMO's medical surgery cap to prevent their hair from entering the insides of the patient!"
 
+/obj/item/clothing/head/utility/surgerycap/sec
+	name = "security surgical cap"
+	desc = "A security red medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+	icon_state = "surgicalcapsec"
+
 //Engineering
 /obj/item/clothing/head/beret/engi
 	name = "engineering beret"
 	desc = "Might not protect you from radiation, but definitely will protect you from looking unfashionable!"
 	greyscale_colors = "#FFBC30"
+	flags_1 = NONE
+
+/obj/item/clothing/head/beret/engi/ce
+	name = "chief engineer's beret"
+	desc = "A fancy beret designed exactly to the Chief Engineer's tastes, minus the LEDs."
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#FFFFFF#2E992E"
+
+/obj/item/clothing/head/beret/atmos
+	name = "atmospheric beret"
+	desc = "While \"pipes\" and \"style\" might not rhyme, this beret sure makes you feel like they should!"
+	greyscale_colors = "#59D7FF"
 	flags_1 = NONE
 
 //Cargo

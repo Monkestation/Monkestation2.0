@@ -31,6 +31,11 @@
 	if(!isnull(damage_mod))
 		src.damage_mod = damage_mod
 
+	ADD_TRAIT(parent, TRAIT_CURSED, SMITE_TRAIT)
+
+/**
+ * This is a omen eat omen world! The stronger omen survives.
+ */
 /datum/component/omen/InheritComponent(obj/vessel, incidents_left, luck_mod, damage_mod)
 	// If we have more incidents left the new one gets deleted.
 	if(src.incidents_left > incidents_left)
@@ -47,6 +52,7 @@
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
+	REMOVE_TRAIT(person, TRAIT_CURSED, SMITE_TRAIT)
 	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
 
 	if(vessel)
@@ -112,12 +118,6 @@
 		INVOKE_ASYNC(src, PROC_REF(slam_airlock), darth_airlock)
 		return
 
-	if(istype(our_guy_pos, /turf/open/floor/noslip/tram_plate/energized))
-		var/turf/open/floor/noslip/tram_plate/energized/future_tram_victim = our_guy_pos
-		if(future_tram_victim.toast(living_guy))
-			consume_omen()
-			return
-
 	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
 		if(istype(the_turf, /turf/open/floor/glass/reinforced/tram)) // don't fall off the tram bridge, we want to hit you instead
 			return
@@ -154,7 +154,7 @@
 			return
 		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-		the_head.receive_damage(75 * damage_mod)
+		the_head.receive_damage(75 * damage_mod, damage_source = "slipping")
 		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * damage_mod)
 		consume_omen()
 

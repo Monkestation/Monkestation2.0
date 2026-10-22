@@ -46,6 +46,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
 		"departments" = departments,
 		"notices" = config.lobby_notices, // monkestation edit - lobby notices
+		"selected_character" = user.client?.prefs?.get_enabled_character_names(),
 	)
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -125,6 +126,9 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	switch(action)
 		if("ui_mounted_with_no_bluescreen")
 			owner.jobs_menu_mounted = TRUE
+		if("change_slot")
+			ui.user.client.prefs.tmp_change_character_slot()
+			return TRUE
 		if("select_job")
 			if(params["job"] == "Random")
 				var/job = get_random_job(owner)
@@ -150,7 +154,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			else
 				relevant_cap = max(hard_popcap, extreme_popcap)
 
-			if(SSticker.queued_players.len && !(ckey(owner.key) in GLOB.admin_datums))
+			if(length(SSticker.queued_players) && !(owner.persistent_client?.patreon?.is_donator() || is_admin(owner.client) || is_mentor(owner.client)))
 				if((living_player_count() >= relevant_cap) || (owner != SSticker.queued_players[1]))
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE

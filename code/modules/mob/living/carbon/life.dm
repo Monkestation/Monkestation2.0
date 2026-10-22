@@ -6,10 +6,6 @@
 		var/turf/open/my_our_turf = loc
 		if(my_our_turf.pollution)
 			my_our_turf.pollution.touch_act(src)
-	//monkestation edit start
-	if(SSparticle_weather.running_weather || SSparticle_weather.running_eclipse_weather)
-		handle_weather(seconds_per_tick)
-	//monkestation edit end
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
@@ -21,7 +17,7 @@
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(seconds_per_tick, times_fired)
-		handle_virus_updates(seconds_per_tick)
+		handle_virus_updates(seconds_per_tick, times_fired)
 
 		. = ..()
 		if(QDELETED(src))
@@ -88,6 +84,10 @@
 		else if(HAS_TRAIT(src, TRAIT_LABOURED_BREATHING))
 			losebreath += (1 / next_breath)
 
+	var/obj/item/organ/internal/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(((pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING)) && !HAS_TRAIT(src, TRAIT_ASSISTED_BREATHING))
+		losebreath ++  //You can't breath at all when being choked or if your lungs are failing, so you're going to miss a breath
+
 	if(losebreath < 1)
 		var/pre_sig_return = SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired)
 		if(pre_sig_return & BREATHE_BLOCK_BREATH)
@@ -121,6 +121,8 @@
 	// Breathe from air
 	else
 		breath = get_breath_from_surroundings(environment, BREATH_VOLUME)
+		if(!HAS_TRAIT(src, TRAIT_VIRUSIMMUNE))
+			breath_airborne_diseases()
 
 	check_breath(breath, skip_breath)
 
@@ -229,6 +231,42 @@
 /mob/living/carbon/proc/handle_blood(seconds_per_tick, times_fired)
 	return
 
+/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_TICK)
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(!blood_type)
+		return
+
+	if(chem.type == blood_type?.restoration_chem && blood_volume < BLOOD_VOLUME_NORMAL)
+		blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
+		reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_TICK
+
+/mob/living/carbon/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(!(methods & INJECT) && !((methods & INGEST) && HAS_TRAIT(src, TRAIT_DRINKS_BLOOD)))
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(blood_type.reagent_type != chem.type)
+		return
+
+	if(chem.data?["blood_type"])
+		var/datum/blood_type/donor_type = chem.data["blood_type"]
+		if(!(donor_type.type_key() in blood_type.compatible_types))
+			reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
+			return COMPONENT_NO_EXPOSE_REAGENTS
+
+	blood_volume = min(blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+	return COMPONENT_NO_EXPOSE_REAGENTS
+
 /mob/living/carbon/proc/handle_bodyparts(seconds_per_tick, times_fired)
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		. |= limb.on_life(seconds_per_tick, times_fired)
@@ -290,19 +328,15 @@
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name
-					update_name_tag() // monkestation edit: name tags
 					dna.previous.Remove("name")
 				if(dna.previous["UE"])
 					dna.unique_enzymes = dna.previous["UE"]
 					dna.previous.Remove("UE")
 				if(dna.previous["blood_type"])
-					dna.human_blood_type = blood_name_to_blood_type(dna.previous["blood_type"])
+					set_blood_type(dna.previous["blood_type"])
 					dna.previous.Remove("blood_type")
 				dna.temporary_mutations.Remove(mut)
 				continue
-	for(var/datum/mutation/human/HM in dna.mutations)
-		if(HM?.timeout)
-			dna.remove_mutation(HM.type)
 
 /**
  * Handles calling metabolization for dead people.
@@ -381,22 +415,31 @@
 //Stomach//
 ///////////
 
-/mob/living/carbon/get_fullness()
-	var/fullness = nutrition
+/mob/living/carbon/get_fullness(only_consumable)
+	. = ..()
 
 	var/obj/item/organ/internal/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly) //nothing to see here if we do not have a stomach
-		return fullness
+		return .
 
-	for(var/bile in belly.reagents.reagent_list)
-		var/datum/reagent/bits = bile
-		if(istype(bits, /datum/reagent/consumable))
-			var/datum/reagent/consumable/goodbit = bile
-			fullness += goodbit.nutriment_factor * goodbit.volume / goodbit.metabolization_rate
+	for(var/datum/reagent/bits as anything in belly.reagents.reagent_list)
+		if(!bits.metabolization_rate)
 			continue
-		fullness += 0.6 * bits.volume / bits.metabolization_rate //not food takes up space
+		// hack to get around stomachs having 5u stomach lining reagent ugugugu
+		var/effective_volume = bits.volume
+		if(belly.food_reagents[bits.type])
+			effective_volume -= belly.food_reagents[bits.type]
+		if(effective_volume <= 0)
+			continue
+		if(istype(bits, /datum/reagent/consumable))
+			var/datum/reagent/consumable/goodbit = bits
+			. += goodbit.get_nutriment_factor(src) * goodbit.volume / goodbit.metabolization_rate
+			continue
+		if(!only_consumable)
+			continue
+		. += 0.6 * effective_volume / bits.metabolization_rate //not food takes up space
 
-	return fullness
+	return .
 
 /mob/living/carbon/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	. = ..()
@@ -452,7 +495,7 @@
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
+	if(!heart || IS_ROBOTIC_ORGAN(heart))
 		return FALSE
 	return TRUE
 
@@ -479,7 +522,7 @@
 	return TRUE
 
 /mob/living/carbon/proc/set_heartattack(status)
-	if(!can_heartattack())
+	if(status && !can_heartattack())
 		return FALSE
 
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)

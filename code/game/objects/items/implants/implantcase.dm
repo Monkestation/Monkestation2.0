@@ -24,13 +24,14 @@
 	return ..()
 
 /obj/item/implantcase/attackby(obj/item/used_item, mob/living/user, params)
-	if(istype(used_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(used_item))
 		if(!user.can_write(used_item))
 			return
 		var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
 		if((user.get_active_held_item() != used_item) || !user.can_perform_action(src))
 			return
 		if(new_name)
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			name = "implant case - '[new_name]'"
 		else
 			name = "implant case"
@@ -69,6 +70,11 @@
 	name = "implant case - 'Tracking'"
 	desc = "A glass case containing a tracking implant."
 	imp_type = /obj/item/implant/tracking
+
+/obj/item/implantcase/tracking/miner
+	name = "implant case - 'Miner Tracking'"
+	desc = "A glass case containing a specialized miner tracking implant with a built-in teleportation beacon."
+	imp_type = /obj/item/implant/tracking/miner
 
 ///An implant case that spawns with a firearms authentication implant, as well as an appropriate name and description.
 /obj/item/implantcase/weapons_auth

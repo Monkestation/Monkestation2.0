@@ -29,7 +29,7 @@
 	C.real_name = original_name
 	activated = TRUE
 
-/datum/symptom/dnaspread/deactivate(mob/living/carbon/mob)
+/datum/symptom/dnaspread/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	activated = FALSE
 	if(!old_dna)
 		return

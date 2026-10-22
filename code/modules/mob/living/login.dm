@@ -7,6 +7,8 @@
 		qdel(client)
 		return FALSE
 
+	process_as_cliented_mob()
+
 	//Mind updates
 	sync_mind()
 
@@ -25,3 +27,8 @@
 	med_hud_set_status()
 
 	update_fov_client()
+
+
+	if(GLOB.sacrament_done)
+		AddComponent(/datum/component/shadowlands)
+	set_ssd_indicator(FALSE)

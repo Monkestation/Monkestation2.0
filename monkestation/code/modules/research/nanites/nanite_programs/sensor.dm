@@ -171,7 +171,7 @@
 	var/check_above = direction.get_value()
 	var/damage_amt = 0
 
-	switch(lowertext(type.get_value()))
+	switch(LOWER_TEXT(type.get_value()))
 		if(BRUTE)
 			damage_amt = host_mob.getBruteLoss()
 		if(BURN)
@@ -289,7 +289,7 @@
 		else
 			send_code_inverted()
 	else
-		if(lowertext(hearing_args[HEARING_RAW_MESSAGE]) == lowertext(sentence.get_value()))
+		if(LOWER_TEXT(hearing_args[HEARING_RAW_MESSAGE]) == LOWER_TEXT(sentence.get_value()))
 			send_code()
 		else
 			send_code_inverted()
@@ -308,12 +308,24 @@
 		"Floran" = /datum/species/floran,
 		"Fly" = /datum/species/fly,
 		"Arachnid" = /datum/species/arachnid,
-		"Jelly" = /datum/species/jelly,
 		"Oozeling" = /datum/species/oozeling,
 		"IPC" = /datum/species/ipc,
 		"Monkey" = /datum/species/monkey,
+		"Plasmaman" = /datum/species/plasmaman,
+		"Goblin" = /datum/species/goblin,
+		"Apid" = /datum/species/apid,
+		"Ornithid" = /datum/species/ornithid,
+		"Satyr" = /datum/species/satyr,
 		"Zombie" = /datum/species/zombie,
 		"Shadow" = /datum/species/shadow,
+		"Oni" = /datum/species/oni,
+		"Android" = /datum/species/android,
+		"Dullahan" = /datum/species/dullahan,
+		"Abductor" = /datum/species/abductor,
+		"Mushroomperson" = /datum/species/mush,
+		"Skeleton" = /datum/species/skeleton,
+		"Vampire" = /datum/species/vampire,
+		"Snailperson" = /datum/species/snail,
 	)
 
 /datum/nanite_program/sensor/species/register_extra_settings()

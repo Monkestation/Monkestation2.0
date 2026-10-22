@@ -21,6 +21,13 @@
 	/// Abstract root value
 	var/abstract_type = /datum/dynamic_ruleset/midround
 
+/datum/dynamic_ruleset/midround/forget_startup()
+	living_players = list()
+	living_antags = list()
+	dead_players = list()
+	list_observers = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
@@ -199,7 +206,7 @@
 	if (!mode.picking_specific_rule(sleeper_agent))
 		return
 
-	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
+///	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
 
 ///subtype to handle checking players
 /datum/dynamic_ruleset/midround/from_living
@@ -230,6 +237,7 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
+		JOB_BRIG_PHYSICIAN,
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 	)
@@ -369,6 +377,9 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_BRIG_PHYSICIAN,
+		JOB_SECURITY_ASSISTANT,
+		JOB_BLUESHIELD,
 	)
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
@@ -379,8 +390,6 @@
 	flags = HIGH_IMPACT_RULESET
 
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
-	/// The nuke ops team datum.
-	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -406,7 +415,6 @@
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
 	if(index == 1)
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
-		nuke_team = leader_antag_datum.nuke_team
 		new_character.mind.add_antag_datum(leader_antag_datum)
 		return
 	return ..()
@@ -443,6 +451,7 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 		JOB_SECURITY_ASSISTANT,
 	)
 	restricted_roles = list(
@@ -493,10 +502,15 @@
 	repeatable = TRUE
 	var/list/vents = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/forget_startup()
+	vents = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	// 50% chance of being incremented by one
 	required_candidates += prob(50)
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
+	var/list/vent_pumps = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in vent_pumps)
 		if(QDELETED(temp_vent))
 			continue
 		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
@@ -514,7 +528,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
 	var/obj/vent = pick_n_take(vents)
 	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-	new_xeno.key = applicant.key
+	new_xeno.PossessByPlayer(applicant.key)
 	new_xeno.move_into_vent(vent)
 	message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by the midround ruleset.")
 	log_dynamic("[key_name(new_xeno)] was spawned as an alien by the midround ruleset.")
@@ -571,6 +585,10 @@
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
 		spawn_locs += (C.loc)
@@ -609,6 +627,10 @@
 
 	var/datum/team/abductor_team/new_team
 
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/forget_startup()
+	new_team = null
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
@@ -641,6 +663,10 @@
 
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
 	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
 		if(!isturf(carp_spawn.loc))
@@ -654,7 +680,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))
-	ninja.key = applicant.key
+	ninja.PossessByPlayer(applicant.key)
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 
 	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a Space Ninja by the midround ruleset.")
@@ -695,6 +721,10 @@
 	var/need_extra_spawns_value = 15
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
 	if(GLOB.dead_mob_list.len < dead_mobs_required)
 		return FALSE
@@ -720,30 +750,10 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
 	var/mob/living/basic/revenant/revenant = new(pick(spawn_locs))
-	revenant.key = applicant.key
+	revenant.PossessByPlayer(applicant.key)
 	message_admins("[ADMIN_LOOKUPFLW(revenant)] has been made into a revenant by the midround ruleset.")
 	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
 	return revenant
-
-/// Midround Sentient Disease Ruleset (From Ghosts)
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
-	name = "Sentient Disease"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
-	antag_datum = /datum/antagonist/disease
-	antag_flag = ROLE_SENTIENT_DISEASE
-	required_candidates = 1
-	minimum_players = 25
-	weight = 4
-	cost = 8
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
-	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
-	virus.key = applicant.key
-	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
-	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
-	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
-	return virus
 
 /// Midround Space Pirates Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/pirates
@@ -826,12 +836,73 @@
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
 
+//////////////////////////////////////////////
+//                                          //
+//           MIDROUND CHANGELINGS           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_living/changeling
+	name = "Genome Awakening"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	antag_datum = /datum/antagonist/changeling
+	antag_flag = ROLE_GENOMEAWAKENING
+	antag_flag_override = ROLE_CHANGELING
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
+		JOB_SECURITY_ASSISTANT,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 3
+	cost = 16
+	scaling_cost = 10
+
+	minimum_players = 20
+
+	requirements = list(70,70,60,50,40,20,20,10,10,10)
+	antag_cap = list("denominator" = 29)
+
+/datum/dynamic_ruleset/roundstart/changeling/pre_execute(population)
+	. = ..()
+	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
+	for (var/i = 1 to num_changelings)
+		if(candidates.len <= 0)
+			break
+		var/mob/M = pick_n_take(candidates)
+		assigned += M.mind
+		M.mind.restricted_roles = restricted_roles
+		M.mind.special_role = ROLE_CHANGELING
+		GLOB.pre_setup_antags += M.mind
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/changeling/execute()
+	for(var/datum/mind/changeling in assigned)
+		var/datum/antagonist/changeling/new_antag = new antag_datum()
+		changeling.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= changeling
+	return TRUE
+
 /// Midround Space Changeling Ruleset (From Ghosts)
-/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_space
 	name = "Space Changeling"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/changeling/space
-	antag_flag = ROLE_CHANGELING_MIDROUND
+	antag_flag = ROLE_CHANGELING_SPACE
 	antag_flag_override = ROLE_CHANGELING
 	required_type = /mob/dead/observer
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -841,7 +912,7 @@
 	minimum_players = 15
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_space/generate_ruleset_body(mob/applicant)
 	var/body = generate_changeling_meteor(applicant)
 	message_admins("[ADMIN_LOOKUPFLW(body)] has been made into a space changeling by the midround ruleset.")
 	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
@@ -864,11 +935,15 @@
 	weight = 4
 	cost = 3
 	repeatable = TRUE
-	var/list/possible_spawns = list() ///places the antag can spawn
+	/// where the paradox clone spawns
+	var/turf/warp_turf
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/forget_startup()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
-	if(!possible_spawns.len)
+	warp_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(!warp_turf)
 		return MAP_ERROR
 	return ..()
 
@@ -877,7 +952,9 @@
 	player_mind.active = TRUE
 
 	var/mob/living/carbon/human/clone_victim = find_original()
-	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
+	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, warp_turf)
+	if(clone.loc != warp_turf)
+		clone.forceMove(warp_turf)
 
 	player_mind.transfer_to(clone)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
@@ -914,3 +991,63 @@
 
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB
+
+//////////////////////////////////////////////
+//                                          //
+//             MIDROUND HERETIC             //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_living/heretic
+	name = "Forbidden Calling"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	antag_datum = /datum/antagonist/heretic
+	antag_flag = ROLE_FORBIDDENCALLING
+	antag_flag_override = ROLE_HERETIC
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_BRIG_PHYSICIAN,
+		JOB_SECURITY_ASSISTANT,
+		JOB_WARDEN,
+		JOB_CHAPLAIN
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 8
+	cost = 6
+	requirements = list(101,101,50,10,10,10,10,10,10,10)
+	repeatable = TRUE
+
+	minimum_players = 25
+
+/datum/dynamic_ruleset/midround/from_living/heretic/execute()
+	var/mob/picked_mob = pick(candidates)
+	assigned += picked_mob.mind
+	picked_mob.mind.special_role = antag_flag
+	var/datum/antagonist/heretic/new_heretic = picked_mob.mind.add_antag_datum(antag_datum)
+
+	// Heretics passively gain influence over time.
+	// As a consequence, latejoin heretics start out at a massive
+	// disadvantage if the round's been going on for a while.
+	// Let's give them some influence points when they arrive.
+	new_heretic.knowledge_points += round((world.time - SSticker.round_start_time) / new_heretic.passive_gain_timer)
+	// BUT let's not give smugglers a million points on arrival.
+	// Limit it to four missed passive gain cycles (4 points).
+	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
+
+	SStgui.update_uis(new_heretic)
+
+	return TRUE

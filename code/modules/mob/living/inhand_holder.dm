@@ -7,7 +7,6 @@
 	icon_state = ""
 	slot_flags = NONE
 	var/mob/living/held_mob
-	var/destroying = FALSE
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	if(head_icon)
@@ -24,14 +23,16 @@
 	deposit(M)
 	. = ..()
 
+/obj/item/clothing/head/mob_holder/proc/release_on_destroy()
+	release(FALSE)
+
 /obj/item/clothing/head/mob_holder/Destroy()
-	destroying = TRUE
-	if(held_mob)
-		release(FALSE)
+	if(!QDELETED(held_mob))
+		release_on_destroy()
 	return ..()
 
 /obj/item/clothing/head/mob_holder/proc/deposit(mob/living/L)
-	if(!istype(L))
+	if(!istype(L) || QDELING(L) || QDELETED(src))
 		return FALSE
 	L.setDir(SOUTH)
 	update_visuals(L)
@@ -63,7 +64,7 @@
 
 /obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE, display_messages = TRUE)
 	if(!held_mob)
-		if(del_on_release && !destroying)
+		if(del_on_release && !QDELING(src))
 			qdel(src)
 		return FALSE
 	var/mob/living/released_mob = held_mob
@@ -79,7 +80,7 @@
 	released_mob.setDir(SOUTH)
 	if(display_messages)
 		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
-	if(del_on_release && !destroying)
+	if(del_on_release && !QDELING(src))
 		qdel(src)
 	return TRUE
 
@@ -123,12 +124,10 @@
 
 /obj/item/clothing/head/mob_holder/destructible
 
-/obj/item/clothing/head/mob_holder/destructible/Destroy()
-	if(held_mob)
-		release(FALSE, TRUE, TRUE)
-	return ..()
-
 /obj/item/clothing/head/mob_holder/destructible/release(del_on_release = TRUE, display_messages = TRUE, delete_mob = FALSE)
 	if(delete_mob && held_mob)
 		QDEL_NULL(held_mob)
 	return ..()
+
+/obj/item/clothing/head/mob_holder/destructible/release_on_destroy()
+	release(FALSE, TRUE, TRUE)

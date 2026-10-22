@@ -2,7 +2,7 @@
 	display_name = "Internal Chemical Tank"
 	desc = "Holds chemicals inside your circuit."
 	category = "Chemistry"
-	power_usage_per_input = 1
+	energy_usage_per_input = 1
 
 	ui_buttons = list(
 		"plus" = "add",

@@ -17,13 +17,17 @@
 	if(!category || QDELETED(src))
 		return
 
+	var/datum/weakref/master_ref
+	if(isdatum(new_master))
+		master_ref = WEAKREF(new_master)
 	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
 			return thealert
-		if(new_master && new_master != thealert.master)
-			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
+		if(master_ref && thealert.master_ref && master_ref != thealert.master_ref)
+			var/datum/current_master = thealert.master_ref.resolve()
+			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [current_master]")
 
 			clear_alert(category)
 			return .()
@@ -54,15 +58,15 @@
 		master_appearance.dir = SOUTH
 		master_appearance.pixel_x = new_master.base_pixel_x
 		master_appearance.pixel_y = new_master.base_pixel_y
-		master_appearance.pixel_z = 0 /* new_master.base_pixel_z */
+		master_appearance.pixel_z = new_master.base_pixel_z
 		thealert.add_overlay(strip_appearance_underlays(master_appearance))
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
-		thealert.master = new_master
+		thealert.master_ref = master_ref
 	else
 		thealert.set_severity(severity)
 
 	alerts[category] = thealert
-	if(client && hud_used)
+	if(HAS_CONNECTED_PLAYER(src) && hud_used)
 		hud_used.reorganize_alerts()
 	if(!no_anim)
 		thealert.transform = matrix(32, 0, MATRIX_TRANSLATE)
@@ -113,11 +117,18 @@
 	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
 	var/click_master = TRUE
 
+	///If set, this overlay will be added to the icon.
+	var/overlay_state
+	///The file to fetch the overlay from
+	var/overlay_icon = 'icons/hud/screen_alert.dmi'
+
 /atom/movable/screen/alert/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(clickable_glow)
 		add_filter("clickglow", 2, outline_filter(color = COLOR_GOLD, size = 1))
 		mouse_over_pointer = MOUSE_HAND_POINTER
+	if(overlay_state)
+		update_appearance()
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
@@ -137,6 +148,11 @@
 /atom/movable/screen/alert/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state || initial(icon_state)][severity]"
+
+/atom/movable/screen/alert/update_overlays()
+	. = ..()
+	if(overlay_state)
+		. += mutable_appearance(overlay_icon, overlay_state)
 
 //Gas alerts
 // Gas alerts are continuously thrown/cleared by:
@@ -197,22 +213,6 @@
 	icon_state = ALERT_TOO_MUCH_N2O
 
 //End gas alerts
-
-
-/atom/movable/screen/alert/fat
-	name = "Fat"
-	desc = "You ate too much food, lardass. Run around the station and lose some weight."
-	icon_state = "fat"
-
-/atom/movable/screen/alert/hungry
-	name = "Hungry"
-	desc = "Some food would be good right about now."
-	icon_state = "hungry"
-
-/atom/movable/screen/alert/starving
-	name = "Starving"
-	desc = "You're severely malnourished. The hunger pains make moving around a chore."
-	icon_state = "starving"
 
 /atom/movable/screen/alert/gross
 	name = "Grossed out."
@@ -318,8 +318,7 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner
-
-	return carbon_owner.help_shake_act(carbon_owner)
+	return carbon_owner.check_self_for_injuries()
 
 /atom/movable/screen/alert/negative
 	name = "Negative Gravity"
@@ -637,15 +636,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "cult"
 	var/static/image/narnar
 	var/angle = 0
-	var/mob/living/basic/construct/Cviewer
+	var/mob/living/basic/construct/construct_owner
 
-/atom/movable/screen/alert/bloodsense/Initialize(mapload)
+/atom/movable/screen/alert/bloodsense/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	narnar = new('icons/hud/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
 
 /atom/movable/screen/alert/bloodsense/Destroy()
-	Cviewer = null
+	construct_owner = null
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
@@ -655,45 +654,53 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!owner.mind)
 		return
 
-	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	if(!antag)
-		return
-	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
+	if(isconstruct(owner))
+		construct_owner = owner
+	else
+		construct_owner = null
 
-	if(antag.cult_team.blood_target)
-		if(!get_turf(antag.cult_team.blood_target))
-			antag.cult_team.unset_blood_target()
-		else
-			blood_target = antag.cult_team.blood_target
-	if(Cviewer?.seeking && Cviewer.master)
-		blood_target = Cviewer.master
-		desc = "Your blood sense is leading you to [Cviewer.master]"
-	if(!blood_target)
-		if(sac_objective && !sac_objective.check_completion())
-			if(icon_state == "runed_sense0")
-				return
-			animate(src, transform = null, time = 1, loop = 0)
-			angle = 0
-			cut_overlays()
-			icon_state = "runed_sense0"
-			desc = "Nar'Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
-			add_overlay(sac_objective.sac_image)
-		else
-			var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
-			if(!summon_objective)
-				return
-			var/list/location_list = list()
-			for(var/area/area_to_check in summon_objective.summon_spots)
-				location_list += area_to_check.get_original_area_name()
-			desc = "The sacrifice is complete, summon Nar'Sie! The summoning can only take place in [english_list(location_list)]!"
-			if(icon_state == "runed_sense1")
-				return
-			animate(src, transform = null, time = 1, loop = 0)
-			angle = 0
-			cut_overlays()
-			icon_state = "runed_sense1"
-			add_overlay(narnar)
-		return
+	// construct track
+	if(construct_owner?.seeking && construct_owner.master)
+		blood_target = construct_owner.master
+		desc = "Your blood sense is leading you to [construct_owner.master.real_name]"
+
+	// cult track
+	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(antag)
+		var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
+		if(antag.cult_team.blood_target)
+			if(!get_turf(antag.cult_team.blood_target))
+				antag.cult_team.unset_blood_target()
+			else
+				blood_target = antag.cult_team.blood_target
+		if(!blood_target)
+			if(sac_objective && !sac_objective.check_completion())
+				if(icon_state == "runed_sense0")
+					return
+				animate(src, transform = null, time = 1, loop = 0)
+				angle = 0
+				cut_overlays()
+				icon_state = "runed_sense0"
+				desc = "Nar'Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
+				add_overlay(sac_objective.sac_image)
+			else
+				var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+				if(!summon_objective)
+					return
+				var/list/location_list = list()
+				for(var/area/area_to_check in summon_objective.summon_spots)
+					location_list += area_to_check.get_original_area_name()
+				desc = "The sacrifice is complete, summon Nar'Sie! The summoning can only take place in [english_list(location_list)]!"
+				if(icon_state == "runed_sense1")
+					return
+				animate(src, transform = null, time = 1, loop = 0)
+				angle = 0
+				cut_overlays()
+				icon_state = "runed_sense1"
+				add_overlay(narnar)
+			return
+
+	// actual tracking
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(owner)
 	if(!P || !Q || (P.z != Q.z)) //The target is on a different Z level, we cannot sense that far.
@@ -705,6 +712,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = "You are currently tracking [real_target.real_name] in [get_area_name(blood_target)]."
 	else
 		desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
+
 	var/target_angle = get_angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
@@ -766,7 +774,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged."
 	icon_state = "empty_cell"
 
-/atom/movable/screen/alert/emptycell/Initialize(mapload)
+/atom/movable/screen/alert/emptycell/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance(updates=UPDATE_DESC)
 
@@ -781,7 +789,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's power cell is running low."
 	icon_state = "low_cell"
 
-/atom/movable/screen/alert/lowcell/Initialize(mapload)
+/atom/movable/screen/alert/lowcell/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance(updates=UPDATE_DESC)
 
@@ -972,11 +980,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(role_overlay)
 
 /atom/movable/screen/alert/poll_alert/Destroy()
-	QDEL_NULL(role_overlay)
-	QDEL_NULL(time_left_overlay)
-	QDEL_NULL(stacks_overlay)
-	QDEL_NULL(candidates_num_overlay)
-	QDEL_NULL(signed_up_overlay)
+	role_overlay = null
+	time_left_overlay = null
+	stacks_overlay = null
+	candidates_num_overlay = null
+	signed_up_overlay = null
 	if(poll)
 		poll.alert_buttons -= src
 	poll = null
@@ -1162,39 +1170,34 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
+/// Gets the placement for the alert based on its index
+/datum/hud/proc/get_ui_alert_placement(index)
+	// Only has support for 5 slots currently
+	if(index > 5)
+		return ""
+
+	return "EAST-1:28,CENTER+[6 - index]:[29 - (index * 2)]"
+
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
 /datum/hud/proc/reorganize_alerts(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
-		return
+		return FALSE
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i in 1 to alerts.len)
 			screenmob.client.screen -= alerts[alerts[i]]
-		return 1
-	for(var/i in 1 to alerts.len)
+		return TRUE
+	for(var/i in 1 to length(alerts))
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
 			alert.icon = ui_style
-		switch(i)
-			if(1)
-				. = ui_alert1
-			if(2)
-				. = ui_alert2
-			if(3)
-				. = ui_alert3
-			if(4)
-				. = ui_alert4
-			if(5)
-				. = ui_alert5 // Right now there's 5 slots
-			else
-				. = ""
-		alert.screen_loc = .
+		alert.screen_loc = get_ui_alert_placement(i)
 		screenmob.client.screen |= alert
 	if(!viewmob)
-		for(var/M in mymob.observers)
-			reorganize_alerts(M)
-	return 1
+		for(var/viewer in mymob.observers)
+			reorganize_alerts(viewer)
+	return TRUE
 
 /atom/movable/screen/alert/Click(location, control, params)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1208,15 +1211,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, boxed_message(jointext(examine(usr), "\n")))
 		return FALSE
-	if(master && click_master)
-		return usr.client.Click(master, location, control, params)
+	var/datum/our_master = master_ref?.resolve()
+	if(our_master && click_master)
+		return usr.client.Click(our_master, location, control, params)
 
 	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
 	severity = 0
-	master = null
+	master_ref = null
 	owner = null
 	screen_loc = ""
 
@@ -1225,3 +1229,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		span_boldnotice(name),
 		span_info(desc),
 	)
+///Alert that you used your psi too much and cant cast any more spells
+/atom/movable/screen/alert/psiblock
+	name = "Psiblock"
+	desc = "You have pushed your psionic powers beyond your capabilities and need time to recover."
+	icon_state = "shadow_mend"

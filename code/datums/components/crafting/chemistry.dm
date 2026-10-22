@@ -149,7 +149,7 @@
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
-	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in range(1)
+	var/obj/item/stock_parts/power_store/cell/cell = locate(/obj/item/stock_parts/power_store/cell) in range(1)
 	if(!cell)
 		return
 	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
@@ -167,4 +167,19 @@
 		/datum/reagent/water = 20,
 		/datum/reagent/consumable/ice = 10,
 	)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/ph_sensor //Ghetto science goggles for the wanna-be Walter White's upon our grimey-ass station.
+	name = "Chemical Sensor"
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	result = /obj/item/ph_meter
+	reqs = list(
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/pen = 1,
+		/obj/item/stack/sheet/iron = 2
+	)
+	time = 4 SECONDS
 	category = CAT_CHEMISTRY

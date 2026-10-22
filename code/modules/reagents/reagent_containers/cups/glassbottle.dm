@@ -4,6 +4,18 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
+/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
+/proc/init_alcohol_containers()
+	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
+	for(var/typepath in containers)
+		containers -= typepath
+		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
+		if(!length(instance.list_reagents))
+			qdel(instance)
+			continue
+		containers[typepath] = instance
+	return containers
+
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -25,6 +37,8 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
+	// Should the bottle still break when thrown by a bartender
+	var/override_bartender_throw = FALSE
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -34,7 +48,7 @@
 	custom_price = PAYCHECK_CREW * 0.9
 
 /obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE, break_top)
-	if(bartender_check(target) && ranged)
+	if(bartender_check(target) && ranged && !override_bartender_throw)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new(drop_location())
@@ -641,14 +655,14 @@
 	update_appearance()
 	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
 	///Type of cork to fire away
-	var/obj/projectile/bullet/reusable/cork_to_fire = sabraged ? /obj/projectile/bullet/reusable/champagne_cork/sabrage : /obj/projectile/bullet/reusable/champagne_cork
+	var/obj/projectile/bullet/cork_to_fire = sabraged ? /obj/projectile/bullet/champagne_cork/sabrage : /obj/projectile/bullet/champagne_cork
 	///Our resulting cork projectile
-	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (drop_location())
+	var/obj/projectile/bullet/champagne_cork/popped_cork = new cork_to_fire (drop_location())
 	popped_cork.firer = user
 	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
 
-/obj/projectile/bullet/reusable/champagne_cork
+/obj/projectile/bullet/champagne_cork
 	name = "champagne cork"
 	icon = 'icons/obj/drinks/drink_effects.dmi'
 	icon_state = "champagne_cork"
@@ -662,14 +676,18 @@
 	ricochet_incidence_leeway = 0
 	range = 7
 	knockdown = 2 SECONDS
-	ammo_type = /obj/item/trash/champagne_cork
+	var/drop_type = /obj/item/trash/champagne_cork
 
-/obj/projectile/bullet/reusable/champagne_cork/sabrage
+/obj/projectile/bullet/champagne_cork/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, drop_type)
+
+/obj/projectile/bullet/champagne_cork/sabrage
 	icon_state = "champagne_cork_sabrage"
 	damage = 12
 	ricochets_max = 2 //bit heavier
 	range = 6
-	ammo_type = /obj/item/trash/champagne_cork/sabrage
+	drop_type = /obj/item/trash/champagne_cork/sabrage
 
 /obj/item/trash/champagne_cork
 	name = "champagne cork"
@@ -742,6 +760,7 @@
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
+	override_bartender_throw = TRUE
 	var/active = FALSE
 	var/list/accelerants = list(
 		/datum/reagent/consumable/ethanol,
@@ -775,13 +794,14 @@
 			if(istype(contained_reagent, accelerant_type))
 				firestarter = 1
 				break
+	..()
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
-	..()
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(I.get_temperature() && !active)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_temperature() && !active)
 		active = TRUE
 		log_bomber(user, "has primed a", src, "for detonation")
 

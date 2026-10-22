@@ -1,13 +1,12 @@
 /datum/component/glitching_state
 	var/count = 5
-	var/list/obj/effect/after_image/after_images
+	var/list/obj/effect/after_image/after_images = list()
 
 /datum/component/glitching_state/Initialize(count = 5)
 	. = ..()
 	var/atom/movable/movable = parent
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.after_images = list()
 	src.count = count
 	if(count > 1)
 		for(var/number = 1 to count)
@@ -35,17 +34,21 @@
 /datum/component/glitching_state/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	RegisterSignal(parent, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(do_sync))
 
 /datum/component/glitching_state/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_ATOM_DIR_CHANGE)
+	UnregisterSignal(parent, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_LIVING_SET_BODY_POSITION))
 
 /datum/component/glitching_state/process(seconds_per_tick)
 	for(var/obj/effect/after_image/image as anything in after_images)
 		image.sync_with_parent(parent, actual_loc = FALSE)
 
-/datum/component/glitching_state/proc/on_dir_change(datum/source, old_dir, new_dir)
+/datum/component/glitching_state/proc/on_dir_change(atom/movable/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 	for(var/obj/effect/after_image/image as anything in after_images)
 		image.sync_with_parent(parent, actual_loc = FALSE, dir_override = new_dir)
 
+/datum/component/glitching_state/proc/do_sync(atom/movable/source)
+	SIGNAL_HANDLER
+	process()

@@ -20,6 +20,23 @@
 	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
 	var/obj/item/cavity_item
 
+	/// Offset to apply to equipment worn as a uniform
+	var/datum/worn_feature_offset/worn_uniform_offset
+	/// Offset to apply to equipment worn on the id slot
+	var/datum/worn_feature_offset/worn_id_offset
+	/// Offset to apply to equipment worn in the suit slot
+	var/datum/worn_feature_offset/worn_suit_storage_offset
+	/// Offset to apply to equipment worn on the hips
+	var/datum/worn_feature_offset/worn_belt_offset
+	/// Offset to apply to overlays placed on the back
+	var/datum/worn_feature_offset/worn_back_offset
+	/// Offset to apply to equipment worn as a suit
+	var/datum/worn_feature_offset/worn_suit_offset
+	/// Offset to apply to equipment worn on the neck
+	var/datum/worn_feature_offset/worn_neck_offset
+	/// Offset to apply to accessories
+	var/datum/worn_feature_offset/worn_accessory_offset
+
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
 	if(owner.stat < HARD_CRIT || !get_organs())
 		return FALSE
@@ -27,6 +44,14 @@
 
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)
+	QDEL_NULL(worn_uniform_offset)
+	QDEL_NULL(worn_id_offset)
+	QDEL_NULL(worn_suit_storage_offset)
+	QDEL_NULL(worn_belt_offset)
+	QDEL_NULL(worn_back_offset)
+	QDEL_NULL(worn_suit_offset)
+	QDEL_NULL(worn_neck_offset)
+	QDEL_NULL(worn_accessory_offset)
 	return ..()
 
 /obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
@@ -139,13 +164,12 @@
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
-/// Parent Type for arms, should not appear in game.
+/// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	max_damage = 50
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
@@ -156,19 +180,16 @@
 	unarmed_damage_high = 8
 	unarmed_stun_threshold = 10
 
-	/// Can these legs be digitigrade? See digitigrade.dm
-	var/can_be_digitigrade = FALSE
-	///Set limb_id to this when in "digi mode". MUST BE UNIQUE LIKE ALL LIMB IDS
-	var/digitigrade_id
-	/// Used solely by digitigrade limbs to remember what their old limb ID was.
-	var/old_limb_id
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 	///our step sound
 	var/list/step_sounds
 	biological_state = BIO_STANDARD_JOINTED
+	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
+	var/datum/worn_feature_offset/worn_foot_offset
 
 /obj/item/bodypart/leg/Destroy()
+	QDEL_NULL(worn_foot_offset)
 	return ..()
 
 /obj/item/bodypart/leg/left

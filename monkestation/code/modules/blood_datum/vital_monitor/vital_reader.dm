@@ -51,7 +51,7 @@
 	/// By default it will connect to these and grab their occupant to display as a patient.
 	var/static/list/connectable_typecache = typecacheof(list(
 		/obj/machinery/abductor/experiment,
-		/obj/machinery/atmospherics/components/unary/cryo_cell,
+		/obj/machinery/cryo_cell,
 		/obj/machinery/computer/operating, // Snowflaked
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/gulag_teleporter,

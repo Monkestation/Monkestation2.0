@@ -3,8 +3,8 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Icon, Input, Stack, Tabs } from '../components';
 
 import { NtosWindow } from '../layouts';
-import { JOB2ICON } from './common/JobToIcon';
 import { jobIsHead, jobToColor } from './CrewConsoleNova';
+import { JOB2ICON } from './common/JobToIcon';
 
 type Data = {
   selected: string;
@@ -25,7 +25,7 @@ type CrewSensor = {
   assignment: string;
   trim: string;
   ijob: number;
-  area: String;
+  area: string;
   dist: number;
   degrees: number;
   zdiff: number;
@@ -86,14 +86,17 @@ const NtosLifelineContent = () => {
     (crew: CrewSensor) => crew.name + crew.assignment,
   );
 
+  const jobIsCommand = (jobId: number) => {
+    return (
+      (jobIsHead(jobId) &&
+        jobId !== 50) /* QMs are heads of staff but not command */ ||
+      (jobId >= 200 && jobId < 300)
+    );
+  };
+
   const sorted = sensors
     .filter(nameSearch)
-    .filter(
-      (sensor) =>
-        !blueshield ||
-        jobIsHead(sensor.ijob) ||
-        (sensor.ijob >= 200 && sensor.ijob < 300),
-    )
+    .filter((sensor) => !blueshield || jobIsCommand(sensor.ijob))
     .sort((a, b) => {
       if (a.dist < 0 || b.dist < 0) {
         return b.dist - a.dist;
@@ -120,14 +123,12 @@ const NtosLifelineContent = () => {
             <Input
               placeholder="Search for name..."
               style={{ flex: 1 }}
-              onInput={(e: { target: HTMLTextAreaElement }) =>
-                setSearchQuery((e.target as HTMLTextAreaElement).value)
-              }
+              onChange={(value) => setSearchQuery(value)}
             />
-            <Button selected="True" onClick={cycleSortBy}>
+            <Button selected onClick={cycleSortBy}>
               {SORT_NAMES[sortBy]}
             </Button>
-            <Button selected="True" onClick={() => setSortAsc(!sortAsc)}>
+            <Button selected onClick={() => setSortAsc(!sortAsc)}>
               <Icon
                 style={{ marginLeft: '2px' }}
                 name={sortAsc ? 'chevron-up' : 'chevron-down'}
@@ -137,7 +138,7 @@ const NtosLifelineContent = () => {
               checked={blueshield}
               onClick={() => setBlueshield(!blueshield)}
             >
-              <Icon name={JOB2ICON['Blueshield']} />
+              <Icon name={JOB2ICON.Blueshield} />
             </Button.Checkbox>
           </Flex>
         </Stack.Item>
@@ -159,7 +160,6 @@ const CrewTab = (props: { sensor: CrewSensor }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label="name"
       selected={selected}
       onClick={() => {
         act('select', {
@@ -185,7 +185,7 @@ const CrewTab = (props: { sensor: CrewSensor }) => {
           <span
             style={{
               color: jobToColor(sensor.ijob),
-              ...(jobIsHead(sensor.ijob) && { 'font-weight': 'bold' }),
+              ...(jobIsHead(sensor.ijob) && { fontWeight: 'bold' }),
             }}
           >
             {sensor.name} ({sensor.assignment})

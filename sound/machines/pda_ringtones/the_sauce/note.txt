@@ -1,0 +1,33 @@
+Rack in Ableton Live 12.2
+
+required plugin: TeleVox https://plugins4free.com/plugin/3753/ (VST3)
+Windows: https://plugins4free.com/get_plug/TeleVox.zip
+Mac: https://plugins4free.com/get_plug/TeleVoxMacInstaller.pkg
+
+Rack:
+  Limiter:
+  - Release: 100ms (No auto)
+  - Ceiling: -6.3db
+  - Lookahead: 6ms
+  - Mode: True Peak
+  - Routing: L/R
+
+  TeleVox:
+  - Speaker Range: 0
+  - Center Freq: 2109hz
+  - Dirt: 0
+  - Resonance: 31
+  - Low/High Shelf Gain: 0
+
+  EQ8:
+    1 Peak:
+    - Freq: 2.40 kHz
+    - Gain: -2.85db
+    - Q: 0.93
+
+  Limiter:
+  - Release: 100ms (No auto)
+  - Ceiling: -4.8db
+  - Lookahead: 1.5ms
+  - Mode: Standard
+  - Routing: L/R

@@ -68,6 +68,8 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+///Sets the item K to the value V, if the list is null it will initialize it as an alist
+#define LAZYASSOCSET(L, K, V) if(!L) { L = alist(); } L[K] = V;
 ///Sets the length of a lazylist
 #define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
 ///Returns the length of the list
@@ -90,7 +92,7 @@
 ///Use LAZYLISTDUPLICATE instead if you want it to null with no entries
 #define LAZYCOPY(L) (L ? L.Copy() : list() )
 /// Consider LAZYNULL instead
-#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define LAZYCLEARLIST(L) L?.Cut()
 /// Clears any nulls out of a list, and also turns the list itself null if its empty afterwards.
 #define LAZYCLEARNULLS(L) if(L) { list_clear_nulls(L); if(!length(L)) L = null };
 ///Returns the list if it's actually a valid list, otherwise will initialize it
@@ -192,6 +194,7 @@
 	} while(FALSE)
 
 #define SORT_FIRST_INDEX(list) (list[1])
+#define SORT_PRIORITY_INDEX(list) (list["priority"])
 #define SORT_COMPARE_DIRECTLY(thing) (thing)
 #define SORT_VAR_NO_TYPE(varname) var/varname
 /****
@@ -225,6 +228,33 @@
 			};\
 			__BIN_ITEM = COMPTYPE;\
 			__BIN_MID = ##COMPARISON(__BIN_ITEM) > ##COMPARISON(COMPARE) ? __BIN_MID : __BIN_MID + 1;\
+			__BIN_LIST.Insert(__BIN_MID, INPUT);\
+		};\
+	} while(FALSE)
+
+/// The above but the tree is sorted in reverse.
+#define BINARY_INSERT_DEFINE_REVERSE(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
+	do {\
+		var/list/__BIN_LIST = LIST;\
+		var/__BIN_CTTL = length(__BIN_LIST);\
+		if(!__BIN_CTTL) {\
+			__BIN_LIST += INPUT;\
+		} else {\
+			var/__BIN_LEFT = 1;\
+			var/__BIN_RIGHT = __BIN_CTTL;\
+			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			##TYPECONT(__BIN_ITEM);\
+			while(__BIN_LEFT < __BIN_RIGHT) {\
+				__BIN_ITEM = COMPTYPE;\
+				if(##COMPARISON(__BIN_ITEM) >= ##COMPARISON(COMPARE)) {\
+					__BIN_LEFT = __BIN_MID + 1;\
+				} else {\
+					__BIN_RIGHT = __BIN_MID;\
+				};\
+				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			};\
+			__BIN_ITEM = COMPTYPE;\
+			__BIN_MID = ##COMPARISON(__BIN_ITEM) < ##COMPARISON(COMPARE) ? __BIN_MID : __BIN_MID + 1;\
 			__BIN_LIST.Insert(__BIN_MID, INPUT);\
 		};\
 	} while(FALSE)
@@ -442,6 +472,17 @@
 	return (list_to_clear.RemoveAll(null) > 0)
 
 
+/**
+ * Removes any empty weakrefs from the list
+ * Returns TRUE if the list had empty refs, FALSE otherwise
+**/
+/proc/list_clear_empty_weakrefs(list/list_to_clear)
+	var/start_len = list_to_clear.len
+	for(var/datum/weakref/entry in list_to_clear)
+		if(!entry.resolve())
+			list_to_clear -= entry
+	return list_to_clear.len < start_len
+
 /*
  * Returns list containing all the entries from first list that are not present in second.
  * If skiprep = 1, repeated elements are treated as one.
@@ -483,7 +524,7 @@
  * C would have a 10% chance of being picked,
  * and D would have a 0% chance of being picked.
  */
-/proc/pick_weight(list/list_to_pick) // monkestation edit: port superior pick_weight impl
+/proc/pick_weight(list/list_to_pick)
 	var/total = 0
 	var/item
 	for(item in list_to_pick)
@@ -521,14 +562,14 @@
  * Useful for weighted random choices (loot tables, syllables in languages, etc.)
  */
 /proc/fill_with_ones(list/list_to_pad)
-	if (!islist(list_to_pad))
+	if(!islist(list_to_pad))
 		return list_to_pad
 
 	var/list/final_list = list()
 
-	for (var/key in list_to_pad)
-		if (list_to_pad[key])
-			final_list[key] = list_to_pad[key]
+	for(var/key, key_value in list_to_pad)
+		if(key_value)
+			final_list[key] = key_value
 		else
 			final_list[key] = 1
 
@@ -730,8 +771,6 @@
 		return target
 	return null
 
-
-
 /// Returns datum/data/record
 /proc/find_record_old(field, value, list/L)
 	for(var/datum/data/record/R in L)
@@ -836,6 +875,7 @@
 			return checked_datum
 
 
+
 ///Copies a list, and all lists inside it recusively
 ///Does not copy any other reference type
 /proc/deep_copy_list(list/inserted_list)
@@ -855,6 +895,21 @@
 			key = deep_copy_list(key)
 			.[i] = key
 			.[key] = value
+
+/// A version of deep_copy_list that actually supports associative list nesting: list(list(list("a" = "b"))) will actually copy correctly.
+/proc/deep_copy_list_alt(list/inserted_list)
+	if(!islist(inserted_list))
+		return inserted_list
+	var/copied_list = inserted_list.Copy()
+	. = copied_list
+	for(var/key_or_value in inserted_list)
+		if(isnum(key_or_value) || !inserted_list[key_or_value])
+			continue
+		var/value = inserted_list[key_or_value]
+		var/new_value = value
+		if(islist(value))
+			new_value = deep_copy_list_alt(value)
+		copied_list[key_or_value] = new_value
 
 ///takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
 ///use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
@@ -932,6 +987,14 @@
 			continue
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
+
+/// Turns an associative list into a flat list of values
+/proc/assoc_to_values(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)
@@ -1313,4 +1376,20 @@
 				&& log_1["line"] == log_2["line"]\
 				&& deep_compare_list(log_1["stack"], log_2["stack"])
 		else
+			return TRUE
+
+/proc/cycle_inplace(list/c_list) //increases the value of each object in the list by 1 and then puts the final object in the starting location of the first object
+	if(!length(c_list))
+		return
+
+	var/first_obj = c_list[1]
+	for(var/i = 1, i < length(c_list), ++i)
+		c_list[i] = c_list[i+1]
+	c_list[length(c_list)] = first_obj
+
+/// Returns TRUE if the list has any items that are in said typecache, FALSE otherwise.
+/proc/typecached_item_in_list(list/things, list/typecache)
+	. = FALSE
+	for(var/datum/thingy as anything in things)
+		if(is_type_in_typecache(thingy, typecache))
 			return TRUE

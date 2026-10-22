@@ -182,6 +182,24 @@
 		/obj/item/knife/combat/survival,
 	)
 
+/datum/supply_pack/imports/floortilecamo
+	name = "Floor-tile Camouflage Uniform"
+	desc = "Thank you for shopping from Camo-J's, our uniquely designed \
+		floor-tile 'NT SCUM' styled camouflage fatigues are the ultimate \
+		espionage uniform used by the very best. Providing the best \
+		flexibility, with our latest Camo-tech threads. Perfect for \
+		risky espionage hallway operations. Enjoy our product!"
+	hidden = TRUE
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(
+		/obj/item/clothing/under/syndicate/floortilecamo = 4,
+		/obj/item/clothing/mask/floortilebalaclava = 4,
+		/obj/item/clothing/gloves/combat/floortile = 4,
+		/obj/item/clothing/shoes/jackboots/floortile = 4,
+	)
+	crate_name = "floor-tile camouflage crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"
 	desc = "Hello <;~insert appropriate greeting here: 'Comrade'|'Imperalist Scum'|'Quartermaster of Reputable Station'~;>, \
@@ -202,7 +220,7 @@
 		/obj/item/clothing/gloves/tackler/combat,
 		/obj/item/clothing/under/syndicate/rus_army,
 		/obj/item/clothing/under/costume/soviet,
-		/obj/item/clothing/mask/russian_balaclava,
+		/obj/item/clothing/mask/thermal_balaclava,
 		/obj/item/clothing/head/helmet/rus_ushanka,
 		/obj/item/clothing/suit/armor/vest/russian_coat,
 		/obj/item/gun/ballistic/rifle/boltaction,
@@ -240,3 +258,29 @@
 	)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/imports/giant_wrench_parts
+	name = "Big Slappy parts"
+	desc = "Illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	cost = CARGO_CRATE_VALUE * 22
+	contraband = TRUE
+	contains = list(/obj/item/weaponcrafting/giant_wrench)
+	crate_name = "unknown parts crate"
+
+/datum/supply_pack/imports/sarcophagus
+	name = "Sarcophagus"
+	desc = "It's an empty sarcophagus, for the dearly departed who \
+	demand something fancier to be forever remembered in."
+	cost = PAYCHECK_COMMAND * 5
+	contains = list()
+	crate_type = /obj/structure/closet/crate/coffin/sarcophagus
+	crate_name = "Sarcophagus"
+
+/datum/supply_pack/imports/egosuit_restock
+	name = "Box of Enkephalin"
+	desc = "A box of some weird green liquid that seems to be the \
+	same shape as a vending machine resupply canister."
+	cost = CARGO_CRATE_VALUE * 4
+	contraband = TRUE
+	contains = list(/obj/item/vending_refill/egosuit)
+	crate_name = "enkephalin crate"

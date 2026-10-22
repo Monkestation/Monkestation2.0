@@ -20,6 +20,9 @@
 /obj/item/gun/energy/ionrifle/emp_act(severity)
 	return
 
+/obj/item/gun/energy/ionrifle/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
+
 /obj/item/gun/energy/ionrifle/carbine
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
@@ -37,6 +40,7 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	ammo_x_offset = 1
 
@@ -68,7 +72,7 @@
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = /obj/item/stock_parts/cell/potato
+	cell_type = /obj/item/stock_parts/power_store/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 	automatic_charge_overlays = FALSE
@@ -76,7 +80,7 @@
 /obj/item/gun/energy/meteorgun/pen
 	name = "meteor pen"
 	desc = "The pen is mightier than the sword."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -112,7 +116,7 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
-	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
+	var/charge_weld = (0.025 * STANDARD_CELL_CHARGE) //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -130,17 +134,17 @@
 	if(cell)
 		. += span_notice("[src] is [round(cell.percent())]% charged.")
 
-/obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
+/obj/item/gun/energy/plasmacutter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
-	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma))
 		charge_multiplier = 2
-	if(istype(I, /obj/item/stack/ore/plasma))
+	if(istype(attacking_item, /obj/item/stack/ore/plasma))
 		charge_multiplier = 1
 	if(charge_multiplier)
 		if(cell.charge == cell.maxcharge)
 			balloon_alert(user, "already fully charged!")
 			return
-		I.use(1)
+		attacking_item.use(1)
 		cell.give(500*charge_multiplier)
 		balloon_alert(user, "cell recharged")
 	else
@@ -172,7 +176,7 @@
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
+	return (..() && (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld)))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks, interaction_key)
 
@@ -192,6 +196,7 @@
 	inhand_icon_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
+	toolspeed = 0.4
 
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2
@@ -246,16 +251,21 @@
 			if(istype(WH))
 				WH.gun = WEAKREF(src)
 
-/obj/item/gun/energy/wormhole_projector/afterattack(atom/target, mob/living/user, flag, params)
-	if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
-		select_fire()
-	return ..()
+/obj/item/gun/energy/wormhole_projector/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// overrides from /obj/item/gun as both ranged interacts result in firing the gun
+	// identical to primary ranged attack
+	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-/obj/item/gun/energy/wormhole_projector/afterattack_secondary(atom/target, mob/living/user, flag, params)
-	if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
-		select_fire()
-	fire_gun(target, user, flag, params)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/gun/energy/wormhole_projector/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
+			select_fire()
+	else
+		if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
+			select_fire()
+	return ..()
 
 /obj/item/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
@@ -299,6 +309,7 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
+	playsound(new_portal, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	firing_core = TRUE
@@ -313,7 +324,7 @@
 	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
 	icon_state = "l6_cyborg"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	cell_type = /obj/item/stock_parts/cell/secborg
+	cell_type = /obj/item/stock_parts/power_store/cell/secborg
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
@@ -331,20 +342,22 @@
 	icon_state = "freezegun"
 	desc = "A gun that changes temperatures. Comes with a collapsible stock."
 	w_class = WEIGHT_CLASS_NORMAL
-	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
-	cell_type = /obj/item/stock_parts/cell/high
-	pin = null
+	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot, /obj/item/ammo_casing/energy/temp/cryo)
+	cell_type = /obj/item/stock_parts/power_store/cell/high
+	pin = /obj/item/firing_pin
+
+/obj/item/gun/energy/temperature/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
-	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 
 /obj/item/gun/energy/temperature/freeze
 	name = "cryogenic temperature gun"
 	desc = "A gun that reduces temperatures. Only for those with ice in their veins."
-	pin = /obj/item/firing_pin
-	ammo_type = list(/obj/item/ammo_casing/energy/temp)
+	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/cryo)
 
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
@@ -425,13 +438,15 @@
 		coin_count++
 		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
 
-/obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
-	if(!can_see(user, get_turf(target), length = 9))
+/obj/item/gun/energy/marksman_revolver/try_fire_gun(atom/target, mob/living/user, params)
+	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return ..()
+	if(!CAN_THEY_SEE(target, user))
 		return ..()
 
 	if(max_coins && coin_count <= 0)
 		to_chat(user, span_warning("You don't have any coins right now!"))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	if(max_coins)
 		START_PROCESSING(SSobj, src)
@@ -441,7 +456,6 @@
 	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
-	new_coin.preparePixelProjectile(target_turf, user)
+	new_coin.aim_projectile(target_turf, user)
 	new_coin.fire()
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS

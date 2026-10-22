@@ -2,6 +2,12 @@
 "a" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"b" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "c" = (
 /obj/structure/marker_beacon/olive,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -45,6 +51,10 @@
 "s" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
+"t" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "u" = (
 /obj/structure/marker_beacon/indigo,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -52,12 +62,22 @@
 "v" = (
 /turf/open/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
+"w" = (
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain/protected_space)
 "x" = (
 /obj/structure/marker_beacon/purple,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "z" = (
 /obj/structure/marker_beacon/jade,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"A" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "B" = (
@@ -68,6 +88,16 @@
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"F" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"G" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "L" = (
 /obj/structure/marker_beacon/yellow,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -1132,8 +1162,8 @@ a
 a
 a
 a
-a
-a
+t
+A
 U
 U
 U
@@ -1180,8 +1210,8 @@ a
 a
 a
 a
-a
-a
+F
+w
 U
 U
 U
@@ -1228,8 +1258,8 @@ a
 a
 a
 l
-a
-a
+F
+w
 U
 U
 U
@@ -1276,8 +1306,8 @@ a
 a
 a
 a
-a
-a
+F
+w
 U
 U
 U
@@ -1324,8 +1354,8 @@ a
 a
 a
 a
-a
-a
+b
+G
 U
 U
 U

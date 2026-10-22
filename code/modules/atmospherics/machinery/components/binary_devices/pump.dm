@@ -27,6 +27,7 @@
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/atmos_pump,
 	))
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -35,21 +36,22 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/binary/pump/click_ctrl(mob/user)
 	if(can_interact(user))
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
-	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
-		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "pressure output set to [target_pressure] kPa")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/pump/click_alt(mob/user)
+	if(target_pressure == MAX_OUTPUT_PRESSURE)
+		return CLICK_ACTION_BLOCKING
+
+	target_pressure = MAX_OUTPUT_PRESSURE
+	investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "pressure output set to [target_pressure] kPa")
+	update_appearance(UPDATE_ICON)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
 	icon_state = (on && is_operational) ? "pump_on-[set_overlay_offset(piping_layer)]" : "pump_off-[set_overlay_offset(piping_layer)]"
@@ -58,10 +60,11 @@
 	if(!on || !is_operational)
 		return
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/input_air = airs[1]
+	var/datum/gas_mixture/output_air = airs[2]
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
-	if(air1.pump_gas_to(air2, target_pressure))
+	if(input_air.pump_gas_to(output_air, target_pressure, output_pipenet_air = output_pipenet_air))
 		update_parents()
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, datum/tgui/ui)
@@ -77,7 +80,7 @@
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -97,7 +100,7 @@
 			if(.)
 				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	. = ..()
@@ -205,14 +208,12 @@
 	if(!connected_pump)
 		return
 	connected_pump.set_on(TRUE)
-	connected_pump.update_appearance()
 
 /obj/item/circuit_component/atmos_pump/proc/set_pump_off()
 	CIRCUIT_TRIGGER
 	if(!connected_pump)
 		return
 	connected_pump.set_on(FALSE)
-	connected_pump.update_appearance()
 
 /obj/item/circuit_component/atmos_pump/proc/request_pump_data()
 	CIRCUIT_TRIGGER

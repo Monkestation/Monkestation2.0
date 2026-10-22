@@ -56,7 +56,7 @@
 	else
 		. += "Is already at max tier."
 
-/obj/item/turbine_parts/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/turbine_parts/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(current_tier >= max_tier)
 		return FALSE
 	switch(current_tier)

@@ -26,7 +26,7 @@
 	/// The length of the knockdown applied to the user on clumsy_check()
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
+	var/stamina_damage = 45 //1 hit to cause loss of sprint - 2 hits to slow - 3 hits to stam crit
 	/// Chance of causing force_say() when stunning a human mob
 	var/force_say_chance = 33
 	/// Can we stun cyborgs?
@@ -41,6 +41,9 @@
 	var/log_stun_attack = TRUE
 	/// Boolean on whether people with chunky fingers can use this baton.
 	var/chunky_finger_usable = FALSE
+
+	/// Boolean, if TRUE when we harmbaton someone we will also try to stun if the baton is active / not on cooldown.
+	var/stun_on_harmbaton = FALSE
 
 	/// The context to show when the baton is active and targeting a living thing
 	var/context_living_target_active = "Stun"
@@ -64,7 +67,7 @@
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
-		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
+		offensive_notes = "It takes [span_warning("[CEILING(STAMINA_MAX  / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
 
@@ -91,6 +94,8 @@
 	var/list/modifiers = params2list(params)
 	switch(baton_attack(target, user, modifiers))
 		if(BATON_DO_NORMAL_ATTACK)
+			if(stun_on_harmbaton)
+				finalize_baton_attack(target, user, modifiers)
 			return ..()
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
@@ -143,7 +148,7 @@
 	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
-	if(cooldown_check > world.time)
+	if(cooldown_check > world.time || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
 		var/wait_desc = get_wait_description()
 		if (wait_desc)
 			to_chat(user, wait_desc)
@@ -171,13 +176,10 @@
 		target.visible_message(desc["visible"], desc["local"])
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
-	if(!ishuman(human_target))
-		return
-	if (human_target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
 		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
-	if(check_martial_counter(human_target, user))
-		return TRUE
+	return FALSE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain)
@@ -205,12 +207,16 @@
 		additional_effects_cyborg(target, user)
 	else
 		if(!trait_check)
-			target.stamina.adjust(-stamina_damage)
-		else
-			var/stamina_to_min = (target.stamina.maximum * 0.29)
-			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
-		if(!trait_check)
+			target.stamina.adjust(-stamina_damage) //Intentionally armor piercing!
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
+
+			if(ishuman(target))
+				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+				target.Disorient(SHOVE_SLOWDOWN_LENGTH)
+		else
+			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
 	return TRUE
 
@@ -256,6 +262,9 @@
 /obj/item/melee/baton/proc/set_batoned(mob/living/target, mob/living/user, cooldown)
 	if(!cooldown)
 		return
+	var/user_ref = REF(user) // avoids harddels.
+	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
+	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
@@ -264,11 +273,14 @@
 
 	if(iscyborg(user))
 		if(affect_cyborg)
+			if(on_stun_sound)
+				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+			if(stun_animation)
+				user.do_attack_animation(user)
+
 			user.flash_act(affect_silicon = TRUE)
 			user.Paralyze(clumsy_knockdown_time)
 			additional_effects_cyborg(user, user) // user is the target here
-			if(on_stun_sound)
-				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
@@ -276,17 +288,19 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
 			human_user.force_say()
+		if(on_stun_sound)
+			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+		if(stun_animation)
+			user.do_attack_animation(user)
+
 		user.Knockdown(clumsy_knockdown_time)
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
-		if(on_stun_sound)
-			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
-	if(stun_animation)
-		user.do_attack_animation(user)
+
 	return
 
 /obj/item/conversion_kit
@@ -314,6 +328,8 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
+	cooldown = (2 SECONDS)
+	stamina_damage = 55 //2 hit stamcrit if the hits are landed quickly
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -321,6 +337,13 @@
 	var/on_inhand_icon_state = "nullrod"
 	/// The force on extension.
 	var/active_force = 10
+
+	var/folded_drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
+	var/folded_pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
+	var/unfolded_drop_sound = 'sound/items/baton/telescopic_baton_unfolded_drop.ogg'
+	var/unfolded_pickup_sound = 'sound/items/baton/telescopic_baton_unfolded_pickup.ogg'
+	pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
+	drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
 
 /obj/item/melee/baton/telescopic/Initialize(mapload)
 	. = ..()
@@ -334,12 +357,6 @@
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-
-//monkestation edit start
-/obj/item/melee/baton/telescopic/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	. = ..()
-	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = FALSE)
-//monkestation edit end
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
@@ -373,11 +390,25 @@
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
+	if(!active)
+		drop_sound = folded_drop_sound
+		pickup_sound = folded_pickup_sound
+	else
+		drop_sound = unfolded_drop_sound
+		pickup_sound = unfolded_pickup_sound
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-//monkestation removal start, moved to \antagonists\contractor\items in the modular folder
-/*/obj/item/melee/baton/telescopic/contractor_baton
+#define CUFF_MAXIMUM 3
+#define MUTE_APPLIED 10 SECONDS
+#define MUTE_MAX 30 SECONDS
+#define BONUS_STAMINA_DAM 12.5
+#define BONUS_STUTTER 10 SECONDS
+#define BATON_CUFF_UPGRADE (1<<0)
+#define BATON_MUTE_UPGRADE (1<<1)
+#define BATON_FOCUS_UPGRADE (1<<2)
+
+/obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/weapons/baton.dmi'
@@ -391,7 +422,8 @@
 	force = 5
 	cooldown = 2.5 SECONDS
 	force_say_chance = 80 //very high force say chance because it's funny
-	stamina_damage = 170 //monkestation edit: stam damage increased
+	stamina_damage = 80
+	knockdown_time = 1.5 SECONDS
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
@@ -400,13 +432,132 @@
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
+	unfolded_drop_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
+	unfolded_pickup_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
+
+	/// Ref to the baton holster, should the baton have one.
+	var/obj/item/mod/module/baton_holster/holster
+	/// Bitflags for what upgrades the baton has
+	var/upgrade_flags
+
 /obj/item/melee/baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
-	target.set_stutter_if_lower(40 SECONDS)*/
-//monkestation removal end
+	target.set_stutter_if_lower(40 SECONDS)
+	if(!iscarbon(target))
+		return
+
+	var/mob/living/carbon/carbon_target = target
+	if(upgrade_flags & BATON_MUTE_UPGRADE)
+		carbon_target.adjust_silence_up_to(MUTE_APPLIED, MUTE_MAX)
+		carbon_target.adjust_emote_mute_up_to(MUTE_APPLIED, MUTE_MAX)
+
+	if(upgrade_flags & BATON_FOCUS_UPGRADE)
+		var/datum/antagonist/traitor/traitor_datum = IS_TRAITOR(user)
+		var/datum/uplink_handler/handler = traitor_datum?.uplink_handler
+		if(handler)
+			for(var/datum/traitor_objective/target_player/kidnapping/objective in handler.active_objectives)
+				if(carbon_target == objective.target)
+					carbon_target.stamina.adjust(-BONUS_STAMINA_DAM)
+					carbon_target.adjust_timed_status_effect(BONUS_STUTTER, /datum/status_effect/speech/stutter)
+
+/obj/item/melee/baton/telescopic/contractor_baton/attack_secondary(mob/living/victim, mob/living/user, params)
+	if(!(upgrade_flags & BATON_CUFF_UPGRADE) || !active)
+		return BATON_DO_NORMAL_ATTACK
+
+	for(var/obj/item/restraints/handcuffs/cuff in contents)
+		cuff.attack(victim, user)
+		break
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/melee/baton/telescopic/contractor_baton/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(istype(attacking_item, /obj/item/baton_upgrade))
+		add_upgrade(attacking_item, user)
+
+	if(!(upgrade_flags & BATON_CUFF_UPGRADE) || !istype(attacking_item, /obj/item/restraints/handcuffs/cable))
+		return
+
+	var/cuffcount = 0
+	for(var/obj/item/restraints/handcuffs/cuff in contents)
+		cuffcount++
+
+	if(cuffcount >= CUFF_MAXIMUM)
+		to_chat(user, span_warning("[src] is at maximum capacity for handcuffs!"))
+		return
+
+	attacking_item.forceMove(src)
+	to_chat(user, span_notice("You insert [attacking_item] into [src]."))
+
+/obj/item/melee/baton/telescopic/contractor_baton/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	for(var/obj/item/baton_upgrade/upgrade in src.contents)
+		upgrade.forceMove(get_turf(src))
+		upgrade_flags &= ~upgrade.upgrade_flag
+	tool.play_tool_sound(src)
+
+/obj/item/melee/baton/telescopic/contractor_baton/examine(mob/user)
+	. = ..()
+	if(upgrade_flags)
+		. += "<br><br>[span_boldnotice("[src] has the following upgrades attached:")]"
+	for(var/obj/item/baton_upgrade/upgrade in contents)
+		. += "<br>[span_notice("[upgrade].")]"
+
+/obj/item/melee/baton/telescopic/contractor_baton/proc/add_upgrade(obj/item/baton_upgrade/upgrade, mob/user)
+	if(!(upgrade_flags & upgrade.upgrade_flag))
+		upgrade_flags |= upgrade.upgrade_flag
+		upgrade.forceMove(src)
+		if(user)
+			user.visible_message(span_notice("[user] inserts the [upgrade] into [src]."), span_notice("You insert [upgrade] into [src]."), span_hear("You hear a faint click."))
+		return TRUE
+	return FALSE
+
+/obj/item/melee/baton/telescopic/contractor_baton/upgraded
+	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets. This one seems to have unremovable parts."
+
+/obj/item/melee/baton/telescopic/contractor_baton/upgraded/Initialize(mapload)
+	. = ..()
+	for(var/upgrade in subtypesof(/obj/item/baton_upgrade))
+		var/obj/item/baton_upgrade/the_upgrade = new upgrade()
+		add_upgrade(the_upgrade)
+	for(var/i in 1 to CUFF_MAXIMUM)
+		new/obj/item/restraints/handcuffs/cable(src)
+
+/obj/item/melee/baton/telescopic/contractor_baton/upgraded/wrench_act(mob/living/user, obj/item/tool)
+	return
+
+/obj/item/baton_upgrade
+	icon = 'icons/obj/items/baton_upgrades.dmi'
+	var/upgrade_flag
+
+/obj/item/baton_upgrade/cuff
+	name = "handcuff baton upgrade"
+	desc = "Allows the user to apply restraints to a target via baton, requires to be loaded with up to three prior."
+	icon_state = "cuff_upgrade"
+	upgrade_flag = BATON_CUFF_UPGRADE
+
+/obj/item/baton_upgrade/mute
+	name = "mute baton upgrade"
+	desc = "Use of the baton on a target will mute them for a short period."
+	icon_state = "mute_upgrade"
+	upgrade_flag = BATON_MUTE_UPGRADE
+
+/obj/item/baton_upgrade/focus
+	name = "focus baton upgrade"
+	desc = "Use of the baton on a target, should they be the subject of your contract, will be extra exhausted."
+	icon_state = "focus_upgrade"
+	upgrade_flag = BATON_FOCUS_UPGRADE
+
+#undef CUFF_MAXIMUM
+#undef MUTE_APPLIED
+#undef MUTE_MAX
+#undef BONUS_STAMINA_DAM
+#undef BONUS_STUTTER
+#undef BATON_CUFF_UPGRADE
+#undef BATON_MUTE_UPGRADE
+#undef BATON_FOCUS_UPGRADE
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -414,7 +565,8 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
-	inhand_icon_state = "baton"
+	base_icon_state = "stunbaton"
+	inhand_icon_state = "stunbaton"
 	worn_icon_state = "baton"
 	force = 10
 	wound_bonus = 0
@@ -423,21 +575,47 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 100 //monke edit
+	stamina_damage = 45
+	cooldown = (1.3 SECONDS)
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 1.5 SECONDS //monke edit
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
 
+	light_outer_range = 1.5
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
+	light_color = LIGHT_COLOR_ORANGE
+	light_power = 0.5
+
+	stun_on_harmbaton = TRUE
+
+	var/inactive_drop_sound = 'sound/items/baton/stun_baton_inactive_drop.ogg'
+	var/inactive_pickup_sound = 'sound/items/baton/stun_baton_inactive_pickup.ogg'
+	var/active_drop_sound = 'sound/items/baton/stun_baton_active_drop.ogg'
+	var/active_pickup_sound = 'sound/items/baton/stun_baton_active_pickup.ogg'
+	drop_sound = 'sound/items/baton/stun_baton_inactive_drop.ogg'
+	pickup_sound = 'sound/items/baton/stun_baton_inactive_pickup.ogg'
+
 	var/throw_stun_chance = 35
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 1000
+	var/cell_hit_cost = STANDARD_CELL_CHARGE
 	var/can_remove_cell = TRUE
+	///Whether or not our inhand changes when active.
+	var/active_changes_inhand = TRUE
+
+	///When set, inhand_icon_state defaults to this instead of base_icon_state
+	var/base_inhand_state = "stunbaton"
+
 	var/convertible = TRUE //if it can be converted with a conversion kit
+
+	/// How long the baton has been active in storage
+	var/time_on_in_storage = 0
+	/// At what time this stun baton automatically turns off when in storage. Set to 0 to disable
+	var/cutoff_time = 0
 
 /datum/armor/baton_security
 	bomb = 50
@@ -447,7 +625,7 @@
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
-		if(!ispath(preload_cell_type, /obj/item/stock_parts/cell))
+		if(!ispath(preload_cell_type, /obj/item/stock_parts/power_store/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
@@ -469,6 +647,7 @@
 /obj/item/melee/baton/security/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
+	turn_off()
 	UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
 	return ..()
 
@@ -486,22 +665,36 @@
 	qdel(item)
 	qdel(src)
 
+/obj/item/melee/baton/security/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!active)
+		return
+	turn_off()
+	update_appearance()
+	return TRUE
+
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)
 		cell.update_appearance()
 		cell = null
-		active = FALSE
-		update_appearance()
+		turn_off()
 
 /obj/item/melee/baton/security/update_icon_state()
+	var/base_inhand = base_inhand_state
+	if(!base_inhand)
+		base_inhand = base_icon_state
 	if(active)
-		icon_state = "[initial(icon_state)]_active"
+		icon_state = "[base_icon_state]_active"
+		if(active_changes_inhand)
+			inhand_icon_state = "[base_inhand]_active"
 		return ..()
 	if(!cell)
-		icon_state = "[initial(icon_state)]_nocell"
+		icon_state = "[base_icon_state]_nocell"
+		inhand_icon_state = base_inhand
 		return ..()
-	icon_state = "[initial(icon_state)]"
+	icon_state = base_icon_state
+	inhand_icon_state = base_inhand
 	return ..()
 
 /obj/item/melee/baton/security/examine(mob/user)
@@ -517,8 +710,8 @@
 	return TRUE
 
 /obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
@@ -541,18 +734,47 @@
 	return FALSE
 
 /obj/item/melee/baton/security/attack_self(mob/user)
-	if(cell?.charge >= cell_hit_cost)
-		active = !active
-		balloon_alert(user, "turned [active ? "on" : "off"]")
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	if(cell?.charge >= cell_hit_cost && !active)
+		turn_on(user)
+		balloon_alert(user, "turned on")
 	else
-		active = FALSE
+		turn_off()
 		if(!cell)
 			balloon_alert(user, "no power source!")
-		else
+		else if(cell?.charge < cell_hit_cost)
 			balloon_alert(user, "out of charge!")
-	update_appearance()
+		else
+			balloon_alert(user, "turned off")
 	add_fingerprint(user)
+
+/// Toggles the stun baton's light
+/obj/item/melee/baton/security/proc/toggle_light()
+	set_light_on(!light_on)
+
+/obj/item/melee/baton/security/proc/turn_on(mob/user)
+	active = TRUE
+	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	update_appearance(UPDATE_ICON)
+	update_inhand_icon()
+	toggle_light()
+	do_sparks(1, TRUE, src)
+	drop_sound = active_drop_sound
+	pickup_sound = active_pickup_sound
+	on_stun_sound = initial(on_stun_sound)
+	if(cutoff_time)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/melee/baton/security/proc/turn_off()
+	active = FALSE
+	set_light_on(FALSE)
+	update_appearance(UPDATE_ICON)
+	update_inhand_icon()
+	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	drop_sound = inactive_drop_sound
+	pickup_sound = inactive_pickup_sound
+	on_stun_sound = null
+	time_on_in_storage = 0
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
 	if(!cell)
@@ -563,8 +785,22 @@
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
 		active = FALSE
-		update_appearance()
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		turn_off()
+
+/obj/item/melee/baton/security/process(seconds_per_tick)
+	if(!active)
+		return PROCESS_KILL
+	if(!(item_flags & IN_STORAGE)) // if its in storage dont count it
+		time_on_in_storage = 0
+		return
+	time_on_in_storage += seconds_per_tick SECONDS
+	if(!(time_on_in_storage >= cutoff_time))
+		return
+	playsound(src, 'sound/weapons/magout.ogg', 40, TRUE)
+	visible_message(span_warning("\The [src] fizzles and automatically turns off in storage!"))
+	time_on_in_storage = 0
+	turn_off()
+
 
 /obj/item/melee/baton/security/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
@@ -580,12 +816,21 @@
 	if((user.istate & ISTATE_SECONDARY))
 		if(active && cooldown_check <= world.time && !check_parried(target, user))
 			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
+			if(active)
+				if(prob(75))
+					do_sparks(rand(1,3), FALSE, src)
+				if(target.ignite_mob())
+					do_sparks(rand(3,5), FALSE, src)
+					message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(target)] on fire with [src] at [AREACOORD(user)]")
+					user.log_message("set [key_name(target)] on fire with [src].", LOG_ATTACK)
 	else if(!(user.istate & ISTATE_HARM))
 		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
 			span_warning("[user] prods you with [src]. Luckily it was off."))
 		return BATON_ATTACK_DONE
 
 /obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+	if(!active)
+		return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/robot = loc
 		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
@@ -600,9 +845,8 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
-
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+	return ..()
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")
@@ -621,7 +865,7 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(active && prob(throw_stun_chance) && isliving(hit_atom))
+	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
 		finalize_baton_attack(hit_atom, thrownby?.resolve(), in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/emp_act(severity)
@@ -645,7 +889,7 @@
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
@@ -654,20 +898,27 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
+	base_icon_state = "stunprod"
 	inhand_icon_state = "prod"
+	base_inhand_state = "prod"
 	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
 	force = 3
 	throwforce = 5
 	cell_hit_cost = 2000
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
+	cell_hit_cost = STANDARD_CELL_CHARGE * 1.5
+	active_changes_inhand = FALSE
+	stun_on_harmbaton = FALSE
+	context_living_rmb_active = "Attack"
 	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
+
+	cutoff_time = 0
 
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
@@ -721,13 +972,16 @@
 	throw_speed = 1
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "boomerang"
+	base_icon_state = "boomerang"
 	inhand_icon_state = "boomerang"
+	base_inhand_state = "boomerang"
 	force = 5
 	throwforce = 5
 	throw_range = 5
 	cell_hit_cost = 2000
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
+	active_changes_inhand = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
@@ -740,19 +994,21 @@
 	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
 	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
-		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
+		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = TRUE)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
-	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "teleprod"
+	base_icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
+	base_inhand_state = "teleprod"
 	slot_flags = null
 	can_upgrade = FALSE
+	light_color = LIGHT_COLOR_BABY_BLUE
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
@@ -765,16 +1021,22 @@
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
 	do_teleport(target, get_turf(target), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	target.adjust_disgust(15)	//Two teleports is safe
+	target.adjust_confusion(3 SECONDS)
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	name = "snatcherprod"
 	desc = "A prod with a telecrystal on the end. It sparks with a desire for theft and subversion."
-	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "telecrystalprod"
+	base_icon_state = "telecrystalprod"
 	inhand_icon_state = "telecrystalprod"
+	base_inhand_state = "telecrystalprod"
 	slot_flags = null
 	throw_stun_chance = 50 //I think it'd be funny
 	can_upgrade = FALSE
+	light_color = LIGHT_COLOR_INTENSE_RED
+	stun_on_harmbaton = TRUE
+	context_living_rmb_active = "Harmful Stun"
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

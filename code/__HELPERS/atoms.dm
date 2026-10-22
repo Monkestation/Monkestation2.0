@@ -98,6 +98,8 @@
 		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR) && !check_external)
 			//Direction works sometimes
 			if(checked_object.dir == dir_toward_wall)
+				if(istype(checked_object, /obj/machinery/button))
+					return FALSE
 				return TRUE
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
@@ -317,12 +319,54 @@ rough example of the "cone" made by the 3 dirs checked
 /proc/pass(...)
 	return
 
-///Returns a list of the parents of all storage components that contain the target item
-/proc/get_storage_locs(obj/item/target)
+/// Returns an x and y value require to reverse the transformations made to center an oversized icon
+/atom/proc/get_oversized_icon_offsets()
+	if (pixel_x == 0 && pixel_y == 0)
+		return list("x" = 0, "y" = 0)
+	var/list/icon_dimensions = get_icon_dimensions(icon)
+	var/icon_width = icon_dimensions["width"]
+	var/icon_height = icon_dimensions["height"]
+	return list(
+		"x" = icon_width > ICON_SIZE_X && pixel_x != 0 ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
+		"y" = icon_height > ICON_SIZE_Y && pixel_y != 0 ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
+	)
+
+///Returns all the objects that we are nested within the contents of starting with ourself then adding our previous loc's loc, does not include our turf
+/atom/movable/proc/get_locs_recursive()
+	var/atom/movable/current_loc = loc
+	var/list/locs_list = list(src)
+	if(!current_loc)
+		return locs_list
+
+	var/sanity = 0 //you REALLY should not have something nested in 500 layers of contents
+	while(!isturf(current_loc))
+		sanity++
+		locs_list += current_loc
+		if(sanity > 500 || !ismovable(current_loc))
+			return locs_list
+
+		current_loc = current_loc.loc
+	return locs_list //if sanity is 0 then that means our loc is a turf and we are the highest level loc
+
+///Returns our highest level loc that is not a turf or ourselves if we are directly in a turf, if we were in a box in the backpack of a mob we would return that mob
+/atom/movable/proc/get_highest_non_turf_loc()
+	var/list/locs_list = get_locs_recursive()
+	return locs_list[length(locs_list)]
+
+/atom/proc/effective_contents(list/typecache = null)
+	var/static/list/default_typecache
+	if(!typecache)
+		default_typecache ||= typecacheof(list(/obj/effect, /atom/movable/screen))
+		typecache = default_typecache
+	return typecache_filter_list_reverse(src.contents, typecache)
+
+/// Returns a list of all items in our contents that were obtained from gifts.
+/atom/proc/get_all_gift_contents() as /list
+	RETURN_TYPE(/list/obj/item)
 	. = list()
-	if(!istype(target) || !(target.item_flags & IN_STORAGE))
-		return
-	var/datum/storage/storage_datum = target.loc.atom_storage
-	if(!storage_datum)
-		return
-	. += storage_datum.real_location?.resolve()
+	for(var/obj/item/thing as anything in get_all_contents_type(/obj/item))
+		if(!QDELETED(thing) && HAS_TRAIT(thing, TRAIT_GIFT_ITEM))
+			. += thing
+
+/// Helper for easily adding blood from INSIDE a mob to an atom (NOT blood ON the mob)
+#define add_mob_blood(from_who) add_blood_DNA(from_who.get_blood_dna_list(), from_who.get_static_viruses())

@@ -12,7 +12,7 @@
 
 /datum/wound/burn/wound_injury(datum/wound/old_wound, attack_direction)
 	if(!old_wound && limb.current_gauze && (wound_flags & ACCEPTS_GAUZE))
-		qdel(limb.remove_gauze())
+		limb.remove_gauze()
 		// oops your existing gauze got burned, need a new one now
 		var/obj/effect/decal/cleanable/ash/ash = new(limb.drop_location())
 		ash.desc += " It looks like it used to be some kind of bandage."
@@ -26,7 +26,7 @@
 
 	default_scar_file = FLESH_SCAR_FILE
 
-	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
+	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal) // sterilizer and alcohol will require reagent treatments, coming soon
 
 	// Flesh damage vars
 	/// How much damage to our flesh we currently have. Once both this and infestation reach 0, the wound is considered healed
@@ -45,18 +45,13 @@
 	/// Once we reach infestation beyond WOUND_INFESTATION_SEPSIS, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn for a really long time for this to happen)
 	var/strikes_to_lose_limb = 3
 
-/datum/wound/burn/flesh/severity_text(simple = FALSE)
-	if(infestation > WOUND_INFECTION_MODERATE)
-		return "Infected, [..()]"
-	return ..()
-
 /datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
 
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+	if (QDELETED(victim) || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	. = ..()
-	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
+	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		victim.adjustToxLoss(0.25 * seconds_per_tick)
 		if(SPT_PROB(0.5, seconds_per_tick))
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
@@ -91,7 +86,17 @@
 		sanitization = max(sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor * seconds_per_tick), 0)
 		return
 
-	infestation += infestation_rate * seconds_per_tick
+	// virus resistant so infections take longer
+	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
+		infestation += infestation_rate * 0.1 * seconds_per_tick
+	else if(HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY))
+		infestation += 0.05
+		sanitization = max(sanitization - 0.15, 0)
+		if(infestation_rate <= 0.15 && prob(50))
+			infestation_rate += 0.001
+	else
+		infestation += infestation_rate * seconds_per_tick
+
 	switch(infestation)
 		if(0 to WOUND_INFECTION_MODERATE)
 			return
@@ -148,6 +153,13 @@
 						var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
 						victim.gain_trauma(sepsis)
 
+/datum/wound/burn/flesh/set_disabling(new_value)
+	. = ..()
+	if(new_value && strikes_to_lose_limb <= 0)
+		treat_text_short = "Amputate or augment limb immediately, or place the patient into cryogenics."
+	else
+		treat_text_short = initial(treat_text_short)
+
 /datum/wound/burn/flesh/get_wound_description(mob/user)
 	if(strikes_to_lose_limb <= 0)
 		return span_deadsay("<B>[victim.p_their(TRUE)] [limb.plaintext_zone] has locked up completely and is non-functional.</B>")
@@ -181,9 +193,25 @@
 
 	return "<B>[condition.Join()]</B>"
 
+/datum/wound/burn/flesh/severity_text(simple = FALSE)
+	. = ..()
+	. += " Burn / "
+	switch(infestation)
+		if(-INFINITY to WOUND_INFECTION_MODERATE)
+			. += "No"
+		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
+			. += "Moderate"
+		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
+			. += "<b>Severe</b>"
+		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
+			. += "<b>Critical</b>"
+		if(WOUND_INFECTION_SEPTIC to INFINITY)
+			. += "<b>Total</b>"
+	. += " Infection"
+
 /datum/wound/burn/flesh/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb <= 0) // Unclear if it can go below 0, best to not take the chance
-		var/oopsie = "Type: [name]\nSeverity: [severity_text()]"
+		var/oopsie = "Type: [name]<br>Severity: [severity_text()]"
 		oopsie += "<div class='ml-3'>Infection Level: [span_deadsay("The body part has suffered complete sepsis and must be removed. Amputate or augment limb immediately.")]</div>"
 		return oopsie
 
@@ -214,16 +242,13 @@
 */
 
 /// if someone is using ointment or mesh on our burns
-/datum/wound/burn/flesh/proc/ointmentmesh(obj/item/stack/medical/I, mob/user)
+/datum/wound/burn/flesh/proc/treat_burn_flesh_wound(obj/item/stack/medical/I, mob/user)
 	user.visible_message(span_notice("[user] begins applying [I] to [victim]'s [limb.plaintext_zone]..."), span_notice("You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
 	if (I.amount <= 0)
 		return TRUE
-	if(!do_after(user, (user == victim ? I.self_delay : I.other_delay), extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(!I.try_heal(victim, user, TRUE))
 		return TRUE
-
-	limb.heal_damage(I.heal_brute, I.heal_burn)
 	user.visible_message(span_green("[user] applies [I] to [victim]."), span_green("You apply [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
-	I.use(1)
 	sanitization += I.sanitization
 	flesh_healing += I.flesh_regeneration
 
@@ -234,35 +259,54 @@
 		return try_treating(I, user)
 
 /// Paramedic UV penlights
-/datum/wound/burn/flesh/proc/uv(obj/item/flashlight/pen/paramedic/I, mob/user)
-	if(!COOLDOWN_FINISHED(I, uv_cooldown))
-		to_chat(user, span_notice("[I] is still recharging!"))
-		return TRUE
+/datum/wound/burn/flesh/proc/uv(obj/item/flashlight/pen/medical_pen, mob/user)
+	if(medical_pen.uv_ing)
+		return FALSE
+
+	if(!medical_pen.on)
+		to_chat(user, span_warning("Turn the [medical_pen] on first!"))
+		return FALSE
+
 	if(infestation <= 0 || infestation < sanitization)
 		to_chat(user, span_notice("There's no infection to treat on [victim]'s [limb.plaintext_zone]!"))
-		return TRUE
+		return FALSE
 
-	user.visible_message(span_notice("[user] flashes the burns on [victim]'s [limb] with [I]."), span_notice("You flash the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]."), vision_distance=COMBAT_MESSAGE_RANGE)
-	sanitization += I.uv_power
-	COOLDOWN_START(I, uv_cooldown, I.uv_cooldown_length)
+	to_chat(user, span_notice("You begin flashing the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with the [medical_pen]..."))
+	playsound(medical_pen, 'sound/machines/microwave/microwave-mid2.ogg', 60, TRUE, 30)
+	medical_pen.uv_ing = TRUE
+	if(!do_after(user, 5 SECONDS, interaction_key = medical_pen))
+		medical_pen.uv_ing = FALSE
+		return FALSE
+
+	if(!medical_pen.on)
+		to_chat(user, span_warning("Turn the [medical_pen] on!"))
+		medical_pen.uv_ing = FALSE
+		return FALSE
+
+	user.visible_message(span_notice("[user] flashes the burns on [victim]'s [limb] with the [medical_pen]."), span_notice("You flash the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [medical_pen]."), vision_distance=COMBAT_MESSAGE_RANGE)
+	sanitization += medical_pen.uv_power
+	medical_pen.uv_ing = FALSE
+	if(infestation > 0 || infestation > sanitization)
+		uv(medical_pen, user)
+
 	return TRUE
 
 /datum/wound/burn/flesh/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/medical/ointment))
-		return ointmentmesh(I, user)
-	else if(istype(I, /obj/item/stack/medical/mesh))
-		var/obj/item/stack/medical/mesh/mesh_check = I
-		if(!mesh_check.is_open)
-			to_chat(user, span_warning("You need to open [mesh_check] first."))
-			return
-		return ointmentmesh(mesh_check, user)
-	else if(istype(I, /obj/item/flashlight/pen/paramedic))
+	if(istype(I, /obj/item/stack/medical))
+		var/obj/item/stack/medical/medical_item = I
+		if(istype(I, /obj/item/stack/medical/mesh))
+			var/obj/item/stack/medical/mesh/mesh_check = I
+			if(!mesh_check.is_open)
+				to_chat(user, span_warning("You need to open [mesh_check] first."))
+				return
+		return treat_burn_flesh_wound(medical_item, user)
+	else if(istype(I, /obj/item/flashlight/pen))
 		return uv(I, user)
 
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
 /datum/wound/burn/flesh/on_stasis(seconds_per_tick, times_fired)
 	. = ..()
-	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
+	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		if(SPT_PROB(0.5, seconds_per_tick))
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
@@ -321,14 +365,15 @@
 	treat_text = "Swiftly apply healing aids such as Synthflesh or regenerative mesh to the wound. \
 		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
 		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
-	treat_text_short = "Apply healing aid such as regenerative mesh or Synthflesh and disinfect / debride."
+	treat_text_short = "Apply healing aid such as regenerative mesh, Synthflesh, or cryogenics and disinfect / debride. \
+		Clean gauze or ointment will slow infection rate."
 	examine_desc = "appears seriously charred, with aggressive red splotches"
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
 	damage_multiplier_penalty = 1.2
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/flesh/severe
-	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
+	treatable_by = list(/obj/item/flashlight/pen, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal)
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
@@ -350,7 +395,8 @@
 	treat_text = "Immediately apply healing aids such as Synthflesh or regenerative mesh to the wound. \
 		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
 		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
-	treat_text_short = "Apply healing aid such as regenerative mesh or Synthflesh and disinfect / debride."
+	treat_text_short = "Apply healing aid such as regenerative mesh, Synthflesh, or cryogenics and disinfect / debride. \
+		Clean gauze or ointment will slow infection rate."
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL
@@ -358,7 +404,7 @@
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/flesh/critical
-	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
+	treatable_by = list(/obj/item/flashlight/pen, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal)
 	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
 	scar_keyword = "burncritical"

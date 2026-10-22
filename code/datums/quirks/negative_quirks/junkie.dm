@@ -17,7 +17,7 @@
 	var/where_accessory //! where the accessory spawned
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
 	var/drug_flavour_text = "Better hope you don't run out..."
-	var/process_interval = 30 SECONDS //! how frequently the quirk processes
+	var/process_interval = 120 SECONDS //! how frequently the quirk processes (This was set at 30 seconds, which caused you to hit high withdrawal WAY TOO QUICKLY)
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
 /datum/quirk/item_quirk/junkie/add_unique(client/client_source)
@@ -62,9 +62,10 @@
 	)
 
 /datum/quirk/item_quirk/junkie/remove()
-	if(quirk_holder && reagent_instance)
-		for(var/addiction_type in subtypesof(/datum/addiction))
-			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
+	if(!reagent_instance || QDELETED(quirk_holder) || QDELETED(quirk_holder.mind))
+		return
+	for(var/addiction_type in subtypesof(/datum/addiction))
+		quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, next_process))
@@ -103,14 +104,10 @@
 		/obj/item/clothing/mask/cigarette/pipe,
 	)
 
-/datum/quirk/item_quirk/junkie/smoker/New()
-	drug_container_type = pick(/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/fancy/cigarettes/cigpack_midori,
-		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
-		/obj/item/storage/fancy/cigarettes/cigpack_robust,
-		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-		/obj/item/storage/fancy/cigarettes/cigpack_carp)
-
+/datum/quirk/item_quirk/junkie/smoker/add_unique(client/client_source)
+	var/brand_name = client_source?.prefs?.read_preference(/datum/preference/choiced/smoker_brand) || "Random"
+	brand_name = brand_name == "Random" ? pick(GLOB.smoker_cigarette_brands) : brand_name
+	drug_container_type = GLOB.smoker_cigarette_brands[brand_name] || /obj/item/storage/fancy/cigarettes
 	return ..()
 
 /datum/quirk/item_quirk/junkie/smoker/post_add()
@@ -120,11 +117,13 @@
 	var/mob/living/carbon/carbon_holder = quirk_holder
 	var/obj/item/organ/internal/lungs/smoker_lungs = null
 	var/obj/item/organ/internal/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(old_lungs && !(old_lungs.organ_flags & ORGAN_SYNTHETIC))
+	if(old_lungs && IS_ORGANIC_ORGAN(old_lungs))
 		if(isplasmaman(carbon_holder))
 			smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
 		else if(isethereal(carbon_holder))
 			smoker_lungs = /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+		else if(isoozeling(carbon_holder))
+			smoker_lungs = /obj/item/organ/internal/lungs/slime/slime_smoker
 		else
 			smoker_lungs = /obj/item/organ/internal/lungs/smoker_lungs
 	if(!isnull(smoker_lungs))
@@ -142,7 +141,7 @@
 		else
 			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
 
-/* /datum/quirk/item_quirk/junkie/alcoholic - monkestation disabled for now
+/datum/quirk/item_quirk/junkie/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
 	icon = FA_ICON_WINE_GLASS
@@ -162,22 +161,15 @@
 	/// Cached typepath of the owner's favorite alcohol reagent
 	var/datum/reagent/consumable/ethanol/favorite_alcohol
 
-/datum/quirk/item_quirk/junkie/alcoholic/New()
-	drug_container_type = pick(
-		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
-		/obj/item/reagent_containers/cup/glass/bottle/vodka,
-		/obj/item/reagent_containers/cup/glass/bottle/ale,
-		/obj/item/reagent_containers/cup/glass/bottle/beer,
-		/obj/item/reagent_containers/cup/glass/bottle/hcider,
-		/obj/item/reagent_containers/cup/glass/bottle/wine,
-		/obj/item/reagent_containers/cup/glass/bottle/sake,
-	)
-
+/datum/quirk/item_quirk/junkie/alcoholic/add_unique(client/client_source)
+	var/drink_name = client_source?.prefs?.read_preference(/datum/preference/choiced/alcoholic_brand) || "Random"
+	drink_name = drink_name == "Random" ? pick(GLOB.alcoholic_drinks) : drink_name
+	drug_container_type = GLOB.alcoholic_drinks[drink_name] || /obj/item/reagent_containers/cup/glass/bottle/whiskey
 	return ..()
 
 /datum/quirk/item_quirk/junkie/alcoholic/post_add()
 	. = ..()
-	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(check_brandy))
 
 	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
 	if(isnull(brandy_container))
@@ -196,7 +188,7 @@
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
 /datum/quirk/item_quirk/junkie/alcoholic/remove()
-	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
 /datum/quirk/item_quirk/junkie/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
 	SIGNAL_HANDLER
@@ -209,4 +201,25 @@
 		quirk_holder.clear_mood_event("wrong_alcohol")
 	else
 		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
- */
+
+/datum/quirk/item_quirk/junkie/caffeinedependence
+	name = "Caffeine Dependence"
+	desc = "You are just not the same without a cup of coffee"
+	icon = FA_ICON_COFFEE
+	value = -2
+	gain_text = span_danger("You'd really like a cup of coffee")
+	lose_text = span_notice("Coffee just doesn't seem as appealing anymore")
+	medical_record_text = "Patient is highly dependent on caffeine"
+	reagent_type = /datum/reagent/consumable/coffee
+	drug_container_type = /obj/item/reagent_containers/cup/glass/coffee
+	mob_trait = TRAIT_CAFFEINE_DEPENDENCE
+	hardcore_value = 0
+	drug_flavour_text = "Better make good friends with the coffee machine"
+	mail_goodies = list(
+		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/icecoffee,
+		/datum/reagent/consumable/hot_ice_coffee,
+		/datum/reagent/consumable/soy_latte,
+		/datum/reagent/consumable/cafe_latte,
+		/datum/reagent/consumable/pumpkin_latte,
+	)

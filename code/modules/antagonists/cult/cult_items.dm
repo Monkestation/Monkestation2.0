@@ -76,6 +76,8 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	/// If TRUE, it can be used at will by anyone, non-cultists included
+	var/free_use = FALSE
 
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
@@ -85,6 +87,10 @@ Striking a noncultist, however, will tear their flesh."}
 	)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	//Swords do not block tackles, body throws, or leaps.
+	if (attack_type == LEAP_ATTACK)
+		final_block_chance = 0
+
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
@@ -93,7 +99,7 @@ Striking a noncultist, however, will tear their flesh."}
 		return FALSE
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!IS_CULTIST(user))
+	if(!IS_CULTIST(user) && !free_use)
 		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message(span_warning("A powerful force shoves [user] away from [target]!"), \
@@ -123,6 +129,363 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!IS_CULTIST(user))
 		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
 
+#define WIELDER_SPELLS "wielder_spell"
+#define SWORD_SPELLS "sword_spell"
+#define SWORD_PREFIX "sword_prefix"
+
+/obj/item/melee/cultblade/haunted
+	name = "haunted longsword"
+	desc = "An eerie sword with a blade that is less 'black' than it is 'absolute nothingness'. It glows with furious, restrained green energy."
+	icon_state = "hauntedblade"
+	inhand_icon_state = "hauntedblade"
+	worn_icon_state = "hauntedblade"
+	force = 30
+	throwforce = 25
+	block_chance = 55
+	wound_bonus = -25
+	bare_wound_bonus = 30
+	free_use = TRUE
+	light_color = COLOR_HERETIC_GREEN
+	light_outer_range = 3
+	demolition_mod = 1.5
+	/// holder for the actual action when created.
+	var/list/datum/action/cooldown/spell/path_sword_actions
+	/// holder for the actual action when created.
+	var/list/datum/action/cooldown/spell/path_wielder_actions
+	var/mob/living/trapped_entity
+	/// The heretic path that the variable below uses to index abilities. Assigned when the heretic is ensouled.
+	var/heretic_path
+	/// If the blade is bound, it cannot utilize its abilities, but neither can its wielder. They must unbind it to use it to its full potential.
+	var/bound = TRUE
+	/// Nested static list used to index abilities and names.
+	var/static/list/heretic_paths_to_haunted_sword_abilities = list(
+		// Ash
+		PATH_ASH = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/ash_beams),
+			SWORD_PREFIX = "ashen",
+		),
+		// Flesh
+		PATH_FLESH = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/blood_siphon),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/cleave),
+			SWORD_PREFIX = "sanguine",
+		),
+		// Void
+		PATH_VOID = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/void_phase),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/void_prison),
+			SWORD_PREFIX = "tenebrous",
+		),
+		// Blade
+		PATH_BLADE = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/furious_steel/solo),
+			SWORD_PREFIX = "keen",
+		),
+		// Rust
+		PATH_RUST = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/cone/staggered/entropic_plume),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/aoe/rust_conversion, /datum/action/cooldown/spell/pointed/rust_construction),
+			SWORD_PREFIX = "rusted",
+		),
+		// Cosmic
+		PATH_COSMIC = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/conjure/cosmic_expansion),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/star_blast),
+			SWORD_PREFIX = "astral",
+		),
+		// Lock
+		PATH_LOCK = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/burglar_finesse),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/apetra_vulnera),
+			SWORD_PREFIX = "incisive",
+		),
+		// Moon
+		PATH_MOON = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/moon_parade),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/mind_gate),
+			SWORD_PREFIX = "shimmering",
+		),
+		// Starter
+		PATH_START = list(
+			WIELDER_SPELLS = null,
+			SWORD_SPELLS = null,
+			SWORD_PREFIX = "stillborn", // lol loser
+		) ,
+	)
+	actions_types = list(/datum/action/item_action/haunted_blade)
+
+/obj/item/melee/cultblade/haunted/examine(mob/user)
+	. = ..()
+
+	var/examine_text = ""
+	if(bound)
+		examine_text = "[src] shines a dull, sickly green, the power emanating from it clearly bound by the runes on its blade. You could unbind it, and wield its fearsome power. But is it worth loosening the bindings of the spirit inside?"
+	else
+		examine_text = "[src] flares a bright and malicious pale lime shade. Someone has unbound the spirit within, and power now clearly resonates from inside the blade, barely restrained and brimming with fury. You may attempt to bind it once more, sealing the horror, or try to harness its strength as a blade."
+
+	. += span_cult(examine_text)
+
+/datum/action/item_action/haunted_blade
+	name = "Unseal Spirit" // img is of a chained shade
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "spirit_sealed"
+
+/datum/action/item_action/haunted_blade/apply_button_icon(atom/movable/screen/movable/action_button/button, force)
+	var/obj/item/melee/cultblade/haunted/blade = target
+	if(istype(blade))
+		button_icon_state = "spirit_[blade.bound ? "sealed" : "unsealed"]"
+		name = "[blade.bound ? "Unseal" : "Seal"] Spirit"
+
+	return ..()
+
+/obj/item/melee/cultblade/haunted/ui_action_click(mob/living/user, actiontype)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return // gtfo
+	if(bound)
+		unbind_blade(user)
+		return
+	if(user.mind?.holy_role)
+		on_priest_handle(user)
+	else if(IS_CULTIST_OR_CULTIST_MOB(user))
+		on_cultist_handle(user)
+	else if(IS_HERETIC_OR_MONSTER(user) || IS_LUNATIC(user))
+		on_heresy_handle(user)
+	else if(IS_WIZARD(user))
+		on_wizard_handle(user)
+	else
+		on_normie_handle(user)
+	return
+
+/obj/item/melee/cultblade/haunted/proc/on_priest_handle(mob/living/user, actiontype)
+	user.visible_message(span_cultbold("You begin chanting the holy hymns of [GLOB.deity]..."),\
+		span_cultbold("[user] begins chanting while holding [src] aloft..."))
+	if(!do_after(user, 6 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	playsound(user, 'sound/effects/pray_chaplain.ogg',60,TRUE)
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_cultist_handle(mob/living/user, actiontype)
+	var/binding_implements = list(/obj/item/melee/cultblade/dagger, /obj/item/melee/sickly_blade/cursed)
+	if(!user.is_holding_item_of_types(binding_implements))
+		to_chat(user, span_notice("You need to hold a ritual dagger to bind [src]!"))
+		return
+
+	user.visible_message(span_cultbold("You begin slicing open your palm on top of [src]..."),\
+		span_cultbold("[user] begins slicing open [user.p_their()] palm on top of [src]..."))
+	if(!do_after(user, 6 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	playsound(user, 'sound/weapons/slice.ogg', 30, TRUE)
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_heresy_handle(mob/living/user, actiontype)
+	// todo make the former a subtype of latter
+	var/binding_implements = list(/obj/item/clothing/neck/eldritch_amulet, /obj/item/clothing/neck/heretic_focus)
+	if(!user.is_holding_item_of_types(binding_implements))
+		to_chat(user, span_notice("You need to hold a focus to bind [src]!"))
+		return
+
+	user.visible_message(span_cultbold("You channel the Mansus through your focus, empowering the sealing runes..."), span_cultbold("[user] holds up their eldritch focus on top of [src] and begins concentrating..."))
+	if(!do_after(user, 6 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_wizard_handle(mob/living/user, actiontype)
+	user.visible_message(span_cultbold("You begin quickly and nimbly casting the sealing runes."), span_cultbold("[user] begins tracing anti-light runes on [src]..."))
+	if(!do_after(user, 3 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_normie_handle(mob/living/user, actiontype)
+	// todo make the former a subtype of latter
+	var/binding_implements = list(/obj/item/book/bible)
+	if(!user.is_holding_item_of_types(binding_implements))
+		to_chat(user, span_notice("You need to wield a bible to bind [src]!"))
+		return
+
+	var/passage = "[pick(GLOB.first_names_male)] [rand(1,9)]:[rand(1,25)]" // Space Bibles will have Alejandro 9:21 passages, as part of the Very New Testament.
+	user.visible_message(span_cultbold("You start reading aloud the passage in [passage]..."), span_cultbold("[user] starts reading aloud the passage in [passage]..."))
+	if(!do_after(user, 12 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+
+	rebind_blade(user)
+
+/obj/item/melee/cultblade/haunted/proc/unbind_blade(mob/user)
+	var/holup = tgui_alert(user, "Are you sure you wish to unseal the spirit within?", "Sealed Evil In A Jar", list("I need the power!", "Maybe not..."))
+	if(holup != "I need the power!")
+		return
+	to_chat(user, span_cultbold("You start focusing on the power of the blade, letting it guide your fingers along the inscribed runes..."))
+	if(!do_after(user, 5 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	visible_message(span_danger("[user] has unbound [src]!"))
+	bound = FALSE
+	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
+		sword_spell.Grant(trapped_entity)
+	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
+		wielder_spell.Grant(user)
+	free_use = TRUE
+	force += 5
+	armour_penetration += 10
+	light_outer_range += 3
+	update_light()
+	trapped_entity.update_mob_action_buttons()
+
+	playsound(src ,'sound/voice/insane_low_laugh.ogg', 200, TRUE) //quiet
+	binding_filters_update()
+
+/obj/item/melee/cultblade/haunted/proc/rebind_blade(mob/user)
+	visible_message(span_danger("[user] has bound [src]!"))
+	bound = TRUE
+	force -= 5
+	armour_penetration -= 10
+	free_use = FALSE // it's a cult blade and you sealed away the other power.
+	light_outer_range -= 3
+	update_light()
+	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
+		sword_spell.Remove(trapped_entity)
+	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
+		wielder_spell.Remove(user)
+	trapped_entity.update_mob_action_buttons()
+
+	playsound(src ,'sound/hallucinations/wail.ogg', 20, TRUE)	// add BOUND alert and UNBOUND
+	binding_filters_update()
+
+/obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
+	. = ..()
+
+	AddElement(/datum/element/heretic_focus)
+	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
+	if(do_bind && !mapload)
+		bind_soul(soul_to_bind, awakener)
+	binding_filters_update()
+	addtimer(CALLBACK(src, PROC_REF(start_glow_loop)), rand(0.1 SECONDS, 1.9 SECONDS))
+
+/obj/item/melee/cultblade/haunted/proc/bind_soul(mob/soul_to_bind, mob/awakener)
+
+	var/datum/mind/trapped_mind = soul_to_bind?.mind
+
+	if(!trapped_mind)
+		return // Can't do anything further down the list
+
+	if(trapped_mind)
+		AddComponent(/datum/component/spirit_holding,\
+				soul_to_bind = trapped_mind,\
+				awakener = awakener,\
+				allow_renaming = FALSE,\
+				allow_channeling = FALSE,\
+				allow_exorcism = FALSE,\
+			)
+
+	// Get the heretic's new body and antag datum.
+	trapped_entity = trapped_mind?.current
+	trapped_entity.PossessByPlayer(trapped_mind?.key)
+	var/datum/antagonist/heretic/heretic_holder = GET_HERETIC(trapped_entity)
+	if(!heretic_holder)
+		stack_trace("[soul_to_bind] in but not a heretic on the heretic soul blade.")
+
+	// Give the spirit a spell that lets them try to fly around.
+	var/datum/action/cooldown/spell/pointed/sword_fling/fling_act = \
+	new /datum/action/cooldown/spell/pointed/sword_fling(trapped_mind, to_fling = src)
+	fling_act.Grant(trapped_entity)
+
+	// Set the sword's path for spell selection.
+	heretic_path = heretic_holder.heretic_path.route || PATH_START
+
+	// Copy the objectives to keep for roundend, remove the datum as neither us nor the heretic need it anymore
+	var/list/copied_objectives = heretic_holder.objectives.Copy()
+	trapped_entity.mind.remove_antag_datum(/datum/antagonist/heretic)
+
+	// Add the fallen antag datum, give them a heads-up of what's happening.
+	var/datum/antagonist/soultrapped_heretic/bozo = new()
+	bozo.objectives |= copied_objectives
+	trapped_entity.mind.add_antag_datum(bozo)
+
+	// Assigning the spells to give to the wielder and spirit.
+	// Let them cast the given spell.
+	ADD_TRAIT(trapped_entity, TRAIT_ALLOW_HERETIC_CASTING, INNATE_TRAIT)
+
+	var/list/path_spells = heretic_paths_to_haunted_sword_abilities[heretic_path]
+
+	var/list/wielder_spells = path_spells[WIELDER_SPELLS]
+	var/list/sword_spells = path_spells[SWORD_SPELLS]
+
+	name = "[path_spells[SWORD_PREFIX]] [name]"
+
+
+	// Creating the path spells.
+	// The sword is created bound - so we do not grant it the spells just yet, but we still create and store them.
+
+	if(sword_spells)
+		for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
+			var/datum/action/cooldown/spell/instanced_spell = new sword_spell(trapped_entity)
+			LAZYADD(path_sword_actions, instanced_spell)
+			instanced_spell.overlay_icon_state = "bg_cult_border" // for flavor, and also helps distinguish
+
+	if(wielder_spells)
+		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
+			var/datum/action/cooldown/spell/instanced_spell = new wielder_spell(trapped_entity)
+			LAZYADD(path_wielder_actions, instanced_spell)
+			instanced_spell.overlay_icon_state = "bg_cult_border"
+
+	binding_filters_update()
+
+/obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
+	. = ..()
+	if((!(slot & ITEM_SLOT_HANDS)) || bound)
+		return
+	for(var/datum/action/cooldown/spell/wielder_spell in path_wielder_actions)
+		wielder_spell.Grant(user)
+	binding_filters_update()
+
+/obj/item/melee/cultblade/haunted/dropped(mob/user, silent)
+	. = ..()
+	for(var/datum/action/cooldown/spell/wielder_spell in path_wielder_actions)
+		wielder_spell.Remove(user)
+	binding_filters_update()
+
+/obj/item/melee/cultblade/haunted/proc/binding_filters_update(mob/user)
+
+	var/h_color = heretic_path ? GLOB.heretic_path_to_color[heretic_path] : "#FF00FF"
+
+	// on bound
+	if(bound)
+		remove_filter("unbound_ray", update = FALSE)
+		add_filter("bind_glow", 2, list("type" = "outline", "color" = h_color, "size" = 0.1))
+		return
+
+	// on unbound
+	// we re-add this every time it's picked up or dropped
+	remove_filter("bind_glow", update = FALSE)
+	add_filter(name = "unbound_ray", priority = 1, params = list(
+		type = "rays",
+		size = 16,
+		color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
+		density = 16,
+	))
+	// because otherwise the animations stack and it looks ridiculous
+	var/ray_filter = get_filter("unbound_ray")
+	animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
+	animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
+
+/obj/item/melee/cultblade/haunted/proc/start_glow_loop()
+	var/filter = get_filter("bind_glow")
+	if (!filter)
+		return
+
+	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
+	animate(alpha = 40, time = 2.5 SECONDS)
+
+#undef WIELDER_SPELLS
+#undef SWORD_SPELLS
+#undef SWORD_PREFIX
+
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
 	desc = "Use the sword to shear open the flimsy fabric of this reality and teleport to your target."
@@ -141,8 +504,8 @@ Striking a noncultist, however, will tear their flesh."}
 		return FALSE
 
 /obj/item/restraints/legcuffs/bola/cult
-	name = "\improper Nar'Sien bola"
-	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sien cultists. Throw it to trip and slow your victim."
+	name = "\improper Nar'Sian bola"
+	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sian cultists. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	inhand_icon_state = "bola_cult"
 	breakouttime = 6 SECONDS
@@ -297,8 +660,8 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened
-	name = "\improper Nar'Sien hardened armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	name = "\improper Nar'Sian hardened armor"
+	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_armor"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
@@ -322,8 +685,8 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 100
 
 /obj/item/clothing/head/hooded/cult_hoodie/hardened
-	name = "\improper Nar'Sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	name = "\improper Nar'Sian hardened helmet"
+	desc = "A heavily-armored helmet worn by warriors of the Nar'Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	inhand_icon_state = null
 	armor_type = /datum/armor/cult_hoodie_hardened
@@ -378,9 +741,25 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 60
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
-	AddComponent(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
+	. = ..()
+	AddComponent( \
+		/datum/component/shielded, \
+		recharge_start_delay = 0 SECONDS, \
+		shield_icon_file = 'icons/effects/cult/effects.dmi', \
+		shield_icon = "shield-cult", \
+		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
+	)
 
-/// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
+	..()
+	if(!IS_CULTIST(user))
+		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
+		user.dropItemToGround(src, TRUE)
+		user.set_dizzy_if_lower(1 MINUTES)
+		user.Paralyze(100)
+
+///Callback when the shield breaks, since cult robes are stupid and have different effects.
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
 	wearer.visible_message(span_danger("[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!"))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(wearer))
@@ -561,6 +940,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "This relic instantly teleports you, and anything you're pulling, forward by a moderate distance."
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state ="shifter"
+	///How many uses does the item have before becoming inert
 	var/uses = 4
 
 /obj/item/cult_shift/examine(mob/user)
@@ -570,11 +950,12 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		. += span_cult("It seems drained.")
 
-/obj/item/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
-	var/mob/living/carbon/C = user
-	if(C.pulling)
-		var/atom/movable/pulled = C.pulling
-		do_teleport(pulled, T, channel = TELEPORT_CHANNEL_CULT)
+///Handles teleporting the atom we're pulling along with us when using the shifter
+/obj/item/cult_shift/proc/handle_teleport_grab(turf/target_turf, mob/user)
+	var/mob/living/carbon/pulling_user = user
+	if(pulling_user.pulling)
+		var/atom/movable/pulled = pulling_user.pulling
+		do_teleport(pulled, target_turf, channel = TELEPORT_CHANNEL_CULT)
 		. = pulled
 
 /obj/item/cult_shift/attack_self(mob/user)
@@ -587,27 +968,33 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, span_warning("\The [src] flickers out of your hands, your connection to this dimension is too strong!"))
 		return
 
-	var/mob/living/carbon/C = user
-	var/turf/mobloc = get_turf(C)
-	var/turf/destination = get_teleport_loc(location = mobloc, target = C, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
+	//The user of the shifter
+	var/mob/living/carbon/user_cultist = user
+	//Initial teleport location
+	var/turf/mobloc = get_turf(user_cultist)
+	//Teleport target turf, with some error to spice it up
+	var/turf/destination = get_teleport_loc(location = mobloc, target = user_cultist, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
+	//The atom the user was pulling when using the shifter; we handle it here before teleporting the user as to not lose their 'pulling' var
+	var/atom/movable/pulled = handle_teleport_grab(destination, user_cultist)
 
-	if(destination)
-		uses--
-		if(uses <= 0)
-			icon_state ="shifter_drained"
-		playsound(mobloc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
+	if(!destination || !do_teleport(user_cultist, destination, channel = TELEPORT_CHANNEL_CULT))
+		playsound(src, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+		balloon_alert(user, "teleport failed!")
+		return
 
-		var/atom/movable/pulled = handle_teleport_grab(destination, C)
-		if(do_teleport(C, destination, channel = TELEPORT_CHANNEL_CULT))
-			if(pulled)
-				C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
-			new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
-			playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			playsound(destination, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	uses--
+	if(uses <= 0)
+		icon_state = "shifter_drained"
 
-	else
-		to_chat(C, span_warning("The veil cannot be torn here!"))
+	if(pulled)
+		user_cultist.start_pulling(pulled) //forcemove (teleporting) resets pulls, so we need to re-pull
+
+	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
+	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
+
+	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
@@ -624,49 +1011,49 @@ Striking a noncultist, however, will tear their flesh."}
 	on = TRUE
 	var/charges = 5
 
-/obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
-	if(!proximity)
-		return
-	if(!IS_CULTIST(user))
-		to_chat(user, "That doesn't seem to do anything useful.")
-		return
+/obj/item/flashlight/flare/culttorch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/antagonist/cult/cult = user.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/team/cult/cult_team = cult?.get_team()
+	if(isnull(cult_team))
+		to_chat(user, span_warning("That doesn't seem to do anything useful."))
+		return ITEM_INTERACT_BLOCKING
 
-	if(!isitem(A))
-		..()
-		to_chat(user, span_warning("\The [src] can only transport items!"))
-		return
+	if(!isitem(interacting_with))
+		to_chat(user, span_warning("[src] can only transport items!"))
+		return ITEM_INTERACT_BLOCKING
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+	var/list/mob/living/cultists = list()
+	for(var/datum/mind/cult_mind as anything in cult_team.members)
+		if(cult_mind == user.mind)
+			continue
+		if(cult_mind.current?.stat != DEAD)
+			cultists |= cult_mind.current
 
-	var/list/cultists = list()
-	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
-		if(M.current && M.current.stat != DEAD)
-			cultists |= M.current
 	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
-		return
+	if(QDELETED(src) || loc != user || user.incapacitated())
+		return ITEM_INTERACT_BLOCKING
 	if(isnull(cultist_to_receive))
-		to_chat(user, "<span class='cult italic'>You require a destination!</span>")
-		log_game("[key_name(user)]'s Void torch failed - no target.")
-		return
+		to_chat(user, span_cult_italic("You require a destination!"))
+		return ITEM_INTERACT_BLOCKING
 	if(cultist_to_receive.stat == DEAD)
-		to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-		log_game("[key_name(user)]'s Void torch failed - target died.")
-		return
-	if(!IS_CULTIST(cultist_to_receive))
-		to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
-		log_game("[key_name(user)]'s Void torch failed - target was deconverted.")
-		return
-	if(A in user.get_all_contents())
-		to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
-		return
-	to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
-	user.log_message("teleported [A] to [cultist_to_receive] with \the [src].", LOG_GAME)
-	cultist_to_receive.put_in_hands(A)
+		to_chat(user, span_cult_italic("[cultist_to_receive] has died!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!(cultist_to_receive.mind in cult_team.members))
+		to_chat(user, span_cult_italic("[cultist_to_receive] is not a follower of the Geometer!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!isturf(interacting_with.loc))
+		to_chat(user, span_cult_italic("[interacting_with] must be on a surface in order to teleport it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_cult_italic("You ignite [interacting_with] with [src], turning it to ash, \
+		but through the torch's flames you see that [interacting_with] has reached [cultist_to_receive]!"))
+	user.log_message("teleported [interacting_with] to [cultist_to_receive] with [src].", LOG_GAME)
+	cultist_to_receive.put_in_hands(interacting_with)
 	charges--
-	to_chat(user, "\The [src] now has [charges] charge\s.")
-	if(charges == 0)
+	to_chat(user, span_notice("[src] now has [charges] charge\s."))
+	if(charges <= 0)
 		qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"
@@ -859,31 +1246,33 @@ Striking a noncultist, however, will tear their flesh."}
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
-/obj/item/blood_beam/afterattack(atom/A, mob/living/user, proximity_flag, clickparams)
-	. = ..()
+/obj/item/blood_beam/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/blood_beam/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(firing || charging)
-		return
-	if(ishuman(user))
-		angle = get_angle(user, A)
-	else
-		qdel(src)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+	if(!ishuman(user))
+		return ITEM_INTERACT_BLOCKING
+	angle = get_angle(user, interacting_with)
 	charging = TRUE
 	INVOKE_ASYNC(src, PROC_REF(charge), user)
 	if(do_after(user, 9 SECONDS, target = user))
 		firing = TRUE
 		ADD_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
-		INVOKE_ASYNC(src, PROC_REF(pewpew), user, clickparams)
+		var/params = list2params(modifiers)
+		INVOKE_ASYNC(src, PROC_REF(pewpew), user, params)
 		var/obj/structure/emergency_shield/cult/weak/N = new(user.loc)
 		if(do_after(user, 9 SECONDS, target = user))
 			user.Paralyze(40)
-			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
+			to_chat(user, span_cult_italic("You have exhausted the power of this spell!"))
 		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
 		firing = FALSE
 		if(N)
 			qdel(N)
 		qdel(src)
 	charging = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/blood_beam/proc/charge(mob/user)
 	var/obj/O
@@ -954,7 +1343,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/shield/mirror
 	name = "mirror shield"
-	desc = "An infamous shield used by Nar'Sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
+	desc = "An infamous shield used by Nar'Sian sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
 	icon_state = "mirror_shield" // eshield1 for expanded
 	inhand_icon_state = "mirror_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -983,7 +1372,8 @@ Striking a noncultist, however, will tear their flesh."}
 					owner.Paralyze(25)
 					qdel(src)
 					return FALSE
-			if(P.reflectable & REFLECT_NORMAL)
+			var/obj/projectile/projectile = hitby
+			if(projectile.reflectable)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)
@@ -991,23 +1381,23 @@ Striking a noncultist, however, will tear their flesh."}
 				illusions--
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
 				if(prob(60))
-					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
-					M.faction = list(FACTION_CULT)
-					M.Copy_Parent(owner, 70, 10, 5)
-					M.move_to_delay = owner.cached_multiplicative_slowdown
+					var/mob/living/simple_animal/hostile/illusion/clone = new(get_turf(owner))
+					clone.faction = list(FACTION_CULT)
+					clone.copy_parent(owner, 70, 10, 5)
+					clone.move_to_delay = owner.cached_multiplicative_slowdown
 				else
-					var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
-					E.Copy_Parent(owner, 70, 10)
-					E.GiveTarget(owner)
-					E.Goto(owner, owner.cached_multiplicative_slowdown, E.minimum_distance)
+					var/mob/living/simple_animal/hostile/illusion/escape/clone = new(get_turf(owner))
+					clone.copy_parent(owner, 70, 10)
+					clone.GiveTarget(owner)
+					clone.Goto(owner, owner.cached_multiplicative_slowdown, clone.minimum_distance)
 			return TRUE
 	else
 		if(prob(50))
-			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
-			H.Copy_Parent(owner, 100, 20, 5)
-			H.faction = list(FACTION_CULT)
-			H.GiveTarget(owner)
-			H.move_to_delay = owner.cached_multiplicative_slowdown
+			var/mob/living/simple_animal/hostile/illusion/clone = new(owner.loc)
+			clone.copy_parent(owner, 100, 20, 5)
+			clone.faction = list(FACTION_CULT)
+			clone.GiveTarget(owner)
+			clone.move_to_delay = owner.cached_multiplicative_slowdown
 			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))
 		return FALSE
 
@@ -1015,7 +1405,7 @@ Striking a noncultist, however, will tear their flesh."}
 	illusions++
 	if(illusions == initial(illusions) && isliving(loc))
 		var/mob/living/holder = loc
-		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
+		to_chat(holder, span_cult_italic("The shield's illusions are back at full strength!"))
 
 /obj/item/shield/mirror/IsReflect()
 	if(prob(block_chance))

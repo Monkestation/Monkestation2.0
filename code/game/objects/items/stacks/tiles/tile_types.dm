@@ -26,8 +26,6 @@
 	var/list/tile_reskin_types
 	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
 	var/list/tile_rotate_dirs
-	/// Allows us to replace the plating we are attacking if our baseturfs are the same.
-	var/replace_plating = FALSE
 
 /obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
@@ -48,21 +46,21 @@
 	if(tile_reskin_types || tile_rotate_dirs)
 		. += span_notice("Use while in your hand to change what type of [src] you want.")
 	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
-		var/verb
+		var/damage_value
 		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
 			if(1 to 3)
-				verb = "superb"
+				damage_value = "superb"
 			if(4 to 6)
-				verb = "great"
+				damage_value = "great"
 			if(7 to 9)
-				verb = "good"
+				damage_value = "good"
 			if(10 to 12)
-				verb = "fairly decent"
+				damage_value = "fairly decent"
 			if(13 to 15)
-				verb = "mediocre"
-		if(!verb)
+				damage_value = "mediocre"
+		if(!damage_value)
 			return
-		. += span_notice("Those could work as a [verb] throwing weapon.")
+		. += span_notice("Those could work as a [damage_value] throwing weapon.")
 
 /**
  * Place our tile on a plating, or replace it.
@@ -78,32 +76,16 @@
 	if(!istype(target_plating))
 		return
 
-	if(!replace_plating)
-		if(!use(1))
-			return
-		target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
-		target_plating.setDir(turf_dir)
-		playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
-		return target_plating // Most executions should end here.
-
-	// If we and the target tile share the same initial baseturf and they consent, replace em.
-	if(!target_plating.allow_replacement || initial(target_plating.baseturfs) != initial(placed_turf_path.baseturfs))
-		to_chat(user, span_notice("You cannot place this tile here directly!"))
-		return
-	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
-	if(!istype(target_plating))
-		return
 	if(!use(1))
 		return
 
-	target_plating = target_plating.ChangeTurf(placed_turf_path, target_plating.baseturfs, CHANGETURF_INHERIT_AIR)
+	target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
 	target_plating.setDir(turf_dir)
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 
-/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		target.attackby(src, user, click_parameters)
+/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, click_parameters)
+	target.attackby(src, user, click_parameters)
 
 //Grass
 /obj/item/stack/tile/grass
@@ -125,6 +107,13 @@
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fairygrass
+
+/obj/item/stack/tile/fairygrass/dark
+	name = "dark fairygrass tile"
+	singular_name = "dark fairygrass floor tile"
+	desc = "A patch of odd, light consuming grass."
+	turf_type = /turf/open/floor/grass/fairy/dark
+	color = "#410096"
 
 //Wood
 /obj/item/stack/tile/wood
@@ -987,6 +976,9 @@
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
 
+/obj/item/stack/tile/fakespace/sixty
+	amount = 60
+
 /obj/item/stack/tile/fakepit
 	name = "fake pits"
 	singular_name = "fake pit"
@@ -1035,23 +1027,23 @@
 	turf_type = /turf/open/floor/noslip/tram
 	merge_type = /obj/item/stack/tile/noslip/tram
 
-/obj/item/stack/tile/noslip/tram_platform
+/obj/item/stack/tile/tram
 	name = "tram platform tiles"
 	singular_name = "tram platform"
 	desc = "A tile used for tram platforms."
 	icon_state = "darkiron_catwalk"
 	inhand_icon_state = "tile-neon"
-	turf_type = /turf/open/floor/noslip/tram_platform
-	merge_type = /obj/item/stack/tile/noslip/tram_platform
+	turf_type = /turf/open/floor/tram
+	merge_type = /obj/item/stack/tile/tram
 
-/obj/item/stack/tile/noslip/tram_plate
-	name = "high-traction platform tile"
-	singular_name = "high-traction platform tile"
-	desc = "A high-traction tile used for tram platforms."
+/obj/item/stack/tile/tram/plate
+	name = "linear induction tram tiles"
+	singular_name = "linear induction tram tile tile"
+	desc = "A tile with an aluminium plate for tram propulsion."
 	icon_state = "darkiron_plate"
 	inhand_icon_state = "tile-neon"
-	turf_type = /turf/open/floor/noslip/tram_plate
-	merge_type = /obj/item/stack/tile/noslip/tram_plate
+	turf_type = /turf/open/floor/tram/plate
+	merge_type = /obj/item/stack/tile/tram/plate
 
 //Circuit
 /obj/item/stack/tile/circuit
@@ -1308,7 +1300,6 @@
 	inhand_icon_state = "tile-glass"
 	merge_type = /obj/item/stack/tile/glass
 	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	replace_plating = TRUE
 
 /obj/item/stack/tile/glass/sixty
 	amount = 60
@@ -1322,7 +1313,6 @@
 	turf_type = /turf/open/floor/glass/reinforced
 	merge_type = /obj/item/stack/tile/rglass
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	replace_plating = TRUE
 
 /obj/item/stack/tile/rglass/sixty
 	amount = 60

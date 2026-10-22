@@ -232,7 +232,7 @@
 /area/shuttle/abandoned/cargo)
 "aK" = (
 /obj/effect/turf_decal/bot_red,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/medical/medkit_rare,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/salad,
@@ -412,7 +412,7 @@
 /area/shuttle/abandoned/cargo)
 "bq" = (
 /obj/effect/turf_decal/bot_red,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
 "br" = (
@@ -444,7 +444,7 @@
 /area/shuttle/abandoned/cargo)
 "bv" = (
 /obj/effect/turf_decal/bot_red,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/seed_rare,
@@ -476,7 +476,7 @@
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/food_or_drink/snack,
 /obj/effect/spawner/random/food_or_drink/snack,
 /obj/effect/spawner/random/food_or_drink/snack,
@@ -646,7 +646,7 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/multitool{
 	pixel_x = 7;
 	pixel_y = 5
@@ -778,7 +778,7 @@
 /area/shuttle/abandoned/cargo)
 "cH" = (
 /obj/effect/turf_decal/bot_red,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/exotic/syndie,
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/dark/textured_large,
@@ -797,7 +797,7 @@
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/condiment,

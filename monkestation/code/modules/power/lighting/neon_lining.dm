@@ -35,17 +35,13 @@
 	. = ..()
 	icon_state = "item_[lining_color]"
 
-/obj/item/stack/neon_lining/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isfloorturf(target))
-		return
-
-	if(!user.Adjacent(target))
-		return
+/obj/item/stack/neon_lining/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isfloorturf(interacting_with))
+		return NONE
 
 	var/facing_dir = user.dir
 
-	var/obj/machinery/light/neon_lining/new_lining = new /obj/machinery/light/neon_lining(target)
+	var/obj/machinery/light/neon_lining/new_lining = new /obj/machinery/light/neon_lining(interacting_with)
 	switch(facing_dir)
 		if(NORTH)
 			new_lining.rotation = 2
@@ -55,11 +51,12 @@
 			new_lining.rotation = 3
 		else
 			new_lining.rotation = 1
-	to_chat(user, span_notice("You lay down some neon lining on the [target]."))
+	to_chat(user, span_notice("You lay down some neon lining on the [interacting_with]."))
 	new_lining.lining_color = lining_color
 	new_lining.update_appearance()
 	new_lining.rebuild_lining_string()
 	use(1)
+	return ITEM_INTERACT_SUCCESS
 
 ///the neon lighting object itself
 /obj/machinery/light/neon_lining
@@ -171,7 +168,7 @@
 		lining_shape = 1
 	update_appearance()
 	rebuild_lining_string()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -181,7 +178,7 @@
 		rotation = 0
 	update_appearance()
 	rebuild_lining_string()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -191,13 +188,13 @@
 		lining_pattern = 0
 	update_appearance()
 	rebuild_lining_string()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	new /obj/item/stack/neon_lining(get_turf(user))
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/break_light_tube(skip_sound_and_sparks = TRUE)
 	return

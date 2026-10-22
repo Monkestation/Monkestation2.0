@@ -35,7 +35,7 @@
 /datum/station_trait/unique_ai/on_round_start()
 	. = ..()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
-		ai.show_laws()
+		to_chat(ai, span_boldnotice("You have been loaded with a unique lawset."), MESSAGE_TYPE_INFO)
 
 /datum/station_trait/ian_adventure
 	name = "Ian's Adventure"
@@ -127,6 +127,55 @@
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
+
+/datum/station_trait/announcement_duke
+	name = "Announcement Duke"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	show_in_report = TRUE
+	report_message = "The Duke himself is your announcer today."
+	blacklist = list(
+		/datum/station_trait/announcement_medbot,
+		/datum/station_trait/birthday,
+		/datum/station_trait/announcement_intern,
+		/datum/station_trait/announcement_dagoth,
+	)
+
+/datum/station_trait/announcement_duke/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/duke
+
+/datum/station_trait/announcement_dagoth
+	name = "Announcement Dagoth Ur"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	show_in_report = TRUE
+	report_message = "I am bestowing upon you my presence, Nerevar."
+	blacklist = list(
+		/datum/station_trait/announcement_medbot,
+		/datum/station_trait/birthday,
+		/datum/station_trait/announcement_intern,
+		/datum/station_trait/announcement_duke,
+	)
+
+/datum/station_trait/announcement_dagoth/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/dagoth
+
+/* disabled (its not my birthday, this has a weight of 0 and yet somehow still rolls)
+/datum/station_trait/announcement_veth_birthday
+	name = "Announcement Veth's Birthday"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 0
+	show_in_report = TRUE
+	report_message = "It's my birthday hehe"
+	blacklist = list(/datum/station_trait/announcement_medbot, /datum/station_trait/birthday, /datum/station_trait/announcement_duke, /datum/station_trait/announcement_dagoth, /datum/station_trait/announcement_intern)
+
+/datum/station_trait/announcement_veth_birthday/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/vethday
+*/
+
 
 /datum/station_trait/colored_assistants
 	name = "Colored Assistants"
@@ -223,7 +272,7 @@
 	. = ..()
 	if(birthday_override_ckey)
 		if(!check_valid_override())
-			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")
+			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has been selected instead.")
 
 	if(!birthday_person)
 		var/list/birthday_options = list()
@@ -297,7 +346,7 @@
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s birthday today."
 	icon_state = "paperslip_words"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 
 /obj/item/clothing/head/costume/party
 	name = "party hat"
@@ -326,37 +375,42 @@
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
 
-/datum/station_trait/scarves
-	name = "Scarves"
-	trait_type = STATION_TRAIT_POSITIVE
+/datum/station_trait/scryers
+	name = "Scryers"
+	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = TRUE
-	var/list/scarves
+	report_message = "Nanotrasen has chosen your station for an experiment - everyone has free scryers! Use these to talk to other people easily and privately."
 
-/datum/station_trait/scarves/New()
+/datum/station_trait/scryers/New()
 	. = ..()
-	report_message = pick(
-		"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.",
-		"After Space Fashion Week, scarves are the hot new accessory.",
-		"Everyone was simultaneously a little bit cold when they packed to go to the station.",
-		"The station is definitely not under attack by neck grappling aliens masquerading as wool. Definitely not.",
-		"You all get free scarves. Don't ask why.",
-		"A shipment of scarves was delivered to the station.",
-	)
-	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
-		/obj/item/clothing/neck/large_scarf/red,
-		/obj/item/clothing/neck/large_scarf/green,
-		/obj/item/clothing/neck/large_scarf/blue,
-	)
-
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-
-/datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+/datum/station_trait/scryers/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
-	var/scarf_type = pick(scarves)
+	if(!ishuman(spawned))
+		return
+	var/mob/living/carbon/human/humanspawned = spawned
+	// Put their silly little scarf or necktie somewhere else
+	var/obj/item/silly_little_scarf = humanspawned.wear_neck
+	if(silly_little_scarf)
+		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
+		silly_little_scarf.forceMove(humanspawned.drop_location())
+		var/static/list/slots = list(
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		)
+		humanspawned.equip_in_one_of_slots(silly_little_scarf, slots, qdel_on_fail = FALSE)
 
-	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK, initial = FALSE)
+	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
+	new_scryer.label = player_client?.prefs?.read_preference(/datum/preference/text/default_scryer_label) || spawned.real_name
+	new_scryer.update_name()
+	var/ringtone = player_client.prefs.read_preference(/datum/preference/choiced/call_ringtone)
+	if(ringtone)
+		new_scryer.set_ringtone(ringtone)
+
+	spawned.equip_to_slot_or_del(new_scryer, ITEM_SLOT_NECK, initial = FALSE)
 
 /datum/station_trait/wallets
 	name = "Wallets!"
@@ -436,7 +490,7 @@
 	name = "AI Triumvirate"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
-	weight = 1
+	weight = 2 // Since were gibbing overflow
 	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
 
 /datum/station_trait/triple_ai/New()
@@ -452,6 +506,4 @@
 
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
-	if(!pure)
-		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-			secondary_ai_spawn.latejoin_active = TRUE
+		ai_datum.total_positions = 3

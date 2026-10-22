@@ -17,7 +17,7 @@
 	do_disease_transformation(mob, new_form)
 
 /*
-/datum/symptom/transformation/deactivate(mob/living/carbon/mob)
+/datum/symptom/transformation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	do_disease_transformation(mob, old_form)
 	to_chat(mob, span_notice("You feel like yourself again!"))
 */
@@ -32,7 +32,7 @@
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
 		if(iscarbon(affected_mob))
-			for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+			for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 				affected_mob.dropItemToGround(W)
 			for(var/obj/item/I in affected_mob.held_items)
 				affected_mob.dropItemToGround(I)
@@ -44,13 +44,12 @@
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else
-				new_mob.key = affected_mob.key
+				new_mob.PossessByPlayer(affected_mob.key)
 		if(transformed_antag_datum && !QDELETED(new_mob.mind))
 			var/datum/antagonist/given_antag = new_mob.mind.has_antag_datum(transformed_antag_datum) || new_mob.mind.add_antag_datum(transformed_antag_datum)
 			given_antag?.antag_flags |= FLAG_ANTAG_CAP_IGNORE // ensure they don't count against storyteller cap
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
-		new_mob.update_name_tag()
 		qdel(affected_mob)
 
 /datum/symptom/transformation/proc/replace_banned_player(mob/living/new_mob, mob/living/affected_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
@@ -63,12 +62,11 @@
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
-			new_mob.key = null
 		return
 	to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 	affected_mob.ghostize(FALSE)
-	affected_mob.key = chosen_one.key
+	affected_mob.PossessByPlayer(chosen_one.key)
 
 
 /datum/symptom/transformation/robot
@@ -76,6 +74,13 @@
 	new_form = /mob/living/silicon/robot
 	bantype = JOB_CYBORG
 	desc = "Restructures the subject cells into a Cyborg. Cure: Synthetic Cleaner"
+
+/datum/symptom/transformation/jungle_fever
+	name = "Jungle Fever"
+	desc = "Restructures the subject cells into a Monkey. Cure: Pulped Banana"
+
+/datum/symptom/transformation/jungle_fever/activate(mob/living/carbon/mob)
+	mob.monkeyize() // so that they keep the virus
 
 /datum/symptom/transformation/xeno
 	name = "Xenomorph Transformation"
@@ -194,4 +199,5 @@
 			if(prob(12))
 				to_chat(mob, span_danger("You try to scream, but nothing comes out!"))
 				mob.set_silence_if_lower(5 SECONDS)
+				mob.set_emote_mute_if_lower(5 SECONDS)
 	multiplier_tweak(0.1)

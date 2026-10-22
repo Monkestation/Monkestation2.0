@@ -11,4 +11,6 @@
 	anomaly_path = /obj/effect/anomaly/walterverse
 
 /datum/round_event/anomaly/anomaly_walterverse/announce(fake)
+	if(isnull(impact_area))
+		impact_area = placer.findValidArea()
 	priority_announce("The Walterverse has been opened. Expected location: [impact_area.name].", "Anomaly Alert", SSstation.announcer.get_rand_alert_sound())

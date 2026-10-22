@@ -26,12 +26,14 @@
 	mail_goodies = list(
 		/obj/item/food/grown/banana = 100,
 		/obj/item/food/pie/cream = 50,
+		/obj/item/clothing/head/nanner_crown = 30,
 		/obj/item/clothing/shoes/clown_shoes/combat = 10,
+		/obj/item/grenade/c4/explosivecharge = 10, // trust me bro
 		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
 		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
 	)
 
-	family_heirlooms = list(/obj/item/bikehorn/golden)
+	family_heirlooms = list(/obj/item/bikehorn/golden, /obj/item/clothing/head/nanner_crown)
 	rpg_title = "Jester"
 	job_flags = STATION_JOB_FLAGS
 
@@ -83,6 +85,7 @@
 	box = /obj/item/storage/box/survival/hug
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
+	skillchips = list(/obj/item/skillchip/job/clown)
 
 /datum/outfit/job/clown/mod
 	name = "Clown (MODsuit)"
@@ -107,9 +110,7 @@
 		return
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
-	H.dna.add_mutation(/datum/mutation/human/clumsy)
-	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
-		M.mutadone_proof = TRUE
+	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.show_to(H)
 	H.faction |= FACTION_CLOWN

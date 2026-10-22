@@ -2,7 +2,7 @@
  * A datum for sounds that need to loop, with a high amount of configurability.
  */
 /datum/looping_sound
-	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
+	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end. In a list, path must have also be assigned a value or it will be assigned 0 and not play.
 	var/mid_sounds
 	/// The length of time to wait between playing mid_sounds.
 	var/mid_length
@@ -10,6 +10,8 @@
 	var/mid_length_vary = 0
 	/// If we should always play each sound once per loop of all sounds. Weights here only really effect order, and could be disgarded
 	var/each_once = FALSE
+	/// Whether if the sounds should be played in order or not. Defaults to FALSE.
+	var/in_order = FALSE
 	/// Override for volume of start sound.
 	var/start_volume
 	/// (soundfile) Played before starting the mid_sounds loop.
@@ -40,7 +42,6 @@
 	var/use_reverb = TRUE
 	/// Are we ignoring walls? Defaults to TRUE.
 	var/ignore_walls = TRUE
-	var/channel //monkestation edit
 
 	// State stuff
 	/// The source of the sound, or the recipient of the sound.
@@ -51,14 +52,24 @@
 	var/loop_started = FALSE
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
+	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
+	var/audio_index = 1
 
 	// Args
 	/// Do we skip the starting sounds?
 	var/skip_starting_sounds = FALSE
 	/// If true, plays directly to provided atoms instead of from them.
 	var/direct
+	/// Sound channel to play on, random if not provided
+	var/sound_channel
 
-/datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE, _channel = 0) //monkestation edit
+/datum/looping_sound/New(
+	_parent,
+	start_immediately = FALSE,
+	_direct = FALSE,
+	_skip_starting_sounds = FALSE,
+	sound_channel,
+)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
@@ -66,7 +77,8 @@
 	set_parent(_parent)
 	direct = _direct
 	skip_starting_sounds = _skip_starting_sounds
-	channel = _channel
+	if(sound_channel)
+		src.sound_channel = sound_channel
 
 	if(start_immediately)
 		start()
@@ -95,6 +107,7 @@
  * * null_parent - Whether or not we should set the parent to null (useful when destroying the `looping_sound` itself). Defaults to FALSE.
  */
 /datum/looping_sound/proc/stop(null_parent = FALSE)
+	stop_current()
 	if(null_parent)
 		set_parent(null)
 	if(!timer_id)
@@ -144,26 +157,14 @@
  */
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/sound_to_play = sound(soundfile)
-	// monkestation edit: volume mixer
-	var/actual_channel = channel || SSsounds.random_available_channel()
+
 	if(direct)
 		var/mob/mob_parent = parent
-		if(!istype(mob_parent)) // no point in playing directly to something that can't even hear sound anyways
+		if(!mob_parent?.client)
 			return
-		mob_parent.playsound_local(
-			get_turf(parent),
-			sound_to_play,
-			volume_override || volume,
-			vary,
-			extra_range,
-			falloff_exponent = falloff_exponent,
-			pressure_affected = pressure_affected,
-			falloff_distance = falloff_distance,
-			use_reverb = use_reverb,
-			channel = actual_channel,
-			mixer_channel = actual_channel
-		)
-	// monkestation end
+		sound_to_play.channel = sound_channel || guess_mixer_channel(soundfile) || SSsounds.random_available_channel()
+		sound_to_play.volume = volume_override || calculate_mixed_volume(mob_parent.client, sound_to_play.volume, sound_to_play.channel)
+		SEND_SOUND(mob_parent, sound_to_play)
 	else
 		playsound(
 			parent,
@@ -172,14 +173,12 @@
 			vary,
 			extra_range,
 			falloff_exponent = falloff_exponent,
+			channel = sound_channel || sound_to_play.channel,
 			pressure_affected = pressure_affected,
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
 			use_reverb = use_reverb,
-			// monkestation start: volume mixer
-			channel = actual_channel,
-			mixer_channel = actual_channel,
-			// monkestation end
+			mixer_channel = sound_to_play.channel,
 		)
 
 /// Returns the sound we should now be playing.
@@ -188,9 +187,15 @@
 	if(!each_once)
 		. = play_from
 		while(!isfile(.) && !isnull(.))
-			. = pick_weight(fill_with_ones(.))
+			. = pick_weight_recursive(.)
 		return .
 
+	if(in_order)
+		. = play_from
+		audio_index++
+		if(audio_index > length(play_from))
+			audio_index = 1
+		return .[audio_index]
 
 	if(!length(cut_list))
 		cut_list = shuffle(play_from.Copy())
@@ -200,7 +205,7 @@
 		// Tree is a list of lists containign files
 		// If an entry in the tree goes to 0 length, we cut it from the list
 		tree += list(.)
-		. = pick_weight(fill_with_ones(.))
+		. = pick_weight_recursive(.)
 
 	if(!isfile(.))
 		return
@@ -217,20 +222,34 @@
 		tree[i - 1] -= list(branch) // Remove the empty list
 	return .
 
+/// Returns the start sound.
+/datum/looping_sound/proc/get_start_sound()
+	return islist(start_sound) ? pick_weight_recursive(start_sound) : start_sound
 
+/// Returns the end sound.
+/datum/looping_sound/proc/get_end_sound()
+	return islist(end_sound) ? pick_weight_recursive(end_sound) : end_sound
 
 /// A proc that's there to handle delaying the main sounds if there's a start_sound, and simply starting the sound loop in general.
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
+	var/start_sound = get_start_sound()
 	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
 	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
 
+/// Stops sound playing on current channel, if specified
+/datum/looping_sound/proc/stop_current()
+	if(!sound_channel || !ismob(parent))
+		return
+	var/mob/mob_parent = parent
+	mob_parent.stop_sound_channel(sound_channel)
+
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
 	if(loop_started) //monkestation edit - Allow null end_sound to stop sound
-		play(end_sound, end_volume)
+		play(get_end_sound(), end_volume)
 
 /// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)

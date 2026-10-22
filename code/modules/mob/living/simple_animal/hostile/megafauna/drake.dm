@@ -46,7 +46,7 @@
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armour_penetration = 60
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
@@ -69,6 +69,7 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
+	hardmode_reward = /obj/item/gem/dragon
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -100,7 +101,38 @@
 	QDEL_NULL(lava_swoop)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/simple_animal/hostile/megafauna/dragon/activate_hardmode()
+	. = ..()
+	meteors.boosted = TRUE
+	mass_fire.boosted = TRUE
+	lava_swoop.boosted = TRUE
+
+/mob/living/simple_animal/hostile/megafauna/dragon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!hardmode || QDELETED(src) || stat == DEAD || is_mining_level(new_turf.z))
+		return
+
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	if(!mining_levels.len)
+		return
+	INVOKE_ASYNC(src, PROC_REF(run_away), pick(mining_levels))
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/run_away(target_z = 1)
+	var/turf/target_turf
+	for(var/i in 1 to 100)
+		target_turf = locate(rand(1,255), rand(1,255), target_z)
+		if(istype(target_turf, /turf/open/misc/asteroid))
+			break
+
+	visible_message(span_boldwarning("[src] flies away!"))
+	animate(src, alpha = 0, pixel_y = 96, time = 1 SECONDS)
+	sleep(1 SECONDS)
+	forceMove(target_turf)
+	animate(src, alpha = 255, pixel_y = initial(pixel_y), time = 1 SECONDS)
+	visible_message(span_boldwarning("[src] flies from up above!"))
+	adjustHealth(-2500)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return
@@ -133,6 +165,9 @@
 	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
 		mass_fire.Trigger(target = target)
 		return
+	else if(hardmode && prob(20))
+		arena_escape_enrage(FALSE)
+		return
 	if(fire_cone.Trigger(target = target) && prob(50))
 		meteors.StartCooldown(0)
 		meteors.Trigger(target = target)
@@ -157,12 +192,15 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(arena_escape_enrage))
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage(should_heal = TRUE) // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0, src)
-	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
-	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
+	if(should_heal)
+		visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
+		adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
+	set_varspeed(move_to_delay) // MONKESTATION EDIT ADDITION
+	handle_automated_action() // MONKESTATION EDIT ADDITION (This makes sure the ashdrake updates its movement speed)
 	set_light_range(10)
 	SLEEP_CHECK_DEATH(5 SECONDS, src) // run.
 	mass_fire.Activate(target)
@@ -177,7 +215,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	anger_modifier = clamp(((maxHealth - health)/60),0,20)
+	if(!hardmode)
+		anger_modifier = clamp(((maxHealth - health) / 60), 0, 20)
+	else
+		anger_modifier = clamp(((maxHealth - health) / 60), 15, 20)
 	lava_swoop.enraged = DRAKE_ENRAGED
 	if(!forced && (swooping & SWOOP_INVULNERABLE))
 		return FALSE
@@ -188,7 +229,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget(atom/attacked_target)
 	if(!swooping)
 		return ..()
 
@@ -245,7 +286,7 @@
 	desc = "An ash drakes true flame."
 	name = "Fire Barrier"
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "1"
+	icon_state = "light"
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
@@ -296,8 +337,9 @@
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
 	playsound(T, SFX_EXPLOSION, 80, TRUE)
-	new /obj/effect/hotspot(T)
+	var/obj/effect/hotspot/hotspot = new(T)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
+	QDEL_IN(hotspot, 1 SECONDS)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
@@ -322,6 +364,7 @@
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	attack_action_types = list()
+	hardmode_reward = null
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize(mapload)
 	. = ..()

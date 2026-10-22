@@ -15,12 +15,17 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1 | PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	slot_flags = ITEM_SLOT_BELT
+	action_slots = ALL
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
+	/// Sound played when the grenade is armed
+	var/grenade_arm_sound = 'sound/weapons/armbomb.ogg'
+	/// If the sound of the grenade should be varied
+	var/grenade_sound_vary = TRUE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS
 	///Will this state what it's det_time is when examined?
@@ -50,6 +55,7 @@
 /obj/item/grenade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT, type)
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(on_used_as_ingredient))
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
@@ -149,7 +155,7 @@
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
+	playsound(src, grenade_arm_sound, volume, grenade_sound_vary)
 	if(istype(user))
 		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE
@@ -168,6 +174,13 @@
 		active = FALSE
 		update_appearance()
 		return FALSE
+
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			active = FALSE
+			update_appearance()
+			return FALSE
 
 	dud_flags |= GRENADE_USED // Don't detonate if we have already detonated.
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
@@ -262,8 +275,8 @@
 			qdel(src)
 		return TRUE //It hit the grenade, not them
 
-/obj/item/grenade/afterattack(atom/target, mob/user)
-	. = ..()
+/obj/item/grenade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(active)
-		user.throw_item(target)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		user.throw_item(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE

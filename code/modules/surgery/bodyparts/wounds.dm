@@ -74,7 +74,7 @@
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
-	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100))
+	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
 		var/datum/wound/loss/dismembering = new
 		dismembering.apply_dismember(src, woundtype, outright = TRUE, attack_direction = attack_direction)
 		return
@@ -122,10 +122,13 @@
 						possible_wounds -= other_path
 						continue
 
-	while (length(possible_wounds))
+	while (TRUE)
 		var/datum/wound/possible_wound = pick_weight(possible_wounds)
-		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
+		if (isnull(possible_wound))
+			break
+
 		possible_wounds -= possible_wound
+		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
 
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)
@@ -304,7 +307,7 @@
  * Arguments:
  * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
  */
-/obj/item/bodypart/proc/update_wounds(replaced = FALSE)
+/obj/item/bodypart/proc/update_wounds(replaced = FALSE, force_remove = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
@@ -312,10 +315,6 @@
 	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
 	for(var/datum/wound/iter_wound as anything in wounds)
 		dam_mul *= iter_wound.damage_multiplier_penalty
-
-	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
-		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("The [current_gauze.name] on your [parse_zone(body_zone)] falls away."))
-		QDEL_NULL(current_gauze)
 
 	wound_damage_multiplier = dam_mul
 	refresh_bleed_rate()

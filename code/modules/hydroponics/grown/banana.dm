@@ -11,9 +11,10 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
-	possible_mutations = list(/datum/hydroponics/plant_mutation/bluespace_banana, /datum/hydroponics/plant_mutation/mime_banana)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/mime_banana)
 	reagents_add = list(/datum/reagent/consumable/banana = 0.1, /datum/reagent/potassium = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	graft_gene = /datum/plant_gene/trait/slip
+	infusion_mutations = list(/datum/hydroponics/plant_mutation/infusion/bluespace_banana)
 
 /obj/item/food/grown/banana
 	seed = /obj/item/seeds/banana
@@ -38,7 +39,7 @@
 		desc += " The curve on this one looks particularly acute."
 
 ///Clowns will always like bananas.
-/obj/item/food/grown/banana/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+/obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
 	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
@@ -189,3 +190,18 @@
 	var/obj/effect/decal/cleanable/food/plant_smudge/banana_smudge = new(loc)
 	banana_smudge.color = "#ffe02f"
 	qdel(src)
+
+/obj/item/food/grown/banana/bunch/monkeybomb
+	desc = "Am exquisite bunch of bananas. Their otherwordly plumpness seems to be hiding something."
+
+/obj/item/food/grown/banana/bunch/monkeybomb/examine(mob/user)
+	. = ..()
+	if(!is_simian(user))
+		. += span_notice("There's a banana label on one of the 'nanas you can't quite make out the details of.")
+		return
+	. += span_notice("The banana label on this bunch indicates that monkeys can use this as a sonic grenade with a 3 second timer!")
+
+/obj/item/food/grown/banana/bunch/monkeybomb/attack_self(mob/user, modifiers)
+	if(!is_simian(user))
+		return to_chat(user, span_notice("You don't really know what to do with this."))
+	else start_ripening()

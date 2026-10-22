@@ -197,7 +197,7 @@
 /datum/design/beaker/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
-	
+
 /datum/design/large_beaker/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
@@ -213,6 +213,10 @@
 	build_type |= COLONY_FABRICATOR
 
 /datum/design/super_cell/New()
+	. = ..()
+	build_type |= COLONY_FABRICATOR
+
+/datum/design/super_battery/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 
@@ -349,10 +353,6 @@
 	build_type |= COLONY_FABRICATOR
 
 /datum/design/airlock_painter/decal/New()
-	. = ..()
-	build_type |= COLONY_FABRICATOR
-
-/datum/design/airlock_painter/decal/tile/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 

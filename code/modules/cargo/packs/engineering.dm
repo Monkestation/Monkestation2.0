@@ -2,6 +2,13 @@
 	group = "Engineering"
 	crate_type = /obj/structure/closet/crate/engineering
 
+/datum/supply_pack/engineering/breachcart
+	name = "Stocked Engineering Cart"
+	desc = "A fully stocked engineering cart full of everything you need to repair the station on the go. Engineering access needed to unlock."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/structure/closet/crate/trashcart/engineering/filled)
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"
 	desc = "Hull breaches again? Say no more with the Nanotrasen Anti-Breach Shield Projector! \
@@ -60,7 +67,7 @@
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. \
 		Contains three insulated gloves."
-	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
+	cost = CARGO_CRATE_VALUE * 5 //Made of pure-grade bullshittinium
 	contains = list(/obj/item/clothing/gloves/color/yellow = 3)
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
@@ -70,7 +77,7 @@
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard \
 		cell-based equipment anytime, anywhere. Contains two Inducers."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0} = 2) //FALSE doesn't work in modified type paths apparently.
+	contains = list(/obj/item/inducer/orderable = 2)
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -87,7 +94,7 @@
 	name = "Power Cell Crate"
 	desc = "Looking for power overwhelming? Look no further. Contains three high-voltage power cells."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/stock_parts/cell/high = 3)
+	contains = list(/obj/item/stock_parts/power_store/cell/high = 3)
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -193,6 +200,8 @@
 	contains = list(/obj/machinery/satellite/meteor_shield = 3)
 	crate_name= "shield sat crate"
 
+/datum/supply_pack/engineering/shield_sat/available()
+	return ..() && !SSmapping.is_planetary()
 
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
@@ -203,6 +212,8 @@
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/shield_sat_control/available()
+	return ..() && !SSmapping.is_planetary()
 
 /// Engine Construction
 

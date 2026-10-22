@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(tcomms_servers)
-
 /obj/item/radio/server
 
 /obj/item/radio/server/can_receive(frequency,levels)
@@ -23,14 +21,12 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	Compiler = new()
 	Compiler.Holder = src
 	server_radio = new()
-	GLOB.tcomms_servers += src
 	return ..()
 
 /obj/machinery/telecomms/server/Destroy()
 	QDEL_NULL(Compiler)
 	QDEL_NULL(server_radio)
 	memory = null
-	GLOB.tcomms_servers -= src
 	return ..()
 
 /obj/machinery/telecomms/server/proc/update_logs()
@@ -50,29 +46,38 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	log.name = "[input] ([md5(identifier)])"
 	log.input_type = input
 	log.parameters["message"] = content
+	log.parameters["language"] = /datum/language/common
 	log_entries.Add(log)
 	update_logs()
 
 /obj/machinery/telecomms/server/proc/compile(mob/user = usr) as /list
-	if(is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
+	///Maximum amount of characters that can be in a script
+	var/max_characters = 15000
+	///The character count of the code being compiled
+	var/code_length = length(rawcode)
+
+	if(is_banned_from(user.ckey, JOB_NETWORK_ADMIN) || is_banned_from(user.ckey, JOB_SIGNAL_TECHNICIAN))
 		to_chat(user, span_warning("You are banned from using NTSL."))
 		return "Unauthorized access."
-
 	if(QDELETED(Compiler))
 		return
-
-	if(!reject_bad_ntsl_text(rawcode, 20000, require_pretty = FALSE, allow_newline = TRUE, allow_code = TRUE))
+	//Check if it has any bad characters in it
+	if(!reject_bad_ntsl_text(rawcode, require_pretty = FALSE, allow_newline = TRUE, allow_code = TRUE))
 		rawcode = null
 		return "Please use galactic common characters only."
+	//Check if it is over the character limit which is 15000 due to TGUI having a hard time handling bigger scripts
+	if(code_length > max_characters)
+		rawcode = null
+		return "Over character limit: [code_length]/[max_characters]"
 	if(!COOLDOWN_FINISHED(src, compile_cooldown))
 		return "Servers are recharging, please wait."
 	var/list/compileerrors = Compiler.Compile(rawcode)
 	COOLDOWN_START(src, compile_cooldown, 2 SECONDS)
 	if(!length(compileerrors) && (compiledcode != rawcode))
-		user.log_message(rawcode, LOG_NTSL)
+		logger.Log(LOG_CATEGORY_NTSL, "Uploaded by [user]: [rawcode]")
 		compiledcode = rawcode
-	if(user.mind.assigned_role == JOB_SIGNAL_TECHNICIAN) //achivement description says only Signal Technician gets the achivement
-		var/freq = length(freq_listening[1]) ? freq_listening[1] : 1459
+	if(istype(user.mind?.assigned_role, /datum/job/signal_technician)) //achivement description says only Signal Technician gets the achivement
+		var/freq = length(freq_listening) ? freq_listening[1] : 1459
 		var/atom/movable/M = new()
 		var/atom/movable/virtualspeaker/speaker = new(null, M, server_radio)
 		speaker.name = "Poly"
@@ -84,12 +89,13 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 			signal.data["name"] = ""
 			signal.data["reject"] = FALSE
 			Compiler.Run(signal)
-			if(!signal.data["reject"] == FALSE)
+			if(signal.data["reject"] == FALSE)
 				user.client.give_award(/datum/award/achievement/jobs/Poly_silent, user)
 		else
 			for(var/sample in signal.data["spans"])
 				if(sample == SPAN_COMMAND)
 					user.client.give_award(/datum/award/achievement/jobs/Poly_loud, user)
 					break // Not having this break leaves us open to a potential DoS attack.
+		signal.data["reject"] = TRUE //Don't pass achievement signals.
 	return compileerrors
 //end-NTSL

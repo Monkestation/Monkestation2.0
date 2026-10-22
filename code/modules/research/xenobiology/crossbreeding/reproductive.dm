@@ -1,6 +1,6 @@
 /*
 Reproductive extracts:
-	When fed three monkey cubes, produces between
+	When fed three biomass cubes, produces between
 	1 and 4 normal slime extracts of the same colour.
 */
 
@@ -10,53 +10,58 @@ Reproductive extracts:
 	desc = "It pulses with a strange hunger."
 	icon_state = "reproductive"
 	effect = "reproductive"
-	effect_desc = "When fed monkey cubes it produces more extracts. Bio bag compatible as well."
+	effect_desc = "When fed biomass cubes it produces more extracts. Bio bag compatible as well."
 	var/extract_type = /obj/item/slime_extract/
 	var/cooldown = 3 SECONDS
 	var/feedAmount = 3
+	var/current_nutrition = 0
 	var/last_produce = 0
 
 /obj/item/slimecross/reproductive/examine()
 	. = ..()
-	. += span_danger("It appears to have eaten [length(contents)] Monkey Cube[p_s()]")
+	. += span_danger("It appears to have eaten [current_nutrition] Biomass Cube[p_s()]")
 
-/obj/item/slimecross/reproductive/Initialize(mapload)
-	. = ..()
-	create_storage(storage_type = /datum/storage/extract_inventory)
-
-/obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
-	var/datum/storage/extract_inventory/slime_storage = atom_storage
-	if(!istype(slime_storage))
-		return
+/obj/item/slimecross/reproductive/item_interaction(mob/living/user, obj/item/target_item, list/modifiers)
 
 	if((last_produce + cooldown) > world.time)
 		to_chat(user, span_warning("[src] is still digesting!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(length(contents) >= feedAmount) //if for some reason the contents are full, but it didnt digest, attempt to digest again
-		to_chat(user, span_warning("[src] appears to be full but is not digesting! Maybe poking it stimulated it to digest."))
-		slime_storage?.processCubes(user)
-		return
-
-	if(istype(O, /obj/item/storage/bag/xeno))
-		var/list/inserted = list()
-		O.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
-		if(inserted.len)
-			to_chat(user, span_notice("You feed [length(inserted)] Monkey Cube[p_s()] to [src], and it pulses gently."))
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-			slime_storage?.processCubes(user)
+	if(istype(target_item, /obj/item/storage/bag/xeno))
+		var/cubes_inserted = FALSE
+		for(var/obj/item/stack/biomass/target_cube in target_item.contents)
+			cubes_inserted = TRUE
+			if(insert_cubes(user, target_cube))
+				break
+		if(!cubes_inserted)
+			to_chat(user, span_warning("There are no biomass cubes in the bio bag!"))
+			return ITEM_INTERACT_BLOCKING
 		else
-			to_chat(user, span_warning("There are no monkey cubes in the bio bag!"))
-		return
+			target_item.atom_storage.refresh_views()
+			return ITEM_INTERACT_SUCCESS
 
-	else if(istype(O, /obj/item/food/monkeycube))
-		if(atom_storage?.attempt_insert(O, user, override = TRUE, force = TRUE))
-			to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
-			slime_storage?.processCubes(user)
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-			return
-		else
-			to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
+	else if(istype(target_item, /obj/item/stack/biomass))
+		insert_cubes(user, target_item)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/slimecross/reproductive/proc/insert_cubes(user, obj/item/stack/biomass/target_cube)
+	var/inserted_cubes = min(feedAmount - current_nutrition, target_cube.get_amount())
+	target_cube.use(inserted_cubes)
+	current_nutrition += inserted_cubes
+	to_chat(user, span_notice("You feed [inserted_cubes] Biomass Cube[p_s()] to [src], and it pulses gently."))
+	playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+	if(current_nutrition >= feedAmount)
+		var/cores = rand(1,4)
+		playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
+		last_produce = world.time
+		to_chat(user, span_notice("[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!"))
+		for(var/i in 1 to cores)
+			new extract_type(drop_location())
+		current_nutrition = 0
+		return TRUE
+	return FALSE
 
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey

@@ -74,22 +74,34 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key
-	if(prefs.unlock_content)
-		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[icon2html('icons/ui_icons/chat/member_content.dmi', world, "blag")][keyname]</font>"
+	var/key_prefix = ""
+	var/list/key_tags
+
+	// heart first lol
 	if(prefs.hearted)
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
-		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
+		LAZYADD(key_tags, "emoji-heart")
 
-	if(player_details.patreon.access_rank > 0)
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
-		keyname = "[sheet.icon_tag("patreon")][keyname]"
+	var/visible_byond_member = !!IsByondMember() && (prefs.toggles & MEMBER_PUBLIC)
+	if(visible_byond_member)
+		LAZYADD(key_tags, "byond_member")
 
-	if(player_details.twitch.access_rank > 0)
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
-		keyname = "[sheet.icon_tag("twitch")][keyname]"
+	if(persistent_client.patreon.access_rank > 0 && prefs.read_preference(/datum/preference/toggle/patreon_public))
+		LAZYADD(key_tags, "emoji-patreon")
 
-	SSdemo.write_chat_global(GLOB.OOC_COLOR ? span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>") : span_ooc(span_prefix("OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]")))
+	if(persistent_client.twitch.access_rank > 0 && prefs.read_preference(/datum/preference/toggle/twitch_public))
+		LAZYADD(key_tags, "emoji-twitch")
+
+	if(visible_byond_member) // add color last
+		keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[keyname]</font>"
+
+	if(LAZYLEN(key_tags))
+		var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
+		for(var/icon_name in key_tags)
+			key_prefix = "[sheet.icon_tag(icon_name)][key_prefix]"
+		key_prefix = "<span style='vertical-align: text-top; padding-right: 0.2em'>[key_prefix]</span>"
+
+	// pronouns
+	var/pronouns = prefs.read_preference(/datum/preference/text/ooc_pronouns)
 
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/receiver as anything in GLOB.clients)
@@ -102,22 +114,64 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/avoid_highlight = receiver == src
 		if(holder)
 			if(!holder.fakekey || receiver.holder)
+				var/list/key_chunks = list()
+
+				var/key_real = keyname
+				var/prefix = key_prefix
+				var/tooltip_real = length(pronouns) ? pronouns : null
+				key_chunks += tooltip_real ? conditional_tooltip_alt(key_real, tooltip_real, TRUE) : key_real
+
+				if(holder.fakekey)
+					var/key_fake = "(" + holder.fakekey + ")"
+					var/tooltip_fake = null
+
+					if(istext(holder.showpronouns))
+						tooltip_fake = holder.showpronouns
+					else if(holder.showpronouns && length(pronouns))
+						tooltip_fake = pronouns
+
+					key_chunks += tooltip_fake ? conditional_tooltip_alt(key_fake, tooltip_fake, TRUE) : key_fake
+					prefix = ""
+
+				var/keyfield = jointext(key_chunks, "/")
+
 				if(check_rights_for(src, R_ADMIN))
 					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
+					var/has_ooc_color = CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color
+					to_chat(receiver, span_adminooc("[has_ooc_color ? "<font color='[ooc_color]'>" : "" ][span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span>[has_ooc_color ? "</font>" : ""]"), avoid_highlighting = avoid_highlight)
 				else
-					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 			else
-				if(GLOB.OOC_COLOR)
-					to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
+				var/keyfield
+				var/keyfield_pre = holder.fakekey ? holder.fakekey : key
+				var/pronoun_text = null
+				var/prefix = key_prefix
+
+				if (holder.fakekey)
+					if (istext(holder.showpronouns))
+						pronoun_text = holder.showpronouns
+					else if (holder.showpronouns && length(pronouns))
+						pronoun_text = pronouns
+					prefix = ""
+				else if (length(pronouns))
+					pronoun_text = pronouns
+
+				if (pronoun_text)
+					keyfield = conditional_tooltip_alt(keyfield_pre, pronoun_text, TRUE)
 				else
-					to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+					keyfield = keyfield_pre
+
+				if(GLOB.OOC_COLOR)
+					to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
+				else
+					to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 
 		else if(!(key in receiver.prefs.ignoring))
+			var/keyfield = conditional_tooltip_alt(keyname, pronouns, length(pronouns))
 			if(GLOB.OOC_COLOR)
-				to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
+				to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[key_prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
 			else
-				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[key_prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -139,39 +193,34 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
 
-/client/proc/set_ooc()
+/client/proc/set_ooc() // MONKE EDIT Why were these kept?
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	var/newColor = tgui_color_picker(src, "Please select the new player OOC color.", "OOC color")
+
+ADMIN_VERB(set_ooc_color, R_FUN, FALSE, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
+	var/newColor = tgui_color_picker(user, "Please select the new player OOC color.", "OOC color")
 	if(isnull(newColor))
 		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
-		return
 	var/new_color = sanitize_color(newColor)
-	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
-	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
+	message_admins("[key_name_admin(user)] has set the players' ooc color to [new_color].")
+	log_admin("[key_name_admin(user)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
 
-
-/client/proc/reset_ooc()
+/client/proc/reset_ooc() // MONKE EDIT Why were these kept?
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	if(tgui_alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
+
+ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
+	if(tgui_alert(user, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
 		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Reset Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to reset player ooc color without authorization.")
-		return
-	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
-	log_admin("[key_name_admin(usr)] has reset player ooc color.")
+	message_admins("[key_name_admin(user)] has reset the players' ooc color.")
+	log_admin("[key_name_admin(user)] has reset player ooc color.")
 	GLOB.OOC_COLOR = null
 
 //Checks admin notice
@@ -196,7 +245,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		to_chat(src, span_notice("The Message of the Day has not been set."))
 
-	config.ShowLobbyNotices(src) // monkestation edit
+	config.show_lobby_notices(src) // monkestation edit
 
 /client/proc/self_notes()
 	set name = "View Admin Remarks"
@@ -358,6 +407,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set name = "Fit Viewport"
 	set category = "OOC"
 	set desc = "Fit the width of the map window to match the viewport"
+	set waitfor = FALSE
 
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
@@ -372,6 +422,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")
 
 	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
+
+	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
+	var/split_width = text2num(split_size[1])
+
+	// Window is minimized, we can't get proper data so return to avoid division by 0
+	if (!split_width)
+		return
 
 	// Gets the type of zoom we're currently using from our view datum
 	// If it's 0 we do our pixel calculations based off the size of the mapwindow
@@ -393,9 +450,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if (text2num(map_size[1]) == desired_width)
 		// Nothing to do
 		return
-
-	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
-	var/split_width = text2num(split_size[1])
 
 	// Avoid auto-resizing the statpanel and chat into nothing.
 	desired_width = min(desired_width, split_width - 300)
@@ -430,7 +484,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
 	if(fully_created)
-		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
+		fit_viewport()
 	else //Delayed to avoid wingets from Login calls.
 		addtimer(CALLBACK(src, VERB_REF(fit_viewport), 1 SECONDS))
 
@@ -442,7 +496,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)
-	var/list/policytext = list(header,"<hr>")
+	var/list/policytext = list(header)
 	var/anything = FALSE
 	for(var/keyword in keywords)
 		var/p = get_policy(keyword)
@@ -453,7 +507,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(!anything)
 		policytext += "No related rules found."
 
-	usr << browse(policytext.Join(""),"window=policy")
+	var/datum/browser/browser = new(usr, "policy", "Server Policy", 600, 500)
+	browser.set_content(policytext.Join(""))
+	browser.open()
 
 /client/verb/fix_stat_panel()
 	set name = "Fix Stat Panel"
@@ -469,3 +525,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
+
+/client/verb/map_vote_tally_count()
+	set name = "Show Map Vote Tallies"
+	set desc = "View the current map vote tally counts."
+	set category = "OOC"
+	to_chat(mob, SSmap_vote.tally_printout)

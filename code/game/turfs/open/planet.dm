@@ -13,6 +13,8 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
+	astar_weight = 60
 
 /turf/open/misc/dirt/station
 	name = "dirt flooring" //FOR THE LOVE OF GOD USE THIS INSTEAD OF DIRT FOR STATION MAPS
@@ -20,6 +22,7 @@
 	baseturfs = /turf/open/floor/plating
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+	astar_weight = /turf/open::astar_weight
 
 /turf/open/misc/dirt/jungle
 	slowdown = 0.5
@@ -33,6 +36,7 @@
 	baseturfs = /turf/open/floor/plating
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+	astar_weight = /turf/open::astar_weight
 
 /turf/open/misc/dirt/dark/station/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -72,8 +76,13 @@
 	desc = "Greener on the other side."
 	icon_state = "junglegrass"
 	base_icon_state = "junglegrass"
-	damaged_dmi = 'icons/turf/floors/junglegrass.dmi'
 	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
+
+/turf/open/misc/grass/broken_states()
+	return list("jungle_damaged")
+
+/turf/open/misc/grass/burnt_states()
+	return list("jungle_damaged")
 
 /turf/closed/mineral/random/jungle
 	baseturfs = /turf/open/misc/dirt/dark/jungle
@@ -92,3 +101,11 @@
 
 /turf/closed/mineral/random/jungle/space_safe
 	baseturfs = /turf/open/misc/dirt/dark/station/airless
+
+/turf/open/misc/dirt/filling
+	name = "filling dirt"
+	desc = "Compressed dirt, meant to fill very large holes. It's very annoying and slow to walk through"
+	slowdown = 1.5
+
+/turf/open/misc/dirt/filling/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	return FALSE

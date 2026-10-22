@@ -30,3 +30,23 @@
 #define ADD_CLOTHING_TRAIT(mob, trait) ADD_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 /// Wrapper for removing clothing based traits
 #define REMOVE_CLOTHING_TRAIT(mob, trait) REMOVE_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
+
+#define ARMOR_LEVEL_TINY 10
+#define ARMOR_LEVEL_WEAK 30
+#define ARMOR_LEVEL_MID 50
+#define ARMOR_LEVEL_INSANE 90
+
+#define WOUND_ARMOR_WEAK 10
+#define WOUND_ARMOR_STANDARD 20
+#define WOUND_ARMOR_HIGH 30
+
+// Modsuit defines
+//Default text for different messages for the user.
+#define HELMET_UNSEAL_MESSAGE "hisses open"
+#define HELMET_SEAL_MESSAGE "hisses closed"
+#define CHESTPLATE_UNSEAL_MESSAGE "releases your chest"
+#define CHESTPLATE_SEAL_MESSAGE "cinches tightly around your chest"
+#define GAUNTLET_UNSEAL_MESSAGE "become loose around your fingers"
+#define GAUNTLET_SEAL_MESSAGE "tighten around your fingers and wrists"
+#define BOOT_UNSEAL_MESSAGE "relax their grip on your legs"
+#define BOOT_SEAL_MESSAGE "seal around your feet"

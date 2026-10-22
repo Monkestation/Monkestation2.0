@@ -2,8 +2,6 @@
 #define PRINTOUT_MISSING "Missing"
 #define PRINTOUT_RAPSHEET "Rapsheet"
 #define PRINTOUT_WANTED "Wanted"
-/// Editing this will cause UI issues.
-#define MAX_CRIME_NAME_LEN 24
 
 /obj/machinery/computer/records/security
 	name = "security records console"
@@ -27,6 +25,7 @@
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
+	projectiles_pass_chance = 0
 
 /obj/machinery/computer/records/security/laptop/syndie
 	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
@@ -79,7 +78,6 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "SecurityRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -160,7 +158,7 @@
 			return TRUE
 
 		if("delete_record")
-			investigate_log("[user] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
+			investigate_log("[key_name(user)] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
 			qdel(target)
 			return TRUE
 
@@ -176,12 +174,6 @@
 			print_record(user, target, params)
 			return TRUE
 
-		if("set_note")
-			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
-			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".")
-			target.security_note = note
-			return TRUE
-
 		if("set_wanted")
 			var/wanted_status = params["status"]
 			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
@@ -191,6 +183,8 @@
 
 			investigate_log("[target.name] has been set from [target.wanted_status] to [wanted_status] by [key_name(usr)].", INVESTIGATE_RECORDS)
 			target.wanted_status = wanted_status
+
+			update_matching_security_huds(target.name)
 
 			return TRUE
 
@@ -220,6 +214,8 @@
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
 		target.wanted_status = WANTED_ARREST
 
+		update_matching_security_huds(target.name)
+
 		return TRUE
 
 	var/datum/crime/citation/new_citation = new(name = input_name, details = input_details, author = usr, fine = params["fine"])
@@ -244,8 +240,8 @@
 		editing_crime.name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 		return TRUE
 
-	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
+	if(params["description"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
+		editing_crime.details = strip_html_full(params["description"], MAX_MESSAGE_LEN)
 		return TRUE
 
 	return FALSE
@@ -276,10 +272,11 @@
 
 /// Voids crimes, or sets someone to discharged if they have none left.
 /obj/machinery/computer/records/security/proc/invalidate_crime(mob/user, datum/record/crew/target, list/params)
-	if(!has_armory_access(user))
-		return FALSE
-	var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
+	var/datum/crime/to_void = locate(params["crime_ref"]) in (target.crimes + target.citations)
 	if(!to_void)
+		return FALSE
+
+	if (user != to_void.author && !has_armory_access(user))
 		return FALSE
 
 	to_void.valid = FALSE
@@ -296,6 +293,7 @@
 		target.wanted_status = WANTED_DISCHARGED
 		investigate_log("[key_name(user)] has invalidated [target.name]'s last valid crime. Their status is now [WANTED_DISCHARGED].", INVESTIGATE_RECORDS)
 
+		update_matching_security_huds(target.name)
 	return TRUE
 
 /// Finishes printing, resets the printer.
@@ -497,11 +495,9 @@
 		investigate_log("[names_of_entries.Join(", ")] have been set to [status_to_set] by [parent.get_creator()].", INVESTIGATE_RECORDS)
 		if(successful_set > COMP_SECURITY_ARREST_AMOUNT_TO_FLAG)
 			message_admins("[successful_set] security entries have been set to [status_to_set] by [parent.get_creator_admin()]. [ADMIN_COORDJMP(src)]")
-		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
-			human.sec_hud_set_security_status()
+		update_all_security_huds()
 
 #undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
 #undef PRINTOUT_MISSING
 #undef PRINTOUT_RAPSHEET
 #undef PRINTOUT_WANTED
-#undef MAX_CRIME_NAME_LEN

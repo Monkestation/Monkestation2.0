@@ -27,6 +27,8 @@
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
 	integrity_failure = 0.33
+	interaction_flags_mouse_drop = NEED_DEXTERITY | ALLOW_RESTING
+
 	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
 	var/mob/living/ass
 	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
@@ -41,6 +43,12 @@
 	var/category
 	///Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
+	/// Variable for the UI telling us how many copies are in the queue.
+	var/copies_left = 0
+	/// The amount of paper this photocoper starts with.
+	var/starting_paper = 30
+	/// A stack for all the empty paper we have newly inserted (LIFO)
+	var/list/paper_stack = list()
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
@@ -52,17 +60,20 @@
 /obj/machinery/photocopier/proc/setup_components()
 	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
-/obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == object_copy)
+/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == object_copy)
 		object_copy = null
-	if(deleting_atom == ass)
-		ass = null
-	if(deleting_atom == toner_cartridge)
+	if(gone == toner_cartridge)
 		toner_cartridge = null
-	return ..()
+	if(gone in paper_stack)
+		paper_stack -= gone
 
 /obj/machinery/photocopier/Destroy()
-	QDEL_NULL(object_copy)
+	// object_copy can be a traitor objective, don't qdel
+	if(object_copy)
+		object_copy.forceMove(drop_location())
+
 	QDEL_NULL(toner_cartridge)
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
@@ -111,7 +122,7 @@
 
 	return data
 
-/obj/machinery/photocopier/ui_act(action, list/params)
+/obj/machinery/photocopier/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -378,6 +389,7 @@
 	toEmbed.psize_x = 128
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
+	copied_ass.assphoto = TRUE
 	toner_cartridge.charges -= ASS_TONER_USE
 
 /**
@@ -413,7 +425,7 @@
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
@@ -427,8 +439,8 @@
 		toner_cartridge = object
 		to_chat(user, span_notice("You insert [object] into [src]."))
 
-	else if(istype(object, /obj/item/areaeditor/blueprints))
-		to_chat(user, span_warning("The Blueprint is too large to put into the copier. You need to find something else to record the document."))
+	else if(istype(object, /obj/item/blueprints))
+		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
 
 	else if(istype(object, /obj/item/paperwork))
 		if(istype(object, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
@@ -448,12 +460,12 @@
 /obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
 	if(. && toner_cartridge.charges)
-		new /obj/effect/decal/cleanable/oil(get_turf(src))
+		new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 		toner_cartridge.charges = 0
 
-/obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/photocopier/mouse_drop_receive(mob/target, mob/user, params)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if(!istype(target) || target.anchored || target.buckled || !Adjacent(target) || !user.can_perform_action(src) || target == ass || copier_blocked())
+	if(!istype(target) || target.anchored || target.buckled || target == ass || copier_blocked())
 		return
 	add_fingerprint(user)
 	if(target == user)
@@ -461,7 +473,7 @@
 	else
 		user.visible_message(span_warning("[user] starts putting [target] onto the photocopier!"), span_notice("You start putting [target] onto the photocopier..."))
 
-	if(do_after(user, 20, target = src))
+	if(do_after(user, 2 SECONDS, target = src))
 		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
@@ -478,10 +490,6 @@
 			visible_message(span_warning("[object_copy] is shoved out of the way by [ass]!"))
 			object_copy = null
 
-/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
-	check_ass() // There was potentially a person sitting on the copier, check if they're still there.
-	return ..()
-
 /**
  * Checks the living mob `ass` exists and its location is the same as the photocopier.
  *
@@ -496,7 +504,7 @@
 	return TRUE
 
 /**
- * Checks if the copier is deleted, or has something dense at its location. Called in `MouseDrop_T()`
+ * Checks if the copier is deleted, or has something dense at its location. Called in `mouse_drop_receive()`
  */
 /obj/machinery/photocopier/proc/copier_blocked()
 	if(QDELETED(src))
@@ -534,7 +542,7 @@
  */
 /obj/item/toner
 	name = "toner cartridge"
-	desc = "A small, lightweight cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
+	desc = "A small, lightweight cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
@@ -547,7 +555,7 @@
 
 /obj/item/toner/large
 	name = "large toner cartridge"
-	desc = "A hefty cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
+	desc = "A hefty cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
 	charges = 25
 	max_charges = 25

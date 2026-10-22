@@ -16,200 +16,189 @@ Implementer of buildmode behaviors.
 
 Existing varieties:
 
-+ Basic
+- Basic
 
-	**Description**:
+  **Description**:
 
-	Allows creation of simple structures consisting of floors, walls, windows, and airlocks.
+  Allows creation of simple structures consisting of floors, walls, windows, and airlocks.
 
-	**Controls**:
+  **Controls**:
+  - _Left click a turf_:
 
-	+ *Left click a turf*:
-	
-		"Upgrades" the turf based on the following rules below:
+    "Upgrades" the turf based on the following rules below:
+    - Space -> Tiled floor
+    - Simulated floor -> Regular wall
+    - Wall -> Reinforced wall
 
-		+ Space -> Tiled floor
-		+ Simulated floor -> Regular wall
-		+ Wall -> Reinforced wall
-	
-	+ *Right click a turf*:
+  - _Right click a turf_:
 
-		"Downgrades" the turf based on the following rules below:
+    "Downgrades" the turf based on the following rules below:
+    - Reinforced wall -> Regular wall
+    - Wall -> Tiled floor
+    - Simulated floor -> Space
 
-		+ Reinforced wall -> Regular wall
-		+ Wall -> Tiled floor
-		+ Simulated floor -> Space
-	
-	+ *Right click an object*:
+  - _Right click an object_:
 
-		Deletes the clicked object.
+    Deletes the clicked object.
 
-	+ *Alt+Left click a location*:
+  - _Alt+Left click a location_:
 
-		Places an airlock at the clicked location.
-	
-	+ *Ctrl+Left click a location*:
+    Places an airlock at the clicked location.
 
-		Places a window at the clicked location.
+  - _Ctrl+Left click a location_:
 
-+ Advanced
+    Places a window at the clicked location.
 
-	**Description**:
+- Advanced
 
-	Creates an instance of a configurable atom path where you click.
+  **Description**:
 
-	**Controls**:
+  Creates an instance of a configurable atom path where you click.
 
-	+ *Right click on the mode selector*:
+  **Controls**:
+  - _Right click on the mode selector_:
 
-		Choose a path to spawn.
-	
-	+ *Left click a location* (requires chosen path):
+    Choose a path to spawn.
 
-		Place an instance of the chosen path at the location.
+  - _Left click a location_ (requires chosen path):
 
-	+ *Right click an object*:
+    Place an instance of the chosen path at the location.
 
-		Delete the object.
+  - _Right click an object_:
 
-+ Fill
+    Delete the object.
 
-	**Description**:
+- Fill
 
-	Creates an instance of an atom path on every tile in a chosen region.
+  **Description**:
 
-	With a special control input, instead deletes everything within the region.
+  Creates an instance of an atom path on every tile in a chosen region.
 
-	**Controls**:
+  With a special control input, instead deletes everything within the region.
 
-	+ *Right click on the mode selector*:
+  **Controls**:
+  - _Right click on the mode selector_:
 
-		Choose a path to spawn.
+    Choose a path to spawn.
 
-	+ *Left click on a region* (requires chosen path):
+  - _Left click on a region_ (requires chosen path):
 
-		Fill the region with the chosen path.
+    Fill the region with the chosen path.
 
-	+ *Alt+Left click on a region*:
+  - _Alt+Left click on a region_:
 
-		Deletes everything within the region.
+    Deletes everything within the region.
 
-	+ *Right click during region selection*:
+  - _Right click during region selection_:
 
-		Cancel region selection.
+    Cancel region selection.
 
-+ Copy
+- Copy
 
-	**Description**:
-	
-	Take an existing object in the world, and place duplicates with identical attributes where you click.
+  **Description**:
 
-	May not always work nicely - "deep" variables such as lists or datums may malfunction.
+  Take an existing object in the world, and place duplicates with identical attributes where you click.
 
-	**Controls**:
+  May not always work nicely - "deep" variables such as lists or datums may malfunction.
 
-	+ *Right click an existing object*:
+  **Controls**:
+  - _Right click an existing object_:
 
-		Select the clicked object as a template.
+    Select the clicked object as a template.
 
-	+ *Left click a location* (Requires a selected object as template):
+  - _Left click a location_ (Requires a selected object as template):
 
-		Place a duplicate of the template at the clicked location.
+    Place a duplicate of the template at the clicked location.
 
-+ Area Edit
+- Area Edit
 
-	**Description**:
+  **Description**:
 
-	Modifies and creates areas.
+  Modifies and creates areas.
 
-	The active area will be highlighted in yellow.
+  The active area will be highlighted in yellow.
 
-	**Controls**:
+  **Controls**:
+  - _Right click the mode selector_:
 
-	+ *Right click the mode selector*:
+    Create a new area, and make it active.
 
-		Create a new area, and make it active.
+  - _Right click an existing area_:
 
-	+ *Right click an existing area*:
+    Make the clicked area active.
 
-		Make the clicked area active.
+  - _Left click a turf_:
 
-	+ *Left click a turf*:
+    When an area is active, adds the turf to the active area.
 
-		When an area is active, adds the turf to the active area.
+- Var Edit
 
-+ Var Edit
+  **Description**:
 
-	**Description**:
+  Allows for setting and resetting variables of objects with a click.
 
-	Allows for setting and resetting variables of objects with a click.
+  If the object does not have the var, will do nothing and print a warning message.
 
-	If the object does not have the var, will do nothing and print a warning message.
+  **Controls**:
+  - _Right click the mode selector_:
 
-	**Controls**:
+    Choose which variable to set, and what to set it to.
 
-	+ *Right click the mode selector*:
+  - _Left click an atom_:
 
-		Choose which variable to set, and what to set it to.
+    Change the clicked atom's variables as configured.
 
-	+ *Left click an atom*:
+  - _Right click an atom_:
 
-		Change the clicked atom's variables as configured.
-	
-	+ *Right click an atom*:
+    Reset the targeted variable to its original value in the code.
 
-		Reset the targeted variable to its original value in the code.
+- Map Generator
 
-+ Map Generator
+  **Description**:
 
-	**Description**:
+  Fills rectangular regions with algorithmically generated content. Right click during region selection to cancel.
 
-	Fills rectangular regions with algorithmically generated content. Right click during region selection to cancel.
+  See the `procedural_mapping` module for the generators themselves.
 
-	See the `procedural_mapping` module for the generators themselves.
+  **Controls**:
+  - _Right-click on the mode selector_:
 
-	**Controls**:
+    Select a map generator from all the generators present in the codebase.
 
-	+ *Right-click on the mode selector*:
-	
-		Select a map generator from all the generators present in the codebase.
-		
-	+ *Left click two corners of an area*:
+  - _Left click two corners of an area_:
 
-		Use the generator to populate the region.
+    Use the generator to populate the region.
 
-	+ *Right click during region selection*:
+  - _Right click during region selection_:
 
-		Cancel region selection.
+    Cancel region selection.
 
-+ Throwing
+- Throwing
 
-	**Description**:
+  **Description**:
 
-	Select an object with left click, and right click to throw it towards where you clicked.
+  Select an object with left click, and right click to throw it towards where you clicked.
 
-	**Controls**:
+  **Controls**:
+  - _Left click on a movable atom_:
 
-	+ *Left click on a movable atom*:
-		
-		Select the atom for throwing.
-	
-	+ *Right click on a location*:
+    Select the atom for throwing.
 
-		Throw the selected atom towards that location.
+  - _Right click on a location_:
 
-+ Boom
+    Throw the selected atom towards that location.
 
-	**Description**:
+- Boom
 
-	Make explosions where you click.
+  **Description**:
 
-	**Controls**:
+  Make explosions where you click.
 
-	+ *Right click the mode selector*:
-	
-		Configure the explosion size.
+  **Controls**:
+  - _Right click the mode selector_:
 
-	+ *Left click a location*:
-	
-		Cause an explosion where you clicked.
+    Configure the explosion size.
+
+  - _Left click a location_:
+
+    Cause an explosion where you clicked.

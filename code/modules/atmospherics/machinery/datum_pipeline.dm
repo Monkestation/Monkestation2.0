@@ -156,6 +156,8 @@
 /datum/pipeline/proc/merge(datum/pipeline/parent_pipeline)
 	if(parent_pipeline == src)
 		return
+	if(!air) //this fixes a runtime but there is probably a better way to handle this
+		air = new
 	air.volume += parent_pipeline.air.volume
 	members.Add(parent_pipeline.members)
 	for(var/obj/machinery/atmospherics/pipe/reference_pipe in parent_pipeline.members)

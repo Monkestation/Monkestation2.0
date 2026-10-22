@@ -112,13 +112,13 @@
 /obj/machinery/reagentgrinder/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/reagentgrinder/handle_atom_del(atom/A)
+/obj/machinery/reagentgrinder/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-	if(holdingitems[A])
-		holdingitems -= A
+	if(holdingitems[gone])
+		holdingitems -= gone
 
 /obj/machinery/reagentgrinder/proc/drop_all_items()
 	for(var/i in holdingitems)
@@ -144,21 +144,21 @@
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/reagentgrinder/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/reagentgrinder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	//You can only screw open empty grinder
-	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/B = I
+	if (is_reagent_container(attacking_item) && !(attacking_item.item_flags & ABSTRACT) && attacking_item.is_open_container())
+		var/obj/item/reagent_containers/B = attacking_item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
@@ -172,30 +172,30 @@
 		return TRUE
 
 	//Fill machine with a bag!
-	if(istype(I, /obj/item/storage/bag))
+	if(istype(attacking_item, /obj/item/storage/bag))
 		var/list/inserted = list()
-		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+		if(attacking_item.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
-			if(!I.contents.len)
-				to_chat(user, span_notice("You empty [I] into [src]."))
+			if(!attacking_item.contents.len)
+				to_chat(user, span_notice("You empty [attacking_item] into [src]."))
 			else
 				to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
-	if(!I.grind_results && !I.juice_results)
+	if(!attacking_item.grind_results && !attacking_item.juice_results)
 		if((user.istate & ISTATE_HARM))
 			return ..()
 		else
-			to_chat(user, span_warning("You cannot grind [I] into reagents!"))
+			to_chat(user, span_warning("You cannot grind [attacking_item] into reagents!"))
 			return TRUE
 
-	if(!I.grind_requirements(src)) //Error messages should be in the objects' definitions
+	if(!attacking_item.grind_requirements(src)) //Error messages should be in the objects' definitions
 		return
 
-	if(user.transferItemToLoc(I, src))
-		to_chat(user, span_notice("You add [I] to [src]."))
-		holdingitems[I] = TRUE
+	if(user.transferItemToLoc(attacking_item, src))
+		to_chat(user, span_notice("You add [attacking_item] to [src]."))
+		holdingitems[attacking_item] = TRUE
 		return FALSE
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
@@ -289,7 +289,7 @@
 			playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
-	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+	use_energy(active_power_usage * time / (1 SECONDS))
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()
@@ -333,7 +333,7 @@
 		return
 	beaker.reagents.add_reagent_list(I.grind_results)
 	if(I.reagents)
-		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
+		I.reagents.trans_to(beaker, I.reagents.total_volume, transferred_by = user)
 	remove_object(I)
 
 /obj/machinery/reagentgrinder/proc/mix(mob/user)

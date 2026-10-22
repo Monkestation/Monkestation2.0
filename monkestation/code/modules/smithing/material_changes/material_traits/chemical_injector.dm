@@ -1,6 +1,7 @@
 /datum/material_trait/chemical_injector
 	name = "Chemical Injector"
 	desc = "Based on the materials liquid flow injects chemicals into the wearer and those hit (scales with liquid flow), douse the item with atleast 100 units of a reagent."
+	trait_flags = MT_PROCESSES
 	///the reagent we are doused in
 	var/datum/reagent/doused_reagent
 	///have we doused
@@ -32,7 +33,7 @@
 	if(iscarbon(target) && doused)
 		var/datum/reagents/reagents = new(1000)
 		reagents.add_reagent(doused_reagent, 7 * (0.01 * host.liquid_flow))
-		reagents.trans_to(target, reagents.total_volume, methods = PATCH, transfered_by = attacker)
+		reagents.trans_to(target, reagents.total_volume, methods = PATCH, transferred_by = attacker)
 		qdel(reagents)
 
 /datum/material_trait/chemical_injector/proc/check_douse(datum/source, atom/movable/target, mob/living/user)

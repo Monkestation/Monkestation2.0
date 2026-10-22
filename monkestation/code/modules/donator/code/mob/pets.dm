@@ -48,7 +48,7 @@
 /mob/living/basic/pet/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
 	desc = "She is the greatest."
-	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon = 'icons/obj/plushes.dmi'
 	icon_state = "cirno-happy"
 	icon_living = "cirno-happy"
 	icon_dead = "cirno-happy"
@@ -90,7 +90,8 @@
 	icon_dead = "slime_dead"
 	gold_core_spawnable = NO_SPAWN
 	initial_language_holder = /datum/language_holder/slime
-	ai_controller = /datum/ai_controller/basic_controller/
+	faction = list(FACTION_SLIME)
+	ai_controller = /datum/ai_controller/basic_controller
 	var/quips = list("Your fingers taste like Donk Pockets, get out more.",
 					"I've seen salad that dresses better than you.",
 					"I smell smoke, are you thinking too hard again?",
@@ -168,7 +169,6 @@
 
 	///Ability
 	var/datum/action/cooldown/lay_gumball/gumball_ability
-
 
 /mob/living/basic/pet/gumball_goblin/Initialize(mapload)
 	. = ..()
@@ -302,3 +302,222 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("TheSpecialSnowflake")
+
+/mob/living/basic/pet/babypukeko
+	name = "baby pukeko"
+	desc = "DAMN!!!!!!!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	icon_living = "babypukeko"
+	icon_dead = "babypukeko-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/mob/living/basic/pet/babypukeko/tall
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	icon_living = "tallbabypukeko"
+	icon_dead = "tallbabypukeko-dead"
+	pixel_x = -96
+
+/mob/living/basic/pet/eris_romch
+	name = "romch"
+	desc = "romch ."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "romch"
+	icon_living = "romch"
+	icon_dead = "romch-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mycah")
+
+/mob/living/basic/pet/theclown_clownpet
+	name = "short clown"
+	desc = "He's just a funny little guy."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "theclown_clownpet"
+	icon_living = "theclown_clownpet"
+	icon_dead = "theclown_clownpet-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mrsmall_theclown")
+
+/mob/living/basic/pet/cyber_husky
+	name = "Cyber Husky"
+	desc = "Whos a good cyber dog? You are!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robodoggo"
+	icon_living = "robodoggo"
+	icon_dead = "robodoggo-dead"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("AdamCoal")
+	///Ability
+	var/datum/action/cooldown/change_hud/change_hud_ability
+
+/mob/living/basic/pet/cyber_husky/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+	change_hud_ability = new()
+	change_hud_ability.Grant(src)
+	var/mutable_appearance/overlay = mutable_appearance(icon, "robodoggo-glasses-dia")
+	src.add_overlay(overlay)
+	initial_language_holder = /datum/language_holder/synthetic
+
+///switches the amimal huds
+/datum/action/cooldown/change_hud
+	name = "change_hud"
+	desc = "Changes your HUD type."
+	cooldown_time = 2 SECONDS
+	button_icon_state = "aviators-diagnostic"
+	var/current_hud = 3
+	button_icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
+
+/datum/action/cooldown/change_hud/Activate(atom/target)
+	. = ..()
+
+	if(current_hud == 1)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-med")
+		usr.add_overlay(overlay)
+		button_icon_state = "aviators-health"
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_MEDICAL_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 2)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_MEDICAL_HUD, ACTION_TRAIT)
+		button_icon_state = "aviators-diagnostic"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-dia")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 3)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+		button_icon_state = "aviators-meson"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-meson")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		usr.sight |= SEE_TURFS
+		StartCooldown()
+		return
+	if(current_hud == 4)
+		current_hud++
+		usr.sight &= ~SEE_TURFS
+		button_icon_state = "aviators-science"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-sci")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_REAGENT_SCANNER, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 5)
+		current_hud = 1
+		REMOVE_TRAIT(usr, TRAIT_REAGENT_SCANNER, ACTION_TRAIT)
+		button_icon_state = "aviators-sec"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+
+/mob/living/basic/pet/cyber_husky/death(gibbed)
+	src.cut_overlays()
+	change_hud_ability.current_hud = 3
+	. = ..()
+
+/mob/living/basic/pet/bananadola
+	name = "bananadola"
+	desc = "Beloved pet of the Bananotrasen CEO, an abomination of genetic horror. Tastes good fried."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
+	icon_state = "bananadola"
+	icon_living = "bananadola"
+	icon_dead = "bananadola"
+	icon_gib = null
+	basic_mob_flags = FLIP_ON_DEATH
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Milthy")
+
+/mob/living/basic/pet/cyber_mastiff
+	name = "cyber mastiff"
+	desc = "It's The Emperor's good boy!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "mecha_walter"
+	icon_living = "mecha_walter"
+	icon_dead = "mecha_walter-dead"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	icon_gib = null
+	gender = MALE
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Flava-Floh")
+
+/mob/living/basic/pet/yato_neco_arc
+	name = "\improper Neco-Arc" // Neko-Aruku
+	desc = "Woah dude... It's that really silly cat I saw on the terminal man..."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "neco_arc"
+	icon_living = "neco_arc"
+	icon_dead = "neco_arc-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Yatosamasensei")
+
+/mob/living/basic/pet/yato_neco_arc/death(gibbed)
+	emote("scream")
+	return ..()
+
+/mob/living/basic/pet/yato_neco_arc/get_scream_sound()
+	return pick('monkestation/code/modules/donator/sounds/neco_arc_1.ogg','monkestation/code/modules/donator/sounds/neco_arc_2.ogg','monkestation/code/modules/donator/sounds/neco_arc_3.ogg')
+
+/mob/living/basic/pet/yato_neco_arc/get_laugh_sound()
+	return pick('monkestation/code/modules/donator/sounds/neco_arc_1.ogg','monkestation/code/modules/donator/sounds/neco_arc_2.ogg','monkestation/code/modules/donator/sounds/neco_arc_3.ogg')
+
+/mob/living/basic/axolotl/shark_costume
+	name = "shark axolotl"
+	desc = "This axolotl seems to wear a scary shark costume!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "shark_axolotl"
+	icon_living = "shark_axolotl"
+	icon_dead = "shark_axolotl-dead"
+	held_state = "shark_axolotl"
+	held_lh = 'monkestation/code/modules/donator/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/code/modules/donator/icons/mob/pets_held_rh.dmi'
+	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
+	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("ZBunz")
+
+/mob/living/basic/mothroach/vanilla
+	name = "Vanilla"
+	desc = "A cute mothroach wearing a medical beret."
+	gender = FEMALE
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "vanilla_mothroach"
+	icon_living = "vanilla_mothroach"
+	icon_dead = "vanilla_mothroach_dead"
+	held_state = "vanilla_mothroach"
+	held_lh = 'monkestation/code/modules/donator/icons/mob/pets_held_lh.dmi'
+	held_rh = 'monkestation/code/modules/donator/icons/mob/pets_held_rh.dmi'
+	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
+	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("Rynnogen")

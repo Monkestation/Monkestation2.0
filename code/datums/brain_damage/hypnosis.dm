@@ -55,13 +55,16 @@
 	to_chat(owner, span_userdanger("You suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you."))
 	owner.clear_alert(ALERT_HYPNOSIS)
 	..()
+	if (!isnull(antagonist))
+		antagonist.trauma = null
 	owner.mind.remove_antag_datum(/datum/antagonist/hypnotized)
+	antagonist = null
 
 /datum/brain_trauma/hypnosis/on_life(seconds_per_tick, times_fired)
 	..()
 	if(SPT_PROB(1, seconds_per_tick))
 		if(prob(50))
-			to_chat(owner, span_hypnophrase("<i>...[lowertext(hypnotic_phrase)]...</i>"))
+			to_chat(owner, span_hypnophrase("<i>...[LOWER_TEXT(hypnotic_phrase)]...</i>"))
 		else
 			owner.cause_hallucination( \
 				/datum/hallucination/chat, \
@@ -71,6 +74,10 @@
 			)
 
 /datum/brain_trauma/hypnosis/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 	hearing_args[HEARING_RAW_MESSAGE] = target_phrase.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("$1"))
+
+/// A "hardened" variant of the hypnosis trauma, used by hypnoflashes so that nanites can't cure it.
+/datum/brain_trauma/hypnosis/hardened
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM | TRAUMA_SPECIAL_CURE_PROOF

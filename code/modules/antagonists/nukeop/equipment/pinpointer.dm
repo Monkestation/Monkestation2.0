@@ -1,10 +1,12 @@
 /obj/item/pinpointer/nuke
+	name = "pinpointer"
+	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mode = TRACK_NUKE_DISK
 
 /obj/item/pinpointer/nuke/examine(mob/user)
 	. = ..()
-	var/msg = "Its tracking indicator reads "
+	var/msg = "It's tracking indicator reads "
 	switch(mode)
 		if(TRACK_NUKE_DISK)
 			msg += "\"nuclear_disk\"."
@@ -12,10 +14,12 @@
 			msg += "\"01000001 01001001\"."
 		if(TRACK_INFILTRATOR)
 			msg += "\"vasvygengbefuvc\"."
+		if(TRACK_COMMANDO_NUKE)
+			msg += "\"big_bomb\"."
 		else
 			msg = "Its tracking indicator is blank."
 	. += msg
-	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if(bomb.timing)
 			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
@@ -23,7 +27,7 @@
 	..()
 	if(!active || alert)
 		return
-	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if(!bomb.timing)
 			continue
 		alert = TRUE
@@ -40,16 +44,19 @@
 			var/obj/item/disk/nuclear/N = locate() in SSpoints_of_interest.real_nuclear_disks
 			target = N
 		if(TRACK_MALF_AI)
-			for(var/V in GLOB.ai_list)
-				var/mob/living/silicon/ai/A = V
+			for(var/mob/living/silicon/ai/A as anything in GLOB.ai_list)
 				if(A.nuking)
 					target = A
-			for(var/V in GLOB.apcs_list)
-				var/obj/machinery/power/apc/A = V
-				if(A.malfhack && A.occupier)
-					target = A
+			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+				if(apc.malfhack && apc.occupier)
+					target = apc
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
+		if(TRACK_COMMANDO_NUKE)
+			for(var/obj/machinery/nuclearbomb/commando/bombue as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando))
+				if(bombue.timing || bombue.exploding)
+					target = bombue
+					break
 	..()
 
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
@@ -62,7 +69,6 @@
 
 /obj/item/pinpointer/nuke/syndicate // Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
 	name = "syndicate pinpointer"
-	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
 	icon_state = "pinpointer_syndicate"
 	worn_icon_state = "pinpointer_black"
 
@@ -71,10 +77,6 @@
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
 	flags_1 = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
-/obj/item/pinpointer/syndicate_cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pinpointer/syndicate_cyborg/cyborg_unequip(mob/user)
 	if(!active)
@@ -92,4 +94,15 @@
 	var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 	if(closest_operative)
 		target = closest_operative
+	..()
+
+/obj/item/pinpointer/commando_nuke
+	name = "nuke pinpointer"
+	desc = "A handheld tracking device that locks onto signals given off by old Nanotrasen nuclear fission explosives."
+	icon_state = "pinpointer_nuke"
+
+/obj/item/pinpointer/commando_nuke/scan_for_target()
+	target = null
+	var/obj/machinery/nuclearbomb/commando/tracked_nuke = locate(/obj/machinery/nuclearbomb/commando) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando)
+	target = tracked_nuke
 	..()

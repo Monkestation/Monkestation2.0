@@ -18,6 +18,8 @@
 	throw_speed = 2
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -32,17 +34,11 @@
 	return ..()
 
 /obj/item/pet_carrier/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(isliving(gone) && (gone in occupants))
-		var/mob/living/L = gone
+		var/mob/living/living_gone = gone
 		occupants -= gone
-		occupant_weight -= L.mob_size
-
-/obj/item/pet_carrier/handle_atom_del(atom/A)
-	if((A in occupants) && isliving(A))
-		var/mob/living/L = A
-		occupants -= L
-		occupant_weight -= L.mob_size
-	..()
+		occupant_weight -= living_gone.mob_size
 
 /obj/item/pet_carrier/examine(mob/user)
 	. = ..()
@@ -72,9 +68,9 @@
 		open = TRUE
 	update_appearance()
 
-/obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open || !user.can_perform_action(src))
-		return
+/obj/item/pet_carrier/click_alt(mob/living/user)
+	if(open)
+		return CLICK_ACTION_BLOCKING
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
 	if(locked)
@@ -82,6 +78,7 @@
 	else
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
 	if((user.istate & ISTATE_HARM))
@@ -131,7 +128,7 @@
 	else
 		loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), null, null, null, user)
 		to_chat(user, span_notice("You start pushing out of [src]... (This will take about 20 seconds.)"))
-		if(!do_after(user, 200, target = user) || open || !locked || !(user in occupants))
+		if(!do_after(user, 20 SECONDS, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message(span_warning("[user] shoves out of [src]!"), null, null, null, user)
 		to_chat(user, span_notice("You shove open [src]'s door against the lock's resistance and fall out!"))
@@ -152,10 +149,9 @@
 	if(!open)
 		. += "[base_icon_state]_[locked ? "" : "un"]locked"
 
-/obj/item/pet_carrier/MouseDrop(atom/over_atom)
-	. = ..()
-	if(isopenturf(over_atom) && usr.can_perform_action(src, NEED_DEXTERITY) && usr.Adjacent(over_atom) && open && occupants.len)
-		usr.visible_message(span_notice("[usr] unloads [src]."), \
+/obj/item/pet_carrier/mouse_drop_dragged(atom/over_atom, mob/user, src_location, over_location, params)
+	if(isopenturf(over_atom) && open && occupants.len)
+		user.visible_message(span_notice("[user] unloads [src]."), \
 		span_notice("You unload [src] onto [over_atom]."))
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)

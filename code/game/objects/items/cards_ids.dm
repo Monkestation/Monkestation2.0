@@ -31,10 +31,26 @@
 	w_class = WEIGHT_CLASS_TINY
 
 	var/list/files = list()
+	/// Cached icon built for this card. Intended for use in chat/examine displays.
+	var/icon/cached_flat_icon
 
 /obj/item/card/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/card/update_overlays()
+	. = ..()
+	cached_flat_icon = null
+
+/// If no cached_flat_icon exists, this proc creates it and crops it.
+/obj/item/card/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+		cached_flat_icon.Crop(ID_ICON_BORDERS)
+	return cached_flat_icon
+
+/obj/item/card/get_examine_icon(mob/user)
+	return ma2html(get_cached_flat_icon(), user)
 
 /*
  * ID CARDS
@@ -50,14 +66,14 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	/// Cached icon that has been built for this card. Intended for use in chat.
-	var/icon/cached_flat_icon
-
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
+	///Boolean on whether a blank bank account should be created on the ID's init.
+	var/create_bank_on_init = TRUE
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 
@@ -118,10 +134,11 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
-	registered_account = blank_bank_account
-	blank_bank_account.account_job = new /datum/job/unassigned
-	registered_account.replaceable = TRUE
+	if(create_bank_on_init)
+		var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+		registered_account = blank_bank_account
+		blank_bank_account.account_job = new /datum/job/unassigned
+		registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))
@@ -145,22 +162,61 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
-/obj/item/card/id/update_overlays()
+/obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	if(isitem(old_loc))
+		unequip_from_item_loc(old_loc)
 	. = ..()
+	if(isitem(loc))
+		equip_to_item_loc(loc)
 
-	cached_flat_icon = null
+/obj/item/card/id/equipped(mob/user, slot)
+	. = ..()
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	if (slot & ITEM_SLOT_POCKETS)
+		//putting it in your pocket doesn't let you use it as access.
+		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 
-/// If no cached_flat_icon exists, this proc creates it and crops it. This proc then returns the cached_flat_icon. Intended only for use displaying ID card icons in chat.
-/obj/item/card/id/proc/get_cached_flat_icon()
-	if(!cached_flat_icon)
-		cached_flat_icon = getFlatIcon(src)
-		cached_flat_icon.Crop(ID_ICON_BORDERS)
-	return cached_flat_icon
+/obj/item/card/id/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(isitem(loc))
+		equip_to_item_loc(loc) // "dropped" into an item, like a worn wallet
+	return ..()
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/// ID card is being equipped to an item (like a pda or wallet)
+/obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
+	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
+	if (ismob(new_loc.loc))
+		var/mob/wearer = new_loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, COMSIG_MOB_RETRIEVE_ACCESS)
+		on_loc_equipped(new_loc, wearer, wearer.get_slot_by_item(new_loc))
+
+/// ID card is being unequipped from an item (like a pda or wallet)
+/obj/item/card/id/proc/unequip_from_item_loc(atom/old_loc)
+	UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(old_loc.loc))
+		UnregisterSignal(old_loc.loc, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	else //This is necessary because unlike TG, Monke doens't call dropped when moving an item from hand to belt/pockets/ID
+		UnregisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
+	SIGNAL_HANDLER
+	UnregisterSignal(dropper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+///Called when we're being used as access.
+/obj/item/card/id/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += GetAccess()
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -361,7 +417,8 @@
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
-	build_access_lists(new_access_list, normal_access, wildcard_access)
+	if(length(new_access_list))
+		build_access_lists(new_access_list, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
 	if(mode == ERROR_ON_FAIL)
@@ -428,13 +485,11 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
-/obj/item/card/id/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!proximity_flag || !check_allowed_items(target) || !isfloorturf(target))
-		return
-	try_project_paystand(user, target)
+/obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with) || !isfloorturf(interacting_with))
+		return NONE
+	try_project_paystand(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -482,7 +537,7 @@
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
-		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
+		playsound(projection, 'sound/effects/empulse.ogg', 40, TRUE)
 		my_store = new_store
 
 /**
@@ -557,15 +612,15 @@
 				if(ispath(trim))
 					SSid_access.apply_trim_to_card(src, trim)
 
-/obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rupee))
+/obj/item/card/id/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/rupee))
 		to_chat(user, span_warning("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
 		return
-	else if(iscash(W))
-		insert_money(W, user)
+	else if(iscash(attacking_item))
+		insert_money(attacking_item, user)
 		return
-	else if(istype(W, /obj/item/storage/bag/money))
-		var/obj/item/storage/bag/money/money_bag = W
+	else if(istype(attacking_item, /obj/item/storage/bag/money))
+		var/obj/item/storage/bag/money/money_bag = attacking_item
 		var/list/money_contained = money_bag.contents
 		var/money_added = mass_insert_money(money_contained, user)
 		if (money_added)
@@ -577,6 +632,7 @@
 /**
  * Insert credits or coins into the ID card and add their value to the associated bank account.
  *
+ * Returns TRUE if the money was successfully inserted, FALSE otherwise.
  * Arguments:
  * money - The item to attempt to convert to credits and insert into the card.
  * user - The user inserting the item.
@@ -589,11 +645,11 @@
 
 	if(!registered_account)
 		to_chat(user, span_warning("[src] doesn't have a linked account to deposit [money] into!"))
-		return
+		return FALSE
 	var/cash_money = money.get_item_credit_value()
 	if(!cash_money)
 		to_chat(user, span_warning("[money] doesn't seem to be worth anything!"))
-		return
+		return FALSE
 	registered_account.adjust_money(cash_money, "System: Deposit")
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
@@ -604,6 +660,7 @@
 
 	to_chat(user, span_notice("The linked account now reports a balance of [registered_account.account_balance] cr."))
 	qdel(money)
+	return TRUE
 
 /**
  * Insert multiple money or money-equivalent items at once.
@@ -637,7 +694,7 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
 		return
 
 	return TRUE
@@ -672,40 +729,44 @@
 	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] credits."))
 	return TRUE
 
-/obj/item/card/id/AltClick(mob/living/user)
+/obj/item/card/id/click_alt(mob/living/user)
 	if(!alt_click_can_use_id(user))
-		return
-	if(!registered_account || registered_account.replaceable)
-		set_new_account(user)
-		return
+		return NONE
+	if (registered_account.being_dumped)
+		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
+		return CLICK_ACTION_SUCCESS
 	if(registered_account.account_debt)
 		var/choice = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Pay Debt"))
 		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
-			return
+			return CLICK_ACTION_BLOCKING
 		if(choice == "Pay Debt")
 			pay_debt(user)
-			return
-	if (registered_account.being_dumped)
-		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
-		return
+			return CLICK_ACTION_SUCCESS
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(registered_account.replaceable && !registered_account.account_balance)
+		var/choice = tgui_alert(user, "This card's account is unassigned. Would you like to link a bank account?", "Bank Account", list("Link Account", "Leave Unassigned"))
+		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
+			return CLICK_ACTION_BLOCKING
+		if(choice == "Link Account")
+			set_new_account(user)
+			return CLICK_ACTION_SUCCESS
 	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)", "Withdraw Funds", max_value = registered_account.account_balance)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!alt_click_can_use_id(user))
-		return
-	if(registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
-		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
-		user.put_in_hands(holochip)
-		to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
-		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
-		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
-		return
-	else
+		return CLICK_ACTION_BLOCKING
+	if(!registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
 		var/difference = amount_to_remove - registered_account.account_balance
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
+	user.put_in_hands(holochip)
+	to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
+	SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
+	log_econ("[amount_to_remove] credits were removed from [src] owned by [registered_name]")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/card/id/proc/pay_debt(user)
 	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] cr)", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
@@ -729,6 +790,10 @@
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+		if(registered_account.mining_points)
+			. += span_notice("The account linked to the ID has [registered_account.mining_points] mining points available.")
+		if(registered_account.bitrunning_points)
+			. += span_notice("The account linked to the ID has [registered_account.bitrunning_points] bitrunning points available.")
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
@@ -755,10 +820,10 @@
 		break
 
 /obj/item/card/id/examine_more(mob/user)
+	. = ..()
 	if(!user.can_read(src))
 		return
 
-	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
@@ -791,10 +856,14 @@
 	return access.Copy()
 
 /obj/item/card/id/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	return src
 
-/obj/item/card/id/RemoveID()
+/obj/item/card/id/remove_id()
 	return src
+
+/obj/item/card/id/proc/chat_span()
+	return trim?.chat_span()
 
 /// Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.
 /obj/item/card/id/proc/update_in_wallet()
@@ -836,6 +905,26 @@
 	icon_state = "retro"
 	registered_age = null
 
+/obj/item/card/id/away/scp1
+	name = "Senior Scientist ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp1
+
+/obj/item/card/id/away/scp2
+	name = "Facility Guard ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp2
+
+/obj/item/card/id/away/scp3
+	name = "MTF Sergeant ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp3
+
+/obj/item/card/id/away/scp4
+	name = "Facility Manager"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp4
+
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
@@ -852,27 +941,32 @@
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	trim = /datum/id_trim/away/old/sec
+	trim = /datum/id_trim/job/away/old/sec /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/sci
-	name = "Charlie Station Scientist's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	trim = /datum/id_trim/away/old/sci
+	name = "Delta Station Scientist's ID card"
+	desc = "A faded Delta Station ID card. You can make out the rank \"Scientist\"."
+	trim = /datum/id_trim/job/away/old/sci /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/eng
-	name = "Charlie Station Engineer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	trim = /datum/id_trim/away/old/eng
+	name = "Beta Station Engineer's ID card"
+	desc = "A faded Beta Station ID card. You can make out the rank \"Station Engineer\"."
+	trim = /datum/id_trim/job/away/old/eng /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
-/obj/item/card/id/away/old/apc
-	name = "APC Access ID"
-	desc = "A special ID card that allows access to APC terminals."
-	trim = /datum/id_trim/away/old/apc
+/obj/item/card/id/away/old/equipment
+	name = "Engineering Equipment Access"
+	desc = "A special ID card that allows access to engineering equipment."
+	trim = /datum/id_trim/job/away/old/equipment /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/robo
 	name = "Delta Station Roboticist's ID card"
 	desc = "An ID card that allows access to bots maintenance protocols."
-	trim = /datum/id_trim/away/old/robo
+	trim = /datum/id_trim/job/away/old/robo /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
+
+/obj/item/card/id/away/old/cargo
+	name = "Alpha Station Cargo Technician's ID card"
+	desc = "A faded Alpha Station ID card. You can make out the rank \"Cargo Technician\"."
+	trim = /datum/id_trim/job/away/old/cargo
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
@@ -908,8 +1002,44 @@
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
 
-/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
+/obj/item/card/id/departmental_budget/civ
+	department_ID = ACCOUNT_CIV
+	department_name = ACCOUNT_CIV_NAME
+	icon_state = "civ_budget" //for the captain to squander
+
+/obj/item/card/id/departmental_budget/srv
+	department_ID = ACCOUNT_SRV
+	department_name = ACCOUNT_SRV_NAME
+	icon_state = "srv_budget" //for parties
+
+/obj/item/card/id/departmental_budget/sec
+	department_ID = ACCOUNT_SEC
+	department_name = ACCOUNT_SEC_NAME
+	icon_state = "sec_budget" //for buying 100 bobrs
+
+/obj/item/card/id/departmental_budget/med
+	department_ID = ACCOUNT_MED
+	department_name = ACCOUNT_MED_NAME
+	icon_state = "med_budget"
+
+/obj/item/card/id/departmental_budget/eng
+	department_ID = ACCOUNT_ENG
+	department_name = ACCOUNT_ENG_NAME
+	icon_state = "eng_budget"
+
+/obj/item/card/id/departmental_budget/sci
+	department_ID = ACCOUNT_SCI
+	department_name = ACCOUNT_SCI_NAME
+	icon_state = "sci_budget" //for five hundred cloners
+
+/obj/item/card/id/departmental_budget/cc
+	department_ID = ACCOUNT_CC
+	department_name = ACCOUNT_CC_NAME
+	icon_state = "cc_budget" //for mountains of goldschlager
+
+/obj/item/card/id/departmental_budget/click_alt(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
+	return CLICK_ACTION_BLOCKING
 
 /obj/item/card/id/advanced
 	name = "identification card"
@@ -936,6 +1066,8 @@
 	var/trim_assignment_override
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
+	/// If this is set, will manually override the chat span used for the wearer's name, normally set by the trim. Intended for admins to VV edit and chameleon ID cards.
+	var/trim_chat_span_override
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -944,14 +1076,15 @@
 
 /obj/item/card/id/advanced/Destroy()
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
 	return ..()
 
+/obj/item/card/id/advanced/chat_span()
+	return trim_chat_span_override || ..()
 
-/obj/item/card/id/advanced/attackby(obj/item/W, mob/user, params)
+/obj/item/card/id/advanced/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/our_crayon = W
+	if(istype(attacking_item, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/our_crayon = attacking_item
 		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
 			if(!do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
 				return
@@ -997,24 +1130,15 @@
 	is_intern = FALSE
 	update_label()
 
-/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/item/card/id/advanced/on_loc_equipped(datum/source, mob/equipper, slot)
 	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		update_intern_status(source, equipper, slot)
 
-	//Old loc
-	if(istype(old_loc, /obj/item/storage/wallet))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	if(istype(old_loc, /obj/item/modular_computer/pda))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	//New loc
-	if(istype(loc, /obj/item/storage/wallet))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
-
-	if(istype(loc, /obj/item/modular_computer/pda))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
+/obj/item/card/id/advanced/on_loc_dropped(datum/source, mob/dropper)
+	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		remove_intern_status(source, dropper)
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
@@ -1244,6 +1368,10 @@
 	var/time_to_assign
 	/// Time left on a card till they can leave.
 	var/time_left = 0
+	/// if the card has been given a custom name.
+	var/named = FALSE
+
+
 
 /obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
@@ -1257,19 +1385,46 @@
 		timed = FALSE
 		time_to_assign = initial(time_to_assign)
 		registered_name = initial(registered_name)
+
 		STOP_PROCESSING(SSobj, src)
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
-	time_to_assign = choice
-	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
-	timed = TRUE
-
+	if(choice)
+		time_to_assign = choice
+		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+		timed = TRUE
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
 	START_PROCESSING(SSobj, src)
+
+/obj/item/card/id/advanced/prisoner/attackby_secondary(obj/item/card/id/C, mob/user)
+	..()
+	var/list/id_access = C.GetAccess()
+	if(!(ACCESS_BRIG in id_access))
+		return FALSE
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return FALSE
+	if(named)
+		named = FALSE
+		registered_name = initial(registered_name)
+		name = initial(name)
+		to_chat(user, "Restating prisoner ID to default parameters.")
+		return
+	var/name_input = tgui_input_text(user, "Enter prisoner name. (Will appear on suit sensors.)", "Prisoner Identification", registered_name, MAX_NAME_LEN)
+	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+		return FALSE
+	if(!name_input || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+		return FALSE
+	registered_name = name_input
+	name = "[name_input]'s ID Card (Prisoner)"
+	to_chat(user, "You set the ID's identification to [name_input].")
+	named = TRUE
+
+
 
 /obj/item/card/id/advanced/prisoner/examine(mob/user)
 	. = ..()
@@ -1346,6 +1501,7 @@
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+	action_slots = ALL
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
@@ -1357,20 +1513,20 @@
 	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
 
 // MONKESTATION ADDITION START
-/obj/item/card/id/advanced/chameleon/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+/obj/item/card/id/advanced/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_card_action.hidden)
 		chameleon_card_action.hidden = FALSE
 		actions += chameleon_card_action
 		chameleon_card_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [attacking_item]")
 	else
 		chameleon_card_action.hidden = TRUE
 		actions -= chameleon_card_action
 		chameleon_card_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [attacking_item]")
 // MONKESTATION ADDITION END
 
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
@@ -1386,67 +1542,61 @@
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
-	. = ..()
-
-/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
-	if(!proximity)
-		return
-
-	if(isidcard(target))
-		theft_target = WEAKREF(target)
-		ui_interact(user)
-		return AFTERATTACK_PROCESSED_ITEM
-
 	return ..()
 
-/obj/item/card/id/advanced/chameleon/pre_attack_secondary(atom/target, mob/living/user, params)
+/obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isidcard(interacting_with))
+		theft_target = WEAKREF(interacting_with)
+		ui_interact(user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/card/id/advanced/chameleon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
-	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(ishuman(target))
-		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
+	// return ITEM_INTERACT_BLOCKING to cancel any part of the following the attack chain.
+	if(ishuman(interacting_with))
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, target))
-			to_chat(user, "<span class='notice'>The scan was interrupted.</span>")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if(!do_after(user, 2 SECONDS, interacting_with, hidden = TRUE))
+			interacting_with.balloon_alert(user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
 
-		var/mob/living/carbon/human/human_target = target
-
+		var/mob/living/carbon/human/human_target = interacting_with
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
 
 		if(!length(target_id_cards))
-			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	if(isitem(target))
-		var/obj/item/target_item = target
+	if(isitem(interacting_with))
+		var/obj/item/target_item = interacting_with
 
-		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
-
 		var/target_item_id = target_item.GetID()
 
 		if(target_item_id)
 			target_id_cards |= target_item_id
 
 		if(!length(target_id_cards))
-			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -1511,7 +1661,7 @@
 
 	return data
 
-/obj/item/card/id/advanced/chameleon/ui_act(action, list/params)
+/obj/item/card/id/advanced/chameleon/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1610,7 +1760,7 @@
 
 					var/selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 					if(selected_trim_path)
-						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+						SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 
 				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant")
 				if(target_occupation)
@@ -1644,7 +1794,7 @@
 			if(forged)
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
-				SSid_access.remove_trim_from_chameleon_card(src)
+				SSid_access.remove_trim_override(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()
@@ -1706,6 +1856,169 @@
 	name = "Green Team identification card"
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
+
+/obj/item/card/id/advanced/bountyhunter
+	assigned_icon_state = "assigned_flame"
+
+#define CARDBOARD_ID_NAME_COLOR 1
+#define CARDBOARD_ID_ASSIGNMENT_COLOR 2
+#define CARDBOARD_ID_TRIM_COLOR 3
+
+/**
+ * A fake ID card anyone can craft with wirecutters and cardboard.
+ * It changes the visible name when worn, but has no access, account, or real ID behavior.
+ */
+/obj/item/card/cardboard
+	name = "cardboard identification card"
+	desc = "A card used to provide ID and det- Heeeey, wait a second, this is just a piece of cut cardboard!"
+	icon_state = "cardboard_id"
+	inhand_icon_state = "cardboard-id"
+	worn_icon_state = "nothing"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	resistance_flags = FLAMMABLE
+	slot_flags = ITEM_SLOT_ID
+	/// The "name" of the "owner" of this "ID".
+	var/scribbled_name
+	/// The assignment written on this card.
+	var/scribbled_assignment
+	/// An icon state used as trim.
+	var/scribbled_trim
+	/// The colors for name, assignment, and trim overlays.
+	var/list/details_colors = list("#000000", "#000000", "#000000")
+
+/obj/item/card/cardboard/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_ID)
+		update_human_identity(user)
+
+/obj/item/card/cardboard/dropped(mob/user)
+	. = ..()
+	update_human_identity(user)
+
+/obj/item/card/cardboard/proc/update_human_identity(mob/user)
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return
+	human_user.name = human_user.get_visible_name()
+	human_user.sec_hud_set_ID()
+
+/obj/item/card/cardboard/proc/update_current_wearer_identity()
+	var/mob/living/carbon/human/human_user = loc
+	if(!istype(human_user) || human_user.wear_id != src)
+		return
+	update_human_identity(human_user)
+
+/obj/item/card/cardboard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isliving(user) && user.can_write(attacking_item, TRUE))
+		var/mob/living/living_user = user
+		INVOKE_ASYNC(src, PROC_REF(modify_card), living_user, attacking_item)
+		return TRUE
+	return ..()
+
+/// Lets the user write a name, assignment, or trim on the card, or reset it.
+/obj/item/card/cardboard/proc/modify_card(mob/living/user, obj/item/attacking_item)
+	if(!user.mind)
+		return
+	var/popup_input = tgui_input_list(user, "What to change", "Cardboard ID", list("Name", "Assignment", "Trim", "Reset"))
+	if(!after_input_check(user, attacking_item, popup_input))
+		return
+	switch(popup_input)
+		if("Name")
+			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			input_name = sanitize_name(input_name, allow_numbers = TRUE)
+			if(!after_input_check(user, attacking_item, input_name, scribbled_name))
+				return
+			scribbled_name = input_name
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_NAME_COLOR] = details["color"] || "#000000"
+		if("Assignment")
+			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job assignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
+			if(!after_input_check(user, attacking_item, input_assignment, scribbled_assignment))
+				return
+			scribbled_assignment = input_assignment
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_ASSIGNMENT_COLOR] = details["color"] || "#000000"
+		if("Trim")
+			var/static/list/possible_trims
+			if(!possible_trims)
+				possible_trims = list()
+				var/list/cardboard_icon_states = icon_states(icon)
+				for(var/trim_path in typesof(/datum/id_trim))
+					var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+					if(!trim?.trim_state || !trim.assignment)
+						continue
+					var/trim_name = replacetext(trim.trim_state, "trim_", "")
+					if("cardboard_[trim_name]" in cardboard_icon_states)
+						possible_trims |= trim_name
+				possible_trims = sort_list(possible_trims)
+			var/input_trim = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", possible_trims)
+			if(!input_trim || !after_input_check(user, attacking_item, input_trim, scribbled_trim))
+				return
+			scribbled_trim = "cardboard_[input_trim]"
+			var/list/details = attacking_item.get_writing_implement_details()
+			details_colors[CARDBOARD_ID_TRIM_COLOR] = details["color"] || "#000000"
+		if("Reset")
+			scribbled_name = null
+			scribbled_assignment = null
+			scribbled_trim = null
+			details_colors = list("#000000", "#000000", "#000000")
+
+	update_appearance()
+	update_current_wearer_identity()
+
+/// Checks that the conditions to modify the cardboard card still hold after user input.
+/obj/item/card/cardboard/proc/after_input_check(mob/living/user, obj/item/attacking_item, input, value)
+	if(!input || (value && input == value))
+		return FALSE
+	if(QDELETED(user) || QDELETED(attacking_item) || QDELETED(src) || user.incapacitated() || !user.is_holding(attacking_item) || !user.CanReach(src) || !user.can_write(attacking_item))
+		return FALSE
+	return TRUE
+
+/obj/item/card/cardboard/attack_self(mob/user)
+	if(!Adjacent(user))
+		return
+	user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show \the [name]."))
+	add_fingerprint(user)
+
+/obj/item/card/cardboard/update_name(updates = ALL)
+	. = ..()
+	if(!scribbled_name)
+		name = initial(name)
+		return
+	name = "[scribbled_name]'s ID Card"
+	if(scribbled_assignment)
+		name = "[name] ([scribbled_assignment])"
+
+/obj/item/card/cardboard/update_overlays()
+	. = ..()
+	if(scribbled_name)
+		var/mutable_appearance/name_overlay = mutable_appearance(icon, "cardboard_name")
+		name_overlay.color = details_colors[CARDBOARD_ID_NAME_COLOR]
+		. += name_overlay
+	if(scribbled_assignment)
+		var/mutable_appearance/assignment_overlay = mutable_appearance(icon, "cardboard_assignment")
+		assignment_overlay.color = details_colors[CARDBOARD_ID_ASSIGNMENT_COLOR]
+		. += assignment_overlay
+	if(scribbled_trim)
+		var/mutable_appearance/frame_overlay = mutable_appearance(icon, "cardboard_frame")
+		frame_overlay.color = details_colors[CARDBOARD_ID_TRIM_COLOR]
+		. += frame_overlay
+		var/mutable_appearance/trim_overlay = mutable_appearance(icon, scribbled_trim)
+		trim_overlay.color = details_colors[CARDBOARD_ID_TRIM_COLOR]
+		. += trim_overlay
+
+/obj/item/card/cardboard/get_id_examine_strings(mob/user)
+	. = ..()
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+
+/obj/item/card/cardboard/examine(mob/user)
+	. = ..()
+	. += span_notice("You could use a pen or crayon to forge a name, assignment, or trim.")
+
+#undef CARDBOARD_ID_NAME_COLOR
+#undef CARDBOARD_ID_ASSIGNMENT_COLOR
+#undef CARDBOARD_ID_TRIM_COLOR
 
 #undef INTERN_THRESHOLD_FALLBACK_HOURS
 #undef ID_ICON_BORDERS

@@ -2,8 +2,8 @@
 	/// Determines what stack is gotten out of us when welded.
 	var/mineralType = null
 
-/obj/item/stack/tile/mineral/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER)
+/obj/item/stack/tile/mineral/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 4)
 			to_chat(user, span_warning("You need at least four tiles to do this!"))
 			return
@@ -11,11 +11,11 @@
 			to_chat(user, span_warning("You can not reform this!"))
 			stack_trace("A mineral tile of type [type] doesn't have its' mineralType set.")
 			return
-		if(W.use_tool(src, user, 0, volume=40))
+		if(attacking_item.use_tool(src, user, 0, volume=40))
 			var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 			var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
-			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [W]."), \
-				span_notice("You shaped [src] into [new_item] with [W]."), \
+			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [attacking_item]."), \
+				span_notice("You shaped [src] into [new_item] with [attacking_item]."), \
 				span_hear("You hear welding."))
 			var/holding = user.is_holding(src)
 			use(4)

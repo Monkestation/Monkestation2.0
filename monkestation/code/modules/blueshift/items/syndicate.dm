@@ -25,43 +25,6 @@
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench(src)
 
-//Back-up space suit
-/obj/item/storage/box/syndie_kit/space_suit
-	name = "boxed space suit and helmet"
-	desc = "A sleek, sturdy box used to hold an emergency spacesuit."
-	icon_state = "syndiebox"
-	illustration = "syndiesuit"
-
-/obj/item/storage/box/syndie_kit/space_suit/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.max_slots = 2
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/head/helmet/space/syndicate,
-		/obj/item/clothing/suit/space/syndicate,
-		))
-
-/obj/item/storage/box/syndie_kit/space_suit/PopulateContents()
-	switch(pick(list("red", "green", "dgreen", "blue", "orange", "black")))
-		if("green")
-			new /obj/item/clothing/head/helmet/space/syndicate/green(src)
-			new /obj/item/clothing/suit/space/syndicate/green(src)
-		if("dgreen")
-			new /obj/item/clothing/head/helmet/space/syndicate/green/dark(src)
-			new /obj/item/clothing/suit/space/syndicate/green/dark(src)
-		if("blue")
-			new /obj/item/clothing/head/helmet/space/syndicate/blue(src)
-			new /obj/item/clothing/suit/space/syndicate/blue(src)
-		if("red")
-			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			new /obj/item/clothing/suit/space/syndicate(src)
-		if("orange")
-			new /obj/item/clothing/head/helmet/space/syndicate/orange(src)
-			new /obj/item/clothing/suit/space/syndicate/orange(src)
-		if("black")
-			new /obj/item/clothing/head/helmet/space/syndicate/black(src)
-			new /obj/item/clothing/suit/space/syndicate/black(src)
-
 //Spy
 /obj/item/clothing/suit/jacket/det_suit/noir/armoured
 	armor_type = /datum/armor/heister
@@ -145,9 +108,9 @@
 	to_chat(user, span_boldannounce("You start skimming through [src], and feel suddenly imparted with the knowledge of the following code words:"))
 
 	user.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	user.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
-	to_chat(user, "<b>Code Phrases</b>: [jointext(GLOB.syndicate_code_phrase, ", ")]")
-	to_chat(user, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+	user.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
+	to_chat(user, "<b>Code Phrases</b>: [span_blue("[jointext(GLOB.syndicate_code_phrase, ", ")]")]")
+	to_chat(user, "<b>Code Responses</b>: [span_orange("[jointext(GLOB.syndicate_code_response, ", ")]")]")
 	user.add_mob_memory(/datum/memory/key/codewords)
 	user.add_mob_memory(/datum/memory/key/codewords/responses)
 
@@ -169,10 +132,10 @@
 	else
 		attacked_mob.visible_message(span_notice("[user] teaches [attacked_mob] by beating [attacked_mob.p_them()] over the head with [src]!"), span_boldnotice("As [user] hits you with [src], you feel suddenly imparted with the knowledge of some [span_red("specific words")]."), span_hear("You hear smacking."))
 		attacked_mob.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-		attacked_mob.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+		attacked_mob.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
 		to_chat(attacked_mob, span_boldnotice("You feel suddenly imparted with the knowledge of the following code words:"))
 		to_chat(attacked_mob, "<b>Code Phrases</b>: [span_blue("[jointext(GLOB.syndicate_code_phrase, ", ")]")]")
-		to_chat(attacked_mob, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+		to_chat(attacked_mob, "<b>Code Responses</b>: [span_orange("[jointext(GLOB.syndicate_code_response, ", ")]")]")
 		attacked_mob.add_mob_memory(/datum/memory/key/codewords)
 		attacked_mob.add_mob_memory(/datum/memory/key/codewords/responses)
 		use_charge(user)
@@ -232,10 +195,28 @@
 /obj/item/antag_granter/clock_cultist
 	name = "brass contraption"
 	desc = "A cogwheel-shaped device of brass, with a glass lens floating, suspended in the center."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "vanguard_cogwheel"
 	antag_datum = /datum/antagonist/clock_cultist/solo
 	user_message = "A whirring fills your ears as <span class='brass'>knowledge of His Eminence fills your mind</span>."
+
+/obj/item/antag_granter/blood_cultist
+	name = "bloody knife"
+	desc = "A ancient knife, caked in blood, both fresh and dried."
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon_state = "render"
+	antag_datum = /datum/antagonist/cult
+	user_message = span_cult("Ancient, bloody knoweldge floods your mind as you look into the dagger.")
+
+/obj/item/antag_granter/blood_cultist/attack_self(mob/living/carbon/user, modifiers)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/obj/item/stack/sheet/runed_metal/ten/metal = new
+	var/obj/item/melee/cultblade/dagger/knoife = new
+	user.equip_conspicuous_item(metal)
+	user.equip_conspicuous_item(knoife)
 
 /obj/item/antag_granter/clock_cultist/attack_self(mob/user, modifiers)
 	. = ..()
@@ -295,12 +276,9 @@
 		balloon_alert(user, "bad text!")
 		return
 
-	//treat voice
-	var/list/message_data = user.treat_message(input)
-
 	//send
 	priority_announce(
-		text = message_data["message"],
+		text = input,
 		title = title,
 		sound = audio_key,
 		sender_override = origin,

@@ -28,9 +28,20 @@
 
 	return data
 
+/mob/living/proc/get_pretend_heart_rate()
+	if(!(mob_biotypes & MOB_ORGANIC))
+		return 0
+	switch(stat)
+		if(DEAD)
+			return 0
+		if(SOFT_CRIT, HARD_CRIT)
+			return 60 + rand(-15, -10)
+		else
+			return 90 + rand(-10, 10)
+
 /// I fully intend on adding real heart rate eventually, but now we fake it
 /// This also serves as a nice way to collect things which should affect heart rate later.
-/mob/living/carbon/proc/get_pretend_heart_rate()
+/mob/living/carbon/get_pretend_heart_rate()
 	if(stat == DEAD)
 		return 0
 
@@ -46,22 +57,6 @@
 		base_amount = 60 + rand(-15, -10)
 	else
 		base_amount = 90 + rand(-10, 10)
-
-	switch(pain_controller?.get_average_pain()) // pain raises it a bit
-		if(25 to 50)
-			base_amount += 5
-		if(50 to 75)
-			base_amount += 10
-		if(75 to INFINITY)
-			base_amount += 15
-
-	switch(pain_controller?.pain_modifier) // numbness lowers it a bit
-		if(0.25 to 0.5)
-			base_amount -= 15
-		if(0.5 to 0.75)
-			base_amount -= 10
-		if(0.75 to 1)
-			base_amount -= 5
 
 	if(has_status_effect(/datum/status_effect/determined)) // adrenaline
 		base_amount += 10

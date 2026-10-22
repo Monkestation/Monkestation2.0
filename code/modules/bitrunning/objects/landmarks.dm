@@ -64,6 +64,11 @@
 	name = "Bitrunning safehouse spawn"
 	icon_state = "safehouse"
 
+/// A location for mobs to spawn.
+/obj/effect/landmark/bitrunning/mob_segment
+	name = "Bitrunning modular mob segment"
+	icon_state = "mob_segment"
+
 ///Swaps the locations of an encrypted crate in the area with another randomly selected crate.
 ///Randomizes names, so you have to inspect crates manually.
 /obj/effect/landmark/bitrunning/crate_replacer

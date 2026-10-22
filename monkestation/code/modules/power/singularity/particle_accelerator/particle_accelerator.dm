@@ -1,14 +1,14 @@
 /*Composed of 7 parts :
- 3 Particle Emitters
- 1 Power Box
- 1 Fuel Chamber
- 1 End Cap
- 1 Control computer
- Setup map
-   |EC|
- CC|FC|
-   |PB|
- PE|PE|PE
+	3 Particle Emitters
+	1 Power Box
+	1 Fuel Chamber
+	1 End Cap
+	1 Control computer
+	Setup map
+		|EC|
+	CC|FC|
+		|PB|
+	PE|PE|PE
 */
 #define PA_CONSTRUCTION_UNSECURED  0
 #define PA_CONSTRUCTION_UNWIRED    1
@@ -18,7 +18,7 @@
 /obj/structure/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
-	icon = 'monkestation/icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = null
 	anchored = FALSE
 	density = TRUE
@@ -62,46 +62,46 @@
 	update_state()
 	update_icon()
 
-/obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
+/obj/structure/particle_accelerator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/did_something = FALSE
 
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			if(W.tool_behaviour == TOOL_WRENCH && !isinspace())
-				W.play_tool_sound(src, 75)
+			if(attacking_item.tool_behaviour == TOOL_WRENCH && !isinspace())
+				attacking_item.play_tool_sound(src, 75)
 				set_anchored(TRUE)
 				user.visible_message("<span class='notice'>[user.name] secures the [name] to the floor.</span>", \
 					"<span class='notice'>You secure the external bolts.</span>")
 				user.changeNext_move(CLICK_CD_MELEE)
 				return //set_anchored handles the rest of the stuff we need to do.
 		if(PA_CONSTRUCTION_UNWIRED)
-			if(W.tool_behaviour == TOOL_WRENCH)
-				W.play_tool_sound(src, 75)
+			if(attacking_item.tool_behaviour == TOOL_WRENCH)
+				attacking_item.play_tool_sound(src, 75)
 				set_anchored(FALSE)
 				user.visible_message("<span class='notice'>[user.name] detaches the [name] from the floor.</span>", \
 					"<span class='notice'>You remove the external bolts.</span>")
 				user.changeNext_move(CLICK_CD_MELEE)
 				return //set_anchored handles the rest of the stuff we need to do.
-			else if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/CC = W
+			else if(istype(attacking_item, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/CC = attacking_item
 				if(CC.use(1))
 					user.visible_message("<span class='notice'>[user.name] adds wires to the [name].</span>", \
 						"<span class='notice'>You add some wires.</span>")
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN
 					did_something = TRUE
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			if(W.tool_behaviour == TOOL_WIRECUTTER)//TODO:Shock user if its on?
+			if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)//TODO:Shock user if its on?
 				user.visible_message("<span class='notice'>[user.name] removes some wires from the [name].</span>", \
 					"<span class='notice'>You remove some wires.</span>")
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
-			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+			else if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user.name] closes the [name]'s access panel.</span>", \
 					"<span class='notice'>You close the access panel.</span>")
 				construction_state = PA_CONSTRUCTION_COMPLETE
 				did_something = TRUE
 		if(PA_CONSTRUCTION_COMPLETE)
-			if(W.tool_behaviour == TOOL_SCREWDRIVER)
+			if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user.name] opens the [name]'s access panel.</span>", \
 					"<span class='notice'>You open the access panel.</span>")
 				construction_state = PA_CONSTRUCTION_PANEL_OPEN
@@ -165,13 +165,13 @@
 /obj/structure/particle_accelerator/power_box
 	name = "Particle Focusing EM Lens"
 	desc = "This uses electromagnetic waves to focus the Alpha particles."
-	icon = 'monkestation/icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "power_box"
 	reference = "power_box"
 
 /obj/structure/particle_accelerator/fuel_chamber
 	name = "EM Acceleration Chamber"
 	desc = "This is where the Alpha particles are accelerated to <b><i>radical speeds</i></b>."
-	icon = 'monkestation/icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "fuel_chamber"
 	reference = "fuel_chamber"

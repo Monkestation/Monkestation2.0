@@ -1,7 +1,7 @@
 #define SHUTDOWN_QUERY_TIMELIMIT (1 MINUTES)
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_HIBERNATE
 	wait = 10 // Not seconds because we're running on SS_TICKER
 	runlevels = RUNLEVEL_INIT|RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	init_order = INIT_ORDER_DBCORE
@@ -47,6 +47,12 @@ SUBSYSTEM_DEF(dbcore)
 	var/connection  // Arbitrary handle returned from rust_g.
 
 	var/db_daemon_started = FALSE
+
+/datum/controller/subsystem/dbcore/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, all_queries),
+	)
 
 /datum/controller/subsystem/dbcore/Initialize()
 	//We send warnings to the admins during subsystem init, as the clients will be New'd and messages
@@ -189,17 +195,17 @@ SUBSYSTEM_DEF(dbcore)
 		//Take over control of all active queries
 		var/queries_to_check = queries_active.Copy()
 		queries_active.Cut()
-		
+
 		//Start all waiting queries
 		for(var/datum/db_query/query in queries_standby)
 			run_query(query)
 			queries_to_check += query
 			queries_standby -= query
-		
+
 		//wait for them all to finish
 		for(var/datum/db_query/query in queries_to_check)
 			UNTIL(query.process() || REALTIMEOFDAY > endtime)
-		
+
 		//log shutdown to the db
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
@@ -247,7 +253,7 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/Connect()
 	if(IsConnected())
 		return TRUE
-	
+
 	if(connection)
 		Disconnect() //clear the current connection handle so isconnected() calls stop invoking rustg
 		connection = null //make sure its cleared even if runtimes happened
@@ -293,7 +299,7 @@ SUBSYSTEM_DEF(dbcore)
 		log_sql("Connect() failed | [last_error]")
 		++failed_connections
 		//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for a time.
-		if(failed_connections > max_connection_failures) 
+		if(failed_connections > max_connection_failures)
 			failed_connection_timeout_count++
 			//basic exponential backoff algorithm
 			failed_connection_timeout = world.time + ((2 ** failed_connection_timeout_count) SECONDS)
@@ -674,7 +680,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 
 /datum/db_query/proc/slow_query_check()
-	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
+	message_admins("HEY! A database query timed out. Did the server just hang? <a href='byond://?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='byond://?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/db_query/proc/NextRow(async = TRUE)
 	Activity("NextRow")

@@ -9,8 +9,6 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
-	worn_x_dimension = 64
-	worn_y_dimension = 64
 	// clothing_flags = LARGE_WORN_ICON MONKESTATION REMOVAL - Flag is no longer necessary
 	actions_types = list(/datum/action/item_action/wheelys)
 	///False means wheels are not popped out
@@ -58,6 +56,10 @@
 	QDEL_NULL(wheels)
 	. = ..()
 
+/obj/item/clothing/shoes/wheelys/cheap
+	name = "Cheap Wheely-Heels"
+	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/cheap
+
 /obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
@@ -70,6 +72,8 @@
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
 	custom_premium_price = PAYCHECK_CREW * 5
 	custom_price = PAYCHECK_CREW * 5
+	worn_x_dimension = 64
+	worn_y_dimension = 72
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
@@ -83,3 +87,5 @@
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	custom_price = PAYCHECK_CREW * 1.6
+	worn_x_dimension = 64
+	worn_y_dimension = 72

@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 43
+#define SAVEFILE_VERSION_MAX 44
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -91,6 +91,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 41)
 		migrate_preferences_to_tgui_prefs_menu()
 
+	if (current_version < 44)
+		key_bindings -= "show_names"
+
 /datum/preferences/proc/update_character(current_version, list/save_data)
 	if (current_version < 41)
 		migrate_character_to_tgui_prefs_menu()
@@ -162,19 +165,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			return FALSE
 
 	var/needs_update = save_data_needs_update(savefile.get_entry())
-	if(load_and_save && (needs_update == -2)) //fatal, can't load any data
+	var/needs_update_monkestation = save_data_needs_update_monkestation(savefile.get_entry()) //MONKESTATION ADDITION - Modular updates
+	if(load_and_save && (needs_update == -2 || needs_update_monkestation == -2)) //fatal, can't load any data //MONKESTATION EDIT - Modular updates
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
 
+	// jobs
+	enabled_characters = savefile.get_entry("enabled_characters", enabled_characters)
+	job_preferences_overall = savefile.get_entry("job_preferences_overall", job_preferences_overall)
+	default_character = savefile.get_entry("default_character", default_character)
+
 	apply_all_client_preferences()
 
 	//general preferences
 	lastchangelog = savefile.get_entry("lastchangelog", lastchangelog)
 	be_special = savefile.get_entry("be_special", be_special)
-	default_slot = savefile.get_entry("default_slot", default_slot)
+	active_slot = savefile.get_entry("default_slot", active_slot)
 	chat_toggles = savefile.get_entry("chat_toggles", chat_toggles)
 	toggles = savefile.get_entry("toggles", toggles)
 	ignoring = savefile.get_entry("ignoring", ignoring)
@@ -193,36 +202,43 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			parsed_favs += path
 	favorite_outfits = unique_list(parsed_favs)
 
-	var/parent_ckey = ckey(parent_key)
 	load_metacoins(parent_ckey)
 	load_inventory(parent_ckey)
 
-	load_preferences_monkestation()
+	load_preferences_monkestation() //MONKESTATION ADDITION - Monkestation-specific data
 
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
 	//try to fix any outdated data if necessary
-	if(needs_update >= 0)
+	if(needs_update >= 0 || needs_update_monkestation >= 0) //MONKESTATION EDIT - Modular updates
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
-		update_preferences(needs_update, savefile) //needs_update = savefile_version if we need an update (positive integer)
+		//MONKESTATION EDIT START - Modular updates
+		if(needs_update >= 0)
+			update_preferences(needs_update, savefile) //needs_update = savefile_version if we need an update (positive integer)
+		if(needs_update_monkestation >= 0)
+			update_preferences_monkestation(needs_update_monkestation, savefile)
+		//MONKESTATION EDIT END
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	//Sanitize
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
-	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
+	active_slot = sanitize_integer(active_slot, 1, max_save_slots, initial(active_slot))
 	toggles = sanitize_integer(toggles, 0, SHORT_REAL_LIMIT-1, initial(toggles))
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+	job_preferences_overall = sanitize_job_preferences(job_preferences_overall)
+	enabled_characters = sanitize_enabled_characters(enabled_characters)
+	default_character = sanitize_default_character(default_character)
 
-	if(needs_update >= 0) //save the updated version
-		var/old_default_slot = default_slot
+	if(needs_update >= 0 || needs_update_monkestation >= 0) //save the updated version //MONKESTATION EDIT - Modular updates
+		var/old_default_slot = active_slot
 		var/old_max_save_slots = max_save_slots
 
 		for (var/slot in savefile.get_entry()) //but first, update all current character slots.
@@ -232,12 +248,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if (!slotnum)
 				continue
 			max_save_slots = max(max_save_slots, slotnum) //so we can still update byond member slots after they lose memeber status
-			default_slot = slotnum
+			active_slot = slotnum
 			if (load_character())
 				save_character()
-		default_slot = old_default_slot
+		active_slot = old_default_slot
 		max_save_slots = old_max_save_slots
 		save_preferences()
+
+	if (read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_PER_CHAR)
+		job_preferences = job_preferences_overall
 
 	return TRUE
 
@@ -261,13 +280,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	savefile.set_entry("lastchangelog", lastchangelog)
 	savefile.set_entry("be_special", be_special)
-	savefile.set_entry("default_slot", default_slot)
+	savefile.set_entry("default_slot", active_slot)
 	savefile.set_entry("toggles", toggles)
 	savefile.set_entry("chat_toggles", chat_toggles)
 	savefile.set_entry("ignoring", ignoring)
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
+	savefile.set_entry("enabled_characters", enabled_characters)
+	savefile.set_entry("job_preferences_overall", job_preferences_overall)
+	savefile.set_entry("default_character", default_character)
 	save_preferences_monkestation()
 	savefile.save()
 	return TRUE
@@ -275,16 +297,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_character(slot)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!slot)
-		slot = default_slot
-	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
-	if(slot != default_slot)
-		default_slot = slot
+		slot = active_slot
+	slot = sanitize_integer(slot, 1, max_save_slots, initial(active_slot))
+	if(slot != active_slot)
+		active_slot = slot
 		savefile.set_entry("default_slot", slot)
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
 	var/needs_update = save_data_needs_update(save_data)
-	if(needs_update == -2) //fatal, can't load any data
+	var/needs_update_monkestation = save_data_needs_update_monkestation(save_data) //MONKESTATION ADDITION - Modular updates
+	if(needs_update == -2 || needs_update_monkestation == -2) //fatal, can't load any data //MONKESTATION EDIT - Modular updates
 		return FALSE
 
 	// Read everything into cache
@@ -300,30 +323,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = save_data?["randomise"]
 
 	//Load prefs
-	job_preferences = save_data?["job_preferences"]
+	job_preferences_character = save_data?["job_preferences"]
 
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
-
-	load_character_monkestation(save_data)
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
 	if(needs_update >= 0)
 		update_character(needs_update, save_data) //needs_update == savefile_version if we need an update (positive integer)
+	//MONKESTATION ADDITION START - Modular updates
+	if(needs_update_monkestation >= 0)
+		update_character_monkestation(needs_update_monkestation, save_data)
+	//MONKESTATION ADDITION END
+
+	load_character_monkestation(save_data) //MONKESTATION ADDITION - Monkestation-specific data
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
-	job_preferences = SANITIZE_LIST(job_preferences)
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	//Validate job prefs
-	for(var/j in job_preferences)
-		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
-			job_preferences -= j
-
+	job_preferences_character = sanitize_job_preferences(job_preferences_character)
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
+
+	if (read_preference(/datum/preference/choiced/character_role_select_mode) == CHARACTER_ROLE_MODE_PER_CHAR)
+		job_preferences = job_preferences_character
 
 	return TRUE
 
@@ -331,7 +356,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!path)
 		return FALSE
-	var/tree_key = "character[default_slot]"
+	var/tree_key = "character[active_slot]"
 	if(!(tree_key in savefile.get_entry()))
 		savefile.set_entry(tree_key, list())
 	var/save_data = savefile.get_entry(tree_key)
@@ -360,7 +385,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	save_data["randomise"] = randomise
 
 	//Write prefs
-	save_data["job_preferences"] = job_preferences
+	save_data["job_preferences"] = job_preferences_character
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks
@@ -368,6 +393,49 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	save_character_monkestation(save_data)
 
 	return TRUE
+
+/datum/preferences/proc/switch_to_slot(new_slot)
+	// SAFETY: `load_character` performs sanitization on the slot number
+	if (!load_character(new_slot))
+		tainted_character_profiles = TRUE
+		randomise_appearance_prefs()
+		save_character()
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		preference_middleware.on_new_character(usr)
+
+	character_preview_view?.update_body()
+
+/datum/preferences/proc/remove_current_slot()
+	PRIVATE_PROC(TRUE)
+
+	var/closest_slot
+	for (var/other_slot in active_slot - 1 to 1 step -1)
+		var/save_data = savefile.get_entry("character[other_slot]")
+		if (!isnull(save_data))
+			closest_slot = other_slot
+			break
+
+	if (isnull(closest_slot))
+		for (var/other_slot in active_slot + 1 to max_save_slots)
+			var/save_data = savefile.get_entry("character[other_slot]")
+			if (!isnull(save_data))
+				closest_slot = other_slot
+				break
+
+	if (isnull(closest_slot))
+		stack_trace("remove_current_slot() being called when there are no slots to go to, the client should prevent this")
+		return
+
+	if (active_slot == default_character)
+		default_character = closest_slot
+	if (active_slot == latejoin_overrride_character)
+		latejoin_overrride_character = 0
+	enabled_characters.RemoveAll(active_slot)
+	enabled_character_names = null
+	savefile.remove_entry("character[active_slot]")
+	tainted_character_profiles = TRUE
+	switch_to_slot(closest_slot)
 
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()
@@ -377,6 +445,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			output += role
 
 	return output.len == input_be_special.len ? input_be_special : output
+
+/datum/preferences/proc/sanitize_job_preferences(list/input_job_preferences)
+	var/alist/job_prefs = SANITIZE_LIST(input_job_preferences)
+	//Validate job prefs
+	for(var/j in job_prefs)
+		if(job_prefs[j] != JP_LOW && job_prefs[j] != JP_MEDIUM && job_prefs[j] != JP_HIGH)
+			job_prefs -= j
+	return job_prefs
+
+/datum/preferences/proc/sanitize_enabled_characters(list/input_enabled_characters)
+	var/list/enabled_characters = SANITIZE_LIST(input_enabled_characters)
+	for (var/i in 1 to length(enabled_characters))
+		enabled_characters[i] = sanitize_integer(enabled_characters[i], 1, max_save_slots, -1)
+		if (enabled_characters[i] == -1)
+			continue
+		if (isnull(savefile.get_entry("character[enabled_characters[i]]")))
+			enabled_characters[i] = -1
+	enabled_characters.RemoveAll(-1)
+	return enabled_characters
+
+/datum/preferences/proc/sanitize_default_character(input_default_character)
+	var/default_character = sanitize_integer(input_default_character, 1, max_save_slots, initial(src.default_character))
+	if (isnull(savefile.get_entry("character[default_character]")))
+		return 1
+	return default_character
 
 /proc/sanitize_keybindings(value)
 	var/list/base_bindings = sanitize_islist(value,list())

@@ -26,7 +26,6 @@ ARTIFACT_SETUP(/obj/item/melee/artifact, SSobj, null, /datum/artifact_effect/mel
 /obj/item/melee/artifact/afterattack(mob/living/victim, mob/user, proximity)
 	if(!istype(victim) || !assoc_comp.active || !COOLDOWN_FINISHED(src,special_cooldown) || !special || !proximity)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	switch(special)
 		if(SPECIAL_IGNITE)
 			victim.adjust_fire_stacks(5)

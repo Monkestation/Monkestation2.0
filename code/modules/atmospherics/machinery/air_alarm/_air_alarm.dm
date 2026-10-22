@@ -1,10 +1,20 @@
+#define AC_MIN_TEMP			T20C - 5
+#define AC_MAX_TEMP			T20C + 10
+#define AC_DEFAULT_TARGET	T20C
+#define AC_TARGET_SKEW		2
+#define AC_SWITCH_COOLDOWN	5 SECONDS
+#define AC_DEFAULT_INC		1.5
+#define AC_ADJACENT_MUL		0.6
+
+GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarmp"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	power_channel = AREA_USAGE_ENVIRON
 	// monkestation edit: let engineers unlock air alarms
 	req_access = null
@@ -14,10 +24,13 @@
 	integrity_failure = 0.33
 	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
+	clicksound = 'sound/machines/terminal_select.ogg'
 
 	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
 	var/danger_level = AIR_ALARM_ALERT_NONE
+	/// Current alert level of the area of our air alarm.
+	var/area_danger = FALSE
 
 	/// Currently selected mode of the alarm. An instance of [/datum/air_alarm_mode].
 	var/datum/air_alarm_mode/selected_mode
@@ -67,8 +80,26 @@
 	/// Whether it is possible to link/unlink this air alarm from a sensor
 	var/allow_link_change = TRUE
 
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
+	/// Whether air conditioning is enabled or not.
+	var/air_conditioning = TRUE
+	/// Whether the air alarm is currently trying to actively regulate the temperature.
+	var/ac_active = FALSE
+	/// The amount of temperature (in K) the air conditioner will "push" towards the target temperature, per tick.
+	var/ac_temp_inc = AC_DEFAULT_INC
+	/// The minimum target temperature the air conditioner can be set to.
+	var/ac_temp_min = AC_MIN_TEMP
+	/// The maximum target temperature the air conditioner can be set to.
+	var/ac_temp_max = AC_MAX_TEMP
+	/// The target temperature the air conditioner is trying to reach, if active.
+	var/ac_temp_target = AC_DEFAULT_TARGET
+	/// The multiplier to [ac_temp_target] for tiles adjacent to the alarm.
+	var/ac_adjacent_mul = AC_ADJACENT_MUL
+	VAR_PRIVATE/cached_target_min = AC_DEFAULT_TARGET - AC_TARGET_SKEW
+	VAR_PRIVATE/cached_target_max = AC_DEFAULT_TARGET + AC_TARGET_SKEW
 
-GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
+	/// Cooldown for the air conditioning (de)activating, to prevent spam.
+	COOLDOWN_DECLARE(ac_switch_cooldown)
 
 /datum/armor/machinery_airalarm
 	energy = 100
@@ -114,12 +145,19 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		/obj/item/circuit_component/air_alarm_vents
 	))
 
+	if(mapload && !(is_station_level(z) || is_mining_level(z)))
+		air_conditioning = FALSE
+
+	if(air_conditioning)
+		SSair.start_processing_machine(src)
+
 	GLOB.air_alarms += src
 	update_appearance()
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
+	SSair.stop_processing_machine(src)
 	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
@@ -128,6 +166,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/power_change()
 	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = our_turf.return_air()
+	if(isnull(environment))
+		return
 	check_danger(our_turf, environment, environment.temperature)
 	return ..()
 
@@ -162,8 +202,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if(AIR_ALARM_BUILD_COMPLETE)
 			. += span_notice("Right-click to [locked ? "unlock" : "lock"] the interface.")
 
+	var/status = air_conditioning ? (ac_active ? "active" : "idle") : "disabled"
+	. += span_notice("A small light indicates that the air conditioning is [span_bold(status)].")
+
 /obj/machinery/airalarm/ui_status(mob/user)
-	if(user.has_unlimited_silicon_privilege && aidisabled)
+	if(HAS_SILICON_ACCESS(user) && aidisabled)
 		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)
 		return ..()
@@ -175,13 +218,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if (!istype(multi_tool) || locked)
 		return .
 
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/air_sensor))
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
-			return TOOL_ACT_SIGNAL_BLOCKING
-		connect_sensor(multi_tool.buffer)
+			return ITEM_INTERACT_BLOCKING
+		connect_sensor(buffer)
 		balloon_alert(user, "connected sensor")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -204,15 +248,23 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/data = list()
 
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["emagged"] = (obj_flags & EMAGGED ? 1 : 0)
 	data["dangerLevel"] = danger_level
-	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
+	data["atmosAlarm"] = !!area_danger
 	data["fireAlarm"] = my_area.fire
 	data["faultStatus"] = my_area.fault_status
 	data["faultLocation"] = my_area.fault_location
 	data["sensor"] = !!connected_sensor
 	data["allowLinkChange"] = allow_link_change
+
+	data["ac"] = list(
+		"enabled" = air_conditioning,
+		"active" = ac_active,
+		"target" = ac_temp_target,
+		"min" = ac_temp_min,
+		"max" = ac_temp_max
+	)
 
 	var/turf/turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = turf.return_air()
@@ -266,7 +318,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		singular_tlv["hazard_max"] = tlv.hazard_max
 		data["tlvSettings"] += list(singular_tlv)
 
-	if(!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || HAS_SILICON_ACCESS(user))
 		data["vents"] = list()
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 			data["vents"] += list(list(
@@ -316,15 +368,15 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	return data
 
-/obj/machinery/airalarm/ui_act(action, params)
+/obj/machinery/airalarm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(. || buildstage != AIR_ALARM_BUILD_COMPLETE)
 		return
-	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
+	var/mob/user = ui.user
+	if((locked && !HAS_SILICON_ACCESS(user)) || (HAS_SILICON_ACCESS(user) && aidisabled))
 		return
 
-	var/mob/user = usr
 	var/area/area = connected_sensor ? get_area(connected_sensor) : get_area(src)
 
 	ASSERT(!isnull(area))
@@ -419,6 +471,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return TRUE
 
 			scrubber.toggle_filters(params["val"])
+		if("toggle_all_filters")
+			if (isnull(scrubber))
+				return TRUE
+
+			scrubber.toggle_filters(GLOB.meta_gas_info)
 		if ("mode")
 			select_mode(user, text2path(params["mode"]))
 			investigate_log("was turned to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -431,7 +488,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			var/threshold_type = params["threshold_type"]
 			var/value = params["value"]
 			tlv.set_value(threshold_type, value)
-			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(user)]", INVESTIGATE_ATMOS)
 
 			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
@@ -444,7 +501,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return
 			var/threshold_type = params["threshold_type"]
 			tlv.reset_value(threshold_type)
-			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(user)]", INVESTIGATE_ATMOS)
 
 			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
@@ -462,29 +519,28 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			if(allow_link_change)
 				disconnect_sensor()
 
-		/* monke start: air conditioning: */
+		if ("lock")
+			togglelock(user)
+			return TRUE
+
 		if("air_conditioning")
 			if(!isnum(params["value"]))
-				return
+				return TRUE
 			if(params["value"])
 				stop_ac()
 			else
 				start_ac()
-			investigate_log("has had its air conditioning turned [air_conditioning ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			. = TRUE
+			investigate_log("has had its air conditioning turned [air_conditioning ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 
 		if("set_ac_target")
 			if(!isnum(params["target"]))
-				return
+				return TRUE
 			set_ac_target(params["target"])
-			investigate_log("has had its air conditioning target set to [params["target"]] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			. = TRUE
+			investigate_log("has had its air conditioning target set to [params["target"]] by [key_name(user)]", INVESTIGATE_ATMOS)
 
 		if("default_ac_target")
 			set_ac_target(initial(ac_temp_target))
-			investigate_log("has had its air conditioning target reset to default by [key_name(usr)]", INVESTIGATE_ATMOS)
-			. = TRUE
-		/* monke end */
+			investigate_log("has had its air conditioning target reset to default by [key_name(user)]", INVESTIGATE_ATMOS)
 
 	update_appearance()
 
@@ -500,7 +556,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/color
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
 		color = "#FF0022" // red
-	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
 		color = "#FFAA00" // yellow
 	else
 		color = "#00FFCC" // teal
@@ -530,7 +586,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/state
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
 		state = "alarm1"
-	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
 		state = "alarm2"
 	else
 		state = "alarm0"
@@ -545,8 +601,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
+	if(!environment)
+		return
+
 	var/old_danger = danger_level
 	danger_level = AIR_ALARM_ALERT_NONE
+	var/old_area_danger = area_danger
+	area_danger = my_area.active_alarms[ALARM_ATMOS]
 
 	var/total_moles = environment.total_moles()
 	var/pressure = environment.return_pressure()
@@ -555,8 +616,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
 	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
+		for(var/gas_path in GLOB.meta_gas_info)
+			var/moles = environment.gases[gas_path] ? environment.gases[gas_path][MOLES] : 0
 			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
@@ -564,7 +625,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	else
 		alarm_manager.clear_alarm(ALARM_ATMOS)
 
-	if(old_danger != danger_level)
+	if(old_danger != danger_level || old_area_danger != area_danger)
 		update_appearance()
 
 	selected_mode.replace(my_area, pressure)
@@ -632,6 +693,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
 	stop_ac() //monkestation addition: prevents air conditioning from trying to heat up telecomms
 
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
+
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
 	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
@@ -667,3 +731,76 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 
 	update_appearance()
 	update_name()
+
+/obj/machinery/airalarm/process_atmos()
+	if(panel_open || (machine_stat & (NOPOWER | BROKEN)) || shorted)
+		return
+	if(!air_conditioning)
+		stop_ac()
+		return PROCESS_KILL
+	var/turf/open/location = get_turf(src)
+	if(!isopenturf(location))
+		update_use_power(IDLE_POWER_USE)
+		ac_active = FALSE
+		return
+	var/datum/gas_mixture/environment = location.return_air()
+	if(!environment)
+		update_use_power(IDLE_POWER_USE)
+		ac_active = FALSE
+		return
+	var/current_temp = environment.return_temperature()
+	if(COOLDOWN_FINISHED(src, ac_switch_cooldown))
+		var/previous_active = ac_active
+		ac_active = !ISINRANGE_EX(current_temp, cached_target_min, cached_target_max)
+		if(previous_active != ac_active)
+			visible_message(span_notice("[src] makes a quiet click as it [ac_active ? "starts trying to regulate" : "stops regulating"] the area's temperature."), blind_message = span_hear("You hear a silent click."), vision_distance = 3)
+			playsound(src, 'sound/machines/terminal_on.ogg', vol = 30, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
+			update_use_power(ac_active ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+		COOLDOWN_START(src, ac_switch_cooldown, AC_SWITCH_COOLDOWN)
+	if(ac_active)
+		if(current_temp < ac_temp_target)
+			environment.temperature = min(current_temp + ac_temp_inc, ac_temp_target)
+		else
+			environment.temperature = max(current_temp - ac_temp_inc, ac_temp_target)
+		air_update_turf(update = FALSE, remove = FALSE)
+		// Update the air of adjacent turfs too
+		var/adjacent_inc = CEILING(ac_temp_inc * ac_adjacent_mul, 0.1)
+		for(var/turf/open/adjacent_turf in location.get_atmos_adjacent_turfs())
+			if(isspaceturf(adjacent_turf))
+				continue
+			var/datum/gas_mixture/adj_environment = adjacent_turf.return_air()
+			if(!adj_environment)
+				continue
+			var/adj_temp = adj_environment.return_temperature()
+			if(adj_temp < ac_temp_target)
+				adj_environment.temperature = min(adj_temp + adjacent_inc, ac_temp_target)
+			else
+				adj_environment.temperature = max(adj_temp - adjacent_inc, ac_temp_target)
+			adjacent_turf.air_update_turf(update = FALSE, remove = FALSE)
+
+/obj/machinery/airalarm/proc/set_ac_target(new_target = AC_DEFAULT_TARGET)
+	if(new_target == ac_temp_target || !isnum(new_target) || !ISINRANGE(new_target, ac_temp_min, ac_temp_max))
+		return
+	ac_temp_target = new_target
+	cached_target_min = ac_temp_target - AC_TARGET_SKEW
+	cached_target_max = ac_temp_target + AC_TARGET_SKEW
+
+/obj/machinery/airalarm/proc/start_ac()
+	air_conditioning = TRUE
+	ac_active = FALSE
+	update_use_power(IDLE_POWER_USE)
+	SSair.start_processing_machine(src)
+
+/obj/machinery/airalarm/proc/stop_ac()
+	air_conditioning = FALSE
+	ac_active = FALSE
+	update_use_power(IDLE_POWER_USE)
+	SSair.stop_processing_machine(src)
+
+#undef AC_ADJACENT_MUL
+#undef AC_DEFAULT_INC
+#undef AC_SWITCH_COOLDOWN
+#undef AC_TARGET_SKEW
+#undef AC_DEFAULT_TARGET
+#undef AC_MAX_TEMP
+#undef AC_MIN_TEMP

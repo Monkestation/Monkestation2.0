@@ -26,7 +26,7 @@
 
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
-	RegisterSignal(loop, COMSIG_MOVELOOP_JPS_REPATH, PROC_REF(repath_incoming))
+	RegisterSignal(loop, COMSIG_MOVELOOP_REPATH, PROC_REF(repath_incoming))
 
 	return loop
 
@@ -39,7 +39,7 @@
 
 /datum/ai_movement/jps/bot
 	max_pathing_attempts = 25
-	maximum_length = AI_BOT_PATH_LENGTH
+	maximum_length = 25
 	diagonal_flags = DIAGONAL_REMOVE_ALL
 
 /datum/ai_movement/jps/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
@@ -47,4 +47,7 @@
 	var/atom/our_pawn = controller.pawn
 	if(isnull(our_pawn))
 		return
-	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
+	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
+
+/datum/ai_movement/jps/bot/travel_to_beacon
+	maximum_length = AI_BOT_PATH_LENGTH

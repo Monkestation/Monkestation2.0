@@ -110,3 +110,25 @@
 		return TRUE
 	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"), "mafia")
 	return FALSE
+
+/datum/saymode/darkspawn //yogs: darkspawn
+	key = MODE_KEY_DARKSPAWN
+	mode = MODE_DARKSPAWN
+
+/datum/saymode/darkspawn/handle_message(mob/living/user, message, datum/language/language)
+	var/datum/mind = user.mind
+	if(!mind)
+		return FALSE
+	if(IS_TEAM_DARKSPAWN(user))
+		user.log_talk(message, LOG_SAY, tag = "darkspawn")
+		var/msg = span_velvet("<b>\[Mindlink\] [user.real_name]:</b> \"[message]\"")
+		if(IS_DARKSPAWN(user)) // the darkspawn get bigger messages than their thralls
+			msg = span_slightly_larger(msg)
+		for(var/mob/talker in GLOB.player_list)
+			if(talker in GLOB.dead_mob_list)
+				var/link = FOLLOW_LINK(talker, user)
+				to_chat(talker, "[link] [msg]", type = MESSAGE_TYPE_RADIO)
+			else if(IS_TEAM_DARKSPAWN(talker))
+				to_chat(talker, msg, type = MESSAGE_TYPE_RADIO, avoid_highlighting = talker == user)
+	return FALSE //yogs end
+

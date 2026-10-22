@@ -26,11 +26,38 @@ SUBSYSTEM_DEF(tgui)
 
 /datum/controller/subsystem/tgui/PreInit()
 	basehtml = file2text('tgui/public/tgui.html')
-	// Inject inline polyfills
-	var/polyfill = file2text('tgui/public/tgui-polyfill.min.js')
-	polyfill = "<script>\n[polyfill]\n</script>"
-	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
+
+	// Inject inline helper functions
+	var/helpers = file2text('tgui/public/helpers.min.js')
+	helpers = "<script type='text/javascript'>\n[helpers]\n</script>"
+	basehtml = replacetextEx(basehtml, "<!-- tgui:helpers -->", helpers)
+
+	// Inject inline ntos-error styles
+	var/ntos_error = file2text('tgui/public/ntos-error.min.css')
+	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
+	basehtml = replacetextEx(basehtml, "<!-- tgui:ntos-error -->", ntos_error)
+
 	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
+
+/datum/controller/subsystem/tgui/OnConfigLoad()
+	var/storage_iframe = CONFIG_GET(string/storage_cdn_iframe)
+
+	if(storage_iframe && storage_iframe != /datum/config_entry/string/storage_cdn_iframe::default)
+		basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", storage_iframe)
+		return
+
+	if(CONFIG_GET(string/asset_transport) == "webroot")
+		var/datum/asset_transport/webroot/webroot = SSassets.transport
+
+		var/datum/asset_cache_item/item = webroot.register_asset("iframe.html", file("tgui/public/iframe.html"))
+		basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", webroot.get_asset_url("iframe.html", item))
+		return
+
+	if(!storage_iframe)
+		return
+
+	basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", storage_iframe)
+
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
@@ -44,14 +71,15 @@ SUBSYSTEM_DEF(tgui)
 		src.current_run = all_uis.Copy()
 	// Cache for sanic speed (lists are references anyways)
 	var/list/current_run = src.current_run
-	while(current_run.len)
-		var/datum/tgui/ui = current_run[current_run.len]
+	var/seconds_per_tick = wait * 0.1
+	while(length(current_run))
+		var/datum/tgui/ui = current_run[length(current_run)]
 		current_run.len--
 		// TODO: Move user/src_object check to process()
 		if(ui?.user && ui.src_object)
-			ui.process(wait * 0.1)
+			ui.process(seconds_per_tick)
 		else
-			ui.close(0)
+			ui.close(FALSE)
 		if(MC_TICK_CHECK)
 			return
 
@@ -71,8 +99,9 @@ SUBSYSTEM_DEF(tgui)
 	var/window_id
 	var/datum/tgui_window/window
 	var/window_found = FALSE
+	var/window_limit = user.client.prefs.read_preference(/datum/preference/toggle/tgui_unlimited_windows) ? TGUI_WINDOW_UNLIMITED_LIMIT : TGUI_WINDOW_HARD_LIMIT
 	// Find a usable window
-	for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
+	for(var/i in 1 to window_limit)
 		window_id = TGUI_WINDOW_ID(i)
 		window = windows[window_id]
 		// As we are looping, create missing window datums
@@ -88,8 +117,10 @@ SUBSYSTEM_DEF(tgui)
 			window_found = TRUE
 			break
 	if(!window_found)
+#ifdef EXTENDED_DEBUG_LOGGING
 		log_tgui(user, "Error: Pool exhausted",
 			context = "SStgui/request_pooled_window")
+#endif
 		return null
 	return window
 
@@ -101,10 +132,13 @@ SUBSYSTEM_DEF(tgui)
  * required user mob
  */
 /datum/controller/subsystem/tgui/proc/force_close_all_windows(mob/user)
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(user, context = "SStgui/force_close_all_windows")
+#endif
 	if(user.client)
 		user.client.tgui_windows = list()
-		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
+		var/window_limit = user.client.prefs.read_preference(/datum/preference/toggle/tgui_unlimited_windows) ? TGUI_WINDOW_UNLIMITED_LIMIT : TGUI_WINDOW_HARD_LIMIT
+		for(var/i in 1 to window_limit)
 			var/window_id = TGUI_WINDOW_ID(i)
 			user << browse(null, "window=[window_id]")
 
@@ -117,7 +151,9 @@ SUBSYSTEM_DEF(tgui)
  * required window_id string
  */
 /datum/controller/subsystem/tgui/proc/force_close_window(mob/user, window_id)
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(user, context = "SStgui/force_close_window")
+#endif
 	// Close all tgui datums based on window_id.
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)

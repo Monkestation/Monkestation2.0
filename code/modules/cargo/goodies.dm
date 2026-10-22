@@ -32,6 +32,13 @@
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
+/datum/supply_pack/goody/validhunting_sabre
+	name = "Authentic Shamshir Sabre"
+	desc = "Jealous of your local high ranking Nanotrasen official's officer sabre? You too can show your off your authority by larping as someone more important with this shoddy replica sabre."
+	cost = PAYCHECK_CREW * 4
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/storage/belt/sabre/cargo)
+
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
 	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks."
@@ -44,6 +51,26 @@
 	desc = "Contains one sharpened survival knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
 	cost = PAYCHECK_COMMAND * 1.75
 	contains = list(/obj/item/knife/combat/survival)
+
+/datum/supply_pack/goody/hunterslugs
+	name = "12 Gauge Hunter Slugs"
+	desc = "12 Gauge shells designed to put down most lavaland xenofauna in a single shot. Make sure to take a combative stance before firing."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/ammo_box/advanced/s12gauge/hunter)
+
+/datum/supply_pack/goody/barkeep_single
+	name = "Double Barrel Single-Pack"
+	desc = "Lost your lupara in a brawl fight? Drunken haze? Simply want a dedicated 'shot'gun? We got you, as long as you pay the fee."
+	cost = PAYCHECK_COMMAND * 12
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel, /obj/item/storage/belt/bandolier)
+
+/datum/supply_pack/goody/pump_single
+	name = "Pump Shotgun Single-Pack"
+	desc = "A respectable pump action shotgun, to restock armoury supplies. Comes with a bandolier."
+	cost = PAYCHECK_COMMAND * 15
+	access_view = ACCESS_ARMORY
+	contains = list(/obj/item/gun/ballistic/shotgun/riot, /obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
@@ -139,7 +166,7 @@
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/valentine, /obj/item/food/candyheart)
+	contains = list(/obj/item/paper/valentine, /obj/item/food/candyheart)
 
 /datum/supply_pack/goody/beeplush
 	name = "Bee Plushie"
@@ -180,7 +207,7 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(/obj/item/reagent_containers/medipen, /obj/item/reagent_containers/medipen/ekit)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"
@@ -236,6 +263,24 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/felinid)
 
+/datum/supply_pack/goody/uncommon_encryption_key
+	name = "Uncommon radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand uncommon when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/uncommon)
+
+/datum/supply_pack/goody/slime_encryption_key
+	name = "Slime radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand slime when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/slime)
+
+/datum/supply_pack/goody/monkey_encryption_key
+	name = "Chimpanzee radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand chimpanzee when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/monkey)
+
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
 	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
@@ -257,7 +302,7 @@
 /datum/supply_pack/goody/fishing_hook_rescue
 	name = "Rescue Fishing Hook"
 	desc = "For when your fellow miner has inevitably fallen into a chasm, and it's up to you to save them."
-	cost = PAYCHECK_CREW * 12
+	cost = PAYCHECK_CREW * 6 //Monkestation price edit
 	contains = list(/obj/item/fishing_hook/rescue)
 
 /datum/supply_pack/goody/premium_bait
@@ -307,3 +352,32 @@
 	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
+
+/datum/supply_pack/goody/summoner_nifsoft
+	name = "Grimoire Caeruleam NIFSoft"
+	desc = "Contains a single Grimoire Caeruleam NIFSoft uploader disk."
+	cost = CARGO_CRATE_VALUE * 0.75
+	contains = list(
+		/obj/item/disk/nifsoft_uploader/summoner,
+	)
+
+/datum/supply_pack/goody/pipebox
+	name = "Smoking Pipe Set"
+	desc = "Contains a pipebox, smoking pipe, and two pouches of tobacco."
+	cost = CARGO_CRATE_VALUE * 0.75
+	contains = list(
+		/obj/item/storage/pipebox,
+	)
+
+/datum/supply_pack/goody/shrimpplush
+	name = "Shrimp Plushie"
+	desc = "It really is just that shrimple."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/toy/plush/shrimp)
+
+/datum/supply_pack/goody/modmegaphone
+	name = "MOD Megaphone Module"
+	desc = "Contains one MOD mounted megaphone to force underlings to pay attention."
+	cost = PAYCHECK_COMMAND * 2.5
+	access_view = ACCESS_COMMAND
+	contains = list(/obj/item/mod/module/megaphone)

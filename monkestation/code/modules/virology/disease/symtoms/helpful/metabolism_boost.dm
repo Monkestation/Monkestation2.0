@@ -1,14 +1,14 @@
 /datum/symptom/metabolism
 	name = "Metabolic Boost"
-	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
+	desc = "The disease causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
 		but also causing increased hunger."
 	max_multiplier = 10
 	stage = 3
 	badness = EFFECT_DANGER_HELPFUL
 	severity = 0
-	
+
 /datum/symptom/metabolism/activate(mob/living/carbon/mob)
-	if(!iscarbon(mob))
+	if(!iscarbon(mob) || !mob.reagents)
 		return
 
 	mob.reagents.metabolize(mob, (multiplier * 0.5) * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself

@@ -1,11 +1,11 @@
 #define MECHA_INT_FIRE (1<<0)
 #define MECHA_INT_TEMP_CONTROL (1<<1)
 #define MECHA_INT_SHORT_CIRCUIT (1<<2)
-#define MECHA_INT_TANK_BREACH (1<<3)
+#define MECHA_CABIN_AIR_BREACH (1<<3)
 #define MECHA_INT_CONTROL_LOST (1<<4)
 
-#define ADDING_ACCESS_POSSIBLE (1<<0)
-#define ADDING_MAINT_ACCESS_POSSIBLE (1<<1)
+#define PANEL_OPEN (1<<0)
+#define ID_LOCK_ON (1<<1)
 #define CANSTRAFE (1<<2)
 #define LIGHTS_ON (1<<3)
 #define SILICON_PILOT (1<<4)
@@ -19,9 +19,16 @@
 #define MMI_COMPATIBLE (1<<10)
 /// Can click from any direction and perform stuff
 #define OMNIDIRECTIONAL_ATTACKS (1<<11)
+//making this a high bitshift to be sure it wont conflict for a while
+///a mech with this flag cannot have its stock parts removed
+#define NOT_ABLE_TO_REMOVE_STOCK_PARTS (1<<12)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)
+
+//EQUIPMENT FLAGS
+///equipment with this flag cannot be removed from a mech
+#define NOT_ABLE_TO_REMOVE_FROM_MECHA (1<<0)
 
 #define MECHA_FRONT_ARMOUR "mechafront"
 #define MECHA_SIDE_ARMOUR "mechaside"
@@ -34,11 +41,6 @@
 #define MECHA_POWER "mecha_power"
 #define MECHA_ARMOR "mecha_armor"
 
-#define MECHA_LOCKED 0
-#define MECHA_SECURE_BOLTS 1
-#define MECHA_LOOSE_BOLTS 2
-#define MECHA_OPEN_HATCH 3
-
 // Some mechs must (at least for now) use snowflake handling of their UI elements, these defines are for that
 // when changing MUST update the same-named tsx file constants
 #define MECHA_SNOWFLAKE_ID_SLEEPER "sleeper_snowflake"
@@ -46,6 +48,12 @@
 #define MECHA_SNOWFLAKE_ID_MODE "mode_snowflake"
 #define MECHA_SNOWFLAKE_ID_EXTINGUISHER "extinguisher_snowflake"
 #define MECHA_SNOWFLAKE_ID_EJECTOR "ejector_snowflake"
+#define MECHA_SNOWFLAKE_ID_OREBOX_MANAGER "orebox_manager_snowflake"
+#define MECHA_SNOWFLAKE_ID_RADIO "radio_snowflake"
+#define MECHA_SNOWFLAKE_ID_AIR_TANK "air_tank_snowflake"
+#define MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC "ballistic_weapon_snowflake"
+#define MECHA_SNOWFLAKE_ID_GENERATOR "generator_snowflake"
+#define MECHA_SNOWFLAKE_ID_RCD "rcd_snowflake"
 
 #define MECHA_AMMO_INCENDIARY "Incendiary bullet"
 #define MECHA_AMMO_BUCKSHOT "Buckshot shell"
@@ -54,3 +62,14 @@
 #define MECHA_AMMO_MISSILE_PEP "PEP missile"
 #define MECHA_AMMO_FLASHBANG "Flashbang"
 #define MECHA_AMMO_CLUSTERBANG "Clusterbang"
+#define MECHA_AMMO_PUNCHING_GLOVE "Punching glove"
+#define MECHA_AMMO_BANANA_PEEL "Banana peel"
+#define MECHA_AMMO_MOUSETRAP "Mousetrap"
+#define MECHA_AMMO_PIPEGUN "Improvised shell"
+#define MECHA_AMMO_PEASHOOTER "Peashooter bullet"
+#define MECHA_AMMO_ISG "IED grenades"
+#define MECHA_AMMO_LIGHTTANK "40mm shell"
+#define MECHA_AMMO_LIGHTTANKMG "12.7x70mm malone"
+#define MECHA_AMMO_ATR "20x160mm"
+#define MECHA_AMMO_FLAME "Flames"
+#define MECHA_AMMO_SENTINEL "Sentinel Cannon Shell"

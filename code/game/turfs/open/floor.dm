@@ -20,11 +20,6 @@
 
 
 	overfloor_placed = TRUE
-
-	/// Determines the type of damage overlay that will be used for the tile
-	var/damaged_dmi = 'icons/turf/damaged.dmi'
-	var/broken = FALSE
-	var/burnt = FALSE
 	/// Path of the tile that this floor drops
 	var/floor_tile = null
 	/// Determines if you can deconstruct this with a RCD
@@ -32,33 +27,16 @@
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
-
-	if (PERFORM_ALL_TESTS(focus_only/valid_turf_states))
-		var/static/list/previous_errors = list()
-
-		if (!(type in previous_errors))
-			if (broken != (icon_state in broken_states()))
-				stack_trace("[icon_state] (from [type]), which should be [broken ? "NOT broken, IS" : "broken, IS NOT"]")
-				previous_errors[type] = TRUE
-
-			if (burnt != (icon_state in burnt_states()))
-				stack_trace("[icon_state] (from [type]), which should be [burnt ? "NOT burnt, IS" : "burnt, IS NOT"]")
-				previous_errors[type] = TRUE
-
 	if(mapload && prob(33))
 		MakeDirty()
 
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-/// Returns a list of every turf state considered "broken".
-/// Will be randomly chosen if a turf breaks at runtime.
-/turf/open/floor/proc/broken_states()
+/turf/open/floor/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/// Returns a list of every turf state considered "burnt".
-/// Will be randomly chosen if a turf is burnt at runtime.
-/turf/open/floor/proc/burnt_states()
+/turf/open/floor/burnt_states()
 	return list()
 
 /turf/open/floor/Destroy()
@@ -120,29 +98,6 @@
 	if(!istype(T))
 		return
 	T.break_tile()
-
-/turf/open/floor/break_tile()
-	if(broken)
-		return
-	broken = TRUE
-	update_appearance()
-
-/turf/open/floor/burn_tile()
-	if(burnt)
-		return
-	burnt = TRUE
-	update_appearance()
-
-/turf/open/floor/update_overlays()
-	. = ..()
-	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states()))
-	else if(burnt)
-		var/list/burnt_states = burnt_states()
-		if(burnt_states.len)
-			. += mutable_appearance(damaged_dmi, pick(burnt_states))
-		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states()))
 
 /// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
@@ -260,6 +215,13 @@
 			)
 		if(RCD_REFLECTOR)
 			return list("mode" = RCD_REFLECTOR, "delay" = 2 SECONDS, "cost" = 20)
+		if(RCD_FIRELOCK)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor/border_only)
+				return list("mode" = RCD_FIRELOCK, "delay" = 1 SECONDS, "cost" = 8)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor/heavy)
+				return list("mode" = RCD_FIRELOCK, "delay" = 5 SECONDS, "cost" = 16)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor)
+				return list("mode" = RCD_FIRELOCK, "delay" = 3 SECONDS, "cost" = 12)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 5 SECONDS, "cost" = 20)
@@ -331,6 +293,16 @@
 			var/obj/structure/reflector/reflector_base = new(src)
 			reflector_base.set_anchored(TRUE)
 			return TRUE
+
+		if(RCD_FIRELOCK)
+			if(locate(/obj/machinery/door/firedoor) in src)
+				balloon_alert(user, "there's already a firedoor!")
+				return FALSE
+			var/obj/machinery/door/firedoor/new_firedoor = new the_rcd.firelock_type(src)
+			if(istype(new_firedoor, /obj/machinery/door/firedoor/border_only))
+				new_firedoor.setDir(user.dir)
+			return TRUE
+
 		if(RCD_AIRLOCK)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
@@ -428,6 +400,12 @@
 			new_furnish.setDir(user.dir)
 			return TRUE
 	return FALSE
+
+/turf/open/floor/rust_turf(magic = FALSE)
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+	ChangeTurf(/turf/open/floor/plating)
+	return ..()
 
 /turf/open/floor/material
 	name = "floor"

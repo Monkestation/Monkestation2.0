@@ -44,10 +44,10 @@
 /datum/station_goal/proc/get_coverage()
 	// monkestation edit: meteor sat refactor
 	/*var/list/coverage = list()
-	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
-		if(!A.active || !is_station_level(A.z))
+	for(var/obj/machinery/satellite/meteor_shield/shield_satt as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/satellite/meteor_shield))
+		if(!shield_satt.active || !is_station_level(shield_satt.z))
 			continue
-		coverage |= view(A.kill_range,A)
+		coverage |= view(shield_satt.kill_range, shield_satt)
 	return coverage.len
 	monkestation end*/
 	return get_meteor_sat_coverage()
@@ -133,8 +133,6 @@ monkestation end */
 		to_chat(user, span_warning("The last satellite emagged needs [DisplayTimeText(COOLDOWN_TIMELEFT(src, shared_emag_cooldown))] to recalibrate first. Emagging another so soon could damage the satellite network."))
 		return FALSE
 	var/cooldown_applied = METEOR_SHIELD_EMAG_COOLDOWN
-	if(istype(emag_card, /obj/item/card/emag/meteor_shield_recalibrator))
-		cooldown_applied /= 3
 	COOLDOWN_START(src, shared_emag_cooldown, cooldown_applied)
 	obj_flags |= EMAGGED
 	to_chat(user, span_notice("You access the satellite's debug mode and it begins emitting a strange signal, increasing the chance of meteor strikes."))

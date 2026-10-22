@@ -69,8 +69,10 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 *	JOB-LOCKED
 */
 
-// Ain't a damn thing
-
+/datum/loadout_item/mask/balaclavathermal
+	name = "Thermal Balaclava"
+	item_path = /obj/item/clothing/mask/thermal_balaclava
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY, JOB_BLUESHIELD)
 /*
 *	FAMILIES
 */
@@ -82,6 +84,11 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /*
 *	MISC
 */
+
+/datum/loadout_item/mask/griddle_toast
+	name = "Griddle Toast"
+	item_path = /obj/item/food/griddle_toast
+
 /datum/loadout_item/mask/fake_mustache
 	name = "Fake Moustache"
 	item_path = /obj/item/clothing/mask/fakemoustache
@@ -129,6 +136,19 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/kitsune
 	name = "Greyscale Kitsune Mask"
 	item_path = /obj/item/clothing/mask/kitsune
+
+/datum/loadout_item/mask/manhunt
+	name = "Smiley Mask"
+	item_path = /obj/item/clothing/mask/joy/manhunt
+
+/datum/loadout_item/mask/deforest_mask
+	name = "Deforest Gas Mask"
+	item_path = /obj/item/clothing/mask/gas/deforest
+
+/datum/loadout_item/mask/deforest_breath_mask
+	name = "Deforest Breath Mask"
+	item_path = /obj/item/clothing/mask/surgical/deforest
+
 /*
 *	DONATOR
 */

@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 export const HERETIC_MECHANICAL_DESCRIPTION = multiline`
       Find hidden influences and sacrifice crew members to gain magical
@@ -12,7 +12,7 @@ const Heretic: Antagonist = {
   description: [
     multiline`
       Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces
-      of decay, but the mansus veil has weakened. We will make them taste fear
+      of decay, but The Mansus' veil has weakened. We will make them taste fear
       again...
     `,
     HERETIC_MECHANICAL_DESCRIPTION,

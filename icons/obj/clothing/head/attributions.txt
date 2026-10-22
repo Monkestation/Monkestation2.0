@@ -1,0 +1,5 @@
+leftjester_hat - Cmpwarrior
+rightjester_hat - Cmpwarrior
+bellsjester_hat - Cmpwarrior
+leftjester2 - Cmpwarrior
+rightjester2 - Cmpwarrior

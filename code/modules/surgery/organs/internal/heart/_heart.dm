@@ -29,15 +29,8 @@
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 	return ..()
 
-/obj/item/organ/internal/heart/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
-	if(heart_bloodtype)
-		receiver.dna?.human_blood_type = heart_bloodtype
-
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
 	. = ..()
-	if(heart_bloodtype)
-		heartless.dna?.human_blood_type = random_human_blood_type()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
@@ -82,7 +75,6 @@
 		base_amount = 80 + rand(-10, 10)
 	base_amount += round(owner.getOxyLoss() / 5)
 	base_amount += ((BLOOD_VOLUME_NORMAL - owner.blood_volume) / 25)
-	base_amount += owner.pain_controller?.get_heartrate_modifier()
 	if(owner.has_status_effect(/datum/status_effect/determined)) // adrenaline
 		base_amount += 10
 
@@ -90,6 +82,15 @@
 		base_amount += 10
 
 	return round(base_amount * clamp(1.5 * ((maxHealth - damage) / maxHealth), 0.5, 1)) // heart damage puts a multiplier on it
+
+/obj/item/organ/internal/heart/get_status_text(advanced, add_tooltips)
+	if(!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD)
+		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
+	return ..()
+
+/obj/item/organ/internal/heart/show_on_condensed_scans()
+	// Always show if the guy needs a heart (so its status can be monitored)
+	return ..() || owner.needs_heart()
 
 /obj/item/organ/internal/heart/on_life(seconds_per_tick, times_fired)
 	..()
@@ -113,7 +114,7 @@
 			beat = BEAT_NONE
 
 		if(owner.has_status_effect(/datum/status_effect/jitter))
-			if(owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+			if(owner.health > owner.hardcrit_threshold && (!beat || beat == BEAT_SLOW))
 				owner.playsound_local(get_turf(owner), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
 
@@ -128,7 +129,6 @@
 					span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 			owner.set_heartattack(TRUE)
 			failed = TRUE
-		owner.adjust_pain_shock(1 * seconds_per_tick)
 
 /obj/item/organ/internal/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantheart
@@ -236,7 +236,7 @@
 	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
 	icon_state = "heart-c-on"
 	base_icon_state = "heart-c"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 
 	var/dose_available = FALSE
@@ -262,21 +262,33 @@
 	dose_available = TRUE
 	emp_vulnerability = 20
 
+/obj/item/organ/internal/heart/cybernetic/surplus
+	name = "surplus prosthetic heart"
+	desc = "A fragile mockery of a human heart that resembles a water pump more than an actual heart. \
+		Offers no protection against EMPs."
+	icon_state = "heart-c-s-on"
+	base_icon_state = "heart-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/heart/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
-
-	// If the owner doesn't need a heart, we don't need to do anything with it.
-	if(!owner.needs_heart())
-		return
-
 	if(. & EMP_PROTECT_SELF)
+		return
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner?.needs_heart())
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.set_dizzy_if_lower(20 SECONDS)
 		owner.losebreath += 10
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon
 		// monkestation edit: antispam
 		if(beating)
 			owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
@@ -301,7 +313,7 @@
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
-	organ_flags = ORGAN_SYNTHETIC  //the power of freedom prevents heart attacks
+	organ_flags = ORGAN_ROBOTIC  //the power of freedom prevents heart attacks
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
@@ -319,7 +331,7 @@
 	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.
 	visual = TRUE //This is used by the ethereal species for color
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
-	heart_bloodtype = /datum/blood_type/crew/ethereal
+	heart_bloodtype = BLOOD_TYPE_ETHEREAL
 
 	///Cooldown for the next time we can crystalize
 	COOLDOWN_DECLARE(crystalize_cooldown)
@@ -387,14 +399,13 @@
 			stop_crystalization_process(victim)
 		return
 
-
 	if(QDELETED(victim) || HAS_TRAIT(victim, TRAIT_SUICIDED))
 		return //lol rip
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
+	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE) || (victim.mind && HAS_TRAIT(victim.mind, TRAIT_DEFIB_BLACKLISTED)))
 		return // no reviving during mafia, or other inconvenient times.
 
 	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
@@ -426,13 +437,6 @@
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
-
-	//Monkestation Edit Begin
-	if(IS_BLOODSUCKER(ethereal) && SSsunlight.sunlight_active)
-		to_chat(ethereal, span_warning("You were unable to finish your crystallization as Sol has halted your attempt to crystallize."))
-		stop_crystalization_process(ethereal, FALSE)
-		return
-	//Monkestation Edit End
 
 	if(ismob(location) || isitem(location) || iseffect(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
@@ -570,12 +574,12 @@
 
 /obj/item/organ/internal/heart/lizard
 	name = "lizard heart"
-	heart_bloodtype = /datum/blood_type/crew/lizard
+	heart_bloodtype = BLOOD_TYPE_LIZARD
 
 /obj/item/organ/internal/heart/pod
 	name = "plant heart"
-	heart_bloodtype = /datum/blood_type/water
+	heart_bloodtype = BLOOD_TYPE_H2O
 
 /obj/item/organ/internal/heart/spider
 	name = "spider heart"
-	heart_bloodtype = /datum/blood_type/spider
+	heart_bloodtype = BLOOD_TYPE_HEMOLYMPH

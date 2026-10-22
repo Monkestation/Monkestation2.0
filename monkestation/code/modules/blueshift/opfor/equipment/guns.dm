@@ -10,6 +10,7 @@
 	new /obj/item/gun/ballistic/shotgun/riot/sol/evil(src)
 	new /obj/item/ammo_box/advanced/s12gauge/buckshot(src)
 	new /obj/item/ammo_box/advanced/s12gauge/buckshot(src)
+	new /obj/item/storage/box/syndie_kit/weapons_auth(src)
 
 /datum/opposing_force_equipment/ranged/infanteria
 	name = "Carwo-Cawil Battle Rifle"
@@ -20,6 +21,7 @@
 	new /obj/item/gun/ballistic/automatic/sol_rifle/evil(src)
 	new /obj/item/ammo_box/magazine/c40sol_rifle/standard(src)
 	new /obj/item/ammo_box/magazine/c40sol_rifle/standard(src)
+	new /obj/item/storage/box/syndie_kit/weapons_auth(src)
 
 /datum/opposing_force_equipment/ranged/miecz
 	name = "'Miecz' Submachinegun"
@@ -40,6 +42,7 @@
 	new /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil(src)
 	new /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel(src)
 	new /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel(src)
+	new /obj/item/storage/box/syndie_kit/weapons_auth(src)
 
 /datum/opposing_force_equipment/ranged/amr
 	name = "'Wyłom' AMR"
@@ -70,18 +73,6 @@
 	new /obj/item/gun/ballistic/shotgun/hook(src)
 	new /obj/item/ammo_box/advanced/s12gauge/buckshot(src)
 	new /obj/item/ammo_box/advanced/s12gauge/buckshot(src)
-
-/*
-/datum/opposing_force_equipment/ranged/rebar_crossbow
-	name = "Syndicate Rebar Crossbow"
-	description = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
-	item_type = /obj/item/storage/toolbox/guncase/nova/opfor/rebar_crossbow
-
-/obj/item/storage/toolbox/guncase/nova/opfor/rebar_crossbow/PopulateContents()
-	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
-	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
-*/
 
 //laser
 /datum/opposing_force_equipment/ranged/ion
@@ -158,6 +149,7 @@
 	new /obj/item/gun/ballistic/automatic/sol_smg/evil(src)
 	new /obj/item/ammo_box/magazine/c35sol_pistol/stendo(src)
 	new /obj/item/ammo_box/magazine/c35sol_pistol/stendo(src)
+	new /obj/item/storage/box/syndie_kit/weapons_auth(src)
 
 /datum/opposing_force_equipment/ranged_stealth/wespe
 	name = "Wespe Pistol"
@@ -168,6 +160,7 @@
 	new /obj/item/gun/ballistic/automatic/pistol/sol/evil(src)
 	new /obj/item/ammo_box/magazine/c35sol_pistol(src)
 	new /obj/item/ammo_box/magazine/c35sol_pistol(src)
+	new /obj/item/storage/box/syndie_kit/weapons_auth(src)
 
 /datum/opposing_force_equipment/ranged_stealth/makarov
 	name = "Makarov Pistol"

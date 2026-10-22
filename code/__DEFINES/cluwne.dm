@@ -1,0 +1,3 @@
+#define CLUWNE_DECONVERT_ON_DEATH "cluwne_deconvert_on_death"
+#define CLUWNE_DECONVERT_ON_DIVINE_INTERVENTION "cluwne_deconvert_on_divine_inervention"
+#define CLUWNE_DECONVERT_NEVER "cluwne_deconvert_never"

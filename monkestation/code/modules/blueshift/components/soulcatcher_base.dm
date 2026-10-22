@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 	if(!message_to_send) //Why say nothing?
 		return FALSE
 
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+	var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 	var/tag = sheet.icon_tag("nif-soulcatcher")
 	var/soulcatcher_icon = ""
 
@@ -325,10 +325,10 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 
 		if(emote)
 			parent_object.manual_emote(html_decode(message_to_send))
-			log_emote("[soul_sender] in [name] soulcatcher room emoted: [message_to_send], as an external object")
+			log_emote("[key_name(soul_sender)] in [name] soulcatcher room emoted: [message_to_send], as an external object")
 		else
 			parent_object.say(html_decode(message_to_send))
-			log_say("[soul_sender] in [name] soulcatcher room said: [message_to_send], as an external object")
+			log_say("[key_name(soul_sender)] in [name] soulcatcher room said: [message_to_send], as an external object")
 
 		parent_object.name = temp_name
 		return TRUE

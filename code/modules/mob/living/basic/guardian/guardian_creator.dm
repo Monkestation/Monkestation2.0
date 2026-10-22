@@ -9,12 +9,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		option.info = span_boldnotice(initial(guardian_path.creator_desc))
 		.[guardian_path] = option
 
-	//MONKESTATION EDIT START
-	// Hack to change Timestop Guardian's radial icon, since it's in a different DMI
-	var/datum/radial_menu_choice/timestop_opt = .[/mob/living/basic/guardian/standard/timestop]
-	timestop_opt.image = image(icon = 'monkestation/icons/bloodsuckers/timestop_guardian.dmi', icon_state = "timestop")
-	//MONKESTATION EDIT END
-
 /// An item which grants you your very own soul buddy
 /obj/item/guardian_creator
 	name = "enchanted deck of tarot cards"
@@ -121,12 +115,13 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	var/datum/guardian_fluff/guardian_theme = GLOB.guardian_themes[theme]
 	var/mob/living/basic/guardian/summoned_guardian = new guardian_path(user, guardian_theme)
 	summoned_guardian.set_summoner(user, different_person = TRUE)
-	summoned_guardian.key = candidate.key
+	summoned_guardian.PossessByPlayer(candidate.key)
 	user.log_message("has summoned [key_name(summoned_guardian)], a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	summoned_guardian.log_message("was summoned as a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
 	to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
 	summoned_guardian.client?.init_verbs()
+	summoned_guardian.updatehealth() // Set the initial health hud
 	return summoned_guardian
 
 /// Checks to ensure we're still capable of using the radial selector
@@ -171,7 +166,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/medical/syringe.dmi'
-	icon_state = "combat_hypo"
+	icon_state = "hypo_qmc"
 	theme = GUARDIAN_THEME_TECH
 	allow_multiple = TRUE
 	allow_changeling = FALSE
@@ -202,7 +197,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "dustyshard"
 	theme = GUARDIAN_THEME_MINER
-	allow_multiple = TRUE
+	allow_multiple = FALSE
 	use_message = span_holoparasite("You pierce your skin with the shard...")
 	used_message = span_holoparasite("This shard seems to have lost all its power...")
 	failure_message = span_boldholoparasite("The shard hasn't reacted at all. Maybe try again later...")

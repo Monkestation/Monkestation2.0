@@ -127,6 +127,34 @@
 /datum/memory/key/quirk_smoker/get_moods()
 	return list("[memorizer] [mood_verb] as they light another up.")
 
+/// Tracks what beverage an alcoholic quirk user likes
+/datum/memory/key/quirk_alcoholic
+	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS // Does not have nomood
+	var/preferred_brandy //haha, get it because brandy is a type of alcohol wow!
+
+/datum/memory/key/quirk_alcoholic/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	preferred_brandy,
+)
+	src.preferred_brandy = preferred_brandy
+	return ..()
+
+/datum/memory/key/quirk_alcoholic/get_names()
+	return list("[protagonist_name]'s addiction to [preferred_brandy] alcohol.")
+
+/datum/memory/key/quirk_alcoholic/get_starts()
+	return list(
+		"[preferred_brandy] being downed by [protagonist_name].",
+		"[protagonist_name] buying a box of [preferred_brandy] bottles.",
+		"[protagonist_name] fiending for some [preferred_brandy].",
+	)
+
+/datum/memory/key/quirk_alcoholic/get_moods()
+	return list("[memorizer] [mood_verb] as they drink some [preferred_brandy].")
+
 /// Where our traitor uplink is, and what is its code
 /datum/memory/key/traitor_uplink
 	var/uplink_loc
@@ -207,4 +235,35 @@
 		"A sticky note attached to a monitor with [decrypt_key] written on it.",
 		"Poly the parrot screaming \"[decrypt_key]!\" over and over again.",
 		"[protagonist_name] spilling coffee over the message monitor while typing [decrypt_key].",
+	)
+
+/datum/memory/key/codewords
+	memory_flags = parent_type::memory_flags | MEMORY_NO_STORY
+
+/datum/memory/key/codewords/get_names()
+	return list("The code phrases used by the Syndicate: [jointext(GLOB.syndicate_code_phrase, ", ")].")
+
+/datum/memory/key/codewords/responses/get_names()
+	return list("The code responses used by the Syndicate: [jointext(GLOB.syndicate_code_response, ", ")].")
+
+/datum/memory/key/on_the_run
+	var/crime
+
+/datum/memory/key/on_the_run/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	crime,
+)
+	src.crime = crime
+	return ..()
+
+/datum/memory/key/on_the_run/get_names()
+	return list("[protagonist_name] with the law on their back for the crime of [crime].")
+
+/datum/memory/key/on_the_run/get_starts()
+	return list(
+		"[protagonist_name] running away from security after comitting [crime].",
+		"[protagonist_name] looking over their shoulder, looking for security, after having committed [crime].",
 	)

@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
 	move_resist = MOVE_FORCE_VERY_STRONG
+
 	///Bitflags for special behavior such as kidnapping
 	var/car_traits = NONE
 	///Sound file(s) to play when we drive around
@@ -13,6 +14,8 @@
 	var/vehicle_move_delay = 1
 	/// How long it takes to rev (vrrm vrrm!)
 	COOLDOWN_DECLARE(enginesound_cooldown)
+	//monkestation addition: does it explode on destruction
+	var/explode_on_destruction = TRUE
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
@@ -20,9 +23,9 @@
 	if(car_traits & CAN_KIDNAP)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.incapacitated() || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
-		return FALSE
+/obj/vehicle/sealed/car/mouse_drop_receive(atom/dropping, mob/M, params)
+	if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M))
+		return
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/kidnapped = dropping
 		kidnapped.visible_message(span_warning("[M] starts forcing [kidnapped] into [src]!"))
@@ -75,8 +78,9 @@
 	add_occupant(kidnapped, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/atom_destruction(damage_flag)
-	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)
-	log_message("[src] exploded due to destruction", LOG_ATTACK)
+	if(explode_on_destruction) //monkestation edit
+		explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)
+		log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
 
 /obj/vehicle/sealed/car/relaymove(mob/living/user, direction)

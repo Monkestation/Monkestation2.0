@@ -27,7 +27,7 @@
 	/// What kind of beams we got?
 	var/projectile_type = /obj/projectile/temp/watcher
 	/// Icon state for our eye overlay
-	var/eye_glow = "ice_glow"
+	var/eye_glow = "watcher_glow"
 	/// Sound to play when we shoot
 	var/shoot_sound = 'sound/weapons/pierce.ogg'
 	/// Typepath of our gaze ability
@@ -66,7 +66,10 @@
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "watcher_emissive", src)
+	if (stat == DEAD)
+		return
+	. += emissive_appearance(icon, "watcher_emissive", src/*, effect_type = EMISSIVE_NO_BLOOM */)
+	. += emissive_appearance(icon, "watcher_emissive_bloom", src)
 
 /// I love eating diamonds yum
 /mob/living/basic/mining/watcher/proc/consume(atom/movable/thing)
@@ -95,6 +98,7 @@
 	icon_state = "watcher_icewing"
 	icon_living = "watcher_icewing"
 	icon_dead = "watcher_icewing_dead"
+	eye_glow = "ice_glow"
 	maxHealth = 130
 	health = 130
 	projectile_type = /obj/projectile/temp/watcher/ice_wing

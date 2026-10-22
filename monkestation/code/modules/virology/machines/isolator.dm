@@ -1,31 +1,35 @@
 /obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
 	desc = "Takes a syringe of blood, and isolates the pathogens inside into a dish."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "isolator"
 	var/datum/disease/acute/isolated_disease = null
 	var/isolating = 0
 	var/beaker = null
 
-/obj/machinery/disease2/isolator/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I,/obj/item/reagent_containers/syringe))
-		return
+/obj/machinery/disease2/isolator/Destroy()
+	isolated_disease = null
+	return ..()
 
-	var/obj/item/reagent_containers/syringe/B = I
+/obj/machinery/disease2/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/syringe))
+		return NONE
 
-	if(src.beaker)
+	var/obj/item/reagent_containers/syringe/B = tool
+	if(beaker)
 		to_chat(user, "A syringe is already loaded into the machine.")
-		return
-
-	if(user.dropItemToGround(B))
-		B.forceMove(src)
-		src.beaker =  B
-		if(istype(B,/obj/item/reagent_containers/syringe))
-			to_chat(user, "You add the syringe to the machine!")
-			src.updateUsrDialog()
-			icon_state = "isolator_in"
+		return ITEM_INTERACT_BLOCKING
+	if(!user.dropItemToGround(B))
+		return ITEM_INTERACT_BLOCKING
+	if(!B.forceMove(src))
+		return ITEM_INTERACT_BLOCKING
+	beaker = B
+	to_chat(user, "You add the syringe to the machine!")
+	src.updateUsrDialog()
+	icon_state = "isolator_in"
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/disease2/isolator/Topic(href, href_list)
 	if(..())
@@ -75,12 +79,12 @@
 	if(!beaker)
 
 		dat = {"Please insert sample into the isolator.<BR>
-<A href='byond://?src=\ref[src];close=1'>Close</A>"}
+<A href='byond://?src=[REF(src)];close=1'>Close</A>"}
 	else if(isolating)
 		dat = "Isolating"
 	else
 		var/datum/reagents/R = beaker:reagents
-		dat += "<A href='byond://?src=\ref[src];eject=1'>Eject</A><BR><BR>"
+		dat += "<A href='byond://?src=[REF(src)];eject=1'>Eject</A><BR><BR>"
 		if(!R.total_volume)
 			dat += "[beaker] is empty."
 		else
@@ -91,10 +95,10 @@
 					var/list/virus = G.data["viruses"]
 					passes = TRUE
 					for (var/datum/disease/acute/V as anything in virus)
-						dat |= "<li>[G.name]: <A href='byond://?src=\ref[src];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
+						dat |= "<li>[G.name]: <A href='byond://?src=[REF(src)];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
 			if(!passes)
 				dat += "<li><em>No pathogen</em></li>"
-	user << browse("<TITLE>Pathogenic Isolator</TITLE>Isolator menu:<BR><BR>[dat]</ul>", "window=isolator;size=575x400")
+	user << browse(HTML_SKELETON_TITLE("Pathogenic Isolator", dat), "window=isolator;size=575x400")
 	onclose(user, "isolator")
 	return
 

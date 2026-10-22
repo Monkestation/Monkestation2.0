@@ -46,7 +46,7 @@
 
 /datum/customer_data/New()
 	. = ..()
-	name_prefixes = world.file2list(prefix_file)
+	name_prefixes = file2list(prefix_file)
 
 /// Can this customer be chosen for this venue?
 /datum/customer_data/proc/can_use(datum/venue/venue)

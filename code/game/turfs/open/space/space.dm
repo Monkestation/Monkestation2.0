@@ -5,11 +5,12 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	turf_flags = NO_RUST
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-	var/starlight_source_count = 0
 
 	var/destination_z
 	var/destination_x
@@ -25,11 +26,12 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	light_inner_range = 0.1
 	light_outer_range = 4
 	light_falloff_curve = 5
-	//space_lit = TRUE
+	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
+	astar_weight = 500
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
@@ -61,9 +63,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
 		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
-
-	if(!SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT))
-		space_lit = TRUE
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
@@ -108,9 +107,12 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 /turf/open/space/remove_air(amount)
 	return null
 
+/turf/open/space/proc/update_starlight()
+	SSstarlight.turfs_to_update |= src
+
 /// Updates starlight. Called when we're unsure of a turf's starlight state
 /// Returns TRUE if we succeed, FALSE otherwise
-/turf/open/space/proc/update_starlight()
+/turf/open/space/proc/immediate_update_starlight()
 	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		// I've got a lot of cordons near spaceturfs, be good kids
 		if(isspaceturf(t) || istype(t, /turf/cordon))
@@ -121,8 +123,11 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	set_light(l_on = FALSE)
 	return FALSE
 
-/// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
+	SSstarlight.turfs_to_enable |= src
+
+/// Turns on the stars, if they aren't already
+/turf/open/space/proc/immediate_enable_starlight()
 	if(space_lit)
 		set_light(l_color = GLOB.starlight_color, l_on = TRUE)
 
@@ -238,7 +243,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 			return TRUE
 	return FALSE
 
-/turf/open/space/rust_heretic_act()
+/turf/open/space/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/space/attempt_lattice_replacement()
@@ -251,7 +256,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	destination_z = dest_z
 
 /turf/open/space/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_SPACEWALK)
+	return HAS_TRAIT(crossing, TRAIT_SPACEWALK) || (locate(/obj/structure/lattice) in src)
 
 /turf/open/space/openspace
 	icon = 'icons/turf/floors.dmi'
@@ -266,7 +271,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 		plane = TRANSPARENT_FLOOR_PLANE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 	return INITIALIZE_HINT_LATELOAD
 
-/turf/open/space/openspace/LateInitialize()
+/turf/open/space/openspace/LateInitialize(mapload_arg)
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 

@@ -53,10 +53,10 @@ SUBSYSTEM_DEF(persistence)
 	save_custom_outfits()
 	save_modular_persistence()
 	save_delamination_counter()
-	if(SStramprocess.can_fire)
+	if(SStransport.can_fire)
+		for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+			save_tram_history(transport.specific_transport_id)
 		save_tram_counter()
-	if(GLOB.interviews)
-		save_keys(GLOB.interviews.approved_ckeys)
 
 ///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(persistence)
 	for(var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
 		var/run = 0
-		if(VM.map_name == SSmapping.config.map_name)
+		if(VM.map_name == SSmapping.current_map.map_name)
 			run++
 		for(var/name in SSpersistence.saved_maps)
 			if(VM.map_name == name)
@@ -96,20 +96,12 @@ SUBSYSTEM_DEF(persistence)
 		saved_maps += mapstosave
 	for(var/i = mapstosave; i > 1; i--)
 		saved_maps[i] = saved_maps[i-1]
-	saved_maps[1] = SSmapping.config.map_name
+	saved_maps[1] = SSmapping.current_map.map_name
 	var/json_file = file(FILE_RECENT_MAPS)
 	var/list/file_data = list()
 	file_data["data"] = saved_maps
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/persistence/proc/save_keys(list/approved_ckeys)
-	var/json_file = file("data/approved_keys.json")
-	var/list/keys = list()
-	if(fexists(json_file))
-		fdel(json_file)
-	keys = json_encode(approved_ckeys)
-	WRITE_FILE(json_file, keys)
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP

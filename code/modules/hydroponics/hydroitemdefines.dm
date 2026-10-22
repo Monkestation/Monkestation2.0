@@ -49,24 +49,30 @@
 	return NONE
 
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
-/obj/item/plant_analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!can_see(user, target, 7))
-		return
-	if((user.istate & ISTATE_HARM) || !user.can_read(src))
-		return
+/obj/item/plant_analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
-	return do_plant_stats_scan(target, user)
+/obj/item/plant_analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_see(user, interacting_with, 7))
+		return ITEM_INTERACT_BLOCKING
+
+	if((user.istate & ISTATE_HARM) || !user.can_read(src))
+		return NONE
+
+	return do_plant_stats_scan(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /// Same as above, but with right click. Right-clicking scans for chemicals.
-/obj/item/plant_analyzer/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!can_see(user, target, 7))
-		return
+/obj/item/plant_analyzer/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/plant_analyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_see(user, interacting_with, 7))
+		return ITEM_INTERACT_BLOCKING
 
 	if((user.istate & ISTATE_HARM) || !user.can_read(src))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return NONE
 
-	return do_plant_chem_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
+	return do_plant_chem_scan(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /*
  * Scan the target on plant scan mode. This prints traits and stats to the user.
@@ -483,13 +489,18 @@
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 7
-	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	embed_type = /datum/embedding/hatchet
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("chop", "tear", "lacerate", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
+
+/datum/embedding/hatchet
+	pain_mult = 4
+	embed_chance = 35
+	fall_chance = 10
 
 /obj/item/hatchet/Initialize(mapload)
 	. = ..()

@@ -11,7 +11,7 @@
 
 /datum/component/particle_spewer/movement/Initialize(duration, spawn_interval, offset_x, offset_y, icon_file, particle_state, equipped_offset, burst_amount, lifetime, random_bursts)
 	. = ..()
-	RegisterSignal(source_object, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(spawn_particles))
+	RegisterSignal(source_object, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(safe_spawn_particles))
 
 /datum/component/particle_spewer/movement/handle_equip_offsets(datum/source, mob/equipper, slot)
 	. = ..()
@@ -20,10 +20,15 @@
 		attached_signal = null
 
 	attached_signal = equipper
-	RegisterSignal(equipper, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(spawn_particles))
+	RegisterSignal(equipper, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(safe_spawn_particles))
 
 /datum/component/particle_spewer/movement/reset_offsets()
 	. = ..()
 	if(attached_signal)
 		UnregisterSignal(attached_signal, COMSIG_MOVABLE_PRE_MOVE)
 		attached_signal = null
+
+/// Version of spawn_particles that will only (async) spawn particles if we're not abusing our tick time.
+/datum/component/particle_spewer/movement/proc/safe_spawn_particles()
+	if(!TICK_CHECK_LOW)
+		INVOKE_ASYNC(src, PROC_REF(spawn_particles))

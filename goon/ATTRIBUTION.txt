@@ -1,166 +1,296 @@
-openlootcrate.ogg - 
+openlootcrate.ogg -
 	Compressed in 2023 by virvatuli sound/misc/openlootcrate.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/openlootcrate.ogg
 
-openlootcrate2.ogg  - 
+openlootcrate2.ogg  -
 	Compressed in 2023 by virvatuli sound/misc/openlootcrate2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/openlootcrate2.ogg
 
-ArtifactAnc1.ogg - 
+ArtifactAnc1.ogg -
 	OG Commit sound/machines/ArtifactAnc1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/ArtifactAnc1.ogg
 
-ArtifactEld1.ogg - 
+ArtifactEld1.ogg -
 	OG Commit sound/machines/ArtifactEld1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/ArtifactEld1.ogg
 
-ArtifactEld2.ogg - 
+ArtifactEld2.ogg -
 	OG Commit sound/machines/ArtifactEld2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/ArtifactEld2.ogg
 
-ArtifactMar1.ogg - 
+ArtifactMar1.ogg -
 	OG Commit sound/machines/ArtifactMar1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/ArtifactMar1.ogg
 
-ArtifactMar2.ogg - 
+ArtifactMar2.ogg -
 	OG Commit sound/machines/ArtifactMar2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/ArtifactMar2.ogg
 
-ArtifactPre1.ogg - 
+ArtifactPre1.ogg -
 	OG Commit sound/machines/ArtifactPre1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/ArtifactPre1.ogg
 
-ArtifactWiz1.ogg - 
+ArtifactWiz1.ogg -
 	OG Commit sound/machines/ArtifactWiz1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/ArtifactWiz1.ogg
 
-elec_bzzz.ogg - 
+elec_bzzz.ogg -
 	OG Commit sound/effects/elec_bzzz.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/effects/elec_bzzz.ogg
 
-electric_shock.ogg - 
+electric_shock.ogg -
 	OG Commit sound/effects/electric_shock.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/effects/electric_shock.ogg
 
-electric_shock_short.ogg - 
+electric_shock_short.ogg -
 	OG Commit sound/effects/electric_shock_short.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/effects/electric_shock_short.ogg
 
-bellalert.ogg - 
+bellalert.ogg -
 	OG Commit sound/machines/bellalert.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/bellalert.ogg
 
-engine_alert1.ogg - 
+engine_alert1.ogg -
 	OG Commit sound/machines/engine_alert1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_alert1.ogg
 
-engine_alert2.ogg - 
+engine_alert2.ogg -
 	OG Commit sound/machines/engine_alert2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_alert2.ogg
 
-engine_alert3.ogg - 
+engine_alert3.ogg -
 	OG Commit sound/machines/engine_alert3.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_alert3.ogg
 
-engine_grump1.ogg - 
+engine_grump1.ogg -
 	OG Commit sound/machines/engine_grump1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_grump1.ogg
 
-engine_grump2.ogg - 
+engine_grump2.ogg -
 	OG Commit sound/machines/engine_grump2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_grump2.ogg
 
-engine_grump3.ogg - 
+engine_grump3.ogg -
 	OG Commit sound/machines/engine_grump3.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_grump3.ogg
 
-engine_grump4.ogg - 
+engine_grump4.ogg -
 	OG Commit sound/machines/engine_grump4.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_grump4.ogg
 
-engine_highpower.ogg - 
+engine_highpower.ogg -
 	OG Commit sound/machines/engine_highpower.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_highpower.ogg
 
-tractor_running.ogg - 
+tractor_running.ogg -
 	OG Commit sound/machines/tractor_running1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/tractor_running.ogg
 
-tractor_running2.ogg - 
+tractor_running2.ogg -
 	OG Commit sound/machines/tractor_running2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/tractor_running2.ogg
 
-tractor_running3.ogg - 
+tractor_running3.ogg -
 	OG Commit sound/machines/tractor_running3.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/tractor_running3.ogg
 
-tractorrev.ogg - 
+tractorrev.ogg -
 	OG Commit sound/machines/tractorrev.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/tractorrev.ogg
 
 
-babynoise.ogg - 
+babynoise.ogg -
 	OG Commit goonstation/sound/babynoise.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/voice/babynoise.ogg
 
-body_thud.ogg - 
+body_thud.ogg -
 	OG Commit goonstation/sound/misc/body_thud.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/body_thud.ogg
 
 
-speak_1.ogg - 
+blub.ogg -
+	OG Commit  goonstation/sound/misc/talk/blub.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/blub.ogg
+
+blub_ask.ogg -
+	OG Commit  goonstation/sound/misc/talk/blub_ask.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/blub_ask.ogg
+
+blub_exclaim.ogg -
+	OG Commit  goonstation/sound/misc/talk/blub_exclaim.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/blub_exclaim.ogg
+
+bottalk_1.ogg -
+	Superlagg a861a5dbf6da8c6c95967a7a057a22e7fc0ffc6d
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/bottalk_1.ogg
+
+bottalk_2.ogg -
+	Superlagg a861a5dbf6da8c6c95967a7a057a22e7fc0ffc6d
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/bottalk_2.ogg
+
+bottalk_3.ogg -
+	Superlagg a861a5dbf6da8c6c95967a7a057a22e7fc0ffc6d
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/bottalk_3.ogg
+
+buwoo.ogg -
+	OG Commit  goonstation/sound/misc/talk/buwoo.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/buwoo.ogg
+
+buwoo_ask.ogg -
+	OG Commit  goonstation/sound/misc/talk/buwoo_ask.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/buwoo_ask.ogg
+
+buwoo_exclaim.ogg -
+	OG Commit  goonstation/sound/misc/talk/buwoo_exclaim.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/buwoo_exclaim.ogg
+
+cow.ogg -
+	mybluecorners 22c5ed02884457311fbad779c05b8477bd8ec49b
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/cow.ogg
+
+cow_ask.ogg -
+	mybluecorners 22c5ed02884457311fbad779c05b8477bd8ec49b
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/cow_ask.ogg
+
+cow_exclaim.ogg -
+	mybluecorners 22c5ed02884457311fbad779c05b8477bd8ec49b
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/cow_exclaim.ogg
+
+cyborg.ogg -
+	virvatuli 601b9a67bd6128d2cb277294cbf399efaf333552
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/cyborg.ogg
+
+cyborg_ask.ogg -
+	virvatuli 601b9a67bd6128d2cb277294cbf399efaf333552
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/cyborg_ask.ogg
+
+cyborg_exclaim.ogg -
+	virvatuli 601b9a67bd6128d2cb277294cbf399efaf333552
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/cyborg_exclaim.ogg
+
+lizard.ogg -
+	OG Commit  goonstation/sound/misc/talk/lizard.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/lizard.ogg
+
+lizard_ask.ogg -
+	OG Commit  goonstation/sound/misc/talk/lizard_ask.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/lizard_ask.ogg
+
+lizard_exclaim.ogg -
+	OG Commit  goonstation/sound/misc/talk/lizard_exclaim.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/lizard_exclaim.ogg
+
+pug.ogg -
+	Aloe, Flaborized, Flourish, and mybluecorners da7c8965c4552ca53af367e6c83a83da2affe790
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/pug.ogg
+
+pug_ask.ogg -
+	Aloe, Flaborized, Flourish, and mybluecorners da7c8965c4552ca53af367e6c83a83da2affe790
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/pug_ask.ogg
+
+pug_exclaim.ogg -
+	Aloe, Flaborized, Flourish, and mybluecorners da7c8965c4552ca53af367e6c83a83da2affe790
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/pug_exclaim.ogg
+
+pugg.ogg -
+	Aloe, Flaborized, Flourish, and mybluecorners da7c8965c4552ca53af367e6c83a83da2affe790
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/pugg.ogg
+
+pugg_ask.ogg -
+	Aloe, Flaborized, Flourish, and mybluecorners da7c8965c4552ca53af367e6c83a83da2affe790
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/pugg_ask.ogg
+
+pugg_exclaim.ogg -
+	Aloe, Flaborized, Flourish, and mybluecorners da7c8965c4552ca53af367e6c83a83da2affe790
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/pugg_exclaim.ogg
+
+pugg.ogg -
+	Aloe, Flaborized, Flourish, and mybluecorners da7c8965c4552ca53af367e6c83a83da2affe790
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/pugg.ogg
+
+radio.ogg
+	OG Commit  goonstation/sound/misc/talk/radio.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/radio.ogg
+
+radio2.ogg
+	mybluecorners d15512660262793cb73b8da05288f067d64a0490
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/radio2.ogg
+
+radio_ai.ogg
+	mybluecorners 8ec37f12e282492a5e7aeb4ec1d5cfa2f1df7460
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/radio_ai.ogg
+
+roach.ogg
+	Lythine ed83f1991a421e0c87420051a49b36d8c4f31d1d
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/roach.ogg
+
+roach_ask.ogg
+	Lythine ed83f1991a421e0c87420051a49b36d8c4f31d1d
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/roach_ask.ogg
+
+roach_exclaim.ogg
+	Lythine ed83f1991a421e0c87420051a49b36d8c4f31d1d
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/roach_exclaim.ogg
+
+skelly.ogg -
+	OG Commit  goonstation/sound/misc/talk/skelly.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/skelly.ogg
+
+skelly_exclaim.ogg -
+	OG Commit goonstation/sound/misc/talk/skelly_exclaim.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/skelly_exclaim.ogg
+
+skelly_ask.ogg -
+	OG Commit goonstation/sound/misc/talk/skelly_ask.ogg
+https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/skelly_ask.ogg
+
+speak_1.ogg -
 	OG Commit  goonstation/sound/misc/talk/speak_1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_1.ogg
 
-speak_1_exclaim.ogg - 
+speak_1_exclaim.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_1_exclaim.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_1_exclaim.ogg
 
-speak_1_ask.ogg - 
+speak_1_ask.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_1_ask.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_1_ask.ogg
 
-speak_2.ogg - 
+speak_2.ogg -
 	OG Commit  goonstation/sound/misc/talk/speak_2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_2.ogg
 
-speak_2_exclaim.ogg - 
+speak_2_exclaim.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_2_exclaim.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_2_exclaim.ogg
 
-speak_2_ask.ogg - 
+speak_2_ask.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_2_ask.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_2_ask.ogg
 
-speak_3.ogg - 
+speak_3.ogg -
 	OG Commit  goonstation/sound/misc/talk/speak_3.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_3.ogg
 
-speak_3_exclaim.ogg - 
+speak_3_exclaim.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_3_exclaim.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_3_exclaim.ogg
 
-speak_3_ask.ogg - 
+speak_3_ask.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_3_ask.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_3_ask.ogg
 
-speak_4.ogg - 
+speak_4.ogg -
 	OG Commit  goonstation/sound/misc/talk/speak_4.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_4.ogg
 
-speak_4_exclaim.ogg - 
+speak_4_exclaim.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_4_exclaim.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_4_exclaim.ogg
 
-speak_4_ask.ogg - 
+speak_4_ask.ogg -
 	OG Commit goonstation/sound/misc/talk/speak_4_ask.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/speak_4_ask.ogg
-
-
-
-radio_ai.ogg
-	mybluecorners (8ec37f12e282492a5e7aeb4ec1d5cfa2f1df7460 
-https://github.com/goonstation/goonstation/blob/master/sound/misc/talk/radio_ai.ogg
 
 
 neon_lining.dmi
@@ -172,27 +302,27 @@ pt_laser.dmi
 https://github.com/goonstation/goonstation/blob/master/icons/obj/pt_laser.dmi
 
 
-teg.dmi - https://github.com/goonstation/goonstation/pull/3408 Azrun blower indication, Inital Commit (circulator's 
+teg.dmi - https://github.com/goonstation/goonstation/pull/3408 Azrun blower indication, Inital Commit (circulator's
 	Azrun https://github.com/goonstation/goonstation/pull/3408 blower indication
 	gannets - main teg sprite
 	Azrun https://github.com/goonstation/goonstation/pull/2902, open states
 https://github.com/goonstation/goonstation/blob/master/icons/obj/power.dmi
 https://github.com/goonstation/goonstation/blob/master/icons/obj/atmospherics/atmos.dmi
 
-slasher.dmi 
+slasher.dmi
 	Zonespace27 https://github.com/goonstation/goonstation/pull/6094
 https://github.com/Zonespace27/goonstation/blob/d9a36b8ae0203788683a38c0b8546c14b0e0f656/icons/mob/slasher.dmi
 
-electile.dmi 
+electile.dmi
 	mybluecorners https://github.com/goonstation/goonstation/pull/1425/files#diff-cc282396fd85af02912a95be13420419cc7a433cfb2280c362f3c3cf4451ad2c
 https://github.com/goonstation/goonstation/blob/master/icons/effects/electile.dmi
 
-320x320.dmi 
-	goonstation/icons/effect/320x320.dmi (lootbox sprites), 
+320x320.dmi
+	goonstation/icons/effect/320x320.dmi (lootbox sprites),
 https://github.com/goonstation/goonstation/blob/master/icons/effects/320x320.dmi
 
-displacements.dmi 
-	pali6   (inital commit) 
+displacements.dmi
+	pali6   (inital commit)
 https://github.com/goonstation/goonstation/blob/master/icons/effects/distort.dmi
 
 particle.dmi

@@ -6,15 +6,17 @@
 	base_icon_state = "scanner"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/internal/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
+
 	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
 	var/message_cooldown
 	var/breakout_time = 1200
-	var/obj/machinery/computer/scan_consolenew/linked_console = null
+	var/obj/machinery/computer/dna_console/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	. = ..()
@@ -23,8 +25,8 @@
 	precision_coeff = 0
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		scan_level += scanning_module.tier
-	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		precision_coeff = matter_bin.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		precision_coeff = capacitor.tier
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		damage_coeff = micro_laser.tier
 
@@ -123,16 +125,16 @@
 		return
 	open_machine()
 
-/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
+/obj/machinery/dna_scannernew/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))//sent icon_state is irrelevant...
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
+	if(default_pry_open(attacking_item, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()
@@ -140,8 +142,8 @@
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/dna_scannernew/mouse_drop_receive(atom/target, mob/user, params)
+	if(!iscarbon(target))
 		return
 	close_machine(target)
 
@@ -171,6 +173,21 @@
 	. = ..()
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
+	if(length(genetic_makeup_buffer))
+		var/datum/blood_type = genetic_makeup_buffer["blood_type"]
+		if(blood_type)
+			blood_type = get_blood_type(blood_type) || random_human_blood_type()
+
+/obj/item/disk/data/proc/can_write(atom/source, mob/user)
+	if(read_only)
+		if(user)
+			source?.balloon_alert(user, "disk is read-only!")
+		return FALSE
+	if(length(mutations) >= max_mutations)
+		if(user)
+			source?.balloon_alert(user, "disk is full!")
+		return FALSE
+	return TRUE
 
 /obj/item/disk/data/debug
 	name = "\improper CentCom DNA disk"
@@ -180,8 +197,8 @@
 /obj/item/disk/data/debug/Initialize(mapload)
 	. = ..()
 	// Grabs all instances of mutations and adds them to the disk
-	for(var/datum/mutation/human/mut as anything in subtypesof(/datum/mutation/human))
-		var/datum/mutation/human/ref = GET_INITIALIZED_MUTATION(mut)
+	for(var/datum/mutation/mut as anything in subtypesof(/datum/mutation))
+		var/datum/mutation/ref = GET_INITIALIZED_MUTATION(mut)
 		mutations += ref
 
 /obj/item/disk/data/attack_self(mob/user)
@@ -190,4 +207,72 @@
 
 /obj/item/disk/data/examine(mob/user)
 	. = ..()
-	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
+	. += span_notice("The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
+
+/// The weight used to pick a positive mutation.
+#define POSITIVE_WEIGHT 5
+/// The weight used to pick a neutral mutation.
+#define NEUTRAL_WEIGHT 2
+/// The weight used to pick a negative mutation.
+#define NEGATIVE_WEIGHT 2
+/// The percent chance that a mutation will have a random (non-stabilizer) chromosome applied, if applicable
+#define CHROMOSOME_PROB 70
+/// The percent chance that a mutation will have a stabilizer chromosome applied, if another chromosome wasn't already applied.
+#define STABILIZER_PROB 15
+
+/obj/item/disk/data/random
+	name = "old DNA data disk"
+	desc = "A dust-caked disk with DNA mutation info on it. Wonder what it has..."
+	read_only = TRUE
+	/// A weighted list of mutations, albeit a two layered one, so it will do a weighted pick for mutation quality, then pick a mutation of that quality.
+	var/static/list/mutation_weights
+
+/obj/item/disk/data/random/Initialize(mapload)
+	. = ..()
+	if(isnull(mutation_weights))
+		mutation_weights = initialize_mutation_weights()
+
+	var/mutation_type = pick_weight_recursive(mutation_weights)
+	var/datum/mutation/mutation = new mutation_type(GET_INITIALIZED_MUTATION(mutation_type))
+	roll_for_chromosome(mutation)?.apply(mutation)
+	mutations += mutation
+
+/// Randomly returns a valid initialized chromosome or null.
+/obj/item/disk/data/random/proc/roll_for_chromosome(datum/mutation/mutation) as /obj/item/chromosome
+	RETURN_TYPE(/obj/item/chromosome)
+	var/chromosome_type
+	var/list/valid_chromosomes = mutation.valid_chromosome_types() - /obj/item/chromosome/stabilizer
+	if(length(valid_chromosomes) && prob(CHROMOSOME_PROB))
+		chromosome_type = pick(valid_chromosomes)
+	else if(prob(STABILIZER_PROB) && mutation.stabilizer_coeff != -1)
+		chromosome_type = /obj/item/chromosome/stabilizer
+	if(chromosome_type)
+		return new chromosome_type
+
+/// Returns a (recursive) weighted list of mutations.
+/obj/item/disk/data/random/proc/initialize_mutation_weights() as /list
+	RETURN_TYPE(/list)
+	. = list()
+	var/list/good = list()
+	var/list/neutral = list()
+	var/list/bad = list()
+	for(var/datum/mutation/mutation as anything in GLOB.all_mutations)
+		if(mutation::random_locked)
+			continue
+		var/weight = isnull(mutation::species_allowed) ? 2 : 3
+		switch(mutation::quality)
+			if(POSITIVE)
+				good[mutation] = weight
+			if(MINOR_NEGATIVE)
+				neutral[mutation] = weight
+			if(NEGATIVE)
+				bad[mutation] = weight
+	.[good] = POSITIVE_WEIGHT
+	.[neutral] = NEUTRAL_WEIGHT
+	.[bad] = NEGATIVE_WEIGHT
+
+#undef STABILIZER_PROB
+#undef CHROMOSOME_PROB
+#undef NEGATIVE_WEIGHT
+#undef NEUTRAL_WEIGHT
+#undef POSITIVE_WEIGHT

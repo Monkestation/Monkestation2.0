@@ -26,7 +26,7 @@
 	if(same_z_layer)
 		return ..()
 	cut_overlay(leftpewarmrest)
-	QDEL_NULL(leftpewarmrest)
+	leftpewarmrest = null
 	gen_armrest()
 	return ..()
 
@@ -41,7 +41,7 @@
 	return mutable_appearance('icons/obj/sofa.dmi', "pewend_left_armrest")
 
 /obj/structure/chair/pew/left/Destroy()
-	QDEL_NULL(leftpewarmrest)
+	leftpewarmrest = null
 	return ..()
 
 /obj/structure/chair/pew/left/post_buckle_mob(mob/living/M)
@@ -69,7 +69,7 @@
 
 /obj/structure/chair/pew/right/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	cut_overlay(rightpewarmrest)
-	QDEL_NULL(rightpewarmrest)
+	rightpewarmrest = null
 	gen_armrest()
 	return ..()
 
@@ -83,7 +83,7 @@
 	return mutable_appearance('icons/obj/sofa.dmi', "pewend_right_armrest")
 
 /obj/structure/chair/pew/right/Destroy()
-	QDEL_NULL(rightpewarmrest)
+	rightpewarmrest = null
 	return ..()
 
 /obj/structure/chair/pew/right/post_buckle_mob(mob/living/M)

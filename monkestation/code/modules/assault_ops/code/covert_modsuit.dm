@@ -89,7 +89,8 @@
 	icon = 'monkestation/code/modules/assault_ops/icons/modsuits/mod.dmi'
 	icon_state = "stealth-control"
 	theme = /datum/mod_theme/covert
-	applied_cell = /obj/item/stock_parts/cell/hyper
+	starting_frequency = MODLINK_FREQ_SYNDICATE
+	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
 	applied_modules = list(
 		/obj/item/mod/module/dna_lock,
 		/obj/item/mod/module/emp_shield,
@@ -97,6 +98,13 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/tether,
 		/obj/item/mod/module/holster,
+	)
+
+	default_pins = list(
+
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/stealth,
+		/obj/item/mod/module/chameleon/contractor,
 	)
 
 /obj/machinery/suit_storage_unit/industrial/assault_operative

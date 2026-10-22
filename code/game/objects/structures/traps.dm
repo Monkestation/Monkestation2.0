@@ -16,6 +16,7 @@
 	var/list/mob/immune_minds = list()
 
 	var/sparks = TRUE
+	var/can_reveal = TRUE
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/structure/trap/Initialize(mapload)
@@ -26,7 +27,7 @@
 	spark_system.attach(src)
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
+		COMSIG_ATOM_ENTERED = PROC_REF(on_trap_entered)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -47,7 +48,7 @@
 		return
 	if(user.mind && (user.mind in immune_minds))
 		return
-	if(get_dist(user, src) <= 1)
+	if(can_reveal && get_dist(user, src) <= 1)
 		. += span_notice("You reveal [src]!")
 		flare()
 
@@ -66,7 +67,7 @@
 	else
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
-/obj/structure/trap/proc/on_entered(datum/source, atom/movable/victim)
+/obj/structure/trap/proc/on_trap_entered(datum/source, atom/movable/victim)
 	SIGNAL_HANDLER
 	if(last_trigger + time_between_triggers > world.time)
 		return
@@ -121,7 +122,7 @@
 	stored_item = null
 	return ..()
 
-/obj/structure/trap/stun/hunter/on_entered(datum/source, atom/movable/victim)
+/obj/structure/trap/stun/hunter/on_trap_entered(datum/source, atom/movable/victim)
 	if(isliving(victim))
 		var/mob/living/living_victim = victim
 		if(!living_victim.mind?.has_antag_datum(/datum/antagonist/fugitive))

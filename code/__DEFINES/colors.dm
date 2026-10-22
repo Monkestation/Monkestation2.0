@@ -11,6 +11,19 @@
 #define FIXED_COLOUR_PRIORITY 4
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
+/// If this is a plain atom color
+#define ATOM_COLOR_TYPE_NORMAL "normal"
+/// If this is a color filter
+#define ATOM_COLOR_TYPE_FILTER "filter"
+// Indexes for color arrays
+#define ATOM_COLOR_VALUE_INDEX 1
+#define ATOM_COLOR_TYPE_INDEX 2
+#define ATOM_PRIORITY_COLOR_FILTER "atom_priority_color"
+#define ATOM_PRIORITY_COLOR_FILTER_PRIORITY -1
+/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+#define SATURATION_MULTIPLY "multiply"
+/// Always affects the original pixel's saturation and lightness.
+#define SATURATION_OVERRIDE "always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
@@ -31,6 +44,9 @@
 #define COLOR_NEARLY_ALL_BLACK "#111111"
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK "#0000007A"
+
+//windows affected by Nar'Sie turn this color.
+#define NARSIE_WINDOW_COLOUR "#7D1919"
 
 #define COLOR_RED "#FF0000"
 #define COLOR_CHRISTMAS_RED "#D6001C"
@@ -61,6 +77,7 @@
 #define COLOR_VERY_SOFT_YELLOW "#FAE48E"
 #define COLOR_GOLD "#FFD700"
 #define COLOR_ETHIOPIA_YELLOW "#FCDD09"
+#define COLOR_LIGHT_YELLOW "#FFFEE0"
 
 #define COLOR_OLIVE "#808000"
 #define COLOR_ASSISTANT_OLIVE "#828163"
@@ -71,6 +88,7 @@
 #define COLOR_LIME "#32CD32"
 #define COLOR_DARK_LIME "#00aa00"
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
+#define COLOR_HERETIC_GREEN COLOR_VERY_PALE_LIME_GREEN // i am co-opting this as heretic glow.
 #define COLOR_VERY_DARK_LIME_GREEN "#003300"
 #define COLOR_GREEN "#008000"
 #define COLOR_CHRISTMAS_GREEN "#00873E"
@@ -95,6 +113,8 @@
 #define COLOR_COMMAND_BLUE "#1B67A5"
 #define COLOR_MEDICAL_BLUE "#5B97BC"
 #define COLOR_MODERATE_BLUE "#555CC2"
+#define COLOR_TRAM_BLUE "#6160A8"
+#define COLOR_TRAM_LIGHT_BLUE "#A8A7DA"
 #define COLOR_AMETHYST "#822BFF"
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
@@ -137,6 +157,7 @@
 #define COLOR_LIGHT_BROWN "#996666"
 #define COLOR_BROWNER_BROWN "#663300"
 
+#define COLOR_CENTCOM_GREEN "#86ff82"
 #define COLOR_GREEN_GRAY "#99BB76"
 #define COLOR_RED_GRAY "#B4696A"
 #define COLOR_PALE_BLUE_GRAY "#98C5DF"
@@ -162,6 +183,16 @@
 #define COLOR_ASSEMBLY_BLUE "#38559E"
 #define COLOR_ASSEMBLY_PURPLE "#6F6192"
 
+//Colors for crayons.
+#define COLOR_CRAYON_RED "#DA0000"
+#define COLOR_CRAYON_ORANGE "#FF9300"
+#define COLOR_CRAYON_YELLOW "#FFF200"
+#define COLOR_CRAYON_GREEN "#A8E61D"
+#define COLOR_CRAYON_BLUE "#00B7EF"
+#define COLOR_CRAYON_PURPLE "#DA00FF"
+#define COLOR_CRAYON_BLACK "#1C1C1C"
+#define COLOR_CRAYON_RAINBOW "#FFF000"
+
 ///Colors for grayscale tools
 #define COLOR_TOOL_BLUE "#1861d5"
 #define COLOR_TOOL_RED "#951710"
@@ -177,6 +208,15 @@
 #define COLOR_SAMPLE_GREEN "#98b944"
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
+
+///Colors for blood greyscale sprites
+#define BLOOD_COLOR_RED "#AA1010"
+#define BLOOD_COLOR_LIZARD "#035A00"
+#define BLOOD_COLOR_XENO "#96BB00"
+#define BLOOD_COLOR_OIL "#2C2C2C"
+#define BLOOD_COLOR_BLACK "#1F1A00"
+#define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
+#define BLOOD_COLOR_HEMOLYMPH "#04e1ed"
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"
@@ -199,6 +239,8 @@
  *
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
  */
+/// Bright light used by default in tubes and bulbs
+#define LIGHT_COLOR_DEFAULT "#f3fffac4"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
@@ -213,6 +255,8 @@
 #define LIGHT_COLOR_BLUEGREEN "#7DE1AF"
 /// Diluted cyan. rgb(125, 225, 225)
 #define LIGHT_COLOR_CYAN "#7DE1E1"
+/// Faint cyan. rgb(200, 240, 255)
+#define LIGHT_COLOR_FAINT_CYAN "#CAF0FF"
 /// Baby Blue rgb(0, 170, 220)
 #define LIGHT_COLOR_BABY_BLUE "#00AADC"
 /// Electric cyan rgb(0, 255, 255)
@@ -255,6 +299,8 @@
 #define LIGHT_COLOR_TUNGSTEN "#FFD6AA"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
+/// Nearly red. rgb(226, 78, 118)
+#define LIGHT_COLOR_BUBBLEGUM "#e24e76"
 
 //The GAGS greyscale_colors for each department's computer/machine circuits
 #define CIRCUIT_COLOR_GENERIC "#1A7A13"
@@ -273,6 +319,15 @@
 #define COLOR_PRIDE_GREEN "#41FC66"
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+/// Colors for status/tram/incident displays
+#define COLOR_DISPLAY_RED "#BE3455"
+#define COLOR_DISPLAY_ORANGE "#FF9900"
+#define COLOR_DISPLAY_YELLOW "#FFF743"
+#define COLOR_DISPLAY_GREEN "#3CF046"
+#define COLOR_DISPLAY_CYAN "#22FFCC"
+#define COLOR_DISPLAY_BLUE "#22CCFF"
+#define COLOR_DISPLAY_PURPLE "#5D5DFC"
 
 /// The default color for admin say, used as a fallback when the preference is not enabled
 #define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
@@ -303,6 +358,9 @@
 	#define CABLE_HEX_COLOR_WHITE COLOR_WHITE
 #define CABLE_COLOR_YELLOW "yellow"
 	#define CABLE_HEX_COLOR_YELLOW COLOR_YELLOW
+
+#define COLOR_DARKSPAWN_PSI "#7264FF"
+#define COLOR_VELVET "#21007F"
 
 #define COLOR_CARP_PURPLE "#aba2ff"
 #define COLOR_CARP_PINK "#da77a8"
@@ -353,5 +411,40 @@ GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BROWN = CABLE_HEX_COLOR_BROWN
 ))
 
-//Monkestation non-modular change: This has to be here because we use it in setup_consistent_human_dna
+GLOBAL_LIST_INIT(heretic_path_to_color, list(
+	PATH_START = COLOR_LIME,
+	PATH_RUST = COLOR_CARGO_BROWN,
+	PATH_FLESH = COLOR_SOFT_RED,
+	PATH_ASH = COLOR_VIVID_RED,
+	PATH_VOID = COLOR_CYAN,
+	PATH_BLADE = COLOR_SILVER,
+	PATH_COSMIC = COLOR_PURPLE,
+	PATH_LOCK = COLOR_YELLOW,
+	PATH_MOON = COLOR_BLUE_LIGHT,
+))
+
+#define HUSK_COLOR_TONE rgb(96, 88, 80)
+
+#define CM_COLOR_SAT_MIN 0.6
+#define CM_COLOR_SAT_MAX 0.7
+#define CM_COLOR_LUM_MIN 0.65
+#define CM_COLOR_LUM_MAX 0.75
+
 #define COLOR_MONKEY_BROWN "#cd8765"
+
+#define LIGHT_COLOR_CLOCKWORK "#BE8700"
+
+//Colors for Bioluminescence plant traits.
+#define COLOR_BIOLUMINESCENCE_STANDARD "#C3E381"
+#define COLOR_BIOLUMINESCENCE_SHADOW "#AAD84B"
+#define COLOR_BIOLUMINESCENCE_YELLOW "#FFFF66"
+#define COLOR_BIOLUMINESCENCE_GREEN "#99FF99"
+#define COLOR_BIOLUMINESCENCE_BLUE "#6699FF"
+#define COLOR_BIOLUMINESCENCE_PURPLE "#D966FF"
+#define COLOR_BIOLUMINESCENCE_PINK "#FFB3DA"
+
+#define LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED 2.7
+#define LIGHT_POWER_FIRE_BLOSSOM_HARVESTED 1.5
+
+#define COLOR_REVENANT	"#1d2953"
+#define COLOR_REVENANT_PLANTBLIGHT "#823abb"

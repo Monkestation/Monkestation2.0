@@ -17,7 +17,7 @@
 	bodytemp_heat_damage_limit = CELCIUS_TO_KELVIN(85 CELCIUS)
 
 	var/leaping = FALSE
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
 	unique_name = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
@@ -47,30 +47,29 @@
 	return -10
 
 /mob/living/carbon/alien/body_temperature_alerts()
-	if(bodytemperature > bodytemp_heat_damage_limit)
-		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
-	else
+	if(bodytemperature <= bodytemp_heat_damage_limit)
 		clear_alert(ALERT_XENO_FIRE)
+		return
 
-/mob/living/carbon/alien/getTrail()
-	if(getBruteLoss() < 200)
-		return pick (list("xltrails_1", "xltrails2"))
-	else
-		return pick (list("xttrails_1", "xttrails2"))
+	//Body temperature is too hot.
+	throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
+
+/mob/living/carbon/alien/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_XENO)
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
-	if (client)
-		for (var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
-			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = L.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo)
-				if(A)
-					var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = L, icon_state = "infected[A.stage]")
-					client.images += I
-	return
+	if (!client)
+		return
+
+	for (var/mob/living/target as anything in GLOB.mob_living_list)
+		if(HAS_TRAIT(target, TRAIT_XENO_HOST))
+			var/obj/item/organ/internal/body_egg/alien_embryo/embryo = target.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo)
+			if(embryo)
+				client.images += image('icons/mob/nonhuman-player/alien.dmi', loc = target, icon_state = "infected[embryo.stage]")
 
 
 /*----------------------------------------
@@ -110,7 +109,6 @@ Des: Removes all infected images from the alien.
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name
-		new_xeno.update_name_tag() // monkestation edit: name tags
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
@@ -118,6 +116,13 @@ Des: Removes all infected images from the alien.
 	if(nanites)
 		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
 		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
+	if(is_holding_items())
+		for(var/hand_index = 1 to length(held_items))
+			var/obj/item/item_in_hand = held_items[hand_index]
+			if(QDELETED(item_in_hand))
+				continue
+			dropItemToGround(item_in_hand, force = TRUE, silent = TRUE)
+			new_xeno.put_in_hand(item_in_hand, hand_index, forced = TRUE)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

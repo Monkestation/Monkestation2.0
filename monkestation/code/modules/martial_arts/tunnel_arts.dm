@@ -30,7 +30,6 @@
 
 /datum/martial_art/the_tunnel_arts/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
-	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY))
 	remove_from.faction -= FACTION_RAT //:(
 	return ..()
 
@@ -52,6 +51,7 @@
 ///Space Wind God Fist: Harm Disarm, stuns the target briefly and temporarily causing them to lose personal gravity.
 /datum/martial_art/the_tunnel_arts/proc/god_fist(mob/living/attacker, mob/living/defender)
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
+	var/def_check = defender.getarmor(affecting, MELEE)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
 		span_danger("[attacker] uppercuts [defender], sending [defender.p_them()] skyward!"),
@@ -62,7 +62,7 @@
 	to_chat(attacker, span_danger("You uppercut [defender]!"), type = MESSAGE_TYPE_COMBAT)
 	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
-	defender.apply_damage(20, attacker.get_attack_type(), affecting)
+	defender.apply_damage(30, attacker.get_attack_type(), affecting, blocked = def_check)
 	defender.emote("flip")
 	defender.emote("spin")
 	defender.apply_status_effect(/datum/status_effect/no_gravity)
@@ -72,6 +72,7 @@
 ///Chaos Reigns: Disarm Harm, Launches the target backwards, confuses them and causes the target to randomly lash out at others.
 /datum/martial_art/the_tunnel_arts/proc/chaos_punch(mob/living/attacker, mob/living/defender)
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
+	var/def_check = defender.getarmor(affecting, MELEE)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
 		span_danger("[attacker] slams [attacker.p_their()] palm into [defender]!"),
@@ -82,7 +83,7 @@
 	to_chat(attacker, span_danger("You palm strike [defender], corrupting [defender.p_their()] Chi energy!"), type = MESSAGE_TYPE_COMBAT)
 	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
-	defender.apply_damage(30, attacker.get_attack_type(), affecting)
+	defender.apply_damage(45, attacker.get_attack_type(), affecting, blocked = def_check)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.throw_at(throw_target, 3, 4, attacker)
 	defender.apply_status_effect(/datum/status_effect/amok/tunnel_madness)
@@ -93,6 +94,7 @@
 ///One Thousand Fists: Harm Harm, Delivers a lethal strike, and produces a duplicate of yourself to fight with you. Only works if the target is alive, and has a mind.
 /datum/martial_art/the_tunnel_arts/proc/thousand_fists(mob/living/attacker, mob/living/defender)
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
+	var/def_check = defender.getarmor(affecting, MELEE)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
 		span_danger("[attacker] punches [defender] with a rapid series of blows!"),
@@ -107,14 +109,14 @@
 		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), defender.loc), sounds DECISECONDS, TIMER_DELETE_ME)
 
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
-	defender.apply_damage(20, attacker.get_attack_type(), affecting)
+	defender.apply_damage(25, attacker.get_attack_type(), affecting, blocked = def_check)
 
 	if(!defender.mind || defender.stat != CONSCIOUS || prob(50))
 		return TRUE
 
 	var/mob/living/simple_animal/hostile/illusion/khan_warrior/khan = new(attacker.loc)
 	khan.faction = attacker.faction.Copy()
-	khan.Copy_Parent(attacker, 100, attacker.health / 2.5, 12, 30)
+	khan.copy_parent(attacker, 100, attacker.health / 2.5, 12, 30)
 	khan.GiveTarget(defender)
 	attacker.visible_message(
 		span_danger("[attacker] seems to duplicate before your very eyes!"),
@@ -189,7 +191,7 @@
 	if(!(khan_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
 	var/datum/dna/dna = khan_user.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(dna?.check_mutation(/datum/mutation/hulk)) //NO HULK
 		return FALSE
 	if(!isturf(khan_user.loc)) //NO MOTHERFLIPPIN MECHS!
 		return FALSE
@@ -209,7 +211,7 @@
 	to_chat(attacker, span_userdanger("[khan_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
 	khan_user.balloon_alert(attacker, "miss!")
 	attacker.changeNext_move(CLICK_CD_MELEE)
-	playsound(khan_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(khan_user, 'sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the tunnel arts.

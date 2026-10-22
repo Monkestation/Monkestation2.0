@@ -229,7 +229,7 @@
 
 	active = TRUE
 	update_icon_state()
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
+	playsound(src, grenade_arm_sound, volume, grenade_sound_vary)
 	if(landminemode)
 		landminemode.activate()
 		return
@@ -402,6 +402,7 @@
 	name = "metal foam grenade"
 	desc = "Used for emergency sealing of hull breaches."
 	stage = GRENADE_READY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/grenade/chem_grenade/metalfoam/Initialize(mapload)
 	. = ..()
@@ -415,13 +416,31 @@
 	beakers += beaker_one
 	beakers += beaker_two
 
+/obj/item/grenade/chem_grenade/iron_metalfoam
+	name = "heavy duty metal foam grenade"
+	desc = "Used for emergency sealing of hull breaches. Although more costly the large iron content inceases the durability of the sealant."
+	stage = GRENADE_READY
+	custom_price = PAYCHECK_COMMAND
 
-/obj/item/grenade/chem_grenade/smart_metal_foam
+/obj/item/grenade/chem_grenade/iron_metalfoam/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/cup/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/cup/beaker/beaker_two = new(src)
+
+	beaker_one.reagents.add_reagent(/datum/reagent/iron, 30)
+	beaker_two.reagents.add_reagent(/datum/reagent/foaming_agent, 10)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
+
+	beakers += beaker_one
+	beakers += beaker_two
+
+/obj/item/grenade/chem_grenade/smart_metalfoam
 	name = "smart metal foam grenade"
 	desc = "Used for emergency sealing of hull breaches, while keeping areas accessible."
 	stage = GRENADE_READY
+	custom_premium_price = PAYCHECK_COMMAND
 
-/obj/item/grenade/chem_grenade/smart_metal_foam/Initialize(mapload)
+/obj/item/grenade/chem_grenade/smart_metalfoam/Initialize(mapload)
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/beaker_two = new(src)
@@ -643,12 +662,12 @@
 	beakers += beaker_one
 	beakers += beaker_two
 
-/obj/item/grenade/chem_grenade/tuberculosis
+/obj/item/grenade/chem_grenade/large/tuberculosis //monkestation edit: Large grenades
 	name = "Fungal tuberculosis grenade"
 	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
 	stage = GRENADE_READY
 
-/obj/item/grenade/chem_grenade/tuberculosis/Initialize(mapload)
+/obj/item/grenade/chem_grenade/large/tuberculosis/Initialize(mapload) //monkestation edit: Large grenades
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_two = new(src)
@@ -676,6 +695,23 @@
 
 	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 150)
 	beaker_two.reagents.add_reagent(/datum/reagent/water/holywater, 150)
+
+	beakers += beaker_one
+	beakers += beaker_two
+
+/obj/item/grenade/chem_grenade/insta_husk
+	name = "Uncle Poobs insta-fry"
+	desc = "The label on the side reads: -Instantly fries any organic and non organic matter to crispy perfection-"
+	stage = GRENADE_READY
+
+/obj/item/grenade/chem_grenade/insta_husk/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/beaker_two = new(src)
+
+	beaker_one.reagents.add_reagent(/datum/reagent/fluorosurfactant, 5, reagtemp = 4500)
+	beaker_one.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 5, reagtemp = 4500)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/ice, 5, reagtemp = 100)
 
 	beakers += beaker_one
 	beakers += beaker_two

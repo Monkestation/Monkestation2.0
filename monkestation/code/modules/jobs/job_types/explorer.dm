@@ -1,12 +1,12 @@
 /datum/job/explorer
-	title = JOB_LATEJOIN_EXPLORER
+	title = JOB_EXPLORER
 	description = "Explore space. Salvage supplies. \
 		Visit strange places. Die in space."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 6
-	spawn_positions = 6
-	supervisors = SUPERVISOR_QM
+	spawn_positions = 3
+	supervisors = SUPERVISOR_QM_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "EXPLORER"
 
@@ -21,7 +21,7 @@
 	display_order = JOB_DISPLAY_ORDER_EXPLORER
 	bounty_types = CIV_JOB_MINE
 	departments_list = list(
-		/datum/job_department/late,
+		/datum/job_department/cargo,
 		)
 
 	family_heirlooms = list(
@@ -30,9 +30,16 @@
 		/obj/item/gps/mining,
 		/obj/item/toy/plush/carpplushie,
 		)
+	alt_titles = list(
+		"Explorer",
+		"Expeditionist",
+		"Scavenger",
+		"Astronaut",
+		"Asteroid Miner",
+		"Space Miner",
+	)
 	rpg_title = "Adventurer"
-	job_flags = STATION_JOB_FLAGS
-
+	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_BE_TARGET | JOB_NO_PLANETARY
 
 /datum/outfit/job/explorer
 	name = "Explorer"
@@ -41,8 +48,9 @@
 	glasses = /obj/item/clothing/glasses/meson
 	uniform = /obj/item/clothing/under/rank/cargo/miner
 	backpack_contents = list(
+		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
-		/obj/item/mining_voucher = 1,
+		/obj/item/explorer_voucher = 1,
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 		/obj/item/cargo_teleporter = 1,
@@ -52,7 +60,7 @@
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+	l_pocket = /obj/item/reagent_containers/medipen/survival
 	r_pocket = /obj/item/storage/bag/ore //causes issues if spawned in backpack
 
 	backpack = /obj/item/storage/backpack/explorer
@@ -61,6 +69,7 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
+	accessory = /obj/item/clothing/accessory/badge/cargo
 
 /obj/item/storage/box/emergency_eva/explorer
 	name = "boxed explorer's EVA kit"
@@ -72,4 +81,7 @@
 	new /obj/item/clothing/suit/space/hardsuit/mining(src)
 	new /obj/item/gps/mining(src)
 
-
+/obj/item/storage/box/emergency_eva/explorer/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/tank/jetpack/mining, /obj/item/clothing/suit/space/hardsuit/mining))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL

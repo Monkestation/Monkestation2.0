@@ -74,10 +74,15 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	item_path = /obj/item/clothing/neck/infinity_scarf
 	item_cost = 7500
 
+/datum/store_item/neck/large_scarf
+	name = "Large Scarf"
+	item_path = /obj/item/clothing/neck/large_scarf
+
 /datum/store_item/neck/boatcloak
 	name = "Boat cloak"
 	item_path = /obj/item/clothing/neck/boatcloak
 	item_cost = 7500
+
 /datum/store_item/neck/ranger_poncho
 	name = "Ranger Poncho"
 	item_path = /obj/item/clothing/neck/ranger_poncho
@@ -134,6 +139,16 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	item_path = /obj/item/clothing/neck/ace
 	item_cost = 10000
 
+/datum/store_item/neck/hornet_cloak
+	name = "Hornet Cloak (alt)"
+	item_path = /obj/item/clothing/neck/hornetcloak/alt
+	item_cost = 5000
+
+/datum/store_item/neck/knight_cloak
+	name = "Knight Cloak (alt)"
+	item_path = /obj/item/clothing/neck/knightcloak/alt
+	item_cost = 5000
+
 /*
 *	NECKTIES
 */
@@ -180,6 +195,14 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Colorable Bowtie Collar"
 	item_path = /obj/item/clothing/neck/tie/bunnytie/tied
 
+/datum/store_item/neck/tie/bunnytie/captain
+	name = "Captain's Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/captain
+
+/datum/store_item/neck/tie/bunnytie/security
+	name = "Head of Security's Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/security
+
 /datum/store_item/neck/straw_coat
 	name = "Straw Coat"
 	item_path = /obj/item/clothing/neck/straw_coat
@@ -189,6 +212,10 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Rainbow Bow Tie"
 	item_path = /obj/item/clothing/neck/bowtie/rainbow
 	item_cost = 10000
+
+/datum/store_item/neck/modlink
+	name = "MODlink Scryer"
+	item_path = /obj/item/clothing/neck/link_scryer/loaded
 
 /// EVERYTHING NOVA RELATED
 

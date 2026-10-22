@@ -10,6 +10,7 @@
 #define RUNE_COLOR_SUMMON "#00FF00"
 
 //blood magic
+#define ENHANCED_BLOODCHARGE 5
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
 /// percent before rise
@@ -31,6 +32,8 @@
 #define THEME_CULT "cult"
 #define THEME_WIZARD "wizard"
 #define THEME_HOLY "holy"
+/// Only used for heretic Harvesters, obtained from sacrificing cultists
+#define THEME_HERETIC "heretic"
 
 /// Defines for cult item_dispensers.
 #define PREVIEW_IMAGE "preview"
@@ -43,3 +46,8 @@ GLOBAL_DATUM(cult_narsie, /obj/narsie)
 #define CULT_VICTORY_MASS_CONVERSION 2
 #define CULT_FAILURE_NARSIE_KILLED 1
 #define CULT_VICTORY_NUKE 0
+
+// Used to keep track of items rewarded after a heretic is sacked.
+#define CURSED_BLADE_UNLOCKED "Cursed Blade"
+#define CRIMSON_MEDALLION_UNLOCKED "Crimson Medallion"
+#define PROTEON_ORB_UNLOCKED "Proteon Orb"

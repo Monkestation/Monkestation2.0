@@ -7,8 +7,8 @@
 		/datum/artifact_activator/touch/carbon,
 		/datum/artifact_activator/touch/silicon
 	)
-	research_value = 2500
-	examine_hint = span_bolddanger("It is vaguely forboding, <i>touching this might be a bad idea...</i>")
+	research_value = TECHWEB_DISCOUNT_MINOR * 4
+	examine_hint = span_bolddanger("It is vaguely foreboding, <i>touching this might be a bad idea...</i>")
 	examine_discovered = span_bolddanger("It will turn a random limb robotic if touched, <i>touching this might be a bad idea...</i>")
 	/// The time between each limb replacement
 	var/limb_replace_time = 1 SECONDS
@@ -22,9 +22,10 @@
 		our_artifact.holder.visible_message(span_smallnoticeital("[our_artifact.holder] does not react to [user]."))
 		return
 
-	if(!LAZYACCESS(first_touched, user))
+	var/user_ref = REF(user)
+	if(!LAZYACCESS(first_touched, user_ref))
 		eat_limb(user)
-		LAZYSET(first_touched, user, TRUE)
+		LAZYSET(first_touched, user_ref, TRUE)
 		COOLDOWN_START(src, borg_cooldown, 5 SECONDS) // so you don't get fucked over by spam-clicking it
 		return
 

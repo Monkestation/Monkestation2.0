@@ -471,6 +471,12 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"ps" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "pP" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -496,6 +502,10 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "rt" = (
 /obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"rS" = (
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "rU" = (
@@ -576,6 +586,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
+"vF" = (
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "wq" = (
 /obj/structure/marker_beacon/teal,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -591,6 +605,10 @@
 	dir = 4
 	},
 /turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"wJ" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "xd" = (
 /obj/structure/stone_tile/cracked{
@@ -628,6 +646,12 @@
 "xD" = (
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"xQ" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "yu" = (
 /obj/structure/stone_tile/block/cracked{
@@ -907,7 +931,7 @@
 "IL" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
-/mob/living/simple_animal/hostile/megafauna/legion/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/legion,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
 "IQ" = (
@@ -1242,6 +1266,12 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"WI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "WM" = (
 /obj/structure/stone_tile/block,
@@ -3801,8 +3831,8 @@ nu
 nu
 nu
 nu
-nu
-nu
+rS
+WI
 BO
 BO
 BO
@@ -3878,8 +3908,8 @@ ny
 Sw
 nu
 nu
-nu
-nu
+wJ
+vF
 BO
 BO
 BO
@@ -3955,8 +3985,8 @@ nu
 HZ
 nu
 YV
-nu
-nu
+wJ
+vF
 BO
 BO
 BO
@@ -4032,8 +4062,8 @@ nu
 nu
 nu
 Aj
-nu
-nu
+wJ
+vF
 BO
 BO
 BO
@@ -4109,8 +4139,8 @@ oS
 nu
 nu
 Sw
-nu
-nu
+xQ
+ps
 BO
 BO
 BO

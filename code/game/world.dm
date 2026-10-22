@@ -7,16 +7,6 @@
 #define NO_INIT_PARAMETER "no-init"
 
 GLOBAL_VAR(restart_counter)
-// monkestation edit: some tracy refactoring
-GLOBAL_VAR(tracy_log)
-GLOBAL_PROTECT(tracy_log)
-GLOBAL_VAR(tracy_initialized)
-GLOBAL_PROTECT(tracy_initialized)
-GLOBAL_VAR(tracy_init_error)
-GLOBAL_PROTECT(tracy_init_error)
-GLOBAL_VAR(tracy_init_reason)
-GLOBAL_PROTECT(tracy_init_reason)
-// monkestation end
 
 /**
  * WORLD INITIALIZATION
@@ -44,6 +34,8 @@ GLOBAL_PROTECT(tracy_init_reason)
  *     - SSdbcore.InitializeRound()
  *     - world.SetupLogs()
  *     - load_admins()
+ *     - load_mentors()
+ *     - MentorizeAdmins()
  *     - ...
  *   - Master.Initialize() =>
  *     - (all subsystems) Initialize()
@@ -72,26 +64,20 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	// monkestation edit: some tracy refactoring
 	if(!tracy_initialized)
-		GLOB.tracy_initialized = FALSE
-#ifndef OPENDREAM
-	if(!tracy_initialized)
+		Tracy = new
 #ifdef USE_BYOND_TRACY
-#warn USE_BYOND_TRACY is enabled
-		var/should_init_tracy = TRUE
-		GLOB.tracy_init_reason = "USE_BYOND_TRACY defined"
+		if(Tracy.enable("USE_BYOND_TRACY defined"))
+			Genesis(tracy_initialized = TRUE)
+			return
 #else
-		var/should_init_tracy = FALSE
+		var/tracy_enable_reason
 		if(USE_TRACY_PARAMETER in params)
-			should_init_tracy = TRUE
-			GLOB.tracy_init_reason = "world.params"
+			tracy_enable_reason = "world.params"
 		if(fexists(TRACY_ENABLE_PATH))
-			GLOB.tracy_init_reason ||= "enabled for round"
+			tracy_enable_reason ||= "enabled for round"
 			SEND_TEXT(world.log, "[TRACY_ENABLE_PATH] exists, initializing byond-tracy!")
-			should_init_tracy = TRUE
 			fdel(TRACY_ENABLE_PATH)
-#endif
-		if(should_init_tracy)
-			init_byond_tracy()
+		if(!isnull(tracy_enable_reason) && Tracy.enable(tracy_enable_reason))
 			Genesis(tracy_initialized = TRUE)
 			return
 #endif
@@ -102,10 +88,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	// Write everything to this log file until we get to SetupLogs() later
 	_initialize_log_files("data/logs/config_error.[GUID()].log")
-	GLOB.demo_log = "[GLOB.log_directory]/demo.txt" //Guh //Monkestation Edit: REPLAYS
 
 	// Init the debugger first so we can debug Master
-	init_debugger()
+	Debugger = new
 
 	// Create the logger
 	logger = new
@@ -149,7 +134,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	// First possible sleep()
 	InitTgs()
-	SSmetrics.world_init_time = REALTIMEOFDAY
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	ConfigLoaded()
@@ -179,6 +163,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	load_admins()
 	load_mentors()
+	MentorizeAdmins()
 
 	load_poll_data()
 
@@ -217,7 +202,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 	data["tick_usage"] = world.tick_usage
 	data["tick_lag"] = world.tick_lag
 	data["time"] = world.time
-	data["timestamp"] = logger.unix_timestamp_string()
+	data["timestamp"] = rustg_unix_timestamp()
 	return data
 
 /world/proc/SetupLogs()
@@ -227,7 +212,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 		var/texttime = time2text(realtime, "YYYY/MM/DD")
 		GLOB.log_directory = "data/logs/[texttime]/round-"
 		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD")]_"
-		GLOB.demo_directory = "data/replays"
 		GLOB.picture_log_directory = "data/picture_logs/[texttime]/round-"
 		if(GLOB.round_id)
 			GLOB.log_directory += "[GLOB.round_id]"
@@ -243,15 +227,10 @@ GLOBAL_PROTECT(tracy_init_reason)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
-	GLOB.demo_log = "[GLOB.demo_directory]/[GLOB.round_id]_demo.txt" //Guh //Monkestation Edit: REPLAYS
 	logger.init_logging()
 
-	if(GLOB.tracy_log)
-		rustg_file_write("[GLOB.tracy_log]", "[GLOB.log_directory]/tracy.loc")
-	// monkestation edit: tracy error logging
-	else if(!isnull(GLOB.tracy_init_error))
-		stack_trace("byond-tracy failed to initialize: [GLOB.tracy_init_error]")
-	// monkestation end
+	if(Tracy.trace_path)
+		rustg_file_write("[Tracy.trace_path]", "[GLOB.log_directory]/tracy.loc")
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
@@ -270,6 +249,52 @@ GLOBAL_PROTECT(tracy_init_reason)
 	if (TgsAvailable()) // why
 		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 #endif
+
+	set_db_log_directory()
+
+/proc/set_db_log_directory()
+	set waitfor = FALSE
+
+	if(!GLOB.round_id || !SSdbcore.IsConnected())
+		return
+
+	var/datum/db_query/set_log_directory = SSdbcore.NewQuery({"
+		UPDATE [format_table_name("round")]
+		SET
+			`log_directory` = :log_directory
+		WHERE
+			`id` = :round_id
+	"}, list("log_directory" = GLOB.log_directory, "round_id" = GLOB.round_id))
+
+	set_log_directory.Execute()
+	QDEL_NULL(set_log_directory)
+
+/proc/get_log_directory_by_round_id(round_id)
+	if(!isnum(round_id) || round_id <= 0 || !SSdbcore.IsConnected())
+		return
+
+	var/datum/db_query/query_log_directory = SSdbcore.NewQuery({"
+		SELECT `log_directory`
+		FROM
+			[format_table_name("round")]
+		WHERE
+			`id` = :round_id
+	"}, list("round_id" = round_id))
+
+	if(!query_log_directory.warn_execute())
+		qdel(query_log_directory)
+		return
+
+	if(!query_log_directory.NextRow())
+		qdel(query_log_directory)
+		CRASH("Failed to get log directory for round [round_id]")
+
+	var/log_directory = query_log_directory.item[1]
+	QDEL_NULL(query_log_directory)
+	if(!rustg_file_exists(log_directory))
+		CRASH("Log directory '[log_directory]' for round ID [round_id] doesn't exist!")
+
+	return log_directory
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC //redirect to server tools if necessary
@@ -329,7 +354,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 	else
 		log_world("Test run failed!\n[fail_reasons.Join("\n")]")
 	sleep(0) //yes, 0, this'll let Reboot finish and prevent byond memes
-	qdel(src) //shut it down
+	del(src) //shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
 	if (reason || fast_track) //special reboot, do none of the normal stuff
@@ -337,7 +362,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, span_boldannounce("Rebooting World immediately due to host request."))
-		SSplexora.Shutdown(TRUE, usr ? key_name(usr) : null) // Monkestation edit: plexora
 	else
 		to_chat(world, span_boldannounce("Rebooting world..."))
 		Master.Shutdown() //run SS shutdowns
@@ -366,29 +390,26 @@ GLOBAL_PROTECT(tracy_init_reason)
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
-			shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
-			auxcleanup()
+			QDEL_NULL(Tracy)
+			QDEL_NULL(Debugger)
+			SSplexora.notify_shutdown(PLEXORA_SHUTDOWN_KILLDD)
 			TgsEndProcess()
 			return ..()
 
+	SSplexora.notify_shutdown()
 	log_world("World rebooted at [time_stamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
-	shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
-	auxcleanup()
+	QDEL_NULL(Tracy)
+	QDEL_NULL(Debugger)
 
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
 	..()
 
-/world/proc/auxcleanup()
-	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (debug_server)
-		call_ext(debug_server, "auxtools_shutdown")()
-
 /world/Del()
-	shutdown_byond_tracy() // monkestation edit: shutdown_byond_tracy
-	auxcleanup()
+	QDEL_NULL(Tracy)
+	QDEL_NULL(Debugger)
 	. = ..()
 
 /world/proc/update_status()
@@ -427,8 +448,8 @@ GLOBAL_PROTECT(tracy_init_reason)
 	new_status += "<br>Roleplay: \[<b>Medium-Rare</b>\]"
 
 	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
-	if(SSmapping.config)
-		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
+	if(SSmapping.current_map)
+		new_status += "<br>Map: <b>[SSmapping.current_map.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.current_map.map_name]</b>"
 	var/alert_text = SSsecurity_level.get_current_level_as_text()
 	if(alert_text)
 		new_status += "<br>Alert: <b>[capitalize(alert_text)]</b>"
@@ -510,53 +531,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 #ifndef DISABLE_DREAMLUAU
 	DREAMLUAU_SET_EXECUTION_LIMIT_MILLIS(tick_lag * 100)
 #endif
-
-/world/proc/init_byond_tracy()
-	// monkestation start: some tracy refactoring
-	if(!fexists(TRACY_DLL_PATH))
-		SEND_TEXT(world.log, "Error initializing byond-tracy: [TRACY_DLL_PATH] not found!")
-		CRASH("Error initializing byond-tracy: [TRACY_DLL_PATH] not found!")
-
-	var/init_result = call_ext(TRACY_DLL_PATH, "init")("block")
-	if(length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
-		SEND_TEXT(world.log, "byond-tracy initialized (logfile: [init_result])")
-		GLOB.tracy_initialized = TRUE
-		return GLOB.tracy_log = init_result
-	else if(init_result == "already initialized")
-		GLOB.tracy_initialized = TRUE
-		SEND_TEXT(world.log, "byond-tracy already initialized ([GLOB.tracy_log ? "logfile: [GLOB.tracy_log]" : "no logfile"])")
-	else if(init_result != "0")
-		GLOB.tracy_init_error = init_result // monkestation edit: log tracy errors
-		SEND_TEXT(world.log, "Error initializing byond-tracy: [init_result]")
-		CRASH("Error initializing byond-tracy: [init_result]")
-	else
-		GLOB.tracy_initialized = TRUE
-		SEND_TEXT(world.log, "byond-tracy initialized (no logfile)")
-	// monkestation end
-
-// monkestation start
-/world/proc/shutdown_byond_tracy()
-	if(GLOB.tracy_initialized)
-		SEND_TEXT(world.log, "Shutting down byond-tracy")
-		GLOB.tracy_initialized = FALSE
-		call_ext(TRACY_DLL_PATH, "destroy")()
-
-/world/proc/flush_byond_tracy()
-	// if GLOB.tracy_log is set, that means we're using para-tracy, which should have this.
-	if(GLOB.tracy_initialized && GLOB.tracy_log)
-		SEND_TEXT(world.log, "Flushing byond-tracy log")
-		var/flush_result = call_ext(TRACY_DLL_PATH, "flush")()
-		if(flush_result != "0")
-			SEND_TEXT(world.log, "Error flushing byond-tracy log: [flush_result]")
-			CRASH("Error flushing byond-tracy log: [flush_result]")
-		SEND_TEXT(world.log, "Flushed byond-tracy log")
-// monkestation end
-
-/world/proc/init_debugger()
-	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (dll)
-		call_ext(dll, "auxtools_init")()
-		enable_debugging()
 
 /world/Profile(command, type, format)
 	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))

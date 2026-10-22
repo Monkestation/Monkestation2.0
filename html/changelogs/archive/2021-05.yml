@@ -471,7 +471,7 @@
   - bugfix: Cryopods can no longer be used to round remove other SSD players.
   - bugfix: Cryopods no longer delete traitor objectives under certain edge cases,
       and can no longer be used to metagame the existence of traitors with steal objectives.
-  - balance: Cryopods now vomit out all the items of players who get vored by them,
+  - balance: Cryopods now vomit out all the items of players who get devoured by them,
       like beautiful loot pinatas.
   itseasytosee:
   - bugfix: changeling spacesuits no longer come with a battery hud
@@ -479,7 +479,7 @@
   Kylerace:
   - bugfix: i dont have the energy for a witty in-universe changelog so airhorns can
       honk again
-  - bugfix: Recyclers dont vore themselves the moment the world is created anymore.
+  - bugfix: Recyclers dont devour themselves the moment the world is created anymore.
   Mothblocks:
   - refactor: tgui tooltips have been moved to a new system that keeps them within
       bounds of the screen.

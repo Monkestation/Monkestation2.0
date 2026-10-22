@@ -194,13 +194,14 @@
 		EQUIP_OUTFIT_ITEM(back, ITEM_SLOT_BACK)
 	if(id)
 		EQUIP_OUTFIT_ITEM(id, ITEM_SLOT_ID)
-	if(!visualsOnly && id_trim && H.wear_id)
-		var/obj/item/card/id/id_card = H.wear_id
-		id_card.registered_age = H.age
-		if(id_trim)
-			if(!SSid_access.apply_trim_to_card(id_card, id_trim))
-				WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
-			H.sec_hud_set_ID()
+	if(!visualsOnly)
+		var/obj/item/card/id/id_card = H.wear_id?.GetID()
+		if(id_card)
+			id_card.registered_age = H.age
+			if(id_trim)
+				if(!SSid_access.apply_trim_to_card(id_card, id_trim))
+					WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
+				H.sec_hud_set_ID()
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)
@@ -209,9 +210,11 @@
 		H.undershirt = initial(undershirt.name)
 
 	if(accessory)
-		var/obj/item/clothing/under/U = H.w_uniform
-		if(U)
-			U.attach_accessory(SSwardrobe.provide_type(accessory, H))
+		var/obj/item/clothing/under/jumpsuit_attached = H.w_uniform
+		if(jumpsuit_attached)
+			var/obj/item/clothing/accessory/worn_accessory = SSwardrobe.provide_type(accessory, H)
+			jumpsuit_attached.attach_accessory(worn_accessory)
+			astype(worn_accessory, /obj/item/clothing/accessory/badge)?.set_identity(H)
 		else
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 

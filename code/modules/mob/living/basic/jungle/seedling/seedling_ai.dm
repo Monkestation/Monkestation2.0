@@ -46,20 +46,20 @@
 	var/watering_can = locate(/obj/item/reagent_containers/cup/watering_can) in living_pawn
 
 	for(var/atom/movable/hydro in oview(search_range, controller.pawn))
-		if(!hydro.GetComponent(/datum/component/plant_growing))
+		var/datum/component/plant_growing/grow = hydro.GetComponent(/datum/component/plant_growing)
+
+		if(!grow)
 			continue
 		if(!(locate(/obj/item/seeds) in hydro.contents))
 			continue
-
-		var/datum/component/plant_growing/grow = hydro.GetComponent(/datum/component/plant_growing)
-		if(grow.water_precent < waterlevel_threshold && watering_can)
+		if(watering_can && (grow.water_precent < waterlevel_threshold))
 			possible_trays += hydro
 			continue
 		if(grow.weed_level > weedlevel_threshold)
 			possible_trays += hydro
 			continue
 
-	if(possible_trays.len)
+	if(length(possible_trays))
 		return pick(possible_trays)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
@@ -74,7 +74,7 @@
 	if(QDELETED(hydro_target))
 		return
 
-	for(var/item as anything in growing.managed_seeds)
+	for(var/item in growing.managed_seeds)
 		var/obj/item/seeds/seed = growing.managed_seeds[item]
 		if(!seed)
 			continue
@@ -120,7 +120,7 @@
 			continue
 
 		var/datum/component/plant_growing/growing = hydro.GetComponent(/datum/component/plant_growing)
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue

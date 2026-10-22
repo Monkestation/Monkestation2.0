@@ -22,7 +22,7 @@
 		- You will not appear as Pale when examined. Anything further than Pale, however, will not be hidden.\n\
 		At the end of a Masquerade, you will re-gain your Vampiric abilities, as well as lose any Disease & Gene you might have."
 	power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN | BP_AM_COSTLESS_UNCONSCIOUS
-	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_DURING_SOL
+	check_flags = BP_CANT_USE_IN_FRENZY | BP_ALLOW_WHILE_SILVER_CUFFED
 	purchase_flags = BLOODSUCKER_CAN_BUY | BLOODSUCKER_DEFAULT_POWER
 	bloodcost = 10
 	cooldown_time = 5 SECONDS
@@ -43,10 +43,9 @@
 	ADD_TRAIT(user, TRAIT_MASQUERADE, BLOODSUCKER_TRAIT)
 	// Handle organs
 	var/obj/item/organ/internal/heart/vampheart = user.get_organ_slot(ORGAN_SLOT_HEART)
-	vampheart.beating = TRUE
-	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		eyes.flash_protect = initial(eyes.flash_protect)
+	vampheart?.beating = TRUE
+
+	RegisterSignal(user, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /datum/action/cooldown/bloodsucker/masquerade/DeactivatePower()
 	. = ..() // activate = FALSE
@@ -57,7 +56,7 @@
 	user.remove_status_effect(/datum/status_effect/masquerade)
 	user.dna.remove_all_mutations()
 	for(var/datum/disease/diseases as anything in user.diseases)
-		diseases.cure()
+		diseases.cure(target = user, safe = TRUE)
 
 	// Handle Traits
 	user.add_traits(bloodsuckerdatum_power.bloodsucker_traits, BLOODSUCKER_TRAIT)
@@ -65,11 +64,17 @@
 
 	// Handle organs
 	var/obj/item/organ/internal/heart/vampheart = user.get_organ_slot(ORGAN_SLOT_HEART)
-	vampheart.beating = FALSE
-	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		eyes.flash_protect = max(initial(eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
+	vampheart?.beating = FALSE
+
+	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
+
 	to_chat(user, span_notice("Your heart beats one final time, while your skin dries out and your icy pallor returns."))
+
+/// Used to automatically disable masquerade if the user dies
+/datum/action/cooldown/bloodsucker/masquerade/proc/on_stat_change(mob/living/target, new_stat)
+	SIGNAL_HANDLER
+	if(active && new_stat == DEAD)
+		DeactivatePower()
 
 /**
  * # Status effect
@@ -86,7 +91,7 @@
 /atom/movable/screen/alert/status_effect/masquerade
 	name = "Masquerade"
 	desc = "You are currently hiding your identity using the Masquerade power. This halts Vampiric healing."
-	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
+	icon = 'icons/bloodsuckers/actions_bloodsucker.dmi'
 	icon_state = "power_human"
 	alerttooltipstyle = "cult"
 

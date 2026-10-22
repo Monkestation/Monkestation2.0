@@ -1,5 +1,5 @@
 /datum/sprite_accessory/tails/ethereal
-	icon = 'monkestation/icons/mob/species/ethereal/ethereal_tail.dmi'
+	icon = 'icons/mob/species/ethereal/ethereal_tail.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 

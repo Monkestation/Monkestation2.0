@@ -119,8 +119,13 @@ GLOBAL_LIST_INIT(tendrils, list())
 	collector.start_pulling(loot)
 	collected += WEAKREF(collector)
 
+/obj/effect/collapse/attack_robot(mob/living/user)
+	. = ..()
+	if (Adjacent(user))
+		return attack_hand(user)
+
 /obj/effect/collapse/Destroy()
-	QDEL_NULL(collected)
+	collected.Cut()
 	QDEL_NULL(emitted_light)
 	return ..()
 
@@ -141,6 +146,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 	playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, TRUE)
 	visible_message(span_boldannounce("The tendril falls inward, the ground around it widening into a yawning chasm!"))
 	for(var/turf/T in RANGE_TURFS(2,src))
+		if(HAS_TRAIT(T, TRAIT_NO_TERRAFORM))
+			continue
 		if(!T.density)
 			T.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland, flags = CHANGETURF_INHERIT_AIR)
 	qdel(src)

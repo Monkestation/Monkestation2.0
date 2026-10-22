@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -30,7 +30,7 @@ export const CargoExpress = (props) => {
   return (
     <Window width={600} height={700}>
       <Window.Content scrollable>
-        <InterfaceLockNoticeBox accessText="a QM-level ID card" />
+        <InterfaceLockNoticeBox accessText="an ID with cargo access" />
         {!locked && <CargoExpressContent />}
       </Window.Content>
     </Window>

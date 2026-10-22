@@ -10,7 +10,6 @@
 	var/static/list/base_traits = list(
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 	)
 
@@ -75,7 +74,7 @@
 
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(ADMIN_HEAL_ALL)
+	owner.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	owner.visible_message(span_warning("[owner] appears to wake from the dead, having healed all wounds!"), span_notice("You have regenerated."))
 
 
@@ -240,6 +239,7 @@
 
 	//Makes the user passive, it's in their oath not to harm!
 	ADD_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PERFECT_SURGEON, HIPPOCRATIC_OATH_TRAIT)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.show_to(owner)
 	return ..()
@@ -247,11 +247,12 @@
 /datum/status_effect/hippocratic_oath/on_remove()
 	QDEL_NULL(aura_healing)
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PERFECT_SURGEON, HIPPOCRATIC_OATH_TRAIT)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.hide_from(owner)
 
 /datum/status_effect/hippocratic_oath/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
+	return span_notice("[owner.p_they(TRUE)] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick()
 	if(owner.stat == DEAD)
@@ -325,7 +326,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/good_music/tick()
-	if(owner.can_hear())
+	if(!HAS_TRAIT(owner, TRAIT_DEAF))
 		owner.adjust_dizzy(-4 SECONDS)
 		owner.adjust_jitter(-4 SECONDS)
 		owner.adjust_confusion(-1 SECONDS)
@@ -342,11 +343,11 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-	owner.adjustBruteLoss(-25)
-	owner.adjustFireLoss(-25)
+	owner.heal_overall_damage(brute = 25, burn = 25, updating_health = FALSE) // fully_heal always calls updatehealth anyways
 	owner.fully_heal(HEAL_CC_STATUS|HEAL_TEMP)
 	return TRUE
 
@@ -376,7 +377,7 @@
 
 /datum/status_effect/mayhem
 	id = "Mayhem"
-	duration = 1 MINUTE // monkestation edit
+	duration = 1 MINUTES
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
 
@@ -424,21 +425,27 @@
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
 	alert_type = null
+	//negative speeds up, positive slows down. -1 is default speedup
+	var/slowdown = -1
 
-/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration, multiplier)
+	if(multiplier)
+		slowdown = multiplier
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
 
 /datum/status_effect/speed_boost/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	var/datum/movespeed_modifier/status_speed_boost/newboost = new /datum/movespeed_modifier/status_speed_boost
+	newboost.multiplicative_slowdown = slowdown
+	owner.add_movespeed_modifier(newboost, update = TRUE)
 	return ..()
 
 /datum/status_effect/speed_boost/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
-	multiplicative_slowdown = -1
+	multiplicative_slowdown = 0
 
 ///this buff provides a max health buff and a heal.
 /datum/status_effect/limited_buff/health_buff
@@ -480,17 +487,17 @@
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
-/datum/status_effect/nest_sustenance/tick(seconds_per_tick, times_fired)
+/datum/status_effect/nest_sustenance/tick(seconds_between_ticks, times_fired)
 	. = ..()
 
 	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
 		qdel(src)
 		return
 
-	owner.adjustBruteLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustOxyLoss(-4 * seconds_per_tick, updating_health = FALSE)
-	owner.stamina.adjust(4 * seconds_per_tick)
+	owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	owner.stamina.adjust(4 * seconds_between_ticks)
 	owner.adjust_bodytemperature(INFINITY, max_temp = owner.standard_body_temperature) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
@@ -547,3 +554,133 @@
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
 	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
+
+/// Gives you a brief period of anti-gravity
+/datum/status_effect/jump_jet
+	id = "jump_jet"
+	alert_type = null
+	duration = 5 SECONDS
+
+/datum/status_effect/jump_jet/on_apply()
+	owner.AddElement(/datum/element/forced_gravity, 0)
+	return TRUE
+
+/datum/status_effect/jump_jet/on_remove()
+	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/datum/status_effect/time_dilation //used by darkspawn; greatly increases action times etc
+	id = "time_dilation"
+	duration = 60 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/time_dilation
+
+/datum/status_effect/time_dilation/get_examine_text()
+	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] is moving jerkily and unpredictably!")
+
+/datum/status_effect/time_dilation/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
+	owner.next_move_modifier *= 0.5 // For the duration of this you move and attack faster
+	owner.ignore_slowdown(id)
+	return TRUE
+
+/datum/status_effect/time_dilation/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
+	owner.next_move_modifier *= 2
+	owner.unignore_slowdown(id)
+
+/atom/movable/screen/alert/status_effect/time_dilation
+	name = "Time Dilation"
+	desc = "Your actions are twice as fast, and the delay between them is halved."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
+	icon_state = "time_dilation"
+
+/datum/movespeed_modifier/time_dilation
+	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/mayhem
+	multiplicative_slowdown = -0.6
+
+/atom/movable/screen/alert/status_effect/mayhem
+	name = span_cult("Mayhem")
+	desc = span_bolddanger("RIP AND TEAR!!")
+	icon = 'icons/obj/weapons/chainsaw.dmi'
+	icon_state = "chainsaw_on"
+	alerttooltipstyle = "cult"
+
+/datum/status_effect/mayhem
+	show_duration = TRUE
+	tick_interval = STATUS_EFFECT_NO_TICK // Just pass me the SSfastprocess ticks please.
+
+	alert_type = /atom/movable/screen/alert/status_effect/mayhem
+
+	var/list/traits = list(
+		TRAIT_NO_SPRINT, // It makes you go really fast already, also makes you focus more on hitting people.
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOCRITOVERLAY,
+	)
+
+/datum/status_effect/mayhem/on_remove()
+	. = ..()
+
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/mayhem)
+	owner.remove_client_colour(/datum/client_colour/mayhem)
+
+	owner.remove_traits(traits, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/mayhem/on_apply()
+	. = ..()
+
+	owner.SetAllImmobility(0)
+	owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
+
+	owner.add_traits(traits, TRAIT_STATUS_EFFECT(id))
+
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/mayhem)
+
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, add_client_colour), /datum/client_colour/mayhem), 2.1 SECONDS) // So that it lines up with the bloodlust colour perfectly.
+
+	if(!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/user = owner
+
+	if(user.handcuffed)
+		shatter(user, ITEM_SLOT_HANDCUFFED)
+
+	if(user.legcuffed)
+		shatter(user, ITEM_SLOT_LEGCUFFED)
+
+	if(user.wear_suit?.breakouttime)
+		shatter(user, ITEM_SLOT_OCLOTHING)
+
+/datum/status_effect/mayhem/proc/shatter(mob/living/carbon/human/user, slot)
+	var/obj/item/restraints = user.get_item_by_slot(slot)
+
+	owner.visible_message(
+		message = span_warning("[user] shatters [user.p_their()] [restraints.name]!"),
+		self_message = span_notice("You shatter your [restraints.name]!"),
+		blind_message = span_hear("You hear something shatter!")
+	)
+
+	qdel(restraints)
+
+/datum/status_effect/mayhem/tick(seconds_between_ticks, times_fired) // Replacement for the Adminordazine it used before.
+	. = ..()
+
+	var/healing_amount = 5 * seconds_between_ticks
+
+	owner.heal_overall_damage(healing_amount, healing_amount, STAMINA_MAX / 10 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustToxLoss(-healing_amount, updating_health = FALSE)
+	owner.adjustOxyLoss(-healing_amount, updating_health = FALSE)
+
+	owner.blood_volume = min(owner.blood_volume + BLOOD_VOLUME_NORMAL / 10 * seconds_between_ticks, BLOOD_VOLUME_NORMAL)
+
+	if(iscarbon(owner))
+		var/mob/living/carbon/user = owner
+		if(length(user.all_wounds) && SPT_PROB(20, seconds_between_ticks))
+			qdel(pick(user.all_wounds))
+			to_chat(user, span_green("One of your ailments leaves you.")) // Static message so it gets collapsed in chat.
+
+	owner.updatehealth() // Because we healed, what, 5 different damage types on SSfastprocess, this is way more efficient.

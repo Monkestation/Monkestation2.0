@@ -40,6 +40,44 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if((user.istate & ISTATE_HARM))
 		return ..(M, user)
 
+/obj/item/balloon_mallet
+	name = "balloon mallet"
+	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "balloon_mallet"
+	inhand_icon_state = "balloon_mallet"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	siemens_coefficient = 0
+	force = 1
+	throw_speed = 1
+	throwforce = 1
+	throw_range = 1
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("mallets", "smoother")
+	attack_verb_simple = list("mallet", "smoother")
+	max_integrity = 20
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/obj/item/balloon_mallet/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
+		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+
+/obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
+	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	if (!isliving(target))
+		return
+	switch(target.mob_mood.sanity)
+		if (SANITY_INSANE to SANITY_CRAZY)
+			force = 8
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			force = 4
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+
 /obj/item/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -83,6 +121,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
 	resistance_flags = FIRE_PROOF
+	tool_behaviour = TOOL_KNIFE // what is a sword but a big knife
 
 /datum/armor/item_claymore
 	fire = 100
@@ -94,6 +133,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	speed = 4 SECONDS, \
 	effectiveness = 105, \
 	)
+
+/obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	//Swords do not block tackles, body throws, or leaps.
+	if (attack_type == LEAP_ATTACK)
+		final_block_chance = 0
+	return ..()
 
 /obj/item/claymore/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -111,7 +156,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 20
 	throw_speed = 3
 	throw_range = 5
-	armour_penetration = 35
+	armour_penetration = 60
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
@@ -255,13 +300,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "claymore_cyborg"
-	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize(mapload)
-	var/obj/item/robot_model/kiltkit = loc
-	robot = kiltkit.loc
 	. = ..()
-	if(!istype(robot))
+	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
@@ -290,6 +332,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor_type = /datum/armor/item_katana
 	resistance_flags = FIRE_PROOF
+
+/obj/item/katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	//Mundane swords do not block tackles, body throws, or leaps.
+	if (attack_type == LEAP_ATTACK)
+		final_block_chance = 0
+	return ..()
 
 /datum/armor/item_katana
 	fire = 100
@@ -331,7 +379,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
-/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/shard))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
 		user.balloon_alert(user, "crafting spear...")
@@ -376,19 +424,30 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
-	armour_penetration = 40
+	embed_type = /datum/embedding/throwing_star
+	armour_penetration = 75
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
+/datum/embedding/throwing_star
+	pain_mult = 4
+	embed_chance = 100
+	fall_chance = 0
+
 /obj/item/throwing_star/stamina
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
+	embed_type = /datum/embedding/throwing_star/stamina
+
+/datum/embedding/throwing_star/stamina
+	pain_mult = 5
+	jostle_chance = 10
+	pain_stam_pct = 0.8
+	jostle_pain_mult = 3
 
 /obj/item/throwing_star/toy
 	name = "toy throwing star"
@@ -396,7 +455,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = NONE
 	force = 0
 	throwforce = 0
-	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
+	embed_type = /datum/embedding/throwing_star/toy
+
+/datum/embedding/throwing_star/toy
+	pain_mult = 0
+	jostle_pain_mult = 0
 
 /obj/item/switchblade
 	name = "switchblade"
@@ -714,6 +777,40 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "hoverboard_nt"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 
+/obj/item/melee/skateboard/holyboard
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	icon_state = "hoverboard_holy_held"
+	inhand_icon_state = "hoverboard_holy"
+	force = 18
+	throwforce = 6
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("bashes", "crashes", "grinds", "skates")
+	attack_verb_simple = list("bash", "crash", "grind", "skate")
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+
+/obj/item/melee/skateboard/holyboard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGICKS!!", \
+		tip_text = "Clear rune", \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+
+/obj/item/melee/skateboard/holyboard/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
+
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."
@@ -783,26 +880,23 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
-/obj/item/melee/baseball_bat/multi_attack(mob/living/target_mob, mob/living/user, params, direction_traveled)
+/obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	// we obtain the relative direction from the bat itself to the target
-	var/relative_direction = get_cardinal_dir(direction_traveled, target_mob)
-	var/atom/throw_target = get_edge_target_turf(target_mob, relative_direction)
+	var/relative_direction = get_cardinal_dir(src, target)
+	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
 	. = ..()
-	if(iscarbon(target_mob))
-		var/mob/living/carbon/target = target_mob
-		target.stamina.adjust(-force * 2)
 
 	if(homerun_ready)
 		user.visible_message(span_userdanger("It's a home run!"))
-		if(!QDELETED(target_mob))
-			target_mob.throw_at(throw_target, rand(8,10), 14, user)
+		if(!QDELETED(target))
+			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = FALSE
 		return
-	else if(!QDELETED(target_mob) && !target_mob.anchored)
+	else if(!QDELETED(target) && !target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
-		target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/Destroy(force)
 	for(var/target in thrown_datums)
@@ -923,15 +1017,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, click_parameters)
 	if(is_type_in_typecache(target, splattable))
-		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target
 			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
 			bug.gib()
@@ -1024,7 +1114,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
-	embedding = list("embed_chance" = 100)
+	embed_type = /datum/embedding/hfr_blade
 	block_chance = 25
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -1038,6 +1128,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/previous_y
 	/// The previous target we attacked
 	var/datum/weakref/previous_target
+
+/datum/embedding/hfr_blade
+	embed_chance = 100
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
@@ -1061,24 +1154,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
+	return FALSE
 
-/obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) || HAS_TRAIT(src, TRAIT_PACIFISM))
-		return ..()
-	slash(target, user, params)
-
-/obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return
-	return ..()
-
-/obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
+/obj/item/highfrequencyblade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
-		return
-	slash(target, user, params)
-	return AFTERATTACK_PROCESSED_ITEM
+		return . // Default attack
+	if(isliving(A) && HAS_TRAIT(src, TRAIT_PACIFISM))
+		return . // Default attack (ultimately nothing)
+
+	return slash(A, user, params)
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
@@ -1113,14 +1200,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_target.gib()
 			log_combat(user, living_target, "gibbed", src)
+		return TRUE
 	else if(target.uses_integrity)
 		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
+		return TRUE
 	else if(iswallturf(target) && prob(force*damage_mod*0.5))
 		var/turf/closed/wall/wall_target = target
 		wall_target.dismantle_wall()
+		return TRUE
 	else if(ismineralturf(target) && prob(force*damage_mod))
 		var/turf/closed/mineral/mineral_target = target
 		mineral_target.gets_drilled()
+		return TRUE
+	return FALSE
 
 /obj/effect/temp_visual/slash
 	icon_state = "highfreq_slash"
@@ -1158,3 +1250,65 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/obj/item/melee/sledgehammer
+	name = "sledgehammer"
+	desc = "An hefty tool used for smashing apart windows, machinery, and other structures. Printers beware."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "sledgehammer"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	force = 5 /// The weapon requires two hands
+	throwforce = 12
+	throw_range = 3 /// Doesn't throw very far
+	demolition_mod = 3 // BREAK THINGS
+	armour_penetration = 10
+	armour_ignorance = 0
+	hitsound = 'sound/weapons/smash.ogg' /// Hitsound when thrown at someone
+	attack_verb_continuous = list("slams", "crushes", "smashes", "flattens", "pounds")
+	attack_verb_simple = list("slam", "crush", "smash", "flatten", "pound")
+	custom_materials = list(/datum/material/iron=6000)
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = ITEM_SLOT_BACK
+	wound_bonus = -15
+	bare_wound_bonus = 15
+
+/obj/item/melee/sledgehammer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_wielded = 12, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), require_twohands = FALSE)
+
+/obj/item/melee/sledgehammer/proc/on_wield(atom/source, mob/living/user)
+	hitsound = "swing_hit"
+
+/obj/item/melee/sledgehammer/proc/on_unwield(atom/source, mob/living/user)
+	hitsound = initial(hitsound)
+
+/obj/item/melee/sledgehammer/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		/// This will already do low damage, so it doesn't need to be intercepted earlier
+		to_chat(user, span_danger("\The [src] is too heavy to attack effectively without being wielded!"))
+		return
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humantarget = target
+		if(!HAS_TRAIT(target, TRAIT_SPLEENLESS_METABOLISM) && humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN) && !isnull(humantarget.dna.species.mutantspleen))
+			var/obj/item/organ/internal/spleen/target_spleen = humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN)
+			target_spleen.apply_organ_damage(5)
+
+	if(target.uses_integrity)
+		if(!QDELETED(target))
+			if(istype(get_area(target), /area/space/shipbreak))
+				if(isstructure(target))
+					target.take_damage(src.force * demolition_mod, BRUTE, MELEE, FALSE, null, 80) // Breaks "structures pretty good"
+				if(ismachinery(target))
+					target.take_damage(src.force * demolition_mod, BRUTE, MELEE, FALSE, null, 80) // A luddites friend, Sledghammer good at break machine
+			playsound(src, 'sound/effects/bang.ogg', 40, 1)
+
+/obj/item/melee/sledgehammer/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle = FALSE, quickstart)
+	. = ..()
+	if(iscarbon(thrower))
+		var/mob/living/carbon/C = thrower
+		C.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/sledgehammer_thrown_stagger, update=TRUE)
+		addtimer(CALLBACK(C, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/status_effect/sledgehammer_thrown_stagger), 4 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		to_chat(target, span_danger("You are staggered from throwing such a heavy object!"))

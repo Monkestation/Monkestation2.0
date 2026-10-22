@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(all_huds)
 GLOBAL_LIST_EMPTY(huds_by_category)
 
 //GLOBAL HUD LIST
-GLOBAL_LIST_INIT(huds, list(
+GLOBAL_ALIST_INIT(huds, alist(
 	DATA_HUD_SECURITY_BASIC = new/datum/atom_hud/data/human/security/basic(),
 	DATA_HUD_SECURITY_ADVANCED = new/datum/atom_hud/data/human/security/advanced(),
 	DATA_HUD_MEDICAL_BASIC = new/datum/atom_hud/data/human/medical/basic(),
@@ -15,12 +15,13 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_DIAGNOSTIC_BASIC = new/datum/atom_hud/data/diagnostic/basic(),
 	DATA_HUD_DIAGNOSTIC_ADVANCED = new/datum/atom_hud/data/diagnostic/advanced(),
 	DATA_HUD_ABDUCTOR = new/datum/atom_hud/abductor(),
-	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
 	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
 	DATA_HUD_FAN = new/datum/atom_hud/data/human/fan_hud(),
 	DATA_HUD_PERMIT = new/datum/atom_hud/data/human/permit(), //monkestation edit
 	DATA_HUD_SENSORS = new/datum/atom_hud/data/human/medical/basic/sensors(), //monkestation edit - CYBERNETICS
-	DATA_HUD_CREW = new/datum/atom_hud/data/human/crew_hud() //Monkestation edit, crew hud
+	DATA_HUD_CREW = new/datum/atom_hud/data/human/crew_hud(), //Monkestation edit, crew hud
+	DATA_HUD_BORER = new/datum/atom_hud/borer(),
+	DATA_HUD_SIMIAN = new/datum/atom_hud/data/human/simian(),
 ))
 
 /datum/atom_hud
@@ -48,7 +49,7 @@ GLOBAL_LIST_INIT(huds, list(
 	var/list/next_time_allowed = list()
 	///mobs that have triggered the cooldown and are queued to see the hud, but do not yet
 	var/list/queued_to_see = list()
-	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisiblity
+	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisibility
 	var/list/hud_exceptions = list()
 	///whether or not this atom_hud type updates the global huds_by_category list.
 	///some subtypes cant work like this since theyre supposed to "belong" to

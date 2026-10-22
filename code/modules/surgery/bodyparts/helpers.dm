@@ -1,15 +1,35 @@
-
-/mob/living/proc/get_bodypart(zone)
+/**
+ * Returns a bodypart of the specified zone that this mob has
+ *
+ * * zone: the zone to get.
+ * Defaults to chest, allowing for skilling zone nullchecks if you don't care what bodypart you get.
+ *
+ * Returns a bodypart, or null.
+ */
+/mob/living/proc/get_bodypart(zone = BODY_ZONE_CHEST) as /obj/item/bodypart
 	return
 
-/mob/living/carbon/get_bodypart(zone)
+/mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST)
 	RETURN_TYPE(/obj/item/bodypart)
-
-	if(!zone)
-		zone = BODY_ZONE_CHEST
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone == zone)
-			return bodypart
+		if(bodypart.body_zone != zone)
+			continue
+		return bodypart
+
+/**
+ * Returns all bodyparts this mob has, optionally including stumps.
+ *
+ * include_stumps: whether or not to consider stumps as valid bodyparts to return.
+ * Defaults to FALSE, meaning that if a limb is missing (is a stump), it won't be included in the returned list.
+ *
+ * Returns a list of bodyparts, which may be empty.
+ */
+/mob/living/proc/get_bodyparts()
+	. = list()
+	for(var/zone in GLOB.all_body_zones)
+		var/obj/item/bodypart/bodypart = get_bodypart(zone)
+		if(bodypart)
+			. += bodypart
 
 ///Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
@@ -27,6 +47,24 @@
 
 	new_limb.try_attach_limb(src, special = special)
 	return old_limb // can be null
+
+/// Replaces the chosen limb(zone) to the original one
+/mob/living/carbon/proc/reset_to_original_bodypart(limb_zone)
+	if (!(limb_zone in BODY_ZONES_ALL))
+		stack_trace("Invalid zone [limb_zone] provided to reset_to_original_bodypart()")
+		return
+
+	// find old limb to del it first
+	var/obj/item/bodypart/old_limb = get_bodypart(limb_zone)
+	if(old_limb)
+		old_limb.drop_limb(special = TRUE)
+		qdel(old_limb)
+
+	// mаke and attach the original limb
+	var/obj/item/bodypart/original_limb = newBodyPart(limb_zone)
+	original_limb.try_attach_limb(src, TRUE)
+	original_limb.update_limb(is_creating = TRUE)
+	regenerate_icons()
 
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i || length(hand_bodyparts) < i)
@@ -118,18 +156,20 @@
 
 ///Remove a specific embedded item from the carbon mob
 /mob/living/carbon/proc/remove_embedded_object(obj/item/embedded)
-	SEND_SIGNAL(src, COMSIG_CARBON_EMBED_REMOVAL, embedded)
+	if (embedded.get_embed()?.owner != src)
+		return
+	embedded.get_embed().remove_embedding()
 
 ///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		for(var/obj/item/embedded in bodypart.embedded_objects)
+		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
 			remove_embedded_object(embedded)
 
-/mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
+/mob/living/carbon/proc/has_embedded_objects(include_harmless = FALSE)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		for(var/obj/item/embedded in bodypart.embedded_objects)
-			if(!include_harmless && embedded.isEmbedHarmless())
+		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
+			if(!include_harmless && embedded.get_embed().is_harmless())
 				continue
 			return TRUE
 
@@ -168,6 +208,15 @@
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
 
+/// Makes sure that the owner's bodytype flags match the flags of all of it's parts and organs
+/mob/living/carbon/proc/synchronize_bodytypes()
+	var/all_limb_flags = NONE
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+			all_limb_flags |= ext_organ.external_bodytypes
+		all_limb_flags |= limb.bodytype
+	bodytype = all_limb_flags
+	dna?.species.bodytype = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0
@@ -198,3 +247,26 @@
 			. = "#fff4e6"
 		if("orange")
 			. = "#ffc905"
+		//Used exclusively for the jaundice yourself monkecoin shop purchase
+		if("simpsons_yellow")
+			. = "#F5CD30"
+
+/proc/body_zone_as_plaintext(body_zone)
+	switch (body_zone)
+		if (BODY_ZONE_L_ARM)
+			return "left arm"
+		if (BODY_ZONE_R_ARM)
+			return "right arm"
+		if (BODY_ZONE_L_LEG)
+			return "left leg"
+		if (BODY_ZONE_R_LEG)
+			return "right leg"
+		if (BODY_ZONE_PRECISE_L_HAND)
+			return "left hand"
+		if (BODY_ZONE_PRECISE_R_HAND)
+			return "right hand"
+		if (BODY_ZONE_PRECISE_L_FOOT)
+			return "left foot"
+		if (BODY_ZONE_PRECISE_R_FOOT)
+			return "right foot"
+	return body_zone

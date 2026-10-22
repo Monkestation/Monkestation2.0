@@ -70,14 +70,14 @@
 	name = "XuraCorp Biohazard Hood"
 	item_path = /obj/item/clothing/head/bio_hood/jax
 	donator_only = TRUE
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_VIROLOGIST, JOB_GENETICIST)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_VIROLOGIST, JOB_GENETICIST, JOB_XENOBIOLOGIST)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/plasmaman_jax
 	name = "XuraCorp Biohazard Underfitting"
 	item_path = /obj/item/clothing/under/plasmaman/jax2
 	donator_only = TRUE
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_VIROLOGIST, JOB_GENETICIST)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_VIROLOGIST, JOB_GENETICIST, JOB_XENOBIOLOGIST)
 	requires_purchase = FALSE
 
 /datum/loadout_item/head/emissionhelm
@@ -414,7 +414,7 @@
 
 /datum/loadout_item/accessory/mercbadge
 	name = "Jade Badge"
-	item_path = /obj/item/clothing/accessory/badge/holo/jade
+	item_path = /obj/item/clothing/accessory/badge/jade
 	donator_only = TRUE
 	requires_purchase = FALSE
 
@@ -541,9 +541,9 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/suit/digicoat_glitched
-	name = "Glitched Digicoat"
-	item_path = /obj/item/clothing/suit/toggle/digicoat/glitched
+/datum/loadout_item/suit/digicoat_hacked
+	name = "Hacked Digicoat"
+	item_path = /obj/item/clothing/suit/toggle/digicoat/hacked
 	donator_only = TRUE
 	requires_purchase = FALSE
 

@@ -14,11 +14,17 @@
 	else
 		deploy_bodybag(user, get_turf(src))
 
-/obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(proximity)
-		if(isopenturf(target))
-			deploy_bodybag(user, target)
+/obj/item/bodybag/interact_with_atom(atom/interacting_with, mob/living/user, flags)
+	if(isopenturf(interacting_with))
+		deploy_bodybag(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/bodybag/attempt_pickup(mob/user)
+	// can't pick ourselves up if we are inside of the bodybag, else very weird things may happen
+	if(contains(user))
+		return TRUE
+	return ..()
 
 /**
  * Creates a new body bag item when unfolded, at the provided location, replacing the body bag item.
@@ -120,14 +126,10 @@
 	icon_state = "prisonerenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner
 
-/obj/item/bodybag/environmental/prisoner/pressurized
-	name = "pressurized prisoner transport bag"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized
-
 /obj/item/bodybag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured until they are transported to a required location."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "syndieenvirobag_folded"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF

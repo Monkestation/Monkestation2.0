@@ -1,25 +1,23 @@
-#define RDSCREEN_NOBREAK "<NO_HTML_BREAK>"
-
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
 
-#define RESEARCH_MATERIAL_DESTROY_ID "__destroy"
-
 //! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
-
 #define TECHWEB_POINT_TYPE_NANITES "Nanite Research"
+#define TECHWEB_POINT_TYPE_AI "AI Research"
 
-#define TECHWEB_POINT_TYPE_DEFAULT TECHWEB_POINT_TYPE_GENERIC
-
-//! Associative names for techweb point values, see: [all_nodes][code/modules/research/techweb/all_nodes.dm]
-#define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
-	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
-	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
-	)
+//!  Amount of points required to unlock nodes of corresponding tiers
+#define TECHWEB_TIER_1_POINTS 40
+#define TECHWEB_TIER_2_POINTS 80
+#define TECHWEB_TIER_3_POINTS 120
+#define TECHWEB_TIER_4_POINTS 160
+#define TECHWEB_TIER_5_POINTS 200
+#define TECHWEB_TIER_6_POINTS 240
+#define TECHWEB_TIER_7_POINTS 320
+#define TECHWEB_DISCOUNT_MINOR 10
 
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
-#define TECHWEB_SINGLE_SERVER_INCOME 52.3
+#define TECHWEB_SINGLE_SERVER_INCOME 1
 
 //! Swab cell line types
 #define CELL_LINE_TABLE_SLUDGE "cell_line_sludge_table"
@@ -69,8 +67,8 @@
 /// Past how much growth can the other cell_lines affect a finished cell line negatively
 #define VATGROWING_DANGER_MINIMUM 30
 
-#define SCIPAPER_COOPERATION_INDEX 1
-#define SCIPAPER_FUNDING_INDEX 2
+#define SCIPAPER_COOPERATION_INDEX "cooperation"
+#define SCIPAPER_FUNDING_INDEX "funding"
 #define SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER 0.01
 /// How much money is one point of gain worth.
 #define SCIPAPER_GAIN_TO_MONEY 125

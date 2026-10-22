@@ -26,7 +26,7 @@
 	var/require_comms_key = FALSE
 
 /datum/world_topic/proc/TryRun(list/input)
-	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
+	key_valid = (CONFIG_GET(string/comms_key) == input["key"]) && CONFIG_GET(string/comms_key) && input["key"]
 	input -= "key"
 	if(require_comms_key && !key_valid)
 		. = "Bad Key"
@@ -79,6 +79,9 @@
 		++PRcounts[id]
 		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
 			return
+
+	if(findtext(input[keyword], @"[s]"))
+		return
 
 	var/final_composed = span_announce("PR: [input[keyword]]")
 	for(var/client/C in GLOB.clients)
@@ -216,7 +219,7 @@
 	.["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 	.["gamestate"] = SSticker.current_state
 
-	.["map_name"] = SSmapping.config?.map_name || "Loading..."
+	.["map_name"] = SSmapping.current_map?.map_name || "Loading..."
 
 	if(key_valid)
 		.["active_players"] = get_active_player_count()

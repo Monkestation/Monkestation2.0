@@ -1,12 +1,9 @@
 GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 
-/client/proc/secrets() //Creates a verb for admins to open up the ui
-	set name = "Secrets"
-	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
-	set category = "Admin.Game"
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/datum/secrets_menu/tgui = new(usr)//create the datum
-	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu.", ADMIN_CATEGORY_GAME)
+	var/datum/secrets_menu/tgui = new(user)
+	tgui.ui_interact(user.mob)
+	BLACKBOX_LOG_ADMIN_VERB("Secrets Panel")
 
 /datum/secrets_menu
 	var/client/holder //client of whoever is using this datum
@@ -25,7 +22,7 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 	is_funmin = check_rights(R_FUN)
 
 /datum/secrets_menu/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/secrets_menu/ui_close()
 	qdel(src)
@@ -44,7 +41,7 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 
 #define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
 #define HIGHLANDER_DELAY_TEXT "40 seconds (crush the hope of a normal shift)"
-/datum/secrets_menu/ui_act(action, params)
+/datum/secrets_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -54,24 +51,28 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")
-			var/dat = "<meta charset='UTF-8'><B>Admin Log<HR></B>"
+			var/dat
 			for(var/l in GLOB.admin_activities)
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_activities.len)
 				dat += "No-one has done anything this round!"
-			holder << browse(dat, "window=admin_log")
+			var/datum/browser/browser = new(holder, "admin_log", "Admin Logs", 600, 500)
+			browser.set_content(dat)
+			browser.open()
 		if("show_admins")
-			var/dat = "<meta charset='UTF-8'><B>Current admins:</B><HR>"
+			var/dat
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank_names()]<br>"
-				holder << browse(dat, "window=showadmins;size=600x500")
+				var/datum/browser/browser = new(holder, "showadmins", "Current admins", 600, 500)
+				browser.set_content(dat)
+				browser.open()
 		//Buttons for debug.
 		if("maint_access_engiebrig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/doors in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
 				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
 					doors.req_access = list()
 					doors.req_one_access = list(ACCESS_BRIG, ACCESS_ENGINEERING)
@@ -79,7 +80,7 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 		if("maint_access_brig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/doors in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
 				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
 					doors.req_access = list(ACCESS_BRIG)
 					doors.req_one_access = list()
@@ -103,28 +104,28 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 					if(!length(living.diseases))
 						continue
 					for(var/datum/disease/acute/disease as anything in living.diseases)
-						disease.cure(target = living)
+						disease.cure(target = living, safe = TRUE)
 
 		if("list_bombers")
-			holder.list_bombers()
+			holder.holder.list_bombers()
 
 		if("list_signalers")
-			holder.list_signalers()
+			holder.holder.list_signalers()
 
 		if("list_lawchanges")
-			holder.list_law_changes()
+			holder.holder.list_law_changes()
 
 		if("showailaws")
-			holder.check_ai_laws()
+			holder.holder.list_law_changes()
 
 		if("manifest")
-			holder.show_manifest()
+			holder.holder.show_manifest()
 
 		if("dna")
-			holder.list_dna()
+			holder.holder.list_dna()
 
 		if("fingerprints")
-			holder.list_fingerprints()
+			holder.holder.list_fingerprints()
 
 		if("ctfbutton")
 			toggle_id_ctf(holder, CTF_GHOST_CTF_GAME_ID)
@@ -252,9 +253,7 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
 		if("anon_name")
-			if(!is_funmin)
-				return
-			holder.anon_names()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb/anon_names)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
 		if("onlyone")
 			if(!is_funmin)
@@ -311,14 +310,13 @@ monkestation end */
 		if("events")
 			if(!is_funmin)
 				return
-			if(SSevents.wizardmode)
-				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
+			if(istype(SSgamemode.current_storyteller, /datum/storyteller/wizard)) //maybe handle this better
+				switch(tgui_alert(usr, "What would you like to do?", "Wizard Events", list("Intensify Summon Events", "Turn Off Summon Events", "Nothing")))
 					if("Intensify Summon Events")
 						summon_events(holder)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
 					if("Turn Off Summon Events")
-						SSevents.toggleWizardmode()
-						SSevents.resetFrequency()
+						SSgamemode.set_storyteller(SSgamemode.selected_storyteller || /datum/storyteller/guide)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Disable"))
 			else
 				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
@@ -329,7 +327,7 @@ monkestation end */
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
-			for(var/obj/machinery/door/airlock/W in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/W as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
@@ -349,17 +347,17 @@ monkestation end */
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Break All Lights"))
 			message_admins("[key_name_admin(holder)] broke all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
+			for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 				L.break_light_tube()
-				stoplag()
+				CHECK_TICK
 		if("whiteout")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Fix All Lights"))
 			message_admins("[key_name_admin(holder)] fixed all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
+			for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 				L.fix()
-				stoplag()
+				CHECK_TICK
 		if("customportal")
 			if(!is_funmin)
 				return
@@ -445,6 +443,30 @@ monkestation end */
 
 			message_admins(span_boldannounce("[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]"))
 			log_admin("[key_name(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
+		if("department_cooldown_override") //Happens when the button is clicked, creates a value for GLOB.department_cd_override in dept_order.dm
+			if(!is_debugger)
+				return
+			if(isnull(GLOB.department_cd_override))
+				var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?","Cooldown Override", 5)
+				if(isnull(set_override))
+					return //user clicked cancel
+				GLOB.department_cd_override = set_override
+			else
+				var/choice = tgui_alert(usr, "Override is active. You can change the cooldown or end the override.", "You were trying to override...", list("Override", "End Override", "Cancel"))
+				if(choice == "Override")
+					var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?", "Title", 5)
+					GLOB.department_cd_override = set_override
+					message_admins("[key_name_admin(holder)] changed the department console order cooldown override to [set_override] minutes.")
+					log_admin("[key_name(holder)] changed the department console order cooldown override to [set_override] minutes.")
+					return
+				if(choice == "End Override")
+					var/set_override = null
+					GLOB.department_cd_override = set_override
+					message_admins("[key_name_admin(holder)] ended the department console order cooldown override.")
+					log_admin("[key_name(holder)] ended the department console order cooldown override.")
+					return
+				if(!choice || choice == "Cancel")
+					return
 		//buttons that are fun for exactly you and nobody else.
 		if("monkey")
 			if(!is_funmin)
@@ -569,7 +591,7 @@ monkestation end */
 				chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
 				nerd = new /mob/living/basic/drone/classic(spawnpoint)
-				nerd.key = chosen_candidate.key
+				nerd.PossessByPlayer(chosen_candidate.key)
 				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--
 
@@ -590,6 +612,41 @@ monkestation end */
 			ctf_controller.toggle_instagib_mode()
 			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
 			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+
+		if("mass_heal")
+			if(!is_funmin)
+				return
+			var/heal_mobs = tgui_alert(usr, "Heal all mobs and return ghosts to their bodies?", "Mass Healing", list("Yes", "No"))
+			if(!heal_mobs || heal_mobs != "Yes")
+				return
+
+			for(var/mob/dead/observer/ghost in GLOB.player_list) //Return all ghosts if possible
+				if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
+					continue
+				ghost.reenter_corpse()
+
+			for(var/mob/living/player in GLOB.player_list)
+				player.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+
+			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
+			message_admins("[key_name_admin(holder)] healed everyone.")
+			log_admin("[key_name(holder)] healed everyone.")
+
+		if("lobotomize_the_bird")
+			var/choice = tgui_alert(usr, "Would you like to lobotomize Poly? This will kill them, and clear ALL saved phrases!", "i have to water the shitbird wait a minute", list("Yes", "No"))
+			if(choice != "Yes")
+				return
+			for(var/mob/living/basic/parrot/poly/shitbird in GLOB.mob_living_list)
+				ADD_TRAIT(shitbird, TRAIT_DONT_WRITE_MEMORY, ADMIN_TRAIT)
+				new /obj/effect/temp_visual/bsa_impact(shitbird.loc) // BOOM.
+				shitbird.dust(just_ash = TRUE)
+
+			for(var/poly_file in list("data/npc_saves/Poly.sav", "data/npc_saves/Poly.json", "data/npc_saves/polytalk.json"))
+				if(fexists(poly_file))
+					fdel(poly_file)
+
+			message_admins("[key_name_admin(holder)] lobotomized Poly.")
+			log_admin("[key_name(holder)] lobotomized Poly.")
 
 	if(E)
 		E.processing = FALSE
@@ -627,7 +684,7 @@ monkestation end */
 			var/mob/chosen = players[1]
 			if (chosen.client)
 				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
-				spawnedMob.key = chosen.key
+				spawnedMob.PossessByPlayer(chosen.key)
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
 			var/mob/living/carbon/human/H = spawnedMob
@@ -705,7 +762,6 @@ monkestation end */
 			if(ROLE_NIGHTMARE)
 				var/datum/antagonist/nightmare/antag_datum = new
 				assign_admin_objective_and_antag(player, antag_datum)
-				player.set_species(/datum/species/shadow/nightmare)
 
 	else if(isAI(player))
 		var/datum/antagonist/malf_ai/antag_datum = new

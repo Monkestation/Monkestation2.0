@@ -1,10 +1,9 @@
 /obj/item/organ/internal/heart/clockwork //this heart doesnt have the fancy bits normal cyberhearts do. However, it also doesnt fucking kill you when EMPd
 	name = "biomechanical pump"
 	desc = "A complex, multi-valved hydraulic pump, which fits perfectly where a heart normally would."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "heart-clock"
-	organ_flags = ORGAN_SYNTHETIC
-	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_ROBOTIC
 
 ///The rate at which slimes regenerate their jelly normally
 #define JELLY_REGEN_RATE 1.5
@@ -17,20 +16,38 @@
 /obj/item/organ/internal/heart/slime
 	name = "slime heart"
 
-	heart_bloodtype = /datum/blood_type/slime
+	heart_bloodtype = BLOOD_TYPE_TOX
+	/// Ability given to the owner of the organ
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	/// Ability given to the owner of the organ
+	var/datum/action/innate/retract_limb/retract_limb
+	/// UI to see amount of wetness stacks
+	var/atom/movable/screen/slime_stacks/slime_wetness_display
+
+/obj/item/organ/internal/heart/slime/Destroy()
+	QDEL_NULL(regenerate_limbs)
+	QDEL_NULL(retract_limb)
+	return ..()
 
 /obj/item/organ/internal/heart/slime/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	regenerate_limbs = new
+	if(QDELETED(regenerate_limbs))
+		regenerate_limbs = new
 	regenerate_limbs.Grant(receiver)
+	if(QDELETED(retract_limb))
+		retract_limb = new
+	retract_limb.Grant(receiver)
 	RegisterSignal(receiver, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
+	if(receiver.hud_used)
+		on_hud_created(receiver)
+	else
+		RegisterSignal(receiver, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /obj/item/organ/internal/heart/slime/Remove(mob/living/carbon/heartless, special)
 	. = ..()
-	if(regenerate_limbs)
-		regenerate_limbs.Remove(heartless)
-		qdel(regenerate_limbs)
+	QDEL_NULL(regenerate_limbs)
+	QDEL_NULL(retract_limb)
+	QDEL_NULL(slime_wetness_display)
 	UnregisterSignal(heartless, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
 /obj/item/organ/internal/heart/slime/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
@@ -60,25 +77,58 @@
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_danger("You feel drained!"))
 
+	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
+	if(!slime_wetness || slime_wetness?.stacks != slime_wetness.stack_limit)
+		if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
+			slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+			if(slime_wetness?.stacks > (HYDROPHOBIA_WETNESS_STACKS - 1) && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
+				slime.balloon_alert(slime, "membrane restored!")
+				playsound(slime, 'sound/surgery/organ1.ogg', 80, TRUE)
+				slime.visible_message(
+					span_notice("[slime]'s body forms an oily outer membrance!"),
+					span_nicegreen("Your protective membrance regenerates!"),
+				)
+
+		update_hud(slime)
+
+
 	if(slime.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(slime)
 
 	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	return .
 
-/obj/item/organ/internal/heart/slime/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
+/obj/item/organ/internal/heart/slime/proc/Cannibalize_Body(mob/living/carbon/human/body)
+	if(HAS_TRAIT(body, TRAIT_OOZELING_NO_CANNIBALIZE))
+		return
+	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - body.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
 	if(!length(limbs_to_consume))
-		H.losebreath++
+		body.losebreath++
 		return
-	if(H.num_legs) //Legs go before arms
+	if(body.num_legs) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
+	consumed_limb = body.get_bodypart(pick(limbs_to_consume))
+	for(var/obj/item/organ/internal/organ in body.get_organs_for_zone(consumed_limb.body_zone))
+		organ.Remove(body)
+		if(!QDELETED(organ))
+			organ.forceMove(body.drop_location())
 	consumed_limb.drop_limb()
-	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
+	body.visible_message(
+		span_danger("[body]'s [consumed_limb] rapidly loses its shape, painfully being drawn back into [body.p_their()] body!"),
+		span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!")
+	)
 	qdel(consumed_limb)
-	H.blood_volume += 20
+	body.blood_volume += 20
+
+/obj/item/organ/internal/heart/slime/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+
+	var/datum/hud/slime_hud = source.hud_used
+	slime_wetness_display = new(null, slime_hud)
+	slime_hud.infodisplay += slime_wetness_display
+	slime_hud.show_hud(slime_hud.hud_version)
 
 /// REGENERATE LIMBS
 /datum/action/innate/regenerate_limbs
@@ -108,9 +158,11 @@
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
+	if(!do_after(H, 2 SECONDS))
+		return
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		if((BODY_ZONE_HEAD in limbs_to_heal) && H.get_bodypart(BODY_ZONE_HEAD)) // We have a head now so we should make eyes.
+		if((BODY_ZONE_HEAD in limbs_to_heal) && istype(H.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/oozeling)) // We have a head now so we should make eyes.
 			new_organ = H.dna.species.get_mutant_organ_type_for_slot(ORGAN_SLOT_EYES)
 			new_organ = SSwardrobe.provide_type(new_organ)
 			new_organ.Insert(H)
@@ -121,7 +173,7 @@
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
-			if(H.regenerate_limb(healed_limb) && istype(healed_limb, /obj/item/bodypart/head)) // We have a head now so we should make eyes.
+			if(istype(H.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/oozeling)) // We have a head now so we should make eyes.
 				new_organ = H.dna.species.get_mutant_organ_type_for_slot(ORGAN_SLOT_EYES)
 				new_organ = SSwardrobe.provide_type(new_organ)
 				new_organ.Insert(H)
@@ -130,6 +182,68 @@
 		to_chat(H, span_warning("...but there is not enough of you to fix everything! You must attain more mass to heal completely!"))
 		return
 	to_chat(H, span_warning("...but there is not enough of you to go around! You must attain more mass to heal!"))
+
+/**
+ * Allows oozelings to selectively retract a limb.
+ */
+/datum/action/innate/retract_limb
+	name = "Retract Limb"
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	button_icon_state = "retract_limb"
+	button_icon = SLIME_ACTIONS_ICON_FILE
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/retract_limb/IsAvailable(feedback)
+	. = ..()
+	if(!.)
+		return
+	if(!isoozeling(owner))
+		return
+	var/mob/living/carbon/human/user = owner
+	var/list/limbs = list(user.get_bodypart(BODY_ZONE_R_ARM), user.get_bodypart(BODY_ZONE_L_ARM), user.get_bodypart(BODY_ZONE_R_LEG), user.get_bodypart(BODY_ZONE_L_LEG))
+	if(!length(limbs))
+		return FALSE // What are you gonna eat if there's nothing left?
+	return TRUE
+
+/datum/action/innate/retract_limb/Activate()
+	. = ..()
+	if(!isoozeling(owner))
+		return
+	var/mob/living/carbon/human/user = owner
+	var/list/possible_limbs = list(BODY_ZONE_HEAD, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	if(!isnull(user.handcuffed))
+		possible_limbs -= list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	if(!isnull(user.legcuffed))
+		possible_limbs -= list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/list/retractable_limbs = list()
+	for(var/zone in possible_limbs)
+		var/obj/item/bodypart/limb = user.get_bodypart(zone)
+		if(!isnull(limb))
+			retractable_limbs[limb] = limb.appearance
+	if(!length(retractable_limbs))
+		return
+	var/obj/item/bodypart/selected_limb = show_radial_menu(user, user, retractable_limbs)
+	if(isnull(selected_limb))
+		return
+	if(!do_after(user, 2 SECONDS))
+		selected_limb.balloon_alert(user, "focus interrupted!")
+		return
+	for(var/obj/item/organ/internal/organ in user.get_organs_for_zone(selected_limb.body_zone))
+		organ.Remove(user)
+		if(!QDELETED(organ))
+			organ.forceMove(user.drop_location())
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+	var/brute = selected_limb.brute_dam
+	var/burn = selected_limb.burn_dam
+	selected_limb.drop_limb()
+	user.visible_message(
+		span_warning("[user]'s [selected_limb] is retracted into [user.p_their()] body with a quick, deliberate motion!"),
+		span_notice("You retract your [selected_limb] back into your body."),
+	)
+	qdel(selected_limb)
+	chest?.receive_damage(brute, burn, forced = TRUE, wound_bonus = CANT_WOUND)
+	user.blood_volume += 20
+	playsound(user, 'sound/items/eatfood.ogg', 20, TRUE)
 
 #undef JELLY_REGEN_RATE
 #undef JELLY_REGEN_RATE_EMPTY
@@ -150,7 +264,7 @@
 /obj/item/organ/internal/heart/synth/emp_act(severity)
 	. = ..()
 
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
@@ -159,10 +273,10 @@
 	switch(severity)
 		if(EMP_HEAVY)
 			to_chat(owner, span_warning("Alert: Main hydraulic pump control has taken severe damage, seek maintenance immediately. Error code: HP300-10."))
-			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maxHealth, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Main hydraulic pump control has taken light damage, seek maintenance immediately. Error code: HP300-05."))
-			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maxHealth, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 
 /datum/design/synth_heart
 	name = "Hydraulic Pump Engine"
@@ -176,6 +290,19 @@
 	)
 	build_path = /obj/item/organ/internal/heart/synth
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/obj/item/organ/internal/heart/synth/abandoned
+	name = "faulty hydraulic pump engine"
+	desc = "A strange and older version of a synth heart, it appears damaged, but still functional."
+	icon_state = "abandoned_heart_on"
+	base_icon_state = "abandoned_heart_off"
+	//Prob to craete sparks on life, when implanted in a person
+	var/spark_prob = 15
+
+/obj/item/organ/internal/heart/synth/abandoned/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(spark_prob, seconds_per_tick))
+		do_sparks(1, FALSE, owner)
+	return ..()

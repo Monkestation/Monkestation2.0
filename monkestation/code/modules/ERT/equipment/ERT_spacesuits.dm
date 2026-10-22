@@ -12,9 +12,8 @@
 /obj/item/clothing/suit/space/ert
 	name = "emergency response team space suit"
 	desc = "A special space suit designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance." // simple description could use more tho
-	icon = 'monkestation/icons/obj/clothing/ERT/ERT_spacesuit_obj.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/ERT/ERT_spacesuit_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/ERT/ERT_spacesuit_worn-digi.dmi'
+	icon = 'icons/obj/clothing/ERT/ERT_spacesuit_obj.dmi'
+	worn_icon = 'icons/mob/clothing/ERT/ERT_spacesuit_worn.dmi'
 	icon_state = "ert-generic"
 	//lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'   do i dare make inhand sprites
 	//righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
@@ -23,12 +22,12 @@
 	armor_type = /datum/armor/ert
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this feels right?
-	cell = /obj/item/stock_parts/cell/bluespace
+	cell = /obj/item/stock_parts/power_store/cell/bluespace
 	allowed = list(
-		/obj/item/tank/jetpack/oxygen/security,
+		/obj/item/tank/jetpack/oxygen,
+		/obj/item/tank/jetpack/harness,
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/oxygen/captain,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/gun/ballistic,
@@ -63,15 +62,15 @@
 /obj/item/clothing/head/helmet/space/ert
 	name = "emergency response team space helmet"
 	desc = "A special space helmet designed by Nanotrasen for use by it's emergency response teams. It has markings to distinguish the role of the wearer at a glance."
-	icon = 'monkestation/icons/obj/clothing/ERT/ERT_helmet_obj.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/ERT/ERT_helmet_worn.dmi'
+	icon = 'icons/obj/clothing/ERT/ERT_helmet_obj.dmi'
+	worn_icon = 'icons/mob/clothing/ERT/ERT_helmet_worn.dmi'
 	icon_state = "ert-generic0"
 	//styling
 	var/style = "generic"
-	worn_icon_snouted = 'monkestation/icons/mob/clothing/ERT/ERT_helmet_worn-digi.dmi'
 	max_integrity = 300
 	armor_type = /datum/armor/ert
 	resistance_flags = ACID_PROOF | FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	//helmet light
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	light_system = OVERLAY_LIGHT_DIRECTIONAL

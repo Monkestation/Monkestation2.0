@@ -9,7 +9,7 @@
 			"type": "icon_state",
 			"icon_state": "standard-face",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"deluxe-custom-mini": [
@@ -22,7 +22,7 @@
 			"type": "icon_state",
 			"icon_state": "deluxe-face",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"tactical-custom-mini": [
@@ -35,7 +35,7 @@
 			"type": "icon_state",
 			"icon_state": "deluxe-face",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

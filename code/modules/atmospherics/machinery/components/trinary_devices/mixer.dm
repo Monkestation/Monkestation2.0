@@ -27,21 +27,21 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/trinary/mixer/click_ctrl(mob/user)
 	if(can_interact(user))
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
-	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
-		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "pressure output on set to [target_pressure] kPa")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/trinary/mixer/click_alt(mob/user)
+	if(target_pressure == MAX_OUTPUT_PRESSURE)
+		return CLICK_ACTION_BLOCKING
+
+	target_pressure = MAX_OUTPUT_PRESSURE
+	investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "pressure output on set to [target_pressure] kPa")
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_overlays()
 	. = ..()
@@ -49,7 +49,9 @@
 		if(!(direction & initialize_directions))
 			continue
 
-		. += get_pipe_image(icon, "cap", direction, pipe_color, piping_layer, TRUE)
+		var/image/cap = get_pipe_image(icon, "cap", direction, pipe_color, piping_layer, TRUE)
+		cap.appearance_flags |= RESET_COLOR|KEEP_APART
+		. += cap
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
@@ -147,13 +149,13 @@
 	data["node2_concentration"] = round(node2_concentration*100, 1)
 	return data
 
-/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")
@@ -177,7 +179,7 @@
 			adjust_node1_value(100 - value)
 			investigate_log("was set to [100 * node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/trinary/mixer/proc/adjust_node1_value(newValue)
 	node1_concentration = newValue / 100

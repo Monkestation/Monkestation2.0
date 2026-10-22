@@ -8,33 +8,34 @@ GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for 
 
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
+	/mob/living/basic,
 	/mob/living/basic/blob_minion,
 	/mob/living/basic/bot,
 	/mob/living/basic/construct,
 	/mob/living/basic/guardian,
 	/mob/living/basic/heretic_summon,
+	/mob/living/basic/mimic, // Cannot exist if spawned without being passed an item reference
+	/mob/living/basic/mimic/crate,
 	/mob/living/basic/mining,
 	/mob/living/basic/pet,
-	/mob/living/basic,
+	/mob/living/basic/soulscythe, // This is just a way for players to control the soulscythe item
 	/mob/living/basic/spider,
-	/mob/living/carbon/alien/adult,
-	/mob/living/carbon/alien,
-	/mob/living/carbon/human/consistent,
-	/mob/living/carbon/human/dummy/consistent,
-	/mob/living/carbon/human/dummy,
-	/mob/living/carbon/human/species,
 	/mob/living/carbon,
+	/mob/living/carbon/alien,
+	/mob/living/carbon/alien/adult,
+	/mob/living/carbon/human/consistent,
+	/mob/living/carbon/human/dummy,
+	/mob/living/carbon/human/dummy/consistent,
+	/mob/living/carbon/human/tutorial,
+	/mob/living/carbon/human/species,
 	/mob/living/silicon,
-	/mob/living/simple_animal/bot,
-	/mob/living/simple_animal/hostile/asteroid/elite,
-	/mob/living/simple_animal/hostile/asteroid,
-	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/basic/mimic/crate, // Cannot exist if spawned without being passed an item reference
-	/mob/living/simple_animal/hostile/retaliate,
-	/mob/living/simple_animal/hostile,
-	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
 	/mob/living/simple_animal,
+	/mob/living/simple_animal/bot,
+	/mob/living/simple_animal/hostile,
+	/mob/living/simple_animal/hostile/asteroid,
+	/mob/living/simple_animal/hostile/asteroid/elite,
+	/mob/living/simple_animal/hostile/megafauna,
+	/mob/living/simple_animal/hostile/retaliate,
 ))
 
 
@@ -62,7 +63,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
-GLOBAL_LIST_EMPTY(aiEyes)
+GLOBAL_LIST_EMPTY(camera_eyes)
 GLOBAL_LIST_EMPTY(suit_sensors_list) //all people with suit sensors on
 GLOBAL_LIST_EMPTY(nanite_sensors_list) //app people with nanite monitoring program
 
@@ -87,17 +88,19 @@ GLOBAL_LIST_EMPTY(revenant_relay_mobs)
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
 
-GLOBAL_LIST_EMPTY(language_datum_instances)
-GLOBAL_LIST_EMPTY(all_languages)
-///List of all languages ("name" = type)
-GLOBAL_LIST_EMPTY(language_types_by_name)
-
-GLOBAL_LIST_EMPTY(sentient_disease_instances)
+/// List of language prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
+/// List if all language typepaths learnable, IE, those with keys
+GLOBAL_LIST_INIT(all_languages, init_all_languages())
+/// List of language prototypes to reference, assoc "name" = typepath
+GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
+///Assoc list key OR alt_key = emote datum. Important to check by key when going through this so you don't have several
+///alt keys flooding the list.
 GLOBAL_LIST_EMPTY(emote_list)
 
 GLOBAL_LIST_INIT(construct_radial_images, list(
@@ -105,6 +108,52 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 	CONSTRUCT_WRAITH = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "wraith"),
 	CONSTRUCT_ARTIFICER = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "artificer")
 ))
+
+/// List of all species prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototypes())
+
+/proc/init_language_prototypes()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+
+		lang_list[lang_type] = new lang_type()
+	return lang_list
+
+/proc/init_all_languages()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list += lang_type
+	return lang_list
+
+/proc/init_language_types_by_name()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list[initial(lang_type.name)] = lang_type
+	return lang_list
+
+/// A list of all the possible blood types, keyed by id (which is just the name in most cases)
+GLOBAL_LIST_INIT(blood_types, init_blood_types())
+
+/// Initializes the list of blood type singletons
+/proc/init_blood_types()
+	. = list()
+	for(var/datum/blood_type/blood_type_path as anything in subtypesof(/datum/blood_type))
+		if(blood_type_path::root_abstract_type == blood_type_path) // Don't instantiate abstract blood types
+			continue
+		var/datum/blood_type/new_type = new blood_type_path()
+		.[new_type.id] = new_type
+
+/proc/init_species_prototypes()
+	var/list/species_list = list()
+	for(var/species_type in subtypesof(/datum/species))
+		species_list[species_type] = new species_type()
+	return species_list
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	var/list/mob_types = list()
@@ -136,16 +185,31 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 		else if(E.message) //Assuming all non-base emotes have this
 			stack_trace("Keyless emote: [E.type]")
 
+		if(LAZYLEN(E.alt_keys))
+			for(var/alt_key in E.alt_keys)
+				if(!.[alt_key])
+					.[alt_key] = list(E)
+				else
+					.[alt_key] += E
+
 		if(E.key_third_person) //This one is optional
 			if(!.[E.key_third_person])
 				.[E.key_third_person] = list(E)
 			else
 				.[E.key_third_person] |= E
 
-/proc/get_crewmember_minds()
-	var/list/minds = list()
+/proc/get_crewmember_minds(require_body = TRUE)
+	. = list()
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
-		var/datum/mind/mind = target.mind_ref?.resolve() // monkestation edit: weakreffed mind ref
-		if(mind)
-			minds += mind
-	return minds
+		var/datum/mind/mind = target.mind_ref?.resolve()
+		if(isnull(mind))
+			continue
+		if(HAS_TRAIT(mind, TRAIT_REMOVED_FROM_MANIFEST)) // shouldn't really happen but let's make sure
+			continue
+		if(require_body && QDELETED(mind.current))
+			continue
+		. += mind
+
+///List of ckeys that have seen a blurb of a given key.
+GLOBAL_LIST_EMPTY(blurb_witnesses)
+GLOBAL_LIST_EMPTY(assault_operative_start)

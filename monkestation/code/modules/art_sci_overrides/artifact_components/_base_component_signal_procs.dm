@@ -32,7 +32,7 @@
 	SIGNAL_HANDLER
 	if(analysis)
 		to_chat(user, "You peel off [analysis], to make room for [sticker].")
-		sticker.peel()
+		analysis.peel()
 	if(!istype(sticker, /obj/item/sticker/analysis_form))
 		return
 	analysis = sticker
@@ -72,12 +72,13 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human = user
 		var/obj/item/bodypart/arm = human.get_active_hand()
-		if(arm.bodytype & BODYTYPE_ROBOTIC)
-			process_stimuli(STIMULUS_SILICON_TOUCH)
-			logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
-		else
-			process_stimuli(STIMULUS_CARBON_TOUCH)
-			logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
+		if(arm)
+			if(arm.bodytype & BODYTYPE_ROBOTIC)
+				process_stimuli(STIMULUS_SILICON_TOUCH)
+				logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
+			else
+				process_stimuli(STIMULUS_CARBON_TOUCH)
+				logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
 	else if(iscarbon(user))
 		process_stimuli(STIMULUS_CARBON_TOUCH)
 		logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent]")

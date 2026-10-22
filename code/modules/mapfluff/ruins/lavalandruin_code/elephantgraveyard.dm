@@ -122,7 +122,7 @@
 		return ..()
 
 /obj/structure/sink/oil_well/drop_materials()
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 
 //***Grave mounds.
 /// has no items inside unless you use the filled subtype
@@ -131,18 +131,20 @@
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave"
+	base_icon_state = "grave"
 	dense_when_open = TRUE
 	material_drop = /obj/item/stack/ore/glass/basalt
 	material_drop_amount = 5
 	anchorable = FALSE
 	anchored = TRUE
-	locked = TRUE
 	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
 	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
-	cutting_tool = /obj/item/shovel
+	cutting_tool_behaviour = TOOL_SHOVEL
 	can_install_electronics = FALSE
+	paint_jobs = null
+
 	elevation = 4 //It's a small mound.
 	elevation_open = 0
 
@@ -150,8 +152,28 @@
 	var/lead_tomb = FALSE
 	/// was this grave opened for the first time
 	var/first_open = FALSE
+	var/grave_dug_open = FALSE
 
-/obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
+/obj/structure/closet/crate/grave/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!force && !grave_dug_open)
+		balloon_alert(user, "use a shovel!")
+		return FALSE
+
+	return TRUE
+
+/obj/structure/closet/crate/grave/before_close(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	balloon_alert(user, "already open!")
+	return FALSE
+
+/obj/structure/closet/crate/grave/filled/populate_contents_immediate() //GRAVEROBBING IS NOW A FEATURE
 	..()
 	new /obj/effect/decal/remains/human/grave(src)
 	switch(rand(1,8))
@@ -180,25 +202,17 @@
 			//empty grave
 			return
 
-/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
-	if(!opened)
-		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
-	else
-		to_chat(user, span_notice("The grave has already been dug up."))
-
 /obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
 	return
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(!(user.istate & ISTATE_HARM)) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
-			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+			if(S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
 				if (do_after(user,20, target = src))
-					opened = TRUE
-					locked = TRUE
-					dump_contents()
-					update_appearance()
+					grave_dug_open = TRUE
+					open(user, force = TRUE)
 					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -214,20 +228,13 @@
 			return 1
 
 	else if(((user.istate & ISTATE_HARM)) && opened) //checks to attempt to remove the grave entirely.
-		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+		if(S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
 			if (do_after(user,15, target = src))
 				to_chat(user, span_notice("You remove \the [src]  completely."))
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)
 				return 1
-	return
-
-/obj/structure/closet/crate/grave/bust_open()
-	..()
-	opened = TRUE
-	update_appearance()
-	dump_contents()
 	return
 
 /obj/structure/closet/crate/grave/filled/lead_researcher

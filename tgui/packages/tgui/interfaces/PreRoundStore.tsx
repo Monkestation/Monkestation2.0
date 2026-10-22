@@ -1,0 +1,133 @@
+import { useBackend } from '../backend';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Divider,
+  DmIcon,
+  Flex,
+  Icon,
+  Section,
+  Stack,
+} from '../components';
+import { Window } from '../layouts';
+import { LobbyNotices, type LobbyNoticesType } from './common/LobbyNotices';
+
+type Item = {
+  path: string;
+  name: string;
+  cost: number;
+  icon: string;
+  icon_state: string;
+};
+
+type Data = {
+  notices: LobbyNoticesType;
+  currently_owned?: string;
+  balance: number;
+  items: Item[];
+  selected_character?: string;
+};
+
+const ItemListEntry = (props) => {
+  const {
+    product: { name, cost, icon, icon_state },
+    disabled,
+    onClick,
+  } = props;
+
+  return (
+    <>
+      <Flex direction="row" align="center">
+        <Flex.Item>
+          <DmIcon
+            icon={icon}
+            icon_state={icon_state}
+            fallback={<Icon mr={1} name="spinner" spin />}
+            height={'32px'}
+            width={'32px'}
+            verticalAlign="middle"
+          />
+        </Flex.Item>
+        <Flex.Item grow={1}>
+          <Box bold>{name}</Box>
+        </Flex.Item>
+        <Flex.Item>
+          {`Cost: ${cost}`} <Icon name="coins" pr={1} />
+        </Flex.Item>
+        <Flex.Item>
+          <Button onClick={onClick} disabled={disabled}>
+            Buy
+          </Button>
+        </Flex.Item>
+      </Flex>
+      <Divider />
+    </>
+  );
+};
+
+export const PreRoundStore = (_props) => {
+  const {
+    act,
+    data: { notices, balance, items, currently_owned, selected_character },
+  } = useBackend<Data>();
+
+  return (
+    <Window title="Pre Round Shop" width={450} height={700}>
+      <Window.Content scrollable>
+        <Section>
+          <LobbyNotices notices={notices} />
+          <BlockQuote>
+            Purchase an item that will spawn with you round start!
+          </BlockQuote>
+          <Stack vertical fill>
+            {currently_owned && (
+              <Stack.Item>
+                <Box>Held Item: {currently_owned}</Box>
+              </Stack.Item>
+            )}
+            <Stack.Item>
+              <Section>
+                <Flex direction="row" align="center" justify="space-between">
+                  <Box>
+                    Balance: {balance} <Icon name="coins" />
+                  </Box>
+                  <Button icon="user" onClick={() => act('change_slot')}>
+                    Change Character
+                  </Button>
+                </Flex>
+              </Section>
+            </Stack.Item>
+
+            {selected_character && (
+              <Stack.Item textAlign="center" mb="1em">
+                <h3
+                  style={{
+                    padding: 0,
+                  }}
+                >
+                  Readying up as '{selected_character}'
+                </h3>
+              </Stack.Item>
+            )}
+            <Stack.Item>
+              {items && items.length > 0
+                ? items.map((purchase) => {
+                    const { name, cost, path } = purchase;
+                    return (
+                      <ItemListEntry
+                        key={name}
+                        product={purchase}
+                        disabled={balance < cost}
+                        onClick={() => act('attempt_buy', { path })}
+                      />
+                    );
+                  })
+                : 'No items to display.'}
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Window.Content>
+    </Window>
+  );
+};

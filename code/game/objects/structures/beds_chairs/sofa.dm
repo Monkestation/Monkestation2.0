@@ -19,6 +19,7 @@ path/corner/color_name {\
 	icon = 'icons/obj/sofa.dmi'
 	buildstackamount = 1
 	item_chair = null
+	astar_weight = 5
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/sofa/Initialize(mapload)
@@ -30,7 +31,7 @@ path/corner/color_name {\
 	if(same_z_layer)
 		return ..()
 	cut_overlay(armrest)
-	QDEL_NULL(armrest)
+	armrest = null
 	gen_armrest()
 	return ..()
 

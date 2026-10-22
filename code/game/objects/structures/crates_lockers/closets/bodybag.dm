@@ -1,4 +1,3 @@
-
 /obj/structure/closet/body_bag
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
@@ -14,11 +13,20 @@
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
-	cutting_tool = null // Bodybags are not deconstructed by cutting
+	cutting_tool_behaviour = null // Bodybags are not deconstructed by cutting
+	can_weld_shut = FALSE
+	can_install_electronics = FALSE
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
+	can_install_electronics = FALSE
+	paint_jobs = null
+
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
+	/// The tagged name of the bodybag, also used to check if the bodybag IS tagged.
+	var/tag_name
+	/// How long it takes to zip up the bag.
+	var/zip_up_time = 0 SECONDS
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
@@ -43,7 +51,7 @@
 	return ..()
 
 /obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
-	if (istype(interact_tool, /obj/item/pen) || istype(interact_tool, /obj/item/toy/crayon))
+	if (IS_WRITING_UTENSIL(interact_tool))
 		if(!user.can_write(interact_tool))
 			return
 		var/t = tgui_input_text(user, "What would you like the label to be?", name, max_length = 53)
@@ -61,6 +69,7 @@
 
 ///Handles renaming of the bodybag's examine tag.
 /obj/structure/closet/body_bag/proc/handle_tag(tag_name)
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
 	tagged = !!tag_name
 	update_appearance()
@@ -70,10 +79,18 @@
 	if(tagged)
 		. += "bodybag_label"
 
-/obj/structure/closet/body_bag/close(mob/living/user)
+/obj/structure/closet/body_bag/after_close(mob/living/user)
 	. = ..()
-	if(.)
-		set_density(FALSE)
+	set_density(FALSE)
+
+/obj/structure/closet/body_bag/before_close(mob/living/user, force)
+	if (zip_up_time == 0 SECONDS)
+		return TRUE
+
+	if(!do_after(user, zip_up_time))
+		return FALSE
+	else
+		return TRUE
 
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -124,6 +141,7 @@
 	foldedbag_path = /obj/item/bodybag/bluespace
 	mob_storage_capacity = 15
 	max_mob_size = MOB_SIZE_LARGE
+	zip_up_time = 1 SECONDS
 
 /obj/structure/closet/body_bag/bluespace/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE
@@ -158,7 +176,7 @@
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(iscarbon(content))
 			var/mob/living/carbon/mob = content
-			if (mob.dna.get_mutation(/datum/mutation/human/dwarfism))
+			if (mob.dna?.get_mutation(/datum/mutation/dwarfism))
 				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
 				continue
 		if(!isitem(content))
@@ -242,7 +260,7 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner
-	breakout_time = 4 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
+	breakout_time = 2 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
 	/// How long it takes to sinch the bag.
 	var/sinch_time = 10 SECONDS
 	/// Whether or not the bag is sinched. Starts unsinched.
@@ -253,7 +271,20 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(sinched)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
+		return FALSE
 	return ..()
+
+/obj/structure/closet/body_bag/environmental/prisoner/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(sinched && !force)
+		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
+		return FALSE
+
+	sinched = FALSE //in case it was forced open unsinch it
+	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
 	. = ..()
@@ -261,22 +292,6 @@
 		icon_state = initial(icon_state) + "_sinched"
 	else
 		icon_state = initial(icon_state)
-
-/obj/structure/closet/body_bag/environmental/prisoner/open(mob/living/user, force = FALSE)
-	if(sinched && !force)
-		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
-		return TRUE
-	if(opened)
-		return FALSE
-	sinched = FALSE
-	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
-	opened = TRUE
-	if(!dense_when_open)
-		set_density(FALSE)
-	dump_contents()
-	update_appearance()
-	after_open(user, force)
-	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
 	/// copy-pasted with changes because flavor text as well as some other misc stuff
@@ -289,7 +304,7 @@
 		location.relay_container_resist_act(user, src)
 		return
 	if(!sinched)
-		open()
+		open(user)
 		return
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -317,7 +332,10 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attack_hand_secondary(mob/user, modifiers)
 	if(!user.can_perform_action(src) || !isturf(loc))
 		return
-	togglelock(user)
+	if(user.istate & ISTATE_HARM)
+		togglelock(user)
+	else
+		return ..() //Return the rest of the attack chain, which is to fold the device
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
@@ -347,16 +365,15 @@
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured during transport."
-	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "syndieenvirobag"
 	contents_pressure_protection = 1
 	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
 	weather_protection = list(TRAIT_WEATHER_IMMUNE)
-	breakout_time = 8 MINUTES
+	breakout_time = 4 MINUTES
 	sinch_time = 20 SECONDS
 
-/obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate/refresh_air()
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/refresh_air()
 	air_contents = null
 	air_contents = new(50) //liters
 	air_contents.temperature = T20C

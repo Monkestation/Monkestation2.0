@@ -6,6 +6,7 @@
 /obj/structure/closet/secure_closet/research_director/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/sci(src)
 	new /obj/item/storage/bag/garment/research_director(src)
 	new /obj/item/computer_disk/command/rd(src)
 	new /obj/item/radio/headset/heads/rd(src)
@@ -23,6 +24,7 @@
 	// Traitor steal objectives
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
 	new /obj/item/laser_pointer(src)
+	new /obj/item/holotool(src)
 
 /obj/structure/closet/secure_closet/cytology
 	name = "cytology equipment locker"

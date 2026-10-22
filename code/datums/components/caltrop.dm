@@ -108,6 +108,8 @@
 	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 		damage *= 0.75
 
+	if((flags & CALTROP_ANTS) && HAS_TRAIT(H, TRAIT_SPACE_ANT_IMMUNITY))
+		damage = 0
 
 	if(!(flags & CALTROP_SILENT) && !H.has_status_effect(/datum/status_effect/caltropped))
 		H.apply_status_effect(/datum/status_effect/caltropped)
@@ -116,7 +118,7 @@
 			span_userdanger("You step on [parent]!")
 		)
 
-	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
+	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
 		if(!HAS_TRAIT(H, TRAIT_LIGHT_STEP))

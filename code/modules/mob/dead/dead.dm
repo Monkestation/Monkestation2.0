@@ -5,6 +5,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	move_resist = INFINITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	throwforce = 0
 
 /mob/dead/Initialize(mapload)
@@ -30,6 +31,10 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/get_status_tab_items()
 	. = ..()
+	if(client?.prefs)
+		. += "Selected Character: [client.prefs.get_enabled_character_names()]"
+		. += ""
+
 	if(SSticker.HasRoundStarted())
 		return
 	var/time_remaining = SSticker.GetTimeLeft()
@@ -75,7 +80,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	var/client/C = client
 	to_chat(C, span_notice("Sending you to [pick]."))
-	new /atom/movable/screen/splash(null, C)
+	new /atom/movable/screen/splash(null, null, C)
 
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 	sleep(2.9 SECONDS) //let the animation play

@@ -1,5 +1,5 @@
+import { sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
 import {
   BlockQuote,
   Button,
@@ -11,7 +11,7 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { sortBy } from 'common/collections';
+import { Window } from '../layouts';
 
 type Data = {
   records: WarrantRecord[];
@@ -174,7 +174,7 @@ const CitationManager = (props) => {
             <RestrictedInput
               maxValue={fine}
               minValue={5}
-              onChange={(event, value) => setPaying(value)}
+              onChange={(value) => setPaying(value)}
               value={paying}
             />
             <Button.Confirm

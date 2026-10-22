@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import { ProgressBar, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 export const XpMenu = (props) => {
   const { data } = useBackend();
@@ -47,7 +47,6 @@ export const XpMenu = (props) => {
     'Nuclear Operative',
     'Paradox Clone',
     'Revenant',
-    'Sentient Disease',
     'Slaughter Demon',
     'Space Dragon',
     'Space Ninja',

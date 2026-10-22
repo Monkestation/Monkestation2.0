@@ -1,11 +1,5 @@
-/client/proc/cmd_admin_debug_traitor_objectives()
-	set name = "Debug Traitor Objectives"
-	set category = "Debug"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	SStraitor.traitor_debug_panel?.ui_interact(usr)
+ADMIN_VERB(debug_traitor_objectives, R_DEBUG, FALSE, "Debug Traitor Objectives", "Verify functionality of traitor goals.", ADMIN_CATEGORY_DEBUG)
+	SStraitor.traitor_debug_panel?.ui_interact(user.mob)
 
 /datum/traitor_objective_debug
 	var/list/all_objectives
@@ -96,7 +90,7 @@
 	return data
 
 /datum/traitor_objective_debug/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/traitor_objective_debug/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

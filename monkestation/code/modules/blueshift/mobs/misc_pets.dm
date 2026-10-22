@@ -8,6 +8,7 @@
 	name = "Walter"
 	real_name = "Walter"
 	desc = "It's Walter, he bites criminals just as well as he bites toddlers."
+	unique_pet = TRUE
 
 /mob/living/basic/rabbit/daisy
 	name = "Daisy"

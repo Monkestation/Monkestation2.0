@@ -12,23 +12,22 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_RESISTLOWPRESSURE,
 	)
 
-	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
+	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_ORGANIC
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
+	mutanteyes = /obj/item/organ/internal/eyes/plasmaman
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/internal/liver/bone/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
 	mutantbutt = /obj/item/organ/internal/butt/plasma
 	mutantappendix = null
 	mutantheart = null
-	burnmod = 1.5
 	heatmod = 1.5
-	brutemod = 1.5
-	payday_modifier = 0.75
 	breathid = "plas"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	species_cookie = /obj/item/reagent_containers/condiment/milk
@@ -63,10 +62,6 @@
 	/// If the bones themselves are burning clothes won't help you much
 	var/internal_fire = FALSE
 
-/datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	. = ..()
-	C.set_safe_hunger_level()
-
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	var/atmos_sealed = TRUE
@@ -89,7 +84,7 @@
 	var/can_burn = FALSE
 	if(!isclothing(H.w_uniform) || !(H.w_uniform.clothing_flags & PLASMAMAN_PREVENT_IGNITION))
 		can_burn = TRUE
-	else if(!isclothing(H.gloves))
+	else if(!isclothing(H.gloves)) //If you dont have the other glove then the suit isnt really sealed is it?
 		can_burn = TRUE
 	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & PLASMAMAN_PREVENT_IGNITION)))
 		can_burn = TRUE

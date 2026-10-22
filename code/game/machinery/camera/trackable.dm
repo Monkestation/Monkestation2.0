@@ -5,8 +5,8 @@
 	///Reference to the atom that owns us, used for tracking.
 	var/atom/tracking_holder
 
-	///What mob are we currently tracking, if any
-	var/mob/living/tracked_mob
+	///What movable atom are we currently tracking, if any
+	var/atom/movable/tracked_movable
 	///If we're currently rechecking our target's trackability in hopes of something changing
 	var/rechecking = FALSE
 	///How many times we've failed to locate our target.
@@ -28,7 +28,7 @@
 
 /datum/trackable/Destroy(force)
 	tracking_holder = null
-	tracked_mob = null
+	tracked_movable = null
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
@@ -63,19 +63,26 @@
 
 /// Takes a mob to track, resets our state and begins trying to follow it
 /// Best we can at least
-/datum/trackable/proc/set_tracked_mob(mob/living/track)
+/datum/trackable/proc/set_tracked_target(atom/movable/track)
+	if(isAI(tracking_holder)) //you can't swap targets while locked onto your core.
+		var/mob/living/silicon/ai/ai_tracker = tracking_holder
+		if(ai_tracker.technically_unpowered)
+			return
 	set_rechecking(FALSE)
-	if(tracked_mob)
-		UnregisterSignal(tracked_mob, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
-	if(track && !isliving(track))
-		tracked_mob = null
-		return
-	tracked_mob = track
-	if(tracked_mob)
-		RegisterSignal(tracked_mob, COMSIG_QDELETING, PROC_REF(target_deleted))
-		RegisterSignal(tracked_mob, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
-		RegisterSignal(tracked_mob, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(glide_size_changed))
-		attempt_track()
+	if(tracked_movable)
+		UnregisterSignal(tracked_movable, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
+	if(track && !ismovable(track))
+		tracked_movable = null
+		return FALSE
+	if(isAI(track)) //get their core instead
+		track = track.loc
+	tracked_movable = track
+	if(tracked_movable)
+		RegisterSignal(tracked_movable, COMSIG_QDELETING, PROC_REF(target_deleted))
+		RegisterSignal(tracked_movable, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
+		RegisterSignal(tracked_movable, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(glide_size_changed))
+		return attempt_track()
+	return FALSE
 
 /datum/trackable/proc/target_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -120,20 +127,20 @@
 
 /// Tries to track onto our target mob. Returns true if it succeeds, false otherwise
 /datum/trackable/proc/attempt_track()
-	if(!tracked_mob)
+	if(!tracked_movable)
 		reset_tracking()
 		return FALSE
 
-	if(!tracked_mob.can_track(tracking_holder))
+	if(!tracked_movable.can_track(tracking_holder))
 		return FALSE
 	// In case we've been checking
 	set_rechecking(FALSE)
-	SEND_SIGNAL(src, COMSIG_TRACKABLE_TRACKING_TARGET, tracked_mob)
+	SEND_SIGNAL(src, COMSIG_TRACKABLE_TRACKING_TARGET, tracked_movable)
 	return TRUE
 
 /datum/trackable/proc/glide_size_changed(datum/source, new_glide_size)
 	SIGNAL_HANDLER
-	SEND_SIGNAL(src, COMSIG_TRACKABLE_GLIDE_CHANGED, tracked_mob, new_glide_size)
+	SEND_SIGNAL(src, COMSIG_TRACKABLE_GLIDE_CHANGED, tracked_movable, new_glide_size)
 
 /**
  * reset_tracking
@@ -141,7 +148,7 @@
  * Resets our tracking
  */
 /datum/trackable/proc/reset_tracking()
-	set_tracked_mob(null)
+	set_tracked_target(null)
 
 /**
  * track_input
@@ -161,7 +168,7 @@
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
-	set_tracked_mob(mob_ref.resolve())
+	set_tracked_target(mob_ref.resolve())
 
 /**
  * track_name
@@ -181,7 +188,7 @@
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
 	to_chat(tracker, span_notice("Now tracking [tracked_mob_name] on camera."))
-	set_tracked_mob(mob_ref.resolve())
+	set_tracked_target(mob_ref.resolve())
 
 /**
  * track_mob

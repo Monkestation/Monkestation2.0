@@ -1,9 +1,11 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon = 'icons/mob/species/human/human_face.dmi'   // default icon for all hairs
+	icon = 'icons/mob/sprite_accessories/hair.dmi'  // default icon for all hairs
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "hair_vlong"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "hair_vlong" //match this with icon_state please
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
@@ -59,22 +61,22 @@
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
-	. = ..()
-	if(!istype(target))
-		return
+/obj/item/clothing/head/wig/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/clothing/head/wig/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ishuman(interacting_with) || interacting_with == user)
+		return NONE
+	var/mob/living/carbon/human/target = interacting_with
 	if(target.head)
 		var/obj/item/clothing/head = target.head
 		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
 			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
-			return
-
+			return ITEM_INTERACT_BLOCKING
 	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!noggin)
-		to_chat(user, span_warning("[target.p_they(TRUE)] have no head!"))
-		return
-
+		to_chat(user, span_warning("[target.p_They()] have no head!"))
+		return ITEM_INTERACT_BLOCKING
 
 	var/selected_hairstyle = null
 	var/selected_hairstyle_color = null
@@ -91,6 +93,7 @@
 		add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
 		hairstyle = selected_hairstyle
 		update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hairstyle = pick(GLOB.roundstart_hairstyles_list - "Bald") //Don't want invisible wig
@@ -111,7 +114,7 @@
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		if (color != user.hair_color) // only update if necessary
+		if(color != user.hair_color) // only update if necessary
 			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()
 		user.update_worn_head()

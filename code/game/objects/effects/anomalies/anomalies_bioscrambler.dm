@@ -2,8 +2,7 @@
 /obj/effect/anomaly/bioscrambler
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
-	aSignal = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
+	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
 	/// Who are we moving towards?
@@ -15,7 +14,7 @@
 	/// Range of the anomaly pulse
 	var/range = 2
 
-/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan)
 	. = ..()
 	pursuit_target = WEAKREF(find_nearest_target())
 
@@ -81,6 +80,7 @@
 
 /obj/effect/anomaly/bioscrambler/docile/update_target()
 	return
+
 /obj/effect/temp_visual/circle_wave
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "circle_wave"
@@ -107,8 +107,11 @@
 /obj/effect/temp_visual/circle_wave/bioscrambler/light
 	max_alpha = 128
 
-//void heretic
 /obj/effect/temp_visual/circle_wave/void_conduit
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
 	amount_to_scale = 12
+
+/obj/effect/temp_visual/circle_wave/void_armor
+	color = COLOR_CYAN
+	amount_to_scale = 4

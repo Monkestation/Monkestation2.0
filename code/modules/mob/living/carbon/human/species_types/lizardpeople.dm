@@ -3,16 +3,14 @@
 	name = "\improper Lizardperson"
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
-	visual_gender = FALSE
+	visual_gender = TRUE	//MONKESTATION EDIT - Dimorphic Lizards
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_CAN_USE_FLIGHT_POTION,
-		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
-	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list("body_markings" = "None", "legs" = DIGITIGRADE_LEGS)
 	external_organs = list(
 		/obj/item/organ/external/horns = "None",
 		/obj/item/organ/external/frills = "None",
@@ -23,15 +21,16 @@
 	mutanttongue = /obj/item/organ/internal/tongue/lizard
 	mutantstomach = /obj/item/organ/internal/stomach/lizard
 	mutantheart = /obj/item/organ/internal/heart/lizard
+	mutantbrain = /obj/item/organ/internal/brain/lizard
+	brutemod = 0.9 //scales and osteoderms are tougher than skin i looked this up and found actual papers on it to prove it
 	coldmod = 1.5
 	heatmod = 0.67
-	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_cookie = /obj/item/food/meat/slab
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
-	exotic_bloodtype = /datum/blood_type/crew/lizard
-	inert_mutation = /datum/mutation/human/firebreath
+	exotic_bloodtype = BLOOD_TYPE_LIZARD
+	inert_mutation = /datum/mutation/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_FORCED //Monkestation Edit: OPTIONAL > FORCED
@@ -69,9 +68,10 @@
 
 	return randname
 
-/datum/species/lizard/randomize_features(mob/living/carbon/human/human_mob)
-	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
-	randomize_external_organs(human_mob)
+/datum/species/lizard/randomize_features()
+	var/list/features = ..()
+	features["body_markings"] = pick(GLOB.body_markings_list)
+	return features
 
 /datum/species/lizard/get_species_description()
 	return "The militaristic Lizardpeople hail originally from Tizira, but have grown \
@@ -102,25 +102,52 @@ Lizard subspecies: ASHWALKERS
 	id = SPECIES_LIZARD_ASH
 	mutantlungs = /obj/item/organ/internal/lungs/lavaland
 	mutantbrain = /obj/item/organ/internal/brain/primitive
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/ashwalker
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
-		TRAIT_NO_UNDERWEAR,
-		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
-	species_language_holder = /datum/language_holder/lizard/ash
-	/*digitigrade_customization = DIGITIGRADE_FORCED*/ //MONKESTATION REMOVAL: not needed
-	examine_limb_id = SPECIES_LIZARD
 	bodypart_overrides = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard/ashwalker,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard/ashwalker,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard/ashwalker,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard/ashwalker,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard/ashwalker,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard/ashwalker,
 	)
+	examine_limb_id = SPECIES_LIZARD
+	species_language_holder = /datum/language_holder/ashwalker
+	/// The aging component given by the species.
+	var/datum/component/ash_age/ash_age
+
+/datum/species/lizard/ashwalker/Destroy(force)
+	QDEL_NULL(ash_age)
+	return ..()
+
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/carbon_target, datum/species/old_species)
+	. = ..()
+	RegisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK, PROC_REF(mob_attack))
+	ash_age = carbon_target.AddComponent(/datum/component/ash_age)
+	carbon_target.faction |= FACTION_ASHWALKER
+
+/datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/carbon_target)
+	. = ..()
+	UnregisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK)
+	QDEL_NULL(ash_age)
+	carbon_target.faction -= FACTION_ASHWALKER
+
+/datum/species/lizard/ashwalker/proc/mob_attack(datum/source, mob/mob_target, mob/user)
+	SIGNAL_HANDLER
+
+	if(!isliving(mob_target))
+		return
+	var/mob/living/living_target = mob_target
+	var/datum/status_effect/ashwalker_damage/ashie_damage = living_target.has_status_effect(/datum/status_effect/ashwalker_damage)
+	if(!ashie_damage)
+		ashie_damage = living_target.apply_status_effect(/datum/status_effect/ashwalker_damage)
+	ashie_damage.register_mob_damage(living_target)
 
 /*
 Lizard subspecies: SILVER SCALED
@@ -141,7 +168,7 @@ Lizard subspecies: SILVER SCALED
 	mutantlungs = null
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
-	exotic_bloodtype = /datum/blood_type/crew/lizard/silver
+	exotic_bloodtype = BLOOD_TYPE_LIZARD
 	armor = 10 //very light silvery scales soften blows
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	examine_limb_id = SPECIES_LIZARD

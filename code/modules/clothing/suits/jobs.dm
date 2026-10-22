@@ -163,7 +163,7 @@
 		/obj/item/t_scanner,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
-		/obj/item/tank/internals/oxygen, //monkestation edit
+		/obj/item/tank/internals,
 		/obj/item/storage/bag/rebar_quiver,
 		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
@@ -278,7 +278,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/medipen,
+		/obj/item/hypospray,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/retractor,
 		/obj/item/scalpel,

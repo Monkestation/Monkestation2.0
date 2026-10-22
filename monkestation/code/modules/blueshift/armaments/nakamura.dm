@@ -75,11 +75,9 @@
 	item_type = /obj/item/mod/module/rad_protection
 	cost = PAYCHECK_CREW
 
-/datum/armament_entry/company_import/nakamura_modsuits/protection_modules/armor_plates
-	item_type = /obj/item/mod/module/armor_booster/retractplates
-	cost = PAYCHECK_COMMAND * 3
-	restricted = TRUE
-	contraband = TRUE
+/datum/armament_entry/company_import/nakamura_modsuits/protection_modules/emp_shielding
+	item_type = /obj/item/mod/module/emp_shield
+	cost = PAYCHECK_COMMAND * 2
 
 // Utility modules, general purpose stuff that really anyone might want
 
@@ -121,6 +119,11 @@
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/magnetic_deploy
 	item_type = /obj/item/mod/module/springlock/contractor
 	cost = PAYCHECK_COMMAND * 2
+
+/datum/armament_entry/company_import/nakamura_modsuits/utility_modules/holster
+	item_type = /obj/item/mod/module/holster
+	cost = PAYCHECK_COMMAND * 3
+	restricted = TRUE
 
 // Mobility modules, jetpacks and stuff
 

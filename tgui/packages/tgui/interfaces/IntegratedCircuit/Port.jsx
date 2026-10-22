@@ -1,8 +1,8 @@
-import { Stack, Box } from '../../components';
-import { Component, createRef } from 'inferno';
-import { DisplayName } from './DisplayName';
 import { classes } from 'common/react';
+import { Component, createRef } from 'react';
+import { Box, Stack } from '../../components';
 import { noop } from './constants';
+import { DisplayName } from './DisplayName';
 
 export class Port extends Component {
   constructor() {
@@ -101,7 +101,6 @@ export class Port extends Component {
               style={{
                 width: '100%',
                 height: '100%',
-                position: 'absolute',
               }}
               viewBox="0, 0, 100, 100"
             >

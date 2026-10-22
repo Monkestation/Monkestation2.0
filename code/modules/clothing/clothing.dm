@@ -16,6 +16,14 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
+	///Sound this item makes when its visor is flipped down
+	var/visor_toggle_down_sound = null
+	///Sound this item makes when its visor is flipped up
+	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -60,8 +68,9 @@
 
 	//MonkeStation Edit Start
 	//Alternative Scream/Laugh Vars
-	var/list/alternative_screams = list()
-	var/list/alternative_laughs = list()
+	var/list/alternative_screams
+	var/list/alternative_laughs
+	var/list/alternative_deathgasps
 	//MonkeStation Edit End
 
 /obj/item/clothing/Initialize(mapload)
@@ -74,32 +83,6 @@
 	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
-
-/obj/item/clothing/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/M = usr
-
-//monkestation edit start, this is currently removed as it breaks things
-/*	if(istype(over_object, /atom/movable/screen/inventory))
-		var/atom/movable/screen/inventory/slot = over_object
-		if(M.get_item_by_slot(slot.slot_id))
-			var/obj/item/clothing/item = M.get_item_by_slot(slot.slot_id)
-			if(!M.temporarilyRemoveItemFromInventory(item))
-				return
-			if(!M.put_in_active_hand(item))
-				if(!M.put_in_inactive_hand(item))
-					if(!M.active_storage?.attempt_insert(item, M))
-						item.forceMove(get_turf(M))
-			item.equip_to_best_slot()*/
-//monkestation edit end
-
-	if(ismecha(M.loc)) // stops inventory actions in a mech
-		return
-
-	if(!M.incapacitated() && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(usr)
 
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
@@ -137,30 +120,31 @@
 		moth_snack.clothing = WEAKREF(src)
 	moth_snack.attack(target, user, params)
 
-/obj/item/clothing/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, repairable_by))
-		return ..()
+/obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = NONE
+	if(!istype(weapon, repairable_by))
+		return
 
 	switch(damaged_clothes)
 		if(CLOTHING_PRISTINE)
-			return..()
+			return
+
 		if(CLOTHING_DAMAGED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			cloth_repair.use(1)
-			repair(user, params)
-			return TRUE
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
+
 		if(CLOTHING_SHREDDED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			if(cloth_repair.amount < 3)
 				to_chat(user, span_warning("You require 3 [cloth_repair.name] to repair [src]."))
-				return TRUE
+				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You begin fixing the damage to [src] with [cloth_repair]..."))
 			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
-				return TRUE
-			repair(user, params)
-			return TRUE
-
-	return ..()
+				return ITEM_INTERACT_BLOCKING
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
@@ -268,10 +252,12 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/wearer = user
-	if(alternative_screams.len)
-		wearer.alternative_screams -= alternative_screams
-	if(alternative_laughs.len)
-		wearer.alternative_laughs -= alternative_laughs
+	if(LAZYLEN(alternative_screams))
+		LAZYREMOVE(wearer.alternative_screams, alternative_screams)
+	if(LAZYLEN(alternative_laughs))
+		LAZYREMOVE(wearer.alternative_laughs, alternative_laughs)
+	if(LAZYLEN(alternative_deathgasps))
+		LAZYREMOVE(wearer.alternative_deathgasps, alternative_deathgasps)
 	//MonkeStation Edit End
 
 /obj/item/clothing/equipped(mob/living/user, slot)
@@ -294,11 +280,25 @@
 		if(!ishuman(user))
 			return
 		var/mob/living/carbon/human/wearer = user
-		if(alternative_screams.len)
-			wearer.alternative_screams.Add(alternative_screams)
-		if(alternative_laughs.len)
-			wearer.alternative_laughs.Add(alternative_laughs)
+		if(LAZYLEN(alternative_screams))
+			LAZYADD(wearer.alternative_screams, alternative_screams)
+		if(LAZYLEN(alternative_laughs))
+			LAZYADD(wearer.alternative_laughs, alternative_laughs)
+		if(LAZYLEN(alternative_deathgasps))
+			LAZYADD(wearer.alternative_deathgasps, alternative_deathgasps)
 		//MonkeStation Edit End
+
+// If the item is a piece of clothing and is being worn, make sure it updates on the player
+/obj/item/clothing/update_greyscale()
+	. = ..()
+
+	var/mob/living/carbon/human/wearer = loc
+
+	if(!istype(wearer))
+		return
+
+	wearer.update_clothing(slot_flags)
+
 
 /**
  * Inserts a trait (or multiple traits) into the clothing traits list
@@ -340,13 +340,11 @@
 		. += span_warning("<b>[p_theyre(TRUE)] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
 		return
 
-	switch (max_heat_protection_temperature)
-		if (400 to 1000)
-			. += "[src] offers the wearer limited protection from fire."
-		if (1001 to 1600)
-			. += "[src] offers the wearer some protection from fire."
-		if (1601 to 35000)
-			. += "[src] offers the wearer robust protection from fire."
+	if(TRAIT_FAST_CUFFING in clothing_traits)
+		. += "[src] increase the speed that you handcuff others."
+
+	if(TRAIT_CAN_SIGN_ON_COMMS in clothing_traits)
+		. += "[src] allows you talk on radios through sign language."
 
 	for(var/zone in damage_by_parts)
 		var/pct_damage_part = damage_by_parts[zone] / limb_integrity * 100
@@ -376,21 +374,51 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)))
+	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
-	//MONKESTATION ADDITION START - Denotes some clothing traits when examining a clothing piece.
 	if(clothing_traits)
 		if(TRAIT_CHUNKYFINGERS in clothing_traits)
 			// Denotes that wearing makes your fingers chunky.
 			. += span_notice("Wearing [src] makes your fingers chunky, preventing use of most firearms, stun batons, and some computers.")
-	//MONKESTATION ADDITION
+
+/obj/item/clothing/examine_tags(mob/user)
+	. = ..()
+	if (clothing_flags & THICKMATERIAL)
+		.["thick"] = "Protects from most injections and sprays."
+	if (clothing_flags & CASTING_CLOTHES)
+		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
+	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
+		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
+	if(flags_cover & PEPPERPROOF)
+		.["pepper-proof"] = "Protects the wearer from the effects of pepperspray."
+	if (max_heat_protection_temperature || min_cold_protection_temperature)
+		var/heat_desc
+		var/cold_desc
+		switch (max_heat_protection_temperature)
+			if (400 to 1000)
+				heat_desc = "high"
+			if (1001 to 1600)
+				heat_desc = "very high"
+			if (1601 to 35000)
+				heat_desc = "extremely high"
+		switch (min_cold_protection_temperature)
+			if (160 to 272)
+				cold_desc = "low"
+			if (72 to 159)
+				cold_desc = "very low"
+			if (0 to 71)
+				cold_desc = "extremely low"
+		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc) - null, " and ")] temperatures."
+
+/obj/item/clothing/examine_descriptor(mob/user)
+	return "clothing"
 
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
+		var/list/readout = list()
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
@@ -399,9 +427,9 @@
 			if(!rating)
 				continue
 			if(!added_damage_header)
-				readout += "\n<b>ARMOR (I-X)</b>"
+				readout += "<b><u>ARMOR (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
 		for(var/durability_key in ARMOR_LIST_DURABILITY())
@@ -409,23 +437,55 @@
 			if(!rating)
 				continue
 			if(!added_durability_header)
-				readout += "\n<b>DURABILITY (I-X)</b>"
+				readout += "<b><u>DURABILITY (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
-		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
+		if((flags_cover & HEADCOVERSMOUTH) || (flags_cover & PEPPERPROOF))
 			var/list/things_blocked = list()
 			if(flags_cover & HEADCOVERSMOUTH)
 				things_blocked += span_tooltip("Because this item is worn on the head and is covering the mouth, it will block facehugger proboscides, killing facehuggers.", "facehuggers")
 			if(flags_cover & PEPPERPROOF)
 				things_blocked += "pepperspray"
 			if(length(things_blocked))
-				readout += "\n<b>COVERAGE</b>"
-				readout += "\nIt will block [english_list(things_blocked)]."
+				readout += "<b><u>COVERAGE</u></b>"
+				readout += "It will block [english_list(things_blocked)]."
 
-		readout += "</span>"
+		if(!length(readout))
+			readout += "No armor or durability information available."
 
-		to_chat(usr, "[readout.Join()]")
+		if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
+			var/list/parts_covered = list()
+			var/output_string = "It"
+			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
+				output_string = "When sealed, it"
+			if(body_parts_covered & HEAD)
+				parts_covered += "head"
+			if(body_parts_covered & CHEST)
+				parts_covered += "torso"
+			if(body_parts_covered & (ARMS|HANDS))
+				parts_covered += "arms"
+			if(body_parts_covered & (LEGS|FEET))
+				parts_covered += "legs"
+			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
+				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
+
+		var/heat_prot
+		switch(max_heat_protection_temperature)
+			if(400 to 1000)
+				heat_prot = "minor"
+			if(1001 to 1600)
+				heat_prot = "some"
+			if(1601 to 35000)
+				heat_prot = "extreme"
+		if(heat_prot)
+			. += "[src] offers the wearer [heat_prot] protection from heat, up to [max_heat_protection_temperature] kelvin."
+
+		if(min_cold_protection_temperature)
+			readout += "It will insulate the wearer from [min_cold_protection_temperature <= SPACE_SUIT_MIN_TEMP_PROTECT ? span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space, down to [min_cold_protection_temperature] kelvin") : "cold, down to [min_cold_protection_temperature] kelvin"]."
+
+		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		to_chat(usr, boxed_message(formatted_readout))
 
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.
@@ -445,7 +505,7 @@
 
 	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone
 		var/mob/living/M = loc
-		if(src in M.get_equipped_items(FALSE))
+		if(src in M.get_equipped_items())
 			to_chat(M, span_warning("Your [name] start[p_s()] to fall apart!"))
 		else
 			to_chat(M, span_warning("[src] start[p_s()] to fall apart!"))
@@ -496,6 +556,7 @@ BLIND     // can't see anything
 /proc/generate_female_clothing(index, t_color, icon, type)
 	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
 	var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+
 	var/icon/female_cropping_mask = icon("icon" = 'icons/mob/clothing/under/masking_helpers.dmi', "icon_state" = female_icon_state)
 	female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
@@ -515,6 +576,44 @@ BLIND     // can't see anything
 	update_item_action_buttons()
 	return TRUE
 
+/// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles etc.
+/obj/item/clothing/proc/adjust_visor(mob/living/user)
+	if(!can_use(user))
+		return FALSE
+
+	visor_toggling()
+
+	var/message
+	if(up)
+		message = alt_toggle_message ?  "[alt_toggle_message] [src]." : "You push [src] out of the way."
+	else
+		message = toggle_message ? "[toggle_message] [src]." : "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
+
+	//play sounds when toggling the visor up or down (if there is any)
+	if(visor_toggle_up_sound && up)
+		playsound(src, visor_toggle_up_sound, 20, TRUE, -1)
+	if(visor_toggle_down_sound && !up)
+		playsound(src, visor_toggle_down_sound, 20, TRUE, -1)
+
+	update_item_action_buttons()
+
+	if(user.is_holding(src))
+		user.update_held_items()
+		return TRUE
+	user.update_clothing(slot_flags)
+	if(!iscarbon(user))
+		return TRUE
+	var/mob/living/carbon/carbon_user = user
+	if(up)
+		carbon_user.head_update(src, forced = 1)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		carbon_user.update_tint()
+	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
+		carbon_user.cutoff_internals()
+	return TRUE
+
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
 	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
@@ -526,17 +625,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
-
-/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
-	up = !up
-	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
-	clothing_flags ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	icon_state = "[initial(icon_state)]"
-	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
-		flash_protect ^= initial(flash_protect)
-	if(visor_vars_to_toggle & VISOR_TINT)
-		tint ^= initial(tint)
+	update_icon_state()
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
@@ -567,7 +656,7 @@ BLIND     // can't see anything
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(isliving(loc))
 			var/mob/living/M = loc
-			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands
+			if(src in M.get_equipped_items()) //make sure they were wearing it and not attacking the item in their hands
 				M.visible_message(span_danger("[M]'s [src.name] fall[p_s()] off, [p_theyre()] completely shredded!"), span_warning("<b>Your [src.name] fall[p_s()] off, [p_theyre()] completely shredded!</b>"), vision_distance = COMBAT_MESSAGE_RANGE)
 				M.dropItemToGround(src)
 			else
@@ -595,24 +684,18 @@ BLIND     // can't see anything
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
 
-/obj/item/clothing/proc/appears_bloody()
-	return GET_ATOM_BLOOD_DNA_LENGTH(src) && can_be_bloody && !(item_flags & NO_BLOOD_ON_ITEM)
-
-/obj/item/clothing/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	if(isinhands)
+/// Returns a list of overlays with our blood, if we're bloodied
+/obj/item/clothing/proc/get_blood_overlay(blood_state)
+	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 
-	if(blood_overlay_type && appears_bloody())
-		var/mutable_appearance/blood_overlay
-		//MONKESTATION EDIT START
-		/* - MONKESTATION EDIT ORIGINAL -
-		if(clothing_flags & LARGE_WORN_ICON)
-			blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "[blood_overlay_type]blood_large")
-		else
-			blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		*/
-		blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		//MONKESTATION EDIT END
-		blood_overlay.color = get_blood_dna_color()
-		. += blood_overlay
+	var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_state]blood")
+
+	blood_overlay.color = get_blood_dna_color()
+
+	var/emissive_alpha = get_blood_emissive_alpha(is_worn = TRUE)
+	if (emissive_alpha)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha)
+		blood_overlay.overlays += emissive_overlay
+
+	return blood_overlay

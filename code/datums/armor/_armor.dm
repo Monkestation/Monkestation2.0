@@ -64,6 +64,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 	return FALSE
 
 /datum/armor/vv_get_dropdown()
+	SHOULD_CALL_PARENT(FALSE)
 	return list("", "MUST MODIFY ARMOR VALUES ON THE PARENT ATOM")
 
 /datum/armor/CanProcCall(procname)
@@ -195,12 +196,31 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
 /// Checks if any of the armor values are non-zero, so this technically also counts negative armor!
 /datum/armor/proc/has_any_armor()
-	for(var/rating as anything in ARMOR_LIST_ALL())
+	for(var/rating in ARMOR_LIST_ALL())
 		if(vars[rating])
 			return TRUE
 	return FALSE
 
 /datum/armor/immune/has_any_armor()
+	return TRUE
+
+/datum/armor/proc/combine_max_armor(datum/armor/other) as /datum/armor
+	RETURN_TYPE(/datum/armor)
+	if(!other)
+		return src
+	var/list/ratings = get_rating_list()
+	for(var/rating in ratings)
+		ratings[rating] = max(ratings[rating], other.get_rating(rating))
+	return generate_new_with_specific(ratings)
+
+/datum/armor/proc/operator~=(datum/armor/other)
+	if(ispath(other, /datum/armor))
+		other = get_armor_by_type(other)
+	if(!istype(other, /datum/armor))
+		return FALSE
+	for(var/rating in ARMOR_LIST_ALL())
+		if(vars[rating] != other.vars[rating])
+			return FALSE
 	return TRUE
 
 /**

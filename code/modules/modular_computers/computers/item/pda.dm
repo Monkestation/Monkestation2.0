@@ -12,19 +12,22 @@
 	inhand_icon_state = "electronic"
 
 	steel_sheet_cost = 2
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64
 	allow_chunky = TRUE
-	hardware_flag = PROGRAM_TABLET
+	hardware_flag = PROGRAM_PDA
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
+
+	action_slots = ALL
+
+	internal_cell = /obj/item/stock_parts/power_store/cell/high // MONKE EDIT: Upgraded cell
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -36,10 +39,9 @@
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
-		// monkestation edit: install crew manifest and spess.tv by default
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/secureye/spesstv,
-		// monkestation end
+		/datum/computer_file/program/chatclient,
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(
@@ -60,13 +62,18 @@
 		QDEL_NULL(inserted_item)
 	return ..()
 
+/obj/item/modular_computer/pda/eject_stored_items(atom/droploc)
+	inserted_item?.forceMove(droploc) // PDA pen slot
+	inserted_item = null
+	return ..()
+
 /obj/item/modular_computer/pda/install_default_programs()
 	var/list/apps_to_download = list()
 	if(has_pda_programs)
 		apps_to_download += default_programs + pda_programs
 	apps_to_download += starting_programs
 
-	for(var/programs as anything in apps_to_download)
+	for(var/programs in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
@@ -86,7 +93,7 @@
 /obj/item/modular_computer/pda/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
-		explode(usr, from_message_menu = TRUE)
+		explode(user, from_message_menu = TRUE)
 
 /obj/item/modular_computer/pda/attack_self(mob/user)
 	// bypass literacy checks to access syndicate uplink
@@ -141,7 +148,7 @@
 
 	return . || NONE
 
-/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(!is_type_in_list(attacking_item, contained_item))
@@ -158,19 +165,9 @@
 	inserted_item = attacking_item
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/modular_computer/pda/item_ctrl_click(mob/user)
 	remove_pen(user)
-
-/obj/item/modular_computer/pda/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()
@@ -238,6 +235,10 @@
 	if(new_ringtone && (new_ringtone != MESSENGER_RINGTONE_DEFAULT))
 		update_ringtone(new_ringtone)
 
+	var/new_sound = owner_client.prefs.read_preference(/datum/preference/choiced/pda_ringtone_sound)
+	if(new_sound)
+		update_ringtone_sound(new_sound)
+
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
 	if(new_theme)
 		device_theme = GLOB.pda_name_to_theme[new_theme]
@@ -249,6 +250,14 @@
 	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
 	if(messenger_app)
 		messenger_app.ringtone = new_ringtone
+
+/// A simple proc to set the ringtone sound || Monkestation Addition
+/obj/item/modular_computer/pda/proc/update_ringtone_sound(new_sound)
+	if(!istext(new_sound) || !(new_sound in GLOB.pda_ringtone_sounds))
+		return
+	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
+	if(messenger_app)
+		messenger_app.ringtone_sound = new_sound
 
 /**
  * Nuclear PDA
@@ -293,6 +302,7 @@
 	has_pda_programs = FALSE
 	starting_programs = list(
 		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/emojipedia,
 	)
 
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
@@ -310,6 +320,25 @@
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/crew_manifest,
 	)
+
+/obj/item/modular_computer/pda/silicon/ai
+	max_idle_programs = 12
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/filemanager,
+		/datum/computer_file/program/themeify,
+		/datum/computer_file/program/notepad,
+		/datum/computer_file/program/emojipedia,
+		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/signal_commander,
+		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/secureye/spesstv,
+		/datum/computer_file/program/ntnetmonitor,
+	)
+
+/obj/item/modular_computer/pda/silicon/ai/get_ntnet_status()
+	return NTNET_ETHERNET_SIGNAL
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
 	. = ..()
@@ -380,7 +409,7 @@
 		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
-/obj/item/modular_computer/pda/silicon/toggle_flashlight()
+/obj/item/modular_computer/pda/silicon/toggle_flashlight(mob/user)
 	if(!silicon_owner || QDELETED(silicon_owner))
 		return FALSE
 	if(iscyborg(silicon_owner))
@@ -400,6 +429,28 @@
 
 /obj/item/modular_computer/pda/silicon/ui_state(mob/user)
 	return GLOB.reverse_contained_state
+
+/obj/item/modular_computer/pda/silicon/explode(mob/target, mob/bomber, from_message_menu)
+	if(from_message_menu)
+		log_bomber(null, null, target, "'s induced disruption as [target.p_they()] tried to open their tablet message menu because of a recent tablet bomb sent to a silicon.")
+	else
+		log_bomber(bomber, "successfully tablet-disrupted", target, "as [target.p_they()] tried to reply to a rigged tablet message sent to a silicon [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
+	to_chat(silicon_owner, span_danger("POWER SURGE DETECTED/"))
+	do_sparks(4, FALSE, src)
+	if(isAI(silicon_owner))
+		silicon_owner.adjustFireLoss(25)
+		if(!isturf(silicon_owner.loc)) //AI not in core? not wise to disable a random APC then.
+			silicon_owner.Unconscious(10 SECONDS,  TRUE)
+		else
+			var/area/AIarea = get_area(silicon_owner)
+			var/obj/machinery/power/apc/AIapc = AIarea.apc
+			if(AIapc)
+				AIapc.energy_fail(45, forced = TRUE)
+				do_sparks(4, FALSE, AIapc)
+	else if(ispAI(silicon_owner))
+		silicon_owner.emp_act(EMP_HEAVY)
+	else //how did this happen cyborgs shouldnt have messengers, oh well!
+		silicon_owner.Paralyze(5 SECONDS)
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"

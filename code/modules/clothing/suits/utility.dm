@@ -27,7 +27,7 @@
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/tank/internals,
 	)
-	slowdown = 1
+	slowdown = 0.5 //monkestation edit: 1 to 0.5
 	armor_type = /datum/armor/utility_fire
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
@@ -58,8 +58,8 @@
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
 
-
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
@@ -191,7 +191,7 @@
 		/obj/item/geiger_counter,
 		/obj/item/tank/internals,
 		)
-	slowdown = 1.5
+	slowdown = 0.5 //monkestation edit: 1.5 to 0.5
 	armor_type = /datum/armor/utility_radiation
 	strip_delay = 60
 	equip_delay_other = 60

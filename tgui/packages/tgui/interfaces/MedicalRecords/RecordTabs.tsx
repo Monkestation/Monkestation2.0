@@ -2,18 +2,18 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
-  Stack,
-  Input,
-  Section,
-  Tabs,
-  NoticeBox,
   Box,
-  Icon,
   Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
 } from 'tgui/components';
 import { JOB2ICON } from '../common/JobToIcon';
 import { isRecordMatch } from '../SecurityRecords/helpers';
-import { MedicalRecord, MedicalRecordData } from './types';
+import type { MedicalRecord, MedicalRecordData } from './types';
 
 /** Displays all found records. */
 export const MedicalRecordTabs = (props) => {
@@ -36,7 +36,7 @@ export const MedicalRecordTabs = (props) => {
       <Stack.Item>
         <Input
           fluid
-          onInput={(_, value) => setSearch(value)}
+          onChange={(value) => setSearch(value)}
           placeholder="Name/Job/DNA"
         />
       </Stack.Item>
@@ -86,6 +86,19 @@ const CrewTab = (props: { record: MedicalRecord }) => {
     if (selectedRecord?.crew_ref === crew_ref) {
       setSelectedRecord(undefined);
     } else {
+      // GOD, I REALLY HATE IT!
+      // THIS FUCKING HACK NEEDED CAUSE "WINSET MAP"
+      // MAKING UI DISAPPEAR, AND WE NEED RE-RENDER SHIT
+      // AFTER BYOND DONE MAKING THEIR SHIT
+      // Anyway... that's better than hack before
+      if (selectedRecord === undefined) {
+        setTimeout(() => {
+          act('view_record', {
+            assigned_view: assigned_view,
+            crew_ref: crew_ref,
+          });
+        });
+      }
       setSelectedRecord(record);
       act('view_record', { assigned_view: assigned_view, crew_ref: crew_ref });
     }
@@ -94,11 +107,10 @@ const CrewTab = (props: { record: MedicalRecord }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label={name}
       onClick={() => selectRecord(record)}
       selected={selectedRecord?.crew_ref === crew_ref}
     >
-      <Box wrap>
+      <Box>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>

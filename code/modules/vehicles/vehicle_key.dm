@@ -9,6 +9,12 @@
 	name = "ATV key"
 	desc = "A small grey key for starting and operating ATVs."
 
+
+/obj/item/key/hoverdog
+	name = "Hoverdog key"
+	desc = "A golden painted key with a hotdog accessory."
+	icon_state = "keyhoverdog"
+
 /obj/item/key/security
 	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
 	icon_state = "keysec"
@@ -33,9 +39,14 @@
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	sharpness = SHARP_EDGED
-	embedding = list("pain_mult" = 1, "embed_chance" = 30, "fall_chance" = 70)
+	embed_type = /datum/embedding/janicart_key
 	wound_bonus = -1
 	bare_wound_bonus = 2
+
+/datum/embedding/janicart_key
+	pain_mult = 1
+	embed_chance = 30
+	fall_chance = 70
 
 /obj/item/key/janitor/suicide_act(mob/living/carbon/user)
 	switch(user.mind?.get_skill_level(/datum/skill/cleaning))

@@ -3,6 +3,7 @@
 	tastes = list("the sewers" = 1, "cheese" = 1)
 	food_reagents = list(/datum/reagent/blood = 30)
 	spawned_mob = /mob/living/basic/mouse
+	shaken_mob = /mob/living/basic/mouse/rat
 
 /obj/item/storage/box/monkeycubes/mousecubes
 	name = "mouse cube box"

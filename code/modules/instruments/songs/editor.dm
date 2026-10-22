@@ -116,7 +116,7 @@
 
 /datum/song/Topic(href, href_list)
 	if(cares_about_distance)
-		if(!usr.can_perform_action(parent, ALLOW_RESTING))
+		if(!usr.can_perform_action(parent, ALLOW_RESTING|ALLOW_PAI))
 			usr << browse(null, "window=instrument")
 			usr.unset_machine()
 			return

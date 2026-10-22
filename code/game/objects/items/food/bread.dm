@@ -8,7 +8,7 @@
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
 	eat_time = 3 SECONDS
-	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 	/// type is spawned 5 at a time and replaces this bread loaf when processed by cutting tool
 	var/obj/item/food/breadslice/slice_type
 	/// so that the yield can change if it isnt 5
@@ -33,7 +33,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS
 	w_class = WEIGHT_CLASS_SMALL
-	food_buffs = STATUS_EFFECT_FOOD_STAM_TINY
+	food_buffs = STATUS_EFFECT_STAM_REGEN_SMALL
 
 /obj/item/food/breadslice/Initialize(mapload)
 	. = ..()

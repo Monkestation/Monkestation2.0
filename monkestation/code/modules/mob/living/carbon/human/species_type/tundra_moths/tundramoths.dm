@@ -4,6 +4,9 @@
 	id = SPECIES_TUNDRA
 	mutanteyes = /obj/item/organ/internal/eyes/moth/tundra
 	external_organs = list(/obj/item/organ/external/wings/moth = "Tundra", /obj/item/organ/external/antennae = "Tundra")
+	inherent_traits = list(
+		TRAIT_HAS_MARKINGS,
+	)
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/tundramoth,
@@ -22,31 +25,33 @@
 /obj/item/bodypart/head/tundramoth
 	name = "Tundra Head"
 	desc = "It looks just like a moths, but its covered in black fur. Is that a bald sp-"
-	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
-	icon_state = "tundra_moth_head"
-	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
+	icon = 'icons/mob/species/tundramoths/bodyparts.dmi'
+	icon_state = "tundra_head"
+	icon_static = 'icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = /obj/item/bodypart/head/moth::head_flags
+	bodypart_traits = /obj/item/bodypart/head/moth::bodypart_traits
 
 /obj/item/bodypart/chest/tundramoth
 	name = "Tundra chest"
 	desc = "It looks just like a moths, but its covered in black fur."
-	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
-	icon_state = "tundra_moth_chest_m"
-	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
+	icon = 'icons/mob/species/tundramoths/bodyparts.dmi'
+	icon_state = "tundra_chest_m"
+	icon_static = 'icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
+	bodypart_traits = /obj/item/bodypart/chest/moth::bodypart_traits
 
 /obj/item/bodypart/arm/left/tundramoth
 	name = "Tundra left arm"
 	desc = "It looks just like a moths, but its covered in black fur."
-	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
-	icon_state = "tundra_moth_l_arm"
-	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
+	icon = 'icons/mob/species/tundramoths/bodyparts.dmi'
+	icon_state = "tundra_l_arm"
+	icon_static = 'icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "slash"
@@ -57,9 +62,9 @@
 /obj/item/bodypart/arm/right/tundramoth
 	name = "Tundra right arm"
 	desc = "It looks just like a moths, but its covered in black fur."
-	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
-	icon_state = "tundra_moth_r_arm"
-	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
+	icon = 'icons/mob/species/tundramoths/bodyparts.dmi'
+	icon_state = "tundra_r_arm"
+	icon_static = 'icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "slash"
@@ -70,17 +75,17 @@
 /obj/item/bodypart/leg/left/tundramoth
 	name = "Tundra left leg"
 	desc = "It looks just like a moths, but its covered in black fur."
-	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
-	icon_state = "tundra_moth_l_leg"
-	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
+	icon = 'icons/mob/species/tundramoths/bodyparts.dmi'
+	icon_state = "tundra_l_leg"
+	icon_static = 'icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right/tundramoth
 	name = "Tundra right leg"
 	desc = "It looks just like a moths, but its covered in black fur."
-	icon = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
-	icon_state = "tundra_moth_r_leg"
-	icon_static = 'monkestation/icons/mob/species/tundramoths/bodyparts.dmi'
+	icon = 'icons/mob/species/tundramoths/bodyparts.dmi'
+	icon_state = "tundra_r_leg"
+	icon_static = 'icons/mob/species/tundramoths/bodyparts.dmi'
 	limb_id = SPECIES_TUNDRA
 	should_draw_greyscale = FALSE

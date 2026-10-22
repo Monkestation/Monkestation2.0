@@ -9,14 +9,6 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/syndicate_medical, 32)
 
-/obj/structure/sign/poster/contraband/crocin_pool
-	name = "SWIM"
-	desc = "This poster dramatically states; 'SWIM'. It seems to be advertising the use of Crocin.. 'recreationally', in the home, work, and, most ominously, 'the pool'. A 'MamoTramsem' logo is in the corner."
-	icon = 'monkestation/code/modules/blueshift/icons/posters/contraband.dmi'
-	icon_state = "poster_sr_crocin"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/crocin_pool, 32)
-
 /obj/structure/sign/poster/contraband/icebox_moment
 	name = "As above, so below"
 	desc = "This poster seems to be instill that a 'Head of Security's Office being overtop a syndicate installation is only fitting. As above.. so below.'"
@@ -56,14 +48,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/operative_duff
 	icon_state = "poster_sr_ultra"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ultra, 32)
-
-/obj/structure/sign/poster/contraband/secborg_vale
-	name = "Defaced Valeborg Advertisement"
-	desc = "This poster originally sought to advertise the sleek utility of the valeborg - but it seems to have been long since defaced. One word lies on top; 'RUN.' - Perhaps fitting, considering the security model shown."
-	icon = 'monkestation/code/modules/blueshift/icons/posters/contraband.dmi'
-	icon_state = "poster_sr_valeborg"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/secborg_vale, 32)
 
 /obj/structure/sign/poster/contraband/killingjoke // I like Batman :)))
 	name = "You don't have to be crazy to work here - but it sure helps!"

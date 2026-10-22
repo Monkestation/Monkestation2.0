@@ -16,7 +16,7 @@
 /datum/symptom/lantern/activate(mob/living/mob)
 	if(!moblight)
 		moblight = new(mob)
-	if(ismouse(mob))
+	if(ismouse(mob) || !mob.reagents)
 		moblight.set_light_range(multiplier)
 		moblight.set_light_power(multiplier / 3)
 		moblight.set_light_color(color)
@@ -34,7 +34,7 @@
 	moblight.set_light_power(multiplier / 3)
 	moblight.set_light_color(color)
 
-/datum/symptom/lantern/deactivate(mob/living/mob)
+/datum/symptom/lantern/deactivate(mob/living/mob, datum/disease/acute/disease, safe = FALSE)
 	QDEL_NULL(moblight)
 	to_chat(mob, span_notice("You don't feel as bright."))
 	flavortext = 0

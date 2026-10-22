@@ -27,6 +27,11 @@
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
 	fade = 1.5 SECONDS
 
+/particles/smoke/steam/guardian
+	position = list(-1, 8, 0)
+	fadein = 5
+	height = 200
+
 /particles/smoke/steam/mild
 	spawning = 1
 	velocity = list(0, 0.3, 0)
@@ -36,6 +41,13 @@
 	icon_state = list("steam_1" = 1, "smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 1)
 	spawning = 2
 	velocity = list(0, 0.25, 0)
+
+/particles/smoke/steam/mald
+	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
+	velocity = list(0, 0.25, 0)
+	lifespan = 1 SECONDS
+	fade = 0.5 SECONDS
+	position = list(-1, 12, 0)
 
 /particles/smoke/cig
 	icon_state = list("steam_1" = 2, "steam_2" = 1, "steam_3" = 1)
@@ -84,3 +96,14 @@
 	grow = 0.05
 	spin = 2
 	color = "#fcffff77"
+
+/particles/smoke/nuke
+	scale = list(0.10, 0.10)
+	color = "#cdcdcdff"
+	position = list(-3, -7, 0)
+	spawning = 3
+	friction = 0.4
+	lifespan = 1 SECONDS
+	fade = 0.5 SECONDS
+	velocity = list(0, 0.3, 0)
+

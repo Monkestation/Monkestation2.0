@@ -13,7 +13,7 @@
 	icon_state = "eradicationlock"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock)
 	cooldown_time = 0.5 SECONDS
 	/// The ckey we lock with, to allow all alternate versions of the user.
@@ -33,7 +33,7 @@
 		return
 	true_owner_ckey = mod.wearer.ckey
 	balloon_alert(mod.wearer, "user remembered")
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Signal fired when the modsuit tries activating
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
@@ -62,7 +62,7 @@
 	icon_state = "rewinder"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/rewinder)
 	cooldown_time = 20 SECONDS
 
@@ -92,9 +92,9 @@
 	return MOD_CANCEL_ACTIVATE
 
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
-/obj/item/mod/module/rewinder/proc/on_module_triggered(datum/source)
+/obj/item/mod/module/rewinder/proc/on_module_triggered(datum/source, mob/user)
 	SIGNAL_HANDLER
-	balloon_alert(mod.wearer, "not while rewinding!")
+	balloon_alert(user, "not while rewinding!")
 	return MOD_ABORT_USE
 
 ///Timestopper - Need I really explain? It's the wizard's time stop, but the user channels it by not moving instead of a duration.
@@ -106,7 +106,7 @@
 	icon_state = "timestop"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timestopper)
 	cooldown_time = 60 SECONDS
 	///The current timestop in progress.
@@ -153,7 +153,7 @@
 	icon_state = "timeline_jumper"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
 	cooldown_time = 5 SECONDS
 	allow_flags = MODULE_ALLOW_PHASEOUT
@@ -173,7 +173,7 @@
 		//phasing out
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
-		mod.wearer.setStaminaLoss(0, 0)
+		mod.wearer.stamina.revitalize()
 		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
 		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
 	else
@@ -207,7 +207,7 @@
 	icon_state = "chronogun"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tem)
 	cooldown_time = 0.5 SECONDS
 	///Reference to the chrono field being controlled by this module
@@ -225,7 +225,7 @@
 	//fire projectile
 	var/obj/projectile/energy/chrono_beam/chrono_beam = new /obj/projectile/energy/chrono_beam(get_turf(src))
 	chrono_beam.tem_weakref = WEAKREF(src)
-	chrono_beam.preparePixelProjectile(target, mod.wearer)
+	chrono_beam.aim_projectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))

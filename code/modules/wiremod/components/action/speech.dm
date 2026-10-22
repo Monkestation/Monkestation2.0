@@ -24,7 +24,7 @@
 
 /obj/item/circuit_component/speech/input_received(datum/port/input/port)
 
-	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SPEECH))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_SPEECH))
 		return
 
 	if(message.value)

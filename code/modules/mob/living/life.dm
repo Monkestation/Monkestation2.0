@@ -55,6 +55,8 @@
 		if(stat != DEAD)
 			//Random events (vomiting etc)
 			handle_random_events(seconds_per_tick, times_fired)
+			// Handle tempature alerts
+			body_temperature_alerts()
 
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -68,13 +70,15 @@
 
 		handle_gravity(seconds_per_tick, times_fired)
 
-	if(stat != DEAD)
-		body_temperature_alerts()
-
 	handle_wounds(seconds_per_tick, times_fired)
 
 	if(machine)
 		machine.check_eye(src)
+
+	if(living_flags & QUEUE_NUTRITION_UPDATE)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
 	if(stat != DEAD)
 		return 1
@@ -114,6 +118,10 @@
 	if(temp_delta < 0 && on_fire)
 		return
 
+	// Prevents homeostasis and environmental temperature equalization only direct temperature changes work.
+	if(HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
+		return
+
 	var/thermal_protection = get_insulation(loc_temp)
 	var/protection_modifier = 1
 	if(bodytemperature > standard_body_temperature + 2 KELVIN)
@@ -126,6 +134,9 @@
 
 	// Cap increase and decrease
 	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
+	// Boost when returning to equilibrium (if we're not cold-blooded)
+	if(!HAS_TRAIT(src, TRAIT_COLD_BLOODED) && !ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
+		temp_change *= 2
 
 	adjust_bodytemperature(temp_change * seconds_per_tick) // No use_insulation because we manually account for it
 
@@ -138,16 +149,19 @@
 /**
  * Get the fullness of the mob
  *
- * This returns a value form 0 upwards to represent how full the mob is.
- * The value is a total amount of consumable reagents in the body combined
- * with the total amount of nutrition they have.
- * This does not have an upper limit.
+ * Fullness is a representation of how much nutrition the mob has,
+ * including the nutrition of stuff yet to be digested (reagents in blood / stomach)
+ *
+ * * only_consumable - if TRUE, only consumable reagents are counted.
+ * Otherwise, all reagents contribute to fullness, despite not adding nutrition as they process.
+ *
+ * Returns a number representing fullness, scaled similarly to nutrition.
  */
-/mob/living/proc/get_fullness()
+/mob/living/proc/get_fullness(only_consumable)
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
 	for(var/datum/reagent/consumable/bits in reagents.reagent_list)
-		fullness += bits.nutriment_factor  * bits.volume / bits.metabolization_rate
+		fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**
@@ -160,7 +174,7 @@
  * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
  */
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
-	return reagents.has_reagent(reagent, amount, needs_metabolizing)
+	return reagents?.has_reagent(reagent, amount, needs_metabolizing)
 
 /mob/living/proc/update_damage_hud()
 	return
@@ -181,3 +195,12 @@
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
 	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
+
+/// Proc used for custom metabolization of reagents, if any
+/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick, times_fired)
+
+/// Proc used for custom reagent exposure effects, if any
+/mob/living/proc/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	return

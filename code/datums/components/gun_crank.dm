@@ -1,7 +1,7 @@
 // Cranking feature on the laser musket and smoothbore disabler, could possibly be used on more than guns
 /datum/component/gun_crank
 	/// Our cell to charge
-	var/obj/item/stock_parts/cell/charging_cell
+	var/obj/item/stock_parts/power_store/cell/charging_cell
 	/// How much charge we give our cell on each crank
 	var/charge_amount
 	/// How long is the cooldown time between each charge
@@ -16,11 +16,11 @@
 	var/charge_move = NONE
 	COOLDOWN_DECLARE(charge_sound_cooldown)
 
-/datum/component/gun_crank/Initialize(charging_cell, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS, charge_move = NONE)
+/datum/component/gun_crank/Initialize(charging_cell, charge_amount = STANDARD_CELL_CHARGE, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS, charge_move = NONE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/cell))
+	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/power_store/cell))
 		return COMPONENT_INCOMPATIBLE
 	src.charging_cell = charging_cell
 	src.charge_amount = charge_amount
@@ -53,13 +53,16 @@
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
 		playsound(source, charge_sound, 40)
 	source.balloon_alert(user, "charging...")
-	SEND_SIGNAL(source, COMSIG_GUN_CRANKING, user) // monkestation edit
-	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_GUNCRANK, timed_action_flags = charge_move))
-		is_charging = FALSE
-		return
-	charging_cell.give(charge_amount)
-	source.update_appearance()
-	is_charging = FALSE
-	SEND_SIGNAL(source, COMSIG_GUN_CRANKED, user) // monkestation edit
+	SEND_SIGNAL(source, COMSIG_START_CRANKING_GUN, user)
+	while(TRUE) // Keep cranking until it's done or we stop
+		if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_GUNCRANK, timed_action_flags = charge_move))
+			is_charging = FALSE
+			return
+		charging_cell.give(charge_amount)
+		source.update_appearance()
+		if(charging_cell.charge >= charging_cell.maxcharge)
+			is_charging = FALSE
+			SEND_SIGNAL(source, COMSIG_GUN_CRANKED, user) // monkestation edit
+			break
 	source.balloon_alert(user, "charged")
 

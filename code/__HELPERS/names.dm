@@ -22,6 +22,12 @@
 /proc/moth_name()
 	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 
+/proc/nightmare_name()
+	return "[pick(GLOB.nightmare_names)]"
+
+/proc/darkspawn_name()
+	return "[pick(GLOB.nightmare_names)]"
+
 GLOBAL_VAR(command_name)
 /proc/command_name()
 	if (GLOB.command_name)
@@ -79,17 +85,17 @@ GLOBAL_VAR(command_name)
 
 	// Prefix
 	var/holiday_name = length(GLOB.holidays) && pick(GLOB.holidays)
+	var/list/seasons = list("spring","summer","fall","winter")
 	if(holiday_name)
 		var/datum/holiday/holiday = GLOB.holidays[holiday_name]
 		if(istype(holiday, /datum/holiday/friday_thirteenth))
 			random = 13
 		name = holiday.getStationPrefix()
 		//get normal name
-	if(!name)
+	if(!name || (name in seasons))
 		name = pick(GLOB.station_names)
 	if(name)
 		new_station_name += name + " "
-
 	// Suffix
 	name = pick(GLOB.station_suffixes)
 	new_station_name += name + " "
@@ -221,22 +227,22 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += lowertext(pick(drinks))
+						. += LOWER_TEXT(pick(drinks))
 					if(2)
-						. += lowertext(pick(foods))
+						. += LOWER_TEXT(pick(foods))
 					if(3)
-						. += lowertext(pick(locations))
+						. += LOWER_TEXT(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						. += lowertext(pick(nouns))
+						. += LOWER_TEXT(pick(nouns))
 					if(2)
-						. += lowertext(pick(objects))
+						. += LOWER_TEXT(pick(objects))
 					if(3)
-						. += lowertext(pick(adjectives))
+						. += LOWER_TEXT(pick(adjectives))
 					if(4)
-						. += lowertext(pick(threats))
+						. += LOWER_TEXT(pick(threats))
 		if(!return_list)
 			if(words == 1)
 				. += "."

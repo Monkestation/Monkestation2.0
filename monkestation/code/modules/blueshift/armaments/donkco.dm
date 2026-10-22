@@ -35,6 +35,16 @@
 /datum/armament_entry/company_import/donk/food/teriyaki_pockets
 	item_type = /obj/item/storage/box/donkpockets/donkpocketteriyaki
 
+/datum/armament_entry/company_import/donk/food/donk_vendor
+	item_type = /obj/item/circuitboard/machine/vending/donksnackvendor
+	contraband = TRUE
+	cost = PAYCHECK_COMMAND * 3
+
+/datum/armament_entry/company_import/donk/food/donk_vendor_refill
+	item_type = /obj/item/vending_refill/donksnackvendor
+	contraband = TRUE
+	cost = PAYCHECK_COMMAND * 5
+
 // Random donk toy items, fake jumpsuits, balloons, so on
 
 // Donk merch gives you more interest than other items, buy donk bling and get company interest faster!
@@ -59,7 +69,7 @@
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/donk/merch/fake_centcom_turtleneck_skirt
-	item_type = /obj/item/clothing/under/rank/centcom/officer_skirt/replica
+	item_type = /obj/item/clothing/under/rank/centcom/officer/skirt/replica
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/donk/merch/snack_rig
@@ -120,10 +130,11 @@
 /datum/armament_entry/company_import/donk/foamforce_ammo/darts
 	item_type = /obj/item/ammo_box/foambox
 	cost = PAYCHECK_LOWER
-
+/*
 /datum/armament_entry/company_import/donk/foamforce_ammo/riot_darts
 	item_type = /obj/item/ammo_box/foambox/riot
 	cost = PAYCHECK_COMMAND * 1.5
+*/
 
 /datum/armament_entry/company_import/donk/foamforce_ammo/pistol_mag
 	item_type = /obj/item/ammo_box/magazine/toy/pistol

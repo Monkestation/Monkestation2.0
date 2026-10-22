@@ -21,9 +21,6 @@
 	if(icon_exists(icon, "[base_icon]_death_transition"))
 		flick("[base_icon]_death_transition", src)
 
-	if(is_anchored)
-		flip_anchored()
-
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
 		set_eyeobj_visible(FALSE)
@@ -32,9 +29,6 @@
 	SSshuttle.autoEvac()
 
 	ShutOffDoomsdayDevice()
-
-	if(gibbed)
-		make_mmi_drop_and_transfer()
 
 	if(explosive)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), loc, 3, 6, 12, null, 15), 1 SECONDS)

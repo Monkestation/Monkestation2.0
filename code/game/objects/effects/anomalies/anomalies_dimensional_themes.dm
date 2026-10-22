@@ -20,7 +20,8 @@
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1), \
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 1), \
 		/obj/structure/table = list(/obj/structure/table/greyscale = 1), \
-		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),)
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+	)
 	/// Typepath of full-size windows which will replace existing ones
 	/// These need to be separate from replace_objs because we don't want to replace dir windows with full ones and they share typepath
 	var/obj/structure/window/replace_window
@@ -117,6 +118,17 @@
 		return
 	var/obj/new_object = new replace_path(object.loc)
 	new_object.setDir(object.dir)
+	if(istype(object, /obj/machinery/door/airlock))
+		if(istype(new_object, /obj/machinery/door/airlock)) //carry over access-related and adjacent variables. The rest is not as important
+			var/obj/machinery/door/airlock/airlock = object
+			var/obj/machinery/door/new_airlock = new_object
+			new_airlock.unres_sides = airlock.unres_sides
+			new_airlock.req_access = airlock.req_access?.Copy()
+			new_airlock.req_one_access = airlock.req_one_access?.Copy()
+			new_airlock.locked = airlock.locked
+			new_airlock.emergency = airlock.emergency
+			new_airlock.update_appearance()
+		new_object.name = object.name
 	qdel(object)
 
 /**
@@ -320,3 +332,40 @@
 	var/turf/open/floor/light/disco_floor = affected_floor
 	disco_floor.currentcolor = pick(disco_floor.coloredlights)
 	disco_floor.update_appearance()
+
+/datum/dimension_theme/clockwork
+	icon = 'icons/obj/stack_objects.dmi'
+	icon_state = "sheet-brass"
+	sound = 'sound/magic/clockwork/fellowship_armory.ogg'
+	replace_floors = list(/turf/open/floor/bronze = 1)
+	replace_walls = /turf/closed/wall/mineral/bronze
+	replace_objs = list(
+		/obj/machinery/door/airlock = list(
+			/obj/machinery/door/airlock/bronze = 1,
+			/obj/machinery/door/airlock/bronze/seethru = 1,
+		),
+		/obj/structure/chair = list(
+			/obj/structure/chair/bronze = 1,
+		),
+		/obj/structure/table = list(
+			/obj/structure/table/bronze = 1,
+		),
+	)
+	replace_window = /obj/structure/window/bronze/fulltile
+
+/datum/dimension_theme/clockwork/New(is_cult = FALSE) //set to true by clock cult transformation
+	. = ..()
+	if(is_cult)
+		replace_walls = /turf/closed/wall/clockwork
+		replace_window = /obj/structure/window/reinforced/clockwork/fulltile
+		replace_objs = list(
+			/obj/machinery/door/airlock = list(
+				/obj/machinery/door/airlock/bronze/clock = 1,
+			),
+			/obj/structure/chair = list(
+				/obj/structure/chair/bronze = 1,
+			),
+			/obj/structure/table = list(
+				/obj/structure/table/bronze = 1,
+			),
+		)

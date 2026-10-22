@@ -16,14 +16,14 @@
 
 /datum/component/scope/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
+	RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(do_secondary_zoom))
 	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_gun_fire))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/scope/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		COMSIG_GUN_TRY_FIRE,
 		COMSIG_ATOM_EXAMINE,
 	))
@@ -35,7 +35,7 @@
 		stop_zooming(user_mob)
 		return
 	tracker.calculate_params()
-	if(!length(user_client.keys_held & user_client.movement_keys))
+	if(!user_client.intended_direction)
 		user_mob.face_atom(tracker.given_turf)
 	animate(user_client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
@@ -46,14 +46,21 @@
 		return
 	stop_zooming(tracker.owner)
 
-/datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/scope/proc/do_secondary_zoom(datum/source, mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+
+	// scoping in using a TK grab causes a lot of strange issues, so don't
+	var/obj/item/gun/thisgun = parent
+	if(thisgun.tk_firing(user))
+		to_chat(user, span_warning("You cannot comprehend what it would mean to scope in with your mind!"))
+		user.balloon_alert(user, "can't scope in!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(tracker)
 		stop_zooming(user)
 	else
 		start_zooming(user)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
 	SIGNAL_HANDLER
@@ -109,13 +116,18 @@
 /datum/component/scope/proc/start_zooming(mob/user)
 	if(!user.client)
 		return
+	if(HAS_TRAIT(user, TRAIT_USER_SCOPED))
+		user.balloon_alert(user, "already zoomed!")
+		return
 	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)
 	tracker.assign_to_mob(user, range_modifier)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_zooming))
+	RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
 	START_PROCESSING(SSprojectiles, src)
+	ADD_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 
 /**
  * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
@@ -126,15 +138,26 @@
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
+	if(!HAS_TRAIT(user, TRAIT_USER_SCOPED))
+		return
+
 	STOP_PROCESSING(SSprojectiles, src)
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	UnregisterSignal(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_ATOM_ENTERING))
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
 		user.client.mouse_override_icon = null
 		user.update_mouse_pointer()
+	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	tracker = null
 	user.clear_fullscreen("scope")
+
+///Stop scoping if the `newloc` we move to is not a turf
+/datum/component/scope/proc/on_enter_new_loc(datum/source, atom/newloc, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if(!isturf(newloc))
+		stop_zooming(tracker.owner)
 
 /atom/movable/screen/fullscreen/cursor_catcher/scope
 	icon_state = "scope"

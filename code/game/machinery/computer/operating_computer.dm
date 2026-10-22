@@ -23,14 +23,14 @@
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/operating/LateInitialize()
+/obj/machinery/computer/operating/LateInitialize(mapload_arg)
 	. = ..()
 	var/static/list/dissection_signals = list(
-		COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_dissection_experiment)
+		COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_autopsy_experiment)
 	)
 	experiment_handler = AddComponent(
 		/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/dissection), \
+		allowed_experiments = list(/datum/experiment/autopsy), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
 		experiment_signals = dissection_signals, \
@@ -49,8 +49,9 @@
 	return ..()
 
 /obj/machinery/computer/operating/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		linked_techweb = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		linked_techweb = buffer
 	return TRUE
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
@@ -59,7 +60,7 @@
 			span_notice("You begin to load a surgery protocol from \the [O]..."), \
 			span_hear("You hear the chatter of a floppy drive."))
 		var/obj/item/disk/surgery/D = O
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			advanced_surgeries |= D.surgeries
 		return TRUE
 	return ..()
@@ -138,10 +139,10 @@
 	data["patient"]["health"] = patient.health
 
 	// check here to see if the patient has standard blood reagent, or special blood (like how ethereals bleed liquid electricity) to show the proper name in the computer
-	data["patient"]["blood_type"] = "[patient.get_blood_type() || "None"]"
+	data["patient"]["blood_type"] = patient.dna?.blood_type.name
 
 	data["patient"]["maxHealth"] = patient.maxHealth
-	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+	data["patient"]["minHealth"] = patient.dead_threshold
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()
 	data["patient"]["fireLoss"] = patient.getFireLoss()
 	data["patient"]["toxLoss"] = patient.getToxLoss()
@@ -169,9 +170,7 @@
 			))
 	return data
 
-
-
-/obj/machinery/computer/operating/ui_act(action, params)
+/obj/machinery/computer/operating/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -37,8 +37,6 @@
 	var/timerid
 	/// Highest score attained by this component, to avoid as much overhead when considering to award a high score to the client
 	var/high_score = 0
-	/// Weakref to the added projectile parry component
-	var/datum/weakref/projectile_parry
 	/// What rank, minimum, the user needs to be to hotswap items
 	var/hotswap_rank = STYLE_BRUTAL
 	/// If this is multitooled, making it make funny noises on the user's rank going up
@@ -99,7 +97,7 @@
 	RegisterSignal(src, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_parent_multitool))
 
 /datum/component/style/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(hotswap))
+	RegisterSignal(parent, COMSIG_USER_ITEM_INTERACTION, PROC_REF(hotswap))
 	RegisterSignal(parent, COMSIG_MOB_MINED, PROC_REF(on_mine))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 	RegisterSignal(parent, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
@@ -113,21 +111,10 @@
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
 
-	projectile_parry = WEAKREF(parent.AddComponent(\
-		/datum/component/projectile_parry,\
-		list(\
-			/obj/projectile/colossus,\
-			/obj/projectile/temp/watcher,\
-			/obj/projectile/kinetic,\
-			/obj/projectile/bileworm_acid,\
-			/obj/projectile/herald,\
-			)\
-		)
-	)
-
+	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK)
+	UnregisterSignal(parent, COMSIG_USER_ITEM_INTERACTION)
 	UnregisterSignal(parent, COMSIG_MOB_MINED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(parent, list(COMSIG_MOB_EMOTED("flip"), COMSIG_MOB_EMOTED("spin")))
@@ -139,9 +126,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
 
-	if(projectile_parry)
-		qdel(projectile_parry.resolve())
-
+	REMOVE_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
@@ -151,13 +136,10 @@
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	return ..()
 
-
 /datum/component/style/process(seconds_per_tick)
 	point_multiplier = round(max(point_multiplier - 0.2 * seconds_per_tick, 1), 0.1)
 	change_points(-5 * seconds_per_tick * ROUND_UP((style_points + 1) / 200), use_multiplier = FALSE)
 	update_screen()
-
-
 
 /datum/component/style/proc/add_action(action, amount)
 	if(length(actions) > 9)
@@ -320,26 +302,27 @@
 			return "#364866"
 
 /// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
-/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, proximity_flag, click_parameters)
+/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, click_parameters)
 	SIGNAL_HANDLER
 
 	if((rank < hotswap_rank) || !isitem(target) || !(target in source.get_all_contents()))
-		return
+		return NONE
 
 	var/obj/item/item_target = target
 
 	if(!(item_target.item_flags & IN_STORAGE))
-		return
+		return NONE
 
 	var/datum/storage/atom_storage = item_target.loc.atom_storage
 
 	if(!atom_storage.can_insert(weapon, source, messages = FALSE))
 		source.balloon_alert(source, "unable to hotswap!")
-		return
+		return NONE
 
 	atom_storage.attempt_insert(weapon, source, override = TRUE)
 	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
 	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
+	return ITEM_INTERACT_BLOCKING
 
 
 /datum/component/style/proc/on_parent_multitool(datum/source, mob/living/user, obj/item/tool, list/recipes)

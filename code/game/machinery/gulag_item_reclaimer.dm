@@ -11,10 +11,10 @@
 	///Icon of the current screen status
 	var/screen_icon = "gulag_on"
 
-/obj/machinery/gulag_item_reclaimer/handle_atom_del(atom/deleting_atom)
+/obj/machinery/gulag_item_reclaimer/Exited(atom/movable/gone, direction)
+	. = ..()
 	for(var/person in stored_items)
-		stored_items[person] -= deleting_atom
-	return ..()
+		stored_items[person] -= gone
 
 /obj/machinery/gulag_item_reclaimer/update_overlays()
 	. = ..()
@@ -82,7 +82,7 @@
 
 	return data
 
-/obj/machinery/gulag_item_reclaimer/ui_act(action, params)
+/obj/machinery/gulag_item_reclaimer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -99,6 +99,9 @@
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
 		return
+	if(!use_energy(active_power_usage, force = FALSE))
+		balloon_alert(user, "not enough energy!")
+		return
 	var/drop_location = drop_location()
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
@@ -106,4 +109,3 @@
 		W.forceMove(drop_location)
 	stored_items -= user
 	user.log_message("has reclaimed their items from the gulag item reclaimer.", LOG_GAME)
-	use_power(active_power_usage)

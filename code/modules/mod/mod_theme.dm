@@ -41,6 +41,8 @@
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
+	/// How long this MOD takes each part to seal.
+	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
@@ -155,6 +157,31 @@
 				CAN_OVERSLOT = TRUE,
 			),
 		),
+		"volt" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES,
+				SEALED_COVER = PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
 	)
 
 /datum/armor/mod_theme_engineering
@@ -184,6 +211,7 @@
 	slowdown_active = 1
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
+		/obj/item/extinguisher,
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
@@ -304,7 +332,7 @@
 		the bare essentials, geared far more for environmental hazards than combat against fauna; however, \
 		this gives way to incredible protection against corrosives and thermal protection good enough for \
 		both casual backstroking through molten magma and romantic walks through arctic terrain. \
-		Instead, the suit is capable of using its' anomalous properties to attract and \
+		Instead, the suit is capable of using its anomalous properties to attract and \
 		carefully distribute layers of ash or ice across the surface; these layers are ablative, but incredibly strong. \
 		Lastly, the suit is capable of compressing and shrinking the mass of the wearer, as well as \
 		rearranging its own constitution, to allow them to fit upright in a sphere form that can \
@@ -319,16 +347,6 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	allowed_suit_storage = list(
-		/obj/item/resonator,
-		/obj/item/mining_scanner,
-		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/pickaxe,
-		/obj/item/kinetic_crusher,
-		/obj/item/stack/ore/plasma,
-		/obj/item/storage/bag/ore,
-		/obj/item/gun/energy/recharge/kinetic_accelerator,
-	)
 	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	skins = list(
 		"mining" = list(
@@ -383,8 +401,12 @@
 		),
 	)
 
+/datum/mod_theme/mining/New()
+	.=..()
+	allowed_suit_storage = GLOB.mining_suit_allowed
+
 /datum/armor/mod_theme_mining
-	melee = 15
+	melee = 20
 	bullet = 5
 	laser = 5
 	energy = 5
@@ -475,7 +497,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
@@ -501,7 +524,7 @@
 			),
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|STERILE,
 				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
@@ -526,7 +549,7 @@
 			),
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|STERILE,
 				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
@@ -571,7 +594,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
@@ -598,7 +622,7 @@
 			),
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|STERILE,
 				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
@@ -638,7 +662,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
-	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
+	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
 		/obj/item/dnainjector,
@@ -696,9 +720,10 @@
 		a few years out of date, leading to an overall lower capacity for modules."
 	default_skin = "security"
 	armor_type = /datum/armor/mod_theme_security
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 3
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 2 // monkestation edit DEFAULT_MAX_COMPLEXITY - 3 -> DEFAULT_MAX_COMPLEXITY - 2
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -734,18 +759,44 @@
 				CAN_OVERSLOT = TRUE,
 			),
 		),
+		"patrol" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE,
+				UNSEALED_COVER = HEADCOVERSMOUTH,
+				SEALED_COVER = HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
 	)
 
 /datum/armor/mod_theme_security
-	melee = 15
+	melee = 35
 	bullet = 15
-	laser = 15
-	energy = 15
+	laser = 30
+	energy = 40
 	bomb = 25
 	bio = 100
-	fire = 75
+	fire = 100
 	acid = 75
-	wound = 15
+	wound = 20
 
 /datum/mod_theme/safeguard
 	name = "safeguard"
@@ -762,6 +813,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -798,15 +850,15 @@
 	)
 
 /datum/armor/mod_theme_safeguard
-	melee = 15
-	bullet = 15
-	laser = 15
-	energy = 15
+	melee = 45
+	bullet = 25
+	laser = 30
+	energy = 40
 	bomb = 40
 	bio = 100
 	fire = 100
-	acid = 95
-	wound = 15
+	acid = 100
+	wound = 25
 
 /datum/mod_theme/magnate
 	name = "magnate"
@@ -829,6 +881,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -865,10 +918,10 @@
 	)
 
 /datum/armor/mod_theme_magnate
-	melee = 20
-	bullet = 15
-	laser = 15
-	energy = 15
+	melee = 40
+	bullet = 50
+	laser = 50
+	energy = 60
 	bomb = 50
 	bio = 100
 	fire = 100
@@ -947,12 +1000,18 @@
 	default_skin = "syndicate"
 	armor_type = /datum/armor/mod_theme_syndicate
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_inactive = 0.5
+	slowdown_active = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	inbuilt_modules = list(
+		/obj/item/mod/module/welding/syndicate,
+		/obj/item/mod/module/night,
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff
+	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1016,10 +1075,10 @@
 	)
 
 /datum/armor/mod_theme_syndicate
-	melee = 15
-	bullet = 20
-	laser = 15
-	energy = 15
+	melee = 50
+	bullet = 50
+	laser = 40
+	energy = 40
 	bomb = 35
 	bio = 100
 	fire = 50
@@ -1040,11 +1099,17 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	siemens_coefficient = 0
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_inactive = 0.5
+	slowdown_active = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	inbuilt_modules = list(
+		/obj/item/mod/module/welding/syndicate,
+		/obj/item/mod/module/night,
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff,
+	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1083,10 +1148,10 @@
 	)
 
 /datum/armor/mod_theme_elite
-	melee = 35
-	bullet = 30
-	laser = 35
-	energy = 35
+	melee = 60
+	bullet = 60
+	laser = 50
+	energy = 50
 	bomb = 55
 	bio = 100
 	fire = 100
@@ -1113,7 +1178,14 @@
 	slowdown_active = 0
 	ui_theme = "syndicate"
 	slot_flags = ITEM_SLOT_BELT
-	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer)
+	inbuilt_modules = list(
+		/obj/item/mod/module/infiltrator,
+		/obj/item/mod/module/storage/belt,
+		/obj/item/mod/module/demoralizer,
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/night,
+		/obj/item/mod/module/quick_cuff,
+	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1129,13 +1201,13 @@
 				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
-				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT|HIDEANTENNAE,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				CAN_OVERSLOT = TRUE,
 			),
 			CHESTPLATE_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT|HIDEMUTWINGS,
 				CAN_OVERSLOT = TRUE,
 			),
 			GAUNTLETS_FLAGS = list(
@@ -1150,10 +1222,10 @@
 	)
 
 /datum/armor/mod_theme_infiltrator
-	melee = 50
-	bullet = 50
-	laser = 40
-	energy = 50
+	melee = 40
+	bullet = 40
+	laser = 30
+	energy = 30
 	bomb = 40
 	fire = 100
 	acid = 100
@@ -1178,7 +1250,10 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_inactive = 0.0
 	slowdown_active = -0.5
-	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/organ_thrower)
+	inbuilt_modules = list(
+		/obj/item/mod/module/quick_carry/advanced,
+		/obj/item/mod/module/organ_thrower,
+	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1191,7 +1266,8 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/restraints/handcuffs,
@@ -1219,7 +1295,7 @@
 			),
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|STERILE,
 				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
@@ -1260,7 +1336,11 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	ui_theme = "wizard"
-	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
+	inbuilt_modules = list(
+		/obj/item/mod/module/anti_magic/wizard,
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff
+	)
 	allowed_suit_storage = list(
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
@@ -1321,7 +1401,15 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	ui_theme = "hackerman"
-	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
+	inbuilt_modules = list(
+		/obj/item/mod/module/welding/camera_vision,
+		/obj/item/mod/module/hacker,
+		/obj/item/mod/module/weapon_recall,
+		/obj/item/mod/module/adrenaline_boost,
+		/obj/item/mod/module/energy_net,
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff
+	)
 	allowed_suit_storage = list(
 		/obj/item/gun,
 		/obj/item/ammo_box,
@@ -1432,9 +1520,81 @@
 	acid = 75
 	wound = 5
 
+/datum/mod_theme/glitch
+	name = "glitch"
+	desc = "A modsuit outfitted for elite Cyber Authority units to track, capture, and eliminate organic intruders."
+	extended_desc = "The Cyber Authority function as a digital police force, patrolling the digital realm and enforcing the law. Cyber Tac units are \
+		the elite of the elite, outfitted with lethal weaponry and fast mobility specially designed to quell organic uprisings."
+	default_skin = "glitch"
+	armor_type = /datum/armor/mod_theme_glitch
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
+	siemens_coefficient = 0
+	slowdown_active = 0.5
+	slowdown_inactive = 1
+	ui_theme = "ntos_terminal"
+	inbuilt_modules = list(
+		/obj/item/mod/module/welding/syndicate,
+		/obj/item/mod/module/hearing_protection,
+	)
+	allowed_suit_storage = list(
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+	)
+	skins = list(
+		"glitch" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
+			),
+		),
+	)
+
+/datum/armor/mod_theme_glitch
+	melee = 40
+	bullet = 50
+	laser = 50
+	energy = 15
+	bomb = 65
+	bio = 100
+	fire = 100
+	acid = 100
+	wound = 100
+
 /datum/mod_theme/responsory
 	name = "responsory"
-	desc = "A high-speed rescue suit by Nanotrasen, intended for its' emergency response teams."
+	desc = "A high-speed rescue suit by Nanotrasen, intended for its emergency response teams."
 	extended_desc = "A streamlined suit of Nanotrasen design, these sleek black suits are only worn by \
 		elite emergency response personnel to help save the day. While the slim and nimble design of the suit \
 		cuts the ceramics and ablatives in it down, dropping the protection, \
@@ -1448,6 +1608,10 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	inbuilt_modules = list(
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff
+	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1518,6 +1682,22 @@
 	acid = 90
 	wound = 10
 
+/datum/mod_theme/responsory/traitor
+	name = "dark paladin"
+	desc = "A high-speed suit <s>stolen</s> by the Gorlex Maradeurs, purposed for less than honest intents."
+	extended_desc = "A streamlined suit of <s>Nanotrasen</s> Syndicate design, these sleek black suits are only worn by \
+		elite <s>emergency response personnel</s> traitors to help <s>save</s> ruin the day. While the slim and nimble design of the suit \
+		cuts the ceramics and ablatives in it down, dropping the protection, \
+		it keeps the wearer safe from the harsh void of space while sacrificing no speed whatsoever. \
+		While wearing it you feel an extreme deference to <s>darkness</s> light."
+	armor_type = /datum/armor/mod_theme_elite
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	inbuilt_modules = list(
+		/obj/item/mod/module/welding/syndicate,
+		/obj/item/mod/module/quick_cuff
+	)
+
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
 	desc = "A high-tech, only technically legal, armored suit created by a collaboration effort between Nanotrasen and Apadyne Technologies."
@@ -1534,6 +1714,10 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
+	inbuilt_modules = list(
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff
+	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1598,6 +1782,10 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	inbuilt_modules = list(
+		/obj/item/mod/module/hearing_protection,
+		/obj/item/mod/module/quick_cuff
+	)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1658,6 +1846,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
 	slowdown_inactive = 0
 	slowdown_active = 0
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 	)
@@ -1715,6 +1904,8 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	activation_step_time = 0.4 SECONDS
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -1774,6 +1965,10 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0
 	slowdown_active = 0
+	activation_step_time = 0.1 SECONDS
+	inbuilt_modules = list(
+		/obj/item/mod/module/quick_cuff
+	)
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -1811,3 +2006,95 @@
 	fire = 100
 	acid = 100
 	wound = 100
+
+/datum/mod_theme/blueshield
+	name = "praetorian"
+	desc = "A prototype of the Magnate-class suit issued to station Blueshields, still boasting exceptional protection worthy of an honor guard."
+	extended_desc = "A prototype of the Magnate-class suit issued for use with the station Blueshields, \
+		it boasts the exceptional protection of its successor, while sacrificing some of the module capacity.\
+		All of the protection of the Magnate, with none of the comfort! The visor uses blue-light to obscure \
+		the face of its wearer, adding to its imposing figure. Compared to the sleek and luxurious design \
+		that came after it, this suit does nothing to hide its purpose, the reinforced plating layered \
+		over the insulated inner armor granting it protection against corrosive liquids, explosive blasts, \
+		fires, electrical shocks, and contempt from the rest of the crew."
+
+	default_skin = "praetorian"
+	armor_type = /datum/armor/mod_theme_security
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	slowdown_inactive = 1
+	slowdown_active = 0.5
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	allowed_suit_storage = list(
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
+	skins = list(
+		"praetorian" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
+			),
+		),
+		"rook" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = null,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT|HIDEEARS|HIDEHAIR,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
+			),
+		),
+	)

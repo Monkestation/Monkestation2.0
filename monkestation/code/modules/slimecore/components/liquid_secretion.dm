@@ -47,11 +47,11 @@
 	if(!COOLDOWN_FINISHED(src, next_secrete))
 		return
 	var/turf/open/parent_turf = parent.loc
-	if(!isopenturf(parent_turf))
+	if(!isopenturf(parent_turf) || HAS_TRAIT(parent_turf, TRAIT_BLOCK_LIQUID_SPREAD))
 		return
 	COOLDOWN_START(src, next_secrete, secretion_interval)
 	if(pre_secrete_callback && !pre_secrete_callback.Invoke(parent))
 		return
 	var/list/reagent_list = list()
 	reagent_list[reagent_id] = amount
-	parent_turf?.add_liquid_list(reagent_list, FALSE, T20C)
+	parent_turf.add_liquid_list(reagent_list, FALSE, T20C)

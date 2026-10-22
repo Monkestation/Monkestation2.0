@@ -1,3 +1,4 @@
+
 /datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
@@ -31,7 +32,7 @@
 		testing("Ruin \"[name]\" placed at ([central_turf.x], [central_turf.y], [central_turf.z])")
 
 		if(clear_below)
-			var/list/static/clear_below_typecache = typecacheof(list(
+			var/static/list/clear_below_typecache = typecacheof(list(
 				/obj/structure/spawner,
 				/mob/living/simple_animal,
 				/obj/structure/flora
@@ -72,8 +73,9 @@
  * @param potentialRuins A list of ruins to choose from.
  * @param clear_below Whether to clear the area below the ruin. Used for multiz ruins.
  * @param mineral_budget The budget to spend on ruins that spawn ore vents. Map templates with vents have that defined by mineral_cost.
+ * @param mineral_budget_update What type of ore distribution should spawn from ruins picked by this cave generator? This list is copied from ores_spawned.dm into SSore_generation.ore_vent_minerals.
  */
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update = null)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -86,12 +88,21 @@
 			return
 
 	var/list/ruins = potentialRuins.Copy()
+	var/list/placed_ruins = list()
 
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
 
 	if(PERFORM_ALL_TESTS(log_mapping))
 		log_mapping("All ruins being loaded for map testing.")
+
+	switch(mineral_budget_update) //If we use more map configurations, add another case
+		if(OREGEN_PRESET_LAVALAND)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
+		if(OREGEN_PRESET_TRIPLE_Z)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_triple_z)
+		if(OREGEN_PRESET_OSHAN)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
 
 	//Set up the starting ruin list
 	for(var/key in ruins)
@@ -109,7 +120,7 @@
 		if(R.unpickable)
 			continue
 		ruins_available[R] = R.placement_weight
-	while((budget > 0 || mineral_budget > 0) && (ruins_available.len || forced_ruins.len))
+	while(((budget > 0 || mineral_budget > 0) && ruins_available.len) || forced_ruins.len)
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z //If set we won't pick z level and use this one instead.
@@ -147,6 +158,23 @@
 									continue outer
 								else
 									break outer
+				if(current_pick.undesirable_ruins && !forced_z)
+					var/original_zLevel = target_z
+					var/z_list = z_levels.Copy()
+					while(length(z_list))
+						var/unwanted_zLevel = FALSE
+						for(var/undesirable in current_pick.undesirable_ruins)
+							if((undesirable in placed_ruins) && placed_ruins[undesirable] == target_z)
+								unwanted_zLevel = TRUE
+								break
+						if(unwanted_zLevel)
+							z_list -= target_z
+							if(!length(z_list))
+								target_z = original_zLevel
+							else
+								target_z = pick(z_list)
+						else
+							break
 
 				placed_turf = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below)
 				if(!placed_turf)
@@ -196,6 +224,7 @@
 									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
+			placed_ruins[current_pick.id] = target_z
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)

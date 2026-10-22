@@ -12,8 +12,8 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 	item_path = /obj/item/storage/box/gum/nicotine
 
 /datum/store_item/pocket/gum_pack_hp
-	name = "Pack of HP+ Gum"
-	item_path = /obj/item/storage/box/gum/happiness
+	name = "Pack of Diet HP+ Gum"
+	item_path = /obj/item/storage/box/gum/happiness/diet
 
 /*
 *	LIPSTICK
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 	item_cost = 3000
 
 /datum/store_item/pocket/tape
-	name = "Spare Cassette Tape"
+	name = "Spare Recording Tape"
 	item_path = /obj/item/tape/random
 	item_cost = 2500
 

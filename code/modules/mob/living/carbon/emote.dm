@@ -193,6 +193,29 @@
 	hands_use_check = TRUE
 	muzzle_ignore = TRUE
 
+/datum/emote/living/carbon/snap/super
+	key = "supersnap"
+	key_third_person = "supersnaps"
+	message = "snaps their fingers stylishly."
+	message_param = "snaps their fingers stylishly at %t."
+	cooldown = 10 SECONDS
+	volume = 120
+
+/datum/emote/living/carbon/snap/super/can_run_emote(mob/user, status_check, intentional)
+	. = ..()
+	if(!HAS_TRAIT(user, TRAIT_PANACHEFUL_SNAPS))
+		return FALSE
+	return TRUE
+
+/datum/emote/living/carbon/snap/super/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	new /obj/effect/particle_effect/sparks(get_turf(user))
+	var/obj/item/clothing/mask/cigarette/held = user.get_active_held_item()
+	if(istype(held))
+		held.light(span_notice("The [held] ignites with a flash of sparks as [user] snaps [user.p_their()] fingers! <b>Damn.</b> <i>That's badass.</i>"))
+
 /datum/emote/living/carbon/snap/get_sound(mob/living/user)
 	if(ishuman(user))
 		return pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
@@ -224,3 +247,85 @@
 	key = "wink"
 	key_third_person = "winks"
 	message = "winks."
+
+/datum/emote/living/carbon/sweatdrop
+	key = "sweatdrop"
+	alt_keys = list("sweat", "sweats")
+	key_third_person = "sweatdrops"
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
+
+/datum/emote/living/carbon/sweatdrop/run_emote(mob/living/carbon/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "sweatdrop", pixel_x = 10, pixel_y = 10)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
+	playsound(user, 'sound/effects/sweatdrop.ogg', vol = 50, vary = TRUE)
+
+/datum/emote/living/carbon/annoyed
+	key = "annoyed"
+	key_third_person = "gets annoyed"
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
+
+/datum/emote/living/carbon/annoyed/run_emote(mob/living/carbon/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "annoyed", pixel_x = 10, pixel_y = 10)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 5 SECONDS)
+	playsound(user, 'sound/effects/annoyed.ogg', vol = 50, vary = TRUE)
+
+/datum/emote/living/carbon/realize
+	key = "realize"
+	alt_keys = list("realizes", "realise", "realises")
+	key_third_person = "realizes"
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
+
+/datum/emote/living/carbon/realize/run_emote(mob/living/carbon/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "realize", pixel_x = 10, pixel_y = 15)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
+	playsound(user, 'sound/effects/realize.ogg', vol = 50, vary = TRUE)
+
+/datum/emote/living/carbon/question
+	key = "question"
+	key_third_person = "questions"
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
+
+/datum/emote/living/carbon/question/run_emote(mob/living/carbon/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "question", pixel_x = 10, pixel_y = 15)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
+	playsound(user, 'sound/effects/question.ogg', vol = 50, vary = TRUE)
+
+/datum/emote/living/carbon/exclaim
+	key = "exclaim"
+	key_third_person = "exclaims"
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
+
+/datum/emote/living/carbon/exclaim/run_emote(mob/living/carbon/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "exclaim", pixel_x = 10, pixel_y = 15)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
+	playsound(user, 'sound/machines/chime.ogg', vol = 35, vary = TRUE)

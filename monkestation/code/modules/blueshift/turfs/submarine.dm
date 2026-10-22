@@ -6,7 +6,7 @@
 	liquid_height = -30
 	turf_height = -30
 
-/turf/open/floor/iron/submarine/rust_heretic_act()
+/turf/open/floor/iron/submarine/rust_heretic_act(rust_strength)
 	return
 
 /turf/open/floor/iron/submarine_vents
@@ -17,7 +17,7 @@
 	liquid_height = -30
 	turf_height = -30
 
-/turf/open/floor/iron/submarine_vents/rust_heretic_act()
+/turf/open/floor/iron/submarine_vents/rust_heretic_act(rust_strength)
 	return
 
 /turf/open/floor/iron/submarine_perf
@@ -31,7 +31,7 @@
 /turf/open/floor/iron/submarine_perf/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/iron/submarine_perf/rust_heretic_act()
+/turf/open/floor/iron/submarine_perf/rust_heretic_act(rust_strength)
 	return
 
 //For now just a titanium wall. I'll make sprites for it later

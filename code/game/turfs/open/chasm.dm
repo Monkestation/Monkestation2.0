@@ -9,8 +9,11 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_TURF_CHASM
 	canSmoothWith = SMOOTH_GROUP_TURF_CHASM
+	turf_flags = NO_RUST
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	astar_weight = 9999
 
 /turf/open/chasm/Initialize(mapload)
 	. = ..()
@@ -49,7 +52,7 @@
 			return TRUE
 	return FALSE
 
-/turf/open/chasm/rust_heretic_act()
+/turf/open/chasm/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -115,3 +118,27 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
+
+// Chasm that doesn't do any z-level nonsense and just kills/stores whoever steps into it.
+/turf/open/chasm/true
+	desc = "There's nothing at the bottom. Absolutely nothing."
+	baseturfs = /turf/open/chasm/true
+
+/turf/open/chasm/true/apply_components(mapload)
+	AddComponent(/datum/component/chasm, null, mapload) //Don't pass anything for below_turf.
+
+/turf/open/chasm/true/no_smooth
+	smoothing_flags = NONE
+
+/turf/open/chasm/true/no_smooth/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/attackby(obj/item/item, mob/user, params, area/area_restriction)
+	if(istype(item, /obj/item/stack/rods))
+		return
+	else if (istype(item, /obj/item/stack/tile/iron) || istype(item, /obj/item/stack/tile/material) && item.has_material_type(/datum/material/iron))
+		return
+	return ..()

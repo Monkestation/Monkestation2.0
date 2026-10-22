@@ -5,6 +5,7 @@
 	icon_state = "tool_storage"
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
@@ -18,12 +19,12 @@
 		/obj/item/wirecutters/drone,
 		/obj/item/multitool/drone,
 		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
+		/obj/item/t_scanner/thermal,
 		/obj/item/analyzer,
+		/obj/item/storage/bag/construction,
 	)
 	atom_storage.max_total_storage = 80
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 18
+	atom_storage.max_slots = 19
 	atom_storage.rustle_sound = FALSE
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat))
 
@@ -37,8 +38,9 @@
 	builtintools += new /obj/item/wirecutters/drone(src)
 	builtintools += new /obj/item/multitool/drone(src)
 	builtintools += new /obj/item/pipe_dispenser(src)
-	builtintools += new /obj/item/t_scanner(src)
+	builtintools += new /obj/item/t_scanner/thermal(src)
 	builtintools += new /obj/item/analyzer(src)
+	builtintools += new /obj/item/storage/bag/construction(src)
 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
@@ -47,8 +49,8 @@
 /obj/item/crowbar/drone
 	name = "built-in crowbar"
 	desc = "A crowbar built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "crowbar_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_crowbar"
 	inhand_icon_state = "crowbar"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
@@ -56,13 +58,12 @@
 /obj/item/screwdriver/drone
 	name = "built-in screwdriver"
 	desc = "A screwdriver built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_screwdriver"
 	inhand_icon_state = "screwdriver"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
-
 
 /obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
 	. = ..()
@@ -76,8 +77,8 @@
 /obj/item/wrench/drone
 	name = "built-in wrench"
 	desc = "A wrench built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wrench_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_wrench"
 	inhand_icon_state = "wrench"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
@@ -94,8 +95,8 @@
 /obj/item/wirecutters/drone
 	name = "built-in wirecutters"
 	desc = "Wirecutters built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wirecutters_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_cutters"
 	inhand_icon_state = "cutters"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
@@ -104,7 +105,7 @@
 /obj/item/multitool/drone
 	name = "built-in multitool"
 	desc = "A multitool built into your chassis."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "multitool_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_multitool"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5

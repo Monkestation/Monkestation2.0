@@ -1,7 +1,6 @@
-import type { Inferno } from 'inferno';
+import { useBackend } from '../../backend';
 import { Box, Icon, Stack, Tooltip } from '../../components';
-import { PreferencesMenuData, Quirk } from './data';
-import { useBackend, useLocalState } from '../../backend';
+import type { PreferencesMenuData, Quirk } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const getValueClass = (value: number): string => {
@@ -24,8 +23,7 @@ const QuirkList = (props: {
   onClick: (quirkName: string, quirk: Quirk) => void;
 }) => {
   return (
-    // Stack is not used here for a variety of IE flex bugs
-    <Box className="PreferencesMenu__Quirks__QuirkList">
+    <Stack vertical g={0}>
       {props.quirks.map(([quirkKey, quirk]) => {
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
@@ -33,8 +31,7 @@ const QuirkList = (props: {
           <Box
             className={className}
             key={quirkKey}
-            role="button"
-            tabIndex="1"
+            style={{ userSelect: 'none', cursor: 'pointer' }}
             onClick={() => {
               props.onClick(quirkKey, quirk);
             }}
@@ -43,9 +40,9 @@ const QuirkList = (props: {
               <Stack.Item
                 align="center"
                 style={{
-                  'min-width': '15%',
-                  'max-width': '15%',
-                  'text-align': 'center',
+                  minWidth: '15%',
+                  maxWidth: '15%',
+                  textAlign: 'center',
                 }}
               >
                 <Icon color="#333" fontSize={3} name={quirk.icon} />
@@ -54,32 +51,32 @@ const QuirkList = (props: {
               <Stack.Item
                 align="stretch"
                 style={{
-                  'border-right': '1px solid black',
-                  'margin-left': 0,
+                  borderRight: '1px solid black',
+                  marginLeft: 0,
                 }}
               />
 
               <Stack.Item
                 grow
                 style={{
-                  'margin-left': 0,
+                  marginLeft: 0,
 
                   // Fixes an IE bug for text overflowing in Flex boxes
-                  'min-width': '0%',
+                  minWidth: '0%',
                 }}
               >
                 <Stack vertical fill>
                   <Stack.Item
                     className={`${className}--${getValueClass(quirk.value)}`}
                     style={{
-                      'border-bottom': '1px solid black',
+                      borderBottom: '1px solid black',
                       padding: '2px',
                     }}
                   >
                     <Stack
                       fill
                       style={{
-                        'font-size': '1.2em',
+                        fontSize: '1.2em',
                       }}
                     >
                       <Stack.Item grow basis="content">
@@ -96,7 +93,7 @@ const QuirkList = (props: {
                     grow
                     basis="content"
                     style={{
-                      'margin-top': 0,
+                      marginTop: 0,
                       padding: '3px',
                     }}
                   >
@@ -118,11 +115,11 @@ const QuirkList = (props: {
           return child;
         }
       })}
-    </Box>
+    </Stack>
   );
 };
 
-const StatDisplay: Inferno.StatelessComponent<{}> = (props) => {
+const StatDisplay: React.FC<{ children: React.ReactNode }> = (props) => {
   return (
     <Box
       backgroundColor="#eee"
@@ -140,10 +137,12 @@ const StatDisplay: Inferno.StatelessComponent<{}> = (props) => {
 export const QuirksPage = (props) => {
   const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [selectedQuirks, setSelectedQuirks] = useLocalState(
-    `selectedQuirks_${data.active_slot}`,
-    data.selected_quirks,
-  );
+  const selectedQuirks = data.selected_quirks;
+  const speciesDisallowedQuirks = data.species_disallowed_quirks;
+
+  const setSelectedQuirks = (selected_quirks) => {
+    data.selected_quirks = selected_quirks;
+  };
 
   return (
     <ServerPreferencesFetcher
@@ -213,6 +212,9 @@ export const QuirksPage = (props) => {
             }
           }
 
+          if (speciesDisallowedQuirks.includes(quirk.name)) {
+            return 'This quirk is incompatible with your selected species.';
+          }
           return undefined;
         };
 
@@ -227,7 +229,7 @@ export const QuirksPage = (props) => {
         };
 
         return (
-          <Stack align="center" fill>
+          <Stack fill>
             <Stack.Item basis="50%">
               <Stack vertical fill align="center">
                 <Stack.Item>
@@ -246,7 +248,7 @@ export const QuirksPage = (props) => {
                   </Box>
                 </Stack.Item>
 
-                <Stack.Item grow width="100%">
+                <Stack.Item grow overflowY="auto">
                   <QuirkList
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotAdd(quirkName) !== undefined) {
@@ -295,7 +297,7 @@ export const QuirksPage = (props) => {
                   </Box>
                 </Stack.Item>
 
-                <Stack.Item grow width="100%">
+                <Stack.Item grow overflowY="auto">
                   <QuirkList
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotRemove(quirkName) !== undefined) {

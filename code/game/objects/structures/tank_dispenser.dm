@@ -34,35 +34,40 @@
 		if(5 to TANK_DISPENSER_CAPACITY)
 			. += "plasma-5"
 
+/obj/structure/tank_dispenser/attack_ai(mob/user)
+	. = ..()
+	return ui_interact(user)
+
 /obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tank_dispenser/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/tank_dispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/full
-	if(istype(I, /obj/item/tank/internals/plasma))
+	if(istype(attacking_item, /obj/item/tank/internals/plasma))
 		if(plasmatanks < TANK_DISPENSER_CAPACITY)
 			plasmatanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/tank/internals/oxygen))
+	else if(istype(attacking_item, /obj/item/tank/internals/oxygen))
 		if(oxygentanks < TANK_DISPENSER_CAPACITY)
 			oxygentanks++
 		else
 			full = TRUE
-	else if(!(user.istate & ISTATE_HARM))
-		to_chat(user, span_notice("[I] does not fit into [src]."))
+	else if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
+		balloon_alert(user, "can't insert!")
 		return
 	else
 		return ..()
 	if(full)
-		to_chat(user, span_notice("[src] can't hold any more of [I]."))
+		to_chat(user, span_notice("[src] can't hold any more of [attacking_item]."))
 		return
 
-	if(!user.transferItemToLoc(I, src))
+	if(!user.transferItemToLoc(attacking_item, src))
 		return
-	to_chat(user, span_notice("You put [I] in [src]."))
+	to_chat(user, span_notice("You put [attacking_item] in [src]."))
+	playsound(src.loc, 'sound/machines/gas_tanks/extin.ogg', 100, 1)
 	update_appearance()
 
 /obj/structure/tank_dispenser/ui_state(mob/user)
@@ -81,23 +86,26 @@
 
 	return data
 
-/obj/structure/tank_dispenser/ui_act(action, params)
+/obj/structure/tank_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+
+	var/obj/item/tank/internals/dispensed_tank
 	switch(action)
 		if("plasma")
 			if (plasmatanks == 0)
 				return TRUE
-
-			dispense(/obj/item/tank/internals/plasma, usr)
+			dispensed_tank = dispense(/obj/item/tank/internals/plasma, usr)
 			plasmatanks--
 		if("oxygen")
 			if (oxygentanks == 0)
 				return TRUE
-
-			dispense(/obj/item/tank/internals/oxygen, usr)
+			dispensed_tank = dispense(/obj/item/tank/internals/oxygen, usr)
 			oxygentanks--
+
+	to_chat(usr, span_notice("You take [dispensed_tank] out of [src]."))
+	playsound(src.loc, 'sound/machines/gas_tanks/extout.ogg', 100, 1)
 
 	update_appearance()
 	return TRUE
@@ -115,6 +123,10 @@
 	var/existing_tank = locate(tank_type) in src
 	if (isnull(existing_tank))
 		existing_tank = new tank_type
-	receiver.put_in_hands(existing_tank)
+	if(iscyborg(receiver))
+		receiver.transferItemToLoc(existing_tank, receiver.loc)
+	else
+		receiver.put_in_hands(existing_tank)
+	return existing_tank
 
 #undef TANK_DISPENSER_CAPACITY

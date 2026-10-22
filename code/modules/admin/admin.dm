@@ -31,6 +31,7 @@
 
 	var/dat = "<html><meta charset='UTF-8'><head><title>Game Panel</title></head><body>"
 	dat += "<center><B>Game Panel</B></center><hr>"
+/*
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
@@ -38,19 +39,23 @@
 				dat += {"<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
 			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
 		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
+*/
+	if(SSgamemode.initialized)
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];gamemode_panel=1'>Game Mode Panel</a><BR>"
+	else
+		dat += "<i>Game Mode Panel (SSgamemode not initialized yet)</i>"
 	dat += "<hr/>"
-	if(SSticker.IsRoundInProgress())
-		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
+	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];spawn_panel=1'>Spawn Panel</a><br><br>"
+
 	dat += {"
-		<BR>
-		<A href='byond://?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
-		<A href='byond://?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
-		<A href='byond://?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf</A><br>
-		<A href='byond://?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_object=1'>Create Object (LEGACY)</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object (LEGACY)</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf (LEGACY)</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob (LEGACY)</A><br>
 		"}
 
 	if(marked_datum && istype(marked_datum, /atom))
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</a><br>"
 
 	dat += "</body></html>"
 	usr << browse(dat, "window=admin2;size=240x280")
@@ -58,24 +63,20 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/datum/admins/proc/spawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom"
-	set name = "Spawn"
-
-	if(!check_rights(R_SPAWN) || !object)
+ADMIN_VERB(spawn_atom, R_SPAWN, FALSE, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text)
+	if(!object)
 		return
 
 	var/list/preparsed = splittext(object,":")
 	var/path = preparsed[1]
 	var/amount = 1
-	if(preparsed.len > 1)
+	if(length(preparsed) > 1) //MONKE EDIT
 		amount = clamp(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
 
 	var/chosen = pick_closest_path(path)
 	if(!chosen)
 		return
-	var/turf/T = get_turf(usr)
+	var/turf/T = get_turf(user.mob)
 
 	if(ispath(chosen, /turf))
 		T.ChangeTurf(chosen)
@@ -84,13 +85,10 @@
 			var/atom/A = new chosen(T)
 			A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] spawned [amount] x [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
 
-/datum/admins/proc/podspawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom via supply drop"
-	set name = "Podspawn"
+ADMIN_VERB(spawn_atom_pod, R_SPAWN, FALSE, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG, object as text)
 
 	if(!check_rights(R_SPAWN))
 		return
@@ -98,7 +96,7 @@
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
-	var/turf/target_turf = get_turf(usr)
+	var/turf/target_turf = get_turf(user.mob)
 
 	if(ispath(chosen, /turf))
 		target_turf.ChangeTurf(chosen)
@@ -111,26 +109,19 @@
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] pod-spawned [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Podspawn Atom")
 
-/datum/admins/proc/spawn_cargo(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn a cargo crate"
-	set name = "Spawn Cargo"
-
-	if(!check_rights(R_SPAWN))
-		return
-
+ADMIN_VERB(spawn_cargo, R_SPAWN, FALSE, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)
 		return
 	var/datum/supply_pack/S = new chosen
 	S.admin_spawned = TRUE
-	S.generate(get_turf(usr))
+	S.generate(get_turf(user.mob))
 
-	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user.mob)] spawned cargo pack [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Cargo")
 
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"
@@ -163,10 +154,8 @@
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
-/datum/admins/proc/create_or_modify_area()
-	set category = "Debug"
-	set name = "Create or modify area"
-	create_area(usr)
+ADMIN_VERB(create_or_modify_area, R_DEBUG, FALSE, "Create Or Modify Area", "Create of modify an area. wow.", ADMIN_CATEGORY_DEBUG)
+	create_area(user.mob)
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)
@@ -218,20 +207,97 @@
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Ghost Drag Control")
 
-	tomob.key = frommob.key
+	tomob.PossessByPlayer(frommob.key)
 	tomob.client?.init_verbs()
 	qdel(frommob)
 
 	return TRUE
 
-/client/proc/adminGreet(logout)
-	if(SSticker.HasRoundStarted())
-		var/string
-		if(logout && CONFIG_GET(flag/announce_admin_logout))
-			string = pick(
-				"Admin logout: [key_name(src)]")
-		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
-			string = pick(
-				"Admin login: [key_name(src)]")
-		if(string)
-			message_admins("[string]")
+/// Sends a message to adminchat when anyone with a holder logs in or logs out.
+/// Is dependent on admin preferences and configuration settings, which means that this proc can fire without sending a message.
+/client/proc/adminGreet(logout = FALSE)
+	if(!SSticker.HasRoundStarted())
+		return
+
+	if(logout && CONFIG_GET(flag/announce_admin_logout))
+		message_admins("Admin logout: [key_name(src)]")
+		return
+
+	if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
+		message_admins("Admin login: [key_name(src)]")
+
+/datum/admins/proc/adminmoreinfo(mob/subject)
+	if(!ismob(subject))
+		to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
+		return
+
+	var/location_description = ""
+	var/special_role_description = ""
+	var/health_description = ""
+	var/gender_description = ""
+	var/turf/position = get_turf(subject)
+
+	//Location
+	if(isturf(position))
+		if(isarea(position.loc))
+			location_description = "[subject.loc == position ? "at coordinates" : "in [position.loc] at coordinates"] [position.x], [position.y], [position.z] in area <b>[position.loc]</b>"
+		else
+			location_description = "[subject.loc == position ? "at coordinates" : "in [subject.loc] at coordinates"] [position.x], [position.y], [position.z]"
+
+	//Job + antagonist
+	if(subject.mind)
+		special_role_description = "Role: <b>[subject.mind.assigned_role.title]</b>; Antagonist: <font color='red'><b>"
+
+		if(subject.mind.antag_datums)
+			var/iterable = 0
+			for(var/datum/antagonist/role in subject.mind.antag_datums)
+				special_role_description += "[role.name]"
+				iterable++
+				if(iterable != length(subject.mind.antag_datums))
+					special_role_description += ", "
+			special_role_description += "</b></font>"
+		else
+			special_role_description += "None</b></font>"
+	else
+		special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
+
+	//Health
+	if(isliving(subject))
+		var/mob/living/lifer = subject
+		var/status
+		switch (subject.stat)
+			if(CONSCIOUS)
+				status = "Alive"
+			if(SOFT_CRIT)
+				status = "<font color='orange'><b>Dying</b></font>"
+			if(UNCONSCIOUS)
+				status = "<font color='orange'><b>Unconscious</b></font>"
+			if(HARD_CRIT)
+				status = "<font color='orange'><b>Unconscious and Dying</b></font>"
+			if(DEAD)
+				status = "<font color='red'><b>Dead</b></font>"
+		health_description = "Status: [status]"
+		health_description += "<br>Brute: [lifer.getBruteLoss()] - Burn: [lifer.getFireLoss()] - Toxin: [lifer.getToxLoss()] - Suffocation: [lifer.getOxyLoss()]"
+		health_description += "<br>Clone: [lifer.getCloneLoss()] - Brain: [lifer.get_organ_loss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.stamina.loss]"
+	else
+		health_description = "This mob type has no health to speak of."
+
+	//Gender
+	switch(subject.gender)
+		if(MALE,FEMALE,PLURAL)
+			gender_description = "[subject.gender]"
+		else
+			gender_description = "<font color='red'><b>[subject.gender]</b></font>"
+
+	//Full Output
+	var/exportable_text = "[span_bold("Info about [subject.name]:")]<br>"
+	exportable_text += "Key - [span_bold(subject.key)]<br>"
+	exportable_text += "Mob Type - [subject.type]<br>"
+	exportable_text += "Gender - [gender_description]<br>"
+	exportable_text += "[health_description]<br>"
+	exportable_text += "Name: [span_bold(subject.name)] - Real Name: [subject.real_name] - Mind Name: [subject.mind?"[subject.mind.name]":""]<br>"
+	exportable_text += "Location is [location_description]<br>"
+	exportable_text += "[special_role_description]<br>"
+	exportable_text += ADMIN_FULLMONTY_NONAME(subject)
+
+	to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)

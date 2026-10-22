@@ -13,7 +13,7 @@
 	contraband = list()
 	premium = list()
 */
-
+#define ITEM_HASH(item)(sanitize_css_class_name("[item.name][item.custom_price][item.type]"))
 #define MAX_VENDING_INPUT_AMOUNT 30
 /**
  * # vending record datum
@@ -41,6 +41,10 @@
 	var/category
 	///List of items that have been returned to the vending machine.
 	var/list/returned_products
+	///If set, this access is needed to see this vending product.
+	var/access_requirement
+	///Is the item discountable by job discounts
+	var/discountable
 
 /**
  * # vending machines
@@ -64,6 +68,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.7
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
+	clicksound = 'sound/machines/pda_button1.ogg'
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -332,6 +337,7 @@
 				continue
 
 			var/obj/obj_to_dump = new dump_path(loc)
+			on_dispense(obj_to_dump)
 			step(obj_to_dump, pick(GLOB.alldirs))
 			found_anything = TRUE
 			dump_amount++
@@ -348,7 +354,7 @@
  * * categories - A list in the format of product_categories to source category from
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  */
-/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE)
+/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, access_needed)
 	default_price = round(initial(default_price) * SSeconomy.inflation_value())
 	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
 
@@ -376,6 +382,9 @@
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
+		R.discountable = temp.discountable
+		if(access_needed)
+			R.access_requirement = access_needed
 		recordlist += R
 
 /obj/machinery/vending/proc/build_inventories(start_empty)
@@ -561,9 +570,9 @@
 	. = ..()
 	if(!panel_open)
 		return FALSE
-	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
+	if(default_unfasten_wrench(user, tool, time = 3 SECONDS))
 		unbuckle_all_mobs(TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
@@ -576,19 +585,19 @@
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/I, mob/living/user, params)
-	if(panel_open && is_wire_tool(I))
+/obj/machinery/vending/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return
 
-	if(refill_canister && istype(I, refill_canister))
+	if(refill_canister && istype(attacking_item, refill_canister))
 		if (!panel_open)
 			to_chat(user, span_warning("You should probably unscrew the service panel first!"))
 		else if (machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, span_notice("[src] does not respond."))
 		else
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/vending_refill/canister = I
+			var/obj/item/vending_refill/canister = attacking_item
 			if(canister.get_part_rating() == 0)
 				to_chat(user, span_warning("[canister] is empty!"))
 			else
@@ -600,11 +609,11 @@
 					to_chat(user, span_warning("There's nothing to restock!"))
 			return
 	if(compartmentLoadAccessCheck(user) && !(user.istate & ISTATE_HARM))
-		if(canLoadItem(I))
-			loadingAttempt(I,user)
+		if(canLoadItem(attacking_item))
+			loadingAttempt(attacking_item,user)
 
-		if(istype(I, /obj/item/storage/bag)) //trays USUALLY
-			var/obj/item/storage/T = I
+		if(istype(attacking_item, /obj/item/storage/bag)) //trays USUALLY
+			var/obj/item/storage/T = attacking_item
 			var/loaded = 0
 			var/denied_items = 0
 			for(var/obj/item/the_item in T.contents)
@@ -622,7 +631,7 @@
 				to_chat(user, span_notice("You insert [loaded] dishes into [src]'s compartment."))
 	else
 		. = ..()
-		if(tiltable && !tilted && I.force)
+		if(tiltable && !tilted && attacking_item.force)
 			if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
 				var/opposite_direction = REVERSE_DIR(get_dir(src, user))
 				var/target = get_step(src, opposite_direction)
@@ -653,7 +662,8 @@
 			if(!dump_path)
 				continue
 			if(R.amount > LAZYLEN(R.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-				new dump_path(get_turf(src))
+				var/obj/item/free_stuff = new dump_path(get_turf(src))
+				on_dispense(free_stuff)
 			else
 				var/obj/returned_obj_to_dump = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
 				LAZYREMOVE(R.returned_products, returned_obj_to_dump)
@@ -738,11 +748,14 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				var/datum/embedding/embed = shard.get_embed()
+				embed.embed_chance = 100
+				embed.ignore_throwspeed_threshold = TRUE
+				embed.impact_pain_mult = 1
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				embed.embed_chance = initial(embed.embed_chance)
+				embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+				embed.impact_pain_mult = initial(embed.impact_pain_mult)
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -954,7 +967,7 @@
 					carbon_target.visible_message(span_danger("[carbon_head] explodes in a shower of gore beneath [src]!"),	span_userdanger("Oh f-"))
 					carbon_head.drop_organs()
 					qdel(carbon_head)
-					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target))
+					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target), carbon_target)
 			return TRUE
 
 	return FALSE
@@ -972,11 +985,14 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				var/datum/embedding/embed = shard.get_embed()
+				embed.embed_chance = 100
+				embed.ignore_throwspeed_threshold = TRUE
+				embed.impact_pain_mult = 1
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				embed.embed_chance = initial(embed.embed_chance)
+				embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+				embed.impact_pain_mult = initial(embed.impact_pain_mult)
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1021,10 +1037,12 @@
 			LAZYADD(product_datum.returned_products, inserted_item)
 			return
 
-	if(vending_machine_input[inserted_item.type])
-		vending_machine_input[inserted_item.type]++
+	var/itemhash = ITEM_HASH(inserted_item)
+	if(vending_machine_input[itemhash])
+		vending_machine_input[itemhash]++
 	else
-		vending_machine_input[inserted_item.type] = 1
+		vending_machine_input[itemhash] = 1
+		update_static_data_for_all_viewers()
 	loaded_items++
 
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
@@ -1079,13 +1097,16 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
+	if (!Adjacent(user))
+		return ..()
+
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
-	if(tilted && !user.buckled && !isAdminGhostAI(user))
+	if(tilted && !user.buckled)
 		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 50, target=src))
+		if(do_after(user, 5 SECONDS, target=src))
 			untilt(user)
 		return
 
@@ -1098,7 +1119,7 @@
 
 /obj/machinery/vending/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/vending),
+		get_asset_datum(/datum/asset/spritesheet_batched/vending),
 	)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
@@ -1116,15 +1137,15 @@
 
 	var/list/categories = list()
 
-	data["product_records"] = collect_records_for_static_data(product_records, categories)
-	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
-	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
+	data["product_records"] = collect_records_for_static_data(product_records, categories, user)
+	data["coin_records"] = collect_records_for_static_data(coin_records, categories, user, premium = TRUE)
+	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, user, premium = TRUE)
 
 	data["categories"] = categories
 
 	return data
 
-/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
+/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
 	var/static/list/default_category = list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
@@ -1133,12 +1154,20 @@
 	var/list/out_records = list()
 
 	for (var/datum/data/vending_product/record as anything in records)
+		if(record.access_requirement)
+			var/obj/item/card/id/user_id
+			if(!istype(user))
+				continue
+			user_id = user.get_idcard(TRUE)
+			if(!issilicon(user) && !(record.access_requirement in user_id?.access) && !(obj_flags & EMAGGED) && onstation)
+				continue
 		var/list/static_record = list(
 			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
 			name = record.name,
 			price = premium ? (record.custom_premium_price || extra_price) : (record.custom_price || default_price),
 			max_amount = record.max_amount,
 			ref = REF(record),
+			discountable = record.discountable,
 		)
 
 		var/atom/printed = record.product_path
@@ -1196,7 +1225,7 @@
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1205,6 +1234,10 @@
 			. = vend(params)
 		if("select_colors")
 			. = select_colors(params)
+
+/// Check if the list of given access is allowed to purchase the given product
+/obj/machinery/vending/proc/allow_purchase(mob/living/user, product_path)
+	return TRUE
 
 /obj/machinery/vending/proc/can_vend(user, silent=FALSE)
 	. = FALSE
@@ -1312,7 +1345,7 @@
 			vend_ready = TRUE
 			return
 		var/datum/bank_account/account = C.registered_account
-		if(account.account_job && account.account_job.paycheck_department == payment_department)
+		if(account.account_job && account.account_job.paycheck_department == payment_department && R.discountable)
 			price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
@@ -1327,7 +1360,7 @@
 		if(D)
 			D.adjust_money(price_to_use)
 			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-			SSeconomy.track_purchase(account, price_to_use, name)
+			SSeconomy.add_audit_entry(account, price_to_use, name)
 			log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [R].")
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
@@ -1335,13 +1368,14 @@
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(usr)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item
 	if(!LAZYLEN(R.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new R.product_path(get_turf(src))
+		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
 		LAZYREMOVE(R.returned_products, vended_item)
@@ -1355,6 +1389,10 @@
 		to_chat(usr, span_warning("[capitalize(format_text(R.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[name]", "[R.name]"))
 	vend_ready = TRUE
+
+///A proc meant to perform custom behavior on newly dispensed items.
+/obj/machinery/vending/proc/on_dispense(obj/item/vended_item)
+	return
 
 /obj/machinery/vending/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -1539,12 +1577,14 @@
 	. = ..()
 	.["access"] = compartmentLoadAccessCheck(user)
 	.["vending_machine_input"] = list()
-	for (var/obj/item/stocked_item as anything in vending_machine_input)
+	for (var/stocked_item in vending_machine_input)
 		if(vending_machine_input[stocked_item] > 0)
 			var/base64
 			var/price = 0
-			for(var/obj/item/stored_item in contents)
-				if(stored_item.type == stocked_item)
+			var/itemname
+			for(var/obj/item/stored_item in contents - component_parts)
+				if(ITEM_HASH(stored_item) == stocked_item)
+					itemname = stored_item.name
 					price = stored_item.custom_price
 					if(!base64) //generate an icon of the item to use in UI
 						if(base64_cache[stored_item.type])
@@ -1554,8 +1594,8 @@
 							base64_cache[stored_item.type] = base64
 					break
 			var/list/data = list(
-				path = stocked_item,
-				name = initial(stocked_item.name),
+				path = stocked_item, //list key is named "path", but actual value is of type "text" from calling ITEM_HASH(). I'm afraid to rename for fear of causing issues
+				name = itemname,
 				price = price,
 				img = base64,
 				amount = vending_machine_input[stocked_item],
@@ -1563,7 +1603,7 @@
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, params)
+/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1575,7 +1615,7 @@
 			vend_ready = TRUE
 			return TRUE
 
-/obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
+/obj/machinery/vending/custom/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!linked_account && isliving(user))
 		var/mob/living/L = user
 		var/obj/item/card/id/C = L.get_idcard(TRUE)
@@ -1584,7 +1624,7 @@
 			speak("\The [src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(I, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attacking_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
@@ -1613,7 +1653,7 @@
 /obj/machinery/vending/custom/proc/vend_act(mob/living/user, list/params)
 	if(!vend_ready)
 		return
-	var/obj/item/choice = text2path(params["item"]) // typepath is a string coming from javascript, we need to convert it back
+	var/choice = params["item"]
 	var/obj/item/dispensed_item
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	vend_ready = FALSE
@@ -1622,8 +1662,8 @@
 		flick(icon_deny, src)
 		return TRUE
 	var/datum/bank_account/payee = id_card.registered_account
-	for(var/obj/item/stock in contents)
-		if(istype(stock, choice))
+	for(var/obj/item/stock in contents - component_parts)
+		if(choice == ITEM_HASH(stock))
 			dispensed_item = stock
 			break
 	if(!dispensed_item)
@@ -1649,8 +1689,10 @@
 			last_shopper = REF(usr)
 	/// Remove the item
 	loaded_items--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
+	if (vending_machine_input[choice] == 0)
+		vending_machine_input -= list(choice)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
 	else
@@ -1689,3 +1731,47 @@
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 #undef MAX_VENDING_INPUT_AMOUNT
+
+/**
+ * This vending machine supports a list of items that changes based on the user/card's access.
+ */
+/obj/machinery/vending/access
+	name = "access-based vending machine"
+	///If set, this access is required to see non-access locked products in the vending machine.
+	var/minimum_access_to_view
+
+/obj/machinery/vending/access/Initialize(mapload)
+	. = ..()
+	var/list/inventory = list()
+	build_access_list(inventory)
+	for(var/access in inventory)
+		build_inventory(inventory[access], product_records, product_categories, start_empty = FALSE, access_needed = access)
+
+/**
+ * This is where you generate the list to store what items each access grants.
+ * Should be an assosciative list where the key is the access as a string and the value is the items typepath.
+ * You can also set it to TRUE instead of a list to allow them to purchase anything.
+ */
+/obj/machinery/vending/access/proc/build_access_list(list/inventory)
+	return
+
+/obj/machinery/vending/access/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
+	if(isnull(minimum_access_to_view))
+		return ..()
+	//dead people can see records, i GUESS...
+	if(!istype(user))
+		return ..()
+	var/obj/item/card/id/user_id = user.get_idcard(TRUE)
+	if(!issilicon(user) && !(obj_flags & EMAGGED) && onstation && !(minimum_access_to_view in user_id?.access))
+		records = list()
+		return ..()
+	return ..()
+
+/// Debug version to verify access checking is working and functional
+/obj/machinery/vending/access/debug
+	minimum_access_to_view = ACCESS_ENGINEERING
+
+/obj/machinery/vending/access/debug/build_access_list(list/inventory)
+	inventory[ACCESS_EVA] = list(/obj/item/crowbar)
+	inventory[ACCESS_SECURITY] = list(/obj/item/wrench, /obj/item/gun/ballistic/revolver/mateba)
+

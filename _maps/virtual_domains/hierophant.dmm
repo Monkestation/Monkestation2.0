@@ -52,6 +52,9 @@
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/indestructible/hierophant,
 /area/virtual_domain)
+"R" = (
+/turf/open/indestructible/hierophant,
+/area/lavaland/surface/outdoors/virtual_domain/protected_space)
 "S" = (
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/indestructible/hierophant,
@@ -534,7 +537,7 @@ y
 y
 r
 a
-a
+R
 w
 w
 w
@@ -574,7 +577,7 @@ y
 y
 r
 a
-a
+R
 w
 w
 w
@@ -614,7 +617,7 @@ y
 y
 r
 a
-a
+R
 w
 w
 w

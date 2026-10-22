@@ -1,10 +1,9 @@
 /datum/challenge_selector
 	/// The client of the person using the UI
-	var/datum/player_details/owner
+	var/datum/persistent_client/owner
 
-/datum/challenge_selector/New(user)
-	owner = get_player_details(user)
-	owner.challenge_menu = src
+/datum/challenge_selector/New(datum/persistent_client/owner)
+	src.owner = owner
 
 /datum/challenge_selector/Destroy(force)
 	if(owner?.challenge_menu == src)
@@ -58,8 +57,6 @@
 			return TRUE
 
 /datum/challenge_selector/proc/add_selection(mob/user, list/params)
-	if(user.ckey != owner.ckey)
-		CRASH("User [user.ckey] tried to use challenge selector of [owner.ckey]")
 	if(isliving(user) || isobserver(user))
 		return
 

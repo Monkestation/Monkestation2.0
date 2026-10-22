@@ -1,6 +1,7 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_DNA_COPY,
@@ -20,6 +21,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 		TRAIT_VIRUSIMMUNE,
 		// monkestation edit: making androids closer to IPCs
 		TRAIT_REVIVES_BY_HEALING,
@@ -30,6 +32,7 @@
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
+	exotic_bloodtype = BLOOD_TYPE_OIL
 	meat = /obj/item/stack/sheet/plasteel{amount = 5}
 	skinned_type = /obj/item/stack/sheet/iron{amount = 10}
 	species_gibs = GIB_TYPE_ROBOTIC
@@ -57,7 +60,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android,
 	)
-	examine_limb_id = SPECIES_HUMAN
 
 
 //Taken from TGstation
@@ -105,8 +107,3 @@
 	),
 	)
 	return to_add
-
-/datum/species/android/on_species_gain(mob/living/carbon/C)
-	. = ..()
-	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
-	C.set_safe_hunger_level()

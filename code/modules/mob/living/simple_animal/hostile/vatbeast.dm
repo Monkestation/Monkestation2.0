@@ -10,6 +10,7 @@
 	mob_size = MOB_SIZE_LARGE
 	gender = NEUTER
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	blood_volume = BLOOD_VOLUME_NORMAL
 	speak_emote = list("roars")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	health = 250
@@ -32,15 +33,18 @@
 	slapper.Grant(src)
 
 	add_cell_sample()
-	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0)
 
-/mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
+/mob/living/simple_animal/hostile/vatbeast/tamed(mob/living/tamer, obj/item/food)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	faction = list(FACTION_NEUTRAL)
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/basic/vatbeast/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_LIZARD) // Green and alien
 
 /// Ability that allows the owner to slap other mobs a short distance away.
 /// For vatbeats, this ability is shared with the rider.
@@ -53,7 +57,6 @@
 	button_icon_state = "tentacle_slap"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	cooldown_time = 12 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 

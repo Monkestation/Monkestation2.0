@@ -4,11 +4,11 @@
 	type_name = "Lamp"
 	activation_message = "starts shining!"
 	deactivation_message = "stops shining."
-	examine_discovered = span_warning("It appears to be some sort of light source")
+	examine_discovered = span_warning("It appears to be some sort of light source.")
 
 	artifact_size = ARTIFACT_SIZE_LARGE
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 /datum/artifact_effect/lamp/setup()
 	var/power
@@ -29,6 +29,7 @@
 
 /datum/artifact_effect/lamp/effect_touched(mob/user)
 	our_artifact.holder.set_light_on(!our_artifact.holder.light_on) //toggle
+	our_artifact.holder.update_light()
 	to_chat(user, span_hear("[our_artifact.holder] clicks."))
 
 /datum/artifact_effect/lamp/effect_activate()

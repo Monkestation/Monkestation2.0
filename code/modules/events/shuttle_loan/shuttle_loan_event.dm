@@ -9,6 +9,7 @@
 	///The types of loan events already run (and to be excluded if the event triggers).
 	admin_setup = list(/datum/event_admin_setup/listed_options/shuttle_loan)
 	var/list/run_situations = list()
+	tags = list(TAG_COMMUNAL)
 
 /datum/round_event_control/shuttle_loan/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
@@ -40,6 +41,13 @@
 	setup = TRUE
 
 /datum/round_event/shuttle_loan/announce(fake)
+	if(fake)
+		var/datum/shuttle_loan_situation/fake_situation = pick(subtypesof(/datum/shuttle_loan_situation))
+		situation = new fake_situation
+		priority_announce("Cargo: [situation.announcement_text]", situation.sender)
+		qdel(situation)
+		return
+
 	priority_announce("Cargo: [situation.announcement_text]", situation.sender)
 	SSshuttle.shuttle_loan = src
 

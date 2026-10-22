@@ -63,3 +63,23 @@
 	price_max = CARGO_CRATE_VALUE * 2
 	stock_max = 2
 	availability_prob = 50
+
+/datum/market_item/weapon/fisher
+	name = "SC/FISHER Saboteur Handgun"
+	desc = "A self-recharging, compact pistol that disrupts lights, cameras, APCs, turrets and more, if only temporarily. Also usable in melee."
+	item = /obj/item/gun/energy/recharge/fisher
+
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_max = 1
+	availability_prob = 50
+
+/datum/market_item/weapon/roulettegun
+	name = "Roulette Shotgun"
+	desc = "Won this shotgun off the poor sod that lost the last game against me. I have no use for it anymore. Extended tube, 10 round capacity. Trigger seems stuck."
+	item = /obj/item/gun/ballistic/shotgun/buckshotroulette
+
+	price_min = CARGO_CRATE_VALUE * 6
+	price_max = CARGO_CRATE_VALUE * 8
+	stock_max = 1
+	availability_prob = 40

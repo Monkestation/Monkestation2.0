@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/mob_try_enter(mob/M)
 	if(!ishuman(M)) // no silicons or drones in mechas.
 		return
-	if(HAS_TRAIT(M, TRAIT_PRIMITIVE)) //no lavalizards either.
+	if(HAS_TRAIT(M, TRAIT_PRIMITIVE) && (!(HAS_TRAIT(M, TRAIT_ADVANCEDTOOLUSER)) || !(HAS_TRAIT(M, TRAIT_LITERATE)))) //no lavalizards either.
 		to_chat(M, span_warning("The knowledge to use this device eludes you!"))
 		return
 	log_message("[M] tried to move into [src].", LOG_MECHA)
@@ -11,7 +11,7 @@
 			to_chat(M, span_warning("Access denied. [name] is secured with a DNA lock."))
 			log_message("Permission denied (DNA LOCK).", LOG_MECHA)
 			return
-	if(!operation_allowed(M))
+	if((mecha_flags & ID_LOCK_ON) && !allowed(M))
 		to_chat(M, span_warning("Access denied. Insufficient operation keycodes."))
 		log_message("Permission denied (No keycode).", LOG_MECHA)
 		return
@@ -50,7 +50,7 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	set_mouse_pointer()
 	if(!internal_damage)
-		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
+		newoccupant.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
 	return TRUE
 
 ///proc called when a new mmi mob tries to enter this mech
@@ -96,10 +96,11 @@
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
 	brain_mob.update_mouse_pointer()
+	RegisterSignal(brain_mob, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	setDir(SOUTH)
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
-		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
+		brain_mob.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
 	user.log_message("has put the MMI/posibrain of [key_name(brain_mob)] into [src]", LOG_GAME)
 	brain_mob.log_message("was put into [src] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 	return TRUE
@@ -107,10 +108,12 @@
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	var/atom/movable/mob_container
 	var/turf/newloc = get_turf(src)
+	var/moved_already = FALSE
 	if(ishuman(M))
 		mob_container = M
 	else if(isbrain(M))
 		var/mob/living/brain/brain = M
+		UnregisterSignal(brain, COMSIG_MOB_RETRIEVE_ACCESS)
 		mob_container = brain.container
 	else if(isAI(M))
 		var/mob/living/silicon/ai/AI = M
@@ -118,41 +121,46 @@
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
-			if(!AI.linked_core) //if the victim AI has no core
+			newloc = null
+			//We ignore Z-levels here because AIs can control mechs from other levels.
+			if(!AI.relocate(silent = TRUE, kill_otherwise = FALSE, ignore_z_levels = TRUE))
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
 				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
 		else
-			if(!AI.linked_core)
-				if(!silent)
-					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
-				AI.linked_core = null
-				return
 			if(!silent)
-				to_chat(AI, span_notice("Returning to core..."))
+				to_chat(AI, span_notice("Attempting to return to core..."))
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			mob_container = AI
-			newloc = get_turf(AI.linked_core)
-			qdel(AI.linked_core)
+			newloc = null
+			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE))
+				moved_already = TRUE
+			else
+				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
 	else
 		return ..()
 	var/mob/living/ejector = M
-	mecha_flags  &= ~SILICON_PILOT
-	mob_container.forceMove(newloc)//ejecting mob container
-	log_message("[mob_container] moved out.", LOG_MECHA)
-	SStgui.close_user_uis(M, src)
-	if(istype(mob_container, /obj/item/mmi))
-		var/obj/item/mmi/mmi = mob_container
-		if(mmi.brainmob)
-			ejector.forceMove(mmi)
-			ejector.reset_perspective()
-			remove_occupant(ejector)
-		mmi.set_mecha(null)
-		mmi.update_appearance()
-	setDir(SOUTH)
+	mecha_flags &= ~SILICON_PILOT
+	if(!moved_already)//ejecting mob container
+		if(mob_container.forceMove(newloc))
+			moved_already = TRUE
+
+	if(moved_already)
+		log_message("[mob_container] moved out.", LOG_MECHA)
+		SStgui.close_user_uis(M, src)
+		if(istype(mob_container, /obj/item/mmi))
+			var/obj/item/mmi/mmi = mob_container
+			if(mmi.brainmob)
+				ejector.forceMove(mmi)
+				ejector.reset_perspective()
+				remove_occupant(ejector)
+			mmi.set_mecha(null)
+			mmi.update_appearance()
+		setDir(SOUTH)
+
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
@@ -187,6 +195,8 @@
 	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
 		to_chat(user, span_notice("You exit the mech."))
+		if(cabin_sealed)
+			set_cabin_seal(user, FALSE)
 		mob_exit(user, silent = TRUE)
 	else
 		to_chat(user, span_notice("You stop exiting the mech. Weapons are enabled again."))

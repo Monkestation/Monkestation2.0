@@ -73,6 +73,17 @@
 			payload.defuse()
 		return
 
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			end_processing()
+			detonation_timer = null
+			next_beep = null
+			countdown.stop()
+			if(payload in src)
+				payload.defuse()
+			return
+
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
 		switch(seconds_remaining())
@@ -194,16 +205,16 @@
 	return TRUE
 
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
+/obj/machinery/syndicatebomb/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(is_wire_tool(I) && open_panel)
+	if(is_wire_tool(attacking_item) && open_panel)
 		wires.interact(user)
 
-	else if(istype(I, /obj/item/bombcore))
+	else if(istype(attacking_item, /obj/item/bombcore))
 		if(!payload)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			payload = I
+			payload = attacking_item
 			to_chat(user, span_notice("You place [payload] into [src]."))
 		else
 			to_chat(user, span_warning("[payload] is already loaded into [src]! You'll have to remove it first."))
@@ -513,21 +524,21 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
-/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
-		I.play_tool_sound(src)
+/obj/item/bombcore/chemical/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
+		attacking_item.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())
 			beakers -= B
 		return
-	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
+	else if(istype(attacking_item, /obj/item/reagent_containers/cup/beaker) || istype(attacking_item, /obj/item/reagent_containers/cup/bottle))
 		if(beakers.len < max_beakers)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			beakers += I
-			to_chat(user, span_notice("You load [src] with [I]."))
+			beakers += attacking_item
+			to_chat(user, span_notice("You load [src] with [attacking_item]."))
 		else
-			to_chat(user, span_warning("[I] won't fit! \The [src] can only hold up to [max_beakers] containers."))
+			to_chat(user, span_warning("[attacking_item] won't fit! \The [src] can only hold up to [max_beakers] containers."))
 			return
 	..()
 
@@ -603,7 +614,7 @@
 
 /obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
-		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
+		for(var/obj/machinery/syndicatebomb/B as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/syndicatebomb))
 			if(B.active)
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++

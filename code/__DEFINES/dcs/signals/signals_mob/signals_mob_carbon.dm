@@ -32,6 +32,8 @@
 	#define COMPONENT_NO_ATTACH (1<<0)
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
+/// Called from bodypart being attached /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_owner, special)
+#define COMSIG_BODYPART_ATTACHED "bodypart_attached"
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
@@ -47,8 +49,8 @@
 
 /// Called from update_health_hud, whenever a bodypart is being updated on the health doll
 #define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
-	/// Return to override that bodypart's health hud with your own icon
-	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+	/// Return to override that bodypart's health hud with whatever is returned by the list
+	#define OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
 
 /// Called from /obj/item/bodypart/check_for_injuries (mob/living/carbon/examiner, list/check_list)
 #define COMSIG_BODYPART_CHECKED_FOR_INJURY "bodypart_injury_checked"
@@ -75,13 +77,11 @@
 ///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
 #define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
-///defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
-#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
-///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
-#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
+///Called when a limb a carbon has gets an embed (mob/living/carbon/the_guy_getting_embedded, /obj/item/the_embed, /obj/item/bodypart/the_part_getting_the_embed)
+#define COMSIG_CARBON_EMBED_ADDED "item_embed_on_add"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
@@ -90,8 +90,10 @@
 #define COMSIG_CARBON_GAIN_ADDICTION "carbon_gain_addiction"
 ///Called when a carbon is no longer addicted (source = what addiction datum was lost, addicted_mind = mind of the freed carbon)
 #define COMSIG_CARBON_LOSE_ADDICTION "carbon_lose_addiction"
-///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added) - this is before on_gain()
+///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added, resilience = the resilience of the trauma given, if set differently from the default) - this is before on_gain()
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
+	/// Return if you want to prevent the carbon from gaining the brain trauma.
+	#define COMSIG_CARBON_BLOCK_TRAUMA (1 << 0)
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
@@ -118,6 +120,10 @@
 	#define COMSIG_CARBON_BLOCK_EAT (1 << 0)
 ///Called when a carbon vomits : (distance, force)
 #define COMSIG_CARBON_VOMITED "carbon_vomited"
+///Called from apply_overlay(cache_index, overlay)
+#define COMSIG_CARBON_APPLY_OVERLAY "carbon_apply_overlay"
+///Called from remove_overlay(cache_index, overlay)
+#define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 
 // /mob/living/carbon/human signals
 
@@ -135,11 +141,20 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
-#define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
-	#define SHIELD_BLOCK (1<<0)
+
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
+
+/// From /mob/living/carbon/human/get_visible_name(): (list/identity)
+#define COMSIG_HUMAN_GET_VISIBLE_NAME "human_get_visible_name"
+	/// Index for the visible face name.
+	#define VISIBLE_NAME_FACE 1
+	/// Index for the visible ID name.
+	#define VISIBLE_NAME_ID 2
+	/// Index for the priority of a forced name override.
+	#define VISIBLE_NAME_FORCED 3
+/// From /mob/living/carbon/human/get_id_name(); sent only while the mob has TRAIT_UNKNOWN: (list/identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
@@ -158,3 +173,24 @@
 
 #define COMSIG_CARBON_PRE_SPRINT "carbon_pre_sprint"
 	#define INTERRUPT_SPRINT (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"
+
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting)
+#define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
+#define COMSIG_HUMAN_PUNCHED "human_punched"
+
+#define COMSIG_CARBON_EQUIP_EARS "carbon_ears_equip"
+#define COMSIG_CARBON_UNEQUIP_EARS "carbon_ears_unequip"
+
+///Sent to carbon when they pickup something (/obj/item)
+#define COMSIG_CARBON_ITEM_PICKED_UP "carbon_item_picked_up"
+#define COMSIG_HUMAN_BEGIN_DUEL "human_begin_duel"
+#define COMSIG_HUMAN_END_DUEL "human_end_duel"
+
+/// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"

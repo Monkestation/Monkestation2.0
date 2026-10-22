@@ -1,14 +1,14 @@
 /datum/artifact_effect/plushie
 	examine_hint = "Has some sort of claw mechanism."
 
-	examine_discovered = "Its a claw machine of some kind"
+	examine_discovered = "Its a claw machine of some kind."
 
 	weight = ARTIFACT_UNCOMMON
 
 	activation_message = "summons a toy of some kind!"
 
-	type_name = "Toy Vender Effect"
-	research_value = 250
+	type_name = "Toy Vendor Effect"
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	var/static/list/obj/item/toy/plush/plushies = list()
 
@@ -27,4 +27,4 @@
 		var/datum/component/ghost_object_control/spiritholder = boi.GetComponent(/datum/component/ghost_object_control)
 		if(!(spiritholder.bound_spirit))
 			spiritholder.request_control(0.6)
-	COOLDOWN_START(src,plushiefact,3 MINUTE)
+	COOLDOWN_START(src, plushiefact, 3 MINUTES)

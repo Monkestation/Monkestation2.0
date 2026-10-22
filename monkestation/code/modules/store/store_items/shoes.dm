@@ -27,6 +27,10 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	item_path = /obj/item/clothing/shoes/russian
 	item_cost = 4000
 
+/datum/store_item/shoes/deforest_boots
+	name = "Deforest Boots"
+	item_path = /obj/item/clothing/shoes/workboots/black/deforest
+	item_cost = 1000
 /*
 *	COWBOY
 */
@@ -113,6 +117,36 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "Colorable Heels"
 	item_path = /obj/item/clothing/shoes/heels
 
+/datum/store_item/shoes/flats
+	name = "Perfumed Flats"
+	item_path = /obj/item/clothing/shoes/flowery
+	item_cost = 5000
+
+/datum/store_item/shoes/flats/alt
+	name = "Blue Flats"
+	item_path = /obj/item/clothing/shoes/starry
+	item_cost = 5000
+
+/datum/store_item/shoes/flats/ball_heel
+	name = "Ball Heels"
+	item_path = /obj/item/clothing/shoes/ballheels
+	item_cost = 5000
+
+/datum/store_item/shoes/flats/gilded_sandal
+	name = "Gilded Sandals"
+	item_path = /obj/item/clothing/shoes/sandal/gilded
+	item_cost = 5000
+
+/datum/store_item/shoes/angel
+	name = "Angel Boots"
+	item_path = /obj/item/clothing/shoes/angel
+	item_cost = 5000
+
+/datum/store_item/shoes/devil
+	name = "Devil Boots"
+	item_path = /obj/item/clothing/shoes/devil
+	item_cost = 5000
+
 /*
 *	JOB-RESTRICTED
 */
@@ -188,8 +222,8 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	item_cost = 2500
 
 /datum/store_item/shoes/wheelys
-	name = "Wheely-Heels"
-	item_path = /obj/item/clothing/shoes/wheelys
+	name = "Cheap Wheely-Heels"
+	item_path = /obj/item/clothing/shoes/wheelys/cheap
 	item_cost = 2500
 
 /*

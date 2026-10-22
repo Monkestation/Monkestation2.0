@@ -34,7 +34,6 @@
 	UnregisterSignal(source, COMSIG_CLIENT_HOVER_NEW)
 	hover_information_data.clear_data(parent, source.mob)
 
-
 /datum/hover_data
 	var/list/images_per_client = list()
 
@@ -46,6 +45,7 @@
 				if(client.ckey != key)
 					continue
 				remove_client_images(client)
+		images_per_client.Cut()
 
 /datum/hover_data/New(datum/component/hovering_information, atom/parent)
 
@@ -62,10 +62,13 @@
 	images_per_client[giver.ckey] += new_image
 
 /datum/hover_data/proc/remove_client_images(client/remover)
-	for(var/image/listed_image as anything in images_per_client[remover.ckey])
-		remover.images -= listed_image
-		images_per_client[remover.ckey] -= listed_image
-		qdel(listed_image)
+	var/list/client_images = images_per_client[remover.ckey]
+	if(!client_images)
+		return
+	for(var/image/listed_image as anything in client_images)
+		remover?.images -= listed_image
+		client_images -= listed_image
+	client_images.Cut()
 
 /obj/effect/overlay/hover
 	icon = null

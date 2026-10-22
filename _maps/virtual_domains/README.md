@@ -4,8 +4,8 @@
 
 1. Create a new map using TGM format. It can be any size, but please, consider limiting to 75x75 max.
 2. Ensure that the map has ONE tile marked with the safehouse bottom left landmark. If you're using modular safehouses, it will need to be a 7x6 area.
-4. Provide a way for players to enter your new map via the north door, which is 4th tile over. 
-5. Enclose your area with a single wall binary closed wall.
+3. Provide a way for players to enter your new map via the north door, which is 4th tile over.
+4. Enclose your area with a single wall binary closed wall.
 
 ## From an existing map
 
@@ -15,6 +15,7 @@
 4. Place a bottom left safehouse landmark somewhere on the map to load the safehouse.
 
 ## BOTH.
+
 1. You need to have one (1) way that the encrypted cache can spawn. This can be from a mob drop, a landmark (place a few, it'll pick one), or a signable landmark if you have a points system.
 2. Make note of the size of the map. Make sure this is in the dm file.
 3. Create the dm file that defines the map qualities. Examples are in the bitrunning file.

@@ -1,4 +1,4 @@
-/obj/projectile/magic
+/obj/projectile/magic  ////These should really be cleaned up someday
 	name = "bolt"
 	icon_state = "energy"
 	damage = 0 // MOST magic projectiles pass the "not a hostile projectile" test, despite many having negative effects
@@ -22,7 +22,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -40,7 +40,7 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+			if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)) // This heals suicides
 				victim.grab_ghost(force = TRUE)
 				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
 			else if(victim.stat != DEAD)
@@ -52,7 +52,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -73,7 +73,7 @@
 			victim.death()
 			return
 
-		if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+		if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)) // This heals suicides
 			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
 		else if(victim.stat != DEAD)
 			to_chat(victim, span_notice("You feel great!"))
@@ -81,7 +81,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -263,7 +263,8 @@
 
 /obj/projectile/magic/locker/Destroy()
 	locker_suck = FALSE
-	RemoveElement(/datum/element/connect_loc, projectile_connections) //We do this manually so the forcemoves don't "hit" us. This behavior is kinda dumb, someone refactor this
+	if (last_tick_turf)
+		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	. = ..()
@@ -272,6 +273,7 @@
 	breakout_time = 600
 	icon_welded = null
 	icon_state = "cursed"
+	paint_jobs = null
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
@@ -280,13 +282,12 @@
 	if(auto_destroy)
 		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
+/obj/structure/closet/decay/after_open(mob/living/user, force)
+	. = ..()
+	unmagify()
+
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
-		unmagify()
-
-/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(.)
 		unmagify()
 
 ///Give it the lesser magic icon and tell it to delete itself
@@ -312,7 +313,7 @@
 /obj/projectile/magic/flying/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
-		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+		var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 		target.throw_at(throw_target, 200, 4)
 
 /obj/projectile/magic/bounty
@@ -377,6 +378,10 @@
 /obj/projectile/magic/wipe/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
+		if(istype(get_area(target), /area/deathmatch))
+			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25) // Roughly 8 hits to kill
+			target.visible_message(span_warning("[target] grips [target.p_their()] head in pain!"))
+			return BULLET_ACT_HIT
 		for(var/x in target.get_traumas())//checks to see if the victim is already going through possession
 			if(istype(x, /datum/brain_trauma/special/imaginary_friend/trapped_owner))
 				target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
@@ -403,8 +408,8 @@
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = chosen_one.key
-		trauma.friend.key = oldkey
+		target.PossessByPlayer(chosen_one.key)
+		trauma.friend.PossessByPlayer(oldkey)
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
 		trauma.friend_initialized = TRUE
@@ -428,9 +433,11 @@
 	/// The icon the trail uses.
 	var/trail_icon = 'icons/obj/wizard.dmi'
 	/// The icon state the trail uses.
-	var/trail_icon_state = "trail"
+	var/trail_icon_state = "arrow"
+	/// Can we spawn a trail effect again?
+	COOLDOWN_DECLARE(trail_cooldown)
 
-/obj/projectile/magic/aoe/Range()
+/obj/projectile/magic/aoe/reduce_range()
 	if(trigger_range >= 1)
 		for(var/mob/living/nearby_guy in range(trigger_range, get_turf(src)))
 			if(nearby_guy.stat == DEAD)
@@ -442,38 +449,31 @@
 
 	return ..()
 
-/obj/projectile/magic/aoe/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
+/obj/projectile/magic/aoe/prehit_pierce(atom/target)
 	if(can_only_hit_target && target != original)
-		return FALSE
+		return PROJECTILE_PIERCE_PHASE
 	return ..()
 
-/obj/projectile/magic/aoe/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(trail)
-		create_trail()
-
-/// Creates and handles the trail that follows the projectile.
-/obj/projectile/magic/aoe/proc/create_trail()
-	if(!trajectory)
+/obj/projectile/magic/aoe/move_animate(animate_x, animate_y, animate_time = world.tick_lag, deleting = FALSE)
+	if(!trail || !movement_vector || deleting || !COOLDOWN_FINISHED(src, trail_cooldown))
 		return
 
-	var/datum/point/vector/previous = trajectory.return_vector_after_increments(1, -1)
-	var/obj/effect/overlay/trail = new /obj/effect/overlay(previous.return_turf())
-	trail.pixel_x = previous.return_px()
-	trail.pixel_y = previous.return_py()
-	trail.icon = trail_icon
-	trail.icon_state = trail_icon_state
-	//might be changed to temp overlay
-	trail.set_density(FALSE)
-	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	QDEL_IN(trail, trail_lifespan)
+	var/obj/effect/overlay/trail_effect = new /obj/effect/overlay(loc)
+	trail_effect.pixel_x = pixel_x
+	trail_effect.pixel_y = pixel_y
+	trail_effect.icon = trail_icon
+	trail_effect.icon_state = trail_icon_state
+	trail_effect.set_density(FALSE)
+	trail_effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	QDEL_IN(trail_effect, trail_lifespan)
+	COOLDOWN_START(src, trail_cooldown, trail_lifespan)
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
 	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
-	speed = 0.3
+	speed = 3.5
 
 	/// The power of the zap itself when it electrocutes someone
 	var/zap_power = 20000
@@ -538,12 +538,91 @@
 		explosion_cause = src,
 	)
 
+/obj/projectile/magic/fire_ball
+	name = "fire ball"
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "fire_ball"
+	damage = 20
+	damage_type = BURN
+	hitsound = null
+	projectile_piercing = PASSMOB
+
+	ricochets_max = 4
+	ricochet_chance = 100
+	ricochet_decay_chance = 1
+	ricochet_decay_damage = 1
+	ricochet_incidence_leeway = 0
+	ricochet_shoots_firer = FALSE
+	///A weakref to our "true" firer because ricochet changes firer
+	var/datum/weakref/true_firer
+
+/obj/projectile/magic/fire_ball/fire(angle, atom/direct_target)
+	. = ..()
+	if(firer)
+		true_firer = WEAKREF(firer)
+
+/obj/projectile/magic/fire_ball/prehit_pierce(atom/target)
+	. = ..()
+	if(. != PROJECTILE_DELETE_WITHOUT_HITTING || !ismob(target))
+		return
+	true_firer = WEAKREF(target)
+	handle_bounce(target)
+	visible_message(span_warning("[src] bounces off the aura around [target]!"))
+	return PROJECTILE_PIERCE_PHASE
+
+/obj/projectile/magic/fire_ball/impact(atom/A)
+	. = ..()
+	if(.)
+		playsound(src, 'sound/items/dodgeball.ogg', 200, channel = CHANNEL_SOUND_EFFECTS) //this is a very quiet sound
+
+/obj/projectile/magic/fire_ball/on_hit(mob/living/target, blocked, pierce_hit)
+	if(target == true_firer?.resolve()) //we do this here instead of on_hit_target due to us having specific logic here with handle_bounce()
+		handle_bounce(target)
+		return BULLET_ACT_BLOCK
+
+	. = ..()
+	if(. != BULLET_ACT_HIT || !istype(target) )
+		return
+
+	if(pierces >= ricochets_max)
+		projectile_piercing = NONE
+	target.adjust_fire_stacks(2)
+	target.ignite_mob()
+	target.Knockdown(3 SECONDS)
+	target.Paralyze(0.5 SECONDS)
+	handle_bounce(target)
+
+/obj/projectile/magic/fire_ball/check_ricochet_flag(atom/A)
+	return !ismob(A) //we handle mobs ourselves but besides that can ALWAYS ricochet
+
+/obj/projectile/magic/fire_ball/check_ricochet(atom/A)
+	return TRUE //this handles the prob checks which is always 100, so lets just skip the step to save resources
+
+///Find a tile within 1 range() of a valid mob in our view, if we cant find any then return FALSE
+/obj/projectile/magic/fire_ball/proc/get_new_target()
+	var/list/possible_targets = list()
+	var/mob/resolved_true_firer = true_firer?.resolve()
+	for(var/mob/living/possible_target in view())
+		if(possible_target == resolved_true_firer || impacted[possible_target])
+			continue
+		possible_targets += possible_target
+
+	if(!length(possible_targets))
+		return FALSE
+	return pick(RANGE_TURFS(1, get_turf(pick(possible_targets))))
+
+/obj/projectile/magic/fire_ball/proc/handle_bounce(atom/target)
+	var/new_target = get_new_target()
+	if(new_target)
+		set_angle_centered(get_angle(target, new_target))
+	else
+		reflect(target)
+
 /obj/projectile/magic/aoe/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 100
-	speed = 1
-	pixel_speed_multiplier = 0.2
+	speed = 0.2
 	trigger_range = 0
 	can_only_hit_target = TRUE
 	paralyze = 6 SECONDS
@@ -569,8 +648,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list(FACTION_CULT)
 	range = 105
-	speed = 1
-	pixel_speed_multiplier = 1/7
+	speed = 0.15
 
 /obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

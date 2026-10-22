@@ -16,6 +16,9 @@
 		return INITIALIZE_HINT_QDEL
 	// We assert this isn't an /area
 
+	if(PLANE_TO_TRUE(loc.plane) == FLOOR_PLANE)
+		vis_flags &= ~VIS_INHERIT_PLANE // don't yoink the floor plane. we'll just sit on game plane, it's fine
+
 	src.particle_flags = particle_flags
 	particles = new particle_path
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
@@ -29,7 +32,7 @@
 	on_move(loc, null, NORTH)
 
 /obj/effect/abstract/particle_holder/Destroy(force)
-	QDEL_NULL(particles)
+	particles = null
 	return ..()
 
 /// Non movables don't delete contents on destroy, so we gotta do this
@@ -57,4 +60,4 @@
 
 /// Sets the particles position to the passed coordinates
 /obj/effect/abstract/particle_holder/proc/set_particle_position(x = 0, y = 0, z = 0)
-	particles.position = list(x, y, z)
+		particles.position = list(x, y, z)

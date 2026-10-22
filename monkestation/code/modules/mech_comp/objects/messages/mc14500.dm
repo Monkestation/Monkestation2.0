@@ -199,8 +199,8 @@ function update_mem_lights(mem)
  *	C (JMP) will adjust the program counter by up to 32 addresses, forward or backward from the current instruction. Arguments 8+ will subtract 7 and then jump 4x that value forward, less than that will jump back 4x(that value + 1)<br>
  *	D (RTN) skip next instruction.  For some reason.<br>
  *	E (SKZ) skip next instruction if RR is zero.<br>
- Output signals have the value \"PIN:VALUE\" i.e \"2:1\" to output true on pin 2.  You can filter this with OR gate triggers, ok.<br>
- Example program: \"30A0B01181\" Will AND RR with 0 on the first iteration (As IEN is zero) and AND it with !RR on subsequent loops(Both set it to zero), load !RR(1) into IEN and OEN, then load input 1 and send it to output 1.  This will repeat without end."}
+	Output signals have the value \"PIN:VALUE\" i.e \"2:1\" to output true on pin 2.  You can filter this with OR gate triggers, ok.<br>
+	Example program: \"30A0B01181\" Will AND RR with 0 on the first iteration (As IEN is zero) and AND it with !RR on subsequent loops(Both set it to zero), load !RR(1) into IEN and OEN, then load input 1 and send it to output 1.  This will repeat without end."}
 */
 
 

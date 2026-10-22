@@ -19,11 +19,15 @@
 		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
 		return FALSE
 
+	tool = tool?.get_proxy_attacker_for(target, user)
+
 	if(accept_hand)
 		if(!tool)
 			success = TRUE
 		if(iscyborg(user))
-			success = TRUE
+			var/mob/living/silicon/robot/borg = user
+			if(istype(borg.module_active, /obj/item/borg/cyborghug))
+				success = TRUE
 
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))
@@ -67,6 +71,8 @@
 #define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2
 ///Modifier given to patients with TRAIT_ANALGESIA
 #define SURGERY_SPEED_TRAIT_ANALGESIA 0.8
+///Modifier given to surgery speed for dissected bodies.
+#define SURGERY_DISSECTION_MODIFIER 1.2
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -86,6 +92,9 @@
 	if(tool)
 		speed_mod = tool.toolspeed
 
+	if(HAS_TRAIT(target, TRAIT_SURGICALLY_ANALYZED))
+		speed_mod /= SURGERY_DISSECTION_MODIFIER
+
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
@@ -95,14 +104,29 @@
 
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
+	var/slowdown_time = time * SURGERY_SLOWDOWN_CAP_MULTIPLIER
+	var/obj/item/clothing/gloves/latex/gloves = user.get_item_by_slot(ITEM_SLOT_GLOVES)
 
-
-	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
-	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
+	fail_prob = min(max(0, modded_time - slowdown_time), 95) //Puts a minimum of 0 and max of 95 here to prevent ghetto surgery causing there to be 95%+ chance of failure
+	if(!(surgery.requires_bodypart_type & BODYTYPE_ROBOTIC))//check if the limb is organic. Nonorganic limbs have no penalties
+		if(user == target)//If doing self surgery, apply a 50% penalty.
+			fail_prob += 50
+		if((get_location_modifier(target) < 0.8))//if the surgery is not on a operating table or stasis bed, incur a 15% penalty
+			fail_prob += 15
+		if(gloves && istype(gloves, /obj/item/clothing/gloves/latex/surgical))//For black latex gloves, 20% buff to surgery success
+			fail_prob -= 20
+		else if(HAS_TRAIT(user, TRAIT_STERILE) || (gloves && (gloves.clothing_flags & STERILE)))//For regular latex gloves or deployed medical modsuits/hardsuits, give a 5% bonus
+			fail_prob -= 5
+		else // If not, incure a 10% failure penalty.
+			fail_prob += 10
+		if(surgery.speed_modifier > 0 || HAS_TRAIT(target, TRAIT_ANALGESIA))//for chemical related surgery speed buffs, adds a reduction in failure chance. also checks for painkillers
+			fail_prob -= 15
+	fail_prob = min(max(0, fail_prob), 99)//minimum of 0 and maximum of 99
+	modded_time = min(modded_time, slowdown_time)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
-		modded_time = time
-	else if(HAS_TRAIT(user, TRAIT_PERFECT_SURGEON))
+		modded_time = (time * tool.toolspeed) //Monkestation edit, allows borgs to have better surgery speed
+	else if(HAS_TRAIT(user, TRAIT_PERFECT_SURGEON) || (gloves && istype(gloves, /obj/item/clothing/gloves/latex/surgical)))
 		modded_time = min(round(time * 0.75, 5), modded_time) // monke edit: perfect surgeon will always be at least 25% faster than normal
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
@@ -164,6 +188,11 @@
 			span_notice("[user] succeeds!"),
 			span_notice("[user] finishes."),
 		)
+	if(ishuman(user))
+		var/mob/living/carbon/human/surgeon = user
+		surgeon.add_blood_DNA_to_items(target.get_blood_dna_list(), ITEM_SLOT_GLOVES)
+	else
+		user.add_mob_blood(target)
 	return TRUE
 
 /datum/surgery_step/proc/play_success_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -253,5 +282,6 @@
 			if(prob(30) && !mechanical_surgery)
 				target.emote("scream")
 
+#undef SURGERY_DISSECTION_MODIFIER
 #undef SURGERY_SPEED_TRAIT_ANALGESIA
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER

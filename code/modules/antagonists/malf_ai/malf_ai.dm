@@ -10,6 +10,9 @@
 	ui_name = "AntagInfoMalf"
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Make sure your precious crew are incapable of ever, ever leaving you."
+	stinger_sound = 'sound/ambience/antag/malf.ogg'
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_count_points = 15 //might want to make this higher
 	///the name of the antag flavor this traitor has.
 	var/employer
 	///assoc list of strings set up after employer is given
@@ -39,8 +42,7 @@
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
+	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
 	return ..()
 
@@ -116,7 +118,7 @@
 		datum_owner.hack_software = TRUE
 
 	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -138,7 +140,7 @@
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
 	antag_memory += "<b>Code Phrase</b>: [span_blue("[phrases]")]<br>"
-	antag_memory += "<b>Code Response</b>: [span_red("[responses]")]<br>"
+	antag_memory += "<b>Code Response</b>: [span_orange("[responses]")]<br>"
 
 /datum/antagonist/malf_ai/proc/add_law_zero()
 	var/mob/living/silicon/ai/malf_ai = owner.current
@@ -189,17 +191,24 @@
 				"name" = category,
 				"items" = (category == malf_ai.malf_picker.selected_cat ? list() : null))
 			for(var/module in malf_ai.malf_picker.possible_modules[category])
-				var/datum/ai_module/mod = malf_ai.malf_picker.possible_modules[category][module]
-				cat["items"] += list(list(
+				var/datum/ai_module/malf/mod = malf_ai.malf_picker.possible_modules[category][module]
+				// monkestation start: add icons
+				var/list/item_data = list(
 					"name" = mod.name,
 					"cost" = mod.cost,
 					"desc" = mod.description,
-				))
+				)
+				if(!mod.upgrade)
+					var/datum/action/power_type = mod.power_type
+					item_data["icon"] = power_type::button_icon
+					item_data["icon_state"] = power_type::button_icon_state
+				cat["items"] += list(item_data)
+				// monkestation end
 			data["categories"] += list(cat)
 
 	return data
 
-/datum/antagonist/malf_ai/ui_act(action, list/params)
+/datum/antagonist/malf_ai/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -214,7 +223,7 @@
 			for(var/category in malf_ai.malf_picker.possible_modules)
 				buyable_items += malf_ai.malf_picker.possible_modules[category]
 			for(var/key in buyable_items)
-				var/datum/ai_module/valid_mod = buyable_items[key]
+				var/datum/ai_module/malf/valid_mod = buyable_items[key]
 				if(valid_mod.name == item_name)
 					malf_ai.malf_picker.purchase_module(malf_ai, valid_mod)
 					return TRUE
@@ -243,13 +252,25 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(malf_ai_won)
 		result += span_greentext("The [special_role_text] was successful!")
 	else
 		result += span_redtext("The [special_role_text] has failed!")
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+
+	// monkestation edit start PR #5133
+	if(istype(owner?.current, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/master_ai = owner.current
+		var/list/ipc_results = list()
+		var/connected_ipc_amt = length(master_ai.connected_ipcs)
+		if(connected_ipc_amt)
+			ipc_results += span_header("The Malfunctioning AI had [connected_ipc_amt] infected IPC('s) under their command: ")
+			for(var/mob/living/carbon/human/connected_ipc as anything in master_ai.connected_ipcs)
+				ipc_results += connected_ipc.name
+		result += ipc_results
+	// monkestation edit end PR #5133
 
 	return result.Join("<br>")
 

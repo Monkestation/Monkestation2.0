@@ -24,3 +24,20 @@
 		/obj/item/mod/module/energy_shield/wizard,
 		/obj/item/mod/module/emp_shield/advanced,
 	)
+
+/obj/item/mod/control/pre_equipped/rescue
+	default_pins = list(
+
+		/obj/item/mod/module/health_analyzer,
+		/obj/item/mod/module/injector,
+		/obj/item/mod/module/flashlight,
+	)
+
+/obj/item/mod/control/pre_equipped/security
+	default_pins = list(
+
+		/obj/item/mod/module/pepper_shoulders,
+		/obj/item/mod/module/criminalcapture,
+		/obj/item/mod/module/dispenser/mirage,
+	)
+

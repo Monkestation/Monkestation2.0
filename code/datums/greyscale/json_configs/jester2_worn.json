@@ -1,0 +1,17 @@
+{
+    "jester2": [
+        {
+            "type": "icon_state",
+            "icon_state": "leftjester2",
+            "blend_mode": "overlay",
+            "color_ids": [1]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "rightjester2",
+            "blend_mode": "overlay",
+			"color_ids": [2]
+        }
+
+    ]
+}

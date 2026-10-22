@@ -5,6 +5,9 @@
 /obj/effect/projectile/muzzle/laser
 	icon_state = "muzzle_laser"
 
+/obj/effect/projectile/muzzle/laser/rifle
+	icon_state = "muzzle_laser_rifle"
+
 /obj/effect/projectile/muzzle/laser/blue
 	icon_state = "muzzle_blue"
 

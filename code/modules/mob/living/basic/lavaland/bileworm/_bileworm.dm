@@ -5,7 +5,7 @@
 	icon_state = "bileworm"
 	icon_living = "bileworm"
 	icon_dead = "bileworm_dead"
-	mob_biotypes = MOB_BUG
+	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	maxHealth = 100
 	health = 100
 	verb_say = "spittles"
@@ -60,3 +60,9 @@
 	ai_controller.set_blackboard_key(BB_BILEWORM_SPEW_BILE, spew_bile)
 	ai_controller.set_blackboard_key(BB_BILEWORM_RESURFACE, resurface)
 	ai_controller.set_blackboard_key(BB_BILEWORM_DEVOUR, devour)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/bileworm/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src)

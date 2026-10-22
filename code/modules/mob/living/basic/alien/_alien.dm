@@ -46,6 +46,7 @@
 	unsuitable_heat_damage = 20
 
 	ai_controller = /datum/ai_controller/basic_controller/alien
+	blood_volume = BLOOD_VOLUME_NORMAL
 
 	///List of loot items to drop when deleted, if this is set then we apply DEL_ON_DEATH
 	var/list/loot
@@ -79,3 +80,6 @@
 		return
 	visible_message(span_alertalien("[src] lays an egg!"))
 	new /obj/structure/alien/egg(loc)
+
+/mob/living/basic/alien/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_XENO)

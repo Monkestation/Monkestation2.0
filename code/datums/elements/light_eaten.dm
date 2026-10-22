@@ -64,7 +64,7 @@
 /datum/element/light_eaten/proc/on_examine(atom/eaten_light, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 	examine_text += span_warning("It's dark and empty...")
-	if(isliving(examiner) && prob(20) && !isnightmare(examiner)) // monkestation edit
+	if(isliving(examiner) && prob(20) && !isnightmare(examiner) && !IS_TEAM_DARKSPAWN(examiner)) // monkestation edit
 		var/mob/living/target = examiner
 		examine_text += span_danger("You can feel something in [eaten_light.p_them()] gnash at your eyes!")
 		target.adjust_temp_blindness(10 SECONDS)

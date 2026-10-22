@@ -6,11 +6,16 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/arachnid_appendages/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.arachnid_appendages_list,
-		"arachnid_appendages",
-		list("BEHIND", "FRONT"),
-	)
+	return assoc_to_keys_features(GLOB.arachnid_appendages_list)
+
+/datum/preference/choiced/arachnid_appendages/icon_for(value)
+	var/datum/sprite_accessory/arachnid_appendages = GLOB.arachnid_appendages_list[value]
+	if(arachnid_appendages.icon_state == null || arachnid_appendages.icon_state == "none")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(arachnid_appendages.icon, "m_arachnid_appendages_[arachnid_appendages.icon_state]_BEHIND")
+	final_icon.Blend(icon(arachnid_appendages.icon, "m_arachnid_appendages_[arachnid_appendages.icon_state]_FRONT"), ICON_OVERLAY)
+	return final_icon
 
 /datum/preference/choiced/arachnid_appendages/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["arachnid_appendages"] = value
@@ -23,11 +28,16 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/arachnid_chelicerae/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.arachnid_chelicerae_list,
-		"arachnid_chelicerae",
-		list("BEHIND", "FRONT"),
-	)
+	return assoc_to_keys_features(GLOB.arachnid_chelicerae_list)
+
+/datum/preference/choiced/arachnid_chelicerae/icon_for(value)
+	var/datum/sprite_accessory/arachnid_chelicerae = GLOB.arachnid_chelicerae_list[value]
+	if(arachnid_chelicerae.icon_state == null || arachnid_chelicerae.icon_state == "none")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(arachnid_chelicerae.icon, "m_arachnid_chelicerae_[arachnid_chelicerae.icon_state]_BEHIND")
+	final_icon.Blend(icon(arachnid_chelicerae.icon, "m_arachnid_chelicerae_[arachnid_chelicerae.icon_state]_FRONT"), ICON_OVERLAY)
+	return final_icon
 
 /datum/preference/choiced/arachnid_chelicerae/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["arachnid_chelicerae"] = value

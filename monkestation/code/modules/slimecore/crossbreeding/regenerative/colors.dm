@@ -1,7 +1,5 @@
 /datum/status_effect/regenerative_extract/purple
-	base_healing_amt = 10
-	diminishing_multiplier = 0.5
-	diminish_time = 1.5 MINUTES
+	base_healing_amt = 4
 	extra_traits = list(TRAIT_NOCRITOVERLAY, TRAIT_NOSOFTCRIT)
 
 /datum/status_effect/regenerative_extract/purple/on_remove()
@@ -34,3 +32,5 @@
 	extra_traits = list(TRAIT_NOCRITOVERLAY, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT)
 	pain_amount = 80 //wow having my wounds closed up in seconds really fucking HURTS
 
+/datum/status_effect/regenerative_extract/rainbow/apply_alert_effect(alert_color)
+	linked_alert.rainbow_effect()

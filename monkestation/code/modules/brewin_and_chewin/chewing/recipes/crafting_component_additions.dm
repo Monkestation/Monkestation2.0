@@ -19,7 +19,7 @@
 	if(istext(result))
 		chef.balloon_alert_to_viewers("failed to craft[result]")
 		return FALSE
-    //We made an item and didn't get a fail message
+		//We made an item and didn't get a fail message
 	result.forceMove(craft_location)
 	result.pixel_x = rand(-10, 10)
 	result.pixel_y = rand(-10, 10)

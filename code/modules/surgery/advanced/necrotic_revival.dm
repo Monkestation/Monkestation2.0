@@ -47,5 +47,5 @@
 	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!")
 	if(!target.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/internal/zombie_infection/z_infection = new()
-		z_infection.Insert(target)
+		z_infection.Follow_Insert(target, ORGAN_SLOT_BRAIN)
 	return ..()

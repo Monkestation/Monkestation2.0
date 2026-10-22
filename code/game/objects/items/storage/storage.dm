@@ -2,7 +2,9 @@
 	name = "storage"
 	icon = 'icons/obj/storage/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	interaction_flags_click = ALLOW_RESTING | FORBID_TELEKINESIS_REACH
 	var/rummage_if_nodrop = TRUE
+	action_slots = ALL
 	/// Should we preload the contents of this type?
 	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
 	/// SANTA IS EVIL

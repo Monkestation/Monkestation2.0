@@ -11,7 +11,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/uniform.dmi'
 	icon_state = "tacticool_hawaiian_orange"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/tachawaiian/blue
 	name = "blue tactical hawaiian outfit"
@@ -31,7 +30,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/uniform.dmi'
 	icon_state = "texas"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/under/doug_dimmadome
 	name = "dimmadome formal outfit"
@@ -39,7 +37,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/uniform.dmi'
 	icon_state = "doug_dimmadome"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/under/pants/tactical
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/shorts_pants_shirts.dmi'

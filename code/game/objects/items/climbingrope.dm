@@ -26,19 +26,26 @@
 	. += span_notice("Then, click solid ground adjacent to the hole above you.")
 	. += span_notice("The rope looks like you could use it [uses] times before it falls apart.")
 
-/obj/item/climbing_hook/afterattack(turf/open/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(target.z == user.z)
-		return
+/obj/item/climbing_hook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/climbing_hook/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with.z == user.z)
+		return NONE
+	var/turf/open/target = interacting_with
 	if(!istype(target) || isopenspaceturf(target))
-		return
-	if(target.is_blocked_turf(exclude_mobs = TRUE))
-		return
-	var/turf/above = GET_TURF_ABOVE(user)
+		return ITEM_INTERACT_BLOCKING
+
+	var/turf/user_turf = get_turf(user)
+	var/turf/above = GET_TURF_ABOVE(user_turf)
+	if(target_blocked(target, above))
+		return ITEM_INTERACT_BLOCKING
 	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
 		balloon_alert(user, "blocked!")
-		return
-	var/turf/user_turf = get_turf(user)
+		return ITEM_INTERACT_BLOCKING
+
 	var/away_dir = get_dir(above, target)
 	user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
 	playsound(target, 'sound/effects/picaxe1.ogg', 50) //plays twice so people above and below can hear
@@ -47,12 +54,30 @@
 	if(do_after(user, climb_time, target))
 		user.Move(target)
 		uses--
-	
+
 	if(uses <= 0)
 		user.visible_message(span_warning("[src] snaps and tears apart!"))
 		qdel(src)
-	
+
 	QDEL_LIST(effects)
+	return ITEM_INTERACT_SUCCESS
+
+// didnt want to mess up is_blocked_turf_ignore_climbable
+/// checks if our target is blocked, also checks for border objects facing the above turf and climbable stuff
+/obj/item/climbing_hook/proc/target_blocked(turf/target, turf/trans_vertical)
+	if(target.density || (isopenspaceturf(target) && target.zPassOut(DOWN)) || !trans_vertical.zPassOut(DOWN) || trans_vertical.density) // we check if we would fall down from it additionally
+		return TRUE
+
+	for(var/atom/movable/atom_content as anything in target.contents)
+		if(isliving(atom_content))
+			continue
+		if(HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
+			continue
+		if((atom_content.flags_1 & ON_BORDER_1) && atom_content.dir != get_dir(target, trans_vertical)) //if the border object is facing the hole then it is blocking us, likely
+			continue
+		if(atom_content.density)
+			return TRUE
+	return FALSE
 
 /obj/item/climbing_hook/emergency
 	name = "emergency climbing hook"

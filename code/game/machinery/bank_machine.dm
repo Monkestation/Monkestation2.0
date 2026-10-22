@@ -18,7 +18,7 @@
 	///The machine's internal radio, used to broadcast alerts.
 	var/obj/item/radio/radio
 	///The channel we announce a siphon over.
-	var/radio_channel = RADIO_CHANNEL_COMMON
+	var/radio_channel = RADIO_CHANNEL_SUPPLY
 
 	///What department to check to link our bank account to.
 	var/account_department = ACCOUNT_CAR
@@ -27,11 +27,12 @@
 
 /obj/machinery/computer/bank_machine/Initialize(mapload)
 	. = ..()
+
 	radio = new(src)
+	radio.set_frequency(FREQ_SUPPLY)
 	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
 	radio.set_listening(FALSE)
-	radio.recalculateChannels()
+
 	synced_bank_account = SSeconomy.get_dep_account(account_department)
 
 /obj/machinery/computer/bank_machine/Destroy()
@@ -112,15 +113,14 @@
 /obj/machinery/computer/bank_machine/proc/end_siphon()
 	siphoning = FALSE
 	unauthorized = FALSE
+	radio.set_frequency(FREQ_SUPPLY)
+	next_warning = 0
 	new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
 	syphoning_credits = 0
 
 /obj/machinery/computer/bank_machine/proc/start_siphon(mob/living/carbon/user)
 	siphoning = TRUE
-	unauthorized = FALSE
 	var/obj/item/card/id/card = user.get_idcard(hand_first = TRUE)
-	if(!istype(card))
-		return
-	if(!check_access(card))
-		return
-	unauthorized = TRUE
+	if(!istype(card) || !check_access(card))
+		unauthorized = TRUE
+		radio.set_frequency(FREQ_COMMON)

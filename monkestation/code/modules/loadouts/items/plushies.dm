@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 
 /datum/loadout_item/plushies/lizard_greyscale
 	name = "Greyscale Lizard Plushie"
-	item_path = /obj/item/toy/plush/lizard_plushie
+	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/loadout_item/plushies/moth
 	name = "Moth Plushie"
@@ -41,7 +41,6 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 /datum/loadout_item/plushies/ratvar
 	name = "Ratvar Plushie"
 	item_path = /obj/item/toy/plush/ratplush
-	restricted_roles = list(JOB_CHAPLAIN)
 
 /datum/loadout_item/plushies/rouny
 	name = "Rouny Plushie"
@@ -116,3 +115,20 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 /datum/loadout_item/plushies/scorched_girl
 	name = "Scorched Girl Plushie"
 	item_path = /obj/item/toy/plush/lobotomy/scorched
+
+/datum/loadout_item/plushies/expie
+	name = "Expie Plushie"
+	item_path = /obj/item/toy/plush/expie
+
+/datum/loadout_item/plushies/expie/spinny_hat
+	name = "Spinny Expie Plushie"
+	item_path = /obj/item/toy/plush/expie/spinny_hat
+
+/datum/loadout_item/plushies/expie/dune
+	name = "Dune Plushie"
+	item_path = /obj/item/toy/plush/expie/dune
+
+/datum/loadout_item/plushies/expie/milky
+	name = "Milky Plushie"
+	item_path = /obj/item/toy/plush/expie/milky
+

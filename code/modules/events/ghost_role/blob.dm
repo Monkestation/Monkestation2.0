@@ -4,16 +4,14 @@
 	weight = 4 //monkie edit: 10 to 4
 	max_occurrences = 1
 	min_players = 35  //monkie edit: 20 to 35
-	earliest_start = 80 MINUTES //monkie edit: 20 to 80
+	earliest_start = 70 MINUTES //monkie edit: 20 to 70
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a new blob overmind."
-
-/datum/round_event_control/blob/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
-	if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // no blobs if the shuttle is past the point of no return
-		return FALSE
-
-	return ..()
+	track = EVENT_TRACK_ROLESET
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/blob
 	announce_chance = 0
@@ -36,7 +34,7 @@
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)
-	var/mob/camera/blob/BC = new_blob.become_overmind()
+	var/mob/eye/blob/BC = new_blob.become_overmind()
 	spawned_mobs += BC
 	message_admins("[ADMIN_LOOKUPFLW(BC)] has been made into a blob overmind by an event.")
 	BC.log_message("was spawned as a blob overmind by an event.", LOG_GAME)

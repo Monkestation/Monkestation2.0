@@ -19,6 +19,8 @@
 	var/static/loc_connections = list(
 		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = PROC_REF(react_to_atmos_adjacency_changes)
 	)
+	/// ID of the fallback timer, used to ensure that the smoke does not far outlive its intended lifetime, in case of subsystem delay or whatnot.
+	var/fallback_timer
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
@@ -26,13 +28,23 @@
 	setDir(pick(GLOB.cardinals))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	SSsmoke.start_processing(src)
+	// Ensure that smoke does not live for much longer than 1.5x the length of its lifetime (rounded up to the nearest 2 seconds)
+	var/fallback_time = CEILING(initial(lifetime) * 1.5, 2 SECONDS)
+	fallback_timer = addtimer(CALLBACK(src, PROC_REF(anti_fog_measures)), fallback_time, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /obj/effect/particle_effect/fluid/smoke/Destroy()
 	SSsmoke.stop_processing(src)
-	if (spread_bucket)
+	if(spread_bucket)
 		SSsmoke.cancel_spread(src)
+	if(fallback_timer)
+		deltimer(fallback_timer)
+		fallback_timer = null
 	return ..()
 
+/obj/effect/particle_effect/fluid/smoke/proc/anti_fog_measures()
+	fallback_timer = null
+	if(!QDELETED(src))
+		kill_smoke()
 
 /**
  * Makes the smoke fade out and then deletes it.
@@ -91,7 +103,7 @@
 		spread_smoke.lifetime = lifetime
 
 		// the smoke spreads rapidly, but not instantly
-		SSfoam.queue_spread(spread_smoke)
+		SSsmoke.queue_spread(spread_smoke)
 
 
 /obj/effect/particle_effect/fluid/smoke/process(seconds_per_tick)
@@ -228,6 +240,12 @@
 /datum/effect_system/fluid_spread/smoke/bad
 	effect_type = /obj/effect/particle_effect/fluid/smoke/bad
 
+
+/// A factory which produces green smoke that makes you cough.
+/datum/effect_system/fluid_spread/smoke/green
+	effect_type = /obj/effect/particle_effect/fluid/smoke/bad/green
+
+
 /////////////////////////////////////////////
 // Bad Smoke (But Green (and Black))
 /////////////////////////////////////////////
@@ -255,25 +273,18 @@
 /////////////////////////////////////////////
 // Nanofrost smoke
 /////////////////////////////////////////////
-
+//MONKESTATION EDIT START
 /// Light blue, transparent smoke which is usually paired with a blast that chills every turf in the area.
 /obj/effect/particle_effect/fluid/smoke/freezing
 	name = "nanofrost smoke"
 	color = "#B2FFFF"
 	opacity = FALSE
-
-/// A factory which produces light blue, transparent smoke and a blast that chills every turf in the area.
-/datum/effect_system/fluid_spread/smoke/freezing
-	effect_type = /obj/effect/particle_effect/fluid/smoke/freezing
 	/// The radius in which to chill every open turf.
 	var/blast = 0
 	/// The temperature to set the turfs air temperature to.
-	var/temperature = 2
+	var/temperature = 253.15 // -20C
 	/// Whether to weld every vent and air scrubber in the affected area shut.
 	var/weldvents = TRUE
-	/// Whether to make sure each affected turf is actually within range before cooling it.
-	var/distcheck = TRUE
-
 /**
  * Chills an open turf.
  *
@@ -285,14 +296,13 @@
  * Arguments:
  * - [chilly][/turf/open]: The open turf to chill
  */
-/datum/effect_system/fluid_spread/smoke/freezing/proc/Chilled(turf/open/chilly)
+/obj/effect/particle_effect/fluid/smoke/freezing/proc/Chilled(turf/open/chilly)
 	if(!istype(chilly))
 		return
 
 	if(chilly.air)
 		var/datum/gas_mixture/air = chilly.air
-		if(!distcheck || get_dist(location, chilly) < blast) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
-			air.temperature = temperature
+		air.temperature = temperature
 
 		var/list/gases = air.gases
 		if(gases[/datum/gas/plasma])
@@ -307,7 +317,7 @@
 
 	if(weldvents)
 		for(var/obj/machinery/atmospherics/components/unary/comp in chilly)
-			if(!isnull(comp.welded) && !comp.welded) //must be an unwelded vent pump or vent scrubber.
+			if(!comp.welded) //must be an unwelded vent pump or vent scrubber.
 				comp.welded = TRUE
 				comp.update_appearance()
 				comp.visible_message(span_danger("[comp] is frozen shut!"))
@@ -315,25 +325,26 @@
 	// Extinguishes everything in the turf
 	for(var/mob/living/potential_tinder in chilly)
 		potential_tinder.extinguish_mob()
-	for(var/obj/item/potential_tinder in chilly)
+	for(var/obj/potential_tinder in chilly)
 		potential_tinder.extinguish()
 
-/datum/effect_system/fluid_spread/smoke/freezing/set_up(range = 5, amount = DIAMOND_AREA(range), atom/holder, atom/location, blast_radius = 0)
+/obj/effect/particle_effect/fluid/smoke/freezing/process(seconds_per_tick)
 	. = ..()
-	blast = blast_radius
+	Chilled(get_turf(src))
 
-/datum/effect_system/fluid_spread/smoke/freezing/start(log = FALSE)
-	if(blast)
-		for(var/turf/T in RANGE_TURFS(blast, location))
-			Chilled(T)
-	return ..()
+/// A factory which produces light blue, transparent smoke and a blast that chills every turf in the area.
+/datum/effect_system/fluid_spread/smoke/freezing
+	effect_type = /obj/effect/particle_effect/fluid/smoke/freezing
 
+//MONKESTATION EDIT STOP
+
+//MONKESTATION REMOVAL: unused code that i broke
 /// A variant of the base freezing smoke formerly used by the vent decontamination event.
-/datum/effect_system/fluid_spread/smoke/freezing/decon
-	temperature = 293.15
-	distcheck = FALSE
-	weldvents = FALSE
-
+// /datum/effect_system/fluid_spread/smoke/freezing/decon
+// 	temperature = 293.15
+// 	distcheck = FALSE
+// 	weldvents = FALSE
+//MONKESTATION REMOVAL
 
 /////////////////////////////////////////////
 // Sleep smoke
@@ -467,3 +478,10 @@
 
 /datum/effect_system/fluid_spread/smoke/chem/quick
 	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/quick
+
+/datum/effect_system/fluid_spread/smoke/chem/darkspawn
+	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/darkspawn
+
+/obj/effect/particle_effect/fluid/smoke/chem/darkspawn
+	lifetime = 10 SECONDS
+	opacity = FALSE

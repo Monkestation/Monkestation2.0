@@ -5,6 +5,7 @@
 /obj/machinery/vending/mechcomp
 	name = "\improper ThinkTronic MechComp Dispenser"
 	desc = "A rather plain vendor for ThinkTronic's line of field-assemblable components."
+	icon_state = "mechcomp"
 	product_ads = "At least it's not Circuits!;95% GPL Compatible!;Source Exists, Somewhere!;Semi-Standards Compliant!;IETF Cleared!"
 	default_price = 0
 	extra_price = 0
@@ -40,7 +41,8 @@
 		/obj/item/mcobject/messaging/storage = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/type_sensor = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/clock = STANDARD_COMPONENT_SUPPLY,
-		/obj/item/mcobject/messaging/repeater = LOW_COMPONENT_SUPPLY
+		/obj/item/mcobject/messaging/repeater = LOW_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/ticker = LOW_COMPONENT_SUPPLY,
 	)
 
 

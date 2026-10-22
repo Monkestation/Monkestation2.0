@@ -53,16 +53,16 @@
 	operated_bodypart = surgery_bodypart
 	if(targetable_wound)
 		operated_wound = operated_bodypart.get_wound_type(targetable_wound)
-		operated_wound.attached_surgery = src
 
 	SEND_SIGNAL(surgery_target, COMSIG_MOB_SURGERY_STARTED, src, surgery_location, surgery_bodypart)
 
 /datum/surgery/Destroy()
 	if(operated_wound)
-		operated_wound.attached_surgery = null
 		operated_wound = null
 	if(target)
 		target.surgeries -= src
+		if(!QDELING(target))
+			SEND_SIGNAL(target, COMSIG_MOB_SURGERY_FINISHED, type, location, operated_bodypart)
 	target = null
 	operated_bodypart = null
 	return ..()

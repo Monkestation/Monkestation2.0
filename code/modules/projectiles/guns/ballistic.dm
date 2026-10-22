@@ -5,7 +5,7 @@
 	name = "projectile gun"
 	icon_state = "debug"
 	w_class = WEIGHT_CLASS_NORMAL
-
+	recoil = 1
 	///sound when inserting magazine
 	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
 	///sound when inserting an empty magazine
@@ -95,7 +95,6 @@
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off = FALSE
-	var/flip_cooldown = 0
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 	/// Check if you are able to see if a weapon has a bullet loaded in or not.
@@ -127,7 +126,19 @@
 	///What is the cap on our misfire probability? Do not set this to 100.
 	var/misfire_probability_cap = 25
 
+	///Recoil quantity when the gun is wielded
 	var/wield_recoil = 0
+
+	/// Does this gun have mag and nomag on mob variance?
+	var/alt_icons = FALSE
+	/// What the icon state is for the on-back guns
+	var/alt_icon_state
+	/// How long it takes to reload a magazine.
+	var/reload_time = 2 SECONDS
+	/// if this gun has a penalty for reloading with an ammo_box type
+	var/box_reload_penalty = TRUE
+	/// reload penalty inflicted by using an ammo box instead of an individual cartridge, if not outright exchanging the magazine
+	var/box_reload_delay = CLICK_CD_MELEE
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
@@ -147,6 +158,15 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_reload))
 	register_context()
+	if(alt_icons)
+		AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/gun/ballistic/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
 
 /obj/item/gun/ballistic/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -161,9 +181,12 @@
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
 
 /obj/item/gun/ballistic/fire_sounds()
-	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo())
+	var/max_ammo = magazine?.max_ammo || initial(spawn_magazine_type.max_ammo)
+	var/current_ammo = get_ammo()
+	var/frequency_to_use = sin((90 / max_ammo) * current_ammo)
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
-	var/play_click = round(sqrt(magazine?.max_ammo * 2)) > get_ammo()
+	var/play_click = round(sqrt(max_ammo * 2)) > current_ammo
+
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 		if(play_click)
@@ -183,8 +206,10 @@
 /obj/item/gun/ballistic/proc/add_notes_ballistic()
 	if(magazine) // Make sure you have a magazine, to get the notes from
 		return "\n[magazine.add_notes_box()]"
-	else
-		return "\nThe warning attached to the magazine is missing..."
+	else if(chambered) // if you don't have a magazine, is there something chambered?
+		return "\n[chambered.add_notes_ammo()]"
+	else // we have a very expensive mechanical paperweight.
+		return "\nThe lack of magazine and usable cartridge in chamber makes its usefulness questionable, at best."
 
 /obj/item/gun/ballistic/vv_edit_var(vname, vval)
 	. = ..()
@@ -248,6 +273,22 @@
 			capacity_number = 20
 	if(capacity_number)
 		. += "[icon_state]_mag_[capacity_number]"
+	if(alt_icons)
+		if(!magazine)
+			if(alt_icon_state)
+				inhand_icon_state = "[alt_icon_state]_nomag"
+				worn_icon_state = "[alt_icon_state]_nomag"
+			else
+				inhand_icon_state = "[initial(icon_state)]_nomag"
+				worn_icon_state = "[initial(icon_state)]_nomag"
+		else
+			if(alt_icon_state)
+				inhand_icon_state = "[alt_icon_state]"
+				worn_icon_state = "[alt_icon_state]"
+			else
+				inhand_icon_state = "[initial(icon_state)]"
+				worn_icon_state = "[initial(icon_state)]"
+
 
 
 /obj/item/gun/ballistic/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
@@ -259,7 +300,6 @@
 			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
 			chambered = null
 		else if(casing_ejector || !from_firing)
-			chambered = null
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
 				var/bounce_angle
@@ -269,20 +309,28 @@
 				casing.bounce_away(bounce_angle = bounce_angle, still_warm = TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
+			UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
 			chambered = null
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
 ///Used to chamber a new round and eject the old one
-/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
+/obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
-		chambered = magazine.get_round(keep_bullet || bolt_type == BOLT_TYPE_NO_BOLT)
-		if (bolt_type != BOLT_TYPE_OPEN)
+		chambered = (bolt_type == BOLT_TYPE_OPEN && !bolt_locked) || bolt_type == BOLT_TYPE_NO_BOLT ? magazine.get_and_shuffle_round() : magazine.get_round()
+		if (bolt_type != BOLT_TYPE_OPEN && !(internal_magazine && bolt_type == BOLT_TYPE_NO_BOLT))
 			chambered.forceMove(src)
+		else
+			RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 		if(replace_new_round)
 			magazine.give_round(new chambered.type)
+
+/obj/item/gun/ballistic/proc/clear_chambered(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
+	chambered = null
 
 ///updates a bunch of racking related stuff and also handles the sound effects and the like
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
@@ -325,7 +373,7 @@
 			balloon_alert(user, "[magazine_wording] loaded")
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
-			chamber_round(TRUE)
+			chamber_round()
 		update_appearance()
 		return TRUE
 	else
@@ -359,70 +407,89 @@
 /obj/item/gun/ballistic/can_shoot()
 	return chambered?.loaded_projectile
 
-/obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/attackby(obj/item/tool, mob/user, params)
 	. = ..()
 	if (.)
 		return
-	if (!internal_magazine && istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
+	if (!internal_magazine && istype(tool, /obj/item/ammo_box/magazine))
 		if (!magazine)
-			insert_magazine(user, AM)
+			insert_magazine(user, tool)
 		else
 			if (tac_reloads)
-				eject_magazine(user, FALSE, AM)
+				eject_magazine(user, FALSE, tool)
 			else
 				balloon_alert(user, "already loaded!")
 		return
-	if (isammocasing(A) || istype(A, /obj/item/ammo_box))
+
+	if (isammocasing(tool) || istype(tool, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
-			if (chambered && !chambered.loaded_projectile)
-				chambered.forceMove(drop_location())
-				chambered = null
-			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
-			if (num_loaded)
-				balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded")
-				playsound(src, load_sound, load_sound_volume, load_sound_vary)
-				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
-					chamber_round()
-				A.update_appearance()
-				update_appearance()
+			if (load_gun(tool, user))
+				return
 			return
-	if(istype(A, /obj/item/suppressor))
-		var/obj/item/suppressor/S = A
+
+	if(istype(tool, /obj/item/suppressor))
 		if(!can_suppress)
-			balloon_alert(user, "[S.name] doesn't fit!")
+			balloon_alert(user, "[tool.name] doesn't fit!")
 			return
+
 		if(!user.is_holding(src))
-			balloon_alert(user, "not in hand!")
+			balloon_alert(user, "hold to modify!")
 			return
+
 		if(suppressed)
 			balloon_alert(user, "already has a supressor!")
 			return
-		if(user.transferItemToLoc(A, src))
-			balloon_alert(user, "[S.name] attached")
-			install_suppressor(A)
-			return
-	if (can_be_sawn_off)
-		if (sawoff(user, A))
+
+		if(!user.transferItemToLoc(tool, src))
+			balloon_alert(user, "cannot attach!")
 			return
 
-	if(can_misfire && istype(A, /obj/item/stack/sheet/cloth))
-		if(guncleaning(user, A))
+		balloon_alert(user, "[tool.name] attached")
+		install_suppressor(tool)
+		return
+
+	if(can_be_sawn_off && sawoff(user, tool))
+		return
+
+	if(can_misfire && istype(tool, /obj/item/stack/sheet/cloth))
+		if(guncleaning(user, tool))
 			return
 
 	return FALSE
 
+/obj/item/gun/ballistic/proc/load_gun(obj/item/ammo, mob/living/user)
+	if (chambered && !chambered.loaded_projectile)
+		chambered.forceMove(drop_location())
+		if(length(magazine?.stored_ammo) && chambered != magazine.stored_ammo[1])
+			magazine.stored_ammo -= chambered
+		chambered = null
+
+	var/num_loaded = magazine?.try_load(user, ammo, silent = TRUE)
+	if (!num_loaded)
+		return FALSE
+
+	balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded")
+	playsound(src, load_sound, load_sound_volume, load_sound_vary)
+	if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
+		chamber_round()
+	ammo.update_appearance()
+	update_appearance()
+	return TRUE
+
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
+	if(can_misfire && magazine && chambered?.loaded_projectile && misfire_probability > 0)  //monke edit : moved can_misfire from the third spot to the first to cancel some runtime issues
 		if(prob(misfire_probability))
 			if(blow_up(user))
 				to_chat(user, span_userdanger("[src] misfires!"))
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
+
 	return ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+	if(isnull(chambered))
+		return ..()
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
 		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
@@ -431,7 +498,7 @@
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	suppressed = S
-	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	update_weight_class(w_class + S.w_class) //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
@@ -439,21 +506,22 @@
 		return
 	if(isitem(suppressed))
 		var/obj/item/I = suppressed
-		w_class -= I.w_class
+		update_weight_class(w_class - I.w_class)
 	return ..()
 
-/obj/item/gun/ballistic/AltClick(mob/user)
-	if (unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
+/obj/item/gun/ballistic/click_alt(mob/user)
+	if(unique_reskin && !current_skin)
 		reskin_obj(user)
-		return
-	if(loc == user)
-		if(suppressed && can_unsuppress)
-			var/obj/item/suppressor/S = suppressed
-			if(!user.is_holding(src))
-				return ..()
-			balloon_alert(user, "[S.name] removed")
-			user.put_in_hands(S)
-			clear_suppressor()
+		return CLICK_ACTION_SUCCESS
+	if(!suppressed || !can_unsuppress)
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/suppressor/S = suppressed
+	if(!user.is_holding(src))
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "[S.name] removed")
+	user.put_in_hands(S)
+	clear_suppressor()
+	return CLICK_ACTION_SUCCESS
 
 ///Prefire empty checks for the bolt drop
 /obj/item/gun/ballistic/proc/prefire_empty_checks()
@@ -486,42 +554,12 @@
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
-		SpinAnimation(4,2)
-		if(flip_cooldown <= world.time)
-			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, span_userdanger("While trying to flip [src] you pull the trigger and accidentally shoot yourself!"))
-				process_fire(user, user, FALSE, user.get_random_valid_zone(even_weights = TRUE))
-				user.dropItemToGround(src, TRUE)
-				return
-			flip_cooldown = (world.time + 30)
-			user.visible_message(span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That’s pretty badass."))
-			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
-			return
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)
 			return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
-		chambered = null
-		var/num_unloaded = 0
-		for(var/obj/item/ammo_casing/casing in get_ammo_list(FALSE, TRUE))
-			casing.forceMove(drop_location())
-			var/bounce_angle
-			if(user)
-				var/sign_x = (istype(user) && !(user.get_held_index_of_item(src) % RIGHT_HANDS)) ? 1 : -1
-				bounce_angle = SIMPLIFY_DEGREES(dir2angle(user.dir) + (sign_x * 90) + rand(-45, 45))
-			casing.bounce_away(bounce_angle = bounce_angle, still_warm = FALSE, sound_delay = 0)
-			num_unloaded++
-			var/turf/our_turf = get_turf(drop_location())
-			if(our_turf && is_station_level(our_turf.z))
-				SSblackbox.record_feedback("tally", "station_mess_created", 1, casing.name)
-		if (num_unloaded)
-			balloon_alert(user, "[num_unloaded] [cartridge_wording] unloaded")
-			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
-			update_appearance()
-		else
-			balloon_alert(user, "it's empty!")
+		unload_ammo(user)
 		return
 	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
 		drop_bolt(user)
@@ -532,6 +570,25 @@
 	rack(user)
 	return
 
+/obj/item/gun/ballistic/proc/unload_ammo(mob/living/user, forced = FALSE)
+	var/num_unloaded = 0
+	var/turf/drop_turf = get_turf(drop_location())
+	for(var/obj/item/ammo_casing/casing as anything in get_ammo_list(FALSE))
+		casing.forceMove(drop_location())
+		casing.bounce_away(FALSE, NONE)
+		num_unloaded++
+		if(drop_turf && is_station_level(drop_turf.z))
+			SSblackbox.record_feedback("tally", "station_mess_created", 1, casing.name)
+
+	if (!num_unloaded)
+		if (!forced)
+			balloon_alert(user, "it's empty!")
+		return
+
+	if (!forced)
+		balloon_alert(user, "[num_unloaded] [cartridge_wording]\s unloaded")
+	playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
+	update_appearance()
 
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
@@ -559,14 +616,12 @@
 	return bullets
 
 ///gets a list of every bullet in the gun
-/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE, drop_all = FALSE)
+/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE)
 	var/list/rounds = list()
 	if(chambered && countchambered)
 		rounds.Add(chambered)
-		if(drop_all)
-			chambered = null
 	if(magazine)
-		rounds.Add(magazine.ammo_list(drop_all))
+		rounds.Add(magazine.ammo_list())
 	return rounds
 
 #define BRAINS_BLOWN_THROW_RANGE 3
@@ -611,8 +666,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(sawn_off)
 		balloon_alert(user, "it's already shortened!")
 		return
-	if(bayonet)
-		balloon_alert(user, "[bayonet.name] must be removed!")
+	if (SEND_SIGNAL(src, COMSIG_GUN_BEING_SAWNOFF, user) & COMPONENT_CANCEL_SAWING_OFF)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
@@ -622,61 +676,61 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
-	if(do_after(user, 30, target = src))
-		if(sawn_off)
-			return
-		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
-		sawn_off = TRUE
-		if(handle_modifications)
-			name = "sawn-off [src.name]"
-			desc = sawn_desc
-			w_class = WEIGHT_CLASS_NORMAL
-			//The file might not have a "gun" icon, let's prepare for this
-			lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-			righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-			inhand_x_dimension = 32
-			inhand_y_dimension = 32
-			inhand_icon_state = "gun"
-			worn_icon_state = "gun"
-			slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
-			slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-			recoil = SAWN_OFF_RECOIL
-			update_appearance()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return
+	if(sawn_off)
+		return
+	user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
+	sawn_off = TRUE
+	SEND_SIGNAL(src, COMSIG_GUN_SAWN_OFF)
+	if(!handle_modifications)
 		return TRUE
+	name = "sawn-off [src.name]"
+	desc = sawn_desc
+	update_weight_class(WEIGHT_CLASS_NORMAL)
+	//The file might not have a "gun" icon, let's prepare for this
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	inhand_icon_state = "gun"
+	worn_icon_state = "gun"
+	slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+	slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+	recoil = SAWN_OFF_RECOIL
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
-	if(misfire_probability == 0)
+	if(misfire_probability == initial(misfire_probability))
 		balloon_alert(user, "it's already clean!")
 		return
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message(span_notice("[user] begins to cleaning [src]."), span_notice("You begin to clean the internals of [src]."))
+	balloon_alert(user, "cleaning...")
 
-	if(do_after(user, 100, target = src))
-		var/original_misfire_value = initial(misfire_probability)
-		if(misfire_probability > original_misfire_value)
-			misfire_probability = original_misfire_value
-			user.visible_message(span_notice("[user] cleans [src] of any fouling."), span_notice("You clean [src], removing any fouling, preventing misfire."))
-			return TRUE
-
-/obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
-	if(!user.is_holding(src))
-		to_chat(user, span_notice("You need to hold [src] to modify it."))
+	if(do_after(user, 10 SECONDS, target = src))
+		misfire_probability = initial(misfire_probability)
+		balloon_alert(user, "fouling cleaned out")
 		return TRUE
 
+/obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
 	if(!can_modify_ammo)
 		return
 
-	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo())
-			to_chat(user, span_notice("You can't get at the internals while the gun has a bullet in it!"))
-			return
+	if(!user.is_holding(src))
+		balloon_alert(user, "hold to modify!")
+		return TRUE
 
-		else if(!bolt_locked)
-			to_chat(user, span_notice("You can't get at the internals while the bolt is down!"))
-			return
+	if(get_ammo())
+		balloon_alert(user, "can't modify while loaded!")
+		return
 
-	to_chat(user, span_notice("You begin to tinker with [src]..."))
+	if(!bolt_locked && bolt_type == BOLT_TYPE_LOCKING)
+		balloon_alert(user, "the bolt is in the way!")
+		return
+
+	balloon_alert(user, "tinkering...")
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
@@ -701,11 +755,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
-	. = FALSE
-	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.loaded_projectile)
-			process_fire(user, user, FALSE)
-			. = TRUE
+	return chambered && process_fire(user, user, FALSE)
 
 /obj/item/gun/ballistic/proc/instant_reload()
 	SIGNAL_HANDLER
@@ -724,3 +774,46 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/suppressor/standard
+	desc = "A small-arms suppressor for maximum espionage."
+
+///Blueshift code!
+/obj/item/gun/ballistic/proc/on_wield()
+	SIGNAL_HANDLER
+
+	recoil = wield_recoil
+	spread = spread * 0.75
+
+/obj/item/gun/ballistic/proc/on_unwield()
+	SIGNAL_HANDLER
+
+	recoil = initial(recoil)
+	spread = initial(spread)
+
+/obj/item/gun/ballistic/proc/handle_magazine(mob/user, obj/item/ammo_box/magazine/inserting_magazine)
+	if(magazine) // If we already have a magazine inserted, we're going to begin tactically reloading it.
+		if(reload_time && !HAS_TRAIT(user, TRAIT_INSTANT_RELOAD)) // Check if we have a reload time to tactical reloading, or if we have the instant reload trait.
+			to_chat(user, span_notice("You start to insert the magazine into [src]!"))
+			if(!do_after(user, reload_time, src, IGNORE_USER_LOC_CHANGE)) // We are allowed to move while reloading.
+				to_chat(user, span_danger("You fail to insert the magazine into [src]!"))
+				return TRUE
+		eject_magazine(user, FALSE, inserting_magazine) // We eject the magazine then insert the new one, while putting the old one in hands.
+	else
+		insert_magazine(user, inserting_magazine) // Otherwise, just insert it.
+
+	return TRUE
+
+/obj/item/gun/ballistic/proc/handle_box_reload(mob/user, obj/item/ammo_box/ammobox, num_loaded)
+	var/box_load = FALSE // if you're reloading with an ammo box, inflicts a cooldown
+	if(istype(ammobox, /obj/item/ammo_box) && box_reload_penalty)
+		box_load = TRUE
+		user.changeNext_move(box_reload_delay) // cooldown to simulate having to fumble for another round
+		balloon_alert(user, "reload encumbered!")
+	to_chat(user, span_notice("You load [num_loaded] [cartridge_wording]\s into [src][box_load ?  ", but it takes some extra effort" : ""]."))
+
+/obj/effect/temp_visual/dir_setting/firing_effect
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	light_power = 1
+	light_color = LIGHT_COLOR_FIRE

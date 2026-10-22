@@ -11,7 +11,10 @@
 	base_icon_state = "infuser"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/dna_infuser
+
+	var/static/list/chromosome_ckey_list = null
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
 	///currently infusing a vict- subject
@@ -129,19 +132,21 @@
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
 	if(!ishuman(target))
 		return FALSE
+
 	var/obj/item/organ/new_organ = pick_organ(target)
 	if(!new_organ)
 		return FALSE
+
 	// Valid organ successfully picked.
 	new_organ = new new_organ()
-	// monkestation start: ensure skillchips don't get nuked
+
 	var/list/skillchips
 	if(ispath(new_organ, /obj/item/organ/internal/brain))
 		skillchips = target.clone_skillchip_list()
 		target.destroy_all_skillchips(silent = TRUE)
-	// monkestation end
+
 	new_organ.replace_into(target)
-	// monkestation start: ensure skillchips don't get nuked
+
 	if(skillchips)
 		for(var/chip in skillchips)
 			var/chip_type = chip["type"]
@@ -152,8 +157,20 @@
 				qdel(skillchip)
 				continue
 			skillchip.set_metadata(chip)
-	// monkestation end
+
 	check_tier_progression(target)
+
+	if(isnull(chromosome_ckey_list))
+		chromosome_ckey_list = list()
+
+	if(!chromosome_ckey_list[target.ckey])
+		chromosome_ckey_list[target.ckey] = TRUE
+		for(var/i in 1 to 2)
+			var/chromosome_path = generate_chromosome()
+			new chromosome_path(get_turf(src))
+
+		say("New DNA detected, extraction of 2 chromosomes successfull.")
+
 	return TRUE
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
@@ -170,7 +187,7 @@
 	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
 		var/obj/item/organ/old_organ = target.get_organ_slot(initial(new_organ.slot))
 		if(old_organ)
-			if((old_organ.type != new_organ) && (old_organ.status != ORGAN_ROBOTIC))
+			if((old_organ.type != new_organ) && (!IS_ROBOTIC_ORGAN(old_organ) || IS_ORGAN_UNREMOVABLE(old_organ)))
 				continue // Old organ can be mutated!
 		else if(ispath(new_organ, /obj/item/organ/external))
 			continue // External organ can be grown!
@@ -265,7 +282,7 @@
 	infusing_from = target
 
 // mostly good for dead mobs like corpses (drag to add).
-/obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
+/obj/machinery/dna_infuser/mouse_drop_receive(atom/target, mob/user, params)
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
 	if(!is_valid_infusion(target, user))
 		return
@@ -287,8 +304,6 @@
 
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
-		return FALSE
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
@@ -306,17 +321,17 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/dna_infuser/AltClick(mob/user)
-	. = ..()
+/obj/machinery/dna_infuser/click_alt(mob/living/user)
 	if(infusing)
 		balloon_alert(user, "not while it's on!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!infusing_from)
 		balloon_alert(user, "no sample to eject!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "ejected sample")
 	infusing_from.forceMove(get_turf(src))
 	infusing_from = null
+	return CLICK_ACTION_SUCCESS
 
 #undef INFUSING_TIME
 #undef SCREAM_TIME

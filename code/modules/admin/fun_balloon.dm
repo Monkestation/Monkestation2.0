@@ -52,7 +52,7 @@
 	return data
 
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /obj/effect/fun_balloon/sentience/ui_status(mob/user)
 	if(popped)
@@ -61,7 +61,7 @@
 		return UI_INTERACTIVE
 	return ..()
 
-/obj/effect/fun_balloon/sentience/ui_act(action, list/params)
+/obj/effect/fun_balloon/sentience/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -104,7 +104,7 @@
 
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(FALSE)
-		body.key = C.key
+		body.PossessByPlayer(C.key)
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 // ----------- Emergency Shuttle Balloon

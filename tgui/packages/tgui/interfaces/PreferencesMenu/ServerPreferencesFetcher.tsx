@@ -1,9 +1,9 @@
-import { Component } from 'inferno';
-import type { InfernoNode } from 'inferno';
+import type { ReactNode } from 'react';
+import { Component } from 'react';
 import { loadedMappings, resolveAsset } from '../../assets';
+import { Box, Dimmer } from '../../components';
 import { fetchRetry } from '../../http';
-import { ServerData } from './data';
-import { Dimmer, Box } from '../../components';
+import type { ServerData } from './data';
 
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
@@ -11,15 +11,15 @@ let lastError: any = null;
 
 export class ServerPreferencesFetcher extends Component<
   {
-    render: (serverData: ServerData | undefined) => InfernoNode;
+    render: (serverData: ServerData | undefined) => ReactNode;
   },
   {
     serverData?: ServerData;
     errored: boolean;
   }
 > {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       serverData: undefined,
       errored: false,
@@ -61,22 +61,25 @@ export class ServerPreferencesFetcher extends Component<
         fontSize="30px"
         textAlign="center"
         style={{
-          'background-color': 'rgba(0, 0, 0, 0.75)',
-          'font-weight': 'bold',
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          fontWeight: 'bold',
         }}
       >
         Error: Unable to fetch preferences clientside data.
         <br />
         (Your character data is OK, this is a UI error)
         <br />
-        Contact a maintainer or create an issue report by pressing Report Issue
-        in the top right of the game window.
+        Try refreshing the preferences window with F5, or closing and reopening
+        it.
+        <br />
+        If that fails, then contact a maintainer or create an issue report by
+        pressing Report Issue in the top right of the game window.
         <br />
         <Box
           textAlign="left"
           fontSize="12px"
           textColor="white"
-          style={{ 'white-space': 'pre-wrap' }}
+          style={{ whiteSpace: 'pre-wrap' }}
         >
           Error Details:{'\n'}
           {typeof lastError === 'object' &&

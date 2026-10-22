@@ -1,42 +1,59 @@
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 83
+	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 	select_name = "kill"
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_laser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
+
+/obj/item/ammo_casing/energy/laser/hitscan
+	projectile_type = /obj/projectile/beam/laser/hitscan
+	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	firing_effect_type = null
+	delay = 1 SECONDS
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = 100
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
-/obj/item/ammo_casing/energy/laser/hellfire/antique
-	e_cost = 100
+/obj/item/ammo_casing/energy/laser/hellfire/blueshield
+	projectile_type = /obj/projectile/beam/laser/hellfire
+	e_cost = LASER_SHOTS(13, STANDARD_CELL_CHARGE)
+	select_name = "maim"
 
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 62.5
+	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
+	select_name = "kill"
+	select_sound = 'sound/weapons/gun/energy/egun_toggle_laser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
+
+/obj/item/ammo_casing/energy/laser/lasrifle
+	projectile_type = /obj/projectile/beam/laser/lasrifle
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/carbine
 	projectile_type = /obj/projectile/beam/laser/carbine
-	e_cost = 25 // 40 shots
+	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 200
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = 90 //monkestation edit
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/laser/musket
+	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	projectile_type = /obj/projectile/beam/laser/musket
-	e_cost = 1000
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/laser/musket/prime
 	projectile_type = /obj/projectile/beam/laser/musket/prime
-	pellets = 3
-	variance = 10
+	pellets = 1
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice
@@ -45,7 +62,7 @@
 
 /obj/item/ammo_casing/energy/chameleon
 	projectile_type = /obj/projectile/energy/chameleon
-	e_cost = 0
+	e_cost = 0 // Can't really use the macro here, unfortunately
 	var/projectile_vars = list()
 
 /obj/item/ammo_casing/energy/chameleon/ready_proj()
@@ -85,14 +102,16 @@
 
 /obj/item/ammo_casing/energy/laser/pulse
 	projectile_type = /obj/projectile/beam/pulse
-	e_cost = 200
+	e_cost = LASER_SHOTS(200, STANDARD_CELL_CHARGE * 40)
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 	harmful = FALSE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/laser/bluetag/hitscan
 	projectile_type = /obj/projectile/beam/lasertag/bluetag/hitscan
@@ -101,19 +120,20 @@
 	projectile_type = /obj/projectile/beam/lasertag/redtag
 	select_name = "redtag"
 	harmful = FALSE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/energy/laser/redtag/hitscan
 	projectile_type = /obj/projectile/beam/lasertag/redtag/hitscan
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/projectile/beam/xray
-	e_cost = 50
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/laser3.ogg'
 
 /obj/item/ammo_casing/energy/mindflayer
 	projectile_type = /obj/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/ammo_casing/energy/laser/minigun
 	select_name = "kill"
@@ -123,7 +143,7 @@
 /obj/item/ammo_casing/energy/nanite
 	projectile_type = /obj/projectile/bullet/c10mm //henk
 	select_name = "bullet"
-	e_cost = 120
+	e_cost = LASER_SHOTS(8, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/thermalpistol.ogg'
 
 /obj/item/ammo_casing/energy/nanite/inferno
@@ -133,3 +153,32 @@
 /obj/item/ammo_casing/energy/nanite/cryo
 	projectile_type = /obj/projectile/energy/cryo
 	select_name = "cryo"
+
+///not exactly an energy ammo casing, but it's used by the laser gatling.
+/obj/item/ammo_casing/laser
+	name = "laser casing"
+	desc = "You shouldn't be seeing this."
+	caliber = CALIBER_LASER
+	icon_state = "s-casing-live"
+	base_icon_state = "s-casing-live"
+	slot_flags = null
+	projectile_type = /obj/projectile/beam
+	fire_sound = 'sound/weapons/laser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
+
+/obj/item/ammo_casing/laser/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
+
+/obj/item/ammo_casing/laser/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
+
+/obj/item/ammo_casing/energy/laser/plasma_glob
+	projectile_type = /obj/projectile/beam/laser/plasma_glob
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/incinerate.ogg'
+
+/obj/item/ammo_casing/energy/laser/plasma_glob/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/caseless)

@@ -11,10 +11,9 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 /// Builds the list of crew records for all crew members.
 /datum/manifest/proc/build()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/readied_player = i
+	for(var/mob/dead/new_player/readied_player as anything in GLOB.new_player_list)
 		if(readied_player.new_character)
-			log_manifest(readied_player.ckey,readied_player.new_character.mind,readied_player.new_character)
+			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
 			inject(readied_player.new_character)
 		CHECK_TICK
@@ -41,7 +40,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 				"trim" = trim,
 				)
 			continue
-		for(var/department_type as anything in job.departments_list)
+		for(var/department_type in job.departments_list)
 			var/datum/job_department/department = departments_by_type[department_type]
 			if(!department)
 				stack_trace("get_manifest() failed to get job department for [department_type] of [job.type]")
@@ -96,49 +95,58 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 
 /// Injects a record into the manifest.
-/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client)
+/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client, atom/appearance_proxy)
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
+	//if you're cargo, and not a boss, you're part of the Union.
+	if((person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO) && !(person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+		GLOB.cargo_union_employees += list(list(
+			CARGO_UNION_LEADER = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
+			CARGO_UNION_NAME = person.real_name,
+		))
 
 	var/assignment = person.mind.assigned_role.title
-	var/mutable_appearance/character_appearance = new(person.appearance)
+	var/mutable_appearance/character_appearance = new(appearance_proxy?.appearance || person.appearance)
 	var/person_gender = "Other"
 	if(person.gender == "male")
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
+	var/datum/dna/record_dna = new()
+	person.dna.copy_dna(record_dna)
 
 	var/chosen_assignment = person_client?.prefs.alt_job_titles[assignment] || assignment
 
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
-		blood_type = "[person.get_blood_type() || "None"]",
+		blood_type = person.get_bloodtype()?.name || "UNKNOWN",
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
-		gender = person_gender,
-		initial_rank = assignment,
-		name = person.real_name,
-		rank = chosen_assignment	,
-		species = person.dna.species.name,
-		trim = assignment,
-		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
-		// Locked specifics
-		dna_ref = person.dna,
-	)
-
-	var/datum/record/crew/crewfile = new (
-		age = person.age,
-		blood_type = "[person.get_blood_type() || "None"]",
-		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = chosen_assignment,
-		species = person.dna.species.name,
+		species = record_dna.species.name,
+		trim = assignment,
+		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
+		// Locked specifics
+		locked_dna = record_dna,
+		mind_ref = person.mind,
+	)
+
+	var/datum/record/crew/crewfile = new (
+		age = person.age,
+		blood_type = person.get_bloodtype()?.name || "UNKNOWN",
+		character_appearance = character_appearance,
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
+		gender = person_gender,
+		initial_rank = assignment,
+		name = person.real_name,
+		rank = chosen_assignment,
+		species = record_dna.species.name,
 		trim = assignment,
 		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
 		// Crew specific

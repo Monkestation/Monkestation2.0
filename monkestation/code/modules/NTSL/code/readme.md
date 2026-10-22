@@ -1,6 +1,6 @@
 https://github.com/Monkestation/Monkestation2.0/pull/2199
 
-## \<NTSL Coding> 
+## \<NTSL Coding>
 
 MODULE ID: NTSL
 
@@ -48,14 +48,14 @@ for example, adding in their job after their name
 
 ### Defines:
 
-- code\__DEFINES\access.dm
-- code\__DEFINES\jobs.dm
-- code\__DEFINES\achievements.dm -- Added poly achievement defines, since apparently we dont modularize dat
-- code\__DEFINES\logging.dm -- Added NTSL log stuff
+- code\_\_DEFINES\access.dm
+- code\_\_DEFINES\jobs.dm
+- code\_\_DEFINES\achievements.dm -- Added poly achievement defines, since apparently we dont modularize dat
+- code\_\_DEFINES\logging.dm -- Added NTSL log stuff
 
-- code\__DEFINES\~monkestation\access.dm
-- code\__DEFINES\~monkestation\jobs.dm
-- code\__DEFINES\~monkestation\NTSL.dm
+- code\_\_DEFINES\~monkestation\access.dm
+- code\_\_DEFINES\~monkestation\jobs.dm
+- code\_\_DEFINES\~monkestation\NTSL.dm
 
 ### Credits:
 

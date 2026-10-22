@@ -87,6 +87,23 @@
 
 	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)
 
+		//We need to be sure that the buckled mobs can teleport too
+	if(teleatom.has_buckled_mobs())
+		for(var/mob/living/rider in teleatom.buckled_mobs)
+			//just in case it fails, but the mob gets unbuckled anyways even if it passes
+			teleatom.unbuckle_mob(rider, TRUE, FALSE)
+
+			var/rider_success = do_teleport(rider, destturf, precision, channel=channel, no_effects=TRUE)
+			if(!rider_success)
+				continue
+
+			if(get_turf(rider) != destturf) //precision made them teleport somewhere else
+				to_chat(rider, span_warning("As you reorient your senses, you realize you aren't riding [teleatom] anymore!"))
+				continue
+
+			// [mob/living].forceMove() forces mobs to unbuckle, so we need to buckle them again
+			teleatom.buckle_mob(rider, force=TRUE)
+
 	return TRUE
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
@@ -106,6 +123,7 @@
 			zlevels = list(zlevel)
 		else
 			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+
 	var/cycles = 1000
 	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
@@ -117,14 +135,37 @@
 		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
 			return random_location
 
+// Safe Location finder in maintenance (used in slasher)
+/proc/find_safe_turf_in_maintenance(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
+	if(!zlevels)
+		if (zlevel)
+			zlevels = list(zlevel)
+		else
+			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/turf/random_location = locate(x,y,z)
+
+		// Check if we're in maintenance
+		var/area/A = get_area(random_location)
+		if(!istype(A, /area/station/maintenance))
+			continue
+
+		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))
+			return random_location
+	return null // Return null if no safe maintenance turf found
+
 /// Checks if a given turf is a "safe" location
 /proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
 	. = FALSE
 	if(!isfloorturf(random_location))
 		return
+
 	var/turf/open/floor/floor_turf = random_location
 	var/area/destination_area = floor_turf.loc
-
 	if(no_teleport && (destination_area.area_flags & NOTELEPORT))
 		return
 
@@ -192,22 +233,23 @@
 	var/area/destination_area = get_area(destination)
 	var/turf/destination_turf = get_turf(destination)
 
-	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
-		return FALSE
+	if(SSticker.current_state < GAME_STATE_FINISHED)
+		if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+			return FALSE
 
-	// prevent unprecise teleports from landing you outside of the destination's reserved area
-	if(is_reserved_level(destination_turf.z) && istype(original_destination) \
-		&& SSmapping.get_reservation_from_turf(destination_turf) != SSmapping.get_reservation_from_turf(get_turf(original_destination)))
-		return FALSE
+		// prevent unprecise teleports from landing you outside of the destination's reserved area
+		if(is_reserved_level(destination_turf.z) && istype(original_destination) \
+			&& SSmapping.get_reservation_from_turf(destination_turf) != SSmapping.get_reservation_from_turf(get_turf(original_destination)))
+			return FALSE
 
-	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
-		return FALSE
+		if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
+			return FALSE
 
-	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
-		return FALSE
+		if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
+			return FALSE
 
-	if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
-		return FALSE
+		if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
+			return FALSE
 
 	SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
 	SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, origin_turf, destination_turf)

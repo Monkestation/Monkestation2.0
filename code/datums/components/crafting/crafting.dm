@@ -20,6 +20,7 @@
 	var/mode = CRAFTING
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
+	var/forced_mode = FALSE //MONKESTATION ADDITION
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -46,30 +47,6 @@
 
 	var/list/requirements_list = list()
 
-	// Process all requirements
-	for(var/requirement_path in R.reqs)
-		// Check we have the appropriate amount available in the contents list
-		var/needed_amount = R.reqs[requirement_path]
-		for(var/content_item_path in contents)
-			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
-				continue
-
-			needed_amount -= contents[content_item_path]
-			if(needed_amount <= 0)
-				break
-
-		if(needed_amount > 0)
-			return FALSE
-
-		// Store the instances of what we will use for R.check_requirements() for requirement_path
-		var/list/instances_list = list()
-		for(var/instance_path in item_instances)
-			if(ispath(instance_path, requirement_path))
-				instances_list += item_instances[instance_path]
-
-		requirements_list[requirement_path] = instances_list
-
 	for(var/requirement_path in R.chem_catalysts)
 		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
 			return FALSE
@@ -93,6 +70,30 @@
 		// We didn't find the required item
 		if(needed_amount > 0)
 			return FALSE
+
+	// Process all requirements
+	for(var/requirement_path in R.reqs)
+		// Check we have the appropriate amount available in the contents list
+		var/needed_amount = R.reqs[requirement_path]
+		for(var/content_item_path in contents)
+			// Right path and not blacklisted
+			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
+				continue
+
+			needed_amount -= contents[content_item_path]
+			if(needed_amount <= 0)
+				break
+
+		if(needed_amount > 0)
+			return FALSE
+
+		// Store the instances of what we will use for R.check_requirements() for requirement_path
+		var/list/instances_list = list()
+		for(var/instance_path in item_instances)
+			if(ispath(instance_path, requirement_path))
+				instances_list += item_instances[instance_path]
+
+		requirements_list[requirement_path] = instances_list
 
 	return R.check_requirements(a, requirements_list)
 
@@ -122,16 +123,15 @@
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
-			else if(item.tool_behaviour)
-				.["tool_behaviour"] += item.tool_behaviour
-				.["other"][item.type] += 1
 			else
-				if(is_reagent_container(item))
-					var/obj/item/reagent_containers/container = item
-					if(container.is_drainable())
-						for(var/datum/reagent/reagent in container.reagents.reagent_list)
-							.["other"][reagent.type] += reagent.volume
 				.["other"][item.type] += 1
+				if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
+					var/obj/item/reagent_containers/container = item
+					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
+						.["other"][reagent.type] += reagent.volume
+				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
+					if(item.tool_behaviour)
+						.["tool_behaviour"] += item.tool_behaviour
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 		else if (isstructure(object))
@@ -403,7 +403,7 @@
 	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
 		if(!is_recipe_available(recipe, user))
 			continue
-		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
+		if(check_tools(user, recipe, surroundings) && check_contents(user, recipe, surroundings))
 			craftability["[REF(recipe)]"] = TRUE
 
 	data["craftability"] = craftability
@@ -413,6 +413,7 @@
 	var/list/data = list()
 	var/list/material_occurences = list()
 
+	data["forced_mode"] = forced_mode //MONKESTATION ADDITION
 	data["recipes"] = list()
 	data["categories"] = list()
 	data["foodtypes"] = FOOD_FLAGS
@@ -457,7 +458,23 @@
 
 	return data
 
-/datum/component/personal_crafting/ui_act(action, params)
+/datum/component/personal_crafting/proc/make_action(datum/crafting_recipe/recipe, mob/user)
+	var/atom/movable/result = construct_item(user, recipe)
+	if(istext(result)) //We failed to make an item and got a fail message
+		to_chat(user, span_warning("Construction failed[result]"))
+		return FALSE
+	if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
+		user.put_in_hands(result)
+	else if(!istype(result, /obj/effect/spawner))
+		result.forceMove(user.drop_location())
+	to_chat(user, span_notice("[recipe.name] crafted."))
+	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
+	result.add_fingerprint(user, FALSE)
+	recipe.on_craft_completion(user, result)
+	return TRUE
+
+
+/datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -475,6 +492,7 @@
 					result.forceMove(user.drop_location())
 				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
+				result.add_fingerprint(user, FALSE)
 				crafting_recipe.on_craft_completion(user, result)
 			else
 				to_chat(user, span_warning("Construction failed[result]"))
@@ -486,6 +504,8 @@
 			display_compact = !display_compact
 			. = TRUE
 		if("toggle_mode")
+			if(forced_mode) //MONKESTATION ADDITION
+				return
 			mode = !mode
 			var/mob/user = usr
 			update_static_data(user)
@@ -493,8 +513,8 @@
 
 /datum/component/personal_crafting/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/crafting),
-		get_asset_datum(/datum/asset/spritesheet/crafting/cooking),
+		get_asset_datum(/datum/asset/spritesheet_batched/crafting),
+		get_asset_datum(/datum/asset/spritesheet_batched/crafting/cooking),
 	)
 ///
 /datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)
@@ -592,6 +612,9 @@
 			stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
 	else if(!isnull(recipe.reaction))
 		stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
+	else if(mode && !data["steps"]) // For cooking recipes, if it's a simple craft with no reaction steps required
+		data["steps"] = list()
+		data["steps"] += "No further reaction needed, and can be crafted from separate reagent containers and ingredients."
 
 	return data
 

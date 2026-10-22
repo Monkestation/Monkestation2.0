@@ -42,7 +42,7 @@
 
 /datum/mafia_role/Destroy(force)
 	QDEL_NULL(body)
-	QDEL_NULL(role_unique_actions)
+	QDEL_LIST(role_unique_actions)
 	return ..()
 
 /**

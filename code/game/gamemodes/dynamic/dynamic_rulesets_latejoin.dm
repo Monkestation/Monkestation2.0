@@ -44,6 +44,7 @@
 	M.mind.add_antag_datum(antag_datum)
 	return TRUE
 
+/*
 //////////////////////////////////////////////
 //                                          //
 //           SYNDICATE TRAITORS             //
@@ -234,3 +235,4 @@
 	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
 
 	return TRUE
+*/

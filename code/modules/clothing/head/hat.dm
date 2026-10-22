@@ -116,7 +116,7 @@
 	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
-	playsound(victim, get_sfx(SFX_RICOCHET), 100, TRUE)
+	playsound(victim, SFX_RICOCHET, 100, TRUE)
 
 /datum/armor/head_cowboy
 	melee = 5
@@ -180,6 +180,10 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
+	greyscale_config = /datum/greyscale_config/jester_hat
+	greyscale_config_worn = /datum/greyscale_config/jester_hat_worn
+	greyscale_colors = "#51E33F#FF1F1F#FFC130"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/rice_hat
 	name = "rice hat"
@@ -311,3 +315,70 @@
 	desc = "Traditional wide-brimmed straw hat."
 	worn_icon = 'icons/mob/clothing/head/straw.dmi'
 	icon_state = "straw_hat"
+
+/obj/item/clothing/head/costume/jester2
+	name = "alternate jester hat"
+	desc = "It's more a hood really."
+	icon_state = "jester2"
+	greyscale_config = /datum/greyscale_config/jester2
+	greyscale_config_worn = /datum/greyscale_config/jester2_worn
+	greyscale_colors = "#FDEA1B#FF0000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/head/wizard/magician
+	name = "magician's top hat"
+	desc = "A purple tophat that looks like it might actually be magical."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head_32x48.dmi'
+	icon_state = "tophat_wiz"
+	dog_fashion = null
+
+/obj/item/clothing/head/costume/minicrown
+	name = "Mini crown"
+	desc = "A cute crown for the cutest prince or princess. Has the initials 'VA' embroidered inside of the cap.."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "minicrown"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/soft/sec/blue
+	desc = "It's a robust baseball hat in tasteful blue colour."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "secbluesoft"
+	soft_type = "secblue"
+
+/obj/item/clothing/head/hats/security_peaked_cap
+	name = "security peaked cap"
+	desc = "It's a red peaked officer's cap."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "security_peaked_cap"
+	armor_type = /datum/armor/soft_sec
+
+/obj/item/clothing/head/hats/security_peaked_cap/blue
+	desc = "It's a blue peaked officer's cap."
+	icon_state = "security_peaked_cap_blue"
+
+/obj/item/clothing/head/hats/warden/drill/centcom_admiral // Abraxis wanted the functionality. This is just easier.
+	name = "\improper CentCom Admiral's campaign hat"
+	icon_state = "admiral"
+	desc = "Worn by the best of the best.. And that best is <i>you!</i>"
+	armor_type = /datum/armor/hats_centcom_cap // same as centcom cap
+	strip_delay = (8 SECONDS) // same as centcom cap
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+
+/obj/item/clothing/head/hats/fez
+	name = "Fez"
+	desc = "Made in Space Türkiye."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "fez"
+
+/obj/item/clothing/head/hats/adventurercap
+	name = "Adventurer's Cap"
+	desc = "What time is it?"
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "adventurer_cap"

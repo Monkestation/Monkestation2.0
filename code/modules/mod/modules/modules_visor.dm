@@ -53,7 +53,7 @@
 		from advanced machinery, exosuits, and other devices, allowing the user to visualize current power levels \
 		and integrity of such. They say these also let you see behind you."
 	icon_state = "diaghud_visor"
-	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
+	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
 //Security Visor - Gives you a security HUD.
@@ -91,4 +91,29 @@
 		this allows the user to perceive their surroundings while in complete darkness, enhancing the view by tenfold; \
 		yet brightening everything into a spooky green glow. They say these also let you see behind you."
 	icon_state = "night_visor"
+	incompatible_modules = list(/obj/item/mod/module/visor, /obj/item/mod/module/night)
 	visor_traits = list(TRAIT_TRUE_NIGHT_VISION)
+
+/obj/item/mod/module/night // Not Visor type so that it remains compatible with other visors
+	name = "MOD night vision module"
+	desc = "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, \
+		this allows the user to perceive their surroundings while in complete darkness, enhancing the view by tenfold; \
+		yet brightening everything into a spooky green glow. They say these also let you see behind you. \
+		These ones are a special version which remain compatible with the other visor modules."
+	icon_state = "night_visor"
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	complexity = 0
+	removable = FALSE
+	module_type = MODULE_TOGGLE
+	incompatible_modules = list(/obj/item/mod/module/night, /obj/item/mod/module/visor/night)
+	/* required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK) */
+
+/obj/item/mod/module/night/on_activation()
+	. = ..()
+	mod.wearer.add_traits(list(TRAIT_TRUE_NIGHT_VISION), REF(src))
+	mod.wearer.update_sight()
+
+/obj/item/mod/module/night/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
+	mod.wearer.remove_traits(list(TRAIT_TRUE_NIGHT_VISION), REF(src))
+	mod.wearer.update_sight()

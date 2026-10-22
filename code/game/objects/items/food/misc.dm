@@ -57,7 +57,7 @@
 
 /obj/item/food/popcorn/caramel
 	name = "caramel popcorn"
-	icon_state = "сaramel_popcorn"
+	icon_state = "caramel_popcorn"
 	desc = "Caramel-covered popcorn. Sweet!"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
@@ -91,6 +91,13 @@
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
+
+///Prevents grilling burnt shit from well, burning.
+/obj/item/food/badrecipe/proc/OnGrill()
+	SIGNAL_HANDLER
+
+	return COMPONENT_HANDLED_GRILLING
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
@@ -110,10 +117,7 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
 
-///Prevents grilling burnt shit from well, burning.
-/obj/item/food/badrecipe/proc/OnGrill()
-	SIGNAL_HANDLER
-	return COMPONENT_HANDLED_GRILLING
+
 
 /obj/item/food/spidereggs
 	name = "spider eggs"
@@ -292,6 +296,21 @@
 	tastes = list("pineapple" = 1)
 	foodtypes = FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/pineappleslice/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/pineappleslice/grilled, rand(10 SECONDS, 15 SECONDS), TRUE)
+
+/obj/item/food/pineappleslice/grilled
+	name = "grilled pineapple slice"
+	desc = "A grilled piece of juicy pineapple. Complete with tantilizing grill marks."
+	icon_state = "grilled_pineapple"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
+	tastes = list("pineapple" = 1)
+	foodtypes = FRUIT | PINEAPPLE
+
+/obj/item/food/pineappleslice/grilled/make_grillable() //so it burns after it grills
+	AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"
@@ -634,3 +653,17 @@
 	tastes = list("pita bread" = 4, "cucumber" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/honeydewslice
+	name = "honeydew melon slice"
+	desc = "a sweet slice of honeydew"
+	icon = 'icons/obj/food/misc.dmi'
+	icon_state = "honeydewslice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 0.25,
+		/datum/reagent/consumable/nutriment = 0.75
+	)
+	tastes = list("watery honey" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL

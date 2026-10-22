@@ -15,6 +15,8 @@
 	var/list/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = "#808080"
+	///The amount of range this fishing line adds to casting
+	var/cast_range = 2
 
 /obj/item/fishing_line/reinforced
 	name = "reinforced fishing line reel"
@@ -36,12 +38,14 @@
 	icon_state = "reel_red"
 	fishing_line_traits = FISHING_LINE_BOUNCY
 	line_color = "#99313f"
+	cast_range = 3
 
 /obj/item/fishing_line/sinew
 	name = "fishing sinew"
 	desc = "An all-natural fishing line made of stretched out sinew."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_sinew"
+	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#d1cca3"
 
 /datum/crafting_recipe/sinew_line
@@ -132,7 +136,7 @@
 	icon_state = "rescue"
 	rod_overlay_icon_state = "hook_rescue_overlay"
 	chasm_detritus_type = /datum/chasm_detritus/restricted/bodies
-
+	custom_premium_price = PAYCHECK_CREW * 6 //Monkestation edit
 
 // This hook can only fish in chasms.
 /obj/item/fishing_hook/rescue/reason_we_cant_fish(datum/fish_source/target_fish_source)

@@ -1,6 +1,6 @@
 /// If a player has any of these enabled, they are forced to use a minimum of OPT_IN_ANTAG_ENABLED_LEVEL antag optin. Dynamic - checked on the fly, not cached.
 GLOBAL_LIST_INIT(optin_forcing_midround_antag_categories, list(
-	ROLE_CHANGELING_MIDROUND,
+	ROLE_CHANGELING_SPACE,
 	ROLE_MALF_MIDROUND,
 	ROLE_OBSESSED,
 	ROLE_SLEEPER_AGENT,
@@ -8,9 +8,11 @@ GLOBAL_LIST_INIT(optin_forcing_midround_antag_categories, list(
 
 /// If a player has any of these enabled ON SPAWN, they are forced to use a minimum of OPT_IN_ANTAG_ENABLED_LEVEL antag optin for the rest of the round.
 GLOBAL_LIST_INIT(optin_forcing_on_spawn_antag_categories, list(
+	ROLE_BLOODLING,
 	ROLE_BROTHER,
 	ROLE_CHANGELING,
 	ROLE_CULTIST,
+	ROLE_DARKSPAWN,
 	ROLE_HERETIC,
 	ROLE_MALF,
 	ROLE_OPERATIVE,
@@ -45,7 +47,7 @@ GLOBAL_LIST_INIT(optin_forcing_on_spawn_antag_categories, list(
 		mind.opt_in_initialized = TRUE
 
 /// Refreshes our ideal/on spawn antag opt in level by accessing preferences.
-/datum/mind/proc/update_opt_in(datum/preferences/preference_instance = GLOB.preferences_datums[LOWER_TEXT(key)])
+/datum/mind/proc/update_opt_in(datum/preferences/preference_instance = GLOB.preferences_datums[ckey(key)])
 	if (isnull(preference_instance))
 		return
 
@@ -58,7 +60,7 @@ GLOBAL_LIST_INIT(optin_forcing_on_spawn_antag_categories, list(
 
 /// Sends a bold message to our holder, telling them if their optin setting has been set to a minimum due to their antag preferences.
 /datum/mind/proc/send_antag_optin_reminder()
-	var/datum/preferences/preference_instance = GLOB.preferences_datums[LOWER_TEXT(key)]
+	var/datum/preferences/preference_instance = GLOB.preferences_datums[ckey(key)]
 	var/client/our_client = preference_instance?.parent // that moment when /mind doesnt have a ref to client :)
 	if (our_client)
 		var/antag_level = get_antag_opt_in_level()
@@ -82,7 +84,7 @@ GLOBAL_LIST_INIT(optin_forcing_on_spawn_antag_categories, list(
 	if (on_spawn_antag_opt_in_level > OPT_IN_NOT_TARGET)
 		return on_spawn_antag_opt_in_level
 
-	var/datum/preferences/preference_instance = GLOB.preferences_datums[LOWER_TEXT(key)]
+	var/datum/preferences/preference_instance = GLOB.preferences_datums[ckey(key)]
 	if (!isnull(preference_instance))
 		for (var/antag_category in GLOB.optin_forcing_midround_antag_categories)
 			if (antag_category in preference_instance.be_special)

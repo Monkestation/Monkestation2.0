@@ -798,7 +798,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cI" = (
 /obj/structure/safe/floor,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/head/helmet/space/eva,
 /obj/item/clothing/suit/space/eva,
 /obj/item/reagent_containers/cup/glass/bottle/rum,

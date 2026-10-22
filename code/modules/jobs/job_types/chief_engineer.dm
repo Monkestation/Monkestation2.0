@@ -11,7 +11,7 @@
 	supervisors = SUPERVISOR_CAPTAIN
 	req_admin_notify = 1
 	minimal_player_age = 7
-	exp_requirements = 600
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_ENGINEERING
 	exp_granted_type = EXP_TYPE_CREW
@@ -32,7 +32,7 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
-	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters, /obj/item/clothing/glasses/meson/engine)
 
 	mail_goodies = list(
 		/obj/item/food/cracker = 25, //you know. for poly
@@ -43,10 +43,10 @@
 		/obj/effect/spawner/random/engineering/tool_advanced = 3
 	)
 	rpg_title = "Head Crystallomancer"
-	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 2
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
@@ -83,6 +83,14 @@
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	implants = list(/obj/item/implant/mindshield)
 	pda_slot = ITEM_SLOT_LPOCKET
+
+#ifndef UNIT_TESTS
+/datum/outfit/job/ce/New()
+	. = ..()
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		shoes = /obj/item/clothing/shoes/stomper
+		backpack_contents += /obj/item/sea_map
+#endif
 
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"

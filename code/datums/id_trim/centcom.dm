@@ -111,6 +111,9 @@
 
 	access = list(ACCESS_CENT_GENERAL) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
+/datum/id_trim/centcom/ert/chat_span()
+	return "job__ert"
+
 /// Trim for ERT Commanders. All station and centcom access.
 /datum/id_trim/centcom/ert/commander
 	assignment = JOB_ERT_COMMANDER
@@ -193,6 +196,9 @@
 	. = ..()
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
+
+/datum/id_trim/centcom/ert/clown/chat_span()
+	return "job__clown"
 
 /datum/id_trim/centcom/ert/militia
 	assignment = "Frontier Militia"

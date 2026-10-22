@@ -1,8 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Section, Stack, Table, Tabs, Button } from '../components';
-import { Window } from '../layouts';
-import { classes } from 'common/react';
 import { toFixed } from 'common/math';
+import { classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Section, Stack, Table, Tabs } from '../components';
+import { Window } from '../layouts';
 
 export const XenobioMarket = (_) => {
   const [tabIndex, setTabIndex] = useLocalState('tabIndex', 1);
@@ -12,38 +12,46 @@ export const XenobioMarket = (_) => {
   return (
     <Window width={900} height={(tabIndex === 1 && 412) || 600}>
       <Window.Content>
-        <Tabs style={{ 'border-radius': '5px' }}>
-          <Tabs.Tab
-            key={1}
-            selected={tabIndex === 1}
-            icon="flask"
-            onClick={() => setTabIndex(1)}
-          >
-            Slime Market
-          </Tabs.Tab>
-          <Tabs.Tab
-            key={2}
-            selected={tabIndex === 2}
-            icon="flask"
-            onClick={() => setTabIndex(2)}
-          >
-            Active Requests
-          </Tabs.Tab>
-          <Tabs.Tab
-            key={3}
-            selected={tabIndex === 3}
-            icon="sack-dollar"
-            onClick={() => setTabIndex(3)}
-          >
-            View Shop
-          </Tabs.Tab>
-          <Button icon={'sack-dollar'} color="green">
-            {points}
-          </Button>
-        </Tabs>
-        <Box>{tabIndex === 1 && <SlimeMarket />}</Box>
-        <Box>{tabIndex === 2 && <RequestViewer />}</Box>
-        <Box>{tabIndex === 3 && <StoreViewer />}</Box>
+        <Stack vertical fill>
+          <Stack.Item>
+            <Tabs style={{ borderRadius: '5px' }}>
+              <Tabs.Tab
+                key={1}
+                selected={tabIndex === 1}
+                icon="flask"
+                onClick={() => setTabIndex(1)}
+              >
+                Slime Market
+              </Tabs.Tab>
+              <Tabs.Tab
+                key={2}
+                selected={tabIndex === 2}
+                icon="flask"
+                onClick={() => setTabIndex(2)}
+              >
+                Active Requests
+              </Tabs.Tab>
+              <Tabs.Tab
+                key={3}
+                selected={tabIndex === 3}
+                icon="sack-dollar"
+                onClick={() => setTabIndex(3)}
+              >
+                View Shop
+              </Tabs.Tab>
+              <Button icon={'sack-dollar'} color="green">
+                {points || '0'}
+              </Button>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section fill scrollable height="100%">
+              {tabIndex === 1 && <SlimeMarket />}
+              {tabIndex === 2 && <RequestViewer />}
+              {tabIndex === 3 && <StoreViewer />}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -60,7 +68,7 @@ const SlimeMarket = (_) => {
           {price_row.prices.map((slime_price) => (
             <Table.Cell width="25%" key={slime_price.key}>
               {!!slime_price.price && (
-                <Section style={{ 'border-radius': '5px' }} mb="6px">
+                <Section style={{ borderRadius: '5px' }} mb="6px">
                   <Stack fill>
                     <Stack.Item>
                       <Box
@@ -68,6 +76,9 @@ const SlimeMarket = (_) => {
                           'xenobio_market32x32',
                           slime_price.icon,
                         ])}
+                        style={{
+                          imageRendering: 'pixelated',
+                        }}
                       />
                     </Stack.Item>
                     <Stack.Item mt="10px">
@@ -91,12 +102,13 @@ const RequestViewer = (_) => {
   return (
     <Table>
       {requests.map((request) => (
-        <Section style={{ 'border-radius': '5px' }} mb="6px" key={request.name}>
+        <Section style={{ borderRadius: '5px' }} mb="6px" key={request.name}>
           <Stack fill>
             <Stack.Item>
               <Box
                 style={{
                   transform: 'scale(2)',
+                  imageRendering: 'pixelated',
                 }}
                 className={classes(['xenobio_market32x32', request.icon])}
               />
@@ -124,12 +136,13 @@ const StoreViewer = (_) => {
   return (
     <Table>
       {shop_items.map((item) => (
-        <Section style={{ 'border-radius': '5px' }} mb="6px" key={item.name}>
+        <Section style={{ borderRadius: '5px' }} mb="6px" key={item.name}>
           <Stack fill>
             <Stack.Item>
               <Box
                 style={{
                   transform: 'scale(2)',
+                  imageRendering: 'pixelated',
                 }}
                 className={classes(['xenobio_market32x32', item.icon_state])}
               />
@@ -153,7 +166,7 @@ const StoreViewer = (_) => {
                 color="green"
                 onClick={() => act('buy', { path: item.item_path })}
               >
-                {item.cost + ' Xenobiology Points'}
+                {`${item.cost} Xenobiology Points`}
               </Button>
             </Stack.Item>
           </Stack>

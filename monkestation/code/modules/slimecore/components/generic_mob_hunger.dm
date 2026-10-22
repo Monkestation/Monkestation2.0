@@ -8,7 +8,7 @@
 	var/feed_pause_end
 	var/remove_overfed_timer
 
-/datum/component/generic_mob_hunger/Initialize(max_hunger = 250, hunger_drain = 0.1, feed_pause_time = 1 MINUTE, starting_hunger)
+/datum/component/generic_mob_hunger/Initialize(max_hunger = 250, hunger_drain = 0.1, feed_pause_time = 1 MINUTES, starting_hunger)
 	. = ..()
 	src.hunger_drain = hunger_drain
 	src.max_hunger = max_hunger
@@ -104,7 +104,7 @@
 	if(!istype(clicker) || !clicker.client)
 		return
 
-	var/list/offset_to_add = get_icon_dimensions(source.icon)
+	var/alist/offset_to_add = get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] + 8 // this renders above any health ones
 	var/obj/effect/overlay/happiness_overlay/hunger/hearts = new(null, clicker)
 	hearts.pixel_y = y_position

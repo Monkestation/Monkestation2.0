@@ -79,6 +79,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	light_color = LIGHT_COLOR_GREEN
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
 	var/list/prize_override
+	projectiles_pass_chance = 0 // I guess gambling can save your life huh?
+
 
 /obj/machinery/computer/arcade/proc/Reset()
 	return
@@ -654,7 +656,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
-	/// does this machine work with slime people and oozlings
+	/// does this machine work with slime people and oozelings
 	var/works_with_slimes = TRUE
 
 /obj/machinery/computer/arcade/amputation/attack_tk(mob/user)

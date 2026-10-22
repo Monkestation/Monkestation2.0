@@ -9,7 +9,7 @@
 	name = "\improper Integrated Positronic Chassis"
 	id = SPECIES_IPC
 	inherent_biotypes = MOB_ROBOTIC | MOB_HUMANOID
-	sexes = FALSE
+	sexes = TRUE
 	inherent_traits = list(
 		TRAIT_ROBOT_CAN_BLEED,
 		TRAIT_CAN_STRIP,
@@ -22,13 +22,13 @@
 		TRAIT_REVIVES_BY_HEALING,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_HUSK,
-
 	)
 
 	mutant_organs = list(
 		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
-		/obj/item/organ/internal/cyberimp/cyberlink/nt_low,
 	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None"
@@ -55,7 +55,7 @@
 	mutantbladder = null
 	mutantspleen = null
 	mutantappendix = null
-	exotic_bloodtype = /datum/blood_type/oil
+	exotic_bloodtype = BLOOD_TYPE_OIL
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/ipc,
@@ -84,8 +84,7 @@
 	var/forced_speech = 0
 
 /datum/species/ipc/get_species_description()
-	return "Integrated Positronic Chassis - or IPC for short - \
-	 are a race of sentient and unbound humanoid robots."
+	return "Integrated Positronic Chassis - or IPC for short - are a race of sentient and unbound humanoid robots."
 
 /datum/species/ipc/random_name(gender, unique, lastname, attempts)
 	. = "[pick(GLOB.posibrain_names)]-[rand(100, 999)]"
@@ -100,10 +99,6 @@
 	if(A)
 		A.Remove(C)
 		QDEL_NULL(A)
-	var/obj/item/organ/internal/lungs/L = C.get_organ_slot("lungs") //Hacky and bad. Will be rewritten entirely in KapuCarbons anyway.
-	if(L)
-		L.Remove(C)
-		QDEL_NULL(L)
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)
@@ -146,24 +141,23 @@
 	COOLDOWN_START(src, blend_cd, 60 SECONDS)
 
 /**
- * Makes the IPC screen switch to BSOD followed by a blank screen
- *
- * Arguments:
- * * transformer - The human that will be affected by the screen change (read: IPC).
- * * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
- */
+	* Makes the IPC screen switch to BSOD followed by a blank screen
+	*
+	* Arguments:
+	* * transformer - The human that will be affected by the screen change (read: IPC).
+	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
+	*/
 /datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
+	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
+		return
 	saved_screen = change_screen // remember the old screen in case of revival
 	switch_to_screen(transformer, screen_name)
 	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
 
-
-/datum/species/ipc/on_species_loss(mob/living/carbon/C)
+/datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
-	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
-	if(change_screen)
-		change_screen.Remove(C)
-		UnregisterSignal(C, COMSIG_LIVING_DEATH)
+	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
+	change_screen?.Remove(target)
 
 /datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
@@ -176,54 +170,79 @@
 
 /datum/action/innate/change_screen/Activate()
 	var/screen_choice = tgui_input_list(usr, "Which screen do you want to use?", "Screen Change", GLOB.ipc_screens_list)
+	var/color_choice = tgui_color_picker(usr, "Which color do you want your screen to be", "Color Change")
 	if(!screen_choice)
+		return
+	if(!color_choice)
 		return
 	if(!ishuman(owner))
 		return
-	var/mob/living/carbon/human/H = owner
-	H.dna.features["ipc_screen"] = screen_choice
-	H.update_body()
+	var/mob/living/carbon/human/screen_owner = owner
+	screen_owner.dna.features["ipc_screen"] = screen_choice
+	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
+	screen_owner.update_body()
 
-/datum/species/ipc/spec_revival(mob/living/carbon/human/H)
-	H.notify_ghost_cloning("You have been repaired!")
-	H.grab_ghost()
-	H.dna.features["ipc_screen"] = "BSOD"
-	H.update_body()
-	playsound(H, 'monkestation/sound/voice/dialup.ogg', 25)
-	H.say("Reactivating [pick("core systems", "central subroutines", "key functions")]...")
+/datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
+	revived_ipc.notify_ghost_cloning("You have been repaired!")
+	revived_ipc.grab_ghost()
+	revived_ipc.dna.features["ipc_screen"] = "BSOD"
+	revived_ipc.update_body()
+	playsound(revived_ipc, 'sound/voice/dialup.ogg', 25)
+	revived_ipc.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
+	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), revived_ipc) //We have to hand this off to not stall the revive() on the sleep()s.
+
+/datum/species/ipc/proc/boot_sequence_fluff(mob/living/carbon/human/booting_ipc)
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
+	booting_ipc.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Finalizing setup...")
+	booting_ipc.say("Finalizing setup...")
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Unit [H.real_name] is fully functional. Have a nice day.")
-	switch_to_screen(H, "Console")
-	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), H, saved_screen), 5 SECONDS)
-	playsound(H.loc, 'sound/machines/chime.ogg', 50, TRUE)
-	H.visible_message(span_notice("[H]'s [change_screen ? "monitor lights up" : "eyes flicker to life"]!"), span_notice("All systems nominal. You're back online!"))
+	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
+	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
+		switch_to_screen(booting_ipc, saved_screen)
+		booting_ipc.visible_message(span_notice("[booting_ipc]'s [change_screen ? "monitor lights up" : "monitor flickers to life"]!"), span_notice("You're back online!"))
+	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
 
-/datum/species/ipc/replace_body(mob/living/carbon/C, datum/species/new_species)
-	..()
+/datum/species/ipc/replace_body(mob/living/carbon/target, datum/species/new_species)
+	. = ..()
+	update_chassis(target)
 
-	var/datum/sprite_accessory/ipc_chassis/chassis_of_choice = GLOB.ipc_chassis_list[C.dna.features["ipc_chassis"]]
+/datum/species/ipc/proc/update_chassis(mob/living/carbon/target)
+	if(!iscarbon(target) || QDELING(target))
+		return
+	var/list/features = target.dna?.features
+	if(!features)
+		return
+	var/datum/sprite_accessory/ipc_chassis/chassis_of_choice = GLOB.ipc_chassis_list[features["ipc_chassis"]]
 
 	if(!chassis_of_choice)
-		chassis_of_choice = GLOB.ipc_chassis_list[pick(GLOB.ipc_chassis_list)]
-		C.dna.features["ipc_chassis"] = pick(GLOB.ipc_chassis_list)
+		var/random_chassis = pick(GLOB.ipc_chassis_list)
+		chassis_of_choice = GLOB.ipc_chassis_list[random_chassis]
+		features["ipc_chassis"] = random_chassis
 
-	for(var/obj/item/bodypart/BP as() in C.bodyparts) //Override bodypart data as necessary
-		BP.limb_id = chassis_of_choice.icon_state
-		BP.name = "\improper[chassis_of_choice.name] [parse_zone(BP.body_zone)]"
-		BP.update_limb()
-		if(chassis_of_choice.color_src == MUTANT_COLOR)
-			BP.should_draw_greyscale = TRUE
+	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts) //Override bodypart data as necessary
+		if(QDELETED(bodypart))
+			return
+		bodypart.limb_id = chassis_of_choice.icon_state
+		bodypart.name = "\improper[chassis_of_choice.name] [parse_zone(bodypart.body_zone)]"
+		bodypart.should_draw_greyscale = bodypart::should_draw_greyscale
+		bodypart.palette = bodypart::palette
+		bodypart.palette_key = bodypart::palette_key
+		if(chassis_of_choice.palette_key == MUTANT_COLOR)
+			bodypart.should_draw_greyscale = TRUE
+			bodypart.palette = chassis_of_choice.palette
+			bodypart.palette_key = chassis_of_choice.palette_key
+		bodypart.update_limb()
 
 /datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
 	SIGNAL_HANDLER
@@ -273,12 +292,12 @@
 	owner.say(threat)
 
 /**
- * Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
- *
- * Arguments:
- * * transformer - The human that will be affected by the screen change (read: IPC).
- * * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to.
- */
+	* Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
+	*
+	* Arguments:
+	* * transformer - The human that will be affected by the screen change (read: IPC).
+	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to.
+	*/
 /datum/species/ipc/proc/switch_to_screen(mob/living/carbon/human/transformer, screen_name)
 	if(!change_screen)
 		return
@@ -321,19 +340,19 @@
 	powerdraw_loop(target_apc, ipc)
 
 /**
- * Runs a loop to charge a synth cell (stomach) via powercord from an APC.
- *
- * Stops when:
- * - The user is full.
- * - The APC has less than 20% charge.
- * - The APC has machine power turned off.
- * - The APC is unable to provide charge for any other reason.
- * - The user moves, or anything else that can happen to interrupt a do_after.
- *
- * Arguments:
- * * target_apc - The APC to drain.
- * * user - The carbon draining the APC.
- */
+	* Runs a loop to charge a synth cell (stomach) via powercord from an APC.
+	*
+	* Stops when:
+	* - The user is full.
+	* - The APC has less than 20% charge.
+	* - The APC has machine power turned off.
+	* - The APC is unable to provide charge for any other reason.
+	* - The user moves, or anything else that can happen to interrupt a do_after.
+	*
+	* Arguments:
+	* * target_apc - The APC to drain.
+	* * user - The carbon draining the APC.
+	*/
 /obj/item/apc_powercord/proc/powerdraw_loop(obj/machinery/power/apc/target_apc, mob/living/carbon/human/user)
 	user.visible_message(span_notice("[user] inserts a power connector into the [target_apc]."), span_notice("You begin to draw power from the [target_apc]."))
 
@@ -382,12 +401,12 @@
 #undef SYNTH_CHARGE_DELAY_PER_100
 
 /**
- * Global timer proc used in defib.dm. Removes the temporary trauma caused by being defibbed as a synth.
- *
- * Args:
- * * obj/item/organ/internal/brain/synth_brain: The brain with the trauma on it. Non-nullable.
- * * datum/brain_trauma/trauma: The trauma itself. Non-nullable.
- */
+	* Global timer proc used in defib.dm. Removes the temporary trauma caused by being defibbed as a synth.
+	*
+	* Args:
+	* * obj/item/organ/internal/brain/synth_brain: The brain with the trauma on it. Non-nullable.
+	* * datum/brain_trauma/trauma: The trauma itself. Non-nullable.
+	*/
 /proc/remove_synth_defib_trauma(obj/item/organ/internal/brain/synth_brain, datum/brain_trauma/trauma)
 	if (QDELETED(synth_brain) || QDELETED(trauma))
 		return

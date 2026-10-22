@@ -13,7 +13,7 @@
 		mouse.icon_living = "mouse_elvis"
 		mouse.icon_dead = "mouse_brown_dead"
 		return
-	mob.dna.add_mutation(/datum/mutation/human/elvis, MUT_EXTRA)
+	mob.dna.add_mutation(/datum/mutation/elvis, MUTATION_SOURCE_GENE_SYMPTOM)
 
 /datum/symptom/elvis/activate(mob/living/carbon/mob)
 	if(!ishuman(mob))
@@ -37,20 +37,19 @@
 		mob.emote("me",1,pick("curls his lip!", "gyrates his hips!", "thrusts his hips!"))
 
 	if(istype(victim))
+		addtimer(CALLBACK(src, PROC_REF(set_hairstyle), victim), 5 SECONDS, TIMER_UNIQUE)
 
-		if(!(victim.hairstyle == "Pompadour (Big)"))
-			spawn(50)
-				victim.hairstyle = "Pompadour (Big)"
-				victim.hair_color = "#242424"
-				victim.update_body()
+/datum/symptom/elvis/proc/set_hairstyle(mob/living/carbon/human/victim)
+	if(QDELETED(src))
+		return
+	if(victim.hairstyle != "Pompadour (Big)")
+		victim.set_hairstyle("Pompadour (Big)", update = FALSE)
+		victim.set_haircolor("#242424", update = TRUE)
+	if(victim.facial_hairstyle != "Sideburns (Elvis)")
+		victim.set_facial_hairstyle("Sideburns (Elvis)", update = FALSE)
+		victim.set_facial_haircolor("#242424", update = TRUE)
 
-		if(!(victim.facial_hairstyle == "Sideburns (Elvis)"))
-			spawn(50)
-				victim.facial_hairstyle = "Sideburns (Elvis)"
-				victim.facial_hair_color = "#242424"
-				victim.update_body()
-
-/datum/symptom/elvis/deactivate(mob/living/carbon/mob)
+/datum/symptom/elvis/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	if(ismouse(mob))
 		return
 	/*
@@ -60,4 +59,4 @@
 			dude.glasses.canremove = 1
 			dude.u_equip(dude.glasses,1)
 	*/
-	mob.dna.remove_mutation(/datum/mutation/human/elvis)
+	mob.dna.remove_mutation(/datum/mutation/elvis, MUTATION_SOURCE_GENE_SYMPTOM)

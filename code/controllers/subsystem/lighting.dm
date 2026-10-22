@@ -15,7 +15,6 @@ SUBSYSTEM_DEF(lighting)
 	msg = "L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]"
 	return ..()
 
-
 /datum/controller/subsystem/lighting/Initialize()
 	if(!initialized)
 		create_all_lighting_objects()
@@ -24,6 +23,20 @@ SUBSYSTEM_DEF(lighting)
 	fire(FALSE, TRUE)
 
 	return SS_INIT_SUCCESS
+
+
+/datum/controller/subsystem/lighting/proc/create_all_lighting_objects()
+	for(var/area/area as anything in GLOB.areas)
+		if(!area.static_lighting)
+			continue
+		for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				if(area_turf.space_lit)
+					continue
+				new /datum/lighting_object(area_turf)
+			CHECK_TICK
+		CHECK_TICK
+
 
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)
@@ -38,7 +51,7 @@ SUBSYSTEM_DEF(lighting)
 		i += 1
 
 		var/datum/light_source/L = queue[i]
-		L.update_corners()
+		L?.update_corners()
 		if(!QDELETED(L))
 			L.needs_update = LIGHTING_NO_UPDATE
 		else
@@ -66,8 +79,9 @@ SUBSYSTEM_DEF(lighting)
 		i += 1
 
 		var/datum/lighting_corner/C = queue[i]
-		C.needs_update = FALSE //update_objects() can call qdel if the corner is storing no data
-		C.update_objects()
+		if(!QDELETED(C))
+			C.needs_update = FALSE //update_objects() can call qdel if the corner is storing no data
+			C.update_objects()
 
 		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
 		if(init_tick_checks)

@@ -15,12 +15,13 @@ RUN apt-get install -y --no-install-recommends \
         curl \
         unzip \
         make \
+        libcurl4:i386 \
         libstdc++6:i386
 
 COPY dependencies.sh .
 
 RUN . ./dependencies.sh \
-    && curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
+    && curl -H "User-Agent: Monkestation2.0/1.0 CI Script" "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
     && unzip byond.zip \
     && cd byond \
     && sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile \
@@ -39,7 +40,7 @@ RUN apt-get install -y --no-install-recommends \
 
 COPY . .
 
-RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build \
+RUN env tools/build/build.sh \
     && tools/deploy.sh /deploy
 
 # rust = base + rustc and i686 target
@@ -59,7 +60,7 @@ RUN apt-get install -y --no-install-recommends \
         gcc-multilib \
         git \
     && git init \
-    && git remote add origin https://github.com/tgstation/rust-g
+    && git remote add origin "https://github.com/${RUST_G_REPO}"
 
 COPY dependencies.sh .
 

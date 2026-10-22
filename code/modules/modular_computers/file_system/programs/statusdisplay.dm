@@ -2,15 +2,14 @@
 	filename = "statusdisplay"
 	filedesc = "Status Display"
 	program_icon = "signal"
-	program_icon_state = "generic"
-	requires_ntnet = TRUE
+	program_open_overlay = "generic"
 	size = 1
 
 	extended_desc = "An app used to change the message on the station status displays."
 	tgui_id = "NtosStatus"
 
-	usage_flags = PROGRAM_ALL
-	available_on_ntnet = FALSE
+	can_run_on_flags = PROGRAM_ALL
+	program_flags = PROGRAM_REQUIRES_NTNET
 
 	var/upper_text = ""
 	var/lower_text = ""
@@ -68,6 +67,17 @@
 					post_status("alert", "bluealert")
 				if(SEC_LEVEL_GREEN)
 					post_status("alert", "greenalert")
+				if(SEC_LEVEL_AMBER)
+					post_status("alert", "amberalert")
+				if(SEC_LEVEL_YELLOW)
+					post_status("alert", "yellowalert")
+				if(SEC_LEVEL_LAMBDA)
+					post_status("alert", "lambdaalert")
+				if(SEC_LEVEL_GAMMA)
+					post_status("alert", "gammaalert")
+				if(SEC_LEVEL_EPSILON)
+					post_status("alert", "epsilonalert")
+
 		else
 			post_status("alert", picture)
 

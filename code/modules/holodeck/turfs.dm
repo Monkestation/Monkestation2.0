@@ -8,8 +8,11 @@
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
 
-/turf/open/floor/holofloor/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	return
+/turf/open/floor/holofloor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING // Fuck you
+
+/turf/open/floor/holofloor/crowbar_act(mob/living/user, obj/item/I)
+	return NONE // Fuck you
 
 /turf/open/floor/holofloor/burn_tile()
 	return //you can't burn a hologram!
@@ -43,7 +46,7 @@
 
 /turf/open/floor/holofloor/white
 	name = "white floor"
-	icon_state = "white"
+	icon_state = "whitefull"
 
 /turf/open/floor/holofloor/pure_white
 	name = "white floor"
@@ -185,7 +188,7 @@
 
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
-	desc = "The surrounding enviroment is so dark you can hardly see yourself."
+	desc = "The surrounding environment is so dark you can hardly see yourself."
 
 /turf/open/floor/holofloor/stairs
 	name = "stairs"

@@ -100,7 +100,6 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark_red)
 /obj/effect/turf_decal/tile/bar
 	name = "bar tile decal"
 	color = "#791500"
-	alpha = 130
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/bar)
 
@@ -124,8 +123,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/brown)
 
 /obj/effect/turf_decal/tile/neutral
 	name = "neutral tile decal"
-	color = "#D4D4D4"
-	alpha = 50
+	color = "#D4D4D480"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/neutral)
 
@@ -314,15 +312,13 @@ TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/brown)
 
 /// Neutral trimlines
 /obj/effect/turf_decal/trimline/neutral
-	color = "#D4D4D4"
-	alpha = 50
+	color = "#D4D4D480"
 
 TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/neutral)
 
 /// Tram trimlines
 /obj/effect/turf_decal/trimline/tram
-	color = "#D4D4D4"
-	alpha = 50
+	color = "#D4D4D480"
 
 TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/tram)
 

@@ -132,6 +132,17 @@
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
 
+/obj/item/storage/fancy/donut_box/random
+	name = "variety donut box"
+	spawn_type = null
+
+/obj/item/storage/fancy/donut_box/random/PopulateContents()
+	var/list/donuts = sort_list(subtypesof(/obj/item/food/donut))
+	for(var/i = 1 to spawn_count)
+		var/thing_in_box = pick(donuts)
+		new thing_in_box(src)
+	..()
+
 #undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
@@ -206,6 +217,13 @@
 	///Do we not have our own handling for cig overlays?
 	var/display_cigs = TRUE
 
+/obj/item/storage/fancy/cigarettes/Initialize(mapload)
+	. = ..()
+	atom_storage.display_contents = FALSE
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	register_context()
+	AddElement(/datum/element/trash_if_empty)
+
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
@@ -220,23 +238,19 @@
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
 	atom_storage.max_slots = 0
 
-/obj/item/storage/fancy/cigarettes/Initialize(mapload)
-	. = ..()
-	atom_storage.display_contents = FALSE
-	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
-	register_context()
-
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
+	if(..() == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	. = ..()
+/obj/item/storage/fancy/cigarettes/click_alt(mob/living/user)
 	var/obj/item/lighter = locate(/obj/item/lighter) in contents
 	if(lighter)
 		quick_remove_item(lighter, user)
 	else
 		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return CLICK_ACTION_SUCCESS
 
 /// Removes an item from the packet if there is one
 /obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user)
@@ -287,6 +301,25 @@
 
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
+
+/obj/item/storage/fancy/cigarettes/crafted
+	name = "cigarette packet"
+	desc = "A handmade box of cigarettes. It lacks branding."
+	base_icon_state = "base"
+	icon_state = "base"
+	spawn_type = null
+	spawn_count = 6
+	spawn_coupon = FALSE
+
+/obj/item/storage/fancy/cigarettes/flash_powder
+	spawn_type = /obj/item/clothing/mask/cigarette/flash_powder
+
+/obj/item/storage/fancy/cigarettes/cigpack_greytide
+	name = "\improper Mainthol Grey packet"
+	desc = "The thin grey line."
+	icon_state = "greytide"
+	base_icon_state = "greytide"
+	spawn_type = /obj/item/clothing/mask/cigarette/greytide
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
@@ -360,8 +393,8 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/shadyjims
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
-	name = "\improper Xeno Filtered packet"
-	desc = "Loaded with 100% pure slime. And also nicotine."
+	name = "\improper slimey cigarette packet"
+	desc = "A pack of cigarettes made from slimes and industry. It smells faintly of the medical bay."
 	icon_state = "slime"
 	base_icon_state = "slime"
 	spawn_type = /obj/item/clothing/mask/cigarette/xeno
@@ -418,6 +451,9 @@
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
+	custom_premium_price = PAYCHECK_COMMAND
+	///If this box has special sprite for its cigars
+	var/cigar_overlay = TRUE
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
@@ -430,7 +466,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
-	if(!open_status)
+	if(!open_status || !cigar_overlay)
 		return
 	var/cigar_position = 1 //generate sprites for cigars in the box
 	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
@@ -443,6 +479,7 @@
 	icon_state = "cohibacase"
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	custom_premium_price = PAYCHECK_COMMAND * 1.75
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
@@ -450,6 +487,27 @@
 	icon_state = "cohibacase"
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
+	custom_premium_price = PAYCHECK_COMMAND * 2.25
+
+/obj/item/storage/fancy/cigarettes/cigars/intern
+	name = "\improper premium Classic cigar case"
+	desc = "A case of incredibly expensive cigars, manufactured the same since 1728."
+	icon_state = "intern_cigar_box"
+	base_icon_state = "intern_cigar_box"
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
+	custom_premium_price = PAYCHECK_COMMAND * 4 // 400
+	discountable = FALSE
+	spawn_count = 6
+	cigar_overlay = FALSE
+
+/obj/item/storage/fancy/cigarettes/cigars/intern/contraband
+	name = "\improper premium Prohibition cigar case"
+	desc = "A case of incredibly expensive, illict cigars. Take a ride on the wild side, why don't you?"
+	icon_state = "intern_cigar_box_purple"
+	base_icon_state = "intern_cigar_box_purple"
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/intern/purple
+	custom_premium_price = PAYCHECK_COMMAND * 5 // 500
 
 /*
  * Heart Shaped Box w/ Chocolates
@@ -506,7 +564,7 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	foldable_result = null
+	foldable_result = /obj/item/reagent_containers/cup/beaker/large
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE

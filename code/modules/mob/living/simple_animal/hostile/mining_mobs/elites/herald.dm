@@ -32,6 +32,7 @@
 	health = 1000
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	mob_biotypes = MOB_ORGANIC|MOB_MINING
 	attack_verb_continuous = "preaches to"
 	attack_verb_simple = "preach to"
 	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
@@ -133,7 +134,7 @@
 		H = new /obj/projectile/herald(startloc)
 	else
 		H = new /obj/projectile/herald/teleshot(startloc)
-	H.preparePixelProjectile(marker, startloc)
+	H.aim_projectile(marker, startloc)
 	H.firer = src
 	if(target)
 		H.original = target
@@ -223,10 +224,14 @@
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 20
-	armour_penetration = 25 //was 50 changed because 50 was waay too much monkestation 20 edit
-	speed = 2
+	armour_penetration = 25
+	speed = 0.5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
+
+/obj/projectile/herald/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/herald/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ismob(target) && ismob(firer))
@@ -246,7 +251,8 @@
 
 /obj/projectile/herald/teleshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	firer.forceMove(get_turf(src))
+	if(!QDELETED(firer))
+		firer.forceMove(get_turf(src))
 
 //Herald's loot: Cloak of the Prophet
 
@@ -267,7 +273,7 @@
 	var/turf/startloc = get_turf(owner)
 	var/obj/projectile/herald/H = null
 	H = new /obj/projectile/herald(startloc)
-	H.preparePixelProjectile(marker, startloc)
+	H.aim_projectile(marker, startloc)
 	H.firer = owner
 	H.fire(set_angle)
 

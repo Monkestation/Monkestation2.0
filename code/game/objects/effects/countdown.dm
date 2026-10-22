@@ -100,6 +100,21 @@
 	else if(N.timing)
 		return round(N.get_time_left(), 1)
 
+//MONKESTATION EDIT START
+/obj/effect/countdown/nukedisk
+	name = "nuke disk unsecured time"
+	color = "#81FF14"
+
+/obj/effect/countdown/nukedisk/get_value()
+	var/obj/item/disk/nuclear/D = attached_to
+	if(!istype(D))
+		return
+	if(locate(/obj/machinery/nuclearbomb) in get_turf(src))
+		return
+	if(D.unsecured_time != 0)
+		return round(D.unsecured_time/60, 1)
+//MONKESTATION EDIT STOP
+
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
 	color = "#00ff80"
@@ -180,3 +195,27 @@
 		return -1
 	var/time_left = max(0, (bud.finish_time - world.time) / 10)
 	return time_left
+
+/obj/effect/countdown/clonepod
+	name = "cloning pod countdown"
+	color = "#18d100"
+	text_size = 1
+
+/obj/effect/countdown/clonepod/get_value()
+	var/obj/machinery/clonepod/C = attached_to
+	if(!istype(C))
+		return
+	else if(C.occupant)
+		var/completion = round(C.get_completion())
+		return completion
+
+/obj/effect/countdown/bomb_actualizer
+	name = "bomb actualizer countdown"
+	color = "#ff9100"
+
+/obj/effect/countdown/bomb_actualizer/get_value()
+	var/obj/machinery/bomb_actualizer/Bomb_Countdown = attached_to
+	if(!istype(Bomb_Countdown))
+		return
+	else if(Bomb_Countdown.active)
+		return Bomb_Countdown.seconds_remaining()

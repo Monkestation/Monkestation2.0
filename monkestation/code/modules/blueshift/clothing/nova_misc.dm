@@ -2,7 +2,6 @@
 //MISC FILES = UNSORTED FILES. EVEN TG HATES THIS ONE.
 
 /obj/item/clothing/under/misc
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/misc_digi.dmi'
 
 /obj/item/clothing/under/misc/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/misc.dmi'
@@ -18,7 +17,6 @@
 	name = "tacticasual uniform"
 	desc = "A white wifebeater on top of some cargo pants. For when you need to carry various beers."
 	icon_state = "tac_s"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/misc/nova/mechanic
 	name = "mechanic's overalls"
@@ -63,7 +61,6 @@
 /obj/item/clothing/suit/toggle/trackjacket
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	name = "track jacket"
 	desc = "A black jacket with blue stripes for the athletic. It is also popular among russian delinquents."
 	icon_state = "trackjacket"
@@ -293,7 +290,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "ensuit"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/trenchbrown
 	name = "brown trenchcoat"

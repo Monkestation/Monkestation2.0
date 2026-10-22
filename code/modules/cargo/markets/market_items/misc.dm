@@ -36,10 +36,30 @@
 	desc = "Yeehaw, hardboiled friends! This holster is the first step in your dream of becoming a detective and being allowed to shoot real guns!"
 	item = /obj/item/storage/belt/holster
 
-	price_min = CARGO_CRATE_VALUE * 2
-	price_max = CARGO_CRATE_VALUE * 4
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 1.5
 	stock_max = 8
+	availability_prob = 75
+
+/datum/market_item/misc/shoulder_holster_detective
+	name = "Modified Holster"
+	desc = "An upgraded holster, good for carrying your big iron and two reloads."
+	item = /obj/item/storage/belt/holster/detective
+
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_max = 3
 	availability_prob = 60
+
+/datum/market_item/misc/sharpener
+	name = "Sharpening Rock"
+	desc = "A whetstone, used to sharpen whatever cooking implements you may have on-hand. Quality assured by the Plasteel Chef."
+	item = /obj/item/sharpener
+
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 2.5
+	stock_max = 3
+	availability_prob = 40
 
 /datum/market_item/misc/holywater
 	name = "Flask of holy water"
@@ -112,3 +132,39 @@
 	stock_min = 3
 	stock_max = 8
 	availability_prob = 90
+
+/datum/market_item/misc/giant_wrench_parts
+	name = "Big Slappy parts"
+	desc = "Cheap illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	item = /obj/item/weaponcrafting/giant_wrench
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 1
+	availability_prob = 25
+
+/datum/market_item/misc/roulettepin
+	name = "\"Roulette\" type electronic firing pin"
+	desc = "Illegal firing pins. Gets you back what security took from you. Warranty valid for exactly 1 use."
+	item = /obj/item/firing_pin/buckshotroulette
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 3
+	availability_prob = 30
+
+/datum/market_item/misc/shuffler
+	name = "Magazine Shuffler"
+	desc = "This \"tool\", if its even useful enough to call it that, was found in the wreckage of a station. Stick it on a gun or magazine and watch it work on those rounds!"
+	item = /obj/item/magazine_shuffler
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 3
+	stock_max = 3
+	availability_prob = 30
+
+/datum/market_item/misc/tricktrickcigarettes
+	name = "Trick Trick Cigarettes"
+	desc = "Cigarettes filled with flash powder. Makes for a fun prank!"
+	item = /obj/item/storage/fancy/cigarettes/flash_powder
+	price_min = PAYCHECK_CREW
+	price_max = PAYCHECK_CREW * 3
+	stock_max = 3
+	availability_prob = 25

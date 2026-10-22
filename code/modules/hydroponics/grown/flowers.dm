@@ -15,7 +15,7 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	genes = list(/datum/plant_gene/trait/preserved)
-	possible_mutations = list(/datum/hydroponics/plant_mutation/geranium, /datum/hydroponics/plant_mutation/lily)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/geranium, /datum/hydroponics/plant_mutation/lily, /datum/hydroponics/plant_mutation/fleshmass)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/poppy
@@ -51,7 +51,10 @@
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
-	greyscale_colors = "#fe881f"
+	icon_state = "lily"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
@@ -95,13 +98,16 @@
 	species = "geranium"
 	plantname = "Geranium Plants"
 	product = /obj/item/food/grown/poppy/geranium
-	possible_mutations = list(/datum/hydroponics/plant_mutation/fraxinella) //monkestation edit
+	possible_mutations = list(/datum/hydroponics/plant_mutation/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
+	icon_state = "geranium"
 	name = "geranium"
 	desc = "A beautiful blue flower."
-	greyscale_colors = "#1499bb"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -335,3 +341,34 @@
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
+
+//Fleshmass
+/obj/item/seeds/fleshmass
+	name = "pack of fleshmass seeds"
+	desc = "These seeds grow into a fleshmass bush."
+	icon_state = "seed-fleshmass"
+	species = "fleshmass"
+	plantname = "Fleshmass Bush"
+	product = /obj/item/food/grown/fleshmass
+	endurance = 30
+	yield = 8
+	potency = 20
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/preserved)
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "fleshmass-grow"
+	icon_dead = "fleshmass-dead"
+	reagents_add = list(/datum/reagent/medicine/c2/synthflesh/biocellulose = 0.15, /datum/reagent/blood = 0.07)
+
+/obj/item/food/grown/fleshmass
+	seed = /obj/item/seeds/fleshmass
+	name = "fleshbulb"
+	desc = "A pulsating bulb of flesh, dripping blood."
+	icon_state = "fleshbulb"
+	foodtypes = MEAT | GROSS | RAW | GORE
+
+/obj/item/food/grown/fleshmass/attack_self(mob/user, modifiers)
+	var/resultsheets = round(max(1, qp_sigmoid(5, 10, seed.potency)))
+	new /obj/item/stack/sheet/fleshmass(drop_location(), resultsheets)
+	playsound(src, 'sound/effects/blobattack.ogg', 30, TRUE)
+	qdel(src)

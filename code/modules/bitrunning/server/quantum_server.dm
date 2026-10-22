@@ -1,6 +1,3 @@
-/**
- * The base object for the quantum server
- */
 /obj/machinery/quantum_server
 	name = "quantum server"
 
@@ -22,6 +19,8 @@
 	var/is_ready = TRUE
 	/// List of available domains
 	var/list/available_domains = list()
+	/// Chance multipled by threat to spawn a glitch
+	var/glitch_chance = 0.2
 	/// Current plugged in users
 	var/list/datum/weakref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
@@ -42,15 +41,27 @@
 	var/server_cooldown_time = 90 SECONDS //MONKESTATION EDIT
 	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
+	/// Determines the glitches available to spawn, builds with completion
+	var/threat = 0
+	/// Maximum rate at which a glitch can spawn
+	var/threat_prob_max = 15
 	/// The turfs we can place a hololadder on.
-	var/turf/exit_turfs = list()
+	var/list/turf/exit_turfs = list()
+	/// Determines if we broadcast to entertainment monitors or not
+	var/broadcasting = FALSE
+	/// Cooldown between being able to toggle broadcasting
+	COOLDOWN_DECLARE(broadcast_toggle_cd)
+	/// Determines what bitrunning network of domains we can access.
+	var/bitrunning_network = BITRUNNER_DOMAIN_DEFAULT
+	/// Determines our ID for what bitrunning machinery we're linked to.
+	var/bitrunning_id = "DEFAULT"
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/quantum_server/LateInitialize()
+/obj/machinery/quantum_server/LateInitialize(mapload_arg)
 	. = ..()
 
 	radio = new(src)
@@ -66,6 +77,7 @@
 
 	// This further gets sorted in the client by cost so it's random and grouped
 	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
+	LAZYREMOVE(available_domains, /datum/lazy_template/virtual_domain/tutorial) //TODO: make this less shit
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
@@ -74,10 +86,24 @@
 	mutation_candidate_refs.Cut()
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
-	QDEL_NULL(exit_turfs)
+	exit_turfs.Cut()
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)
+
+/obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
+	if(obj_flags & EMAGGED)
+		return
+
+	obj_flags |= EMAGGED
+	glitch_chance *= 2
+	threat_prob_max *= 2
+
+	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
+	balloon_alert(user, "system jailbroken...")
+	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
@@ -140,3 +166,18 @@
 
 	servo_bonus = servo_rating
 
+/obj/machinery/quantum_server/tutorial
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+	capacitor_coefficient = 0.4
+
+/obj/machinery/quantum_server/tutorial/coop
+	bitrunning_id = "tutorial_coop"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+
+/obj/machinery/quantum_server/tutorial/solo_1
+	bitrunning_id = "tutorial_solo_1"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+
+/obj/machinery/quantum_server/tutorial/solo_2
+	bitrunning_id = "tutorial_solo_2"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL

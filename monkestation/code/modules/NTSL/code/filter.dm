@@ -4,7 +4,7 @@
  */
 
 /proc/setup_pretty_filter(path = "config/ntsl_filter.txt")
-	var/list/filter_lines = world.file2list(path)
+	var/list/filter_lines = file2list(path)
 	for(var/line in filter_lines)
 		add_pretty_filter_line(line)
 
@@ -49,18 +49,14 @@
 	return FALSE // No, it is pretty.
 
 //Returns null if there is any bad text in the string
-/proc/reject_bad_ntsl_text(text, max_length = 512, ascii_only = TRUE, require_pretty = TRUE, allow_newline = FALSE, allow_code = FALSE)
+/proc/reject_bad_ntsl_text(text, ascii_only = TRUE, require_pretty = TRUE, allow_newline = FALSE, allow_code = FALSE)
 	if(require_pretty && isnotpretty(text))
 		return
-	var/char_count = 0
 	var/non_whitespace = FALSE
 	var/lenbytes = length(text)
 	var/char = ""
 	for(var/i = 1, i <= lenbytes, i += length(char))
 		char = text[i]
-		char_count++
-		if(char_count > max_length)
-			return
 		switch(text2ascii(char))
 			if(9, 62, 60, 92, 47) // tab, <, >, \, /
 				if(!allow_code)

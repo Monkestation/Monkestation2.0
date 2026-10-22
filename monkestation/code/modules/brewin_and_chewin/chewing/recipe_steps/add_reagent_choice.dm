@@ -11,7 +11,7 @@
 //amount: The amount of the required reagent that needs to be added.
 //base_quality_award: The quality awarded by following this step.
 //our_recipe: The parent recipe object,
-/datum/chewin_cooking/recipe_step/add_reagent_choice/New(var/list/reagent_ids = list(),  var/amount, var/datum/chewin_cooking/recipe/our_recipe)
+/datum/chewin_cooking/recipe_step/add_reagent_choice/New(list/reagent_ids = list(),  amount, datum/chewin_cooking/recipe/our_recipe)
 
 	if(!length(reagent_ids))
 		CRASH("/datum/chewin_cooking/recipe_step/add/reagent/New(): No Reagent List Given")
@@ -32,7 +32,7 @@
 	..(our_recipe)
 
 
-/datum/chewin_cooking/recipe_step/add_reagent_choice/check_conditions_met(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_reagent_choice/check_conditions_met(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	var/obj/item/container = tracker.holder_ref.resolve()
 
 
@@ -59,7 +59,7 @@
 	return return_type
 
 //Reagents are calculated in two areas. Here and /datum/chewin_cooking/recipe/proc/calculate_reagent_quality
-/datum/chewin_cooking/recipe_step/add_reagent_choice/calculate_quality(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_reagent_choice/calculate_quality(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	var/obj/item/container = tracker.holder_ref.resolve()
 	for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
 		if(!(reagent.type in reagent_ids))
@@ -69,18 +69,18 @@
 		return reagent_ids[reagent.type]
 
 
-/datum/chewin_cooking/recipe_step/add_reagent_choice/follow_step(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_reagent_choice/follow_step(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	var/obj/item/reagent_containers/our_item = used_item
 	var/obj/item/container = tracker.holder_ref.resolve()
 
 	var/trans = our_item.reagents.trans_to(container, our_item.amount_per_transfer_from_this)
 
-	playsound(usr,'monkestation/sound/chemistry/transfer/beakerpour_0-10-1.ogg',50,1)
+	playsound(usr,'sound/chemistry/transfer/beakerpour_0-10-1.ogg',50,1)
 	to_chat(usr, span_notice("You transfer [trans] units to \the [container]."))
 
 	return CHEWIN_SUCCESS
 
-/datum/chewin_cooking/recipe_step/add_reagent_choice/is_complete(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_reagent_choice/is_complete(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	var/obj/item/reagent_containers/our_item = used_item
 	var/obj/item/container = tracker.holder_ref.resolve()
 

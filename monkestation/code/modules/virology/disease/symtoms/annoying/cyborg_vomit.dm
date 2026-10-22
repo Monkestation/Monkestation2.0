@@ -11,7 +11,7 @@
 	if(prob(90))		//90% chance for just oil
 		mob.visible_message(span_danger("[mob.name] vomits up some oil!"))
 		mob.adjustToxLoss(-3)
-		var/obj/effect/decal/cleanable/oil/oil = new /obj/effect/decal/cleanable/oil(get_turf(mob))
+		var/obj/effect/decal/cleanable/blood/oil/oil = new /obj/effect/decal/cleanable/blood/oil(get_turf(mob))
 		playsound(oil, 'sound/effects/splat.ogg', 50, 1)
 		mob.Stun(0.5 SECONDS)
 	else				//10% chance for a random bot!

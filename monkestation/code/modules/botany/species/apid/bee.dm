@@ -21,7 +21,7 @@
 /mob/living/basic/bee/apid_summoned/pollinate(atom/movable/hydro)
 	var/datum/component/plant_growing/growing = GetComponent(/datum/component/plant_growing)
 	if(growing)
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue

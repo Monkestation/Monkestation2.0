@@ -38,7 +38,7 @@
 	var/target_Theyre = target.p_Theyre()
 	var/target_They_have = "[target.p_They()] [target.p_have()]"
 
-	if(target.stat == CONSCIOUS)
+	if(target.stat == CONSCIOUS && !HAS_TRAIT_FROM(target, TRAIT_INCAPACITATED, STAMINA)) // monkestation edit: allow revenants to drain stamcrit people
 		to_chat(src, span_revennotice("[target_Their] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))

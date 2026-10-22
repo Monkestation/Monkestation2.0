@@ -10,7 +10,7 @@
 	lefthand_file = 'monkestation/code/modules/blueshift/icons/bowie_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/blueshift/icons/bowie_righthand.dmi'
 	worn_icon_state = "knife"
-	force = 20 // Zoowee Momma!
+	force = 17
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 15
 	wound_bonus = 10 //scalpel tier
@@ -21,6 +21,7 @@
 	desc = "A dressed-up leather sheath featuring a brass tip. It has a large pocket clip right in the center, for ease of carrying an otherwise burdensome knife."
 	icon = 'monkestation/code/modules/blueshift/icons/bowiepocket.dmi'
 	icon_state = "bowiesheath"
+	icon_state_preview = "bowiesheathe-knife"
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
@@ -33,16 +34,15 @@
 		/obj/item/knife/bowie,
 		))
 
-/obj/item/storage/belt/bowie_sheath/AltClick(mob/user)
-	if(length(contents))
-		var/obj/item/knife = contents[1]
-		user.visible_message(span_notice("[user] takes [knife] out of [src]."), span_notice("You take [knife] out of [src]."))
-		user.put_in_hands(knife)
-		update_appearance()
-		return TRUE
-	else
+/obj/item/storage/belt/bowie_sheath/click_alt(mob/user)
+	if(!length(contents))
 		to_chat(user, span_warning("[src] is empty!"))
-		return FALSE
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/knife = contents[1]
+	user.visible_message(span_notice("[user] takes [knife] out of [src]."), span_notice("You take [knife] out of [src]."))
+	user.put_in_hands(knife)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/bowie_sheath/update_icon_state()
 	icon_state = initial(icon_state)

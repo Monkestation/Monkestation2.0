@@ -1,3 +1,4 @@
+/*
 #define FEVER_CHANGE "fever"
 /**Fever
  * No change to stealth
@@ -75,3 +76,4 @@
 		M.remove_homeostasis_level(type)
 
 #undef FEVER_CHANGE
+*/

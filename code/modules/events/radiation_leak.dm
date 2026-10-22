@@ -8,6 +8,8 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL)
 
 /datum/round_event/radiation_leak
 	start_when = 1 // 2 seconds in
@@ -154,7 +156,7 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(try_remove_radiation), source, user, tool)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Attempts a do_after, and if successful, stops the event
 /datum/round_event/radiation_leak/proc/try_remove_radiation(obj/machinery/source, mob/living/user, obj/item/tool)

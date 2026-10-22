@@ -7,6 +7,7 @@
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE | QUIRK_DONT_CLONE // monkestation edit: QUIRK_DONT_CLONE
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
+	species_blacklist = list(SPECIES_OOZELING)
 
 /datum/quirk/quadruple_amputee/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -15,6 +16,32 @@
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus, special = TRUE)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus, special = TRUE)
 
+/datum/quirk/quadruple_amputee/add()
+	if(!isipc(quirk_holder)) // this checks ishuman too
+		return
+	var/mob/living/carbon/human/ipc_holder = quirk_holder
+	ipc_holder.physiology?.brute_mod *= 1.3
+	ipc_holder.physiology?.burn_mod *= 1.3
+
+/datum/quirk/quadruple_amputee/remove()
+	if(!isipc(quirk_holder))
+		return
+	var/mob/living/carbon/human/ipc_holder = quirk_holder
+	ipc_holder.physiology?.brute_mod /= 1.3
+	ipc_holder.physiology?.burn_mod /= 1.3
+
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
 	Additionally, you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+	if(isipc(quirk_holder))
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
+
+/datum/quirk/quadruple_amputee/remove()
+	if(QDELING(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.reset_to_original_bodypart(BODY_ZONE_L_ARM)
+	human_holder.reset_to_original_bodypart(BODY_ZONE_R_ARM)
+	human_holder.reset_to_original_bodypart(BODY_ZONE_L_LEG)
+	human_holder.reset_to_original_bodypart(BODY_ZONE_R_LEG)

@@ -1,6 +1,6 @@
-/datum/action/cooldown/spell/pointed/mind_transfer //monkestation edit: replaced in-game with an AOE spell
-	name = "Single Target Mind Swap" //monkestation edit: added single target
-	desc = "This spell allows the user to switch bodies with a target next to him."
+/datum/action/cooldown/spell/pointed/mind_transfer
+	name = "Single Target Mind Swap"
+	desc = "This spell allows the user to switch bodies with a target next to them."
 	button_icon_state = "mindswap"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 
@@ -42,6 +42,12 @@
 		return FALSE
 	if(!isliving(owner))
 		return FALSE
+	// monkestation start: prevent mindswap if you have TRAIT_NO_MINDSWAP
+	if(HAS_TRAIT(owner, TRAIT_NO_MINDSWAP))
+		if(feedback)
+			to_chat(owner, span_warning("Your mind can't be swapped!"))
+		return FALSE
+	// monkestation end
 	if(HAS_TRAIT(owner, TRAIT_SUICIDED))
 		if(feedback)
 			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
@@ -108,8 +114,6 @@
 	var/datum/mind/mind_to_swap = to_swap.mind
 	if(to_swap.can_block_magic(antimagic_flags) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/wizard) \
-		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
-		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key?[1] == "@" \
 	)
@@ -128,7 +132,7 @@
 
 	// Just in case the swappee's key wasn't grabbed by transfer_to...
 	if(to_swap_key)
-		caster.key = to_swap_key
+		caster.PossessByPlayer(to_swap_key)
 
 	// MIND TRANSFER END
 

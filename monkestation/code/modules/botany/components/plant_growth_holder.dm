@@ -42,6 +42,11 @@
 
 	health_value = seed.endurance * 3
 
+/datum/component/growth_information/Destroy(force)
+	current_looks = null
+	planter = null
+	return ..()
+
 /datum/component/growth_information/proc/update_plant_visuals(datum/source)
 	var/obj/item/seeds/seed = parent
 	update_growth_information()
@@ -130,8 +135,8 @@
 	if(plant_state == HYDROTRAY_PLANT_DEAD)
 		var/obj/item/seeds/seed = parent
 		var/atom/movable/to_send = planter
-		qdel(current_looks)
 		SEND_SIGNAL(planter, COMSIG_PLANT_SENDING_IMAGE, current_looks, 0, seed.plant_icon_offset, planter_id)
+		current_looks = null
 		SEND_SIGNAL(planter, COMSIG_GROWER_SET_HARVESTABLE, FALSE)
 		planter = null
 		SEND_SIGNAL(to_send, COMSIG_REMOVE_PLANT, planter_id)
@@ -154,8 +159,8 @@
 		SEND_SIGNAL(planter, COMSIG_GROWER_SET_HARVESTABLE, FALSE)
 		return
 	var/atom/movable/to_send = planter
-	qdel(current_looks)
 	SEND_SIGNAL(planter, COMSIG_PLANT_SENDING_IMAGE, current_looks, 0, seed.plant_icon_offset, planter_id)
+	current_looks = null
 	SEND_SIGNAL(planter, COMSIG_GROWER_SET_HARVESTABLE, FALSE)
 	planter = null
 	SEND_SIGNAL(to_send, COMSIG_REMOVE_PLANT, planter_id)

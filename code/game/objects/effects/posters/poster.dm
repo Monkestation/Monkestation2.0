@@ -53,19 +53,19 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/poster/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/shard))
+/obj/item/poster/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/shard))
 		return ..()
 
 	if (poster_structure.trap?.resolve())
 		balloon_alert(user, "already trapped!")
 		return
 
-	if(!user.transferItemToLoc(I, poster_structure))
+	if(!user.transferItemToLoc(attacking_item, poster_structure))
 		return
 
-	poster_structure.trap = WEAKREF(I)
-	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	poster_structure.trap = WEAKREF(attacking_item)
+	to_chat(user, span_notice("You conceal the [attacking_item.name] inside the rolled up poster."))
 
 /obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -73,11 +73,6 @@
 		poster_structure = null
 		if(!QDELING(src))
 			qdel(src) //we're now a poster, huzzah!
-
-/obj/item/poster/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == poster_structure)
-		poster_structure.moveToNullspace() //get it the fuck out of us since atom/destroy qdels contents and it'll cause a qdel loop
-	return ..()
 
 /obj/item/poster/Destroy(force)
 	QDEL_NULL(poster_structure)
@@ -201,11 +196,9 @@
 		return
 
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
-	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), forced = TRUE))
+	if(!can_embed_trap(user) || !payload.force_embed(user, user.get_active_hand()))
 		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
 		payload.forceMove(user.drop_location())
-	else
-		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))

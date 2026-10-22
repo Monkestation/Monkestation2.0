@@ -47,8 +47,8 @@
 	/// Used to determine the y position of the component within the UI
 	var/rel_y = 0
 
-	/// The power usage whenever this component receives an input
-	var/power_usage_per_input = 1
+	/// The energy usage whenever this component receives an input.
+	var/energy_usage_per_input = 0.001 * STANDARD_CELL_CHARGE
 
 	/// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
@@ -77,7 +77,7 @@
 /obj/item/circuit_component/Initialize(mapload)
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
-		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
+		name = "[LOWER_TEXT(display_name)] [COMPONENT_DEFAULT_NAME]"
 	populate_options()
 	populate_ports()
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !trigger_input)
@@ -249,7 +249,7 @@
 		parent.current_size += circuit_size
 
 /obj/item/circuit_component/proc/check_power_modifictions()
-	return power_usage_per_input
+	return energy_usage_per_input
 
 /**
  * Called whether this circuit component should receive an input.
@@ -275,7 +275,7 @@
 
 		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, power_usage)
 		if(!(flags & COMPONENT_OVERRIDE_POWER_USAGE))
-			var/obj/item/stock_parts/cell/cell = parent.get_cell()
+			var/obj/item/stock_parts/power_store/cell/cell = parent.get_cell()
 			if(!cell?.use(power_usage))
 				return FALSE
 
@@ -347,7 +347,7 @@
 			. += create_ui_notice(initial(shell.name), "green", "plus-square")
 
 	if(length(input_ports))
-		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
+		. += create_ui_notice("Energy Usage Per Input: [display_energy(energy_usage_per_input)]", "orange", "bolt")
 
 /**
  * Called when a special button is pressed on this component in the UI.

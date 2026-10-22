@@ -1,0 +1,2 @@
+/obj/machinery/jukebox/@SUBTYPES : /obj/machinery/jukebox/@SUBTYPES{@OLD}
+/obj/machinery/media/jukebox : /obj/machinery/jukebox{@OLD}

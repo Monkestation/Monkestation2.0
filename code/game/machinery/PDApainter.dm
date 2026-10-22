@@ -93,11 +93,12 @@
 			if(stored_id_card)
 				SSexplosions.low_mov_atom += stored_id_card
 
-/obj/machinery/pdapainter/handle_atom_del(atom/A)
-	if(A == stored_pda)
+/obj/machinery/pdapainter/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == stored_pda)
 		stored_pda = null
 		update_appearance(UPDATE_ICON)
-	if(A == stored_id_card)
+	if(gone == stored_id_card)
 		stored_id_card = null
 		update_appearance(UPDATE_ICON)
 
@@ -105,7 +106,7 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool))
 		power_change()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
@@ -280,7 +281,7 @@
 
 	return data
 
-/obj/machinery/pdapainter/ui_act(action, params)
+/obj/machinery/pdapainter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -352,6 +353,8 @@
 					continue
 
 				if(SSid_access.apply_trim_to_card(stored_id_card, path, copy_access = FALSE))
+					if(CONFIG_GET(flag/everyone_has_maint_access))
+						stored_id_card.add_access(list(ACCESS_MAINT_TUNNELS))
 					return TRUE
 
 				to_chat(usr, span_warning("The trim you selected could not be added to \the [stored_id_card]. You will need a rarer ID card to imprint that trim data."))

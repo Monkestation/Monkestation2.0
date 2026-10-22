@@ -95,7 +95,8 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_CAN_HEAR_MUSIC), INNATE_TRAIT)
+	remove_verb(src, /mob/living/verb/pulled)
 
 	for(var/ability in abilities)
 		var/datum/action/spell = new ability(src)
@@ -145,12 +146,16 @@
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
-		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
+		var/change_in_time = DELTA_WORLD_TIME(SSclient_mobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 
 	update_appearance(UPDATE_ICON)
 	update_health_hud()
+
+/mob/living/basic/revenant/AltClickOn(atom/target)
+	if(CAN_I_SEE(target))
+		client.loot_panel.open(get_turf(target))
 
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
@@ -194,7 +199,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		AltClickNoInteract(src, A)
+		base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		ranged_secondary_attack(A, modifiers)
@@ -202,12 +207,24 @@
 
 	if(ishuman(A) && in_range(src, A))
 		attempt_harvest(A)
+		return
+
+	// This is probably the most cringe place I could put this but whatever -
+	// Revenants can click on spirit boards for seances like ghosts
+	if(istype(A, /obj/structure/spirit_board) \
+		&& !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) \
+		&& !HAS_TRAIT(src, TRAIT_NO_TRANSFORM) \
+		&& !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED))
+
+		var/obj/structure/spirit_board/board = A
+		board.spirit_board_pick_letter(src)
+		return
 
 /mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
 	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
 		return
 
-	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	var/alist/icon_dimensions = get_icon_dimensions(target.icon)
 	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 	orbit(target, orbitsize)

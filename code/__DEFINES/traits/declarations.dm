@@ -7,7 +7,44 @@
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 */
 
-//mob traits
+// Traits applied to global objects
+
+/// GLOB trait, applied whenever something in the world wants to use the distortion plane
+/// Distortion is an expensive effect, so it's worthwhile to keep it off until we care
+#define TRAIT_DISTORTION_IN_USE(z_layer) "distortion_in_use_#[z_layer]"
+
+/// SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
+#define TRAIT_MARKET_CRASHING "market_crashing"
+
+/// Traits given by station traits
+#define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
+#define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
+#define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
+#define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
+#define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
+#define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
+#define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
+#define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
+#define STATION_TRAIT_HANGOVER "station_trait_hangover"
+#define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
+#define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
+#define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
+#define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
+#define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
+#define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
+#define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
+#define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
+#define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
+#define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
+#define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
+#define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
+#define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"
+
+// Hud traits
+/// This hud is owned by a client with an open escape menu
+#define TRAIT_ESCAPE_MENU_OPEN "escape_menu_open"
+
+// Mob traits
 /// Forces the user to stay unconscious.
 #define TRAIT_KNOCKEDOUT "knockedout"
 /// Prevents voluntary movement.
@@ -32,8 +69,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXPANDED_FOV "expanded_fov"
 /// Doesn't miss attacks
 #define TRAIT_PERFECT_ATTACKER "perfect_attacker"
-///Recolored by item/greentext
-/* #define TRAIT_GREENTEXT_CURSED "greentext_curse" */
 #define TRAIT_INCAPACITATED "incapacitated"
 /// In some kind of critical condition. Is able to succumb.
 #define TRAIT_CRITICAL_CONDITION "critical-condition"
@@ -51,20 +86,26 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_FAT "fat"
+/// If you are fat, you no longer get the slowdown from it
+#define TRAIT_FAT_IGNORE_SLOWDOWN "fat_ignore_slowdown"
+/// Always hungry. They can eat as much as they want without eating slowdown.
+#define TRAIT_GLUTTON "glutton"
 #define TRAIT_HUSK "husk"
 ///Blacklisted from being revived via defibrilator
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
+///Prevented from reviving in special magical antagonist ways (changeling, bloodsucker)
+#define TRAIT_NO_SPECIAL_REVIVAL "no_special_revival"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
 /// Trait that means you are capable of holding items in some form
 #define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
+/// This user can use advanced hypnoflashes.
+#define TRAIT_CAN_HYPNO "can_hypno"
 /// Trait which lets you clamber over a barrier
 #define TRAIT_FENCE_CLIMBER "can_climb_fences"
 /// means that you can't use weapons with normal trigger guards.
 #define TRAIT_CHUNKYFINGERS "chunkyfingers"
 #define TRAIT_CHUNKYFINGERS_IGNORE_BATON "chunkyfingers_ignore_baton"
-/// Allows you to mine with your bare hands
-/* #define TRAIT_FIST_MINING "fist_mining" */
 #define TRAIT_DUMB "dumb"
 /// Whether a mob is dexterous enough to use machines and certain items or not.
 #define TRAIT_ADVANCEDTOOLUSER "advancedtooluser"
@@ -72,8 +113,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
 #define TRAIT_CANT_ATTACK "cant_attack"
-// Trait added to the user of a hippocratic oath status effect
-/* #define TRAIT_HIPPOCRATIC_OATH "hippocratic_oath" */
 /// Makes it so the mob ignores all slowdown.
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 /// Makes it so the mob ignores slowdown from damage.
@@ -88,6 +127,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
+//FOR XENO LARVA
+#define TRAIT_NEUTERED "neutered" //the mob cant reproduce
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
 /// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
@@ -95,16 +136,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_XENO_HOST "xeno_host"
 /// This parrot is currently perched
 #define TRAIT_PARROT_PERCHED "parrot_perched"
-/// This mob is immune to stun causing status effects and stamcrit.
+/// This mob is immune to stun causing status effects, stamcrit, and all stamina damage except sprinting.
 /// Prefer to use [/mob/living/proc/check_stun_immunity] over checking for this trait exactly.
 #define TRAIT_STUNIMMUNE "stun_immunity"
 #define TRAIT_BATON_RESISTANCE "baton_resistance"
+#define TRAIT_TASER_RESISTANCE "taser_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
-/* #define TRAIT_IWASBATONED "iwasbatoned" */
+#define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
 #define TRAIT_PUSHIMMUNE "push_immunity"
-/// can't be kicked to the side
-/* #define TRAIT_NO_SIDE_KICK "no_side_kick" */
 /// Are we immune to shocks?
 #define TRAIT_SHOCKIMMUNE "shock_immunity"
 /// Are we immune to specifically tesla / SM shocks?
@@ -127,28 +167,37 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTCOLD "resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE "resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE "resist_low_pressure"
+/// Prevents natural body temperature stabilization effects. Direct temperature changes still work.
+#define TRAIT_THERMAL_STASIS "thermal_stasis"
 /// This human is immune to the effects of being exploded. (ex_act)
 #define TRAIT_BOMBIMMUNE "bomb_immunity"
 /// This mob won't get gibbed by nukes going off
 #define TRAIT_NUKEIMMUNE "nuke_immunity"
 /// Can't be given viruses
 #define TRAIT_VIRUSIMMUNE "virus_immunity"
-/// Won't become a husk under any circumstances
-/* #define TRAIT_UNHUSKABLE "trait_unhuskable" */
+/// Stepping on ants wont cause damage
+#define TRAIT_SPACE_ANT_IMMUNITY "space_ant_immunity"
 /// Reduces the chance viruses will spread to this mob, and if the mob has a virus, slows its advancement
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
+/// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
+#define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
+/// protects the holder from throw_impact
+#define TRAIT_IMPACTIMMUNE "impact_immunity"
 /// This carbon doesn't show an overlay when they have no brain
 #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 #define TRAIT_NOFIRE "nonflammable"
+#define TRAIT_SUPPRESS_NOFIRE "nonnonflammable" // this is just so oozeling ash heretics aren't at an inherit disadvantage due to TRAIT_NOFIRE. if you try to use this to "balance" things i will bite your head off ~Lucy
 #define TRAIT_NOFIRE_SPREAD "no_fire_spreading"
 /// Prevents plasmamen from self-igniting if only their helmet is missing
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
-///Can toss a guns like a badass, causing additional damage/effect to their enemies
-/* #define TRAIT_TOSS_GUN_HARD "toss_gun_hard" */
+#define TRAIT_AKIMBO "akimbo"
+#define TRAIT_NO_RECOIL "no_recoil"
+///Prevent species from changing while they have the trait
+#define TRAIT_SPECIESLOCK "species_lock"
 /// Species with this trait are genderless
 #define TRAIT_AGENDER "agender"
 /// Species with this trait have a blood clan mechanic
@@ -159,6 +208,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USES_SKINTONES "uses_skintones"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS "mutcolors"
+/// Species with this trait can switch their base color to be greyscale
+#define TRAIT_GREYSCALE_TOGGLE "toggle_greyscale"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS_SECONDARY "mutcolors_secondary"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
@@ -176,20 +227,28 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This carbon doesn't metabolize reagents.
 /// This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
+/// This carbon doesn't get warnings about blood level.
+#define TRAIT_NO_BLEED_WARN "no_bleed_warn"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 // This means the carbon does not have altered bloodloss from having or not having a spleen
 #define TRAIT_SPLEENLESS_METABOLISM "spleenless_metabolism"
 /// Humans with this trait cannot be affected by changeling transformation stings
 #define TRAIT_NO_TRANSFORMATION_STING "no_transformation_sting"
-/// This carbon can't be overdosed by chems
-#define TRAIT_OVERDOSEIMMUNE "overdose_immune"
 /// Humans with this trait cannot be turned into zombies
 #define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
-/// Carbons with this trait cant have their dna scrambled by genetics or a disease retrovirus.
-#define TRAIT_NO_DNA_SCRAMBLE "no_dna_scramble"
+/// Removes tackle and throwing debuffs from dwarfs
+#define TRAIT_STABLE_DWARF "stable_dwarf"
+/// Makes you heal from radiation received
+#define TRAIT_RADHEALING "radiation_healing"
+/// Makes embed-able projectiles have an additional 50% chance at not embedding when hitting the target
+#define TRAIT_EMBED_RESISTANCE "embed_resistance"
+/// Makes you not leave fingerprints (you still leave fibers though)
+#define TRAIT_NO_FINGERPRINTS "no_fingerprints"
+/// Gives you a coinflip chance when eating disliked food to actually like its taste
+#define TRAIT_STABILIZED_EATER "stabilized_eater"
 /// Carbons with this trait can eat blood to regenerate their own blood volume, instead of injecting it
 #define TRAIT_DRINKS_BLOOD "drinks_blood"
 /// Mob is immune to clone (cellular) damage
@@ -209,11 +268,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_NO_HUSK "no_husk"
-/// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds
-/* #define TRAIT_EASYBLEED "easybleed" */
+/// Mob recovers from addictions at an accelerated rate
+#define TRAIT_ADDICTIONRESILIENT "addiction_resilient"
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get overlays from being in critical.
 #define TRAIT_NOCRITOVERLAY "no_crit_overlay"
+/// For gloves that should not incur a penalty when doing surgery
+#define TRAIT_STERILE "sterilegloves"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
 /// The mob is holy and resistance to cult magic
@@ -223,7 +284,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This allows a person who has antimagic to cast spells without getting blocked
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 /// This mob recently blocked magic with some form of antimagic
-/* #define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic" */
+#define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
 /// The user can do things like use magic staffs without penalty
 #define TRAIT_MAGICALLY_GIFTED "magically_gifted"
 /// This object innately spawns with fantasy variables already applied (the magical component is given to it on initialize), and thus we never want to give it the component again.
@@ -232,39 +293,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
-/// Prevents shovies and some strong blows such as unarmed punches and (unreliably) tackles the owner down
-/* #define TRAIT_BRAWLING_KNOCKDOWN_BLOCKED "brawling_knockdown_blocked" */
-/// Applies tackling defense bonus to any mob that has it
-/* #define TRAIT_OFF_BALANCE_TACKLER "off_balance_tackler" */
-/// Prevents some severe head injuries being sustained from heavy collisions or blunt force injuries.
-/* #define TRAIT_HEAD_INJURY_BLOCKED "head_injury_blocked" */
-/// Prevents staggering.
-/* #define TRAIT_NO_STAGGER "no_stagger" */
-/// Getting hit by thrown movables won't push you away
-/* #define TRAIT_NO_THROW_HITPUSH "no_throw_hitpush" */
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
-///This trait gets you a list of fishes that can be caught when examining a fishing spot.
-/* #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot" */
-///lobstrosities and carps will prioritize/flee from those that have this trait (given by the skill-locked hat)
-/* #define TRAIT_SCARY_FISHERMAN "scary_fisherman" */
-///Trait given to turfs or objects that can be fished from
-/* #define TRAIT_FISHING_SPOT "fishing_spot" */
-///Trait given to mobs that can fish without a rod
-/* #define TRAIT_PROFOUND_FISHER "profound_fisher" */
-/// This trait lets you evaluate someone's fitness level against your own
-/* #define TRAIT_EXAMINE_FITNESS "reveal_power_level" */
-/// These mobs have particularly hygienic tongues
-/* #define TRAIT_WOUND_LICKER "wound_licker" */
 /// Mobs with this trait are allowed to use silicon emotes
-/* #define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed" */
-
-/// This trait designate that the mob was originally a monkey
-/* #define TRAIT_BORN_MONKEY "born_as_a_monkey" */
-
-/// Added to a mob, allows that mob to experience flavour-based moodlets when examining food
-/* #define TRAIT_REMOTE_TASTING "remote_tasting" */
-
+#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
 /// Stops the mob from slipping on water, or banana peels, or pretty much anything that doesn't have [GALOSHES_DONT_HELP] set
 #define TRAIT_NO_SLIP_WATER "noslip_water"
 /// Stops the mob from slipping on permafrost ice (not any other ice) (but anything with [SLIDE_ICE] set)
@@ -289,7 +321,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes it impossible for someone to be converted by cult/revs/etc.
 #define TRAIT_UNCONVERTABLE "unconvertable"
 #define TRAIT_DISSECTED "dissected"
-/* #define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed" */
+#define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed"
 /// Lets the user succumb even if they got NODEATH
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
@@ -316,6 +348,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MESON_VISION "meson_vision"
 /// Gives us Night vision
 #define TRAIT_TRUE_NIGHT_VISION "true_night_vision"
+/// Negates unwrenching high pressure atmospheric components flinging the user to a certain degree.
+#define TRAIT_PRESSURE_FLING_RESISTANT "pressure_fling_resistant"
 /// Negates our gravity, letting us move normally on floors in 0-g
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// We are ignoring gravity
@@ -323,12 +357,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 /// Makes whispers clearly heard from seven tiles away, the full hearing range
-/* #define TRAIT_GOOD_HEARING "good_hearing" */
+#define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
-/* #define TRAIT_XRAY_HEARING "xray_hearing" */
+#define TRAIT_XRAY_HEARING "xray_hearing"
 
 /// This mob can not enter or move on a shuttle
-/* #define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement" */
+#define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement"
+
+/// Given to mobs which have been implanted with a sponsorship implant
+#define TRAIT_SPONSOR_IMPLANT "sponsor_implant"
+
+/// Given by the bloodsilver status effect - so we can check the trait instead of status effects.
+#define TRAIT_BLOODSILVER_CURSE "bloodsilver_curse"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
@@ -338,11 +378,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WEB_WEAVER "web_weaver"
 /// Can navigate the web without getting stuck
 #define TRAIT_WEB_SURFER "web_surfer"
+/// Can navigate ONLY the arachnid web without getting stuck
+#define TRAIT_ARACHNID_WEB_SURFER "arachnid_web_surfer"
 /// A web is being spun on this turf presently
 #define TRAIT_SPINNING_WEB_TURF "spinning_web_turf"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
-/* #define TRAIT_SURGEON "surgeon" */
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
@@ -362,12 +403,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SECURITY_HUD "sec_hud"
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
-/* #define TRAIT_BOT_PATH_HUD "bot_path_hud" */
-/// Is a medbot healing you
-/* #define TRAIT_MEDIBOTCOMINGTHROUGH "medbot" */
 #define TRAIT_PASSTABLE "passtable"
 /// Lets you fly through windows
-/* #define TRAIT_PASSWINDOW "passwindow" */
+#define TRAIT_PASSWINDOW "passwindow"
 /// Makes you immune to flashes
 #define TRAIT_NOFLASH "noflash"
 /// prevents xeno huggies implanting skeletons
@@ -381,8 +419,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GUNFLIP "gunflip"
 /// Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
-/// Doubles the duration and cooldown of a flip
-/* #define TRAIT_SLOW_FLIP "slow_flip" */
+//---- Brain trauma resists
+/// Unable to gain any brain trauma whatsoever
+#define TRAIT_BRAIN_TRAUMA_IMMUNITY "brain_trauma_immunity"
+
+/// Prevents death from having too much brain damage
+#define TRAIT_BRAIN_DAMAGE_NODEATH "brain_damage_nodeath"
+
 #define TRAIT_SPACEWALK "spacewalk"
 /// Sanity trait to keep track of when we're in hyperspace and add the appropriate element if we werent
 #define TRAIT_HYPERSPACED "hyperspaced"
@@ -395,15 +438,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We can walk up or around cliffs, or at least we don't fall off of it
 #define TRAIT_CLIFF_WALKER "cliff_walker"
 /// This means the user is currently holding/wearing a "tactical camouflage" item (like a potted plant).
-/* #define TRAIT_TACTICALLY_CAMOUFLAGED "tactically_camouflaged" */
+#define TRAIT_TACTICALLY_CAMOUFLAGED "tactically_camouflaged"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
 #define TRAIT_DWARF "dwarf"
 //Gets a mood buff while in maints (used for Goblins).
 #define TRAIT_MAINTENANCE_DWELLER "maintenance_dweller"
-/// Makes you way too tall. Like just too much, dude, it's kind of creepy. Humanoid only.
-/* #define TRAIT_TOO_TALL "too_tall" */
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
 /// hnnnnnnnggggg..... you're pretty good....
@@ -416,9 +457,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_EXTINGUISH "no_extinguish"
 /// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
-/// Trait given to mobs to indicate that they can catch papers thrown at them midair without trying,
-/// and make syndicate airplanes when folding paper up.
-/* #define TRAIT_PAPER_MASTER "paper_master" */
 /// This mob is able to use sign language over the radio.
 #define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"
 /// nobody can use martial arts on this mob
@@ -439,8 +477,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COAGULATING "coagulating"
 /// From anti-convulsant medication against seizures.
 #define TRAIT_ANTICONVULSANT "anticonvulsant"
-/// From stimulant reagents, this affects whether the all-nighter lack of sleep penalty should be countered
-/* #define TRAIT_STIMULATED "stimulated" */
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE "antennae"
 /// Blowing kisses actually does damage to the victim
@@ -463,8 +499,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CAN_USE_FLIGHT_POTION "can_use_flight_potion"
 /// This mob overrides certian SSlag_switch measures with this special trait
 #define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
-/// Someone can safely be attacked with honorbound with ONLY a combat mode check, the trait is assuring holding a weapon and hitting won't hurt them..
-#define TRAIT_ALLOWED_HONORBOUND_ATTACK "allowed_honorbound_attack"
 /// The user is sparring
 #define TRAIT_SPARRING "sparring"
 /// The user is currently challenging an elite mining mob. Prevents him from challenging another until he's either lost or won.
@@ -489,12 +523,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
-/// Mob has fov applied to it
-/* #define TRAIT_FOV_APPLIED "fov_applied" */
 /// Mob is using the scope component
-/* #define TRAIT_USER_SCOPED "user_scoped" */
+#define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
+/// Mob does not get a damage overlay from brute/burn
+#define TRAIT_NO_DAMAGE_OVERLAY "no_damage_overlay"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -503,11 +537,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait which prevents you from becoming overweight
 #define TRAIT_NOFAT "cant_get_fat"
-
-/// Trait which allows you to eat rocks
-/* #define TRAIT_ROCK_EATER "rock_eater" */
-/// Trait which allows you to gain bonuses from consuming rocks
-/* #define TRAIT_ROCK_METAMORPHIC "rock_metamorphic" */
 
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
@@ -519,7 +548,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
 
 /// Trait that tracks if something has been renamed. Typically holds a REF() to the object itself (AKA src) for wide addition/removal.
-/* #define TRAIT_WAS_RENAMED "was_renamed" */
+#define TRAIT_WAS_RENAMED "was_renamed"
 
 /// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
 #define TRAIT_DOUBLE_TAP "double_tap"
@@ -543,69 +572,126 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// The person with this trait always appears as 'unknown'.
 #define TRAIT_UNKNOWN "unknown"
 
+/// The person with this trait always appears as 'unknown', but doesnt obscure the examine.
+#define TRAIT_ANONYMOUS "anonymous"
+
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
 
 /// If applied to a mob, nearby dogs will have a small chance to nonharmfully harass said mob
 #define TRAIT_HATED_BY_DOGS "hated_by_dogs"
-/// Mobs with this trait will not be immobilized when held up
-/* #define TRAIT_NOFEAR_HOLDUPS "no_fear_holdup" */
-/// Mob has gotten an armor buff from adamantine extract
-/* #define TRAIT_ADAMANTINE_EXTRACT_ARMOR "adamantine_extract_armor" */
-/// Mobs with this trait won't be able to dual wield guns.
-/* #define TRAIT_NO_GUN_AKIMBO "no_gun_akimbo" */
-/// Mobs with this trait cannot be hit by projectiles, meaning the projectiles will just go through.
-/* #define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles" */
 
-/// Projectile with this trait will always hit the defined zone of a struck living mob.
-#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
+/// Mobs with this trait can never be hit by laser projectiles, meaning the projectiles will just go through.
+#define TRAIT_UNHITTABLE_BY_LASERS "unhittable_by_lasers"
 
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
-/// Whether or not the user is in a MODlink call, prevents making more calls
-/* #define TRAIT_IN_CALL "in_call" */
+/// Monkeys are friendly/neutral to this mob by defaulot.
+#define TRAIT_MONKEYFRIEND 	"monkeyfriend"
+/// User is sprinting, full speed ahead.
+#define TRAIT_SPRINTING "sprinting"
+///Slows the user, with additional effects based on the source.
+#define TRAIT_DISORIENTED "disoriented"
+/// User cannot sprint.
+#define TRAIT_NO_SPRINT "no_sprint"
+/// Their monitors are corrupted (this should be IPC exclusive trait). Currently used to set special examine text on IPCs. Examine text is overridden by TRAIT_CORRUPTED_MONITOR.
+#define TRAIT_CORRUPTED_MONITOR "corrupted_monitor"
+/// One can breath under water, you get me?
+#define TRAIT_WATER_BREATHING "water_breathing"
+/// Does not take damage from bloodloss (or any blood shenanigans)
+#define TRAIT_NO_BLOODLOSS_DAMAGE "no_bloodloss_damage"
+/// Do IPC's dream of doomsday? The answer is yes
+#define TRAIT_ROBOT_CAN_BLEED "robots_can_bleed"
+/// Tough feets for the satyrs.
+#define TRAIT_HARD_SOLES "hard_soles" //Taken from Skyrat
+/// The mob's nanites are sending a monitoring signal visible on diag HUD.
+#define TRAIT_NANITE_MONITORING "nanite_monitoring"
+/// This mob can vault over climable structures.
+#define TRAIT_VAULTING "vaulting"
+/// Ethereals with this trait will not suffer negative effects from overcharge.
+#define TRAIT_ETHEREAL_NO_OVERCHARGE "ethereal_no_overcharge"
+/// Oozelings with this trait will not lose limbs from low blood/nutrition.
+#define TRAIT_OOZELING_NO_CANNIBALIZE "oozeling_no_cannibalize"
+/// Indicates that they've inhaled helium.
+#define TRAIT_HELIUM "helium"
+/// Allows the user to start any surgery, anywhere. Mostly used by abductor scientists.
+#define TRAIT_ALL_SURGERIES "all_surgeries"
+/// Prevents the user from ever (unintentionally) failing a surgery step, and ensures they always have the maximum surgery speed.
+#define TRAIT_PERFECT_SURGEON "perfect_surgeon"
+/// Allows the user to climb tables and such faster.
+#define TRAIT_FAST_CLIMBER 	"fast_climber"
+/// The user is more resistant to being shoved.
+#define TRAIT_SHOVE_RESIST	"shove_resist"
+/// Allows the user to instantly reload.
+#define TRAIT_INSTANT_RELOAD "instant_reload"
+/// Falsifies Health analyzer blood levels
+#define TRAIT_MASQUERADE "masquerade"
+/// Prevents the user from entering stamina crit.
+#define TRAIT_CANT_STAMCRIT "cant_stamcrit"
+/// This mob will automatically revive when healed enough.
+#define TRAIT_REVIVES_BY_HEALING "trait_revives_by_healing"
+/// This mob is a ghost critter.
+#define TRAIT_GHOST_CRITTER "ghost_critter"
+/// This mob is *currently* being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.
+#define TRAIT_CONVERSION_FLASHED "conversion_flashed"
+/// For when a mob has been consumed by a zombie
+#define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
+/// Applied when blight is cured. Prevents getting blight again while present.
+#define TRAIT_REVENANT_BLIGHT_PROTECTION "revenant_blight_protection"
+/// Caused by temporary deafness, makes everyone sounds like they are whispering
+#define TRAIT_HARD_OF_HEARING "hard_of_hearing"
+/// Mob sleeps less, counter to TRAIT_HEAVY_SLEEPER
+#define TRAIT_LIGHT_SLEEPER "light_sleeper"
+/// Makes a mob throw guns instead of shooting them, works with TRAIT_NOGUNS
+#define TRAIT_THROW_GUNS "throw_guns"
+/// This mob can strip other mobs.
+#define TRAIT_CAN_STRIP "can_strip"
+/// Mob can't strip other mobs, overrides TRAIT_CAN_STRIP. Importantly, they cannot *open* strip menus, so this is used for mayhem in a bottle.
+#define TRAIT_CANT_STRIP "cant_strip"
+/// Can use the nuclear device's UI, regardless of a lack of hands
+#define TRAIT_CAN_USE_NUKE "can_use_nuke"
 
+// If present on a mob or mobmind, allows them to "suplex" an immovable rod
+// turning it into a glorified potted plant, and giving them an
+// achievement. Can also be used on rod-form wizards.
+// Normally only present in the mind of a Research Director.
+#define TRAIT_ROD_SUPLEX "rod_suplex"
+/// The mob has an active mime vow of silence, and thus is unable to speak and has other mime things going on
+#define TRAIT_MIMING "miming"
+/// This atom is affected by the cluwne curse. Mostly used to prevent looping transformations.
+#define TRAIT_CLUWNE "cluwne"
+/// This mob is phased out of reality from magic, either a jaunt or rod form
+#define TRAIT_MAGICALLY_PHASED "magically_phased"
+/// Whether or not the user is in a MODlink call, prevents making more calls
+#define TRAIT_IN_CALL "in_call"
 /// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
 #define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
 /// Does the mob ignore elevation? (e.g. xeno larvas on hiding)
 #define TRAIT_IGNORE_ELEVATION "ignore_elevation"
-
-/// Prevents you from twohanding weapons.
-/* #define TRAIT_NO_TWOHANDING "no_twohanding" */
-
-/// Improves boxing damage against boxers and athletics experience gain
-/* #define TRAIT_STRENGTH "strength" */
-
-/// Increases the duration of having exercised
-/* #define TRAIT_STIMMED "stimmed" */
-
-/// Indicates that the target is able to be boxed at a boxer's full power.
-/* #define TRAIT_BOXING_READY "boxing_ready" */
-
-/// Halves the time of tying a tie.
-/* #define TRAIT_FAST_TYING "fast_tying" */
-
-/// Sells for more money on the pirate bounty pad.
-/* #define TRAIT_HIGH_VALUE_RANSOM "high_value_ransom" */
-
 /// Makes the user handcuff others faster
-/* #define TRAIT_FAST_CUFFING "fast_cuffing" */
+#define TRAIT_FAST_CUFFING "fast_cuffing"
+/// Makes user able to absorb food through any exposed body part.
+#define TRAIT_FOOD_ABSORPTION "food_absorbtion"
+/// Trait that is applied whenever someone or something is glassblowing
+#define TRAIT_CURRENTLY_GLASSBLOWING "currently_glassblowing"
+/// Determines if something can receive healing from a xeno
+#define TRAIT_XENO_HEAL_AURA "xeno_heal_aura"
+/// Source trait for slashers.
+#define TRAIT_SLASHER "slasher"
+/// Given to the detective, if they have this, they can see syndicate special descriptions.
+#define TRAIT_DETECTIVE "detective_ability"
+#define TRAIT_OVERDOSEIMMUNE "overdose_immune"
 
-///Given by /obj/item/virgin_mary, mobs that used this can no longer use it again ever
-/* #define TRAIT_MAFIAINITIATE "mafiainitiate" */
-
-/// Our mob has the mind reading genetic mutation.
-/* #define TRAIT_MIND_READER "mind reader" */
-
-///Makes the player appear as their respective job in Binary Talk rather than being a 'Default Cyborg'.
-/* #define TRAIT_DISPLAY_JOB_IN_BINARY "display job in binary" */
-
-/// Trait that determines vulnerability to being stunned from a shove
-/* #define TRAIT_STUN_ON_NEXT_SHOVE "stun on next shove" */
-
-/// Trait that determines whether our mob gains more strength from drinking during a fist fight
-/* #define TRAIT_DRUNKEN_BRAWLER "drunken brawler" */
+// Traits related to food
+/// Trait for Fire Burps
+#define TRAIT_FOOD_FIRE_BURPS	"food_buff_fire_burps"
+/// Trait for fast sliding
+#define TRAIT_FOOD_SLIDE		"food_slide_buff"
+/// Trait for hand picked crops to be of a higher stats (ignores cap)
+#define TRAIT_FOOD_JOB_BOTANIST	"food_job_botanist"
+/// Trait for rocks to randomly drop ore.
+#define TRAIT_FOOD_JOB_MINER	"food_job_miner"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -623,35 +709,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
-/* #define TRAIT_CORONER_METABOLISM "coroner_metabolism" */
-/* #define TRAIT_HUMAN_AI_METABOLISM "human_ai_metabolism" */
+#define TRAIT_GOBLIN_METABOLISM "goblin_metabolism"
 
 //LUNG TRAITS
 /// Lungs always breathe normally when in vacuum/space.
 #define TRAIT_SPACEBREATHING "spacebreathing"
-
-/// This mob can strip other mobs.
-#define TRAIT_CAN_STRIP "can_strip"
-/// Can use the nuclear device's UI, regardless of a lack of hands
-#define TRAIT_CAN_USE_NUKE "can_use_nuke"
-
-// If present on a mob or mobmind, allows them to "suplex" an immovable rod
-// turning it into a glorified potted plant, and giving them an
-// achievement. Can also be used on rod-form wizards.
-// Normally only present in the mind of a Research Director.
-#define TRAIT_ROD_SUPLEX "rod_suplex"
-/// The mob has an active mime vow of silence, and thus is unable to speak and has other mime things going on
-#define TRAIT_MIMING "miming"
-
-/// This mob is phased out of reality from magic, either a jaunt or rod form
-#define TRAIT_MAGICALLY_PHASED "magically_phased"
 
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
-#define TRAIT_KNOW_ROBO_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
@@ -660,22 +729,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Allows chef's to chefs kiss their food, to make them with love
 #define TRAIT_CHEF_KISS "chefs_kiss"
 /// Allows clowns to bend balloons into animals
-/* #define TRAIT_BALLOON_SUTRA "balloon_sutra" */
-/// Allows detectives to identify chemicals by taste
-/* #define TRAIT_DETECTIVES_TASTE "detectives_taste" */
+#define TRAIT_BALLOON_SUTRA "balloon_sutra"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
-/* #define TRAIT_MOVE_GROUND "move_ground" */
+#define TRAIT_MOVE_GROUND "move_ground"
 #define TRAIT_MOVE_FLYING "move_flying"
 #define TRAIT_MOVE_VENTCRAWLING "move_ventcrawling"
 #define TRAIT_MOVE_FLOATING "move_floating"
-/* #define TRAIT_MOVE_PHASING "move_phasing" */
-/*#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down*/
+#define TRAIT_MOVE_PHASING "move_phasing"
+#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down"
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
-
-/// Cannot be turned into a funny skeleton by the plasma river
-/* #define TRAIT_NO_PLASMA_TRANSFORM "no_plasma_transform" */
 
 /// Weather immunities, also protect mobs inside them.
 #define TRAIT_LAVA_IMMUNE "lava_immune" //Used by lava turfs and The Floor Is Lava.
@@ -699,27 +763,58 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
 
-/// This turf contains something using split visiblity
-/* #define TRAIT_CONTAINS_SPLITVIS "contains_splitvis" */
-
 ///Lava will be safe to cross while it has this trait.
 #define TRAIT_LAVA_STOPPED "lava_stopped"
 ///Chasms will be safe to cross while they've this trait.
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
 ///Chasms will be safe to cross if there is something with this trait on it
-/* #define TRAIT_CHASM_STOPPER "chasm_stopper" */
-///The effects of the immerse element will be halted while this trait is present.
-/* #define TRAIT_IMMERSE_STOPPED "immerse_stopped" */
+#define TRAIT_CHASM_STOPPER "chasm_stopper"
 /// The effects of hyperspace drift are blocked when the tile has this trait
 #define TRAIT_HYPERSPACE_STOPPED "hyperspace_stopped"
 
+// /turf/open
+/// Liquids cannot spread over this turf.
+#define TRAIT_BLOCK_LIQUID_SPREAD "block_liquid_spread"
+/// If a trait is considered as having "coverage" by a meteor shield.
+#define TRAIT_COVERED_BY_METEOR_SHIELD "covered_by_meteor_shield"
+/// Replacement for GLOB.typecache_elevated_structures
+#define TRAIT_TURF_HAS_ELEVATED_STRUCTURE "turf_has_elevated_structure"
 ///Turf slowdown will be ignored when this trait is added to a turf.
 #define TRAIT_TURF_IGNORE_SLOWDOWN "turf_ignore_slowdown"
 ///Mobs won't slip on a wet turf while it has this trait
 #define TRAIT_TURF_IGNORE_SLIPPERY "turf_ignore_slippery"
 
+// /obj
+/// added to structures we want the mobs to be able to target.
+#define TRAIT_MOB_DESTROYABLE		"mob_destroyable"
+/// This object cannot have its export value be shown by export scanner (shows as unknown)
+#define TRAIT_HIDDEN_EXPORT_VALUE	"hiddenexportvalue"
+
+// /obj/item
+/// Trait given to a piece of eyewear that allows the user to use NIFSoft HUDs
+#define TRAIT_NIFSOFT_HUD_GRANTER "nifsoft_hud_granter"
+/// Whether a storage item can be compressed by the bluespace compression kit, without the usual storage limitation.
+#define TRAIT_BYPASS_COMPRESS_CHECK	"can_compress_anyways"
+/// This item is considered "trash" (and will be eaten by cleaner slimes)
+#define TRAIT_TRASH_ITEM "trash_item"
+/// This item came from a gift.
+#define TRAIT_GIFT_ITEM	"gift_item"
+/// The mob can see pathogen clouds and such.
+#define TRAIT_VIRUS_SCANNER "virus_scanner"
+/// This item always renders. (only used for stupid magboots rn)
+#define TRAIT_ALWAYS_RENDER	"always_render"
+/// Prevents mechcomp interaction components from interacting with this object.
+#define TRAIT_MECHCOMP_INTERACTION_BANNED "mechcomp_interaction_banned"
+
+// /atom/movable
+/// Things with this trait can pass through wooden barricades.
+#define TRAIT_GOES_THROUGH_WOODEN_BARRICADES	"goes_through_wooden_barricades"
+
 /// Mobs with this trait can't send the mining shuttle console when used outside the station itself
 #define TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION "forbid_mining_shuttle_console_outside_station"
+
+/// Used to prevent spray painting/cleaning polarized windows.
+#define TRAIT_WINDOW_POLARIZED "polarized"
 
 //important_recursive_contents traits
 /*
@@ -737,16 +832,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Used by the honkspam element to avoid spamming the sound. Amusing considering its name.
 #define TRAIT_HONKSPAMMING "trait_honkspamming"
+
 /// Required by the waddling element since there are multiple sources of it.
-/* #define TRAIT_WADDLING "trait_waddling" */
-/// Required by the on_hit_effect element, which is in turn added by other elements.
-/* #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect" */
+#define TRAIT_WADDLING "trait_waddling"
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
-
-///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
-#define TRAIT_MAT_TRANSMUTED "transmuted"
 
 // cargo traits
 ///If the item will block the cargo shuttle from flying to centcom
@@ -754,10 +845,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///If the crate's contents are immune to the missing item manifest error
 #define TRAIT_NO_MISSING_ITEM_ERROR "no_missing_item_error"
 ///If the crate is immune to the wrong content in manifest error
-/* #define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error" */
-
-///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
-#define TRAIT_MARKET_CRASHING "market_crashing"
+#define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error"
 
 // item traits
 #define TRAIT_NODROP "nodrop"
@@ -779,8 +867,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNCATCHABLE "uncatchable"
 /// Fish in this won't die
 #define TRAIT_FISH_SAFE_STORAGE "fish_case"
-/// Stuff that can go inside fish cases
-#define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
+/// Stuff that can go inside fish cases and aquariums
+#define TRAIT_AQUARIUM_CONTENT "aquarium_content"
 /// If the item can be used as a bit.
 #define TRAIT_FISHING_BAIT "fishing_bait"
 /// The quality of the bait. It influences odds of catching fish
@@ -789,14 +877,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GREAT_QUALITY_BAIT "great_quality_bait"
 /// Baits with this trait will ignore bait preferences and related fish traits.
 #define TRAIT_OMNI_BAIT "omni_bait"
-/// The bait won't be consumed when used
-/* #define TRAIT_BAIT_UNCONSUMABLE "bait_unconsumabe" */
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
 #define TRAIT_APC_SHOCKING "apc_shocking"
 /// Properly wielded two handed item
 #define TRAIT_WIELDED "wielded"
+/// This item is currently performing a cleaving attack
+#define TRAIT_CLEAVING "cleaving"
 /// A transforming item that is actively extended / transformed
 #define TRAIT_TRANSFORM_ACTIVE "active_transform"
 /// Buckling yourself to objects with this trait won't immobilize you
@@ -805,10 +893,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_STRIP "no_strip"
 /// Disallows this item from being pricetagged with a barcode
 #define TRAIT_NO_BARCODES "no_barcode"
-/// Allows heretics to cast their spells.
-#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
-/// Designates a heart as a living heart for a heretic.
-#define TRAIT_LIVING_HEART "living_heart"
 /// Prevents the same person from being chosen multiple times for kidnapping objective
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 /// An item still plays its hitsound even if it has 0 force, instead of the tap
@@ -817,19 +901,30 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DANGEROUS_OBJECT "dangerous_object"
 /// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
-/// An item that, if it has contents, will ignore its contents when scanning for contraband.
-/* #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker" */
-/// For edible items that cannot be composted inside hydro trays
-/* #define TRAIT_UNCOMPOSTABLE "uncompostable" */
 /// Items with this trait will not have their worn icon overlayed.
 #define TRAIT_NO_WORN_ICON "no_worn_icon"
 /// Items with this trait will not appear when examined.
 #define TRAIT_EXAMINE_SKIP "examine_skip"
+/// An item is ALWAYS considered baseline reachable and will pipe into CanBeReached().
+#define TRAIT_SKIP_BASIC_REACH_CHECK "skip_basic_reach_check"
+
+//---- Heretic Traits
+/// Hides the heretic overlay that outs them as the heretic
+#define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
+/// Allows heretics to cast their spells.
+#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
+/// Designates a heart as a living heart for a heretic.
+#define TRAIT_LIVING_HEART "living_heart"
+/// Trait given to all participants in a heretic arena
+#define TRAIT_ELDRITCH_ARENA_PARTICIPANT "eldritch_arena_participant"
+/// Trait given to heretic summons, making them immune to heretic spells
+#define TRAIT_HERETIC_SUMMON "heretic_summon"
+/// Lock heretic grasp no longer goes on cooldown when opening things
+#define TRAIT_LOCK_GRASP_UPGRADED "lock_grasp_upgraded"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
-/* #define TRAIT_ANOSMIA "anosmia" */
-/* #define TRAIT_HEAVY_DRINKER "heavy_drinker" */
+#define TRAIT_HEAVY_DRINKER "heavy_drinker"
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"
 #define TRAIT_NIGHT_VISION "night_vision"
@@ -848,9 +943,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
 #define TRAIT_EMPATH "empath"
+#define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
+#define TRAIT_NO_CLONE "NO_CLONE"
 #define TRAIT_BALD "bald"
 #define TRAIT_SHAVED "shaved"
 #define TRAIT_BADTOUCH "bad_touch"
@@ -861,17 +958,29 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
-/* #define TRAIT_STRONG_STOMACH "strong_stomach" */
-
-/// This mob always lands on their feet when they fall, for better or for worse.
-/* #define TRAIT_CATLIKE_GRACE "catlike_grace" */
+#define TRAIT_CAFFEINE_DEPENDENCE "caffeine_dependence"
+#define TRAIT_PRO_SKATER "pro_skater"
+#define TRAIT_ANIME "anime"
+#define TRAIT_CAT "cat"
+#define TRAIT_FEEBLE "feeble"
+#define TRAIT_GOURMAND "gourmand"
+#define TRAIT_CLOWN_DISBELIEVER	"clown_disbeliever"
+#define TRAIT_HIDDEN_IMAGE "generic-hidden-image"
+#define TRAIT_JAILBIRD "jailbird"
+#define TRAIT_LOUD_ASS "loud_ass"
+#define TRAIT_MINING_CALLOUTS "miner_callouts"
+#define TRAIT_PARANOIA "paranoia"
+#define TRAIT_PRIDE_PIN "pride_pin"
+#define TRAIT_STABLE_ASS "stable_ass"
+#define TRAIT_STOWAWAY "stowaway"
+#define TRAIT_UNSTABLE_ASS "unstable_ass"
 
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
 
 // Debug traits
-/// This object has light debugging tools attached to it
-/* #define TRAIT_LIGHTING_DEBUGGED "lighting_debugged" */
+/// This object has sound debugging tools attached to it
+#define TRAIT_SOUND_DEBUGGED "sound_debugged"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -902,6 +1011,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VENTCRAWLER_ALWAYS "ventcrawler_always"
 #define TRAIT_VENTCRAWLER_NUDE "ventcrawler_nude"
 
+/// Trait to allow climbing into disposals bin by themselves. Only matters for non-carbon living mobs.
+#define TRAIT_CAN_CLIMB_DISPOSALS "disposals_always"
+
 /// Minor trait used for beakers, or beaker-ishes. [/obj/item/reagent_containers], to show that they've been used in a reagent grinder.
 #define TRAIT_MAY_CONTAIN_BLENDED_DUST "may_contain_blended_dust"
 
@@ -917,24 +1029,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
 
-/// Trait applied when the turf is being masked by the [/datum/component/vis_block] component
-/// Without cutting out ALL of the center, requiring extra trickery to make seeing both sides reveal the inside
-/* #define TRAIT_INNER_DARKNESS "inner_darkness" */
-
 /// Trait applied when an integrated circuit/module becomes undupable
 #define TRAIT_CIRCUIT_UNDUPABLE "circuit_undupable"
-
-/// Trait applied when an integrated circuit opens a UI on a player (see list pick component)
-/* #define TRAIT_CIRCUIT_UI_OPEN "circuit_ui_open" */
 
 /// PDA/ModPC Traits. This one makes PDAs explode if the user opens the messages menu
 #define TRAIT_PDA_MESSAGE_MENU_RIGGED "pda_message_menu_rigged"
 /// This one denotes a PDA has received a rigged message and will explode when the user tries to reply to a rigged PDA message
 #define TRAIT_PDA_CAN_EXPLODE "pda_can_explode"
 ///The download speeds of programs from the dowloader is halved.
-/* #define TRAIT_MODPC_HALVED_DOWNLOAD_SPEED "modpc_halved_download_speed" */
+#define TRAIT_MODPC_HALVED_DOWNLOAD_SPEED "modpc_halved_download_speed"
 ///Dictates whether a user (source) is interacting with the frame of a stationary modular computer or the pc inside it. Needed for circuits I guess.
-/* #define TRAIT_MODPC_INTERACTING_WITH_FRAME "modpc_interacting_with_frame" */
+#define TRAIT_MODPC_INTERACTING_WITH_FRAME "modpc_interacting_with_frame"
 
 /// If present on a [/mob/living/carbon], will make them appear to have a medium level disease on health HUDs.
 #define TRAIT_DISEASELIKE_SEVERITY_MEDIUM "diseaselike_severity_medium"
@@ -969,17 +1074,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
+/// Trait given to mechs that can have orebox functionality on movement
+#define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
+
 /// Similar trait given to temporary bodies inhabited by players
 #define TRAIT_TEMPORARY_BODY "temporary_body"
 
 /// Trait given to objects with the wallmounted component
 #define TRAIT_WALLMOUNTED "wallmounted"
-
-/// Trait given to mechs that can have orebox functionality on movement
-/* #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional" */
-
-///A trait for mechs that were created through the normal construction process, and not spawned by map or other effects.
-/* #define TRAIT_MECHA_CREATED_NORMALLY "trait_mecha_created_normally" */
 
 ///fish traits
 #define TRAIT_RESIST_EMULSIFY "resist_emulsify"
@@ -992,19 +1094,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
-///It comes from a fish case. Relevant for bounties so far.
-/* #define TRAIT_FISH_FROM_CASE "fish_from_case" */
-///Fish will also occasionally fire weak tesla zaps
-/* #define TRAIT_FISH_ELECTROGENESIS "fish_electrogenesis" */
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
 
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
-
-/// Whether bots will salute this mob.
-/* #define TRAIT_COMMISSIONED "commissioned" */
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
@@ -1019,22 +1114,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNDERFLOOR "underfloor"
 /// If the movable shouldn't be reflected by mirrors.
 #define TRAIT_NO_MIRROR_REFLECTION "no_mirror_reflection"
-/// If this movable is currently treading in a turf with the immerse element.
-/* #define TRAIT_IMMERSED "immersed" */
 /// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
 #define TRAIT_ELEVATED_TURF "elevated_turf"
-/**
- * With this, the immerse overlay will give the atom its own submersion visual overlay
- * instead of one that's also shared with other movables, thus making editing its appearance possible.
- */
-/* #define TRAIT_UNIQUE_IMMERSE "unique_immerse" */
-
-/// Don't render a drop shadow
-/* #define TRAIT_SHADOWLESS "shadowless" */
-
-/// This item is currently under the control of telekinesis
-/* #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled" */
-
+/// Projectiles targeted at this object will hit it regardless of density or layer.
+#define TRAIT_PROJECTILE_SINK "projectile_sink"
 /// changelings with this trait can no longer talk over the hivemind
 #define TRAIT_CHANGELING_HIVEMIND_MUTE "ling_mute"
 /// This guy is a hulk! (Bulky and green, lacks tact)
@@ -1046,46 +1129,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Has splattercasting
 #define TRAIT_SPLATTERCASTER "splattercaster"
 
-///Traits given by station traits
-/* #define STATION_TRAIT_ASSISTANT_GIMMICKS "station_trait_assistant_gimmicks" */
-#define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
-#define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
-#define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
-#define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
-/* #define STATION_TRAIT_MACHINES_GLITCHED "station_trait_machine_glitch" */
-/* #define STATION_TRAIT_BRIGHT_DAY "station_trait_bright_day" */
-#define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
-#define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
-#define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
-#define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
-/* #define STATION_TRAIT_FORESTED "station_trait_forested" */
-#define STATION_TRAIT_HANGOVER "station_trait_hangover"
-/* #define STATION_TRAIT_HUMAN_AI "station_trait_human_ai" */
-#define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
-#define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
-#define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
-#define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
-#define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
-/* #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula" */
-#define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
-#define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
-#define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
-#define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
-#define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
-#define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
-#define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
-/* #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage" */
-
 ///Deathmatch traits
-/* #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants" */
+#define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
 
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"
 
 /// This limb can't be torn open anymore
-/* #define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure" */
+#define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure"
 /// Trait given if the mob has a cranial fissure.
-/* #define TRAIT_HAS_CRANIAL_FISSURE "has_cranial_fissure" */
+#define TRAIT_HAS_CRANIAL_FISSURE "has_cranial_fissure"
 
 /// Denotes that this id card was given via the job outfit, aka the first ID this player got.
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
@@ -1093,14 +1146,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// ID cards with this trait have special appraisal text.
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
-/// things with this trait are treated as having no access in /atom/movable/proc/check_access(obj/item)
-#define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
-
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
-
-///Used by wearable_client_colour to determine whether the mob wants to have the colours of the screen affected by worn items (some still do regardless).
-/* #define TRAIT_SEE_WORN_COLOURS "see_worn_colour" */
+///The entity has Silicon 'access', so is either a silicon, has an access wand, or is an admin ghost AI.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_SILICON_ACCESS "silicon_access_trait"
+///The entity has AI 'access', so is either an AI, has an access wand, or is an admin ghost AI. Used to block off regular Silicons from things.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_AI_ACCESS "ai_access_trait"
 
 // Radiation defines
 
@@ -1117,6 +1170,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This should not be used on clothing_traits, but should be applied to the clothing itself.
 #define TRAIT_RADIATION_PROTECTED_CLOTHING "radiation_protected_clothing"
 
+/// Immune to the effects of rust
+#define TRAIT_RUSTIMMUNE "rust_immune"
+
 /// Whether or not this item will allow the radiation SS to go through standard
 /// radiation processing as if this wasn't already irradiated.
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
@@ -1132,7 +1188,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob heals from cult pylons.
 #define TRAIT_HEALS_FROM_CULT_PYLONS "heals_from_cult_pylons"
-
 /// Ignore Crew monitor Z levels
 #define TRAIT_MULTIZ_SUIT_SENSORS "multiz_suit_sensors"
 
@@ -1158,18 +1213,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RUNECHAT_HIDDEN "runechat_hidden"
 
 /// the object has a label applied
-/* #define TRAIT_HAS_LABEL "labeled" */
+#define TRAIT_HAS_LABEL "labeled"
 
 /// Trait given to a mob that is currently thinking (giving off the "thinking" icon), used in an IC context
-/* #define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC" */
+#define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC"
 
 ///without a human having this trait, they speak as if they have no tongue.
 #define TRAIT_SPEAKS_CLEARLY "speaks_clearly"
-
-// specific sources for TRAIT_SPEAKS_CLEARLY
-
-///Trait given by /datum/component/germ_sensitive
-/* #define TRAIT_GERM_SENSITIVE "germ_sensitive" */
 
 /// This atom can have spells cast from it if a mob is within it
 /// This means the "caster" of the spell is changed to the mob's loc
@@ -1179,16 +1229,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Needs above trait to work.
 /// This trait makes it so that any cast spells will attempt to transfer to the location's location.
 /// For example, a heretic inside the haunted blade's spells would emanate from the mob wielding the sword.
-/* #define TRAIT_SPELLS_TRANSFER_TO_LOC "spells_transfer_to_loc" */
+#define TRAIT_SPELLS_TRANSFER_TO_LOC "spells_transfer_to_loc"
 
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
-
-///Trait given to limb by /mob/living/basic/living_limb_flesh
-/* #define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored" */
-
-///Trait given to organs that have been inside a living being previously
-/* #define TRAIT_USED_ORGAN "used_organ" */
 
 /// Trait given while using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET "wing_buffet"
@@ -1197,19 +1241,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
 
-///this trait hides most visible fluff and interactions of happiness, likely temporarily.
-/* #define TRAIT_MOB_HIDE_HAPPINESS "mob_hide_happiness" */
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
-///trait given to mobs that are hatched
-/* #define TRAIT_MOB_HATCHED "mob_hatched" */
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
-///trait given to food that can be baked by /datum/component/bakeable
-/* #define TRAIT_BAKEABLE "bakeable" */
-
-/// Trait given to foam darts that have an insert in them
-/* #define TRAIT_DART_HAS_INSERT "dart_has_insert" */
 
 /// Trait determines if this mob has examined an eldritch painting
 #define TRAIT_ELDRITCH_PAINTING_EXAMINE "eldritch_painting_examine"
@@ -1220,72 +1255,39 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
 
-///Trait granted by the miner skillchip, allows communication with minebots
-/* #define TRAIT_ROCK_STONER "rock_stoner" */
-
-///Trait given by the regenerative shield component
-/* #define TRAIT_REGEN_SHIELD "regen_shield" */
-
-/// Trait given when a mob is currently in invisimin mode
-/* #define TRAIT_INVISIMIN "invisimin" */
-
-///Trait given when a mob has been tipped
-/* #define TRAIT_MOB_TIPPED "mob_tipped" */
-
-/// Trait which self-identifies as an enemy of the law
-/* #define TRAIT_ALWAYS_WANTED "always_wanted" */
-
-/// Trait given to mobs that have the basic eating element
-/* #define TRAIT_MOB_EATER "mob_eater" */
 /// Trait which means whatever has this is dancing by a dance machine
-/* #define TRAIT_DISCO_DANCER "disco_dancer" */
+#define TRAIT_DISCO_DANCER "disco_dancer"
 
-/// Trait given to anything linked to, not necessarily allied to, the mansus
-/* #define TRAIT_MANSUS_TOUCHED "mansus_touched" */
-
-/// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
-/// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
-/// Appiled it wizard can't refund any spells.
-/* #define TRAIT_SPELLS_LOTTERY "spell_for_sale" */
-
-/// Trait given to mobs wearing the clown mask
-/* #define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown" */
-/// Does this item bypass ranged armor checks?
-/* #define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor" */
-
-/// Trait which means that this item is considered illegal contraband, and valid for the contraband bounty or when scanned by an nspect scanner.
-/* #define TRAIT_CONTRABAND "illegal_contraband" */
-
-/// Traits given by settler, each with their own specific effects for cases where someone would have that trait, but not the other settler effects
-
-/* #define TRAIT_EXPERT_FISHER "expert_fisher" */ // fishing is easier
-/* #define TRAIT_ROUGHRIDER "roughrider" */ // you can improve speed on mounted animals with a good mood
-/* #define TRAIT_STUBBY_BODY "stubby_body" */ // you have a stubby body that lessens your agility
-/* #define TRAIT_BEAST_EMPATHY "beast_empathy" */ // you're good with animals, such as with taming them
-/* #define TRAIT_STURDY_FRAME "sturdy_frame" */ // you suffer much lesser effects from equipment that slows you down
-
-/// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
-/* #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked" */
-/// This trait lets you attach limbs to any player without surgery.
-/* #define TRAIT_EASY_ATTACH "easy_attach" */
-
-///Attached to objects currently on window frames, tables and such, allowing them to walk on other objects without the climbing delay
-/* #define TRAIT_ON_CLIMBABLE "on_climbable" */
-
-///Trait given to the birthday boy
-/* #define TRAIT_BIRTHDAY_BOY "birthday_boy" */
+/// Trait which means that this item is considered illegal contraband, ~(and valid for the contraband bounty or when scanned by an nspect scanner.)~ not implemented yet.
+#define TRAIT_CONTRABAND "illegal_contraband"
 
 ///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
-/* #define TRAIT_NO_TERRAFORM "no_terraform" */
-
-///Mobs with these trait do not get italicized/quiet speech when speaking in low pressure
-/* #define TRAIT_SPEECH_BOOSTER "speech_booster" */
-
-/// Given to a mob that can throw to make them not able to throw
-/* #define TRAIT_NO_THROWING "no_throwing" */
+#define TRAIT_NO_TERRAFORM "no_terraform"
 
 ///Trait which allows mobs to parry mining mob projectiles
-/* #define TRAIT_MINING_PARRYING "mining_parrying" */
+#define TRAIT_MINING_PARRYING "mining_parrying"
+
+/// This atom has a tether attached to it
+#define TRAIT_TETHER_ATTACHED "tether_attached"
+
+/**
+ *
+ * This trait is used in some interactions very high in the interaction chain to allow
+ * certain atoms to be skipped by said interactions if the user is in combat mode.
+ *
+ * Its primarily use case is for stuff like storage and tables, to allow things like emags to be bagged
+ * (because in some contexts you might want to be emagging a bag, and in others you might want to be storing it.)
+ *
+ * This is only checked by certain items explicitly so you can't just add the trait and expect it to work.
+ * (This may be changed later but I chose to do it this way to avoid messing up interactions which require combat mode)
+ */
+#define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
+
+///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
+#define TRAIT_ILLUSORY_EFFECT "illusory_effect"
+
+///Trait given to atoms currently affected by projectile dampeners
+#define TRAIT_GOT_DAMPENED "got_dampened"
 
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
@@ -1293,4 +1295,100 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
-// END TRAIT DEFINES
+/// Trait given to anything linked to, not necessarily allied to, the mansus
+#define TRAIT_MANSUS_TOUCHED "mansus_touched"
+
+// These traits are used in IS_X() as an OR, and is utilized for pseudoantags (such as deathmatch or domains) so they don't need to actually get antag status.
+// To specifically and only get the antag datum, GET_X() exists now.
+#define TRAIT_ACT_AS_CULTIST "act_as_cultist"
+#define TRAIT_ACT_AS_HERETIC "act_as_heretic"
+
+/// Prevents the affected object from opening a loot window via alt click. See atom/AltClick()
+#define TRAIT_ALT_CLICK_BLOCKER "no_alt_click"
+
+/// Trait that says you're shaded by something (ie partially in the dark)
+#define TRAIT_SHADED "shaded"
+
+/// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
+/// Can either be applied to the attacker or an individual limb.
+#define TRAIT_BORG_PUNCHER "borg_puncher"
+
+/// Prevents observers from being able to observe (seeing their UI and such)
+#define TRAIT_NO_OBSERVE "no_observe"
+
+/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
+#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+/// Makes the mob immune to carpotoxin
+#define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
+
+/// This mob can hear the music from the DJ station.
+#define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"
+/// This mob is currently listening to a walkman.
+#define TRAIT_LISTENING_TO_WALKMAN "listening_to_walkman"
+// /datum/mind + /mob/living
+/// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
+#define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+/// You have special interactions with bloodsuckers and the occult.
+#define TRAIT_OCCULTIST "occultist"
+/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
+#define TRAIT_UNBORGABLE "unborgable"
+/// The user is "bloodsucker aligned" - i.e a bloodsucker or vassal.
+/// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED)` instead of `IS_BLOODSUCKER(user) || IS_VASSAL(user)`
+#define TRAIT_BLOODSUCKER_ALIGNED "bloodsucker_aligned"
+
+// /datum/mind
+/// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
+#define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW "joined_as_crew"
+
+///Darkspawn traits
+///lets darkspawns walk through weak light
+#define TRAIT_DARKSPAWN_LIGHTRES "darkspawn_lightres"
+///lets darkspawns walk through any light
+#define TRAIT_DARKSPAWN_CREEP "darkspawn_creep"
+///permanently reduces the lucidity gained from future succs
+#define TRAIT_DARKSPAWN_DEVOURED "darkspawn_devoured"
+///disable psi regeneration (make sure to remove it after some time)
+#define TRAIT_DARKSPAWN_PSIBLOCK "darkspawn_psiblock"
+///make aoe ally buff abilities also affect allied darkspawns
+#define TRAIT_DARKSPAWN_BUFFALLIES "darkspawn_allybuff"
+///revives the darkspawn if they're dead and in the dark
+#define TRAIT_DARKSPAWN_UNDYING "darkspawn_undying"
+
+///reduces the cooldown of all used /datum/action/cooldown by 25%
+#define TRAIT_FAST_COOLDOWNS "short_spell_cooldowns"
+
+/// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
+#define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
+
+/// extra painful groin kicks, oof
+#define TRAIT_NUTCRACKER "nutcracker"
+
+/// they get warm when they do exercisey things
+#define TRAIT_EXERTION_OVERHEAT "exertion_overheat"
+
+/// For if a body has been dissected, to prevent repeats.
+#define TRAIT_BORER_DISSECTION "borer_dissection"
+
+// Traits related directly to Clockwork Cult
+/// Given to Clockwork Golems, gives them a reduction on invoke time for certain scriptures.
+#define TRAIT_FASTER_SLAB_INVOKE "faster_slab_invoke"
+/// Prevents the invocation of clockwork scriptures.
+#define TRAIT_NO_SLAB_INVOKE "no_slab_invoke"
+/// Has an item been enchanted by a clock cult Stargazer?
+#define TRAIT_STARGAZED	"stargazed"
+#define TRAIT_FEATHERED "feathers"
+#define TRAIT_NON_IMPORTANT_SHOE_BLOCK "shoe_block"
+/// Skip a breath once in every x breaths (where x is ticks between breaths)
+#define TRAIT_LABOURED_BREATHING "laboured_breathing"
+/// Blocks losebreath from accumulating from things such as heart attacks or choking
+#define TRAIT_ASSISTED_BREATHING "assisted_breathing"
+/// Stops organs from decaying while dead
+#define TRAIT_NO_ORGAN_DECAY "no_organ_decay"
+/// Mob does not homeostasize body temperature
+#define TRAIT_COLD_BLOODED "cold_blooded"
+
+/// Trait applied to a mob when it gets a required "operational datum" (components/elements). Sends out the source as the type of the element.
+#define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"

@@ -19,7 +19,6 @@
 	var/max_reagent_volume = 45
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
-	var/insertable = TRUE
 	var/static/list/clean_blacklist = typecacheof(list(
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/structure/mop_bucket,
@@ -55,14 +54,16 @@
 	// Disable normal cleaning if there are liquids.
 	if(isturf(atom_to_clean) && turf_to_clean.liquids)
 		to_chat(cleaner, span_warning("It would be quite difficult to clean this with a pool of liquids on top!"))
-		return DO_NOT_CLEAN
+		return CLEAN_BLOCKED
 
 	if(clean_blacklist[atom_to_clean.type])
-		return DO_NOT_CLEAN
+		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
 	if(reagents.total_volume < 0.1)
-		to_chat(cleaner, span_warning("Your mop is dry!"))
-		return DO_NOT_CLEAN
-	return reagents.has_chemical_flag(REAGENT_CLEANS, 1)
+		cleaner.balloon_alert(cleaner, "mop is dry!")
+		return CLEAN_BLOCKED
+	if(reagents.has_chemical_flag(REAGENT_CLEANS, amount = 1))
+		return CLEAN_ALLOWED
+	return CLEAN_BLOCKED|CLEAN_NO_XP
 
 /**
  * Applies reagents to the cleaned floor and removes them from the mop.
@@ -81,9 +82,32 @@
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER), 0.1)
 	reagents.remove_all(val2remove) //reaction() doesn't use up the reagents
 
-/obj/item/mop/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+/obj/item/mop/proc/attack_on_liquids_turf(obj/item/mop/the_mop, turf/target, mob/user, obj/effect/abstract/liquid_turf/liquids)
+	if(!user.Adjacent(target))
+		return FALSE
+	var/free_space = max_reagent_volume - reagents.total_volume
+	var/speed_mult = 1
+	var/datum/liquid_group/targeted_group = target?.liquids?.liquid_group
+	while(!QDELETED(targeted_group))
+		if(speed_mult >= 0.2)
+			speed_mult -= 0.05
+		if(free_space <= 0)
+			to_chat(user, span_warning("Your [src] can't absorb any more!"))
+			return TRUE
+		if(!do_after(user, src.mopspeed * speed_mult, target = target))
+			break
+		if(the_mop.reagents.total_volume == the_mop.max_reagent_volume)
+			to_chat(user, span_warning("Your [src] can't absorb any more!"))
+			break
+		if(targeted_group?.reagents_per_turf)
+			targeted_group?.trans_to_seperate_group(the_mop.reagents, min(targeted_group?.reagents_per_turf, 5))
+			to_chat(user, span_notice("You soak up some liquids with \the [src]."))
+		else if(!QDELETED(target?.liquids?.liquid_group))
+			targeted_group = target.liquids.liquid_group
+		else
+			break
+	user.changeNext_move(CLICK_CD_MELEE)
+	return TRUE
 
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
@@ -128,9 +152,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mop/advanced/cyborg
-	insertable = FALSE
-
 /obj/item/mop/sharp //Basically a slightly worse spear.
 	desc = "A mop with a sharpened handle. Careful!"
 	name = "sharpened mop"
@@ -138,10 +159,16 @@
 	throwforce = 18
 	throw_speed = 4
 	demolition_mod = 0.75
-	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
-	armour_penetration = 10
+	embed_type = /datum/embedding/mop
+	armour_penetration = 20
+	armour_ignorance = 10
 	attack_verb_continuous = list("mops", "stabs", "shanks", "jousts")
 	attack_verb_simple = list("mop", "stab", "shank", "joust")
 	sharpness = SHARP_EDGED //spears aren't pointy either.  Just assume it's carved into a naginata-style blade
 	wound_bonus = -15
 	bare_wound_bonus = 15
+
+/datum/embedding/mop
+	impact_pain_mult = 2
+	remove_pain_mult = 4
+	jostle_chance = 2.5

@@ -10,4 +10,4 @@
 	if (ishuman(victim))
 		if(victim.is_bleeding())
 			victim.restore_blood()
-			to_chat(victim, span_notice("You feel your blood regenerate, and your bleeding to stop!"))
+			to_chat(victim, span_notice("You feel your blood regenerate as your bleeding stops!"))

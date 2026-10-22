@@ -45,9 +45,13 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_click = ALLOW_SILICON_REACH
 	// Blue, dim light
 	light_power = 0.8
+	light_outer_range = 2
 	light_color = LIGHT_COLOR_BLUE
+	light_on = FALSE
 	/// associative lazylist of the form: list(owner of a hologram = hologram representing that owner).
 	var/list/masters
 	/// Holoray-owner link
@@ -82,6 +86,9 @@ Possible to do for anyone motivated enough:
 	var/ringing = FALSE
 	var/offset = FALSE
 	var/on_network = TRUE
+	/// If set, only other holopads with the same "key" will be able to start a call with this holopad.
+	/// However, they can still START outgoing calls to key-less holopads.
+	var/key
 	/// For pads in secure areas; do not allow forced connecting
 	var/secure = FALSE
 	/// If we are currently calling another holopad
@@ -113,6 +120,12 @@ Possible to do for anyone motivated enough:
 	board.secure = TRUE
 	board.build_path = /obj/machinery/holopad/secure
 
+/obj/machinery/holopad/secure/hacked
+	name = "hacked holopad"
+	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
+	req_access = list(ACCESS_SYNDICATE)
+	key = "syndicate"
+
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
@@ -120,6 +133,12 @@ Possible to do for anyone motivated enough:
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
+	///just play once god please don't spam it
+	var/play_once = TRUE
+	var/has_played = FALSE
+
+/obj/machinery/holopad/tutorial/everplaying
+	play_once = FALSE
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
@@ -161,10 +180,17 @@ Possible to do for anyone motivated enough:
 		replay_start()
 
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
-	if (!isliving(AM))
+	if(!isliving(AM))
+		return
+	if(has_played)
 		return
 	if(!replay_mode && (disk?.record))
 		replay_start()
+
+/obj/machinery/holopad/tutorial/replay_start()
+	. = ..()
+	if(play_once)
+		has_played = TRUE
 
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
@@ -223,7 +249,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/holopad/set_anchored(anchorvalue)
 	. = ..()
@@ -298,7 +324,7 @@ Possible to do for anyone motivated enough:
 		data["holo_calls"] += list(call_data)
 	return data
 
-/obj/machinery/holopad/ui_act(action, list/params)
+/obj/machinery/holopad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -314,7 +340,7 @@ Possible to do for anyone motivated enough:
 				last_request = world.time
 				to_chat(usr, span_info("You requested an AI's presence."))
 				var/area/area = get_area(src)
-				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
+				for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 					if(!AI.client)
 						continue
 					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='byond://?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
@@ -327,10 +353,11 @@ Possible to do for anyone motivated enough:
 				return
 			if(usr.loc == loc)
 				var/list/callnames = list()
-				for(var/I in holopads)
-					var/area/A = get_area(I)
-					if(A)
-						LAZYADD(callnames[A], I)
+				for(var/obj/machinery/holopad/holopad as anything in holopads)
+					var/area/holopad_area = get_area(holopad)
+					if(!holopad_area || !can_call_to(holopad))
+						continue
+					LAZYADD(callnames[holopad_area], holopad)
 				callnames -= get_area(src)
 				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
 				if(isnull(result))
@@ -492,9 +519,6 @@ Possible to do for anyone motivated enough:
 			if(!is_operational || !validate_user(master))
 				clear_holo(master)
 
-	if(outgoing_call)
-		outgoing_call.Check()
-
 	var/are_ringing = FALSE
 
 	for(var/datum/holocall/holocall as anything in holo_calls)
@@ -516,6 +540,12 @@ Possible to do for anyone motivated enough:
 	if(ringing != are_ringing)
 		ringing = are_ringing
 		update_appearance(UPDATE_ICON_STATE)
+		return
+
+	if(outgoing_call)
+		outgoing_call.Check()
+		update_appearance(UPDATE_ICON_STATE)
+
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -568,7 +598,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				holocall_to_update.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
-				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range)
+				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range = INFINITY)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
@@ -580,14 +610,17 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
-	if(total_users || replay_mode)
-		set_light(l_outer_range = 2)
+	if(total_users || replay_mode || outgoing_call)
+		set_light(l_on = TRUE)
 	else
-		set_light(l_outer_range = 2)
-	update_appearance()
+		set_light(l_on = FALSE)
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/holopad/update_icon_state()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
+	if(outgoing_call)
+		icon_state = "[base_icon_state]_sending"
+		return ..()
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
 		return ..()
@@ -627,6 +660,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	set_can_hear_flags(CAN_HEAR_HOLOCALL_USER, set_flag = FALSE)
 	calling = FALSE
 	outgoing_call = null
+	SetLightsAndPower()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/holopad/proc/unset_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -640,14 +675,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SetLightsAndPower()
 	return TRUE
 
+/obj/machinery/holopad/proc/can_call_to(obj/machinery/holopad/other)
+	if(QDELETED(other))
+		return FALSE
+	if(other.key && key != other.key)
+		return FALSE
+	return TRUE
+
 //Try to transfer hologram to another pad that can project on T
 /obj/machinery/holopad/proc/transfer_to_nearby_pad(turf/T, datum/holo_owner)
 	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
 	if(!h || h.HC) //Holocalls can't change source.
 		return FALSE
-	for(var/pad in holopads)
-		var/obj/machinery/holopad/another = pad
-		if(another == src)
+	for(var/obj/machinery/holopad/another as anything in holopads)
+		if(another == src || !can_call_to(another))
 			continue
 		if(another.validate_location(T))
 			unset_holo(holo_owner)

@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const ClockCultist: Antagonist = {
   key: 'clockcultist',
@@ -7,8 +7,8 @@ const ClockCultist: Antagonist = {
   description: [
     multiline`
       You are one of the last remaining servants of
-      Rat'var, The Clockwork Justicar.
-      After a long and destructive war, Rat'Var was imprisoned
+      Ratvar, The Clockwork Justicar.
+      After a long and destructive war, Ratvar was imprisoned
       inside a dimension of suffering.
       You must free him by protecting The Ark so that his light may
       shine again.

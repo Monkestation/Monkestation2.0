@@ -8,12 +8,12 @@
 
 	///List of medipen subtypes it can refill and the chems needed for it to work.
 	var/static/list/allowed_pens = list(
-		/obj/item/reagent_containers/hypospray/medipen = /datum/reagent/medicine/epinephrine,
-		/obj/item/reagent_containers/hypospray/medipen/atropine = /datum/reagent/medicine/atropine,
-		/obj/item/reagent_containers/hypospray/medipen/salbutamol = /datum/reagent/medicine/salbutamol,
-		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = /datum/reagent/medicine/sal_acid,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = /datum/reagent/medicine/pen_acid,
+		/obj/item/reagent_containers/medipen = /datum/reagent/medicine/epinephrine,
+		/obj/item/reagent_containers/medipen/atropine = /datum/reagent/medicine/atropine,
+		/obj/item/reagent_containers/medipen/salbutamol = /datum/reagent/medicine/salbutamol,
+		/obj/item/reagent_containers/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
+		/obj/item/reagent_containers/medipen/salacid = /datum/reagent/medicine/sal_acid,
+		/obj/item/reagent_containers/medipen/penacid = /datum/reagent/medicine/pen_acid,
 	)
 
 /obj/machinery/medipen_refiller/Initialize(mapload)
@@ -32,7 +32,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
 		else if(is_reagent_container(held_item) && held_item.is_open_container())
 			context[SCREENTIP_CONTEXT_LMB] = "Refill machine"
-		else if(istype(held_item, /obj/item/reagent_containers/hypospray/medipen) && reagents.has_reagent(allowed_pens[held_item.type]))
+		else if(istype(held_item, /obj/item/reagent_containers/medipen) && reagents.has_reagent(allowed_pens[held_item.type]))
 			context[SCREENTIP_CONTEXT_LMB] = "Refill medipen"
 		else if(istype(held_item, /obj/item/plunger))
 			context[SCREENTIP_CONTEXT_LMB] = "Plunge machine"
@@ -57,14 +57,14 @@
 		if(!length(reagent_container.reagents.reagent_list))
 			balloon_alert(user, "nothing to transfer!")
 			return
-		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transfered_by = user)
+		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			balloon_alert(user, "[units] units transfered")
 		else
 			balloon_alert(user, "reagent storage full!")
 		return
-	if(istype(weapon, /obj/item/reagent_containers/hypospray/medipen))
-		var/obj/item/reagent_containers/hypospray/medipen/medipen = weapon
+	if(istype(weapon, /obj/item/reagent_containers/medipen))
+		var/obj/item/reagent_containers/medipen/medipen = weapon
 		if(!(LAZYFIND(allowed_pens, medipen.type)))
 			balloon_alert(user, "medipen incompatible!")
 			return
@@ -80,21 +80,21 @@
 			medipen.add_initial_reagents()
 			reagents.remove_reagent(allowed_pens[medipen.type], 10)
 			balloon_alert(user, "refilled")
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 		cut_overlays()
 		return
 	return ..()
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...", "plunging medipen refiller...")
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH)
 		reagents.clear_reagents()
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)

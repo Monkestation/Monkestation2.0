@@ -42,18 +42,46 @@
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
+	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
+	var/prevent_drop = FALSE
+
+/datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, prevent_drop)
+	src.prevent_drop = prevent_drop
+	return ..()
 
 /datum/status_effect/incapacitating/knockdown/on_apply()
 	. = ..()
 	if(!.)
 		return
+
+	// anti-drop logic (for shuttle dock or tripped)
+	if(prevent_drop)
+		for(var/obj/item/held_item in owner.held_items)
+			ADD_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+
+	// Apply floored trait so the mob falls over
 	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+
+	// Clean up no-drop immediately after application
+	if(prevent_drop)
+		addtimer(CALLBACK(src, PROC_REF(clear_prevent_drop)), 0)
+
+/datum/status_effect/incapacitating/knockdown/proc/clear_prevent_drop()
+	for(var/obj/item/held_item in owner.held_items)
+		REMOVE_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 	owner.knockdown_diminish = 1
 	return ..()
 
+// cleaner tripped version — now uses prevent_drop flag instead of the hack
+/datum/status_effect/incapacitating/knockdown/tripped
+	id = "tripped"
+
+/datum/status_effect/incapacitating/knockdown/tripped/on_apply()
+	prevent_drop = TRUE
+	return ..()
 
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
@@ -83,6 +111,21 @@
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 	owner.paralyze_diminish = 1
+	return ..()
+
+//DAZED
+/// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
+/datum/status_effect/incapacitating/dazed
+	id = "dazed"
+
+/datum/status_effect/incapacitating/dazed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/dazed/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //INCAPACITATED
@@ -324,20 +367,20 @@
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/kinetic_crusher/hammer_synced
+	var/boosted = FALSE
 
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
 	. = ..()
-	if(.)
-		hammer_synced = new_hammer_synced
+	boosted = was_boosted
 
 /datum/status_effect/crusher_mark/on_apply()
-	if(owner.mob_size >= MOB_SIZE_LARGE)
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+	var/list/factions = list(FACTION_MINING, FACTION_BOSS) // MONKESTATION ADDITION
+	if(faction_check(owner.faction, factions)) //MONKESTATION EDIT, only marks mining mobs no longer large mobs
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', boosted ? "shield" : "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
 		owner.underlays += marked_underlay
@@ -345,15 +388,26 @@
 	return FALSE
 
 /datum/status_effect/crusher_mark/Destroy()
-	hammer_synced = null
 	if(owner)
 		owner.underlays -= marked_underlay
-	QDEL_NULL(marked_underlay)
+	marked_underlay = null
 	return ..()
 
 /datum/status_effect/crusher_mark/be_replaced()
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
+
+/datum/status_effect/crusher_mark/admin //admin version that marks any mob
+	id = "admin_crusher_mark"
+	duration = 3000
+
+/datum/status_effect/crusher_mark/admin/on_apply() //this one marks ANYONE :>
+	marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+	marked_underlay.pixel_x = -owner.pixel_x
+	marked_underlay.pixel_y = -owner.pixel_y
+	owner.underlays += marked_underlay
+	return TRUE
+
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -367,14 +421,24 @@
 	underlay_state = "bleed"
 	var/bleed_damage = 200
 
+/datum/status_effect/stacking/saw_bleed/sickle //monke addition
+	id = "sickle_bleed"
+	tick_interval = 6
+	delay_before_decay = 100 //these take longer to decay
+	overlay_file = 'icons/effects/bleed.dmi'
+	underlay_file = 'icons/effects/bleed.dmi'
+	overlay_state = "bleed"
+	underlay_state = "bleed"
+	bleed_damage = 125 //weaker than cleaving saw bleed due to being more available
+
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
-	new /obj/effect/temp_visual/bleed/explode(owner.loc)
-	for(var/d in GLOB.alldirs)
-		owner.do_splatter_effect(d)
+	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
+	for(var/splatter_dir in GLOB.alldirs)
+		owner.create_splatter(splatter_dir)
 	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
@@ -498,7 +562,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
-	C.preparePixelProjectile(owner, spawn_turf)
+	C.aim_projectile(owner, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -508,6 +572,27 @@
 	. = ..()
 	deltimer(timerid)
 
+/datum/status_effect/progenitor_curse
+	id= "progenitor_curse"
+	tick_interval = 1.5 SECONDS //how often a hand is shot
+	duration = 30 SECONDS
+	alert_type = null
+
+/datum/status_effect/progenitor_curse/tick()
+	if(owner.stat == DEAD)
+		return
+	var/grab_dir = turn(owner.dir, rand(-180, 180)) //grab them from a random direction
+	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
+	if(spawn_turf)
+		grasp(spawn_turf)
+
+/datum/status_effect/progenitor_curse/proc/grasp(turf/spawn_turf)
+	set waitfor = FALSE
+	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
+	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
+	pro.aim_projectile(owner, spawn_turf)
+	pro.fire()
 
 /datum/status_effect/gonbola_pacify
 	id = "gonbolaPacify"
@@ -531,8 +616,10 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
 	tick_interval = 10
-	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
+	var/stun = TRUE
+	var/cause_hypnotism = TRUE
+	var/hypnosis_type = /datum/brain_trauma/hypnosis
 
 /atom/movable/screen/alert/status_effect/trance
 	name = "Trance"
@@ -547,7 +634,8 @@
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
+	if(cause_hypnotism)
+		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
@@ -572,7 +660,7 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
@@ -581,28 +669,54 @@
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
 	hearing_speaker.log_message("hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, color="red")
 	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, color="orange", log_globally = FALSE)
-	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), hypnosis_type, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living, Stun), 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
+
+/// "Hardened" trance variant, used by hypnoflashes.
+/// Only difference is the resulting trauma can't be cured via nanites/viruses.
+/datum/status_effect/trance/hardened
+	hypnosis_type = /datum/brain_trauma/hypnosis/hardened
+
+///Just for the effects and not the trauma.
+/datum/status_effect/trance/no_hypno
+	cause_hypnotism = FALSE
 
 /datum/status_effect/spasms
 	id = "spasms"
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
+// MONKESTATION ADDITION START
+	var/mutation_synchronizer = 1
+	var/mutation_power = 1
+	var/mutation_energy = 1
+// MONKESTATION ADDITION END
 
 /datum/status_effect/spasms/tick()
 	if(owner.stat >= UNCONSCIOUS)
 		return
-	if(!prob(15))
+//	if(!prob(15)) // MONKESTATION EDIT OLD
+	if(!prob(15 * mutation_synchronizer / mutation_energy)) // MONKESTATION EDIT NEW
 		return
 	switch(rand(1,5))
 		if(1)
 			if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
 				to_chat(owner, span_warning("Your leg spasms!"))
 				step(owner, pick(GLOB.cardinals))
+				// MONKESTATION ADDITION START
+				if(mutation_power > 1)
+					var/obj/item/bodypart/leg = owner.get_bodypart("[prob(50) ? "l" : "r"]_leg")
+					leg.receive_damage(2 * mutation_power)
+				// MONKESTATION ADDITION END
 		if(2)
 			if(owner.incapacitated())
 				return
+			// MONKESTATION ADDITION START
+			if(mutation_power > 1)
+				var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+				var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+				arm.receive_damage(1 * mutation_power)
+			// MONKESTATION ADDITION END
 			var/obj/item/held_item = owner.get_active_held_item()
 			if(!held_item)
 				return
@@ -623,6 +737,12 @@
 				to_chat(owner, span_warning("Your arm spasms!"))
 				owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
 				owner.ClickOn(pick(targets))
+				// MONKESTATION ADDITION START
+				if(mutation_power > 1)
+					var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+					var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+					arm.receive_damage(2 * mutation_power)
+				// MONKESTATION ADDITION END
 			owner.set_combat_mode(FALSE)
 		if(4)
 			owner.set_combat_mode(TRUE)
@@ -630,6 +750,12 @@
 			owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
 			owner.ClickOn(owner)
 			owner.set_combat_mode(FALSE)
+			// MONKESTATION ADDITION START
+			if(mutation_power > 1)
+				var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+				var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+				arm.receive_damage(2 * mutation_power)
+			// MONKESTATION ADDITION END
 		if(5)
 			if(owner.incapacitated())
 				return
@@ -641,6 +767,12 @@
 				to_chat(owner, span_warning("Your arm spasms!"))
 				owner.log_message("threw [held_item] due to a Muscle Spasm", LOG_ATTACK)
 				owner.throw_item(pick(targets))
+			// MONKESTATION ADDITION START
+			if(mutation_power > 1)
+				var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+				var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+				arm.receive_damage(2 * mutation_power)
+			// MONKESTATION ADDITION END
 
 /datum/status_effect/convulsing
 	id = "convulsing"
@@ -872,21 +1004,21 @@
 		to_chat(living, span_notice("You manage to get some of the ants off!"))
 		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
 
-/datum/status_effect/stagger
-	id = "stagger"
+/datum/status_effect/rebuked
+	id = "rebuked"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
 
-/datum/status_effect/stagger/on_apply()
+/datum/status_effect/rebuked/on_apply()
 	owner.next_move_modifier *= 1.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time *= 2.5
 	return TRUE
 
-/datum/status_effect/stagger/on_remove()
+/datum/status_effect/rebuked/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return

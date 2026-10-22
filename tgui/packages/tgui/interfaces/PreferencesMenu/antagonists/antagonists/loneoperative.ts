@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 import { OPERATIVE_MECHANICAL_DESCRIPTION } from './operative';
 
 const LoneOperative: Antagonist = {
@@ -13,7 +13,7 @@ const LoneOperative: Antagonist = {
 
     OPERATIVE_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default LoneOperative;

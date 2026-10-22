@@ -5,13 +5,17 @@
 
 // Organ signals
 /// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
-#define COMSIG_ORGAN_IMPLANTED "comsig_organ_implanted"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "comsig_wag_tail"
+#define COMSIG_ORGAN_IMPLANTED "organ_implanted"
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
-#define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+#define COMSIG_ORGAN_REMOVED "organ_removed"
 /// Called when an organ is being regenerated with a new copy in species regenerate_organs (obj/item/organ/replacement)
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
+/// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
+#define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
+/// Called when using the *wag emote
+#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
+/// Called when a organ's damage is adjusted apply_organ_damage (damage_amount, maximum, required_organ_flag)
+#define COMSIG_ORGAN_ADJUST_DAMAGE "organ_adjust_damage"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -36,8 +40,12 @@
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 ///from base of mob/living/set_body_position()
 #define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
-///From post-can inject check of syringe after attack (mob/user)
-#define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
+/// Sent to a mob being injected with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
+/// Sent to a mob being withdrawn from with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
+///from base of mob/living/set_usable_legs()
+#define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
@@ -89,6 +97,8 @@
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
+#define COMSIG_LIVING_FAKE_DEATH "fake_death"
+
 ///from base of mob/living/gib(): (no_brain, no_organs, no_bodyparts)
 ///Note that it is fired regardless of whether the mob was dead beforehand or not.
 #define COMSIG_LIVING_GIBBED "living_gibbed"
@@ -115,6 +125,8 @@
 #define COMSIG_LIVING_STATUS_IMMOBILIZE "living_immobilize"
 ///from base of mob/living/incapacitate() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_INCAPACITATE "living_incapacitate"
+///from base of mob/living/Daze() (amount, ignore_canstun)
+#define COMSIG_LIVING_STATUS_DAZE "living_daze"
 ///from base of mob/living/Unconscious() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
 ///from base of mob/living/Sleeping() (amount, ignore_canstun)
@@ -122,9 +134,6 @@
 /// from mob/living/check_stun_immunity(): (check_flags)
 #define COMSIG_LIVING_GENERIC_STUN_CHECK "living_check_stun"
 	#define COMPONENT_NO_STUN (1<<0) //For all of them
-///from base of /mob/living/can_track(): (mob/user)
-#define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
-	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 /// from start of /mob/living/handle_breathing(): (seconds_per_tick, times_fired)
@@ -180,6 +189,10 @@
 	#define STOP_SACRIFICE (1<<0)
 	/// Don't send a message for sacrificing this thing, we have our own
 	#define SILENCE_SACRIFICE_MESSAGE (1<<1)
+	/// Don't send a message for sacrificing this thing UNLESS it's the cult target
+	#define SILENCE_NONTARGET_SACRIFICE_MESSAGE (1<<2)
+	/// Dusts the target instead of gibbing them (no soulstone)
+	#define DUST_SACRIFICE (1<<3)
 
 /// From /mob/living/befriend() : (mob/living/new_friend)
 #define COMSIG_LIVING_BEFRIENDED "living_befriended"
@@ -192,11 +205,6 @@
 
 /// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
 #define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
-
-/// From /obj/projectile/attempt_parry() : (obj/projectile/parried_projectile)
-#define COMSIG_LIVING_PROJECTILE_PARRYING "living_projectile_parrying"
-	/// Return to allow the parry to happen
-	#define ALLOW_PARRY (1<<0)
 
 /// From /obj/projectile/on_parry() : (obj/projectile/parried_projectile)
 #define COMSIG_LIVING_PROJECTILE_PARRIED "living_projectile_parried"
@@ -215,12 +223,26 @@
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
 
+///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
+#define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define FAILED_BLOCK NONE
+	#define SUCCESSFUL_BLOCK (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
+
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
+
+/// Sent from a mob to their loc when starting to remove cuffs on itself
+#define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
 
 #define COMSIG_LIVING_BODY_TEMPERATURE_CHANGE "living_body_temperature_change"
 
@@ -229,3 +251,18 @@
 	#define HOMEOSTASIS_HANDLED (1<<0)
 	/// Return to not reduce hunger at all
 	#define HOMEOSTASIS_NO_HUNGER (1<<1)
+
+/// Sent to the mob when their mind is slaved
+#define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
+/// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
+#define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
+
+/// Sent from [/mob/living/examine] late, after the first signal is sent, but BEFORE flavor text handling,
+/// for when you prefer something guaranteed to appear at the bottom of the stack
+/// (Flavor text should stay at the very very bottom though)
+#define COMSIG_LIVING_LATE_EXAMINE "late_examine"
+
+#define COMSIG_LIVING_BINGLE_EVOLVE "living_bingle_evolve"
+
+/// Sent when the [/datum/status_effect/silver_bullet] status effect is applied or refresh.
+#define COMSIG_LIVING_BLOODSILVER_HIT "living_bloodsilver_hit"

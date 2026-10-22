@@ -2,21 +2,37 @@
 SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
-	wait = 10
+	wait = 1 SECONDS
 	runlevels = RUNLEVEL_GAME
 	var/list/processing = list()
 	var/list/eligible_zlevels = list()
 	var/list/next_hit_by_zlevel = list() //Used by barometers to know when the next storm is coming
+	var/list/currentrun
 
-/datum/controller/subsystem/weather/fire()
+/datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
-	for(var/V in processing)
-		var/datum/weather/our_event = V
-		if(our_event.aesthetic || our_event.stage != MAIN_STAGE)
+	var/list/active_weather = list()
+	for(var/datum/weather/weather as anything in processing)
+		if(weather.aesthetic || weather.stage != MAIN_STAGE)
 			continue
-		for(var/mob/act_on as anything in GLOB.mob_living_list)
-			if(our_event.can_weather_act(act_on))
-				our_event.weather_act(act_on)
+		active_weather += weather
+
+	if(length(active_weather))
+		if(!resumed)
+			currentrun = GLOB.mob_living_list.Copy()
+		var/list/current_run = src.currentrun
+		while(length(current_run))
+			var/mob/act_on = current_run[length(current_run)]
+			current_run.len--
+			if(QDELETED(act_on))
+				continue
+			for(var/datum/weather/weather as anything in active_weather)
+				if(weather.can_weather_act(act_on))
+					weather.weather_act(act_on)
+			if(MC_TICK_CHECK)
+				return
+	else
+		currentrun = null
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
@@ -24,7 +40,7 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/our_event = pick_weight(possible_weather)
 		run_weather(our_event, list(text2num(z)))
 		eligible_zlevels -= z
-		var/randTime = rand(3000, 6000)
+		var/randTime = rand(5 MINUTES, 10 MINUTES)
 		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(our_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize()
@@ -81,3 +97,11 @@ SUBSYSTEM_DEF(weather)
 			A = W
 			break
 	return A
+
+ADMIN_VERB(stop_weather, R_DEBUG | R_ADMIN, FALSE, "Stop All Active Weather", "Stop all currently active weather.", ADMIN_CATEGORY_DEBUG) // Probably not needed but added incase.
+	log_admin("[key_name(user)] stopped all currently active weather.")
+	message_admins("[key_name_admin(user)] stopped all currently active weather.")
+	for(var/datum/weather/current_weather as anything in SSweather.processing)
+		if(current_weather in SSweather.processing)
+			current_weather.end()
+	BLACKBOX_LOG_ADMIN_VERB("Stop All Active Weather")

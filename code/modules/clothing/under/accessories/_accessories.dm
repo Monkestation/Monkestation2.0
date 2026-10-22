@@ -30,6 +30,13 @@
 	. = ..()
 	register_context()
 
+/obj/item/clothing/accessory/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
 /**
  * Can we be attached to the passed clothing article?
  */
@@ -53,6 +60,22 @@
 		return FALSE
 
 	return TRUE
+
+// If accessory is being worn, make sure it updates on the player
+/obj/item/clothing/accessory/update_greyscale()
+	. = ..()
+
+	var/obj/item/clothing/under/attached_to = loc
+
+	if(!istype(attached_to))
+		return
+
+	var/mob/living/carbon/human/wearer = attached_to.loc
+
+	if(!istype(wearer))
+		return
+
+	attached_to.update_accessory_overlay()
 
 /**
  * Actually attach this accessory to the passed clothing article.
@@ -99,13 +122,13 @@
  *
  * We may have exited the clothing's loc at this point
  */
-/obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
+/obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from, popped = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(IS_WEAKREF_OF(src, detach_from.atom_storage?.real_location))
+	if(detach_from.atom_storage?.real_location == src)
 		// Ensure void items do not stick around
-		atom_storage.close_all()
-		detach_from.atom_storage.close_all()
+		atom_storage?.close_all()
+		detach_from.atom_storage?.close_all()
 		// And clean up the storage we made
 		QDEL_NULL(detach_from.atom_storage)
 
@@ -148,10 +171,12 @@
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	dropped(user)
 	return
 
 /// Signal proc for [COMSIG_CLOTHING_UNDER_ADJUSTED] on the uniform we're pinned to
@@ -163,6 +188,8 @@
 		return
 
 	source.remove_accessory(src)
+	if(QDELETED(src))
+		return
 	forceMove(source.drop_location())
 	source.visible_message(span_warning("[src] falls off of [source]!"))
 
@@ -187,7 +214,7 @@
 	. += "It can be worn above or below your suit. Right-click to toggle."
 
 /obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!isnull(held_item))
+	if(!isnull(held_item) && held_item != src)
 		return NONE
 
 	context[SCREENTIP_CONTEXT_RMB] = "Wear [above_suit ? "below" : "above"] suit"

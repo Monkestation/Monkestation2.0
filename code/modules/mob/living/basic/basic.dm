@@ -43,8 +43,6 @@
 
 	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	///Minimum force required to deal any damage.
-	var/force_threshold = 0
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
@@ -96,6 +94,18 @@
 	var/list/weather_immunities
 //MONKESTATION EDIT END
 
+	//MONKESTATION EDIT START - These variables were changed as part of a temperature overhaul by
+	// Borbop, in #3301.
+	// WHEN PORTING THESE OVER:
+	// * `minimum_survivable_temperature` -> `bodytemp_cold_damage_limit`
+	// * `maximum_survivable_temperature` -> `bodytemp_heat_damage_limit`
+	// * If either one has a value of `0`, set it to `-1`.
+	/* //MONKESTATION EDIT ORIGINAL
+	///Minimal body temperature without receiving damage
+	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
+	///Maximal body temperature without receiving damage
+	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
+	*/
 	bodytemp_cold_damage_limit = NPC_DEFAULT_MIN_TEMP
 	bodytemp_heat_damage_limit = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
@@ -131,7 +141,7 @@
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
 /mob/living/basic/proc/apply_atmos_requirements()
-	if(unsuitable_atmos_damage == 0)
+	if(unsuitable_atmos_damage == 0 || isnull(habitable_atmos))
 		return
 	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
 	habitable_atmos = string_assoc_list(habitable_atmos)
@@ -170,7 +180,7 @@
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(staminaloss > 0)
+	if(stamina?.loss > 0)
 		stamina.adjust(stamina_recovery * seconds_per_tick, forced = TRUE)
 
 /mob/living/basic/say_mod(input, list/message_mods = list())
@@ -181,6 +191,7 @@
 /mob/living/basic/death(gibbed)
 	. = ..()
 	if(basic_mob_flags & DEL_ON_DEATH)
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0
@@ -211,7 +222,7 @@
 		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_DEAD)
 
-/mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return
@@ -299,7 +310,7 @@
 
 /// Updates movement speed based on stamina loss
 /mob/living/basic/on_stamina_update()
-	set_varspeed(initial(speed) + (staminaloss * 0.06))
+	set_varspeed(initial(speed) + (stamina?.loss * 0.06))
 
 /mob/living/basic/get_fire_overlay(stacks, on_fire)
 	var/fire_icon = "generic_fire"
@@ -320,7 +331,7 @@
 
 /mob/living/basic/update_held_items()
 	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
+	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_REDUCED)
 		return
 	var/turf/our_turf = get_turf(src)
 	for(var/obj/item/held in held_items)
@@ -328,6 +339,12 @@
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
+
+/mob/living/basic/update_cached_insulation()
+	return
+
+/mob/living/basic/get_insulation(temperature)
+	return temperature_insulation
 
 //MONKESTATION EDIT START
 /mob/living/basic/proc/get_scream_sound()

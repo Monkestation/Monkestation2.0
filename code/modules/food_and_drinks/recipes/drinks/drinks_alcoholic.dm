@@ -31,11 +31,6 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
-/datum/chemical_reaction/drink/wine
-	results = list(/datum/reagent/consumable/ethanol/wine = 10)
-	required_reagents = list(/datum/reagent/consumable/grapejuice = 10)
-	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
-
 /datum/chemical_reaction/drink/spacebeer
 	results = list(/datum/reagent/consumable/ethanol/beer = 10)
 	required_reagents = list(/datum/reagent/consumable/flour = 10)
@@ -122,6 +117,11 @@
 /datum/chemical_reaction/drink/manly_dorf
 	results = list(/datum/reagent/consumable/ethanol/manly_dorf = 3)
 	required_reagents = list (/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/ale = 2)
+	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/drink/honeybee_mead
+	results = list(/datum/reagent/consumable/ethanol/honeybee_mead = 3)
+	required_reagents = list (/datum/reagent/consumable/ethanol/mead = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/sugar = 1)
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/greenbeer
@@ -661,3 +661,16 @@
 /datum/chemical_reaction/drink/blue_hawaiian
 	results = list(/datum/reagent/consumable/ethanol/blue_hawaiian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/curacao = 1)
+
+/datum/chemical_reaction/drink/ratvander
+	results = list(/datum/reagent/consumable/ethanol/ratvander = 10)
+	required_reagents = list(
+		/datum/reagent/consumable/ethanol/wine = 5,
+		/datum/reagent/consumable/ethanol/triple_sec = 5,
+		/datum/reagent/consumable/sugar = 1,
+		/datum/reagent/iron = 1,
+		/datum/reagent/copper = 0.6
+	)
+	mix_message = "The mixture develops a golden glow."
+	mix_sound = 'sound/magic/clockwork/scripture_tier_up.ogg'
+	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER

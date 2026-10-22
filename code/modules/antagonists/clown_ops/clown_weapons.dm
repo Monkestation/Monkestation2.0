@@ -65,12 +65,11 @@
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 
-	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process(seconds_per_tick)
-	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
 	if(bananium_amount < BANANA_SHOES_MAX_CHARGE)
 		bananium.insert_amount_mat(min(BANANA_SHOES_RECHARGE_RATE * seconds_per_tick, BANANA_SHOES_MAX_CHARGE - bananium_amount), /datum/material/bananium)
@@ -91,7 +90,7 @@
 	force = 0
 	throwforce = 0
 	hitsound = null
-	embedding = null
+	embed_type = null
 	light_color = COLOR_YELLOW
 	sword_color_icon = "bananium"
 	active_heat = 0

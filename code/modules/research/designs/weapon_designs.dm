@@ -83,7 +83,7 @@
 	name = "Buckshot Shell"
 	id = "buckshot_shell"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -96,7 +96,7 @@
 	id = "slug_shell"
 	desc = "A 12g slug shell"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -202,8 +202,8 @@
 	autolathe_exportable = FALSE
 
 /datum/design/beamrifle
-	name = "Beam Marksman Rifle Part Kit (Lethal)"
-	desc = "The gunkit for a powerful long ranged anti-material rifle that fires charged particle beams to obliterate targets."
+	name = "Event Horizon Anti-Existential Beam Rifle Part Kit (DOOMSDAY DEVICE)"
+	desc = "The kit that produces a weapon made to end your foes on an existential level. Why the fuck can you make this?"
 	id = "beamrifle"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.25, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5)
@@ -312,6 +312,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/piercesyringe // The day when syringe guns aren't a weapon.
+	name = "Piercing Syringe"
+	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	id = "piercesyringe"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/reagent_containers/syringe/piercing
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/xray
 	name = "X-ray Laser Gun Part Kit (Lethal)"
 	desc = "Not quite as menacing as it sounds"
@@ -338,6 +350,19 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
+/datum/design/lasercannon
+	name = "Laser Cannon Part Kit (Lethal)"
+	desc = "Big lasers for big targets."
+	id = "lasercannon"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/weaponcrafting/gunkit/lasercannon
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
@@ -357,6 +382,20 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/lasershell
+	name = "Scatter Laser Shotgun Shell (Lethal)"
+	desc = "A high-tech shotgun shell which houses an internal capacitor and laser focusing crystal inside of a shell casing. \
+		Able to be fired from conventional ballistic shotguns with minimal rifling degradation. Also leaves most targets covered \
+		in grotesque burns."
+	id = "lasershell"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ammo_casing/shotgun/scatterlaser
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)

@@ -118,7 +118,6 @@
 	icon_state = "undersuit_greyscale"
 	greyscale_config = /datum/greyscale_config/cin_surplus_undersuit/object
 	greyscale_config_worn = /datum/greyscale_config/cin_surplus_undersuit
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/cin_surplus_undersuit/digi
 	greyscale_colors = "#bbbbc9#bbbbc9#34343a"
 
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus/desert
@@ -153,7 +152,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
 	icon_state = "vest_basic"
 	armor_type = /datum/armor/cin_surplus_armor
-	supports_variations_flags = CLOTHING_NO_VARIATION
+	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/armor/vest/cin_surplus_vest/Initialize(mapload)
 	. = ..()

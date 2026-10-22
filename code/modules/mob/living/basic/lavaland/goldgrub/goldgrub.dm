@@ -10,7 +10,7 @@
 	speed = 5
 	pixel_x = -12
 	base_pixel_x = -12
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	friendly_verb_continuous = "harmlessly rolls into"
 	friendly_verb_simple = "harmlessly roll into"
 	maxHealth = 45
@@ -37,6 +37,8 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/fetch,
 	)
+	/// Do we have emissives?
+	var/has_emissive = TRUE
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
 	. = ..()
@@ -63,6 +65,8 @@
 		make_egg_layer()
 
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+	if(has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
@@ -97,15 +101,9 @@
 	return ..()
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
-	AddComponent(\
-		/datum/component/tameable,\
-		food_types = list(/obj/item/stack/ore),\
-		tame_chance = 25,\
-		bonus_tame_chance = 5,\
-		after_tame = CALLBACK(src, PROC_REF(tame_grub)),\
-	)
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)
 
-/mob/living/basic/mining/goldgrub/proc/tame_grub()
+/mob/living/basic/mining/goldgrub/tamed(mob/living/tamer, atom/food)
 	new /obj/effect/temp_visual/heart(src.loc)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goldgrub)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -135,6 +133,11 @@
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
 
+/mob/living/basic/mining/goldgrub/update_overlays()
+	. = ..()
+	if(has_emissive)
+		. += emissive_appearance(icon, "[icon_state]_e", src)
+
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	name = "goldgrub baby"
@@ -150,6 +153,7 @@
 	can_tame = FALSE
 	can_lay_eggs = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/babygrub
+	has_emissive = FALSE
 
 /mob/living/basic/mining/goldgrub/baby/Initialize(mapload)
 	. = ..()
@@ -178,7 +182,7 @@
 	transformed_mob.ai_controller.blackboard[BB_FRIENDS_LIST] = friends
 
 	if(length(friends))
-		transformed_mob.tame_grub()
+		transformed_mob.tamed()
 
 	if(initial(new_mob.unique_name))
 		transformed_mob.set_name()

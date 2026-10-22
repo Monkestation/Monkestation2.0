@@ -120,3 +120,53 @@
 	name = "robot toy"
 	default_name = "robot toy"
 	donator_pet = /mob/living/basic/pet/robottoything
+
+/obj/item/choice_beacon/pet/donator/babypukeko
+	name = "baby pukeko"
+	default_name = "baby pukeko"
+	donator_pet = /mob/living/basic/pet/babypukeko
+
+/obj/item/choice_beacon/pet/donator/tallbabypukeko
+	name = "tall baby pukeko"
+	default_name = "tall baby pukeko"
+	donator_pet = /mob/living/basic/pet/babypukeko/tall
+
+/obj/item/choice_beacon/pet/donator/eris_romch
+	name = "romch"
+	default_name = "romch"
+	donator_pet = /mob/living/basic/pet/eris_romch
+
+/obj/item/choice_beacon/pet/donator/theclown_clownpet
+	name = "short clown"
+	default_name = "short clown"
+	donator_pet = /mob/living/basic/pet/theclown_clownpet
+
+/obj/item/choice_beacon/pet/donator/cyber_husky
+	name = "Cyber Husky"
+	default_name = "Cyber Husky"
+	donator_pet = /mob/living/basic/pet/cyber_husky
+
+/obj/item/choice_beacon/pet/donator/bananadola
+	name = "bananadola"
+	default_name = "bananadola"
+	donator_pet = /mob/living/basic/pet/bananadola
+
+/obj/item/choice_beacon/pet/donator/cyber_mastiff
+	name = "cyber mastiff"
+	default_name = "cyber mastiff"
+	donator_pet = /mob/living/basic/pet/cyber_mastiff
+
+/obj/item/choice_beacon/pet/donator/yato_neco_arc
+	name = "Neco-Arc"
+	default_name = "Neco-Arc"
+	donator_pet = /mob/living/basic/pet/yato_neco_arc
+
+/obj/item/choice_beacon/pet/donator/shark_axolotl
+	name = "Shark Axolotl"
+	default_name = "Shark Axolotl"
+	donator_pet = /mob/living/basic/axolotl/shark_costume
+
+/obj/item/choice_beacon/pet/donator/vanilla_mothroach
+	name = "Vanilla Mothroach"
+	default_name = "Vanilla"
+	donator_pet = /mob/living/basic/mothroach/vanilla

@@ -10,8 +10,11 @@
 ##Path/CanProcCall(procname){\
 	return FALSE;\
 }\
+##Path/can_vv_mark(procname){\
+	return FALSE;\
+}\
 ##Path/Read(savefile/savefile){\
-	qdel(src);\
+	del(src);\
 }\
 ##Path/Write(savefile/savefile){\
 	return;\
@@ -19,3 +22,4 @@
 #else
 #define GENERAL_PROTECT_DATUM(Path)
 #endif
+// we del instead of qdel because for security reasons we must ensure the datum does not exist if Read is called. qdel will not enforce this.

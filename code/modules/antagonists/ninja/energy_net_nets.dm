@@ -12,7 +12,6 @@
 	desc = "It's a net made of green energy."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "energynet"
-
 	density = TRUE//Can't pass through.
 	opacity = FALSE //Can see through.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
@@ -20,26 +19,30 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	max_integrity = 60 //How much health it has.
-	can_buckle = 1
+	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
-	///The creature currently caught in the net
-	var/mob/living/affected_mob
+
+/obj/structure/energy_net/Initialize(mapload)
+	. = ..()
+	// ninja gets a version without the alpha 1 pixels, so they can easily hit the person inside
+	var/image/ninja_appearance = image('icons/effects/effects.dmi', src, "energynet_clickthru", initial(layer))
+	SET_PLANE_EXPLICIT(ninja_appearance, initial(plane), src)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/has_antagonist, "energynet_clickthru", ninja_appearance, /datum/antagonist/ninja)
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BRUTE || damage_type == BURN)
 		playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
 
-/obj/structure/energy_net/Destroy()
-	if(!QDELETED(affected_mob))
-		affected_mob.visible_message(span_notice("[affected_mob.name] is recovered from the energy net!"), span_notice("You are recovered from the energy net!"), span_hear("You hear a grunt."))
-	affected_mob = null
+/obj/structure/energy_net/atom_destruction(damage_flag)
+	for(var/mob/recovered_mob as anything in buckled_mobs)
+		recovered_mob.visible_message(span_notice("[recovered_mob] is recovered from the energy net!"), span_notice("You are recovered from the energy net!"), span_hear("You hear a grunt."))
 	return ..()
 
 /obj/structure/energy_net/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/energy_net/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
+/obj/structure/energy_net/user_buckle_mob(mob/living/buckled_mob, mob/user, check_loc = TRUE)
 	return//We only want our target to be buckled
 
 /obj/structure/energy_net/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)

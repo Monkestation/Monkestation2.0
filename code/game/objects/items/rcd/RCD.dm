@@ -1,7 +1,3 @@
-#define RCD_DESTRUCTIVE_SCAN_RANGE 10
-#define RCD_HOLOGRAM_FADE_TIME (15 SECONDS)
-#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
-
 ///each define maps to a variable used for construction in the RCD
 #define CONSTRUCTION_MODE "construction_mode"
 #define WINDOW_TYPE "window_type"
@@ -9,6 +5,7 @@
 #define WALLFRAME_TYPE "wallframe_type"
 #define FURNISH_TYPE "furnish_type"
 #define AIRLOCK_TYPE "airlock_type"
+#define FIRELOCK_TYPE "firelock_type"
 
 ///flags to be sent to UI
 #define TITLE "title"
@@ -37,6 +34,7 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
+	action_slots = ALL
 
 	///all stuff used by RCD for construction
 	var/static/list/root_categories = list(
@@ -47,12 +45,15 @@
 				list(CONSTRUCTION_MODE = RCD_FLOORWALL, ICON = "wallfloor", TITLE = "Wall/Floor"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window, ICON = "windowsize", TITLE = "Directional Window"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced, ICON = "windowtype", TITLE = "Directional Reinforced Window"),
-				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/fulltile, ICON = "window0", TITLE = "Full Tile Window"),
-				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, ICON = "rwindow0", TITLE = "Full Tile Reinforced Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/fulltile, ICON = "window-0", TITLE = "Full Tile Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, ICON = "reinforced_window-0", TITLE = "Full Tile Reinforced Window"),
 				list(CONSTRUCTION_MODE = RCD_CATWALK, ICON = "catwalk-0", TITLE = "Catwalk"),
 				list(CONSTRUCTION_MODE = RCD_REFLECTOR, ICON = "reflector_base", TITLE = "Reflector"),
 				list(CONSTRUCTION_MODE = RCD_GIRDER, ICON = "girder", TITLE = "Girder"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window_sill, ICON = "window_sill-0", TITLE = "Window Sill"),
+				list(CONSTRUCTION_MODE = RCD_FIRELOCK, FIRELOCK_TYPE = /obj/machinery/door/firedoor, ICON = "firelock_window", TITLE = "Firelock"),
+				list(CONSTRUCTION_MODE = RCD_FIRELOCK, FIRELOCK_TYPE = /obj/machinery/door/firedoor/border_only, ICON = "firelock_slim", TITLE = "Slim Firelock"),
+				list(CONSTRUCTION_MODE = RCD_FIRELOCK, FIRELOCK_TYPE = /obj/machinery/door/firedoor/heavy, ICON = "firelock_heavy", TITLE = "Heavy Firelock"),
 			),
 
 			//Computers & Machine Frames
@@ -66,6 +67,8 @@
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/apc, ICON = "apc", TITLE = "APC WallFrame"),
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/airalarm, ICON = "alarm_bitem", TITLE = "AirAlarm WallFrame"),
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/firealarm, ICON = "fire_bitem", TITLE = "FireAlarm WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/button, ICON = "button", TITLE = "Button WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/camera/wired, ICON = "cameracase", TITLE = "Camera WallFrame"),
 			),
 
 			//Interior Design[construction_mode = RCD_FURNISHING is implied]
@@ -137,7 +140,7 @@
 	/// main category of currently selected design[Structures, Airlocks, Airlock Access]
 	var/root_category = "Construction"
 	/// owner of this rcd. It can either be an construction console or an player
-	var/owner
+	var/atom/owner
 	/// type of structure being built, used to decide what variables are used to build what structure
 	var/mode = RCD_FLOORWALL
 	/// temporary holder of mode, used to restore mode original value after rcd deconstruction act
@@ -156,6 +159,8 @@
 	var/obj/item/wallframe/wallframe_type = /obj/item/wallframe/apc
 	/// type of furniture tables,chairs etc we are trying to build
 	var/furnish_type = /obj/structure/chair
+	/// type of firedoor
+	var/obj/machinery/door/firedoor/firelock_type = /obj/machinery/door/firedoor
 	/// delay multiplier for all construction types
 	var/delay_mod = 1
 	/// variable for R walls to deconstruct them
@@ -189,6 +194,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	COOLDOWN_START(src, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
 	rcd_scan(src)
+
+/// How many tiles within player radius does it perform a rcd scan in
+#define RCD_DESTRUCTIVE_SCAN_RANGE 10
 
 /**
  * Global proc that generates RCD hologram in a range.
@@ -229,6 +237,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		hologram.makeHologram()
 		animate(hologram, alpha = 0, time = fade_time, easing = CIRCULAR_EASING | EASE_IN)
 
+#undef RCD_DESTRUCTIVE_SCAN_RANGE
+
 /obj/effect/rcd_hologram
 	name = "hologram"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -236,10 +246,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/effect/rcd_hologram/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, RCD_HOLOGRAM_FADE_TIME)
-
-#undef RCD_DESTRUCTIVE_SCAN_COOLDOWN
-#undef RCD_DESTRUCTIVE_SCAN_RANGE
-#undef RCD_HOLOGRAM_FADE_TIME
 
 /obj/item/construction/rcd/suicide_act(mob/living/user)
 	var/turf/T = get_turf(user)
@@ -298,6 +304,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			// monkestation start: window sills
 			if(is_full_tile)
 				structures_to_ignore += /obj/structure/window_sill
+			if(istype(target, /obj/structure/door_assembly))
+				structures_to_ignore += /obj/structure/door_assembly
 			// monkestation end
 
 			//check if we can build our window on the grill
@@ -327,6 +335,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				RCD_FURNISHING,
 				RCD_MACHINE,
 				RCD_REFLECTOR,
+				RCD_FIRELOCK,
 				RCD_WINDOWGRILLE,
 			)
 
@@ -372,7 +381,12 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	//does this atom allow for rcd actions?
 	var/list/rcd_results = target.rcd_vals(user, src)
 	if(!rcd_results)
-		return FALSE
+		return NONE
+
+	//straight up can't touch this
+	if(mode == RCD_DECONSTRUCT && (target.resistance_flags & INDESTRUCTIBLE))
+		balloon_alert(user, "too durable!")
+		return ITEM_INTERACT_BLOCKING
 
 	var/delay = rcd_results["delay"] * delay_mod
 	if (
@@ -385,6 +399,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	current_active_effects += 1
 	_rcd_create_effect(target, user, delay, rcd_results)
 	current_active_effects -= 1
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Internal proc which creates the rcd effects & creates the structure
@@ -442,7 +457,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/rcd/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/rcd),
+		get_asset_datum(/datum/asset/spritesheet_batched/rcd),
 	)
 
 /obj/item/construction/rcd/ui_host(mob/user)
@@ -473,7 +488,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	var/category_icon_state
 	var/category_icon_suffix
-	for(var/sub_category as anything in root_categories[root_category])
+	for(var/sub_category in root_categories[root_category])
 		var/list/target_category =  root_categories[root_category][sub_category]
 		if(target_category.len == 0)
 			continue
@@ -563,6 +578,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[WINDOW_TYPE] != null)
 					window_type = design[WINDOW_TYPE]
+				if(design[FIRELOCK_TYPE] != null)
+					firelock_type = design[FIRELOCK_TYPE]
 			else if(category_name == "Machines")
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[COMPUTER_DIR] != null)
@@ -587,34 +604,34 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rcd/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/construction/rcd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	//proximity check for normal rcd & range check for arcd
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return FALSE
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 
-	//do the work
 	mode = construction_mode
-	rcd_create(target, user)
+	return rcd_create(interacting_with, user)
 
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/construction/rcd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ranged || !range_check(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
 
-/obj/item/construction/rcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	//proximity check for normal rcd & range check for arcd
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	mode = construction_mode
+	return rcd_create(interacting_with, user)
 
-	//do the work
+/obj/item/construction/rcd/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	mode = RCD_DECONSTRUCT
-	rcd_create(target, user)
+	return rcd_create(interacting_with, user)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/construction/rcd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ranged || !range_check(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
 
-/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return
-	afterattack(target, user, TRUE, click_parameters)
+	mode = RCD_DECONSTRUCT
+	return rcd_create(interacting_with, user)
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, list/modifiers)
+	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -630,7 +647,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/borg
 	desc = "A device used to rapidly build walls and floors."
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
-	var/energyfactor = 72
+	/// enery usage
+	var/energyfactor = 0.072 * STANDARD_CELL_CHARGE
 
 /obj/item/construction/rcd/borg/get_matter(mob/user)
 	if(!iscyborg(user))
@@ -672,7 +690,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
-	energyfactor = 66
+	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
 
 /obj/item/construction/rcd/loaded
@@ -727,12 +745,33 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *6, /datum/material/glass=SHEET_MATERIAL_AMOUNT*4)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 4)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*24, /datum/material/glass=SHEET_MATERIAL_AMOUNT*16)
+	name = "RCD large matter cartridge"
+	desc = "If the standard seemed unnaturally heavy, then this one is 4 times heavier than usual!"
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 18, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 12)
+	w_class = WEIGHT_CLASS_SMALL
 	ammoamt = 160
+	color = "#cc99ff"
+
+/obj/item/rcd_ammo/mega_large
+	name = "RCD massive matter cartridge"
+	desc = "This is no longer a small block, but a solid monoblock, it is not just 8 times heavier than usual, but also takes up more space."
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 28, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 20, /datum/material/titanium= SHEET_MATERIAL_AMOUNT * 8, /datum/material/uranium=SHEET_MATERIAL_AMOUNT * 4)
+	icon_state = "rcdammo_mega"
+	w_class = WEIGHT_CLASS_NORMAL
+	ammoamt = 320
+	color = "#cc99ff"
+
+/obj/item/rcd_ammo/ultra_large
+	name = "RCD bluespace matter cartridge"
+	desc = "A very strange cartridge with a constantly changing structure. It has a very small weight and volume, but it holds 16 times more than usual!"
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 36, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 28, /datum/material/titanium=SHEET_MATERIAL_AMOUNT * 12, /datum/material/uranium=SHEET_MATERIAL_AMOUNT * 8, /datum/material/plasma=SHEET_MATERIAL_AMOUNT * 4, /datum/material/bluespace=SHEET_MATERIAL_AMOUNT * 2)
+	icon_state = "rcdammo_ultra"
+	ammoamt = 640
+	color = "#2478ff"
 
 /obj/item/construction/rcd/combat/admin
 	name = "admin RCD"
@@ -753,3 +792,54 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
 	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+
+///How much charge is used up for each matter unit.
+#define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
+
+/obj/item/construction/rcd/exosuit
+	name = "mounted RCD"
+	desc = "An exosuit-mounted Rapid Construction Device."
+	max_matter = INFINITY // mass-energy equivalence go brrrrrr
+	canRturf = TRUE
+	ranged = TRUE
+	has_ammobar = FALSE
+	resistance_flags = FIRE_PROOF | INDESTRUCTIBLE // should NOT be destroyed unless the equipment is destroyed
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
+	delay_mod = 0.5
+
+/obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
+	if(ismecha(owner))
+		return owner.ui_status(user)
+	return UI_CLOSE
+
+/obj/item/construction/rcd/exosuit/get_matter(mob/user)
+	if(silo_link)
+		return ..()
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	return round(gundam.get_charge() / MASS_TO_ENERGY)
+
+/obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
+	if(silo_link)
+		return ..()
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
+		gundam.balloon_alert(user, "insufficient charge!")
+		return FALSE
+	return TRUE
+
+/obj/item/construction/rcd/exosuit/checkResource(amount, mob/user)
+	if(silo_link)
+		return ..()
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	if(!gundam.has_charge(amount * MASS_TO_ENERGY))
+		gundam.balloon_alert(user, "insufficient charge!")
+		return FALSE
+	return TRUE
+
+#undef MASS_TO_ENERGY

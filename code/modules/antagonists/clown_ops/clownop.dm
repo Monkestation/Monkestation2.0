@@ -9,6 +9,7 @@
 	preview_outfit = /datum/outfit/clown_operative_elite
 	preview_outfit_behind = /datum/outfit/clown_operative
 	nuke_icon_state = "bananiumbomb_base"
+	antag_count_points = 8
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
@@ -67,18 +68,8 @@
 	back = /obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	uniform = /obj/item/clothing/under/syndicate
 
-/datum/outfit/clown_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.active = TRUE
-	H.update_worn_back()
-
 /datum/outfit/clown_operative_elite
 	name = "Clown Operative (Elite, Preview only)"
 
 	back = /obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	uniform = /obj/item/clothing/under/syndicate
-
-/datum/outfit/clown_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.active = TRUE
-	H.update_worn_back()

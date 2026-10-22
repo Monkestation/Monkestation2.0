@@ -39,16 +39,16 @@
 		if(ispath(summoned_object_type, /turf))
 			if(isclosedturf(spawn_place))
 				spawn_place.ChangeTurf(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
-				return
+				continue
 			if(ispath(summoned_object_type, /turf/closed))
 				if (spawn_place.overfloor_placed)
 					spawn_place.ChangeTurf(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
 				else
 					spawn_place.PlaceOnTop(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
-				return
+				continue
 			var/turf/open/open_turf = spawn_place
 			open_turf.replace_floor(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
-			return
+			continue
 
 		var/atom/summoned_object = new summoned_object_type(spawn_place)
 

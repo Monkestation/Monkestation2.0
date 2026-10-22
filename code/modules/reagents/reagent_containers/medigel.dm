@@ -16,7 +16,7 @@
 	throw_speed = 3
 	throw_range = 7
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
 	volume = 60
 	var/can_fill_from_container = TRUE
 	var/apply_type = PATCH
@@ -33,8 +33,7 @@
 	)
 
 /obj/item/reagent_containers/medigel/mode_change_message(mob/user)
-	var/squirt_mode = amount_per_transfer_from_this == initial(amount_per_transfer_from_this)
-	to_chat(user, span_notice("You will now apply the medigel's contents in [squirt_mode ? "extended sprays":"short bursts"]. You'll now use [amount_per_transfer_from_this] units per use."))
+	to_chat(user, span_notice("You'll now use [amount_per_transfer_from_this] units per use."))
 
 /obj/item/reagent_containers/medigel/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
@@ -67,7 +66,7 @@
 	else
 		log_combat(user, M, "applied", src, reagents.get_reagent_log_string())
 		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, methods = apply_type)
+		reagents.trans_to(M, amount_per_transfer_from_this, transferred_by = user, methods = apply_type)
 	return
 
 /obj/item/reagent_containers/medigel/libital
@@ -99,3 +98,18 @@
 	current_skin = "medigel_blue"
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
 	custom_price = PAYCHECK_CREW * 2
+
+/obj/item/reagent_containers/medigel/advanced
+	name = "advanced medical gel applicator (synthflesh)"
+	desc = "An advanced medical gel applicator, designed for precision application, and a large sealed internal reservoir. This one contains synthflesh, a slightly toxic medicine capable of healing both bruises and burns."
+	worn_icon_state = "hypo"
+	inhand_icon_state = "combat_hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	icon_state = "combat_gel"
+	current_skin = "combat_gel"
+	possible_transfer_amounts = list(5,10,20,30,50)
+	volume = 300
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 300)
+	can_fill_from_container = FALSE
+	reagent_flags = TRANSPARENT

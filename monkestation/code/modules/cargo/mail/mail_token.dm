@@ -22,7 +22,7 @@
 /obj/item/storage/bag/mail_token_catcher
 	name = "mail token tray"
 	desc = "A tray for holding mail tokens."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper_bin0"
 
 /obj/item/storage/bag/mail_token_catcher/Initialize(mapload)

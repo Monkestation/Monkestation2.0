@@ -14,6 +14,8 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
+	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
+	antag_count_points = 1 //its revs, you get nothing
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why
 	var/deconversion_reason
@@ -78,7 +80,6 @@
 /datum/antagonist/rev/greet()
 	. = ..()
 	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/revolutionary_tide.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
@@ -187,6 +188,8 @@
 	job_rank = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
+	hardcore_random_bonus = TRUE
+	antag_count_points = 10
 
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
@@ -269,8 +272,7 @@
 
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
-	assistant.hairstyle = hairstyle
-	assistant.update_body_parts()
+	assistant.set_hairstyle(hairstyle, update = TRUE)
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -302,6 +304,7 @@
 
 	if(mute)
 		rev_mind.current.set_silence_if_lower(10 SECONDS)
+		rev_mind.current.set_emote_mute_if_lower(10 SECONDS)
 	if(stun)
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)
@@ -550,7 +553,7 @@
 		player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			ADD_TRAIT(player_mind, TRAIT_DEFIB_BLACKLISTED, REF(src))
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
@@ -564,7 +567,7 @@
 	var/extra_detail = try_auto_call_shuttle() \
 		? "For the safety of our staff, we are expediting an emergency shuttle for remaining members of security and command." \
 		: "For the safety of our staff, we have blacklisted your station for new employment of security and command."
-	var/propaganda = pick(world.file2list("strings/anti_union_propaganda.txt"))
+	var/propaganda = pick(file2list("strings/anti_union_propaganda.txt"))
 
 	priority_announce(
 		"[message_header]\n\n[extra_detail]\n\n[propaganda]",
@@ -614,8 +617,7 @@
 /datum/team/revolution/proc/defeat_effects()
 	// If the revolution was quelled, make rev heads unable to be revived through pods
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
-		if(!isnull(rev_head.current))
-			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+		ADD_TRAIT(rev_head, TRAIT_DEFIB_BLACKLISTED, REF(src))
 
 	for(var/datum/objective/mutiny/head_tracker in objectives)
 		var/mob/living/head_of_staff = head_tracker.target?.current
@@ -714,14 +716,14 @@
 	for(var/datum/mind/N as anything in SSjob.get_living_heads())
 		var/mob/M = N.current
 		if(M)
-			heads_report += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-			heads_report += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-			heads_report += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+			heads_report += "<tr><td><a href='byond://?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			heads_report += "<td><A href='byond://?priv_msg=[M.ckey]'>PM</A></td>"
+			heads_report += "<td><A href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
 			var/turf/mob_loc = get_turf(M)
 			heads_report += "<td>[mob_loc.loc]</td></tr>"
 		else
-			heads_report += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
-			heads_report += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+			heads_report += "<tr><td><a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
+			heads_report += "<td><A href='byond://?priv_msg=[N.key]'>PM</A></td></tr>"
 	heads_report += "</table>"
 	return common_part + heads_report
 

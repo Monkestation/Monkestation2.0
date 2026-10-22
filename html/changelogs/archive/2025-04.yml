@@ -1,0 +1,583 @@
+2025-04-02:
+  Addust:
+  - rscadd: Rayne Corp, Toyota, and Johnson & Co Architecture have gotten together
+      to make some cursed new gun
+  - rscadd: If you discover a Screaming Hilux pistol, do not fire it without wielding
+      it and acquiring ear protection.
+  - rscadd: You have been warned.
+  Ice-Type:
+  - bugfix: Sleeping carp and awakened dragon now apply stamina damage properly again!
+      :)
+2025-04-03:
+  Gw0sty:
+  - rscadd: Adds holiday checks for events that aren't too spammy in their nature
+2025-04-04:
+  Absolucy:
+  - balance: Kindle is now dodged/countered by martial arts, consistent with the mansus
+      grasp and blood cult stun.
+  - map: Fixed a window on top of a windoor (which prevented interacting with the
+      windoor) in the Icebox library.
+  - rscadd: Added a new neutral quirk, "Unborgable". It's exactly what it says on
+      the tin, and prevents your brain from being used for a cyborg or AI, for better
+      or worse.
+  - bugfix: Jukebox and lobby screen music should now play on BYOND 516. Jukeboxes
+      won't have directional audio, however.
+  - qol: Cats can now knock things off reinforced tables.
+  - bugfix: The effects of revenant blight shouldn't be much weaker than intended
+      anymore.
+  - balance: Revenant blight now makes people easier to wound.
+  - balance: Revenants can now drain stamcritted people.
+  - balance: Revenant blight now drains sanity.
+  - rscadd: Revenant blight victims in the final stage will be soft spoken.
+  - code_imp: The protection from revenant blight after being cured is now a trait,
+      rather than a status effect
+  - rscdel: Removed the TEG and SM-TEG from Box Station's random engine rotation.
+  - code_imp: Heavily optimized code related to the roundend process.
+  - refactor: Refactored some code related to initialization.
+  - code_imp: Runtime errors will now print to the chat while debugging.
+  Absolucy, Gaxeer:
+  - bugfix: Round time in stat panel and ESC menu will show actual time since the
+      round start, not the world time.
+  Absolucy, Kashargul:
+  - bugfix: confirm buttons on the chat window
+  - bugfix: scroll tracking failing on large display counts when large messages blocks
+      where received
+  Absolucy, Vishenka0704, Mothblocks:
+  - qol: You can now delete your characters in preferences.
+  Gw0sty:
+  - rscadd: Cassettes can be made on central command
+  - map: Icebox surgery is more spacious
+  - map: Tramstation no longer has a spaced sealed area in its rock
+  - bugfix: Tramstation pet sanctuary apc is no longer disconnected roundstart
+  RandomDudeFromTheRim:
+  - bugfix: fixed the syndicate magboot confusion
+  The-Hotline-System:
+  - rscadd: Added Sprungle's ominous porcelain, and golden masks.
+  - rscadd: Added the CentCom Admiral clothes for Abraxis.
+  TheMrGlasses:
+  - rscadd: Adds an upgrade for better medical borg surgical tools.
+  - rscadd: Adds rescue hooks to the medical vendor, mining lockers, and mining vendor.
+  - balance: Changes the price of rescue hooks to a more reasonable 300 credits.
+  Wisemonster:
+  - rscdel: Removed the stolen CC clothes from the nanotrasen reps closet.
+2025-04-05:
+  Absolucy:
+  - refactor: The cargo imports console and assault op armaments uplink now use a
+      more efficient method of displaying icons.
+  Absolucy, hry-gh:
+  - bugfix: fix chat fixed?
+  Absolucy, timothymtorres:
+  - qol: Add more glasses to the nearsighted pref menu with icons.
+  - qol: Add UI preference menus for AI hologram and status displays.
+2025-04-06:
+  Absolucy:
+  - bugfix: Fixed some edge cases where player worn icons wouldn't update properly...
+      such as blades being hidden when equipping to a void cloak.
+  - bugfix: Fixed the civilian bounty console UI not extending to the entire screen
+      width on BYOND 516.
+  - bugfix: (JohnFulpWillard) Clients joining a round twice as a crewmember (via admins
+      or otherwise) no longer break security/medical record consoles permanently.
+  - bugfix: (Aylong) Fixed small character preview, color matrix preview, mech preview,
+      and other previews with uses ByondUI map.
+  - bugfix: (JohnFulpWillard) Users on 515 no longer have 2 scrollwheels on the experiscanner.
+  - rscdel: (JohnFulpWillard) The stat panel only shows the scrollwheel when there's
+      something to scroll to.
+  - bugfix: (jlsnow301) TGUI Say should focus on its initial open, once more
+  - bugfix: (hry-gh) Certain songs trying to play would crash the chat, it no longer
+      does.
+  - bugfix: Replay subsystem initialization should no longer seemingly freeze the
+      server for players waiting in the lobby.
+  - bugfix: Fixed plague rats appearing twice on the roundend report.
+2025-04-08:
+  Absolucy:
+  - rscadd: Ported a lot of MODlink-related content, mainly scryers, from tgstation.
+      You can see more info in the adjacent changelogs!
+  - rscadd: Added MODlink scryers as a loadout option (under neck items)
+  - bugfix: Going through your past few messages in tgui-say using the arrow keys
+      now works on BYOND 516 again.
+  - balance: (Hatterhat) The strong-arm implant's punches now respect armor.
+  - spellcheck: (Hatterhat) While using an arm with the strong-arm implant to punch
+      people, you no longer kick them; your implant's in your arm, after all!
+  - balance: (necromanceranne) Strongarm implants now utilize the attacking limb's
+      unarmed potential to determine damage and potential armor penetration. It also
+      does additional stamina damage (1.5x punch damage)
+  - balance: (necromanceranne) Strong-arm implants go on cooldown when activated,
+      but deal more overall lethal damage on a single blow.
+  - balance: (necromanceranne) The strong-arm implant does additional damage to fauna
+      and some other dangerous mobs.
+  - qol: (necromanceranne) You can pair toolset arm implants with the strong-arm implants.
+  - balance: (necromanceranne) Having a strongarm implant installed into each arm
+      now allows you to pry open doors.
+  - bugfix: You can now use hypernob crystals, durathread reinforcement, and fire/lava/pressure-proofing
+      potions on clothing with storage, i.e jackboots, by clicking on it while in
+      combat mode.
+  CRITAWAKETS:
+  - balance: The bluespace MOD storage can now hold bulky storage items (backpacks,
+      toolbelts) just like the bag of holding.
+  Fikou:
+  - bugfix: fixes multitools possibly randomly losing their buffer
+  - bugfix: fixes modlinks checking battery charge without a battery and working without
+      charge
+  - qol: modlink stuff is a bit more explained
+  - bugfix: modlinks printed from rnd no longer start with a frequency (remember to
+      copy it from another one with a multitool buffer, robotics starts with 2 NT
+      frequency linked ones)
+  Fikou, Armhulen, Sheets (+rep for Mothblocks and Potato):
+  - bugfix: RD MODsuit outfit (admin only) no longer has a beret that blocks the activation
+      of the suit
+  - bugfix: The beret used by death squad officers no longer is blocked from being
+      put on a hat stabilizer module
+  - admin: Admins can now Shear matrices of objects in Modify Transform
+  - admin: Admins now have access to Test Matrices in the VV dropdown, an all-in-one
+      tool for editing transforms.
+  - rscadd: MODLink system, available through scryers (from RnD and Charlie Station)
+      and through MODsuits. Lets you call people with holographs!
+  Guillaume Prata:
+  - balance: The Atmospheric MODsuit now comes pre equipped with the quick carry module.
+      Go save some lives!
+  Gw0sty:
+  - balance: Research now generates at 1 point per second, all other metrics based
+      on this number follow suite.
+  Jacquerel:
+  - rscadd: pAIs can be inserted into MODsuits and can control suit modules (but are
+      not capable of moving the suit).
+  - bugfix: AIs/pAIs in MODsuits can properly pin actions
+  MTandi:
+  - qol: Solar control console now shows power generation history
+  - refactor: Refactored MOD Suit UI
+  - qol: Added options to hide detailed vitals and DNA data to the MOD status module
+  - qol: Made MOD Ion Jetpack Module have stabilizers enabled by default
+  SyncIt21:
+  - bugfix: jetpack modules work on mod suits again
+  - bugfix: jetpack cyber implants also work
+  - refactor: removed `get_mover` callback, user is retrieved during activation
+  - refactor: timestop module on `on_module_triggered()` accepts user as 2nd param
+  - bugfix: finishing & closing the turbine core rotor part will now connect itself
+      to the cable beneath it allowing it to share its produced power with everyone.
+  - bugfix: turbine's now give detailed balloon alerts if you have a missing component,
+      or something is not aligned correctly during turbine construction
+  - bugfix: turbine's will not produce power in vaccume
+  - bugfix: turbine's won't function if any of it's components are damaged or misaligned
+      after linking or during processing
+  carlarctg:
+  - rscadd: Centcom's janitorial department has gotten tired of scooping up discarded
+      scarves from the floor and has instead assigned MODlink scryers to some stations'
+      crew in an attempt to spice up the disposal team's jobs.
+  stonetear:
+  - bugfix: jetpack signals now pass a user argument.  This fixes an error when automatically
+      stowing a captain jetpack into your modsuit.
+2025-04-09:
+  Absolucy:
+  - rscdel: Removed the proto-kinetic grenade launcher.
+  - qol: The storyteller will no longer roll antags after the emergency shuttle is
+      past the point of no return.
+  - bugfix: Optimized some more stuff, reducing the potential for server-side lag
+      (time dilation) in some situations.
+  - bugfix: Chat messages now actually queue as intended.
+  - bugfix: Fixed improperly cleaning up memories when a mind is deleted.
+  - bugfix: Messages sent to MMIs in wiremod components now have a 1 second cooldown,
+      to prevent massive spam.
+  - code_imp: (mc-oofet) Basic mobs that delete on death now ghost before dying.
+  - bugfix: (SmArtKar, Kapu) Atmospheric tanks no longer fetch icons every tick
+  - bugfix: (tontyGH) Pubby's whiteship no longer breaks when it tries to dock.
+  - bugfix: (SmArtKar) Fixed a Honkerblast 5000 runtime.
+  - bugfix: (Melbert) Fixed an error from reading an ID card closely when you can't
+      read.
+  Gw0sty:
+  - rscadd: Chameleon hats now can be used inhand to set hairstyles in ones disguise
+  - balance: Medical mech equipment now is also locked behind Odysseus research
+  - balance: Research access is now needed to unlock nanite remotes.
+  - code_imp: Modularized some code
+  Shoddd:
+  - balance: flechette is now weak against armor
+  Tostah:
+  - rscadd: When something is implanted with a hive node, grant them the ability to
+      speak Xenocommon
+  - rscadd: New Traitor Misc. Gear; Xenomorph Hive Node Implanter for 5tc.
+  flleeppyy:
+  - rscadd: Observe verb
+  - rscdel: Replying to mentorhelps via Discord
+2025-04-11:
+  Absolucy:
+  - bugfix: Stabilized rainbow extracts now use signals to detect when the user enters
+      crit, preventing dumb things
+  Gw0sty:
+  - rscadd: Limb Grower has more designs
+  - rscadd: Limb Grower has a new sprite from TG.
+  - rscadd: Mechfab can print IPC Antennas.
+  - rscadd: Prosthesis feature manipulation
+  - bugfix: defib mounts with defibs inside them roundstart will no longer be invisible.
+  - bugfix: Printing digitgrade limbs section will no longer just, not work.
+  - bugfix: Captains now have places to spawn on Icebox
+  Kitsunemitsu:
+  - balance: AI now takes 15 hours of silicon to unlock instead of 3.
+  Loiosh42:
+  - image: Lilies and Geraniums now have different sprites
+  MomoBerri:
+  - bugfix: Mailing on Theseus now works properly.
+  Shoddd:
+  - balance: Oddity maints loot is rarer again
+  - balance: Trash piles only roll for oddity loot once
+  - admin: Better borer say logging
+  Singul0:
+  - rscadd: Adds scrap vehicles (Locker mechs, Ambulance and trash tank!)
+  - bugfix: Walls take armor penetration into account now
+  Ziiro:
+  - bugfix: IPC reboot surgery now displays the correct error/complete messages.
+  - balance: IPC reboot surgery now requires 5 iron in the step, not 15.
+  - bugfix: IPCs now use the correct wings when drinking a flight potion
+2025-04-12:
+  Absolucy:
+  - refactor: Cached generated preview icons for antags, hopefully increasing performance
+  - bugfix: The "Report Bugs" button is red once more.
+  - bugfix: 'Fixed some lighting-related code:'
+  - bugfix: The admin Break/Fix Lights buttons now don't take half an eternity to
+      complete.
+  - admin: 'Added some new Lua functions: SS13.ispath, SS13.typecacheof, SS13.is_type_in_typecache,
+      SS13.get_turf, and SS13.get_area'
+  - bugfix: Fixed a broken check in the SS13.register_signal Lua function.
+  - bugfix: Fixed the _winget SDQL2/Lua wrapper, so it actually returns the return
+      value of winget.
+  - rscadd: Teratomas now have an antag preference.
+  - rscadd: Added an uncommon random event, where some teratomas (picked from ghosts)
+      somehow manage to crash a car or washing machine into the station.
+  - rscadd: Putting a teratoma's brain into a cyborg or AI may have... unforeseen
+      consequences.
+  - rscadd: Teratomas are now fundamentally evil.
+  Absolucy, Gaxeer:
+  - refactor: replace bubble sort with timsort for cameralist, move global procs to
+      `cameranet` datum
+  Ice-Type:
+  - balance: Armour now affects the scarp, acarp, and tunnel arts martial arts.
+  - balance: Base damage is increased to compensate. Damage will be higher with no
+      armour, but still a little weaker with base sec armour.
+  - bugfix: Awakened dragon now ACTUALLY deflects all projectiles. Dual wielding and
+      shotguns won't work anymore!
+  adamsong:
+  - rscadd: Added tgui ticket panel
+  flleeppyy:
+  - admin: You can now restart the MC/Failsafe from the discord with /restartcontroller
+2025-04-13:
+  Absolucy:
+  - bugfix: Fixed some assorted minor bugs.
+  - bugfix: Fixed R&D metaphorically exploding when the Cybernetic Revolution station
+      trait rolled.
+  - rscadd: (MTO, Lilah Novi) Say commands typed in the command bar now trigger typing
+      indicators.
+  - qol: (hry-gh) Under the chat settings, you can now press "Adjust UI Sizes" to
+      drag around some of the panel sizes.
+  - bugfix: (hry-gh) The input at the bottom right is no longer so teeny tiny on 516
+      if you use a window scaling that is greater than 100%
+  - qol: (hry-gh) There's a new UI preference called UI scale which allows people
+      that use windows scaling to have their UIs original size with the contents zoomed
+      out, instead of the default, which is the UIs being larger with the contents
+      "normal" size.
+  - bugfix: (hry-gh) Various UIs did not respect windows scaling, they now do.
+  - bugfix: Fixed the white border around the tgui-say input on 516 when it was focused.
+  - bugfix: Fixed a hard delete with the Prosthetic Limb quirk.
+  - bugfix: Fixed some antags still rolling after the emergency shuttle is past the
+      point of no return.
+  BingusSS13:
+  - admin: Using "Make Human" in the player panel will now apply quirks and loadout.
+  DexeeXI:
+  - rscdel: Removal of unused assets
+  - rscdel: Cleanup of items on Centcom
+  Gw0sty:
+  - bugfix: IPC chests will no longer become dislocated
+  - qol: Heliostation distro has been slightly adjusted to create less unnecessary
+      snags. Actual distro is unaffected.
+  - balance: Maintenace drone's inbuilt tools are now considered Bulky storage, the
+      same as a normal bag. Normal -> Bulky
+  - balance: Cyborg RPED's have now received additional storage capacity. 50 parts
+      -> 200 Parts
+  - bugfix: All stations merged have a proper preloaded Maintenace drone spawner
+  - bugfix: DeltaStation Cargo now has a distro that is connected to the atmospherics
+      and can properly restore air.
+  - bugfix: Deltastation robotics airlock will no longer spawn with a oxygen tank
+  - bugfix: Deltratstation PTL now has a connected distro
+  - bugfix: Theseus AI sat now functional
+  - bugfix: Tramstation arrivals is now connected to distro
+  - bugfix: Assault operatives and Plague rats now have proper preference icons in
+      the player panel
+  - bugfix: Psyker Zombie no longer has round removing chasms.
+  - bugfix: Psyker shuffle has more appriopate totally real crates and preopened ones.
+  Ziiro:
+  - bugfix: IPCs now die without a brain
+  - bugfix: IPCs are no longer sent to null space in some revival circumstances
+  - bugfix: IPC death/revival screen manipulation now checks if they have a screen
+      first.
+  flleeppyy:
+  - bugfix: change discord verification code format
+2025-04-14:
+  Absolucy:
+  - bugfix: Bloodsuckers will no longer suffer a masquerade infraction when their
+      own holoparasite is watching them.
+  Addust:
+  - bugfix: the engineering outpost ruin no longer needs all its atmos room windows
+      dismantled in order to keep a PERPETUAL FIRE ALARM from occuring
+  Gboster-0:
+  - rscadd: Added many chromosome effects to a lot of mutations
+  - rscadd: Added A lotta lot of mutations from TG/Bee/Yog/Goon/Paradise, whole rainbow.
+      Gotta research em all! (note, some are only findable on certain species or need
+      to be combined)
+  - balance: You can only now get 3 chromosomes from a person using injectors and
+      2 chromosomes from using the DNA infuser
+  Gw0sty:
+  - spellcheck: Fixed Interrogator gramma, thanks to TerryTehCoder
+  Killermankey:
+  - map: Lead Poisoning Station.
+  Snack-Max:
+  - rscadd: Added Fez
+  The-Hotline-System:
+  - bugfix: Logs now properly display ckeys in regards to fireman carries and piggyback
+      rides.
+  - admin: Bombers List now logs reagent explosions, explosive ammunition, etc.
+  destrucktoid:
+  - rscadd: Added new healing systems for bloodsuckers. They can now exceed their
+      blood capacity with their feed ability, doing so gives them minor instant healing
+      and a medium boost to their passive healing over time, their blood drain is
+      dramatically increased until they are back under capacity though.
+  flleeppyy:
+  - bugfix: Monkestation is killing modularization. Future PRs should not follow modularization
+      guidelines.
+2025-04-15:
+  Absolucy:
+  - balance: Monster Hunters no longer have a hunting contract, it is instead integrated
+      into their antagonist UI.
+  - refactor: Cleaned up monster hunter code a lot.
+  - qol: Improved the Monster Hunter UI a bit.
+  - qol: You can no longer activate Jack in the Bombs in Wonderland.
+  - qol: Reworded Monster Hunter objectives a bit to be more thematic.
+  - bugfix: Hopefully fixed orbiting ghosts sometimes being lost by a Monster Hunter
+      using Paradox Shift.
+  - bugfix: Fixed an exploit related to Monster Hunters.
+  - admin: Added logging to various Monster Hunter actions.
+  - bugfix: Fixed the Monster Hunter UI always showing a red X next to objectives,
+      regardless of if they are actually completed or not.
+  Loiosh42:
+  - balance: Bogseo has been rechambered to .585 trappiste
+  - balance: The heavy weapons locker now has a riot helmet and SWAT mask
+  - balance: The heavy weapons locker now has kits instead of a loose pile of ammo
+      and guns
+  - balance: .585 trappiste non-lethal rounds mildly nerfed
+2025-04-16:
+  Draggeru:
+  - map: Modifies the centcom z level and modifies 2 admin offices
+  Snack-Max:
+  - rscadd: add Fezs to the shop
+2025-04-17:
+  Absolucy:
+  - bugfix: IPCs, androids, and bloodsuckers can no longer be cloned.
+  - bugfix: Bloodsuckers can no longer give changelings infinite free absorbs using
+      Veil of Many Faces.
+  - bugfix: Coffins now protect bloodsuckers from temperature and heat, preventing
+      a potential softlock from being stuck infinitely healing while being damaged,
+      if your coffin was in a superheated room or something.
+  - balance: Bloodsuckers in torpor while in a coffin will now have their body temperature
+      rapidly stabilized.
+2025-04-19:
+  Absolucy:
+  - bugfix: Reverted a previous change to tgui-panel/chat to see if it fixes chat
+      failing to load settings sometimes.
+  - bugfix: i fed some more bugs to my refrigerator.
+  - bugfix: Possibly fixed jukeboxes and lobby music not respecting their appropriate
+      preference / volume mixer options?
+  - admin: Massively fixed up and improved Veth's player panel UI.
+  - bugfix: Screentip images will no longer appear for players on BYOND versions suffering
+      from the bug that makes them way too big.
+  - bugfix: Fixed FOV checks improperly handling diagonal directions.
+  - bugfix: 'Fixed deers not stopping and staring at vehicles (like, well, a deer
+      in headlights) as intended.
+
+      fix (13spacemen) C4 notification jump works again.'
+  - bugfix: (timothymtorres) Fix air alarm helper to ignore gas when appropriate.
+  - bugfix: (timothymtorres) Fix air alarm not checking missing gases.
+  - bugfix: (thegrb93) Air alarms stuck in warning state when area alarms are cleared.
+  - bugfix: (Melbert) Mirror reflections should be more accurate now.
+  - bugfix: (Melbert) Becoming a vampire or Bloodsucker while standing in front of
+      a mirror correctly vanishes you (rather than waiting to exit and enter the mirror's
+      view)
+  - bugfix: (Melbert) "Mind Gate" does self brain damage as intended.
+  - bugfix: (Melbert) Fixed EMP'd / signaled microwaves not running as they should.
+  - bugfix: ' (SmArtKar) Fixed a qdel loop in hypnosis brain trauma.'
+  - bugfix: (ShizCalev) Fixed a minor runtime when renaming mechs that don't have
+      a camera attached to them.
+  - bugfix: The Cargo Budget station goal now actually works.
+  - bugfix: Fix the Teratoma Syndrome symptom not working.
+  Absolucy, GPeckman:
+  - rscadd: Added whisper-sensitive cybernetic ears, which make it much easier for
+      the user to hear whispers, at the cost of being more vulnerable to loud noises.
+  - rscadd: Added wall-penetrating cybernetic ears, which allow you to hear speech
+      through walls.
+  - balance: Basic cybernetic ears and upgraded cybernetic ears are now unlocked with
+      the other basic/normal cybernetics.
+  Absolucy, Melbert:
+  - qol: Examining a heretic influence gives you a sp00ky message rather than an empty
+      box
+  Addust:
+  - rscadd: An additional wheelchair marker has been added to the Nova arrivals shuttle
+      (used on Blueshift and Voidraptor)
+  CannibalHunter:
+  - image: resprited plunger sprites and added inhand sprites
+  Shoddd:
+  - rscdel: night vision quirk
+  TheColorCyan:
+  - balance: Void chill had it's slowdown reduced
+  - rscadd: Void chill stacks are now purged by holy water
+  - rscadd: Holy water reduces the cooling effect of void storm and void chill
+  - balance: Ascension ritual now requires bodies that at any point had a mind.
+2025-04-20:
+  Addust:
+  - bugfix: Whiteships can now land on lavaland without getting obliterated by regrowing
+      rocks.
+  JohnFulpWillard:
+  - bugfix: '[Theseus] Fixes a missing disposal tube at evac.'
+  Melbert:
+  - bugfix: You can't fax unfaxable things by putting them in faxable things
+2025-04-21:
+  Absolucy:
+  - bugfix: (high-speedspin-cycle) Layer manifold and pipe volumes are now consistent
+      with other pipes.
+  - bugfix: (FlufflesTheDog) Shuttle atmos volumes should no longer become negative.
+  - bugfix: (FlufflesTheDog) Shuttle atmos devices will no longer make illegal connections
+      during rotations.
+  - balance: The Teratoma Crash event can only occur at least 40 minutes into the
+      round now (up to 20 minutes)
+  Gw0sty:
+  - bugfix: Detectives now will spawn on Theseus stationside
+  MomoBerri:
+  - bugfix: Theseus mail delivery should now work through the disposal chute like
+      proper.
+  - bugfix: Theseus engineering wiring has been updated, and a new window has been
+      added to make accessing the powernet easier.
+  RandomDudeFromTheRim:
+  - map: The "Plasma to Pure" pump is now on the right layer on IceBox station. Atmosians
+      rejoice!
+  - bugfix: fixed a shuttle respawn exploit
+  - map: Added true chasms (no z level stuff), and modified the Medsim shuttle by
+      adding them to it.
+  - bugfix: To discourage mutated crew from eating APCs, NanoTrasen has coated all
+      APCs in the patented "Non-Tasty NanoPaint"!
+  Shoddd:
+  - rscadd: weeping kudzu trait
+  - bugfix: several helio station bugs
+  - bugfix: heliostation has a labor camp shuttle again
+  Veth-s:
+  - admin: Adds a headset message button to Veth's Player panel.
+  destrucktoid:
+  - rscadd: Added a new way for bloodsuckers to earn levels
+  - balance: Bloodsuckers can only rank up till level 3 via Sol. Any further levels
+      must be gained through other means.
+2025-04-23:
+  Draggeru:
+  - bugfix: Removes the cotton candy chicken from centcom
+2025-04-24:
+  RandomDudeFromTheRim:
+  - rscdel: Removed a poster referencing something inappropriate
+  Veth, Kaysee, ThePoobertDoobertson:
+  - rscadd: Slasher will now spawn in maints as spooky jesus intended.
+  - rscadd: Slasher now has a jaunt that goes through windows and doors but not walls.
+      It is a NON-MAGICAL jaunt - 4s duration, 2minute cooldown, and leaves a trail
+      of blood behind it.
+  - rscdel: Removed slasher's invisibility, he is now always just slightly invisible.
+  - rscdel: Removed slasher's machete damage and throw damage scaling on light level.
+  - bugfix: Hopefully fixed the Slasher's tracking circle (for the fifth time). Currently,
+      targets with unknown identity cannot be chosen as it was causing issues with
+      the slasher's tracker.
+  - sound: Slasher now has new SFX for jaunting.
+  - image: Slasher now has all new icons for his outfit and jaunt.
+  - code_imp: Cleaned up some of Slasher's code.
+2025-04-26:
+  Gw0sty:
+  - rscadd: Xenobiology and Cytology are now an independent subdepartment
+  - rscadd: Science will now hang out at break rooms.
+  - rscadd: Various slight improvements to various xenobiology on maps
+  - rscadd: Scientists start with a experiment scanner in their backpack.
+  - bugfix: Kidnapping and heirlooms will target recent jobs more.
+  - bugfix: Scientist jumpsuits now actually provide bomb protection as described.
+  - qol: New jobs can now use more departmental clothing from the monkestation store
+  - bugfix: Helio xenobio is now accessible correctly again
+  - bugfix: Theseus no longer has excess airlocks in robotics
+  - bugfix: Heliostation xenobio will no longer have atmosphere problems
+  Loiosh42:
+  - bugfix: Blueshield Bogseo case now spawns with 2 ammoboxes instead of 2 loose
+      rounds
+  PineappleMan929:
+  - rscadd: Adds lava chicken! If you throw fried chicken into lava, it becomes lava
+      chicken. (warning, it is really fucking spicy)
+  - image: Lava chicken looks extremely spicy now! (which it is)
+  QueenReduviidae:
+  - bugfix: Fixes smithing letting you make perfect items without doing anything.
+  RandomDudeFromTheRim:
+  - bugfix: fixed wings working when they shouldn't
+  RealityOverseer:
+  - bugfix: Capitalized "Tickets" button in admin tab
+  - bugfix: (distributivgesetz) Fixed a rare bug that let you spam bluespace bodybags
+      everywhere.
+  - bugfix: (Sealed101) Fixed bluespace bodybags consuming xenomorphs when folded.
+  flleeppyy:
+  - rscadd: Eris WIP button
+  - bugfix: Vanderlin button irritating the people who pay close attention to it and
+      it being offcenter
+  - rscadd: Cigarette packs can now be crafted with cardboard (no coupons for you)
+  - qol: Better user feedback when putting things into smartfridges (includes drying
+      racks)
+  - qol: Items that are dryable now have examine text for knowing if you can put it
+      in a drying rack
+2025-04-27:
+  Absolucy:
+  - admin: Added a warning for admins using the "Shake" VV when doing so might accidentally
+      cause a bunch of lag.
+  - map: Disconnected aux power SMES from Box grid at roundstart.
+  - bugfix: (Maurukas) Removed a power loop on Icebox.
+  - map: (Maurukas) Disconnected aux power SMES from Icebox grid at roundstart.
+  - map: (Maurukas) Removed some power cables connecting Deltastation's aux power
+  - bugfix: (Maurukas) Fixed Tramstation's gravity generator SMES, now functions and
+      charged at roundstart.
+  - map: 'Blueshift: Most major hallways, alongside dorms, have a fully charged 10k
+      power cell in their APCs roundstart now.'
+  - map: 'Blueshift: Engineering spawns with an oxygen canister now.'
+  - map: 'Blueshift: Art Supply Storage''s APC is now properly wired to the grid.'
+2025-04-28:
+  Absolucy:
+  - qol: Made the output of the genetic sequencer scanner look much better.
+  - qol: The genetic sequencer scanner now shows genetic stability.
+  - rscdel: Removed AFK kicking functionality, as it wasn't even enabled anyways,
+      yet it was somehow randomly kicking players who were very much not AFK.
+  - bugfix: Fixed malf AIs being able to overload/destroy indestructible machines.
+  - bugfix: Fix some jobs (assistant, cargo tech, nt rep, secass) not getting the
+      proper implants during cybernetic revolution.
+  Gw0sty:
+  - map: Kilo, Derelict russian, Unknown site 1,  Derelict Sulaco, icebox, engineering
+      outpost and snow arena has some of their roundstart atmospheric differences
+      fixed. Hopefully decreases some load times.
+  shodd, ZephyrTFA:
+  - refactor: Map Votes are now carried over between rounds. When a map vote is actually
+      a contest, the winning map will have its votes reset.
+  - refactor: a large amount of map vote and vote code changed
+  - rscdel: RTV gone
+2025-04-30:
+  EssentialTomato:
+  - rscadd: Added the ability to research and print artifact zapper boards
+  - bugfix: Vatgrown queen bees can now be used in the apiary
+  Gw0sty:
+  - bugfix: Airborne diseases now work. Reminder to wear masks
+  Ice-Type:
+  - bugfix: Thanks to new advances in sorcery and the power of luck, windows now visually
+      crack again. Praise be. Said advances were then refined by Shion thanks Shion
+  - balance: Crew printable eyes now are severely flash weak, compared to being identical
+      to standard eyes before.
+  - balance: All uplinks can now purchase thermal and x-ray eyes. These are not flash
+      weak, unlike the crew versions.
+  - balance: Thermal eyes now only cost 5TC.
+  - balance: Thermal eyes now only come with a single use autosurgeon - if you want
+      a reusable one you're going to have to cough up x-ray TC.
+  Shoddd:
+  - bugfix: oozeling, floran, and plasma man damage mods work again
+  - bugfix: veil of many faces now works properly
+  - balance: veil of many faces now changes hud status
+  - balance: feed now has a message for the person being fed on, increased range people
+      can tell you are feeding
+  - balance: Go home power can no longer be used while dead
+  Tostah:
+  - rscadd: new misc gear to all uplinks; Syndicate Autosurgeon

@@ -31,7 +31,10 @@
 		trigger_organ_action()
 
 /obj/item/organ/internal/monster_core/regenerative_core/on_triggered_internal()
-	owner.revive(HEAL_ALL)
+	if(lavaland_equipment_pressure_check(get_turf(owner)))
+		owner.revive(HEAL_ALL)
+	else
+		owner.heal_and_revive(40, needs_organs = FALSE)
 	qdel(src)
 
 /// Log applications and apply moodlet.
@@ -61,5 +64,3 @@
 		This process will trigger automatically if you are badly wounded."
 	button_icon_state = "legion_core_stable"
 	check_flags = NONE
-
-/datum/action/cooldown/monster_core_action/regenerative_core

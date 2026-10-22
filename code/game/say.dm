@@ -32,9 +32,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!message || message == "")
 		return
 	spans |= speech_span
-	if(!language)
-		language = get_selected_language()
+	language ||= get_selected_language()
 	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
+
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
@@ -77,7 +77,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
-	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
+	var/list/hearers = get_hearers_in_view(range, source)
+	get_voice().start_barking(message, hearers, range, say_test(message), FALSE, src)
+	for(var/atom/movable/hearing_movable as anything in hearers)
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
@@ -92,17 +94,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
-	var/realnamepart = "[speaker.GetVoice(TRUE)][speaker.get_alt_name()]" // MONKESTATION ADDITION -- NTSL
+	var/realnamepart = "[speaker.GetVoice(TRUE)][speaker.get_alt_name()]"
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	if(face_name && ishuman(speaker))
-		var/mob/living/carbon/human/H = speaker
-		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
-	else if(visible_name && ishuman(speaker))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/human_speaker = speaker
-		namepart = "[human_speaker.get_visible_name()]"
+		if(face_name)
+			namepart = "[human_speaker.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
+		else if(visible_name)
+			namepart = "[human_speaker.get_visible_name()]"
+		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN) && !HAS_TRAIT(human_speaker, TRAIT_ANONYMOUS))
+			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.chat_span()
+			spanpart2 = "<span class='name [id_span || "job__unknown"]'>"
 	//End name span.
-//	var/endspanpart = "</span>" // MONKESTATION EDIT OLD -- NTSL
-	var/endspanpart = "</span></a>" // MONKESTATION EDIT NEW
+	var/endspanpart = "</span></a>"
 
 	//Message
 	var/messagepart
@@ -118,9 +122,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
 
-// MONKESTATION EDIT OLD -- NTSL down there
-//	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
-// MONKESTATION EDIT NEW -- NTSL down there
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, realnamepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -163,7 +164,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
-	input = varname.Replace_char(input, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
+	input = replacetext_char(input, varname, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
 
 /// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
 /atom/movable/proc/say_emphasis(input)
@@ -172,7 +173,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	ENCODE_HTML_EMPHASIS(input, "_", "u", underline)
 	ENCODE_HTML_EMPHASIS(input, "\\`", "font color= 'red'", redtext) //MONKESTATION ADDITION: makes your text red
 	var/static/regex/remove_escape_backlashes = regex("\\\\(_|\\+|\\|)", "g") // Removes backslashes used to escape text modification.
-	input = remove_escape_backlashes.Replace_char(input, "$1")
+	input = replacetext_char(input, remove_escape_backlashes, "$1")
 	return input
 
 #undef ENCODE_HTML_EMPHASIS
@@ -180,11 +181,25 @@ GLOBAL_LIST_INIT(freqtospan, list(
 ///	Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
 /atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list())
 	if(!language)
+		// monkestation edit start
+		/* original
 		return "makes a strange sound."
+		*/
+		var/datum/language/dialect = GLOB.language_datum_instances[/datum/language/common]
+		return dialect.scramble_sentence(raw_message, get_partially_understood_languages())
+		// monkestation edit end
 
 	if(!has_language(language))
+		var/list/mutual_languages
+		// Get what we can kinda understand, factor in any bonuses passed in from say mods
+		var/list/partially_understood_languages = get_partially_understood_languages()
+		if(LAZYLEN(partially_understood_languages))
+			mutual_languages = partially_understood_languages.Copy()
+			for(var/bonus_language in message_mods[LANGUAGE_MUTUAL_BONUS])
+				mutual_languages[bonus_language] = max(message_mods[LANGUAGE_MUTUAL_BONUS][bonus_language], mutual_languages[bonus_language])
+
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble(raw_message)
+		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
 
 	return raw_message
 
@@ -273,7 +288,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		job = JOB_PERSONAL_AI
 	else if(isobj(M))  // Cold, emotionless machines
 		job = "Machine"
-	else  // Unidentifiable mob
+	else if(isnull(job)) // Unidentifiable mob
 		job = "Unknown"
 
 /atom/movable/virtualspeaker/GetJob()

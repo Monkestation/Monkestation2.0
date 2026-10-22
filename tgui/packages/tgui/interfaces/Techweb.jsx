@@ -1,19 +1,20 @@
 import { map, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import {
-  Button,
-  Section,
-  Modal,
-  Tabs,
   Box,
-  Input,
-  Flex,
-  ProgressBar,
+  Button,
   Collapsible,
-  Icon,
   Divider,
+  Flex,
+  Icon,
+  Input,
+  LabeledList,
+  Modal,
+  ProgressBar,
+  Section,
+  Tabs,
 } from '../components';
-import { Window, NtosWindow } from '../layouts';
+import { NtosWindow, Window } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
@@ -28,7 +29,7 @@ const selectRemappedStaticData = (data) => {
   // Handle reshaping of node cache to fill in unsent fields, and
   // decompress the node IDs
   const node_cache = {};
-  for (let id of Object.keys(data.static_data.node_cache)) {
+  for (const id of Object.keys(data.static_data.node_cache)) {
     const node = data.static_data.node_cache[id];
     const costs = Object.keys(node.costs || {}).map((x) => ({
       type: remapId(x),
@@ -48,7 +49,7 @@ const selectRemappedStaticData = (data) => {
 
   // Do the same as the above for the design cache
   const design_cache = {};
-  for (let id of Object.keys(data.static_data.design_cache)) {
+  for (const id of Object.keys(data.static_data.design_cache)) {
     const [name, classes] = data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
       name: name,
@@ -82,14 +83,6 @@ const useRemappedBackend = () => {
     ...rest,
   };
 };
-
-// Utility Functions
-
-const abbreviations = {
-  'General Research': 'Gen. Res.',
-  'Nanite Research': 'Nanite Res.',
-};
-const abbreviateName = (name) => abbreviations[name] ?? name;
 
 // Actual Components
 
@@ -152,6 +145,9 @@ export const TechwebContent = (props) => {
     t_disk,
     d_disk,
     locked,
+    queue_nodes = [],
+    node_cache,
+    point_types_abbreviations = [],
   } = data;
   const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
   const [lastPoints, setLastPoints] = useLocalState('lastPoints', {});
@@ -161,27 +157,35 @@ export const TechwebContent = (props) => {
       <Flex.Item className="Techweb__HeaderSection">
         <Flex className="Techweb__HeaderContent">
           <Flex.Item>
-            <Box>
-              Available points:
-              <ul className="Techweb__PointSummary">
-                {Object.keys(points).map((k) => (
-                  <li key={k}>
-                    <b>{k}</b>: {points[k]}
-                    {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
-                  </li>
-                ))}
-              </ul>
-            </Box>
-            <Box>
-              Security protocols:
-              <span
-                className={`Techweb__SecProtocol ${
-                  !!sec_protocols && 'engaged'
-                }`}
-              >
-                {sec_protocols ? 'Engaged' : 'Disengaged'}
-              </span>
-            </Box>
+            <LabeledList>
+              <LabeledList.Item label="Security">
+                <span
+                  className={`Techweb__SecProtocol ${
+                    !!sec_protocols && 'engaged'
+                  }`}
+                >
+                  {sec_protocols ? 'Engaged' : 'Disengaged'}
+                </span>
+              </LabeledList.Item>
+              {Object.keys(points).map((k) => (
+                <LabeledList.Item key={k} label={point_types_abbreviations[k]}>
+                  <b>{points[k]}</b>
+                  {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
+                </LabeledList.Item>
+              ))}
+              <LabeledList.Item label="Queue">
+                {queue_nodes.length !== 0
+                  ? Object.keys(queue_nodes).map((node_id) => (
+                      <Button
+                        key={node_id}
+                        tooltip={`Added by: ${queue_nodes[node_id]}`}
+                      >
+                        {node_cache[node_id].name}
+                      </Button>
+                    ))
+                  : 'Empty'}
+              </LabeledList.Item>
+            </LabeledList>
           </Flex.Item>
           <Flex.Item grow={1} />
           <Flex.Item>
@@ -300,9 +304,11 @@ const TechwebOverview = (props) => {
           </Flex.Item>
           <Flex.Item align={'center'}>
             <Input
+              width="100%"
               value={searchText}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={(value) => setSearchText(value)}
               placeholder={'Search...'}
+              expensive
             />
           </Flex.Item>
         </Flex>
@@ -488,9 +494,24 @@ const TechNodeDetail = (props) => {
 
 const TechNode = (props) => {
   const { act, data } = useRemappedBackend();
-  const { node_cache, design_cache, experiments, points, nodes } = data;
+  const {
+    node_cache,
+    design_cache,
+    experiments,
+    points,
+    nodes,
+    queue_nodes = [],
+    point_types_abbreviations = [],
+  } = data;
   const { node, nodetails, nocontrols } = props;
-  const { id, can_unlock, tier } = node;
+  const {
+    id,
+    can_unlock,
+    have_experiments_done,
+    tier,
+    enqueued_by_user,
+    is_free,
+  } = node;
   const {
     name,
     description,
@@ -550,6 +571,40 @@ const TechNode = (props) => {
       buttons={
         !nocontrols && (
           <>
+            {tier > 0 &&
+              (!!can_unlock && (is_free || queue_nodes.length === 0) ? (
+                <Button
+                  icon="lightbulb"
+                  disabled={!can_unlock || tier > 1 || queue_nodes.length > 0}
+                  onClick={() => act('researchNode', { node_id: id })}
+                >
+                  Research
+                </Button>
+              ) : enqueued_by_user ? (
+                <Button
+                  icon="trash"
+                  color="bad"
+                  onClick={() => act('dequeueNode', { node_id: id })}
+                >
+                  Dequeue
+                </Button>
+              ) : id in queue_nodes && !enqueued_by_user ? (
+                <Button icon="check" color="good">
+                  Queued
+                </Button>
+              ) : (
+                <Button
+                  icon="lightbulb"
+                  disabled={
+                    !have_experiments_done ||
+                    id in queue_nodes ||
+                    techcompl < prereq_ids.length
+                  }
+                  onClick={() => act('enqueueNode', { node_id: id })}
+                >
+                  Enqueue
+                </Button>
+              ))}
             {!nodetails && (
               <Button
                 icon="tasks"
@@ -559,15 +614,6 @@ const TechNode = (props) => {
                 }}
               >
                 Details
-              </Button>
-            )}
-            {tier > 0 && (
-              <Button
-                icon="lightbulb"
-                disabled={!can_unlock || tier > 1}
-                onClick={() => act('researchNode', { node_id: id })}
-              >
-                Research
               </Button>
             )}
           </>
@@ -593,7 +639,7 @@ const TechNode = (props) => {
                       : Math.min(1, (points[k.type] || 0) / reqPts)
                   }
                 >
-                  {abbreviateName(k.type)} ({nodeProg}/{reqPts})
+                  {point_types_abbreviations[k.type]} ({nodeProg}/{reqPts})
                 </ProgressBar>
               </Flex.Item>
             );
@@ -628,10 +674,10 @@ const TechNode = (props) => {
           className="Techweb__NodeExperimentsRequired"
           title="Required Experiments"
         >
-          {required_experiments.map((k) => {
+          {required_experiments.map((k, idx) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={idx} />;
             }
             return <Experiment key={thisExp} exp={thisExp} />;
           })}
@@ -642,10 +688,10 @@ const TechNode = (props) => {
           className="TechwebNodeExperimentsRequired"
           title="Discount-Eligible Experiments"
         >
-          {Object.keys(discount_experiments).map((k) => {
+          {Object.keys(discount_experiments).map((k, idx) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={idx} />;
             }
             return (
               <Experiment key={thisExp} exp={thisExp}>

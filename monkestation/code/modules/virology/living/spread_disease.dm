@@ -19,7 +19,7 @@
 				new /obj/effect/pathogen_cloud/core(get_turf(src), src, airborne_viruses)
 				strength -= 40
 
-/mob/living/infect_disease(datum/disease/acute/disease, forced = FALSE, notes = "", decay = TRUE)
+/mob/living/infect_disease(datum/disease/acute/disease, forced = FALSE, notes = "", decay = TRUE, patient_zero = FALSE)
 	if(!istype(disease))
 		return FALSE
 
@@ -29,8 +29,8 @@
 	if(!disease.spread_flags && !(disease.disease_flags & DISEASE_DORMANT))
 		return FALSE
 
-	for(var/datum/disease/acute/D as anything in diseases)
-		if("[disease.uniqueID]-[disease.subID]" == "[D.uniqueID]-[D.subID]") // child ids are for pathogenic mutations and aren't accounted for as thats fucked.
+	for(var/datum/disease/acute/old_disease as anything in diseases)
+		if(disease.uniqueID == old_disease.uniqueID && disease.subID == old_disease.subID) // child ids are for pathogenic mutations and aren't accounted for as thats fucked.
 			return FALSE
 
 	if(immune_system && !immune_system.CanInfect(disease))
@@ -45,6 +45,8 @@
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(src)] [notes]. Infection chance now [D.infectionchance]%"
 
 		LAZYADD(diseases, D)
+		if(patient_zero)
+			D.carrier = TRUE
 		D.affected_mob = src
 		//SSdisease.active_diseases += D
 		D.after_add()
@@ -66,6 +68,9 @@
 
 /mob/dead/new_player/proc/DiseaseCarrierCheck(mob/living/carbon/human/H)
 	// 10% of players are joining the station with some minor disease if latejoined
+	//don't let the compromised die right out of the gates.
+	if((/datum/quirk/item_quirk/immunodeficiency::name in H?.client?.prefs?.all_quirks) || HAS_TRAIT(H, TRAIT_IMMUNODEFICIENCY))
+		return
 	if(prob(10))
 		var/virus_choice = pick(WILD_ACUTE_DISEASES)
 		var/datum/disease/acute/D = new virus_choice

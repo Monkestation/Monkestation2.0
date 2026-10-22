@@ -5,7 +5,7 @@
 /datum/wires/mod/New(atom/holder)
 	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)
 	add_duds(2)
-	..()
+	return ..()
 
 /datum/wires/mod/interactable(mob/user)
 	if(!..())
@@ -21,6 +21,12 @@
 	status += "The green light is [mod.locked ? "on" : "off"]."
 	status += "The yellow light is [mod.interface_break ? "off" : "on"]."
 	return status
+
+/datum/wires/mod/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		return TRUE
+
+	return ..()
 
 /datum/wires/mod/on_pulse(wire)
 	var/obj/item/mod/control/mod = holder
@@ -50,8 +56,14 @@
 		if(WIRE_INTERFACE)
 			mod.interface_break = !mend
 
-/datum/wires/mod/ui_act(action, params)
+/datum/wires/mod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	var/obj/item/mod/control/mod = holder
-	if(!issilicon(usr) && mod.seconds_electrified && mod.shock(usr))
+	var/mob/user = ui.user
+	if(!HAS_SILICON_ACCESS(user) && mod.seconds_electrified && mod.shock(user))
 		return FALSE
+	return ..()
+
+/datum/wires/mod/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		return TRUE
 	return ..()

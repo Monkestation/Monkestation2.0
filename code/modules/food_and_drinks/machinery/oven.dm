@@ -96,14 +96,19 @@
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 
-/obj/machinery/oven/attackby(obj/item/I, mob/user, params)
-	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
-		if(user.transferItemToLoc(I, src, silent = FALSE))
-			to_chat(user, span_notice("You put [I] in [src]."))
-			add_tray_to_oven(I, user)
+/obj/machinery/oven/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!open || !used_tray || isnull(tool.atom_storage))
+		return NONE
+	return used_tray.item_interaction(user, tool, modifiers)
+
+/obj/machinery/oven/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(open && !used_tray && istype(attacking_item, /obj/item/plate/oven_tray))
+		if(user.transferItemToLoc(attacking_item, src, silent = FALSE))
+			to_chat(user, span_notice("You put [attacking_item] in [src]."))
+			add_tray_to_oven(attacking_item, user)
 	else
 		return ..()
 
@@ -137,6 +142,19 @@
 	used_tray = null
 	UnregisterSignal(oven_tray, COMSIG_MOVABLE_MOVED)
 	update_baking_audio()
+
+/obj/machinery/oven/attack_robot(mob/user)
+	. = ..()
+	if(user.Adjacent(src))
+		attack_hand(user)
+	return TRUE
+
+/obj/machinery/oven/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	attack_hand_secondary(user, modifiers)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/oven/attack_hand(mob/user, modifiers)
 	. = ..()
@@ -210,7 +228,7 @@
 
 /obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool, time = 2 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/oven/range
 	name = "range"
@@ -234,6 +252,47 @@
 	desc = "Time to bake cookies!"
 	icon_state = "oven_tray"
 	max_items = 6
+	biggest_w_class = WEIGHT_CLASS_BULKY
+
+/// Oven trays accept any item, not just edible ones, since you bake raw/unbaked items in an oven.
+/obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isnull(tool.atom_storage))
+		// Dump contents of storage container onto the tray
+		if(!istype(tool, /obj/item/storage/bag/tray))
+			to_chat(user, span_notice("You start placing items from [tool] onto [src]..."))
+			if(!do_after(user, 2 SECONDS, target = tool))
+				return ITEM_INTERACT_BLOCKING
+		var/loaded = 0
+		for(var/obj/item/stored_item in tool)
+			if(contents.len >= max_items)
+				break
+			if(stored_item.w_class > biggest_w_class)
+				continue
+			if(tool.atom_storage.attempt_remove(stored_item, src))
+				stored_item.pixel_x = rand(-max_x_offset, max_x_offset)
+				stored_item.pixel_y = rand(-3, max_height_offset)
+				AddToPlate(stored_item)
+				loaded++
+		if(loaded)
+			to_chat(user, span_notice("You place [loaded] item\s onto [src]."))
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "nothing to place!")
+		return ITEM_INTERACT_BLOCKING
+	if(tool.w_class > biggest_w_class)
+		balloon_alert(user, "too big!")
+		return ITEM_INTERACT_BLOCKING
+	if(contents.len >= max_items)
+		balloon_alert(user, "can't fit!")
+		return ITEM_INTERACT_BLOCKING
+	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
+		return ITEM_INTERACT_BLOCKING
+	if(user.transferItemToLoc(tool, src, silent = FALSE))
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
+		tool.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
+		to_chat(user, span_notice("You place [tool] on [src]."))
+		AddToPlate(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
 
 #undef OVEN_SMOKE_STATE_NONE
 #undef OVEN_SMOKE_STATE_GOOD

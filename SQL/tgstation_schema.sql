@@ -104,7 +104,7 @@ CREATE TABLE `ban` (
 DROP TABLE IF EXISTS `citation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS `citation` (
+CREATE TABLE `citation` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `round_id` int(11) unsigned NULL,
   `server_ip` int(11) unsigned NOT NULL,
@@ -135,10 +135,12 @@ CREATE TABLE `connection_log` (
   `datetime` datetime DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NULL,
+  `round_id` int(11) unsigned DEFAULT NULL,
   `ckey` varchar(45) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
+  `byond_version` varchar(8) DEFAULT NULL,
+  `byond_build` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -279,6 +281,20 @@ CREATE TABLE `library_action` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `cassette_purchases`
+--
+CREATE TABLE IF NOT EXISTS `cassette_purchases` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cassette_id` VARCHAR(32) NOT NULL,
+  `cassette_name` VARCHAR(64) NOT NULL,
+  `buyer_ckey` VARCHAR(32),
+  `purchase_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `server_id` VARCHAR(50),
+  PRIMARY KEY (`id`),
+  KEY `idx_cassette_id` (`cassette_id`),
+  KEY `idx_purchase_date` (`purchase_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Table structure for table `messages`
 --
 
@@ -312,6 +328,37 @@ CREATE TABLE `messages` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `mentor`
+--
+
+DROP TABLE IF EXISTS `mentor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mentor` (
+  `ckey` varchar(32) NOT NULL,
+  `rank` varchar(32) NOT NULL,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mentor_ranks`
+--
+
+DROP TABLE IF EXISTS `mentor_ranks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mentor_ranks` (
+  `rank` VARCHAR(32) NOT NULL,
+  `flags` SMALLINT(5) UNSIGNED NOT NULL,
+	`exclude_flags` SMALLINT(5) UNSIGNED NOT NULL,
+	`can_edit_flags` SMALLINT(5) UNSIGNED NOT NULL,
+  PRIMARY KEY (`rank`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
 -- Table structure for table `role_time`
 --
 
@@ -335,7 +382,7 @@ DROP TABLE IF EXISTS `role_time_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 
-CREATE TABLE IF NOT EXISTS `role_time_log` (
+CREATE TABLE `role_time_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `job` varchar(128) NOT NULL,
@@ -370,6 +417,7 @@ CREATE TABLE `player` (
   `antag_tokens` tinyint(4) unsigned DEFAULT '0',
   `metacoins` int(10) unsigned NOT NULL DEFAULT '0',
   `twitch_rank` VARCHAR(32) NOT NULL DEFAULT '',
+	`twitch_user` VARCHAR(32) NOT NULL DEFAULT '',
   `patreon_key` VARCHAR(32) NOT NULL DEFAULT 'None',
   `patreon_rank` VARCHAR(32) NOT NULL DEFAULT 'None',
   PRIMARY KEY (`ckey`),
@@ -512,54 +560,6 @@ CREATE TABLE `schema_revision` (
   PRIMARY KEY (`major`, `minor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Table structure for table `stickyban`
---
-DROP TABLE IF EXISTS `stickyban`;
-CREATE TABLE `stickyban` (
-	`ckey` VARCHAR(32) NOT NULL,
-	`reason` VARCHAR(2048) NOT NULL,
-	`banning_admin` VARCHAR(32) NOT NULL,
-	`datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`ckey`)
-) ENGINE=InnoDB;
-
---
--- Table structure for table `stickyban_matched_ckey`
---
-DROP TABLE IF EXISTS `stickyban_matched_ckey`;
-CREATE TABLE `stickyban_matched_ckey` (
-	`stickyban` VARCHAR(32) NOT NULL,
-	`matched_ckey` VARCHAR(32) NOT NULL,
-	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`exempt` TINYINT(1) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`stickyban`, `matched_ckey`)
-) ENGINE=InnoDB;
-
---
--- Table structure for table `stickyban_matched_ip`
---
-DROP TABLE IF EXISTS `stickyban_matched_ip`;
-CREATE TABLE `stickyban_matched_ip` (
-	`stickyban` VARCHAR(32) NOT NULL,
-	`matched_ip` INT UNSIGNED NOT NULL,
-	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	PRIMARY KEY (`stickyban`, `matched_ip`)
-) ENGINE=InnoDB;
-
---
--- Table structure for table `stickyban_matched_cid`
---
-DROP TABLE IF EXISTS `stickyban_matched_cid`;
-CREATE TABLE `stickyban_matched_cid` (
-	`stickyban` VARCHAR(32) NOT NULL,
-	`matched_cid` VARCHAR(32) NOT NULL,
-	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	PRIMARY KEY (`stickyban`, `matched_cid`)
-) ENGINE=InnoDB;
 
 --
 -- Table structure for table `achievements`
@@ -584,7 +584,7 @@ CREATE TABLE `achievement_metadata` (
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `metacoin_item_purchases`;
-CREATE TABLE IF NOT EXISTS `metacoin_item_purchases` (
+CREATE TABLE `metacoin_item_purchases` (
 	`ckey` varchar(32) NOT NULL,
 	`purchase_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
 	`item_id` varchar(50) NOT NULL,
@@ -615,6 +615,10 @@ CREATE TABLE `ticket` (
   KEY `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP PROCEDURE IF EXISTS `set_poll_deleted`;
+DROP TRIGGER IF EXISTS `role_timeTlogupdate`;
+DROP TRIGGER IF EXISTS `role_timeTloginsert`;
+DROP TRIGGER IF EXISTS `role_timeTlogdelete`;
 DELIMITER $$
 CREATE PROCEDURE `set_poll_deleted`(
 	IN `poll_id` INT
@@ -720,23 +724,6 @@ CREATE TABLE `tutorial_completions` (
   UNIQUE INDEX `ckey_tutorial_unique` (`ckey`, `tutorial_key`));
 
 --
--- Table structure for table `metric_data`
---
-DROP TABLE IF EXISTS `metric_data`;
-CREATE TABLE `metric_data` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`datetime` datetime NOT NULL,
-	`cpu` decimal(20,10) unsigned DEFAULT NULL,
-	`maptick` decimal(20,10) unsigned DEFAULT NULL,
-	`elapsed_processed` int(15) unsigned DEFAULT NULL,
-	`elapsed_real` int(15) unsigned DEFAULT NULL,
-	`client_count` int(15) unsigned DEFAULT NULL,
-	`round_id` int(15) unsigned DEFAULT NULL,
-	`relational_id` varchar(255) DEFAULT NULL,
-	PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
 -- Table structure for table `overwatch_asn_ban`
 --
 DROP TABLE IF EXISTS `overwatch_asn_ban`;
@@ -768,39 +755,6 @@ CREATE TABLE `overwatch_whitelist` (
 	`timestamp` datetime NOT NULL,
 	PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-
---
--- Table structure for table `subsystem_extra_metrics`
---
-DROP TABLE IF EXISTS `subsystem_extra_metrics`;
-CREATE TABLE `subsystem_extra_metrics` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`datetime` datetime NOT NULL,
-	`round_id` int(15) unsigned DEFAULT NULL,
-	`ss_id` varchar(255) DEFAULT NULL,
-	`relation_id_SS` varchar(255) DEFAULT NULL,
-	`ss_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-	PRIMARY KEY (`id`) USING BTREE,
-	CONSTRAINT `ss_value` CHECK (json_valid(`ss_value`))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Table structure for table `metric_data`
---
-DROP TABLE IF EXISTS `subsystem_metrics`;
-CREATE TABLE `subsystem_metrics` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`avg_iter_count` decimal(20,6) NOT NULL DEFAULT 0.000000,
-	`avg_drift` decimal(20,6) NOT NULL DEFAULT 0.000000,
-	`datetime` datetime NOT NULL,
-	`round_id` int(15) unsigned DEFAULT NULL,
-	`ss_id` varchar(255) DEFAULT NULL,
-	`relational_id` varchar(255) DEFAULT NULL,
-	`relation_id_SS` varchar(255) DEFAULT NULL,
-	`cost` decimal(20,6) unsigned DEFAULT NULL,
-	`tick_usage` decimal(20,6) unsigned DEFAULT NULL,
-	PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

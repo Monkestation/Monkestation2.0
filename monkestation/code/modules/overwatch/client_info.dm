@@ -11,30 +11,16 @@
 /client
 	var/datum/ip_info/ip_info = new
 
-/client/proc/Overwatch_ASN_panel()
-	set category = "Server"
-	set name = "Overwatch ASN Panel"
-
+ADMIN_VERB(Overwatch_ASN_panel, R_SERVER, FALSE, "Overwatch ASN Panel", "Opens the Overwatch ASN Panel.", ADMIN_CATEGORY_SERVER)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_warning("Failed to establish database connection"))
+		to_chat(user, span_warning("Failed to establish database connection"))
 		return
 
-	if(!check_rights(R_SERVER))
-		return
+	new /datum/overwatch_asn_panel(user)
 
-	new /datum/overwatch_asn_panel(src)
-
-
-/client/proc/Overwatch_WhitelistPanel()
-	set category = "Server"
-	set name = "Overwatch WL Panel"
-
+ADMIN_VERB(Overwatch_WhitelistPanel, R_BAN, FALSE, "Overwatch WL Panel", "Opens the Overwatch Whitelist Panel.", ADMIN_CATEGORY_MAIN)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_warning("Failed to establish database connection"))
+		to_chat(user, span_warning("Failed to establish database connection"))
 		return
 
-	if(!check_rights(R_BAN))
-		return
-
-	new /datum/overwatch_wl_panel(src)
-
+	new /datum/overwatch_wl_panel(user)

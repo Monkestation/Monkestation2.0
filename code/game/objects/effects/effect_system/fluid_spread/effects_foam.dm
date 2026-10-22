@@ -40,6 +40,8 @@
 	. = ..()
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
+	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
+		plane = FLOOR_PLANE
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -92,15 +94,18 @@
 
 	if(isturf(loc))
 		var/turf/turf_location = loc
-		for(var/obj/object in turf_location)
-			if(object == src)
-				continue
-			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
-				continue
-			reagents.expose(object, VAPOR, fraction)
+		if(!HAS_TRAIT(turf_location, TRAIT_ELEVATED_TURF))
+			for(var/obj/object in turf_location)
+				if(object == src)
+					continue
+				if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+					continue
+				reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
+		if(HAS_TRAIT(foamer, TRAIT_ON_ELEVATED_SURFACE))
+			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
 		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
@@ -138,9 +143,10 @@
 		return FALSE
 
 	var/datum/can_pass_info/info = new(no_id = TRUE)
+	info.pass_flags = PASSTABLE | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
-		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
+		if(spread_turf?.density || location.LinkBlockedWithAccess(spread_turf, info))
 			continue
 
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
@@ -150,7 +156,10 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
+			if(HAS_TRAIT(foaming, TRAIT_ON_ELEVATED_SURFACE))
+				continue
 			foam_mob(foaming, seconds_per_tick)
+
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
 		reagents.copy_to(spread_foam, (reagents.total_volume))
@@ -228,7 +237,7 @@
 /obj/effect/particle_effect/fluid/foam/firefighting
 	name = "firefighting foam"
 	lifetime = 20 //doesn't last as long as normal foam
-	result_type = /obj/effect/decal/cleanable/plasma
+	//result_type = /obj/effect/decal/cleanable/plasma: monkestation removal
 	allow_duplicate_results = FALSE
 	slippery_foam = FALSE
 	/// The amount of plasma gas this foam has absorbed. To be deposited when the foam dissipates.
@@ -246,7 +255,7 @@
 		return
 
 	var/obj/effect/hotspot/hotspot = locate() in location
-	if(!(hotspot && location.air))
+	if(!location.air) //monkestation edit: doesnt require a hotspot
 		return
 
 	QDEL_NULL(hotspot)
@@ -261,12 +270,17 @@
 	air.garbage_collect()
 	location.air_update_turf(FALSE, FALSE)
 
+//MONKESTATION EDIT START
 /obj/effect/particle_effect/fluid/foam/firefighting/make_result()
-	var/atom/movable/deposit = ..()
-	if(istype(deposit) && deposit.reagents && absorbed_plasma > 0)
-		deposit.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
-		absorbed_plasma = 0
-	return deposit
+	. = ..()
+	if(absorbed_plasma > 5)
+		var/turf/open/exposed_turf = loc
+		var/obj/effect/decal/cleanable/plasma/reagentdecal = new(exposed_turf)
+		reagentdecal = locate() in exposed_turf
+		if(reagentdecal)
+			reagentdecal.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
+			absorbed_plasma = 0
+//MONKESTATION EDIT STOP
 
 /obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, seconds_per_tick)
 	if(!istype(foaming))
@@ -301,20 +315,28 @@
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
-	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
+	desc = "A lightweight foamed metal wall that can be used as a base to construct a wall."
 	gender = PLURAL
 	max_integrity = 20
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	pass_flags_self = PASSCLOSEDTURF
 	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP
 	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
+	///Do we seal the floor below us aswell?
+	var/foam_floor = TRUE
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
+	if(foam_floor)
+		var/turf/open/location = loc
+		if(isspaceturf(location))
+			location.PlaceOnTop(/turf/open/floor/plating/foam)
 
 /obj/structure/foamedmetal/Destroy()
 	air_update_turf(TRUE, FALSE)
+	playsound(src, 'sound/effects/crackshatter.ogg', 30, TRUE, -4)
 	. = ..()
 
 /obj/structure/foamedmetal/Move()
@@ -337,7 +359,9 @@
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
-/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, params)
+/obj/structure/foamedmetal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.istate & ISTATE_HARM)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	///A speed modifier for how fast the wall is build
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
@@ -347,24 +371,29 @@
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
-	if(!istype(W, /obj/item/stack/sheet))
+	if(tool.tool_behaviour == TOOL_MINING)
+		user.visible_message(span_notice("[user] cracks the [src] apart with \the [tool]."), span_notice("You crack the [src] apart with \the [tool]."), span_hear("You hear something scraping against pourous metal."))
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool, /obj/item/stack/sheet))
 		return ..()
 
-	var/obj/item/stack/sheet/sheet_for_plating = W
+	var/obj/item/stack/sheet/sheet_for_plating = tool
 	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
 		if(sheet_for_plating.get_amount() < 2)
 			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
 		if (do_after(user, 40 * platingmodifier, target = src))
 			if(!sheet_for_plating.use(2))
-				return
+				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	add_hiddenprint(user)
 
@@ -418,6 +447,7 @@
 	alpha = 120
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
+	foam_floor = FALSE
 
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
@@ -451,6 +481,22 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/metal/resin/halon
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/// A variant of resin foam that is created from halon combustion. It does not dissolve in heat to allow the gas to spread before foaming.
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive) // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return FALSE // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	return // Doesn't dissolve in heat.
 
 /datum/effect_system/fluid_spread/foam/dirty
 	effect_type = /obj/effect/particle_effect/fluid/foam/dirty

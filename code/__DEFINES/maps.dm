@@ -61,13 +61,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define MAP_MAXZ 6
 
 /// Path for the next_map.json file, if someone, for some messed up reason, wants to change it.
-// monkestation start: messed up cat here, i changed it (added world.port to it if there's no debugger attached)
-#ifdef UNIT_TESTS
 #define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
-#else
-#define PATH_TO_NEXT_MAP_JSON (world.GetConfig("env", "AUXTOOLS_DEBUG_DLL") ? "data/next_map.json" : "data/next_map.[world.port].json")
-#endif
-// monkestation end
 
 /// List of directories we can load map .json files from
 #define MAP_DIRECTORY_MAPS "_maps"
@@ -89,6 +83,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAIT_ICE_RUINS "Ice Ruins"
 #define ZTRAIT_ICE_RUINS_UNDERGROUND "Ice Ruins Underground"
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
+#define ZTRAIT_REEBE "Reebe"
+///Generalized ztrait for levels that most things should not interact with, EG centcom or reebe
+#define ZTRAIT_RESTRICTED "Restricted"
 
 // boolean - weather types that occur on the level
 #define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
@@ -131,7 +128,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 // default trait definitions, used by SSmapping
 ///Z level traits for CentCom
-#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE)
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE, ZTRAIT_RESTRICTED = TRUE)
 ///Z level traits for Space Station 13
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE, ZTRAIT_STARLIGHT = TRUE)
 ///Z level traits for Deep Space
@@ -148,6 +145,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_AWAY list(ZTRAIT_AWAY = TRUE)
 ///Z level traits for Secret Away Missions
 #define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE, ZTRAIT_NOPHASE = TRUE)
+///List of ztraits the reebe Z level has
+#define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, \
+						ZTRAIT_NOPHASE = TRUE, \
+						ZTRAIT_RESTRICTED = TRUE, \
+						ZTRAIT_BOMBCAP_MULTIPLIER = 0.5, \
+						ZTRAIT_RESERVED = TRUE, \
+						ZTRAIT_BASETURF = /turf/open/indestructible/reebe_flooring)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
@@ -228,13 +232,16 @@ Always compile, always use that verb, and always make sure that it works for wha
 //All
 #define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
 
-//monkestation start
+/// Checks the job changes in the map config for the passed change key.
+#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
+
 #define ZTRAIT_OSHAN "OshanTrait"
 
-#define ZTRAIT_ECLIPSE "Eclipse"
+#define ZTRAIT_OSHAN_MINING "Oshan Mining"
 
 ///Z level traits for Lavaland
 #define ZTRAITS_TRENCH list(\
+	ZTRAIT_OSHAN_MINING = TRUE, \
 	ZTRAIT_GRAVITY = TRUE, \
 	ZTRAIT_MINING = TRUE, \
 	ZTRAIT_NOPARALLAX = TRUE, \
@@ -250,29 +257,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PARTICLEWEATHER_SNOW "weather_snow"
 #define PARTICLEWEATHER_DUST "weather_dust"
 #define PARTICLEWEATHER_RADS "weather_rads"
-//monkestation end
 
-#define ZTRAITS_ECLIPSE list(\
-	list(\
-		ZTRAIT_LINKAGE = CROSSLINKED, \
-		ZTRAIT_UP = TRUE, \
-		ZTRAIT_GRAVITY = TRUE, \
-		ZTRAIT_MINING = TRUE, \
-		ZTRAIT_NOPARALLAX = TRUE, \
-		ZTRAIT_DAYCYCLE = TRUE, \
-		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-		ZTRAIT_BASETURF = /turf/open/misc/dirt/forest, \
-		ZTRAIT_ECLIPSE = TRUE, \
-	), \
-	list(\
-		ZTRAIT_LINKAGE = CROSSLINKED, \
-		ZTRAIT_DOWN = TRUE, \
-		ZTRAIT_GRAVITY = TRUE, \
-		ZTRAIT_MINING = TRUE, \
-		ZTRAIT_NOPARALLAX = TRUE, \
-		ZTRAIT_DAYCYCLE = TRUE, \
-		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-		ZTRAIT_BASETURF = /turf/open/openspace/forest, \
-		ZTRAIT_ECLIPSE = TRUE, \
-	)\
-)
+/// Marks a level as being "safe", even if it is a station z level.
+/// Nukes will not kill players on such levels.
+#define ZTRAIT_FORCED_SAFETY "Forced Safety"
+
+#define is_safe_level(z) SSmapping.level_trait(z, ZTRAIT_FORCED_SAFETY)

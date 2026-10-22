@@ -50,24 +50,24 @@ GLOBAL_LIST_INIT(loadout_accessory, generate_loadout_items(/datum/loadout_item/a
 /datum/loadout_item/accessory/armband_medblue
 	name = "Medical Armband (blue stripe)"
 	item_path = /obj/item/clothing/accessory/armband/medblue
-	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER, JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_CHEMIST, JOB_VIROLOGIST)
+	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER, JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_CHEMIST, JOB_VIROLOGIST, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/accessory/armband_med
 	name = "Medical Armband (white)"
 	item_path = /obj/item/clothing/accessory/armband/med
-	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER, JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_CHEMIST, JOB_VIROLOGIST)
+	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER, JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_CHEMIST, JOB_VIROLOGIST, JOB_BRIG_PHYSICIAN)
 
 /datum/loadout_item/accessory/armband_cargo
 	name = "Cargo Armband"
 	item_path = /obj/item/clothing/accessory/armband/cargo
-	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER)
+	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_EXPLORER)
 
 /datum/loadout_item/accessory/armband_engineering
 	name = "Engineering Armband"
 	item_path = /obj/item/clothing/accessory/armband/engine
-	restricted_roles = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+	restricted_roles = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_NETWORK_ADMIN)
 
 /datum/loadout_item/accessory/armband_science
 	name = "Science Armband"
 	item_path = /obj/item/clothing/accessory/armband/science
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_XENOBIOLOGIST)

@@ -153,3 +153,53 @@
 
 ///mothroach next meal key!
 #define BB_MOTHROACH_NEXT_EAT "mothroach_next_eat"
+
+#define BB_CHICKEN_RECRUIT_COOLDOWN "BB_chicken_cooldown"
+#define BB_CHICKEN_SELF_ABILITY "BB_chicken_ability"
+#define BB_CHICKEN_TARGETED_ABILITY "BB_chicken_targeted_ability"
+#define BB_CHICKEN_SPECALITY_ABILITY "BB_chicken_special_ability"
+#define BB_CHICKEN_LAY_EGG "BB_chicken_lay_egg"
+#define BB_CHICKEN_NESTING_BOX "BB_chicken_lay_target"
+#define BB_CHICKEN_FEED "BB_chicken_feed_ability"
+
+///gary defines
+#define BB_GARY_HIDEOUT "BB_gary_hideout"
+#define BB_GARY_HIDEOUT_SETTING_UP "BB_gary_hideout_setting_up"
+#define BB_GARY_TARGET_AREA "BB_gary_target"
+#define BB_GARY_BARTERING "BB_gary_bartering"
+#define BB_GARY_COME_HOME "BB_gary_come_home"
+#define BB_GARY_HAS_SHINY "BB_gary_has_shiny"
+#define BB_GARY_BARTER_TARGET "BB_gary_barter_target"
+#define BB_GARY_BARTER_ITEM "BB_gary_barter_item"
+#define BB_GARY_BARTER_STEP "BB_gary_barter_step"
+#define BB_GARY_WANDER_COOLDOWN "BB_gary_wander_cooldown"
+
+
+// Hiding AI blackboard keys
+
+/// Whether or not the mob is currently hiding.
+#define BB_HIDING_HIDDEN "BB_hiding_hidden"
+/// The typecache (populated on `Initialize()` with the first argument of
+/// `/datum/element/can_hide/basic/New()`) of turfs that our mob can hide onto.
+#define BB_HIDING_CAN_HIDE_ON "BB_hiding_can_hide_on"
+/// The aggro range the mob has when hiding.
+#define BB_HIDING_AGGRO_RANGE "BB_hiding_aggro_range"
+/// The aggro range the mob has when NOT hiding (set dynamically).
+#define BB_HIDING_AGGRO_RANGE_NOT_HIDING "BB_hiding_aggro_range_not_hiding"
+/// The cooldown before the mob can hide again (set dynamically).
+#define BB_HIDING_COOLDOWN_BEFORE_HIDING "BB_hiding_cooldown_before_hiding"
+/// The cooldown before the mob can stop hiding (set dynamically).
+#define BB_HIDING_COOLDOWN_BEFORE_STOP_HIDING "BB_hiding_cooldown_before_stop_hiding"
+/// The minimum value for the cooldown before the mob can hide / come out of hiding again.
+#define BB_HIDING_COOLDOWN_MINIMUM "BB_hiding_cooldown_minimum"
+/// The maximum value for the cooldown before the mob can hide / come out of hiding again.
+#define BB_HIDING_COOLDOWN_MAXIMUM "BB_hiding_cooldown_maximum"
+/// The probability (in %) that the mob will stop hiding randomly every process.
+#define BB_HIDING_RANDOM_STOP_HIDING_CHANCE "BB_hiding_random_stop_hiding_chance"
+
+/// The default vision range when hiding, if none is specified.
+#define DEFAULT_HIDING_AGGRO_RANGE 2
+/// The default chance to get out of hiding for every random hiding subtree process.
+#define DEFAULT_RANDOM_STOP_HIDING_CHANCE 2
+
+#define BB_TEMPORARY_TARGET "BB_targetting_temporary"

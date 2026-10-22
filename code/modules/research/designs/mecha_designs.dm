@@ -4,7 +4,7 @@
 
 /datum/design/board/ripley_main
 	name = "APLU \"Ripley\" Central Control module"
-	desc = "Allows for the construction of a \"Ripley\" Central Control module."
+	desc = "Allows for construction of a \"Ripley\" Central Control module."
 	id = "ripley_main"
 	build_path = /obj/item/circuitboard/mecha/ripley/main
 	category = list(
@@ -14,7 +14,7 @@
 
 /datum/design/board/ripley_peri
 	name = "APLU \"Ripley\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Ripley\" Peripheral Control module."
+	desc = "Allows for construction of a \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
 	build_path = /obj/item/circuitboard/mecha/ripley/peripherals
 	category = list(
@@ -24,7 +24,7 @@
 
 /datum/design/board/odysseus_main
 	name = "\"Odysseus\" Central Control module"
-	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
+	desc = "Allows for construction of an \"Odysseus\" Central Control module."
 	id = "odysseus_main"
 	build_path = /obj/item/circuitboard/mecha/odysseus/main
 	category = list(
@@ -34,7 +34,7 @@
 
 /datum/design/board/odysseus_peri
 	name = "\"Odysseus\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
+	desc = "Allows for construction of an \"Odysseus\" Peripheral Control module."
 	id = "odysseus_peri"
 	build_path = /obj/item/circuitboard/mecha/odysseus/peripherals
 	category = list(
@@ -44,7 +44,7 @@
 
 /datum/design/board/gygax_main
 	name = "\"Gygax\" Central Control module"
-	desc = "Allows for the construction of a \"Gygax\" Central Control module."
+	desc = "Allows for construction of a \"Gygax\" Central Control module."
 	id = "gygax_main"
 	build_path = /obj/item/circuitboard/mecha/gygax/main
 	category = list(
@@ -54,7 +54,7 @@
 
 /datum/design/board/gygax_peri
 	name = "\"Gygax\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
+	desc = "Allows for construction of a \"Gygax\" Peripheral Control module."
 	id = "gygax_peri"
 	build_path = /obj/item/circuitboard/mecha/gygax/peripherals
 	category = list(
@@ -64,7 +64,7 @@
 
 /datum/design/board/gygax_targ
 	name = "\"Gygax\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
+	desc = "Allows for construction of a \"Gygax\" Weapons & Targeting Control module."
 	id = "gygax_targ"
 	build_path = /obj/item/circuitboard/mecha/gygax/targeting
 	category = list(
@@ -74,7 +74,7 @@
 
 /datum/design/board/durand_main
 	name = "\"Durand\" Central Control module"
-	desc = "Allows for the construction of a \"Durand\" Central Control module."
+	desc = "Allows for construction of a \"Durand\" Central Control module."
 	id = "durand_main"
 	build_path = /obj/item/circuitboard/mecha/durand/main
 	category = list(
@@ -84,7 +84,7 @@
 
 /datum/design/board/durand_peri
 	name = "\"Durand\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
+	desc = "Allows for construction of a \"Durand\" Peripheral Control module."
 	id = "durand_peri"
 	build_path = /obj/item/circuitboard/mecha/durand/peripherals
 	category = list(
@@ -94,7 +94,7 @@
 
 /datum/design/board/durand_targ
 	name = "\"Durand\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
+	desc = "Allows for construction of a \"Durand\" Weapons & Targeting Control module."
 	id = "durand_targ"
 	build_path = /obj/item/circuitboard/mecha/durand/targeting
 	category = list(
@@ -104,7 +104,7 @@
 
 /datum/design/board/honker_main
 	name = "\"H.O.N.K.\" Central Control module"
-	desc = "Allows for the construction of a \"H.O.N.K.\" Central Control module."
+	desc = "Allows for construction of a \"H.O.N.K.\" Central Control module."
 	id = "honker_main"
 	build_path = /obj/item/circuitboard/mecha/honker/main
 	category = list(
@@ -114,7 +114,7 @@
 
 /datum/design/board/honker_peri
 	name = "\"H.O.N.K.\" Peripherals Control module"
-	desc = "Allows for the construction of a \"H.O.N.K.\" Peripheral Control module."
+	desc = "Allows for construction of a \"H.O.N.K.\" Peripheral Control module."
 	id = "honker_peri"
 	build_path = /obj/item/circuitboard/mecha/honker/peripherals
 	category = list(
@@ -124,7 +124,7 @@
 
 /datum/design/board/honker_targ
 	name = "\"H.O.N.K.\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"H.O.N.K.\" Weapons & Targeting Control module."
+	desc = "Allows for construction of a \"H.O.N.K.\" Weapons & Targeting Control module."
 	id = "honker_targ"
 	build_path = /obj/item/circuitboard/mecha/honker/targeting
 	category = list(
@@ -134,7 +134,7 @@
 
 /datum/design/board/phazon_main
 	name = "\"Phazon\" Central Control module"
-	desc = "Allows for the construction of a \"Phazon\" Central Control module."
+	desc = "Allows for construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/mecha/phazon/main
@@ -145,7 +145,7 @@
 
 /datum/design/board/phazon_peri
 	name = "\"Phazon\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
+	desc = "Allows for construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/mecha/phazon/peripherals
@@ -156,7 +156,7 @@
 
 /datum/design/board/phazon_targ
 	name = "\"Phazon\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
+	desc = "Allows for construction of a \"Phazon\" Weapons & Targeting Control module."
 	id = "phazon_targ"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/mecha/phazon/targeting
@@ -167,7 +167,7 @@
 
 /datum/design/board/clarke_main
 	name = "\"Clarke\" Central Control module"
-	desc = "Allows for the construction of a \"Clarke\" Central Control module."
+	desc = "Allows for construction of a \"Clarke\" Central Control module."
 	id = "clarke_main"
 	build_path = /obj/item/circuitboard/mecha/clarke/main
 	category = list(
@@ -177,7 +177,7 @@
 
 /datum/design/board/clarke_peri
 	name = "\"Clarke\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Clarke\" Peripheral Control module."
+	desc = "Allows for construction of a \"Clarke\" Peripheral Control module."
 	id = "clarke_peri"
 	build_path = /obj/item/circuitboard/mecha/clarke/peripherals
 	category = list(
@@ -187,7 +187,7 @@
 
 /datum/design/board/savannah_ivanov_main
 	name = "\"Savannah-Ivanov\" Central Control module"
-	desc = "Allows for the construction of a \"Savannah-Ivanov\" Central Control module."
+	desc = "Allows for construction of a \"Savannah-Ivanov\" Central Control module."
 	id = "savannah_ivanov_main"
 	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/main
 	category = list(
@@ -197,7 +197,7 @@
 
 /datum/design/board/savannah_ivanov_peri
 	name = "\"Savannah-Ivanov\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Savannah-Ivanov\" Peripheral Control module."
+	desc = "Allows for construction of a \"Savannah-Ivanov\" Peripheral Control module."
 	id = "savannah_ivanov_peri"
 	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
 	category = list(
@@ -207,7 +207,7 @@
 
 /datum/design/board/savannah_ivanov_targ
 	name = "\"Savannah-Ivanov\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Savannah-Ivanov\" Weapons & Targeting Control module."
+	desc = "Allows for construction of a \"Savannah-Ivanov\" Weapons & Targeting Control module."
 	id = "savannah_ivanov_targ"
 	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/targeting
 	category = list(
@@ -218,28 +218,23 @@
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
+// Monkestation Edit Start: Code Cleanup.
 
 /datum/design/mech_scattershot
 	name = "LBX AC 10 \"Scattershot\""
-	desc = "Allows for the construction of LBX AC 10."
+	desc = "Allows for construction of the LBX AC 10."
 	id = "mech_scattershot"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -252,42 +247,30 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
 	construction_time = 20
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_carbine
 	name = "FNX-99 \"Hades\" Carbine"
-	desc = "Allows for the construction of FNX-99 \"Hades\" Carbine."
+	desc = "Allows for construction of the FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -300,162 +283,230 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
 	construction_time = 20
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_flamethrower
+	name = "FNX-100 \"Conflagrator\" Flamethrower"
+	desc = "Allows for construction of the FNX-100 \"Conflagrator\" Flamethrower."
+	id = "mech_flamethrower"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/silver=SHEET_MATERIAL_AMOUNT*3)
+	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_flamethrower_ammo
+	name = "FNX-100 Flamethrower Fuel"
+	desc = "Ammunition for the FNX-100 \"Conflagrator\" Flamethrower."
+	id = "mech_flamethrower_ammo"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_ammo/flamer
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
+	construction_time = 20
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+
+/datum/design/mech_heavy
+	name = "Executor Mech Rifle"
+	desc = "Allows for construction of the Executor Mech Rifle."
+	id = "mech_heavy"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/titanium=SHEET_MATERIAL_AMOUNT*8)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_heavy_ammo
+	name = "Executor Ammunition"
+	desc = "Ammunition for the Executor Mech Rifle."
+	id = "mech_heavy_ammo"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_ammo/heavy
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
+	construction_time = 20
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_minigun
+	name = "Avtomat AC 3"
+	desc = "Allows for construction of the Avtomat AC 3."
+	id = "mech_minigun"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minigun
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/titanium=SHEET_MATERIAL_AMOUNT*8)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_minigun_ammo
+	name = "Avtomat AC 3 Ammunition"
+	desc = "Ammunition for the Avtomat AC 3."
+	id = "mech_minigun_ammo"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_ammo/minigun
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
+	construction_time = 20
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_ion
 	name = "MKIV Ion Heavy Cannon"
-	desc = "Allows for the construction of MKIV Ion Heavy Cannon."
+	desc = "Allows for construction of the MKIV Ion Heavy Cannon."
 	id = "mech_ion"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/silver=SHEET_MATERIAL_AMOUNT*3,/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_tesla
 	name = "MKI Tesla Cannon"
-	desc = "Allows for the construction of MKI Tesla Cannon."
+	desc = "Allows for construction of the MKI Tesla Cannon."
 	id = "mech_tesla"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/silver=SHEET_MATERIAL_AMOUNT*4)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_laser
 	name = "CH-PS \"Immolator\" Laser"
-	desc = "Allows for the construction of CH-PS Laser."
+	desc = "Allows for construction of the CH-PS Laser."
 	id = "mech_laser"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_laser_heavy
 	name = "CH-LC \"Solaris\" Laser Cannon"
-	desc = "Allows for the construction of CH-LC Laser Cannon."
+	desc = "Allows for construction of the CH-LC Laser Cannon."
 	id = "mech_laser_heavy"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_disabler
 	name = "CH-DS \"Peacemaker\" Disabler"
-	desc = "Allows for the construction of CH-DS Disabler."
+	desc = "Allows for construction of the CH-DS Disabler."
 	id = "mech_disabler"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = BLUE_ALERT_DESIGN
 
 /datum/design/mech_grenade_launcher
 	name = "SGL-6 Grenade Launcher"
-	desc = "Allows for the construction of SGL-6 Grenade Launcher."
+	desc = "Allows for construction of the SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*11,/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,/datum/material/silver=SHEET_MATERIAL_AMOUNT*4)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -468,42 +519,30 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 20
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_missile_rack
 	name = "PEP-6 Missile Rack"
-	desc = "Allows for the construction of an PEP-6 Breaching Missile Rack."
+	desc = "Allows for construction of the PEP-6 Breaching Missile Rack."
 	id = "mech_missile_rack"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*11,/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,/datum/material/silver=SHEET_MATERIAL_AMOUNT*4)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -516,18 +555,12 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 20
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -540,20 +573,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT*5,/datum/material/uranium=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = BLUE_ALERT_DESIGN
 
 /datum/design/clusterbang_launcher_ammo
 	name = "SOB-3 Clusterbang Launcher Ammunition"
@@ -564,20 +592,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT * 1.5,/datum/material/uranium=HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	construction_time = 20
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = BLUE_ALERT_DESIGN
 
 /datum/design/mech_wormhole_gen
 	name = "Localized Wormhole Generator"
@@ -588,24 +611,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -618,24 +632,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/diamond=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -648,24 +653,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*15,/datum/material/gold=SHEET_MATERIAL_AMOUNT*10,/datum/material/plasma=SHEET_MATERIAL_AMOUNT*12.5,/datum/material/silver=SHEET_MATERIAL_AMOUNT*10)
 	construction_time = 1200
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -678,24 +674,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*12.5,/datum/material/titanium=SHEET_MATERIAL_AMOUNT * 2.5,/datum/material/silver=SHEET_MATERIAL_AMOUNT*1.5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -708,24 +695,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -738,24 +716,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,/datum/material/silver=SHEET_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -768,24 +737,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/silver=SHEET_MATERIAL_AMOUNT * 2.5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -798,24 +758,15 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT * 2.5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_ODYSSEUS,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -828,13 +779,12 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/diamond=SHEET_MATERIAL_AMOUNT*3.25)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
@@ -848,22 +798,14 @@
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -876,22 +818,13 @@
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
-		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -904,16 +837,11 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-	)
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -926,16 +854,11 @@
 	materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT *2)
 	construction_time = 20
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_PHAZON,
-	)
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
-		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -948,17 +871,13 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_syringe_gun
-	name = "Exosuit Medical (Syringe Gun)"
+	name = "Exosuit Syringe Gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
@@ -966,17 +885,13 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_medical_beamgun
-	name = "Exosuit Medical (Medical Beamgun)"
+	name = "Exosuit Medical Beamgun"
 	desc = "Equipment for medical exosuits. A mounted medical nanite projector which will treat patients with a focused beam."
 	id = "mech_medi_beam"
 	build_type = MECHFAB
@@ -984,11 +899,9 @@
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_ODYSSEUS
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL,
-		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+//Monkestation edit: Code Cleanup

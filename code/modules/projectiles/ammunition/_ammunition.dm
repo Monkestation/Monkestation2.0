@@ -10,6 +10,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	override_notes = TRUE
+	custom_materials = AMMO_MATS_BASIC
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
 	///Which kind of guns it can be loaded into
@@ -33,6 +34,15 @@
 	var/heavy_metal = TRUE
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
+	/// Can this bullet casing be printed at an ammunition workbench?
+	var/can_be_printed = TRUE
+	/// If it can be printed, does this casing require an advanced ammunition datadisk? Mainly for specialized ammo.
+	/// Rubbers aren't advanced. Standard ammo (or FMJ if you're particularly pedantic) isn't advanced.
+	/// Think more specialized or weird, niche ammo, like armor-piercing, incendiary, hollowpoint, or God forbid, phasic.
+	var/advanced_print_req = FALSE
+	/// sound we play when ejected a gun and hit the floor
+	var/bullet_bounce_sound = null
+	var/bullet_bounce_sound_volume = 50
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
@@ -46,6 +56,7 @@
 	pixel_y = base_pixel_y + rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
 	update_appearance()
+	update_trash_trait()
 
 /obj/item/ammo_casing/Destroy()
 	var/turf/T = get_turf(src)
@@ -66,17 +77,34 @@
 /obj/item/ammo_casing/proc/add_notes_ammo()
 	// Try to get a projectile to derive stats from
 	var/obj/projectile/exam_proj = projectile_type
+	var/initial_damage = initial(exam_proj.damage)
+	var/initial_stamina = initial(exam_proj.stamina)
+	// projectile damage multiplier for guns with snowflaked damage multipliers
+	var/proj_damage_mult = 1
 	if(!ispath(exam_proj) || pellets == 0)
 		return
 
+	// are we in an ammo box?
+	if(isammobox(loc))
+		var/obj/item/ammo_box/our_box = loc
+		// is our ammo box in a gun?
+		if(isgun(our_box.loc))
+			var/obj/item/gun/our_gun = our_box.loc
+			// grab the damage multiplier
+			proj_damage_mult = our_gun.projectile_damage_multiplier
+	// if not, are we just in a gun e.g. chambered
+	else if(isgun(loc))
+		var/obj/item/gun/our_gun = loc
+		// grab the damage multiplier.
+		proj_damage_mult = our_gun.projectile_damage_multiplier
 	var/list/readout = list()
+	if(proj_damage_mult <= 0 || (initial_damage <= 0 && initial_stamina <= 0))
+		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric."
 	// No dividing by 0
-	if(initial(exam_proj.damage) > 0)
-		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT(initial(exam_proj.damage) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round"
-	if(initial(exam_proj.stamina) > 0)
-		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT(initial(exam_proj.stamina) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds"
-	if(!readout.len) // Everything else failed, give generic text
-		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric"
+	if(initial_damage)
+		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * proj_damage_mult) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round."
+	if(initial_stamina)
+		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * proj_damage_mult) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds."
 	return readout.Join("\n") // Sending over a single string, rather than the whole list
 
 /obj/item/ammo_casing/update_icon_state()
@@ -96,17 +124,18 @@
 		update_appearance()
 		victim.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
 		source_item?.reagents?.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
-
+	update_trash_trait()
 	return ..()
 
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
+	update_trash_trait()
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
+/obj/item/ammo_casing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/ammo_box))
+		var/obj/item/ammo_box/box = attacking_item
 		if(isturf(loc))
 			var/boolets = 0
 			for(var/obj/item/ammo_casing/bullet in loc)
@@ -153,5 +182,23 @@
 		)
 	if(still_warm && our_turf.bullet_sizzle)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), sound_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
-	else if(our_turf.bullet_bounce_sound)
+		return
+	if(bullet_bounce_sound)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, bullet_bounce_sound, bullet_bounce_sound_volume, 1), sound_delay)
+		return
+	if(our_turf.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, our_turf.bullet_bounce_sound, 20, 1), sound_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.
+
+/obj/item/ammo_casing/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
+	. = ..()
+	update_trash_trait()
+
+/obj/item/ammo_casing/refresh_shot()
+	. = ..()
+	update_trash_trait()
+
+/obj/item/ammo_casing/proc/update_trash_trait()
+	if(QDELETED(loaded_projectile))
+		ADD_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)

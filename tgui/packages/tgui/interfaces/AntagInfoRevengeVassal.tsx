@@ -1,17 +1,15 @@
 import { resolveAsset } from '../assets';
-import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, Dropdown, Section, Stack } from '../components';
+import {
+  Button,
+  Divider,
+  Dropdown,
+  Image,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
-
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-};
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type BloodsuckerInformation = {
   power: PowerInfo[];
@@ -27,24 +25,6 @@ type Info = {
   objectives: Objective[];
 };
 
-const ObjectivePrintout = (props: any) => {
-  const { data } = useBackend<Info>();
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
-};
-
 export const AntagInfoRevengeVassal = (props: any) => {
   return (
     <Window width={620} height={300}>
@@ -56,6 +36,9 @@ export const AntagInfoRevengeVassal = (props: any) => {
 };
 
 const VassalInfo = () => {
+  const {
+    data: { objectives },
+  } = useBackend<Info>();
   return (
     <Stack vertical fill>
       <Stack.Item minHeight="20rem">
@@ -66,7 +49,7 @@ const VassalInfo = () => {
               Master!
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout />
+              <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -117,7 +100,6 @@ const PowerSection = (props: any) => {
       <Stack>
         <Stack.Item grow>
           <Dropdown
-            displayText={selectedPower.power_name}
             selected={selectedPower.power_name}
             width="100%"
             options={power.map((powers) => powers.power_name)}
@@ -128,18 +110,17 @@ const PowerSection = (props: any) => {
             }
           />
           {selectedPower && (
-            <Box
+            <Image
               position="absolute"
               height="12rem"
-              as="img"
               src={resolveAsset(`bloodsucker.${selectedPower.power_icon}.png`)}
             />
           )}
-          <Divider Vertical />
+          <Divider vertical />
         </Stack.Item>
         <Stack.Divider />
-        <Stack.Item scrollable grow={1} fontSize="16px">
-          {selectedPower && selectedPower.power_explanation}
+        <Stack.Item grow fontSize="16px">
+          {selectedPower?.power_explanation}
         </Stack.Item>
       </Stack>
     </Section>

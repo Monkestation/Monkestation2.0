@@ -1,6 +1,6 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { BooleanLike, classes } from 'common/react';
+import { type BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -114,7 +114,7 @@ const CameraSelector = (props) => {
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onInput={(e, value) => setSearchText(value)}
+          onChange={(value) => setSearchText(value)}
         />
       </Stack.Item>
       <Stack.Item grow>

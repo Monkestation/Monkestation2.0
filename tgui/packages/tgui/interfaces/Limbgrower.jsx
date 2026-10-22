@@ -24,7 +24,7 @@ export const Limbgrower = (props) => {
     categories.find((category) => category.name === tab)?.designs || [];
 
   return (
-    <Window title="Limb Grower" width={500} height={550}>
+    <Window title="Limb Grower" width={726} height={550}>
       {!!busy && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />

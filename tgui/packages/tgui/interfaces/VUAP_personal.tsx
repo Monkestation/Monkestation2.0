@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Section, Table, Stack, Grid } from '../components';
+import { Box, Button, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 
 interface MuteStates {
@@ -197,11 +197,11 @@ export const VUAP_personal = (props) => {
           </Stack.Item>
 
           <Stack.Item>
-            <Grid>
-              <Grid.Column>
+            <Table>
+              <Table.Cell>
                 <Section title="Punish">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="times"
@@ -223,8 +223,8 @@ export const VUAP_personal = (props) => {
                         color="red"
                         onClick={() => handleAction('smite')}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         content="PRISON"
@@ -237,15 +237,15 @@ export const VUAP_personal = (props) => {
                         color="red"
                         onClick={() => handleAction('unprison')}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
-              </Grid.Column>
+              </Table.Cell>
 
-              <Grid.Column>
+              <Table.Cell>
                 <Section title="Message">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="comment"
@@ -258,8 +258,14 @@ export const VUAP_personal = (props) => {
                         content="SM"
                         onClick={() => handleAction('sm')}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                      <Button
+                        fluid
+                        icon="comment-alt"
+                        content="HEADSET MSG"
+                        onClick={() => handleAction('headsetmsg')}
+                      />
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="comment-alt"
@@ -272,17 +278,17 @@ export const VUAP_personal = (props) => {
                         content="PLAY SOUND TO"
                         onClick={() => handleAction('playsoundto')}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
-              </Grid.Column>
-            </Grid>
+              </Table.Cell>
+            </Table>
 
-            <Grid>
-              <Grid.Column>
+            <Table>
+              <Table.Cell>
                 <Section title="Movement">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="running"
@@ -301,8 +307,8 @@ export const VUAP_personal = (props) => {
                         content="SEND"
                         onClick={() => handleAction('send')}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="sign-out-alt"
@@ -321,15 +327,15 @@ export const VUAP_personal = (props) => {
                         content="SEND TO CRYO"
                         onClick={() => handleAction('cryo')}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
-              </Grid.Column>
+              </Table.Cell>
 
-              <Grid.Column>
+              <Table.Cell>
                 <Section title="Info">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="code"
@@ -348,8 +354,8 @@ export const VUAP_personal = (props) => {
                         content="PLAYTIME"
                         onClick={() => handleAction('playtime')}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="book"
@@ -368,17 +374,17 @@ export const VUAP_personal = (props) => {
                         content="LANGUAGE"
                         onClick={() => handleAction('language')}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
-              </Grid.Column>
-            </Grid>
+              </Table.Cell>
+            </Table>
 
-            <Grid>
-              <Grid.Column>
+            <Table>
+              <Table.Cell>
                 <Section title="Transformation">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="ghost"
@@ -406,8 +412,8 @@ export const VUAP_personal = (props) => {
                         }
                         onClick={() => handleAction('makemonkey')}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="robot"
@@ -426,12 +432,12 @@ export const VUAP_personal = (props) => {
                         }
                         onClick={() => handleAction('makeai')}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
                 <Section title="Health">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="heart"
@@ -453,8 +459,8 @@ export const VUAP_personal = (props) => {
                         content="CURE ALL BAD DISEASES"
                         onClick={() => handleAction('cureAllDiseases')}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="plus"
@@ -471,14 +477,14 @@ export const VUAP_personal = (props) => {
                         content="DISEASE PANEL"
                         onClick={() => handleAction('diseasePanel')}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
-              </Grid.Column>
-              <Grid.Column>
+              </Table.Cell>
+              <Table.Cell>
                 <Section title="Misc">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="comment"
@@ -509,8 +515,8 @@ export const VUAP_personal = (props) => {
                         content="SPAWN COOKIE"
                         onClick={() => handleAction('spawncookie')}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="star"
@@ -535,17 +541,17 @@ export const VUAP_personal = (props) => {
                         content="THUNDERDOME OBSERVER"
                         onClick={() => handleAction('thunderdomeobserver')}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
-              </Grid.Column>
-            </Grid>
+              </Table.Cell>
+            </Table>
 
-            <Grid>
-              <Grid.Column>
+            <Table>
+              <Table.Cell>
                 <Section title="Mute Controls">
-                  <Grid>
-                    <Grid.Column size={6}>
+                  <Table>
+                    <Table.Cell width="6%">
                       <Button.Checkbox
                         fluid
                         checked={playerData.muteStates.ic}
@@ -567,8 +573,8 @@ export const VUAP_personal = (props) => {
                         content="PRAY"
                         color={!playerData.muteStates.pray ? 'green' : 'red'}
                       />
-                    </Grid.Column>
-                    <Grid.Column size={6}>
+                    </Table.Cell>
+                    <Table.Cell width="6%">
                       <Button.Checkbox
                         fluid
                         checked={playerData.muteStates.adminhelp}
@@ -599,11 +605,11 @@ export const VUAP_personal = (props) => {
                         content="Toggle All"
                         onClick={toggleAllMutes}
                       />
-                    </Grid.Column>
-                  </Grid>
+                    </Table.Cell>
+                  </Table>
                 </Section>
-              </Grid.Column>
-            </Grid>
+              </Table.Cell>
+            </Table>
           </Stack.Item>
         </Stack>
       </Window.Content>

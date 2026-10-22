@@ -4,6 +4,8 @@
 #define COMPONENT_INCOMPATIBLE 1
 /// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
 #define COMPONENT_NOTRANSFER 2
+/// Deletes the component silently. This is for valid, non-error cases where you still want to execute some of the component's logic.
+#define COMPONENT_REDUNDANT 3
 
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1
@@ -55,6 +57,7 @@
 #define CALTROP_SILENT (1 << 2)
 #define CALTROP_NOSTUN (1 << 3)
 #define CALTROP_NOCRAWL (1 << 4)
+#define CALTROP_ANTS (1 << 5)
 
 //Ingredient type in datum/component/customizable_reagent_holder
 #define CUSTOM_INGREDIENT_TYPE_EDIBLE 1

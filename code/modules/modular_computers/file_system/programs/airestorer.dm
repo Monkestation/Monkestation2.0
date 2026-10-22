@@ -1,14 +1,12 @@
 /datum/computer_file/program/ai_restorer
 	filename = "ai_restore"
 	filedesc = "AI Manager & Restorer"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
-	requires_ntnet = FALSE
-	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
-	transfer_access = list(ACCESS_RD)
-	available_on_ntnet = TRUE
+	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	download_access = list(ACCESS_RD)
 	tgui_id = "NtosAiRestorer"
 	program_icon = "laptop-code"
 
@@ -78,17 +76,15 @@
 
 /datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
 	if(!stored_card)
-		if(user)
-			to_chat(user, span_warning("There is no card in \the [computer.name]."))
 		return FALSE
 
 	if(restoring && !forced)
 		if(user)
-			to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
+			to_chat(user, span_warning("Safeties prevent you from removing \the [stored_card] until reconstruction is complete..."))
 		return FALSE
 
 	if(user && computer.Adjacent(user))
-		to_chat(user, span_notice("You remove [stored_card] from [computer.name]."))
+		computer.balloon_alert(user, "[stored_card] removed")
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(computer.drop_location())

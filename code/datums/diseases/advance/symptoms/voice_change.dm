@@ -1,3 +1,4 @@
+/*
 /*Voice Change
  * Slight stealth reduction
  * Reduces resistance
@@ -57,7 +58,7 @@
 				if(scramble_language && !current_language) // Last part prevents rerolling language with small amounts of cure.
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
 					H.add_blocked_language(subtypesof(/datum/language) - current_language, LANGUAGE_VOICECHANGE)
-					H.grant_language(current_language, TRUE, TRUE, LANGUAGE_VOICECHANGE)
+					H.grant_language(current_language, source = LANGUAGE_VOICECHANGE)
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()
@@ -67,3 +68,4 @@
 	if(scramble_language)
 		A.affected_mob.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_VOICECHANGE)
 		A.affected_mob.remove_all_languages(LANGUAGE_VOICECHANGE) // In case someone managed to get more than one anyway.
+*/

@@ -4,10 +4,9 @@
 /turf/open/misc
 	name = "coder/mapper fucked up"
 	desc = "report on github please"
-	icon_state = "BROKEN"
 
 	flags_1 = NO_SCREENTIPS_1
-	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST
+	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -22,16 +21,16 @@
 	heat_capacity = 10000
 	tiled_dirt = TRUE
 
-/turf/open/misc/attackby(obj/item/W, mob/user, params)
+/turf/open/misc/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/rods))
-		build_with_rods(W, user)
+	if(istype(attacking_item, /obj/item/stack/rods))
+		build_with_rods(attacking_item, user)
 		return TRUE
-	else if(istype(W, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(W, user)
+	else if(istype(attacking_item, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(attacking_item, user)
 		return TRUE
 
 /turf/open/misc/attack_paw(mob/user, list/modifiers)
@@ -85,6 +84,13 @@
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 		if(RCD_REFLECTOR)
 			return list("mode" = RCD_REFLECTOR, "delay" = 2 SECONDS, "cost" = 20)
+		if(RCD_FIRELOCK)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor/border_only)
+				return list("mode" = RCD_FIRELOCK, "delay" = 1 SECONDS, "cost" = 8)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor/heavy)
+				return list("mode" = RCD_FIRELOCK, "delay" = 5 SECONDS, "cost" = 16)
+			if(the_rcd.firelock_type == /obj/machinery/door/firedoor)
+				return list("mode" = RCD_FIRELOCK, "delay" = 3 SECONDS, "cost" = 12)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 5 SECONDS, "cost" = 20)
@@ -140,6 +146,16 @@
 			var/obj/structure/reflector/reflector_base = new(src)
 			reflector_base.set_anchored(TRUE)
 			return TRUE
+
+		if(RCD_FIRELOCK)
+			if(locate(/obj/machinery/door/firedoor) in src)
+				balloon_alert(user, "there's already a firedoor!")
+				return FALSE
+			var/obj/machinery/door/firedoor/new_firedoor = new the_rcd.firelock_type(src)
+			if(istype(new_firedoor, /obj/machinery/door/firedoor/border_only))
+				new_firedoor.setDir(user.dir)
+			return TRUE
+
 		if(RCD_AIRLOCK)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))

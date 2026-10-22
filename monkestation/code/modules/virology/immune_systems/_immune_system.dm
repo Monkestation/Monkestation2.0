@@ -17,6 +17,7 @@
 		ANTIGEN_X	= 0,
 		ANTIGEN_Y	= 0,
 		ANTIGEN_Z	= 0,
+		ANTIGEN_IG 	= 0,
 		)
 
 /datum/immune_system/Destroy(force)
@@ -41,7 +42,7 @@
 			antibodies[antibody] = rand(10, 30) * boost
 		if(antibody in GLOB.blood_antigens)
 			antibodies[antibody] = rand(10, 20) * boost
-			var/blood_type = host.has_dna()?.human_blood_type
+			var/blood_type = host.get_bloodtype()
 			if(blood_type)
 				switch(antibody)
 					if(ANTIGEN_O)
@@ -78,6 +79,12 @@
 		antibodies[antibody] *= new_boost
 	boost = new_boost
 
+/datum/immune_system/proc/change_strength(new_strength = 1)
+	var/old_strength = strength
+	if(new_strength == old_strength)
+		return
+	strength = new_strength
+
 /datum/immune_system/proc/GetImmunity()
 	return list(strength, antibodies.Copy())
 
@@ -96,9 +103,9 @@
 	overloaded = TRUE
 
 
-//If even one antibody hass sufficient concentration, the disease won't be able to infect
+//If even one antibody has sufficient concentration, the disease won't be able to infect
 /datum/immune_system/proc/CanInfect(datum/disease/acute/disease)
-	if (overloaded)
+	if (overloaded || (HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(host, TRAIT_VIRUS_RESISTANCE)))
 		return TRUE
 
 	if(HAS_TRAIT(host, TRAIT_VIRUSIMMUNE))
@@ -126,11 +133,12 @@
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 4
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 2.5
+			if(HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(host, TRAIT_VIRUS_RESISTANCE))
+				tally -= 1
 
 			tally *= boost
-
 			if (antibodies[A] < threshold)
 				antibodies[A] = min(antibodies[A] + tally, threshold)//no overshooting here
 			else
@@ -151,7 +159,7 @@
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 5.5
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 3.5
 
 			if(!HAS_TRAIT(host, TRAIT_NOHUNGER))
@@ -166,9 +174,10 @@
 						tally = max(tally - 1.5, 0.5)
 					else
 						EMPTY_BLOCK_GUARD
+			if(HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(host, TRAIT_VIRUS_RESISTANCE))
+				tally -= 1
 
 			tally *= boost
-
 			if (antibodies[A] < 69)
 				antibodies[A] = min(antibodies[A] + tally * strength, 70)
 			else
@@ -180,6 +189,8 @@
 
 // fix immune system damage
 /datum/immune_system/proc/ImmuneRepair(level, threshold)
+	if(HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY))
+		level *= 0.5
 	if(level < 0)
 		strength = max(strength + level, 0)
 		return

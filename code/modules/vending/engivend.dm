@@ -9,22 +9,31 @@
 		/obj/item/clothing/glasses/meson/engine = 2,
 		/obj/item/clothing/glasses/welding = 3,
 		/obj/item/multitool = 4,
-		/obj/item/grenade/chem_grenade/smart_metal_foam = 10,
 		/obj/item/geiger_counter = 5,
-		/obj/item/stock_parts/cell/high = 10,
+		/obj/item/storage/bag/construction = 5,
+		/obj/item/stock_parts/power_store/cell/high = 10,
+		/obj/item/stock_parts/power_store/battery/high = 10,
 		/obj/item/electronics/airlock = 10,
 		/obj/item/electronics/apc = 10,
 		/obj/item/electronics/airalarm = 10,
 		/obj/item/electronics/firealarm = 10,
 		/obj/item/electronics/firelock = 10,
+		/obj/item/grenade/chem_grenade/metalfoam = 10,
+		/obj/item/grenade/chem_grenade/iron_metalfoam = 5,
+		/obj/item/storage/box/metalfoam = 2,
+		/obj/item/storage/box/nanofrost = 2,
+		/obj/item/storage/box/flares = 2,
+		/obj/item/clothing/head/cone = 20,
 	)
 	contraband = list(
-		/obj/item/stock_parts/cell/potato = 3,
+		/obj/item/stock_parts/power_store/cell/potato = 3,
 	)
 	premium = list(
 		/obj/item/storage/belt/utility = 3,
 		/obj/item/construction/rcd/loaded = 2,
-		/obj/item/storage/box/smart_metal_foam = 1,
+		/obj/item/grenade/chem_grenade/smart_metalfoam = 10,
+		/obj/item/storage/box/smart_metalfoam = 2,
+		/obj/item/storage/box/large_oxygen_candles = 2,
 	)
 	refill_canister = /obj/item/vending_refill/engivend
 	default_price = PAYCHECK_CREW

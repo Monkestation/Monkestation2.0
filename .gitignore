@@ -1,3 +1,6 @@
+# monkestation addition: icon_exists cache
+icon_exists_cache.json
+
 ###Files and folders specified here will never be tracked.
 
 # Local overrides--you can use this to change the config for your dev environment (like setting up SQL) without worrying about committing it
@@ -6,6 +9,7 @@
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
+/cache/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
@@ -245,3 +249,6 @@ config/dbconfig.txt
 # Running OpenDream locally
 tgstation.json
 rust_g64.dll
+
+#ableton sound analysis files
+*.asd

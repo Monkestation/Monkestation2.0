@@ -22,9 +22,6 @@
  * preference_source - the preferences of the thing we're equipping
  */
 /mob/living/carbon/human/proc/equip_outfit_and_loadout(datum/outfit/outfit, datum/preferences/preference_source, visuals_only = FALSE, datum/job/equipping_job)
-	if (!preference_source)
-		return FALSE
-
 	var/datum/outfit/equipped_outfit
 
 	if(ispath(outfit))
@@ -34,12 +31,13 @@
 	else
 		CRASH("Outfit passed to equip_outfit_and_loadout was neither a path nor an instantiated type!")
 
-	var/override_preference = preference_source.read_preference(/datum/preference/choiced/loadout_override_preference)
+	var/override_preference = preference_source?.read_preference(/datum/preference/choiced/loadout_override_preference)
 
 	var/list/loadout_datums = loadout_list_to_datums(preference_source?.loadout_list)
 
 
-	if(override_preference == LOADOUT_OVERRIDE_CASE && !visuals_only)
+	var/spawned_briefcase = FALSE
+	if(override_preference == LOADOUT_OVERRIDE_CASE && preference_source && !visuals_only)
 		var/obj/item/storage/briefcase/empty/briefcase = new(loc)
 
 		for(var/datum/loadout_item/item as anything in loadout_datums)
@@ -48,25 +46,26 @@
 					to_chat(src, span_warning("You were unable to get a loadout item([initial(item.item_path.name)]) due to job restrictions!"))
 				continue
 
-			new item.item_path(briefcase)
+			SSwardrobe.provide_type(item.item_path, briefcase)
 		var/list/numbers = list()
-		for(var/num as anything in preference_source?.special_loadout_list["unusual"])
+		for(var/num in preference_source.special_loadout_list["unusual"])
 			if(num in numbers)
 				continue
 			numbers += num
-			var/list/unusuals = preference_source?.extra_stat_inventory["unusual"]
+			var/list/unusuals = preference_source.extra_stat_inventory["unusual"]
 			var/unusual_idx = text2num(num)
 			if(length(unusuals) < unusual_idx)
 				stack_trace("tried to get unusual [unusual_idx] despite length being [length(unusuals)]")
 				continue
 			var/list/data = unusuals[unusual_idx]
 			var/item_path = text2path(data["unusual_type"])
-			var/obj/item/new_item = new item_path(briefcase)
+			var/obj/item/new_item = SSwardrobe.provide_type(item_path, briefcase)
 			new_item.AddComponent(/datum/component/unusual_handler, data)
 
 		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
 		equipOutfit(equipped_outfit, visuals_only)
 		put_in_hands(briefcase)
+		spawned_briefcase = TRUE
 	else
 		for(var/datum/loadout_item/item as anything in loadout_datums)
 			if(item.restricted_roles && equipping_job && !(equipping_job.title in item.restricted_roles))
@@ -82,26 +81,27 @@
 
 		equipOutfit(equipped_outfit, visuals_only)
 
-	for(var/num as anything in preference_source?.special_loadout_list["unusual"])
-		var/list/unusuals = preference_source?.extra_stat_inventory["unusual"]
-		var/unusual_idx = text2num(num)
-		if(length(unusuals) < unusual_idx)
-			stack_trace("tried to get unusual [unusual_idx] despite length being [length(unusuals)]")
-			continue
-		var/list/data = unusuals[unusual_idx]
-		var/item_path = text2path(data["unusual_type"])
-		var/obj/item/new_item = new item_path
-		new_item.AddComponent(/datum/component/unusual_handler, data)
-		if(!new_item.equip_to_best_slot(src))
-			if(!put_in_hands(new_item))
-				new_item.forceMove(get_turf(src))
+	if(!spawned_briefcase) // avoid double spawning unusuals
+		for(var/num in preference_source?.special_loadout_list["unusual"])
+			var/list/unusuals = preference_source?.extra_stat_inventory["unusual"]
+			var/unusual_idx = text2num(num)
+			if(length(unusuals) < unusual_idx)
+				stack_trace("tried to get unusual [unusual_idx] despite length being [length(unusuals)]")
+				continue
+			var/list/data = unusuals[unusual_idx]
+			var/item_path = text2path(data["unusual_type"])
+			var/obj/item/new_item = SSwardrobe.provide_type(item_path)
+			new_item.AddComponent(/datum/component/unusual_handler, data)
+			if(!new_item.equip_to_best_slot(src))
+				if(!put_in_hands(new_item))
+					new_item.forceMove(get_turf(src))
 
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		if(istype(item, /datum/loadout_item/effects))
 			continue
 		item.on_equip_item(preference_source, src, visuals_only)
 
-	regenerate_icons()
+	//regenerate_icons()
 	return TRUE
 
 /*

@@ -22,27 +22,27 @@
 			return
 
 	var/obj/item/organ/internal/appendix/appendix = owner.get_organ_slot(ORGAN_SLOT_APPENDIX)
-	if((!appendix && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (appendix && ((appendix.organ_flags & ORGAN_FAILING) || (appendix.organ_flags & ORGAN_SYNTHETIC))))
+	if((!appendix && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (appendix && ((appendix.organ_flags & ORGAN_FAILING) || IS_ROBOTIC_ORGAN(appendix))))
 		replace_appendix(appendix)
 		return
 
 	var/obj/item/organ/internal/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
-	if((!liver && !HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM)) || (liver && ((liver.damage > liver.high_threshold) || (liver.organ_flags & ORGAN_SYNTHETIC))))
+	if((!liver && !HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM)) || (liver && ((liver.damage > liver.high_threshold) || IS_ROBOTIC_ORGAN(liver))))
 		replace_liver(liver)
 		return
 
 	var/obj/item/organ/internal/lungs/lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || (lungs.organ_flags & ORGAN_SYNTHETIC))))
+	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || IS_ROBOTIC_ORGAN(lungs))))
 		replace_lungs(lungs)
 		return
 
 	var/obj/item/organ/internal/stomach/stomach = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if((!stomach && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (stomach && ((stomach.damage > stomach.high_threshold) || (stomach.organ_flags & ORGAN_SYNTHETIC))))
+	if((!stomach && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (stomach && ((stomach.damage > stomach.high_threshold) || IS_ROBOTIC_ORGAN(stomach))))
 		replace_stomach(stomach)
 		return
 
 	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
-	if(!eyes || (eyes && ((eyes.damage > eyes.low_threshold) || (eyes.organ_flags & ORGAN_SYNTHETIC))))
+	if(!eyes || (eyes && ((eyes.damage > eyes.low_threshold) || IS_ROBOTIC_ORGAN(eyes))))
 		replace_eyes(eyes)
 		return
 
@@ -213,14 +213,14 @@
 		playsound(owner, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
-			var/obj/effect/decal/cleanable/robot_debris/debris = new(get_turf(owner))
+			var/obj/effect/decal/cleanable/blood/gibs/robot_debris/debris = new(get_turf(owner))
 			debris.streak(dirs)
 	else
 		owner.visible_message(span_warning("[owner]'s [chest.name] sheds off its damaged flesh, rapidly replacing it!"), span_warning("Your [chest.name] sheds off its damaged flesh, rapidly replacing it!"))
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
-			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner))
+			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner), owner.get_static_viruses(), blood_dna_info)
 			gibs.streak(dirs)
 
 	var/obj/item/bodypart/chest/new_chest = new(null)

@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 
 /**
  * A map of keyed materials to a quantity.
@@ -21,19 +21,9 @@ export type Material = {
   ref: string;
 
   /**
-   * The amount of material; 2,000 units is one sheet.
+   * The amount of material; 100 units is one sheet.
    */
   amount: number;
-
-  /**
-   * The number of sheets.
-   */
-  sheets: number;
-
-  /**
-   * Whether the material can be removed.
-   */
-  removable: BooleanLike;
 
   /**
    * The color of the material.
@@ -74,30 +64,107 @@ export type Design = {
 
   /**
    * The icon used to represent this design, generated in
-   * /datum/asset/spritesheet/research_designs. **The image within may not be
+   * /datum/asset/spritesheet_batched/research_designs. **The image within may not be
    * 32x32.**
    */
   icon: string;
-
-  /**
-   * The amount of time, in seconds, that this design takes to print.
-   */
-  constructionTime: number;
-
-  /**
-   * The maximum number of items than can be printed
-   */
-  maxmult: number;
 };
 
 /**
  * The static and dynamic data made available to a fabricator UI.
  */
 export type FabricatorData = {
+	/**
+	 * Current machine mode for dual-purpose fabricators.
+	 */
+	machine_mode?: 'lathe' | 'ammo';
+
+	/**
+	 * Label for the mode-toggle button.
+	 */
+	mode_toggle_label?: string;
+
+  /**
+   * Label for the currently active lathe recipe set.
+   */
+  lathe_recipe_label?: string;
+
+  /**
+   * Internal ID of the currently active lathe recipe set.
+   */
+  lathe_recipe_set?: string;
+
+  /**
+   * Dropdown options for available lathe recipe sets.
+   */
+  lathe_recipe_sets?: Array<{
+    displayText: string;
+    value: string;
+  }>;
+
+  /**
+   * Whether there is more than one lathe recipe set available.
+   */
+  lathe_recipe_can_switch?: BooleanLike;
+
+	/**
+	 * Optional tgui theme name for this fabricator window.
+	 */
+	ui_theme?: string;
+
+  /**
+   * Ammo-mode: whether an ammo container is inserted.
+   */
+  mag_loaded?: BooleanLike;
+
+  /**
+   * Ammo-mode: whether the machine is currently filling rounds.
+   */
+  system_busy?: BooleanLike;
+
+  /**
+   * Ammo-mode: selected/inserted container name.
+   */
+  mag_name?: string;
+
+  /**
+   * Ammo-mode: current rounds in inserted container.
+   */
+  current_rounds?: number;
+
+  /**
+   * Ammo-mode: max rounds in inserted container.
+   */
+  max_rounds?: number;
+
+  /**
+   * Optional status/error message for ammo mode.
+   */
+  error?: string;
+
+  /**
+   * Optional color key for ammo mode status box.
+   */
+  error_type?: string;
+
+  /**
+   * Ammo-mode printable round options for the inserted container.
+   */
+  available_rounds?: Array<{
+    name: string;
+    typepath: string;
+    mats_list: string;
+  }>;
+
   /**
    * The materials available to the fabricator, via ore silo or local storage.
    */
   materials: Material[];
+
+  /**
+   * Definition of how much units 1 sheet has.
+   */
+  SHEET_MATERIAL_AMOUNT: number;
 
   /**
    * The name of the fabricator, as displayed on the title bar.

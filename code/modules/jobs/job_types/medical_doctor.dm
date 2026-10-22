@@ -24,7 +24,7 @@
 		/datum/job_department/medical,
 		)
 
-	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/scalpel, /obj/item/hemostat, /obj/item/circular_saw, /obj/item/retractor, /obj/item/cautery, /obj/item/clothing/neck/stethoscope, /obj/item/clothing/mask/surgical, /obj/item/flashlight/pen)
 
 	mail_goodies = list(
 		/obj/item/healthanalyzer/advanced = 15,
@@ -44,12 +44,12 @@
 	jobtype = /datum/job/doctor
 
 	id_trim = /datum/id_trim/job/medical_doctor
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
-	suit = /obj/item/clothing/suit/toggle/labcoat
+	uniform = /obj/item/clothing/under/rank/medical/doctor
+	suit = /obj/item/clothing/suit/toggle/labcoat/medical
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	head = /obj/item/clothing/head/utility/surgerycap
+	glasses = /obj/item/clothing/glasses/hud/health
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 

@@ -56,7 +56,3 @@
 	random_icon_states = null
 	base_name = ""
 	can_dry = FALSE
-
-/obj/effect/decal/cleanable/blood/innards/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	add_blood_DNA(list("DEMON BLOOD" = /datum/blood_type/animal))

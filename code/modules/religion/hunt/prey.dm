@@ -15,3 +15,7 @@
 	name = "Prey of the Hunt"
 	desc = "A hapless deer, chosen as prey for the Great Hunt"
 	butcher_results = list(/obj/item/food/meat/slab = 3, /obj/item/food/meat/religioustrophy = 1)
+
+/mob/living/basic/deer/prey/Destroy()
+	GLOB.sect_of_the_hunt_preys -= src
+	return ..()

@@ -20,6 +20,8 @@
 		)
 	random_spawns_possible = FALSE
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS
+	antag_capacity_points = 2 //2 due to valid hunting tendencies of borgs, fine turning down to 1
+	oshan_normal_latejoin = TRUE
 
 /datum/job/cyborg/get_latejoin_spawn_point()
 	var/turf/open/picked_turf = get_random_open_turf_in_area()
@@ -52,10 +54,9 @@
 	spawned.gender = NEUTER
 	var/mob/living/silicon/robot/robot_spawn = spawned
 	robot_spawn.notify_ai(AI_NOTIFICATION_NEW_BORG)
-	robot_spawn.TryConnectToAI()
 	if(!robot_spawn.connected_ai) // Only log if there's no Master AI
 		robot_spawn.log_current_laws()
 	return TRUE
 
-/datum/job/cyborg/radio_help_message(mob/M)
-	to_chat(M, "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>")
+/datum/job/cyborg/get_radio_information()
+	return "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>"

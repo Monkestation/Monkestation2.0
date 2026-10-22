@@ -40,6 +40,9 @@
 	/// Are byond mouse events beyond the window passed in to the ui
 	var/mouse_hooked = FALSE
 
+	/// The id of any ByondUi elements that we have opened
+	var/list/open_byondui_elements
+
 /**
  * public
  *
@@ -55,9 +58,11 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(user,
 		"new [interface] fancy [user?.client?.prefs.read_preference(/datum/preference/toggle/tgui_fancy)]",
 		src_object = src_object)
+#endif
 	src.user = user
 	src.src_object = src_object
 	src.window_key = "[REF(src_object)]-main"
@@ -146,8 +151,25 @@
 		window.close(can_be_suspended)
 		src_object.ui_close(user)
 		SStgui.on_close(src)
+
+		if(user.client)
+			terminate_byondui_elements()
+
 	state = null
 	qdel(src)
+
+/**
+ * public
+ *
+ * Closes all ByondUI elements, left dangling by a forceful TGUI exit,
+ * such as via Alt+F4, closing in non-fancy mode, or terminating the process
+ *
+ */
+/datum/tgui/proc/terminate_byondui_elements()
+	set waitfor = FALSE
+
+	for(var/byondui_element in open_byondui_elements)
+		winset(user.client, byondui_element, list("parent" = ""))
 
 /**
  * public
@@ -202,11 +224,12 @@
  *
  * optional custom_data list Custom data to send instead of ui_data.
  * optional force bool Send an update even if UI is not interactive.
+ * optional always_instant bool Send and update regardless of the cooldown.
  */
-/datum/tgui/proc/send_full_update(custom_data, force)
+/datum/tgui/proc/send_full_update(custom_data, force, always_instant)
 	if(!user?.client || !initialized || closing)
 		return
-	if(!COOLDOWN_FINISHED(src, refresh_cooldown))
+	if(!always_instant && !COOLDOWN_FINISHED(src, refresh_cooldown))
 		refreshing = TRUE
 		addtimer(CALLBACK(src, PROC_REF(send_full_update), custom_data, force), COOLDOWN_TIMELEFT(src, refresh_cooldown), TIMER_UNIQUE)
 		return
@@ -216,7 +239,8 @@
 		custom_data,
 		with_data = should_update_data,
 		with_static_data = TRUE))
-	COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
+	if(!always_instant)
+		COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
 
 /**
  * public
@@ -253,6 +277,7 @@
 			"size" = window_size,
 			"fancy" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_fancy),
 			"locked" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_lock),
+			"scale" = user.client?.prefs?.read_preference(/datum/preference/toggle/ui_scale),
 		),
 		"client" = list(
 			"ckey" = user.client?.ckey,
@@ -290,9 +315,11 @@
 		return
 	// Validate ping
 	if(!initialized && world.time - opened_at > TGUI_PING_TIMEOUT)
+#ifdef EXTENDED_DEBUG_LOGGING
 		log_tgui(user, "Error: Zombie window detected, closing.",
 			window = window,
 			src_object = src_object)
+#endif
 		close(can_be_suspended = FALSE)
 		return
 	// Update through a normal call to ui_interact
@@ -353,6 +380,18 @@
 			LAZYINITLIST(src_object.tgui_shared_states)
 			src_object.tgui_shared_states[href_list["key"]] = href_list["value"]
 			SStgui.update_uis(src_object)
+		if(TGUI_MANAGED_BYONDUI_TYPE_RENDER)
+			var/byond_ui_id = payload[TGUI_MANAGED_BYONDUI_PAYLOAD_ID]
+			if(!byond_ui_id || LAZYLEN(open_byondui_elements) > TGUI_MANAGED_BYONDUI_LIMIT)
+				return
+
+			LAZYOR(open_byondui_elements, byond_ui_id)
+		if(TGUI_MANAGED_BYONDUI_TYPE_UNMOUNT)
+			var/byond_ui_id = payload[TGUI_MANAGED_BYONDUI_PAYLOAD_ID]
+			if(!byond_ui_id)
+				return
+
+			LAZYREMOVE(open_byondui_elements, byond_ui_id)
 
 /// Wrapper for behavior to potentially wait until the next tick if the server is overloaded
 /datum/tgui/proc/on_act_message(act_type, payload, state)

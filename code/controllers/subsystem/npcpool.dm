@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
-	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
+	flags = SS_POST_FIRE_TIMING | SS_NO_INIT | SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
@@ -20,8 +20,8 @@ SUBSYSTEM_DEF(npcpool)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while(currentrun.len)
-		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
+	while(length(currentrun))
+		var/mob/living/simple_animal/SA = currentrun[length(currentrun)]
 		--currentrun.len
 
 		if (QDELETED(SA)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.

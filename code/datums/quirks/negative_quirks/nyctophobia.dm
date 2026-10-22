@@ -6,6 +6,7 @@
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 	hardcore_value = 5
 	mail_goodies = list(/obj/effect/spawner/random/engineering/flashlight)
+	no_process_traits = list(TRAIT_FEARLESS, TRAIT_MIND_TEMPORARILY_GONE)
 
 /datum/quirk/nyctophobia/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
@@ -26,7 +27,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+	if(istype(human_holder.dna?.species, /datum/species/shadow) || IS_TEAM_DARKSPAWN(human_holder))
 		return
 
 	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)

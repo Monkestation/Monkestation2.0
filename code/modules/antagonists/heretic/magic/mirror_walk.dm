@@ -2,7 +2,8 @@
 	name = "Mirror Walk"
 	desc = "Allows you to traverse invisibly and freely across the station within the realm of the mirror. \
 		You can only enter and exit the realm of mirrors when nearby reflective surfaces and items, \
-		such as windows, mirrors, and reflective walls or equipment."
+		such as windows, mirrors, and reflective walls or equipment. \
+		You will slowly heal damage while in this form."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -64,7 +65,7 @@
 
 	jaunter.Beam(nearby_reflection, icon_state = "light_beam", time = phase_out_time)
 	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
-	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED))
+	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED, hidden = TRUE))
 		return
 
 	playsound(jaunter, 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
@@ -96,7 +97,7 @@
 
 	nearby_reflection.Beam(phase_turf, icon_state = "light_beam", time = phase_in_time)
 	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
-	if(!do_after(unjaunter, phase_in_time, nearby_reflection))
+	if(!do_after(unjaunter, phase_in_time, nearby_reflection, hidden = TRUE))
 		return FALSE
 
 	// We can move around while phasing in, but we'll always end up where we started it.
@@ -144,7 +145,7 @@
 
 		if(isturf(thing))
 			var/turf/turf_thing = thing
-			if((SSticker.current_state < GAME_STATE_FINISHED) && (turf_thing.turf_flags & NOJAUNT)) // monkestation edit: allow jaunts to work after roundend
+			if(turf_thing.turf_flags & NOJAUNT)
 				continue
 			if(turf_thing.flags_ricochet & RICOCHET_SHINY)
 				return thing
@@ -156,3 +157,14 @@
 
 /obj/effect/dummy/phased_mob/mirror_walk
 	name = "reflection"
+
+/obj/effect/dummy/phased_mob/mirror_walk/Initialize(mapload, atom/movable/jaunter)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/dummy/phased_mob/mirror_walk/process(seconds_per_tick)
+	if(!isliving(jaunter))
+		STOP_PROCESSING(SSobj, src)
+		return ..()
+	var/mob/living/living_jaunter = jaunter
+	living_jaunter.heal_overall_damage(5 * seconds_per_tick)

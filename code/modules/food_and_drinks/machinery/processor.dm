@@ -83,7 +83,7 @@
 /obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/processor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(processing)
@@ -145,7 +145,7 @@
 		span_notice("You turn on [src]."), \
 		span_hear("You hear a food processor."))
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/total_time = 0
 	for(var/atom/movable/movable_input as anything in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(movable_input)

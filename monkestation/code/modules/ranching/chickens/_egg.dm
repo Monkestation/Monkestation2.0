@@ -48,7 +48,7 @@
 /obj/item/food/egg/proc/pre_hatch()
 	var/list/final_mutations = list()
 	var/failed_mutations = FALSE
-	for(var/datum/mutation/ranching/chicken/mutation in possible_mutations)
+	for(var/datum/ranching_mutation/chicken/mutation in possible_mutations)
 		if(mutation.cycle_requirements(src, TRUE))
 			final_mutations |= mutation
 		else
@@ -65,7 +65,7 @@
 	var/mob/living/basic/chick/birthed = new /mob/living/basic/chick(src.loc)
 
 	if(possible_mutations.len)
-		var/datum/mutation/ranching/chicken/chosen_mutation = pick(possible_mutations)
+		var/datum/ranching_mutation/chicken/chosen_mutation = pick(possible_mutations)
 		birthed.grown_type = chosen_mutation.chicken_type
 		if(chosen_mutation.nearby_items.len)
 			absorbed_required_items(chosen_mutation.nearby_items)

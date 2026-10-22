@@ -17,7 +17,7 @@
 		forceMove(OB)
 	if(!container?.mecha) //Unless inside a mecha, brains are rather helpless.
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 
 /mob/living/brain/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	var/obj/item/organ/internal/brain/brain_loc = loc
@@ -68,7 +68,7 @@
 	return // no eyes, no flashing
 
 /mob/living/brain/can_be_revived()
-	if(!container || health <= HEALTH_THRESHOLD_DEAD)
+	if(!container || health <= dead_threshold)
 		return FALSE
 	return TRUE
 

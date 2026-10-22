@@ -16,6 +16,10 @@
 	time = 6 SECONDS
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/ed209/New()
+	. = ..()
+	blacklist |= typesof(/obj/item/clothing/head/helmet/space)
+
 /datum/crafting_recipe/secbot
 	name = "Secbot"
 	result = /mob/living/simple_animal/bot/secbot
@@ -109,7 +113,7 @@
 		/obj/item/extinguisher = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
 		/obj/item/assembly/prox_sensor = 1,
-		/obj/item/clothing/head/utility/hardhat/red = 1,
+		/obj/item/clothing/head/utility/hardhat = 1,
 	)
 	time = 4 SECONDS
 	category = CAT_ROBOT
@@ -211,4 +215,151 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/reagent_containers/syringe = 1,
 	)
+	category = CAT_ROBOT
+
+
+// vendozer crafts, needs book, 6 parts Plus assembly
+
+/datum/crafting_recipe/vendozer
+	name = "The Vendozer"
+	always_available = FALSE
+	result = /obj/vehicle/sealed/mecha/vendozer
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/conveyor = 30,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/mecha_parts/part/vendozer_fl = 1,
+		/obj/item/mecha_parts/part/vendozer_fr = 1,
+		/obj/item/mecha_parts/part/vendozer_bl = 1,
+		/obj/item/mecha_parts/part/vendozer_br = 1,
+		/obj/item/mecha_parts/part/vendozer_eg = 1,
+		/obj/item/mecha_parts/part/vendozer_ck = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_fl
+	name = "Vendozer Front Left Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a YouTool and SecDrobe." //the vending refills dont have unique names, so we have to do this.
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_fl
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/stack/sheet/iron = 20,
+		/obj/item/pipe = 6,
+		/obj/item/stack/cable_coil = 40,
+		/obj/item/vending_refill/youtool = 1,
+		/obj/item/vending_refill/wardrobe/sec_wardrobe = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_fr
+	name = "Vendozer Front Right Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a Robust Softdrinks."
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_fr
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/pipe = 6,
+		/obj/item/stack/cable_coil = 35,
+		/obj/item/toy/crayon/spraycan = 1,
+		/obj/item/vending_refill/cola = 1,
+		/obj/item/stack/sheet/iron = 5,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_bl
+	name = "Vendozer Back Left Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a NanoDrug Plus."
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_bl
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/cable_coil = 50,
+		/obj/item/extinguisher = 2,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/light/tube = 1,
+		/obj/item/vending_refill/drugs = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_br
+	name = "Vendozer Back Right Armor Parts"
+	desc = "Giant shitty armor for something... Crafted with the parts of a Getmore Chocolate Corp vendor."
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_br
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/extinguisher = 2,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/light/tube = 1,
+		/obj/item/vending_refill/snack = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_eg
+	name = "Vendozer Turbine Engine"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_eg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 30 SECONDS
+	machinery = list(/obj/machinery/power/turbine/inlet_compressor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/core_rotor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/turbine_outlet/constructed = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/tank/internals/oxygen = 10,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/cable_coil = 60,
+		/obj/item/extinguisher = 2,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/light/tube = 4,
+		/obj/item/pipe = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_ck
+	name = "Vendozer Cabin"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_ck
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 30 SECONDS
+	machinery = list(/obj/machinery/computer/security  = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/clothing/mask/gas = 3,
+		/obj/item/wallframe/camera = 5,
+		/obj/item/stack/sheet/rglass = 10,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/radio = 2,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun = 2,
+		/obj/item/light/bulb = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/cleanbot_jr
+	name = "Scrubs Junior"
+	desc = "A little cleaning robot, he graduated from medical school!"
+	result = /mob/living/basic/bot/cleanbot/medbay/jr
+	reqs = list(
+		/obj/item/reagent_containers/cup/bucket = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/assembly/health = 1,
+		/obj/item/bodypart/arm/right/robot = 1,
+
+	)
+	parts = list(/obj/item/reagent_containers/cup/bucket = 1)
+	time = 5 SECONDS
 	category = CAT_ROBOT

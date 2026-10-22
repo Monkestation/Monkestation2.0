@@ -9,9 +9,8 @@
 /datum/hallucination/station_message/blob_alert
 
 /datum/hallucination/station_message/blob_alert/start()
-	to_chat(hallucinator, span_priorityannounce("Biohazard Alert"))
-	to_chat(hallucinator, span_priorityalert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak."))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_OUTBREAK5]))
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", \
+		"Biohazard Alert", ANNOUNCER_OUTBREAK5, players = list(hallucinator))
 	return ..()
 
 /datum/hallucination/station_message/shuttle_dock
@@ -33,20 +32,19 @@
 	if(!(locate(/mob/living/silicon/ai) in GLOB.silicon_mobs))
 		return FALSE
 
-	to_chat(hallucinator, span_priorityannounce("Anomaly Alert"))
-	to_chat(hallucinator, span_priorityalert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core."))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_AIMALF]))
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", \
+		"Anomaly Alert", ANNOUNCER_AIMALF, players = list(hallucinator))
 	return ..()
 
 /datum/hallucination/station_message/heretic
 	/// This is gross and will probably easily be outdated in some time but c'est la vie.
 	/// Maybe if someone datumizes heretic paths or something this can be improved
 	var/static/list/ascension_bodies = list(
-		list("Fear the blaze, for the Ashlord, %FAKENAME% has ascended! The flames shall consume all!", 'sound/ambience/antag/heretic/ascend_ash.ogg'),
-		list("Master of blades, the Torn Champion's disciple, %FAKENAME% has ascended! Their steel is that which will cut reality in a maelstom of silver!", 'sound/ambience/antag/heretic/ascend_blade.ogg'),
-		list("Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %FAKENAME% has ascended! Fear the ever twisting hand!", 'sound/ambience/antag/heretic/ascend_flesh.ogg'),
-		list("Fear the decay, for the Rustbringer, %FAKENAME% has ascended! None shall escape the corrosion!", 'sound/ambience/antag/heretic/ascend_rust.ogg'),
-		list("The nobleman of void %FAKENAME% has arrived, stepping along the Waltz that ends worlds!", 'sound/ambience/antag/heretic/ascend_void.ogg')
+		list("Fear the blaze, for the Ashlord, %FAKENAME% has ascended! The flames shall consume all!", 'sound/music/antag/heretic/ascend_ash.ogg'),
+		list("Master of blades, the Torn Champion's disciple, %FAKENAME% has ascended! Their steel is that which will cut reality in a maelstom of silver!", 'sound/music/antag/heretic/ascend_blade.ogg'),
+		list("Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %FAKENAME% has ascended! Fear the ever twisting hand!", 'sound/music/antag/heretic/ascend_flesh.ogg'),
+		list("Fear the decay, for the Rustbringer, %FAKENAME% has ascended! None shall escape the corrosion!", 'sound/music/antag/heretic/ascend_rust.ogg'),
+		list("The nobleman of void %FAKENAME% has arrived, stepping along the Waltz that ends worlds!", 'sound/music/antag/heretic/ascend_void.ogg')
 	)
 
 /datum/hallucination/station_message/heretic/start()
@@ -92,9 +90,8 @@
 	random_hallucination_weight = 2
 
 /datum/hallucination/station_message/meteors/start()
-	to_chat(hallucinator, span_priorityannounce("Meteor Alert"))
-	to_chat(hallucinator, span_priorityalert("Meteors have been detected on collision course with the station."))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_METEORS]))
+	priority_announce("Meteors have been detected on collision course with the station.", \
+		"Meteor Alert", ANNOUNCER_METEORS, players = list(hallucinator))
 	return ..()
 
 /datum/hallucination/station_message/supermatter_delam
@@ -103,6 +100,21 @@
 	SEND_SOUND(hallucinator, 'sound/magic/charge.ogg')
 	to_chat(hallucinator, span_boldannounce("You feel reality distort for a moment..."))
 	return ..()
+
+/datum/hallucination/station_message/radiation_storm/
+
+/datum/hallucination/station_message/radiation_storm/start()
+	priority_announce("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", \
+		"Anomaly Alert", ANNOUNCER_RADIATION, players = list(hallucinator))
+	addtimer(CALLBACK(src, PROC_REF(fake_warm_air)), 2 SECONDS)
+	return TRUE
+
+/datum/hallucination/station_message/radiation_storm/proc/fake_warm_air()
+	if(QDELETED(src) || QDELETED(hallucinator))
+		return
+
+	to_chat(hallucinator, span_warning("The air begins to grow warm."))
+	return
 
 /datum/hallucination/station_message/clock_cult_ark
 	// Clock cult's long gone, but this stays for posterity.

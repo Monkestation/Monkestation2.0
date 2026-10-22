@@ -13,6 +13,7 @@
 	light_outer_range = 8
 	light_power = 2
 	light_on = FALSE
+	access_provider_flags = VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_KIDNAPPED
 	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
@@ -76,8 +77,8 @@
 /obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
 	. = ..()
 	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
-		for(var/mob/voreman as anything in return_drivers())
-			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
+		for(var/mob/victim as anything in return_drivers())
+			victim.client.give_award(/datum/award/achievement/misc/round_and_full, victim)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if((user.loc != src) || user.environment_smash >= ENVIRONMENT_SMASH_WALLS)
@@ -128,7 +129,7 @@
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 			hittarget_living.adjustBruteLoss(200)
-			new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
+			hittarget_living.add_splatter_floor(small_drip = FALSE)
 
 			log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
 			dump_mobs(TRUE)
@@ -176,7 +177,7 @@
 	to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
 	initialize_controller_action_type(/datum/action/vehicle/sealed/roll_the_dice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
@@ -196,7 +197,7 @@
  * * Fart and make everyone nearby laugh
  */
 /obj/vehicle/sealed/car/clowncar/proc/roll_the_dice(mob/user)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
 		to_chat(user, span_notice("The button panel is currently recharging."))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CLOWNCAR_RANDOMNESS, dice_cooldown_time)
@@ -246,7 +247,7 @@
 ///Deploys oil when the clowncar moves in oil deploy mode
 /obj/vehicle/sealed/car/clowncar/proc/cover_in_oil()
 	SIGNAL_HANDLER
-	new /obj/effect/decal/cleanable/oil/slippery(loc)
+	new /obj/effect/decal/cleanable/blood/oil/slippery(loc)
 
 ///Stops dropping oil after the time has run up
 /obj/vehicle/sealed/car/clowncar/proc/stop_dropping_oil()

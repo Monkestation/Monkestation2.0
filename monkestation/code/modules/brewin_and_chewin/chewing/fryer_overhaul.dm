@@ -36,7 +36,7 @@
 			frying_burnt = TRUE
 			visible_message(span_warning("[src] emits an acrid smell!"))
 
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/deepfryer/proc/start_fry(obj/item/frying_item, mob/user)
 	to_chat(user, span_notice("You put [frying_item] into [src]."))
@@ -83,5 +83,11 @@
 		icon_state = "fryer_on"
 		frying = TRUE
 		for(var/obj/item/item as anything in basket.contents)
+			if(istype(item, /obj/item/organ/internal/brain))
+				var/obj/item/organ/internal/brain/brain = item
+				if((brain.brainmob && (brain.brainmob.client || brain.brainmob.get_ghost())) || brain.decoy_override)
+					visible_message(span_warning("\The [brain] falls out of \the [basket]!"))
+					brain.forceMove(drop_location())
+					continue
 			start_fry(item, user)
 		fry_loop.start()

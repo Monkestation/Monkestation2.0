@@ -23,13 +23,13 @@
 	ignores_checks = passed_ignore
 	announce_change = passed_announce
 	/// Add a fake occurence to make the weightings/checks properly respect the scheduled event.
-	event.add_occurence()
+	event.add_occurrence()
 	fakes_occurence = TRUE
 
 /datum/scheduled_event/proc/remove_occurence()
 	if(fakes_occurence)
 		/// Remove the fake occurence if we still have it
-		event.subtract_occurence()
+		event.subtract_occurrence()
 		fakes_occurence = FALSE
 
 /// For admins who want to reschedule the event.
@@ -57,8 +57,9 @@
 
 	///Trigger the event and remove the scheduled datum
 	message_admins("Scheduled Event: [event] successfully triggered.")
+	SSgamemode.remove_scheduled_event(src, FALSE)
 	SSgamemode.TriggerEvent(event, ignores_checks)
-	SSgamemode.remove_scheduled_event(src)
+	qdel(src)
 
 /datum/scheduled_event/Destroy()
 	remove_occurence()
@@ -73,11 +74,11 @@
 	switch(href_list["action"])
 		if("cancel")
 			message_admins("[key_name_admin(usr)] cancelled scheduled event [event.name].")
-			log_admin_private("[key_name(usr)] cancelled scheduled event [event.name].")
+			log_admin("[key_name(usr)] cancelled scheduled event [event.name].")
 			SSgamemode.remove_scheduled_event(src)
 		if("refund")
 			message_admins("[key_name_admin(usr)] refunded scheduled event [event.name].")
-			log_admin_private("[key_name(usr)] refunded scheduled event [event.name].")
+			log_admin("[key_name(usr)] refunded scheduled event [event.name].")
 			SSgamemode.refund_scheduled_event(src)
 		if("reschedule")
 			var/new_schedule = input(usr, "New schedule time (in seconds):", "Reschedule Event") as num|null
@@ -85,10 +86,10 @@
 				return
 			start_time = world.time + new_schedule * 1 SECONDS
 			message_admins("[key_name_admin(usr)] rescheduled event [event.name] to [new_schedule] seconds.")
-			log_admin_private("[key_name(usr)] rescheduled event [event.name] to [new_schedule] seconds.")
+			log_admin("[key_name(usr)] rescheduled event [event.name] to [new_schedule] seconds.")
 		if("fire")
 			if(!round_started)
 				return
 			message_admins("[key_name_admin(usr)] has fired scheduled event [event.name].")
-			log_admin_private("[key_name(usr)] has fired scheduled event [event.name].")
+			log_admin("[key_name(usr)] has fired scheduled event [event.name].")
 			try_fire()

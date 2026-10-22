@@ -164,15 +164,30 @@
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !ishuman(user))
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
-			H.visible_message(span_alert("[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
-			reagents.trans_to(H, reagents.total_volume, transfered_by = user, methods = INGEST)
-			qdel(src)
+	var/mob/living/carbon/human/as_human = user
+	if(!isflyperson(as_human))
+		return
+	playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
+	as_human.visible_message(span_alert("[as_human] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
+	lazy_init_reagents()?.trans_to(as_human, reagents.total_volume, transferred_by = user, methods = INGEST)
+	qdel(src)
+
+/obj/effect/decal/cleanable/vomit/nebula
+	name = "nebula vomit"
+	desc = "Gosh, how... beautiful."
+	icon_state = "vomitnebula_1"
+	random_icon_states = list("vomitnebula_1", "vomitnebula_2", "vomitnebula_3", "vomitnebula_4")
+	beauty = 10
+
+/obj/effect/decal/cleanable/vomit/nebula/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/decal/cleanable/vomit/nebula/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
 
 /// Nebula vomit with extra guests
 /obj/effect/decal/cleanable/vomit/nebula/worms
@@ -241,19 +256,26 @@
 	name = "blue glitter"
 	icon_state = "freon"
 
+//MONKESTATION EDIT START: MADE THE EFFECT NOT FLOUR, IT'S PAIN!
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
-	icon_state = "flour"
-	icon = 'icons/effects/tomatodecal.dmi'
-	color = "#2D2D2D"
+	icon_state = "purpleglow"
+	icon = 'icons/effects/stabilized_plasma.dmi'
+//MONKESTATION EDIT STOP
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"
 	desc = "One bug squashed. Four more will rise in its place."
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "xfloor1"
-	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	color = BLOOD_COLOR_XENO
+
+/obj/effect/decal/cleanable/blood/ethereal
+
+/obj/effect/decal/cleanable/blood/ethereal/get_default_blood_type()
+	return get_blood_type(BLOOD_TYPE_ETHEREAL)
 
 /obj/effect/decal/cleanable/confetti
 	name = "confetti"
@@ -282,6 +304,9 @@
 
 /obj/effect/decal/cleanable/wrapping/pinata/syndie
 	icon_state = "syndie_pinata_shreds"
+
+/obj/effect/decal/cleanable/wrapping/pinata/donk
+	icon_state = "donk_pinata_shreds"
 
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"
@@ -328,12 +353,12 @@
 
 /obj/effect/decal/cleanable/ants/proc/update_ant_damage(ant_min_damage, ant_max_damage)
 	if(!ant_max_damage)
-		ant_max_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
+		ant_max_damage = min(10, round((reagents ? reagents.get_reagent_amount(/datum/reagent/ants) : reagent_amount) * 0.1,0.1)) // 100u ants = 10 max_damage
 	if(!ant_min_damage)
 		ant_min_damage = 0.1
-	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN) /// Small amounts of ants won't be able to bite through shoes.
+	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_ANTS) /// Small amounts of ants won't be able to bite through shoes.
 	if(ant_max_damage > 1)
-		ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
+		ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_ANTS | CALTROP_BYPASS_SHOES)
 
 	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
 	if(caltrop_comp)
@@ -461,3 +486,36 @@
 	if(item.ignition_effect(src, user))
 		ignite()
 	return ..()
+
+/obj/effect/decal/cleanable/fuel_pool/hivis
+	icon_state = "fuel_pool_hivis"
+
+//-----------
+// Nuke Gibs
+//-----------
+/obj/effect/decal/cleanable/nuke_debris
+	name = "nuke debris"
+	desc = "Glad that's finally over with."
+	icon = 'icons/obj/machines/nuke.dmi'
+	icon_state = "debris2"
+	random_icon_states = null
+
+/obj/effect/decal/cleanable/nuke_debris/proc/streak(list/directions, mapload=FALSE)
+	var/direction = pick(directions)
+	var/range = pick(1, 200; 2, 150; 3, 50; 4, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
+	if(!step_to(src, get_step(src, direction), 0))
+		return
+	if(mapload)
+		for (var/i in 1 to range)
+			if (!step_to(src, get_step(src, direction), 0))
+				break
+		return
+
+/obj/effect/decal/cleanable/nuke_debris/timer
+	icon_state = "debris1"
+
+/obj/effect/decal/cleanable/nuke_debris/main
+	icon_state = "debris4"
+
+/obj/effect/decal/cleanable/nuke_debris/slot
+	icon_state = "debris3"

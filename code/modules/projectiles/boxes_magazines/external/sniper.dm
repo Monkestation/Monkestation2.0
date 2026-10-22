@@ -40,3 +40,16 @@
 	desc = "An extremely fast sniper round able to pretty much instantly shoot through something."
 	base_icon_state = "marksman"
 	ammo_type = /obj/item/ammo_casing/p50/marksman
+
+
+// Wylom AMR magazine
+
+/obj/item/ammo_box/magazine/wylom
+	name = "anti-materiel magazine (.60 Strela)"
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
+	icon_state = "wylom_mag"
+	base_icon_state = "wylom_mag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/p60strela
+	max_ammo = 3
+	caliber = CALIBER_60STRELA

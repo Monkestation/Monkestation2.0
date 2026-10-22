@@ -1,11 +1,11 @@
+import { multiline } from 'common/string';
 import {
   CheckboxInput,
+  type Feature,
   FeatureColorInput,
-  Feature,
   FeatureDropdownInput,
-  FeatureToggle,
+  type FeatureToggle,
 } from '../base';
-import { multiline } from 'common/string';
 
 export const asaycolor: Feature<string> = {
   name: 'Admin chat color',
@@ -19,6 +19,14 @@ export const brief_outfit: Feature<string> = {
   category: 'ADMIN',
   description: 'The outfit to gain when spawning as the briefing officer.',
   component: FeatureDropdownInput,
+};
+
+export const autoadmin: FeatureToggle = {
+  name: 'Autoadmin - On join',
+  category: 'ADMIN',
+  description:
+    'When enabled, you will automatically readmin on new connection.',
+  component: CheckboxInput,
 };
 
 export const bypass_deadmin_in_centcom: FeatureToggle = {
@@ -46,11 +54,5 @@ export const ghost_roles_as_admin: FeatureToggle = {
     state. However, this does not suppress notifications when you are
     a regular player (deadminned).
 `,
-  component: CheckboxInput,
-};
-
-export const comms_notification: FeatureToggle = {
-  name: 'Enable comms console sound',
-  category: 'ADMIN',
   component: CheckboxInput,
 };

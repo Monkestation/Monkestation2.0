@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 	name = "ocean elevator"
 	desc = "an elevator used to move things up and down the ocean floors."
 
-	icon = 'monkestation/icons/obj/machines/sea_elevator.dmi'
+	icon = 'icons/obj/machines/sea_elevator.dmi'
 	icon_state = "elevator_up_station"
 	anchored = TRUE
 

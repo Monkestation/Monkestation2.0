@@ -28,8 +28,8 @@
 	///Does this show up on the artifact fourm?
 	var/super_secret = FALSE
 
-	///Research value when discovered For reference,5000 is one node
-	var/research_value = 100
+	///Research value when discovered For reference, 40 is one node
+	var/research_value = TECHWEB_DISCOUNT_MINOR
 	///The artifact we're on.
 	var/datum/component/artifact/our_artifact
 	///Type of effect, shows up in Xray Machine
@@ -58,7 +58,7 @@
 ///Called on process() IF the artifact is active.
 /datum/artifact_effect/proc/effect_process()
 	return
-///Called when the artifact/effect is destroyed is destroyed
+///Called when the artifact/effect is destroyed
 /datum/artifact_effect/proc/on_destroy(atom/source)
 	return
 ///Util, can be called to activate, then de-activate the artifact as a whole swiftly. Wont Re activate already active artifacts.

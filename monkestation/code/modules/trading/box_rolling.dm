@@ -39,7 +39,10 @@
 		return
 	opened = TRUE
 	mouse_over_pointer = MOUSE_INACTIVE_POINTER
-	playsound(usr, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
+	if(isliving(hud.mymob))
+		playsound(hud.mymob, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
+	else
+		hud.mymob.playsound_local(null, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
 	icon_state = "lootb2"
 	flick("lootb1", src)
 	addtimer(CALLBACK(src, PROC_REF(after_open), usr), 2 SECONDS)
@@ -55,19 +58,19 @@
 
 	var/type_rolled
 	if(!guarentee_unusual)
-		type_rolled = rand(1, 100)
+		type_rolled = rand(1, 200)
 	else
 		type_rolled = 1
 
 	var/type_string
 	switch(type_rolled)
-		if(1)
+		if(1 to 2)
 			type_string = "Unusual"
-		if(2 to 3)
+		if(3 to 4)
 			type_string = "High Tier"
-		if(4 to 8)
+		if(5 to 9)
 			type_string = "Medium Tier"
-		if(9 to 15)
+		if(10 to 16)
 			type_string = "Low Tier"
 		else
 			type_string = "Loadout Item"
@@ -106,11 +109,8 @@
 	qdel(src)
 
 
-/proc/testing_trigger_lootbox(mob/user = usr)
-	if(!user || !user.client)
-		return
-
-	user.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
+/mob/proc/testing_trigger_lootbox()
+	overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
 
 /mob/proc/trigger_lootbox_on_self()
 	src.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)

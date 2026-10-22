@@ -11,7 +11,7 @@
 	max_wizard_trigger_potency = 6
 
 /datum/round_event/scrubber_clog/flood
-	maximum_spawns = 250
+	maximum_spawns = 200
 
 /datum/round_event/scrubber_clog/flood/setup()
 	. = ..()
@@ -19,7 +19,7 @@
 	spawn_delay = rand(1, 2) //IT MUST FLOOD
 
 /datum/round_event/scrubber_clog/flood/announce()
-	priority_announce("Unusual lifesign readings detected in the entire ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce("Bees detected in the entire ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/scrubber_clog/flood/get_mob()
 	var/static/list/mob_list = list(

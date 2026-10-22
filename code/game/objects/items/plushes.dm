@@ -18,7 +18,7 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
 	var/obj/item/toy/plush/maternal_parent //who owns, see love()
-	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
+	var/static/list/breeding_blacklist = typecacheof(list(/obj/item/toy/plush/carpplushie/dehy_carp, /obj/item/toy/plush/shrimp/golden))
 	var/list/scorned = list() //who the plush hates
 	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
@@ -110,10 +110,10 @@
 
 	return ..()
 
-/obj/item/toy/plush/handle_atom_del(atom/A)
-	if(A == grenade)
+/obj/item/toy/plush/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == grenade)
 		grenade = null
-	..()
 
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
@@ -125,19 +125,21 @@
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.get_sharpness())
+/obj/item/toy/plush/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, span_warning("You already murdered it!"))
 				return
 			if(!divine)
 				user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
-				I.play_tool_sound(src)
+				attacking_item.play_tool_sound(src)
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				user.adjust_drunk_effect(20, up_to = 50)
+				if(isliving(user))
+					var/mob/living/living_user = user
+					living_user.adjust_drunk_effect(20, up_to = 50)
 
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
@@ -150,24 +152,23 @@
 		else
 			to_chat(user, span_notice("You remove the grenade from [src]."))
 			user.put_in_hands(grenade)
-			grenade = null
 		return
-	if(isgrenade(I))
+	if(isgrenade(attacking_item))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
 		if(grenade)
 			to_chat(user, span_warning("[src] already has a grenade!"))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
-		span_danger("You slide [I] into [src]."))
-		grenade = I
-		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
+		span_danger("You slide [attacking_item] into [src]."))
+		grenade = attacking_item
+		user.log_message("added a grenade ([attacking_item.name]) to [src]", LOG_GAME)
 		return
-	if(istype(I, /obj/item/toy/plush))
-		love(I, user)
+	if(istype(attacking_item, /obj/item/toy/plush))
+		love(attacking_item, user)
 		return
 	return ..()
 
@@ -390,11 +391,14 @@
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "carpplush"
+	icon_state = "map_plushie_carp"
+	greyscale_config = /datum/greyscale_config/plush_carp
+	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
@@ -513,8 +517,8 @@
 	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
-	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	squeak_override = list('sound/voice/weh.ogg' = 1) // Monkestation Edit
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	worn_icon_state = "map_plushie_lizard"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
@@ -524,10 +528,10 @@
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend
 		var/generated_lizard_color = "#" + random_color()
-		var/temp_hsv = RGBtoHSV(generated_lizard_color)
+		var/list/lizard_hsv = rgb2hsv(generated_lizard_color)
 
 		// If our color is too dark, use the classic green lizard plush color
-		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+		if(lizard_hsv[3] < 50)
 			generated_lizard_color = "#66ff33"
 
 		// Set our greyscale colors to the lizard color we made + black eyes
@@ -538,24 +542,36 @@
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
-/obj/item/toy/plush/space_lizard_plushie
+/obj/item/toy/plush/lizard_plushie/greyscale
+	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	greyscale_colors = "#d3d3d3#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
-	icon_state = "plushie_spacelizard"
-	inhand_icon_state = null
+	icon_state = "map_plushie_spacelizard"
+	greyscale_config = /datum/greyscale_config/plush_spacelizard
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
-	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
+	squeak_override = list('sound/voice/weh.ogg' = 1) // Monkestation Edit
+
+/obj/item/toy/plush/lizard_plushie/space/green
+	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "plushie_snake"
+	icon_state = "map_plushie_snake"
+	greyscale_config = /datum/greyscale_config/plush_snake
+	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("bites", "hisses", "tail slaps")
 	attack_verb_simple = list("bite", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -578,12 +594,15 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "plushie_slime"
+	icon_state = "map_plushie_slime"
+	greyscale_config = /datum/greyscale_config/plush_slime
+	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
 	attack_verb_simple = list("blorble", "slime", "absorb")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE //given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -652,7 +671,7 @@
 	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
-	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
 	worn_icon_state = "plushie_h"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
@@ -847,3 +866,258 @@
 	inhand_icon_state = "blahaj"
 	attack_verb_continuous = list("gnaws", "gnashes", "chews")
 	attack_verb_simple = list("gnaw", "gnash", "chew")
+
+/obj/item/toy/plush/donkpocket
+	name = "donk pocket plushie"
+	desc = "The stuffed companion of choice for the seasoned traitor."
+	icon_state = "donkpocket"
+	attack_verb_continuous = list("donks")
+	attack_verb_simple = list("donk")
+
+// From fulpstation, PR #1109 by Momo8289 & PR #1392 by QuiteLiterallyAnything. Sprite by Slig.
+// I missed this lil guy.
+
+/obj/item/toy/plush/shrimp
+	name = "shrimp plushie"
+	desc = "You're telling me THIS GUY fried my rice?"
+	icon_state = "shrimp"
+	attack_verb_continuous = list("shrimps", "skitters")
+	attack_verb_simple = list("shrimp","skitter")
+	squeak_override = list(
+		'sound/effects/kero.ogg' = 1
+	)
+	/// A list of "fried rice" items that the shrimp can produce on frying rice.
+	/// PLEASE NOTE: the rice item must have "fried rice" in its name by default
+	/// or else the "shrimp fried" component won't be able to attatch to it.
+	var/list/fried_rice_types = list(
+		/obj/item/food/salad/hurricane_rice,
+		/obj/item/food/salad/hawaiian_fried_rice,
+		/obj/item/food/salad/ketchup_fried_rice,
+		/obj/item/food/salad/mediterranean_fried_rice,
+	)
+	/// Whether the shrimp has fried any rice. The shrimp can only fry rice once.
+	var/has_fried = FALSE
+	// Decide if we allow unlimited rice frying or not.
+	var/golden = FALSE
+	// Whether it has shrimp fried a man yet
+	var/suishrimp = FALSE
+	// How many men we've fried
+	var/suishrimp_count = 0
+
+
+/obj/item/toy/plush/shrimp/examine(mob/user)
+	. = ..()
+	if(suishrimp)
+		. += span_notice("[p_Theyre()] ready.") // i give up for now
+		return
+	if(has_fried)
+		. += span_notice("[p_Theyre()] all tuckered out.")
+		return
+	else
+		. += span_notice("[p_Theyre()] ready to fry some rice.")
+
+/obj/item/toy/plush/shrimp/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is <b>frying</b> to <b>krill</b> [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, 'sound/effects/kero.ogg', 50, TRUE, -1)
+	var/list/available_spots = get_adjacent_open_turfs(loc)
+	if(available_spots.len) // Totally didn't borrow this from the moth plushie code
+		var/turf/open/random_open_spot = pick(available_spots)
+		forceMove(random_open_spot)
+
+	var/obj/item/food/new_rice = new /obj/item/food/salad/ketchup_fried_rice(loc)
+
+	// same logic as regular frying but with some additions
+	ADD_TRAIT(new_rice, TRAIT_FOOD_CHEF_MADE, user)
+	new_rice.food_buffs = /datum/status_effect/food/speech/shrimp_speech
+	new_rice.AddComponent(/datum/component/shrimp_fried)
+	new_rice.name = "bloody shrimp fried rice"
+	new_rice.desc = "A classic Japanese comfort food, made with sausage, veggies, worchestershire sauce, rice- oh, and of course, the blood of [user]."
+	new /obj/effect/temp_visual/shrimp_frying_rice(get_turf(user))
+	suishrimp_count++
+	user.dust(just_ash = FALSE, drop_items = TRUE)
+
+	if(suishrimp_count == 1)
+		desc = "This shrimp has krilled a man."
+	if(suishrimp_count == 2)
+		desc = "This shrimp has krilled two men. And many more to come."
+	if(suishrimp_count > 3)
+		desc = "This shrimp has krilled [suishrimp_count] men. Nothing can stop its rampage."
+	return MANUAL_SUICIDE
+
+/obj/item/toy/plush/shrimp/golden
+	name = "golden shrimp plushie"
+	desc = "You're telling me THIS GUY fries rice ENDLESSLY?!"
+	icon_state = "golden_shrimp"
+	golden = TRUE
+
+/obj/item/toy/plush/shrimp/golden/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/particle_spewer/sparkle)
+
+///////    = MOOD EVENT =    ///////
+
+/// The mood event that shrimp fried rice provides on consumption.
+/datum/mood_event/shrimp_rice
+	description = "I can't believe a shrimp fried that rice!"
+	mood_change = 3
+	timeout = 2 MINUTES
+
+
+///////    = FOOD STATUS EFFECT =    ///////
+
+/// Status effect provided by shrimp fried foods.
+/// Gives the consumer crustacean speech.
+/datum/status_effect/food/speech/shrimp_speech
+	alert_type = /atom/movable/screen/alert/status_effect/shrimp_speech
+	on_remove_on_mob_delete = TRUE
+	duration = 10 MINUTES
+	remove_on_fullheal = TRUE
+
+	/// Ref to the component so we can clear it
+	var/datum/component/speechmod
+
+/datum/status_effect/food/speech/shrimp_speech/on_apply()
+	speechmod = owner.AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
+	return ..()
+
+/datum/status_effect/food/speech/shrimp_speech/on_remove()
+	. = ..()
+	QDEL_NULL(speechmod)
+
+/atom/movable/screen/alert/status_effect/shrimp_speech
+	name = "Shrimp Speech"
+	desc = "That meal has synchronized my psyche with the grand oceanic lexicon."
+	icon_state = "shrimp_status_effect"
+
+
+///////    = "SHRIMP FRIED" COMPONENT =    ///////
+
+/// Turns fried rice into shrimp fried rice and makes it
+/// give a positive mood event and speech modifier when eaten.
+/datum/component/shrimp_fried/Initialize(...)
+	. = ..()
+	if(!IS_EDIBLE(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	var/obj/item/food/food_parent = parent
+	if(!findtext(initial(food_parent.name), "fried rice"))
+		qdel(src)
+		stack_trace("Tried to add /datum/component/shrimp_fried to a food item \
+			([food_parent])that did not contain \"fried rice\" in its name.")
+		return
+
+	food_parent.name = initial(food_parent.name)
+	food_parent.name = replacetext(food_parent.name, "fried rice", "shrimp fried rice")
+
+/datum/component/shrimp_fried/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(on_eaten))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/shrimp_fried/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_FOOD_EATEN)
+
+/datum/component/shrimp_fried/proc/on_eaten(atom/source, mob/living/eater, mob/feeder, bitecount, bite_consumption)
+	SIGNAL_HANDLER
+	if(!istype(eater))
+		return
+
+	if(!bitecount)
+		eater.add_mood_event("shrimp_fried_rice", /datum/mood_event/shrimp_rice)
+
+/datum/component/shrimp_fried/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_notice("By the grace of a crustaceous benefactor it has been \
+		<b>shrimp fried</b>. It is truly a meal to <b>KRILL</b> for.")
+
+///////    = SHRIMP PLUSH LOGIC =    ///////
+
+/**
+ * If we interact with a reagent container that has thirty units of rice then we produce
+ * a random "fried rice" item and add the "shrimp fried" component and "shrimp speech"
+ * element to it.
+ *
+ * Made using '/obj/item/food/deadmouse/interact_with_atom()' as a reference.
+ **/
+/obj/item/toy/plush/shrimp/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(has_fried)
+		return NONE
+
+	if(!interacting_with.is_open_container() || !interacting_with.reagents)
+		return NONE
+
+	if(iscarbon(interacting_with.loc))
+		to_chat(user, span_warning("[src] needs room to work! Try placing [interacting_with] down."))
+		return NONE
+
+	var/datum/reagents/target_reagents = interacting_with.reagents
+	if(!target_reagents.has_reagent(/datum/reagent/consumable/rice, 30))
+		return NONE
+
+	to_chat(user, span_notice("[src] produces fried rice from [interacting_with]."))
+	var/chosen = pick(fried_rice_types)
+	var/obj/item/food/new_rice = new chosen(interacting_with.loc)
+
+	ADD_TRAIT(new_rice, TRAIT_FOOD_CHEF_MADE, user)
+	new_rice.food_buffs = /datum/status_effect/food/speech/shrimp_speech
+	new_rice.AddComponent(/datum/component/shrimp_fried)
+
+	if(golden)
+		has_fried = FALSE
+		new_rice.food_quality = 100 // masterchef
+	else
+		has_fried = TRUE
+		new_rice.food_quality = 20 // medicorechef
+	target_reagents.remove_reagent(/datum/reagent/consumable/rice, 30)
+	playsound(get_turf(new_rice), 'sound/effects/kero.ogg', 75, frequency = 0.5)
+	user.do_attack_animation(interacting_with)
+	new /obj/effect/temp_visual/shrimp_frying_rice(get_turf(new_rice))
+	return ITEM_INTERACT_SUCCESS
+
+///////    = SHRIMP PLUSH RICE FRYING VISUAL EFFECT =    ///////
+
+/obj/effect/temp_visual/shrimp_frying_rice
+	icon = 'icons/obj/toys/plushes.dmi'
+	icon_state = "shrimp"
+	layer = MOB_UPPER_LAYER
+	plane = GAME_PLANE
+	duration = 1.5 SECONDS
+	alpha = 223.125
+
+	var/matrix/effect_matrix = matrix()
+
+/obj/effect/temp_visual/shrimp_frying_rice/Initialize(mapload)
+	. = ..()
+	//Taken directly from Dream Maker Reference on 'animate()' with minor adjustment.
+	animate(src, time = 1.5 SECONDS, alpha = 0, easing = SINE_EASING)
+
+/obj/item/toy/plush/expie // Casualties: Unknown reference
+	name = "expie plushie"
+	desc = "A tag on it reads, \"Made with all natural glowfruit and geofruit stuffing!\""
+	icon_state = "expie"
+	attack_verb_continuous = list("experiments")
+	attack_verb_simple = list("experiment")
+	squeak_override = list(
+		'sound/misc/expie_bark.ogg' = 1
+	)
+
+/obj/item/toy/plush/expie/spinny_hat
+	name = "spinny expie plushie"
+	desc = "A normal expie plushie which has been given a bright lolipop and a spinny propeller hat."
+	icon_state = "expie_spinny_hat"
+
+/obj/item/toy/plush/expie/dune
+	name = "dune plushie"
+	desc = "A tag on it reads, \"Manufacturer is not responsible for bodily harm as a result of plushie usage.\""
+	icon_state = "dune"
+	attack_verb_continuous = list("chomps")
+	attack_verb_simple = list("chomp")
+
+/obj/item/toy/plush/expie/milky
+	name = "milky plushie"
+	desc = "A tag on it reads, \"Made with all natural geofruit milk fibers.\""
+	icon_state = "milky"
+

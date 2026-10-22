@@ -196,6 +196,10 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		if(!merged_area.has_contained_turfs())
 			qdel(merged_area)
 
+	//force lighting update to fix lighting bugs in custom areas, this is a REALLY shitty solution please replace it at the earliest convenience
+	for(var/turf/unlit_turf as anything in turfs)
+		unlit_turf.ChangeTurf(unlit_turf.type)
+
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
@@ -294,3 +298,113 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 				mobs_in_area += mob
 				break
 	return mobs_in_area
+
+/**
+ * rename_area
+ * Renames an area to the given new name, updating all machines' names and firedoors
+ * to properly ensure alarms and machines are named correctly at all times.
+ * Args:
+ * - area_to_rename: The area that's being renamed.
+ * - new_name: The name we're changing said area to.
+ */
+/proc/rename_area(area/area_to_rename, new_name)
+	var/prevname = "[area_to_rename.name]"
+	set_area_machinery_title(area_to_rename, new_name, prevname)
+	area_to_rename.name = new_name
+	require_area_resort() //area renamed so resort the names
+
+	if(LAZYLEN(area_to_rename.firedoors))
+		for(var/obj/machinery/door/firedoor/area_firedoors as anything in area_to_rename.firedoors)
+			area_firedoors.CalculateAffectingAreas()
+	area_to_rename.update_areasize()
+	return TRUE
+
+/**
+ * Renames all machines in a defined area from the old title to the new title.
+ * Used when renaming an area to ensure that all machiens are labeled the new area's machine.
+ * Args:
+ * - area_renaming: The area being renamed, which we'll check turfs from to rename machines in.
+ * - title: The new name of the area that we're swapping into.
+ * - oldtitle: The old name of the area that we're replacing text from.
+ */
+/proc/set_area_machinery_title(area/area_renaming, title, oldtitle)
+	if(!oldtitle) // or replacetext goes to infinite loop
+		return
+
+	//stuff tied to the area to rename
+	var/static/list/to_rename = typecacheof(list(
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
+		/obj/machinery/camera,
+	))
+	for(var/list/zlevel_turfs as anything in area_renaming.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
+				machine.name = replacetext(machine.name, oldtitle, title)
+
+/// Checks to see if the given area is a proper centcom area.
+/// Some antag-related areas are /area/centcom, which are likely not intended by whatever is checking for centcom areas,
+/// so this excludes said areas.
+/proc/is_centcom_area(area/area)
+	var/static/list/blacklist_typecache
+	if(isnull(blacklist_typecache))
+		blacklist_typecache = typecacheof(list(
+			/area/centcom/abductor_ship,
+			/area/centcom/heretic_sacrifice,
+			/area/centcom/syndicate_mothership,
+			/area/centcom/wizard_station,
+		))
+
+	area = get_area(area)
+	return istype(area, /area/centcom) && !is_type_in_typecache(area, blacklist_typecache)
+
+/proc/is_station_area_or_adjacent(area/area)
+	var/static/list/blacklisted_areas = typecacheof(list(
+		/area/centcom,
+		/area/forestplanet,
+		/area/icemoon,
+		/area/lavaland,
+		/area/misc,
+		/area/ocean,
+		/area/ruin,
+		/area/space/shipbreak,
+		/area/shuttle,
+		/area/space,
+		/area/station/asteroid,
+	))
+
+	var/static/list/outdoor_areas = typecacheof(list(
+		/area/forestplanet,
+		/area/icemoon,
+		/area/ocean,
+	))
+
+	if(!isarea(area))
+		if(ispath(area, /area))
+			area = GLOB.areas_by_type[area]
+		else if(isatom(area))
+			area = get_area(get_turf(area))
+		else
+			return FALSE
+
+	if(isnull(area) || is_type_in_typecache(area, blacklisted_areas))
+		return FALSE
+
+	if(GLOB.the_station_areas.Find(area.type))
+		return TRUE
+
+	var/list/edge_areas = list()
+	for(var/adjacent_areas_list in get_area_edge_turfs(area, return_adjacent_areas = TRUE)) // returns a list of lists for some reason
+		edge_areas |= adjacent_areas_list
+
+	for(var/area/adjacent_area as anything in edge_areas)
+		if(GLOB.the_station_areas.Find(adjacent_area.type) || is_type_in_typecache(adjacent_area, outdoor_areas)) // yeah sure you can make a neat little base in an icebox cabin
+			return TRUE
+
+	return FALSE
+

@@ -14,7 +14,7 @@
 	armor_type = /datum/armor/structure_window
 	can_atmos_pass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
-	pass_flags_self = PASSGLASS
+	pass_flags_self = PASSGLASS | PASSWINDOW
 	set_dir_on_move = FALSE
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
@@ -26,16 +26,19 @@
 	var/fulltile = FALSE
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
-	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/break_sound = SFX_SHATTER
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 	var/hit_sound = 'sound/effects/glasshit.ogg'
-	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
-	var/bloodied = FALSE
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
+
+	var/glass_color
+	var/glass_color_blend_to_color
+	var/glass_color_blend_to_ratio
+	///Do we use random coloration
+	var/uses_color = TRUE
 
 /datum/armor/structure_window
 	melee = 50
@@ -203,7 +206,7 @@
 		return
 	return ..()
 
-/obj/structure/window/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/structure/window/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 	add_fingerprint(user)
@@ -212,7 +215,7 @@
 /obj/structure/window/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
@@ -220,7 +223,7 @@
 		atom_integrity = max_integrity
 		update_nearby_icons()
 		to_chat(user, span_notice("You repair [src]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1)
@@ -248,7 +251,7 @@
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 					set_anchored(TRUE)
 					to_chat(user, span_notice("You fasten the frame to the floor."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
@@ -258,14 +261,14 @@
 
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
 	if(!tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 	if (!QDELETED(G))
 		G.add_fingerprint(user)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	to_chat(user, span_notice("You successfully disassemble [src]."))
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
 	if(!anchored || (flags_1 & NODECONSTRUCT_1))
@@ -285,17 +288,14 @@
 		else
 			return FALSE
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/window/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/window/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 
 	add_fingerprint(user)
 	return ..()
-
-/obj/structure/window/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/window/set_anchored(anchorvalue)
 	..()
@@ -326,6 +326,14 @@
 			return FALSE
 	return TRUE
 
+/obj/structure/window/proc/change_color(new_color)
+	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+	else
+		glass_color = new_color
+	if(fulltile)
+		color = glass_color
+	update_appearance()
 
 /obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -376,6 +384,8 @@
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_WINDOW_POLARIZED))
+		return
 	if (is_dark_color && fulltile) //Opaque directional windows restrict vision even in directions they are not placed in, please don't do this
 		set_opacity(255)
 	else
@@ -383,7 +393,7 @@
 
 /obj/structure/window/wash(clean_types)
 	. = ..()
-	if(!(clean_types & CLEAN_SCRUB))
+	if(!(clean_types & CLEAN_SCRUB) || HAS_TRAIT(src, TRAIT_WINDOW_POLARIZED))
 		return
 	set_opacity(initial(opacity))
 	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -393,7 +403,6 @@
 		if(!cleanables.wash(clean_types))
 			continue
 		vis_contents -= cleanables
-	bloodied = FALSE
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)
@@ -427,15 +436,21 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
-
-	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
-	cut_overlay(crack_overlay)
-	if(ratio > 75)
-		return
-	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-	. += crack_overlay
-
+	// this always rounds up - you can change CEILING to round if you want to round to the nearest 25.
+	var/ratio = CEILING((atom_integrity / max_integrity) * 100, 25)
+	if(ratio <= 75)
+		var/cracks_alpha = 100
+		// lighter colored windows need the alpha higher so it can be seen better
+		if(isnull(color) || !is_color_dark(color, 55))
+			cracks_alpha = 200
+		. += mutable_appearance(
+			icon = 'icons/obj/structures.dmi',
+			icon_state = "damage[ratio]",
+			layer = layer + 0.1,
+			offset_spokesman = src,
+			alpha = cracks_alpha,
+			appearance_flags = RESET_COLOR,
+		)
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
 
@@ -564,7 +579,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 		state = RWINDOW_SECURE
 		to_chat(user, span_notice("You pry the window back into the frame."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
@@ -667,7 +682,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /* Full Tile Windows (more atom_integrity) */
 
 /obj/structure/window/fulltile
-	icon = 'icons/obj/smooth_structures/window.dmi'
+	icon = 'icons/obj/structures/window/window.dmi'
 	icon_state = "window-0"
 	base_icon_state = "window"
 	max_integrity = 100
@@ -676,7 +691,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK +  SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 	glass_amount = 2
 
 /obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -689,9 +705,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	anchored = FALSE
 
 /obj/structure/window/plasma/fulltile
-	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
-	icon_state = "plasma_window-0"
-	base_icon_state = "plasma_window"
+	icon = 'icons/obj/structures/window/window.dmi'
+	icon_state = "window-0"
+	base_icon_state = "window"
 	max_integrity = 400
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -699,15 +715,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
 	glass_amount = 2
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
 
 /obj/structure/window/reinforced/plasma/fulltile
-	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
-	icon_state = "rplasma_window-0"
-	base_icon_state = "rplasma_window"
+	icon = 'icons/obj/structures/window/reinforced_window.dmi'
+	icon_state = "reinforced_window-0"
+	base_icon_state = "reinforced_window"
 	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
@@ -715,7 +734,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
 	glass_amount = 2
 
 /obj/structure/window/reinforced/plasma/fulltile/unanchored
@@ -723,7 +745,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/fulltile
-	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon = 'icons/obj/structures/window/reinforced_window.dmi'
 	icon_state = "reinforced_window-0"
 	base_icon_state = "reinforced_window"
 	max_integrity = 150
@@ -733,7 +755,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	state = RWINDOW_SECURE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -766,6 +789,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	base_icon_state = "rice_window"
 	max_integrity = 150
 	glass_amount = 2
+	uses_color = FALSE
 
 //there is a sub shuttle window in survival_pod.dm for mining pods
 /obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
@@ -792,6 +816,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	receive_ricochet_chance_mod = 1.2
 	rad_insulation = RAD_MEDIUM_INSULATION
 	glass_material_datum = /datum/material/alloy/titaniumglass
+	uses_color = FALSE
 
 /datum/armor/reinforced_shuttle
 	melee = 90
@@ -839,6 +864,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	glass_amount = 2
 	rad_insulation = RAD_EXTREME_INSULATION
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
+	uses_color = FALSE
 
 /datum/armor/plasma_plastitanium
 	melee = 95
@@ -922,7 +948,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 		return ..()
 	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(W)
 			user.visible_message(span_notice("[user] patches some of the holes in \the [src]."))
@@ -938,7 +964,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
 	glass_type = /obj/item/stack/sheet/bronze
-	uses_color // monkestation edit
+	//uses_color // monkestation edit
 
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE
@@ -957,3 +983,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/bronze/fulltile/unanchored
 	anchored = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/spawner, 0)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/unanchored/spawner, 0)

@@ -50,8 +50,8 @@
 		if(closet.horizontal)
 			scooby.set_resting(FALSE, silent = TRUE)
 		return
-
-	closet.togglelock(scooby, silent = TRUE)
+	if(closet.can_unlock(scooby, scooby.get_idcard(), closet.id_card))
+		closet.togglelock(scooby, silent = TRUE)
 
 	if(closet.horizontal)
 		scooby.set_resting(FALSE, silent = TRUE)

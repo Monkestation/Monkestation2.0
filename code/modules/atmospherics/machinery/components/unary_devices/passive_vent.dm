@@ -11,11 +11,13 @@
 
 	pipe_state = "pvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
+	interaction_flags_click = NEED_VENTCRAWL
 
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
 		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions, pipe_color)
+		cap.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(cap)
 	icon_state = "passive_vent"
 
@@ -26,6 +28,9 @@
 
 	var/datum/gas_mixture/external = location.return_air()
 	var/datum/gas_mixture/internal = airs[1]
+
+	if(!internal.volume || !external.volume)
+		return
 
 	if(internal.equalize(external))
 		air_update_turf(FALSE, FALSE)

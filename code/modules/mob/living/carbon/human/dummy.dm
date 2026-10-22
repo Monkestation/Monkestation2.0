@@ -8,11 +8,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_NO_TELEPORT), INNATE_TRAIT)
 
 /mob/living/carbon/human/dummy/Destroy()
 	in_use = FALSE
 	return ..()
+
+// no reason for these to ever be hearing sensitive, it just wastes time on spatial grid stuff
+/mob/living/carbon/human/dummy/become_hearing_sensitive(trait_source)
+	return
 
 /mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	return
@@ -23,6 +27,24 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	harvest_organs()
 	return ..()
+
+/mob/living/carbon/human/dummy/update_cached_insulation()
+	return
+
+/mob/living/carbon/human/dummy/get_insulation(temperature)
+	return temperature_insulation
+
+/mob/living/carbon/human/dummy/med_hud_set_health()
+	return
+
+/mob/living/carbon/human/dummy/med_hud_set_status()
+	return
+
+/mob/living/carbon/human/dummy/on_can_hear_music_trait_gain(datum/source)
+	return
+
+/mob/living/carbon/human/dummy/on_can_hear_music_trait_loss(datum/source)
+	return
 
 /*
 	MONKESTATION EDIT START
@@ -96,52 +118,78 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	cut_overlays(TRUE)
 
 /mob/living/carbon/human/dummy/setup_human_dna()
-	create_dna()
-	randomize_human(src)
-	dna.initialize_dna(skip_index = TRUE) //Skip stuff that requires full round init.
+	randomize_human(src, randomize_mutations = FALSE)
 
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
 
+/// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.
+/proc/get_consistent_feature_entry(list/accessory_feature_list)
+	var/consistent_entry = (accessory_feature_list- SPRITE_ACCESSORY_NONE)[1]
+	ASSERT(!isnull(consistent_entry))
+	return consistent_entry
+
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
-	target.dna.initialize_dna(/datum/blood_type/crew/human/o_plus, skip_index = TRUE)
-	target.dna.features["body_markings"] = "None"
-	target.dna.features["ears"] = "None"
-	target.dna.features["frills"] = "None"
-	target.dna.features["horns"] = "None"
-	target.dna.features["moth_antennae"] = "Plain"
-	target.dna.features["moth_markings"] = "None"
-	target.dna.features["moth_wings"] = "Plain"
-	target.dna.features["snout"] = "Round"
-	target.dna.features["spines"] = "None"
-	target.dna.features["tail_cat"] = "None"
-	target.dna.features["tail_lizard"] = "Smooth"
-	target.dna.features["tail_monkey"] = "Monkey"
-	target.dna.features["pod_hair"] = "Ivy"
+	/* monkestation removal
+	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
+	target.dna.features["ethcolor"] = COLOR_WHITE
+	*/
+	target.dna.features["body_markings"] = get_consistent_feature_entry(GLOB.body_markings_list)
+	target.dna.features["ears"] = get_consistent_feature_entry(GLOB.ears_list)
+	target.dna.features["frills"] = get_consistent_feature_entry(GLOB.frills_list)
+	target.dna.features["horns"] = get_consistent_feature_entry(GLOB.horns_list)
+	target.dna.features["moth_antennae"] = get_consistent_feature_entry(GLOB.moth_antennae_list)
+	target.dna.features["moth_markings"] = get_consistent_feature_entry(GLOB.moth_markings_list)
+	target.dna.features["moth_wings"] = get_consistent_feature_entry(GLOB.moth_wings_list)
+	target.dna.features["snout"] = get_consistent_feature_entry(GLOB.snouts_list)
+	target.dna.features["spines"] = get_consistent_feature_entry(GLOB.spines_list)
+	target.dna.features["tail_cat"] = get_consistent_feature_entry(GLOB.tails_list_human) // it's a lie
+	target.dna.features["tail_lizard"] = get_consistent_feature_entry(GLOB.tails_list_lizard)
+	target.dna.features["tail_monkey"] = get_consistent_feature_entry(GLOB.tails_list_monkey)
+	target.dna.features["pod_hair"] = get_consistent_feature_entry(GLOB.pod_hair_list)
 	target.dna.features["fur"] = COLOR_MONKEY_BROWN //Monkestation Addition
-	target.dna.features["ethereal_horns"] = "None" //Monkestation Addition
-	target.dna.features["ethereal_tail"] = "None" //Monkestation Addition
-	target.dna.features["ipc_screen"] = "BSOD" //Monkestation Addition
-	target.dna.features["ipc_chassis"] = "Bishop Cyberkinetics" //Monkestation Addition
-	target.dna.features["ipc_antenna"] = "None" //Monkestation Addition
-	target.dna.features["anime_top"] = "None" //Monkestation Addition
-	target.dna.features["anime_middle"] = "None" //Monkestation Addition
-	target.dna.features["anime_bottom"] = "None" //Monkestation Addition
-	target.dna.features["arachnid_appendages"] = "Long" //Monkestation Addition
-	target.dna.features["arachnid_chelicerae"] = "Basic" //Monkestation Addition
-	target.dna.features["goblin_ears"] = "Normal" //Monkestation Addition
-	target.dna.features["floran_leaves"] = "Furnivour" //Monkestation Addition
-	target.dna.features["satyr_fluff"] = "Normal" //Monkestation Addition
-	target.dna.features["satyr_tail"] = "Short" //Monkestation Addition
-	target.dna.features["satyr_horns"] = "Back" //Monkestation Addition
-	target.dna.features["arm_wings"] = "Monochrome" //Monkestation Addition
-	target.dna.features["ears_avian"] = "Hermes" //Monkestation Addition
-	target.dna.features["tail_avian"] = "Eagle" //Monkestation Addition
+	target.dna.features["ethereal_horns"] = get_consistent_feature_entry(GLOB.ethereal_horns_list) //Monkestation Addition
+	target.dna.features["ethereal_tail"] = get_consistent_feature_entry(GLOB.ethereal_tail_list) //Monkestation Addition
+	target.dna.features["ipc_screen"] = get_consistent_feature_entry(GLOB.ipc_screens_list) //Monkestation Addition
+	target.dna.features["ipc_chassis"] = get_consistent_feature_entry(GLOB.ipc_chassis_list) //Monkestation Addition
+	target.dna.features["ipc_antenna"] = get_consistent_feature_entry(GLOB.ipc_antennas_list) //Monkestation Addition
+	target.dna.features["anime_top"] = get_consistent_feature_entry(GLOB.anime_top_list) //Monkestation Addition
+	target.dna.features["anime_middle"] = get_consistent_feature_entry(GLOB.anime_middle_list) //Monkestation Addition
+	target.dna.features["anime_bottom"] = get_consistent_feature_entry(GLOB.anime_bottom_list) //Monkestation Addition
+	target.dna.features["anime_halo"] = get_consistent_feature_entry(GLOB.anime_halo_list)
+	target.dna.features["arachnid_appendages"] = get_consistent_feature_entry(GLOB.arachnid_appendages_list) //Monkestation Addition
+	target.dna.features["arachnid_chelicerae"] = get_consistent_feature_entry(GLOB.arachnid_chelicerae_list) //Monkestation Addition
+	target.dna.features["goblin_ears"] = get_consistent_feature_entry(GLOB.goblin_ears_list) //Monkestation Addition
+	target.dna.features["goblin_nose"] = get_consistent_feature_entry(GLOB.goblin_nose_list) //Monkestation Addition
+	target.dna.features["floran_leaves"] = get_consistent_feature_entry(GLOB.floran_leaves_list) //Monkestation Addition
+	target.dna.features["satyr_fluff"] = get_consistent_feature_entry(GLOB.satyr_fluff_list) //Monkestation Addition
+	target.dna.features["satyr_tail"] = get_consistent_feature_entry(GLOB.satyr_tail_list) //Monkestation Addition
+	target.dna.features["satyr_horns"] = get_consistent_feature_entry(GLOB.satyr_horns_list) //Monkestation Addition
+	target.dna.features["arm_wings"] = get_consistent_feature_entry(GLOB.arm_wings_list) //Monkestation Addition
+	target.dna.features["ears_avian"] = get_consistent_feature_entry(GLOB.avian_ears_list) //Monkestation Addition
+	target.dna.features["tail_avian"] = get_consistent_feature_entry(GLOB.tails_list_avian) //Monkestation Addition
+	target.dna.features["oni_horns"] = get_consistent_feature_entry(GLOB.oni_horns_list)
+	target.dna.features["oni_wings"] = get_consistent_feature_entry(GLOB.oni_wings_list)
+	target.dna.features["oni_tail"] = get_consistent_feature_entry(GLOB.oni_tail_list)
+	target.dna.features["apid_wings"] = get_consistent_feature_entry(GLOB.apid_wings_list)
+	target.dna.features["apid_antenna"] = get_consistent_feature_entry(GLOB.apid_antenna_list)
+
 
 	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = COLOR_VIBRANT_LIME
 	palette.mutant_color_secondary = COLOR_VIBRANT_LIME
 	palette.ethereal_color = COLOR_WHITE
+	target.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
+	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly
+	// In practice this doesn't matter, but this is for the sake of 100%(ish) consistency
+	var/static/consistent_UF
+	var/static/consistent_UI
+	if(isnull(consistent_UF) || isnull(consistent_UI))
+		consistent_UF = target.dna.unique_features
+		consistent_UI = target.dna.unique_identity
+	else
+		target.dna.unique_features = consistent_UF
+		target.dna.unique_identity = consistent_UI
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent
@@ -155,11 +203,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/consistent/setup_human_dna()
 	create_consistent_human_dna(src)
-
-/mob/living/carbon/human/consistent/update_body(is_creating)
-	..()
-	if(is_creating)
-		fully_replace_character_name(real_name, "John Doe")
+	fully_replace_character_name(real_name, "John Doe")
 
 /mob/living/carbon/human/consistent/domutcheck()
 	return // We skipped adding any mutations so this runtimes
@@ -192,7 +236,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
+		carbon_target.dna.copy_dna(copycat.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target
@@ -227,9 +271,10 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 /mob/living/carbon/human/dummy/extra_tall
 	bound_height = 64
-
+	// this prevents the top of tall characters from being cut off.
+	appearance_flags = parent_type::appearance_flags & ~TILE_BOUND
 	var/list/extra_bodyparts = list()
 
 /mob/living/carbon/human/dummy/extra_tall/Destroy()
-	. = ..()
-	extra_bodyparts = null
+	extra_bodyparts.Cut()
+	return ..()

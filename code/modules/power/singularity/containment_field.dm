@@ -4,7 +4,7 @@
 	name = "containment field"
 	desc = "An energy field."
 	icon = 'icons/obj/engine/singularity.dmi'
-	icon_state = "Contain_F"
+	icon_state = "field"
 	density = FALSE
 	move_resist = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -49,7 +49,7 @@
 		shock(user)
 		return TRUE
 
-/obj/machinery/field/containment/attackby(obj/item/W, mob/user, params)
+/obj/machinery/field/containment/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	shock(user)
 	return TRUE
 

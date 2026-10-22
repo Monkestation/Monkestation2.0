@@ -12,20 +12,25 @@
 	src.dry_result = dry_result
 
 	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(finish_drying))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	ADD_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 
 /datum/element/dryable/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
+	UnregisterSignal(target, COMSIG_ATOM_EXAMINE)
 	REMOVE_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 /datum/element/dryable/proc/finish_drying(atom/source)
 	SIGNAL_HANDLER
+	var/static/list/dried_color
+	if (isnull(dried_color))
+		dried_color = color_transition_filter(COLOR_DRIED_TAN)
 	var/atom/dried_atom = source
 	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom
-		resulting_atom.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY)
+		resulting_atom.add_atom_colour(dried_color, FIXED_COLOUR_PRIORITY)
 		ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT(type))
 		resulting_atom.forceMove(source.drop_location())
 		return
@@ -42,3 +47,10 @@
 		ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT(type))
 		qdel(source)
 
+/datum/element/dryable/proc/on_examined(atom/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+
+	if (HAS_TRAIT(source, TRAIT_DRIED))
+		examine_text += span_notice("It's been dried out.")
+	else
+		examine_text += span_notice("It can be dried out on a drying rack.")

@@ -1,11 +1,8 @@
 /obj/item/clothing/under/rank/civilian
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/civilian_digi.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer // Lawyers' suits are in TG's suits.dmi
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit // EXCEPT THIS ONE.
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/buttondown_slacks/worn/digi
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/civilian.dmi'
@@ -23,7 +20,6 @@
 	name = "head of personnel's naval jumpsuit"
 	desc = "A pale green naval suit and a rank badge denoting the Personnel Officer. Target, maximum firepower."
 	icon_state = "imphop"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/nova/parade
 	name = "head of personnel's male formal uniform"
@@ -51,7 +47,6 @@
 
 
 /obj/item/clothing/under/suit
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 /obj/item/clothing/under/suit/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/suits.dmi'
@@ -69,7 +64,6 @@
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/recolorable_suit
 	greyscale_config_worn = /datum/greyscale_config/recolorable_suit/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/recolorable_suit/worn/digi
 	greyscale_colors = "#a99780#ffffff#6e2727#ffc500"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -83,7 +77,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	greyscale_config = /datum/greyscale_config/recolorable_suitskirt
 	greyscale_config_worn = /datum/greyscale_config/recolorable_suitskirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/recolorable_suitskirt/worn/digi
 
 /obj/item/clothing/under/suit/nova/recolorable/casual
 	name = "office casual suit"
@@ -91,7 +84,6 @@
 	icon_state = "fancysuit_casual"
 	greyscale_config = /datum/greyscale_config/fancysuit_casual
 	greyscale_config_worn = /datum/greyscale_config/fancysuit_casual/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/fancysuit_casual/worn/digi
 	greyscale_colors = "#37373e#ffffff"
 
 /obj/item/clothing/under/suit/nova/recolorable/executive
@@ -100,7 +92,6 @@
 	icon_state = "fancysuit_executive"
 	greyscale_config = /datum/greyscale_config/fancysuit_executive
 	greyscale_config_worn = /datum/greyscale_config/fancysuit_executive/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/fancysuit_executive/worn/digi
 	greyscale_colors = "#37373e#37373e#ffffff#ac3232"
 
 /obj/item/clothing/under/suit/nova/pencil
@@ -112,7 +103,6 @@
 	greyscale_colors = "#37373e#ffffff"
 	greyscale_config = /datum/greyscale_config/pencilskirt_withshirt
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_withshirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_withshirt/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/suit/nova/pencil/noshirt
@@ -122,7 +112,6 @@
 	greyscale_colors = "#37373e"
 	greyscale_config = /datum/greyscale_config/pencilskirt
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt/worn/digi
 	body_parts_covered = GROIN|LEGS
 
 /obj/item/clothing/under/suit/nova/pencil/charcoal
@@ -157,7 +146,6 @@
 	greyscale_colors = "#37373e#37373e#ffffff#ac3232"
 	greyscale_config = /datum/greyscale_config/pencilskirt_withsuit
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_withsuit/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_withsuit/worn/digi
 
 /obj/item/clothing/under/suit/nova/pencil/checkered
 	name = "checkered pencilskirt and shirt"
@@ -166,7 +154,6 @@
 	greyscale_colors = "#37373e#232323#ffffff"
 	greyscale_config = /datum/greyscale_config/pencilskirt_checkers_withshirt
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_checkers_withshirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_checkers_withshirt/worn/digi
 
 /obj/item/clothing/under/suit/nova/pencil/checkered/noshirt
 	name = "checkered pencilskirt"
@@ -175,7 +162,6 @@
 	greyscale_colors = "#37373e#232323"
 	greyscale_config = /datum/greyscale_config/pencilskirt_checkers
 	greyscale_config_worn = /datum/greyscale_config/pencilskirt_checkers/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/pencilskirt_checkers/worn/digi
 	body_parts_covered = GROIN|LEGS
 
 /*

@@ -28,26 +28,35 @@
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
+/obj/item/organ/internal/ears/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+	if(.)
+		REMOVE_TRAIT(receiver, TRAIT_DEAF, NO_EARS)
+
+/obj/item/organ/internal/ears/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	// Do not apply with special flag, even if it would ultimately be redundant by new ears being hot-swapped in.
+	// This is so we don't trip signal_addtrait when hot-swapping ears, which could cause inappropriate behavior like nuking sound effects.
+	if(!special)
+		ADD_TRAIT(organ_owner, TRAIT_DEAF, NO_EARS)
+
 /obj/item/organ/internal/ears/get_status_appendix(advanced, add_tooltips)
-	if(owner.stat == DEAD)
+	if(owner.stat == DEAD || !HAS_TRAIT(owner, TRAIT_DEAF))
 		return
 	if(advanced)
+		if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, QUIRK_TRAIT))
+			return conditional_tooltip("Subject is permanently deaf.", "Irreparable under normal circumstances.", add_tooltips)
 		if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, GENETIC_MUTATION))
-			return "Subject is genetically deaf."
+			return conditional_tooltip("Subject is genetically deaf.", "Use medication such as [/datum/reagent/medicine/mutadone::name].", add_tooltips)
 		if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
-			return "Subject is [(organ_flags & ORGAN_FAILING) ? "permanently": "temporarily"] deaf from ear damage."
-	if(HAS_TRAIT(owner, TRAIT_DEAF))
-		return "Subject is deaf."
+			return conditional_tooltip("Subject is [(organ_flags & ORGAN_FAILING) ? "permanently": "temporarily"] deaf from ear damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/inacusiate::name], or protect ears with earmuffs.", add_tooltips)
+	return "Subject is deaf."
 
 /obj/item/organ/internal/ears/show_on_condensed_scans()
 	// Always show if we have an appendix
-	return ..() || (owner.stat != DEAD && HAS_TRAIT(owner, TRAIT_DEAF))
+	return ..() || (owner.stat != DEAD && deaf)
 
 /obj/item/organ/internal/ears/on_life(seconds_per_tick, times_fired)
-	// only inform when things got worse, needs to happen before we heal
-	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
-		to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises for a moment."))
-
 	. = ..()
 	// if we have non-damage related deafness like mutations, quirks or clothing (earmuffs), don't bother processing here. Ear healing from earmuffs or chems happen elsewhere
 	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
@@ -61,16 +70,59 @@
 			adjustEarDamage(0, 4)
 			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
 
-	if(deaf)
-		ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
-	else
-		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+	update_hearing_loss()
 
 /obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
+
+	// if we are already hard of hearing, don't accumulate the duration
+	// instead adjust the amount of damage (so we might escalate to deafness) and reset the duration if appropriate
+	if (ddeaf > 0 && HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
+		deaf = max(deaf, ddeaf*damage_multiplier*0.75)
+		update_hearing_loss()
+		return
+
 	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	deaf = max(deaf + ddeaf*damage_multiplier*0.75, 0)
+	update_hearing_loss()
+
+/obj/item/organ/internal/ears/get_status_appendix(advanced, add_tooltips)
+	if (owner.stat == DEAD)
+		return
+	if (advanced)
+		if (HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+			return "Subject is temporarily hard of hearing from ear damage."
+	return ..()
+
+/obj/item/organ/internal/ears/proc/update_hearing_loss()
+	var/was_deaf = HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE)
+	var/was_hoh = HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+//if already deaf from quirks or genetics, don't apply trait_hard_of_hearing or trait_deaf
+	if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, QUIRK_TRAIT) || HAS_TRAIT_FROM(owner, TRAIT_DEAF, GENETIC_MUTATION))
+		return
+
+	if (!deaf)
+		if (was_deaf)
+			REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		if (was_hoh)
+			REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+		return
+
+	if (damage < 25 && !(organ_flags & ORGAN_FAILING))
+		ADD_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		if (!was_hoh)
+			if (was_deaf)
+				to_chat(owner, span_warning("You're able to hear again, but everything sounds quiet."))
+			else
+				to_chat(owner, span_warning("Everything goes quiet."))
+	else
+		ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+		if (!was_deaf)
+			to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises."))
 
 /obj/item/organ/internal/ears/invincible
 	damage_multiplier = 0
@@ -106,13 +158,13 @@
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
-		ear_owner.AddElement(/datum/element/waddling)
+		ear_owner.AddElementTrait(TRAIT_WADDLING, ORGAN_TRAIT, /datum/element/waddling)
 
 /obj/item/organ/internal/ears/penguin/on_remove(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
-		ear_owner.RemoveElement(/datum/element/waddling)
+		REMOVE_TRAIT(ear_owner, TRAIT_WADDLING, ORGAN_TRAIT)
 
 /obj/item/organ/internal/ears/bronze
 	name = "tin ears"
@@ -121,17 +173,34 @@
 	bang_protect = 1 //Fear me weaklings.
 
 /obj/item/organ/internal/ears/cybernetic
-	name = "cybernetic ears"
+	name = "basic cybernetic ears"
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/ears/cybernetic/upgraded
-	name = "upgraded cybernetic ears"
+	name = "cybernetic ears"
 	icon_state = "ears-c-u"
 	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
 	damage_multiplier = 0.5
+
+/obj/item/organ/internal/ears/cybernetic/whisper
+	name = "whisper-sensitive cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
+	// Same sensitivity as felinid ears
+	damage_multiplier = 2
+	organ_traits = list(TRAIT_GOOD_HEARING)
+
+// "X-ray ears" that let you hear through walls
+/obj/item/organ/internal/ears/cybernetic/xray
+	name = "wall-penetrating cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
+	// Same sensitivity as felinid ears
+	damage_multiplier = 2
+	organ_traits = list(TRAIT_XRAY_HEARING)
 
 /obj/item/organ/internal/ears/cybernetic/emp_act(severity)
 	. = ..()

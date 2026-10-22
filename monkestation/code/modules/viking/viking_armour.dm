@@ -2,13 +2,13 @@
 // I mean they coould but funny armour
 
 /obj/item/clothing/head/viking
-	icon = 'monkestation/icons/viking/viking_items.dmi'
-	worn_icon = 'monkestation/icons/viking/viking_armor.dmi'
+	icon = 'icons/viking/viking_items.dmi'
+	worn_icon = 'icons/viking/viking_armor.dmi'
 	desc = "oi admins wrong one"
 
 /obj/item/clothing/under/viking
-	icon = 'monkestation/icons/viking/viking_items.dmi'
-	worn_icon ='monkestation/icons/viking/viking_armor.dmi'
+	icon = 'icons/viking/viking_items.dmi'
+	worn_icon ='icons/viking/viking_armor.dmi'
 	desc = "oi admins wrong one"
 
 //warning this item will include the godslayer armor heal (as soon as i get the code in)

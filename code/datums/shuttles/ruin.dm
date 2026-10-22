@@ -26,3 +26,8 @@
 	suffix = "syndicate_fighter_shiv"
 	name = "Syndicate Fighter"
 	description = "A small Syndicate vessel with exactly one tile of useful interior space and 4 laser turrets. Starts with a Syndicate mob in the pilot's seat, and extremely cramped."
+
+/datum/map_template/shuttle/ruin/freeminer
+	suffix = "freeminer"
+	name = "Sheffield-class Free Miner Shuttle"
+	description = "An independent mining ship with a crew of four, equipped to comb the abyss for useful materials or die trying."

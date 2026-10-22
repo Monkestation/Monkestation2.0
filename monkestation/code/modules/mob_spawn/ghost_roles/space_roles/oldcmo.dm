@@ -22,10 +22,10 @@
 /datum/outfit/oldcmo
 	name = "Ancient Chief Medical Officer"
 	id = /obj/item/card/id/advanced/old
-	id_trim = /datum/id_trim/away/old/cmo
+	id_trim = /datum/id_trim/job/away/old/cmo
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	shoes = /obj/item/clothing/shoes/jackboots
-	l_pocket = /obj/item/flashlight/pen/paramedic
+	l_pocket = /obj/item/flashlight/pen
 	r_pocket = /obj/item/pinpointer/crew
 	implants = list(/obj/item/implant/mindshield)
 	skillchips = list(/obj/item/skillchip/entrails_reader)

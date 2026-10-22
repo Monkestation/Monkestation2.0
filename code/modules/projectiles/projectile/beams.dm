@@ -2,7 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
+	damage = 22
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -15,34 +15,71 @@
 	light_color = COLOR_SOFT_RED
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	wound_bonus = -20
 	bare_wound_bonus = 10
 
 
 /obj/projectile/beam/laser
-	generic_name = "laser beam"
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
+/obj/projectile/beam/laser/hitscan
+	damage = 30
+	icon_state = null
+	hitscan = TRUE
+	hitscan_light_color_override = COLOR_RED
+	impact_light_color_override = COLOR_RED
+	hitscan_light_intensity = 1
+	hitscan_light_outer_range = 0.25
+
+/obj/projectile/beam/laser/lasrifle
+	damage = 25
+	range = 30
+	tracer_type = /obj/effect/projectile/tracer/laser/rifle
+	impact_type = /obj/effect/projectile/impact/laser/rifle
+	muzzle_type = /obj/effect/projectile/muzzle/laser/rifle
+	hitscan = TRUE
+	damage_falloff_tile = -1 //This makes ricochets less impactful
+	armour_penetration = -30 //armor is * 130% more effective against it
+	wound_bonus = -15
+	wound_falloff_tile = 3
+	impact_effect_type = null
+	hitscan_light_intensity = 2
+	hitscan_light_outer_range = 0.5
+	hitscan_light_color_override = LIGHT_COLOR_INTENSE_RED
+	muzzle_flash_intensity = 4
+	muzzle_flash_range = 0.5
+	muzzle_flash_color_override = LIGHT_COLOR_INTENSE_RED
+	impact_light_intensity = 4
+	impact_light_outer_range = 1
+	impact_light_color_override = LIGHT_COLOR_INTENSE_RED
+	expanded_bounce = TRUE
+	ricochets_max = 2
+	ricochet_chance = 100
+	ricochet_auto_aim_angle = 10
+	ricochet_auto_aim_range = 10
+	ricochet_incidence_leeway = 90
+	ricochet_shoots_firer = TRUE
+
 /obj/projectile/beam/laser/carbine
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	damage = 10
+	damage = 9
+	wound_bonus = -40
+	speed = 0.9
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
+	icon_state = "heavylaser"
 	wound_bonus = 0
 	damage = 25
-	speed = 0.6 // higher power = faster, that's how light works right
-
-/obj/projectile/beam/laser/hellfire/Initialize(mapload)
-	. = ..()
-	transform *= 2
+	speed = 1.6
+	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -60,36 +97,55 @@
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
+
 /obj/projectile/beam/laser/musket
 	name = "low-power laser"
 	icon_state = "laser_musket"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	damage = 28
-	stamina = 35
+	stamina = 17.5
 	light_color = COLOR_STRONG_VIOLET
 	weak_against_armour = TRUE
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
-	damage = 25
-	stamina = 20
+	damage = 45
+	stamina = 10
 	weak_against_armour = FALSE
+
+/obj/projectile/beam/laser/musket/syndicate
+	name = "resonant laser"
+	damage = 30
+	stamina = 32.5
+	weak_against_armour = FALSE
+	armour_penetration = 45 //less powerful than armor piercing rounds
+	wound_bonus = 10
 
 /obj/projectile/beam/weak
 	damage = 15
 
 /obj/projectile/beam/weak/penetrator
-	armour_penetration = 50
+	armour_penetration = 80
 
 /obj/projectile/beam/practice
 	name = "practice laser"
-	generic_name = "practice laser beam"
 	damage = 0
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 5
+	damage = 8.15
+	wound_bonus = 5
+	bare_wound_bonus = 5
+	wound_falloff_tile = -3
+
+/obj/projectile/beam/scatter/pathetic
+	name = "extremely weak laser pellet"
+	damage = 1
+	wound_bonus = 0
+	color = "#dbc11d"
+	hitsound = 'sound/items/bikehorn.ogg' //honk
+	hitsound_wall = 'sound/items/bikehorn.ogg'
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
@@ -105,12 +161,19 @@
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
 
+/obj/projectile/beam/laser/hardlight
+	name = "hardlight laser"
+	pass_flags = PASSTABLE
+	damage = 32
+	damage_type = BURN
+	range = 8
+
 /obj/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
 	damage = 0
 	damage_type = STAMINA
-	stamina = 35
+	stamina = 24
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -118,27 +181,21 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
-	debilitating = TRUE
-	debilitate_mult = 3
 
 /obj/projectile/beam/disabler/weak
-	stamina = 15
-	debilitate_mult = 1.5
+	stamina = 11.5
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
 	weak_against_armour = TRUE
-	debilitate_mult = 2
 
 /obj/projectile/beam/disabler/smoothbore/prime
 	name = "focused disabler beam"
 	weak_against_armour = FALSE
-	stamina = 65 // MONKESTATION EDIT ORG: 30
-	debilitate_mult = 3.5 // MONKESTATION ADDITION
+	stamina = 30
 
 /obj/projectile/beam/pulse
 	name = "pulse"
-	generic_name = "pulse beam"
 	icon_state = "u_laser"
 	damage = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -152,10 +209,9 @@
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
-			SSexplosions.low_mov_atom += target //monkestation edit
+			SSexplosions.low_mov_atom += target
 		else
-			SSexplosions.lowturf += target //monkestation edit
-
+			SSexplosions.lowturf += target
 /obj/projectile/beam/pulse/shotgun
 	damage = 30
 
@@ -185,6 +241,7 @@
 	return //don't want the emitters to miss
 
 /obj/projectile/beam/emitter/hitscan
+	icon_state = null
 	hitscan = TRUE
 	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter
@@ -216,7 +273,7 @@
 		var/mob/living/carbon/human/M = target
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
-				M.stamina.adjust(-34)
+				M.stamina.adjust(-17)
 
 /obj/projectile/beam/lasertag/redtag
 	icon_state = "laser"
@@ -228,6 +285,7 @@
 	impact_type = /obj/effect/projectile/impact/laser
 
 /obj/projectile/beam/lasertag/redtag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/beam/lasertag/bluetag
@@ -238,8 +296,21 @@
 	impact_type = /obj/effect/projectile/impact/laser/blue
 
 /obj/projectile/beam/lasertag/bluetag/hitscan
+	icon_state = null
 	hitscan = TRUE
 
 /obj/projectile/magic/shrink/alien
 	antimagic_flags = NONE
 	shrink_time = 9 SECONDS
+
+/obj/projectile/beam/laser/plasma_glob
+	name = "plasma globule"
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
+	icon_state = "plasma_glob"
+	damage = 10
+	speed = 1.5
+	bare_wound_bonus = 55 // Lasers have a wound bonus of 40, this is a bit higher
+	wound_bonus = -50 // However we do not very much against armor
+	pass_flags = PASSTABLE | PASSGRILLE // His ass does NOT pass through glass!
+	weak_against_armour = TRUE
+

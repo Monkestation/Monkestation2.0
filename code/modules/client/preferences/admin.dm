@@ -40,6 +40,15 @@
 
 	return is_admin(preferences.parent)
 
+
+/datum/preference/toggle/autoadmin
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "autoadmin"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/autoadmin/create_default_value()
+	return TRUE
+
 /datum/preference/toggle/bypass_deadmin_in_centcom
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "bypass_deadmin_in_centcom"
@@ -58,17 +67,6 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/ghost_roles_as_admin/is_accessible(datum/preferences/preferences)
-	if (!..(preferences))
-		return FALSE
-
-	return is_admin(preferences.parent)
-
-/datum/preference/toggle/comms_notification
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "comms_notification"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/comms_notification/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
 

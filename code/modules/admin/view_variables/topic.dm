@@ -11,7 +11,10 @@
 	else if(islist(target))
 		vv_do_list(target, href_list)
 	if(href_list["Vars"])
-		debug_variables(locate(href_list["Vars"]))
+		var/datum/vars_target = locate(href_list["Vars"])
+		if(href_list["special_varname"]) // Some special vars can't be located even if you have their ref, you have to use this instead
+			vars_target = vars_target.vars[href_list["special_varname"]]
+		debug_variables(vars_target)
 
 //Stuff below aren't in dropdowns/etc.
 
@@ -110,7 +113,7 @@
 				var/log_msg = "[key_name(usr)] dealt [amount] amount of [Text] damage to [key_name(L)]"
 				message_admins("[key_name(usr)] dealt [amount] amount of [Text] damage to [ADMIN_LOOKUPFLW(L)]")
 				log_admin(log_msg)
-				admin_ticket_log(L, "<font color='blue'>[log_msg]</font>")
+				admin_ticket_log(L, log_msg) // MONKESTATION EDIT - tgui tickets
 				vv_update_display(L, Text, "[newamt]")
 
 

@@ -21,6 +21,8 @@
 	var/datum/weakref/last_hovored_ref
 	/// overlay for keybind maptext
 	var/mutable_appearance/keybind_maptext
+	/// if observers can trigger this action at any time
+	var/allow_observer_click = FALSE
 
 /atom/movable/screen/movable/action_button/Destroy()
 	if(our_hud)
@@ -36,6 +38,8 @@
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
 	if(isobserver(user))
 		var/mob/dead/observer/dead_mob = user
+		if(allow_observer_click)
+			return TRUE
 		if(dead_mob.observetarget) // Observers can only click on action buttons if they're not observing something
 			return FALSE
 
@@ -52,7 +56,7 @@
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		begin_creating_bind(usr)
+		linked_action?.begin_creating_bind(usr)
 		return TRUE
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		var/datum/hud/our_hud = usr.hud_used
@@ -66,14 +70,6 @@
 		trigger_flags |= TRIGGER_SECONDARY_ACTION
 	linked_action.Trigger(trigger_flags = trigger_flags)
 	return TRUE
-
-/atom/movable/screen/movable/action_button/proc/begin_creating_bind(mob/user)
-	if(!isnull(linked_action.full_key))
-		linked_action.full_key = null
-		linked_action.update_button_status(src)
-		return
-	linked_action.full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
-	linked_action.update_button_status(src)
 
 // Entered and Exited won't fire while you're dragging something, because you're still "holding" it
 // Very much byond logic, but I want nice behavior, so we fake it with drag
@@ -106,7 +102,7 @@
 	closeToolTip(usr)
 	return ..()
 
-/atom/movable/screen/movable/action_button/MouseDrop(over_object)
+/atom/movable/screen/movable/action_button/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	last_hovored_ref = null
 	if(!can_use(usr))
 		return
@@ -131,9 +127,12 @@
 		our_hud.position_action_relative(src, button)
 		save_position()
 		return
+
 	. = ..()
+
 	our_hud.position_action(src, screen_loc)
 	save_position()
+	our_hud.hide_landings()
 
 /atom/movable/screen/movable/action_button/proc/save_position()
 	var/mob/user = our_hud.mymob
@@ -276,12 +275,12 @@
 
 /atom/movable/screen/button_palette/Destroy()
 	if(our_hud)
-		our_hud.mymob?.client?.screen -= src
+		our_hud.mymob?.canon_client?.screen -= src
 		our_hud.toggle_palette = null
 		our_hud = null
 	return ..()
 
-/atom/movable/screen/button_palette/Initialize(mapload)
+/atom/movable/screen/button_palette/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance()
 
@@ -441,7 +440,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 
 /atom/movable/screen/palette_scroll/down/Destroy()
 	if(our_hud)
-		our_hud.mymob?.client?.screen -= src
+		our_hud.mymob?.canon_client?.screen -= src
 		our_hud.palette_down = null
 		our_hud = null
 	return ..()
@@ -454,7 +453,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 
 /atom/movable/screen/palette_scroll/up/Destroy()
 	if(our_hud)
-		our_hud.mymob?.client?.screen -= src
+		our_hud.mymob?.canon_client?.screen -= src
 		our_hud.palette_up = null
 		our_hud = null
 	return ..()
@@ -472,7 +471,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 /atom/movable/screen/action_landing/Destroy()
 	if(owner)
 		owner.landing = null
-		owner?.owner?.mymob?.client?.screen -= src
+		owner?.owner?.mymob?.canon_client?.screen -= src
 		owner.refresh_actions()
 		owner = null
 	return ..()

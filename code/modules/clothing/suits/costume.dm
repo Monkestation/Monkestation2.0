@@ -104,11 +104,11 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/syndicatefake
-	name = "black and red space suit replica"
-	icon_state = "syndicate-black-red"
+	name = "red space suit replica" //monkestation edit
+	icon_state = "syndicate" //monkestation edit
 	icon = 'icons/obj/clothing/suits/spacesuit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/spacesuit.dmi'
-	inhand_icon_state = "syndicate-black-red"
+	inhand_icon_state = "space_suit_syndicate" //monkestation edit
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -428,7 +428,10 @@
 	name = "gothic coat"
 	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
+	body_parts_covered = ARMS|HANDS|CHEST|GROIN //the model has a glove on it so protect the hands.
 	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/costume/xenos
 	name = "xenos suit"
@@ -600,3 +603,247 @@
 /obj/item/clothing/suit/costume/irs/Initialize(mapload)
 	. = ..()
 	allowed += GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/hooded/hotdog
+	name = "hotdog suit"
+	desc = "With great hotdog comes great responsi-bun-ity."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN
+	hoodtype = /obj/item/clothing/head/hooded/hotdog
+
+/obj/item/clothing/head/hooded/hotdog
+	name = "hotdog suit hood"
+	desc = "There's a certain joke to be made here."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/suit/costume/dio
+	name = "flamboyant jacket"
+	desc = "It exudes a menancing aura."
+	icon_state = "dio_jacket"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/hooded/dinojammies
+	name = "dinosaur pajamas"
+	desc = "The ultimate in reptile-pajama-costume fusion."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "dinojammies"
+	worn_icon_state = "dinojammies"
+	hoodtype = /obj/item/clothing/head/hooded/dinojammies
+
+/obj/item/clothing/head/hooded/dinojammies
+	desc = "A dinosaur head hood."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "dinojammies_hood"
+	worn_icon_state = "dinojammies_hood"
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/suit/hooded/gorilla
+	name = "gorilla costume"
+	desc = "Ooga!"
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "gorilla"
+	worn_icon_state = "gorilla"
+	hoodtype = /obj/item/clothing/head/hooded/gorilla
+	alternative_screams = list('sound/creatures/gorilla.ogg')
+
+/obj/item/clothing/head/hooded/gorilla
+	desc = "A gorilla costume hood."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "gorilla"
+	worn_icon_state = "gorilla"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/suit/costume/bunnysuit/regular
+	slowdown = 0
+	desc = "Hop Hop Hop! It looks old."
+
+/obj/item/clothing/suit/shipwreckedsuit
+	name = "shipwrecked captain suit"
+	desc = "DISCLAIMER:Not Space Proof. Wearing this suit gives you the luck of a true space captain! Just avoid the space rocks..."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "shipwrecked_suit"
+	worn_icon_state = "shipwrecked_suit"
+
+/obj/item/clothing/head/shipwreckedhelmet
+	name = "shipwrecked captain helmet"
+	desc = "DISCLAIMER:Not Space Proof. A vital part of keeping out the poisonous oxygen!... what do you mean oxygen is good for me?"
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "shipwrecked_helmet"
+	worn_icon_state = "shipwrecked_helmet"
+	worn_y_offset = 4
+
+/obj/item/clothing/suit/kingofbugssuit
+	name = "king of bugs suit"
+	desc = "DISCLAIMER:Not Space Proof. Dandori Issues "
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "kingofbugs_suit"
+	worn_icon_state = "kingofbugs_suit"
+
+/obj/item/clothing/head/kingofbugshelmet
+	name = "king of bugs helmet"
+	desc = "DISCLAIMER:Not Space Proof. FOOD!!!"
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "kingofbugs_helmet"
+	worn_icon_state = "kingofbugs_helmet"
+	worn_y_offset = 5
+
+/obj/item/clothing/head/helldiverhelmet
+	name = "helldiver helmet"
+	desc = "Have a Nice Cup of LIBER-TEA"
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "helldiver_helm"
+	worn_icon_state = "helldiver_helm"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+
+/datum/loadout_item/head/helldiverhelmet
+	name = "Helldiver Helmet"
+	item_path = /obj/item/clothing/head/helldiverhelmet
+
+/datum/store_item/head/helldiverhelmet
+	name = "Helldiver Helmet"
+	item_path = /obj/item/clothing/head/helldiverhelmet
+	item_cost = 10000
+
+/obj/item/clothing/suit/helldiverarmor
+	name = "helldiver armor"
+	desc = "How Do You Like The Taste of DEMOCRACY?!"
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "helldiver_armor"
+	worn_icon_state = "helldiver_armor"
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/helldiverarmor/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
+/datum/loadout_item/suit/helldiverarmor
+	name = "Helldiver Armor"
+	item_path = /obj/item/clothing/suit/helldiverarmor
+
+/datum/store_item/suit/helldiverarmor
+	name = "Helldiver Armor"
+	item_path = /obj/item/clothing/suit/helldiverarmor
+	item_cost = 10000
+
+/obj/item/clothing/suit/hooded/ashsuit
+	name = "ashsuit suit"
+	desc = "Whoever controls the Plasma, controls the Spinward Sector."
+	icon_state = "ashsuit"
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	hoodtype = /obj/item/clothing/head/hooded/ashsuit
+	armor_type = /datum/armor/hooded_ashsuit
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
+		/obj/item/mining_scanner,
+		/obj/item/pickaxe,
+		/obj/item/resonator,
+		/obj/item/storage/bag/ore,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/tank/internals,
+		)
+	resistance_flags = FIRE_PROOF
+	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
+
+/datum/armor/hooded_ashsuit
+	melee = 30
+	bullet = 10
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 50
+	acid = 50
+
+/obj/item/clothing/head/hooded/ashsuit
+	name = "ashsuit hood"
+	desc = "For covering your face when walking the ash dunes."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "ashsuit"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	armor_type = /datum/armor/hooded_explorer
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/hooded/ashsuit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
+/obj/item/clothing/head/hooded/ashsuit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
+/obj/item/clothing/suit/chameleon/syndie_armor
+	name = "syndicate body armor"
+	desc = "A set of red and black body armor. Lightweight but great protection."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "armor_syndie"
+	armor_type = /datum/armor/mod_theme_infiltrator
+	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/chameleon/syndie_armor/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets)
+
+/obj/item/clothing/suit/chameleon/syndie_armor/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
+		return ..()
+
+	if(chameleon_action.hidden)
+		chameleon_action.hidden = FALSE
+		actions += chameleon_action
+		chameleon_action.Grant(user)
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon body armor ([name]) with [attacking_item]")
+	else
+		chameleon_action.hidden = TRUE
+		actions -= chameleon_action
+		chameleon_action.Remove(user)
+		log_game("[key_name(user)] has locked the disguise of the chameleon body armor ([name]) with [attacking_item]")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/clothing/suit/infinity_jacket
+	name = "infinity jersey"
+	desc = "A jersey labelled '88', somehow leaving a threatening aura around it."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "infinity_jersey"
+
+/obj/item/clothing/suit/thekiller_robe
+	name = "killer's robe"
+	desc = "As long as there has been man, there has been The Killer. They are surprisingly into the theater scene."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "thekiller_robe"
+	flags_inv = HIDEJUMPSUIT

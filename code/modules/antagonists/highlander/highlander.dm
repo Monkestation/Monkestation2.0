@@ -56,7 +56,7 @@
 		if(!H.dropItemToGround(I))
 			qdel(I)
 	H.regenerate_icons()
-	H.revive(ADMIN_HEAL_ALL)
+	H.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
@@ -95,10 +95,11 @@
 	var/mob/living/silicon/robot/robotlander = owner.current
 	if(!istype(robotlander))
 		return ..()
-	robotlander.revive(ADMIN_HEAL_ALL)
+	robotlander.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	robotlander.set_connected_ai() //DISCONNECT FROM AI
 	robotlander.laws.clear_inherent_laws()
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
 	robotlander.laws.show_laws(robotlander)
-	robotlander.model.transform_to(/obj/item/robot_model/syndicate/kiltborg)
+	robotlander.apply_model(/obj/item/robot_model/highlander)
+	robotlander.apply_skin(robotlander.model.default_skin, TRUE, FALSE)
 	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.model.basic_modules

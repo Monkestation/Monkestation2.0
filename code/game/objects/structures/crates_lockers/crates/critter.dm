@@ -2,6 +2,7 @@
 	name = "critter crate"
 	desc = "A crate designed for safe transport of animals. It has an oxygen tank for safe transport in space."
 	icon_state = "crittercrate"
+	base_icon_state = "crittercrate"
 	horizontal = FALSE
 	allow_objects = FALSE
 	breakout_time = 600
@@ -16,6 +17,7 @@
 	can_install_electronics = FALSE
 	elevation = 21
 	elevation_open = 0
+	can_weld_shut = FALSE
 
 	var/obj/item/tank/internals/emergency_oxygen/tank
 
@@ -42,8 +44,11 @@
 		return
 
 	. += "crittercrate_door"
+
 	if(manifest)
-		. += "manifest"
+		var/mutable_appearance/manifest_overlay = mutable_appearance(icon, "manifest")
+		manifest_overlay.color = manifest?.color
+		. += manifest_overlay
 
 /obj/structure/closet/crate/critter/return_air()
 	if(tank)

@@ -4,16 +4,19 @@
 	icon_state = "clown"
 	inhand_icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	var/enabled_waddle = TRUE
 	///List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
 	var/list/squeak_sound = list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1)
 	lace_time = 20 SECONDS // how the hell do these laces even work??
 	species_exception = list(/datum/species/golem/bananium)
+	var/has_storage = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()
 
-	create_storage(storage_type = /datum/storage/pockets/shoes/clown)
+	if(has_storage)
+		create_storage(storage_type = /datum/storage/pockets/shoes/clown)
 	LoadComponent(/datum/component/squeak, squeak_sound, 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
@@ -21,28 +24,29 @@
 	. = ..()
 	if(slot & ITEM_SLOT_FEET)
 		if(enabled_waddle)
-			user.AddElement(/datum/element/waddling)
+			user.AddElementTrait(TRAIT_WADDLING, SHOES_TRAIT, /datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))
 			user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/living/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)
 	if(is_clown_job(user.mind?.assigned_role))
 		user.clear_mood_event("clownshoes")
 
-/obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
+/obj/item/clothing/shoes/clown_shoes/item_ctrl_click(mob/user)
 	if(!isliving(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(user.get_active_held_item() != src)
 		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	if (!enabled_waddle)
 		to_chat(user, span_notice("You switch off the waddle dampeners!"))
 		enabled_waddle = TRUE
 	else
 		to_chat(user, span_notice("You switch on the waddle dampeners!"))
 		enabled_waddle = FALSE
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
@@ -61,3 +65,53 @@
 	icon_state = "ducky_shoes"
 	inhand_icon_state = "ducky_shoes"
 	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
+
+/obj/item/clothing/shoes/clown_shoes/cluwne
+	name = "cluwne shoes"
+	desc = "A sense of bloodlust washes over you as you wear these shoes. Ctrl-click to toggle waddle dampeners. Alt-click to toggle sound dampeners."
+	icon_state = "cluwne"
+	inhand_icon_state = "cluwne_shoes"
+	worn_icon_state = "cluwne"
+	slowdown = SHOES_SLOWDOWN
+	var/sound_dampener = TRUE
+
+/obj/item/clothing/shoes/clown_shoes/cluwne/click_alt(mob/living/user)
+	if(!isliving(user))
+		return CLICK_ACTION_BLOCKING
+	if(user.get_active_held_item() != src)
+		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
+		return CLICK_ACTION_BLOCKING
+
+	sound_dampener = !sound_dampener
+	if(sound_dampener)
+		to_chat(user, span_notice("You switch on the sound dampener. Your footsteps fall silent."))
+	else
+		to_chat(user, span_notice("You switch off the sound dampener. The shoes are ready to squeak again."))
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/shoes/clown_shoes/yellow
+	desc = "The prankster's standard-issue clowning shoes. But Yellow! Ctrl-click to toggle waddle dampeners."
+	name = "yellow clown shoes"
+	icon_state = "clown_yellow"
+
+/obj/item/clothing/shoes/clown_shoes/green_jester_shoes
+	name = "jester shoes"
+	desc = "Shoes that jingle with every step!!"
+	icon_state = "green_jester_shoes"
+	greyscale_config = /datum/greyscale_config/green_jester_shoes
+	greyscale_config_worn = /datum/greyscale_config/green_jester_shoes_worn
+	greyscale_colors = "#E10000#01C204#E0D35C"
+	squeak_sound = list('sound/effects/jingle.ogg'=1) //jingle jingle jingle jingle
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
+	name = "clown jester shoes"
+	desc = "A court jester's shoes, updated with modern squeaking technology."
+	icon_state = "jester_shoes"
+	squeak_sound = list('sound/effects/clown_jingle1.ogg'=1, 'sound/effects/clown_jingle2.ogg'=1) //jingHONK jinglHONK jHONKgle jiHONKgle
+
+/obj/item/clothing/shoes/clown_shoes/harlequin_boots
+	name = "harlequin boots"
+	desc = "For the more serious clowns, Now with a internal bell"
+	icon_state = "harlequin_boots"
+	squeak_sound = list('sound/effects/clown_jingle1.ogg'=1, 'sound/effects/clown_jingle2.ogg'=1)

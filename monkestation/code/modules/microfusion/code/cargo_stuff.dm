@@ -17,8 +17,8 @@
 	contains = list(
 		/obj/item/microfusion_phase_emitter/advanced,
 		/obj/item/microfusion_phase_emitter/advanced,
-		/obj/item/stock_parts/cell/microfusion/advanced,
-		/obj/item/stock_parts/cell/microfusion/advanced,
+		/obj/item/stock_parts/power_store/cell/microfusion/advanced,
+		/obj/item/stock_parts/power_store/cell/microfusion/advanced,
 	)
 	crate_name = "Microfusion Upgrade Crate"
 

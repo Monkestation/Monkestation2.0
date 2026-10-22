@@ -28,13 +28,13 @@
 	if(candidate || spawn_anyway_if_no_player)
 		var/mob/living/new_mob = new spawn_type (get_turf(get_spawn_turf()))
 		if(candidate)
-			new_mob.ckey = candidate.ckey
+			new_mob.PossessByPlayer(candidate.ckey)
 		post_spawn(new_mob)
 
 ///BACK FOR REVENGE!!!
 /datum/shuttle_event/simple_spawner/player_controlled/alien_queen
 	name = "ALIEN QUEEN! (Kinda dangerous!)"
-	spawning_list = list(/mob/living/carbon/alien/adult/royal/queen = 1, /obj/vehicle/sealed/mecha/working/ripley = 1)
+	spawning_list = list(/mob/living/carbon/alien/adult/royal/queen = 1, /obj/vehicle/sealed/mecha/ripley = 1)
 	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
 
 	event_probability = 0.2

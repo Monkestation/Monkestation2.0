@@ -14,11 +14,11 @@
 	///If true, the structure can be deconstructed into a metal sheet with a wrench.
 	var/deconstructible = TRUE
 
-/obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && deconstructible)
+/obj/structure/fluff/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH && deconstructible)
 		user.visible_message(span_notice("[user] starts disassembling [src]..."), span_notice("You start disassembling [src]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 50))
+		attacking_item.play_tool_sound(src)
+		if(attacking_item.use_tool(src, user, 50))
 			user.visible_message(span_notice("[user] disassembles [src]!"), span_notice("You break down [src] into scrap metal."))
 			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new/obj/item/stack/sheet/iron(drop_location())
@@ -269,18 +269,31 @@
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
-	icon = 'icons/obj/tram_rails.dmi'
+	icon = 'icons/obj/tram/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE
-	deconstructible = TRUE
+	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	deconstructible = FALSE
 
 /obj/structure/fluff/tram_rail/floor
+	name = "tram rail protective cover"
 	icon_state = "rail_floor"
 
 /obj/structure/fluff/tram_rail/end
 	icon_state = "railend"
 
+/obj/structure/fluff/tram_rail/electric
+	desc = "Great for trams, not so great for skating. This one is a power rail."
+
 /obj/structure/fluff/tram_rail/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric/anchor
+	name = "tram rail anchor"
+	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
+	if(user.electrocute_act(75, src))
+		do_sparks(5, TRUE, src)

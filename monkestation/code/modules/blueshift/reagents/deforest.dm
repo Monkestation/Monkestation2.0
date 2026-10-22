@@ -13,7 +13,6 @@
 
 /datum/reagent/medicine/lidocaine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.cause_pain(BODY_ZONES_ALL, -1 * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART,3 * REM * seconds_per_tick, 80)
 
 //Inverse Medicines//
@@ -31,7 +30,7 @@
 	. = ..()
 	to_chat(affected_mob, span_userdanger("Your body aches with unimaginable pain!"))
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART,3 * REM * seconds_per_tick, 85)
-	affected_mob.stamina?.adjust(-5 * REM * seconds_per_tick, 0)
+	affected_mob.stamina?.adjust(-2.5 * REM * seconds_per_tick, 0)
 	if(prob(30))
 		INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/mob, emote), "scream")
 
@@ -153,7 +152,7 @@
 
 	our_guy.add_mood_event("tweaking", /datum/mood_event/stimulant_heavy/sundowner, name)
 
-	our_guy.stamina?.adjust(10 * REM * seconds_per_tick)
+	our_guy.stamina?.adjust(5 * REM * seconds_per_tick)
 	our_guy.AdjustSleeping(-20 * REM * seconds_per_tick)
 	our_guy.adjust_drowsiness(-5 * REM * seconds_per_tick)
 
@@ -213,26 +212,29 @@
 // Reaction to make twitch, makes 10u from 17u input reagents
 /datum/chemical_reaction/twitch
 	results = list(
-		/datum/reagent/drug/twitch = 5,
+		/datum/reagent/drug/twitch = 10,
 	)
 	required_reagents = list(
-		/datum/reagent/medicine/adminordrazine = 30,
-		/datum/reagent/bluespace = 30 //why? because fuck you thats why. Im gonna leave it at this. Good luck making it.
+		/datum/reagent/consumable/coffee = 30,
+		/datum/reagent/drug/cocaine = 30,
+		/datum/reagent/drug/methamphetamine = 30,
+		/datum/reagent/bluespace = 30 //Lots of speed chems for a bit of this stuff, will need a container larger than a large beaker to be mixed.
 	)
+	required_temp = 350
 	mob_react = FALSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
-// Twitch drug, makes the takers of it faster and able to dodge bullets while in their system, to potentially bad side effects
+// Twitch drug, makes the takers of it much faster while in their system, to potentially bad side effects
 /datum/reagent/drug/twitch
 	name = "TWitch"
 	description = "A drug originally developed by and for plutonians to assist them during raids. \
 		Does not see wide use due to the whole reality-disassociation and heart disease thing afterwards. \
-		However, the gods came to an agreement, and banished it from the realms. \
-		If the gods catch you using this, expect a swift and painful death."
+		Though it once granted bullet immunity, cost cutting and chemical dilution have lessened its effect. \
+		Now it just makes you faster, and gives you a wee bit of a heart attack if you take too much."
 
 	reagent_state = LIQUID
 	color = "#c22a44"
-	taste_description = "television static, and the gods wrath"
+	taste_description = "television static"
 	metabolization_rate = 0.65 * REAGENTS_METABOLISM
 	ph = 3
 	overdose_threshold = 15
@@ -322,8 +324,6 @@
 				span_danger("You suddenly snap back to normal speeds. You feel like you've just been run over by a power loader.")
 			)
 		our_guy.stamina.adjust(-constant_dose_time)
-		if(!HAS_TRAIT(our_guy, TRAIT_TWITCH_ADAPTED))
-			our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3 * constant_dose_time) // Basically you might die
 
 	if(!our_guy.hud_used)
 		return
@@ -382,7 +382,7 @@
 /datum/reagent/drug/twitch/overdose_start(mob/living/our_guy)
 	. = ..()
 
-	RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
+	//RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets)) //This is the code that enables dodging bullets, it's disabled due to bullet immunity being extremely overpowered.
 
 	our_guy.next_move_modifier -= 0.2 // Overdosing makes you a liiitle faster but you know has some really bad consequences
 
@@ -414,7 +414,7 @@
 		var/mob/living/carbon/human/human = our_guy
 		human.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = our_guy.bodytemp_heat_damage_limit - 5)
 	else
-		our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * seconds_per_tick, required_organtype = affected_organtype)
+		our_guy.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	our_guy.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 
 	if(SPT_PROB(5, seconds_per_tick) && !(our_guy.mob_biotypes & MOB_ROBOTIC))
@@ -479,6 +479,14 @@
 	process_flags = ORGANIC | SYNTHETIC
 	overdose_threshold = 60 // it takes a lot, if youre really messed up you CAN hit this but its unlikely
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/dinitrogen_plasmide/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
+	. = ..()
+	if((our_guy.mob_biotypes & MOB_ROBOTIC))
+		var/cooling = 50 * REM * seconds_per_tick
+		our_guy.reagents?.chem_temp -= cooling
+		our_guy.adjust_bodytemperature(-1 * cooling * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = our_guy.bodytemp_cold_damage_limit + 5)
+		our_guy.adjustFireLoss(-1.5)
 
 /datum/reagent/dinitrogen_plasmide/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()

@@ -117,8 +117,5 @@
 		"Is there something more iconic and awesome than a double-barrel? Yeah, me."
 	],
 
-	"operator": [
-		"Operator",
-		"Handler"
-	]
+	"operator": ["Operator", "Handler"]
 }

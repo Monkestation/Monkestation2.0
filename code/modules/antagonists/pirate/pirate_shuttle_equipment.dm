@@ -116,31 +116,20 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	var/cooldown = 300
-	var/next_use = 0
-
-/// Surgery disk for the space IRS (I don't know where to dump them anywhere else)
-/obj/item/disk/surgery/irs
-	name = "Advanced Surgery Disk"
-	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
-	surgeries = list(
-		/datum/surgery/advanced/lobotomy,
-		/datum/surgery/advanced/bioware/vein_threading,
-		/datum/surgery/advanced/bioware/nerve_splicing,
-		/datum/surgery/healing/combo/upgraded, // monkestation edit: Fixed surgeries
-		/datum/surgery/advanced/pacify, // monkestation edit: Fixed surgeries
-	)
+	/// Cooldown on locating booty.
+	COOLDOWN_DECLARE(locate_cooldown)
 
 /obj/machinery/loot_locator/interact(mob/user)
-	if(world.time <= next_use)
-		to_chat(user,span_warning("[src] is recharging."))
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
+		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
 		return
-	next_use = world.time + cooldown
 	var/atom/movable/AM = find_random_loot()
 	if(!AM)
 		say("No valuables located. Try again later.")
 	else
 		say("Located: [AM.name] at [get_area_name(AM)]")
+
+	COOLDOWN_START(src, locate_cooldown, 10 SECONDS)
 
 /obj/machinery/loot_locator/proc/find_random_loot()
 	if(!GLOB.exports_list.len)
@@ -154,6 +143,19 @@
 		P = pick_n_take(possible_loot)
 		AM = P.find_loot()
 	return AM
+
+/// Surgery disk for the space IRS (I don't know where to dump them anywhere else)
+/obj/item/disk/surgery/irs
+	name = "Advanced Surgery Disk"
+	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
+	surgeries = list(
+		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/healing/combo/upgraded, // monkestation edit: Fixed surgeries
+		/datum/surgery/advanced/pacify, // monkestation edit: Fixed surgeries
+	)
+
 
 //Pad & Pad Terminal
 /obj/machinery/piratepad
@@ -172,8 +174,8 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You register [src] in [I]s buffer."))
-		I.buffer = src
+		multitool_set_buffer(I, src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
@@ -213,15 +215,16 @@
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
-	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
-		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
-		pad_ref = WEAKREF(I.buffer)
+	var/datum/buffer = multitool_get_buffer(I)
+	if (!QDELETED(buffer) && istype(buffer,/obj/machinery/piratepad))
+		to_chat(user, span_notice("You link [src] with [buffer] in [I] buffer."))
+		pad_ref = WEAKREF(buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/LateInitialize()
+/obj/machinery/computer/piratepad_control/LateInitialize(mapload_arg)
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/P in GLOB.machines)
+		for(var/obj/machinery/piratepad/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad))
 			if(P.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(P)
 				return
@@ -244,7 +247,7 @@
 	data["status_report"] = status_report
 	return data
 
-/obj/machinery/computer/piratepad_control/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -392,21 +395,3 @@
 		var/turf/parrot_turf = get_turf(current_parrot)
 		if(parrot_turf && is_station_level(parrot_turf.z))
 			return current_parrot
-
-/datum/export/pirate/cash
-	cost = 1
-	unit_name = "bills"
-	export_types = list(/obj/item/stack/spacecash)
-
-/datum/export/pirate/cash/get_amount(obj/O)
-	var/obj/item/stack/spacecash/C = O
-	return ..() * C.amount * C.value
-
-/datum/export/pirate/holochip
-	cost = 1
-	unit_name = "holochip"
-	export_types = list(/obj/item/holochip)
-
-/datum/export/pirate/holochip/get_cost(atom/movable/AM)
-	var/obj/item/holochip/H = AM
-	return H.credits

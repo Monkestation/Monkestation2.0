@@ -10,7 +10,7 @@
 	jaunt_type = /obj/effect/dummy/phased_mob/shadow
 
 	/// The max amount of lumens on a turf allowed before we can no longer enter jaunt with this
-	var/light_threshold = SHADOW_SPECIES_LIGHT_THRESHOLD
+	var/light_threshold = SHADOW_SPECIES_DIM_LIGHT
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/Grant(mob/grant_to)
 	. = ..()
@@ -48,13 +48,13 @@
 	playsound(get_turf(owner), 'sound/effects/nightmare_poof.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
 	cast_on.SetAllImmobility(0)
-	cast_on.setStaminaLoss(0, FALSE)
+	cast_on.stamina.revitalize()
 	enter_jaunt(cast_on)
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
 	/// Max amount of light permitted before being kicked out
-	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
+	var/light_max = SHADOW_SPECIES_DIM_LIGHT
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
 	var/healing_rate = 1.5
 	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
@@ -92,7 +92,9 @@
 
 /obj/effect/dummy/phased_mob/shadow/phased_check(mob/living/user, direction)
 	. = ..()
-	if(. && isspaceturf(.))
+	if(!.)
+		return
+	if(isspaceturf(.))
 		to_chat(user, span_warning("It really would not be wise to go into space."))
 		return FALSE
 	if(check_light_level(.))

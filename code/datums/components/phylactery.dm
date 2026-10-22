@@ -20,6 +20,8 @@
 	// Internal vars.
 	/// The number of ressurections that have occured from this phylactery.
 	var/num_resurrections = 0
+	// The max number of resurrections that can occur from this phylactery
+	var/max_ressurections = -1
 	/// A timerid to the current revival timer.
 	var/revive_timer
 
@@ -183,7 +185,6 @@
 	// Fix their name
 	lich.dna.real_name = lich_mind.name
 	lich.real_name = lich_mind.name
-	lich.update_name_tag(lich_mind.name) // monkestation edit: name tags
 	// Slap the lich mind in and get their ghost
 	lich_mind.transfer_to(lich)
 	lich_mind.grab_ghost(force = TRUE)

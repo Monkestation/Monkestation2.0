@@ -9,6 +9,16 @@ GLOBAL_LIST_INIT(store_toys, generate_store_items(/datum/store_item/toys))
 	name = "Toy Foam Sword"
 	item_path = /obj/item/toy/sword
 
+/datum/store_item/toys/walkman
+	item_cost = 500
+	name = "Walkman"
+	item_path = /obj/item/walkman
+
+/datum/store_item/toys/walkman
+	item_cost = 350
+	name = "Spare Cassette Tape"
+	item_path = /obj/item/cassette_tape/random
+
 /datum/store_item/toys/card_deck
 	item_cost = 2500
 	name = "Playing Card Deck"
@@ -103,3 +113,12 @@ GLOBAL_LIST_INIT(store_toys, generate_store_items(/datum/store_item/toys))
 	item_path = /obj/item/toy/katana
 	item_cost = 8000
 
+/datum/store_item/toys/monkey_pen
+	name = "Monkey Pen"
+	item_path = /obj/item/pen/monkey
+	item_cost = 25000
+
+/datum/store_item/toys/banana_pen
+	name = "Banana Pen"
+	item_path = /obj/item/pen/banana
+	item_cost = 25000

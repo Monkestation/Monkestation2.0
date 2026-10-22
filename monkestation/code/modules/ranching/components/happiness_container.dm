@@ -12,14 +12,14 @@
 	///the foods we dislike
 	var/list/disliked_foods = list()
 	///the food_types we dislike
-	var/list/disliked_food_types = list()
+	var/alist/disliked_food_types = alist()
 	///this is our thresholds where we do a callback at unhappy
 	var/list/unhappy_callbacks = list()
 
 	///our applied_visual
 	var/mutable_appearance/applied_visual
 
-/datum/component/happiness_container/Initialize(maxiumum_life_happiness = -1, liked_reagents = list(), disliked_reagents = list(), liked_foods = list(), disliked_foods = list(), disliked_food_types = list(), unhappy_callbacks = list())
+/datum/component/happiness_container/Initialize(maxiumum_life_happiness = -1, liked_reagents = list(), disliked_reagents = list(), liked_foods = list(), disliked_foods = list(), disliked_food_types = alist(), unhappy_callbacks = list())
 	. = ..()
 	src.maxiumum_life_happiness = maxiumum_life_happiness
 	src.liked_reagents = liked_reagents
@@ -31,7 +31,7 @@
 
 /datum/component/happiness_container/Destroy(force)
 	unhappy_callbacks = null
-	QDEL_NULL(applied_visual)
+	remove_visual()
 	return ..()
 
 /datum/component/happiness_container/RegisterWithParent()
@@ -89,9 +89,9 @@
 /datum/component/happiness_container/proc/ate_type(atom/ate)
 	if(istype(ate, /obj/item/food))
 		var/obj/item/food/food = ate
-		for(var/food_type as anything in disliked_food_types)
+		for(var/food_type, value in disliked_food_types)
 			if(food_type & initial(food.foodtypes))
-				adjust_happiness(parent, disliked_food_types[food_type])
+				adjust_happiness(parent, value)
 	if(ate in liked_foods)
 		adjust_happiness(parent, liked_foods[ate.type])
 	if(ate in disliked_foods)
@@ -119,14 +119,16 @@
 	if(applied_visual)
 		return
 	var/atom/movable/parent_movable = parent
-	applied_visual = mutable_appearance('monkestation/icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, parent_movable, plane = parent_movable.plane)
+	applied_visual = mutable_appearance('icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, parent_movable, plane = parent_movable.plane)
 	parent_movable.add_overlay(applied_visual)
 	addtimer(CALLBACK(src, PROC_REF(remove_visual)), 3 SECONDS)
 
 /datum/component/happiness_container/proc/remove_visual()
+	if(!applied_visual)
+		return
 	var/atom/movable/parent_movable = parent
-	parent_movable.cut_overlay(applied_visual)
-	QDEL_NULL(applied_visual)
+	parent_movable?.cut_overlay(applied_visual)
+	applied_visual = null
 
 /datum/component/happiness_container/proc/passes_happy(datum/source, check)
 	if(check > 0)

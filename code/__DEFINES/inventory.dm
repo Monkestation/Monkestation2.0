@@ -7,12 +7,15 @@
 #define WEIGHT_CLASS_SMALL 2
 /// Standard backpacks can carry tiny, small & normal items, (e.g. fire extinguisher, stun baton, gas mask, metal sheets)
 #define WEIGHT_CLASS_NORMAL 3
-/// Items that can be weilded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
+/// Items that can be wielded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
 #define WEIGHT_CLASS_BULKY 4
 /// Usually represents objects that require two hands to operate, (e.g. shotgun, two-handed melee weapons)
 #define WEIGHT_CLASS_HUGE 5
 /// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
 #define WEIGHT_CLASS_GIGANTIC 6
+
+/// Weight class that can fit in pockets
+#define POCKET_WEIGHT_CLASS WEIGHT_CLASS_SMALL
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
@@ -89,6 +92,15 @@
 #define HIDESNOUT (1<<12)
 ///hides mutant/moth wings, does not apply to functional wings
 #define HIDEMUTWINGS (1<<13)
+///hides belts and riggings
+#define HIDEBELT (1<<14)
+///hides antennae
+#define HIDEANTENNAE (1<<15)
+///hides tails
+#define HIDETAIL (1<<16)
+
+/// Hides every head feature covered by full-head masks, excluding the eyes
+#define HIDE_ALL_HEAD (HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDENECK|HIDEANTENNAE|HIDEHEADGEAR)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
@@ -112,6 +124,10 @@
 //defines for the index of hands
 #define LEFT_HANDS 1
 #define RIGHT_HANDS 2
+/// Checks if the value is "right" - same as ISEVEN, but used primarily for hand or foot index contexts
+#define IS_RIGHT_INDEX(value) (value % 2 == 0)
+/// Checks if the value is "left" - same as ISODD, but used primarily for hand or foot index contexts
+#define IS_LEFT_INDEX(value) (value % 2 != 0)
 
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 /// For when there's simply no need for a female version of this uniform.
@@ -143,14 +159,15 @@ DEFINE_BITFIELD(no_equip_flags, list(
 ))
 
 //Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
-///No alternative sprites based on bodytype
-#define CLOTHING_NO_VARIATION (1<<0)
 ///Has a sprite for digitigrade legs specifically.
-#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
+#define CLOTHING_DIGITIGRADE_VARIATION (1<<0)
 ///The sprite works fine for digitigrade legs as-is.
-#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
-///Has a sprite for snouted heads specifically.
-#define CLOTHING_SNOUTED_VARIATION (1<<3)
+#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<1)
+/// Auto-generates the leg portion of the sprite with GAGS
+#define CLOTHING_DIGITIGRADE_MASK (1<<2)
+
+/// All variation flags which render "correctly" on a digitigrade leg setup
+#define DIGITIGRADE_VARIATIONS (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_DIGITIGRADE_MASK)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)
@@ -159,6 +176,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define MASKCOVERSMOUTH (1<<3) // on other items, these are just for mask/head
 #define HEADCOVERSMOUTH (1<<4)
 #define PEPPERPROOF (1<<5) //protects against pepperspray
+#define ALLOW_SURGERY_THROUGH (1<<6) //item will not obstruct body part access, such as for surgery, despite covering the body part
 
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
@@ -175,6 +193,55 @@ DEFINE_BITFIELD(no_equip_flags, list(
 /// The index of the entry in 'afk_thefts' with the time it happened
 #define AFK_THEFT_TIME 3
 
+/// String for items placed into the left pocket.
+#define LOCATION_LPOCKET "in your left pocket"
+/// String for items placed into the right pocket
+#define LOCATION_RPOCKET "in your right pocket"
+/// String for items placed into the backpack.
+#define LOCATION_BACKPACK "in your backpack"
+/// String for items placed into the hands.
+#define LOCATION_HANDS "in your hands"
+/// String for items placed in the glove slot.
+#define LOCATION_GLOVES "on your hands"
+/// String for items placed in the eye/glasses slot.
+#define LOCATION_EYES "covering your eyes"
+/// Items placed in the mask slot.
+#define LOCATION_MASK "covering your face"
+/// String for items placed on the head/hat slot.
+#define LOCATION_HEAD "on your head"
+/// String for items placed in the neck slot.
+#define LOCATION_NECK "around your neck"
+/// String for items placed in the id slot
+#define LOCATION_ID "in your ID slot"
+
+/// A list of things that any suit storage can hold
+/// Should consist of ubiquitous, non-specialized items
+/// or items that are meant to be "suit storage agnostic" as
+/// a benefit, which of the time of this commit only applies
+/// to the captain's jetpack, here
+GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
+	/obj/item/clipboard,
+	/obj/item/flashlight,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman,
+	/obj/item/lighter,
+	/obj/item/pen,
+	/obj/item/modular_computer/pda,
+	/obj/item/toy,
+	/obj/item/radio,
+	/obj/item/storage/bag/books,
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/tank/jetpack/oxygen/captain,
+	/obj/item/stack/spacecash,
+	/obj/item/storage/wallet,
+	/obj/item/folder,
+	/obj/item/storage/box/matches,
+	/obj/item/clothing/mask/cigarette,
+	/obj/item/gun/energy/laser/bluetag,
+	/obj/item/gun/energy/laser/redtag,
+	/obj/item/storage/belt/holster
+)))
+
 //Allowed equipment lists for security vests.
 
 GLOBAL_LIST_INIT(detective_vest_allowed, list(
@@ -184,7 +251,7 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/gun/microfusion, //monkestation edit
+	/obj/item/gun/microfusion,
 	/obj/item/lighter,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -204,7 +271,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/gun/microfusion, //monkestation edit
+	/obj/item/gun/microfusion,
 	/obj/item/knife/combat,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -222,7 +289,7 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/ammo_casing,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/gun/microfusion, //monkestation edit
+	/obj/item/gun/microfusion,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
@@ -231,19 +298,66 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/storage/belt/holster/energy,
 ))
 
-/// String for items placed into the left pocket.
-#define LOCATION_LPOCKET "in your left pocket"
-/// String for items placed into the right pocket
-#define LOCATION_RPOCKET "in your right pocket"
-/// String for items placed into the backpack.
-#define LOCATION_BACKPACK "in your backpack"
-/// String for items placed into the hands.
-#define LOCATION_HANDS "in your hands"
-/// String for items placed in the glove slot.
-#define LOCATION_GLOVES "on your hands"
-/// String for items placed in the eye/glasses slot.
-#define LOCATION_EYES "covering your eyes"
-/// String for items placed on the head/hat slot.
-#define LOCATION_HEAD "on your head"
-/// String for items placed in the neck slot.
-#define LOCATION_NECK "around your neck"
+//Allowed list for all mining suits
+
+GLOBAL_LIST_INIT(mining_suit_allowed, list(
+	/obj/item/t_scanner/adv_mining_scanner,
+	/obj/item/melee/cleaving_saw,
+	/obj/item/climbing_hook,
+	/obj/item/flashlight,
+	/obj/item/tank/internals,
+	/obj/item/gun/energy/recharge/kinetic_accelerator,
+	/obj/item/kinetic_crusher,
+	/obj/item/knife,
+	/obj/item/mining_scanner,
+	/obj/item/organ/internal/monster_core,
+	/obj/item/storage/bag/ore,
+	/obj/item/pickaxe,
+	/obj/item/resonator,
+	/obj/item/spear,
+	/obj/item/tank/jetpack,
+	/obj/item/gun/ballistic/shotgun/autoshotgun,
+	/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+	/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+	/obj/item/gun/ballistic/automatic/proto/pksmg,
+	/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+	/obj/item/gun/ballistic/revolver/govmining,
+	/obj/item/gun/energy/laser/explorer,
+	/obj/item/melee/sledgehammer,
+))
+
+/// Allowed list for science winter coats and bio suits.
+GLOBAL_LIST_INIT(science_suit_allowed, list(
+	/obj/item/analyzer,
+	/obj/item/dnainjector,
+	/obj/item/hypospray,
+	/obj/item/paper,
+	/obj/item/reagent_containers/cup/beaker,
+	/obj/item/reagent_containers/cup/bottle,
+	/obj/item/reagent_containers/cup/tube,
+	/obj/item/reagent_containers/dropper,
+	/obj/item/reagent_containers/medipen,
+	/obj/item/reagent_containers/pill,
+	/obj/item/reagent_containers/syringe,
+	/obj/item/storage/bag/xeno,
+	/obj/item/storage/pill_bottle,
+))
+
+/// The items the frontier clothing can hold
+GLOBAL_LIST_INIT(colonist_suit_allowed, list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/flashlight,
+	/obj/item/gun,
+	/obj/item/melee,
+	/obj/item/tank/internals,
+	/obj/item/storage/belt/holster,
+	/obj/item/construction,
+	/obj/item/fireaxe,
+	/obj/item/pipe_dispenser,
+	/obj/item/storage/bag,
+	/obj/item/pickaxe,
+	/obj/item/resonator,
+	/obj/item/t_scanner,
+	/obj/item/analyzer,
+))

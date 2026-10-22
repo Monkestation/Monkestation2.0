@@ -6,16 +6,16 @@
 	icon = 'monkestation/code/modules/blueshift/icons/storage.dmi'
 	resistance_flags = FLAMMABLE
 
-/obj/structure/rack/wooden/MouseDrop_T(obj/object, mob/user, params)
+/obj/structure/rack/wooden/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	var/list/modifiers = params2list(params)
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
 
-	object.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size / 3), world.icon_size / 3)
-	object.pixel_y = text2num(LAZYACCESS(modifiers, ICON_Y)) > 16 ? 10 : -4
+	dropped.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size / 3), world.icon_size / 3)
+	dropped.pixel_y = text2num(LAZYACCESS(modifiers, ICON_Y)) > 16 ? 10 : -4
 
-/obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/structure/rack/wooden/wrench_act_secondary(mob/living/user, obj/item/tool)
 	return NONE
 
 /obj/structure/rack/wooden/crowbar_act(mob/living/user, obj/item/tool)
@@ -41,7 +41,7 @@
 	resistance_flags = FLAMMABLE
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
-	cutting_tool = /obj/item/crowbar
+	cutting_tool_behaviour = TOOL_CROWBAR
 
 /obj/machinery/smartfridge/wooden
 	name = "Debug Wooden Smartfridge"

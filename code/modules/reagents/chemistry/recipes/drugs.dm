@@ -59,6 +59,9 @@
 	if(power <= 0)
 		return
 	var/turf/T = get_turf(holder.my_atom)
+	if(isnull(T))
+		holder.clear_reagents()
+		return
 	var/inside_msg
 	if(ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
@@ -80,6 +83,7 @@
 	results = list(/datum/reagent/drug/bath_salts = 7)
 	required_reagents = list(/datum/reagent/toxin/bad_food = 1, /datum/reagent/saltpetre = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/consumable/enzyme = 1, /datum/reagent/consumable/tea = 1, /datum/reagent/mercury = 1)
 	required_temp = 374
+	reaction_flags = REACTION_CLEAR_INVERSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/aranesp
@@ -91,6 +95,7 @@
 	results = list(/datum/reagent/drug/happiness = 4)
 	required_reagents = list(/datum/reagent/nitrous_oxide = 2, /datum/reagent/medicine/epinephrine = 1, /datum/reagent/consumable/ethanol = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
+	reaction_flags = REACTION_CLEAR_INVERSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/pumpup
@@ -156,3 +161,8 @@
 		var/obj/item/food/drug/saturnx/new_glob = new(location)
 		new_glob.pixel_x = rand(-6, 6)
 		new_glob.pixel_y = rand(-6, 6)
+
+/datum/chemical_reaction/positronic_excitation_salts
+	results = list(/datum/reagent/drug/methamphetamine/robo = 1)
+	required_reagents = list(/datum/reagent/drug/methamphetamine = 1, /datum/reagent/dinitrogen_plasmide = 1)
+	reaction_tags = REACTION_TAG_DRUG | REACTION_TAG_EASY

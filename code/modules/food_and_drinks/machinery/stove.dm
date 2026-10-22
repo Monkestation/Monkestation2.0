@@ -21,6 +21,11 @@
 	. = ..()
 	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)
 
+/obj/machinery/stove/attack_robot(mob/user)
+	. = ..()
+	attack_hand(user)
+	return TRUE
+
 // Soup pot for cooking soup
 // Future addention ideas:
 // - Thermostat you can stick in the pot to see in examine the temperature
@@ -34,7 +39,6 @@
 	volume = 200
 	possible_transfer_amounts = list(20, 50, 100, 200)
 	amount_per_transfer_from_this = 50
-	amount_list_position = 2
 	reagent_flags = REFILLABLE | DRAINABLE
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	w_class = WEIGHT_CLASS_BULKY
@@ -116,7 +120,7 @@
 	. = ..()
 	LAZYREMOVE(added_ingredients, gone)
 
-/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return

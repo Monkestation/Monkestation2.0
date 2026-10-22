@@ -1,6 +1,6 @@
-import { Antagonist, Category } from '../base';
-import { BLOB_MECHANICAL_DESCRIPTION } from './blob';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
+import { BLOB_MECHANICAL_DESCRIPTION } from './blob';
 
 const BlobInfection: Antagonist = {
   key: 'blobinfection',

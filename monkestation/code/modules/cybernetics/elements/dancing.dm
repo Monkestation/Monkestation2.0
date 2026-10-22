@@ -55,7 +55,7 @@
 	var/dchatmsg = "<span style='color: [user.chat_color];'><b>[user]</b></span> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && (!only_forced_audio || !intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(user, tmp_sound, 50, vary)
 
@@ -134,7 +134,7 @@
 		var/mob/living/living_target = target
 		final_pixel_y += living_target.body_position_pixel_y_offset
 	animate(target, pixel_y = final_pixel_y, time = 0.5 SECONDS)
-
+/*
 /datum/dance/head_spin/trigger_dance(mob/living/target, start=TRUE)
 	ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	var/matrix/initial_matrix = matrix(target.transform)
@@ -183,3 +183,4 @@
 /datum/dance/head_spin/end_dance(mob/target)
 	continues = FALSE
 	REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
+*/

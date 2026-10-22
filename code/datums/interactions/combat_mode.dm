@@ -2,6 +2,12 @@
 	shift_to_open_context_menu = TRUE
 	var/combat_mode = FALSE
 
+/datum/interaction_mode/combat_mode/Destroy(force)
+	var/atom/movable/screen/combattoggle/selector = UI
+	if(selector?.combat_mode == src)
+		selector.combat_mode = null
+	return ..()
+
 /datum/interaction_mode/combat_mode/update_istate(mob/M, modifiers)
 	M.istate = NONE
 
@@ -18,10 +24,8 @@
 /datum/interaction_mode/combat_mode/procure_hud(mob/M, datum/hud/H)
 	if (!M.hud_used?.has_interaction_ui)
 		return
-	var/atom/movable/screen/combattoggle/flashy/CT = new
-	CT.hud = H
+	var/atom/movable/screen/combattoggle/flashy/CT = new(null, H, src)
 	CT.icon = H.ui_style
-	CT.combat_mode = src
 	UI = CT
 	return CT
 

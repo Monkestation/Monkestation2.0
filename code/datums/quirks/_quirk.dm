@@ -40,6 +40,8 @@
 	/// A list of traits that should stop this quirk from processing.
 	/// Signals for adding and removing this trait will automatically be added to `process_update_signals`.
 	var/list/no_process_traits
+	// List of species that cannot choose this quirk
+	var/list/species_blacklist
 
 /datum/quirk/New()
 	. = ..()
@@ -195,6 +197,22 @@
 	SIGNAL_HANDLER
 	update_process()
 
+/// If a quirk is able to be selected for the mob's species
+/datum/quirk/proc/is_species_appropriate(datum/species/mob_species)
+	if(LAZYLEN(species_blacklist) && (mob_species.id in species_blacklist))
+		return FALSE
+	if(mob_trait in GLOB.species_prototypes[mob_species].inherent_traits)
+		return FALSE
+	return TRUE
+
+/// return additional data that should be remembered by cloning
+/datum/quirk/proc/clone_data()
+	return
+
+/// create the quirk from clone data
+/datum/quirk/proc/on_clone(mob/living/carbon/human/cloned_mob, client/client_source, data)
+	add_to_holder(cloned_mob, TRUE, client_source)
+
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk
 	/// Lazylist of strings describing where all the quirk items have been spawned.
@@ -279,3 +297,42 @@
 	for(var/datum/quirk/quirk as anything in quirks)
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		quirk.add_to_holder(to_mob, quirk_transfer = TRUE, client_source = to_pass)
+
+/// Subtype quirk that has some bonus logic to give the player some sort of cybernetics
+/datum/quirk/cybernetics_quirk
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_DONT_CLONE
+	abstract_parent_type = /datum/quirk/cybernetics_quirk
+	/// The typepath of the organ to implant.
+	var/obj/item/organ/internal/cybernetic_type
+	/// Weakref to the organ that was given.
+	var/datum/weakref/given_organ
+
+/datum/quirk/cybernetics_quirk/Destroy()
+	given_organ = null
+	return ..()
+
+/datum/quirk/cybernetics_quirk/add_unique(client/client_source)
+	if(!cybernetic_type)
+		CRASH("No cybernetic_type specified for [type]")
+	var/obj/item/organ/internal/new_organ = new cybernetic_type
+	new_organ.Insert(quirk_holder, special = TRUE, drop_if_replaced = FALSE)
+	given_organ = WEAKREF(given_organ)
+
+/datum/quirk/cybernetics_quirk/remove()
+	var/obj/item/organ/internal/quirk_organ = given_organ?.resolve()
+	if(isnull(quirk_organ))
+		return
+	var/original_type = get_original_type()
+	quirk_organ.Remove(quirk_holder, special = !isnull(original_type))
+	qdel(quirk_organ)
+	given_organ = null
+	if(!QDELETED(quirk_holder) && original_type)
+		var/obj/item/organ/internal/original_organ = new original_type
+		original_organ.Insert(quirk_holder, special = TRUE, drop_if_replaced = FALSE)
+
+/datum/quirk/cybernetics_quirk/on_clone(mob/living/carbon/human/cloned_mob, client/client_source, data)
+	CRASH()
+
+/// Returns the typepath of the original organ to implant if this quirk is removed.
+/datum/quirk/cybernetics_quirk/proc/get_original_type()
+	return null

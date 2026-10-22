@@ -14,9 +14,9 @@ const FRAME_DURATION = 1000 / FPS;
 // True if Performance API is supported
 const supportsPerf = !!window.performance?.now;
 // High precision markers
-let hpMarkersByName = {};
+const hpMarkersByName = {};
 // Low precision markers
-let lpMarkersByName = {};
+const lpMarkersByName = {};
 
 /**
  * Marks a certain spot in the code for later measurements.
@@ -51,8 +51,13 @@ const measure = (markerNameA, markerNameB) => {
 const formatDuration = (duration) => {
   const durationInFrames = duration / FRAME_DURATION;
   // prettier-ignore
-  return duration.toFixed(duration < 10 ? 1 : 0) + 'ms '
-    + '(' + durationInFrames.toFixed(2) + ' frames)';
+  return (
+    duration.toFixed(duration < 10 ? 1 : 0) +
+    'ms ' +
+    '(' +
+    durationInFrames.toFixed(2) +
+    ' frames)'
+  );
 };
 
 export const perf = {

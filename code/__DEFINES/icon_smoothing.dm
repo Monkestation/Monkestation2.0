@@ -114,9 +114,13 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_LOWERED_PLASTEEL S_TURF(61)
 #define SMOOTH_GROUP_FISSURE S_TURF(62)
 
-#define SMOOTH_GROUP_MUSHROOM S_TURF(63)
+// Monkestation edit start
+#define SMOOTH_GROUP_FLOOR_BLOODLING S_TURF(63) ////turf/open/floor/bloodling
 
-#define MAX_S_TURF 63 //Always match this value with the one above it.
+#define SMOOTH_GROUP_MUSHROOM S_TURF(64)
+#define SMOOTH_GROUP_CARPET_GRIMEY S_TURF(65) ///turf/open/floor/carpet/grimey
+
+#define MAX_S_TURF 65 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
@@ -149,12 +153,15 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(24) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
 #define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(25) ///obj/structure/window/reinforced/shuttle
 
-#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/window/reinforced/tram
+#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/tram
 
 #define SMOOTH_GROUP_LATTICE S_OBJ(31) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK S_OBJ(32) ///obj/structure/lattice/catwalk
 
 #define SMOOTH_GROUP_AIRLOCK S_OBJ(41) ///obj/machinery/door/airlock
+
+#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(46) ///obj/structure/transport/linear
+#define SMOOTH_GROUP_TRAM_STRUCTURE S_OBJ(47) //obj/structure/tram
 
 #define SMOOTH_GROUP_TABLES S_OBJ(51) ///obj/structure/table
 #define SMOOTH_GROUP_WOOD_TABLES S_OBJ(52) ///obj/structure/table/wood
@@ -162,7 +169,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_BRONZE_TABLES S_OBJ(54) ///obj/structure/table/bronze
 #define SMOOTH_GROUP_ABDUCTOR_TABLES S_OBJ(55) ///obj/structure/table/abductor
 #define SMOOTH_GROUP_GLASS_TABLES S_OBJ(56) ///obj/structure/table/glass
-#define SMOOTH_GROUP_SANDSTONE_TABLES S_OBJ(57) ///obj/structure/table/sandstone //MONKESTATION EDIT
+#define SMOOTH_GROUP_SANDSTONE_TABLES S_OBJ(57) ///obj/structure/table/sandstone
 
 #define SMOOTH_GROUP_ALIEN_NEST S_OBJ(60) ///obj/structure/bed/nest
 #define SMOOTH_GROUP_ALIEN_RESIN S_OBJ(61) ///obj/structure/alien/resin
@@ -180,8 +187,6 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_GRAV_FIELD S_OBJ(69)
 
-#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(71) ///obj/structure/industrial_lift
-
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(72)
 
 #define SMOOTH_GROUP_WATER S_OBJ(73) ///obj/effect/abstract/liquid_turf
@@ -191,6 +196,8 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_GRILLE S_OBJ(75)
 
 #define SMOOTH_GROUP_WAXWALL S_OBJ(76)
+
+#define SMOOTH_GROUP_SILK_WALLS S_OBJ(77)
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
 #define SETUP_SMOOTHING(...) \
@@ -220,3 +227,17 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_group_variable) \
 	var/list/unwrapped = UNWRAP_SMOOTHING_GROUPS(smoothing_group_variable, unwrapped); \
 	assert_sorted(unwrapped, "[#smoothing_group_variable] ([type])"); \
+
+#define SMOOTH_ADAPTERS_WALLS list( \
+		/turf/closed/wall = "wall", \
+		/obj/structure/falsewall = "wall", \
+		/obj/machinery/door/airlock = "wall", \
+)
+
+// wall don't need adapter with another wall
+#define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
+		/obj/machinery/door/airlock = "wall", \
+		/turf/closed/wall = "wall", \
+)
+
+#define SMOOTH_ADAPTERS_ICON 'icons/obj/structures/window/adapters.dmi'

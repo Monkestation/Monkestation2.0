@@ -26,6 +26,10 @@
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	..()
+	return TRUE
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
@@ -328,13 +332,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(isjellyperson(affected_mob))
+	if(isoozeling(affected_mob))
 		shock_timer = 0 //immune to shocks
 		affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
 		affected_mob.stamina.adjust(2 * REM * seconds_per_tick, 0)
-		if(is_species(affected_mob, /datum/species/jelly/luminescent))
+		if(is_species(affected_mob, /datum/species/oozeling/luminescent))
 			var/mob/living/carbon/human/affected_human = affected_mob
-			var/datum/species/jelly/luminescent/slime_species = affected_human.dna.species
+			var/datum/species/oozeling/luminescent/slime_species = affected_human.dna.species
 			slime_species.extract_cooldown = max(slime_species.extract_cooldown - (2 SECONDS * REM * seconds_per_tick), 0)
 	..()
 

@@ -9,6 +9,8 @@
 	cooldown = 5 SECONDS //Honestly, this should be easy to turn off at any time if you don't want it anymore.
 	activate_message = span_notice("You suddenly understand the need to shout about things you point at.")
 	deactivate_message = span_notice("You no longer understand why you were yelling so much.")
+	var/datum/action/item_action/hands_free/drg_callout/toggle_action
+	var/disabled = FALSE
 	//5-10 second delay for radio messages
 	COOLDOWN_DECLARE(radio_cooldown)
 	//1 second delay for regular point shouts
@@ -50,7 +52,7 @@
 	/mob/living/basic/mining/goliath/ = list("Goliath!", "Watch the tentacles!", "We got a goliath!", "Goliath! Don't let it grab you!", "Watch where you stick those tentacles, you blasted sack of hellspawn! "),
 	/mob/living/basic/mining/legion/dwarf/ = list("Legion! He's adorable!", "Little legion here!", "I'm gonna call you Steeve!"),
 	/mob/living/basic/mining/legion/ = list("Legion!", "Don't let it create more!", "Watch the legion!", "We've got a legion!"),
-	/mob/living/basic/legion_brood/ = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
+	/mob/living/basic/mining/legion_brood/ = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
 	/mob/living/basic/mining/watcher/  = list("Watcher!","Watcher spotted!", "Watcher! I hate these things!", "Break the watcher!", "Dodge the ice!"),
 	/mob/living/basic/mining/brimdemon/ = list("Brimdemon!", "Brimdemon, watch the beams!", "Spotted a brimdemon!", "Keep your distance!"),
 	/mob/living/basic/mining/bileworm/ = list("Bileworm!", "Take out that bileworm!", "Kill the bileworm before it melts us all!", "Acid spreader!"),
@@ -94,7 +96,22 @@
 	/obj/item/stack/ore/ = list("Ore!", "Some ore!", "Got ore here!"),
 
 	//Items: Mining
-	/obj/item/pickaxe/ = list("Rock and stone!", "For rock and stone!", "For Karl!", "Rock and stone forever!", "We are unbreakable!", "Rock and roll and stone!", "If you don't rock and stone, you ain't comin' home!", "Rock solid!"),
+	/obj/item/pickaxe/ = list(
+		"Rock and Stone!",
+		"For Rock and Stone!",
+		"For Karl!",
+		"Rock and Stone forever!",
+		"We are unbreakable!",
+		"Rock and roll and Stone!",
+		"If you don't Rock and Stone, you ain't comin' home!",
+		"Rock solid!",
+		"Rock and Stone in the heart!",
+		"Did I hear a Rock and Stone?",
+		"Rock and Stone, to the bone!",
+		"Rock and Stone! It never gets old.",
+		"If you Rock and Stone, you're never alone!",
+		"Rock and Stone like there's no tomorrow!"
+		),
 	/obj/item/shovel/ = list("Can you dig it?", "Oh yeah, I dig it.", "Lets dig up some sand!", "May they bury you deep!"),
 	/obj/structure/closet/ = list("Storage here!", "Check inside!", "I bet there's loot in here!"),
 	/obj/structure/ore_box/ = list("My grandpa told me they used mules back in the day!", "Drag this behind you!", "Ore box!", "Throw the ores in here, lads!", "Grab an ore crate!", "Minerals in here!"),
@@ -116,7 +133,7 @@
 	/obj/item/wormhole_jaunter/ = list("Jaunter!", "Yeesh, never liked traveling by wormhole!", "Safe...ish wormholes!", "Saves your rear from a chasm if you keep it on you!", "Ready to open a wormhole!"),
 
 	/obj/item/organ/internal/monster_core/ = list("Got some beast organs!", "Organ here!", "Crush this in a pinch!", "Monster organ, grab it before it goes bad!", "Organ! I prefer red sugar..."),
-	/obj/item/reagent_containers/hypospray/medipen/survival/ = list("Survival pen!", "Medipen here!", "Keep one of these in your pocket!", "With this, the fight goes on!", "No time for a lie-down!"),
+	/obj/item/reagent_containers/medipen/survival/ = list("Survival pen!", "Medipen here!", "Keep one of these in your pocket!", "With this, the fight goes on!", "No time for a lie-down!"),
 	/obj/item/extinguisher/ = list("Fire extinguisher!", "Extinguisher here!", "Works against magma fires too!", "Never know when you'll need this!", "Where's the fire?"),
 	/obj/item/lazarus_injector/ = list("Lazarus Injector!", "Wish I had this for my goldfish!", "Lazarus here!", "Lets go revive some pets!"),
 	/obj/item/extraction_pack/ = list("Fulton Pack!", "They're coming too?", "Use this, it's a fulton recovery device.", "Time to grab everything not nailed down!","Heard about a guy that brought home a bear with one of these!", "Link this to a beacon!"),
@@ -160,22 +177,35 @@
 /obj/item/skillchip/drg_callout/on_activate(mob/living/carbon/user, silent)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler))
+	if (isnull(toggle_action))
+		toggle_action = new(src)
+		toggle_action.update_state(disabled)
+	toggle_action.Grant(user)
 
-/obj/item/skillchip/drg_callout/proc/point_handler(mob/pointing_mob, atom/pointed_at)
+/obj/item/skillchip/drg_callout/proc/point_handler(mob/pointing_mob, atom/pointed_at, list/callouts=null)
 	SIGNAL_HANDLER
 
-	if(!COOLDOWN_FINISHED(src, shout_cooldown))
+	if (disabled || !COOLDOWN_FINISHED(src, shout_cooldown))
 		return
 
-	var/type = is_path_in_list_return_path(pointed_at.type, miner_callouts)
-	if(!type)
-		return
-	var/list/callouts = miner_callouts[type]
-	if(!length(callouts))
+	if (pointed_at)
+		var/type = is_path_in_list_return_path(pointed_at.type, miner_callouts)
+		if (!type)
+			return
+		callouts = miner_callouts[type]
+
+	if (!callouts || !length(callouts))
 		return
 
-	if(COOLDOWN_FINISHED(src, radio_cooldown))
-		pointing_mob.say(".h [pick(callouts)]", forced = "Miner Skillchip")
+	var/turf/our_turf = get_turf(pointing_mob)
+	var/pressure = our_turf.return_air()?.return_pressure() || 0
+	var/thin_air = pressure < (ONE_ATMOSPHERE * 0.4)
+
+	if (thin_air && COOLDOWN_FINISHED(src, radio_cooldown))
+		if (is_mining_level(our_turf.z))
+			pointing_mob.say(".h [pick(callouts)]", forced = "Miner Skillchip")
+		else
+			pointing_mob.say("; [pick(callouts)]", forced = "Miner Skillchip")
 		COOLDOWN_START(src, radio_cooldown, rand(5 SECONDS, 10 SECONDS))
 	else
 		pointing_mob.say("[pick(callouts)]", forced = "Miner Skillchip")
@@ -187,3 +217,26 @@
 /obj/item/skillchip/drg_callout/on_deactivate(mob/living/carbon/user, silent)
 	. = ..()
 	UnregisterSignal(holding_brain.owner, COMSIG_MOB_POINTED)
+	toggle_action.Remove(user)
+
+/obj/item/skillchip/drg_callout/ui_action_click()
+	disabled = !disabled
+	if (disabled)
+		to_chat(holding_brain.owner, "D.R.G.R.A.S skillchip disabled.")
+	else
+		to_chat(holding_brain.owner, "D.R.G.R.A.S skillchip enabled.")
+		point_handler(holding_brain.owner, null, callouts=miner_callouts[/obj/item/pickaxe])
+	toggle_action.update_state(disabled)
+
+/datum/action/item_action/hands_free/drg_callout
+	name = "Toggle D.R.G.R.A.S Skillchip"
+	button_icon = 'icons/obj/mining.dmi'
+	button_icon_state = "minipick"
+	var/chip_disabled
+
+/datum/action/item_action/hands_free/drg_callout/proc/update_state(chip_disabled)
+	src.chip_disabled = chip_disabled
+	build_all_button_icons()
+
+/datum/action/item_action/hands_free/drg_callout/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return !chip_disabled

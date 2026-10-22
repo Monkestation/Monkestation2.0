@@ -17,7 +17,7 @@
 	slot_flags = NONE
 	light_system = OVERLAY_LIGHT
 	light_color = COLOR_SOFT_RED
-//	light_range = 1 //Monkestation removal
+	light_outer_range = 1
 	light_power = 0.3
 	light_on = FALSE
 	/// Is camera streaming
@@ -92,6 +92,7 @@
 	internal_camera.network = camera_networks
 	internal_camera.c_tag = "LIVE: [broadcast_name]"
 	wielder.apply_status_effect(/datum/status_effect/streamer, internal_camera, CALLBACK(src, PROC_REF(ensure_still_active)))
+	wielder.log_message("started a Spess.tv stream named \"[broadcast_name]\" at [loc_name(wielder)]", LOG_GAME)
 	start_broadcasting_network(camera_networks, "[broadcast_name] is now LIVE!")
 
 	// INTERNAL RADIO
@@ -126,17 +127,97 @@
 		return FALSE
 	return TRUE
 
-/obj/item/broadcast_camera/AltClick(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		return
+/obj/item/broadcast_camera/click_alt(mob/user)
 	active_microphone = !active_microphone
 
 	/// Text popup for letting the user know that the microphone has changed state
-	balloon_alert(user, "turned [active_microphone ? "on" : "off"] the microphone.")
+	balloon_alert(user, "microphone [active_microphone ? "" : "de"]activated")
 
 	///If the radio exists as an object, set its state accordingly
 	if(active)
 		set_microphone_state()
 
+	return CLICK_ACTION_SUCCESS
+
 /obj/item/broadcast_camera/proc/set_microphone_state()
 	internal_radio.set_broadcasting(active_microphone)
+
+/datum/status_effect/streamer
+	id = "streamer"
+	alert_type = null
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	/// How many people are currently watching the stream.
+	var/viewers = 0
+	/// The camera being used to stream.
+	var/obj/machinery/camera/camera
+	/// Simple screen element used to hold the maptext for the viewer counter.
+	var/atom/movable/screen/stream_viewers/viewer_display
+	/// Callback to see if the stream is still valid.
+	var/datum/callback/extra_checks
+
+/datum/status_effect/streamer/Destroy()
+	extra_checks = null
+	camera = null
+	return ..()
+
+/datum/status_effect/streamer/on_creation(mob/living/new_owner, obj/machinery/camera/camera, datum/callback/extra_checks)
+	src.camera = camera
+	src.extra_checks = extra_checks
+	return ..()
+
+/datum/status_effect/streamer/on_apply()
+	if(QDELETED(camera))
+		return FALSE
+	else if(!istype(camera))
+		CRASH("Invalid camera ([camera]) passed to [type] (expected an /obj/machinery/camera)")
+	if(extra_checks && !extra_checks.Invoke(src))
+		return FALSE
+	give_hud()
+	RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(give_hud))
+	RegisterSignal(owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignal(camera, COMSIG_QDELETING, PROC_REF(hamburger_time))
+	return TRUE
+
+/datum/status_effect/streamer/on_remove()
+	. = ..()
+	UnregisterSignal(owner, list(COMSIG_MOB_LOGIN, COMSIG_MOB_GET_STATUS_TAB_ITEMS))
+	UnregisterSignal(camera, COMSIG_QDELETING)
+	if(!isnull(viewer_display))
+		owner.client?.screen -= viewer_display
+		QDEL_NULL(viewer_display)
+
+/datum/status_effect/streamer/before_remove(source)
+	if(!isnull(source) && !QDELETED(camera) && source == camera)
+		return FALSE
+	return ..()
+
+/datum/status_effect/streamer/tick(seconds_between_ticks, times_fired)
+	if(extra_checks && !extra_checks.Invoke(src))
+		qdel(src)
+		return
+	viewers = camera.count_spesstv_viewers()
+	viewer_display?.update_maptext(camera.count_spesstv_viewers())
+
+/datum/status_effect/streamer/proc/give_hud()
+	SIGNAL_HANDLER
+	if(QDELETED(viewer_display))
+		viewer_display = new
+	viewers = camera.count_spesstv_viewers()
+	viewer_display.update_maptext(viewers)
+	owner.client?.screen |= viewer_display
+
+/datum/status_effect/streamer/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Stream Viewers: [viewers]"
+
+/datum/status_effect/streamer/proc/hamburger_time()
+	SIGNAL_HANDLER
+	qdel(src)
+
+/atom/movable/screen/stream_viewers
+	screen_loc = ui_more_under_health_and_to_the_left
+	maptext_width = 84
+	maptext_height = 24
+
+/atom/movable/screen/stream_viewers/proc/update_maptext(amt)
+	maptext = "<div align='left' valign='top' style='position: relative; top: 0px; left: 6px'>Viewers: <font color='#33FF33'>[amt]</font></div>"

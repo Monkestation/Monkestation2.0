@@ -11,7 +11,6 @@
 		TRAIT_PRIMITIVE,
 		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
-
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/werewolf
 	mutantears = /obj/item/organ/internal/ears/werewolf
@@ -22,7 +21,7 @@
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 
 	bodypart_overrides = list(
@@ -36,7 +35,7 @@
 
 /obj/item/organ/internal/brain/werewolf/get_attacking_limb(mob/living/carbon/human/target)
 	name = "werewolf brain"
-	desc = "a strange mixture of a human and wolf brain"
+	desc = "A strange mixture of a human and wolf brain."
 	organ_traits = list(TRAIT_PRIMITIVE, TRAIT_CAN_STRIP)
 
 	if(target.body_position == LYING_DOWN)

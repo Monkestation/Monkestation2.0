@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/pollinate
 	name = "Pollinate Crop"
 	desc = "You try to pollinate a crop."
-	button_icon = 'monkestation/icons/mob/simple/bees.dmi'
+	button_icon = 'icons/mob/simple/bees_big.dmi'
 	button_icon_state = "pollen_sac"
 
 	cooldown_time = 1 MINUTES
@@ -25,7 +25,7 @@
 	apid.adjust_honeycount(10)
 	to_chat(owner, span_notice("You pollinate the [cast_on]."))
 
-	for(var/item as anything in growing.managed_seeds)
+	for(var/item in growing.managed_seeds)
 		var/obj/item/seeds/seed = growing.managed_seeds[item]
 		if(!seed)
 			continue
@@ -67,7 +67,7 @@
 /datum/action/cooldown/spell/change_pollination_stat
 	name = "Change Stat"
 	desc = "Changes the stat you and your bees increase on plants."
-	button_icon = 'monkestation/icons/mob/simple/bees.dmi'
+	button_icon = 'icons/mob/simple/bees_big.dmi'
 	button_icon_state = "pollen_sac"
 
 

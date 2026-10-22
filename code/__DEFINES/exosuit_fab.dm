@@ -8,6 +8,14 @@
 #define BORG_MODEL_MEDICAL (1<<3)
 /// Module is compatible with Engineering Cyborg model
 #define BORG_MODEL_ENGINEERING (1<<4)
+/// Module is compatible with Peacekeeper Cyborg model
+#define BORG_MODEL_PEACEKEEPER (1<<5)
+/// Module is compatible with Science Cyborg model
+#define BORG_MODEL_SCIENCE (1<<6)
+/// Module is compatible with Service Cyborg model
+#define BORG_MODEL_SERVICE (1<<7)
+/// Module is compatible with Cargo Cyborg model
+#define BORG_MODEL_CARGO (1<<8)
 
 /// Module is compatible with Ripley Exosuit models
 #define EXOSUIT_MODULE_RIPLEY (1<<0)
@@ -31,6 +39,18 @@
 #define EXOSUIT_MODULE_RETICENCE (1<<9)
 /// Module is compatible with Marauder models
 #define EXOSUIT_MODULE_MARAUDER (1<<10)
+// Module is compatbile with makeshift locker mechs
+#define EXOSUIT_MODULE_MAKESHIFT (1<<11)
+// Module is compatbile with ambulance "mechs"
+#define EXOSUIT_MODULE_AMBULANCE (1<<12)
+// Module is compatbile with makeshift tank "mechs"
+#define EXOSUIT_MODULE_TRASHTANK (1<<13)
+// Module is compatbile with tank "mechs"
+#define EXOSUIT_MODULE_TANK (1<<14)
+// Module is compatbile with drilling "mechs"
+#define EXOSUIT_MODULE_DRILL (1<<15)
+// Module is compatbile with the giant fucking walkers
+#define EXOSUIT_MODULE_SENTINEL (1<<16)
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)

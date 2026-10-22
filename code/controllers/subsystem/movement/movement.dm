@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(movement)
 	name = "Movement Loops"
-	flags = SS_NO_INIT|SS_BACKGROUND|SS_TICKER
+	flags = SS_NO_INIT | SS_TICKER /* | SS_HIBERNATE */
 	wait = 1 //Fire each tick
 	/*
 		A breif aside about the bucketing system here
@@ -18,6 +18,14 @@ SUBSYSTEM_DEF(movement)
 	var/canonical_time = 0
 	///The visual delay of the subsystem
 	var/visual_delay = 1
+
+/*
+/datum/controller/subsystem/movement/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, sorted_buckets),
+	)
+*/
 
 /datum/controller/subsystem/movement/stat_entry(msg)
 	var/total_len = 0

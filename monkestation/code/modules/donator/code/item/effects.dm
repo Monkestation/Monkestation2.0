@@ -37,7 +37,7 @@
 //bidlink2
 /obj/item/effect_granter/donator/cirno
 	name = "Cirno transformation"
-	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon = 'icons/obj/plushes.dmi'
 	icon_state = "cirno-happy"
 	animal_transformation = /mob/living/basic/pet/cirno
 
@@ -133,3 +133,64 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "robottoything"
 	animal_transformation = /mob/living/basic/pet/robottoything
+
+//Cobalt Velvet 235
+/obj/item/effect_granter/donator/babypukeko
+	name = "baby pukeko"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	animal_transformation = /mob/living/basic/pet/babypukeko
+
+/obj/item/effect_granter/donator/tallbabypukeko
+	name = "tall baby pukeko"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	animal_transformation = /mob/living/basic/pet/babypukeko/tall
+
+//Mycah
+/obj/item/effect_granter/donator/eris_romch
+	name = "romch"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "romch"
+	animal_transformation = /mob/living/basic/pet/eris_romch
+
+//Mrsmall_theclown
+/obj/item/effect_granter/donator/theclown_clownpet
+	name = "short clown"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "theclown_clownpet"
+	animal_transformation = /mob/living/basic/pet/theclown_clownpet
+
+//adamcoal
+/obj/item/effect_granter/donator/cyber_husky
+	name = "cyber husky"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robodoggo"
+	animal_transformation = /mob/living/basic/pet/cyber_husky
+
+//Cerebresec
+/obj/item/effect_granter/donator/cyber_mastiff
+	name = "Cyber Mastiff transformation"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "mecha_walter"
+	animal_transformation = /mob/living/basic/pet/cyber_mastiff
+
+//Yatosamasensei
+/obj/item/effect_granter/donator/yato_neco_arc
+	name = "Neco-Arc"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "neco_arc"
+	animal_transformation = /mob/living/basic/pet/yato_neco_arc
+
+/obj/item/effect_granter/donator/shark_axolotl
+	name = "Shark Axolotl"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "shark_axolotl"
+	animal_transformation = /mob/living/basic/axolotl/shark_costume
+
+//Rynnogen
+/obj/item/effect_granter/donator/vanilla_mothroach
+	name = "Vanilla Mothroach"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "vanilla_mothroach"
+	animal_transformation = /mob/living/basic/mothroach/vanilla

@@ -7,8 +7,13 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	organ_flags = ORGAN_EDIBLE
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	visual = TRUE
+
+	/// The savefile_key of the preference this relates to. Used for the preferences UI.
+	var/preference
+	///With what DNA block do we mutate in mutate_feature() ? For genetics
+	var/dna_block
 
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
@@ -57,6 +62,9 @@
 	return ..()
 
 /obj/item/organ/external/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	if(!should_external_organ_apply_to(type, receiver))
+		stack_trace("adding a [type] to a [receiver.type] when it shouldn't be!")
+
 	var/obj/item/bodypart/limb = receiver.get_bodypart(deprecise_zone(zone))
 
 	if(!limb)
@@ -76,7 +84,7 @@
 	add_to_limb(ownerlimb)
 
 	if(external_bodytypes)
-		limb.synchronize_bodytypes(receiver)
+		receiver.synchronize_bodytypes()
 
 	receiver.update_body_parts()
 
@@ -120,9 +128,23 @@
 		ownerlimb.external_organs -= src
 		ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 		if(ownerlimb.owner && external_bodytypes)
-			ownerlimb.synchronize_bodytypes(ownerlimb.owner)
+			ownerlimb.owner.synchronize_bodytypes()
 	ownerlimb = null
 	return ..()
+
+/proc/should_external_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)
+	if(isnull(organpath) || isnull(target))
+		stack_trace("passed a null path or mob to 'should_external_organ_apply_to'")
+		return FALSE
+
+	var/datum/bodypart_overlay/mutant/bodypart_overlay = initial(organpath.bodypart_overlay)
+	var/feature_key = !isnull(bodypart_overlay) && initial(bodypart_overlay.feature_key)
+	if(isnull(feature_key))
+		return TRUE
+
+	if(target.dna.features[feature_key] != SPRITE_ACCESSORY_NONE)
+		return TRUE
+	return FALSE
 
 ///Update our features after something changed our appearance
 /obj/item/organ/external/proc/mutate_feature(features, mob/living/carbon/human/human)
@@ -220,15 +242,9 @@
 	desc = "Take a closer look at that snout!"
 	icon_state = "snout"
 
-	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
-	visual = TRUE
-	cosmetic_only = TRUE
-
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
-	layers = list(BODY_ADJ_LAYER)
 
-	feature_key = "snout"
 	preference = "feature_lizard_snout"
 	external_bodytypes = BODYTYPE_SNOUTED
 
@@ -236,6 +252,25 @@
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
+
+	/// Offset to apply to equipment worn on the mouth we give to the head.
+	var/datum/worn_feature_offset/worn_mask_offset
+
+/obj/item/organ/external/snout/add_to_limb(obj/item/bodypart/head/bodypart)
+	. = ..()
+	if(isnull(bodypart.worn_mask_offset))
+		worn_mask_offset = bodypart.worn_mask_offset = new(
+			attached_part = bodypart,
+			feature_key = OFFSET_FACEMASK,
+			offset_x = list("east" = 1, "west" = -1),
+		)
+
+/obj/item/organ/external/snout/remove_from_limb()
+	var/obj/item/bodypart/head/head_part = ownerlimb
+	if(worn_mask_offset)
+		QDEL_NULL(worn_mask_offset)
+		head_part.worn_mask_offset = null
+	return ..()
 
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
@@ -328,6 +363,11 @@
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
+/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.head?.flags_inv & HIDEANTENNAE))
+		return TRUE
+	return FALSE
+
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair
 	name = "podperson hair"
@@ -354,6 +394,10 @@
 	var/color_swapped_layer = EXTERNAL_FRONT
 	///The individual rgb colors are subtracted from this to get the color shifted layer
 	var/color_inverse_base = 255
+	color_source = ORGAN_COLOR_OVERRIDE
+	palette = /datum/color_palette/generic_colors
+	palette_key = "pod_color"
+
 
 /datum/bodypart_overlay/mutant/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list

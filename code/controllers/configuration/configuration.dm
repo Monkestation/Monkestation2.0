@@ -17,6 +17,7 @@
 	var/list/mode_names
 	var/list/mode_reports
 	var/list/mode_false_report_weight
+	var/list/lobby_notices
 
 	var/motd
 	var/policy
@@ -96,10 +97,11 @@
 	if (fexists("[directory]/ezdb.txt"))
 		LoadEntries("ezdb.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
-	LoadMisc() // Monkestation edit: other configuration stuff
+	LoadMisc()
 	LoadMOTD()
 	LoadPolicy()
 	LoadChatFilter()
+	LoadRelays()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		validate_job_config()
 	if(CONFIG_GET(flag/usewhitelist))
@@ -166,14 +168,33 @@
 	if(IsAdminAdvancedProcCall())
 		return
 
-	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
+	var/list/separate_levels = splittext(filename, "/")
+	// allows for inheriting our folder from the thing that included us
+	var/subfolder = ""
+	// do we have an actual directory or is this just one file
+	if(length(separate_levels) > 1)
+		var/actual_filename = separate_levels[length(separate_levels)]
+		// We need to sanitize out .. to ensure filename_to_test doesn't accidentially an infinte loop here
+		// Need filename in absolute form
+		var/list/parsed_folder_bits = list()
+		// look at just the relative directory referenced
+		for(var/entry in separate_levels - actual_filename)
+			if(entry == ".." && length(parsed_folder_bits))
+				parsed_folder_bits.Cut(length(parsed_folder_bits), 0)
+			else
+				parsed_folder_bits += entry
+		if(length(parsed_folder_bits))
+			subfolder = "[parsed_folder_bits.Join("/")]/"
+		filename = "[subfolder][actual_filename]"
+
+	var/filename_to_test = world.system_type == MS_WINDOWS ? LOWER_TEXT(filename) : filename
 	if(filename_to_test in stack)
 		log_config_error("Warning: Config recursion detected ([english_list(stack)]), breaking!")
 		return
 	stack = stack + filename_to_test
 
 	log_config("Loading config file [filename]...")
-	var/list/lines = world.file2list("[directory]/[filename]")
+	var/list/lines = file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
 		L = trim(L)
@@ -193,10 +214,10 @@
 		var/value = null
 
 		if(pos)
-			entry = lowertext(copytext(L, 1, pos))
+			entry = LOWER_TEXT(copytext(L, 1, pos))
 			value = copytext(L, pos + length(L[pos]))
 		else
-			entry = lowertext(L)
+			entry = LOWER_TEXT(L)
 
 		if(!entry)
 			continue
@@ -205,13 +226,13 @@
 			if(!value)
 				log_config_error("Warning: Invalid $include directive: [value]")
 			else
-				LoadEntries(value, stack)
+				LoadEntries("[subfolder][value]", stack)
 				++.
 			continue
 
 		// Reset directive, used for setting a config value back to defaults. Useful for string list config types
 		if (entry == "$reset")
-			var/datum/config_entry/resetee = _entries[lowertext(value)]
+			var/datum/config_entry/resetee = _entries[LOWER_TEXT(value)]
 			if (!value || !resetee)
 				log_config_error("Warning: invalid $reset directive: [value]")
 				continue
@@ -268,18 +289,17 @@
 	msg = "Edit"
 	return msg
 
-/datum/controller/configuration/proc/Get(entry_type)
-	var/datum/config_entry/E = entry_type
-	var/entry_is_abstract = initial(E.abstract_type) == entry_type
+/datum/controller/configuration/proc/Get(datum/config_entry/entry_type)
+	var/entry_is_abstract = entry_type::abstract_type == entry_type
 	if(entry_is_abstract)
 		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
-	E = entries_by_type[entry_type]
-	if(!E)
+	entry_type = entries_by_type[entry_type]
+	if(!entry_type)
 		CRASH("Missing config entry for [entry_type]!")
-	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	if((entry_type.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
 		return
-	return E.config_entry_value
+	return entry_type.config_entry_value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	var/datum/config_entry/E = entry_type
@@ -293,6 +313,9 @@
 		log_admin_private("Config rewrite of [entry_type] to [new_val] attempted by [key_name(usr)]")
 		return
 	return E.ValidateAndSet("[new_val]")
+
+/datum/controller/configuration/proc/LoadMisc()
+	load_important_notices()
 
 /datum/controller/configuration/proc/LoadMOTD()
 	var/list/motd_contents = list()
@@ -347,7 +370,7 @@ Example config:
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
 	filename = "[directory]/[filename]"
-	var/list/Lines = world.file2list(filename)
+	var/list/Lines = file2list(filename)
 
 	var/datum/map_config/currentmap = null
 	for(var/t in Lines)
@@ -365,10 +388,10 @@ Example config:
 		var/data = null
 
 		if(pos)
-			command = lowertext(copytext(t, 1, pos))
+			command = LOWER_TEXT(copytext(t, 1, pos))
 			data = copytext(t, pos + length(t[pos]))
 		else
-			command = lowertext(t)
+			command = LOWER_TEXT(t)
 
 		if(!command)
 			continue
@@ -400,6 +423,9 @@ Example config:
 				currentmap = null
 			if ("disabled")
 				currentmap = null
+			if("feedbacklink")
+				if(currentmap.map_name == SSmapping.current_map.map_name)
+					SSmapping.current_map.feedback_link = data
 			else
 				log_config("Unknown command in map vote config: '[command]'")
 
@@ -441,7 +467,7 @@ Example config:
 	soft_shared_filter_reasons = list()
 	shared_regex_reason = list()
 
-	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
+	for (var/line in file2list("[directory]/in_character_filter.txt"))
 		if (!line)
 			continue
 		if (findtextEx(line, "#", 1, 2))
@@ -474,7 +500,7 @@ Example config:
 	var/list/formatted_banned_words = list()
 
 	for (var/banned_word in banned_words)
-		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
+		formatted_banned_words[LOWER_TEXT(banned_word)] = banned_words[banned_word]
 	return formatted_banned_words
 
 /datum/controller/configuration/proc/compile_filter_regex(list/banned_words, list/regex_expressions)
@@ -532,3 +558,78 @@ Example config:
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(message_admins), text), 0)
+
+/datum/controller/configuration/proc/LoadRelays()
+	var/config_path = "[directory]/relays.toml"
+	if(!fexists(file(config_path)))
+		log_config("relays.toml does not exist.")
+		return
+
+	var/list/result = rustg_raw_read_toml_file(config_path)
+	if(!result["success"])
+		log_config("Notify Server Operators: The relay config (relays.toml) is not configured correctly! [result["content"]]")
+		return
+
+	var/list/content = json_decode(result["content"])
+	if(!length(content))
+		return
+
+	GLOB.relay_config = content["relay"]
+
+/*
+// JSON example of how lobby_notices.json works.
+
+[
+	"this notice will show in both the chatbox, and tgui. will do HTML like the others but using classes that are used in the chatbox will not show in tgui as they are separate",
+	{
+		"TGUI_SAFE": "This shows in tgui! <span style='font-size: 110%'>you can also use html! but not the classes used the chatbox, as said above</span>",
+		"CHATBOX_SAFE": "This shows in tgui! <span class='bold red'>(with special formatting!)</span>."
+	},
+	{
+		"TGUI_SAFE": [
+			"this is the first line",
+			"this is the second line. notice how this object doesn't have a chatbox_safe?",
+			"that means it'll only show in Tgui"
+		]
+	}
+]
+
+*/
+/datum/controller/configuration/proc/load_important_notices()
+	lobby_notices?.Cut()
+	var/rawnotices = file2text("[directory]/lobby_notices.json")
+	if(rawnotices)
+		var/parsed = safe_json_decode(rawnotices)
+		if(!parsed)
+			log_config("JSON parsing failure for lobby_notices.json")
+			DelayedMessageAdmins("JSON parsing failure for lobby_notices.json")
+		else
+			lobby_notices = parsed
+
+/datum/controller/configuration/proc/show_lobby_notices(target)
+	if(!length(config.lobby_notices))
+		return FALSE
+
+	var/final_notices = ""
+	var/do_final_top_separator = FALSE
+	for(var/notice in config.lobby_notices)
+		var/do_separator = FALSE
+		if(islist(notice))
+			var/list/_notice = notice
+			if(_notice["CHATBOX_SAFE"])
+				do_separator = TRUE
+				final_notices = "[final_notices]<br>[_notice["CHATBOX_SAFE"]]"
+		else
+			final_notices = "[final_notices]<br>[notice]"
+			do_separator = TRUE
+
+		if(do_separator)
+			do_final_top_separator = TRUE
+			final_notices = "[final_notices]<hr class='solid'>"
+
+	if(!final_notices)
+		return FALSE
+
+	to_chat(target, "[do_final_top_separator ? "<hr class='solid'>" : ""][final_notices]")
+
+	return TRUE

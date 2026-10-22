@@ -8,28 +8,28 @@
 		/datum/artifact_activator/range
 	)
 
-	research_value = 400
+	research_value = TECHWEB_DISCOUNT_MINOR
 
 	examine_discovered = span_warning("It appears to play smooth jazz, but suddenly.")
 	var/sound_hit_list = list(
-		'monkestation/sound/effects/artifacts/orchestral/hit01.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit02.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit03.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit04.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit05.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit06.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit07.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit08.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit09.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit10.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit11.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit12.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit13.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit14.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit15.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit16.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit17.ogg',
-		'monkestation/sound/effects/artifacts/orchestral/hit18.ogg'
+		'sound/effects/artifacts/orchestral/hit01.ogg',
+		'sound/effects/artifacts/orchestral/hit02.ogg',
+		'sound/effects/artifacts/orchestral/hit03.ogg',
+		'sound/effects/artifacts/orchestral/hit04.ogg',
+		'sound/effects/artifacts/orchestral/hit05.ogg',
+		'sound/effects/artifacts/orchestral/hit06.ogg',
+		'sound/effects/artifacts/orchestral/hit07.ogg',
+		'sound/effects/artifacts/orchestral/hit08.ogg',
+		'sound/effects/artifacts/orchestral/hit09.ogg',
+		'sound/effects/artifacts/orchestral/hit10.ogg',
+		'sound/effects/artifacts/orchestral/hit11.ogg',
+		'sound/effects/artifacts/orchestral/hit12.ogg',
+		'sound/effects/artifacts/orchestral/hit13.ogg',
+		'sound/effects/artifacts/orchestral/hit14.ogg',
+		'sound/effects/artifacts/orchestral/hit15.ogg',
+		'sound/effects/artifacts/orchestral/hit16.ogg',
+		'sound/effects/artifacts/orchestral/hit17.ogg',
+		'sound/effects/artifacts/orchestral/hit18.ogg'
 	)
 
 	var/reactions = list(
@@ -43,6 +43,7 @@
 		"Jazz attack!",
 	)
 
+	/// How far our effect reaches
 	var/reaction_radius = 9
 
 	COOLDOWN_DECLARE(jazz_cooldown)
@@ -57,10 +58,7 @@
 	playsound(our_artifact.holder, pick(sound_hit_list), channel = CHANNEL_MACHINERY, vol = 80)
 
 	var/turf/our_turf = get_turf(our_artifact.holder)
-	for(var/turf/open/floor in range(reaction_radius,our_artifact.holder))
-		if(floor == our_turf)
-			continue
-		for(var/mob/living/living in floor)
-			to_chat(living, span_notice(pick(reactions)))
-			living.add_mood_event("orchestral_artifact", /datum/mood_event/jazzy)
+	for(var/mob/living/living in range(reaction_radius, our_turf))
+		to_chat(living, span_notice(pick(reactions)))
+		living.add_mood_event("orchestral_artifact", /datum/mood_event/jazzy)
 	COOLDOWN_START(src, jazz_cooldown, 3 SECONDS)

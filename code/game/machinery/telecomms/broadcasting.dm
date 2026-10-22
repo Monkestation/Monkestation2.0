@@ -60,7 +60,8 @@
 	var/list/levels
 	/// Blacklisted spans we don't want being put into comms by anything, ever - a place to put any new spans we want to make without letting them annoy people on comms
 	var/list/blacklisted_spans = list(
-		SPAN_SOAPBOX
+		SPAN_SOAPBOX,
+		SPAN_HYPNOPHRASE,
 	)
 
 /datum/signal/subspace/New(data)
@@ -183,7 +184,7 @@
 
 	for(var/obj/item/radio/called_radio as anything in radios)
 		if(!QDELETED(called_radio))
-			called_radio.on_recieve_message()
+			called_radio.on_recieve_message(data)
 
 	// From the list of radios, find all mobs who can hear those.
 	var/list/receive = get_hearers_in_radio_ranges(radios)

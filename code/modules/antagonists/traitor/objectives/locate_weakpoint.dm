@@ -124,32 +124,29 @@
 /datum/traitor_objective/locate_weakpoint/proc/create_shockwave(center_x, center_y, center_z)
 	var/turf/epicenter = locate(center_x, center_y, center_z)
 	var/lowpop = (length(GLOB.clients) <= CONFIG_GET(number/minimal_access_threshold))
-//monkestation removal start
-/*	if(lowpop)
-		explosion(epicenter, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, explosion_cause = src)
-	else
-		explosion(epicenter, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 9, explosion_cause = src)*/
-//monkestation removal end
-//monkestation edit start: now creates radiating(one explosion in each ring) light explosions
 	var/greatest_dist = 0
-	var/list/turfs_to_collapse = list()
+	var/alist/turfs_to_collapse = alist()
 	for(var/turf/collapsed_turf as anything in GLOB.station_turfs)
-		if(istype(get_area(collapsed_turf), /area/station/ai_monitored)) //remote bombing of these areas would be bad
+		var/area/turf_area = get_area(collapsed_turf)
+
+		if(istype(turf_area, /area/station/ai_monitored) || istype(turf_area, /area/shuttle)) //remote bombing of these areas would be bad
+			continue
+		if(!(turf_area.type in GLOB.the_station_areas))
 			continue
 
 		var/dist = get_dist(epicenter, collapsed_turf)
 		if(dist > greatest_dist)
 			greatest_dist = dist
 
-		if(!turfs_to_collapse["[dist]"])
-			turfs_to_collapse["[dist]"] = list()
-		turfs_to_collapse["[dist]"] += collapsed_turf
+		if(!turfs_to_collapse[dist])
+			turfs_to_collapse[dist] = list()
+		turfs_to_collapse[dist] += collapsed_turf
 
 	for(var/iterator in 1 to greatest_dist)
-		if(!turfs_to_collapse["[iterator]"])
+		if(!turfs_to_collapse[iterator])
 			continue
 		for(var/i in 1 to (lowpop ? 1 : 2)) //if lowpop then only do one collapse per ring, otherwise do two
-			addtimer(CALLBACK(pick_n_take(turfs_to_collapse["[iterator]"]), TYPE_PROC_REF(/turf, structural_collapse), 6 SECONDS, list(0, 0, 3), list('sound/effects/creak1.ogg', \
+			addtimer(CALLBACK(pick_n_take(turfs_to_collapse[iterator]), TYPE_PROC_REF(/turf, structural_collapse), 6 SECONDS, list(0, 0, 3), list('sound/effects/creak1.ogg', \
 																																					'sound/effects/creak2.ogg', \
 																																					'sound/effects/creak3.ogg'), FALSE), \
 					2 SECONDS * iterator)
@@ -221,7 +218,7 @@
 	for(var/mob/living/silicon/ai/ai_player in GLOB.player_list)
 		to_chat(ai_player, alertstr)
 
-	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, PROC_REF(scan_checks), user, user_area, objective)))
+	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, PROC_REF(scan_checks), user, user_area, objective), hidden = TRUE))
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 
@@ -272,28 +269,24 @@
 	objective_weakref = null
 	return ..()
 
-/obj/item/grenade/c4/es8/afterattack(atom/movable/target, mob/user, flag)
-	if(!user.mind)
-		return
-
+/obj/item/grenade/c4/es8/plant_c4(atom/bomb_target, mob/living/user)
 	if(!IS_TRAITOR(user))
 		to_chat(user, span_warning("You can't seem to find a way to detonate the charge."))
-		return
+		return FALSE
 
 	var/datum/traitor_objective/locate_weakpoint/objective = objective_weakref.resolve()
-
 	if(!objective || objective.objective_state == OBJECTIVE_STATE_INACTIVE || objective.handler.owner != user.mind)
 		to_chat(user, span_warning("You don't think it would be wise to use [src]."))
-		return
+		return FALSE
 
-	var/area/target_area = get_area(target)
+	var/area/target_area = get_area(bomb_target)
 	if (target_area.type != objective.weakpoint_area)
 		to_chat(user, span_warning("[src] can only be detonated in [initial(objective.weakpoint_area.name)]."))
-		return
+		return FALSE
 
-	if(!isfloorturf(target) && !iswallturf(target))
+	if(!isfloorturf(bomb_target) && !iswallturf(bomb_target))
 		to_chat(user, span_warning("[src] can only be planted on a wall or the floor!"))
-		return
+		return FALSE
 
 	return ..()
 

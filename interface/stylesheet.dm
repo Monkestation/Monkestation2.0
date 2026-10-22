@@ -96,6 +96,7 @@ h1.alert, h2.alert		{color: #000000;}
 .grey					{color: #838383;}
 .nicegreen				{color: #14a833;}
 .boldnicegreen			{color: #14a833;	font-weight: bold;}
+.velvet					{color: #21007F;}
 .cult					{color: #973e3b;}
 .cultlarge				{color: #973e3b;	font-weight: bold;	font-size: 3;}
 .narsie					{color: #973e3b;	font-weight: bold;	font-size: 15;}
@@ -104,6 +105,7 @@ h1.alert, h2.alert		{color: #000000;}
 .hierophant				{color: #660099;	font-weight: bold;	font-style: italic;}
 .hierophant_warning		{color: #660099;	font-style: italic;}
 .purple					{color: #5e2d79;}
+.purplelarge			{color: #5e2d79;	font-weight: bold;	font-size: 3;}
 .holoparasite			{color: #35333a;}
 .bounty					{color: #ab6613;	font-style: italic;}
 
@@ -113,8 +115,6 @@ h1.alert, h2.alert		{color: #000000;}
 .revenminor				{color: #823abb}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 3;}
-
-.sentientdisease		{color: #446600;}
 
 .deconversion_message	{color: #5000A0;	font-size: 3;	font-style: italic;}
 
@@ -133,6 +133,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
+.copperplate			{font-family: copperplate;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
 .command_headset		{font-weight: bold;	font-size: 3;}
@@ -146,21 +147,9 @@ h1.alert, h2.alert		{color: #000000;}
 .clown					{color: #FF69Bf;	font-size: 3;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
 .singing				{font-family: "Trebuchet MS", cursive, sans-serif; font-style: italic;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
-.hypnophrase			{color: #3bb5d3;	font-weight: bold;	animation: hypnocolor 1500ms infinite; animation-direction: alternate;}
-	@keyframes hypnocolor {
-		0%		{color: #0d0d0d;}
-		25%		{color: #410194;}
-		50%		{color: #7f17d8;}
-		75%		{color: #410194;}
-		100%	{color: #3bb5d3;}
-}
+.hypnophrase			{color: #3bb5d3;	font-weight: bold;}
 
-.phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
-	@keyframes phobia {
-		0%		{color: #0d0d0d;}
-		50%		{color: #dd0000;}
-		100%	{color: #0d0d0d;}
-}
+.phobia			{color: #dd0000;	font-weight: bold;}
 
 .icon					{height: 1em;	width: auto;}
 

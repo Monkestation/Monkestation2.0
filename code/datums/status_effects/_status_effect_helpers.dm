@@ -84,6 +84,17 @@
 
 	return null
 
+///Gets every status effect of an ID and returns all of them in a list, rather than the individual 'has_status_effect'
+/mob/living/proc/get_all_status_effect_of_id(datum/status_effect/checked_effect)
+	RETURN_TYPE(/list/datum/status_effect)
+
+	var/list/all_effects_of_type = list()
+	for(var/datum/status_effect/present_effect as anything in status_effects)
+		if(present_effect.id == initial(checked_effect.id))
+			all_effects_of_type += present_effect
+
+	return all_effects_of_type
+
 /**
  * Checks if this mob has a status effect that shares the passed effect's ID
  * and has the passed sources are in its list of sources (ONLY works for grouped efects!)

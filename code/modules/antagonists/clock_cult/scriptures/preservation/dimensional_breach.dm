@@ -1,0 +1,39 @@
+/datum/scripture/ark_activation
+	name = "Ark Invigoration"
+	desc = "Prepares the Ark for activation, alerting the crew of your existence."
+	tip = "Prepares the Ark for activation, alerting the crew of your existence."
+	button_icon_state = "Spatial Gateway"
+	power_cost = STANDARD_CELL_CHARGE * 1.5
+	invocation_time = 14 SECONDS
+	invocation_text = list("Brightest Engine, take my soul...", "To complete our greatest goal...", "through the rifts you now shall come...", "to show them where the light is from!")
+	invokers_required = 6
+	category = SPELLTYPE_PRESERVATION
+	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg' //ironic
+	fast_invoke_mult = 1
+	cogs_required = 5
+
+/datum/scripture/ark_activation/check_special_requirements(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!on_reebe(invoker))
+		to_chat(invoker, span_brass("You need to be near the gateway to channel its energy!"))
+		return FALSE
+
+	if(!GLOB.clock_ark)
+		to_chat(invoker, span_userdanger("No ark located, contact the admins with an ahelp(f1)."))
+		return FALSE
+
+	if(SSthe_ark.charged_anchoring_crystals < ANCHORING_CRYSTALS_TO_SUMMON)
+		to_chat(invoker, span_brass("Reebe is not yet anchored enough to this realm, the ark cannot open until enough anchoring crystals are summoned and protected."))
+		return FALSE
+
+	return TRUE
+
+/datum/scripture/ark_activation/invoke_success()
+	if(!GLOB.clock_ark)
+		to_chat(invoker, span_userdanger("No ark located, contact the admins with an ahelp(f1)."))
+		return FALSE
+
+	GLOB.clock_ark.open_gateway()

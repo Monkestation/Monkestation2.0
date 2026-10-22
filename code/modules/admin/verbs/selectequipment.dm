@@ -1,10 +1,6 @@
-/client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Select equipment"
-
-
-	var/datum/select_equipment/ui = new(usr, target)
-	ui.ui_interact(usr)
+ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment", mob/target in world)
+	var/datum/select_equipment/ui = new(user, target)
+	ui.ui_interact(user.mob)
 
 /*
  * This is the datum housing the select equipment UI.
@@ -49,7 +45,7 @@
 		ui.set_autoupdate(FALSE)
 
 /datum/select_equipment/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_FUN)
 
 /datum/select_equipment/ui_status(mob/user, datum/ui_state/state)
 	if(QDELETED(target_mob))
@@ -59,6 +55,36 @@
 /datum/select_equipment/ui_close(mob/user)
 	clear_human_dummy(dummy_key)
 	qdel(src)
+
+/datum/select_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (!.)
+		return
+
+	if (action != "applyoutfit")
+		return
+
+	var/mob/living/target_mob_living = user.mob
+
+	for(var/datum/quirk/quirk as anything in target_mob_living.quirks)
+		target_mob_living.remove_quirk(quirk.type)
+
+	switch(params["applyQuirks"])
+		if("All Quirks")
+			SSquirks.AssignQuirks(target_mob_living, user)
+		if("Positive Quirks Only")
+			SSquirks.AssignQuirks(target_mob_living, user, omit_negatives = TRUE)
+		if("Negative Quirks Only")
+			SSquirks.AssignQuirks(target_mob_living, user, omit_positives = TRUE)
+		if("Neutral Quirks Only")
+			SSquirks.AssignQuirks(target_mob_living, user, omit_positives = TRUE, omit_negatives = TRUE)
+
+	// Handle effect state from dropdown
+	switch(params["effectState"])
+		if("Holy")
+			new /obj/effect/holy(target_mob_living.loc)
+		if("Unholy")
+			target_mob_living.mods_bring_them_to_life_fancy(size = 1)
 
 /datum/select_equipment/proc/init_dummy()
 	dummy_key = "selectequipmentUI_[target_mob]"
@@ -92,7 +118,7 @@
 
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/outfit_list)
 	var/list/entries = list()
-	for(var/path as anything in outfit_list)
+	for(var/path in outfit_list)
 		var/datum/outfit/outfit = path
 		entries += list(outfit_entry(category, path, initial(outfit.name)))
 	return entries
@@ -152,7 +178,7 @@
 			return custom_outfit
 
 
-/datum/select_equipment/ui_act(action, params)
+/datum/select_equipment/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	. = TRUE
@@ -181,7 +207,7 @@
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			user.outfit_manager()
+			return SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/outfit_manager)
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])
@@ -212,8 +238,10 @@
 			if(tgui_alert(usr,"Drop Items in Pockets? No will delete them.", "Robust quick dress shop", list("Yes", "No")) == "No")
 				delete_pocket = TRUE
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for(var/obj/item/item in human_target.get_equipped_items(delete_pocket))
+
+	BLACKBOX_LOG_ADMIN_VERB("Select Equipment")
+	var/includes_flags = delete_pocket ? INCLUDE_POCKETS : NONE
+	for(var/obj/item/item in human_target.get_equipped_items(includes_flags))
 		qdel(item)
 
 	var/obj/item/organ/internal/brain/human_brain = human_target.get_organ_slot(BRAIN)

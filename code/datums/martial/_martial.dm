@@ -5,7 +5,8 @@
 	var/max_streak_length = 6
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
-	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
+	///Chance to block melee attacks using items while on throw mode.
+	var/block_chance = 0
 	var/help_verb
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 	var/smashes_tables = FALSE //If the martial art smashes tables when performing table slams and head smashes
@@ -15,6 +16,12 @@
 	var/timerid
 	/// If set to true this style allows you to punch people despite being a pacifist (for instance Boxing, which does no damage)
 	var/pacifist_style = FALSE
+	/// A modifier to the effective grab state for resist grabs of users of this martial art.
+	/// IE: grab_state_modifier = 1 means passive grabs are aggro grab difficulty, and aggro grabs are neckgrab difficulty.
+	var/grab_state_modifier = 0
+	/// A modifier to the chance of escaping a grab.
+	/// IE: grab_escape_chance_modifier = -10 means 10% less chance to escape a grab
+	var/grab_escape_chance_modifier = 0
 
 /datum/martial_art/serialize_list(list/options, list/semvers)
 	. = ..()
@@ -40,6 +47,43 @@
 
 /datum/martial_art/proc/can_use(mob/living/L)
 	return TRUE
+
+/**
+ * Gets what limb is being used going when punching with this martial art.
+ *
+ * Override get_prefered_attacking_limb() to change the limb used.
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * A bodypart, or null if we want to use default behavior (brain determines, or active hand).
+ */
+/datum/martial_art/proc/get_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!can_use(martial_artist))
+		return
+	var/preferred_zone = get_prefered_attacking_limb(martial_artist, target)
+	if(!preferred_zone)
+		return null
+	return martial_artist.get_bodypart(preferred_zone)
+
+/**
+ * Allows martial arts to have a say which limb the user should be striking with.
+ *
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * * A body zone, or null if we have no preference.
+ */
+/datum/martial_art/proc/get_prefered_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_CALL_PARENT(FALSE)
+	PROTECTED_PROC(TRUE)
+	return null
 
 /datum/martial_art/proc/add_to_streak(element, mob/living/defender)
 	if(defender != current_target)
@@ -77,6 +121,7 @@
 		add_verb(holder_living, help_verb)
 	holder_living.mind.martial_art = src
 	holder = WEAKREF(holder_living)
+	RegisterSignal(holder_living, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/old, mob/living/holder_living)
@@ -101,4 +146,29 @@
 /datum/martial_art/proc/on_remove(mob/living/holder_living)
 	if(help_verb)
 		remove_verb(holder_living, help_verb)
+	UnregisterSignal(holder_living, list(COMSIG_ATOM_ATTACKBY, COMSIG_LIVING_CHECK_BLOCK))
 	return
+
+/datum/martial_art/proc/check_block(mob/living/user, atom/movable/hitby, damage, attack_text, attack_type, ...)
+	SIGNAL_HANDLER
+
+	if(!can_use(user) || !user.throw_mode || user.incapacitated(IGNORE_GRAB))
+		return NONE
+	if(attack_type == PROJECTILE_ATTACK)
+		return NONE
+	if(!prob(block_chance))
+		return NONE
+
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
+	if(istype(attacker) && user.Adjacent(attacker))
+		user.visible_message(
+			span_danger("[user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
+			span_userdanger("You block [attack_text]!"),
+		)
+		attacker.Stun(4 SECONDS)
+	else
+		user.visible_message(
+			span_danger("[user] blocks [attack_text]!"),
+			span_userdanger("You block [attack_text]!"),
+		)
+	return SUCCESSFUL_BLOCK

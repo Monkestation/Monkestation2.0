@@ -12,7 +12,7 @@
 	)
 	valid_type_paths = list(/obj/item/gun/magic/artifact)
 
-	research_value = 500
+	research_value = TECHWEB_DISCOUNT_MINOR
 
 	examine_discovered = span_warning("It appears to be some sort of projectile weapon!")
 

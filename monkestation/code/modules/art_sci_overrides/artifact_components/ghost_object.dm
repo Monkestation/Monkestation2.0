@@ -45,7 +45,7 @@
 
 	step(movable_parent, dir_to_move)
 	var/last_move_diagonal = ((dir_to_move & (dir_to_move - 1)) && (movable_parent.loc == next))
-	COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 2 : 1) * speed) SECOND)
+	COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 2 : 1) * speed) SECONDS)
 
 	if(QDELETED(src))
 		return COMSIG_BLOCK_RELAYMOVE
@@ -77,16 +77,15 @@
 	)
 	if(!LAZYLEN(candidates))
 		if(repolling)
-			addtimer(CALLBACK(src,PROC_REF(request_control),2.5 MINUTE))
+			addtimer(CALLBACK(src,PROC_REF(request_control), 2.5 MINUTES))
 		attempting_awakening = FALSE
 		return
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	bound_spirit = new(parent)
-	bound_spirit.ckey = chosen_spirit.ckey
+	bound_spirit.PossessByPlayer(chosen_spirit.ckey)
 	bound_spirit.fully_replace_character_name(null, "[parent]")
-	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
-	bound_spirit.update_atom_languages()
+	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 	ADD_TRAIT(bound_spirit, TRAIT_GODMODE, REF(src))
 	speed = movement_speed
 

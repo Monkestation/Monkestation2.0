@@ -13,16 +13,19 @@
 			wound.remove_wound()
 			break
 
-	var/heal_amt = 5 * multiplier
+	var/heal_amt = 4 * multiplier
 	var/current_health = mob.getBruteLoss()
 	if(current_health >= heal_amt)
-		total_healed += heal_amt * 0.2
+		total_healed += heal_amt * 0.5
 	else
-		total_healed += (heal_amt - current_health) * 0.2
+		total_healed += (heal_amt - current_health) * 0.5
 	mob.heal_overall_damage(brute = heal_amt, burn = heal_amt)
-	mob.adjustToxLoss(-heal_amt)
+	if(!(HAS_TRAIT(mob, TRAIT_TOXINLOVER) || HAS_TRAIT(mob, TRAIT_TOXIMMUNE)))
+		mob.adjustToxLoss(-heal_amt)
 
-/datum/symptom/immortal/deactivate(mob/living/carbon/mob)
+/datum/symptom/immortal/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
+	if(safe) // don't kill people if they get ahealed!!
+		return
 	if(ishuman(mob))
 		var/mob/living/carbon/human/person = mob
 		to_chat(person, span_warning("You suddenly feel hurt and old..."))

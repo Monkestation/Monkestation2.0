@@ -51,10 +51,13 @@
 		return
 	edit_emitter(user)
 
-/obj/effect/sound_emitter/AltClick(mob/user)
-	if(check_rights_for(user.client, R_SOUND))
-		activate(user)
-		to_chat(user, span_notice("Sound emitter activated."), confidential = TRUE)
+/obj/effect/sound_emitter/click_alt(mob/user)
+	if(!check_rights_for(user.client, R_SOUND))
+		return CLICK_ACTION_BLOCKING
+
+	activate(user)
+	to_chat(user, span_notice("Sound emitter activated."), confidential = TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/effect/sound_emitter/proc/edit_emitter(mob/user)
 	var/dat = ""
@@ -138,7 +141,7 @@
 		if(SOUND_EMITTER_GLOBAL)
 			hearing_mobs = GLOB.player_list.Copy()
 	for(var/mob/M in hearing_mobs)
-		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_midi))
+		if(M.client.prefs.channel_volume["[CHANNEL_ADMIN]"])
 			M.playsound_local(M, sound_file, sound_volume, FALSE, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
 	if(user)
 		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [AREACOORD(src)]")

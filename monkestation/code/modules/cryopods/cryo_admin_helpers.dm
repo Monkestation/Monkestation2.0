@@ -16,11 +16,9 @@
 	//find cryopod
 	for(var/obj/machinery/cryopod/cryo in GLOB.valid_cryopods)
 		if(!cryo.occupant && cryo.state_open && !cryo.panel_open) //free, opened, and panel closed?
-			if(buckled)
-				buckled.unbuckle_mob(src, TRUE)
-			if(buckled_mobs)
-				for(var/mob/buckled_mob in buckled_mobs)
-					unbuckle_mob(buckled_mob)
+			buckled?.unbuckle_mob(src, force = TRUE)
+			for(var/mob/buckled_mob in buckled_mobs)
+				unbuckle_mob(buckled_mob, force = TRUE)
 			cryo.close_machine(src) //put player
 			break
 
@@ -51,10 +49,11 @@
 
 	//log/message
 	to_chat(usr, "Put [src] in cryopod.")
-	log_admin("[key_name(usr)] has put [key_name(src)] into a cryopod.")
+	var/log_msg = "[key_name(usr)] has put [key_name(src)] into a cryopod."
+	log_admin(log_msg)
 	var/msg = span_notice("[key_name_admin(usr)] has put [key_name(src)] into a cryopod from [ADMIN_VERBOSEJMP(src)].")
 	message_admins(msg)
-	admin_ticket_log(src, msg)
+	admin_ticket_log(src, log_msg)
 
 	send_notice = send_notice == "Yes"
 	send_to_cryo(send_notice)

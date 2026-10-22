@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const CorticalBorer: Antagonist = {
   key: 'corticalborer',
@@ -11,7 +11,7 @@ const CorticalBorer: Antagonist = {
     to make sure your species survives and thrives.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default CorticalBorer;

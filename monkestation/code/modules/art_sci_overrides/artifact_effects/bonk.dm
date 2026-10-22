@@ -11,7 +11,7 @@
 	var/hit_power = 1
 	artifact_size = ARTIFACT_SIZE_LARGE
 	COOLDOWN_DECLARE(bonk_cooldown)
-	research_value = 500
+	research_value = TECHWEB_DISCOUNT_MINOR
 	examine_discovered = span_warning("It appears to bonk those with heads on said head.")
 
 /datum/artifact_effect/bonk/setup()

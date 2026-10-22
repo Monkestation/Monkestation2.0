@@ -44,21 +44,22 @@
 	else
 		to_chat(user, span_warning("[src] fails to implant [target]."))
 
-/obj/item/implanter/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I, /obj/item/pen))
-		return ..()
-	if(!user.can_write(I))
-		return
+/obj/item/implanter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!IS_WRITING_UTENSIL(tool))
+		return NONE
+	if(!user.can_write(tool))
+		return ITEM_INTERACT_BLOCKING
 
 	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
-	if(user.get_active_held_item() != I)
-		return
+	if(user.get_active_held_item() != tool)
+		return ITEM_INTERACT_BLOCKING
 	if(!user.can_perform_action(src))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(new_name)
 		name = "implanter ([new_name])"
 	else
 		name = "implanter"
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/implanter/Initialize(mapload)
 	. = ..()

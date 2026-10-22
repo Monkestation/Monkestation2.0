@@ -63,7 +63,7 @@
 	name = "prepare electronics (multitool)"
 	implements = list(
 		TOOL_MULTITOOL = 100,
-		TOOL_HEMOSTAT = 10) // try to reboot internal controllers via short circuit with some conductor
+		TOOL_HEMOSTAT = 50)
 	time = 24
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
@@ -83,7 +83,7 @@
 	name = "unwrench bolts (wrench)"
 	implements = list(
 		TOOL_WRENCH = 100,
-		TOOL_RETRACTOR = 10)
+		TOOL_RETRACTOR = 60)
 	time = 24
 	preop_sound = 'sound/items/ratchet.ogg'
 
@@ -108,7 +108,7 @@
 	name = "wrench bolts (wrench)"
 	implements = list(
 		TOOL_WRENCH = 100,
-		TOOL_RETRACTOR = 10)
+		TOOL_RETRACTOR = 60)
 	time = 24
 	preop_sound = 'sound/items/ratchet.ogg'
 

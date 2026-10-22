@@ -20,5 +20,5 @@
 	sleep(10 SECONDS)
 	to_chat(victim, span_danger("You feel an agonizing pain in your throat!"))
 	sleep(10 SECONDS)
-	victim.vomit(10, TRUE)
+	victim.vomit(10 * power, TRUE)
 	active = 0

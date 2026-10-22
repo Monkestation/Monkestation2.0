@@ -11,6 +11,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
+	species_blacklist = list(SPECIES_IPC, SPECIES_OOZELING, SPECIES_PLASMAMAN)
 
 /datum/quirk/blooddeficiency/post_add()
 	update_mail()
@@ -25,6 +26,14 @@
 	UnregisterSignal(quirk_holder, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 	UnregisterSignal(quirk_holder, COMSIG_SPECIES_GAIN)
 
+/datum/quirk/blooddeficiency/is_species_appropriate(datum/species/mob_species)
+	var/datum/species_traits = GLOB.species_prototypes[mob_species].inherent_traits
+	if(TRAIT_NOBLOOD in species_traits)
+		return FALSE
+	if(TRAIT_NOBREATH in species_traits)
+		return FALSE
+	return ..()
+
 /datum/quirk/blooddeficiency/proc/lose_blood(mob/living/carbon/human/draining, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 	if(quirk_holder.stat == DEAD || quirk_holder.blood_volume <= min_blood)
@@ -38,11 +47,11 @@
 
 	mail_goodies.Cut()
 
-	var/datum/blood_type/new_type = quirk_holder.get_blood_type()
+	var/datum/blood_type/new_type = quirk_holder.get_bloodtype()
 	if(isnull(new_type))
 		return
 
-	if(istype(new_type, /datum/blood_type/crew/human))
+	if(istype(new_type, /datum/blood_type/human))
 		mail_goodies += /obj/item/reagent_containers/blood/o_minus
 		return
 

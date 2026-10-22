@@ -1,8 +1,9 @@
 /obj/item/organ/internal/ears/robot/clockwork
 	name = "biometallic recorder"
 	desc = "An odd sort of microphone that looks grown, rather than built."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "ears-clock"
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/ears/jelly
 	name = "core audiosomes"
@@ -54,6 +55,6 @@
 	)
 	build_path = /obj/item/organ/internal/ears/synth
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE

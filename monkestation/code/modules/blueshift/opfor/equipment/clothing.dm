@@ -17,7 +17,7 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/engineer
 	name = "Syndicate Engineer"
@@ -35,7 +35,7 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 	new /obj/item/clothing/glasses/meson/night(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/spy
 	name = "Syndicate Spy"
@@ -54,7 +54,7 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/maid
 	name = "Syndicate Maid"
@@ -62,9 +62,9 @@
 	item_type = /obj/item/storage/backpack/duffelbag/syndie/maid
 
 /obj/item/storage/backpack/duffelbag/syndie/maid/PopulateContents() //by far the weakest bundle
-	new /obj/item/clothing/under/syndicate/nova/maid(src)
+	new /obj/item/clothing/under/syndicate/skirt/maid(src)
 	new /obj/item/clothing/gloves/combat/maid(src)
-	new /obj/item/clothing/head/costume/maidheadband/syndicate(src)
+	new /obj/item/clothing/head/maidheadband/syndicate(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
@@ -84,7 +84,7 @@
 	new /obj/item/storage/belt/military/assault(src)
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/cybersun_hacker
 	name = "Cybersun Hacker"
@@ -136,23 +136,6 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 
-/datum/opposing_force_equipment/clothing_sol/dogginos
-	name = "Dogginos Courier"
-	description = "You're just doing your job."
-	item_type = /obj/item/storage/backpack/satchel/leather/dogginos
-
-/obj/item/storage/backpack/satchel/leather/dogginos/PopulateContents()
-	new /obj/item/clothing/under/pizza(src)
-	new /obj/item/clothing/suit/pizzaleader(src)
-	new /obj/item/clothing/suit/toggle/jacket/hoodie/pizza(src)
-	new /obj/item/clothing/head/pizza(src)
-	new /obj/item/clothing/head/soft/red(src)
-	new /obj/item/clothing/glasses/regular/betterunshit(src)
-	new /obj/item/clothing/mask/fakemoustache/italian(src)
-	new /obj/item/clothing/shoes/sneakers/red(src)
-	new /obj/item/radio/headset/headset_cent/impostorsr(src)
-	new /obj/item/card/id/advanced/chameleon(src)
-
 /obj/item/card/id/advanced/chameleon/impostorsr
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_COMMAND) //I didn't know i had to say this but you're not supposed to shoot your 'superior' just because they do not have access to the bridge
 
@@ -163,11 +146,10 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/impostor/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
-	new /obj/item/clothing/under/rank/centcom/officer_skirt(src)
+	new /obj/item/clothing/under/rank/centcom/officer/skirt(src)
 	new /obj/item/clothing/head/hats/centcom_cap(src)
 	new /obj/item/clothing/suit/armor/centcom_formal(src)
 	new /obj/item/clothing/shoes/combat(src)
-	new /obj/item/radio/headset/headset_cent/impostorsr(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clipboard(src)
 	new /obj/item/card/id/advanced/chameleon/impostorsr(src) //this thing has bridge access, and no one knows about that
@@ -245,7 +227,7 @@
 		FIRE = 100,
 		ACID = 100,
 	)))
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 	new /obj/item/clothing/gloves/latex/nitrile/heister(src)
 	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/under/suit/black/skirt(src)
@@ -325,7 +307,7 @@
 	new /obj/item/card/id/advanced/chameleon(src)
 
 /datum/opposing_force_equipment/clothing_magic/narsian
-	name = "Nar'Sien Prophet"
+	name = "Nar'Sian Prophet"
 	description = "An overshadowed cult following, whom incidentally thrive best in the dark."
 	item_type = /obj/item/storage/backpack/satchel/leather/narsian
 

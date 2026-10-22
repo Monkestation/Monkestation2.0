@@ -1,84 +1,65 @@
 //unsorted miscellaneous temporary visuals
 /obj/effect/temp_visual/dir_setting/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
+	icon_state = "splatter1"
+	base_icon_state = "splatter"
 	duration = 5
 	randomdir = FALSE
-	layer = ABOVE_MOB_LAYER
-	alpha = 175
+	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
-	var/splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, angle, blood_color)
-	if(!blood_color)
-		blood_color = COLOR_DARK_RED
-	var/x_component = sin(angle) * -15
-	var/y_component = cos(angle) * -15
-	var/obj/effect/abstract/shared_particle_holder/splatter = add_shared_particles(/particles/splatter, "bloodsplatter_[blood_color]")
-	if(blood_color != "red")
-		splatter.particles.color = blood_color
-	splatter.particles.velocity = list(x_component, y_component)
-	color = blood_color
-	icon_state = "[splatter_type][pick(1, 2, 3, 4, 5, 6)]"
+// set_color arg can be either a color string or a singleton /datum/blood_type to pull the color from
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_RED)
+	if(set_color)
+		var/datum/blood_type/blood_type = set_color
+		if(istype(blood_type))
+			color = blood_type.color
+		else
+			color = set_color
+	if(ISDIAGONALDIR(set_dir))
+		icon_state = "[base_icon_state][pick(1, 2, 6)]"
+	else
+		icon_state = "[base_icon_state][pick(3, 4, 5)]"
 	. = ..()
 	var/target_pixel_x = 0
 	var/target_pixel_y = 0
-	switch(angle)
-		if(0, 360)
-			target_pixel_x = 0
-			target_pixel_y = 8
-		if(1 to 44)
-			target_pixel_x = round(4 * ((angle) / 45))
-			target_pixel_y = 8
-		if(45)
-			target_pixel_x = 8
-			target_pixel_y = 8
-		if(46 to 89)
-			target_pixel_x = 8
-			target_pixel_y = round(4 * ((90 - angle) / 45))
-		if(90)
-			target_pixel_x = 8
-			target_pixel_y = 0
-		if(91 to 134)
-			target_pixel_x = 8
-			target_pixel_y = round(-3 * ((angle - 90) / 45))
-		if(135)
-			target_pixel_x = 8
-			target_pixel_y = -6
-		if(136 to 179)
-			target_pixel_x = round(4 * ((180 - angle) / 45))
-			target_pixel_y = -6
-		if(180)
-			target_pixel_x = 0
-			target_pixel_y = -6
-		if(181 to 224)
-			target_pixel_x = round(-6 * ((angle - 180) / 45))
-			target_pixel_y = -6
-		if(225)
-			target_pixel_x = -6
-			target_pixel_y = -6
-		if(226 to 269)
-			target_pixel_x = -6
-			target_pixel_y = round(-6 * ((270 - angle) / 45))
-		if(270)
-			target_pixel_x = -6
-			target_pixel_y = 0
-		if(271 to 314)
-			target_pixel_x = -6
-			target_pixel_y = round(8 * ((angle - 270) / 45))
-		if(315)
-			target_pixel_x = -6
-			target_pixel_y = 8
-		if(316 to 359)
-			target_pixel_x = round(-6 * ((360 - angle) / 45))
-			target_pixel_y = 8
-	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
-
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Destroy()
-	remove_shared_particles("bloodsplatter_[color]")
-	return ..()
+	switch(set_dir)
+		if(NORTH)
+			target_pixel_y = 16
+		if(SOUTH)
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(EAST)
+			target_pixel_x = 16
+		if(WEST)
+			target_pixel_x = -16
+		if(NORTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = 16
+		if(NORTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = 16
+		if(SOUTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(SOUTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration, flags = CUBIC_EASING | EASE_OUT)
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
+	icon_state = "ion_fade"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 10
+	randomdir = 0
+
+
+/obj/effect/temp_visual/dir_setting/magicbroom_trail //monkestation addition
+	name = "magic trails"
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
@@ -90,22 +71,43 @@
 	icon_state = "firing_effect"
 	duration = 2
 
+/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
+	. = ..()
+	if (ismovable(loc))
+		var/atom/movable/spawned_inside = loc
+		spawned_inside.vis_contents += src
+
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			pixel_x = rand(-3,3)
-			pixel_y = rand(4,6)
+			pixel_x += rand(-3,3)
+			pixel_y += rand(4,6)
 		if(SOUTH)
-			pixel_x = rand(-3,3)
-			pixel_y = rand(-1,1)
+			pixel_x += rand(-3,3)
+			pixel_y += rand(-1,1)
 		else
-			pixel_x = rand(-1,1)
-			pixel_y = rand(-1,1)
+			pixel_x += rand(-1,1)
+			pixel_y += rand(-1,1)
 	..()
 
 /obj/effect/temp_visual/dir_setting/firing_effect/energy
 	icon_state = "firing_effect_energy"
+	duration = 3
+
+/obj/effect/temp_visual/dir_setting/firing_effect/blue
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_blue"
+	duration = 3
+
+/obj/effect/temp_visual/dir_setting/firing_effect/red
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_red"
+	duration = 3
+
+/obj/effect/temp_visual/dir_setting/firing_effect/yellow
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_yellow"
 	duration = 3
 
 /obj/effect/temp_visual/dir_setting/firing_effect/magic
@@ -166,6 +168,9 @@
 	if(fades)
 		animate(src, alpha = 0, time = 32)
 
+/obj/effect/temp_visual/dir_setting/curse/long // Necro Sect Usage
+	duration = 330
+
 /obj/effect/temp_visual/dir_setting/curse/blob
 	icon_state = "curseblob"
 
@@ -203,6 +208,17 @@
 			icon_state = "beam_splash_w"
 		if(EAST)
 			icon_state = "beam_splash_e"
+
+/obj/effect/temp_visual/bsa_impact
+	name = "\improper Bluespace Artillery detonation"
+	desc = "Tearing into conventional space once more, the immense energy of the beam is delivered directly into the target and its surroundings."
+	icon = 'icons/effects/96x160.dmi'
+	icon_state = "bsa_impact_ex"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	pixel_y = -32
+	pixel_x = -32
+	duration = 10
 
 /obj/effect/temp_visual/wizard
 	name = "water"
@@ -272,10 +288,10 @@
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "3"
+	icon_state = "heavy"
 	light_outer_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
-	duration = 10
+	duration = 1 SECONDS
 
 /obj/effect/temp_visual/revenant
 	name = "spooky lights"
@@ -284,7 +300,17 @@
 /obj/effect/temp_visual/revenant/cracks
 	name = "glowing cracks"
 	icon_state = "purplecrack"
-	duration = 6
+	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/revenant/cracks/glow
+
+/obj/effect/temp_visual/revenant/cracks/glow/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/temp_visual/revenant/cracks/glow/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src)
 
 /obj/effect/temp_visual/gravpush
 	name = "gravity wave"
@@ -311,6 +337,13 @@
 	icon_state = "bluestream_fade"
 	duration = 9
 
+/obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
+	. = ..()
+	apply_wibbly_filters(src)
+
+/obj/effect/temp_visual/bluespace_fissure/long
+	duration = 300
+
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
@@ -321,14 +354,6 @@
 
 /obj/effect/temp_visual/gib_animation/animal
 	icon = 'icons/mob/simple/animal.dmi'
-
-/obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/simple/mob.dmi'
-	duration = 15
-
-/obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
-	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
-	. = ..()
 
 /obj/effect/temp_visual/mummy_animation
 	icon = 'icons/mob/simple/mob.dmi'
@@ -645,3 +670,29 @@
 	. = ..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
+
+/obj/effect/temp_visual/jet_plume
+	name = "jet plume"
+	icon_state = "jet_plume"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "big_slash"
+	pixel_x = -32
+	pixel_y = -32
+	duration = 0.3 SECONDS
+	light_power = 0
+	light_on = 0
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/semicircle
+	icon_state = "big_slash_180"
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/full_circle
+	icon_state = "big_slash_360"
+	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/circle_wave/star_blast
+	color = COLOR_VOID_PURPLE

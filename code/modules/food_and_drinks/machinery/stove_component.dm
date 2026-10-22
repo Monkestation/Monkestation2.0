@@ -81,7 +81,7 @@
 
 	SEND_SIGNAL(container, COMSIG_STOVE_PROCESS, temperature, seconds_per_tick, parent)
 	container?.reagents.expose_temperature(SOUP_BURN_TEMP + 80, heat_coefficient)
-	real_parent.use_power(real_parent.active_power_usage)
+	real_parent.use_energy(real_parent.active_power_usage)
 
 	var/turf/stove_spot = real_parent.loc
 	if(isturf(stove_spot))

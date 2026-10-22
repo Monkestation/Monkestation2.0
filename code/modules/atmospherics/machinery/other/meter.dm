@@ -90,17 +90,17 @@
 		new_greyscale = COLOR_GRAY
 	else
 		switch(env_temperature)
-			if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+			if(700 to INFINITY)
 				new_greyscale = COLOR_RED
-			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+			if(460 to 700)
 				new_greyscale = COLOR_ORANGE
-			if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+			if(340 to 460)
 				new_greyscale = COLOR_YELLOW
-			if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+			if(270 to 340)
 				new_greyscale = COLOR_VIBRANT_LIME
-			if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+			if(200 to 270)
 				new_greyscale = COLOR_CYAN
-			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+			if(70 to 200)
 				new_greyscale = COLOR_BLUE
 			else
 				new_greyscale = COLOR_VIOLET

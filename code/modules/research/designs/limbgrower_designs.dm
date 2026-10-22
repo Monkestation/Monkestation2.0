@@ -8,7 +8,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
 
 /datum/design/rightarm
 	name = "Right Arm"
@@ -16,7 +16,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
 
 /datum/design/leftleg
 	name = "Left Leg"
@@ -24,7 +24,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_DIGITIGRADE)
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
 
 /datum/design/rightleg
 	name = "Right Leg"
@@ -32,7 +32,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_DIGITIGRADE)
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
 
 //Non-limb limb designs
 
@@ -131,7 +131,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/external/tail/cat
-	category = list(SPECIES_HUMAN)
+	category = list(RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_INITIAL) // Monkestation Edit:
 
 /datum/design/cat_ears
 	name = "Cat Ears"
@@ -139,7 +139,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/internal/ears/cat
-	category = list(SPECIES_HUMAN)
+	category = list(RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_INITIAL) // Monkestation Edit:
 
 /datum/design/plasmaman_lungs
 	name = "Plasma Filter"

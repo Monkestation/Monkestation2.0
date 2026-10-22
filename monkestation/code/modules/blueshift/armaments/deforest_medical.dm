@@ -32,11 +32,11 @@
 	cost = PAYCHECK_COMMAND * 8
 
 /datum/armament_entry/company_import/deforest/first_aid_kit/first_responder
-	item_type = /obj/item/storage/backpack/duffelbag/deforest_surgical/stocked
+	item_type = /obj/item/storage/backpack/deforest_surgical/stocked
 	cost = PAYCHECK_COMMAND * 10
 
 /datum/armament_entry/company_import/deforest/first_aid_kit/orange_satchel
-	item_type = /obj/item/storage/backpack/duffelbag/deforest_medkit/stocked
+	item_type = /obj/item/storage/backpack/deforest_medkit/stocked
 	cost = PAYCHECK_COMMAND * 10
 
 // Basic first aid supplies like gauze, sutures, mesh, so on
@@ -48,10 +48,6 @@
 	item_type = /obj/item/stack/medical/suture/coagulant
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/deforest/first_aid/suture
-	item_type = /obj/item/stack/medical/suture
-	cost = PAYCHECK_LOWER
-
 /datum/armament_entry/company_import/deforest/first_aid/red_sun
 	item_type = /obj/item/stack/medical/ointment/red_sun
 	cost = PAYCHECK_LOWER
@@ -60,13 +56,8 @@
 	item_type = /obj/item/stack/medical/ointment
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/deforest/first_aid/mesh
-	item_type = /obj/item/stack/medical/mesh
-	cost = PAYCHECK_LOWER
-
 /datum/armament_entry/company_import/deforest/first_aid/sterile_gauze
 	item_type = /obj/item/stack/medical/gauze/sterilized
-	cost = PAYCHECK_LOWER
 
 /datum/armament_entry/company_import/deforest/first_aid/amollin
 	item_type = /obj/item/storage/pill_bottle/painkiller
@@ -75,6 +66,10 @@
 /datum/armament_entry/company_import/deforest/first_aid/robo_patch
 	item_type = /obj/item/reagent_containers/pill/robotic_patch/synth_repair
 	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/first_aid/robo_pen
+	item_type = /obj/item/reagent_containers/medipen/synthcare
+	cost = PAYCHECK_CREW * 2
 
 /datum/armament_entry/company_import/deforest/first_aid/subdermal_splint
 	item_type = /obj/item/stack/medical/wound_recovery
@@ -91,40 +86,43 @@
 	cost = PAYCHECK_LOWER * 3
 
 /datum/armament_entry/company_import/deforest/medpens/occuisate
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate
+	item_type = /obj/item/reagent_containers/medipen/deforest/occuisate
 
 /datum/armament_entry/company_import/deforest/medpens/morpital
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/morpital
+	item_type = /obj/item/reagent_containers/medipen/deforest/morpital
 
 /datum/armament_entry/company_import/deforest/medpens/lipital
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/lipital
+	item_type = /obj/item/reagent_containers/medipen/deforest/lipital
 
 /datum/armament_entry/company_import/deforest/medpens/meridine
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/meridine
+	item_type = /obj/item/reagent_containers/medipen/deforest/meridine
 
 /datum/armament_entry/company_import/deforest/medpens/calopine
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/calopine
+	item_type = /obj/item/reagent_containers/medipen/deforest/calopine
 
 /datum/armament_entry/company_import/deforest/medpens/coagulants
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/coagulants
+	item_type = /obj/item/reagent_containers/medipen/deforest/coagulants
 
 /datum/armament_entry/company_import/deforest/medpens/lepoturi
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi
+	item_type = /obj/item/reagent_containers/medipen/deforest/lepoturi
 
 /datum/armament_entry/company_import/deforest/medpens/psifinil
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/psifinil
+	item_type = /obj/item/reagent_containers/medipen/deforest/psifinil
 
 /datum/armament_entry/company_import/deforest/medpens/halobinin
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/halobinin
+	item_type = /obj/item/reagent_containers/medipen/deforest/halobinin
 
 /datum/armament_entry/company_import/deforest/medpens/robo_solder
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder
+	item_type = /obj/item/reagent_containers/medipen/deforest/robot_liquid_solder
 
 /datum/armament_entry/company_import/deforest/medpens/robo_cleaner
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner
+	item_type = /obj/item/reagent_containers/medipen/deforest/robot_system_cleaner
+
+/datum/armament_entry/company_import/deforest/medpens/robo_painkiller
+	item_type = /obj/item/reagent_containers/medipen/synthpainkill
 
 /datum/armament_entry/company_import/deforest/medpens/pentibinin
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin
+	item_type = /obj/item/reagent_containers/medipen/deforest/pentibinin
 	contraband = TRUE
 
 // Autoinjectors for fighting
@@ -134,24 +132,24 @@
 	cost = PAYCHECK_COMMAND * 2
 
 /datum/armament_entry/company_import/deforest/medpens_stim/adrenaline
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/adrenaline
+	item_type = /obj/item/reagent_containers/medipen/deforest/adrenaline
 
 /datum/armament_entry/company_import/deforest/medpens_stim/synephrine
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/synephrine
+	item_type = /obj/item/reagent_containers/medipen/deforest/synephrine
 
 /datum/armament_entry/company_import/deforest/medpens_stim/krotozine
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/krotozine
+	item_type = /obj/item/reagent_containers/medipen/deforest/krotozine
 
 /datum/armament_entry/company_import/deforest/medpens_stim/aranepaine
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine
+	item_type = /obj/item/reagent_containers/medipen/deforest/aranepaine
 	contraband = TRUE
 
 /datum/armament_entry/company_import/deforest/medpens_stim/synalvipitol
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/synalvipitol
+	item_type = /obj/item/reagent_containers/medipen/deforest/synalvipitol
 	contraband = TRUE
 
 /datum/armament_entry/company_import/deforest/medpens_stim/demoneye
-	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/demoneye
+	item_type = /obj/item/reagent_containers/medipen/deforest/demoneye
 	cost = PAYCHECK_COMMAND * 3
 	contraband = TRUE
 
@@ -220,3 +218,61 @@
 /datum/armament_entry/company_import/deforest/medical_modules/surgical_processor
 	name = "MOD surgical processor module"
 	item_type = /obj/item/mod/module/surgical_processor
+
+/datum/armament_entry/company_import/deforest/saftey_clothing
+	subcategory = "Saftey Clothing"
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/jumpsuit
+	name = "Deforest Jumpsuit"
+	item_type = /obj/item/clothing/under/rank/medical/paramedic/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/jacket
+	name = "Deforest Jacket"
+	item_type = /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/gloves
+	name = "Deforest Gloves"
+	item_type = /obj/item/clothing/gloves/latex/nitrile/deforest
+	cost = PAYCHECK_COMMAND * 3
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/boots
+	name = "Deforest Boots"
+	item_type = /obj/item/clothing/shoes/workboots/black/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/belt
+	name = "Deforest Belt"
+	item_type = /obj/item/storage/belt/medical/paramedic/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/hat
+	name = "Deforest Hat"
+	item_type = /obj/item/clothing/head/soft/paramedic/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/gas_mask
+	name = "Deforest Gas Mask"
+	item_type = /obj/item/clothing/mask/gas/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/breath_mask
+	name = "Deforest Breath Mask"
+	item_type = /obj/item/clothing/mask/surgical/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/beret
+	name = "Deforest Beret"
+	item_type = /obj/item/clothing/head/beret/medical/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/satchel
+	name = "Deforest Satchel"
+	item_type = /obj/item/storage/backpack/satchel/med/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/backpack
+	name = "Deforest Backpack"
+	item_type = /obj/item/storage/backpack/medic/deforest
+	cost = PAYCHECK_CREW

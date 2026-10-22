@@ -52,6 +52,9 @@
 /// All armors, preferable in the order as seen above
 #define ARMOR_LIST_ALL(...) list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
 
+/// Blacklist for certain objects being used with anti-drop implants or superglue - currently only d-swords.
+#define ANTI_DROP_BLACKLIST(...) list(/obj/item/dualsaber)
+
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)
@@ -95,17 +98,23 @@ DEFINE_BITFIELD(status_flags, list(
 //Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
-#define CLICK_CD_MELEE 8
-#define CLICK_CD_THROW 8
-#define CLICK_CD_RANGE 4
-#define CLICK_CD_RAPID 2
-#define CLICK_CD_HYPER_RAPID 1
-#define CLICK_CD_CLICK_ABILITY 6
-#define CLICK_CD_BREAKOUT 100
-#define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_RESIST 20
-#define CLICK_CD_GRABBING 10
-#define CLICK_CD_LOOK_UP 5
+#define CLICK_CD_MELEE (0.8 SECONDS)
+#define CLICK_CD_FAST_MELEE (0.5 SECONDS)
+#define CLICK_CD_THROW (0.8 SECONDS)
+#define CLICK_CD_RANGE (0.4 SECONDS)
+#define CLICK_CD_RAPID (0.2 SECONDS)
+#define CLICK_CD_HYPER_RAPID (0.1 SECONDS)
+#define CLICK_CD_CLICK_ABILITY (0.6 SECONDS)
+#define CLICK_CD_BREAKOUT (10 SECONDS)
+#define CLICK_CD_HANDCUFFED (1 SECONDS)
+#define CLICK_CD_RESIST (2 SECONDS)
+#define CLICK_CD_GRABBING (1 SECONDS)
+#define CLICK_CD_LOOK_UP (0.5 SECONDS)
+#define CLICK_CD_WHIP (1.2 SECONDS)
+
+#define CLICK_CD_BULKY_WEAPON (2.4 SECONDS)
+#define CLICK_CD_LARGE_WEAPON (1.6 SECONDS)
+#define CLICK_CD_LIGHT_WEAPON (1.2 SECONDS)
 
 //Cuff resist speeds
 #define FAST_CUFFBREAK 1
@@ -125,12 +134,21 @@ DEFINE_BITFIELD(status_flags, list(
 //slowdown when crawling
 #define CRAWLING_ADD_SLOWDOWN 4
 
-//Attack types for checking shields/hit reactions
+//Attack types for checking block reactions
+/// Attack was made with a melee weapon
 #define MELEE_ATTACK 1
+/// Attack is a punch or kick.
+/// Mob attacks are not classified as unarmed (currently).
 #define UNARMED_ATTACK 2
+/// A projectile is hitting us.
 #define PROJECTILE_ATTACK 3
+/// A thrown item is hitting us.
 #define THROWN_PROJECTILE_ATTACK 4
+/// We're being tackled or leaped at.
 #define LEAP_ATTACK 5
+
+/// Used in check block to get what mob is attacking the blocker.
+#define GET_ASSAILANT(weapon) (get(weapon, /mob/living))
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH "punch"
@@ -158,43 +176,19 @@ DEFINE_BITFIELD(status_flags, list(
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
+#define STAGGERED_SLOWDOWN_LENGTH 3 SECONDS
+#define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
 
-
 //Combat object defines
 
-//Embedded objects
-///Chance for embedded objects to cause pain (damage user)
-#define EMBEDDED_PAIN_CHANCE 15
-///Chance for embedded object to fall out (causing pain but removing the object)
-#define EMBEDDED_ITEM_FALLOUT 5
-///Chance for an object to embed into somebody when thrown
-#define EMBED_CHANCE 45
-///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
-#define EMBEDDED_PAIN_MULTIPLIER 2
-///Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
-#define EMBEDDED_IMPACT_PAIN_MULTIPLIER 4
-///The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
+/// The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBED_THROWSPEED_THRESHOLD 4
-///Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 6
-///A Time in ticks, total removal time = (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME 30
-///Chance for embedded objects to cause pain every time they move (jostle)
-#define EMBEDDED_JOSTLE_CHANCE 5
-///Coefficient of multiplication for the damage the item does while
-#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER 1
-///This percentage of all pain will be dealt as stam damage rather than brute (0-1)
-#define EMBEDDED_PAIN_STAM_PCT 0.0
-///For thrown weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
+/// For thrown embedding weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
 #define EMBED_CHANCE_SPEED_BONUS 10
-
-#define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
-#define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
-#define EMBED_POINTY list("ignore_throwspeed_threshold" = TRUE)
-#define EMBED_POINTY_SUPERIOR list("embed_chance" = 100, "ignore_throwspeed_threshold" = TRUE)
 
 //Gun weapon weight
 #define WEAPON_LIGHT 1
@@ -221,7 +215,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 ///accuracy penalty of sawn off guns
 #define SAWN_OFF_ACC_PENALTY 25
 ///added recoil of sawn off guns
-#define SAWN_OFF_RECOIL 1
+#define SAWN_OFF_RECOIL 1.5
 
 //ammo box sprite defines
 ///ammo box will always use provided icon state
@@ -234,10 +228,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SUPPRESSED_NONE 0
 #define SUPPRESSED_QUIET 1 ///standard suppressed
 #define SUPPRESSED_VERY 2 /// no message
-
-//Projectile Reflect
-#define REFLECT_NORMAL (1<<0)
-#define REFLECT_FAKEPROJECTILE (1<<1)
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
@@ -272,8 +262,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define TOTAL_BODYPART_COUNT 6
 
-GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-
 #define BODY_ZONE_PRECISE_EYES "eyes"
 #define BODY_ZONE_PRECISE_MOUTH "mouth"
 #define BODY_ZONE_PRECISE_GROIN "groin"
@@ -281,6 +269,13 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define BODY_ZONE_PRECISE_R_HAND "r_hand"
 #define BODY_ZONE_PRECISE_L_FOOT "l_foot"
 #define BODY_ZONE_PRECISE_R_FOOT "r_foot"
+
+// These lists are ordered as bodyparts would be ordered
+GLOBAL_LIST_INIT(all_body_zones, list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(limb_zones, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT))
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1
@@ -305,13 +300,6 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
-
-/// Flag for when /afterattack potentially acts on an item.
-/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
-/// Does not necessarily imply success, or even that it did hit an item, just intent.
-// This is intentionally not (1 << 0) because some stuff currently erroneously returns TRUE/FALSE for afterattack.
-// Doesn't need to be set if proximity flag is FALSE.
-#define AFTERATTACK_PROCESSED_ITEM (1 << 1)
 
 //Autofire component
 /// Compatible firemode is in the gun. Wait until it's held in the user hands.
@@ -359,3 +347,65 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define COMBO_STEPS "steps"
 /// The proc the combo calls
 #define COMBO_PROC "proc"
+
+///Deathmatch lobby current status
+#define DEATHMATCH_NOT_PLAYING 0
+#define DEATHMATCH_PRE_PLAYING 1
+#define DEATHMATCH_PLAYING 2
+
+/// The amount of energy needed to increase the burn force by 1 damage during electrocution.
+#define JOULES_PER_DAMAGE (25 KILO JOULES)
+/// Calculates the amount of burn force when applying this much energy to a mob via electrocution from an energy source.
+#define ELECTROCUTE_DAMAGE(energy) (energy >= 1 KILO JOULES ? clamp(20 + round(energy / JOULES_PER_DAMAGE), 20, 195) + rand(-5,5) : 0)
+
+// Attack chain attack_modifier modifiers
+/// Sets the weapon's base force to this. Use carefully (as multiple overrides may collide). Set via [SET_ATTACK_FORCE]
+#define FORCE_OVERRIDE "force_override"
+/// Flat addition or subtration to the weapon's force. Set via [MODIFY_ATTACK_FORCE]
+#define FORCE_MODIFIER "force_modifier"
+/// Multiplication of the weapon's force. Applied AFTER [FORCE_MODIFIER]. Set via [MODIFY_ATTACK_FORCE_MULTIPLIER]
+#define FORCE_MULTIPLIER "force_multiplier"
+/// If set in modifiers, default messages ("You hit the thing with the thing") are silenced
+#define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
+/// If set in modifiers, default hitsound is silenced
+#define SILENCE_HITSOUND "silence_hitsound"
+/// Uf set in modifiers then this attack was blocked
+#define ATTACK_BLOCKED "attack_blocked"
+
+/// Used in attack chain to set the force of the attack without changing the base force of the item.
+#define SET_ATTACK_FORCE(atk_mods, value) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[FORCE_OVERRIDE] = value;
+
+/// Used in attack chain to add or remove force from the attack without changing the base force of the item.
+#define MODIFY_ATTACK_FORCE(atk_mods, amount) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[FORCE_MODIFIER] += amount;
+
+/// Used in attack chain to multiply the force of the attack without changing the base force of the item.
+#define MODIFY_ATTACK_FORCE_MULTIPLIER(atk_mods, amount) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	if(!(FORCE_MULTIPLIER in atk_mods)) { atk_mods[FORCE_MULTIPLIER] = 1 }; \
+	atk_mods[FORCE_MULTIPLIER] *= amount;
+
+/// Used in attack chain to prevent hitsounds on attack (to allow for custom sounds)
+#define MUTE_ATTACK_HITSOUND(atk_mods) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[SILENCE_HITSOUND] = TRUE;
+
+/// Used in attack chain to prevent default visible messages from being sent (to allow for custom messages)
+#define HIDE_ATTACK_MESSAGES(atk_mods) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[SILENCE_DEFAULT_MESSAGES] = TRUE;
+
+/// Calculates the final force of some item based on atk_mods
+/// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
+#define CALCULATE_FORCE(some_item, atk_mods) \
+	((((FORCE_OVERRIDE in atk_mods) ? atk_mods[FORCE_OVERRIDE] : some_item.force) + (atk_mods?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in atk_mods) ? atk_mods[FORCE_MULTIPLIER] : 1))
+
+/// Return from attacked_by to indicate the attack did not connect
+/// A negative number is used here to people can easily check "attacks that failed or did 0 damage" with <= 0
+#define ATTACK_FAILED -1
+
+///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown?
+#define FLASH_COMPLETED "flash_completed"

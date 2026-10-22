@@ -1,0 +1,74 @@
+/// Adds the item to contents and to_image (if needed)
+/datum/lootpanel/proc/add_to_index(datum/search_object/index)
+	RegisterSignal(index, COMSIG_QDELETING, PROC_REF(on_searchable_deleted))
+	if(isnull(index.icon))
+		to_image += index
+
+	contents += index
+
+
+/// Used to populate contents and start generating if needed
+/datum/lootpanel/proc/populate_contents()
+	if(length(contents))
+		reset_contents()
+
+	// Add source turf first
+	var/datum/search_object/source = new(owner, source_turf)
+	add_to_index(source)
+
+	var/should_check_obscured = length(source_turf.contents) < 25
+	for(var/atom/thing as anything in source_turf.contents)
+		// validate
+		if(!istype(thing))
+			stack_trace("Non-atom in the contents of [source_turf]!")
+			continue
+
+		add_new_searchable(thing, FALSE, should_check_obscured)
+
+	queue_update()
+
+/datum/lootpanel/proc/on_source_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	// async because the same move handler we register with this can trigger on the /datum/search_object later in this event
+	// deleting it just as we added it
+	addtimer(CALLBACK(src, PROC_REF(add_new_searchable), arrived, TRUE), 0)
+
+/datum/lootpanel/proc/add_new_searchable(atom/movable/thing, from_signal, should_check_obscured = TRUE)
+	if(QDELETED(thing))
+		return
+	if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
+		return
+	if(should_check_obscured && thing.IsObscured())
+		return
+	if(thing.invisibility > owner.mob.see_invisible)
+		return
+	if(from_signal && (!source_turf || !(thing in source_turf.contents)))
+		return
+
+	// convert
+	var/datum/search_object/index = new(owner, thing)
+	add_to_index(index)
+
+	if(from_signal)
+		queue_update()
+
+/datum/lootpanel/proc/queue_update()
+	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
+	window?.send_update()
+
+	if(length(to_image))
+		SSlooting.backlog += src
+
+
+/// For: Resetting to empty. Ignores the searchable qdel event
+/datum/lootpanel/proc/reset_contents()
+	for(var/datum/search_object/index as anything in contents)
+		contents -= index
+		to_image -= index
+
+		if(QDELETED(index))
+			continue
+
+		UnregisterSignal(index, COMSIG_QDELETING)
+		qdel(index)

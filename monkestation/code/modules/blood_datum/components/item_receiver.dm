@@ -24,7 +24,7 @@
 	if(!length(item_types))
 		return TRUE
 
-	for(var/item as anything in item_types)
+	for(var/item in item_types)
 		if(istype(offer, item))
 			return TRUE
 
@@ -33,7 +33,7 @@
 
 /datum/component/item_receiver/proc/try_take_item(datum/source, atom/movable/screen/alert/give/alert, obj/item/offer)
 	var/can_take = FALSE
-	for(var/item as anything in item_types)
+	for(var/item in item_types)
 		if(istype(offer, item))
 			can_take = TRUE
 			break

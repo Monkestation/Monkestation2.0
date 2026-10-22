@@ -14,7 +14,7 @@
 	health = 25
 	maxHealth = 25
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
@@ -36,6 +36,9 @@
 	var/extinguish_people = TRUE
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
+
+	/// the type of hardhat this firebot was made with so we know what to drop when it breaks
+	var/hardhat_type = /obj/item/clothing/head/utility/hardhat
 
 /mob/living/simple_animal/bot/firebot/Initialize(mapload)
 	. = ..()
@@ -64,13 +67,13 @@
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
 
-/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag)
+/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.interact_with_atom(attack_target, src, modifiers)
 	else
 		return ..()
 
@@ -78,7 +81,7 @@
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.interact_with_atom(A, src, modifiers)
 	else
 		return ..()
 
@@ -137,9 +140,9 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/firebot/ui_act(action, params)
+/mob/living/simple_animal/bot/firebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
@@ -280,7 +283,7 @@
 		flick("firebots_use", user)
 	else
 		flick("firebot1_use", user)
-	internal_ext.afterattack(target, user, null)
+	internal_ext.interact_with_atom(target, src)
 
 /mob/living/simple_animal/bot/firebot/update_icon_state()
 	. = ..()
@@ -297,7 +300,7 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/clothing/head/utility/hardhat/red(Tsec)
+	new hardhat_type(Tsec)
 
 	var/turf/T = get_turf(Tsec)
 

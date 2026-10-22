@@ -6,7 +6,9 @@
 /area/shuttle/arrival)
 "b" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron/shuttle/arrivals,
+/turf/open/floor/iron/shuttle/arrivals{
+	icon_state = "sign_3"
+	},
 /area/shuttle/arrival)
 "c" = (
 /obj/structure/chair/sofa/bench/right{

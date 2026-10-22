@@ -1,4 +1,4 @@
-import { FeatureChoiced, FeatureDropdownInput } from '../base';
+import { type FeatureChoiced, FeatureDropdownInput } from '../base';
 
 export const tunnel_vision_fov: FeatureChoiced = {
   name: 'Tunnel Vision FOV',

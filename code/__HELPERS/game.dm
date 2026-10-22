@@ -90,6 +90,10 @@
 			return TRUE
 
 		else if(isliving(player_mind.current))
+			if(isAI(player_mind.current))
+				var/mob/living/silicon/ai/AI = player_mind.current
+				if(AI.is_dying)
+					return FALSE
 			return (player_mind.current.stat != DEAD)
 
 	return FALSE
@@ -139,8 +143,7 @@
 	for(var/client/remove_from in hide_from)
 		remove_from.images -= image_to_remove
 
-
-///Add an image to a list of clients and calls a proc to remove it after a duration
+/// Add an image to a list of clients and calls a proc to remove it after a duration
 /proc/flick_overlay_global(image/image_to_show, list/show_to, duration)
 	if(!show_to || !length(show_to) || !image_to_show)
 		return
@@ -148,7 +151,7 @@
 		add_to.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-/// Flicks a certain overlay onto an atom, handling icon_state strings
+///Flicks a certain overlay onto an atom, handling icon_state strings
 /atom/proc/flick_overlay(image_to_show, list/show_to, duration, layer)
 	var/image/passed_image = \
 		istext(image_to_show) \
@@ -157,30 +160,54 @@
 
 	flick_overlay_global(passed_image, show_to, duration)
 
-/// flicks an overlay to anyone who can view this atom
-/atom/proc/flick_overlay_view(image_to_show, duration)
-	var/list/viewing = list()
-	for(var/mob/viewer as anything in viewers(src))
-		if(viewer.client)
-			viewing += viewer.client
-	flick_overlay(image_to_show, viewing, duration)
+/**
+ * Helper atom that copies an appearance and exists for a period
+*/
+/atom/movable/flick_visual
+
+/// Takes the passed in MA/icon_state, mirrors it onto ourselves, and displays that in world for duration seconds
+/// Returns the displayed object, you can animate it and all, but you don't own it, we'll delete it after the duration
+/atom/proc/flick_overlay_view(mutable_appearance/display, duration)
+	if(!display)
+		return null
+
+	var/mutable_appearance/passed_appearance = \
+		istext(display) \
+			? mutable_appearance(icon, display, layer) \
+			: display
+
+	// If you don't give it a layer, we assume you want it to layer on top of this atom
+	// Because this is vis_contents, we need to set the layer manually (you can just set it as you want on return if this is a problem)
+	if(passed_appearance.layer == FLOAT_LAYER)
+		passed_appearance.layer = layer + 0.1
+	// This is faster then pooling. I promise
+	var/atom/movable/flick_visual/visual = new()
+	visual.appearance = passed_appearance
+	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	// I hate /area
+	var/atom/movable/lies_to_children = src
+	lies_to_children.vis_contents += visual
+	QDEL_IN_CLIENT_TIME(visual, duration)
+	return visual
+
+/area/flick_overlay_view(mutable_appearance/display, duration)
+	return
 
 ///Get active players who are playing in the round
 /proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
 	var/active_players = 0
-	for(var/i = 1; i <= GLOB.player_list.len; i++)
-		var/mob/player_mob = GLOB.player_list[i]
+	for(var/mob/player_mob as anything in GLOB.player_list)
 		if(!player_mob?.client)
 			continue
-		if(alive_check && player_mob.stat)
+		if(alive_check && player_mob.stat == DEAD)
 			continue
-		else if(afk_check && player_mob.client.is_afk())
+		if(afk_check && player_mob.client.is_afk())
 			continue
-		else if(human_check && !ishuman(player_mob))
+		if(human_check && !ishuman(player_mob))
 			continue
-		else if(isnewplayer(player_mob)) // exclude people in the lobby
+		if(isnewplayer(player_mob)) // exclude people in the lobby
 			continue
-		else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
+		if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
 			var/mob/dead/observer/ghost_player = player_mob
 			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
@@ -188,7 +215,7 @@
 	return active_players
 
 ///Uses stripped down and bastardized code from respawn character
-/proc/make_body(mob/dead/observer/ghost_player)
+/proc/make_body(mob/dead/observer/ghost_player, apply_prefs = TRUE)
 	if(!ghost_player || !ghost_player.key)
 		return
 
@@ -196,9 +223,11 @@
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
+	if(apply_prefs)
+		ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
+
 	new_character.dna.update_dna_identity()
-	new_character.key = ghost_player.key
+	new_character.PossessByPlayer(ghost_player.key)
 
 	return new_character
 
@@ -232,20 +261,32 @@
 	return atom_to_find.loc
 
 ///Send a message in common radio when a player arrives
-/proc/announce_arrival(mob/living/carbon/human/character, rank)
+/proc/announce_arrival(mob/living/carbon/human/character, rank, announce_to_ghosts = TRUE)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
-	var/area/player_area = get_area(character)
-	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if (announce_to_ghosts)
+		var/area/player_area = get_area(character)
+
+		deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(!character.mind)
 		return
 	if(!GLOB.announcement_systems.len)
 		return
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
+	if(HAS_TRAIT(character, TRAIT_STOWAWAY))
+		return
 
-	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	var/obj/machinery/announcement_system/announcer
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.arrival_toggle)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	announcer = pick(available_machines)
+	announcer.announce(AUTO_ANNOUNCE_ARRIVAL, character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 ///Check if the turf pressure allows specialized equipment to work
 /proc/lavaland_equipment_pressure_check(turf/turf_to_check)
@@ -280,7 +321,7 @@
 
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
-	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
 		var/area/apc_area = current_apc.area
@@ -300,8 +341,8 @@
 	if(selected_tip)
 		message = selected_tip
 	else
-		var/list/randomtips = world.file2list("strings/tips.txt")
-		var/list/memetips = world.file2list("strings/sillytips.txt")
+		var/list/randomtips = file2list("strings/tips.txt")
+		var/list/memetips = file2list("strings/sillytips.txt")
 		if(length(randomtips) && prob(95))
 			message = pick(randomtips)
 		else if(length(memetips))
@@ -313,4 +354,54 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, custom_boxed_message("purple_box", span_purple("<span class='oocplain'><b>[source]: </b>[message]</span>")))
+	to_chat(target, custom_boxed_message("purple_box", span_purple("<b>[source]: </b>[message]")))
+
+///Checks to see if `atom/source` is behind `atom/target`
+/proc/check_behind(atom/source, atom/target)
+	// Let's see if source is behind target
+	// "Behind" is defined as 3 tiles directly to the back of the target
+	// x . .
+	// x > .
+	// x . .
+
+	// No tactical spinning allowed
+	if(HAS_TRAIT(target, TRAIT_SPINNING))
+		return TRUE
+
+	// We'll take "same tile" as "behind" for ease
+	if(target.loc == source.loc)
+		return TRUE
+
+	// We'll also assume lying down is behind, as mob directions when lying are unclear
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.body_position == LYING_DOWN)
+			return TRUE
+
+	// Exceptions aside, let's actually check if they're, yknow, behind
+	var/dir_target_to_source = get_dir(target, source)
+	if(target.dir & REVERSE_DIR(dir_target_to_source))
+		return TRUE
+
+	return FALSE
+
+/// Returns a list of all minds that the target mind shares a team with.
+/proc/get_all_team_members(datum/mind/mind) as /list
+	. = list()
+	for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+		var/datum/team/team = antag_datum.get_team()
+		if(team)
+			. |= team.members
+
+/// Used to get a random closed and non-secure locker on the station z-level, created for the Stowaway trait.
+/proc/get_unlocked_closed_locker()
+	var/list/eligible_lockers = list()
+	for(var/obj/structure/closet/closet as anything in GLOB.closets)
+		if(QDELETED(closet) || closet.opened || istype(closet, /obj/structure/closet/secure_closet))
+			continue
+		var/turf/closet_turf = get_turf(closet)
+		if(!closet_turf || !is_station_level(closet_turf.z) || !is_safe_turf(closet_turf, dense_atoms = TRUE))
+			continue
+		eligible_lockers += closet
+	if(length(eligible_lockers))
+		return pick(eligible_lockers)

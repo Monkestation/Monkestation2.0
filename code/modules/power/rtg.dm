@@ -22,8 +22,7 @@
 	connect_to_network()
 
 /obj/machinery/power/rtg/process()
-	..()
-	add_avail(power_gen)
+	add_avail(power_to_energy(power_gen))
 
 /obj/machinery/power/rtg/RefreshParts()
 	. = ..()
@@ -36,12 +35,12 @@
 /obj/machinery/power/rtg/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Power generation now at <b>[power_gen*0.001]</b>kW.")
+		. += span_notice("The status display reads: Power generation at <b>[display_power(power_gen, convert = FALSE)]</b>.")
 
-/obj/machinery/power/rtg/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
+/obj/machinery/power/rtg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), attacking_item))
 		return
-	else if(default_deconstruction_crowbar(I))
+	else if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
@@ -74,10 +73,10 @@
 	tesla_zap(src, 5, power_gen * 0.05)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 2, 3, 4, null, 8), 10 SECONDS) // Not a normal explosion.
 
-/obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/Proj)
+/obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/proj)
 	. = ..()
-	if(!going_kaboom && istype(Proj) && Proj.damage > 0 && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		log_bomber(Proj.firer, "triggered a", src, "explosion via projectile")
+	if(!going_kaboom && istype(proj) && proj.damage > 0 && ((proj.damage_type == BURN) || (proj.damage_type == BRUTE)))
+		log_bomber(proj.firer, "triggered a", src, "explosion via projectile")
 		overload()
 
 /obj/machinery/power/rtg/abductor/blob_act(obj/structure/blob/B)
@@ -141,11 +140,11 @@
 	power_gen = 750
 	anchored = TRUE
 
-/obj/machinery/power/rtg/old_station/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
+/obj/machinery/power/rtg/old_station/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), attacking_item))
 		to_chat(user,span_warning("You feel it crumbling under your hands!"))
 		return
-	else if(default_deconstruction_crowbar(I, user = user))
+	else if(default_deconstruction_crowbar(attacking_item, user = user))
 		return
 	return ..()
 

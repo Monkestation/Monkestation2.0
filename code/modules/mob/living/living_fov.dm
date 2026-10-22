@@ -18,21 +18,18 @@
 		var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
 
 		/// Getting a direction vector
-		var/dir_x
-		var/dir_y
-		switch(dir)
-			if(SOUTH)
-				dir_x = 0
-				dir_y = -vector_len
-			if(NORTH)
-				dir_x = 0
-				dir_y = vector_len
-			if(EAST)
-				dir_x = vector_len
-				dir_y = 0
-			if(WEST)
-				dir_x = -vector_len
-				dir_y = 0
+		var/dir_x = 0 // based on east/west
+		var/dir_y = 0 // based on north/south
+
+		if(dir & NORTH)
+			dir_y += vector_len
+		else if(dir & SOUTH)
+			dir_y -= vector_len
+
+		if(dir & EAST)
+			dir_x += vector_len
+		else if(dir & WEST)
+			dir_x -= vector_len
 
 		///Calculate angle
 		var/angle = arccos((dir_x * rel_x + dir_y * rel_y) / (sqrt(dir_x**2 + dir_y**2) * sqrt(rel_x**2 + rel_y**2)))
@@ -105,7 +102,7 @@
 		var/client/mob_client = living_mob.client
 		if(!mob_client)
 			continue
-		if(HAS_TRAIT(living_mob, TRAIT_DEAF)) //Deaf people can't hear sounds so no sound indicators
+		if(HAS_TRAIT(living_mob, TRAIT_DEAF) || HAS_TRAIT(living_mob, TRAIT_HARD_OF_HEARING)) //Deaf people can't hear sounds so no sound indicators
 			continue
 		if(living_mob.in_fov(center, ignore_self))
 			continue

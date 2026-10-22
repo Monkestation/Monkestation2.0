@@ -1,0 +1,17 @@
+import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
+
+const Teratoma: Antagonist = {
+  key: 'teratoma',
+  name: 'Teratoma',
+  description: [
+    multiline`
+      By all means, you should not exist. Your very existence is a sin against nature itself.
+      You are loyal to nobody, except the forces of chaos itself.
+    `,
+    'Spread misery and chaos upon the station.',
+  ],
+  category: Category.Ghost,
+};
+
+export default Teratoma;

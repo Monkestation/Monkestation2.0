@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -24,7 +24,7 @@ export const BankMachine = (props) => {
     <Window width={350} height={155}>
       <Window.Content>
         <NoticeBox danger>Authorized personnel only</NoticeBox>
-        <Section title={station_name + ' Vault'}>
+        <Section title={`${station_name} Vault`}>
           <LabeledList>
             <LabeledList.Item
               label="Current Balance"

@@ -72,7 +72,7 @@
 	return TRUE
 
 /datum/keybinding/mob/toggle_move_intent
-	hotkey_keys = list("C")
+	hotkey_keys = list("ShiftC")
 	name = "toggle_move_intent"
 	full_name = "Hold to toggle move intent"
 	description = "Held down to cycle to the other move intent, release to cycle back"
@@ -169,7 +169,7 @@
 /datum/keybinding/mob/target/r_arm
 	hotkey_keys = list("Numpad4")
 	name = "target_r_arm"
-	full_name = "Target: right arm"
+	full_name = "Target: Right arm"
 	description = "Pressing this key targets the right arm. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETRIGHTARM_DOWN
 
@@ -183,7 +183,7 @@
 /datum/keybinding/mob/target/left_arm
 	hotkey_keys = list("Numpad6")
 	name = "target_left_arm"
-	full_name = "Target: left arm"
+	full_name = "Target: Left arm"
 	description = "Pressing this key targets the body. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTARM_DOWN
 
@@ -204,7 +204,7 @@
 /datum/keybinding/mob/target/left_leg
 	hotkey_keys = list("Numpad3")
 	name = "target_left_leg"
-	full_name = "Target: left leg"
+	full_name = "Target: Left leg"
 	description = "Pressing this key targets the left leg. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTLEG_DOWN
 

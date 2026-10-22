@@ -17,8 +17,10 @@
 		/obj/item/stack/sheet/plasteel = 2,
 		/obj/item/stack/sheet/bronze = 2,
 		/obj/item/stack/sheet/runed_metal = 1,
+		/obj/item/stack/sheet/titaniumglass = 2,
 		exotic_material = 2 // this needs to be refactored properly
 	)
+	pressure_resistance = 35
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -37,7 +39,7 @@
 		if(GIRDER_TRAM)
 			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
 
-/obj/structure/girder/attackby(obj/item/W, mob/user, params)
+/obj/structure/girder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
 		platingmodifier = 0.7
@@ -46,16 +48,21 @@
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/gun/energy/plasmacutter))
+	if(istype(attacking_item, /obj/item/gun/energy/plasmacutter))
 		balloon_alert(user, "slicing apart...")
-		if(W.use_tool(src, user, 40, volume=100))
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			if (!QDELETED(M))
-				M.add_fingerprint(user)
+		if(attacking_item.use_tool(src, user, 40, volume=100))
+			if(state == GIRDER_TRAM)
+				var/obj/item/stack/sheet/mineral/titanium/M = new (user.loc, 2)
+				if(!QDELETED(M))
+					M.add_fingerprint(user)
+			else
+				var/obj/item/stack/sheet/iron/M = new (loc, 2)
+				if(!QDELETED(M))
+					M.add_fingerprint(user)
 			qdel(src)
 			return
 
-	else if(isstack(W))
+	else if(isstack(attacking_item))
 		if(iswallturf(loc) || (locate(/obj/structure/falsewall) in src.loc.contents))
 			balloon_alert(user, "wall already present!")
 			return
@@ -63,19 +70,19 @@
 			balloon_alert(user, "need floor!")
 			return
 		if(state == GIRDER_TRAM)
-			if(!locate(/obj/structure/industrial_lift/tram) in src.loc.contents)
+			if(!locate(/obj/structure/transport/linear/tram) in src.loc.contents)
 				balloon_alert(user, "need tram floors!")
 				return
 
-		if(istype(W, /obj/item/stack/rods))
-			var/obj/item/stack/rods/rod = W
+		if(istype(attacking_item, /obj/item/stack/rods))
+			var/obj/item/stack/rods/rod = attacking_item
 			var/amount = construction_cost[rod.type]
 			if(state == GIRDER_DISPLACED)
 				if(rod.get_amount() < amount)
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
@@ -88,7 +95,7 @@
 					balloon_alert(user, "need [amount] rods!")
 					return
 				balloon_alert(user, "adding plating...")
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 4 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
@@ -98,10 +105,10 @@
 					qdel(src)
 				return
 
-		if(!istype(W, /obj/item/stack/sheet))
+		if(!istype(attacking_item, /obj/item/stack/sheet))
 			return
 
-		var/obj/item/stack/sheet/sheets = W
+		var/obj/item/stack/sheet/sheets = attacking_item
 		if(istype(sheets, /obj/item/stack/sheet/iron))
 			var/amount = construction_cost[/obj/item/stack/sheet/iron]
 			if(state == GIRDER_DISPLACED)
@@ -128,8 +135,8 @@
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
-					sheets.use(2)
-					var/obj/structure/tramwall/tram_wall = new(loc)
+					sheets.use(amount)
+					var/obj/structure/tram/alt/iron/tram_wall = new(loc)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -148,6 +155,21 @@
 					qdel(src)
 				return
 
+		if(istype(sheets, /obj/item/stack/sheet/titaniumglass) && state == GIRDER_TRAM)
+			var/amount = construction_cost[/obj/item/stack/sheet/titaniumglass]
+			if(sheets.get_amount() < amount)
+				balloon_alert(user, "need [amount] sheets!")
+				return
+			balloon_alert(user, "adding panel...")
+			if (do_after(user, 2 SECONDS, target = src))
+				if(sheets.get_amount() < amount)
+					return
+				sheets.use(amount)
+				var/obj/structure/tram/tram_wall = new(loc)
+				transfer_fingerprints_to(tram_wall)
+				qdel(src)
+			return
+
 		if(istype(sheets, /obj/item/stack/sheet/plasteel))
 			var/amount = construction_cost[/obj/item/stack/sheet/plasteel]
 			if(state == GIRDER_DISPLACED)
@@ -155,7 +177,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -221,7 +243,7 @@
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
-			else if(state == GIRDER_TRAM)
+			/* else if(state == GIRDER_TRAM)
 				if(sheets.get_amount() < amount)
 					balloon_alert(user, "need [amount] sheets!")
 					return
@@ -233,7 +255,7 @@
 					var/obj/structure/tramwall/plastitanium/tram_wall = new (loc)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
-				return
+				return */
 			else
 				if(sheets.get_amount() < amount)
 					balloon_alert(user, "need [amount] sheets!")
@@ -261,22 +283,17 @@
 				if(sheets.get_amount() < amount)
 					balloon_alert(user, "need [amount] sheets!")
 					return
+				var/tram_wall_type = text2path("/obj/structure/tram/alt/[M]")
+				if(!tram_wall_type)
+					balloon_alert(user, "need titanium glass or mineral!")
+					return
 				balloon_alert(user, "adding plating...")
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
+					var/obj/structure/tram/tram_wall
+					tram_wall = new tram_wall_type(loc)
 					sheets.use(amount)
-					var/obj/structure/tramwall/tram_wall
-					var/tram_wall_type = text2path("/obj/structure/tramwall/[M]")
-					if(tram_wall_type)
-						tram_wall = new tram_wall_type(loc)
-					else
-						var/obj/structure/tramwall/material/mat_tram_wall = new(loc)
-						var/list/material_list = list()
-						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
-						if(material_list)
-							mat_tram_wall.set_custom_materials(material_list)
-						tram_wall = mat_tram_wall
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -286,7 +303,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "concealing entrance...")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 2 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -308,7 +325,7 @@
 					balloon_alert(user, "need [amount] sheets!")
 					return
 				balloon_alert(user, "adding plating...")
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
@@ -328,8 +345,8 @@
 
 		add_hiddenprint(user)
 
-	else if(istype(W, /obj/item/pipe))
-		var/obj/item/pipe/P = W
+	else if(istype(attacking_item, /obj/item/pipe))
+		var/obj/item/pipe/P = attacking_item
 		if (P.pipe_type in list(0, 1, 5)) //simple pipes, simple bends, and simple manifolds.
 			if(!user.transferItemToLoc(P, drop_location()))
 				return
@@ -349,9 +366,9 @@
 			if(state != GIRDER_TRAM)
 				return
 			state = GIRDER_DISASSEMBLED
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			if (!QDELETED(M))
-				M.add_fingerprint(user)
+			var/obj/item/stack/sheet/mineral/titanium/material = new (user.loc, 2)
+			if (!QDELETED(material))
+				material.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 
@@ -361,7 +378,7 @@
 			if(state != GIRDER_DISPLACED)
 				return
 			state = GIRDER_DISASSEMBLED
-			var/area/shipbreak/A = get_area(src)
+			var/area/space/shipbreak/A = get_area(src)
 			if(istype(A)) //shipbreaking
 				var/obj/item/stack/scrap/framing/M = new(loc, 1)
 				if (!QDELETED(M))
@@ -436,7 +453,7 @@
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
-		var/area/shipbreak/A = get_area(src)
+		var/area/space/shipbreak/A = get_area(src)
 		if(istype(A)) //shipbreaking
 			remains = /obj/item/stack/scrap/framing
 		new remains(loc)
@@ -463,7 +480,13 @@
 
 /obj/structure/girder/tram
 	name = "tram girder"
+	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
+	icon_state = "tram"
 	state = GIRDER_TRAM
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+
+/obj/structure/girder/tram/corner
+	name = "tram frame corner"
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 
@@ -474,26 +497,26 @@
 	icon_state= "cultgirder"
 	can_displace = FALSE
 
-/obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
+/obj/structure/girder/cult/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
+	if(attacking_item.tool_behaviour == TOOL_WELDER)
+		if(!attacking_item.tool_start_check(user, amount=0))
 			return
 
 		balloon_alert(user, "slicing apart...")
-		if(W.use_tool(src, user, 40, volume=50))
+		if(attacking_item.use_tool(src, user, 40, volume=50))
 			var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 1)
 			transfer_fingerprints_to(R)
 			qdel(src)
 
-	else if(istype(W, /obj/item/stack/sheet/runed_metal))
-		var/obj/item/stack/sheet/runed_metal/R = W
+	else if(istype(attacking_item, /obj/item/stack/sheet/runed_metal))
+		var/obj/item/stack/sheet/runed_metal/R = attacking_item
 		var/amount = construction_cost[R.type]
 		if(R.get_amount() < amount)
 			balloon_alert(user, "need [amount] sheet!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			if(R.get_amount() < amount)
 				return
 			R.use(amount)
@@ -541,25 +564,25 @@
 	icon_state = "wall_gear"
 	can_displace = FALSE
 
-/obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/girder/bronze/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount = 0))
+	if(attacking_item.tool_behaviour == TOOL_WELDER)
+		if(!attacking_item.tool_start_check(user, amount = 0))
 			return
 		balloon_alert(user, "slicing apart...")
-		if(W.use_tool(src, user, 40, volume=50))
+		if(attacking_item.use_tool(src, user, 40, volume=50))
 			var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
 			transfer_fingerprints_to(B)
 			qdel(src)
 
-	else if(istype(W, /obj/item/stack/sheet/bronze))
-		var/obj/item/stack/sheet/bronze/B = W
+	else if(istype(attacking_item, /obj/item/stack/sheet/bronze))
+		var/obj/item/stack/sheet/bronze/B = attacking_item
 		var/amount = construction_cost[B.type]
 		if(B.get_amount() < amount)
 			balloon_alert(user, "need [amount] sheets!")
 			return
 		balloon_alert(user, "adding plating...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			if(B.get_amount() < amount)
 				return
 			B.use(amount)

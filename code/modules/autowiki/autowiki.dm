@@ -11,7 +11,7 @@
 /proc/generate_autowiki()
 	var/output = generate_autowiki_output()
 	rustg_file_write(output, "data/autowiki_edits.txt")
-	qdel(world)
+	del(world)
 #endif
 
 /// Returns a string of the autowiki output file

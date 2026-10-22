@@ -4,12 +4,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/client/parent
 	/// The key of the parent client.
 	var/parent_key
+	/// The ckey of the parent client.
+	var/parent_ckey
 	/// The path to the general savefile for this datum
 	var/path
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
 	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
-	var/default_slot = 1
+	var/active_slot = 1
 	/// The maximum number of slots we're allowed to contain
 	var/max_save_slots = 20
 
@@ -47,11 +49,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Quirk list
 	var/list/all_quirks = list()
 
-	//Job preferences 2.0 - indexed by job title , no key or value implies never
-	var/list/job_preferences = list()
+	/// Used to change which character the player will join as for this specific round
+	/// not saved
+	var/latejoin_overrride_character = 0
+
+	/// Use `get_enabled_character_names()` instead
+	/// not saved
+	var/enabled_character_names = null
+
+	/// Job preferences 2.0 - indexed by job title , no key or value implies never
+	/// Points to either `job_preferences_character` or `job_preferences_overall`
+	/// ["job title"] = priority
+	var/list/job_preferences
+
+	/// The enabled characters for `Character Filters` role selection mode
+	/// [character slot number]
+	var/list/enabled_characters = list()
+
+	/// The default character for `Character Filters` role selection mode
+	var/default_character = 1
+
+	/// Job preferences for the active character
+	/// ["job title"] = (int) priority
+	var/alist/job_preferences_character = list()
+
+	/// Overall job preferences for the `Character Filters` and `Simple` role selection modes
+	/// ["job title"] = (int) priority
+	var/alist/job_preferences_overall = list()
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
-	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	var/current_window = PREFERENCE_WINDOW_CHARACTERS
+	var/starting_page = PREFERENCE_PAGE_CHARACTERS
 
 	var/unlock_content = 0
 
@@ -92,7 +120,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///have we finished loading
 	var/loaded = FALSE
 
+	/// Is the UI currently "locked" and can't be re-opened?
+	var/locked = FALSE
+	/// Timer ID of the "unlock timer"
+	var/unlock_timer_id
+	/// UI is waiting to open
+	var/sleeping = FALSE
+
 /datum/preferences/Destroy(force)
+	acquire_lock()
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
@@ -101,16 +137,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/New(client/parent)
 	src.parent = parent
 	src.parent_key = parent?.key
+	src.parent_ckey = parent?.ckey
 
 	for (var/middleware_type in subtypesof(/datum/preference_middleware))
 		middleware += new middleware_type(src)
 
 	if(IS_CLIENT_OR_MOCK(parent))
 		load_and_save = !is_guest_key(parent_key)
-		load_path(ckey(parent_key))
+		load_path(parent_ckey)
 		if(load_and_save && !fexists(path))
 			try_savefile_type_migration()
-		unlock_content = !!parent.IsByondMember()
+		unlock_content = !!parent.IsByondMember() || is_admin(parent)
 		// monke edit: more save slots
 		//if(unlock_content)
 		//	max_save_slots = 8
@@ -127,7 +164,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(loaded_preferences_successfully)
 		if(load_character())
 			loaded = TRUE
-			return
+
+	var/needs_save = FALSE
+	for(var/channel in GLOB.used_sound_channels)
+		if(isnull(channel_volume["[channel]"]))
+			channel_volume["[channel]"] = 50
+			needs_save = TRUE
+	if(needs_save)
+		save_preferences()
+
+	//If we loaded prefs, we still want to make sure they have all sound channels, now that it's done we can safely early return.
+	if(loaded)
+		return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 	if(parent)
@@ -149,20 +197,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// I'm making the assumption that ui close will be called whenever a user logs out, or loses a window
 	// If this isn't the case, kill me and restore the code, thanks
 
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized != INITIALIZATION_INNEW_REGULAR)
+		return
+
+	if(locked)
+		testing("Tried to open prefs UI while it was locked ([world.time])")
+		return
+	else if(!loaded)
+		to_chat(user, span_warning("Your preferences haven't finished loading yet, wait a moment!"))
+		return
+
+	acquire_lock()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-
-		// HACK: Without this the character starts out really tiny because of some BYOND bug.
-		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
-		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
-		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
-		// I hate this place
-		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/atom/movable/screen/map_view/char_preview, update_body)), 1 SECONDS)
+		character_preview_view.display_to(user, ui.window)
+	release_lock()
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
@@ -181,12 +235,41 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	data["character_preferences"] = compile_character_preferences(user)
 
-	data["active_slot"] = default_slot
+	data["active_slot"] = active_slot
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
 
+	if (current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
+		var/list/channels = list()
+		for(var/channel in GLOB.used_sound_channels)
+			var/list/channel_info = get_channel_info(channel)
+			channels += list(list(
+				"num" = channel,
+				"name" = channel_info[1],
+				"desc" = channel_info[2],
+				"volume" = channel_volume["[channel]"]
+			))
+		data["channels"] = channels
+
 	return data
+
+/datum/preferences/proc/open_window(starting_page, user=usr, sleep_time=0)
+	if (starting_page == PREFERENCE_PAGE_CHARACTERS)
+		src.current_window = PREFERENCE_WINDOW_CHARACTERS
+	else
+		src.current_window = PREFERENCE_WINDOW_GAME_PREFERENCES
+		src.starting_page = starting_page
+	if (sleeping)
+		return
+	if (unlock_timer_id)
+		sleep_time += timeleft(unlock_timer_id)
+	if (sleep_time)
+		sleeping = TRUE
+		sleep(sleep_time)
+		sleeping = FALSE
+	update_static_data(user)
+	ui_interact(user)
 
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
@@ -196,6 +279,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
 	data["window"] = current_window
+	data["starting_page"] = starting_page
 
 	data["content_unlocked"] = unlock_content
 
@@ -215,39 +299,84 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return assets
 
+/datum/preferences/proc/set_channel_volume(channel, vol)
+	parent.mob.update_media_volume(channel)
+
+	//we gotta take into account existing sounds repeating/waiting, otherwise we completely wipe looping sounds (such as whitenoise).
+	for(var/sound/S in parent.SoundQuery())
+		//master channel affects all others.
+		if((channel != CHANNEL_MASTER_VOLUME) && (S.channel != channel))
+			continue
+		var/sound/new_sound = sound(
+			null,
+			repeat = S.repeat,
+			wait = S.wait,
+			channel = S.channel,
+			volume = calculate_mixed_volume(parent, S.volume, S.channel),
+		)
+		new_sound.status = SOUND_UPDATE
+		SEND_SOUND(parent.mob, new_sound)
+
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 
 	switch (action)
-		if ("update_body")
-			// monkestation start: janky bugfixing for runtimes
-			if(!QDELETED(character_preview_view))
-				character_preview_view.update_body()
-			else
-				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
-			// monkestation end
+		if ("try_fix_preview")
+			ui.close()
+			INVOKE_ASYNC(src, PROC_REF(open_window), PREFERENCE_PAGE_CHARACTERS, usr, 0.1 SECONDS)
+			return FALSE
+
+		if ("open_character")
+			if (locked || current_window == PREFERENCE_WINDOW_CHARACTERS)
+				return FALSE
+			acquire_lock()
+			release_lock() // Prevents this function from being used again for 0.5s
+			current_window = PREFERENCE_WINDOW_CHARACTERS
+			update_static_data(usr)
+			return TRUE
+
+		if ("open_game")
+			if (locked || current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
+				return FALSE
+			acquire_lock()
+			release_lock() // Prevents this function from being used again for 0.5s
+			current_window = PREFERENCE_WINDOW_GAME_PREFERENCES
+			update_static_data(usr)
+			return TRUE
+
+		if ("volume")
+			var/channel = text2num(params["channel"])
+			var/volume = text2num(params["volume"])
+			if(isnull(channel))
+				return FALSE
+			channel_volume["[channel]"] = volume
+			save_preferences()
+			var/static/list/instrument_channels = list(
+				CHANNEL_INSTRUMENTS,
+				CHANNEL_INSTRUMENTS_ROBOT,
+			)
+			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
+				set_channel_volume(channel, volume)
+
+			else if((channel in instrument_channels))
+				var/datum/song/holder_song = new
+				for(var/used_channel in holder_song.channels_playing)
+					set_channel_volume(used_channel, volume)
+			return TRUE
+
+		if ("set_character_enabled")
+			set_character_enabled(sanitize_integer(params["slot"], 1, max_save_slots, default_character), params["enabled"] != FALSE)
+			return TRUE
 		if ("change_slot")
 			// Save existing character
 			save_character()
-
-			// SAFETY: `load_character` performs sanitization the slot number
-			if (!load_character(params["slot"]))
-				tainted_character_profiles = TRUE
-				randomise_appearance_prefs()
-				save_character()
-
-			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
-				preference_middleware.on_new_character(usr)
-
-			// monkestation start: janky bugfixing for runtimes
-			if(!QDELETED(character_preview_view))
-				character_preview_view.update_body()
-			else
-				addtimer(CALLBACK(src, PROC_REF(create_character_preview_view), usr), 0.5 SECONDS, TIMER_DELETE_ME)
-			// monkestation end
-
+			// SAFETY: `switch_to_slot` performs sanitization on the slot number
+			switch_to_slot(params["slot"])
+			return TRUE
+		if ("remove_current_slot")
+			remove_current_slot()
 			return TRUE
 		if ("rotate")
 			character_preview_view.dir = turn(character_preview_view.dir, -90)
@@ -271,7 +400,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
+				enabled_character_names = null
 
+			for(var/datum/preference_middleware/preference_middleware as anything in middleware)
+				preference_middleware.post_set_preference(ui.user, requested_preference_key, value)
 			return TRUE
 
 		if ("open_store")
@@ -318,9 +450,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return FALSE
 
 /datum/preferences/ui_close(mob/user)
+	testing("Closing preferences UI ([world.time])")
+	acquire_lock()
 	save_character()
 	save_preferences()
 	QDEL_NULL(character_preview_view)
+	release_lock()
 
 /datum/preferences/Topic(href, list/href_list)
 	. = ..()
@@ -328,16 +463,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	if (href_list["open_keybindings"])
-		current_window = PREFERENCE_TAB_KEYBINDINGS
-		update_static_data(usr)
-		ui_interact(usr)
+		open_window(PREFERENCE_PAGE_KEYBINDINGS)
 		return TRUE
+
+/datum/preferences/proc/acquire_lock()
+	locked = TRUE
+	if(unlock_timer_id)
+		deltimer(unlock_timer_id)
+		unlock_timer_id = null
+	testing("Preferences UI locked ([world.time])")
+
+/datum/preferences/proc/release_lock(after = 0.5 SECONDS)
+	if(locked && !QDELETED(src))
+		unlock_timer_id = addtimer(CALLBACK(src, PROC_REF(finish_unlock)), after, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+		testing("About to unlock preferences UI ([world.time])")
+
+/datum/preferences/proc/finish_unlock()
+	locked = FALSE
+	unlock_timer_id = null
+	testing("Preferences UI unlocked ([world.time])")
 
 /datum/preferences/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src)
 	character_preview_view.generate_view("character_preview_[REF(character_preview_view)]")
 	character_preview_view.update_body()
-	character_preview_view.display_to(user)
 
 	return character_preview_view
 
@@ -382,14 +531,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
 	name = "character_preview"
-	name = "default"
-	icon = 'monkestation/icons/hud/screen_gen64x32.dmi'
+	icon = 'icons/hud/screen_gen64x32.dmi'
+	bound_height = 64
 
 	/// The body that is displayed
 	var/mob/living/carbon/human/dummy/extra_tall/body
 	/// The preferences this refers to
 	var/datum/preferences/preferences
-	bound_height = 64
+/*
+	/// Whether we show current job clothes or nude/loadout only
+	var/show_job_clothes = TRUE
+*/
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
@@ -397,44 +549,43 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /atom/movable/screen/map_view/char_preview/Destroy()
 	QDEL_NULL(body)
-	preferences?.character_preview_view = null
+	if(preferences?.character_preview_view == src)
+		preferences.character_preview_view = null
 	preferences = null
 	return ..()
 
 /// Updates the currently displayed body
 /atom/movable/screen/map_view/char_preview/proc/update_body()
+	if(QDELETED(src))
+		return
 	if (isnull(body))
 		create_body()
 	else
 		body.wipe_state()
-	appearance = preferences.render_new_preview_appearance(body)
+
+	appearance = preferences.render_new_preview_appearance(body/*, show_job_clothes*/)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
+	if(QDELETED(src))
+		return
 	QDEL_NULL(body)
-
 	body = new
-	RegisterSignal(body, COMSIG_QDELETING, PROC_REF(clear_body))
 
-	// Without this, it doesn't show up in the menu
-	body.appearance_flags &= ~TILE_BOUND
 
-/atom/movable/screen/map_view/char_preview/proc/clear_body(atom/movable/deletee)
-	if(body == deletee)
-		body = null
+/datum/preferences/proc/get_character_name(slot)
+	// It won't be updated in the savefile yet, so just read the name directly
+	if (slot == active_slot)
+		return read_preference(/datum/preference/name/real_name)
+
+	var/tree_key = "character[slot]"
+	var/save_data = savefile.get_entry(tree_key)
+	return save_data?["real_name"]
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 
 	for (var/index in 1 to max_save_slots)
-		// It won't be updated in the savefile yet, so just read the name directly
-		if (index == default_slot)
-			profiles += read_preference(/datum/preference/name/real_name)
-			continue
-
-		var/tree_key = "character[index]"
-		var/save_data = savefile.get_entry(tree_key)
-		var/name = save_data?["real_name"]
-
+		var/name = get_character_name(index)
 		if (isnull(name))
 			profiles += null
 			continue
@@ -443,28 +594,105 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return profiles
 
-/datum/preferences/proc/set_job_preference_level(datum/job/job, level)
+/datum/preferences/proc/set_job_preference_level(datum/job/job, level, job_prefs_type)
 	if (!job)
 		return FALSE
+
+	var/list/job_prefs
+	if (job_prefs_type == JOB_PREFS_OVERALL)
+		job_prefs = job_preferences_overall
+	if (job_prefs_type == JOB_PREFS_CHARACTER)
+		job_prefs = job_preferences_character
 
 	if (level == JP_HIGH)
 		var/datum/job/overflow_role = SSjob.overflow_role
 		var/overflow_role_title = initial(overflow_role.title)
 
-		for(var/other_job in job_preferences)
-			if(job_preferences[other_job] == JP_HIGH)
+		for(var/other_job in job_prefs)
+			if(job_prefs[other_job] == JP_HIGH)
 				// Overflow role needs to go to NEVER, not medium!
 				if(other_job == overflow_role_title)
-					job_preferences[other_job] = null
+					job_prefs[other_job] = null
 				else
-					job_preferences[other_job] = JP_MEDIUM
+					job_prefs[other_job] = JP_MEDIUM
 
 	if(level == null)
-		job_preferences -= job.title
+		job_prefs -= job.title
 	else
-		job_preferences[job.title] = level
+		job_prefs[job.title] = level
 
 	return TRUE
+
+/datum/preferences/proc/GetHighestJobPreference()
+	for(var/job in job_preferences)
+		if(job_preferences[job] == JP_HIGH)
+			return job
+
+/datum/preferences/proc/get_enabled_character_names()
+	if (!isnull(enabled_character_names))
+		return enabled_character_names
+
+	if (latejoin_overrride_character != 0)
+		return get_character_name(latejoin_overrride_character) + " (via override)"
+
+	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
+	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
+		return read_preference(/datum/preference/name/real_name)
+
+	enabled_character_names = ""
+
+	for (var/i in 1 to length(enabled_characters))
+		var/name = get_character_name(enabled_characters[i])
+
+		if (!isnull(name))
+			if (i == 1)
+				enabled_character_names = name
+			else if (i == length(enabled_characters))
+				enabled_character_names += " or [name]"
+			else
+				enabled_character_names += ", [name]"
+
+	enabled_character_names += " (default: [get_character_name(default_character)])"
+
+	return enabled_character_names
+
+/datum/preferences/proc/set_character_enabled(slot, enable)
+	enabled_character_names = null
+	enabled_characters.RemoveAll(slot)
+	if (enable)
+		if (isnull(savefile.get_entry("character[slot]")))
+			return FALSE
+		enabled_characters.Add(slot)
+		sort_list(enabled_characters)
+	return TRUE
+
+/datum/preferences/proc/pick_character_for_job(datum/job/job)
+	if (latejoin_overrride_character != 0)
+		if (latejoin_overrride_character != active_slot)
+			save_character()
+			switch_to_slot(latejoin_overrride_character)
+		return
+
+	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
+	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
+		return
+
+	var/chosen = default_character
+	for (var/character_slot in shuffle(enabled_characters))
+		// It won't be updated in the savefile yet, so just read the name directly
+		if (character_slot == active_slot)
+			if (!isnull(job_preferences_character[job.title]))
+				return
+
+		var/tree_key = "character[character_slot]"
+		var/save_data = savefile.get_entry(tree_key)
+		var/job_prefs = save_data?["job_preferences"]
+		if (islist(job_prefs) && !isnull(job_prefs[job.title]))
+			chosen = character_slot
+			break
+
+	save_character()
+	switch_to_slot(chosen)
 
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
@@ -480,8 +708,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			.++
 
 /datum/preferences/proc/validate_quirks()
+	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)
+	var/list/quirks_removed
+	for(var/quirk_name in all_quirks)
+		var/quirk_path = SSquirks.quirks[quirk_name]
+		var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk_path]
+		if(!quirk_prototype.is_species_appropriate(species_type))
+			all_quirks -= quirk_name
+			LAZYADD(quirks_removed, quirk_name)
+	var/list/feedback
+	if(LAZYLEN(quirks_removed))
+		LAZYADD(feedback, "The following quirks are incompatible with your species:")
+		LAZYADD(feedback, quirks_removed)
 	if(GetQuirkBalance() < 0)
+		LAZYADD(feedback, "Your quirks have been reset.")
 		all_quirks = list()
+	if(LAZYLEN(feedback))
+		to_chat(parent, boxed_message(span_greentext(feedback.Join("\n"))))
 
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
 /datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
@@ -540,3 +783,55 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			default_randomization[preference_key] = RANDOM_ENABLED
 
 	return default_randomization
+
+/datum/preferences/proc/pick_character_tgui_list(current_slot_num, title)
+	var/list/characters = create_character_profiles()
+	var/list/options = list()
+	var/current_slot
+
+	for(var/i = 1 to length(characters))
+		var/name = characters[i]
+		if (isnull(name))
+			continue
+
+		if(current_slot_num == i)
+			current_slot = name
+
+		options[name] = i
+
+	if(!length(options))
+		to_chat(parent, span_warning("You have no characters."))
+		return
+
+	var/choice = tgui_input_list(parent, "Select a character slot", title, options, current_slot)
+
+	if(!choice)
+		return
+
+	to_chat(parent, span_notice("Selected character '[choice]'"))
+	return options[choice]
+
+/client/verb/change_character_slot()
+	set name = "Change Character Slot"
+	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
+	set category = "OOC"
+
+	if (prefs.read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_SIMPLE)
+		return prefs.tmp_change_character_slot()
+
+	var/choice = prefs.pick_character_tgui_list(prefs.active_slot, "Change Character Slot")
+	if(choice)
+		prefs.save_character()
+		prefs.switch_to_slot(choice)
+
+/datum/preferences/proc/tmp_change_character_slot()
+	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Set Override Character")
+	if(choice)
+		latejoin_overrride_character = choice
+		enabled_character_names = null
+
+/datum/preferences/proc/set_default_character()
+	var/choice = pick_character_tgui_list(latejoin_overrride_character, "Change Default Character")
+	if(choice)
+		default_character = choice
+		enabled_character_names = null

@@ -60,6 +60,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/admin_only = FALSE
 	//can only mentors use this?
 	var/mentor_only = FALSE
+	/// Should this be preloaded in SSwardrobe?
+	var/preload = TRUE
 
 /*
  * Place our [var/item_path] into [outfit].
@@ -104,17 +106,13 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		if(ispath(item_path, /obj/item/clothing))
 			// When an outfit is equipped in preview, get_equipped_items() does not work, so we have to use get_all_contents()
 			var/obj/item/clothing/equipped_item = locate(item_path) in (visuals_only ? equipper.get_all_contents() : equipper.get_all_gear()) // needs held items for briefcasers
-			if(equipped_item)
-				equipped_item.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
-			else
-				stack_trace("[type] on_equip_item(): Could not locate clothing item (path: [item_path]) in [equipper]'s [visuals_only ? "visible":"all"] contents to set greyscaling!")
+			equipped_item?.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
+			//stack_trace("[type] on_equip_item(): Could not locate clothing item (path: [item_path]) in [equipper]'s [visuals_only ? "visible":"all"] contents to set greyscaling!")
 
 		else if(!visuals_only)
 			var/obj/item/other_item = locate(item_path) in equipper.get_all_gear()
-			if(other_item)
-				other_item.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
-			else
-				stack_trace("[type] on_equip_item(): Could not locate backpack item (path: [item_path]) in [equipper]'s contents to set greyscaling!")
+			other_item?.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
+			// stack_trace("[type] on_equip_item(): Could not locate backpack item (path: [item_path]) in [equipper]'s contents to set greyscaling!")
 
 	if(can_be_named && !visuals_only && (INFO_NAMED in our_loadout[item_path]))
 		var/obj/item/equipped_item = locate(item_path) in equipper.get_all_gear()
@@ -136,4 +134,4 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	if(ispath(outfit_contents.back, /obj/item/storage) || (!outfit_contents.back && (ispath(equipper.back, /obj/item/storage) || !isnull(equipper.backpack))))
 		LAZYADD(outfit_contents.backpack_contents, item_path_to_spawn)
 	else
-		new item_path_to_spawn(equipper.drop_location())
+		SSwardrobe.provide_type(item_path_to_spawn, equipper.drop_location())

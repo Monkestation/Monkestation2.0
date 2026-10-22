@@ -51,11 +51,6 @@
 	for (var/obj/item/clothing/item in premium)
 		if(premium[item] < MINIMUM_CLOTHING_STOCK && allow_increase(item))
 			premium[item] = MINIMUM_CLOTHING_STOCK
-
-	QDEL_NULL(products_monke)
-	QDEL_NULL(product_categories_monke)
-	QDEL_NULL(premium_monke)
-	QDEL_NULL(contraband_monke)
 	return ..()
 
 /// This proc checks for forbidden traits cause it'd be pretty bad to have 5 insuls available to assistants roundstart at the vendor!
@@ -81,39 +76,12 @@
 
 #undef MINIMUM_CLOTHING_STOCK
 
-
-/obj/machinery/vending/wardrobe/medi_wardrobe
-	products_monke = list(
-		/obj/item/radio/headset/headset_med = 3,
-		/obj/item/clothing/gloves/latex/nitrile = 2,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem/emt = 2,
-		/obj/item/clothing/under/rank/medical/scrubs/nova/red = 4,
-		/obj/item/clothing/under/rank/medical/scrubs/nova/white = 4,
-		/obj/item/clothing/under/rank/medical/doctor/nova/utility = 4,
-	)
-
-/obj/machinery/vending/wardrobe/engi_wardrobe
-	products_monke = list(
-		/obj/item/radio/headset/headset_eng = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/trouser = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/utility = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem = 3,
-		/obj/item/clothing/under/misc/overalls = 3,
-		/obj/item/clothing/suit/toggle/jacket/engi = 3,
-		/obj/item/clothing/head/utility/hardhat/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/red = 2,
-	)
-
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	products_monke = list(
 		/obj/item/clothing/glasses/meson/engine = 2,
-		/obj/item/clothing/head/beret/atmos = 4,
 	)
 
-/obj/machinery/vending/wardrobe/cargo_wardrobe
+/obj/machinery/vending/access/wardrobe_cargo
 	products_monke = list(
 		/obj/item/clothing/under/rank/cargo/tech/nova/long = 3,
 		/obj/item/clothing/under/rank/cargo/tech/nova/gorka = 3,
@@ -131,22 +99,13 @@
 
 /obj/machinery/vending/wardrobe/robo_wardrobe
 	products_monke = list(
-		/obj/item/clothing/head/beret/science/fancy/robo = 2,
 		/obj/item/tank/internals/anesthetic = 2,
 		/obj/item/clothing/mask/breath = 2,
 		/obj/item/reagent_containers/cup/bottle/morphine = 2,
 		/obj/item/reagent_containers/syringe = 2,
-		/obj/item/clothing/gloves/color/black = 2, // fire resistant, allows the robo to painlessly mold metal. also its down here because its a treatment item
 		/obj/item/bonesetter = 2, // for dislocations
 		/obj/item/stack/medical/gauze = 4, // for ALL wounds
 		/obj/item/healthanalyzer/simple = 2,
-	)
-
-/obj/machinery/vending/wardrobe/science_wardrobe
-	products_monke = list(
-		/obj/item/clothing/under/rank/rnd/scientist/nova/hlscience = 3,
-		/obj/item/clothing/under/rank/rnd/scientist/nova/utility = 3,
-		/obj/item/clothing/suit/toggle/jacket/sci = 3,
 	)
 
 /obj/machinery/vending/wardrobe/hydro_wardrobe
@@ -175,17 +134,6 @@
 		/obj/item/radio/headset/headset_srv = 3,
 	)
 
-/obj/machinery/vending/wardrobe/chem_wardrobe
-	products_monke = list(
-		/obj/item/clothing/under/rank/medical/chemist/nova/formal = 2,
-		/obj/item/clothing/under/rank/medical/chemist/nova/formal/skirt = 2,
-	)
-
-/obj/machinery/vending/wardrobe/viro_wardrobe
-	products_monke = list(
-		/obj/item/clothing/head/beret/medical/virologist = 2,
-	)
-
 /obj/machinery/vending/wardrobe/det_wardrobe
 	products_monke = list(
 		/obj/item/clothing/head/fedora/beige = 2,
@@ -204,23 +152,6 @@
 		/obj/item/clothing/under/suit/nova/inferno/beeze = 2,
 	)
 
-
-/// Removes given list of products. Must be called before build_inventory() to actually prevent the records from being created.
-/obj/machinery/vending/proc/remove_products(list/paths_to_remove)
-	if(!length(paths_to_remove))
-		return
-	for(var/typepath as anything in products)
-		for(var/to_remove as anything in paths_to_remove)
-			if(ispath(typepath, to_remove))
-				products.Remove(typepath)
-
-/obj/machinery/vending/
-	/// list of products to exclude when building the vending machine's inventory
-	var/list/excluded_products
-
-/obj/machinery/vending/Initialize(mapload)
-	remove_products(excluded_products)
-	return ..()
 
 /obj/machinery/vending/clothing
 	product_categories_monke = list(

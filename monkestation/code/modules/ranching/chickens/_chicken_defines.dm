@@ -24,8 +24,8 @@
 	create_mutations()
 
 /mob/living/basic/proc/create_mutations()
-	for(var/datum/mutation/ranching/mutation as anything in mutation_list)
-		var/datum/mutation/ranching/new_mut = new mutation
+	for(var/datum/ranching_mutation/mutation as anything in mutation_list)
+		var/datum/ranching_mutation/new_mut = new mutation
 		if(!istype(new_mut))
 			continue
 		created_mutations += new_mut
@@ -74,7 +74,7 @@
 	///List of liked foods
 	var/list/liked_foods = list(/obj/item/food/grown/wheat = 3,)
 	///list of disliked foods
-	var/list/disliked_food_types = list(MEAT = 4,)
+	var/alist/disliked_food_types = alist(MEAT = 4)
 	///list of disliked foods
 	var/list/disliked_foods = list()
 	///list of dislike chemicals

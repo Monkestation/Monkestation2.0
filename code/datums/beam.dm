@@ -203,8 +203,71 @@
 
 /obj/effect/ebeam/singularity_pull()
 	return
+
 /obj/effect/ebeam/singularity_act()
 	return
+
+/obj/effect/ebeam/Process_Spacemove(movement_dir, continuous_move)
+	return
+
+/// A beam subtype used for advanced beams, to react to atoms entering the beam
+/obj/effect/ebeam/reacting
+	/// If TRUE, atoms that exist in the beam's loc when inited count as "entering" the beam
+	var/react_on_init = FALSE
+
+/obj/effect/ebeam/reacting/Initialize(mapload, beam_owner)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
+		COMSIG_TURF_CHANGE = PROC_REF(on_turf_change),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	if(!isturf(loc) || isnull(owner) || mapload || !react_on_init)
+		return
+
+	for(var/atom/movable/existing as anything in loc)
+		beam_entered(existing)
+
+/obj/effect/ebeam/reacting/proc/on_entered(datum/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_entered(entered)
+
+/obj/effect/ebeam/reacting/proc/on_exited(datum/source, atom/movable/exited)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_exited(exited)
+
+/obj/effect/ebeam/reacting/proc/on_turf_change(datum/source, path, new_baseturfs, flags, list/datum/callback/post_change_callbacks)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_turfs_changed(post_change_callbacks)
+
+/// Some atom entered the beam's line
+/obj/effect/ebeam/reacting/proc/beam_entered(atom/movable/entered)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_ENTERED, src, entered)
+
+/// Some atom exited the beam's line
+/obj/effect/ebeam/reacting/proc/beam_exited(atom/movable/exited)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_EXITED, src, exited)
+
+/// Some turf the beam covers has changed to a new turf type
+/obj/effect/ebeam/reacting/proc/beam_turfs_changed(list/datum/callback/post_change_callbacks)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_TURFS_CHANGED, post_change_callbacks)
 
 /**
  * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.**

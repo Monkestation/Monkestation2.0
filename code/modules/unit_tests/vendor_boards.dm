@@ -3,13 +3,14 @@
 
 /datum/unit_test/vendor_boards/Run()
 	var/obj/item/circuitboard/machine/vendor/dummy_board = new
-	var/list/vending_names_paths = dummy_board.vending_names_paths.Copy()
+	var/list/vending_names_paths = dummy_board.valid_vendor_names_paths.Copy()
 	QDEL_NULL(dummy_board)
 
 	// 'cuz there's various subtypes of the same vendor which are pretty much the same thing,
 	// we're gonna check refill canister types rather than vendor types.
 	var/list/valid_vendor_refills = list()
-	for(var/obj/machinery/vending/vendor_type as anything in vending_names_paths)
+	for(var/vending_type in vending_names_paths)
+		var/obj/machinery/vending/vendor_type = vending_names_paths[vending_type]
 		if(isnull(vendor_type::refill_canister))
 			TEST_FAIL("[vendor_type] ([vendor_type::name]) does not have a refill_canister set, despite the fact it can be constructed from a vendor board!")
 		else

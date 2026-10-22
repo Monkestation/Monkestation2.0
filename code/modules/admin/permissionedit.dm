@@ -1,21 +1,16 @@
-/client/proc/edit_admin_permissions()
-	set category = "Admin"
-	set name = "Permissions Panel"
-	set desc = "Edit admin permissions"
-	if(!check_rights(R_PERMISSIONS))
-		return
-	usr.client.holder.edit_admin_permissions()
+ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "Edit admin permissions.", ADMIN_CATEGORY_MAIN)
+	user.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions(action, target, operation, page)
 	if(!check_rights(R_PERMISSIONS))
 		return
 	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/group/permissions)
 	asset_cache_datum.send(usr)
-	var/list/output = list("<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("panels.css")]'><a href='?_src_=holder;[HrefToken()];editrightsbrowser=1'>\[Permissions\]</a>")
+	var/list/output = list("<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("panels.css")]'><a href='byond://?_src_=holder;[HrefToken()];editrightsbrowser=1'>\[Permissions\]</a>")
 	if(action)
-		output += " | <a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a><hr style='background:#000000; border:0; height:3px'>"
+		output += " | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a> | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a><hr style='background:#000000; border:0; height:3px'>"
 	else
-		output += "<br><a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a><br><a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a>"
+		output += "<br><a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a><br><a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a>"
 	if(action == 1)
 		var/logcount = 0
 		var/logssperpage = 20
@@ -34,7 +29,7 @@
 		if(logcount > logssperpage)
 			output += "<br><b>Page: </b>"
 			while(logcount > 0)
-				output += "|<a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightstarget=[target];editrightsoperation=[operation];editrightspage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+				output += "|<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightstarget=[target];editrightsoperation=[operation];editrightspage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 				logcount -= logssperpage
 				pagecount++
 			output += "|"
@@ -73,7 +68,7 @@
 		while(query_check_admin_errors.NextRow())
 			var/admin_key = query_check_admin_errors.item[1]
 			var/admin_rank = query_check_admin_errors.item[2]
-			output += "[admin_key] has non-existent rank [admin_rank] | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_key]'>\[Change Rank\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_key]'>\[Remove\]</a>"
+			output += "[admin_key] has non-existent rank [admin_rank] | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_key]'>\[Change Rank\]</a> | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_key]'>\[Remove\]</a>"
 			output += "<hr style='background:#000000; border:0; height:1px'>"
 		qdel(query_check_admin_errors)
 		output += "<h3>Unused ranks</h3>"
@@ -83,7 +78,7 @@
 			return
 		while(query_check_unused_rank.NextRow())
 			var/admin_rank = query_check_unused_rank.item[1]
-			output += {"Rank [admin_rank] is not held by any admin | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremoverank=[admin_rank]'>\[Remove\]</a>
+			output += {"Rank [admin_rank] is not held by any admin | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremoverank=[admin_rank]'>\[Remove\]</a>
 			<br>Permissions: [rights2text(text2num(query_check_unused_rank.item[2])," ")]
 			<br>Denied: [rights2text(text2num(query_check_unused_rank.item[3])," ", "-")]
 			<br>Allowed to edit: [rights2text(text2num(query_check_unused_rank.item[4])," ", "*")]
@@ -156,7 +151,7 @@
 			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>", confidential = TRUE)
 			return
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
-		if((D.ranks & GLOB.protected_ranks).len > 0)
+		if((D.get_ranks() & GLOB.protected_ranks).len > 0)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>", confidential = TRUE)
 			return
 	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "add" || task == "rank" || task == "permissions"))
@@ -448,7 +443,7 @@
 		qdel(query_change_rank_log)
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
-		D.ranks = new_ranks //set the admin_rank as our rank
+		D.update_ranks(new_ranks) //set the admin_rank as our rank
 		D.bypass_2fa = TRUE // Another admin has cleared us
 		var/client/C = GLOB.directory[admin_ckey]
 		D.associate(C)
@@ -462,24 +457,36 @@
 #undef RANK_DONE
 
 /datum/admins/proc/change_admin_flags(admin_ckey, admin_key, datum/admins/admin_holder)
+	if(!check_rights(R_PERMISSIONS))
+		message_admins("[key_name_admin(usr)] attempted to edit admin permissions without sufficient rights.")
+		log_admin("[key_name(usr)] attempted to edit admin permissions without sufficient rights.")
+		return
+
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		return
+
+	var/old_flags = admin_holder.rank_flags()
 	var/new_flags = input_bitfield(
 		usr,
 		"Admin rights<br>This will affect only the current admin [admin_key]",
 		"admin_flags",
-		admin_holder.rank_flags(),
+		old_flags,
 		350,
 		590,
 		allowed_edit_list = usr.client.holder.can_edit_rights_flags(),
+		picked_from = admin_flags_bitfield.Value()
 	)
 
-	admin_holder.disassociate()
+	if(isnull(new_flags) || old_flags == new_flags)
+		return
 
-	if (findtext(admin_holder.rank_names(), "([admin_ckey])"))
-		var/datum/admin_rank/rank = admin_holder.ranks[1]
+	admin_holder.disassociate()
+	if(findtext(admin_holder.rank_names(), "([admin_ckey])"))
+		var/datum/admin_rank/rank = admin_holder.get_ranks()[1]
 		rank.rights = new_flags
 		rank.include_rights = new_flags
 		rank.exclude_rights = NONE
-		rank.can_edit_rights = rank.can_edit_rights
 	else
 		// Not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too.
 		var/datum/admin_rank/new_admin_rank = new(
@@ -492,7 +499,7 @@
 			/* init_edit_rights = */ admin_holder.can_edit_rights_flags(),
 		)
 
-		admin_holder.ranks = list(new_admin_rank)
+		admin_holder.update_ranks(list(new_admin_rank))
 
 	var/log = "[key_name(usr)] has updated the admin rights of [admin_ckey] into [rights2text(new_flags)]"
 	message_admins(log)

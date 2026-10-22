@@ -1,53 +1,14 @@
-/datum/language_holder/ashwalker
-	understood_languages = list(/datum/language/draconic = list(LANGUAGE_ATOM),
-								/datum/language/ashtongue = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/draconic = list(LANGUAGE_ATOM),
-							/datum/language/ashtongue = list(LANGUAGE_ATOM))
-/datum/species/lizard/ashwalker
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/ashwalker
-	bodypart_overrides = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard/ashwalker,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard/ashwalker,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard/ashwalker,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard/ashwalker,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard/ashwalker,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard/ashwalker,
-	)
-	species_language_holder = /datum/language_holder/ashwalker
-
-/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/carbon_target, datum/species/old_species)
-	. = ..()
-	RegisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK, PROC_REF(mob_attack))
-	carbon_target.AddComponent(/datum/component/ash_age)
-	carbon_target.faction |= FACTION_ASHWALKER
-
-/datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/carbon_target)
-	. = ..()
-	UnregisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK)
-	carbon_target.faction &= FACTION_ASHWALKER
-
-/datum/species/lizard/ashwalker/proc/mob_attack(datum/source, mob/mob_target, mob/user)
-	SIGNAL_HANDLER
-
-	if(!isliving(mob_target))
-		return
-	var/mob/living/living_target = mob_target
-	var/datum/status_effect/ashwalker_damage/ashie_damage = living_target.has_status_effect(/datum/status_effect/ashwalker_damage)
-	if(!ashie_damage)
-		ashie_damage = living_target.apply_status_effect(/datum/status_effect/ashwalker_damage)
-	ashie_damage.register_mob_damage(living_target)
-
 /**
- * 20 minutes = ash storm immunity
- * 40 minutes = armor
- * 60 minutes = base punch
- * 80 minutes = lavaproof
- * 100 minutes = firebreath
+ * 15 minutes = ash storm immunity
+ * 30 minutes = armor
+ * 45 minutes = base punch
+ * 60 minutes = lavaproof
+ * 75 minutes = firebreath
  */
 
 /datum/component/ash_age
 	/// the amount of minutes after each upgrade
-	var/stage_time = 20 MINUTES
+	var/stage_time = 15 MINUTES
 	/// the current stage of the ash
 	var/current_stage = 0
 	/// the time when upgraded/attached

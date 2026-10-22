@@ -28,14 +28,14 @@
 	lose_text = span_notice("You suddenly remember how languages work.")
 
 /datum/brain_trauma/severe/aphasia/on_gain()
-	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/aphasia, LANGUAGE_APHASIA)
-	owner.grant_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, LANGUAGE_APHASIA)
+	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	if(!QDELING(owner))
-		owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
-		owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+		owner.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_APHASIA)
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
 	..()
 
@@ -114,7 +114,7 @@
 		REMOVE_TRAIT(owner, X, TRAUMA_TRAIT)
 
 /datum/brain_trauma/severe/paralysis/crushed
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 
 /datum/brain_trauma/severe/paralysis/crushed/New(specific_type)
@@ -136,9 +136,19 @@
 		// this is not the best way to do this, but uh
 
 /datum/brain_trauma/severe/paralysis/paraplegic
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+
+/datum/brain_trauma/severe/paralysis/hemiplegic
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/left
+	paralysis_type = "left"
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/right
+	paralysis_type = "right"
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
@@ -302,7 +312,7 @@
 	scan_desc = "oneiric feedback loop"
 	gain_text = span_warning("You feel odd, like you just forgot something important.")
 	lose_text = span_notice("You feel like a weight was lifted from your mind.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	var/trigger_phrase = "Nanotrasen"
 
 /datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
@@ -315,7 +325,7 @@
 	owner.remove_status_effect(/datum/status_effect/trance)
 
 /datum/brain_trauma/severe/hypnotic_trigger/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
@@ -353,7 +363,7 @@
 	scan_desc = "H_E##%%%WEEP6%11S!!,)()"
 	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
 	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// Our cooldown declare for causing hallucinations
 	COOLDOWN_DECLARE(weeping_hallucinations)
 
@@ -377,7 +387,7 @@
 	scan_desc = "H_(82882)G3E:__))9R"
 	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
 	lose_text = span_notice("You no longer feel the hunger for flesh...")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// How much faster we loose hunger
 	var/hunger_rate = 15
 
@@ -406,7 +416,7 @@
 	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
 	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
 	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// How much damage we deal with each scratch
 	var/scratch_damage = 0.5
 
@@ -432,7 +442,7 @@
 	scan_desc = "C_)L(#_I_##M;B"
 	gain_text = span_warning("The rusted climb shall finish at the peak")
 	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
 	var/atom/tile = get_turf(owner)
@@ -452,6 +462,8 @@
 	lose_text = span_notice("You no longer feel the urge to take things.")
 	/// Cooldown between allowing steal attempts
 	COOLDOWN_DECLARE(steal_cd)
+	/// Prob to try pickpocket instead
+	var/pickpocket_chance_percent = 25
 
 /datum/brain_trauma/severe/kleptomaniac/on_gain()
 	. = ..()
@@ -470,25 +482,27 @@
 /datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
 	if(owner.usable_hands <= 0)
 		return
+
 	if(!SPT_PROB(5, seconds_per_tick))
 		return
+
 	if(!COOLDOWN_FINISHED(src, steal_cd))
 		return
+
 	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
 		return
 
-//MONKESTATION EDIT START - Adds pickpocketing to Kleptomaniac, like with our original implementation.
-	if(prob(src.pickpocket_chance_percent))
-		src.steal_from_someone()
+	if(prob(pickpocket_chance_percent))
+		if(!steal_from_someone())
+			steal_from_ground()
 	else
-		src.steal_from_ground()
+		steal_from_ground()
 
 	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
 	COOLDOWN_START(src, steal_cd, 8 SECONDS)
 
 // Use the rest of the original function as the stealing-from-ground code
 /datum/brain_trauma/severe/kleptomaniac/proc/steal_from_ground()
-//MONKESTATION EDIT END
 	// If our main hand is full, that means our offhand is empty, so try stealing with that
 	var/steal_to_offhand = !!owner.get_active_held_item()
 	var/curr_index = owner.active_hand_index
@@ -515,8 +529,103 @@
 
 	if(steal_to_offhand)
 		owner.swap_hand(curr_index)
+
 	owner.setDir(pre_dir)
-	/* //MONKESTATION REMOVAL - Moved from here to the edited `on_life` function
-	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
-	COOLDOWN_START(src, steal_cd, 8 SECONDS)
-	*/
+
+	return TRUE
+
+// this proc is so terribly made
+// i wish i could access /datum/element/strippable
+/datum/brain_trauma/severe/kleptomaniac/proc/steal_from_someone()
+	// Owner must be currently able to strip others.
+	if(HAS_TRAIT(owner, TRAIT_CANT_STRIP))
+		return FALSE
+
+	if(!HAS_TRAIT(owner, TRAIT_CAN_STRIP))
+		return FALSE
+
+	var/list/potential_victims = list()
+	for(var/mob/living/carbon/human/potential_victim in view(1, owner))
+		if(potential_victim == owner)
+			continue
+		var/list/items_in_pockets = potential_victim.get_pockets()
+		if(!length(items_in_pockets))
+			return FALSE
+		potential_victims += potential_victim
+
+	if(!length(potential_victims))
+		return FALSE
+
+	var/mob/living/carbon/human/victim = pick(potential_victims)
+
+	// `items_in_pockets` should never be empty, given that we excluded them above. If it *is*
+	// empty, something is horribly wrong!
+	var/obj/item/item_to_steal = pick(victim.get_pockets())
+	owner.visible_message(
+		span_warning("[owner] attempts to remove [item_to_steal] from [victim]'s pocket!"),
+		span_warning("You attempt to remove [item_to_steal] from [victim]'s pocket."),
+		span_hear("You hear rustling."),
+	)
+
+	if(victim.is_blind())
+		to_chat(victim, span_userdanger("You feel someone fumble with your belongings."))
+
+	owner.log_message(
+		"is pickpocketing [item_to_steal] out of [key_name(victim)]'s pockets (kleptomania).",
+		LOG_ATTACK,
+		color = "red",
+	)
+	victim.log_message(
+		"is having [item_to_steal] pickpocketed by [key_name(owner)] (kleptomania).",
+		LOG_VICTIM,
+		color = "orange",
+		log_globally = FALSE,
+	)
+
+	if(!do_after(owner, item_to_steal.strip_delay, victim) || !victim.temporarilyRemoveItemFromInventory(item_to_steal))
+		owner.visible_message(
+			span_warning("[owner] fails to pickpocket [victim]."),
+			span_warning("You fail to pick [victim]'s pocket."),
+			null
+		)
+		return FALSE
+
+	owner.log_message(
+		"has pickpocketed [key_name(victim)] of [item_to_steal] (kleptomania).",
+		LOG_ATTACK,
+		color = "red",
+	)
+	victim.log_message(
+		"has been pickpocketed of [item_to_steal] by [key_name(owner)] (kleptomania).",
+		LOG_VICTIM,
+		color = "orange",
+		log_globally = FALSE,
+	)
+
+	owner.visible_message(
+		span_warning("[owner] removes [item_to_steal] from [victim]'s pocket!"),
+		span_warning("You remove [item_to_steal] from [victim]'s pocket."),
+		null
+	)
+
+	if(QDELETED(item_to_steal))
+		return FALSE
+
+	var/hand_index_to_steal_to = owner.active_hand_index
+	if(owner.get_active_held_item())
+		hand_index_to_steal_to = owner.get_inactive_hand_index()
+
+	if(!owner.putItemFromInventoryInHandIfPossible(item_to_steal, hand_index_to_steal_to, TRUE))
+		item_to_steal.forceMove(owner.drop_location())
+
+	return TRUE
+
+/mob/living/carbon/human/proc/get_pockets()
+	var/list/pockets = list()
+	if(l_store)
+		pockets += l_store
+	if(r_store)
+		pockets += r_store
+	if(s_store)
+		pockets += s_store
+	return pockets

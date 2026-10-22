@@ -77,7 +77,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bitrunner
 	name = "Bitrunner"
-	icon_state = "Bitrunner"
+	icon_state = JOB_BITRUNNER
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
@@ -107,6 +107,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Shaft Miner"
 	icon_state = "Shaft Miner"
 
+/obj/effect/landmark/start/explorer
+	name = "Explorer"
+	icon_state = "Explorer"
+
 /obj/effect/landmark/start/security_officer
 	name = "Security Officer"
 	icon_state = "Security Officer"
@@ -122,6 +126,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/captain
 	name = "Captain"
 	icon_state = "Captain"
+
+/obj/effect/landmark/start/bridge_assistant
+	name = "Bridge Assistant"
+	icon_state = JOB_BRIDGE_ASSISTANT
 
 /obj/effect/landmark/start/detective
 	name = "Detective"
@@ -185,11 +193,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/virologist
 	name = "Pathologist"
-	icon_state = "Virologist"
+	icon_state = JOB_VIROLOGIST
 
 /obj/effect/landmark/start/psychologist
 	name = "Psychologist"
 	icon_state = "Psychologist"
+
+/obj/effect/landmark/start/barber
+	name = "Barber"
+	icon_state = "Barber"
 
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
@@ -198,24 +210,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/cyborg
 	name = "Cyborg"
 	icon_state = "Cyborg"
-
-/obj/effect/landmark/start/ai
-	name = "AI"
-	icon_state = "AI"
-	delete_after_roundstart = FALSE
-	var/primary_ai = TRUE
-	var/latejoin_active = TRUE
-
-/obj/effect/landmark/start/ai/after_round_start()
-	if(latejoin_active && !used)
-		new /obj/structure/ai_core/latejoin_inactive(loc)
-	return ..()
-
-/obj/effect/landmark/start/ai/secondary
-	icon = 'icons/effects/landmarks_static.dmi'
-	icon_state = "ai_spawn"
-	primary_ai = FALSE
-	latejoin_active = FALSE
 
 //Department Security spawns
 
@@ -281,6 +275,26 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/commando_nukeop
+	name = "commando nukeop"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_spawn"
+
+/obj/effect/landmark/start/commando_nukeop/Initialize(mapload)
+	..()
+	GLOB.commando_nukeop_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/commando_nukeop_leader
+	name = "commando nukeop leader"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_leader_spawn"
+
+/obj/effect/landmark/start/commando_nukeop_leader/Initialize(mapload)
+	..()
+	GLOB.commando_nukeop_leader_start += loc
+	return INITIALIZE_HINT_QDEL
+
 // Must be immediate because players will
 // join before SSatom initializes everything.
 INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
@@ -310,6 +324,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
 	icon_state = "observer_start"
+
+/obj/effect/landmark/tutorial_start
+	name = "tutorial_start"
 
 //generic maintenance locations
 /obj/effect/landmark/generic_maintenance_landmark
@@ -485,7 +502,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	party_debris = null
 	return ..()
 
-/obj/effect/landmark/start/hangover/LateInitialize()
+/obj/effect/landmark/start/hangover/LateInitialize(mapload_arg)
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
@@ -539,21 +556,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		return
 
 /obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
-	make_hungover(joining_mob)
-
-/obj/effect/landmark/start/hangover/closet
-	name = "hangover spawn closet"
-	icon_state = "hangover_spawn_closet"
-
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
-	make_hungover(joining_mob)
+	var/mob/created_joining_mob = ..()
+	make_hungover(created_joining_mob)
 	for(var/obj/structure/closet/closet in contents)
 		if(closet.opened)
 			continue
-		joining_mob.forceMove(closet)
-		return
-	return ..() //Call parent as fallback
+		created_joining_mob.forceMove(closet)
+		return created_joining_mob
+	return created_joining_mob
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
@@ -565,7 +575,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/landmark/navigate_destination/LateInitialize()
+/obj/effect/landmark/navigate_destination/LateInitialize(mapload_arg)
 	. = ..()
 	if(!location)
 		var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
@@ -659,6 +669,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/minisat_access_chapel_library
 	location = "Chapel and Library MiniSat Access"
 
+/obj/effect/landmark/navigate_destination/garden
+	location = "Public Garden"
+
 //Service
 /obj/effect/landmark/navigate_destination/kitchen
 	location = "Kitchen"
@@ -714,3 +727,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/virology
 	location = "Virology"
 //End of monke edit
+
+/obj/effect/landmark/navigate_destination/mining_foundry
+	location = "Mining Foundry"

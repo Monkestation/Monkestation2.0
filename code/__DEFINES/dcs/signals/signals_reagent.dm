@@ -14,10 +14,14 @@
 #define COMSIG_REAGENT_EXPOSE_ATOM "reagent_expose_atom"
 ///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_OBJ "reagent_expose_obj"
-///from base of [/datum/reagent/proc/expose_atom]: (/mob/living, reac_volume, methods, show_message, touch_protection, /mob/camera/blob) // ovemind arg is only used by blob reagents.
+///from base of [/datum/reagent/proc/expose_atom]: (/mob/living, reac_volume, methods, show_message, touch_protection, /mob/eye/blob) // ovemind arg is only used by blob reagents.
 #define COMSIG_REAGENT_EXPOSE_MOB "reagent_expose_mob"
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF "reagent_expose_turf"
+///from base of [/datum/reagent/proc/on_merge(data, amount)]: (list/data, amount)
+#define COMSIG_REAGENT_ON_MERGE "reagent_on_merge"
+///from base of [/datum/reagent/proc/on_transfer_creation(reagent, target_holder, new_reagent)]: (datum/reagents/target_holder, datum/reagent/new_reagent)
+#define COMSIG_REAGENT_ON_TRANSFER "reagent_on_transfer"
 
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
@@ -39,6 +43,8 @@
 #define COMSIG_REAGENTS_REM_REAGENT "reagents_rem_reagent"
 ///from base of [/datum/reagents/proc/clear_reagents]: ()
 #define COMSIG_REAGENTS_CLEAR_REAGENTS "reagents_clear_reagents"
+///from base of [/datum/reagents/proc/update_total()]
+#define COMSIG_REAGENTS_HOLDER_UPDATED "reagents_update_total"
 ///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
 #define COMSIG_REAGENTS_TEMP_CHANGE "reagents_temp_change"
 ///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
@@ -55,5 +61,8 @@
 #define COMSIG_REAGENTS_EXPOSE_TURF "reagents_expose_turf"
 ///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
 #define COMSIG_REAGENTS_CRAFTING_PING "reagents_crafting_ping"
-
+/// sent when reagents are transfered from a cup, to something refillable (atom/transfer_to)
+#define COMSIG_REAGENTS_CUP_TRANSFER_TO "reagents_cup_transfer_to"
+/// sent when reagents are transfered from some reagent container, to a cup (atom/transfer_from)
+#define COMSIG_REAGENTS_CUP_TRANSFER_FROM "reagents_cup_transfer_from"
 #define COMSIG_REAGENT_METABOLIZE_REAGENT "reagents_metabolize"

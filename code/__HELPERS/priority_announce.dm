@@ -13,7 +13,7 @@
 #define CHAT_ALERT_DEFAULT_SPAN(string) ("<div class='chat_alert_default'>" + string + "</div>")
 #define CHAT_ALERT_COLORED_SPAN(color, string) ("<div class='chat_alert_" + color + "'>" + string + "</div>")
 
-#define ANNOUNCEMENT_COLORS list("default", "green", "blue", "pink", "yellow", "orange", "red", "purple", "grey", "amber", "crimson") // monkestation edit
+#define ANNOUNCEMENT_COLORS list("default", "green", "blue", "pink", "yellow", "orange", "red", "purple", "grey", "amber", "crimson")
 
 /**
  * Make a big red text announcement to
@@ -37,7 +37,7 @@
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
  */
-/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override)
+/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override, append_update = TRUE)
 	if(!text)
 		return
 
@@ -55,6 +55,7 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
+	var/sound_channel = CHANNEL_ANNOUNCEMENTS
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
@@ -66,15 +67,15 @@
 			GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
 		if(ANNOUNCEMENT_TYPE_SYNDICATE)
 			header = MAJOR_ANNOUNCEMENT_TITLE("Syndicate Captain's Announcement")
-		// MONKESTATION ADDITION START
 		if(ANNOUNCEMENT_TYPE_AI)
 			var/mob/living/silicon/ai/sender = usr
 			if(!istype(sender))
 				CRASH("Non-AI tried to send an AI station announcement")
 			header = MAJOR_ANNOUNCEMENT_TITLE("Station Announcement by [sender.name] (AI)")
-		// MONKESTATION ADDITION END
+			sound_channel = CHANNEL_VOX
 		else
-			header += generate_unique_announcement_header(title, sender_override)
+			header += generate_unique_announcement_header(title, sender_override, append_update)
+			sound_channel = CHANNEL_STORYTELLER
 
 	announcement_strings += ANNOUNCEMENT_HEADER(header)
 
@@ -90,15 +91,15 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, ""))
 
-	dispatch_announcement_to_players(finalized_announcement, players, sound)
+	dispatch_announcement_to_players(finalized_announcement, players, sound, sound_channel = sound_channel)
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
 			GLOB.news_network.submit_article(title + "<br><br>" + text, "[command_name()]", "Station Announcements", null)
 		else
-			GLOB.news_network.submit_article(text, "[command_name()] Update", "Station Announcements", null)
+			GLOB.news_network.submit_article(text, "[command_name()][append_update ? " Update" : ""]", "Station Announcements", null)
 
-/proc/print_command_report(text = "", title = null, announce=TRUE)
+/proc/print_command_report(text = "", title = null, announce = TRUE, sanitize = TRUE)
 	if(!title)
 		title = "Classified [command_name()] Update"
 
@@ -114,7 +115,7 @@
 	message.title = title
 	message.content = text
 
-	SScommunications.send_message(message)
+	SScommunications.send_message(message, sanitize)// monkestation edit - sanitization
 
 /**
  * Sends a minor annoucement to players.
@@ -162,12 +163,15 @@
 	var/title
 	var/message
 
-	if(current_level_number > previous_level_number)
+	if((SSsecurity_level.number_level_to_text(previous_level_number) in GLOB.same_level_alert_levels) && (current_level_name in GLOB.same_level_alert_levels))
+		title = "Attention! Security level switched to [current_level_name]:"
+		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name())
+	else if(current_level_number > previous_level_number)
 		title = "Attention! Security level elevated to [current_level_name]:"
-		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name()) // monkestation edit: add %STATION_NAME% replacement
+		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name())
 	else
 		title = "Attention! Security level lowered to [current_level_name]:"
-		message = replacetext_char(selected_level.lowering_to_announcement, "%STATION_NAME%", station_name()) // monkestation edit: add %STATION_NAME% replacement
+		message = replacetext_char(selected_level.lowering_to_announcement, "%STATION_NAME%", station_name())
 
 	var/list/level_announcement_strings = list()
 	level_announcement_strings += ANNOUNCEMENT_HEADER(MINOR_ANNOUNCEMENT_TITLE(title))
@@ -179,10 +183,10 @@
 
 /// Proc that just generates a custom header based on variables fed into `priority_announce()`
 /// Will return a string.
-/proc/generate_unique_announcement_header(title, sender_override)
+/proc/generate_unique_announcement_header(title, sender_override, append_update = TRUE)
 	var/list/returnable_strings = list()
 	if(isnull(sender_override))
-		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()][append_update ? " Update" : ""]")
 	else
 		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
 
@@ -192,20 +196,39 @@
 	return jointext(returnable_strings, "")
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
-/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
+/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE, sound_channel = CHANNEL_ANNOUNCEMENTS)
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
 
 	for(var/mob/target in players)
-		if(isnewplayer(target) || !target.can_hear())
+		if(isnewplayer(target) || HAS_TRAIT(target, TRAIT_DEAF))
 			continue
 
 		to_chat(target, announcement)
 		if(!should_play_sound)
 			continue
 
-		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-//			SEND_SOUND(target, sound(sound_to_play)) MONKESTATION EDIT CHANGE OLD -- Volume mixer PR#7
-			SEND_SOUND(target, sound(sound_to_play, volume = target.client.prefs.channel_volume["[CHANNEL_VOX]"])) // MONKESTATION EDIT CHANGE NEW
+		if(target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
+			var/sound/mixed_sound = sound(sound_to_play)
+			if("[sound_channel]" in target.client?.prefs?.channel_volume)
+				mixed_sound.volume = target.client?.prefs?.channel_volume["[sound_channel]"]
+			if(!isnull(target.client))
+				SEND_SOUND(target, mixed_sound)
+
+/proc/send_formatted_admin_message(
+	text,
+	title = "Admin Alert",
+	sound_override = 'sound/effects/adminhelp.ogg',
+	color_override = "red"
+)
+	if(isnull(text))
+		return
+	var/list/announcement_strings = list()
+	announcement_strings += SUBHEADER_ANNOUNCEMENT_TITLE(title)
+	announcement_strings += span_major_announcement_text(text)
+	var/finalized_announcement = create_announcement_div(jointext(announcement_strings, ""), color_override)
+	SEND_ADMINCHAT_MESSAGE(finalized_announcement)
+	if(sound_override)
+		SEND_ADMINS_NOTFICATION_SOUND(sound_override)
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT

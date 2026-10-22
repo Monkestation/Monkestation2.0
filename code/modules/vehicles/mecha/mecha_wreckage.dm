@@ -241,3 +241,28 @@
 			/obj/item/mecha_parts/part/odysseus_right_arm,
 			/obj/item/mecha_parts/part/odysseus_left_leg,
 			/obj/item/mecha_parts/part/odysseus_right_leg)
+
+/obj/structure/mecha_wreckage/devitt
+	name = "\improper Devitt Mk3 Wreckage"
+	icon = 'icons/mecha/tanks.dmi'
+	icon_state = "devitt-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+
+
+/obj/structure/mecha_wreckage/vendozer
+	name = "\improper Vendozer Wreckage"
+	icon = 'icons/mecha/largetanks.dmi'
+	icon_state = "vendozer-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+
+/obj/structure/mecha_wreckage/sentinel
+	name = "\improper Sentinel Wreckage"
+	icon = 'icons/mecha/largetanks.dmi'
+	icon_state = "sentinel-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+
+/obj/structure/mecha_wreckage/syntinel
+	name = "\improper Sentinel Wreckage"
+	icon = 'icons/mecha/largetanks.dmi'
+	icon_state = "syntinel-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)

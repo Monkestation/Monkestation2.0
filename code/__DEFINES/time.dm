@@ -2,7 +2,7 @@
 #define MIDNIGHT_ROLLOVER 864000
 
 ///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
-#define ROUND_TIME(...) ( "[world.time - SSticker.round_start_time > MIDNIGHT_ROLLOVER ? "[round((world.time - SSticker.round_start_time)/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]" )
+#define ROUND_TIME(...) ( "[STATION_TIME_PASSED() > MIDNIGHT_ROLLOVER ? "[round(STATION_TIME_PASSED()/MIDNIGHT_ROLLOVER)]:[gameTimestamp(wtime = STATION_TIME_PASSED())]" : gameTimestamp(wtime = STATION_TIME_PASSED())]" )
 
 ///Returns the time that has passed since the game started
 #define STATION_TIME_PASSED(...) (world.time - SSticker.round_start_time)
@@ -36,11 +36,15 @@
 #define FESTIVE_SEASON "Festive Season"
 #define GARBAGEDAY "Garbage Day"
 #define MONKEYDAY "Monkey Day"
-#define PRIDE_WEEK "Pride Week"
+#define PRIDE_MONTH "Pride Month"
 #define MOTH_WEEK "Moth Week"
 #define IAN_HOLIDAY "Ian's Birthday"
+//Season names for donator job stuff
+#define WINTER "Winter"
+#define SPRING "Spring"
+#define SUMMER "Summer"
+#define AUTUMN "Autumn"
 /*
-
 Days of the week to make it easier to reference them.
 
 When using time2text(), please use "DDD" to find the weekday. Refrain from using "Day"
@@ -55,15 +59,19 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define SATURDAY "Sat"
 #define SUNDAY "Sun"
 
-#define INFINITE -1 // -1 is commonly used to indicate an infinite time duration
+#define MILLISECONDS * 0.01
 
-#define MILLISECONDS *0.01
+#define DECISECONDS * 1 //the base unit all of these defines are scaled by, because byond uses that as a unit of measurement for some fucking reason
 
-#define DECISECONDS *1 //the base unit all of these defines are scaled by, because byond uses that as a unit of measurement for some fucking reason
+#define SECONDS * 10
 
-#define SECONDS *10
+#define MINUTES * 600
 
-#define TICKS *world.tick_lag
+#define HOURS * 36000
+
+#define DAYS * 864000
+
+#define TICKS * world.tick_lag
 
 #define DS2TICKS(DS) ((DS)/world.tick_lag)
 
@@ -72,6 +80,13 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define MS2DS(T) ((T) MILLISECONDS)
 
 #define DS2MS(T) ((T) * 100)
+
+#define station_time_in_ticks (GLOB.roundstart_hour HOURS + round_duration_in_ticks)
+
+/// The amount of ticks past since round start
+#define ROUND_TIME_TICKS (world.time - SSticker.round_start_time)
+/// Station time, in ticks
+#define STATION_TIME_TICKS (ROUND_TIME_TICKS + SSticker.gametime_offset)
 
 /*Timezones*/
 

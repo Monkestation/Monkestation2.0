@@ -22,7 +22,7 @@
 	id = MASSDRIVER_SHACK
 
 /obj/machinery/mass_driver/Destroy()
-	for(var/obj/machinery/computer/pod/control in GLOB.machines)
+	for(var/obj/machinery/computer/pod/control as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/pod))
 		if(control.id == id)
 			control.connected = null
 	return ..()
@@ -33,7 +33,7 @@
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, dir)
 	for(var/atom/movable/O in loc)
@@ -44,7 +44,7 @@
 			if(O_limit >= 20)
 				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 

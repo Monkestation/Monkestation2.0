@@ -98,15 +98,47 @@
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
 	force_on = 30
+	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
+	var/nemesis_damage_multiplier = 5 // Makes it deal 30 * 5 (150) damage to fauna.
 
-/* MONKESTATION REMOVAL START
-/obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-		return TRUE
-	return FALSE
-MONKESTATION REMOVAL END */
+
+/obj/item/chainsaw/doomslayer/attack_self(mob/user)
+	if(on && user.has_status_effect(/datum/status_effect/mayhem))
+		to_chat(user, span_warning("There is no escape. RIP. AND. TEAR."))
+		return
+	return ..()
+
+/obj/item/chainsaw/doomslayer/attack(mob/living/target_mob, mob/living/user, params)
+	if(target_mob == user) // Prevents you from hitting yourself with it. (as well as getting lifesteal from doing so)
+		return
+
+	var/bonus_applied = FALSE
+	for(var/faction in target_mob.faction)
+		if(faction in nemesis_factions)
+			bonus_applied = TRUE
+			force *= nemesis_damage_multiplier
+			break
+
+	. = ..()
+
+	if(bonus_applied)
+		force /= nemesis_damage_multiplier
+
+	var/healing_amount = force / initial(force) * 3 // 3 healing per hit on people and 15 on fauna.
+	user.heal_overall_damage(healing_amount, healing_amount)
+
+/obj/item/chainsaw/doomslayer/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot != ITEM_SLOT_HANDS)
+		return
+	ADD_TRAIT(user, TRAIT_CANT_STRIP, REF(src)) // Pairs well with returning early when you try to attack yourself. LET THE SHUFFLEFEST COMMENCE!!
+
+/obj/item/chainsaw/doomslayer/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CANT_STRIP, REF(src))
+
+/obj/item/chainsaw/doomslayer/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
+	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
 
 /obj/item/chainsaw/mounted_chainsaw
 	name = "mounted chainsaw"

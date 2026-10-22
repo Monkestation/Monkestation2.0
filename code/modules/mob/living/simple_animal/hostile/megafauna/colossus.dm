@@ -36,7 +36,7 @@
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armour_penetration = 60
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 10
@@ -55,6 +55,7 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	hardmode_reward = /obj/item/gem/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -93,25 +94,69 @@
 	QDEL_NULL(dir_shots)
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/activate_hardmode()
+	. = ..()
+	spiral_shots.projectile_type = /obj/projectile/colossus/fast
+	random_shots.projectile_type = /obj/projectile/colossus/fast
+	random_shots.projectile_amount *= 2
+	shotgun_blast.projectile_type = /obj/projectile/colossus/fast
+	shotgun_blast.telegraph_time *= 0.5
+	dir_shots.projectile_type = /obj/projectile/colossus/fast
+	dir_shots.boosted = TRUE
+	dir_shots.firing_time *= 0.5
+
+/mob/living/simple_animal/hostile/megafauna/colossus/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!hardmode || QDELETED(src) || is_mining_level(new_turf.z))
+		return
+
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	if(!mining_levels.len)
+		return
+	INVOKE_ASYNC(src, PROC_REF(teleport_away), pick(mining_levels))
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/teleport_away(target_z = 1)
+	var/turf/target_turf
+	for(var/i in 1 to 100)
+		target_turf = locate(rand(1,255), rand(1,255), target_z)
+		if(istype(target_turf, /turf/open/misc/asteroid))
+			break
+
+	var/datum/effect_system/spark_spread/quantum/sparks = new()
+	sparks.set_up(5, 1, loc)
+	sparks.start()
+	playsound(loc, 'sound/magic/blink.ogg', 50, TRUE)
+	visible_message(span_boldwarning("[src] vanishes with blue sparks!"))
+
+	forceMove(target_turf)
+	sparks = new()
+	sparks.set_up(5, 1, target_turf)
+	sparks.start()
+	playsound(target_turf, 'sound/magic/blink.ogg', 50, TRUE)
+	visible_message(span_boldwarning("[src] appears with blue sparks dancing around them!"))
+	adjustHealth(-2500)
+
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health) / 40), 0, 20)
 
 	if(client)
 		return
 
-	if(enrage(target))
-		if(move_to_delay == initial(move_to_delay))
-			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
-		ranged_cooldown = world.time + 3 SECONDS
-		telegraph()
-		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
-		move_to_delay = 3
-		return
-	else
-		move_to_delay = initial(move_to_delay)
+	if(!hardmode)
+		if(enrage(target))
+			if(move_to_delay == initial(move_to_delay))
+				visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
+			ranged_cooldown = world.time + 3 SECONDS
+			telegraph()
+			dir_shots.fire_in_directions(src, target, GLOB.alldirs)
+			move_to_delay = 3
+			return
+		else
+			move_to_delay = initial(move_to_delay)
 
 	if(health <= maxHealth / 10 && final_available)
-		final_available = FALSE
+		if(!hardmode)
+			final_available = FALSE
 		colossus_final.Trigger(target = target)
 	else if(prob(20 + anger_modifier)) //Major attack
 		spiral_shots.Trigger(target = target)
@@ -158,11 +203,6 @@
 		if (is_species(human_victim, /datum/species/golem/sand))
 			. = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
-	visible_message(span_colossus("[src] disintegrates [victim]!"))
-	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	victim.dust()
-
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
 	desc = "A shimmering forcefield protecting the colossus."
@@ -184,15 +224,19 @@
 	name = "death bolt"
 	icon_state = "chronobolt"
 	damage = 25
-	armour_penetration = 50
-	speed = 2
+	armour_penetration = 100
+	speed = 0.5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
 
+/obj/projectile/colossus/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
-	if(isliving(target))
+	if(isliving(target) && target != firer)
 		direct_target = TRUE
 	return ..(target, direct_target, ignore_loc, cross_failed)
 
@@ -202,7 +246,7 @@
 		var/mob/living/dust_mob = target
 		if(dust_mob.stat == DEAD)
 			dust_mob.investigate_log("has been dusted by a death bolt (colossus).", INVESTIGATE_DEATHS)
-			dust_mob.dust()
+			dust_mob.dust(drop_items = TRUE)
 		return
 	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
 		return
@@ -211,6 +255,9 @@
 			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
+
+/obj/projectile/colossus/fast
+	speed = 1
 
 ///Anomolous Crystal///
 
@@ -271,19 +318,19 @@
 		return
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
-/obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.get_temperature())
+/obj/machinery/anomalous_crystal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)
 	..()
 
-/obj/machinery/anomalous_crystal/bullet_act(obj/projectile/P, def_zone)
+/obj/machinery/anomalous_crystal/bullet_act(obj/projectile/proj, def_zone)
 	. = ..()
-	if(istype(P, /obj/projectile/magic))
-		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
+	if(istype(proj, /obj/projectile/magic))
+		ActivationReaction(proj.firer, ACTIVATE_MAGIC, proj.damage_type)
 		return
-	ActivationReaction(P.firer, P.armor_flag, P.damage_type)
+	ActivationReaction(proj.firer, proj.armor_flag, proj.damage_type)
 
 /obj/machinery/anomalous_crystal/proc/ActivationReaction(mob/user, method, damtype)
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
@@ -474,9 +521,9 @@
 
 /obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
 	if(..())
-		var/obj/projectile/P = new generated_projectile(get_turf(src))
-		P.firer = src
-		P.fire(dir2angle(dir))
+		var/obj/projectile/proj = new generated_projectile(get_turf(src))
+		proj.firer = src
+		proj.fire(dir2angle(dir))
 
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."
@@ -498,7 +545,7 @@
 			if(to_revive.stat != DEAD)
 				continue
 			to_revive.set_species(/datum/species/shadow, TRUE)
-			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 			//Free revives, but significantly limits your options for reviving except via the crystal
 			//except JK who cares about BADDNA anymore. this even heals suicides.
 			ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
@@ -530,7 +577,7 @@
 		var/be_helper = tgui_alert(usr, "Become a Lightgeist? (Warning, You can no longer be revived!)", "Lightgeist Deployment", list("Yes", "No"))
 		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
 			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
-			deployable.key = user.key
+			deployable.PossessByPlayer(user.key)
 
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
@@ -574,6 +621,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	paint_jobs = null
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()

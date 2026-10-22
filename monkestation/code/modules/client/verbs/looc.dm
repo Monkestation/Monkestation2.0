@@ -50,7 +50,7 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		if(!CONFIG_GET(flag/looc_enabled))
 			to_chat(src, span_danger("LOOC is disabled."))
 			return
-		if(!GLOB.dooc_allowed && (mob.stat == DEAD) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum)
+		if(!GLOB.dooc_allowed && (mob.stat == DEAD) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum?.check_for_rights(R_MENTOR))
 			to_chat(usr, span_danger("LOOC for dead mobs has been turned off."))
 			return
 		if(CHECK_BITFIELD(prefs.muted, MUTE_OOC))
@@ -62,10 +62,10 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 			to_chat(src, span_danger("Advertising other servers is not allowed."))
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
-		if(mob.stat && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum)
+		if(mob.stat && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum?.check_for_rights(R_MENTOR))
 			to_chat(src, span_danger("You cannot salt in LOOC while unconscious or dead."))
 			return
-		if(isdead(mob) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum)
+		if(isdead(mob) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum?.check_for_rights(R_MENTOR))
 			to_chat(src, span_danger("You cannot use LOOC while ghosting."))
 			return
 	if(is_banned_from(ckey, "OOC"))
@@ -79,23 +79,26 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 
 	var/list/hearers = list()
 	for(var/mob/hearer in get_hearers_in_view(9, mob))
-		var/client/client = hearer.client
-		if(QDELETED(client) || !CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC))
+		var/client/hearing_client = hearer.client
+		if(QDELETED(hearing_client) || !CHECK_BITFIELD(hearing_client.prefs.chat_toggles, CHAT_OOC))
 			continue
-		hearers[client] = TRUE
-		if((client in GLOB.admins) && is_admin_looc_omnipotent(client))
+		if(key in hearing_client.prefs.ignoring)
+			continue
+		hearers[hearing_client] = TRUE
+		//handled in the for() loop below.
+		if((hearing_client in GLOB.admins) && is_admin_looc_omnipotent(hearing_client))
 			continue
 		to_chat(hearer, span_looc("[span_prefix("LOOC:")] <EM>[span_name("[mob.name]")]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (hearer == mob))
-		if(client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
+		if(hearing_client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
 			hearer.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
 
-	for(var/client/client in GLOB.admins)
-		if(!CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC) || !is_admin_looc_omnipotent(client))
+	for(var/client/admin_client in GLOB.admins)
+		if(!CHECK_BITFIELD(admin_client.prefs.chat_toggles, CHAT_OOC) || !is_admin_looc_omnipotent(admin_client))
 			continue
-		var/prefix = "[hearers[client] ? "" : "(R)"]LOOC"
-		if(client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
-			client.mob?.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
-		to_chat(client, span_looc("[span_prefix("[prefix]:")] <EM>[ADMIN_LOOKUPFLW(mob)]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (client == src))
+		var/prefix = "[hearers[admin_client] ? "" : "(R)"]LOOC"
+		if(admin_client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
+			admin_client.mob?.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
+		to_chat(admin_client, span_looc("[span_prefix("[prefix]:")] <EM>[ADMIN_LOOKUPFLW(mob)]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (admin_client == src))
 
 /// Logging for messages sent in LOOC
 /proc/log_looc(text, list/data)
@@ -109,14 +112,10 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		GLOB.looc_allowed = !GLOB.looc_allowed
 	to_chat(world, "<span class='oocplain bold'>LOOC channel has been globally [GLOB.looc_allowed ? "enabled" : "disabled"].</span>")
 
-/datum/admins/proc/togglelooc()
-	set category = "Server"
-	set name = "Toggle LOOC"
-	if(!check_rights(R_ADMIN))
-		return
+ADMIN_VERB(togglelooc, R_ADMIN, FALSE, "Toggle LOOC", "Shows the range of cameras on the station.", ADMIN_CATEGORY_SERVER)
 	toggle_looc()
-	log_admin("[key_name(usr)] toggled LOOC.")
-	message_admins("[key_name_admin(usr)] toggled LOOC.")
+	log_admin("[key_name(user)] toggled LOOC.")
+	message_admins("[key_name_admin(user)] toggled LOOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle LOOC", "[GLOB.looc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /proc/is_admin_looc_omnipotent(client/admin)

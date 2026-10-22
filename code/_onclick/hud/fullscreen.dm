@@ -3,7 +3,7 @@
 	if (!screen || screen.type != type)
 		// needs to be recreated
 		clear_fullscreen(category, FALSE)
-		screens[category] = screen = new type()
+		screens[category] = screen = new type(null, hud_used)
 	else if ((!severity || severity == screen.severity) && (!client || screen.screen_loc != "CENTER-7,CENTER-7" || screen.view == client.view))
 		// doesn't need to be updated
 		return screen
@@ -27,7 +27,7 @@
 
 	screens -= category
 
-	if(animated)
+	if(!QDELETED(src) && animated)
 		animate(screen, alpha = 0, time = animated)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen_after_animate), screen), animated, TIMER_CLIENT_TIME)
 	else
@@ -42,12 +42,11 @@
 
 /mob/proc/clear_fullscreens()
 	for(var/category in screens)
+		var/atom/movable/screen/fullscreen/screen = screens[category]
 		clear_fullscreen(category)
-
-/mob/proc/hide_fullscreens()
-	if(client)
-		for(var/category in screens)
-			client.screen -= screens[category]
+		if(!QDELETED(screen))
+			qdel(screen)
+		screens -= category
 
 /mob/proc/reload_fullscreen()
 	if(client)
@@ -167,7 +166,7 @@
 
 	. = ..()
 
-	color = color_matrix_identity() //We convert it early to avoid a sudden weird jitter.
+	color = COLOR_MATRIX_IDENTITY //We convert it early to avoid a sudden weird jitter.
 	alpha = 0
 
 	animate(src, alpha = 255, time = 5 SECONDS) //Fade in.
@@ -248,3 +247,11 @@
 	icon_state = "noise"
 	color = "#04a8d1"
 	alpha = 80
+
+/atom/movable/screen/fullscreen/soul_punishment
+	icon_state = "soul_punishment"
+	alpha = 60
+
+/atom/movable/screen/fullscreen/nearby // made seperate from soul punishment because the intensity gets worse over time
+	icon_state = "soul_punishment"
+	alpha = 100

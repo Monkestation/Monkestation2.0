@@ -5,6 +5,18 @@
 	desc = "Ankle coverings. These ones have a golden design."
 	icon_state = "gildedcuffs"
 	body_parts_covered = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+
+// Wraps have different icons so parent doesn't fit properly.
+#define SHOE_SAMPLE_X 14
+#define SHOE_SAMPLE_Y 3
+
+/obj/item/clothing/shoes/wraps/get_general_color(icon/base_icon)
+	// just grabs the color of the middle of the left foot
+	return base_icon.GetPixel(SHOE_SAMPLE_X, SHOE_SAMPLE_Y) || ..()
+
+#undef SHOE_SAMPLE_X
+#undef SHOE_SAMPLE_Y
 
 /obj/item/clothing/shoes/wraps/silver
 	name = "silver leg wraps"
@@ -41,12 +53,12 @@
 	icon_state = "heels"
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/heels/worn/digi
 	greyscale_colors = "#FFFFFF"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/high_heels/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
 	//AddComponent(/datum/component/squeak, list('monkestation/code/modules/blueshift/sounds/effects/heel1.ogg' = 1, 'monkestation/code/modules/blueshift/sounds/effects/heel2.ogg' = 1), 50)
 
 /obj/item/clothing/shoes/fancy_heels
@@ -58,11 +70,11 @@
 	greyscale_colors = "#FFFFFF"
 	greyscale_config = /datum/greyscale_config/fancyheels
 	greyscale_config_worn = /datum/greyscale_config/fancyheels/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/fancyheels/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/fancy_heels/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/shoesteps/tap_shoes)
 	//AddComponent(/datum/component/squeak, list('monkestation/code/modules/blueshift/sounds/effects/heel1.ogg' = 1, 'monkestation/code/modules/blueshift/sounds/effects/heel2.ogg' = 1), 50)
 
 /obj/item/clothing/shoes/discoshoes
@@ -109,7 +121,6 @@
 	icon_state = "clothwrap"
 	greyscale_config = /datum/greyscale_config/clothwraps
 	greyscale_config_worn = /datum/greyscale_config/clothwraps/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/clothwraps/worn/digi
 	greyscale_colors = "#FFFFFF"
 	body_parts_covered = FALSE
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -120,7 +131,6 @@
 	icon_state = "legwrap"
 	greyscale_config = /datum/greyscale_config/legwraps
 	greyscale_config_worn = /datum/greyscale_config/legwraps/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/legwraps/worn/digi
 	greyscale_colors = "#FFFFFF"
 	body_parts_covered = FALSE
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -153,7 +163,6 @@
 	greyscale_colors = "#cc0f0f#c4c2c2"
 	greyscale_config = /datum/greyscale_config/boots/christmasboots
 	greyscale_config_worn = /datum/greyscale_config/boots/christmasboots/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/boots/christmasboots/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/winterboots/christmas/green
@@ -182,6 +191,7 @@
 	greyscale_config = /datum/greyscale_config/laceup
 	greyscale_config_worn = /datum/greyscale_config/laceup/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/colorable_sandals
 	name = "sandals"
@@ -192,7 +202,6 @@
 	greyscale_colors = "#383631"
 	greyscale_config = /datum/greyscale_config/sandals
 	greyscale_config_worn = /datum/greyscale_config/sandals/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sandals/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/jackboots/recolorable
@@ -202,7 +211,6 @@
 	greyscale_colors = "#383631"
 	greyscale_config = /datum/greyscale_config/boots
 	greyscale_config_worn = /datum/greyscale_config/boots/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/boots/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/wraps/cloth
@@ -211,7 +219,6 @@
 	icon_state = "clothwrap"
 	greyscale_config = /datum/greyscale_config/clothwraps
 	greyscale_config_worn = /datum/greyscale_config/clothwraps/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/clothwraps/worn/digi
 	greyscale_colors = "#FFFFFF"
 	body_parts_covered = FALSE
 	flags_1 = IS_PLAYER_COLORABLE_1

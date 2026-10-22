@@ -163,7 +163,7 @@
 	var/static/list/weighted_traits
 	if(!weighted_traits)
 		weighted_traits = list()
-		for(var/trait_type as anything in GLOB.fish_traits)
+		for(var/trait_type in GLOB.fish_traits)
 			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
@@ -237,13 +237,13 @@
 	catalog_description = "Liquid plasma vents"
 	fish_table = list(
 		FISHING_DUD = 5,
-		/obj/item/fish/chasm_crab/ice = 15,
-		/obj/item/coin/plasma = 3,
-		/obj/item/stack/ore/plasma = 3,
-		/mob/living/basic/mining/lobstrosity = 1,
-		/obj/effect/decal/remains/plasma = 1,
-		/obj/item/stack/sheet/mineral/mythril = 1,
-		/obj/item/stack/sheet/mineral/adamantine = 1,
+		/obj/item/fish/chasm_crab/ice = 120,
+		/obj/item/coin/plasma = 24,
+		/obj/item/stack/ore/plasma = 24,
+		/mob/living/basic/mining/lobstrosity = 8,
+		/obj/effect/decal/remains/plasma = 8,
+		/obj/item/stack/sheet/mineral/mythril = 3,
+		/obj/item/stack/sheet/mineral/adamantine = 8,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,

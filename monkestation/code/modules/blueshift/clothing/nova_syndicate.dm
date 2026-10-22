@@ -3,7 +3,6 @@
 #define RESKIN_SYNDIE "Syndicate Red"
 
 /obj/item/clothing/under/syndicate
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/syndicate_digi.dmi'
 
 /obj/item/clothing/under/syndicate/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/syndicate.dmi'
@@ -32,7 +31,6 @@
 	can_adjust = TRUE
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	unique_reskin = list(
 		RESKIN_NT = "tactifool_blue",
 		RESKIN_CHARCOAL = "tactifool"
@@ -58,7 +56,6 @@
 /obj/item/clothing/under/syndicate/bloodred/sleepytime/sensors //Halloween-only
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/syndicate/nova/baseball
 	name = "syndicate baseball tee"
@@ -116,6 +113,10 @@
 	has_sensor = HAS_SENSORS
 	can_adjust = TRUE
 
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/tacticool
+	name = "tacticool utility turtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
+
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt
 	name = "suspicious utility overalls skirtleneck"
 	desc = "A pair of spiffy overalls with a turtleneck underneath, this one is a skirt instead, breezy."
@@ -124,6 +125,10 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/syndicate/nova/overalls/unarmoured/skirt/tacticool
+	name = "tacticool utility skirtleneck"
+	desc = "A pair of spiffy overalls with a tacticool turtleneck underneath, now with 100% more tacticool."
 
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/examine_more(mob/user)
 	. = ..()
@@ -150,7 +155,6 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/clothing_under/syndicate
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	unique_reskin = list(
 		RESKIN_SYNDIE = "syndicate_red",
 		RESKIN_CHARCOAL = "syndicate"
@@ -270,7 +274,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/helmet.dmi'
 	icon_state = "swat_ds"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/head/beret/sec/syndicate
 	name = "brig officer's beret"
@@ -333,7 +336,6 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/belt.dmi'
 	icon_state = "webbingds"
 	worn_icon_state = "webbingds"
-	uses_advanced_reskins = FALSE
 
 /obj/item/clothing/suit/armor/bulletproof/old
 	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
@@ -363,42 +365,6 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head.dmi'
 	icon_state = "dssoft"
 	soft_type = "ds"
-
-//Maid Outfit
-/obj/item/clothing/head/costume/maidheadband/syndicate
-	name = "tactical maid headband"
-	desc = "Tacticute."
-	icon_state = "syndimaid_headband"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/costume.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/costume.dmi'
-
-/obj/item/clothing/gloves/combat/maid
-	name = "combat maid sleeves"
-	desc = "These 'tactical' gloves and sleeves are fireproof and electrically insulated. Warm to boot."
-	icon_state = "syndimaid_arms"
-
-/obj/item/clothing/under/syndicate/nova/maid
-	name = "tactical maid outfit"
-	desc = "A 'tactical' skirtleneck fashioned to the likeness of a maid outfit. Why the Syndicate has these, you'll never know."
-	icon_state = "syndimaid"
-	//armor_type = /datum/armor/clothing_under/none
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/under/syndicate/nova/maid/Initialize(mapload)
-	. = ..()
-	var/obj/item/clothing/accessory/maidcorset/syndicate/A = new (src)
-	attach_accessory(A)
-
-/obj/item/clothing/accessory/maidcorset/syndicate
-	name = "syndicate maid apron"
-	desc = "Practical? No. Tactical? Also no. Cute? Most definitely yes."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/accessories.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/accessories.dmi'
-	icon_state = "syndimaid_corset"
-	minimize_when_attached = FALSE
-	attachment_slot = null
 
 //Wintercoat & Hood
 /obj/item/clothing/suit/hooded/wintercoat/nova/syndicate
@@ -443,7 +409,6 @@
 	icon_state = "ip_turtleneck"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/syndicate/nova/interdyne/miner
 	name = "interdyne jumpsuit"
@@ -464,23 +429,10 @@
 /obj/item/clothing/head/beret/medical/nova/interdyne
 	name = "interdyne beret"
 	desc = "A white and green beret denoting one's allegiance to Interdyne Pharmaceutics."
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#FFFFFF#198019"
-
-/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_black
-	name = "black deck officer's cap"
-	desc = "A black officer's cap that demands discipline from the one who wears it."
-	icon_state = "ip_officercap_black"
-	armor_type = /datum/armor/sec_navywarden
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head.dmi'
-
-/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_white
-	name = "white deck officer's cap"
-	desc = "A white officer's cap that demands discipline from the one who wears it."
-	icon_state = "ip_officercap_white"
-	armor_type = /datum/armor/sec_navywarden
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head.dmi'
 
 /obj/item/clothing/head/bio_hood/interdyne
 	name = "interdyne biosuit helmet"
@@ -505,42 +457,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/armor.dmi'
 	current_skin = "ip_officercloak" //prevents reskinning
-
-/obj/item/clothing/suit/toggle/labcoat/nova
-	name = "MONKE LABCOAT SUIT DEBUG"
-	desc = "REPORT THIS IF FOUND"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/labcoat.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/labcoat.dmi'
-	icon_state = null //Keeps this from showing up under the chameleon hat
-
-
-/obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/black
-	name = "interdyne black labcoat"
-	desc = "A black labcoat accented with interdyne-green colors."
-	icon_state = "ip_labcoatblack"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/white
-	name = "interdyne white labcoat"
-	desc = "A white labcoat accented with interdyne-green colors."
-	icon_state = "ip_labcoatwhite"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-
-/obj/item/clothing/suit/syndicate/interdyne_jacket
-	name = "interdyne jacket"
-	desc = "A green high-visibility jacket bearing interdyne colors."
-	icon_state = "ip_armorlabcoat"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/labcoat.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/labcoat.dmi'
-	armor_type = /datum/armor/wintercoat_syndicate
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/toggle/labcoat/nova/rd/deckofficer
-	name = "deck officer's labcoat"
-	desc = "A white labcoat with interdyne-green accents and a particularly fancy collar."
-	icon_state = "ip_officerlabcoat"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro/interdyne
 	name = "interdyne winter coat"

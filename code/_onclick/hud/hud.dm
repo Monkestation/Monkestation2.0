@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Glass" = 'icons/hud/screen_glass.dmi',
 	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
 	"Detective" = 'icons/hud/screen_detective.dmi',
-	"GrimyPoop" = 'monkestation/icons/hud/screen_grimypoop.dmi'
+	"GrimyPoop" = 'icons/hud/screen_grimypoop.dmi'
 ))
 
 /proc/ui_style2icon(ui_style)
@@ -32,8 +32,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/blobpwrdisplay
 
+	var/atom/movable/screen/mapvote_hud/mapvote_hud
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
+
+	var/atom/movable/screen/bloodling_bio_display
 
 	var/atom/movable/screen/combo/combo_display
 
@@ -42,7 +45,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/pull_icon
 	var/atom/movable/screen/rest_icon
 	var/atom/movable/screen/throw_icon
-	var/atom/movable/screen/module_store_icon
 
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
@@ -95,12 +97,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll
+	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
+	var/atom/movable/screen/hunger/hunger
 
 	var/list/atom/movable/screen/cybernetics/ammo_counter/cybernetics_ammo = list() //monkestation edit - CYBERNETICS
 
-	// subtypes can override this to force a specific UI style
+	var/atom/movable/screen/vis_holder/vis_holder
+
+	/// Subtypes can override this to force a specific UI style
 	var/ui_style
 
 	var/list/team_finder_arrows = list()
@@ -131,6 +136,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
+	if(preferences?.read_preference(/datum/preference/toggle/mapvote_hud))
+		mapvote_hud = new(null, src, preferences)
+		infodisplay += mapvote_hud
+
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
 		var/atom/movable/plane_master_controller/controller_instance = new mytype(null,src)
 		plane_master_controllers[controller_instance.name] = controller_instance
@@ -144,16 +153,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	RegisterSignal(mymob, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
 	update_sightflags(mymob, mymob.sight, NONE)
 
+	vis_holder = new(null, src)
+
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
-	var/client/client = mymob.client
-	if(client.rebuild_plane_masters)
-		var/new_relay_loc = (client.byond_version > 515) ? "1,1" : "CENTER"
-		for(var/group_key as anything in master_groups)
-			var/datum/plane_master_group/group = master_groups[group_key]
-			group.relay_loc = new_relay_loc
-			group.rebuild_hud()
-		client.rebuild_plane_masters = FALSE
+	var/client/client = mymob.canon_client
 	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
 	on_eye_change(null, null, client.eye)
 
@@ -187,9 +191,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
 		return
 
-	for(var/group_key as anything in master_groups)
+	for(var/group_key in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
-		group.transform_lower_turfs(src, current_plane_offset)
+		group.build_planes_offset(src, current_plane_offset)
 
 /datum/hud/proc/should_use_scale()
 	return should_sight_scale(mymob.sight)
@@ -201,6 +205,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
+	if(isnull(eye_turf))
+		return
+	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)
 		return
@@ -208,10 +215,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	current_plane_offset = new_offset
 
 	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
-	if(should_use_scale())
-		for(var/group_key as anything in master_groups)
-			var/datum/plane_master_group/group = master_groups[group_key]
-			group.transform_lower_turfs(src, new_offset)
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		group.build_planes_offset(src, new_offset)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -224,7 +230,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_NULL(listed_actions)
 	QDEL_LIST(floating_actions)
 
-	QDEL_NULL(module_store_icon)
 	QDEL_LIST(static_inventory)
 	QDEL_LIST(team_finder_arrows)
 
@@ -240,16 +245,20 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(hotkeybuttons)
 	throw_icon = null
 	QDEL_LIST(infodisplay)
+	QDEL_NULL(vis_holder)
 
 	healths = null
 	stamina = null
 	healthdoll = null
 	spacesuit = null
+	hunger = null
 	cybernetics_ammo = null //monkestation edit - CYBERNETICS
 	blobpwrdisplay = null
 	alien_plasma_display = null
+	bloodling_bio_display = null
 	alien_queen_finder = null
 	combo_display = null
+	mapvote_hud = null
 
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
@@ -389,6 +398,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			if(always_visible_inventory.len)
 				screenmob.client.screen += always_visible_inventory
 
+	if(vis_holder)
+		screenmob.client.screen += vis_holder
+
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	// Gives all of the actions the screenmob owes to their hud
@@ -396,7 +408,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// Handles alerts - the things on the right side of the screen
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
-	update_parallax_pref(screenmob)
+
+	if(screenmob == mymob)
+		update_parallax_pref(screenmob)
+	else
+		viewmob.hud_used.update_parallax_pref()
 
 	// ensure observers get an accurate and up-to-date view
 	if (!viewmob)
@@ -422,12 +438,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		return
 	var/mob/screenmob = viewmob || mymob
 	hidden_inventory_update(screenmob)
-
-/datum/hud/robot/show_hud(version = 0, mob/viewmob)
-	. = ..()
-	if(!.)
-		return
-	update_robot_modules_display()
 
 /datum/hud/proc/hidden_inventory_update()
 	return
@@ -471,23 +481,30 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hand_slots = list()
 	var/atom/movable/screen/inventory/hand/hand_box
 	for(var/i in 1 to mymob.held_items.len)
-		hand_box = new /atom/movable/screen/inventory/hand()
+		hand_box = new /atom/movable/screen/inventory/hand(null, src)
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
 		hand_box.screen_loc = ui_hand_position(i)
 		hand_box.held_index = i
 		hand_slots["[i]"] = hand_box
-		hand_box.hud = src
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
-	var/i = 1
-	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
-		i++
-	for(var/atom/movable/screen/human/equip/E in static_inventory)
-		E.screen_loc = ui_equip_position(mymob)
+	var/num_of_swaps = 0
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		num_of_swaps += 1
+
+	var/hand_num = 1
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		var/hand_ind = RIGHT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_LEFT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
+
+	for(var/atom/movable/screen/human/equip/equip in static_inventory)
+		equip.screen_loc = ui_equip_position(mymob)
 
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)
@@ -532,7 +549,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			palette_actions.insert_action(button, palette_actions.index_of(relative_to))
 		if(SCRN_OBJ_FLOATING) // If we don't have it as a define, this is a screen_loc, and we should be floating
 			floating_actions += button
-			var/client/our_client = mymob.client
+			var/client/our_client = mymob.canon_client
 			if(!our_client)
 				position_action(button, button.linked_action.default_button_position)
 				return
@@ -573,7 +590,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /// Ensures all of our buttons are properly within the bounds of our client's view, moves them if they're not
 /datum/hud/proc/view_audit_buttons()
-	var/our_view = mymob?.client?.view
+	var/our_view = mymob?.canon_client?.view
 	if(!our_view)
 		return
 	listed_actions.check_against_view()
@@ -691,7 +708,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-[pixel_north_offset]"
 
 /datum/action_group/proc/check_against_view()
-	var/owner_view = owner?.mymob?.client?.view
+	var/owner_view = owner?.mymob?.canon_client?.view
 	if(!owner_view)
 		return
 	// Unlikey as it is, we may have been changed. Want to start from our target position and fail down
@@ -806,4 +823,4 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/action_group/listed/refresh_actions()
 	. = ..()
-	owner.palette_actions.refresh_actions() // We effect them, so we gotta refresh em
+	owner?.palette_actions.refresh_actions() // We effect them, so we gotta refresh em

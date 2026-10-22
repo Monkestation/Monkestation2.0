@@ -7,10 +7,10 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/dresser/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
+/obj/structure/dresser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
-		if(I.use_tool(src, user, 20, volume=50))
+		if(attacking_item.use_tool(src, user, 20, volume=50))
 			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
 			set_anchored(!anchored)
 	else

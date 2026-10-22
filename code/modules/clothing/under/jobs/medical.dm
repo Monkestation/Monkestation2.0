@@ -49,7 +49,6 @@
 	desc = "A light blue turtleneck and tan khakis, for a chief medical officer with a superior sense of style."
 	icon_state = "cmoturtle"
 	inhand_icon_state = "b_suit"
-	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
@@ -60,7 +59,22 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
+
+/obj/item/clothing/under/rank/medical/chief_medical_officer/formal
+	name = "chief medical officer's formal shirt"
+	desc = "A light blue pressed shirt and tan khakis, for a chief medical officer with a tasteful sense of style."
+	icon_state = "cmoformal"
+	inhand_icon_state = "b_suit"
+	can_adjust = FALSE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
+/obj/item/clothing/under/rank/medical/chief_medical_officer/formal/skirt
+	name = "chief medical officer's formal skirt"
+	desc = "A light blue pressed shirt and tan khaki skirt, for a chief medical officer with a tasteful sense of style."
+	icon_state = "cmoformal_skirt"
+	inhand_icon_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/medical/virologist
@@ -72,7 +86,7 @@
 /obj/item/clothing/under/rank/medical/virologist/skirt
 	name = "pathologist's jumpskirt"
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
-	icon_state = "virologywhite_skirt"
+	icon_state = "virology_skirt"
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
@@ -109,7 +123,7 @@
 /obj/item/clothing/under/rank/medical/chemist/skirt
 	name = "chemist's jumpskirt"
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
-	icon_state = "chemistrywhite_skirt"
+	icon_state = "chemistry_skirt"
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
@@ -132,11 +146,17 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/under/rank/medical/doctor/nurse
-	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
-	name = "nurse's suit"
-	icon_state = "nursesuit"
-	inhand_icon_state = "w_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	can_adjust = FALSE
+/obj/item/clothing/under/rank/medical/doctor/utility
+	name = "medical utility uniform"
+	desc = "A utility uniform worn by Medical doctors."
+	icon_state = "util_med"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/rank/medical/doctor/utility/syndicate
+	armor_type = /datum/armor/clothing_under/utility_syndicate
+	has_sensor = NO_SENSORS
+
+/obj/item/clothing/under/rank/medical/paramedic/deforest
+	name = "Deforest Uniform"
+	desc = "A high-visibility medical uniform designed by Deforest Medical for search and rescue; pouches and pockets line the vest, ready to hold anything a would-be medic could need."
+	icon_state = "hivisuniform"

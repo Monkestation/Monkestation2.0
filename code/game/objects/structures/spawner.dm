@@ -215,14 +215,13 @@
 		contents.Add(user)
 
 /obj/structure/spawner/nether/process(seconds_per_tick)
-	for(var/mob/living/living_mob in contents)
-		if(living_mob)
-			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
-			living_mob.adjustBruteLoss(60 * seconds_per_tick)
-			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
-			if(living_mob.stat == DEAD)
-				var/mob/living/basic/blankbody/newmob = new(loc)
-				newmob.name = "[living_mob]"
-				newmob.desc = "It's [living_mob], but [living_mob.p_their()] flesh has an ashy texture, and [living_mob.p_their()] face is featureless save an eerie smile."
-				src.visible_message(span_warning("[living_mob] reemerges from the link!"))
-				qdel(living_mob)
+	for(var/mob/living/living_mob as anything in contents)
+		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		living_mob.adjustBruteLoss(60 * seconds_per_tick)
+		new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
+		if(living_mob.stat == DEAD)
+			var/mob/living/basic/blankbody/newmob = new(loc)
+			newmob.name = "[living_mob]"
+			newmob.desc = "It's [living_mob], but [living_mob.p_their()] flesh has an ashy texture, and [living_mob.p_their()] face is featureless save an eerie smile."
+			src.visible_message(span_warning("[living_mob] reemerges from the link!"))
+			qdel(living_mob)

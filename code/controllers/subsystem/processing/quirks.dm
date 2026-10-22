@@ -7,11 +7,12 @@
 PROCESSING_SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
 	init_order = INIT_ORDER_QUIRKS
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 	wait = 1 SECONDS
 
 	var/list/quirks = list() //Assoc. list of all roundstart quirk datum types; "name" = /path/
+	var/list/datum/quirk/quirk_prototypes = list()
 	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
@@ -23,23 +24,39 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
 		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
 		list("Alcohol Tolerance", "Light Drinker"),
+		list("Drunken Resilience", "Light Drinker"),
 		list("Clown Enjoyer", "Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
+		list("Prosthetic Organ", "Tin Man", "Body Purist"),
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
 		list("Gigantism", "Dwarfism"),
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
-		//list("Bilingual", "Foreigner"), //monkestation edit, commented out
+		list("Common Second Language", "Foreigner"),
+		list("Listener", "Uncommon"),
+		list("Outsider", "Uncommon"),
+		list("Listener", "Mute"),
+		list("Listener", "Deaf"),
+		list("Polyglot", "Listener"),
+		list("Polyglot", "Bilingual"),
+		list("Polyglot", "Common Second Language"),
+		list("Lisp", "Mute"),
+		list("Polyglot", "Foreigner"),
 		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
 		list("Body Purist", "Bright Eyes"),
-		list("Hypoalgesia","Hyperalgesia"),
-		list("Kakologophobia", "Easily Offended"), //MONKESTATION ADDITION
+		list("Kakologophobia", "Easily Offended"),
+		list("Deaf", "Hard Of Hearing"),
+		list("Paraplegic", "Hemiplegic", "Monoplegic"),
+		list("Prosthetic Limb", "Monoplegic"),
+		list("Cyborg Pre-screened dogtag", "Unborgable"),
+		list("Revival Blacklist", "Uncloneable Neurons"),
+		list("Mute", "Fluffy Tongue")
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
@@ -64,6 +81,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if(initial(quirk_type.abstract_parent_type) == type)
 			continue
 
+		quirk_prototypes[type] = new type
 		quirks[initial(quirk_type.name)] = quirk_type
 		quirk_points[initial(quirk_type.name)] = initial(quirk_type.value)
 

@@ -5,6 +5,8 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
+/// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
+#define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
 
 //Message modes. Each one defines a radio channel, more or less.
 //if you use ! as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.
@@ -60,12 +62,19 @@
 
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 
+#define MODE_BLOODLING "bloodling"
+
+#define MODE_DARKSPAWN "mindlink"
+#define MODE_KEY_DARKSPAWN  "w"
+#define MODE_TOKEN_DARKSPAWN  ":w"
+
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
 #define SPAN_ITALICS "italics"
 #define SPAN_SANS "sans"
 #define SPAN_PAPYRUS "papyrus"
+#define SPAN_COPPERPLATE "copperplate" //reserved for codeword marking please do not use this for anything else
 #define SPAN_REALLYBIG "reallybig"
 #define SPAN_COMMAND "command_headset"
 #define SPAN_CLOWN "clown"
@@ -73,23 +82,29 @@
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_HELIUM "small"
 #define SPAN_SOAPBOX "soapbox"
-#define SPAN_BOLD "bold" // monkestation addition
+#define SPAN_BOLD "bold"
+#define SPAN_HYPNOPHRASE "hypnophrase"
+#define SPAN_PROGENITOR "progenitor"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)
 #define REDUCE_RANGE (1<<1)
 #define NOPASS (1<<2)
 
-//Eavesdropping
+/// Range to hear normal messages
+#define MESSAGE_RANGE 7
+/// Range to hear whispers normally
+#define WHISPER_RANGE 1
+/// Additional range to partially hear whispers
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 /// How close intercoms can be for radio code use
 #define MODE_RANGE_INTERCOM 1
 
 // A link given to ghost alice to follow bob
-#define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
-#define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
-#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
+#define FOLLOW_LINK(alice, bob) "<a href='byond://?src=[REF(alice)];follow=[REF(bob)]'>(F)</a>"
+#define TURF_LINK(alice, turfy) "<a href='byond://?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]'>(T)</a>"
+#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href='byond://?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]'>(F)</a>"
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
@@ -97,6 +112,11 @@
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
 #define MAX_PLAQUE_LEN 144
+#define MAX_LABEL_LEN 64
+#define MAX_DESC_LEN 280
+#define MAX_AAS_LENGTH 168
+//Editing this will cause UI issues unless you also edit the CrimeWatcher.tsx UI.
+#define MAX_CRIME_NAME_LEN 39
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
@@ -106,4 +126,4 @@
 
 //Used in visible_message_flags, audible_message_flags and runechat_flags
 #define EMOTE_MESSAGE (1<<0)
-#define LOOC_MESSAGE (1<<1) //monke: looc
+#define LOOC_MESSAGE (1<<1)

@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/Initialize()
 	if(!CONFIG_GET(flag/enable_night_shifts))
 		can_fire = FALSE
+		return SS_INIT_NO_NEED
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
@@ -53,7 +54,7 @@ SUBSYSTEM_DEF(nightshift)
 	set waitfor = FALSE
 
 	if(!resumed)
-		currentrun = GLOB.apcs_list.Copy()
+		currentrun = SSmachines.get_machines_by_type(/obj/machinery/power/apc)
 		nightshift_active = active
 		if(announce)
 			if (active)

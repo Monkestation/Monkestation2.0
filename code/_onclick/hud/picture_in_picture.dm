@@ -13,7 +13,7 @@
 
 	var/mutable_appearance/standard_background
 
-/atom/movable/screen/movable/pic_in_pic/Initialize(mapload)
+/atom/movable/screen/movable/pic_in_pic/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	make_backgrounds()
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(multiz_offset_increase))
@@ -43,7 +43,8 @@
 	standard_background = new /mutable_appearance()
 	standard_background.icon = 'icons/misc/pic_in_pic.dmi'
 	standard_background.icon_state = "background"
-	standard_background.layer = SPACE_LAYER
+	standard_background.layer = SPACE_LAYER /* LOWER_FLOOR_LAYER */
+	standard_background.appearance_flags = PIXEL_SCALE
 
 /atom/movable/screen/movable/pic_in_pic/proc/add_buttons()
 	var/static/mutable_appearance/move_tab

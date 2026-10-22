@@ -445,7 +445,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * close: boolean, the state you want the curtains in.
  */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
-	for(var/obj/machinery/door/poddoor/D in GLOB.airlocks) //I really dislike pathing of these
+	for(var/obj/machinery/door/poddoor/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)
@@ -675,7 +675,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /datum/mafia_controller/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/mafia),
+		get_asset_datum(/datum/asset/spritesheet_batched/mafia),
 	)
 
 /datum/mafia_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

@@ -13,6 +13,8 @@
 	suicide_cry = "FOR THE HIVE!!"
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Consume the station's most valuable genomes."
+	hardcore_random_bonus = TRUE
+	stinger_sound = 'sound/ambience/antag/ling_alert.ogg'
 	/// Whether to give this changeling objectives or not
 	var/give_objectives = TRUE
 	/// Weather we assign objectives which compete with other lings
@@ -53,11 +55,17 @@
 	var/list/innate_powers = list()
 	/// Associated list of all powers we have evolved / bought from the emporium. [path] = [instance of path]
 	var/list/purchased_powers = list()
+	/// The amount of offspring spawned from the changling. To prevent refreshing the amount by buying the power again.
+	var/births = 0
 
 	/// The voice we're mimicing via the changeling voice ability.
 	var/mimicing = ""
 	/// Whether we can currently respec in the cellular emporium.
 	var/can_respec = FALSE
+
+	/// If this changeling has used a "weird" power at least once.
+	/// Only used for monster hunter targeting.
+	var/used_weird_power = FALSE
 
 	/// The currently active changeling sting.
 	var/datum/action/changeling/sting/chosen_sting
@@ -127,11 +135,13 @@
 	create_initial_profile()
 	if(give_objectives)
 		forge_objectives()
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	owner.current.get_language_holder().omnitongue = TRUE
+	owner.current.persistent_client?.remove_challenge(/datum/challenge/no_heals)
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	return ..()
 
 /datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
+	. = ..()
 	var/mob/mob_to_tweak = mob_override || owner.current
 	if(!isliving(mob_to_tweak))
 		return
@@ -143,16 +153,15 @@
 	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
 	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
+	ADD_TRAIT(mob_to_tweak, TRAIT_NO_MINDSWAP, CHANGELING_TRAIT)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
 
-		lingchemdisplay = new /atom/movable/screen/ling/chems()
-		lingchemdisplay.hud = hud_used
+		lingchemdisplay = new /atom/movable/screen/ling/chems(null, hud_used)
 		hud_used.infodisplay += lingchemdisplay
 
-		lingstingdisplay = new /atom/movable/screen/ling/sting()
-		lingstingdisplay.hud = hud_used
+		lingstingdisplay = new /atom/movable/screen/ling/sting(null, hud_used)
 		hud_used.infodisplay += lingstingdisplay
 
 		hud_used.show_hud(hud_used.hud_version)
@@ -187,20 +196,20 @@
 
 	var/datum/hud/ling_hud = owner.current.hud_used
 
-	lingchemdisplay = new
-	lingchemdisplay.hud = ling_hud
+	lingchemdisplay = new(null, ling_hud)
 	ling_hud.infodisplay += lingchemdisplay
 
-	lingstingdisplay = new
-	lingstingdisplay.hud = ling_hud
+	lingstingdisplay = new(null, ling_hud)
 	ling_hud.infodisplay += lingstingdisplay
 
 	ling_hud.show_hud(ling_hud.hud_version)
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
+	. = ..()
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
 	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	REMOVE_TRAIT(living_mob, TRAIT_NO_MINDSWAP, CHANGELING_TRAIT)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -211,6 +220,7 @@
 		QDEL_NULL(lingstingdisplay)
 
 /datum/antagonist/changeling/on_removal()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
 	remove_changeling_powers(include_innate = TRUE)
 	if(!iscarbon(owner.current))
 		return
@@ -267,7 +277,10 @@
 /datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	if(HAS_TRAIT(source, TRAIT_BLOODSILVER_CURSE)) // no chem regeneration while under the effects of a bloodsilver bullet.
+		return
+
+	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs)
 
 	// If dead, we only regenerate up to half chem storage.
 	if(owner.current.stat == DEAD)
@@ -426,7 +439,7 @@
  * Changeling's ability to re-adapt all of their learned powers.
  */
 /datum/antagonist/changeling/proc/readapt()
-	if(!ishuman(owner.current) || ismonkey(owner.current))
+	if(!ishuman(owner.current) || ismonkeybasic(owner.current))
 		to_chat(owner.current, span_warning("We can't remove our evolutions in this form!"))
 		return FALSE
 
@@ -501,7 +514,7 @@
 		if(verbose)
 			to_chat(user, span_warning("[target]'s body is ruined beyond usability!"))
 		return FALSE
-	if(!ishuman(target) || ismonkey(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+	if(!ishuman(target) || ismonkeybasic(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
 			to_chat(user, span_warning("We could gain no benefit from absorbing a lesser creature."))
 		return FALSE
@@ -561,6 +574,7 @@
 
 	// Grab the target's sechut icon.
 	new_profile.id_icon = target.wear_id?.get_sechud_job_icon_state()
+	new_profile.id = target.wear_id?.GetID()
 
 	var/list/slots = list("head", "wear_mask", "wear_neck", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -733,7 +747,7 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner.current
-	first_profile.dna.transfer_identity(carbon_owner, transfer_SE = TRUE)
+	first_profile.dna.copy_dna(carbon_owner.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	carbon_owner.real_name = first_profile.name
 	carbon_owner.updateappearance(mutcolor_update = TRUE)
 	carbon_owner.domutcheck()
@@ -770,11 +784,19 @@
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
-	chosen_dna.transfer_identity(user, TRUE)
+	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+
+	// Snowflake to carry over anime implants
+	if(user.has_quirk(/datum/quirk/anime))
+		user.remove_quirk(/datum/quirk/anime)
+
+	for(var/datum/quirk/target_quirk as anything in chosen_profile.quirks)
+		if(istype(target_quirk, /datum/quirk/anime))
+			user.add_quirk(/datum/quirk/anime)
+			break
 
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
-		if(IS_ORGANIC_LIMB(limb))
-			limb.update_limb(is_creating = TRUE)
+		limb.update_limb(is_creating = TRUE)
 
 	user.updateappearance(mutcolor_update = TRUE)
 	user.domutcheck()
@@ -849,9 +871,11 @@
 		new_flesh_item.worn_icon = chosen_profile.worn_icon_list[slot]
 		new_flesh_item.worn_icon_state = chosen_profile.worn_icon_state_list[slot]
 
-		if(istype(new_flesh_item, /obj/item/changeling/id) && chosen_profile.id_icon)
+		if(istype(new_flesh_item, /obj/item/changeling/id) && chosen_profile.id_icon && chosen_profile.id)
 			var/obj/item/changeling/id/flesh_id = new_flesh_item
 			flesh_id.hud_icon = chosen_profile.id_icon
+			flesh_id.stored_name = chosen_profile.id.registered_name
+			flesh_id.stored_job = chosen_profile.id.assignment
 
 		if(equip)
 			user.equip_to_slot_or_del(new_flesh_item, slot2slot[slot])
@@ -864,7 +888,13 @@
 			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
+	user.name = user.get_visible_name()
 	current_profile = chosen_profile
+
+/datum/antagonist/changeling/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(births > 0 || true_absorbs > 0 || used_weird_power)
+		prey += owner
 
 // Changeling profile themselves. Store a data to store what every DNA instance looked like.
 /datum/changeling_profile
@@ -902,6 +932,8 @@
 	var/socks
 	/// The colour of the socks worn by profile source
 	var/socks_color //MONKESTATION EDIT
+	/// ID worn
+	var/obj/item/card/id/id
 	/// A list of paths for any skill chips the profile source had installed
 	var/list/skillchips = list()
 	/// What scars the profile sorce had, in string form (like persistent scars)
@@ -1009,8 +1041,8 @@
 	var/list/data = list()
 	var/list/memories = list()
 
-	for(var/memory_key in stolen_memories)
-		memories += list(list("name" = memory_key, "story" = stolen_memories[memory_key]))
+	for(var/memory_key, memory_value in stolen_memories)
+		memories += list(list("name" = memory_key, "story" = memory_value))
 
 	data["memories"] = memories
 	data["true_name"] = changelingID

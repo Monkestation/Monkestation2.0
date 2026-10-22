@@ -1,29 +1,30 @@
-import { Window } from '../layouts';
+import { sortBy } from 'common/collections';
 import { useBackend } from '../backend';
 import {
-  Section,
   Box,
   Button,
   Flex,
   Icon,
   LabeledList,
+  Section,
+  Stack,
   Table,
   Tooltip,
 } from '../components';
-import { sortBy } from 'common/collections';
+import { Window } from '../layouts';
 
 const ExperimentStages = (props) => {
   return (
     <Table ml={2} className="ExperimentStage__Table">
       {props.children.map((stage, idx) => (
-        <ExperimentStageRow key={idx} {...stage} />
+        <ExperimentStageRow key={idx} stage={stage} />
       ))}
     </Table>
   );
 };
 
 const ExperimentStageRow = (props) => {
-  const [type, description, value, altValue] = props;
+  const [type, description, value, altValue] = props.stage;
 
   // Determine completion based on type of stage
   let completion = false;
@@ -106,12 +107,12 @@ export const TechwebServer = (props) => {
 export const ExperimentConfigure = (props) => {
   const { act, data } = useBackend();
   const { always_active, has_start_callback } = data;
-  let techwebs = data.techwebs ?? [];
+  const techwebs = data.techwebs ?? [];
 
   const experiments = sortBy((exp) => exp.name)(data.experiments ?? []);
 
   // Group servers together by web
-  let webs = new Map();
+  const webs = new Map();
   techwebs.forEach((x) => {
     if (x.web_id !== null) {
       if (!webs.has(x.web_id)) {
@@ -122,7 +123,7 @@ export const ExperimentConfigure = (props) => {
   });
 
   return (
-    <Window resizable width={600} height={735}>
+    <Window width={600} height={735}>
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>
@@ -140,10 +141,7 @@ export const ExperimentConfigure = (props) => {
           </Flex.Item>
           <Flex.Item mb={has_start_callback ? 1 : 0} grow={1}>
             {techwebs.some((e) => e.selected) && (
-              <Section
-                title="Experiments"
-                className="ExperimentConfigure__ExperimentsContainer"
-              >
+              <Section title="Experiments" scrollable fill>
                 <Flex.Item mb={1}>
                   {(experiments.length &&
                     always_active &&
@@ -196,22 +194,24 @@ export const Experiment = (props) => {
             : act('select_experiment', { ref: ref })
         }
         backgroundColor={selected ? 'good' : '#40628a'}
-        className="ExperimentConfigure__ExperimentName"
+        bold
+        style={{ borderRadius: 0 }}
       >
-        <Flex align="center" justify="space-between">
-          <Flex.Item color={'white'}>{name}</Flex.Item>
-          <Flex.Item color={'rgba(255, 255, 255, 0.5)'}>
-            <Box className="ExperimentConfigure__TagContainer">
-              {tag}
-              <Tooltip content={performance_hint} position="bottom-start">
-                <Icon name="question-circle" mx={0.5} />
-                <Box className="ExperimentConfigure__PerformanceHint" />
-              </Tooltip>
-            </Box>
-          </Flex.Item>
-        </Flex>
+        <Stack align="center" justify="space-between">
+          <Stack.Item color="white">{name}</Stack.Item>
+          <Stack.Item color="rgba(255, 255, 255, 0.5)">
+            <Stack>
+              <Stack.Item grow>{tag}</Stack.Item>
+              <Stack.Item>
+                <Tooltip content={performance_hint} position="bottom-start">
+                  <Icon name="question-circle" mx={0.5} />
+                </Tooltip>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
       </Button>
-      <Box className={'ExperimentConfigure__ExperimentContent'}>
+      <Box className="ExperimentConfigure__ExperimentContent">
         <Box mb={1}>{description}</Box>
         {props.children}
         <ExperimentStages>{progress}</ExperimentStages>

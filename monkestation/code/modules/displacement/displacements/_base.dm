@@ -1,5 +1,5 @@
 /obj/effect/distortion
-	icon = 'monkestation/icons/effects/displacement_maps.dmi'
+	icon = 'icons/effects/displacement_maps.dmi'
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
 	mouse_opacity = FALSE

@@ -11,7 +11,6 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 	"cached_ref",
 	"weak_reference",
 	"cooldowns",
-	"__auxtools_weakref_id",
 	"tag",
 	"type",
 	"parent_type",
@@ -23,6 +22,10 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 /obj/item/organ/internal/brain
 	/// The modular persistence data for a character.
 	var/datum/modular_persistence/modular_persistence
+
+/obj/item/organ/internal/brain/Destroy()
+	QDEL_NULL(modular_persistence)
+	return ..()
 
 /// Saves the contents of the modular persistence datum for the player's client to their file.
 /datum/controller/subsystem/persistence/proc/save_modular_persistence()
@@ -95,7 +98,7 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 	return returned_list
 
 /// Saves the held persistence data to where it needs to go.
-/datum/modular_persistence/proc/save_data(var/ckey)
+/datum/modular_persistence/proc/save_data(ckey)
 	ckey = replacetext(ckey || owner.owner?.ckey || owner.brainmob?.ckey, "@", "")
 	if(!owner.owner && !owner.brainmob)
 		CRASH("Modular persistence save called on a brain with no owning mob or brainmob! How did this happen?! (\ref[owner], [owner])")

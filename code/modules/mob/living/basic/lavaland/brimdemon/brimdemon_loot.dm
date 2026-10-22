@@ -1,19 +1,3 @@
-/// Brimdemon crusher trophy, it... makes a funny sound?
-/obj/item/crusher_trophy/brimdemon_fang
-	name = "brimdemon's fang"
-	icon_state = "brimdemon_fang"
-	desc = "A fang from a brimdemon's corpse."
-	denied_type = /obj/item/crusher_trophy/brimdemon_fang
-	/// Cartoon punching vfx
-	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
-
-/obj/item/crusher_trophy/brimdemon_fang/effect_desc()
-	return "mark detonation creates visual and audiosensory effects on the target"
-
-/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
-	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
-	playsound(target, 'sound/lavaland/brimdemon_crush.ogg', 100)
-
 /// Reagent pool left by dying brimdemon
 /obj/effect/decal/cleanable/brimdust
 	name = "brimdust"
@@ -22,10 +6,8 @@
 	icon = 'icons/obj/mining.dmi'
 	layer = FLOOR_CLEAN_LAYER
 	mergeable_decal = FALSE
-
-/obj/effect/decal/cleanable/brimdust/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/brimdust, 15)
+	decal_reagent = /datum/reagent/brimdust
+	reagent_amount = 15
 
 /// Ashwalker ore sensor crafted from brimdemon ash
 /obj/item/ore_sensor
@@ -53,4 +35,4 @@
 	if(!COOLDOWN_FINISHED(src, ore_sensing_cooldown))
 		return
 	COOLDOWN_START(src, ore_sensing_cooldown, cooldown)
-	mineral_scan_pulse(get_turf(src), range)
+	mineral_scan_pulse(get_turf(src), range, src)

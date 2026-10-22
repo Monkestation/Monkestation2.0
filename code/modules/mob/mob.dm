@@ -30,7 +30,10 @@
 	else if(ckey)
 		stack_trace("Mob without client but with associated ckey has been deleted.")
 
+	persistent_client?.set_mob(null)
+
 	unset_machine()
+	clear_fullscreens()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -41,7 +44,7 @@
 		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
-	if(observers?.len)
+	if(length(observers))
 		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 
@@ -54,16 +57,23 @@
 	if(mock_client)
 		mock_client.mob = null
 
-	if(SSparticle_weather.running_weather)
-		if(src in SSparticle_weather.running_weather.messaged_mobs)
-			SSparticle_weather.running_weather.messaged_mobs -= src
-
 	return ..()
 
 /mob/New()
 	// This needs to happen IMMEDIATELY. I'm sorry :(
 	GenerateTag()
 	return ..()
+
+/// Assigns a (c)key to this mob.
+/mob/proc/PossessByPlayer(ckey)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(isnull(ckey))
+		return
+
+	if(!istext(ckey))
+		CRASH("Tried to assign a mob a non-text ckey, wtf?!")
+
+	src.ckey = ckey(ckey)
 
 /**
  * Intialize a mob
@@ -92,11 +102,8 @@
 		add_to_alive_mob_list()
 	set_focus(src)
 	prepare_huds()
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	update_config_movespeed()
@@ -234,7 +241,7 @@
 				msg = alt_msg
 				type = alt_type
 
-		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
+		if(type & MSG_AUDIBLE && HAS_TRAIT(src, TRAIT_DEAF))//Hearing related
 			if(!alt_msg)
 				return
 			else
@@ -332,16 +339,26 @@
  * * message is the message output to anyone who can hear.
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
+ * * push_appearance (optional) pushes an atom's appearance to all viewing mobs, for use with <img src='\ref[thing]'>
  */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE)
-	var/list/hearers = get_hearers_in_view(hearing_distance, src)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE, atom/push_appearance, list/ignored_mobs)
+	if(!isnull(push_appearance) && !isatom(push_appearance))
+		stack_trace("push_appearance must be an atom, but got [push_appearance] instead")
+	var/list/hearers = get_hearers_in_range(hearing_distance, src) //caches the hearers and then removes ignored mobs.
+	if(isnull(hearers))
+		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
+	hearers -= ignored_mobs
 	if(self_message)
 		hearers -= src
 	var/raw_msg = message
 	if(audible_message_flags & EMOTE_MESSAGE)
 		message = "<span class='emote'><b>[src]</b> [message]</span>"
 	for(var/mob/M in hearers)
-		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags) && M.can_hear())
+		if(push_appearance)
+			M << output(push_appearance, "push_appearance_placeholder_id")
+		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags))
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
 		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
@@ -355,8 +372,9 @@
  * * self_message (optional) is what the src mob hears.
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
+ * * push_appearance (optional) pushes an atom's appearance to all viewing mobs, for use with <img src='\ref[thing]'>
  */
-/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE)
+/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE, atom/push_appearance, list/ignored_mobs)
 	. = ..()
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
@@ -570,28 +588,29 @@
 		return
 
 	face_atom(examinify)
-	var/list/result
+	var/result_combined
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		var/ref_to_atom = ref(examinify)
+		var/ref_to_atom = REF(examinify)
 		var/examine_time = client.recent_examines[ref_to_atom]
 		if(examine_time && (world.time - examine_time < EXAMINE_MORE_WINDOW))
-			result = examinify.examine_more(src)
+			var/list/result = examinify.examine_more(src)
 			if(!length(result))
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
+			result_combined = boxed_message(jointext(result, "<br>"))
+
 		else
-			result = examinify.examine(src)
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
 			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
 			handle_eye_contact(examinify)
-	else
-		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
-	if(result.len)
-		for(var/i in 1 to (length(result) - 1))
-			result[i] += "\n"
+	if(!result_combined)
+		var/list/result = examinify.examine(src)
+		var/atom_title = examinify.examine_title(src, thats = TRUE)
+		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
+		result_combined = (atom_title ? fieldset_block("[atom_title][ismob(examinify) ? "!" :"."]", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
 
-	to_chat(src, boxed_message("<span class='infoplain'>[result.Join()]</span>"))
+	to_chat(src, span_infoplain(result_combined))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 
@@ -619,7 +638,7 @@
 	//you can only initiate exaimines if you have a hand, it's not disabled, and only as many examines as you have hands
 	/// our active hand, to check if it's disabled/detatched
 	var/obj/item/bodypart/active_hand = has_active_hand()? get_active_hand() : null
-	if(!active_hand || active_hand.bodypart_disabled || LAZYLEN(do_afters) >= usable_hands)
+	if(!active_hand || active_hand.bodypart_disabled || do_after_count() >= usable_hands)
 		to_chat(src, span_warning("You don't have a free hand to examine this!"))
 		return FALSE
 
@@ -688,7 +707,7 @@
 	// check to see if their face is blocked or, if not, a signal blocks it
 	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 3) // so the examine signal has time to fire and this will print after
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 0.3 SECONDS) // so the examine signal has time to fire and this will print after
 
 	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
@@ -756,12 +775,12 @@
 	if(ismecha(loc))
 		return
 
-	if(incapacitated())
+	if(incapacitated(IGNORE_SOFTCRIT))
 		return
 
-	var/obj/item/I = get_active_held_item()
-	if(I)
-		I.attack_self(src)
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item)
+		held_item.attack_self(src)
 		update_held_items()
 		return
 
@@ -808,7 +827,7 @@
 		qdel(M)
 		return
 
-	M.key = key
+	M.PossessByPlayer(key)
 
 
 /**
@@ -832,6 +851,7 @@
 	set hidden = TRUE
 	set category = null
 	return
+
 /**
  * Topic call back for any mob
  *
@@ -845,20 +865,6 @@
 		unset_machine()
 		src << browse(null, t1)
 
-/**
- * Controls if a mouse drop succeeds (return null if it doesnt)
- */
-/mob/MouseDrop(mob/M)
-	. = ..()
-	if(M != usr)
-		return
-	if(usr == src)
-		return
-	if(!Adjacent(usr))
-		return
-	if(isAI(M))
-		return
-
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
 	return FALSE
@@ -867,6 +873,7 @@
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
+	return .
 
 /**
  * Convert a list of spells into a displyable list for the statpanel
@@ -942,7 +949,7 @@
 		selected_hand = (active_hand_index % held_items.len)+1
 
 	if(istext(selected_hand))
-		selected_hand = lowertext(selected_hand)
+		selected_hand = LOWER_TEXT(selected_hand)
 		if(selected_hand == "right" || selected_hand == "r")
 			selected_hand = 2
 		if(selected_hand == "left" || selected_hand == "l")
@@ -997,15 +1004,68 @@
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
 		return FALSE
 
-	var/list/protection_was_used = list() // this is a janky way of interrupting signals using lists
-	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, protection_was_used) & COMPONENT_MAGIC_BLOCKED
+	// A list of all things which are providing anti-magic to us
+	var/list/antimagic_sources = list()
+	var/is_magic_blocked = FALSE
 
-	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, antimagic_sources) & COMPONENT_MAGIC_BLOCKED)
+		is_magic_blocked = TRUE
+	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		is_magic_blocked = TRUE
 	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		is_magic_blocked = TRUE
 
+	if(is_magic_blocked && charge_cost > 0 && !HAS_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC))
+		on_block_magic_effects(casted_magic_flags, antimagic_sources)
+
 	return is_magic_blocked
+
+/// Called whenever a magic effect with a charge cost is blocked and we haven't recently blocked magic.
+/mob/proc/on_block_magic_effects(magic_flags, list/antimagic_sources)
+	return
+
+/mob/living/on_block_magic_effects(magic_flags, list/antimagic_sources)
+	ADD_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT), 6 SECONDS)
+
+	var/mutable_appearance/antimagic_effect
+	var/antimagic_color
+	var/atom/antimagic_source = length(antimagic_sources) ? pick(antimagic_sources) : src
+
+	if(magic_flags & MAGIC_RESISTANCE)
+		visible_message(
+			span_warning("[src] pulses red as [ismob(antimagic_source) ? p_they() : antimagic_source] absorbs magic energy!"),
+			span_userdanger("An intense magical aura pulses around [ismob(antimagic_source) ? "you" : antimagic_source] as it dissipates into the air!"),
+		)
+		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
+		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
+		playsound(src, 'sound/magic/magic_block.ogg', 50, TRUE)
+
+	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
+		visible_message(
+			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
+			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
+		)
+		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
+		playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+
+	else if(magic_flags & MAGIC_RESISTANCE_MIND)
+		visible_message(
+			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
+			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
+		)
+		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
+		antimagic_color = LIGHT_COLOR_DARK_BLUE
+		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/human = src
+		human.apply_height_filters(antimagic_effect)
+
+	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
+	add_overlay(antimagic_effect)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob
@@ -1046,7 +1106,7 @@
 	if (Adjacent(A))
 		return TRUE
 	var/datum/dna/mob_dna = has_dna()
-	if(mob_dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(src, A))
+	if(mob_dna?.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, A))
 		return TRUE
 
 	//range check
@@ -1075,6 +1135,14 @@
  * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
  * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
+ * * ALLOW_VENTCRAWL - Mobs with ventcrawl traits can alt-click this to vent
+ * * BYPASS_ADJACENCY - The target does not have to be adjacent
+ * * SILENT_ADJACENCY - Adjacency is required but errors are not printed
+ * * NOT_INSIDE_TARGET - The target maybe adjacent but the mob should not be inside the target
+ * * ALLOW_PAI - Allows pAIs to perform an action
+ *
+ * silence_adjacency: Sometimes we want to use this proc to check interaction without allowing it to throw errors for base case adjacency
+ * Alt click uses this, as otherwise you can detect what is interactable from a distance via the error message
 **/
 /mob/proc/can_perform_action(atom/movable/target, action_bitflags)
 	return
@@ -1201,13 +1269,6 @@
 		return
 	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
 		light.set_light_cutoff(lighting_cutoff, lighting_color_cutoffs)
-	for(var/atom/movable/screen/plane_master/additive_lighting/light as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE_ADDITIVE))
-		if(!client)
-			return
-		if(!client.prefs.read_preference(/datum/preference/toggle/bloom))
-			light.alpha = 0
-		else
-			light.alpha = 140
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()
@@ -1244,11 +1305,12 @@
 /**
  * Proc that returns TRUE if the mob can write using the writing_instrument, FALSE otherwise.
  *
- * This proc a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
+ * This proc has a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
  */
-/mob/proc/can_write(obj/item/writing_instrument)
+/mob/proc/can_write(obj/item/writing_instrument, silent_if_not_writing_tool = FALSE)
 	if(!istype(writing_instrument))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		if(!silent_if_not_writing_tool)
+			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
 	if(!is_literate())
@@ -1261,7 +1323,8 @@
 
 	var/pen_info = writing_instrument.get_writing_implement_details()
 	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		if(!silent_if_not_writing_tool)
+			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
 	if(has_gravity())
@@ -1321,6 +1384,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_GODMODE, "Toggle Godmode")
 	VV_DROPDOWN_OPTION(VV_HK_DROP_ALL, "Drop Everything")
 	VV_DROPDOWN_OPTION(VV_HK_REGEN_ICONS, "Regenerate Icons")
+	VV_DROPDOWN_OPTION(VV_HK_REGEN_ICONS_FULL, "Regenerate Icons & Clear Stuck Overlays")
 	VV_DROPDOWN_OPTION(VV_HK_PLAYER_PANEL, "Show player panel")
 	VV_DROPDOWN_OPTION(VV_HK_BUILDMODE, "Toggle Buildmode")
 	VV_DROPDOWN_OPTION(VV_HK_DIRECT_CONTROL, "Assume Direct Control")
@@ -1334,48 +1398,47 @@
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
-	if(href_list[VV_HK_PLAYER_PANEL])
+
+	if(href_list[VV_HK_REGEN_ICONS_FULL])
 		if(!check_rights(NONE))
 			return
-		usr.client.VUAP_selected_mob = src
-		usr.client.selectedPlayerCkey = src.ckey
-		usr.client.holder.vuap_open()
+		cut_overlays()
+		regenerate_icons()
+
+	if(href_list[VV_HK_PLAYER_PANEL])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, src)
+
 	if(href_list[VV_HK_GODMODE])
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_spell, src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_spell, src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, src)
+
 	if(href_list[VV_HK_GIB])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_gib(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/gib_them, src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_admin_drop_everything(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/drop_everything, src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_assume_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_assume_direct_control, src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_give_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_give_direct_control, src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
@@ -1398,20 +1461,44 @@
 	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
-/mob/verb/open_language_menu()
+/mob/verb/open_language_menu_verb()
 	set name = "Open Language Menu"
 	set category = "IC"
 
-	var/datum/language_holder/H = get_language_holder()
-	H.open_language_menu(usr)
+	get_language_holder().open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
-/mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+/mob/proc/adjust_nutrition(change, forced = FALSE) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
+		return
+
 	nutrition = max(0, nutrition + change)
 
+/mob/living/adjust_nutrition(change, forced)
+	. = ..()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(change) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
+
 ///Force set the mob nutrition
-/mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
-	nutrition = max(0, change)
+/mob/proc/set_nutrition(set_to, forced = FALSE) //Seriously fuck you oldcoders.
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
+		return
+
+	nutrition = max(0, set_to)
+
+/mob/living/set_nutrition(set_to, forced)
+	var/old_nutrition = nutrition
+	. = ..()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(old_nutrition - nutrition) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
 
 ///Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
@@ -1451,11 +1538,6 @@
 	. = stat
 	stat = new_stat
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
-
-/// Proc used for custom metabolization of reagents, if any
-/mob/proc/reagent_check(datum/reagent/chem, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_CHECK, chem, seconds_per_tick, times_fired)
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -1497,7 +1579,7 @@
 	if(!canon_client)
 		return
 
-	for(var/datum/callback/callback as anything in canon_client.player_details?.post_logout_callbacks)
+	for(var/datum/callback/callback as anything in persistent_client?.post_logout_callbacks)
 		callback.Invoke()
 
 	if(canon_client?.movingmob)
@@ -1555,9 +1637,10 @@
 	var/list/data = list()
 	var/list/memories = list()
 
-	for(var/memory_key in user?.mind.memories)
-		var/datum/memory/memory = user.mind.memories[memory_key]
-		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+	for(var/memory_key, memory_value in user?.mind.memories)
+		var/datum/memory/memory = memory_value
+		if(memory)
+			memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories
 	return data
@@ -1571,3 +1654,48 @@
 /mob/key_down(key, client/client, full_key)
 	..()
 	SEND_SIGNAL(src, COMSIG_MOB_KEYDOWN, key, client, full_key)
+
+/// Makes a client temporarily aware of an appearance via and invisible vis contents object.
+/mob/proc/send_appearance(mutable_appearance/appearance) as /atom/movable/screen
+	RETURN_TYPE(/atom/movable/screen)
+	if(!hud_used || isnull(appearance))
+		return
+
+	var/atom/movable/screen/container = new
+	container.appearance = appearance
+
+	hud_used.vis_holder.vis_contents += container
+	addtimer(CALLBACK(src, PROC_REF(remove_appearance), container), 5 SECONDS, TIMER_DELETE_ME)
+
+	return container
+
+/mob/proc/remove_appearance(atom/movable/container)
+	if(!hud_used)
+		return
+
+	hud_used.vis_holder.vis_contents -= container
+
+/proc/ma2html(mutable_appearance/appearance, mob/viewer, extra_classes = "")
+	if(isatom(appearance))
+		var/atom/atom = appearance
+		appearance = copy_appearance_filter_overlays(atom.appearance)
+	else if(isappearance_or_image(appearance) || isicon(appearance))
+		appearance = copy_appearance_filter_overlays(appearance)
+	else
+		CRASH("Invalid appearance passed to ma2html - either a appearance, image, icon, or atom must be passed!")
+
+	if(IS_CLIENT_OR_MOCK(viewer))
+		var/datum/client_interface/client = viewer
+		viewer = client.mob
+	if(!ismob(viewer))
+		CRASH("Invalid viewer passed to ma2html")
+	var/atom/movable/screen/container = viewer.send_appearance(appearance)
+	if(QDELETED(container))
+		CRASH("Failed to send appearance to client")
+	return "<img class='icon [extra_classes]' src='\ref[container]' style='image-rendering: pixelated; -ms-interpolation-mode: nearest-neighbor'>"
+
+/**
+ * Returns the access list for this mob, most mobs don't have any access.
+ */
+/mob/proc/get_access() as /list
+	return list()

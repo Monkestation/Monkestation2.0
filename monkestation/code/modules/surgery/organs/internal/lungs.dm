@@ -1,15 +1,33 @@
 /obj/item/organ/internal/lungs/clockwork
 	name = "clockwork diaphragm"
 	desc = "A utilitarian bellows which serves to pump oxygen into an automaton's body."
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "lungs-clock"
-	organ_flags = ORGAN_SYNTHETIC
-	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/lungs/slime
 	zone = BODY_ZONE_CHEST
 	organ_flags = ORGAN_UNREMOVABLE
 	safe_oxygen_min = 4 //We don't need much oxygen to subsist.
+
+/obj/item/organ/internal/lungs/slime/Initialize(mapload)
+	. = ..()
+	add_gas_reaction(/datum/gas/water_vapor, while_present = PROC_REF(melt_lungs))
+
+/obj/item/organ/internal/lungs/slime/proc/melt_lungs(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
+	if(h2o_pp > 1)
+		var/ratio = clamp((h2o_pp - 1.0) / (8.0 - 1.0),0,1)
+		var/lung_damage  = 5  * ratio
+		var/blood_damage = 15 * ratio
+		apply_organ_damage(lung_damage)
+		breather.blood_volume -= blood_damage
+
+		if(prob(20) && h2o_pp < 3)
+			breather.emote("cough")
+		if(prob(20) && h2o_pp >= 3)
+			breather.emote("wheeze")
+			breather.adjustOxyLoss(-8)
+			to_chat(owner, span_userdanger("Your lungs feel like they are liquefying!"))
 
 /obj/item/organ/internal/lungs/slime/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -20,12 +38,9 @@
 	desc = "A device that transfers generated heat to a fluid medium to cool it down. Required to keep your synthetics cool-headed. It's shape resembles lungs." //Purposefully left the 'fluid medium' ambigious for interpretation of the character, whether it be air or fluid cooling
 	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
 	icon_state = "lungs-ipc"
-	safe_nitro_min = 0
-	safe_co2_max = 0
-	safe_plasma_min = 0
-	safe_plasma_max = 0
-	safe_oxygen_min = 0	//What are you doing man, dont breathe with those!
-	safe_oxygen_max = 0
+	safe_co2_max = 0.1
+	safe_oxygen_min = 16	//What are you doing man, dont breathe with those!
+	safe_oxygen_max = 16.1	//A constant struggle between too much air and too little for anyone who needs to breathe
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
@@ -34,7 +49,7 @@
 /obj/item/organ/internal/lungs/synth/emp_act(severity)
 	. = ..()
 
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
@@ -61,6 +76,6 @@
 	)
 	build_path = /obj/item/organ/internal/lungs/synth
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE

@@ -11,6 +11,7 @@
 	circuit = /obj/item/circuitboard/machine/emitter
 
 	use_power = NO_POWER_USE
+	can_change_cable_layer = TRUE
 
 	/// The icon state used by the emitter when it's on.
 	var/icon_state_on = "emitter-active" //monkestation edit
@@ -57,6 +58,14 @@
 	///stores the direction and orientation of the last projectile
 	var/last_projectile_params
 
+	//monkestation edit start
+	//Basic Emitters projectile characteristics
+	///damage modifier on walls
+	var/wall_dem_mod = 1
+	///can projectile hit walls
+	var/is_proj_hit_walls = FALSE
+	//monkestation edit end
+
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
@@ -76,6 +85,12 @@
 	welded = TRUE
 	. = ..()
 
+/obj/machinery/power/emitter/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(welded)
+		balloon_alert(user, "unweld first!")
+		return FALSE
+	return TRUE
+
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
 	if(!anchored && welded) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
@@ -87,10 +102,19 @@
 	var/fire_shoot_delay = 12 SECONDS
 	var/min_fire_delay = 2.4 SECONDS
 	var/power_usage = 350
+	//monkestation edit start
+	var/list/wall_mod_table = list(1, 1.25, 2.5, 5, 8.35) //infinite, 20, 10, 5, 3 hits respectively to destroy a normal wall, last two tiers, 10, 7 shots for r-walls
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		max_fire_delay -= 2 SECONDS * laser.tier
 		min_fire_delay -= 0.4 SECONDS * laser.tier
 		fire_shoot_delay -= 2 SECONDS * laser.tier
+		var/parts_tier = laser.tier
+		if(obj_flags & EMAGGED)
+			parts_tier += 1
+		if(parts_tier >= 2)
+			is_proj_hit_walls = TRUE
+		wall_dem_mod = wall_mod_table[clamp(parts_tier, 0, LAZYLEN(wall_mod_table))]
+	//monkestation edit end
 	maximum_fire_delay = max_fire_delay
 	minimum_fire_delay = min_fire_delay
 	fire_delay = fire_shoot_delay
@@ -116,7 +140,7 @@
 		. += span_notice("Its status display is glowing faintly.")
 	else
 		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay)]</b> and <b>[DisplayTimeText(maximum_fire_delay)]</b>.")
-		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
+		. += span_notice("Power consumption at <b>[display_power(active_power_usage, convert = FALSE)]</b>.")
 
 /obj/machinery/power/emitter/should_have_node()
 	return welded
@@ -176,15 +200,16 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/emitter/process(seconds_per_tick)
+	var/power_usage = active_power_usage * seconds_per_tick
 	if(machine_stat & (BROKEN))
 		return
-	if(!welded || (!powernet && active_power_usage))
+	if(!welded || (!powernet && power_usage))
 		active = FALSE
 		update_appearance()
 		return
 	if(!active)
 		return
-	if(active_power_usage && surplus() < active_power_usage)
+	if(power_usage && surplus() < power_usage)
 		if(powered)
 			powered = FALSE
 			update_appearance()
@@ -192,7 +217,7 @@
 			log_game("[src] lost power in [AREACOORD(src)]")
 		return
 
-	add_load(active_power_usage)
+	add_load(power_usage)
 	if(!powered)
 		powered = TRUE
 		update_appearance()
@@ -219,6 +244,15 @@
 
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
 	var/obj/projectile/projectile = new projectile_type(get_turf(src))
+	//monkestation edit start
+	if(istype(projectile, /obj/projectile/beam/emitter/hitscan)) //TODO: LESS SNOWFLAKE CHECK
+		projectile.wall_dem_mod = wall_dem_mod
+		projectile.damage_walls = is_proj_hit_walls
+		if(obj_flags & EMAGGED)
+			take_damage((round(max_integrity/100 * 5)))
+			visible_message(span_warning("The [src] visibly buckles under overloaded pressure!"))
+
+	//monkestation edit end
 	playsound(src, projectile_sound, 50, TRUE)
 	if(prob(35))
 		sparks.start()
@@ -256,7 +290,7 @@
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/item)
 	..()
@@ -333,9 +367,6 @@
 			return
 	return ..()
 
-/obj/machinery/power/emitter/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/energy_gun, mob/user)
 	if(!istype(energy_gun, /obj/item/gun/energy))
 		return
@@ -373,7 +404,8 @@
 		return FALSE
 	locked = FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "id lock shorted out")
+	balloon_alert(user, "id lock shorted out and lasers overloaded") //monkestation edit
+	RefreshParts() //monkestation edit
 	return TRUE
 
 
@@ -490,11 +522,14 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/turret_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/turret_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/power/emitter/emitter = user.buckled
-	emitter.setDir(get_dir(emitter,targeted_atom))
+	emitter.setDir(get_dir(emitter, interacting_with))
 	user.setDir(emitter.dir)
 	switch(emitter.dir)
 		if(NORTH)
@@ -530,7 +565,7 @@
 			user.pixel_x = 8
 			user.pixel_y = -12
 
-	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, clickparams)
+	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, list2params(modifiers))
 
 	if(emitter.charge >= 10 && world.time > delay)
 		emitter.charge -= 10
@@ -538,6 +573,7 @@
 		delay = world.time + 10
 	else if (emitter.charge < 10)
 		playsound(src,'sound/machines/buzz-sigh.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/ctf
 	name = "Energy Cannon"

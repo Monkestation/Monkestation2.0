@@ -12,11 +12,11 @@
 		finish_action(controller, TRUE)
 		return
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
-	if(find_this_thing)
-		controller.set_blackboard_key(set_key, find_this_thing)
-		finish_action(controller, TRUE)
-	else
+	if(QDELETED(controller.pawn) || isnull(find_this_thing))
 		finish_action(controller, FALSE)
+		return
+	controller.set_blackboard_key(set_key, find_this_thing)
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	return locate(locate_path) in oview(search_range, controller.pawn)
@@ -40,7 +40,7 @@
 /datum/ai_behavior/find_and_set/edible/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/food_candidates = list()
-	for(var/held_candidate as anything in living_pawn.held_items)
+	for(var/held_candidate in living_pawn.held_items)
 		if(!held_candidate || !IsEdible(held_candidate))
 			continue
 		food_candidates += held_candidate
@@ -95,7 +95,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/nearby_items = list()
-	for (var/obj/new_friend as anything in oview(search_range, controller.pawn))
+	for (var/obj/new_friend in oview(search_range, controller.pawn))
 		if (!isitem(new_friend) && !isstructure(new_friend))
 			continue
 		if (is_type_in_list(new_friend, GLOB.animatable_blacklist))

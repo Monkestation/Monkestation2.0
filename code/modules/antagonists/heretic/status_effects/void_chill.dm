@@ -4,7 +4,7 @@
  */
 /datum/status_effect/void_chill
 	id = "void_chill"
-	duration = 20 SECONDS
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/void_chill
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
@@ -14,34 +14,43 @@
 	///Maximum of stacks that we could possibly get
 	var/stack_limit = 5
 	///icon for the overlay
-	var/mutable_appearance/stacks_overlay
+	var/image/stacks_overlay
+	COOLDOWN_DECLARE(chill_purge)
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
 	set_stacks(new_stacks)
-	stacks_overlay = mutable_appearance('icons/effects/effects.dmi', "void_chill_oh_fuck", ABOVE_MOB_LAYER)
+	owner.add_atom_colour(COLOR_BLUE_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	owner.update_icon(UPDATE_OVERLAYS)
-
-/datum/status_effect/void_chill/Destroy()
-	QDEL_NULL(stacks_overlay)
-	return ..()
 
 /datum/status_effect/void_chill/on_apply()
 	if(issilicon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
-	owner.update_icon(UPDATE_OVERLAYS)
+	if(IS_HERETIC_OR_MONSTER(owner))
+		return FALSE
 	return TRUE
 
 /datum/status_effect/void_chill/on_remove()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
-	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
-	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
+	owner.remove_alt_appearance("heretic_status")
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
-/datum/status_effect/void_chill/tick(seconds_per_ticks)
-	owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_per_ticks)
+/datum/status_effect/void_chill/tick(seconds_between_ticks)
+	if(owner.has_reagent(/datum/reagent/water/holywater) || owner.can_block_magic())
+		//void chill is less effective
+		owner.adjust_bodytemperature(-3 KELVIN * stacks * seconds_between_ticks)
+		if(COOLDOWN_FINISHED(src, chill_purge))
+			COOLDOWN_START(src, chill_purge, 2 SECONDS)
+			to_chat(owner, span_notice("You feel holy protection warming you up."))
+			adjust_stacks(-1)
+	else
+		owner.adjust_bodytemperature(-6 KELVIN * stacks * seconds_between_ticks)
+
+	if (stacks == 0)
+		owner.remove_status_effect(/datum/status_effect/void_chill)
 
 /datum/status_effect/void_chill/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
@@ -55,13 +64,12 @@
 /datum/status_effect/void_chill/proc/update_stacks_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays -= stacks_overlay
-
 	linked_alert?.update_appearance(UPDATE_ICON_STATE|UPDATE_DESC)
-	stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_partial")
+	owner.remove_alt_appearance("heretic_status")
+	stacks_overlay = image('icons/effects/void_effects.dmi', owner, "void_chill_partial")
 	if(stacks >= 5)
-		stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_oh_fuck")
-	overlays += stacks_overlay
+		stacks_overlay = image('icons/effects/void_effects.dmi', owner, "void_chill_oh_fuck")
+	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretic, "heretic_status", stacks_overlay, NONE)
 
 /**
  * Setter and adjuster procs for stacks
@@ -78,8 +86,6 @@
 /datum/status_effect/void_chill/proc/adjust_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	update_movespeed(stacks)
-	if(stacks >= 5)
-		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 
 ///Updates the movespeed of owner based on the amount of stacks of the debuff
 /datum/status_effect/void_chill/proc/update_movespeed(stacks)
@@ -89,25 +95,26 @@
 
 /datum/status_effect/void_chill/lasting
 	id = "lasting_void_chill"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 
 /datum/movespeed_modifier/void_chill
 	variable = TRUE
-	multiplicative_slowdown = 0.1
+	multiplicative_slowdown = 0.5
 
-//Screen alert
+//---- Screen alert
 /atom/movable/screen/alert/status_effect/void_chill
 	name = "Void Chill"
 	desc = "There's something freezing you from within and without. You've never felt cold this oppressive before..."
-	icon_state = "void_chill_minor"
+	icon_state = "heretic_template"
+	overlay_state = "void_chill_minor"
 
-/atom/movable/screen/alert/status_effect/void_chill/update_icon_state()
-	. = ..()
+/atom/movable/screen/alert/status_effect/void_chill/update_overlays()
 	if(!istype(attached_effect, /datum/status_effect/void_chill))
-		return
+		return ..()
 	var/datum/status_effect/void_chill/chill_effect = attached_effect
 	if(chill_effect.stacks >= 5)
-		icon_state = "void_chill_oh_fuck"
+		overlay_state = "void_chill_oh_fuck"
+	return ..()
 
 /atom/movable/screen/alert/status_effect/void_chill/update_desc(updates)
 	. = ..()

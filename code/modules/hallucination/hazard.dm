@@ -61,7 +61,7 @@
 	return ..()
 
 /obj/effect/client_image_holder/hallucination/danger/lava/on_hallucinator_entered(mob/living/afflicted)
-	afflicted.stamina.adjust(-20)
+	afflicted.stamina.adjust(-10)
 	afflicted.cause_hallucination(/datum/hallucination/fire, "fake lava hallucination")
 
 /obj/effect/client_image_holder/hallucination/danger/chasm
@@ -85,6 +85,10 @@
 	image_icon = 'icons/effects/anomalies.dmi'
 	image_state = "flux"
 	image_layer = OBJ_LAYER + 0.01
+
+/obj/effect/client_image_holder/hallucination/danger/anomaly/generate_image()
+	. = ..()
+	apply_wibbly_filters(.)
 
 /obj/effect/client_image_holder/hallucination/danger/anomaly/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()

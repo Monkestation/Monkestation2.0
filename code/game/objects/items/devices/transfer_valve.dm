@@ -27,16 +27,14 @@
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
-/obj/item/transfer_valve/handle_atom_del(atom/deleted_atom)
+/obj/item/transfer_valve/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(deleted_atom == tank_one)
+	if(gone == tank_one)
 		tank_one = null
 		update_appearance()
-		return
-	if(deleted_atom == tank_two)
+	else if(gone == tank_two)
 		tank_two = null
 		update_appearance()
-		return
 
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
@@ -145,6 +143,11 @@
 	if(!istype(target) || (target != tank_one && target != tank_two))
 		return FALSE
 
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			return FALSE
+
 	// Throw both tanks into processing queue
 	var/datum/gas_mixture/target_mix = target.return_air()
 	var/datum/gas_mixture/other_mix
@@ -181,7 +184,7 @@
 		if(attached_device)
 			if(issignaler(attached_device))
 				var/obj/item/assembly/signaler/attached_signaller = attached_device
-				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
+				attachment = "<A HREF='byond://?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
 				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
 			else
 				attachment = attached_device
@@ -252,7 +255,7 @@
 	data["valve"] = valve_open
 	return data
 
-/obj/item/transfer_valve/ui_act(action, params)
+/obj/item/transfer_valve/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -263,14 +266,12 @@
 				split_gases()
 				valve_open = FALSE
 				tank_one.forceMove(drop_location())
-				tank_one = null
 				. = TRUE
 		if("tanktwo")
 			if(tank_two)
 				split_gases()
 				valve_open = FALSE
 				tank_two.forceMove(drop_location())
-				tank_two = null
 				. = TRUE
 		if("toggle")
 			toggle_valve()

@@ -11,7 +11,7 @@
 	health = 25
 	maxHealth = 25
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = CLEAN_BOT
@@ -88,9 +88,9 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/cleanable/molten_object,
-		/obj/effect/decal/cleanable/oil,
+		/obj/effect/decal/cleanable/blood/oil,
 		/obj/effect/decal/cleanable/food,
-		/obj/effect/decal/cleanable/robot_debris,
+		/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 		/obj/effect/decal/cleanable/shreds,
 		/obj/effect/decal/cleanable/glass,
 		/obj/effect/decal/cleanable/vomit,
@@ -99,7 +99,7 @@
 	///blood we can clean
 	var/static/list/cleanable_blood = typecacheof(list(
 		/obj/effect/decal/cleanable/blood,
-		/obj/effect/decal/cleanable/xenoblood, // monkestation addition
+		/obj/effect/decal/cleanable/blood/xeno, // monkestation addition
 	))
 	///pests we hunt
 	var/static/list/huntable_pests = typecacheof(list(
@@ -249,9 +249,9 @@
 // Actions received from TGUI
 /mob/living/basic/bot/cleanbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !ui.user.has_unlimited_silicon_privilege)
+	var/mob/user = ui.user
+	if(. || !(bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
-
 	switch(action)
 		if("clean_blood")
 			janitor_mode_flags ^= CLEANBOT_CLEAN_BLOOD
@@ -364,5 +364,16 @@
 
 /mob/living/basic/bot/cleanbot/medbay
 	name = "Scrubs, MD"
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
+
+/mob/living/basic/bot/cleanbot/firing_range //An invicible cleanbot to clean the firing range of blood.
+	name = "M-O"
+	desc = "A little cleaning robot, he looks like he's taken a beating."
+	bot_mode_flags = (BOT_MODE_ON)
+	health = 24
+
+/mob/living/basic/bot/cleanbot/firing_range/Initialize(mapload)
+	. = ..()
+	//Area based godmode to clean the firing range, just incase it somehow escapes onto station. Somehow....
+	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/centcom, allow_area_subtypes = TRUE)

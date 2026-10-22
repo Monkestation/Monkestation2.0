@@ -32,9 +32,9 @@
 	return TRUE
 
 
-/obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
-	if(isstack(I))
-		var/obj/item/stack/material = I
+/obj/structure/table_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isstack(attacking_item))
+		var/obj/item/stack/material = attacking_item
 		if(material.tableVariant)
 			if(material.get_amount() < 1)
 				to_chat(user, span_warning("You need one [material.name] sheet to do this!"))
@@ -95,22 +95,22 @@
 	framestackamount = 2
 	resistance_flags = FLAMMABLE
 
-/obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
-	if (isstack(I))
-		var/obj/item/stack/material = I
+/obj/structure/table_frame/wood/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if (isstack(attacking_item))
+		var/obj/item/stack/material = attacking_item
 		var/toConstruct // stores the table variant
 		var/carpet_type // stores the carpet type used for construction in case of poker tables
-		if(istype(I, /obj/item/stack/sheet/mineral/wood))
+		if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
 			toConstruct = /obj/structure/table/wood
-		else if(istype(I, /obj/item/stack/tile/carpet))
+		else if(istype(attacking_item, /obj/item/stack/tile/carpet))
 			toConstruct = /obj/structure/table/wood/poker
-			carpet_type = I.type
+			carpet_type = attacking_item.type
 		if (toConstruct)
 			if(material.get_amount() < 1)
 				to_chat(user, span_warning("You need one [material.name] sheet to do this!"))
 				return
 			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(do_after(user, 20, target = src) && material.use(1))
+			if(do_after(user, 2 SECONDS, target = src) && material.use(1))
 				make_new_table(toConstruct, null, carpet_type)
 	else
 		return ..()

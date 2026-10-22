@@ -39,8 +39,8 @@
 #define IS_VALID_ASSOC_KEY(V) (!isnum(V)) //hhmmm..
 
 //General helpers
-#define VV_HREF_TARGET_INTERNAL(target, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
-#define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
+#define VV_HREF_TARGET_INTERNAL(target, href_key) "byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
+#define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
 #define VV_HREF_TARGET(target, href_key, text) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)]'>[text]</a>"
 #define VV_HREF_TARGETREF(targetref, href_key, text) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)]'>[text]</a>"
 #define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>" //for stuff like basic varedits, one variable
@@ -50,10 +50,10 @@
 #define GET_VV_VAR_TARGET href_list[VV_HK_VARNAME]
 
 //Helper for getting something to vv_do_topic in general
-#define VV_TOPIC_LINK(datum, href_key, text) "<a href='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
+#define VV_TOPIC_LINK(datum, href_key, text) "<a href='byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
 
 //Helpers for vv_get_dropdown()
-#define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
+#define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"
@@ -89,7 +89,7 @@
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
 #define VV_HK_SPIN_ANIMATION "atom_spin"
 #define VV_HK_STOP_ALL_ANIMATIONS "stop_animations"
-#define VV_HK_SHAKE "shake" //Monkestation EDIT forced shaking
+#define VV_HK_SHAKE "shake"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
 #define VV_HK_SHOW_HIDDENPRINTS "show_hiddenprints"
@@ -98,12 +98,13 @@
 #define VV_HK_AUTO_RENAME "auto_rename"
 #define VV_HK_EDIT_FILTERS "edit_filters"
 #define VV_HK_EDIT_PARTICLES "edit_particles"
-#define VV_HK_EDIT_MOVABLE_PHYSICS "edit_movable_physics" //Monkestation EDIT PHYSICS
+#define VV_HK_EDIT_MOVABLE_PHYSICS "edit_movable_physics"
 #define VV_HK_EDIT_DISPLACEMENT_LARGE "edit_large_displacement"
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
+#define VV_HK_TEST_MATRIXES "test_matrixes"
 #define VV_HK_ADD_AI "add_ai"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
-#define VV_HK_ADJUST_ANIMATIONS "adjust_animations" //Monkestation EDIT CYBERNETIC
+#define VV_HK_ADJUST_ANIMATIONS "adjust_animations"
 
 // /atom/movable
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
@@ -123,6 +124,7 @@
 #define VV_HK_GODMODE "godmode"
 #define VV_HK_DROP_ALL "dropall"
 #define VV_HK_REGEN_ICONS "regen_icons"
+#define VV_HK_REGEN_ICONS_FULL "regen_icons_full"
 #define VV_HK_PLAYER_PANEL "player_panel"
 #define VV_HK_BUILDMODE "buildmode"
 #define VV_HK_DIRECT_CONTROL "direct_control"
@@ -151,6 +153,7 @@
 #define VV_HK_MOD_MUTATIONS "quirkmut"
 #define VV_HK_MOD_QUIRKS "quirkmod"
 #define VV_HK_SET_SPECIES "setspecies"
+#define VV_HK_REISSUE_RSID "reissue_rs_id"
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
@@ -165,3 +168,10 @@
 
 #define VV_HK_POSSESS_ITEM "possess_item"
 #define VV_HK_VIEW_DISEASE_DATA "disease_data"
+
+#define VV_HK_EXAMINE_GIFT "examine_gift"
+
+// Flags for debug_variable() that do little things to what we end up rendering
+
+/// ALWAYS render a reduced list, useful for fuckoff big datums that need to be condensed for the sake of client load
+#define VV_ALWAYS_CONTRACT_LIST (1<<0)

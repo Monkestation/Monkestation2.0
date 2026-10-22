@@ -52,7 +52,6 @@
 	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
-
 /obj/item/crowbar/large
 	name = "large crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
@@ -102,6 +101,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
+	/// Used on Initialize, how much time to cut cable restraints and zipties.
+	var/snap_time_weak_handcuffs = 0 SECONDS
+	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	var/snap_time_strong_handcuffs = 0 SECONDS
 
 /obj/item/crowbar/power/get_all_tool_behaviours()
 	return list(TOOL_CROWBAR, TOOL_WIRECUTTER)
@@ -128,15 +131,20 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
-	if(user)
-		balloon_alert(user, "attached [active ? "cutting" : "prying"]")
-	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	balloon_alert(user, "attached [active ? "cutting" : "prying"]")
+	playsound(user ? user : src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_CROWBAR)
+		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
+	else
+		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/crowbar/power/syndicate
-	name = "Syndicate jaws of life"
-	desc = "A pocket sized re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
+	name = "compact jaws of death"
+	desc = "A pocket sized redesign of the Syndicate jaws of death, made for operatives. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_syndie"
+	inhand_icon_state = "minijaws"
+	worn_icon_state = "minijaws"
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
@@ -160,19 +168,11 @@
 				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)
-	if(istype(attacked_carbon) && attacked_carbon.handcuffed && tool_behaviour == TOOL_WIRECUTTER)
-		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
-		qdel(attacked_carbon.handcuffed)
-		return
-
-	return ..()
-
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, simple but powerful."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "crowbar_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_crowbar"
 	worn_icon_state = "crowbar"
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
@@ -229,3 +229,20 @@
 
 /obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
 	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants) && mech.dir == mech_dir
+
+/obj/item/crowbar/power/science
+	name = "hybrid cutters" // hybrid between crowbar and wirecutters
+	desc = "Quite similar to the jaws of life, this tool combines the utility of a crowbar and a set of wirecutters without the hydraulic force required to pry open doors."
+	icon_state = "jaws_sci"
+	inhand_icon_state = "scijaws"
+	worn_icon_state = "scijaws"
+	force_opens = FALSE
+
+/obj/item/crowbar/power/death
+	name = "jaws of death"
+	desc = "A syndicate-powered refitting of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
+	icon_state = "jaws_death"
+	inhand_icon_state = "jawsofdeath"
+	worn_icon_state = "jawsofdeath"
+	toolspeed = 0.5
+	force_opens = TRUE

@@ -64,6 +64,10 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "White Dress"
 	item_path = /obj/item/clothing/suit/costume/whitedress
 
+/datum/loadout_item/suit/flowery
+	name = "Perfumed Dress Cover"
+	item_path = /obj/item/clothing/suit/jacket/gown
+
 /*
 *	LABCOATS
 */
@@ -145,6 +149,14 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Gothic Coat"
 	item_path = /obj/item/clothing/suit/costume/gothcoat
 
+/datum/loadout_item/suit/butler
+	name = "Butler Coat"
+	item_path = /obj/item/clothing/suit/toggle/jacket/butler
+
+/datum/loadout_item/suit/silk
+	name = "Silk Coat"
+	item_path = /obj/item/clothing/suit/jacket/silk
+
 /*
 *	COSTUMES
 */
@@ -158,7 +170,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/toggle/owlwings/griffinwings
 
 /datum/loadout_item/suit/syndi
-	name = "Black And Red Space Suit Replica"
+	name = "Red Space Suit Replica"
 	item_path = /obj/item/clothing/suit/syndicatefake
 
 /datum/loadout_item/suit/bee
@@ -255,7 +267,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/coat_sci
 	name = "Science Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/science
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST) // Reserved for the Science Departement
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_XENOBIOLOGIST) // Reserved for the Science Departement
 
 /datum/loadout_item/suit/coat_eng
 	name = "Engineering Winter Coat"
@@ -288,6 +300,22 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Bartender's Tailcoat"
 	item_path = /obj/item/clothing/suit/jacket/tailcoat/bartender
 	restricted_roles = list(JOB_BARTENDER)
+
+/datum/loadout_item/suit/armor/vest/capcarapace/tailcoat_captain
+	name = "Captain's Tailcoat"
+	item_path = /obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain
+	restricted_roles = list(JOB_CAPTAIN)
+
+/datum/loadout_item/suit/armor/hos_tailcoat
+	name = "Head of Security's Tailcoat"
+	item_path = /obj/item/clothing/suit/armor/hos_tailcoat
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+
+/datum/loadout_item/suit/qm_jacket
+	name = "Quartermaster's Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/supply/head
+	restricted_roles = list(JOB_QUARTERMASTER)
+
 
 /*
 *	FAMILIES
@@ -322,7 +350,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/ratvar
 
 /datum/loadout_item/suit/winter_coat/narsie
-	name = "Narsie Winter Coat"
+	name = "Nar'Sie Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/narsie
 
 /datum/loadout_item/suit/saints
@@ -501,7 +529,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 
 /datum/loadout_item/suit/frontiertrench
 	name = "Frontier Trenchcoat"
-	item_path = /obj/item/clothing/suit/jacket/frontier_colonist
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/unarmored
 
 /datum/loadout_item/suit/cossak
 	name = "Ukrainian Coat"
@@ -537,11 +565,11 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 
 /datum/loadout_item/suit/frontierjacket/short
 	name = "Frontier Jacket (Short)"
-	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/short
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/short/unarmored
 
 /datum/loadout_item/suit/frontierjacket/short/medical
 	name = "Frontier Medical Jacket (Short)"
-	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/medical
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/medical/unarmored
 
 /datum/loadout_item/suit/woolcoat
 	name = "Leather Overcoat"
@@ -576,6 +604,10 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/cardigan
 	name = "Cardigan"
 	item_path = /obj/item/clothing/suit/toggle/jacket/cardigan
+
+/datum/loadout_item/suit/deforest
+	name = "Deforest Jacket"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
 
 /*
 *	HOODIES
@@ -649,7 +681,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/navybluejacketofficer
 	name = "Security Officer's Navy Blue Formal Jacket"
 	item_path = /obj/item/clothing/suit/jacket/officer/blue
-	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT)
 	requires_purchase = FALSE
 
 /datum/loadout_item/suit/navybluejacketwarden
@@ -670,10 +702,10 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
 	requires_purchase = FALSE
 
-/datum/loadout_item/suit/brit
-	name = "High Vis Armored Vest"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/brit
-	restricted_roles = list(JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_DETECTIVE,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+/datum/loadout_item/suit/security_jacket_hi_vis
+	name = "Security Hi-Vis Jacket"
+	item_path = /obj/item/clothing/suit/armor/vest/secjacket
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
 	requires_purchase = FALSE
 
 /datum/loadout_item/suit/british_jacket
@@ -681,16 +713,6 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/british_officer
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
 	requires_purchase = FALSE
-
-/datum/loadout_item/suit/peacekeeper_jacket
-	name = "Peacekeeper Jacket"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket
-	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
-
-/datum/loadout_item/suit/peacekeeper_jacket/badge
-	name = "Badged Peacekeeper Jacket"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket/badge
 
 /datum/loadout_item/suit/offdep_jacket
 	name = "Off-Department Jacket"
@@ -705,13 +727,13 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/sci_jacket
 	name = "Science Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/sci
-	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_XENOBIOLOGIST)
 	requires_purchase = FALSE
 
 /datum/loadout_item/suit/med_jacket
 	name = "Medbay Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/med
-	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHEMIST, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHEMIST, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BRIG_PHYSICIAN)
 	requires_purchase = FALSE
 
 /datum/loadout_item/suit/supply_jacket
@@ -720,7 +742,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/suit/digicoat_glitched //Public donator reward for Razurath.
+/datum/loadout_item/suit/digicoat_glitched //Purchasable version of Razurath's donator reward.
 	name = "Glitched Digicoat"
 	item_path = /obj/item/clothing/suit/toggle/digicoat/glitched
 
@@ -778,3 +800,6 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_CHAPLAIN)
 	requires_purchase = FALSE
 
+/datum/loadout_item/suit/henchmen_coat
+	name = "Henchmen Coat"
+	item_path = /obj/item/clothing/suit/jacket/henchmen_coat

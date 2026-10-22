@@ -5,12 +5,13 @@ import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
+  Dropdown,
   Icon,
+  Image,
   Input,
   Section,
   Stack,
   Tabs,
-  Dropdown,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -63,7 +64,7 @@ export const SelectEquipment = (props) => {
   const currentOutfitEntry = getOutfitEntry(current_outfit);
 
   return (
-    <Window width={670} height={415} theme="admin">
+    <Window width={750} height={415} theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item>
@@ -74,7 +75,7 @@ export const SelectEquipment = (props) => {
                   autoFocus
                   placeholder="Search"
                   value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
+                  onChange={(value) => setSearchText(value)}
                 />
               </Stack.Item>
               <Stack.Item>
@@ -94,14 +95,12 @@ export const SelectEquipment = (props) => {
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section fill title={name} textAlign="center">
-                  <Box
-                    as="img"
+                  <Image
                     m={0}
                     src={`data:image/jpeg;base64,${icon64}`}
                     height="100%"
                     style={{
-                      '-ms-interpolation-mode': 'nearest-neighbor',
-                      'image-rendering': 'pixelated',
+                      imageRendering: 'pixelated',
                     }}
                   />
                 </Section>
@@ -205,8 +204,8 @@ const CurrentlySelectedDisplay = (props) => {
           title={entry?.path}
           style={{
             overflow: 'hidden',
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
           }}
         >
           {entry?.name}
@@ -218,18 +217,17 @@ const CurrentlySelectedDisplay = (props) => {
 
 const ConfirmationBox = (props) => {
   const { act, data } = useBackend();
-  const [holyEffect, setHolyEffect] = useLocalState('holyEffect', false);
+  const { current_outfit } = data;
+  const [effectState, setEffectState] = useLocalState('effectState', 'None');
   const [applyQuirks, setApplyQuirks] = useLocalState(
     'applyQuirks',
     'No Quirks',
   );
-  const { current_outfit } = data;
+
   return (
-    <Stack align="center">
-      <Stack.Item grow>
+    <Stack>
+      <Stack.Item grow={2}>
         <Dropdown
-          width="200%"
-          // I would add more options here but that would be excessively long,- flleeppyy
           options={[
             'No Quirks',
             'All Quirks',
@@ -239,34 +237,30 @@ const ConfirmationBox = (props) => {
           ]}
           selected={applyQuirks}
           onSelected={(value) => setApplyQuirks(value)}
+          width="100%"
+        />
+      </Stack.Item>
+      <Stack.Item grow={1}>
+        <Dropdown
+          options={['None', 'Holy', 'Unholy']}
+          selected={effectState}
+          onSelected={(value) => setEffectState(value)}
+          width="100%"
         />
       </Stack.Item>
       <Stack.Item>
-        <Stack>
-          <Stack.Item>
-            <Button.Checkbox
-              checked={holyEffect}
-              onClick={() => setHolyEffect(!holyEffect)}
-              content="Holy Effect"
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
-              mr={0.8}
-              lineHeight={2}
-              color="green"
-              onClick={() =>
-                act('applyoutfit', {
-                  path: current_outfit,
-                  holyEffect,
-                  applyQuirks,
-                })
-              }
-            >
-              Confirm
-            </Button>
-          </Stack.Item>
-        </Stack>
+        <Button
+          color="green"
+          onClick={() =>
+            act('applyoutfit', {
+              path: current_outfit,
+              effectState: effectState, // Pass the state directly
+              applyQuirks,
+            })
+          }
+        >
+          Confirm
+        </Button>
       </Stack.Item>
     </Stack>
   );

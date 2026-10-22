@@ -79,6 +79,43 @@
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
 
+/**
+ * Returns the distance to the nearest ore vent, where ore vents are tracked in SSore_generation's possible vents list.
+ * Returns 0 if we're not on lavaland, and as we're using get_dist, our range is limited to 127 tiles.
+ */
+/turf/closed/mineral/proc/prox_to_vent()
+	if(!is_mining_level(z))
+		return 0
+
+	var/distance = 128 // Max distance for a get_dist is 127
+	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
+		if(vent.z != src.z)
+			continue //Silly
+		var/temp_distance = get_dist(src, vent)
+		if(temp_distance < distance)
+			distance = temp_distance
+	return distance
+
+/**
+ * Returns the amount of ore to spawn in this turf, based on proximity to a vent.
+ * If for some reason we have a distance of zero (like being off mining Z levels), we return a random amount between 1 and 5 instead.
+ */
+/turf/closed/mineral/proc/scale_ore_to_vent()
+	var/distance = prox_to_vent()
+	if(distance == 0) // We're not on lavaland or similar failure condition
+		return rand(1,5)
+	if(distance < VENT_PROX_VERY_HIGH)
+		return ORE_WALL_VERY_HIGH
+	if(distance < VENT_PROX_HIGH)
+		return ORE_WALL_HIGH
+	if(distance < VENT_PROX_MEDIUM)
+		return ORE_WALL_MEDIUM
+	if(distance < VENT_PROX_LOW)
+		return ORE_WALL_LOW
+	if(distance < VENT_PROX_FAR)
+		return ORE_WALL_FAR
+	return 0
+
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
 		underlay_appearance.icon = initial(turf_type.icon)
@@ -87,29 +124,30 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
 		return
 
-	if(I.tool_behaviour == TOOL_MINING)
-		var/turf/T = user.loc
-		if (!isturf(T))
-			return
+	if(attacking_item.tool_behaviour != TOOL_MINING)
+		return
+	var/turf/T = user.loc
+	if (!isturf(T))
+		return
 
-		if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
-			return
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
+		return
 
-		TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
+	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
 
-		balloon_alert(user, "picking...")
+	balloon_alert(user, "picking...")
 
-		if(!I.use_tool(src, user, tool_mine_speed, volume=50))
-			TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
-			return
-		if(ismineralturf(src))
-			gets_drilled(user, TRUE)
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+	if(!attacking_item.use_tool(src, user, tool_mine_speed, volume=50))
+		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
+		return
+	if(ismineralturf(src))
+		gets_drilled(user, TRUE)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 
 /turf/closed/mineral/attack_hand(mob/user)
 	if(!weak_turf)
@@ -117,7 +155,7 @@
 	var/turf/user_turf = user.loc
 	if (!isturf(user_turf))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
 		return
 	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
@@ -187,7 +225,7 @@
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
-	if(do_after(H, 50, target = src))
+	if(do_after(H, 5 SECONDS, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
@@ -731,7 +769,7 @@
 /turf/closed/mineral/gibtonite/proc/countdown(notify_admins = FALSE)
 	set waitfor = FALSE
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
-		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), 5) //makes the animation pulse one time per tick
+		flick_overlay_view(mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER + 0.1), 0.5 SECONDS) //makes the animation pulse one time per tick
 		det_time--
 		sleep(0.5 SECONDS)
 	if(istype(src, /turf/closed/mineral/gibtonite))
@@ -771,10 +809,10 @@
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
-			G.icon_state = "Gibtonite ore 3"
+			G.icon_state = "gibtonite_3"
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
-			G.icon_state = "Gibtonite ore 2"
+			G.icon_state = "gibtonite_2"
 
 	var/flags = NONE
 	var/old_type = type
@@ -791,7 +829,7 @@
 	defer_change = TRUE
 
 /turf/closed/mineral/gibtonite/ice
-	icon_state = "icerock_Gibtonite"
+	icon_state = "icerock_Gibtonite_inactive"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "icerock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
@@ -816,7 +854,7 @@
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
-/turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/strong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!ishuman(user))
 		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
 		return FALSE

@@ -83,8 +83,9 @@
  *
  * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
  */
-/proc/get_hearers_in_view(view_radius, atom/source)
+/proc/get_hearers_in_view(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -93,12 +94,12 @@
 
 	if(view_radius <= 0)//special case for if only source cares
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
 			if(recursive_contents)
 				. += recursive_contents
 		return .
 
-	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, view_radius)
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
@@ -123,6 +124,41 @@
 	return .
 
 /**
+ * The exact same as get_hearers_in_view, but not limited by visibility. Does no filtering for traits, line of sight, or any other such criteria.
+ * Filtering is intended to be done by whatever calls this function.
+ *
+ * This function exists to allow for mobs to hear speech without line of sight, if such a thing is needed.
+ *
+ * * radius - what radius search circle we are using, worse performance as this increases
+ * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
+ */
+/proc/get_hearers_in_range(range, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+	var/turf/center_turf = get_turf(source)
+	if(!center_turf)
+		return
+
+	. = list()
+
+	if(range <= 0)//special case for if only source cares
+		for(var/atom/movable/target as anything in center_turf)
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
+			if(recursive_contents)
+				. += recursive_contents
+		return .
+
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, range)
+
+	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
+		return .
+
+	for(var/atom/movable/hearable as anything in hearables_from_grid)
+		if (get_dist(center_turf, hearable) <= range)
+			. += hearable
+
+	return .
+
+/**
  * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight to source
  * the majority of the work is passed off to the spatial grid if view_radius > 0
  * because view() isnt a raycasting algorithm, this does not hold symmetry to it. something in view might not be hearable with this.
@@ -131,7 +167,7 @@
  * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  */
-/proc/get_hearers_in_LOS(view_radius, atom/source)
+/proc/get_hearers_in_LOS(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -139,12 +175,12 @@
 	if(view_radius <= 0)//special case for if only source cares
 		. = list()
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/hearing_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/hearing_contents = target.important_recursive_contents?[contents_type]
 			if(hearing_contents)
 				. += hearing_contents
 		return
 
-	. = SSspatial_grid.orthogonal_range_search(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius)
+	. = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	for(var/atom/movable/target as anything in .)
 		var/turf/target_turf = get_turf(target)
@@ -179,7 +215,7 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
-		. |= get_hearers_in_LOS(radio.canhear_range, radio, FALSE)
+		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
 ///Calculate if two atoms are in sight, returns TRUE or FALSE
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
@@ -443,3 +479,99 @@
 		return center //Offer the center only as a default case when we don't have a valid circle.
 	return peel
 
+#define EDGE_STATE_SOUTH_BORDER 1
+#define EDGE_STATE_MAP_BOTTOM 2
+#define EDGE_STATE_MAP_TOP 3
+#define SET_DIR_LIST(dir_list, edge_state) \
+	switch(edge_state) { \
+		if(EDGE_STATE_MAP_BOTTOM) { \
+			##dir_list = GLOB.cardinals - SOUTH;\
+			} \
+		if(EDGE_STATE_MAP_TOP) { \
+			##dir_list = GLOB.cardinals - NORTH;\
+			} \
+		else { \
+			##dir_list = GLOB.cardinals;\
+			} \
+	}
+
+#define ADD_NEW_AREAS(dir_list, step_turf, step_of, checked, added_to) \
+	for(var/dir in dir_list) { \
+		##step_turf = get_step(step_of, dir);\
+		if(step_turf && step_turf.loc != checked) { \
+			##added_to |= step_turf.loc;\
+			} \
+	}
+
+///Returns all turfs on the border of an area
+/proc/get_area_edge_turfs(area/checked, return_adjacent_areas = FALSE) as /list
+	RETURN_TYPE(/list)
+	var/list/returned_list = list()
+	for(var/i in 1 to length(checked.turfs_by_zlevel))
+		var/list/z_turfs = checked.turfs_by_zlevel[i]
+		var/list/new_list = list()
+		var/last_y = 0
+		var/edge_state = FALSE
+		var/turf/last_checked
+		returned_list.len++
+		returned_list[i] = new_list
+		for(var/turf/z_turf in z_turfs)
+			if(z_turf.y != last_y)
+				last_y = z_turf.y
+				if(last_checked)
+					if(return_adjacent_areas)
+						var/list/dir_list
+						SET_DIR_LIST(dir_list, edge_state)
+						var/turf/step_turf
+						ADD_NEW_AREAS(dir_list, step_turf, last_checked, checked, new_list)
+					else
+						new_list += last_checked
+
+				if(z_turf.y == 1)
+					edge_state = EDGE_STATE_MAP_BOTTOM
+				else if(last_y == 0)
+					edge_state = EDGE_STATE_SOUTH_BORDER
+				else if(z_turf.y == world.maxy)
+					edge_state = EDGE_STATE_MAP_TOP
+				else
+					edge_state = FALSE
+
+				if(return_adjacent_areas)
+					var/list/dir_list
+					SET_DIR_LIST(dir_list, edge_state)
+					var/turf/step_turf
+					ADD_NEW_AREAS(dir_list, step_turf, z_turf, checked, new_list)
+				else
+					new_list += z_turf
+				last_checked = null
+				continue
+
+			if(edge_state)
+				if(return_adjacent_areas)
+					var/list/dir_list
+					SET_DIR_LIST(dir_list, edge_state)
+					var/turf/step_turf
+					ADD_NEW_AREAS(dir_list, step_turf, z_turf, checked, new_list)
+				else
+					new_list += z_turf
+				continue
+
+			var/turf/north_turf = get_step(z_turf, NORTH)
+			if(north_turf.loc != checked) //if we dont have a step something else already broke as map borders have already been handled
+				if(return_adjacent_areas)
+					var/list/dir_list = GLOB.cardinals - NORTH
+					if(edge_state == EDGE_STATE_MAP_BOTTOM)
+						dir_list -= SOUTH
+					var/turf/step_turf
+					ADD_NEW_AREAS(dir_list, step_turf, z_turf, checked, new_list)
+				new_list |= (return_adjacent_areas ? north_turf.loc : z_turf)
+				last_checked = null
+			else
+				last_checked = z_turf
+	return returned_list
+
+#undef EDGE_STATE_SOUTH_BORDER
+#undef EDGE_STATE_MAP_BOTTOM
+#undef EDGE_STATE_MAP_TOP
+#undef SET_DIR_LIST
+#undef ADD_NEW_AREAS

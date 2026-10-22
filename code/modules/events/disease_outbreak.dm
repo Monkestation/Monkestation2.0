@@ -34,6 +34,8 @@
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
@@ -55,9 +57,12 @@
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
 		if(!(candidate.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
-		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
+		//Don't pick someone who's virus immune, only for it to not do anything.
+		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE) || HAS_TRAIT(candidate, TRAIT_VIRUS_RESISTANCE))
 			continue
 		if(length(candidate.diseases)) //Is our candidate already sick?
+			continue
+		if(candidate.check_contact_sterility(BODY_ZONE_EVERYTHING))
 			continue
 		disease_candidates += candidate
 
@@ -98,6 +103,19 @@
 	var/list/afflicted = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
+	if(!illness_type)
+		var/list/virus_candidates = list(
+			/datum/disease/cold,
+			/datum/disease/cold9,
+			/datum/disease/brainrot,
+			/datum/disease/flu,
+			/datum/disease/fluspanish,
+			/// And here are some that will never roll for real, just to mess around.
+			/datum/disease/gastrolosis,
+			/datum/disease/gbs,
+		)
+		var/datum/disease/fake_virus = pick(virus_candidates)
+		illness_type = initial(fake_virus.name)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
@@ -133,7 +151,7 @@
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]", patient_zero = TRUE))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)
@@ -157,6 +175,7 @@
 		/datum/event_admin_setup/listed_options/disease_outbreak_advanced,
 		/datum/event_admin_setup/input_number/disease_outbreak_advanced
 	)
+	track = EVENT_TRACK_MAJOR
 
 /**
  * Admin virus customization
@@ -236,14 +255,12 @@
 		)
 	var/datum/disease/acute/new_disease = new virus_choice
 	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
-	new_disease.carrier = TRUE
-	illness_type = new_disease.name
 	new_disease.Refresh_Acute()
 
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]", patient_zero = TRUE))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)

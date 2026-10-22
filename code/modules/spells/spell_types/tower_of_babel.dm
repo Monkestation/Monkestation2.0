@@ -16,7 +16,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 			return
 		if(IS_WIZARD(target) && !badmin)
 			// wizards are not only immune but can speak all languages to taunt their victims over the radio
-			target.grant_all_languages(source=LANGUAGE_BABEL)
+			target.grant_all_languages(source = LANGUAGE_BABEL)
 			ADD_TRAIT(target.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
 			to_chat(target, span_reallybig(span_hypnophrase("You feel a magical force improving your speech patterns!")))
 			continue
@@ -53,7 +53,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 		to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
 
-	to_curse.apply_status_effect(/datum/status_effect/tower_of_babel/magical, INFINITE)
+	to_curse.apply_status_effect(/datum/status_effect/tower_of_babel/magical, INFINITY)
 	return TRUE
 
 /// Mainly so admin triggered tower of babel can be undone

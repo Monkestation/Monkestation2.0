@@ -1,4 +1,4 @@
-import { InfernoNode } from 'inferno';
+import type { ReactNode } from 'react';
 import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
@@ -46,21 +46,21 @@ type Gas = {
 };
 
 const GasSearchBar = (props: {
-  title: InfernoNode;
+  title: ReactNode;
   onChange: (inputValue: string) => void;
   activeInput: boolean;
   setActiveInput: (toggle: boolean) => void;
 }) => {
-  const { title, onChange, activeInput, setActiveInput } = props;
+  const { title, activeInput, setActiveInput } = props;
   return (
     <Flex align="center">
       <Flex.Item grow>
         {activeInput ? (
           <Input
             fluid
-            onChange={(e, value) => {
+            onChange={(value) => {
               setActiveInput(false);
-              onChange(value);
+              props.onChange(value);
             }}
           />
         ) : (
@@ -91,7 +91,7 @@ const GasHandbook = (props) => {
     <Section
       title={
         <GasSearchBar
-          title={relevantGas ? 'Gas: ' + relevantGas.name : 'Gas Lookup'}
+          title={relevantGas ? `Gas: ${relevantGas.name}` : 'Gas Lookup'}
           onChange={(keyword) =>
             setActiveGasId(
               gasInfo.find((gas) =>
@@ -108,7 +108,7 @@ const GasHandbook = (props) => {
         <>
           <Box mb="0.5em">{relevantGas.description}</Box>
           <Box mb="0.5em">
-            {'Specific heat: ' + relevantGas.specific_heat + ' Joule/KelvinMol'}
+            {`Specific heat: ${relevantGas.specific_heat} Joule/KelvinMol`}
           </Box>
           <Box mb="0.5em">{'Relevant Reactions:'}</Box>
           {Object.entries(relevantGas.reactions).map(
@@ -148,7 +148,7 @@ const ReactionHandbook = (props) => {
         <GasSearchBar
           title={
             relevantReaction
-              ? 'Reaction: ' + relevantReaction.name
+              ? `Reaction: ${relevantReaction.name}`
               : 'Reaction Lookup'
           }
           onChange={(keyword) =>
@@ -181,10 +181,10 @@ const ReactionHandbook = (props) => {
                     <Tooltip content={factor.tooltip} position="top">
                       <Flex>
                         <Flex.Item
-                          style={{ 'border-bottom': 'dotted 2px' }}
+                          style={{ borderBottom: 'dotted 2px' }}
                           shrink
                         >
-                          {factor.factor_name + ':'}
+                          {`${factor.factor_name}:`}
                         </Flex.Item>
                       </Flex>
                     </Tooltip>

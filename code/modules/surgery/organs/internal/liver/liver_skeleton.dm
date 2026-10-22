@@ -11,11 +11,11 @@
 
 /obj/item/organ/internal/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()
-	//parent returned COMSIG_MOB_STOP_REAGENT_CHECK or we are failing
-	if(. || (organ_flags & ORGAN_FAILING))
+	//parent returned COMSIG_MOB_STOP_REAGENT_TICK or we are failing
+	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		organ_owner.stamina?.adjust(7.5 * REM * seconds_per_tick, 0)
+		organ_owner.stamina?.adjust(3.75 * REM * seconds_per_tick, 0)
 		organ_owner.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
 		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
@@ -38,7 +38,7 @@
 					to_chat(organ_owner, span_warning("Your missing [parse_zone(selected_part)] aches from wherever you left it."))
 					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/mob, emote), "sigh")
 		organ_owner.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
-		return COMSIG_MOB_STOP_REAGENT_CHECK // Stop metabolism
+		return COMSIG_MOB_STOP_REAGENT_TICK // Stop metabolism
 	if(chem.type == /datum/reagent/consumable/milk)
 		if(chem.volume > 50)
 			organ_owner.reagents.remove_reagent(chem.type, (chem.volume - 50))

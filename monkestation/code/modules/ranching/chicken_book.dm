@@ -1,7 +1,7 @@
 /obj/item/book/manual/chicken_encyclopedia
 	name = "chicken encyclopedia"
 	desc = "The exciting sequel to the encyclopedia of 21st century trains!"
-	icon = 'monkestation/icons/obj/ranching.dmi'
+	icon = 'icons/obj/ranching.dmi'
 	icon_state = "chicken_book"
 	unique = TRUE
 
@@ -14,8 +14,8 @@
 
 /obj/item/book/manual/chicken_encyclopedia/ui_static_data(mob/user)
 	var/list/chickens = list()
-	for(var/datum/mutation/ranching/chicken/mutation_type as anything in GLOB.chicken_mutations)
-		var/datum/mutation/ranching/chicken/mutation = GLOB.chicken_mutations[mutation_type]
+	for(var/datum/ranching_mutation/chicken/mutation_type as anything in GLOB.chicken_mutations)
+		var/datum/ranching_mutation/chicken/mutation = GLOB.chicken_mutations[mutation_type]
 		var/male_name = mutation.chicken_type::breed_name_male || "[mutation.chicken_type::breed_name] Rooster"
 		var/female_name = mutation.chicken_type::breed_name_female || "[mutation.chicken_type::breed_name] Hen"
 

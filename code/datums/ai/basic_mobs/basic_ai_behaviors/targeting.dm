@@ -1,5 +1,5 @@
 /// List of objects that AIs will treat as targets
-GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
+GLOBAL_ALIST_EMPTY(hostile_machines_by_z)
 /// Static typecache list of things we are interested in
 /// Consider this a union of the for loop and the hearers call from below
 /// Must be kept up to date with the contents of hostile_machines
@@ -11,8 +11,6 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE
-	/// Static typecache list of potentially dangerous objs
-	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
 /datum/ai_behavior/find_potential_targets/get_cooldown(datum/ai_controller/cooldown_for)
 	if(cooldown_for.blackboard[BB_FIND_TARGETS_FIELD(type)])
@@ -40,9 +38,11 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
 		return
 
-	for(var/HM in typecache_filter_list(range(aggro_range, living_mob), hostile_machines)) //Can we see any hostile machines?
-		if(can_see(living_mob, HM, aggro_range))
-			potential_targets += HM
+	var/turf/mob_turf = get_turf(living_mob)
+	if(mob_turf?.z)
+		for (var/atom/hostile_machine as anything in GLOB.hostile_machines_by_z[mob_turf.z])
+			if (can_see(living_mob, hostile_machine, aggro_range))
+				potential_targets += hostile_machine
 
 	if(!potential_targets.len)
 		failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 /datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
 	var/valid_found = FALSE
 	var/mob/pawn = controller.pawn
-	for(var/maybe_target as anything in found)
+	for(var/maybe_target in found)
 		if(maybe_target == pawn)
 			continue
 		if(!is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 /datum/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/strategy, hiding_location_key)
 	var/mob/pawn = controller.pawn
 	var/list/accepted_targets = list()
-	for(var/maybe_target as anything in found)
+	for(var/maybe_target in found)
 		if(maybe_target == pawn)
 			continue
 		// Need to better handle viewers here

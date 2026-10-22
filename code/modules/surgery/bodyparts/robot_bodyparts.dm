@@ -22,7 +22,7 @@
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_LIST_PROSTHETIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -54,7 +54,7 @@
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_LIST_PROSTHETIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -86,7 +86,7 @@
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_LIST_PROSTHETIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -118,7 +118,7 @@
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_LIST_PROSTHETIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -149,7 +149,7 @@
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_LIST_PROSTHETIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -169,7 +169,8 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 	var/wired = FALSE
-	var/obj/item/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/power_store/cell/cell = null
+
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -184,7 +185,7 @@
 	return ..()
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/stock_parts/cell))
+	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("You have already inserted a cell!"))
 			return
@@ -258,7 +259,7 @@
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_LIST_PROSTHETIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -394,6 +395,58 @@
 	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+
+// Advanced Limbs: More durable, high punching force
+
+/obj/item/bodypart/arm/left/robot/advanced
+	name = "advanced robotic left arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
+	unarmed_stun_threshold = 15
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
+
+/obj/item/bodypart/arm/right/robot/advanced
+	name = "advanced robotic right arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
+	unarmed_stun_threshold = 15
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
+
+/obj/item/bodypart/leg/left/robot/advanced
+	name = "advanced robotic left leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 18
+	unarmed_damage_high = 18
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
+
+/obj/item/bodypart/leg/right/robot/advanced
+	name = "advanced robotic right leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 18
+	unarmed_damage_high = 18
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

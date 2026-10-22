@@ -19,6 +19,10 @@
  */
 export enum KEY {
   Alt = 'Alt',
+  ArrowDown = 'ArrowDown',
+  ArrowLeft = 'ArrowLeft',
+  ArrowRight = 'ArrowRight',
+  ArrowUp = 'ArrowUp',
   Backspace = 'Backspace',
   Control = 'Control',
   Delete = 'Delete',
@@ -30,6 +34,7 @@ export enum KEY {
   Home = 'Home',
   Insert = 'Insert',
   Left = 'Left',
+  Minus = '-',
   PageDown = 'PageDown',
   PageUp = 'PageUp',
   Right = 'Right',

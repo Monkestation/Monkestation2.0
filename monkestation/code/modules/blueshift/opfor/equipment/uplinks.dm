@@ -52,12 +52,18 @@
 	description = "A cogwheel-shaped device of brass, with a glass lens floating, suspended in the center. Capable of making one become a \"Clock Cultist\"."
 	admin_note = "Clockwork Cultist (solo) antag granter."
 
+/datum/opposing_force_equipment/uplink/blood_cultist
+	item_type = /obj/item/antag_granter/blood_cultist
+	name = "Bloody Knife"
+	description = "A ancient knife, covered in blood, both fresh and dried. Capable of making one become a \"Blood Cultist\"."
+	admin_note = "Blood Cultist (solo) antag granter."
+
 //Services
 /*
 /datum/opposing_force_equipment/uplink/give_exploitables
 	name = "Exploitables Access"
 	description = "You will be given access to a network of exploitable information of certain crewmates, viewable using either a verb or on examine."
-	item_type = /obj/effect/gibspawner/generic
+	item_type = ABSTRACT_UPLINK_ITEM
 	admin_note = "Same effect as using the traitor panel Toggle Exploitables Override button. Usually safe to give."
 
 /datum/opposing_force_equipment/uplink/give_exploitables/on_issue(mob/living/target)
@@ -74,7 +80,7 @@
 /datum/opposing_force_equipment/uplink/power_outage
 	name = "Power Outage"
 	description = "A virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
-	item_type = /obj/effect/gibspawner/generic
+	item_type = ABSTRACT_UPLINK_ITEM
 	admin_note = "Equivalent to the Grid Check random event."
 	max_amount = 1
 
@@ -85,7 +91,7 @@
 /datum/opposing_force_equipment/uplink/telecom_outage
 	name = "Telecomms Outage"
 	description = "A virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
-	item_type = /obj/effect/gibspawner/generic
+	item_type = ABSTRACT_UPLINK_ITEM
 	admin_note = "Equivalent to the Communications Blackout random event."
 	max_amount = 1
 

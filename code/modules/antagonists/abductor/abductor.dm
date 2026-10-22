@@ -8,6 +8,7 @@
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
+	antag_count_points = 5 //half of default as they spawn as a pair
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -15,6 +16,32 @@
 	var/greet_text
 	/// Type path for the associated job datum.
 	var/role_job = /datum/job/abductor_agent
+
+	/// A list of surgeries that abductors can't do, to prevent bullshittery.
+	var/static/list/always_forbidden_surgeries = typecacheof(list(
+		/datum/surgery/advanced/brainwashing_sleeper,
+		/datum/surgery/advanced/necrotic_revival
+	))
+
+/datum/antagonist/abductor/on_gain()
+	. = ..()
+	RegisterSignal(owner.current, COMSIG_SURGERY_STARTING, PROC_REF(prevent_forbidden_surgeries))
+
+/datum/antagonist/abductor/on_removal()
+	. = ..()
+	UnregisterSignal(owner.current, COMSIG_SURGERY_STARTING)
+
+
+/datum/antagonist/abductor/proc/prevent_forbidden_surgeries(mob/user, datum/surgery/surgery, mob/patient)
+	SIGNAL_HANDLER
+
+	if(is_type_in_typecache(surgery, always_forbidden_surgeries))
+		return COMPONENT_CANCEL_SURGERY
+
+	if(istype(surgery, /datum/surgery/advanced/brainwashing) && length(team?.abductees) <= 3)
+		return COMPONENT_CANCEL_SURGERY
+
+	return NONE
 
 /datum/antagonist/abductor/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/scientist = new
@@ -58,6 +85,17 @@
 	name = "\improper Abductor Solo"
 	outfit = /datum/outfit/abductor/scientist/onemanteam
 	role_job = /datum/job/abductor_solo
+
+/datum/antagonist/abductor/scientist/onemanteam/antag_token(datum/mind/hosts_mind, mob/spender)
+	team = new
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		hosts_mind.add_antag_datum(/datum/antagonist/abductor/scientist/onemanteam, team)
+	if(isobserver(spender))
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
+		var/datum/mind/new_mind = new_mob.mind
+		new_mind.add_antag_datum(/datum/antagonist/abductor/scientist/onemanteam, team)
 
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
@@ -125,6 +163,7 @@
 		team = current_teams[choice]
 	else
 		return
+	new_owner.current.unequip_everything() //Adding the datum kidnaps the person to the ship. Best they dont bring artifacts with them.
 	new_owner.add_antag_datum(src)
 	log_admin("[key_name(usr)] made [key_name(new_owner)] [name] on [choice]!")
 	message_admins("[key_name_admin(usr)] made [key_name_admin(new_owner)] [name] on [choice] !")
@@ -194,7 +233,7 @@
 	explanation_text = "Experiment on [target_amount] humans."
 
 /datum/objective/experiment/check_completion()
-	for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
+	for(var/obj/machinery/abductor/experiment/E as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/abductor/experiment))
 		if(!istype(team, /datum/team/abductor_team))
 			return FALSE
 		var/datum/team/abductor_team/T = team

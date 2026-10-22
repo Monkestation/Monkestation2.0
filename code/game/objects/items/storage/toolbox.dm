@@ -87,6 +87,9 @@
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
+/obj/item/storage/toolbox/mechanical/empty/PopulateContents()
+	return
+
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
@@ -273,22 +276,23 @@
 	new /obj/item/gun_maintenance_supplies(src)
 
 //floorbot assembly
-/obj/item/storage/toolbox/attackby(obj/item/stack/tile/iron/T, mob/user, params)
-	var/list/allowed_toolbox = list(/obj/item/storage/toolbox/emergency, //which toolboxes can be made into floorbots
-							/obj/item/storage/toolbox/electrical,
-							/obj/item/storage/toolbox/mechanical,
-							/obj/item/storage/toolbox/artistic,
-							/obj/item/storage/toolbox/syndicate)
+/obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/tile/iron))
+		return ..()
+	var/static/list/allowed_toolbox = list(
+		/obj/item/storage/toolbox/artistic,
+		/obj/item/storage/toolbox/electrical,
+		/obj/item/storage/toolbox/emergency,
+		/obj/item/storage/toolbox/mechanical,
+		/obj/item/storage/toolbox/syndicate,
+	)
 
-	if(!istype(T, /obj/item/stack/tile/iron))
-		..()
-		return
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
-		return
+		return TRUE
 	if(contents.len >= 1)
 		balloon_alert(user, "not empty!")
-		return
-	if(T.use(10))
+		return FALSE
+	if(tool.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		switch(B.toolbox)
@@ -306,11 +310,205 @@
 		B.update_appearance()
 		B.balloon_alert(user, "tiles added")
 		qdel(src)
-	else
-		balloon_alert(user, "needs 10 tiles!")
-		return
-
+		return FALSE
+	balloon_alert(user, "needs 10 tiles!")
+	return FALSE
 
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = SMALL_MATERIAL_AMOUNT*5)
+
+//guncases are defined in a blueshift module folder. Note to Self: move that here.
+/obj/item/storage/toolbox/guncase/monkeycase
+	name = "monkey gun case"
+	desc = "Everything a monkey needs to truly go ape-shit. There's a paw-shaped hand scanner lock on the front of the case."
+
+/obj/item/storage/toolbox/guncase/monkeycase/Initialize(mapload)
+	. = ..()
+	atom_storage.set_locked(STORAGE_SOFT_LOCKED)
+
+/obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
+	if(!monkey_check(user))
+		return
+	return ..()
+
+/obj/item/storage/toolbox/guncase/monkeycase/attack_self_secondary(mob/user, modifiers)
+	attack_self(user, modifiers)
+	return
+
+/obj/item/storage/toolbox/guncase/monkeycase/attack_hand(mob/user, list/modifiers)
+	if(!monkey_check(user))
+		return
+	return ..()
+
+/obj/item/storage/toolbox/guncase/monkeycase/proc/monkey_check(mob/user)
+	if(atom_storage.locked == STORAGE_NOT_LOCKED)
+		return TRUE
+
+	if(is_simian(user))
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
+		to_chat(user, span_notice("You place your paw on the paw scanner, and hear a soft click as [src] unlocks!"))
+		playsound(src, 'sound/machines/click.ogg', 25, TRUE)
+		return TRUE
+	to_chat(user, span_warning("You put your hand on the hand scanner, and it rejects it with an angry chimpanzee screech!"))
+	playsound(src, SFX_SCREECH, 75, TRUE)
+	return FALSE
+
+/obj/item/storage/toolbox/guncase/monkeycase/PopulateContents()
+	switch(rand(1, 3))
+		if(1)
+			// Uzi with a boxcutter.
+			new /obj/item/gun/ballistic/automatic/mini_uzi/chimpgun(src)
+			new /obj/item/ammo_box/magazine/uzim9mm(src)
+			new /obj/item/ammo_box/magazine/uzim9mm(src)
+			new /obj/item/boxcutter(src)
+		if(2)
+			// Thompson with a boxcutter.
+			new /obj/item/gun/ballistic/automatic/tommygun/chimpgun(src)
+			new /obj/item/ammo_box/magazine/tommygunm45(src)
+			new /obj/item/ammo_box/magazine/tommygunm45(src)
+			new /obj/item/boxcutter(src)
+		if(3)
+			// M1911 with a switchblade and an extra banana bomb.
+			new /obj/item/gun/ballistic/automatic/pistol/m1911/chimpgun(src)
+			new /obj/item/ammo_box/magazine/m45(src)
+			new /obj/item/ammo_box/magazine/m45(src)
+			new /obj/item/switchblade(src)
+			new /obj/item/food/grown/banana/bunch/monkeybomb(src)
+
+	// Banana bomb! Basically a tiny flashbang for monkeys.
+	new /obj/item/food/grown/banana/bunch/monkeybomb(src)
+	// Somewhere to store it all.
+	new /obj/item/storage/backpack/satchel(src)
+
+/obj/item/storage/toolbox/guncase/traitor
+	name = "makarov gun case"
+	desc = "A weapon's case. Has a blood-red 'S' stamped on the cover. There seems to be a strange switch along the side inside a plastic flap."
+	icon_state = "pistol_case"
+	base_icon_state = "pistol_case"
+	// What ammo box do we spawn in our case?
+	var/ammo_box_to_spawn = /obj/item/ammo_box/c9mm
+	// Timer for the bomb in the case.
+	var/explosion_timer
+	// Whether or not our case is exploding. Used for determining sprite changes.
+	var/currently_exploding = FALSE
+
+/obj/item/storage/toolbox/guncase/traitor/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/storage/toolbox/guncase/traitor/examine(mob/user)
+	. = ..()
+	. += span_notice("Activate the Evidence Disposal Explosive using Alt-Right-Click.")
+
+/obj/item/storage/toolbox/guncase/traitor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Activate Evidence Disposal Explosive"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/toolbox/guncase/traitor/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 2)
+		new extra_to_spawn (src)
+
+	if(ammo_box_to_spawn)
+		new ammo_box_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/traitor/update_icon_state()
+	. = ..()
+	if(currently_exploding)
+		icon_state = "[base_icon_state]_exploding"
+	else
+		icon_state = "[base_icon_state]"
+
+/obj/item/storage/toolbox/guncase/traitor/click_alt_secondary(mob/user)
+	. = ..()
+	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
+	if(i_dont_even_think_once_about_blowing_stuff_up == "No")
+		return
+	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
+	to_chat(user, span_warning("You prime [src]'s evidence disposal bomb!"))
+	log_bomber(user, "has activated a", src, "for detonation")
+	playsound(src, 'sound/weapons/armbomb.ogg', 50, TRUE)
+	currently_exploding = TRUE
+	update_appearance()
+
+/// proc to handle our detonation
+/obj/item/storage/toolbox/guncase/traitor/proc/think_fast_chucklenuts()
+	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 2, explosion_cause = src)
+	qdel(src)
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition
+	name = "makarov 9mm magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/m9mm
+
+/obj/item/storage/toolbox/guncase/traitor/donksoft
+	name = "\improper Donksoft riot pistol gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/donksoft
+	name = "\improper Donksoft riot pistol magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
+/obj/item/storage/toolbox/guncase/traitor/jester
+	name = "\improper Whispering Jester pistol gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
+	extra_to_spawn = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
+	ammo_box_to_spawn = /obj/item/ammo_box/c45/caseless
+
+/obj/item/storage/toolbox/guncase/traitor/revolver
+	name = "\improper Syndicate revolver gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate
+	extra_to_spawn = /obj/item/ammo_box/a357
+
+/obj/item/storage/toolbox/guncase/traitor/revolver/PopulateContents()
+	new weapon_to_spawn(src)
+	for(var/i in 1 to 3)
+		new extra_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/traitor/wespe
+	name = "\improper Wespe pistol gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/sol/evil/unrestricted
+	extra_to_spawn = /obj/item/ammo_box/magazine/c35sol_pistol
+	ammo_box_to_spawn = /obj/item/ammo_box/c35sol
+
+/obj/item/storage/toolbox/guncase/traitor/bobr
+	name = "\improper Bóbr 12 GA revolver gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/shotgun_revolver
+	extra_to_spawn = /obj/item/ammo_box/advanced/s12gauge
+	ammo_box_to_spawn = /obj/item/ammo_box/tacshield/tutel
+
+/obj/item/storage/toolbox/repair
+	name = "robotic repair toolbox"
+	desc = "Capable of robusting and repairing any troublesome robots after the fact."
+	icon_state = "toolbox-secmed"
+	inhand_icon_state = "toolbox-secmed"
+
+/obj/item/storage/toolbox/repair/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
+	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil/industrial(src)
+
+/obj/item/storage/toolbox/electrical/medical
+	name = "robotic repair toolbox"
+	desc = "Contains equipment for IPC maintenance, because we all know robotics won't do it."
+	icon_state = "toolbox-medical"
+	inhand_icon_state = "toolbox-medical"
+
+/obj/item/storage/toolbox/electrical/medical/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
+	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil(src)

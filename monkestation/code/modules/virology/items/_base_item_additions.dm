@@ -9,7 +9,8 @@ GLOBAL_LIST_INIT(infected_items, list())
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	disease_contact(user)
+	if(!QDELETED(user))
+		disease_contact(user)
 
 //Called by attack_hand(), transfers diseases between the mob and the item
 /obj/item/proc/disease_contact(mob/living/carbon/M, bodypart = null)
@@ -22,7 +23,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 
 	//secondly, do they happen to carry contact-spreading viruses themselves?
 	var/list/contact_diseases = filter_disease_by_spread(M.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
-	if (contact_diseases?.len)
+	if (length(contact_diseases))
 		//if so are their hands protected?
 		var/block = M.check_contact_sterility(bodypart)
 		for (var/datum/disease/acute/D in contact_diseases)
@@ -66,7 +67,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 			pathogen = image('monkestation/code/modules/virology/icons/effects.dmi', src, "pathogen_contact")
 			pathogen.plane = HUD_PLANE
 			pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-		for (var/mob/L in GLOB.science_goggles_wearers)
+		for (var/mob/L in GLOB.virus_viewers)
 			if (L.client)
 				L.client.images |= pathogen
 		if (decay)
@@ -78,7 +79,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 	if(!length(viruses))
 		GLOB.infected_items -= src
 		if (pathogen)
-			for (var/mob/L in GLOB.science_goggles_wearers)
+			for (var/mob/L in GLOB.virus_viewers)
 				if(L.client)
 					L.client.images -= pathogen
 

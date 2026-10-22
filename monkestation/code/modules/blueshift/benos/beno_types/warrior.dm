@@ -23,6 +23,7 @@
 
 	add_movespeed_modifier(/datum/movespeed_modifier/alien_big)
 
+
 /mob/living/carbon/alien/adult/nova/warrior/create_internal_organs()
 	organs += new /obj/item/organ/internal/alien/plasmavessel
 	..()

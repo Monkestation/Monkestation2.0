@@ -219,7 +219,7 @@
 		/datum/reagent/water = 11,
 	)
 	tastes = list("ice" = 1, "water" = 1, "pineapples" = 5)
-	foodtypes = PINEAPPLE //Pineapple to allow all that like pineapple to enjoy
+	foodtypes = FRUIT | PINEAPPLE
 
 /obj/item/food/snowcones/mime
 	name = "mime snowcone"
@@ -327,11 +327,10 @@
 	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
 	var/bitecount = 0
 
-
 /obj/item/food/popsicle/Initialize(mapload)
 	. = ..()
 	bite_consumption = reagents.total_volume / bite_states
-	update_icon() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
+	update_appearance() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
 
 /obj/item/food/popsicle/make_edible()
 	. = ..()
@@ -357,6 +356,10 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
+
+/obj/item/popsicle_stick/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
 
 /obj/item/food/popsicle/creamsicle_orange
 	name = "orange creamsicle"
@@ -421,3 +424,14 @@
 	tastes = list("chopped hazelnuts", "waffle")
 	foodtypes = DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/popsicle/meatsicle
+	name = "Meatsicle"
+	desc = "A horrific abomination of raw meat, glazed with sugar on a stick, then frozen."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/sugar = 4,
+	)
+	overlay_state = "meatsicle"
+	foodtypes = RAW | MEAT | SUGAR

@@ -329,6 +329,11 @@
 	description = "I need something to cover my head..."
 	mood_change = -3
 
+/datum/mood_event/bald_reminder
+	description = "I was reminded that I can't grow my hair back at all! This is awful!"
+	mood_change = -5
+	timeout = 4 MINUTES
+
 /datum/mood_event/bad_touch
 	description = "I don't like when people touch me."
 	mood_change = -3
@@ -403,6 +408,13 @@
 	mood_change = -1
 	timeout = 30 SECONDS
 
+//MONKESTATION EDIT START
+/datum/mood_event/watersprayed/cat
+	description = "HSSSSSSS!"
+	mood_change = -10
+	timeout = 5 SECONDS
+//MONKESTATION EDIT STOP
+
 /datum/mood_event/gamer_withdrawal
 	description = "I wish I was gaming right now..."
 	mood_change = -5
@@ -452,6 +464,16 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
+/datum/mood_event/amulet_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed!"
+	mood_change = -6
+	timeout = 5 MINUTES
+
+/datum/mood_event/mallet_humiliation
+	description = "Getting hit by such a stupid weapon feels rather humiliating..."
+	mood_change = -3
+	timeout = 10 SECONDS
+
 /datum/mood_event/amulette_insanity
 	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
 	mood_change = -6
@@ -462,3 +484,27 @@
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
 	mood_change = -200
 	special_screen_obj = "mood_despair"
+
+/datum/mood_event/encountered_evil
+	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
+	mood_change = -4
+	timeout = 1 MINUTES
+
+/datum/mood_event/no_borer
+	description = "I still can hear that lingering melody, echoing."
+	mood_change = -5
+
+/datum/mood_event/smoke_in_face
+	description = "That smoke was disgusting."
+	mood_change = -3
+	timeout = 30 SECONDS
+
+/datum/mood_event/smoke_in_face/add_effects(param)
+	if(HAS_TRAIT(owner, TRAIT_SMOKER))
+		description = "Blowing smoke in my face, really?"
+		mood_change = 0
+
+/datum/mood_event/wishgranter_awakening
+	description = "What... what was that ominous feeling?"
+	mood_change = -10
+	timeout = 5 MINUTES

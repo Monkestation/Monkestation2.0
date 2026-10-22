@@ -91,7 +91,7 @@
 /obj/machinery/seed_extractor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(!isliving(user) || (user.istate & ISTATE_HARM))
@@ -216,7 +216,23 @@
 				"name" = reagent.name,
 				"rate" = reagent.rate
 			))
-		seed_data["volume_mod"] = (locate(/datum/plant_gene/trait/maxchem) in to_add.genes) ? 2 : 1
+		var/datum/plant_gene/trait/maxchem/volume_trait = locate(/datum/plant_gene/trait/maxchem) in to_add.genes
+		var/datum/plant_gene/trait/modified_volume/volume_unit_trait = locate(/datum/plant_gene/trait/modified_volume) in to_add.genes
+		seed_data["volume_mod"] = volume_trait ? volume_trait.rate : 1
+		seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capcity : PLANT_REAGENT_VOLUME
+		seed_data["mutatelist"] = list()
+		for(var/obj/item/seeds/mutant as anything in to_add.mutatelist)
+			seed_data["mutatelist"] += initial(mutant.plantname)
+		if(to_add.product && istype(to_add.product, /obj/item))
+			var/obj/item/food/grown/product = new to_add.product
+			var/datum/reagent/product_distill_reagent = istype(to_add.product, /obj/item/food/grown) ? product.distill_reagent : null
+			seed_data["distill_reagent"] = initial(product_distill_reagent.name)
+			seed_data["juice_results"] = list()
+			for(var/datum/reagent/reagent as anything in product.juice_results)
+				seed_data["juice_results"] += initial(reagent.name)
+			seed_data["grind_results"] = list()
+			for(var/datum/reagent/reagent as anything in product.grind_results)
+				seed_data["grind_results"] += initial(reagent.name)
 		piles[seed_id] = seed_data
 	return TRUE
 
@@ -260,7 +276,7 @@
 		data["trait_db"] += trait_data
 	return data
 
-/obj/machinery/seed_extractor/ui_act(action, params)
+/obj/machinery/seed_extractor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

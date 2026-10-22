@@ -211,7 +211,7 @@
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/message = "Mobs have been spawned in [ADMIN_VERBOSEJMP(T)] by a [reaction_name] reaction."
-		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
+		message += " (<A HREF='byond://?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
 		if(M)
@@ -252,7 +252,7 @@
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)
 			continue
-		if(iseffect(X) || iscameramob(X) || isdead(X))
+		if(iseffect(X) || iseyemob(X) || isdead(X))
 			continue
 		var/distance = get_dist(X, T)
 		var/moving_power = max(range - distance, 1)
@@ -289,11 +289,14 @@
 	var/power = modifier + round(created_volume/strengthdiv, 1)
 	if(power > 0)
 		var/turf/T = get_turf(holder.my_atom)
+		if(isnull(T))
+			holder.clear_reagents()
+			return
 		var/inside_msg
 		if(ismob(holder.my_atom))
 			var/mob/M = holder.my_atom
 			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
-		var/lastkey = holder.my_atom.fingerprintslast //This can runtime (null.fingerprintslast) - due to plumbing?
+		var/lastkey = holder.my_atom?.fingerprintslast //This can runtime (null.fingerprintslast) - due to plumbing?
 		var/touch_msg = "N/A"
 		if(lastkey)
 			var/mob/toucher = get_mob_by_key(lastkey)
@@ -301,8 +304,14 @@
 		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
 			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
 		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+
+		// monkestation edit start
+		if(lastkey) // This is a sad way to do it. But a way to do it none the lesser.
+			log_bomber(get_mob_by_key(lastkey), "Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [touch_msg] Source: [holder.my_atom]")
+		// monkestation edit end
+
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(power , T, 0, 0)
+		e.set_up(power , holder.my_atom, 0, 0)
 		e.start(holder.my_atom)
 	holder.clear_reagents()
 
@@ -335,26 +344,27 @@
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
-	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
-	var/sum_volume = 0
-	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
-	for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		if(!(reagent.type in required_reagents) || !(reagent.type in results))
-			continue
-		if(reagent.inverse_chem)
-			invert_reagents.add_reagent(reagent.inverse_chem, reagent.volume, no_react = TRUE)
+	if(!isnull(get_turf(holder.my_atom)))
+		var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
+		var/sum_volume = 0
+		invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
+		for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+			if(!(reagent.type in required_reagents) || !(reagent.type in results))
+				continue
+			if(reagent.inverse_chem)
+				invert_reagents.add_reagent(reagent.inverse_chem, reagent.volume, no_react = TRUE)
+				holder.remove_reagent(reagent.type, reagent.volume)
+				continue
+			invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
+			sum_volume += reagent.volume
 			holder.remove_reagent(reagent.type, reagent.volume)
-			continue
-		invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
-		sum_volume += reagent.volume
-		holder.remove_reagent(reagent.type, reagent.volume)
-	if(!force_range)
-		force_range = (sum_volume/6) + 3
-	if(invert_reagents.reagent_list)
-		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = invert_reagents)
-		smoke.start(log = TRUE)
-	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
+		if(!force_range)
+			force_range = (sum_volume/6) + 3
+		if(invert_reagents.reagent_list)
+			smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = invert_reagents)
+			smoke.start(log = TRUE)
+		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
 	if(clear_products)
@@ -362,20 +372,21 @@
 
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
 /datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
-	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
-	reagents.my_atom = holder.my_atom //fingerprint
-	var/sum_volume = 0
-	for (var/datum/reagent/reagent as anything in holder.reagent_list)
-		if((reagent.type in required_reagents) || (reagent.type in results))
-			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
-			holder.remove_reagent(reagent.type, reagent.volume)
-	if(!force_range)
-		force_range = (sum_volume/6) + 3
-	if(reagents.reagent_list)
-		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = reagents)
-		smoke.start(log = TRUE)
-	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
+	if(!isnull(get_turf(holder.my_atom)))
+		var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
+		reagents.my_atom = holder.my_atom //fingerprint
+		var/sum_volume = 0
+		for (var/datum/reagent/reagent as anything in holder.reagent_list)
+			if((reagent.type in required_reagents) || (reagent.type in results))
+				reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
+				holder.remove_reagent(reagent.type, reagent.volume)
+		if(!force_range)
+			force_range = (sum_volume/6) + 3
+		if(reagents.reagent_list)
+			smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = reagents)
+			smoke.start(log = TRUE)
+		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
 	if(clear_products)
@@ -388,7 +399,7 @@
 		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
 		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
-	for(var/atom/movable/movey as anything in orange(range, this_turf))
+	for(var/atom/movable/movey in orange(range, this_turf))
 		if(!istype(movey, /atom/movable))
 			continue
 		if(isliving(movey) && damage)
@@ -396,7 +407,7 @@
 			live.apply_damage(damage)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
-		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
+		if(iseffect(movey) || iseyemob(movey) || isdead(movey))
 			continue
 		if(implosion)
 			var/distance = get_dist(movey, this_turf)

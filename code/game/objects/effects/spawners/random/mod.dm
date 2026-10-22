@@ -7,6 +7,7 @@
 	name = "maint MOD module spawner"
 	loot = list(
 		/obj/item/mod/module/springlock = 2,
+		/obj/item/mod/module/magboot/corpse_exoskeleton = 2,
 		/obj/item/mod/module/visor/rave = 2,
 		/obj/item/mod/module/tanner = 1,
 		/obj/item/mod/module/balloon = 1,
@@ -16,6 +17,6 @@
 	)
 
 /obj/effect/spawner/random/mod/maint/Initialize(mapload)
-	if(SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN))
+	if(is_multi_z_level(z))
 		loot += list(/obj/item/mod/module/atrocinator = 3)
 	return ..()

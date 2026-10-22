@@ -46,11 +46,12 @@
 
 /obj/item/organ/external/wings/functional/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	handle_flight(owner)
+	if(wings_open)
+		handle_flight(owner)
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(human.movement_type & ~FLYING)
+	if(!(human.movement_type & FLYING))
 		return FALSE
 	if(!can_fly(human))
 		toggle_flight(human)
@@ -97,11 +98,13 @@
 		buckled_obj.unbuckle_mob(human)
 		step(buckled_obj, olddir)
 	else
-		human.AddComponent(/datum/component/force_move, get_ranged_target_turf(human, olddir, 4), TRUE)
+		human.AddComponent(/datum/component/force_move, get_ranged_target_turf(human, olddir, 4), TRUE, TRUE)
 	return TRUE
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
+	if(QDELETED(human))
+		return
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
 		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
@@ -115,6 +118,7 @@
 		passtable_off(human, SPECIES_TRAIT)
 		close_wings()
 	human.update_body_parts()
+	human.refresh_gravity()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
@@ -138,6 +142,16 @@
 	VAR_PRIVATE/wings_open = FALSE
 	///Feature render key for opened wings
 	var/open_feature_key = "wingsopen"
+
+/datum/bodypart_overlay/mutant/wings/functional/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.w_uniform?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_neck?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+
+	return ..()
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
@@ -179,6 +193,7 @@
 /obj/item/organ/external/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
+	organ_flags = ORGAN_ROBOTIC
 	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 
 ///skeletal wings, which relate to skeletal races.

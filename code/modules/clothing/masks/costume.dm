@@ -4,18 +4,16 @@
 	icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 			"Joy" = "joy",
 			"Flushed" = "flushed",
 			"Pensive" = "pensive",
 			"Angry" = "angry",
-			"Pleading" = "pleading"
+			"Pleading" = "pleading",
+			"Epic" = "epicface",
+			"Smile" = "smile"
 	)
-
-/obj/item/clothing/mask/joy/Initialize(mapload)
-	. = ..()
-	register_context()
 
 /obj/item/clothing/mask/joy/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -25,7 +23,6 @@
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
 	user.update_worn_mask()
-	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"
@@ -49,6 +46,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	adjusted_flags = ITEM_SLOT_HEAD
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#AA0000"
 	greyscale_config = /datum/greyscale_config/kitsune
@@ -67,6 +67,10 @@
 	weldingvisortoggle(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 
+/obj/item/clothing/mask/kitsune/click_alt(mob/living/user)
+	weldingvisortoggle(user)
+	return CLICK_ACTION_SUCCESS
+
 /obj/item/clothing/mask/joy/manhunt
 	name = "smiley mask"
 	desc = "A happy mask! Doesn't seem like there is anything wrong with it...right?"
@@ -75,5 +79,38 @@
 			"Happy" = "happy",
 			"Bloodied" = "bloodied",
 			"Stop me" = "stop_me",
+			"Cracked bloodied" = "cracked_bloodied",
 			"Cracked" = "cracked",
 	)
+
+/obj/item/clothing/mask/rebellion
+	name = "rebellion mask"
+	desc = "Mask that is usually used during rebellions by insurgents. It covers the entire face and makes you unrecognizable."
+	inhand_icon_state = null
+	w_class = WEIGHT_CLASS_SMALL
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	custom_price = PAYCHECK_CREW
+	visor_flags = MASKINTERNALS
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
+	alternate_worn_layer = BENEATH_HAIR_LAYER
+	icon_state = "rebellion_mask"
+	greyscale_config = /datum/greyscale_config/rebellion_mask
+	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
+
+/obj/item/clothing/mask/sprungle
+	name = "porcelain mask"
+	desc = "An ill omen of things to come."
+	icon_state = "protector"
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
+
+/obj/item/clothing/mask/sprungle/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon, "hood")
+
+/obj/item/clothing/mask/sprungle/personal
+	name = "golden mask"
+	icon_state = "lordprotector"

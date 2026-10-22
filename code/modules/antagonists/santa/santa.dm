@@ -3,14 +3,16 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	antag_flags = FLAG_ANTAG_CAP_IGNORE
 	suicide_cry = "FOR CHRISTMAS!!"
+	antag_count_points = 2 //santa is an enemy of the state
 
 /datum/antagonist/santa/on_gain()
 	. = ..()
 	give_equipment()
 	give_objective()
 
-	owner.add_traits(list(TRAIT_CANNOT_OPEN_PRESENTS, TRAIT_PRESENT_VISION), TRAIT_SANTA)
+	owner.add_traits(list(TRAIT_CANNOT_OPEN_PRESENTS, TRAIT_PRESENT_VISION), SANTA_TRAIT)
 
 /datum/antagonist/santa/greet()
 	. = ..()

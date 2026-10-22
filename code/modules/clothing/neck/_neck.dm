@@ -3,9 +3,35 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
-	strip_delay = 40
-	equip_delay_other = 40
+	interaction_flags_click = NEED_DEXTERITY
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
 	blood_overlay_type = "mask"
+	var/cover_accessories = TRUE
+
+/obj/item/clothing/neck/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/clothing/neck/click_alt_secondary(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(!can_use(user))
+		return
+	cover_accessories = !cover_accessories
+	if(cover_accessories)
+		to_chat(usr, span_notice("You adjust [src] to cover accessories."))
+	else
+		to_chat(usr, span_notice("You adjust [src] to show accessories."))
+
+	user.update_clothing(ITEM_SLOT_NECK)
+	update_appearance()
+
+/obj/item/clothing/neck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_RMB] =  "[cover_accessories ? "Uncover" : "Cover"] accessories"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -15,9 +41,25 @@
 	if(body_parts_covered & HEAD)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
+		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "maskblood")
+			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+			. += blood_overlay
 
-/obj/item/clothing/neck/appears_bloody()
-	return ..() && (body_parts_covered & HEAD)
+	if(cover_accessories)
+		return
+
+	var/mob/living/carbon/human/wearer = loc
+	if(!ishuman(wearer) || !wearer.w_uniform)
+		return
+
+	var/obj/item/clothing/under/undershirt = wearer.w_uniform
+	if(!istype(undershirt) || !length(undershirt.attached_accessories))
+		return
+
+	var/obj/item/clothing/accessory/displayed = undershirt.attached_accessories[1]
+	if(displayed.above_suit)
+		. += undershirt.accessory_overlay
 
 /obj/item/clothing/neck/bowtie
 	name = "bow tie"
@@ -51,6 +93,7 @@
 	greyscale_config = /datum/greyscale_config/ties
 	greyscale_config_worn = /datum/greyscale_config/ties/worn
 	greyscale_colors = "#4d4e4e"
+	alternate_worn_layer = LOW_NECK_LAYER // So that it renders below suit jackets, MODsuits, etc
 	flags_1 = IS_PLAYER_COLORABLE_1
 	/// All ties start untied unless otherwise specified
 	var/is_tied = FALSE
@@ -58,7 +101,7 @@
 	var/tie_timer = 4 SECONDS
 	/// Is this tie a clip-on, meaning it does not have an untied state?
 	var/clip_on = FALSE
-	/// MONKESTATION EDIT Base icon_state name between tied and untied versions.
+	/// Base icon_state name between tied and untied versions.
 	var/tie_type = "tie_greyscale"
 
 /obj/item/clothing/neck/tie/Initialize(mapload)
@@ -70,6 +113,7 @@
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
+	. += span_notice("The tie can be worn above or below your suit. Right-click to toggle.")
 	if(clip_on)
 		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
 	else if(!is_tied)
@@ -77,10 +121,9 @@
 	else
 		. += span_notice("The tie can be untied with Alt-Click.")
 
-/obj/item/clothing/neck/tie/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/neck/tie/click_alt(mob/living/user)
 	if(clip_on)
-		return
+		return NONE
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
@@ -92,11 +135,11 @@
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Clumsy & Dumb people have trouble tying their ties.
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Success!
 	is_tied = !is_tied
 	user.visible_message(
@@ -105,6 +148,19 @@
 	)
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/neck/tie/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	alternate_worn_layer = alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer)
+	user.update_clothing(ITEM_SLOT_NECK)
+	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
+	add_fingerprint(user)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
@@ -124,6 +180,7 @@
 
 /obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	context[SCREENTIP_CONTEXT_RMB] = "Wear [alternate_worn_layer == initial(alternate_worn_layer) ? "above" : "below"] suit"
 	if(clip_on)
 		return
 	if(is_tied)
@@ -179,6 +236,11 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+/obj/item/clothing/neck/tie/disco/equipped(mob/living/user, slot)
+	. = ..()
+	if(user.client)
+		LoadComponent(/datum/component/soulcatcher/attachable_soulcatcher)
+
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
 	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
@@ -192,6 +254,16 @@
 	name = "maid neck cover"
 	desc = "A neckpiece for a maid costume, it smells faintly of disappointment."
 	icon_state = "maid_neck"
+
+/obj/item/clothing/neck/kris
+	name = "vessel's ascot"
+	desc = "* A replica of the ascot a vessel wore while saving the world."
+	icon_state = "kris_ascot"
+
+/obj/item/clothing/neck/ralsei
+	name = "prince's scarf"
+	desc = "A fluffy scarf, it smells of cake."
+	icon_state = "ralsei_scarf"
 
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
@@ -226,7 +298,7 @@
 	switch (body_part)
 		if(BODY_ZONE_CHEST)//Listening to the chest
 			user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
-			if(!user.can_hear())
+			if(HAS_TRAIT(user, TRAIT_DEAF))
 				to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear"))
 				return
 			else
@@ -463,25 +535,21 @@
 	selling = !selling
 	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
 
-/obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
+/obj/item/clothing/neck/necklace/dope/merchant/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/export_report/ex = export_item_and_contents(interacting_with, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
 
 	if(price)
 		var/true_price = round(price*profit_scaling)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> credits[interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user),true_price)
 	else
-		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+		to_chat(user, span_warning("There is no export value for [interacting_with] or any items within it."))
 
-	return .
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"
@@ -495,3 +563,9 @@
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/shawl
+	name = "silk shawl"
+	desc = "A delicate silk scarf with tiny sparkling fragments woven into the fabric."
+	icon_state = "starshawl"
+	icon = 'icons/obj/clothing/neck.dmi'

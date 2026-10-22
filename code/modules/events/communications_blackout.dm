@@ -6,6 +6,10 @@
 	description = "Heavily emps all telecommunication machines, blocking all communication for a while."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
+	max_occurrences = 2
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL, TAG_SPOOKY)
+	event_group = /datum/event_group/comms
 
 /datum/round_event/communications_blackout
 	announce_when = 1
@@ -29,3 +33,7 @@
 /datum/round_event/communications_blackout/start()
 	for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 		T.emp_act(EMP_HEAVY)
+	for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+		if(!isnull(transport.home_controller))
+			var/obj/machinery/transport/tram_controller/tcomms/controller = transport.home_controller
+			controller.emp_act(EMP_HEAVY)

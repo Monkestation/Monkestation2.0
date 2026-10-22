@@ -42,7 +42,7 @@
  *
  * required user mob The mob interacting with the UI.
  *
- * return list Statuic Data to be sent to the UI.
+ * return list Static Data to be sent to the UI.
  */
 /datum/proc/ui_static_data(mob/user)
 	return list()
@@ -55,12 +55,13 @@
  *
  * required user the mob currently interacting with the ui
  * optional ui ui to be updated
+ * always_instant when set to true stops the ui update cooldown from happening
  */
-/datum/proc/update_static_data(mob/user, datum/tgui/ui)
+/datum/proc/update_static_data(mob/user, datum/tgui/ui, always_instant)
 	if(!ui)
 		ui = SStgui.get_open_ui(user, src)
 	if(ui)
-		ui.send_full_update()
+		ui.send_full_update(always_instant = always_instant)
 
 /**
  * public
@@ -213,9 +214,11 @@
 	if(window_id)
 		window = usr.client.tgui_windows[window_id]
 		if(!window)
+#ifdef EXTENDED_DEBUG_LOGGING
 			log_tgui(usr,
 				"Error: Couldn't find the window datum, force closing.",
 				context = window_id)
+#endif
 			SStgui.force_close_window(usr, window_id)
 			return TRUE
 

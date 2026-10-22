@@ -12,6 +12,8 @@
 /datum/emote
 	/// What calls the emote.
 	var/key = ""
+	///Lazylist of alt keys that will work but not be told to players.
+	var/list/alt_keys
 	/// This will also call the emote.
 	var/key_third_person = ""
 	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "flap angry". Defaulted to key.
@@ -32,6 +34,10 @@
 	var/message_monkey = ""
 	/// Message to display if the user is a simple_animal or basic mob.
 	var/message_animal_or_basic = ""
+	/// Message displayed if the user is an IPC.
+	var/message_ipc = ""
+	/// Message displayed if the user is an insect.
+	var/message_insect = ""
 	/// Message with %t at the end to allow adding params to the message, like for mobs doing an emote relatively to something else.
 	var/message_param = ""
 	/// Whether the emote is visible and/or audible bitflag
@@ -46,6 +52,8 @@
 	var/list/mob_type_blacklist_typecache
 	/// Types that can use this emote regardless of their state.
 	var/list/mob_type_ignore_stat_typecache
+	/// Trait that is required to use this emote.
+	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
 	/// Sound to play when emote is called.
@@ -60,6 +68,14 @@
 	var/can_message_change = FALSE
 	/// How long is the cooldown on the audio of the emote, if it has one?
 	var/audio_cooldown = 2 SECONDS
+	/// The falloff exponent for audible emotes.
+	var/falloff_exponent = SOUND_FALLOFF_EXPONENT
+	/// The extra range for audible emotes.
+	var/extra_range = 0
+	/// The volume to play an audible emote at.
+	var/volume = 50
+	/// Lets emote proceed without early returning in the event the message is empty.
+	var/empty_message_intentional
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -99,39 +115,46 @@
 
 	msg = replace_pronoun(user, msg)
 
-	if(!msg)
+	if(!msg && !empty_message_intentional)
 		return
 
-	user.log_message(msg, LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [msg]"
+	if(user.client)
+		user.log_message(msg ? msg : "performed a messageless emote. ([type])", LOG_EMOTE)
+	var/dchatmsg = "<b>[user]</b> [msg ? msg : "performed an emote."]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
-		//MONKESTATION EDIT START - Allows sounds to vary based on their calling conditions.
-		//playsound(user, tmp_sound, 50, vary, mixer_channel = CHANNEL_MOB_SOUNDS) //MONKESTATION EDIT ORIGINAL
 		var/tmp_vary = should_vary(user)
-		playsound(user, tmp_sound, 50, tmp_vary, mixer_channel = get_mixer_channel(user, params, type_override, intentional))
-		//MONKESTATION EDIT END
+		playsound(
+			source = user,
+			soundin = tmp_sound,
+			vol = get_emote_volume(user),
+			vary = tmp_vary,
+			extrarange = extra_range,
+			falloff_exponent = falloff_exponent,
+			mixer_channel = get_mixer_channel(user, params, type_override, intentional)
+		)
 
 	var/user_turf = get_turf(user)
 	if (user.client)
 		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
-			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+			if((ghost.client?.prefs?.chat_toggles & CHAT_GHOSTSIGHT) && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
-	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
-		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
-	else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
-		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
-	if(emote_type & EMOTE_IMPORTANT)
-		for(var/mob/living/viewer in viewers())
-			if(viewer.is_blind() && !viewer.can_hear())
-				to_chat(viewer, msg)
+	if(msg)
+		if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
+			user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
+		else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
+			user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
+		if(emote_type & EMOTE_IMPORTANT)
+			for(var/mob/living/viewer in viewers())
+				if(viewer.is_blind() && HAS_TRAIT(viewer, TRAIT_DEAF))
+					to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
-	SSblackbox.record_feedback("tally", "emote_used", 1, name)
+	// SSblackbox.record_feedback("tally", "emote_used", 1, name)
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
@@ -165,6 +188,22 @@
  */
 /datum/emote/proc/get_sound(mob/living/user)
 	return sound //by default just return this var.
+
+/datum/emote/proc/get_emote_volume(mob/living/user)
+	return volume
+
+// Whether this emote should vary in pitch every time it's played.
+//
+// By default, this returns the `vary` variable, so you should set that if it will always be TRUE or
+// FALSE. However, if your emote only varies under certain calling conditions (such as the user
+// being a human despite the emote applying to all living creatures), then you should override this
+// proc.
+/datum/emote/proc/should_vary(mob/living/user)
+	return vary
+
+/// Returns the mixer channel that sound emotes should use.
+/datum/emote/proc/get_mixer_channel(mob/user, params, type_override, intentional = FALSE)
+	return issilicon(user) ? CHANNEL_SILICON_EMOTES : CHANNEL_MOB_EMOTES
 
 /**
  * To replace pronouns in the inputed string with the user's proper pronouns.
@@ -247,6 +286,8 @@
  * Returns a bool about whether or not the user can run the emote.
  */
 /datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+	if(trait_required && !HAS_TRAIT(user, trait_required))
+		return FALSE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
@@ -309,18 +350,21 @@
 *
 * Returns TRUE if it was able to run the emote, FALSE otherwise.
 */
-/atom/proc/manual_emote(text)
-	if(!text)
+/atom/proc/manual_emote(text, log_emote = TRUE)
+	if (!text)
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
-	log_message(text, LOG_EMOTE)
+	if (log_emote)
+		log_message(text, LOG_EMOTE)
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
 	return TRUE
 
-/mob/manual_emote(text)
+/mob/manual_emote(text, log_emote = null)
 	if (stat != CONSCIOUS)
 		return FALSE
-	. = ..()
+	if (isnull(log_emote))
+		log_emote = !isnull(client)
+	. = ..(text, log_emote)
 	if (!.)
 		return FALSE
 	if (!client)

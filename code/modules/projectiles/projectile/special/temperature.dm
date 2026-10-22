@@ -5,9 +5,11 @@
 	damage_type = BURN
 	armor_flag = ENERGY
 	/// What temp to trend the target towards
-	var/temperature = HYPOTHERMIA - 2 CELCIUS
+	var/temperature = -60
+	var/min = 200
+	var/max = 400
 	/// How much temp per shot to apply
-	var/temperature_mod_per_shot = 0.25
+	var/temperature_mod_per_shot = 0.8
 
 /obj/projectile/temp/is_hostile_projectile()
 	return BODYTEMP_NORMAL - temperature != 0 // our damage is done by cooling or heating (casting to boolean here)
@@ -16,16 +18,23 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/M = target
-		M.adjust_bodytemperature(temperature_mod_per_shot * ((100-blocked) / 100) * (temperature - M.bodytemperature), use_insulation = TRUE)
+		var/temp_adjust = temperature_mod_per_shot * ((100-blocked) / 100) * (temperature)
+		if(temp_adjust != 0)
+			M.apply_status_effect(/datum/status_effect/thermally_destabilized)
+
+		M.adjust_bodytemperature(temp_adjust, min, max, use_insulation = TRUE)
 
 /obj/projectile/temp/hot
 	name = "heat beam"
-	temperature = CELCIUS_TO_KELVIN(50 CELCIUS) // Raise the body temp by 100 points
+	icon_state = "lava"
+	temperature =  60
 
 /obj/projectile/temp/cryo
 	name = "cryo beam"
 	range = 3
-	temperature_mod_per_shot = 1.5 // get this guy really chilly really fast
+	temperature = -60
+	min = 150
+	temperature_mod_per_shot = 2.5 // get this guy really chilly really fast
 
 /obj/projectile/temp/cryo/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
@@ -39,3 +48,25 @@
 		var/turf/open/O = T
 		O.freeze_turf()
 	return ..()
+
+/obj/projectile/temp/pyro
+	name = "hot beam"
+	icon_state = "firebeam" // sets on fire, diff sprite!
+	range = 9
+	temperature = 240
+	max = 1000
+
+/obj/projectile/temp/pyro/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/living_target = target
+	if(!istype(living_target))
+		return
+	living_target.adjust_fire_stacks(2)
+	living_target.ignite_mob()
+
+/obj/projectile/temp/pyro/on_range()
+	var/turf/location = get_turf(src)
+	new /obj/effect/hotspot(location)
+	location.hotspot_expose(700, 50, 1)

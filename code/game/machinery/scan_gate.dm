@@ -12,7 +12,7 @@
 #define SCANGATE_FLY "fly"
 #define SCANGATE_PLASMAMAN "plasma"
 #define SCANGATE_MOTH "moth"
-#define SCANGATE_JELLY "jelly"
+#define SCANGATE_OOZE "ooze"
 #define SCANGATE_POD "pod"
 #define SCANGATE_GOLEM "golem"
 #define SCANGATE_ZOMBIE "zombie"
@@ -85,8 +85,8 @@
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 
-/obj/machinery/scanner_gate/attackby(obj/item/W, mob/user, params)
-	var/obj/item/card/id/card = W.GetID()
+/obj/machinery/scanner_gate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/obj/item/card/id/card = attacking_item.GetID()
 	if(card)
 		if(locked)
 			if(allowed(user))
@@ -94,16 +94,16 @@
 				req_access = list()
 				to_chat(user, span_notice("You unlock [src]."))
 		else if(!(obj_flags & EMAGGED))
-			to_chat(user, span_notice("You lock [src] with [W]."))
-			var/list/access = W.GetAccess()
+			to_chat(user, span_notice("You lock [src] with [attacking_item]."))
+			var/list/access = attacking_item.GetAccess()
 			req_access = access
 			locked = TRUE
 		else
-			to_chat(user, span_warning("You try to lock [src] with [W], but nothing happens."))
+			to_chat(user, span_warning("You try to lock [src] with [attacking_item], but nothing happens."))
 	else
-		if(!locked && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), W))
+		if(!locked && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), attacking_item))
 			return
-		if(panel_open && is_wire_tool(W))
+		if(panel_open && is_wire_tool(attacking_item))
 			wires.interact(user)
 	return ..()
 
@@ -158,8 +158,8 @@
 						scan_species = /datum/species/plasmaman
 					if(SCANGATE_MOTH)
 						scan_species = /datum/species/moth
-					if(SCANGATE_JELLY)
-						scan_species = /datum/species/jelly
+					if(SCANGATE_OOZE)
+						scan_species = /datum/species/oozeling
 					if(SCANGATE_POD)
 						scan_species = /datum/species/pod
 					if(SCANGATE_GOLEM)
@@ -201,14 +201,14 @@
 			assembly?.activate()
 		set_scanline("scanning", 10)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)
 		next_beep = world.time + (2 SECONDS)
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-	var/image/alarm_image = image(icon, src, "alarm_light", layer+1)
-	flick_overlay_view(alarm_image, 2 SECONDS)
+	var/mutable_appearance/alarm_display = mutable_appearance(icon, "alarm_light")
+	flick_overlay_view(alarm_display, 2 SECONDS)
 	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)
@@ -233,7 +233,7 @@
 	data["target_nutrition"] = detect_nutrition
 	return data
 
-/obj/machinery/scanner_gate/ui_act(action, params)
+/obj/machinery/scanner_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -291,7 +291,7 @@
 #undef SCANGATE_FLY
 #undef SCANGATE_PLASMAMAN
 #undef SCANGATE_MOTH
-#undef SCANGATE_JELLY
+#undef SCANGATE_OOZE
 #undef SCANGATE_POD
 #undef SCANGATE_GOLEM
 #undef SCANGATE_ZOMBIE

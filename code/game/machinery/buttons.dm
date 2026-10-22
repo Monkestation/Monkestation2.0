@@ -1,9 +1,13 @@
 /obj/machinery/button
 	name = "button"
 	desc = "A remote control switch."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "doorctrl"
-	var/skin = "doorctrl"
+	icon = 'icons/obj/buttons.dmi'
+	base_icon_state = "button"
+	icon_state = "button"
+	///Icon suffix for the skin of the front pannel that is added to base_icon_state
+	var/skin = ""
+	///Whether it is possible to change the panel skin
+	var/can_alter_skin = TRUE
 	power_channel = AREA_USAGE_ENVIRON
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/obj/item/assembly/device
@@ -12,11 +16,9 @@
 	var/id = null
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
-	///The light mask used in the icon file for emissive layer
-	var/light_mask = null
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
 	light_outer_range = 1.5
-	light_color = LIGHT_COLOR_DARK_BLUE
+	light_color = LIGHT_COLOR_VIVID_GREEN
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -61,70 +63,78 @@
 	return ..()
 
 /obj/machinery/button/update_icon_state()
+	icon_state = "[base_icon_state][skin]"
 	if(panel_open)
-		icon_state = "button-open"
-		return ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "[skin]-p"
-		return ..()
-	icon_state = skin
+		icon_state += "-open"
+	else if(machine_stat & (NOPOWER|BROKEN))
+		icon_state += "-nopower"
 	return ..()
+
+/obj/machinery/button/update_appearance()
+	. = ..()
+
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)))
+		set_light(0)
+	else
+		set_light(l_outer_range = initial(light_outer_range), l_power = light_power, l_color = light_color)
 
 /obj/machinery/button/update_overlays()
 	. = ..()
-	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
-	if(!panel_open)
-		return
-	if(device)
-		. += "button-device"
-	if(board)
-		. += "button-board"
+
+	if(panel_open && board)
+		. += "[base_icon_state]-overlay-board"
+	if(panel_open && device)
+		if(istype(device, /obj/item/assembly/signaler))
+			. += "[base_icon_state]-overlay-signaler"
+		else
+			. += "[base_icon_state]-overlay-device"
+
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, "[base_icon_state]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "button-open", "[skin]", tool)
+		default_deconstruction_screwdriver(user, "[base_icon_state][skin]-open", "[base_icon_state][skin]", tool)
 		update_appearance()
 	else
-		to_chat(user, span_alert("Maintenance Access Denied."))
-		flick("[skin]-denied", src)
+		balloon_alert(user, "access denied")
+		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 
 	return TRUE
 
-/obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
+/obj/machinery/button/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(panel_open)
-		if(!device && isassembly(W))
-			if(!user.transferItemToLoc(W, src))
-				to_chat(user, span_warning("\The [W] is stuck to you!"))
+		if(!device && isassembly(attacking_item))
+			if(!user.transferItemToLoc(attacking_item, src))
+				to_chat(user, span_warning("\The [attacking_item] is stuck to you!"))
 				return
-			device = W
-			to_chat(user, span_notice("You add [W] to the button."))
+			device = attacking_item
+			to_chat(user, span_notice("You add [attacking_item] to the button."))
 
-		if(!board && istype(W, /obj/item/electronics/airlock))
-			if(!user.transferItemToLoc(W, src))
-				to_chat(user, span_warning("\The [W] is stuck to you!"))
+		if(!board && istype(attacking_item, /obj/item/electronics/airlock))
+			if(!user.transferItemToLoc(attacking_item, src))
+				to_chat(user, span_warning("\The [attacking_item] is stuck to you!"))
 				return
-			board = W
+			board = attacking_item
 			if(board.one_access)
 				req_one_access = board.accesses
 			else
 				req_access = board.accesses
 			balloon_alert(user, "electronics added")
-			to_chat(user, span_notice("You add [W] to the button."))
+			to_chat(user, span_notice("You add [attacking_item] to the button."))
 
-		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
+		if(!device && !board && attacking_item.tool_behaviour == TOOL_WRENCH)
 			to_chat(user, span_notice("You start unsecuring the button frame..."))
-			W.play_tool_sound(src)
-			if(W.use_tool(src, user, 40))
+			attacking_item.play_tool_sound(src)
+			if(attacking_item.use_tool(src, user, 40))
 				to_chat(user, span_notice("You unsecure the button frame."))
-				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-				qdel(src)
+				deconstruct(src)
 
 		update_appearance()
 		return
 
-	if(!(user.istate & ISTATE_HARM) && !(W.item_flags & NOBLUDGEON))
+	if(!(user.istate & ISTATE_HARM) && !(attacking_item.item_flags & NOBLUDGEON))
 		return attack_hand(user)
 	else
 		return ..()
@@ -180,6 +190,7 @@
 	if(!initialized_button)
 		setup_device()
 	add_fingerprint(user)
+	play_click_sound(SFX_BUTTON)
 	if(panel_open)
 		if(device || board)
 			if(device)
@@ -190,17 +201,39 @@
 				req_access = list()
 				req_one_access = list()
 				board = null
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 			balloon_alert(user, "electronics removed")
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
-		else
-			if(skin == "doorctrl")
-				skin = "launcher"
-			else
-				skin = "doorctrl"
-			balloon_alert(user, "swapped button style")
-			to_chat(user, span_notice("You change the button frame's front panel."))
+		else if(can_alter_skin)
+			to_chat(user, span_notice("You're starting to adjust the color display."))
+			var/static/list/choices = list(
+				"Gray"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button"),
+				"Green"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-green"),
+				"Red"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-red"),
+				"Blue"		= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-blue"),
+				"Yellow"	= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-yellow"),
+				"Warning"	= image(icon = 'icons/obj/buttons.dmi', icon_state = "button-warning"),
+				)
+			var/choice = show_radial_menu(user, src, choices, tooltips = TRUE, require_near = TRUE)
+			if(!choice)
+				return
+			switch(choice)
+				if("Gray")
+					skin = ""
+				if("Green")
+					skin = "-green"
+				if("Red")
+					skin = "-red"
+				if("Blue")
+					skin = "-blue"
+				if("Yellow")
+					skin = "-yellow"
+				if("Warning")
+					skin = "-warning"
+			to_chat(user, span_notice("You change the button frame's front panel to [choice]."))
+			update_appearance(UPDATE_ICON)
+			balloon_alert(user, "changed style")
 		return
 
 	if((machine_stat & (NOPOWER|BROKEN)))
@@ -211,20 +244,24 @@
 		return
 
 	if(!allowed(user))
-		to_chat(user, span_alert("Access Denied."))
-		flick("[skin]-denied", src)
-		playsound(src, SFX_BUTTON_FAIL, vol = 45, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY) // monkestation edit: button sounds
+		balloon_alert(user, "access denied")
+		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
+		playsound(src, SFX_BUTTON_FAIL, vol = 45, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY)
 		return
 
 	playsound(src, SFX_BUTTON_CLICK, vol = 45, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY) // monkestation edit: button sounds
-	use_power(5)
-	icon_state = "[skin]1"
+	use_energy(5)
+	flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
 
 	if(device)
 		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED, src)
 
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)
+/obj/machinery/button/on_deconstruction(disassembled)
+	var/obj/item/wallframe/button/dropped_frame = new /obj/item/wallframe/button(drop_location())
+	transfer_fingerprints_to(dropped_frame)
+	board = null
+	device = null
 
 /obj/machinery/button/door
 	name = "door button"
@@ -238,6 +275,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/machinery/button/door/green
+	icon_state = "button-green"
+
+/obj/machinery/button/door/red
+	icon_state = "button-red"
+
+/obj/machinery/button/door/blue
+	icon_state = "button-blue"
+
+/obj/machinery/button/door/yellow
+	icon_state = "button-yellow"
+
+/obj/machinery/button/door/warning
+	icon_state = "button-warning"
+
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
@@ -249,6 +301,139 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 			C.sync_doors = sync_doors
 			device = C
 	..()
+
+// RCD fix airlock without electronics
+/obj/machinery/button/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(!board && the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
+	return FALSE
+
+/obj/machinery/button/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_WALLFRAME)	// Add electronics via RCD. Access codes are taken from the RCD.
+			board = the_rcd.airlock_electronics.create_copy(board)
+			balloon_alert(user, "electronics added")
+			user.visible_message(
+				span_notice("[user] fabricates a circuit and places it into [src]."),
+				span_notice("You adapt a airlock circuit and slot it into the assembly."),
+			)
+			if(board.passed_name)	// Naming the button from the RCD graph "Airlock Name"
+				name = board.passed_name
+			update_appearance()
+			return TRUE
+	return FALSE
+
+// New attach
+/obj/item/wallframe/button/attach(turf/on_wall, mob/user)
+	var/button_count = 0
+	var/list/buttons_we_have = list()	// buttons at the same dir
+	for(var/obj/machinery/button/button_we_found in get_turf(user))
+		if(button_we_found?.dir == user.dir)
+			button_count++
+			buttons_we_have += button_we_found
+		if(button_count >= 4)
+			to_chat(user, span_notice("You try to add next button, but there no more room and the wallframe falls to the floor."))
+			return FALSE
+
+	if(result_path)
+		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+		user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
+			span_notice("You attach [src] to the wall."),
+			span_hear("You hear clicking."))
+		var/floor_to_wall = get_dir(user, on_wall)
+
+		var/obj/O = new result_path(get_turf(user), floor_to_wall, TRUE)
+		O.setDir(floor_to_wall)
+
+		if(button_count)
+			for(var/obj/machinery/button/current_old_button in buttons_we_have)
+				switch(button_count)
+					if(1)
+						switch(floor_to_wall)	// offset of the already existing first button
+							if(NORTH)
+								current_old_button.pixel_x = -6
+								current_old_button.pixel_y = 24
+							if(SOUTH)
+								current_old_button.pixel_x = -6
+								current_old_button.pixel_y = -24
+							if(EAST)
+								current_old_button.pixel_x = 24
+								current_old_button.pixel_y = 6
+							if(WEST)
+								current_old_button.pixel_x = -24
+								current_old_button.pixel_y = 6
+
+						switch(floor_to_wall)	// offset of the second button
+							if(NORTH)
+								O.pixel_x = 6
+								O.pixel_y = 24
+								break
+							if(SOUTH)
+								O.pixel_x = 6
+								O.pixel_y = -24
+								break
+							if(EAST)
+								O.pixel_x = 24
+								O.pixel_y = -6
+								break
+							if(WEST)
+								O.pixel_x = -24
+								O.pixel_y = -6
+								break
+
+					if(2)	// offset of the third button
+						switch(floor_to_wall)
+							if(NORTH)
+								O.pixel_x = -6
+								O.pixel_y = 36
+								break
+							if(SOUTH)
+								O.pixel_x = -6
+								O.pixel_y = -36
+								break
+							if(EAST)
+								O.pixel_x = 36
+								O.pixel_y = 6
+								break
+							if(WEST)
+								O.pixel_x = -36
+								O.pixel_y = 6
+								break
+
+					if(3)	// offset of the fourth button
+						switch(floor_to_wall)
+							if(NORTH)
+								O.pixel_x = 6
+								O.pixel_y = 36
+								break
+							if(SOUTH)
+								O.pixel_x = 6
+								O.pixel_y = -36
+								break
+							if(EAST)
+								O.pixel_x = 36
+								O.pixel_y = -6
+								break
+							if(WEST)
+								O.pixel_x = -36
+								O.pixel_y = -6
+								break
+
+		else	// default offset of the first button in the middle
+			switch(floor_to_wall)
+				if(NORTH)
+					O.pixel_y = pixel_shift
+				if(SOUTH)
+					O.pixel_y = -pixel_shift
+				if(EAST)
+					O.pixel_x = pixel_shift
+				if(WEST)
+					O.pixel_x = -pixel_shift
+
+		after_attach(O)
+	qdel(src)
+
+////////////////////////////////////////////////////
 
 /obj/machinery/button/door/incinerator_vent_ordmix
 	name = "combustion chamber vent control"
@@ -288,8 +473,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/massdriver
 	name = "mass driver button"
 	desc = "A remote control switch for a mass driver."
-	icon_state = "launcher"
-	skin = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/massdriver
 
 /obj/machinery/button/massdriver/indestructible
@@ -298,8 +483,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
-	icon_state = "launcher"
-	skin = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/igniter
 
 /obj/machinery/button/ignition/indestructible
@@ -321,8 +506,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/flasher
 	name = "flasher button"
 	desc = "A remote control switch for a mounted flasher."
-	icon_state = "launcher"
-	skin = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/flasher
 
 /obj/machinery/button/flasher/indestructible
@@ -331,8 +516,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/curtain
 	name = "curtain button"
 	desc = "A remote control switch for a mechanical curtain."
-	icon_state = "launcher"
-	skin = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
@@ -344,8 +529,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
-	icon_state = "launcher"
-	skin = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
 	id = 1

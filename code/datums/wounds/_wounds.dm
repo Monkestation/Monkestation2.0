@@ -93,8 +93,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
-	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * [base_xadone_progress_to_qdel] power
 	var/cryo_progress
 
@@ -128,7 +126,6 @@
 	update_actionspeed_modifier()
 
 /datum/wound/Destroy()
-	QDEL_NULL(attached_surgery)
 	if (limb)
 		remove_wound()
 
@@ -194,22 +191,27 @@
 		qdel(src)
 		return FALSE
 
+	if(isitem(wound_source))
+		var/obj/item/wound_item = wound_source
+		src.wound_source = wound_item.name
+	else
+		src.wound_source = wound_source
+
 	set_victim(L.owner)
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	update_descriptions()
-	limb.update_wounds()
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
-	if(!victim.alerts[ALERT_WOUNDED]) // only one alert is shared between all of the wounds
-		victim.throw_alert(ALERT_WOUNDED, /atom/movable/screen/alert/status_effect/wound)
+	victim.update_health_hud()
 
-	var/demoted
+	var/demoted = FALSE
 	if(old_wound)
-		demoted = (severity <= old_wound.severity)
-
+		if(severity <= old_wound.severity)
+			demoted = TRUE
+	limb.update_wounds(replaced = demoted)
 	if(severity == WOUND_SEVERITY_TRIVIAL)
 		return
 
@@ -348,13 +350,13 @@
 	if (ismob(old_victim))
 		var/mob/mob_victim = old_victim
 		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced)
+		if(!replaced && !limb)
+			mob_victim.update_health_hud()
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)
 		return
 	LAZYREMOVE(victim.all_wounds, src)
-	if(!victim.all_wounds)
-		victim.clear_alert(ALERT_WOUNDED)
 	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**
@@ -367,8 +369,11 @@
 /datum/wound/proc/replace_wound(datum/wound/new_wound, smited = FALSE, attack_direction = attack_direction)
 	already_scarred = TRUE
 	var/obj/item/bodypart/cached_limb = limb // remove_wound() nulls limb so we have to track it locally
-	remove_wound(replaced=TRUE)
+	remove_wound(replaced = TRUE)
 	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
+	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED) && severity > new_wound.severity)
+		for(var/trait_source in GET_TRAIT_SOURCES(src, TRAIT_WOUND_SCANNED))
+			ADD_TRAIT(new_wound, TRAIT_WOUND_SCANNED, trait_source)
 	. = new_wound
 	qdel(src)
 
@@ -441,7 +446,7 @@
 		if(initial(disabling))
 			set_disabling(!limb.current_gauze)
 
-		limb.update_wounds()
+		limb.update_wounds(replaced = TRUE)
 
 	start_limping_if_we_should()
 
@@ -631,13 +636,13 @@
 	// future todo : medical doctors can self-diagnose / don't use [undiagnosed_name]
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
-			return span_danger("It's suffering [a_or_from] [lowertext(undiagnosed_name || name)].")
+			return span_danger("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
 		if(WOUND_SEVERITY_MODERATE)
-			return span_warning("It's suffering [a_or_from] [lowertext(undiagnosed_name || name)].")
+			return span_warning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
 		if(WOUND_SEVERITY_SEVERE)
-			return span_boldwarning("It's suffering [a_or_from] [lowertext(undiagnosed_name || name)]!")
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!")
 		if(WOUND_SEVERITY_CRITICAL)
-			return span_boldwarning("It's suffering [a_or_from] [lowertext(undiagnosed_name || name)]!!")
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!!")
 
 /// A hook proc used to modify desc before it is spanned via [get_desc_intensity]. Useful for inserting spans yourself.
 /datum/wound/proc/modify_desc_before_span(desc, mob/user)
@@ -665,29 +670,42 @@
 		return span_bold("[desc]!")
 	return "[desc]."
 
+/**
+ * Prints the details about the wound for the wound scanner on simple mode
+ */
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\n\
-		Severity: [severity_text(simple = FALSE)]\n\
-		Description: [desc]\n\
+	return "Type: [name]<br>\
+		Severity: [severity_text()]<br>\
+		Description: [desc]<br>\
 		Recommended Treatment: [treat_text]"
 
+/**
+ * Prints the details about the wound for the wound scanner on complex mode
+ */
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\n\
-		Risk: [severity_text(simple = TRUE)]\n\
-		Description: [simple_desc ? simple_desc : desc]\n\
-		<i>Treatment Guide: [simple_treat_text]</i>\n\
+	var/severity_text_formatted = severity_text()
+	for(var/i in 1 to severity)
+		severity_text_formatted += "!"
+
+	return "[name] detected!<br>\
+		Risk: [severity_text_formatted]<br>\
+		Description: [simple_desc || desc]<br>\
+		<i>Treatment Guide: [simple_treat_text]</i><br>\
 		<i>Homemade Remedies: [homemade_treat_text]</i>"
 
-/datum/wound/proc/severity_text(simple = FALSE)
+/**
+ * Returns what text describes this wound
+ */
+/datum/wound/proc/severity_text()
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate" + (simple ? "!" : "")
+			return "Moderate"
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe" + (simple ? "!!" : "")
+			return "<b>Severe</b>"
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical" + (simple ? "!!!" : "")
+			return "<b>Critical</b>"
 
 /// Getter proc for our scar_keyword, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)
@@ -700,7 +718,7 @@
 	// fleshy burns will look for flesh then bone
 	// dislocations will look for flesh, then bone, then metal
 	var/file = default_scar_file
-	for (var/biotype as anything in pregen_data.scar_priorities)
+	for (var/biotype in pregen_data.scar_priorities)
 		if (scarred_limb.biological_state & text2num(biotype))
 			file = GLOB.biotypes_to_scar_file[biotype]
 			break

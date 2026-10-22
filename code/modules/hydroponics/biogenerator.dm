@@ -12,6 +12,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	processing_flags = START_PROCESSING_MANUALLY
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	/// Whether the biogenerator is currently processing biomass or not.
 	var/processing = FALSE
 	/// The reagent container that is currently inside of the biomass generator. Can be null.
@@ -70,13 +71,11 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/biogenerator/handle_atom_del(atom/deleting_atom)
+/obj/machinery/biogenerator/Exited(atom/movable/gone, direction)
 	. = ..()
-
-	if(deleting_atom == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-
 
 /obj/machinery/biogenerator/RefreshParts()
 	. = ..()
@@ -219,12 +218,9 @@
 	else
 		to_chat(user, span_warning("You cannot put \the [attacking_item] in \the [src]!"))
 
-
-/obj/machinery/biogenerator/AltClick(mob/living/user)
-	. = ..()
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH) && can_interact(user))
-		eject_beaker(user)
-
+/obj/machinery/biogenerator/click_alt(mob/living/user)
+	eject_beaker(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Activates biomass processing and converts all inserted food products into biomass
 /obj/machinery/biogenerator/proc/start_process()
@@ -265,7 +261,7 @@
 
 		convert_to_biomass(food_to_convert)
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 	if(!current_item_count)
 		stop_process(FALSE)
@@ -413,7 +409,7 @@
 
 /obj/machinery/biogenerator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 
@@ -474,7 +470,7 @@
 	return data
 
 
-/obj/machinery/biogenerator/ui_act(action, list/params)
+/obj/machinery/biogenerator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

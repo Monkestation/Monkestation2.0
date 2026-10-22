@@ -121,6 +121,7 @@
 		reset_spell_cooldown()
 	else
 		StartCooldown()
+		consume_resource()
 		build_all_button_icons()
 
 /// Registers all signal procs for the hand.
@@ -128,7 +129,12 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_hand_hit))
+	RegisterSignal(attached_hand, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_hand_interact))
+	RegisterSignal(attached_hand, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_hand_interact_secondary))
+
+	RegisterSignal(attached_hand, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_hand_ranged_interact))
+	RegisterSignal(attached_hand, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_hand_ranged_interact_secondary))
+
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
 	RegisterSignal(attached_hand, COMSIG_QDELETING, PROC_REF(on_hand_deleted))
 
@@ -142,7 +148,10 @@
 
 	UnregisterSignal(attached_hand, list(
 		COMSIG_ITEM_AFTERATTACK,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_ITEM_INTERACTING_WITH_ATOM,
+		COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_QDELETING,
 		COMSIG_ITEM_OFFER_TAKEN,
@@ -153,6 +162,10 @@
 	return ..() | SPELL_NO_FEEDBACK | SPELL_NO_IMMEDIATE_COOLDOWN
 
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)
+	if(SEND_SIGNAL(cast_on, COMSIG_TOUCH_HANDLESS_CAST, src) & COMPONENT_CAST_HANDLESS)
+		StartCooldown()
+		return
+
 	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
 		remove_hand(cast_on, reset_cooldown_after = TRUE)
 		return
@@ -165,33 +178,57 @@
  *
  * When our hand hits an atom, we can cast do_hand_hit() on them.
  */
-/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
+/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, atom/victim, mob/caster, click_parameters)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_hand_hit
 
-	if(!proximity_flag)
-		return
 	if(!can_hit_with_hand(victim, caster))
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster)
+	if(LAZYACCESS(params2list(click_parameters), RIGHT_CLICK))
+		INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster)
+	else
+		INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster)
 
 /**
- * Signal proc for [COMSIG_ITEM_AFTERATTACK_SECONDARY] from our attached hand.
+ * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM] from our attached hand.
  *
- * Same as on_hand_hit, but for if right-click was used on hit.
+ * Handles left-click interactions through the item interaction system.
  */
-/datum/action/cooldown/spell/touch/proc/on_secondary_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
+/datum/action/cooldown/spell/touch/proc/on_hand_interact(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_secondary_hand_hit
 
-	if(!proximity_flag)
-		return
-	if(!can_hit_with_hand(victim, caster))
-		return
+	return source.interact_with_atom(target, user, modifiers)
 
-	INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+/**
+ * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
+ *
+ * Handles right-click interactions through the item interaction system.
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_interact_secondary(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+
+	return source.interact_with_atom_secondary(target, user, modifiers)
+
+/**
+ * Signal proc for [COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM] from our attached hand.
+ *
+ * Handles left-click ranged interactions through the item interaction system.
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_ranged_interact(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+
+	return source.ranged_interact_with_atom(target, user, modifiers)
+
+/**
+ * Signal proc for [COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
+ *
+ * Handles right-click ranged interactions through the item interaction system.
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_ranged_interact_secondary(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+
+	return source.ranged_interact_with_atom_secondary(target, user, modifiers)
 
 /// Checks if the passed victim can be cast on by the caster.
 /datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/caster)
@@ -354,6 +391,30 @@
 		user.balloon_alert(user, "can't reach out!")
 		return TRUE
 	return ..()
+
+/obj/item/melee/touch_attack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
+	if(!hand_spell || !hand_spell.can_hit_with_hand(interacting_with, user))
+		return NONE
+
+	hand_spell.do_hand_hit(src, interacting_with, user)
+	if(QDELETED(src))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/melee/touch_attack/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
+	if(!hand_spell || !hand_spell.can_hit_with_hand(interacting_with, user))
+		return NONE
+
+	hand_spell.do_secondary_hand_hit(src, interacting_with, user)
+	if(QDELETED(src))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/melee/touch_attack/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
+/obj/item/melee/touch_attack/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
 
 /**
  * When the hand component of a touch spell is qdel'd, (the hand is dropped or otherwise lost),

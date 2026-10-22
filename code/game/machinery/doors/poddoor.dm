@@ -1,7 +1,7 @@
 /obj/machinery/door/poddoor
 	name = "blast door"
 	desc = "A heavy duty blast door that opens mechanically."
-	icon = 'icons/obj/doors/blastdoor.dmi'
+	icon = 'icons/obj/doors/blast_door.dmi'
 	icon_state = "closed"
 	layer = BLASTDOOR_LAYER
 	closingLayer = CLOSED_BLASTDOOR_LAYER
@@ -14,11 +14,12 @@
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	can_open_with_hands = FALSE
+	door_align_type = /obj/machinery/door/poddoor
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
-	var/open_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
-	var/close_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
+	var/open_sound = 'sound/machines/poddoors/blastdoor.ogg'
+	var/close_sound = 'sound/machines/poddoors/blastdoor.ogg'
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -33,35 +34,43 @@
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	else if (default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
-	var/change_id = tgui_input_number(user, "Set the door controllers ID (Current: [id])", "Door Controller ID", isnum(id) ? id : null, 100)
+
+	var/change_id = tgui_input_text(user, "Set the door controllers ID (Current: [id])", "Door Controller ID", "[id]", 50)
 	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-	id = change_id
+
+	//We try setting this as a number because ANNOYINGLY this value can be a number or string so we need to be able to set it to either
+	var/as_num_id = text2num(change_id)
+	if (as_num_id)
+		id = as_num_id
+	else
+		id = change_id
+
 	to_chat(user, span_notice("You change the ID to [id]."))
 	balloon_alert(user, "id changed")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(machine_stat & NOPOWER)
 		open(TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
@@ -72,13 +81,13 @@
 		id = null
 		deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
 		balloon_alert(user, "removed airlock electronics")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
@@ -90,13 +99,13 @@
 		new /obj/item/stack/cable_coil(loc, amount)
 		deconstruction = BLASTDOOR_NEEDS_WIRES
 		balloon_alert(user, "removed internal cables")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_WIRES)
@@ -108,7 +117,7 @@
 		new /obj/item/stack/sheet/plasteel(loc, amount)
 		user.balloon_alert(user, "torn apart")
 		qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/examine(mob/user)
 	. = ..()
@@ -142,7 +151,6 @@
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
 	icon_state = density ? "closed" : "open"
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))

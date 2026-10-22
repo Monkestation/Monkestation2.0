@@ -3,15 +3,37 @@
 /// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
 /proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
 	var/list/sales = list()
-	var/list/sale_items_copy = sale_items.Copy()
-	for (var/i in 1 to num)
-		var/datum/uplink_item/taken_item = pick_n_take(sale_items_copy)
+	var/list/per_category = list()
+
+	for (var/datum/uplink_item/possible_sale as anything in sale_items)
+		if (!(possible_sale.category in per_category))
+			per_category[possible_sale.category] = list()
+		per_category[possible_sale.category] += possible_sale
+
+	for (var/i in 1 to min(length(per_category), num))
+		var/datum/uplink_category/item_category = pick(per_category)
+		var/datum/uplink_item/taken_item = pick(per_category[item_category])
+		per_category -= item_category
 		var/datum/uplink_item/uplink_item = new taken_item.type()
 		var/discount = uplink_item.get_discount()
-		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+		var/static/list/disclaimer = list(
+			"Void where prohibited.",
+			"Not recommended for children.",
+			"Contains small parts.",
+			"Check local laws for legality in region.",
+			"Do not taunt.",
+			"Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.",
+			"Keep away from fire or flames.",
+			"Product is provided \"as is\" without any implied or expressed warranties.",
+			"As seen on TV.",
+			"For recreational use only.",
+			"Use only as directed.",
+			"16% sales tax will be charged for orders originating within Space Nebraska.",
+		)
 		uplink_item.limited_stock = limited_stock
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
+		uplink_item.stock_key = WEAKREF(uplink_item)
 		uplink_item.category = category
 		uplink_item.cost = max(round(uplink_item.cost * (1 - discount)),1)
 		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
@@ -42,7 +64,7 @@
 	var/refund_amount = 0
 	/// Whether this item is refundable or not.
 	var/refundable = FALSE
-	// Chance of being included in the surplus crate.
+	/// Chance of being included in the surplus crate.
 	var/surplus = 100
 	/// Whether this can be discounted or not
 	var/cant_discount = FALSE
@@ -74,6 +96,9 @@
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
 	/// However, they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
+	/// Whether this item prevents secondary objectives from being taken.
+	/// In addition, if any secondary objectives have been taken or completed, this item will not be available for purchase.
+	var/lock_secondary_objectives = FALSE
 
 /datum/uplink_item/New()
 	. = ..()
@@ -116,6 +141,36 @@
 		uplink_handler.purchase_log.LogPurchase(A, src, cost)
 	if(lock_other_purchases)
 		uplink_handler.shop_locked = TRUE
+	if(lock_secondary_objectives)
+		uplink_handler.disable_secondary_objectives()
+
+/// Used to create the uplink's item for generic use, rather than use by a Syndie specifically
+/// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins
+/datum/uplink_item/proc/spawn_item_for_generic_use(mob/user)
+	var/atom/movable/created = new item(user.loc)
+
+	if(isgun(created))
+		replace_pin(created)
+	else if(istype(created, /obj/item/storage/toolbox/guncase))
+		for(var/obj/item/gun/gun in created)
+			replace_pin(gun)
+
+	if(isobj(created))
+		var/obj/created_obj = created
+		LAZYREMOVE(created_obj.req_access, ACCESS_SYNDICATE)
+		LAZYREMOVE(created_obj.req_one_access, ACCESS_SYNDICATE)
+
+	return created
+
+/// Used by spawn_item_for_generic_use to replace the pin of a gun with a normal one
+/datum/uplink_item/proc/replace_pin(obj/item/gun/gun_reward)
+	PRIVATE_PROC(TRUE)
+
+	if(!istype(gun_reward.pin, /obj/item/firing_pin/implant/pindicate))
+		return
+
+	QDEL_NULL(gun_reward.pin)
+	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
 
 /// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
@@ -135,6 +190,10 @@
 			return A
 	to_chat(user, span_boldnotice("[A] materializes onto the floor!"))
 	return A
+
+///Override for any unique checks for specific items, by default returns TRUE
+/datum/uplink_item/proc/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	return TRUE
 
 /datum/uplink_category/discounts
 	name = "Discounted Gear"
