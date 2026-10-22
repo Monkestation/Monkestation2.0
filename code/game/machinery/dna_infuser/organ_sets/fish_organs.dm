@@ -236,7 +236,8 @@
 	if(receiver.dna)
 		var/datum/bodypart_overlay/mutant/tail/fish/fish_overlay = bodypart_overlay
 		if(fish_overlay.imprint_on_next_insertion && !(receiver.dna.features["fish_tail"] in fish_overlay.get_global_feature_list()))
-			receiver.dna.features["fish_tail"] = fish_overlay.get_random_appearance().name
+			var/datum/sprite_accessory/random_tail = fish_overlay.get_random_appearance()
+			receiver.dna.features["fish_tail"] = random_tail.name
 			receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
 		// people who weren't born with a fish tail get one of these faded out blue and grey colors
 		if(!receiver.dna.features["fish_tail_color"])
