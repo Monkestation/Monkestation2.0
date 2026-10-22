@@ -750,7 +750,6 @@
 			range = 50
 		if(owner.apply_status_effect(/datum/status_effect/slimerecall/delayed/stabilized, F, range))
 			owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
-			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
 	return ..()
 
