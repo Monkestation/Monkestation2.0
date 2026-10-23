@@ -66967,9 +66967,6 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/iron,
 /area/station/maintenance/aft/lesser)
-"sAH" = (
-/turf/open/space/basic,
-/area/station/science/xenobiology)
 "sAK" = (
 /obj/effect/turf_decal/trimline/purple/filled/warning,
 /turf/open/floor/iron/white,
@@ -127446,7 +127443,7 @@ cXG
 aaa
 aaa
 aaa
-sAH
+aaa
 cnz
 cnz
 cVs
