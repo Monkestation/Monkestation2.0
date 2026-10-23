@@ -102,3 +102,12 @@
 
 /// How many tiles away can an extract compressor link to a extract fridge or biomass recycler thingy
 #define COMPRESSOR_LINK_RANGE 7
+
+/// Doesn't squash mobs like roaches and stuff when walking over them
+#define TRAIT_CAREFUL_STEPS "careful_steps"
+/// Prevents shattering glass tables
+#define TRAIT_LIGHTWEIGHT "lightweight"
+/// Ate past its max hunger via the generic_mob_hunger component, wears off after a few minutes
+#define TRAIT_OVERFED "overfed"
+/// Currently has the rainbow color-cycle effect applied
+#define TRAIT_RAINBOWED "rainbowed"
