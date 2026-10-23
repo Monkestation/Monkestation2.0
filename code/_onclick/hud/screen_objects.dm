@@ -790,8 +790,11 @@
 
 	var/not_fake_healthy = !owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
 	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
-		var/icon_key = 0
 		var/part_zone = body_part.body_zone
+		// I hate that we "allow" support for more than 2 hands in the codebase
+		if(!limbs[part_zone])
+			continue
+		var/icon_key = 0
 
 		var/list/overridable_key = list(icon_key)
 		if(body_part.bodypart_disabled)

@@ -973,13 +973,10 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots["[previous_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
-		held_location = hud_used.hand_slots["[held_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
+		// update the previous handset and the current handset
+		for(var/hand_index in list(previous_index, get_offhand_index(previous_index), held_index, get_offhand_index(held_index)))
+			var/atom/movable/screen/inventory/hand/held_location = hud_used.hand_slots["[hand_index]"]
+			held_location?.update_appearance()
 	return TRUE
 
 /mob/proc/activate_hand(selected_hand)
