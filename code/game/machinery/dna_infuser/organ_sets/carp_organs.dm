@@ -79,6 +79,10 @@
 	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
 
+/obj/item/organ/internal/tongue/carp/get_possible_languages()
+	. = ..()
+	. += /datum/language/carptongue
+
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(owner.stat != CONSCIOUS || !prob(0.1))
