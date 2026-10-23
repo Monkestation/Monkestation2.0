@@ -809,6 +809,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
 
+/obj/structure/curtain/closed
+	icon_state = "bathroom-closed"
+
+/obj/structure/curtain/closed/Initialize(mapload)
+	. = ..()
+	toggle()
+
 /obj/structure/curtain/bounty
 	icon_type = "bounty"
 	icon_state = "bounty-open"
