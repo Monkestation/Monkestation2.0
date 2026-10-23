@@ -75,12 +75,12 @@
 	help_verb = /mob/living/carbon/human/proc/judo_help
 
 	var/list/combo_moves = list(
-		"DG" = /datum/martial_art/corpjudo/proc/discombobulate,
-		"HD" = /datum/martial_art/corpjudo/proc/eye_poke,
-		"GD" = /datum/martial_art/corpjudo/proc/judo_throw,
-		"DDG" = /datum/martial_art/corpjudo/proc/armbar,
-		"DDGGDH" = /datum/martial_art/corpjudo/proc/wheel_throw,
-		"EDEGDDGEDDGE" = /datum/martial_art/corpjudo/proc/golden_blast,
+		"DG" = PROC_REF(discombobulate),
+		"HD" = PROC_REF(eye_poke),
+		"GD" = PROC_REF(judo_throw),
+		"DDG" = PROC_REF(armbar),
+		"DDGGDH" = PROC_REF(wheel_throw),
+		"EDEGDDGEDDGE" = PROC_REF(golden_blast),
 	)
 
 /datum/martial_art/corpjudo/teach(mob/living/owner, make_temporary=FALSE)
@@ -116,8 +116,7 @@
 		var/mob/living/owner = holder.resolve()
 		if(owner)
 			remove(owner) // Clean up the martial art effects from the owner
-	//some how need to call remove here
-	QDEL_NULL(combo_moves)
+	combo_moves = null
 	return ..()
 
 ///
@@ -128,7 +127,7 @@
 	defender.visible_message("<span class='warning'>[attacker] strikes [defender] in the head with [attacker.p_their()] palm!</span>", \
 						"<span class='userdanger'>[attacker] strikes you with [attacker.p_their()] palm!</span>")
 	playsound(get_turf(attacker), 'sound/weapons/slap.ogg', 40, TRUE, -1)
-	defender.apply_damage(25, STAMINA)
+	defender.apply_damage(10, STAMINA)
 	defender.adjust_confusion(5 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Discombobulate")
 	return MARTIAL_ATTACK_SUCCESS
@@ -156,7 +155,7 @@
 	defender.visible_message("<span class='warning'>[attacker] judo throws [defender] to ground!</span>", \
 						"<span class='userdanger'>[attacker] judo throws you to the ground!</span>")
 	playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
-	defender.apply_damage(62, STAMINA)
+	defender.apply_damage(25, STAMINA)
 	defender.Knockdown(7 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Judo Throw")
 	return MARTIAL_ATTACK_SUCCESS
@@ -170,7 +169,7 @@
 	playsound(get_turf(attacker), 'sound/weapons/slashmiss.ogg', 40, TRUE, -1)
 	if(attacker.body_position == STANDING_UP)
 		defender.drop_all_held_items()
-	defender.apply_damage(112, STAMINA)
+	defender.apply_damage(45, STAMINA)
 	defender.Knockdown(5 SECONDS)
 	combo_refresh() // Flow combos need to refresh the chain.
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Armbar")
@@ -189,7 +188,7 @@
 		defender.visible_message("<span class='warning'>[attacker] manages to get a hold onto [defender], and pinning [defender.p_them()] to the ground!</span>", \
 							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
 		playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
-	defender.apply_damage(250, STAMINA)
+	defender.apply_damage(120, STAMINA)
 	defender.Knockdown(15 SECONDS)
 	defender.set_confusion(10 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Wheel Throw")
@@ -205,7 +204,7 @@
 	do_sparks(5, FALSE, defender)
 	attacker.say("GOLDEN BLAST!")
 	playsound(get_turf(defender), 'sound/weapons/goldenblast.ogg', 60, TRUE, -1)
-	defender.apply_damage(250, STAMINA)
+	defender.apply_damage(120, STAMINA)
 	defender.Knockdown(30 SECONDS)
 	defender.set_confusion(30 SECONDS)
 	//says this causes a full stun not sure if that is something wanted.
