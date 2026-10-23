@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Stabilized and Regenerative bluespace extracts now have a 3 second window where you can shove someone to prevent them from being teleported (or they can resist out of it if they want)"
