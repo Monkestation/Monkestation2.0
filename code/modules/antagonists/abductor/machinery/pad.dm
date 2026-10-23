@@ -12,6 +12,15 @@
 		console = null
 	return ..()
 
+/// Returns TRUE and aborts the warp if the target is carrying a bluespace body bag.
+/obj/machinery/abductor/pad/proc/check_bs_bodybag(atom/movable/target)
+	var/obj/item/bodybag/bluespace/bag = locate() in target.get_all_contents()
+	if(!bag)
+		return FALSE
+	to_chat(target, span_warning("The bluespace fold of \the [bag] interferes with the warp field, preventing you from teleporting!"))
+	say("Warp failed: bluespace interference detected.")
+	return TRUE
+
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	if(!target.buckled)
 		target.forceMove(get_turf(src))
@@ -23,6 +32,8 @@
 // Monkestation Edit Start
 	for(var/atom/movable/target in loc)
 		if(isliving(target) || istype(target, /obj/item/toy/plush))
+			if(check_bs_bodybag(target))
+				continue
 			target.forceMove(teleport_target)
 			new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 			if(isliving(target))
@@ -32,11 +43,16 @@
 // Monkestation Edit End
 
 /obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
+	if(check_bs_bodybag(target))
+		return FALSE
 	flick("alien-pad", src)
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 	Warp(target)
+	return TRUE
 
 /obj/machinery/abductor/pad/proc/doMobToLoc(place, atom/movable/target)
+	if(check_bs_bodybag(target))
+		return
 	flick("alien-pad", src)
 	target.forceMove(place)
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
@@ -50,6 +66,8 @@
 // Monkestation Edit Start
 	for(var/atom/movable/target in get_turf(src))
 		if(isliving(target) || istype(target, /obj/item/toy/plush))
+			if(check_bs_bodybag(target))
+				continue
 			target.forceMove(place)
 			new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 // Monkestation Edit End

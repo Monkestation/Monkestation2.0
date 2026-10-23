@@ -693,6 +693,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
 
+/obj/item/construction/rcd/borg/syndicate/ninja
+	name = "ninja RCD"
+	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. "
+	icon_state = "rsf" // Kind of gross to use this, but it is green. Ninja love green things.
+
 /obj/item/construction/rcd/loaded
 	matter = 160
 
