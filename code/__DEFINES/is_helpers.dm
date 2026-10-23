@@ -184,6 +184,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismouse(A) (istype(A, /mob/living/basic/mouse))
 
+#define isroach(A) (istype(A, /mob/living/basic/cockroach))
+
 #define isslime(A) (istype(A, /mob/living/basic/slime))
 
 #define isdrone(A) (istype(A, /mob/living/basic/drone))

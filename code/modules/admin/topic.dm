@@ -704,18 +704,12 @@
 			to_chat(usr, "That's already an AI.", confidential = TRUE)
 			return
 
-		var/move = TRUE
-		switch(tgui_alert(usr,"Move new AI to AI spawn location?","Move AI?", list("Yes", "No","Cancel")))
-			if("Cancel", null)
-				return
-			if("No")
-				move = FALSE
 		if(QDELETED(our_mob))
 			to_chat(usr, span_danger("Subject was deleted already. Transform canceled."))
 			return
 		message_admins(span_danger("Admin [key_name_admin(usr)] AIized [key_name_admin(our_mob)]!"))
 		log_admin("[key_name(usr)] AIized [key_name(our_mob)].")
-		our_mob.AIize(our_mob.client, move)
+		our_mob.AIize(our_mob.client)
 
 	else if(href_list["makerobot"])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_robotize, locate(href_list["makerobot"]))
@@ -1815,23 +1809,23 @@
 //monkestation edit end
 // Token Panel Addition START
 	else if(href_list["token_manager"])
-		SStoken_manager.ui_interact(usr)
+		GLOB.token_manager.ui_interact(usr)
 		return
 	else if(href_list["token_action"])
 		switch(href_list["token_action"])
 			if("accepted")
-				to_chat(usr, span_admin("Tokens accepted this round: [SStoken_manager.accepted_count]"))
+				to_chat(usr, span_admin("Tokens accepted this round: [GLOB.token_manager.accepted_count]"))
 			if("pending")
 				// Show pending requests
-				var/list/pending = SStoken_manager.get_pending_requests_for_panel()
+				var/list/pending = GLOB.token_manager.get_pending_requests_for_panel()
 				if(!length(pending))
 					to_chat(usr, span_admin("No pending token requests."))
 				else
 					for(var/list/request in pending)
 						to_chat(usr, span_admin("[request["requester"]] - [request["type"]]: [request["details"]]"))
 			if("rejected")
-				to_chat(usr, span_admin("Tokens rejected this round: [SStoken_manager.rejected_count]"))
+				to_chat(usr, span_admin("Tokens rejected this round: [GLOB.token_manager.rejected_count]"))
 			if("timed_out")
-				to_chat(usr, span_admin("Tokens timed out this round: [SStoken_manager.timed_out_count]"))
+				to_chat(usr, span_admin("Tokens timed out this round: [GLOB.token_manager.timed_out_count]"))
 		return
 // Token Panel Addition END

@@ -146,11 +146,7 @@
 		to_chat(user, span_warning("You take apart the pile of hats."))
 		update_hats(NONE, user)
 
-
-/obj/item/clothing/head/verb/detach_stacked_hat()
-	set name = "Remove Stacked Hat"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/head, detach_stacked_hat, usr, "Remove Stacked Hat", "Object")
 
 	if(!isliving(usr) || !can_use(usr) || !length(contents))
 		return

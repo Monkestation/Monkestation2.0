@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/cmo
 	name = "advanced hypospray"
 	icon_state = "hypo_cmo"
-	desc = "An advanced hypospray that can use larger size vials, pierce thick clothing, and deliver more reagents per injection."
+	desc = "An advanced hypospray that can pierce thick clothing and inject reagents faster than a standard hypospray."
 	allowed_containers = list(/obj/item/reagent_containers/chemcanister, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/omnizine

@@ -79,20 +79,23 @@
 	if(!chosen_boulder.processed_by)
 		check_for_boosts()
 		var/obj/item/processing/shards/shards  = new(src)
-		shards.custom_materials = list()
+		var/list/shard_mats = list()
+		var/list/rejected_mats = list()
 		for(var/datum/material/material as anything in chosen_boulder.custom_materials)
-			if(!can_process_material(material))
-				continue
 			var/quantity = chosen_boulder.custom_materials[material]
-			shards.custom_materials += material
-			shards.custom_materials[material] = quantity * refining_efficiency
-			chosen_boulder.custom_materials -= material
+			if(!can_process_material(material))
+				rejected_mats[material] = quantity
+				continue
+			shard_mats[material] = quantity * refining_efficiency
+		chosen_boulder.set_custom_materials(rejected_mats)
 
-		if(!isnull(shards) && !length(shards.custom_materials))
+		if(!length(shard_mats))
 			qdel(shards)
+		else
+			shards.set_custom_materials(shard_mats)
+			shards.set_colors()
+			src.remove_resource(shards)
 
-		shards.set_colors()
-		src.remove_resource(shards)
 		if(!length(chosen_boulder.custom_materials))
 			chosen_boulder.break_apart()
 		else
@@ -122,21 +125,19 @@
 /obj/machinery/bouldertech/flatpack/chemical_injector/proc/process_crystal(obj/item/processing/crystals/crystal)
 	if(QDELETED(crystal) || !crystal.processed_by)
 		check_for_boosts()
+		var/list/rejected_mats = list()
 		for(var/datum/material/material as anything in crystal.custom_materials)
-			if(!can_process_material(material))
-				continue
 			var/quantity = crystal.custom_materials[material]
-			var/obj/item/processing/shards/shards  = new(src)
-			shards.custom_materials = list()
-			shards.custom_materials += material
-			shards.custom_materials[material] = quantity
-			crystal.custom_materials -= material
-
-			if(!isnull(shards) && !length(shards.custom_materials))
-				qdel(shards)
+			if(!can_process_material(material))
+				rejected_mats[material] = quantity
 				continue
+			var/obj/item/processing/shards/shards  = new(src)
+			var/list/shard_mats = list()
+			shard_mats[material] = quantity
+			shards.set_custom_materials(shard_mats)
 			shards.set_colors()
 			src.remove_resource(shards)
+		crystal.set_custom_materials(rejected_mats)
 		if(!length(crystal.custom_materials))
 			qdel(crystal)
 		else

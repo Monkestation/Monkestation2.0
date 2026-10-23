@@ -446,7 +446,9 @@
 	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
-	can_suppress = FALSE
+	can_suppress = TRUE
+	suppressor_x_offset = 12
+	suppressor_y_offset = -2
 	fire_sound = 'monkestation/code/modules/security/sound/paco/paco_shot.ogg'
 	rack_sound = 'monkestation/code/modules/security/sound/paco/paco_rack.ogg'
 	lock_back_sound = 'monkestation/code/modules/security/sound/paco/paco_lock.ogg'
@@ -481,6 +483,8 @@
 		overlay_y = 13)
 
 /obj/item/gun/ballistic/automatic/pistol/paco/click_alt(mob/user) //Some people like the stripe, some people don't. Gives you the option to do the unthinkable.
+	if(suppressed) //probably want to remove the suppressor instead of picking at it.
+		return ..()
 	if(!has_stripe || !TIMER_COOLDOWN_FINISHED(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
 		return CLICK_ACTION_BLOCKING
 	TIMER_COOLDOWN_START(src, COOLDOWN_STRIPE, 6 SECONDS)

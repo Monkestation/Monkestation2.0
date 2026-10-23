@@ -10,6 +10,7 @@
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
+	limb_overlay = /datum/bodypart_overlay/texture/carpskin
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
@@ -20,8 +21,8 @@
 	safe_oxygen_min = 0
 	safe_oxygen_max = 15
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "lungs"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("lungs", "/obj/item/organ/internal/lungs/carp")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
@@ -38,8 +39,8 @@
 
 	say_mod = "gnashes"
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "tongue"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("tongue", "/obj/item/organ/internal/tongue/carp")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
@@ -97,8 +98,8 @@
 	name = "mutated carp-brain"
 	desc = "Carp DNA infused into what was once a normal brain."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "brain"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("brain", "/obj/item/organ/internal/brain/carp")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
@@ -139,8 +140,8 @@
 	name = "mutated carp-heart"
 	desc = "Carp DNA infused into what was once a normal heart."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("heart", "/obj/item/organ/internal/heart/carp")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 

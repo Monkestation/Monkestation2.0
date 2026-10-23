@@ -1034,6 +1034,10 @@
 			if(!original)
 				return
 
+			if(length(original.sources) && get_mutation_class(original) == SCANNER_MUTATION_CLASS_OTHER)
+				say("ERROR: This mutation is anomalous, and cannot be saved.")
+				return
+
 			diskette.mutations += original.make_copy()
 
 			to_chat(usr,span_notice("Mutation successfully stored to disk."))

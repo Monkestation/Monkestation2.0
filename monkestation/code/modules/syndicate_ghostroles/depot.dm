@@ -129,28 +129,11 @@
 /obj/item/storage/toolbox/syndicate/shipbreaking/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench(src)
-	new /obj/item/weldingtool/electric/hacked_raynewelder(src)
+	new /obj/item/weldingtool/electric/raynewelder/hacked(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool(src)
 	new /obj/item/extinguisher/mini(src)
-
-/obj/item/weldingtool/electric/hacked_raynewelder //depot exclusive gamer loot now, not even necessary
-	name = "modified laser welding tool"
-	desc = "A Rayne corp laser cutter and welder. This one seems to have been refitted by the Syndicate for general salvage use, though the removal of its safety measures has slightly reduced its efficiency."
-	icon = 'icons/obj/rayne_corp/rayne.dmi'
-	icon_state = "raynewelder"
-	inhand_icon_state = "raynewelder"
-	lefthand_file = 'icons/mob/inhands/equipment/engineering_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/engineering_righthand.dmi'
-	light_power = 1
-	light_color = LIGHT_COLOR_FLARE
-	tool_behaviour = NONE
-	toolspeed = 0.3
-	power_use_amount = 25
-	// We don't use fuel
-	change_icons = FALSE
-	max_fuel = 20
 
 //UNIQUE CARGO THEFT ITEM: SYNDICATE BLACKBOX
 //syndicate blackboxes contain data that Nanotrasen REALLY wants: can be sold on the cargo shuttle for a hefty sum

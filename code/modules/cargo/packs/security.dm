@@ -7,11 +7,12 @@
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
 	desc = "Contains two boxes of beanbag shotgun shells, two boxes \
-		of rubbershot shotgun shells, two boxes of buckshot, and one of each special .38 speedloaders."
+		of rubbershot shotgun shells, two boxes of buckshot, two boxes of slugs, and one of each special .38 speedloaders."
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/item/ammo_box/advanced/s12gauge/bean = 2,
 					/obj/item/ammo_box/advanced/s12gauge/rubber = 2,
 					/obj/item/ammo_box/advanced/s12gauge/buckshot = 2,
+					/obj/item/ammo_box/advanced/s12gauge = 2,
 					/obj/item/ammo_box/c38/trac,
 					/obj/item/ammo_box/c38/hotshot,
 					/obj/item/ammo_box/c38/iceblox,
@@ -392,7 +393,9 @@
 	cost = CARGO_CRATE_VALUE * 12 // three times more expensive than regular armor
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen = 3,
 					/obj/item/clothing/suit/armor/swat = 3,
-					/obj/item/clothing/mask/gas/sechailer/swat = 3,
+					/obj/item/clothing/mask/gas/sechailer/swat,
+					/obj/item/clothing/mask/gas/sechailer/swat/alt,
+					/obj/item/clothing/mask/gas/sechailer/swat/alt/pig,
 					/obj/item/storage/belt/military/assault = 3,
 					/obj/item/clothing/gloves/tackler/combat = 3,
 				)

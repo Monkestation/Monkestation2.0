@@ -38,8 +38,8 @@
 	var/obj/machinery/ai/data_core/relocated_into = get_turf(ai_spawn)
 	var/datum/ai_os/os_using = GLOB.ai_os["[relocated_into.z]"]
 
-	os_using.set_cpu(ai_spawn, os_using.total_cpu)
-	os_using.set_ram(ai_spawn, os_using.total_ram)
+	os_using.set_cpu(ai_spawn, os_using.total_cpu, TRUE)
+	os_using.set_ram(ai_spawn, os_using.total_ram, TRUE)
 	ai_spawn.log_current_laws()
 
 /datum/job/ai/get_roundstart_spawn_point()
@@ -73,3 +73,6 @@
 
 /datum/job/ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>"
+
+/datum/job/ai/get_lobby_icon()
+	return uni_icon('icons/mob/huds/hud.dmi', "hudai")

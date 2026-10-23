@@ -256,11 +256,7 @@
 		playsound(defender, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return FALSE
 
-
-/mob/living/proc/CQC_help()
-	set name = "Remember The Basics"
-	set desc = "You try to remember some of the basics of CQC."
-	set category = "CQC"
+GAME_VERB_PROC_DESC(/mob/living, CQC_help, "Remember The Basics", "You try to remember some of the basics of CQC.", "CQC")
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
 	to_chat(usr, "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down.")

@@ -174,20 +174,13 @@ Lizard subspecies: SILVER SCALED
 	examine_limb_id = SPECIES_LIZARD
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor
-	///stored eye color for when we turn back off of a silverscale.
-	var/old_eye_color_left
-	///See above
-	var/old_eye_color_right
 
 /datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/new_silverscale, datum/species/old_species, pref_load)
 	var/mob/living/carbon/human/silverscale = new_silverscale
 	var/datum/color_palette/generic_colors/palette = new_silverscale.dna.color_palettes[/datum/color_palette/generic_colors]
 	old_mutcolor = palette.return_color(MUTANT_COLOR)
-	old_eye_color_left = silverscale.eye_color_left
-	old_eye_color_right = silverscale.eye_color_right
 	palette.mutant_color = "#eeeeee"
-	silverscale.eye_color_left = "#0000a0"
-	silverscale.eye_color_right = "#0000a0"
+	silverscale.add_eye_color("#0000a0", EYE_COLOR_SPECIES_PRIORITY)
 	..()
 	silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
@@ -195,8 +188,7 @@ Lizard subspecies: SILVER SCALED
 	var/mob/living/carbon/human/was_silverscale = old_silverscale
 	var/datum/color_palette/generic_colors/palette = was_silverscale.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = old_mutcolor
-	was_silverscale.eye_color_left = old_eye_color_left
-	was_silverscale.eye_color_right = old_eye_color_right
+	was_silverscale.remove_eye_color(EYE_COLOR_SPECIES_PRIORITY)
 
 	was_silverscale.remove_filter("silver_glint")
 	..()

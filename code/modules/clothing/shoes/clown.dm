@@ -97,7 +97,8 @@
 /obj/item/clothing/shoes/clown_shoes/green_jester_shoes
 	name = "jester shoes"
 	desc = "Shoes that jingle with every step!!"
-	icon_state = "green_jester_shoes"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("green_jester_shoes", "/obj/item/clothing/shoes/clown_shoes/green_jester_shoes")
 	greyscale_config = /datum/greyscale_config/green_jester_shoes
 	greyscale_config_worn = /datum/greyscale_config/green_jester_shoes_worn
 	greyscale_colors = "#E10000#01C204#E0D35C"

@@ -5,9 +5,10 @@
 	"map_file": "runtimestation.dmm",
 	"space_ruin_levels": 1,
 	"ignored_unit_tests": [
-		"/datum/unit_test/required_map_items",
+		"/datum/unit_test/maptest_required_map_items",
 		"/datum/unit_test/vendor_boards"
 	],
+	"is_unit_test_map": true,
 	"shuttles": {
 		"cargo": "cargo_delta"
 	}

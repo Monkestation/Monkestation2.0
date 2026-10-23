@@ -157,15 +157,6 @@
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/moonblade_hit.ogg'
-	/// How much damage does this item do to the targets sanity?
-	var/sanity_damage = 20
-	var/list/possible_sounds = list(
-		'sound/items/SitcomLaugh1.ogg',
-		'sound/items/SitcomLaugh2.ogg',
-		'sound/items/SitcomLaugh3.ogg',
-	)
-	var/valid_weapon_type = /obj/item/melee/sickly_blade
-	var/sanity_threshold = SANITY_LEVEL_INSANE
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/Initialize(mapload)
 	. = ..()
@@ -179,33 +170,25 @@
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
 	if(!IS_HERETIC(user) && (slot_flags & slot))
-		channel_amulet(user)
+		channel_moon_amulet(user)
 		return // Equipping the amulet as a non-heretic will give you a fat mood debuff and nothing else
 	if(!(slot_flags & slot))
 		on_amulet_deactivate(user)
 		return
 	on_amulet_activate(user)
 
-/// Modifies any blades you hold/pickup/drop when the amulet is enabled
+/// Starts channeling through any blades you hold/pickup/drop when the amulet is enabled
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_amulet_activate(mob/living/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(blade_channel))
-	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip_item))
-	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_dropped_item))
-	// Just make sure we pacify blades potentially in our hands when we put on the amulet
-	on_equip_item(user, user.get_active_held_item(), ITEM_SLOT_HANDS)
-	on_equip_item(user, user.get_inactive_held_item(), ITEM_SLOT_HANDS)
+	user.AddComponentFrom(REF(src), /datum/component/moon_blade_channel)
 	ADD_TRAIT(user, TRAIT_THERMAL_VISION, REF(src))
 	user.update_sight()
 	// If the equipper is a moon heretic, we buff their passive
 	var/datum/status_effect/heretic_passive/moon/moon_passive = user.has_status_effect(/datum/status_effect/heretic_passive/moon)
 	moon_passive?.amulet_equipped = TRUE
 
-/// Modifies any blades you hold/pickup/drop when the amulet is disabled
+/// Stops channeling through your blades when the amulet is disabled
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_amulet_deactivate(mob/living/user)
-	// Make sure to restore the values of any blades we might be holding when our amulet is deactivated
-	on_dropped_item(user, user.get_active_held_item())
-	on_dropped_item(user, user.get_inactive_held_item())
-	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM))
+	user.RemoveComponentSource(REF(src), /datum/component/moon_blade_channel)
 	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, REF(src))
 	user.update_sight()
 	var/datum/status_effect/heretic_passive/moon/moon_passive = user.has_status_effect(/datum/status_effect/heretic_passive/moon)
@@ -216,16 +199,14 @@
 	return ..()
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(channel_amulet(user, target))
+	if(channel_moon_amulet(user, target))
 		return
 	return ..()
 
-/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/blade_channel(mob/living/attacker, mob/living/victim)
-	SIGNAL_HANDLER
-	channel_amulet(attacker, victim)
+#define MOON_AMULET_SANITY_DAMAGE 20
 
 /// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie
-/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/channel_amulet(mob/user, atom/target)
+/proc/channel_moon_amulet(mob/user, atom/target)
 
 	if(!isliving(user))
 		return FALSE
@@ -254,10 +235,10 @@
 		return FALSE
 	if(!human_target.mob_mood)
 		return FALSE
-	if(human_target.mob_mood.sanity_level < sanity_threshold)
+	if(human_target.mob_mood.sanity_level < SANITY_LEVEL_INSANE)
 		human_target.balloon_alert(living_user, "[human_target.p_their()] mind is too strong!")
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		human_target.mob_mood.adjust_sanity(-sanity_damage)
+		human_target.mob_mood.adjust_sanity(-MOON_AMULET_SANITY_DAMAGE)
 	else
 		if(HAS_TRAIT_NOT_FROM(target, TRAIT_MINDSHIELD, NANITES_TRAIT))
 			human_target.balloon_alert(living_user, "[human_target.p_their()] mind almost bends but something protects it!")
@@ -269,56 +250,4 @@
 		human_target.log_message("was driven insane by [living_user]", LOG_GAME)
 	return TRUE
 
-/// Modifies any blades that we equip while wearing the amulet
-/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_equip_item(mob/user, obj/item/blade, slot)
-	SIGNAL_HANDLER
-	if(!istype(blade, valid_weapon_type))
-		return // We only care about modifying blades
-	if(slot & ITEM_SLOT_HANDS)
-		blade.force = 0
-		blade.wound_bonus = 0
-		blade.bare_wound_bonus = 0
-		blade.armour_penetration = 200
-		blade.hitsound = null
-		ADD_TRAIT(blade, TRAIT_CUSTOM_TAP_SOUND, REF(src))
-		RegisterSignal(blade, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, PROC_REF(modify_attack_message))
-		return
-	blade.force = initial(blade.force)
-	blade.wound_bonus = initial(blade.wound_bonus)
-	blade.bare_wound_bonus = initial(blade.bare_wound_bonus)
-	blade.armour_penetration = initial(blade.armour_penetration)
-	blade.hitsound = initial(blade.hitsound)
-	REMOVE_TRAIT(blade, TRAIT_CUSTOM_TAP_SOUND, REF(src))
-	UnregisterSignal(blade, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT)
-
-/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/modify_attack_message(obj/item/weapon, mob/living/victim, mob/living/attacker)
-	SIGNAL_HANDLER
-
-	var/list/attack_list = list(
-		"You sweep [weapon] towards [victim], splitting [victim.p_Their()] image in two.",
-		"You strike [victim] with [weapon], spilling forth a cascade from within. Immaculate.",
-		"As it bite deep, your [weapon] unburdens [victim] of unneeded thought.",
-	)
-	to_chat(attacker, span_danger(pick(attack_list)))
-
-	var/list/victim_list = list(
-		"You are struck by [attacker], but the [weapon] tears away something more than parts of your body.",
-		"You see an arch of light as [attacker]'s [weapon] twists towards you, and you see the world briefly in tetrachrome.",
-		"As [attacker] carves into you with [weapon], you lose something deep within. The agony is worse than any wound.",
-	)
-	to_chat(victim, span_userdanger(pick(victim_list)))
-	playsound(attacker, pick(possible_sounds), 40, TRUE)
-	return SIGNAL_MESSAGE_MODIFIED
-
-/// Modifies any blades that we drop while wearing the amulet
-/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_dropped_item(mob/user, obj/item/dropped_item)
-	SIGNAL_HANDLER
-	if(!istype(dropped_item, valid_weapon_type))
-		return // We only care about modifying blades
-	dropped_item.force = initial(dropped_item.force)
-	dropped_item.wound_bonus = initial(dropped_item.wound_bonus)
-	dropped_item.bare_wound_bonus = initial(dropped_item.bare_wound_bonus)
-	dropped_item.armour_penetration = initial(dropped_item.armour_penetration)
-	dropped_item.hitsound = initial(dropped_item.hitsound)
-	REMOVE_TRAIT(dropped_item, TRAIT_CUSTOM_TAP_SOUND, REF(src))
-	UnregisterSignal(dropped_item, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT)
+#undef MOON_AMULET_SANITY_DAMAGE

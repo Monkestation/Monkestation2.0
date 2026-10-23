@@ -2,8 +2,8 @@
 	name = "sticky tape"
 	singular_name = "sticky tape"
 	desc = "Used for sticking to things for sticking said things to people."
-	icon = 'icons/obj/tapes.dmi'
-	icon_state = "tape"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("tape", "/obj/item/stack/sticky_tape")
 	var/prefix = "sticky"
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
@@ -86,6 +86,7 @@
 	name = "super sticky tape"
 	singular_name = "super sticky tape"
 	desc = "Quite possibly the most mischevious substance in the galaxy. Use with extreme lack of caution."
+	SETUP_MAP_ICONS("tape", "/obj/item/stack/sticky_tape/super")
 	prefix = "super sticky"
 	conferred_embed = /datum/embedding/sticky_tape/super
 	splint_factor = 0.4
@@ -97,11 +98,31 @@
 	embed_chance = 100
 	fall_chance = 0.1
 
+/obj/item/stack/sticky_tape/surgical
+	name = "surgical tape"
+	singular_name = "surgical tape"
+	desc = "Made for patching broken bones back together alongside bone gel, not for playing pranks."
+	SETUP_MAP_ICONS("tape", "/obj/item/stack/sticky_tape/surgical")
+	prefix = "surgical"
+	conferred_embed = /datum/embedding/sticky_tape/surgical
+	splint_factor = 0.5
+	custom_price = PAYCHECK_CREW
+	merge_type = /obj/item/stack/sticky_tape/surgical
+	greyscale_colors = "#70BAE7#BD6A62"
+	tape_gag = /obj/item/clothing/mask/muzzle/tape/surgical
+
+/datum/embedding/sticky_tape/surgical
+	embed_chance = 30
+
+/obj/item/stack/sticky_tape/surgical/get_surgery_tool_overlay(tray_extended)
+	return "tape" + (tray_extended ? "" : "_out")
+
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("tape_spikes", "/obj/item/stack/sticky_tape/pointy")
 	singular_name = "pointy tape"
 	desc = "Used for sticking to things for sticking said things inside people."
-	icon_state = "tape_spikes"
 	prefix = "pointy"
 	conferred_embed = /datum/embedding/pointy_tape
 	merge_type = /obj/item/stack/sticky_tape/pointy
@@ -116,6 +137,7 @@
 	name = "super pointy tape"
 	singular_name = "super pointy tape"
 	desc = "You didn't know tape could look so sinister. Welcome to Space Station 13."
+	SETUP_MAP_ICONS("tape_spikes", "/obj/item/stack/sticky_tape/pointy/super")
 	prefix = "super pointy"
 	conferred_embed = /datum/embedding/pointy_tape/super
 	merge_type = /obj/item/stack/sticky_tape/pointy/super
@@ -124,21 +146,3 @@
 
 /datum/embedding/pointy_tape/super
 	embed_chance = 100
-
-/obj/item/stack/sticky_tape/surgical
-	name = "surgical tape"
-	singular_name = "surgical tape"
-	desc = "Made for patching broken bones back together alongside bone gel, not for playing pranks."
-	prefix = "surgical"
-	conferred_embed = /datum/embedding/sticky_tape/surgical
-	splint_factor = 0.5
-	custom_price = PAYCHECK_CREW
-	merge_type = /obj/item/stack/sticky_tape/surgical
-	greyscale_colors = "#70BAE7#BD6A62"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape/surgical
-
-/datum/embedding/sticky_tape/surgical
-	embed_chance = 30
-
-/obj/item/stack/sticky_tape/surgical/get_surgery_tool_overlay(tray_extended)
-	return "tape" + (tray_extended ? "" : "_out")

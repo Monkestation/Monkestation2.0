@@ -125,9 +125,6 @@
 			continue
 		.["highscore"] += list(list("name" = S.name,"scores" = S.high_scores))
 
-/client/verb/checkachievements()
-	set category = "OOC"
-	set name = "Check achievements"
-	set desc = "See all of your achievements!"
+GAME_VERB_DESC(/client, checkachievements, "Check achievements", "See all of your achievements!", "OOC")
 
 	persistent_client.achievements.ui_interact(usr)

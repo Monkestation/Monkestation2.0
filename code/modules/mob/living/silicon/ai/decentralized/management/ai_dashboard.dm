@@ -192,9 +192,6 @@
 			var/datum/action/innate/ai/the_ability = locate(project.ability_path) in owner.actions
 			if(!the_ability)
 				return
-			if(the_ability.uses >= the_ability.max_uses)
-				to_chat(owner, span_warning("This action already has the maximum amount of charges!"))
-				return
 			if(!project || !set_project_cpu(project, text2num(params["amount"])))
 				to_chat(owner, span_warning("Unable to add CPU to [params["project_name"]]. Either not enough free CPU or ability recharge is unavailable."))
 			. = TRUE
@@ -213,6 +210,11 @@
 			var/amount_to_add = 1 - total_cpu_used
 			if(!set_project_cpu(project, amount_to_add))
 				to_chat(owner, span_warning("Unable to add CPU to [params["project_name"]]. Either not enough free CPU or project is unavailable."))
+			. = TRUE
+		if("clear_ai_resources")
+			var/turf/owner_turf = get_turf(owner)
+			var/datum/ai_os/owner_os = GLOB.ai_os["[owner_turf.z]"]
+			owner_os.clear_ai_resources(owner)
 			. = TRUE
 		if("toggle_contribute_cpu")
 			contribute_spare_cpu = !contribute_spare_cpu
@@ -237,21 +239,15 @@
 	if(amount < 0)
 		return FALSE
 
-	if(has_completed_project(project.type))
-		if(!project.ability_recharge_cost)
-			return
-		var/datum/action/innate/ai/the_ability = locate(project.ability_path) in owner.actions
-		if(!the_ability)
-			return
-		if(the_ability.uses >= the_ability.max_uses)
-			return
+	//what are you recharging?
+	if(has_completed_project(project.type) && !project.ability_recharge_cost)
+		return
 
 	var/total_cpu_used = 0
 	for(var/I in cpu_usage)
 		if(I == project.name)
 			continue
 		total_cpu_used += cpu_usage[I]
-
 
 	if(amount > (1 - total_cpu_used))
 		return FALSE
@@ -329,7 +325,7 @@
 	if(isnull(owner_os))
 		owner_os = new /datum/ai_os(owner_turf)
 
-	var/current_cpu = owner_os.cpu_assigned[owner] ? owner_os.total_cpu * owner_os.cpu_assigned[owner] : 0
+	var/current_cpu = owner_os.cpu_assigned[owner] ? owner_os.cpu_assigned[owner] : 0
 	var/current_ram = owner_os.ram_assigned[owner] ? owner_os.ram_assigned[owner] : 0
 	current_ram += free_ram
 
@@ -354,14 +350,14 @@
 
 	var/remaining_cpu = current_cpu
 	for(var/I in cpu_usage)
-		remaining_cpu -= cpu_usage[I]
+		remaining_cpu -= cpu_usage[I] * current_cpu
 
 	if(remaining_cpu > 0 && contribute_spare_cpu)
 		var/points = max(round(AI_RESEARCH_PER_CPU * remaining_cpu * seconds_per_tick, 0.1), 0)
 
 		if(crypto_mining)
 			points *= 0.5
-			var/bitcoin_mined = (points * 2) * (1 - 0.04 * sqrt(points))
+			var/bitcoin_mined = (points * 3) / (1 + 0.2 * sqrt(points))
 			bitcoin_mined = clamp(bitcoin_mined, 0, MAX_AI_BITCOIN_MINED_PER_TICK)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(D)
@@ -372,7 +368,7 @@
 	for(var/project_being_researched in cpu_usage)
 		if(!cpu_usage[project_being_researched])
 			continue
-		var/used_cpu = round(cpu_usage[project_being_researched] * seconds_per_tick * current_cpu, 1)
+		var/used_cpu = round(cpu_usage[project_being_researched] * current_cpu * seconds_per_tick, 1)
 		var/datum/ai_project/project = get_project_by_name(project_being_researched)
 		if(!project)
 			cpu_usage[project_being_researched] = 0
@@ -380,7 +376,7 @@
 		if(has_completed_project(project.type)) //This means we're an ability recharging
 			if(!project.ability_recharge_cost) //No ability, just waste the CPU
 				continue
-			project.ability_recharge_invested += used_cpu
+			project.invest_ability(used_cpu)
 			if(project.ability_recharge_invested > project.ability_recharge_cost)
 				owner.playsound_local(owner, 'sound/machines/ping.ogg', 50, 0)
 				recharge_ability(project)
