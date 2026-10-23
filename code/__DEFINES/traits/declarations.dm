@@ -790,6 +790,21 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Mobs won't slip on a wet turf while it has this trait
 #define TRAIT_TURF_IGNORE_SLIPPERY "turf_ignore_slippery"
 
+// Shuttle construction traits. Temporarily here instead of the end of the file so this can be testmerged with #12711, move back once one is merged.
+/**
+ * This trait is given to turfs that have had shuttle frame parts built on them, but are not yet part of a shuttle.
+ * When attempting custom shuttle creation, a flood fill algorithm
+ * checks for turfs with this trait to determine the turfs
+ * that will constitute the created shuttle.
+ */
+#define TRAIT_SHUTTLE_CONSTRUCTION_TURF "shuttle_construction_turf"
+
+// Trait given to areas with a shuttle construction turf in them
+#define TRAIT_HAS_SHUTTLE_CONSTRUCTION_TURF "has_shuttle_construction_turf"
+
+///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
+#define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
+
 // /obj
 /// added to structures we want the mobs to be able to target.
 #define TRAIT_MOB_DESTROYABLE		"mob_destroyable"
@@ -1406,18 +1421,3 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to a mob when it gets a required "operational datum" (components/elements). Sends out the source as the type of the element.
 #define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
-/**
- * This trait is given to turfs that have had shuttle frame parts built on them, but are not yet part of a shuttle.
- * When attempting custom shuttle creation, a flood fill algorithm
- * checks for turfs with this trait to determine the turfs
- * that will constitute the created shuttle.
- */
-#define TRAIT_SHUTTLE_CONSTRUCTION_TURF "shuttle_construction_turf"
-
-// Trait given to areas with a shuttle construction turf in them
-#define TRAIT_HAS_SHUTTLE_CONSTRUCTION_TURF "has_shuttle_construction_turf"
-
-///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
-#define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
-
-
