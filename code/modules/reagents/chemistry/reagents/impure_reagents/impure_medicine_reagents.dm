@@ -888,6 +888,40 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	else if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote(pick("screech","scratch","jump","look"))
 
+// monkestation start: port of Hyoscyamine from /tg/station
+/datum/reagent/inverse/atropine
+	name = "Hyoscyamine"
+	description = "Slowly regenerates all damaged organs, but cannot restore non-functional organs."
+	color = "#273333"
+	ph = 13.6
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 40
+
+/datum/reagent/inverse/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	if(affected_mob.getToxLoss() <= 25)
+		affected_mob.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
+	return TRUE
+
+/datum/reagent/inverse/atropine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/static/list/possible_organs = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_TONGUE,
+	)
+	affected_mob.adjustOrganLoss(pick(possible_organs), 2 * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	affected_mob.reagents.remove_reagent(type, 1 * REM * seconds_per_tick)
+// monkestation end
+
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
 	description = "Synthetic medication that induces blood regeneration and wound clotting in patients. \
