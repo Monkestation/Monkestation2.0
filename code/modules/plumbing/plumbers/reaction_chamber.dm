@@ -31,7 +31,10 @@
 
 /obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS), PROC_REF(on_reagent_change))
+	//Monkestation Edit: For Australium
+	RegisterSignal(reagents, COMSIG_REAGENTS_REACTED, PROC_REF(on_reagents_reacted))
+	//End Monkestation Edit
 	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
@@ -47,6 +50,22 @@
 		emptying = FALSE
 		holder.flags |= NO_REACT
 	return NONE
+
+//Monkestation Addition: For Australium
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagents_reacted(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	on_reagent_change(holder)
+	process_reacted_reagents()
+	return NONE
+
+///Lets australium and co. act on our contents, but only once we're done gathering and all reactions have finished
+/obj/machinery/plumbing/reaction_chamber/proc/process_reacted_reagents()
+	if(reagents.flags & NO_REACT) //still gathering, converting now would eat our required reagents
+		return
+	if(LAZYLEN(reagents.reaction_list)) //wait for the reactions to finish so we don't mess with them mid-way
+		return
+	reagents.reagent_processing()
+//End Monkestation Addition
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
 	if(!emptying || reagents.is_reacting) //suspend heating/cooling during emptying phase
