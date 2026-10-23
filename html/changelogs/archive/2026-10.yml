@@ -279,3 +279,8 @@
   ashallaryn:
   - image: modified oozeling "retract limb" "regrow limb" "toggle core signal" and
       "toggle cleaning" HUD button icons
+2026-10-23:
+  Absolucy:
+  - balance: Stabilized and Regenerative bluespace extracts now have a 3 second window
+      where you can shove someone to prevent them from being teleported (or they can
+      resist out of it if they want)
