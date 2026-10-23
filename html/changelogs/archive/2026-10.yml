@@ -263,3 +263,24 @@
       blade (the brain damage / sanity damage) on its own, so the amulet isn't required
       to use it anymore, altho the amulet still gives you bonuses
   - bugfix: Fixed the Resplendent Regalia's hit message for the wearer
+2026-10-22:
+  Absolucy:
+  - balance: Abductors can no longer teleport if they have a bluespace body bag in
+      their inventory.
+  LettuceGuardian:
+  - bugfix: Guardsman helmet mob side view being misaligned
+  SirNightKnight:
+  - balance: the laser cannon can now be worn on your back.
+  - bugfix: fixed the laser cannon worn sprite not showing properly
+  SmArtKar:
+  - bugfix: Getting deconverted from cult no longer leaves you with black eyes.
+  - bugfix: Eye color effects (cult, weed, silverscale, demoneye) no longer mess up
+      your eye color when they overlap.
+  ashallaryn:
+  - image: modified oozeling "retract limb" "regrow limb" "toggle core signal" and
+      "toggle cleaning" HUD button icons
+2026-10-23:
+  Absolucy:
+  - balance: Stabilized and Regenerative bluespace extracts now have a 3 second window
+      where you can shove someone to prevent them from being teleported (or they can
+      resist out of it if they want)
