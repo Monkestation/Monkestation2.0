@@ -508,3 +508,8 @@
 	description = "What... what was that ominous feeling?"
 	mood_change = -10
 	timeout = 5 MINUTES
+
+/datum/mood_event/tailpulled
+	description = "I hate getting my tail pulled!"
+	mood_change = -3
+	timeout = 2 MINUTES
