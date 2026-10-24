@@ -29,6 +29,11 @@
 
 	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
+	if(ishuman(user)) // Should prevent you from doing even surgery with a tool. Its a de-abilitating effect
+		var/datum/status_effect/weapon_lock/locked = user.has_status_effect(/datum/status_effect/weapon_lock)
+		if(istype(locked) && locked.locked_check(target, user, src))
+			return TRUE
+
 	var/item_interact_result = target.base_item_interaction(user, src, modifiers)
 	if(item_interact_result & ITEM_INTERACT_SUCCESS)
 		return TRUE

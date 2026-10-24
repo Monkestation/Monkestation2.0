@@ -79,6 +79,7 @@
 	new /obj/item/storage/photo_album/hos(src)
 	new /obj/item/gps/security(src)
 	new /obj/item/bodycam_upgrade(src)
+	new /obj/item/storage/belt/security/blueshield/corpjudo(src) //monkestation edit: Paradise port
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -126,6 +127,7 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/bodycam_upgrade(src)
+	new /obj/item/storage/belt/security/blueshield/corpjudo(src) //monkestation edit: Paradise port
 
 /obj/structure/closet/secure_closet/security/sec
 
