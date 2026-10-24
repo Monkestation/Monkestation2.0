@@ -93,6 +93,12 @@
 		ui = new(user, src, "SlimeRancherScanner", name)
 		ui.open()
 
+/obj/item/slime_rancher_scanner/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/json/slimepedia),
+		get_asset_datum(/datum/asset/spritesheet_batched/slimepedia),
+	)
+
 /obj/item/slime_rancher_scanner/attack_self_secondary(mob/user, modifiers)
 	. = ..()
 	if(!. && !QDELETED(slime))

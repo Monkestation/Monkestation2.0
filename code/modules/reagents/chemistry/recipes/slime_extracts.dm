@@ -4,6 +4,8 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME
 	required_other = TRUE
 	var/deletes_extract = TRUE
+	/// What the reaction does, in a player's words. Shown in the Slimepedia.
+	var/desc
 
 /datum/chemical_reaction/slime/pre_reaction_other_checks(datum/reagents/holder)
 	var/obj/item/slime_extract/extract = holder.my_atom
@@ -27,6 +29,7 @@
 
 //Grey
 /datum/chemical_reaction/slime/slimespawn
+	desc = "Hatches a baby grey slime."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/grey
 
@@ -36,11 +39,13 @@
 	..()
 
 /datum/chemical_reaction/slime/slimeinaprov
+	desc = "Makes 3u of epinephrine."
 	results = list(/datum/reagent/medicine/epinephrine = 3)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/grey
 
 /datum/chemical_reaction/slime/slimemonkey
+	desc = "Makes 3 biomass cubes."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/grey
 
@@ -51,22 +56,26 @@
 
 //Green
 /datum/chemical_reaction/slime/slimemutate
+	desc = "Makes 1u of imperfect mutation toxin, which turns people into slimepeople."
 	results = list(/datum/reagent/mutationtoxin/jelly = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/green
 
 /datum/chemical_reaction/slime/slimehuman
+	desc = "Makes 1u of stable mutation toxin, which turns people human."
 	results = list(/datum/reagent/mutationtoxin = 1)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/green
 
 /datum/chemical_reaction/slime/slimelizard
+	desc = "Makes 1u of lizard mutation toxin."
 	results = list(/datum/reagent/mutationtoxin/lizard = 1)
 	required_reagents = list(/datum/reagent/uranium/radium = 1)
 	required_container = /obj/item/slime_extract/green
 
 //Metal
 /datum/chemical_reaction/slime/slimemetal
+	desc = "Makes 15 iron sheets and 5 plasteel sheets."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/metal
 
@@ -77,6 +86,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimeglass
+	desc = "Makes 15 glass sheets and 5 reinforced glass sheets."
 	required_reagents = list(/datum/reagent/water = 1)
 	required_container = /obj/item/slime_extract/metal
 
@@ -88,6 +98,7 @@
 
 //Gold
 /datum/chemical_reaction/slime/slimemobspawn
+	desc = "Shakes for 5 seconds, then summons 5 hostile creatures."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/gold
 	deletes_extract = FALSE //we do delete, but we don't do so instantly
@@ -106,6 +117,7 @@
 	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 5, "Gold Slime", HOSTILE_SPAWN), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser
+	desc = "Shakes for 5 seconds, then summons 3 hostile creatures."
 	required_reagents = list(/datum/reagent/blood = 1)
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
@@ -113,6 +125,7 @@
 	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Lesser Gold Slime", HOSTILE_SPAWN, FACTION_NEUTRAL), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly
+	desc = "Shakes for 5 seconds, then summons 1 friendly creature."
 	required_reagents = list(/datum/reagent/water = 1)
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly/summon_mobs(datum/reagents/holder, turf/T)
@@ -120,6 +133,7 @@
 	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 1, "Friendly Gold Slime", FRIENDLY_SPAWN, FACTION_NEUTRAL), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/spider
+	desc = "Shakes for 5 seconds, then summons 3 giant midwife spiders."
 	required_reagents = list(/datum/reagent/spider_extract = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME | REACTION_TAG_DANGEROUS
 
@@ -130,6 +144,7 @@
 
 //Silver
 /datum/chemical_reaction/slime/slimebork
+	desc = "Flashes everyone nearby and scatters 5 or 6 random foods."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/silver
 
@@ -159,6 +174,7 @@
 	return get_random_food()
 
 /datum/chemical_reaction/slime/slimebork/drinks
+	desc = "Flashes everyone nearby and scatters 5 or 6 random drinks."
 	required_reagents = list(/datum/reagent/water = 1)
 
 /datum/chemical_reaction/slime/slimebork/drinks/getbork()
@@ -166,11 +182,13 @@
 
 //Blue
 /datum/chemical_reaction/slime/slimefrost
+	desc = "Makes 10u of frost oil."
 	results = list(/datum/reagent/consumable/frostoil = 10)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/blue
 
 /datum/chemical_reaction/slime/slimestabilizer
+	desc = "Makes a slime stabilizer, which lowers a slime's mutation chance."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/blue
 
@@ -179,6 +197,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimefoam
+	desc = "Spews out a big cloud of foam."
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/blue
 
@@ -187,6 +206,7 @@
 
 //Dark Blue
 /datum/chemical_reaction/slime/slimefreeze
+	desc = "Goes cold for 5 seconds, then floods the tile with freezing nitrogen."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/darkblue
 	deletes_extract = FALSE
@@ -208,6 +228,7 @@
 			T.atmos_spawn_air("[initial(gastype.id)]=50;TEMP=2.7")
 
 /datum/chemical_reaction/slime/slimefireproof
+	desc = "Makes a fireproofing potion for clothing."
 	required_reagents = list(/datum/reagent/water = 1)
 	required_container = /obj/item/slime_extract/darkblue
 
@@ -217,11 +238,13 @@
 
 //Orange
 /datum/chemical_reaction/slime/slimecasp
+	desc = "Makes 10u of capsaicin oil."
 	results = list(/datum/reagent/consumable/capsaicin = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/orange
 
 /datum/chemical_reaction/slime/slimefire
+	desc = "Vibrates for 5 seconds, then bursts into a cloud of burning plasma."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/orange
 	deletes_extract = FALSE
@@ -243,12 +266,14 @@
 
 
 /datum/chemical_reaction/slime/slimesmoke
+	desc = "Makes phosphorus, potassium and sugar, which puff into smoke."
 	results = list(/datum/reagent/phosphorus = 10, /datum/reagent/potassium = 10, /datum/reagent/consumable/sugar = 10)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/orange
 
 //Yellow
 /datum/chemical_reaction/slime/slimeoverload
+	desc = "Releases an EMP pulse."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/yellow
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME | REACTION_TAG_DANGEROUS
@@ -258,6 +283,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimecell
+	desc = "Makes an EMP-proof slime power cell."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/yellow
 
@@ -266,6 +292,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimeglow
+	desc = "Makes a glowing slime you can carry as a light."
 	required_reagents = list(/datum/reagent/water = 1)
 	required_container = /obj/item/slime_extract/yellow
 
@@ -277,6 +304,7 @@
 
 //Purple
 /datum/chemical_reaction/slime/slimepsteroid
+	desc = "Makes a slime steroid, which gives a slime more cores."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/purple
 
@@ -285,12 +313,14 @@
 	..()
 
 /datum/chemical_reaction/slime/slimeregen
+	desc = "Makes 5u of regenerative jelly."
 	results = list(/datum/reagent/medicine/regen_jelly = 5)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/purple
 
 //Dark Purple
 /datum/chemical_reaction/slime/slimeplasma
+	desc = "Makes 3 plasma sheets."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/darkpurple
 
@@ -300,6 +330,7 @@
 
 //Red
 /datum/chemical_reaction/slime/slimemutator
+	desc = "Makes a slime mutator, which raises a slime's mutation chance."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/red
 
@@ -308,6 +339,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimebloodlust
+	desc = "Drives every slime in sight rabid. Docile slimes go wild instead."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/red
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME | REACTION_TAG_DANGEROUS
@@ -323,6 +355,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimespeed
+	desc = "Makes a speed potion for items."
 	required_reagents = list(/datum/reagent/water = 1)
 	required_container = /obj/item/slime_extract/red
 
@@ -332,6 +365,7 @@
 
 //Pink
 /datum/chemical_reaction/slime/docility
+	desc = "Makes a docility potion, which tames a slime for good."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/pink
 
@@ -340,6 +374,7 @@
 	..()
 
 /datum/chemical_reaction/slime/gender
+	desc = "Makes a gender change potion."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/pink
 
@@ -349,12 +384,14 @@
 
 //Black
 /datum/chemical_reaction/slime/slimemutate2
+	desc = "Makes 1u of advanced mutation toxin."
 	results = list(/datum/reagent/aslimetoxin = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/black
 
 //Oil
 /datum/chemical_reaction/slime/slimeexplosion
+	desc = "Vibrates for 5 seconds, then explodes."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/oil
 	deletes_extract = FALSE
@@ -383,12 +420,14 @@
 
 
 /datum/chemical_reaction/slime/slimecornoil
+	desc = "Makes 10u of corn oil."
 	results = list(/datum/reagent/consumable/cornoil = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/oil
 
 //Light Pink
 /datum/chemical_reaction/slime/slimepotion2
+	desc = "Makes a sentience potion, which lets a ghost take over a creature."
 	required_container = /obj/item/slime_extract/lightpink
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 
@@ -397,6 +436,7 @@
 	..()
 
 /datum/chemical_reaction/slime/renaming
+	desc = "Makes a renaming potion."
 	required_container = /obj/item/slime_extract/lightpink
 	required_reagents = list(/datum/reagent/water = 1)
 
@@ -407,6 +447,7 @@
 
 //Adamantine
 /datum/chemical_reaction/slime/adamantine
+	desc = "Makes an adamantine sheet."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/adamantine
 
@@ -416,6 +457,7 @@
 
 //Bluespace
 /datum/chemical_reaction/slime/slimefloor2
+	desc = "Makes 25 bluespace floor tiles."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/bluespace
 
@@ -425,6 +467,7 @@
 
 
 /datum/chemical_reaction/slime/slimecrystal
+	desc = "Makes a bluespace crystal."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/bluespace
 
@@ -434,6 +477,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimeradio
+	desc = "Makes a bluespace radio potion, which gives a creature a built-in radio."
 	required_reagents = list(/datum/reagent/water = 1)
 	required_container = /obj/item/slime_extract/bluespace
 
@@ -443,6 +487,7 @@
 
 //Cerulean
 /datum/chemical_reaction/slime/slimepsteroid2
+	desc = "Makes an extract enhancer, which gives an extract one more use."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/cerulean
 
@@ -451,6 +496,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slime_territory
+	desc = "Makes cerulean prints, one-use blueprints for renaming areas."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/cerulean
 
@@ -460,6 +506,7 @@
 
 //Sepia
 /datum/chemical_reaction/slime/slimestop
+	desc = "After 5 seconds, stops time around it."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/sepia
 
@@ -478,6 +525,7 @@
 	use_slime_core(holder)
 
 /datum/chemical_reaction/slime/slimecamera
+	desc = "Makes a camera and a roll of film."
 	required_reagents = list(/datum/reagent/water = 1)
 	required_container = /obj/item/slime_extract/sepia
 
@@ -487,6 +535,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimefloor
+	desc = "Makes 25 sepia floor tiles."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/sepia
 
@@ -496,6 +545,7 @@
 
 //Pyrite
 /datum/chemical_reaction/slime/slimepaint
+	desc = "Makes a random can of paint."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/pyrite
 
@@ -505,6 +555,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimecrayon
+	desc = "Makes a random crayon."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/pyrite
 
@@ -515,6 +566,7 @@
 
 //Rainbow :o)
 /datum/chemical_reaction/slime/slime_rng
+	desc = "Hatches a baby slime of a random color. With 5u or more, primes a grenade full of random slimes instead."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/rainbow
 
@@ -531,6 +583,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slimebomb
+	desc = "Primes a grenade full of volatile slimes."
 	required_reagents = list(/datum/reagent/toxin/slimejelly = 1)
 	required_container = /obj/item/slime_extract/rainbow
 
@@ -552,6 +605,7 @@
 	..()
 
 /datum/chemical_reaction/slime/slime_transfer
+	desc = "Makes a transference potion, which moves your mind into a creature."
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/rainbow
 
@@ -560,6 +614,7 @@
 	..()
 
 /datum/chemical_reaction/slime/flight_potion
+	desc = "Makes a flight potion."
 	required_reagents = list(/datum/reagent/water/holywater = 5, /datum/reagent/uranium = 5)
 	required_container = /obj/item/slime_extract/rainbow
 

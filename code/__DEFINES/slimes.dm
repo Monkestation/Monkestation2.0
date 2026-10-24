@@ -102,6 +102,10 @@
 
 /// How many tiles away can an extract compressor link to a extract fridge or biomass recycler thingy
 #define COMPRESSOR_LINK_RANGE 7
+/// Extracts the compressor's type tank holds.
+#define COMPRESSOR_EFFECT_EXTRACTS 10
+/// Extracts the compressor's color tank holds.
+#define COMPRESSOR_COLOR_EXTRACTS 5
 
 /// Doesn't squash mobs like roaches and stuff when walking over them
 #define TRAIT_CAREFUL_STEPS "careful_steps"

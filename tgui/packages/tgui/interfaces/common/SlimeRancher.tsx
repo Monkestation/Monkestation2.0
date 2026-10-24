@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Box, DmIcon, Icon } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalizeAll } from 'tgui-core/string';
@@ -57,6 +57,45 @@ export function SlimePortrait(props: {
           className="SlimeRancher__sprite"
         />
       )}
+    </Box>
+  );
+}
+
+type Requirement = {
+  name: string;
+  icon: string;
+  icon_state: string;
+};
+
+const REQUIREMENT_ICON_SIZE = '48px';
+
+/** Fixed size so an odd-sized source icon can't shove one row out of line with its neighbors. */
+function RequirementIcon(props: { requirement: Requirement }) {
+  const { requirement } = props;
+
+  return (
+    <DmIcon
+      icon={requirement.icon}
+      icon_state={requirement.icon_state}
+      fallback={<Icon name="question" />}
+      width={REQUIREMENT_ICON_SIZE}
+      height={REQUIREMENT_ICON_SIZE}
+    />
+  );
+}
+
+/** Something a slime has to eat or drain to mutate, with whatever progress or amount goes under it. */
+export function RequirementCell(props: {
+  requirement: Requirement;
+  children?: ReactNode;
+}) {
+  const { requirement, children } = props;
+
+  return (
+    <Box className="SlimeRancher__requirement">
+      <RequirementIcon requirement={requirement} />
+      <span>{requirement.name}</span>
+      {children}
     </Box>
   );
 }

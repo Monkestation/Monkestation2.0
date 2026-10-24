@@ -18,6 +18,8 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	var/rgb_code
 	/// For slime types that use fancy visual effects.
 	var/obj/effect/abstract/visual_effect/visual_effect
+	/// Tint for this color's crossbreeds. Unused when visual_effect is set, since that replaces the tint.
+	var/crossbreed_color
 	/// List of `/datum/slime_mutation`s this slime type is eligible for.
 	/// Slimes with no further mutations can only go rainbow.
 	var/list/possible_mutations = list(/datum/slime_mutation/rainbow)
@@ -49,6 +51,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/blue
 	rgb_code = COLOR_SLIME_BLUE
+	crossbreed_color = "#ADD8E6"
 	possible_mutations = list(
 		/datum/slime_mutation/silver,
 		/datum/slime_mutation/darkblue,
@@ -59,6 +62,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	color = "metal"
 	core_type = /obj/item/slime_extract/metal
 	rgb_code = COLOR_SLIME_METAL
+	crossbreed_color = "#7E7E7E"
 	possible_mutations = list(
 		/datum/slime_mutation/silver,
 		/datum/slime_mutation/yellow,
@@ -70,6 +74,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/purple
 	rgb_code = COLOR_SLIME_PURPLE
+	crossbreed_color = "#B19CD9"
 	possible_mutations = list(
 		/datum/slime_mutation/green,
 		/datum/slime_mutation/darkblue,
@@ -81,6 +86,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/orange
 	rgb_code = COLOR_SLIME_ORANGE
+	crossbreed_color = "#FFA500"
 	possible_mutations = list(
 		/datum/slime_mutation/darkpurple,
 		/datum/slime_mutation/yellow,
@@ -94,6 +100,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/darkblue
 	rgb_code = COLOR_SLIME_DARK_BLUE
+	crossbreed_color = "#0000FF"
 	possible_mutations = list(
 		/datum/slime_mutation/blue,
 		/datum/slime_mutation/purple,
@@ -104,6 +111,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	color = "dark purple"
 	core_type = /obj/item/slime_extract/darkpurple
 	rgb_code = COLOR_SLIME_DARK_PURPLE
+	crossbreed_color = "#551A8B"
 	possible_mutations = list(
 		/datum/slime_mutation/sepia,
 		/datum/slime_mutation/purple,
@@ -114,6 +122,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	color = "silver"
 	core_type = /obj/item/slime_extract/silver
 	rgb_code = COLOR_SLIME_SILVER
+	crossbreed_color = "#D3D3D3"
 	possible_mutations = list(
 		/datum/slime_mutation/pyrite,
 		/datum/slime_mutation/metal,
@@ -125,6 +134,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/yellow
 	rgb_code = COLOR_SLIME_YELLOW
+	crossbreed_color = "#FFFF00"
 	possible_mutations = list(
 		/datum/slime_mutation/bluespace,
 		/datum/slime_mutation/metal,
@@ -144,17 +154,20 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/cerulean
 	rgb_code = COLOR_SLIME_CERULEAN
+	crossbreed_color = "#2956B2"
 
 /datum/slime_type/pyrite
 	color = "pyrite"
 	core_type = /obj/item/slime_extract/pyrite
 	rgb_code = COLOR_SLIME_PYRITE
+	crossbreed_color = "#FAFAD2"
 
 /datum/slime_type/sepia
 	color = "sepia"
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/sepia
 	rgb_code = COLOR_SLIME_SEPIA
+	crossbreed_color = "#704214"
 
 //TIER 4
 
@@ -172,6 +185,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/green
 	rgb_code = COLOR_SLIME_GREEN
+	crossbreed_color = "#00FF00"
 	possible_mutations = list(
 		/datum/slime_mutation/black,
 	)
@@ -181,6 +195,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/pink
 	rgb_code = COLOR_SLIME_PINK
+	crossbreed_color = "#FF69B4"
 	possible_mutations = list(
 		/datum/slime_mutation/lightpink,
 	)
@@ -190,6 +205,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/red
 	rgb_code = COLOR_SLIME_RED
+	crossbreed_color = "#FF0000"
 	possible_mutations = list(
 		/datum/slime_mutation/oil,
 	)
@@ -200,6 +216,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	color = "adamantine"
 	core_type = /obj/item/slime_extract/adamantine
 	rgb_code = COLOR_SLIME_ADAMANTINE
+	crossbreed_color = "#008B8B"
 
 /datum/slime_type/black
 	color = "black"
@@ -213,6 +230,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/lightpink
 	rgb_code = COLOR_SLIME_LIGHT_PINK
+	crossbreed_color = "#FFB6C1"
 
 /datum/slime_type/oil
 	color = "oil"
@@ -229,6 +247,10 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	rgb_code = COLOR_SLIME_RAINBOW
 	visual_effect = /obj/effect/abstract/visual_effect/rainbow
 	possible_mutations = list()
+
+/// Icon states use dashes where the color name has spaces, e.g. "dark-blue-adult".
+/proc/slime_icon_prefix(datum/slime_type/slime_type)
+	return replacetext(slime_type::color, " ", "-")
 
 /// Maps each slime extract type to its /datum/slime_type.
 /proc/init_slime_types_by_extract() as /alist

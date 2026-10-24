@@ -318,7 +318,7 @@
 	return ..() || can_slip_past(blocker)
 
 /mob/living/basic/slime/update_icon_state()
-	var/icon_prefix = replacetext(slime_type.color, " ", "-")
+	var/icon_prefix = slime_icon_prefix(slime_type)
 	icon_living = "[icon_prefix]-[life_stage]"
 	icon_dead = !cores ? "[icon_prefix]-cut" : "[icon_prefix]-[life_stage]-dead"
 	icon_state = stat == DEAD ? icon_dead : icon_living
@@ -434,14 +434,9 @@
 
 ///Spawns a crossed slimecore item
 /mob/living/basic/slime/proc/spawn_corecross()
-	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
 	visible_message(span_danger("[src] shudders, its mutated core consuming the rest of its body!"))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
-	var/selected_crossbreed_path
-	for(var/obj/item/slimecross/cross_item as anything in crossbreeds)
-		if(cross_item::slime_type == slime_type.type && cross_item::effect == crossbreed_modification)
-			selected_crossbreed_path = cross_item
-			break
+	var/selected_crossbreed_path = GLOB.slime_crossbreeds["[crossbreed_modification]|[slime_type.type]"]
 	if(selected_crossbreed_path)
 		new selected_crossbreed_path(loc)
 	else

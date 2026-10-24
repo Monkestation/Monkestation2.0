@@ -1,3 +1,24 @@
+@mixin slime-scrollbar {
+	// chromium skips ::-webkit-scrollbar while scrollbar-color is set, and reset.scss sets it on body
+	scrollbar-color: auto;
+
+	&::-webkit-scrollbar {
+		width: 16px;
+	}
+
+	&::-webkit-scrollbar-track {
+		margin: 6px 0;
+		border-radius: 999px;
+		background: var(--slime-scroll-track);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border: 4px solid var(--slime-scroll-track);
+		border-radius: 999px;
+		background: var(--slime-cyan);
+	}
+}
+
 .theme-slime_rancher {
 	--slime-housing: oklch(0.28 0.035 245);
 	--slime-cream: oklch(0.95 0.025 85);
@@ -46,23 +67,34 @@
 		font-size: 1rem;
 		line-height: 1.4;
 		font-variant-numeric: tabular-nums;
-		// chromium skips ::-webkit-scrollbar while scrollbar-color is set, and reset.scss sets it on body
-		scrollbar-color: auto;
+		@include slime-scrollbar;
+	}
 
-		&::-webkit-scrollbar {
-			width: 16px;
+	.SlimeRancher__tabs {
+		--tabs-container-background: var(--slime-scroll-track);
+		--tab-background: transparent;
+		--tab-background-hover: oklch(0.35 0.04 245);
+		--tab-background-selected: var(--slime-cyan);
+		--tab-color: var(--slime-cream);
+		--tab-color-selected: var(--slime-ink);
+		--tab-indicator-size: 0;
+		flex: none;
+		gap: 0.333rem;
+		margin: 0;
+		padding: 0.333rem;
+		border-radius: 999px;
+		font-weight: bold;
+
+		.Tab {
+			min-height: 2.5rem;
+			padding: 0 0.5rem;
+			border-radius: 999px;
 		}
 
-		&::-webkit-scrollbar-track {
-			margin: 6px 0;
-			border-radius: 999px;
-			background: var(--slime-scroll-track);
-		}
-
-		&::-webkit-scrollbar-thumb {
-			border: 4px solid var(--slime-scroll-track);
-			border-radius: 999px;
-			background: var(--slime-cyan);
+		.Tab--selected {
+			box-shadow:
+				inset 0 2px 0 var(--slime-highlight),
+				0 3px 0 oklch(0.58 0.1 205);
 		}
 	}
 
@@ -279,6 +311,29 @@
 			box-shadow:
 				inset 0 1px 0 var(--slime-highlight),
 				0 1px 0 var(--slime-shadow);
+		}
+	}
+
+	&__scroll {
+		overflow-y: auto;
+		@include slime-scrollbar;
+	}
+
+	&__requirement {
+		position: relative;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		justify-items: center;
+		align-items: start;
+		gap: 0.25rem;
+		min-width: 0;
+		font-size: 0.917rem;
+		font-weight: bold;
+		text-align: center;
+		overflow-wrap: anywhere;
+
+		> img {
+			image-rendering: pixelated;
 		}
 	}
 
