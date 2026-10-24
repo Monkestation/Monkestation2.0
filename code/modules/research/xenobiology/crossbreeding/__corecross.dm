@@ -24,12 +24,22 @@ To add a crossbreed:
 	get around to the crossbreeds eventually!
 \*==========================================*/
 
+/// "[effect]|[slime_type]" -> crossbreed path, for every non-abstract slimecross.
+GLOBAL_ALIST_INIT(slime_crossbreeds, init_slime_crossbreeds())
+
+/proc/init_slime_crossbreeds() as /alist
+	. = alist()
+	for(var/obj/item/slimecross/cross_path as anything in subtypesof(/obj/item/slimecross))
+		if(!cross_path::slime_type)
+			continue // not a real crossbreed
+		.["[cross_path::effect]|[cross_path::slime_type]"] = cross_path
+
 /obj/item/slimecross //The base type for crossbred extracts. Mostly here for posterity, and to set base case things.
 	name = "crossbred slime extract"
 	desc = "An extremely potent slime extract, formed through crossbreeding."
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "base"
-	var/colour = "null"
+	var/datum/slime_type/slime_type
 	var/effect = "null"
 	var/effect_desc = "null"
 	force = 0
@@ -45,52 +55,13 @@ To add a crossbreed:
 
 /obj/item/slimecross/Initialize(mapload)
 	. = ..()
-	name = effect + " " + colour + " extract"
-	var/itemcolor = "#FFFFFF"
-	switch(colour)
-		if("orange")
-			itemcolor = "#FFA500"
-		if("purple")
-			itemcolor = "#B19CD9"
-		if("blue")
-			itemcolor = "#ADD8E6"
-		if("metal")
-			itemcolor = "#7E7E7E"
-		if("yellow")
-			itemcolor = "#FFFF00"
-		if("dark purple")
-			itemcolor = "#551A8B"
-		if("dark blue")
-			itemcolor = "#0000FF"
-		if("silver")
-			itemcolor = "#D3D3D3"
-		if("bluespace")
-			itemcolor = "#32CD32"
-		if("sepia")
-			itemcolor = "#704214"
-		if("cerulean")
-			itemcolor = "#2956B2"
-		if("pyrite")
-			itemcolor = "#FAFAD2"
-		if("red")
-			itemcolor = "#FF0000"
-		if("green")
-			itemcolor = "#00FF00"
-		if("pink")
-			itemcolor = "#FF69B4"
-		if("gold")
-			itemcolor = "#FFD700"
-		if("oil")
-			itemcolor = "#505050"
-		if("black")
-			itemcolor = "#000000"
-		if("light pink")
-			itemcolor = "#FFB6C1"
-		if("adamantine")
-			itemcolor = "#008B8B"
-	add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
-	if(colour == "rainbow")
-		rainbow_effect()
+	if(isnull(slime_type))
+		return
+	name = "[effect] [slime_type::color] extract"
+	if(slime_type::visual_effect)
+		add_visual_effect(slime_type::visual_effect)
+	else if(slime_type::crossbreed_color)
+		add_atom_colour(slime_type::crossbreed_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.
 	name = "result extract"
