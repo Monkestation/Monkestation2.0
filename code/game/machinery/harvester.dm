@@ -69,10 +69,7 @@
 		return
 	var/mob/living/carbon/C = occupant
 	if(!allow_clothing)
-		for(var/A in C.held_items + C.get_equipped_items())
-			if(!isitem(A))
-				continue
-			var/obj/item/I = A
+		for(var/obj/item/I as anything in C.get_equipped_items(INCLUDE_HELD))
 			if(!(HAS_TRAIT(I, TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)

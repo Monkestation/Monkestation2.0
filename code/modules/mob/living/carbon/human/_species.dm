@@ -976,7 +976,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	switch(slot)
 		if(ITEM_SLOT_HANDS)
-			if(H.get_empty_held_indexes())
+			if(length(H.get_empty_held_indexes()))
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_MASK)

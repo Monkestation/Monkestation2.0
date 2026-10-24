@@ -380,7 +380,7 @@
 	var/loop_counter = 0
 	if(ishuman(user) && (user.istate & ISTATE_HARM))
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/gun/gun in H.held_items)
+		for(var/obj/item/gun/gun as anything in H.get_held_items_of_type(/obj/item/gun))
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))
