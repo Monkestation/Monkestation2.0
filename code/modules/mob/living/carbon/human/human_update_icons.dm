@@ -68,7 +68,7 @@ There are several things that need to be remembered:
 		update_worn_id()
 		update_worn_glasses()
 		update_worn_gloves()
-		update_inv_ears()
+		update_worn_ears()
 		update_worn_shoes()
 		update_suit_storage()
 		update_worn_mask()
@@ -84,10 +84,15 @@ There are several things that need to be remembered:
 		//damage overlays
 		update_damage_overlays()
 
+/mob/living/carbon/human/update_obscured_slots(obscured_flags)
+	..()
+	if(obscured_flags & HIDEFACE)
+		sec_hud_set_security_status()
+
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-/mob/living/carbon/human/update_worn_undersuit()
+/mob/living/carbon/human/update_worn_undersuit(update_obscured = TRUE)
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
@@ -98,6 +103,9 @@ There are several things that need to be remembered:
 		var/obj/item/clothing/under/uniform = w_uniform
 		update_hud_uniform(uniform)
 
+		if(update_obscured)
+			update_obscured_slots(uniform.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(uniform, ITEM_SLOT_ICLOTHING) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/target_overlay = RESOLVE_ICON_STATE(uniform) //Selects proper icon from the vars the clothing has (Search define for more.)
@@ -106,24 +114,24 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/uniform_overlay
 		//This is how non-humanoid clothing works. You check if the mob has the right bodyflag, and the clothing has the corresponding clothing flag.
-		//handled_by_bodytype is used to track whether or not we successfully used an alternate sprite. It's set to TRUE to ease up on copy-paste.
+		//handled_by_bodyshape is used to track whether or not we successfully used an alternate sprite. It's set to TRUE to ease up on copy-paste.
 		//icon_file MUST be set to null by default, or it causes issues.
-		//handled_by_bodytype MUST be set to FALSE under the if(!icon_exists()) statement, or everything breaks.
-		//"override_file = handled_by_bodytype ? icon_file : null" MUST be added to the arguments of build_worn_icon()
+		//handled_by_bodyshape MUST be set to FALSE under the if(!icon_exists()) statement, or everything breaks.
+		//"override_file = handled_by_bodyshape ? icon_file : null" MUST be added to the arguments of build_worn_icon()
 		//Friendly reminder that icon_exists(file, state, scream = TRUE) is your friend when debugging this code.
-		var/handled_by_bodytype = TRUE
+		var/handled_by_bodyshape = TRUE
 		var/icon_file
 		var/woman
 		//BEGIN SPECIES HANDLING
-		if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		if((bodyshape & BODYSHAPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
-		else if(dna.species.visual_gender & dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		else if(dna.species.visual_gender & dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 			icon_file = DEFAULT_UNIFORM_FILE
-			handled_by_bodytype = FALSE
+			handled_by_bodyshape = FALSE
 
 		//END SPECIES HANDLING
 		uniform_overlay = uniform.build_worn_icon(
@@ -132,7 +140,7 @@ There are several things that need to be remembered:
 			isinhands = FALSE,
 			female_uniform = woman ? uniform.female_sprite_flags : null,
 			override_state = target_overlay,
-			override_file = handled_by_bodytype ? icon_file : null,
+			override_file = handled_by_bodyshape ? icon_file : null,
 		)
 
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
@@ -140,11 +148,11 @@ There are several things that need to be remembered:
 			my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 		apply_overlay(UNIFORM_LAYER)
-		check_body_shape(BODYTYPE_DIGITIGRADE, ITEM_SLOT_ICLOTHING)
+		check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_ICLOTHING)
 
 	update_mutant_bodyparts()
 
-/mob/living/carbon/human/update_worn_id()
+/mob/living/carbon/human/update_worn_id(update_obscured = TRUE)
 	remove_overlay(ID_LAYER)
 
 	if(client && hud_used)
@@ -156,6 +164,10 @@ There are several things that need to be remembered:
 	if(wear_id)
 		var/obj/item/worn_item = wear_id
 		update_hud_id(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		var/icon_file = 'icons/mob/clothing/id.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
@@ -170,7 +182,7 @@ There are several things that need to be remembered:
 	apply_overlay(ID_LAYER)
 
 
-/mob/living/carbon/human/update_worn_gloves()
+/mob/living/carbon/human/update_worn_gloves(update_obscured = TRUE)
 	remove_overlay(GLOVES_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1])
@@ -198,6 +210,9 @@ There are several things that need to be remembered:
 
 	var/obj/item/worn_item = gloves
 	update_hud_gloves(worn_item)
+
+	if(update_obscured)
+		update_obscured_slots(worn_item.flags_inv)
 
 	CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_GLOVES)
 
@@ -230,7 +245,7 @@ There are several things that need to be remembered:
 	overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
 
-/mob/living/carbon/human/update_worn_glasses()
+/mob/living/carbon/human/update_worn_glasses(update_obscured = TRUE)
 	remove_overlay(GLASSES_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -245,12 +260,15 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = glasses
 		update_hud_glasses(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_EYES) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/icon_file = 'icons/mob/clothing/eyes.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_GLASSES, glasses)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -263,7 +281,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLASSES_LAYER)
 
 
-/mob/living/carbon/human/update_inv_ears()
+/mob/living/carbon/human/update_worn_ears(update_obscured = TRUE)
 	remove_overlay(EARS_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -278,12 +296,15 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = ears
 		update_hud_ears(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_EARS) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/icon_file = 'icons/mob/clothing/ears.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_EARS, ears)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -295,7 +316,7 @@ There are several things that need to be remembered:
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
 
-/mob/living/carbon/human/update_worn_neck()
+/mob/living/carbon/human/update_worn_neck(update_obscured = TRUE)
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -306,6 +327,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_neck
 		update_hud_neck(wear_neck)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		if(worn_item.slot_flags & ITEM_SLOT_MASK)
 			CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_MASK)
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_NECK) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
@@ -313,7 +337,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_NECK, wear_neck)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -327,7 +351,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/human/update_worn_shoes()
+/mob/living/carbon/human/update_worn_shoes(update_obscured = TRUE)
 	remove_overlay(SHOES_LAYER)
 
 	if(num_legs < 2)
@@ -341,16 +365,19 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = shoes
 		update_hud_shoes(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_FEET) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/handled_by_bodytype = TRUE
 		var/icon_file = DEFAULT_SHOES_FILE
 
-		if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (shoes.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		if((bodyshape & BODYSHAPE_DIGITIGRADE) && (shoes.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_SHOES_FILE
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SHOES, shoes)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -382,9 +409,9 @@ There are several things that need to be remembered:
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
-	check_body_shape(BODYTYPE_DIGITIGRADE, ITEM_SLOT_FEET)
+	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_FEET)
 
-/mob/living/carbon/human/update_suit_storage()
+/mob/living/carbon/human/update_suit_storage(update_obscured = TRUE)
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(client && hud_used)
@@ -395,6 +422,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = s_store
 		update_hud_s_store(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_SUITSTORE) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
@@ -403,7 +433,7 @@ There are several things that need to be remembered:
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 	apply_overlay(SUIT_STORE_LAYER)
 
-/mob/living/carbon/human/update_worn_head()
+/mob/living/carbon/human/update_worn_head(update_obscured = TRUE)
 	remove_overlay(HEAD_LAYER)
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
@@ -413,12 +443,15 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = head
 		update_hud_head(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_HEAD) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_HEAD, head)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -430,11 +463,10 @@ There are several things that need to be remembered:
 			my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
 
-	update_mutant_bodyparts()
 	apply_overlay(HEAD_LAYER)
-	check_body_shape(BODYTYPE_SNOUTED, ITEM_SLOT_HEAD)
+	check_body_shape(BODYSHAPE_SNOUTED, ITEM_SLOT_HEAD)
 
-/mob/living/carbon/human/update_worn_belt()
+/mob/living/carbon/human/update_worn_belt(update_obscured = TRUE)
 	remove_overlay(BELT_LAYER)
 
 	if(client && hud_used)
@@ -445,12 +477,15 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = belt
 		update_hud_belt(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_BELT) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_BELT, belt)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -464,7 +499,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(BELT_LAYER)
 
-/mob/living/carbon/human/update_worn_oversuit()
+/mob/living/carbon/human/update_worn_oversuit(update_obscured = TRUE)
 	remove_overlay(SUIT_LAYER)
 
 	if(client && hud_used)
@@ -474,10 +509,14 @@ There are several things that need to be remembered:
 	if(wear_suit)
 		var/obj/item/worn_item = wear_suit
 		update_hud_wear_suit(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		var/icon_file = DEFAULT_SUIT_FILE
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SUIT, wear_suit)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -496,7 +535,7 @@ There are several things that need to be remembered:
 	update_mutant_bodyparts()
 
 	apply_overlay(SUIT_LAYER)
-	check_body_shape(BODYTYPE_DIGITIGRADE, ITEM_SLOT_OCLOTHING)
+	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_OCLOTHING)
 
 
 /mob/living/carbon/human/update_pockets()
@@ -520,7 +559,7 @@ There are several things that need to be remembered:
 				client.screen += r_store
 			update_observer_view(r_store)
 
-/mob/living/carbon/human/update_worn_mask()
+/mob/living/carbon/human/update_worn_mask(update_obscured = TRUE)
 	remove_overlay(FACEMASK_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -535,12 +574,15 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_mask
 		update_hud_wear_mask(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_MASK) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_MASK, wear_mask)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -552,9 +594,9 @@ There are several things that need to be remembered:
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
 	apply_overlay(FACEMASK_LAYER)
-	check_body_shape(BODYTYPE_SNOUTED, ITEM_SLOT_MASK)
+	check_body_shape(BODYSHAPE_SNOUTED, ITEM_SLOT_MASK)
 
-/mob/living/carbon/human/update_worn_back()
+/mob/living/carbon/human/update_worn_back(update_obscured = TRUE)
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
@@ -565,10 +607,14 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = back
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_MISC, back)
 			if(species_icon_file)
 				icon_file = species_icon_file
@@ -855,7 +901,7 @@ generate/load female uniform sprites matching all previously decided variables
 	var/layer2use = alternate_worn_layer || default_layer
 
 	var/mob/living/carbon/wearer = loc
-	var/is_digi = istype(wearer) && (wearer.dna?.species?.bodytype & BODYTYPE_DIGITIGRADE) && !wearer.is_digitigrade_squished()
+	var/is_digi = istype(wearer) && (wearer.bodyshape & BODYSHAPE_DIGITIGRADE) && !wearer.is_digitigrade_squished()
 
 	var/mutable_appearance/standing // this is the actual resulting MA
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
@@ -993,17 +1039,17 @@ generate/load female uniform sprites matching all previously decided variables
  *
  * return an integer, the number of limbs updated
  */
-/mob/living/carbon/human/proc/check_body_shape(check_shapes = BODYTYPE_DIGITIGRADE|BODYTYPE_SNOUTED, ignore_slots = NONE)
+/mob/living/carbon/human/proc/check_body_shape(check_shapes = BODYSHAPE_DIGITIGRADE|BODYSHAPE_SNOUTED, ignore_slots = NONE)
 	. = 0
-	if(!(bodytype & check_shapes))
+	if(!(bodyshape & check_shapes))
 		// optimization - none of our limbs or organs have the desired shape
 		return .
 
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		var/checked_bodyshape = limb.bodytype
+		var/checked_bodyshape = limb.bodyshape
 		// accounts for stuff like snouts
 		for(var/obj/item/organ/organ in limb)
-			checked_bodyshape |= organ.external_bodytypes
+			checked_bodyshape |= organ.external_bodyshapes
 
 		// any limb needs to be updated, so stop here and do it
 		if(checked_bodyshape & check_shapes)
@@ -1014,7 +1060,7 @@ generate/load female uniform sprites matching all previously decided variables
 		return
 	// hardcoding this here until bodypart updating is more sane
 	// we need to update clothing items that may have been affected by bodyshape updates
-	if(check_shapes & BODYTYPE_DIGITIGRADE)
+	if(check_shapes & BODYSHAPE_DIGITIGRADE)
 		for(var/obj/item/thing as anything in get_equipped_items())
 			if(thing.slot_flags & ignore_slots)
 				continue
