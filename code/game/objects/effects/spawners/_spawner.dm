@@ -17,3 +17,8 @@
 	SHOULD_CALL_PARENT(FALSE)
 	moveToNullspace()
 	return QDEL_HINT_QUEUE
+
+/obj/effect/spawner/forceMove(atom/destination)
+	if(destination && QDELETED(src)) // throw a warning if we try to forceMove a qdeleted spawner to somewhere other than nullspace
+		stack_trace("Warning: something tried to forceMove() a qdeleted [src]([type]) to non-null destination [destination]([destination.type])!")
+	return ..()

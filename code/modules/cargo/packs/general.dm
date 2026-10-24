@@ -26,48 +26,6 @@
 	crate_name = "tattoo crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/misc/aquarium_kit
-	name = "Aquarium Kit"
-	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, \
-		fish catalog, fish food and three freshwater fish from our collection."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/book/fish_catalog,
-					/obj/item/storage/fish_case/random/freshwater = 3,
-					/obj/item/fish_feed,
-					/obj/item/storage/box/aquarium_props,
-					/obj/item/aquarium_kit,
-				)
-	crate_name = "aquarium kit crate"
-	crate_type = /obj/structure/closet/crate/wooden
-
-/datum/supply_pack/misc/aquarium_fish
-	name = "Aquarium Fish Case"
-	desc = "An aquarium fish bundle handpicked by monkeys from our collection. Contains two random fish."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random = 2)
-	crate_name = "aquarium fish crate"
-
-/datum/supply_pack/misc/freshwater_fish
-	name = "Freshwater Fish Case"
-	desc = "Aquarium fish that have had most of their mud cleaned off."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random/freshwater = 2)
-	crate_name = "freshwater fish crate"
-
-/datum/supply_pack/misc/saltwater_fish
-	name = "Saltwater Fish Case"
-	desc = "Aquarium fish that fill the room with the smell of salt."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random/saltwater = 2)
-	crate_name = "saltwater fish crate"
-
-/datum/supply_pack/misc/tiziran_fish
-	name = "Tirizan Fish Case"
-	desc = "Tiziran saltwater fish imported from the Zagos Sea."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/tiziran = 2)
-	crate_name = "tiziran fish crate"
-
 /datum/supply_pack/misc/fish_analyzers
 	name = "Fish Analyzers"
 	desc = "A pack containing three analyzers to monitor fish's status and traits with."

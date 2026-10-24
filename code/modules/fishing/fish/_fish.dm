@@ -2,7 +2,7 @@
 /obj/item/fish
 	name = "generic looking aquarium fish"
 	desc = "very bland"
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -12,7 +12,7 @@
 	attack_verb_simple = list("slap", "whack")
 	hitsound = 'sound/weapons/slap.ogg'
 	///The grind results of the fish. They scale with the weight of the fish.
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
+	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
 
 	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
@@ -138,10 +138,17 @@
 
 	/// If this fish type counts towards the Fish Species Scanning experiments
 	var/experisci_scannable = TRUE
+	/// cooldown on creating tesla zaps
+	COOLDOWN_DECLARE(electrogenesis_cooldown)
+	/// power of the tesla zap created by the fish in a bioelectric generator
+	var/electrogenesis_power = 10 MEGA JOULES
+
+	/// The beauty this fish provides to the aquarium it's inserted in.
+	var/beauty = FISH_BEAUTY_GENERIC
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
+	AddComponent(/datum/component/aquarium_content, icon, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STIRRED), beauty)
 
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(do_flop_animation)
@@ -314,6 +321,8 @@
 		last_feeding = world.time
 	else
 		var/datum/reagent/wrong_reagent = pick(fed_reagents.reagent_list)
+		if(!wrong_reagent)
+			return
 		fed_reagent_type = wrong_reagent.type
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
@@ -348,6 +357,9 @@
 	process_health(seconds_per_tick)
 	if(ready_to_reproduce())
 		try_to_reproduce()
+
+	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && COOLDOWN_FINISHED(src, electrogenesis_cooldown))
+		try_electrogenesis()
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
@@ -602,6 +614,20 @@
 /obj/item/fish/proc/refresh_flopping()
 	if(flopping)
 		flop_animation()
+
+/// Zaps nearby things with weak tesla arcs if the fish is alive and fed
+/obj/item/fish/proc/try_electrogenesis()
+	if(status == FISH_DEAD || is_hungry())
+		return
+	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
+	var/fish_zap_range = 1
+	var/fish_zap_power = 1 KILO JOULES // ~5 damage, just a little friendly "yeeeouch!"
+	var/fish_zap_flags = ZAP_MOB_DAMAGE
+	if(istype(loc, /obj/structure/aquarium/bioelec_gen))
+		fish_zap_range = 5
+		fish_zap_power = electrogenesis_power
+		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
+	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, zap_flags = fish_zap_flags)
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)
