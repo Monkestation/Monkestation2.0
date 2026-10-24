@@ -95,7 +95,7 @@
 	var/uniform_compatible = isnull(worn_uniform) \
 		|| (worn_uniform.supports_variations_flags & DIGITIGRADE_VARIATIONS) \
 		|| !(worn_uniform.body_parts_covered & LEGS) \
-		|| (worn_suit?.flags_inv & HIDEJUMPSUIT) // If suit hides our jumpsuit, it doesn't matter if it squishes
+		|| (obscured_slots & HIDEJUMPSUIT) // If suit hides our jumpsuit, it doesn't matter if it squishes
 
 	var/suit_compatible = isnull(worn_suit) \
 		|| (worn_suit.supports_variations_flags & DIGITIGRADE_VARIATIONS) \
@@ -109,7 +109,7 @@
 /obj/item/bodypart/leg/left/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 	composition_effects = list(TRAIT_COLD_BLOODED = 0.5)
 	palette = /datum/color_palette/generic_colors
@@ -128,7 +128,7 @@
 /obj/item/bodypart/leg/right/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 	composition_effects = list(TRAIT_COLD_BLOODED = 0.5)
 	palette = /datum/color_palette/generic_colors

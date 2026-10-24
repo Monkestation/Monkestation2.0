@@ -87,11 +87,7 @@
 	return GLOB.tails_list_human
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return FALSE
-	if(human.w_uniform?.flags_inv & HIDETAIL)
-		return FALSE
-	return TRUE
+	return !(human.obscured_slots & (HIDEJUMPSUIT|HIDETAIL))
 
 /obj/item/organ/external/tail/cat
 	name = "tail"

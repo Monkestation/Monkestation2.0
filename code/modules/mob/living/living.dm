@@ -2204,10 +2204,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
 
-/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
-/mob/living/proc/is_face_visible()
-	return TRUE
-
 
 ///Proc to modify the value of num_legs and hook behavior associated to this event.
 /mob/living/proc/set_num_legs(new_value)

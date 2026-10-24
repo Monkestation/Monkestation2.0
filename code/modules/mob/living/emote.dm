@@ -596,7 +596,7 @@ monkestation edit end */
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(!carbon_user.is_face_visible())
+		if(carbon_user.obscured_slots & HIDEFACE)
 			return // if your face is obscured, skip propagation
 
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
