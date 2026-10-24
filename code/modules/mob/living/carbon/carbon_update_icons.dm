@@ -541,6 +541,8 @@
 	var/list/needs_update = list()
 	var/limb_count_update = 0
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		if(limb.bodypart_flags & BODYPART_ABSTRACT) // not drawn, and has no zone to key it by
+			continue
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
 
 		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
@@ -563,6 +565,8 @@
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		if(limb.bodypart_flags & BODYPART_ABSTRACT)
+			continue
 		if(limb in needs_update)
 			var/bodypart_icon = limb.get_limb_icon(dropped = FALSE, update_on = src)
 			new_limbs += bodypart_icon

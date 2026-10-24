@@ -202,7 +202,6 @@
 	plaintext_zone = "left leg"
 	px_x = -2
 	px_y = 12
-	can_be_disabled = TRUE
 	bodypart_trait_source = LEFT_LEG_TRAIT
 
 /obj/item/bodypart/leg/left/set_owner(new_owner)

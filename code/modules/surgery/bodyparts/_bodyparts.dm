@@ -890,6 +890,10 @@
 	refresh_bleed_rate()
 	return old_owner
 
+/// Called on every bodypart once [/mob/living/carbon/proc/create_bodyparts] has made the whole body, which doesn't go through try_attach_limb()
+/obj/item/bodypart/proc/on_body_created(mob/living/carbon/new_owner)
+	return
+
 /obj/item/bodypart/proc/on_removal()
 	if(!length(bodypart_traits))
 		return

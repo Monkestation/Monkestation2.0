@@ -18,7 +18,7 @@
 		return
 
 	for(var/mob/living/carbon/human/human in oview(range, basic_mob))
-		for(var/obj/item/item as anything in human.held_items)
+		for(var/obj/item/item as anything in human.get_held_items())
 			if(QDELETED(item))
 				continue
 			if(!istype(item, ai_controller.blackboard[BB_BASIC_MOB_SCARED_ITEM]))

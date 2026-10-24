@@ -82,7 +82,7 @@
 
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE)
+/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE, move_to_floor = TRUE)
 	if(!owner)
 		return
 	var/atom/drop_loc = owner.drop_location()
@@ -137,7 +137,7 @@
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
 
-	if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!drop_loc && move_to_floor) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
@@ -165,7 +165,10 @@
 		qdel(src)
 		return
 
-	forceMove(drop_loc)
+	if(move_to_floor)
+		forceMove(drop_loc)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_POST_REMOVED, phantom_owner, special, dismembered)
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
 
 /**
@@ -253,13 +256,13 @@
 	head.tongue = src
 	..()
 
-/obj/item/bodypart/chest/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/chest/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(special)
 		return ..()
 	//if this is not a special drop, this is a mistake
 	return FALSE
 
-/obj/item/bodypart/arm/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/arm/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 
@@ -292,7 +295,7 @@
 	new_arm_owner.update_worn_gloves()
 
 
-/obj/item/bodypart/leg/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/leg/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
@@ -303,7 +306,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE, violent = violent)
 	return ..()
 
-/obj/item/bodypart/head/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/head/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))

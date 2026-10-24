@@ -998,13 +998,17 @@
 				bodypart_instance.held_index = r_arm_index_next //2, 4, 6, 8...
 				hand_bodyparts += bodypart_instance
 
+	for(var/obj/item/bodypart/bodypart_instance as anything in bodyparts.Copy())
+		bodypart_instance.on_body_created(src)
+
 
 ///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	bodyparts += new_bodypart
-	real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
+	if(!isnull(new_bodypart.body_zone))
+		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
@@ -1025,7 +1029,8 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	old_bodypart.on_removal()
 	bodyparts -= old_bodypart
-	real_bodypart_cache -= old_bodypart.body_zone
+	if(!isnull(old_bodypart.body_zone))
+		real_bodypart_cache -= old_bodypart.body_zone
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
