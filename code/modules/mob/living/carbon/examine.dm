@@ -261,9 +261,9 @@
 						. += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> noises."
 					else
 						. += "[t_He] appear[p_s()] to not be responding to <strong>quiet voices</strong>."
-				if (bodytemperature > bodytemp_heat_damage_limit)
+				if (bodytemperature > get_body_temp_heat_damage_limit())
 					. += "[t_He] [t_is] flushed and wheezing."
-				if (bodytemperature < bodytemp_cold_damage_limit)
+				if (bodytemperature < get_body_temp_cold_damage_limit())
 					. += "[t_He] [t_is] shivering."
 				if(HAS_TRAIT(src, TRAIT_EVIL))
 					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."

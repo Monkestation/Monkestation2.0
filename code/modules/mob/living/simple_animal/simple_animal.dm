@@ -56,8 +56,10 @@
 	///How much stamina the mob recovers per second
 	var/stamina_recovery = 5
 
-	bodytemp_cold_damage_limit = NPC_DEFAULT_MIN_TEMP
-	bodytemp_heat_damage_limit = NPC_DEFAULT_MAX_TEMP
+	///Minimal body temperature without receiving damage
+	var/minbodytemp = NPC_DEFAULT_MIN_TEMP
+	///Maximal body temperature without receiving damage
+	var/maxbodytemp = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold.
 	var/unsuitable_cold_damage
 	///This damage is taken when the body temp is too hot.
@@ -74,6 +76,9 @@
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
+
+	///How fast the mob's temperature normalizes. The greater the value, the slower their temperature normalizes. Should always be greater than 0.
+	var/temperature_normalization_speed = 5
 
 	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
 	melee_damage_lower = 0
@@ -190,6 +195,8 @@
 		unsuitable_cold_damage = unsuitable_atmos_damage
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
+	if((unsuitable_cold_damage || unsuitable_heat_damage) && (minbodytemp > 0 || maxbodytemp < INFINITY))
+		AddElement(/datum/element/body_temp_sensitive, minbodytemp, maxbodytemp, unsuitable_cold_damage, unsuitable_heat_damage)
 
 /mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -330,11 +337,11 @@
 /mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)
 	. = TRUE
 	var/areatemp = get_temperature(environment)
-	if((areatemp < bodytemp_cold_damage_limit) || (areatemp > bodytemp_heat_damage_limit))
+	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
 		. = FALSE
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	. = ..()
+	normalize_temperature(environment, seconds_per_tick)
 
 	if(!environment_air_is_safe() && unsuitable_atmos_damage)
 		adjustHealth(unsuitable_atmos_damage * seconds_per_tick)
@@ -344,36 +351,19 @@
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
 
-/mob/living/simple_animal/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	if((bodytemperature < bodytemp_cold_damage_limit) && unsuitable_cold_damage)
-		adjustHealth(unsuitable_cold_damage * seconds_per_tick)
-
-	if((bodytemperature > bodytemp_heat_damage_limit) && unsuitable_heat_damage)
-		adjustHealth(unsuitable_heat_damage * seconds_per_tick)
-
-/mob/living/simple_animal/body_temperature_alerts()
-	if((bodytemperature < bodytemp_cold_damage_limit) && unsuitable_cold_damage)
-		switch(unsuitable_cold_damage)
-			if(1 to 5)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
-			if(5 to 10)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
-			if(10 to INFINITY)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
-		. = TRUE
-
-	if((bodytemperature > bodytemp_heat_damage_limit) && unsuitable_heat_damage)
-		switch(unsuitable_heat_damage)
-			if(1 to 5)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
-			if(5 to 10)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 2)
-			if(10 to INFINITY)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
-		. = TRUE
-
-	if(!.)
-		clear_alert(ALERT_TEMPERATURE)
+/// Moves our body temperature towards the temperature of the turf we are on
+/mob/living/simple_animal/proc/normalize_temperature(datum/gas_mixture/environment, seconds_per_tick)
+	if(!isturf(loc) || HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
+		return
+	var/areatemp = get_temperature(environment)
+	var/temp_delta = areatemp - bodytemperature
+	if(abs(temp_delta) <= 5)
+		return
+	if(temp_delta < 0)
+		if(!on_fire)
+			adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, temp_delta, 0))
+	else
+		adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, 0, temp_delta))
 
 /mob/living/simple_animal/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	if(butcher_results || guaranteed_butcher_results)
@@ -630,9 +620,3 @@
 
 /mob/living/simple_animal/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
-
-/mob/living/simple_animal/update_cached_insulation()
-	return
-
-/mob/living/simple_animal/get_insulation(temperature)
-	return temperature_insulation

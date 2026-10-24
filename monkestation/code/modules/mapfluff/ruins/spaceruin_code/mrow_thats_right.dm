@@ -156,8 +156,8 @@
 	// it's clad in blood-red armor
 	damage_coeff = list(BRUTE = 0.8, BURN = 0.9, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 	unsuitable_atmos_damage = 0
 
 /mob/living/simple_animal/hostile/syndicat/super/Initialize(mapload)

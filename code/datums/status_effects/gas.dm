@@ -24,7 +24,7 @@
 
 
 /datum/status_effect/freon/tick()
-	if(can_melt && owner.bodytemperature >= owner.standard_body_temperature - 2 KELVIN)
+	if(can_melt && owner.bodytemperature >= owner.get_body_temp_normal())
 		qdel(src)
 
 /datum/status_effect/freon/proc/owner_resist()
@@ -41,7 +41,7 @@
 	if(!owner.stat)
 		to_chat(owner, span_notice("The cube melts!"))
 	owner.cut_overlay(cube)
-	owner.adjust_bodytemperature(50 KELVIN, max_temp = owner.standard_body_temperature - 5 KELVIN)
+	owner.adjust_bodytemperature(100)
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()

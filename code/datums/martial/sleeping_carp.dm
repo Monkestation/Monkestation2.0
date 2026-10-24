@@ -379,7 +379,9 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 	desc = "This gloves are capable of making people use The Sleeping Carp."
 	icon_state = "black"
 	greyscale_colors = "#000000"
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	var/datum/martial_art/the_sleeping_carp/style

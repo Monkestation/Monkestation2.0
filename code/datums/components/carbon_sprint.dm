@@ -60,7 +60,7 @@
 		//We set forced to TRUE because we want sprinting to override TRAIT_STUNIMMMUNE, which makes you immune to all other stamina damage.
 		carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * sprint_stamina_modifier, TRUE)
 		if(HAS_TRAIT(carbon_parent, TRAIT_EXERTION_OVERHEAT))
-			carbon_parent.adjust_bodytemperature((carbon_parent.bodytemp_heat_damage_limit - carbon_parent.standard_body_temperature) * 0.15)
+			carbon_parent.adjust_bodytemperature((carbon_parent.get_body_temp_heat_damage_limit() - carbon_parent.get_body_temp_normal()) * 0.15)
 	else if(sprinting)
 		stopSprint()
 

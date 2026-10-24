@@ -7,8 +7,8 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = HEAD
-
-
+	heat_protection = HEAD
+	cold_protection = HEAD
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
@@ -27,8 +27,8 @@
 	)
 	armor_type = /datum/armor/none
 	body_parts_covered = CHEST|GROIN
-
-
+	heat_protection = CHEST|GROIN
+	cold_protection = CHEST|GROIN
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
@@ -41,6 +41,8 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = HANDS|ARMS
+	cold_protection = HANDS|ARMS
+	heat_protection = HANDS|ARMS
 	item_flags = IMMUTABLE_SLOW
 
 /obj/item/clothing/shoes/mod
@@ -52,8 +54,8 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = FEET|LEGS
-
-
+	heat_protection = FEET|LEGS
+	cold_protection = FEET|LEGS
 	item_flags = IMMUTABLE_SLOW
 	item_flags = IGNORE_DIGITIGRADE
 	can_be_tied = FALSE
