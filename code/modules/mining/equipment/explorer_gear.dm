@@ -15,6 +15,8 @@
 	armor_type = /datum/armor/hooded_explorer
 	resistance_flags = FIRE_PROOF
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
+	cerulean_flipper_palette = "#423934"
 
 /obj/item/clothing/suit/hooded/explorer/get_general_color(icon/base_icon)
 	return "#796755"
@@ -80,20 +82,20 @@
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
-/obj/item/clothing/mask/gas/explorer/adjustmask(mob/user)
+/obj/item/clothing/mask/gas/explorer/visor_toggling()
 	. = ..()
 	// adjusted = out of the way = smaller = can fit in boxes
-	w_class = mask_adjusted ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL
-	inhand_icon_state = mask_adjusted ? "[initial(inhand_icon_state)]_up" : initial(inhand_icon_state)
-	if(user)
-		user.update_held_items()
+	update_weight_class(up ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL)
 
+/obj/item/clothing/mask/gas/explorer/update_icon_state()
+	. = ..()
+	inhand_icon_state = "[initial(inhand_icon_state)][up ? "_up" : ""]"
 
 /obj/item/clothing/mask/gas/explorer/examine(mob/user)
 	. = ..()
-	if(mask_adjusted || w_class == WEIGHT_CLASS_SMALL)
+	if(up || w_class == WEIGHT_CLASS_SMALL)
 		return
 	. += span_notice("You could fit this into a box if you adjusted it.")
 
@@ -102,7 +104,7 @@
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
-	adjustmask()
+	visor_toggling()
 
 /obj/item/clothing/suit/hooded/cloak
 	icon = 'icons/obj/clothing/suits/armor.dmi'
@@ -115,6 +117,7 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()
@@ -184,6 +187,7 @@
 	. = ..()
 	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -230,6 +234,7 @@
 /obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
@@ -244,6 +249,10 @@
 
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/hooded/cloakhood/drake/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer
 	name = "godslayer armour"

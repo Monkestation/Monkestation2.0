@@ -64,7 +64,7 @@
 	if(human.stat || human.body_position == LYING_DOWN)
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-	if(human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
+	if((human.obscured_slots & HIDEJUMPSUIT) && (!human.wear_suit?.species_exception || !is_type_in_list(src, human.wear_suit.species_exception)))
 		to_chat(human, span_warning("Your suit blocks your wings from extending!"))
 		return FALSE
 	var/turf/location = get_turf(human)
@@ -143,7 +143,10 @@
 	///Feature render key for opened wings
 	var/open_feature_key = "wingsopen"
 
-/datum/bodypart_overlay/mutant/wings/functional/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/wings/functional/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if(human.w_uniform?.flags_inv & HIDEMUTWINGS)
 		return FALSE
 	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)

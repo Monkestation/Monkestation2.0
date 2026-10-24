@@ -11,6 +11,7 @@
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
+	bodyshapes_with_variations = NONE
 
 
 /datum/armor/eva_plasmaman
@@ -116,28 +117,25 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
-	toggle_welding_screen(user)
-	return CLICK_ACTION_SUCCESS
+	if(user.can_perform_action(src))
+		adjust_visor(user)
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
-		toggle_welding_screen(user)
+		adjust_visor(user)
 		return
 
 	return ..()
 
-/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
-	if(!weldingvisortoggle(user))
+/obj/item/clothing/head/helmet/space/plasmaman/adjust_visor(mob/living/user)
+	. = ..()
+	if(!.)
 		return
 	if(helmet_on)
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 		helmet_on = FALSE
 		set_light_on(FALSE)
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Welding visors don't just come from nothing
-	update_appearance(UPDATE_ICON)
-
-/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling()
-	. = ..()
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
@@ -194,7 +192,7 @@
 		update_appearance(UPDATE_ICON)
 
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return

@@ -60,7 +60,7 @@
 	if(isnull(their_turf) || isnull(source_turf))
 		return
 	var/distance = get_dist(source_turf, their_turf)
-	return ceil(. - CALCULATE_SOUND_VOLUME(., distance, max_distance, falloff_distance, falloff_exponent))
+	return ceil(. - CALCULATE_SOUND_VOLUME_RATIO(., distance, max_distance, falloff_distance, falloff_exponent) * .)
 
 /datum/media_source/object/get_priority(mob/target)
 	var/datum/preferences/prefs = target?.client?.prefs
@@ -83,6 +83,16 @@
 	SIGNAL_HANDLER
 	if(!QDELETED(src))
 		qdel(src)
+
+/datum/media_source/object/update_for_listener(mob/target, force_update_time = FALSE)
+	// Whoever is carrying us can get their moved signal before we hear that we moved too,
+	// so catch up first or they'd stop and restart the song when changing z-levels.
+	var/turf/our_turf = get_turf(source)
+	if(!isnull(our_turf) && our_turf != source_turf)
+		on_source_moved(source)
+		if(!force_update_time)
+			return
+	return ..()
 
 /datum/media_source/object/proc/on_source_moved(atom/movable/source)
 	SIGNAL_HANDLER

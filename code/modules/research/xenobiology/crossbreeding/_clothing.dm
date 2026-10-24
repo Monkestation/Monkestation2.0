@@ -125,6 +125,7 @@ Slimecrossing Armor
 	item_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
 	if((def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)) && prob(hit_reflect_chance))

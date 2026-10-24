@@ -15,6 +15,7 @@
 
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/toggle/jacket/sweater
 	name = "sweater jacket"
@@ -33,9 +34,10 @@
 	SETUP_MAP_ICONS("jacket_oversized", "/obj/item/clothing/suit/jacket/oversized")
 	greyscale_config = /datum/greyscale_config/jacket_oversized
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized_worn
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_CERULEAN_MASK_INBETWEEN
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /obj/item/clothing/suit/jacket/fancy
 	name = "fancy fur coat"
@@ -66,6 +68,18 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/gun/ballistic/revolver/c38/detective, /obj/item/gun/energy/laser/musket, /obj/item/gun/ballistic/rifle/boltaction/pipegun, /obj/item/radio)
 	species_exception = list(/datum/species/golem/bone) //bad to the bone
+
+/obj/item/clothing/suit/jacket/leather/armored
+	desc = "Its leather is so thick, you can hardly tell there's padding beneath it. its also <b>really loud!</b>"
+	icon = /obj/item/clothing/suit/toggle/jacket/sweater::icon
+	icon_state = "/obj/item/clothing/suit/toggle/jacket/sweater"
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_state = "leatherjacket_p"
+	armor_type = /datum/armor/wintercoat_security
+
+/obj/item/clothing/suit/jacket/leather/armored/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/jacket/leather/biker
 	name = "biker jacket"

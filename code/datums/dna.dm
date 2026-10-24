@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(identity_block_lengths, list(
  */
 GLOBAL_LIST_INIT(features_block_lengths, list(
 		"[DNA_ETHEREAL_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
+		"[DNA_FISH_TAIL_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 	))
 
 /**
@@ -281,6 +282,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_MUSHROOM_CAPS_BLOCK] = construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len)
 	if(features["pod_hair"])
 		L[DNA_POD_HAIR_BLOCK] = construct_block(GLOB.pod_hair_list.Find(features["pod_hair"]), GLOB.pod_hair_list.len)
+	if(features["fish_tail"])
+		L[DNA_FISH_TAIL_BLOCK] = construct_block(GLOB.tails_list_fish.Find(features["fish_tail"]), GLOB.tails_list_fish.len)
+	if(features["fish_tail_color"])
+		L[DNA_FISH_TAIL_COLOR_BLOCK] = sanitize_hexcolor(features["fish_tail_color"], include_crunch = FALSE)
 	if(features["arm_wings"]) // NON-MODULE CHANGE
 		L[DNA_ARM_WINGS_BLOCK] = construct_block(GLOB.arm_wings_list.Find(features["arm_wings"]), GLOB.arm_wings_list.len)
 	if(features["tail_avian"]) // NON-MODULE CHANGE
@@ -288,7 +293,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(features["ears_avian"]) // NON-MODULE CHANGE
 		L[DNA_AVIAN_EARS_BLOCK] = construct_block(GLOB.avian_ears_list.Find(features["ears_avian"]), GLOB.avian_ears_list.len)
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
-		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
+		. += L[blocknum] || random_string(GET_UF_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
 /datum/dna/proc/generate_dna_blocks()
 /* MONKESTATION EDIT OLD
@@ -429,6 +434,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
 		if(DNA_POD_HAIR_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.pod_hair_list.Find(features["pod_hair"]), GLOB.pod_hair_list.len))
+		if(DNA_FISH_TAIL_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_fish.Find(features["fish_tail"]), GLOB.tails_list_fish.len))
+		if(DNA_FISH_TAIL_COLOR_BLOCK)
+			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["fish_tail_color"], include_crunch = FALSE))
 		if(DNA_ARM_WINGS_BLOCK) // NON-MODULE CHANGE
 			set_uni_feature_block(blocknumber, construct_block(GLOB.arm_wings_list.Find(features["arm_wings"]), GLOB.arm_wings_list.len))
 		if(DNA_AVIAN_TAIL_BLOCK) // NON-MODULE CHANGE
@@ -715,6 +724,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["caps"] = GLOB.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), GLOB.caps_list.len)]
 	if(dna.features["pod_hair"])
 		dna.features["pod_hair"] = GLOB.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), GLOB.pod_hair_list.len)]
+	if(dna.features["fish_tail"])
+		dna.features["fish_tail"] = GLOB.tails_list_fish[deconstruct_block(get_uni_feature_block(features, DNA_FISH_TAIL_BLOCK), GLOB.tails_list_fish.len)]
+	if(dna.features["fish_tail_color"])
+		dna.features["fish_tail_color"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_FISH_TAIL_COLOR_BLOCK))
 	if(dna.features["arm_wings"]) // NON-MODULE CHANGE
 		dna.features["arm_wings"] = GLOB.arm_wings_list[deconstruct_block(get_uni_feature_block(features, DNA_ARM_WINGS_BLOCK), GLOB.arm_wings_list.len)]
 	if(dna.features["tail_avian"]) // NON-MODULE CHANGE

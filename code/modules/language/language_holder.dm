@@ -423,6 +423,28 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	)
 	selected_language = /datum/language/uncommon
 
+/datum/language_holder/carp
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/carp/dragon
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/monkey
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
@@ -545,6 +567,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/voltaic = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/cerulean
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
 	)
 
 /datum/language_holder/golem

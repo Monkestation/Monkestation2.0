@@ -29,6 +29,12 @@
 	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
+
+/obj/item/clothing/suit/apron/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
+	return apply_icon_mask(base_icon, LEGS_MASK, legs)
 
 /datum/armor/suit_apron
 	bio = 50
@@ -169,11 +175,12 @@
 	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
+	bodyshapes_with_variations = NONE
 
-/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance((bodyshape & BODYSHAPE_CERULEAN) ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/suit/hazardvest/press // Variant used by the Curator
 	name = "press hazard vest"
@@ -219,6 +226,7 @@
 	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	bodyshapes_with_variations = NONE
 
 //Security
 /obj/item/clothing/suit/jacket/officer/blue

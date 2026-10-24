@@ -4,6 +4,7 @@
 	allowed = list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	icon = 'icons/obj/clothing/suits/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/chaplainsuit/armor
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -50,6 +51,7 @@
 	icon_state = "studentuni"
 	inhand_icon_state = null
 	body_parts_covered = ARMS|CHEST
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/chaplainsuit/armor/witchhunter
 	name = "witchunter garb"
@@ -67,6 +69,7 @@
 	inhand_icon_state = "monkfrock"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/monkhabit
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/head/hooded/monkhabit
 	name = "monk's hood"
@@ -124,6 +127,10 @@
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	armor_type = /datum/armor/chaplain_clock
 
+/obj/item/clothing/suit/chaplainsuit/armor/clock/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
+
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
 	desc = "Deus Vult."
@@ -146,6 +153,10 @@
 	slowdown = 0
 	clothing_flags = NONE
 
+/obj/item/clothing/suit/chaplainsuit/armor/templar/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
+
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
@@ -160,6 +171,10 @@
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
 
+/obj/item/clothing/head/helmet/chaplain/ancient/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/biosuit_dark)
+
 /obj/item/clothing/suit/chaplainsuit/armor/ancient
 	name = "ancient armour"
 	desc = "Defend the treasure..."
@@ -167,6 +182,10 @@
 	inhand_icon_state = null
 	slowdown = 0.2 // stone armor is heavy
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+
+/obj/item/clothing/suit/chaplainsuit/armor/ancient/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
@@ -226,6 +245,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"

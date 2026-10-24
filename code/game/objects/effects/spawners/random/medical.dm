@@ -63,6 +63,7 @@
 		/obj/item/organ/internal/lungs/plasmaman,
 		/obj/item/organ/external/tail/cat,
 		/obj/item/organ/external/tail/lizard,
+		/obj/item/organ/external/tail/fish/cerulean,
 	)
 
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner
