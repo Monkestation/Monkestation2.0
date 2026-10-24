@@ -12,7 +12,10 @@
 
 /datum/bodypart_overlay/mutant/anime_head
 	color_source = ORGAN_COLOR_ANIME
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "anime_top"
 
 /datum/bodypart_overlay/mutant/anime_head/get_global_feature_list()
@@ -21,7 +24,10 @@
 /datum/bodypart_overlay/mutant/anime_head/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/anime_head/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/anime_head/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if(human.head?.flags_inv & HIDEEARS)
 		return FALSE
 	return ..()
@@ -40,7 +46,10 @@
 
 /datum/bodypart_overlay/mutant/anime_middle
 	color_source = ORGAN_COLOR_ANIME
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "anime_middle"
 
 /datum/bodypart_overlay/mutant/anime_middle/get_global_feature_list()
@@ -49,7 +58,10 @@
 /datum/bodypart_overlay/mutant/anime_middle/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/anime_middle/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/anime_middle/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
 	return ..()
@@ -68,7 +80,10 @@
 
 /datum/bodypart_overlay/mutant/anime_bottom
 	color_source = ORGAN_COLOR_ANIME
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "anime_bottom"
 
 /datum/bodypart_overlay/mutant/anime_bottom/get_global_feature_list()
@@ -77,7 +92,10 @@
 /datum/bodypart_overlay/mutant/anime_bottom/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/anime_bottom/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/anime_bottom/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if(human.w_uniform?.flags_inv & HIDETAIL)
 		return FALSE
 	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
@@ -113,8 +131,12 @@
 
 /datum/bodypart_overlay/mutant/anime_halo
 	color_source = ORGAN_COLOR_ANIME_HALO
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "anime_halo"
+	overlay_flags = NONE
 
 /datum/bodypart_overlay/mutant/anime_halo/get_global_feature_list()
 	return GLOB.anime_halo_list
@@ -122,16 +144,18 @@
 /datum/bodypart_overlay/mutant/anime_halo/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/anime_halo/get_emissive_overlay(layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/anime_halo/get_emissive_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	if(!sprite_datum.is_emissive)
 		return
-	layer = bitflag_to_layer(layer)
-	var/mutable_appearance/halo_emissive_overlay = emissive_appearance_copy(get_image(layer, limb), limb)
+	var/mutable_appearance/halo_emissive_overlay = emissive_appearance_copy(get_image(limb, layer_index, layer_real), limb)
 	halo_emissive_overlay.pixel_y = 0
 	halo_emissive_overlay.pixel_z = -16
 	return halo_emissive_overlay
 
-/datum/bodypart_overlay/mutant/anime_halo/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/anime_halo/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if((human.head?.flags_inv & HIDEEARS) || (human.stat == DEAD))
 		return FALSE
 	return ..()

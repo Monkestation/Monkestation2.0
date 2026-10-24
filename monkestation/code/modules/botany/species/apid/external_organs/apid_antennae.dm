@@ -14,7 +14,7 @@
 
 ///Moth antennae datum, with full burning functionality
 /datum/bodypart_overlay/mutant/antennae_apid
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = "apid_antenna"
 
 /datum/bodypart_overlay/mutant/antennae_apid/get_global_feature_list()

@@ -13,7 +13,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/floran_leaves
 
 /datum/bodypart_overlay/mutant/floran_leaves
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = "floran_leaves"
 	color_source = ORGAN_COLOR_MUTSECONDARY
 
@@ -28,7 +28,10 @@
 /datum/bodypart_overlay/mutant/floran_leaves/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/floran_leaves/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/floran_leaves/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	. = ..()
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return FALSE

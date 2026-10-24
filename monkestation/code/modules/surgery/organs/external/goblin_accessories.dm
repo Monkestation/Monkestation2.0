@@ -12,7 +12,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/goblin_ears
 
 /datum/bodypart_overlay/mutant/goblin_ears
-	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "goblin_ears"
 
 /datum/bodypart_overlay/mutant/goblin_ears/get_global_feature_list()
@@ -21,7 +24,10 @@
 /datum/bodypart_overlay/mutant/goblin_ears/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/goblin_ears/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/goblin_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/goblin_nose
@@ -38,7 +44,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/goblin_nose
 
 /datum/bodypart_overlay/mutant/goblin_nose
-	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "goblin_nose"
 
 /datum/bodypart_overlay/mutant/goblin_nose/get_global_feature_list()
@@ -47,5 +56,8 @@
 /datum/bodypart_overlay/mutant/goblin_nose/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/goblin_nose/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/goblin_nose/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
