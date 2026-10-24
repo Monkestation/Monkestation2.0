@@ -1,0 +1,71 @@
+# dmeow proc lists. Read at startup from DreamDaemon's working directory.
+
+# The 50 procs that saved the most game-thread time by running compiled, in
+# rank order.
+[compile_first]
+/turf/open/process_cell
+/datum/gas_mixture/share
+/datum/RegisterSignal
+/datum/gas_mixture/copy_from_ratio
+/qdel
+/obj/machinery/atmospherics/components/unary/vent_pump/process_atmos
+/datum/lighting_corner/update_lumcount
+/datum/gas_mixture/return_pressure
+/datum/UnregisterSignal
+/datum/gas_mixture/archive
+/datum/gas_mixture/compare
+/datum/lighting_corner/update_objects
+/atom/movable/Moved
+/mob/living/incapacitated
+/obj/machinery/power/surplus
+/mob/living/handle_environment
+/obj/machinery/airalarm/process_atmos
+/mob/living/adjust_bodytemperature
+/datum/ai_controller/basic_controller/able_to_run
+/mob/living/Life
+/obj/machinery/power/apc/charge_channel
+/datum/ai_controller/able_to_run
+/datum/controller/subsystem/radiation/can_irradiate_basic
+/datum/cameranet/get_camera_chunk
+/obj/machinery/power/apc/surplus
+/datum/gas_mixture/turf/heat_capacity
+/datum/pipeline/process
+/turf/open/consider_superconductivity
+/datum/controller/subsystem/garbage/Queue
+/datum/gas_mixture/copy_from
+/turf/LinkBlockedWithAccess
+/datum/gas_mixture/remove
+/obj/machinery/atmospherics/pipe/heat_exchanging/process_atmos
+/datum/controller/subsystem/air/add_to_active
+/datum/gas_mixture/garbage_collect
+/mob/living/get_insulation
+/atom/check_atmos_process
+/mob/living/carbon/handle_organs
+/turf/open/temperature_expose
+/datum/pollution/can_share_with
+/atom/movable/has_buckled_mobs
+/obj/item/organ/internal/on_death
+/mob/living/get_temperature
+/datum/reagents/has_reagent
+/datum/gas_mixture/total_moles
+/datum/gas_mixture/merge
+/datum/status_effect/process
+/datum/gas_mixture/New
+/atom/get_all_contents
+/turf/should_atmos_process
+
+# Compiled even though the auto-tier would skip them. Needs a dmeow with
+# [force_compile]; an older one refuses to start on this header.
+[force_compile]
+# only reads a field, but a turf var lookup is slow interpreted
+/turf/open/return_air
+
+[never_compile]
+# actually slower JIT'd
+/atom/on_mouse_enter
+/datum/tgui/send_update
+
+# these always seem to deopt
+/___callbackvarset
+/_addtimer
+/add_verb
