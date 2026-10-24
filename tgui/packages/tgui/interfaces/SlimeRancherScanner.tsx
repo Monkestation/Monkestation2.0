@@ -7,7 +7,7 @@ import {
   Tabs,
   Tooltip,
 } from 'tgui-core/components';
-import type { BooleanLike } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -101,7 +101,12 @@ function MutationRow(props: { mutation: Mutation }) {
   const { mutation } = props;
 
   return (
-    <Box className="SlimeRancherScanner__recipe">
+    <Box
+      className={classes([
+        'SlimeRancherScanner__recipe',
+        !!mutation.ready && 'SlimeRancherScanner__recipe--ready',
+      ])}
+    >
       <Box className="SlimeRancherScanner__recipe-heading">
         <SlimeName color={mutation.color} hex={mutation.color_hex} />
         {!!mutation.ready && (
@@ -296,6 +301,9 @@ function Mutations() {
   const { data } = useBackend<Data>();
   const { mutations } = data;
   const anyReady = mutations.some((mutation) => !!mutation.ready);
+  const sorted = [...mutations].sort(
+    (a, b) => Number(!!b.ready) - Number(!!a.ready),
+  );
 
   if (mutations.length === 0) {
     return (
@@ -317,7 +325,7 @@ function Mutations() {
         </NoticeBox>
       )}
       <Box className="SlimeRancherScanner__recipes">
-        {mutations.map((mutation) => (
+        {sorted.map((mutation) => (
           <MutationRow key={mutation.color} mutation={mutation} />
         ))}
       </Box>
