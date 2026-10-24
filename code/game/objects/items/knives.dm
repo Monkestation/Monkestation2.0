@@ -5,6 +5,8 @@
 	icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	pickup_sound =  'sound/items/handling/knife1_pickup.ogg'
+	drop_sound = 'sound/items/handling/knife3_drop.ogg'
 	inhand_icon_state = "knife"
 	worn_icon_state = "knife"
 	desc = "The original knife, it is said that all other knives are only copies of this one."

@@ -167,8 +167,8 @@
 	icon_state = "musket"
 	inhand_icon_state = "musket"
 	worn_icon_state = "musket"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -205,6 +205,7 @@
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
+	icon_state = "moistnugget"
 	var/guns_left = 30
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
@@ -371,7 +372,6 @@
 	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
 	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
 	icon_state = "brushgun"
-	icon = 'icons/obj/guns/guns.dmi'
 	bolt_wording = "Lever"
 	bolt_type = BOLT_TYPE_STANDARD
 	cartridge_wording = "bullet"
@@ -402,7 +402,6 @@
 	w_class = WEIGHT_CLASS_HUGE
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	inhand_icon_state = "fatmac"
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "fatmac"

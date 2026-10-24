@@ -117,7 +117,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/c38/detective
 	name = "\improper Colt Detective Special"
 	desc = "A classic, if not outdated, law enforcement firearm. Uses .38 Special rounds. \nSome spread rumors that if you loosen the barrel with a wrench, you can \"improve\" it."
-
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_38
 	initial_fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
@@ -151,7 +150,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 /obj/item/gun/ballistic/revolver/syndicate/cowboy
 	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
-	//There's already a cowboy sprite in there!
 	icon_state = "lucky"
 
 /obj/item/gun/ballistic/revolver/syndicate/nuclear
@@ -352,7 +350,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 /obj/item/gun/ballistic/revolver/takbok
 	name = "\improper Takbok Revolver"
 	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
 	inhand_icon_state = "takbok"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
@@ -425,7 +422,6 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	name = "\improper .45 Long Revolver"
 	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
 	icon_state = "45revolver"
-	icon = 'icons/obj/guns/guns.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
 	obj_flags = UNIQUE_RENAME
 

@@ -118,12 +118,8 @@
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher
 	name = "\improper Kiboko Grenade Launcher"
 	desc = "A unique grenade launcher firing .980 grenades. A laser sight system allows its user to specify a range for the grenades it fires to detonate at."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
 	icon_state = "kiboko"
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "kiboko"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
 	inhand_icon_state = "kiboko"
 	SET_BASE_PIXEL(-8, 0)
 	special_mags = TRUE
@@ -210,14 +206,13 @@
 	name = "\improper China Lake 40mm"
 	desc = "Oh, they're goin' ta have to glue you back together...IN HELL!"
 	desc_controls = "ALT-Click to set range. Can be reloaded by CLICK-DRAGGING grenades onto the launcher."
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/china_lake
 	var/target_range = 10
 	var/minimum_target_range = 5
 	var/maximum_target_range = 30
-	icon = 'icons/obj/guns/china_lake_obj.dmi'
 	icon_state = "china_lake"
-	lefthand_file = 'icons/mob/inhands/china_lake_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/china_lake_righthand.dmi'
 	inhand_icon_state = "china_lake"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
@@ -265,7 +260,6 @@
 	payloads. It does heavy damage on a direct hit to the natural landscape and natural fauna, however due to \
 	hardiness of most fauna, the blast leaves something to be desired."
 	name = "Proto-Kinetic 'Slab' Grenade Launcher"
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
 	eject_sound = 'sound/weapons/gun/l6/l6_door.ogg'
 	worn_icon_state = "protoklauncher"

@@ -189,7 +189,6 @@
 	Working a late shift one night, the Mining Research Director used a box of salvaged spare parts from busted accelerators to throw together this design. While it lacks \
 	most of what makes the accelerator a good tool, it makes up for it with a unprecidented amount of room for modification, capable of holding nearly triple \
 	the amount of mods that a normal accelerator could. 'Assemble it yourself' he said."
-	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "kineticpistol"
 	base_icon_state = "kineticpistol"
 	recharge_time = 2 SECONDS
@@ -205,7 +204,6 @@
 	The design results in a massive hard to control blast of kinetic energy, with the power to punch right through creatures and cause massive damage. The \
 	only problem with the design is that it is so bulky you need to carry it with two hands, and the technology has been outfitted with a special firing pin \
 	that denies use near or on the station, due to its destructive nature."
-	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "kineticrailgun"
 	base_icon_state = "kineticrailgun"
 	w_class = WEIGHT_CLASS_BULKY
@@ -224,7 +222,6 @@
 	full power on the kinetic force generation means that you can fit a couple more smaller capacitors in without the entire thing exploding. \
 	This results in a multi shot accelerator that doesn't combust on the first shot and allows rapid follow up shots in short succession. \
 	The director said 'It came to me in a delusion' when we asked him how the team came up with this."
-	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "kineticrepeater"
 	base_icon_state = "kineticrepeater"
 	recharge_time = 2 SECONDS
@@ -239,7 +236,6 @@
 	for clearing large amounts of rocks and crowded fauna. \
 	The only downside is the lowered mod capacity, lack of range, required mod, and longer cooldown... but its pretty good for clearing rocks. \
 	A warning label is stuck to the side : Weapon will underperform without accompanying mod (Should be included with purchase)."
-	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "kineticshockwave"
 	base_icon_state = "kineticshockwave"
 	recharge_time = 2 SECONDS

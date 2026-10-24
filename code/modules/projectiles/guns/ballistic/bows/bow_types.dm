@@ -8,6 +8,7 @@
 /obj/item/gun/ballistic/bow/divine
 	name = "divine bow"
 	desc = "Holy armament to pierce the souls of sinners."
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "holybow"
 	inhand_icon_state = "holybow"
 	base_icon_state = "holybow"

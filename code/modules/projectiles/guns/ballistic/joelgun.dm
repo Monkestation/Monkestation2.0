@@ -1,9 +1,9 @@
 /obj/item/gun/ballistic/revolver/joel
-	load_sound = 'sound/items/lisa/gunload.ogg'
-	eject_sound = 'sound/items/lisa/empty.ogg'
-	icon_state = "joelgun"
 	name = "\improper Bolt Action pistol"
 	desc = "The most powerful handgun in Olathe. It's best not to waste the only bullet. Examine again for more information."
+	icon_state = "joelgun"
+	load_sound = 'sound/items/lisa/gunload.ogg'
+	eject_sound = 'sound/items/lisa/empty.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c22
 	custom_premium_price = PAYCHECK_CREW * 2.5
 	///Cooldown between ability uses

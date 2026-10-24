@@ -159,14 +159,9 @@
 /obj/item/gun/ballistic/automatic/pistol/sol
 	name = "\improper Wespe Pistol"
 	desc = "The standard issue service pistol of SolFed's various military branches. Uses .35 Sol and comes with an attached light."
-
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "wespe"
-
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_light.ogg'
-
 	w_class = WEIGHT_CLASS_NORMAL
-
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol
 	special_mags = TRUE
 
@@ -207,7 +202,6 @@
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil
 	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. This one is painted tacticool black."
-
 	icon_state = "wespe_evil"
 	pin = /obj/item/firing_pin/implant/pindicate
 
@@ -223,15 +217,11 @@
 	name = "\improper Skild Pistol"
 	desc = "A somewhat rare to see Trappiste pistol firing the high caliber .585 developed by the same company. \
 		Sees rare use mainly due to its tendency to cause severe wrist discomfort."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "skild"
-
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
-
 	w_class = WEIGHT_CLASS_NORMAL
-
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
 
 	suppressor_x_offset = 8
@@ -285,9 +275,8 @@
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. \
 		Uses plasma power packs. \
 		Spews an inaccurate stream of searing plasma out the magnetic barrel so long as it has power and the trigger is pulled."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "slonce"
-
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/incinerate.ogg'
 	fire_sound_volume = 40 // This thing is comically loud otherwise
 
@@ -337,7 +326,7 @@
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. \
 		Uses plasma power packs. \
 		Fires relatively accurate globs of searing plasma."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
+	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "gwiazda"
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/burn.ogg'
@@ -380,10 +369,7 @@
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
 	name = "\improper Whispering-Jester .45"
 	desc = "A .45 handgun that is designed by Rayne Corp for various people such as jesters, insurgents, and even stealth operatives. The handgun has a built in holosight, suppressor, and laser sight."
-	icon = 'icons/obj/weapons/guns/whispering_jester_45/item.dmi'
 	icon_state = "jester"
-	lefthand_file = 'icons/obj/weapons/guns/whispering_jester_45/lefthand.dmi'
-	righthand_file = 'icons/obj/weapons/guns/whispering_jester_45/righthand.dmi'
 	inhand_icon_state = "jester"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
@@ -420,7 +406,7 @@
 	bolt_wording = "firearm"
 	fire_delay = 0.1
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	fire_sound_volume = 150 //abraxis this is a bad idea
+	fire_sound_volume = 150
 	recoil = 5 //it's a pistol firing full-auto, fuck your wrist lmao
 	wield_recoil = 0.75
 	spread = 12.5
@@ -439,11 +425,8 @@
 /obj/item/gun/ballistic/automatic/pistol/paco //Sec pistol, Paco from CEV Eris.
 	name = "\improper FS HG .35 Auto \"Paco\""
 	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines."
-	icon = 'monkestation/code/modules/security/icons/paco.dmi'
 	icon_state = "paco"
 	inhand_icon_state = "paco"
-	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
 	can_suppress = TRUE
@@ -509,7 +492,6 @@
 	desc = "The standard issue service pistol of blueshield agents."
 	burst_size = 4
 	fire_delay = 1
-	icon = 'icons/obj/weapons/guns/tech9.dmi'
 	icon_state = "tech9"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_light.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35

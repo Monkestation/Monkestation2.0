@@ -693,8 +693,8 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	desc = sawn_desc
 	update_weight_class(WEIGHT_CLASS_NORMAL)
 	//The file might not have a "gun" icon, let's prepare for this
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	inhand_icon_state = "gun"
@@ -775,7 +775,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/suppressor
 	name = "suppressor"
 	desc = "A syndicate small-arms suppressor for maximum espionage."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
 
