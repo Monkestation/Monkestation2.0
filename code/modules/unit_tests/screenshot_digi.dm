@@ -8,7 +8,7 @@
 	// screenshot test of just plain digitigrade legs.
 	// doubles as coverage that ashwalkers spawn with digitigrade legs (as they should be forced to do)
 	dummy.set_species(/datum/species/lizard/ashwalker)
-	TEST_ASSERT((dummy.bodytype & BODYTYPE_DIGITIGRADE), "Dummy (Ashwalker) should be digitigrade!")
+	TEST_ASSERT((dummy.bodyshape & BODYSHAPE_DIGITIGRADE), "Dummy (Ashwalker) should be digitigrade!")
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 1)
 
@@ -37,14 +37,14 @@
 	// screenshot of turning the ashwalker into a human
 	// this should correctly update the auto gen sprites and leg sprites
 	dummy.set_species(/datum/species/human)
-	TEST_ASSERT(!(dummy.bodytype & BODYTYPE_DIGITIGRADE), "Dummy (Human) should be not digitigrade!")
+	TEST_ASSERT(!(dummy.bodyshape & BODYSHAPE_DIGITIGRADE), "Dummy (Human) should be not digitigrade!")
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 5)
 
 	// screenshot test of turning the human back into an ashwalker
 	// this should correctly update the auto gen sprites and leg sprites again
 	dummy.set_species(/datum/species/lizard/ashwalker)
-	TEST_ASSERT((dummy.bodytype & BODYTYPE_DIGITIGRADE), "Dummy (Ashwalker) should be digitigrade again!")
+	TEST_ASSERT((dummy.bodyshape & BODYSHAPE_DIGITIGRADE), "Dummy (Ashwalker) should be digitigrade again!")
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 6)
 

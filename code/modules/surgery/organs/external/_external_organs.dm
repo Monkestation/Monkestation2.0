@@ -85,6 +85,8 @@
 
 	if(external_bodytypes)
 		receiver.synchronize_bodytypes()
+	if(external_bodyshapes)
+		receiver.synchronize_bodyshapes()
 
 	receiver.update_body_parts()
 
@@ -129,6 +131,8 @@
 		ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 		if(ownerlimb.owner && external_bodytypes)
 			ownerlimb.owner.synchronize_bodytypes()
+		if(ownerlimb.owner && external_bodyshapes)
+			ownerlimb.owner.synchronize_bodyshapes()
 	ownerlimb = null
 	return ..()
 
@@ -246,7 +250,7 @@
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
 
 	preference = "feature_lizard_snout"
-	external_bodytypes = BODYTYPE_SNOUTED
+	external_bodyshapes = BODYSHAPE_SNOUTED
 
 	dna_block = DNA_SNOUT_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
