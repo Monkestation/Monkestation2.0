@@ -49,7 +49,8 @@ IMPL_UPDATE_SPECIES_COLOR(head)
 	biological_state = BIO_FLESH|BIO_BLOODED
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_PUSHIMMUNE, TRAIT_STUNIMMUNE)
 	wing_types = null
-	acceptable_bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	acceptable_bodytype = BODYTYPE_ORGANIC
+	acceptable_bodyshape = BODYSHAPE_DIGITIGRADE
 
 IMPL_UPDATE_SPECIES_COLOR(chest)
 
@@ -97,7 +98,7 @@ IMPL_UPDATE_SPECIES_COLOR(arm/right)
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = NONE
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	speed_modifier = 3
@@ -107,11 +108,16 @@ IMPL_UPDATE_SPECIES_COLOR(arm/right)
 
 IMPL_UPDATE_SPECIES_COLOR(leg/left)
 
+/obj/item/bodypart/leg/left/werewolf/Initialize(mapload)
+	. = ..()
+	// No squished sprite, the component just keeps the digitigrade shape and bodytype in sync with what we wear
+	AddComponent(/datum/component/digitigrade_limb, initial(limb_id), initial(limb_id))
+
 /obj/item/bodypart/leg/right/werewolf
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = NONE
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	speed_modifier = 3
@@ -122,3 +128,8 @@ IMPL_UPDATE_SPECIES_COLOR(leg/left)
 IMPL_UPDATE_SPECIES_COLOR(leg/right)
 
 #undef IMPL_UPDATE_SPECIES_COLOR
+
+/obj/item/bodypart/leg/right/werewolf/Initialize(mapload)
+	. = ..()
+	// No squished sprite, the component just keeps the digitigrade shape and bodytype in sync with what we wear
+	AddComponent(/datum/component/digitigrade_limb, initial(limb_id), initial(limb_id))
