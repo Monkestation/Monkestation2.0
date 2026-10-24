@@ -4,28 +4,21 @@
 
 	unusual_description = "shooting star"
 	duration = 5 SECONDS
-	burst_amount = 5
+	burst_amount = 6
 	offsets = FALSE
-	//has a chance to randomly change on animate
-	var/direction = NORTH
-
-/datum/component/particle_spewer/movement/shooting_star/spawn_particles(atom/movable/mover, turf/target)
-	. = ..()
-	var/dir = get_dir(mover, target)
-	direction = dir
 
 /datum/component/particle_spewer/movement/shooting_star/animate_particle(obj/effect/abstract/particle/spawned)
 
-	spawned.dir = direction
+	spawned.dir = move_dir
 	if(prob(30))
 		spawned.icon_state = "starlarge"
-	if(direction & NORTH|SOUTH)
+	if(move_dir & (NORTH|SOUTH))
 		spawned.pixel_x += rand(-16, 16)
 
-	if(direction & EAST|WEST)
+	if(move_dir & (EAST|WEST))
 		spawned.pixel_y += rand(-16, 16)
 
-	switch(direction)
+	switch(move_dir)
 		if(NORTH)
 			animate(spawned, time = rand(0.5 SECONDS, duration), pixel_y = spawned.pixel_y + 160, alpha = 25)
 		if(SOUTH)
@@ -34,4 +27,3 @@
 			animate(spawned, time = rand(0.5 SECONDS, duration), pixel_x = spawned.pixel_x + 160, alpha = 25)
 		if(WEST)
 			animate(spawned, time = rand(0.5 SECONDS, duration), pixel_x = spawned.pixel_x - 160, alpha = 25)
-	QDEL_IN(spawned, duration)

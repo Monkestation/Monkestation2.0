@@ -5,8 +5,14 @@
  */
 
 import { toFixed } from 'common/math';
+import {
+  IMPL_HUB_STORAGE,
+  IMPL_IFRAME_INDEXED_DB,
+  type StorageImplementation,
+  storage,
+} from 'common/storage';
 import { capitalize } from 'common/string';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -22,6 +28,7 @@ import {
   Stack,
   Tabs,
   TextArea,
+  Tooltip,
 } from 'tgui/components';
 import { ChatPageSettings } from 'tgui-panel/chat/ChatPageSettings';
 import {
@@ -237,6 +244,9 @@ export const SettingsGeneral = (props) => {
             Show suggestions while typing
           </Button.Checkbox>
         </LabeledList.Item>
+        <LabeledList.Item label="Storage">
+          <StorageIndicator />
+        </LabeledList.Item>
       </LabeledList>
       <Divider />
       <Stack fill>
@@ -278,6 +288,41 @@ export const SettingsGeneral = (props) => {
       </Stack>
     </Section>
   );
+};
+
+const StorageIndicator = () => {
+  const [impl, setImpl] = useState<StorageImplementation | null>(null);
+
+  useEffect(() => {
+    storage.getImpl().then(setImpl);
+  }, []);
+
+  switch (impl) {
+    case IMPL_IFRAME_INDEXED_DB:
+      return (
+        <Tooltip content={`Saved to the storage CDN (${Byond.storageCdn}).`}>
+          <Box inline color="good">
+            <Icon mr={0.5} name="cloud" />
+            Storage CDN
+          </Box>
+        </Tooltip>
+      );
+    case IMPL_HUB_STORAGE:
+      return (
+        <Tooltip content="The storage CDN did not load, so settings are saved in BYOND's built-in storage instead.">
+          <Box inline color="average">
+            <Icon mr={0.5} name="hard-drive" />
+            byondstorage (fallback)
+          </Box>
+        </Tooltip>
+      );
+    default:
+      return (
+        <Box inline color="label">
+          Checking...
+        </Box>
+      );
+  }
 };
 
 const TextHighlightSettings = (props) => {
@@ -384,7 +429,7 @@ const TextHighlightSetting = (props) => {
             content="Exact"
             checked={matchWord}
             tooltipPosition="bottom-start"
-            tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Not compatible with punctuation. Overriden if regex is used."
+            tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Overriden if regex is used."
             onClick={() =>
               updateHighlight({
                 id: id,

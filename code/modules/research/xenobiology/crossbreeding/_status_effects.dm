@@ -61,32 +61,75 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	var/interrupted = FALSE
-	var/mob/target
-	var/icon/bluespace
+	var/atom/destination
+	var/precision = 0
+	var/channel = TELEPORT_CHANNEL_QUANTUM //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
 
-/datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resistField))
-	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
-	to_chat(owner, span_notice("Resist if you wish avoid the force!"))
-	bluespace = icon('icons/effects/effects.dmi',"chronofield")
-	owner.add_overlay(bluespace)
+/datum/status_effect/slimerecall/on_creation(mob/living/new_owner, atom/destination, precision = 0)
+	src.destination = destination
+	src.precision = precision
 	return ..()
 
-/datum/status_effect/slimerecall/proc/resistField()
+/datum/status_effect/slimerecall/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resist_field))
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
+	to_chat(owner, span_notice("Resist if you wish to avoid the force!"))
+	return ..()
+
+/datum/status_effect/slimerecall/proc/resist_field()
 	SIGNAL_HANDLER
 	interrupted = TRUE
-	owner.remove_status_effect(src)
+	qdel(src)
+
+/datum/status_effect/slimerecall/proc/on_update_overlays(mob/living/source, list/overlays)
+	SIGNAL_HANDLER
+	overlays += mutable_appearance('icons/effects/effects.dmi', "chronofield")
 
 /datum/status_effect/slimerecall/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
-	owner.cut_overlay(bluespace)
-	if(interrupted || !ismob(target))
+	UnregisterSignal(owner, list(COMSIG_LIVING_RESIST, COMSIG_ATOM_UPDATE_OVERLAYS))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	if(interrupted || QDELETED(destination))
 		to_chat(owner, span_warning("The bluespace tug fades away, and you feel that the force has passed you by."))
 		return
 	var/turf/old_location = get_turf(owner)
-	if(do_teleport(owner, target.loc, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
-		old_location.visible_message(span_warning("[owner] disappears in a flurry of sparks!"))
-		to_chat(owner, span_warning("The unknown force snatches briefly you from reality, and deposits you next to [target]!"))
+	if(do_teleport(owner, get_turf(destination), precision, channel = channel))
+		on_teleport(old_location)
+
+/datum/status_effect/slimerecall/proc/on_teleport(turf/old_location)
+	old_location.visible_message(span_warning("[owner] disappears in a flurry of sparks!"))
+	to_chat(owner, span_warning("The unknown force snatches briefly you from reality, and deposits you next to [destination]!"))
+
+/datum/status_effect/slimerecall/delayed
+	duration = 3 SECONDS
+
+/datum/status_effect/slimerecall/delayed/on_apply()
+	RegisterSignal(owner, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_shoved))
+	owner.visible_message(span_warning("[owner] flickers as bluespace tugs at [owner.p_them()]!"), ignored_mobs = list(owner))
+	return ..()
+
+/// Interrupts the teleport when we're shoved.
+/datum/status_effect/slimerecall/delayed/proc/on_shoved(datum/source, mob/living/shover, zone)
+	SIGNAL_HANDLER
+	owner.visible_message(span_warning("[shover] knocks [owner] out of the bluespace pull!"))
+	interrupted = TRUE
+	qdel(src)
+
+/datum/status_effect/slimerecall/delayed/on_remove()
+	UnregisterSignal(owner, COMSIG_HUMAN_DISARM_HIT)
+	return ..()
+
+/datum/status_effect/slimerecall/delayed/regenerative/on_teleport(turf/old_location)
+	old_location.visible_message(span_warning("[owner] disappears in a shower of sparks!"))
+	to_chat(owner, span_danger("The milky goo teleports you somewhere it remembers!"))
+
+/datum/status_effect/slimerecall/delayed/stabilized
+	channel = TELEPORT_CHANNEL_BLUESPACE
+
+/datum/status_effect/slimerecall/delayed/stabilized/on_teleport(turf/old_location)
+	to_chat(owner, span_notice("The extract will take some time to re-align you on the bluespace axis."))
+	do_sparks(5, FALSE, owner)
 
 /atom/movable/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
@@ -700,16 +743,13 @@
 		linked_alert.icon_state = "slime_bluespace_on"
 
 	if(owner.stat >= SOFT_CRIT)
-		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
-		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
 		var/range = 0
 		if(!F)
 			F = get_turf(owner)
 			range = 50
-		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
-			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
-			do_sparks(5,FALSE,owner)
+		if(owner.apply_status_effect(/datum/status_effect/slimerecall/delayed/stabilized, F, range))
+			owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
 	return ..()
 

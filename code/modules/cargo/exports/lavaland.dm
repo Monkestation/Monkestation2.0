@@ -24,6 +24,7 @@
 						/obj/item/clothing/gloves/gauntlets,
 						/obj/item/jacobs_ladder,
 						/obj/item/clothing/suit/hooded/cultrobes/hardened,
+						/obj/item/gun/energy/recharge/kinetic_accelerator/bdm,
 						)
 
 /datum/export/lavaland/major //valuable chest/ruin loot, minor megafauna loot
