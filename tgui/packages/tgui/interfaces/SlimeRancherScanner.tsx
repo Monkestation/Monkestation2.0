@@ -319,11 +319,6 @@ function Mutations() {
   return (
     <Box className="SlimeRancher__card SlimeRancherScanner__mutations">
       <h2 className="SlimeRancher__heading">Mutations</h2>
-      {!anyReady && (
-        <NoticeBox info>
-          No recipe is finished yet, so this slime will only secrete extracts.
-        </NoticeBox>
-      )}
       <Box className="SlimeRancherScanner__recipes">
         {sorted.map((mutation) => (
           <MutationRow key={mutation.color} mutation={mutation} />
