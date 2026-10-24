@@ -377,7 +377,7 @@
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)
-		I.dropped(src, silent)
+		has_unequipped(I, silent)
 	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
 	return TRUE
@@ -406,36 +406,16 @@
 	drop_all_held_items()
 
 
-/mob/living/carbon/proc/check_obscured_slots(transparent_protection)
-	var/obscured = NONE
-	var/hidden_slots = NONE
+/// This proc is called after an item has been successfully handled and equipped to a slot.
+/mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	return item.on_equipped(src, slot, initial)
 
-	for(var/obj/item/I in get_all_worn_items())
-		hidden_slots |= I.flags_inv
-		if(transparent_protection)
-			hidden_slots |= I.transparent_protection
-
-	if(hidden_slots & HIDENECK)
-		obscured |= ITEM_SLOT_NECK
-	if(hidden_slots & HIDEMASK)
-		obscured |= ITEM_SLOT_MASK
-	if(hidden_slots & HIDEEYES)
-		obscured |= ITEM_SLOT_EYES
-	if(hidden_slots & HIDEEARS)
-		obscured |= ITEM_SLOT_EARS
-	if(hidden_slots & HIDEGLOVES)
-		obscured |= ITEM_SLOT_GLOVES
-	if(hidden_slots & HIDEJUMPSUIT)
-		obscured |= ITEM_SLOT_ICLOTHING
-	if(hidden_slots & HIDESHOES)
-		obscured |= ITEM_SLOT_FEET
-	if(hidden_slots & HIDESUITSTORAGE)
-		obscured |= ITEM_SLOT_SUITSTORE
-	if(hidden_slots & HIDEHEADGEAR)
-		obscured |= ITEM_SLOT_HEAD
-
-	return obscured
-
+/// This proc is called after an item has been removed from a mob but before it has been officially deslotted.
+/mob/proc/has_unequipped(obj/item/item, silent = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	item.dropped(src, silent)
+	return TRUE
 
 /obj/item/proc/equip_to_best_slot(mob/equipper)
 	var/should_prioritize_storage = !isclothing(src) && !(slot_flags & ITEM_SLOT_ON_BODY)
@@ -479,12 +459,8 @@ GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 	if(!I)
 		to_chat(src, span_warning("You are not holding anything to equip!"))
 		return
-	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
-		if(I.equip_to_best_slot(src))
-			return
-		if(put_in_active_hand(I))
-			return
-		I.forceMove(drop_location())
+	if(!QDELETED(I))
+		I.equip_to_best_slot(src)
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()

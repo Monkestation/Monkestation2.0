@@ -7,6 +7,7 @@
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = null
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -80,20 +81,20 @@
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
-/obj/item/clothing/mask/gas/explorer/adjustmask(mob/user)
+/obj/item/clothing/mask/gas/explorer/visor_toggling()
 	. = ..()
 	// adjusted = out of the way = smaller = can fit in boxes
-	w_class = mask_adjusted ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL
-	inhand_icon_state = mask_adjusted ? "[initial(inhand_icon_state)]_up" : initial(inhand_icon_state)
-	if(user)
-		user.update_held_items()
+	update_weight_class(up ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL)
 
+/obj/item/clothing/mask/gas/explorer/update_icon_state()
+	. = ..()
+	inhand_icon_state = "[initial(inhand_icon_state)][up ? "_up" : ""]"
 
 /obj/item/clothing/mask/gas/explorer/examine(mob/user)
 	. = ..()
-	if(mask_adjusted || w_class == WEIGHT_CLASS_SMALL)
+	if(up || w_class == WEIGHT_CLASS_SMALL)
 		return
 	. += span_notice("You could fit this into a box if you adjusted it.")
 
@@ -102,7 +103,7 @@
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
-	adjustmask()
+	visor_toggling()
 
 /obj/item/clothing/suit/hooded/cloak
 	icon = 'icons/obj/clothing/suits/armor.dmi'

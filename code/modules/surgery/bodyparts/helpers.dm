@@ -219,7 +219,19 @@
 			all_limb_flags |= ext_organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
 	bodytype = all_limb_flags
-	dna?.species.bodytype = all_limb_flags
+
+/// Makes sure that the owner's bodyshape flags match the flags of all of it's parts and organs
+/mob/living/carbon/proc/synchronize_bodyshapes()
+	var/all_limb_flags = NONE
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+			all_limb_flags |= ext_organ.external_bodyshapes
+		all_limb_flags |= limb.bodyshape
+
+	if(obscured_slots & HIDESNOUT)
+		all_limb_flags &= ~BODYSHAPE_SNOUTED
+
+	bodyshape = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0

@@ -42,10 +42,8 @@
 
 ///Checks if our wings are usable
 /obj/item/organ/external/wings/moth/proc/can_fly()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		if(human_owner.wear_suit?.flags_inv & HIDEMUTWINGS)
-			return FALSE //Can't fly with hidden wings
+	if(owner.obscured_slots & HIDEMUTWINGS)
+		return FALSE //Can't fly with hidden wings
 	if(isspaceturf(owner.loc) || burnt)
 		return FALSE //No flight in space/burnt wings
 	return TRUE
@@ -97,9 +95,7 @@
 	return GLOB.moth_wings_list
 
 /datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.w_uniform?.flags_inv & HIDEMUTWINGS) && !(human.wear_suit?.flags_inv & HIDEMUTWINGS) && !(human.wear_neck?.flags_inv & HIDEMUTWINGS))
-		return TRUE
-	return FALSE
+	return !(human.obscured_slots & HIDEMUTWINGS)
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
