@@ -14,14 +14,6 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
 
-/obj/item/bodypart/head/monkey/Initialize(mapload)
-	worn_head_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_HEAD,
-		offset_y = list("north" = 1, "south" = 1, "east" = 1, "west" = 1)
-	)
-	return ..()
-
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -43,6 +35,11 @@
 	worn_belt_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_BELT,
+		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1)
+	)
+	worn_neck_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_NECK,
 		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1)
 	)
 	return ..()
