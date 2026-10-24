@@ -380,3 +380,19 @@
 
 /datum/id_trim/pirate/lustrous
 	sechud_icon_state = SECHUD_RADIANT
+
+/datum/id_trim/job/centcom_liaison
+	assignment = "CentCom Liaison"
+	trim_state = "trim_centcom"
+	sechud_icon_state = SECHUD_CENTCOM
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_CENTCOM_BLUE
+	minimal_access = list(
+		ACCESS_CENT_GENERAL,
+		ACCESS_CENT_LIVING,
+		ACCESS_WEAPONS,
+		ACCESS_NT_REPRESENTATVE,
+		ACCESS_ENGINEERING,
+		ACCESS_ATMOSPHERICS,
+		ACCESS_ENGINE_EQUIP
+		)
