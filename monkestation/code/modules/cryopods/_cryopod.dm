@@ -410,8 +410,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	mob_occupant.ghostize(can_reenter_corpse = FALSE)
 	ADD_TRAIT(mob_occupant, TRAIT_NO_TRANSFORM, REF(src))
-	var/list/items = mob_occupant.get_equipped_items(INCLUDE_POCKETS)
-	items |= mob_occupant.held_items
+	var/list/items = mob_occupant.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD)
 	for(var/obj/item/item_content as anything in items)
 		if(!isitem(item_content) || QDELING(item_content))
 			continue

@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 	if (!istype(D))
 		return
 
-	if (src in perp.held_items)
+	if (perp.is_holding(src))
 		bodypart = BODY_ZONE_ARMS
 
 	if (bodypart)
