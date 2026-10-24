@@ -24,7 +24,7 @@
 		qdel(headbutt)
 
 /datum/bodypart_overlay/mutant/satyr_fluff
-	layers = EXTERNAL_ADJACENT //| EXTERNAL_FRONT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER) //| EXTERNAL_FRONT
 	feature_key = "satyr_fluff"
 	color_source = ORGAN_COLOR_HAIR
 
@@ -34,7 +34,10 @@
 /datum/bodypart_overlay/mutant/satyr_fluff/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/satyr_fluff/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/satyr_fluff/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 
@@ -50,7 +53,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/satyr_horns
 
 /datum/bodypart_overlay/mutant/satyr_horns
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "satyr_horns"
 
 /datum/bodypart_overlay/mutant/satyr_horns/get_global_feature_list()
@@ -59,7 +65,10 @@
 /datum/bodypart_overlay/mutant/satyr_horns/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/satyr_horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/satyr_horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 //ONI STUFF
@@ -78,7 +87,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_tail
 
 /datum/bodypart_overlay/mutant/oni_tail
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "oni_tail"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 
@@ -88,7 +100,10 @@
 /datum/bodypart_overlay/mutant/oni_tail/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_tail/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/oni_wings
@@ -105,7 +120,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_wings
 
 /datum/bodypart_overlay/mutant/oni_wings
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "oni_wings"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 
@@ -115,7 +133,10 @@
 /datum/bodypart_overlay/mutant/oni_wings/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_wings/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/oni_horns
@@ -132,7 +153,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_horns
 
 /datum/bodypart_overlay/mutant/oni_horns
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "oni_horns"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 
@@ -142,5 +166,8 @@
 /datum/bodypart_overlay/mutant/oni_horns/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE

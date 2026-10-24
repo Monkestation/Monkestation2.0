@@ -463,6 +463,8 @@
 #define SLIPPERY_TURF (1<<5)
 /// Slipping on this will send them sliding for a long time
 #define SUPER_DUPER_SLIDE (1<<6)
+/// For mobs who are slippery, this requires the mob holding it to be lying down.
+#define SLIPPERY_WHEN_LYING_DOWN (1<<7)
 
 #define MAX_CHICKENS 50
 
@@ -951,15 +953,11 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// WOUND_LAYER (full body)
 ))
 
-//Bitflags for the layers a bodypart overlay can draw on (can be drawn on multiple layers)
-/// Draws overlay on the BODY_FRONT_LAYER
-#define EXTERNAL_FRONT (1 << 0)
-/// Draws overlay on the BODY_ADJ_LAYER
-#define EXTERNAL_ADJACENT (1 << 1)
-/// Draws overlay on the BODY_BEHIND_LAYER
-#define EXTERNAL_BEHIND (1 << 2)
-/// Draws organ on all EXTERNAL layers
-#define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+// Legacy mutant bodypart layering defines for icon states
+// Don't change these without updating all relevant icon states
+#define EXTERNAL_FRONT "FRONT"
+#define EXTERNAL_ADJACENT "ADJ"
+#define EXTERNAL_BEHIND "BEHIND"
 
 // Bitflags for external organs restylability
 /// This organ allows restyle through plant restyling (like secateurs)
