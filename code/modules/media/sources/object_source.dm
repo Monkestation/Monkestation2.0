@@ -84,6 +84,16 @@
 	if(!QDELETED(src))
 		qdel(src)
 
+/datum/media_source/object/update_for_listener(mob/target, force_update_time = FALSE)
+	// Whoever is carrying us can get their moved signal before we hear that we moved too,
+	// so catch up first or they'd stop and restart the song when changing z-levels.
+	var/turf/our_turf = get_turf(source)
+	if(!isnull(our_turf) && our_turf != source_turf)
+		on_source_moved(source)
+		if(!force_update_time)
+			return
+	return ..()
+
 /datum/media_source/object/proc/on_source_moved(atom/movable/source)
 	SIGNAL_HANDLER
 	if(QDELETED(src))
