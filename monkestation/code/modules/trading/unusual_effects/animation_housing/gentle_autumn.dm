@@ -2,7 +2,7 @@
 	unusual_description = "gentle autumn"
 	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "leaf2"
-	burst_amount = 2
+	burst_amount = 3
 	duration = 6 SECONDS
 	random_bursts = TRUE
 	spawn_interval = 3 SECONDS
