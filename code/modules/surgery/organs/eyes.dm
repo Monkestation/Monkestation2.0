@@ -159,7 +159,7 @@
 			eye_right.color = parent.get_right_eye_color() || eye_color_right
 			eye_left.color = parent.get_left_eye_color() || eye_color_left
 
-		var/obscured = parent.check_obscured_slots(TRUE)
+		var/obscured = parent.check_obscured_slots()
 		if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 			overlays += emissive_appearance_copy(eye_left, src, NONE)
 			overlays += emissive_appearance_copy(eye_right, src, NONE)
