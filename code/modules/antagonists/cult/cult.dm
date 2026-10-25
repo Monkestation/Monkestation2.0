@@ -586,8 +586,7 @@
 	r_hand = /obj/item/melee/blood_magic/stun
 
 /datum/outfit/cultist/post_equip(mob/living/carbon/human/equipped, visualsOnly)
-	equipped.eye_color_left = BLOODCULT_EYE
-	equipped.eye_color_right = BLOODCULT_EYE
+	equipped.set_eye_color(BLOODCULT_EYE)
 	equipped.update_body()
 
 #undef CULT_LOSS
