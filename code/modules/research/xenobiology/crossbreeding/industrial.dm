@@ -43,9 +43,11 @@ Industrial extracts:
 	if(plasmaabsorbed >= plasmarequired)
 		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		plasmaabsorbed -= plasmarequired
-		var/spawn_loc = astype(loc, /obj/item/storage) || drop_location()
+		var/datum/storage/container = loc?.atom_storage
 		for(var/i in 1 to itemamount)
-			do_after_spawn(new itempath(spawn_loc))
+			var/obj/item/spawned = new itempath(drop_location())
+			container?.attempt_insert(spawned, override = TRUE)
+			do_after_spawn(spawned)
 	else if(IsWorking)
 		playsound(src, 'sound/effects/bubbles.ogg', 5, TRUE)
 	if(IsWorking)
