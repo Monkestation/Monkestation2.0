@@ -424,12 +424,16 @@ SUBSYSTEM_DEF(gamemode)
 
 		current_pop_scale_multipliers[track] = calculated_multiplier
 
+/// Returns the running round event if it fired, otherwise one of the EVENT_* defines.
 /datum/controller/subsystem/gamemode/proc/TriggerEvent(datum/round_event_control/event, forced = FALSE)
 	. = event.preRunEvent(forced)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		event.max_occurrences = 0
 	else if(. == EVENT_READY)
-		event.run_event(random = TRUE, admin_forced = forced) // fallback to dynamic
+		var/datum/round_event/round_event = event.run_event(random = TRUE, admin_forced = forced) // fallback to dynamic
+		if(!round_event)
+			return EVENT_INTERRUPTED
+		return round_event
 
 ADMIN_VERB(force_event, R_FUN, FALSE, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
 	SSgamemode.event_panel(user.mob)

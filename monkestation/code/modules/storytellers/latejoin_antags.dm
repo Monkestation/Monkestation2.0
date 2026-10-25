@@ -33,8 +33,7 @@
 		picked_event = pick_weight(valid_events)
 		COOLDOWN_START(src, latejoin_antag_cooldown, rand(LATEJOIN_ANTAG_COOLDOWN_LOW, LATEJOIN_ANTAG_COOLDOWN_HIGH))
 
-	var/datum/round_event/antagonist/running_event = picked_event.run_event(random = TRUE, event_cause = "storyteller", candidate_pool = candidate_pool)
-	if(!length(running_event.setup_minds))
+	if(!picked_event.run_event(random = TRUE, event_cause = "storyteller", candidate_pool = candidate_pool))
 		log_storyteller("Latejoin: [picked_event.name] ran for [key_name(latejoiner)], but they weren't picked for it")
 		if(picked_event == forced_event)
 			forced_next_events[EVENT_TRACK_LATEJOIN] = forced_event
