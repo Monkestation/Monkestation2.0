@@ -614,6 +614,7 @@
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/razor(src)
 	new /obj/item/blood_filter(src)
+	new /obj/item/autopsy_scanner(src)
 
 /obj/item/storage/backpack/duffelbag/sec
 	name = "security duffel bag"
