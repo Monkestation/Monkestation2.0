@@ -22,7 +22,7 @@
 		return
 
 	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
-	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
+	playsound(get_turf(src), 'sound/items/weapons/emitter.ogg', 70)
 	do_smoke(amount = DIAMOND_AREA(1), holder = src, location = src, smoke_type=/obj/effect/particle_effect/fluid/smoke/quick)
 
 	if(prob(bee_chance)) //monkestation edit
@@ -89,13 +89,13 @@
 /obj/item/clothing/head/hats/tophat/syndicate/proc/speak(mob/living/carbon/human/user)
 	sleep(2 SECONDS)
 	to_chat(user,  span_boldwarning("Time!"))
-	user.playsound_local(get_turf(user), 'sound/voice/robotic/time.ogg',100,0, use_reverb = TRUE)
+	user.playsound_local(get_turf(user), 'sound/mobs/non-humanoids/cyborg/robotic/time.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECONDS)
 	to_chat(user,  span_boldwarning("For!"))
-	user.playsound_local(get_turf(user), 'sound/voice/robotic/for.ogg',100,0, use_reverb = TRUE)
+	user.playsound_local(get_turf(user), 'sound/mobs/non-humanoids/cyborg/robotic/for.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECONDS)
 	to_chat(user,  span_boldwarning("CRIME!!"))
-	user.playsound_local(get_turf(user), 'sound/voice/robotic/crime.ogg',100,0, use_reverb = TRUE)
+	user.playsound_local(get_turf(user), 'sound/mobs/non-humanoids/cyborg/robotic/crime.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECONDS)
 
 /obj/item/clothing/head/hats/tophat/syndicate/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)

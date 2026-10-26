@@ -254,7 +254,7 @@
 			continue
 
 		to_chat(select_mob, span_userdanger("The planet stirs... another monster has arrived!"))
-		playsound(get_turf(select_mob), 'sound/magic/demon_attack1.ogg', 50, TRUE)
+		playsound(get_turf(select_mob), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		flash_color(select_mob, flash_color = "#FF0000", flash_time = 3 SECONDS)
 
 	var/megafauna_choice = pick(

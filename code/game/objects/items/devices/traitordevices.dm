@@ -18,7 +18,7 @@ effective or pretty fucking useless.
 /obj/item/batterer
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "batterer"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -269,7 +269,7 @@ effective or pretty fucking useless.
 	src.user = user
 	animate(user,alpha = 25,time = 1.5 SECONDS)
 	START_PROCESSING(SSobj, src)
-	playsound(src, 'sound/magic/charge.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/charge.ogg', 50, TRUE)
 	on = TRUE
 
 /obj/item/storage/belt/military/assault/cloak/proc/Deactivate(display_message)
@@ -341,7 +341,7 @@ effective or pretty fucking useless.
 /obj/item/jammer
 	name = "radio jammer"
 	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful distruptor wave which disables all nearby listening devices."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
 	/// The range of devices to disable while active
@@ -450,7 +450,7 @@ effective or pretty fucking useless.
 		COMBAT_MESSAGE_RANGE,
 	)
 
-	playsound(src, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
@@ -596,9 +596,9 @@ effective or pretty fucking useless.
 		if(COOLDOWN_FINISHED(src, acquire_target_cooldown))
 			activating = TRUE
 			COOLDOWN_START(src, acquire_target_cooldown, 10 SECONDS)
-			playsound(src, 'sound/machines/beep.ogg', 75, FALSE)
+			playsound(src, 'sound/machines/beep/beep.ogg', 75, FALSE)
 			sleep(0.25 SECONDS)
-			playsound(src, 'sound/machines/beep.ogg', 75, TRUE)
+			playsound(src, 'sound/machines/beep/beep.ogg', 75, TRUE)
 			sleep(1.25 SECONDS)
 			target(M) //warning shot?
 			activating = FALSE

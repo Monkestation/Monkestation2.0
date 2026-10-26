@@ -1,6 +1,6 @@
 /obj/item/bodypart/head/teratoma
-	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static =  'icons/mob/human/species/teratoma/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	is_dimorphic = FALSE
@@ -12,8 +12,8 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/chest/teratoma
-	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static =  'icons/mob/human/species/teratoma/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	is_dimorphic = FALSE
@@ -26,8 +26,8 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/arm/left/teratoma
-	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static =  'icons/mob/human/species/teratoma/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
@@ -38,8 +38,8 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/arm/right/teratoma
-	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static =  'icons/mob/human/species/teratoma/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
@@ -50,8 +50,8 @@
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/leg/left/teratoma
-	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static =  'icons/mob/human/species/teratoma/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
@@ -62,8 +62,8 @@
 	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
 
 /obj/item/bodypart/leg/right/teratoma
-	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static =  'icons/mob/human/species/teratoma/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM

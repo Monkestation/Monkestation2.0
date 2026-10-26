@@ -75,7 +75,7 @@
 	defender.adjust_confusion(5 SECONDS)
 	defender.adjust_eye_blur(5 SECONDS)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
-	playsound(get_turf(defender), 'sound/weapons/slash.ogg', 50, 1, -1)
+	playsound(get_turf(defender), 'sound/items/weapons/slash.ogg', 50, 1, -1)
 
 /*
 Jugular Cut
@@ -120,7 +120,7 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 		defender.losebreath = clamp(defender.losebreath + 10, 0, 50)
 	defender.adjustOxyLoss(10)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
-	playsound(get_turf(defender), 'sound/weapons/slash.ogg', 50, 1, -1)
+	playsound(get_turf(defender), 'sound/items/weapons/slash.ogg', 50, 1, -1)
 
 
 

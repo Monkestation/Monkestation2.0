@@ -177,7 +177,7 @@
 
 	message += "\nStation personnel are advised to stay cautious, follow lawful orders, and report all known threats."
 
-	minor_announce(message, title, TRUE, TRUE, GLOB.player_list, 'sound/misc/notice1.ogg', should_play_sound, "purple")
+	minor_announce(message, title, TRUE, TRUE, GLOB.player_list, 'sound/announcer/notice/notice1.ogg', should_play_sound, "purple")
 
 	door_controller.activate()
 	armory_open = TRUE
@@ -200,7 +200,7 @@
 
 	message += "\n\nStation personnel are advised to still remain vigilant, and have a secure shift."
 
-	minor_announce(message, title, TRUE, TRUE, GLOB.player_list, 'sound/misc/notice2.ogg', TRUE, "green")
+	minor_announce(message, title, TRUE, TRUE, GLOB.player_list, 'sound/announcer/notice/notice2.ogg', TRUE, "green")
 
 	door_controller.activate()
 	armory_open = FALSE
