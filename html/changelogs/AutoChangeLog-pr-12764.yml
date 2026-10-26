@@ -1,5 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - balance: "the laser cannon can now be worn on your back."
-  - bugfix: "fixed the laser cannon worn sprite not showing properly"

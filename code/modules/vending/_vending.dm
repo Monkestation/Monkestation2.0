@@ -54,7 +54,7 @@
 /obj/machinery/vending
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -68,7 +68,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.7
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
-	clicksound = 'sound/machines/pda_button1.ogg'
+	clicksound = 'sound/machines/pda_button/pda_button1.ogg'
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -831,7 +831,7 @@
 
 				living_target.Paralyze(paralyze_time)
 				living_target.emote("scream")
-				playsound(living_target, 'sound/effects/blobattack.ogg', 40, TRUE)
+				playsound(living_target, 'sound/effects/blob/blobattack.ogg', 40, TRUE)
 				playsound(living_target, 'sound/effects/splat.ogg', 50, TRUE)
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)

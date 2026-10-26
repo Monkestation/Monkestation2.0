@@ -1,4 +1,0 @@
-author: "LettuceGuardian"
-delete-after: True
-changes:
-  - bugfix: "Guardsman helmet mob side view being misaligned"

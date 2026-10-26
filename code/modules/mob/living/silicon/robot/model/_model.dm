@@ -216,7 +216,7 @@
 			continue
 		energy_storage.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(energy_storage.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(cyborg_owner, "+ [to_stock]u [initial(energy_storage.mat_type.name)]")
-		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
+		playsound(charger, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(cyborg_owner, "restock process complete")
 	charger.sendmats = FALSE

@@ -153,7 +153,7 @@
 
 /obj/structure/spawner/lavaland/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/cursed_dagger))
-		playsound(get_turf(src), 'sound/magic/demon_attack1.ogg', 50, TRUE)
+		playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		cursed = !cursed
 		if(cursed)
 			src.add_atom_colour("#41007e", TEMPORARY_COLOUR_PRIORITY)
@@ -253,7 +253,7 @@
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You place [src] on [interacting_with]."))
 	new /obj/structure/railroad(interacting_with)
-	playsound(interacting_with, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(interacting_with, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railroad
@@ -598,7 +598,7 @@
 	if(!regen_core.preserve())
 		balloon_alert(user, "organ decayed!")
 		return
-	playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	balloon_alert_to_viewers("[src] revitalizes [regen_core]!")
 	return
 
@@ -636,7 +636,7 @@
 
 	if(allow_transform < REQUIRED_OBSERVERS)
 		balloon_alert_to_viewers("[src] rejects the request, not enough viewers!")
-		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		human_user.adjustBruteLoss(10)
 		return
 
@@ -646,7 +646,7 @@
 
 		if(choice != "Yes")
 			balloon_alert_to_viewers("[src] feels rejected and punishes [human_user]!")
-			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 			human_user.adjustBruteLoss(50)
 			return
 
@@ -662,7 +662,7 @@
 			ADD_TRAIT(human_user, TRAIT_RESISTCOLD, ROUNDSTART_TRAIT)
 
 		ADD_TRAIT(human_user, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
-		playsound(src, 'sound/magic/demon_dies.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/demon_dies.ogg', 50, TRUE)
 		meat_counter++
 
 	return ..()
@@ -690,7 +690,7 @@
 		else
 			meat_counter++
 
-		playsound(get_turf(src),'sound/magic/demon_consume.ogg', 100, TRUE)
+		playsound(get_turf(src),'sound/effects/magic/demon_consume.ogg', 100, TRUE)
 		var/delivery_key = viewable_living.fingerprintslast //key of whoever brought the body
 		var/mob/living/delivery_mob = get_mob_by_key(delivery_key) //mob of said key
 
@@ -1098,7 +1098,7 @@
 	name = "\improper Ashland Clothing Storage"
 	desc = "A large container, filled with various clothes for the Ash Walkers."
 	product_ads = "Praise the Necropolis"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
 	use_power = NO_POWER_USE

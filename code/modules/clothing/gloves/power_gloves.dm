@@ -73,7 +73,7 @@
 		owner.balloon_alert(owner, "not enough power in the grid!")
 		return
 	else
-		playsound(owner, 'sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
+		playsound(owner, 'sound/items/weapons/powerglovestarget.ogg', 35, TRUE, -1)
 		if(do_after(owner, 3 SECONDS, target, IGNORE_TARGET_LOC_CHANGE, hidden = TRUE))
 			for(var/obj/machinery/light/light in get_area(owner))
 				light.flicker(amount = rand(3, 6))
@@ -85,9 +85,9 @@
 				target_tesla_zap(owner, target, calculated_power, SHOCK_NOSTUN, INFINITY)
 				StartCooldown()
 				if(surplus <= heavy_zap) //plays a separate sound at 2 MW excess
-					playsound(target, 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
+					playsound(target, 'sound/effects/magic/lightningshock.ogg', 50, TRUE, -1)
 				else
-					playsound(target, 'sound/magic/lightningbolt.ogg', 50, TRUE, -1)
+					playsound(target, 'sound/effects/magic/lightningbolt.ogg', 50, TRUE, -1)
 
 /obj/item/clothing/gloves/color/yellow/power_gloves/equipped(mob/living/owner, slot)
 	. = ..()

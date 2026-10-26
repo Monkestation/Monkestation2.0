@@ -35,7 +35,7 @@
 	name = "Shock Touch"
 	desc = "Channel electricity to your hand to shock people with."
 	button_icon_state = "zap"
-	sound = 'sound/weapons/zapbang.ogg'
+	sound = 'sound/items/weapons/zapbang.ogg'
 	cooldown_time = 12 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
@@ -192,7 +192,7 @@
 		For some reason, this power does not play nicely with the undead, or people with strange ideas about morality."
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "mending_touch"
-	sound = 'sound/magic/staff_healing.ogg'
+	sound = 'sound/effects/magic/staff_healing.ogg'
 	cooldown_time = 12 SECONDS
 	school = SCHOOL_RESTORATION
 	invocation_type = INVOCATION_NONE

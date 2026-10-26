@@ -69,7 +69,7 @@
 	desc = "Holy smokes."
 	icon_state = "chaplain"
 	force = 10
-	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev77
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
@@ -140,7 +140,7 @@
 		return
 	user.say("#Oh great [GLOB.deity], give me the ammunition I need!", forced = "ammo prayer")
 	magazine.top_off()
-	user.playsound_local(get_turf(src), 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+	user.playsound_local(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 	chamber_round()
 
 /datum/action/item_action/pray_refill
