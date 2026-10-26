@@ -4266,7 +4266,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "ayQ" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "ayR" = (
@@ -58766,7 +58766,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/science/breakroom)
 "pkx" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/misc/asteroid,
 /area/station/security/prison/rec)
 "pkB" = (

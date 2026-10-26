@@ -184,6 +184,8 @@
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
+	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	var/unarmed_effectiveness = 10
 	///Damage at which attacks from this bodypart will stun
 	var/unarmed_stun_threshold = 2
 

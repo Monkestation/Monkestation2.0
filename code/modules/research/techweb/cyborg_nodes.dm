@@ -248,6 +248,7 @@
 		"ci-breather",
 		"ci-diaghud",
 		"ci-gloweyes",
+		"ci-herculean",
 		"ci-medhud",
 		"ci-meson",
 		"ci-nutriment",

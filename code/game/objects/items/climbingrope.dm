@@ -51,9 +51,23 @@
 	playsound(target, 'sound/effects/picaxe1.ogg', 50) //plays twice so people above and below can hear
 	playsound(user_turf, 'sound/effects/picaxe1.ogg', 50)
 	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
-	if(do_after(user, climb_time, target))
+
+	// Our climbers athletics ability
+	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics)
+
+	// Misc bonuses to the climb speed.
+	var/misc_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		misc_multiplier *= potential_spine.athletics_boost_multiplier
+
+	var/final_climb_time = (climb_time - fitness_level) * misc_multiplier
+
+	if(do_after(user, final_climb_time, target))
 		user.Move(target)
 		uses--
+		user.mind?.adjust_experience(/datum/skill/athletics, round((ATHLETICS_SKILL_MISC_EXP)/(fitness_level || 1), 1)) //get some experience for our trouble, especially since this costs us a climbing rope use
 
 	if(uses <= 0)
 		user.visible_message(span_warning("[src] snaps and tears apart!"))

@@ -10221,7 +10221,7 @@
 	dir = 5
 	},
 /obj/structure/sign/poster/contraband/random/directional/north,
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "deg" = (
@@ -19505,7 +19505,7 @@
 "fIP" = (
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/effect/turf_decal/bot,
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness/recreation/entertainment)
 "fIQ" = (
@@ -34278,7 +34278,7 @@
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/assistant,
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness/recreation/entertainment)
 "jHd" = (
