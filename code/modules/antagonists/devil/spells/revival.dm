@@ -2,7 +2,7 @@
 	name = "Devilish revival"
 	desc = "Heals your body into great condition."
 	button_icon_state = "sacredflame"
-	sound = 'sound/magic/RATTLEMEBONES.ogg'
+	sound = 'sound/effects/magic/RATTLEMEBONES.ogg'
 	school = SCHOOL_NECROMANCY
 	cooldown_time = 5 MINUTES
 	check_flags = NONE

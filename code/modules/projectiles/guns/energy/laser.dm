@@ -33,7 +33,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "lasrifle"
 	fire_delay = 10
-	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasrifle)
 
@@ -159,7 +159,7 @@
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator
 	select_name = "accelerator"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
 /obj/projectile/beam/laser/accelerator
 	name = "accelerator laser"

@@ -200,7 +200,7 @@
 /obj/item/antag_granter/blood_cultist
 	name = "bloody knife"
 	desc = "A ancient knife, caked in blood, both fresh and dried."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
 	antag_datum = /datum/antagonist/cult
 	user_message = span_cult("Ancient, bloody knoweldge floods your mind as you look into the dagger.")
@@ -230,7 +230,7 @@
 	desc = "Hmm... what is this for?"
 	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
 	special_desc = "A remote that can be used to transmit a fake announcement of your own design."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	icon_state = "inspector"

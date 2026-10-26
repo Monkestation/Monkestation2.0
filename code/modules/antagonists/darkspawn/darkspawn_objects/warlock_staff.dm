@@ -11,7 +11,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/darkspawn/darkspawn_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/darkspawn/darkspawn_righthand.dmi'
 	block_chance = 5
-	fire_sound = 'sound/weapons/emitter2.ogg'
+	fire_sound = 'sound/items/weapons/emitter2.ogg'
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	slot_flags = NONE
 	flags_1 = NONE

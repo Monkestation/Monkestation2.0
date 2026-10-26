@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/vendozer
 	desc = "The Ultimate statement of dissatisfaction towards the station, the Vendozer wrecks havoc to all that has disgruntled this employee."
 	name = "\proper The Vendozer"
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "vendozer"
 	base_icon_state = "vendozer"
 	SET_BASE_PIXEL(-24, 0)
@@ -78,7 +78,7 @@
 /obj/vehicle/sealed/mecha/vendozer/admeme
 	desc = "You pissed off god, or corporate, good luck."
 	name = "\improper Vendozer, Doom edition"
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "vendozer"
 	base_icon_state = "vendozer"
 	SET_BASE_PIXEL(-24, 0)

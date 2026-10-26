@@ -134,9 +134,9 @@
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
-	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/stepsound = 'sound/vehicles/mecha/mechstep.ogg'
 	///Sound played when the mech walks
-	var/turnsound = 'sound/mecha/mechturn.ogg'
+	var/turnsound = 'sound/vehicles/mecha/mechturn.ogg'
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
@@ -373,7 +373,7 @@
  */
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
-	user.playsound_local(src, 'sound/machines/beep.ogg', 25)
+	user.playsound_local(src, 'sound/machines/beep/beep.ogg', 25)
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
@@ -783,7 +783,7 @@
 
 		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
-	playsound(src, 'sound/machines/airlock.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/airlock/airlock.ogg', 50, TRUE)
 
 ///fetches temp of the gas mixture we are using
 /obj/vehicle/sealed/mecha/return_temperature()

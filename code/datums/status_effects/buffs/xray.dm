@@ -22,7 +22,7 @@
 
 /datum/status_effect/temporary_xray/eldritch/on_apply()
 	. = ..()
-	SEND_SOUND(owner, 'sound/hallucinations/i_see_you1.ogg')
+	SEND_SOUND(owner, 'sound/effects/hallucinations/i_see_you1.ogg')
 
 /atom/movable/screen/alert/status_effect/temporary_xray
 	name = "Eldritch Sight"

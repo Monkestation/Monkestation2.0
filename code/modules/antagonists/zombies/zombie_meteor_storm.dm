@@ -65,7 +65,7 @@
 		new_mob.set_species(/datum/species/zombie/infectious)
 		new_mob.forceMove(zombie_meteor)
 		player_mind.transfer_to(new_mob, TRUE)
-		SEND_SOUND(new_mob, 'sound/magic/mutate.ogg')
+		SEND_SOUND(new_mob, 'sound/effects/magic/mutate.ogg')
 		message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into a zombie by an event.")
 		new_mob.log_message("was spawned as a zombie by an event.", LOG_GAME)
 		if(!length(candidates))
