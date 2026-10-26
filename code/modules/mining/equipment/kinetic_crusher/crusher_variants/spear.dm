@@ -18,7 +18,7 @@
 	armour_penetration = 20
 	armour_ignorance = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("pierces", "stabs", "impales", "pokes", "jabs")
 	attack_verb_simple = list("imaple", "stab", "pierce", "jab", "poke")
 	sharpness = SHARP_EDGED

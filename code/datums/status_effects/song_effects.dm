@@ -25,7 +25,7 @@
 
 /datum/status_effect/song/antimagic/on_apply()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_STATUS_EFFECT(id))
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	playsound(owner, 'sound/items/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/song/antimagic/on_remove()
