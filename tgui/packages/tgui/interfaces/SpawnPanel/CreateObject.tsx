@@ -1,5 +1,5 @@
 import { storage } from 'common/storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Button,
   DmIcon,
@@ -43,6 +43,9 @@ export function CreateObject(props: CreateObjectProps) {
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
   const [selectedObj, setSelectedObj] = useState<string | null>(null);
+  const selectionRevision = useRef(0);
+  const latestBackendSelection = useRef(data);
+  latestBackendSelection.current = data;
   const [searchBy, setSearchBy] = useState(false);
   const [sortBy, setSortBy] = useState(listTypes.Objects);
   const [hideMapping, setHideMapping] = useState(false);
@@ -101,6 +104,8 @@ export function CreateObject(props: CreateObjectProps) {
   }, [data.copied_type]);
 
   useEffect(() => {
+    let active = true;
+    const initialSelectionRevision = selectionRevision.current;
     const loadStoredValues = async () => {
       const storedSearchText = await storage.get('spawnpanel-searchText');
       const storedSearchBy = await storage.get('spawnpanel-searchBy');
@@ -116,9 +121,19 @@ export function CreateObject(props: CreateObjectProps) {
       if (storedHideMapping !== undefined) setHideMapping(storedHideMapping);
       if (storedShowIcons !== undefined) setshowIcons(storedShowIcons);
       if (storedShowPreview !== undefined) setshowPreview(storedShowPreview);
-      if (storedSelectedObj) {
+      // A new server has no selection even when the browser remembers one.
+      // Restore both sides, but never overwrite a newer server/user choice.
+      const latest = latestBackendSelection.current;
+      if (
+        active &&
+        selectionRevision.current === initialSelectionRevision &&
+        !latest.selected_object &&
+        !latest.copied_type &&
+        storedSelectedObj
+      ) {
         if (allObjects[storedSelectedObj]) {
           setSelectedObj(storedSelectedObj);
+          act('selected-atom-changed', { newObj: storedSelectedObj });
           props.onIconSettingsChange?.({
             icon: allObjects[storedSelectedObj].icon,
             iconState: allObjects[storedSelectedObj].icon_state,
@@ -128,6 +143,9 @@ export function CreateObject(props: CreateObjectProps) {
     };
 
     loadStoredValues();
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -222,6 +240,7 @@ export function CreateObject(props: CreateObjectProps) {
   };
 
   const handleObjectSelect = (obj: string) => {
+    selectionRevision.current++;
     setSelectedObj(obj);
     act('selected-atom-changed', {
       newObj: obj,
