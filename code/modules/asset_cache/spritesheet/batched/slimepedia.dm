@@ -2,7 +2,7 @@
 	name = "slimepedia"
 
 /datum/asset/spritesheet_batched/slimepedia/create_spritesheets()
-	var/slime_icon = 'icons/obj/xenobiology/slime_rancher/slimes.dmi'
+	var/slime_icon = 'icons/mob/simple/slimes.dmi'
 	var/datum/universal_icon/face = uni_icon(slime_icon, "aslime-[SLIME_MOOD_SMILE]")
 	for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
 		var/prefix = slime_icon_prefix(slime_type)

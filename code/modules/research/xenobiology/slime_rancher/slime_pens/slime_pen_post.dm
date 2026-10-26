@@ -9,7 +9,7 @@
 	for(var/corner in GLOB.diagonals)
 		var/label = "[capitalize(dir2text(corner))] corner"
 		choices[label] = image(
-			icon = 'icons/obj/xenobiology/slime_rancher/slime_pen.dmi',
+			icon = 'icons/obj/xenobiology/slime_pen.dmi',
 			icon_state = "post_picker",
 			dir = corner,
 		)
@@ -21,7 +21,7 @@
 /obj/item/slime_pen_post
 	name = "slime pen post"
 	desc = "A collapsible corner post. Use it on an adjacent floor tile to choose its exact corner and deploy it there."
-	icon = 'icons/obj/xenobiology/slime_rancher/slime_pen.dmi'
+	icon = 'icons/obj/xenobiology/slime_pen.dmi'
 	icon_state = "corner"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
@@ -79,7 +79,7 @@
 /obj/structure/slime_pen_post
 	name = "slime pen post"
 	desc = "A corner post for a slime pen. Its plate marks the tile it belongs to, and the dotted guides point into the future pen."
-	icon = 'icons/obj/xenobiology/slime_rancher/slime_pen.dmi'
+	icon = 'icons/obj/xenobiology/slime_pen.dmi'
 	icon_state = "corner"
 	dir = NORTHEAST
 	density = FALSE
@@ -428,7 +428,7 @@
 /obj/structure/slime_pen_anchor
 	name = "slime pen tile plate"
 	desc = "This plate marks the tile owned by its corner post."
-	icon = 'icons/obj/xenobiology/slime_rancher/slime_pen.dmi'
+	icon = 'icons/obj/xenobiology/slime_pen.dmi'
 	icon_state = "post_anchor"
 	density = FALSE
 	anchored = TRUE
@@ -483,7 +483,7 @@
 
 /// Dotted preview of where the fence will go
 /obj/effect/slime_pen_guide
-	icon = 'icons/obj/xenobiology/slime_rancher/slime_pen.dmi'
+	icon = 'icons/obj/xenobiology/slime_pen.dmi'
 	icon_state = "post_marker"
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

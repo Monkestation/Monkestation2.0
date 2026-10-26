@@ -13,7 +13,7 @@
 /obj/machinery/extract_compressor
 	name = "extract compressor"
 	desc = "Crossbreeds slime extracts under pressure, no slime required."
-	icon = 'icons/obj/xenobiology/slime_rancher/compressor.dmi'
+	icon = 'icons/obj/xenobiology/compressor.dmi'
 	icon_state = "cross_compressor"
 	base_icon_state = "cross_compressor"
 	layer = BELOW_OBJ_LAYER

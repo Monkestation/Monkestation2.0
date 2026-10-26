@@ -126,7 +126,7 @@
 /obj/item/slime_breeding_pellet
 	name = "slime breeding pellet"
 	desc = "A biomass pellet slimes go nuts for. Feed it to a slime, and it'll split the next time it's fed enough!"
-	icon = 'icons/obj/xenobiology/slime_rancher/biomass.dmi'
+	icon = 'icons/obj/xenobiology/biomass.dmi'
 	icon_state = "pellet"
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON

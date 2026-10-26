@@ -4,7 +4,7 @@
 	alpha = 150
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	icon ='icons/obj/xenobiology/slime_rancher/filters.dmi'
+	icon ='icons/effects/slime_filters.dmi'
 	icon_state = "diag"
 	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	blend_mode = BLEND_INSET_OVERLAY
@@ -15,7 +15,7 @@
 	alpha = 150
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	icon ='icons/obj/xenobiology/slime_rancher/filters.dmi'
+	icon ='icons/effects/slime_filters.dmi'
 	icon_state = "diag"
 	vis_flags = NONE
 	blend_mode = 0

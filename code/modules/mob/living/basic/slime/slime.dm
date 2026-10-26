@@ -3,7 +3,7 @@
 
 /mob/living/basic/slime
 	name = "grey baby slime (123)"
-	icon = 'icons/obj/xenobiology/slime_rancher/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "grey-baby"
 	pass_flags = PASSTABLE | PASSGRILLE
 	generic_canpass = FALSE
@@ -331,7 +331,7 @@
 	if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
 		. += mutable_appearance(icon, "aslime-[current_mood]")
 	if(cat_slime)
-		var/mutable_appearance/cat_ears = mutable_appearance('icons/obj/xenobiology/slime_rancher/slime_cat_ears.dmi', "cat_ears-[life_stage]")
+		var/mutable_appearance/cat_ears = mutable_appearance('icons/mob/simple/slime_cat_ears.dmi', "cat_ears-[life_stage]")
 		cat_ears.color = slime_type.rgb_code
 		. += cat_ears
 	if(equipped_hat)

@@ -12,7 +12,7 @@
 /obj/item/vacuum_pack
 	name = "slime vacuum pack"
 	desc = "A backpack (or belt) vacuum for carrying and launching slimes. Anything else it sucks up goes straight to the linked recycler."
-	icon = 'icons/obj/xenobiology/slime_rancher/vacuum.dmi'
+	icon = 'icons/obj/xenobiology/vacuum.dmi'
 	icon_state = "vacuum_pack"
 	inhand_icon_state = "vacuum_pack"
 	lefthand_file = 'icons/mob/inhands/equipment/vacuum_pack_lefthand.dmi'

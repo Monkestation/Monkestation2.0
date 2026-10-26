@@ -11,7 +11,7 @@
 /obj/structure/slime_pen_barrier
 	name = "containment field"
 	desc = "A shimmering mesh strung between two pen posts. Slimes bounce off it. You won't."
-	icon = 'icons/obj/xenobiology/slime_rancher/slime_pen.dmi'
+	icon = 'icons/obj/xenobiology/slime_pen.dmi'
 	icon_state = "barrier"
 	flags_1 = ON_BORDER_1
 	density = FALSE

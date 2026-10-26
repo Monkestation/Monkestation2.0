@@ -4,7 +4,7 @@
 	alpha = 210
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	icon = 'icons/obj/xenobiology/slime_rancher/visual_effects.dmi'
+	icon = 'icons/effects/slime_visual_effects.dmi'
 	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	blend_mode = BLEND_INSET_OVERLAY
 

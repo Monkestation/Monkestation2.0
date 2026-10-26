@@ -9,7 +9,7 @@
 	name = "Covered in Slime"
 	desc = "You are covered in slime and it's eating away at you! Click to start cleaning it off, or find a faster way to wash it away!"
 	icon_state = "template"
-	overlay_icon = 'icons/obj/xenobiology/slime_rancher/slimed.dmi'
+	overlay_icon = 'icons/effects/slimed.dmi'
 	overlay_state = "slimed"
 	clickable_glow = TRUE
 

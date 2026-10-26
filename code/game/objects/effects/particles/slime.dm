@@ -1,6 +1,6 @@
 /// Slime goop particles, dripping off whoever got coated.
 /particles/slime
-	icon = 'icons/obj/xenobiology/slime_rancher/slimed.dmi'
+	icon = 'icons/effects/slimed.dmi'
 	icon_state = list("goop_1" = 6, "goop_2" = 2, "goop_3" = 1)
 	width = 100
 	height = 100

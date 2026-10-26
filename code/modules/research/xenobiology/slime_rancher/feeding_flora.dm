@@ -1,7 +1,7 @@
 /mob/living/basic/cockroach/rockroach
 	name = "rockroach"
 	desc = "This cockroach has decided to cosplay as a turtle and is carrying a rock shell on its back."
-	icon = 'icons/obj/xenobiology/slime_rancher/xenofauna.dmi'
+	icon = 'icons/obj/fluff/flora/xenofauna.dmi'
 	icon_state = "rockroach"
 	health = 15
 	maxHealth = 15
@@ -15,7 +15,7 @@
 /obj/item/rockroach_shell
 	name = "rockroach shell"
 	desc = "A rocky shell of some poor rockroach."
-	icon = 'icons/obj/xenobiology/slime_rancher/xenofauna.dmi'
+	icon = 'icons/obj/fluff/flora/xenofauna.dmi'
 	icon_state = "rockroach_shell"
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2
@@ -24,7 +24,7 @@
 /mob/living/basic/cockroach/iceroach
 	name = "iceroach"
 	desc = "This cockroach has decided to cosplay as a turtle and is carrying some ice shards on its back."
-	icon = 'icons/obj/xenobiology/slime_rancher/xenofauna.dmi'
+	icon = 'icons/obj/fluff/flora/xenofauna.dmi'
 	icon_state = "iceroach"
 	health = 15
 	maxHealth = 15
@@ -33,7 +33,7 @@
 /mob/living/basic/cockroach/gemroach
 	name = "gemroach"
 	desc = "I swear I've seen this one before but I can't remember where."
-	icon = 'icons/obj/xenobiology/slime_rancher/xenofauna.dmi'
+	icon = 'icons/obj/fluff/flora/xenofauna.dmi'
 	icon_state = "gemroach"
 	health = 15
 	maxHealth = 15
@@ -42,7 +42,7 @@
 /// Small critters for slimes to drain, deleted on death.
 /mob/living/basic/xenofauna
 	desc = "Feed these to the slimes!"
-	icon = 'icons/obj/xenobiology/slime_rancher/xenofauna.dmi'
+	icon = 'icons/obj/fluff/flora/xenofauna.dmi'
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 	health = 40
 	maxHealth = 40

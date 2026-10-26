@@ -232,7 +232,7 @@
 /obj/item/stack/biomass
 	name = "biomass cubes"
 	desc = "Cubes of condensed green biomass."
-	icon = 'icons/obj/xenobiology/slime_rancher/biomass.dmi'
+	icon = 'icons/obj/xenobiology/biomass.dmi'
 	icon_state = "biomass"
 	base_icon_state = "biomass"
 	singular_name = "biomass cube"

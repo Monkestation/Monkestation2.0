@@ -3,7 +3,7 @@
 	desc = "A slime is draining your very lifeforce! Remove it by hand, by hitting it, or by water."
 	icon = 'icons/hud/screen_slimecore.dmi'
 	icon_state = "template"
-	overlay_icon = 'icons/obj/xenobiology/slime_rancher/slimes.dmi'
+	overlay_icon = 'icons/mob/simple/slimes.dmi'
 	overlay_state = "grey-baby"
 
 /datum/status_effect/slime_leech

@@ -8,7 +8,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 /datum/slime_type
 	/// Our slime's color as text. Used by both description, and icon.
 	/// Spaces become dashes in icon states, so if you touch these names,
-	/// remember to update icons/obj/xenobiology/slime_rancher/slimes.dmi!
+	/// remember to update icons/mob/simple/slimes.dmi!
 	var/color
 	///Whether the slime icons should be semi-transparent
 	var/transparent = FALSE
