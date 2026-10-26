@@ -177,7 +177,7 @@
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
 	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
+		playsound(human_target, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
 	return FALSE
 
@@ -330,7 +330,7 @@
 	stamina_damage = 55 //2 hit stamcrit if the hits are landed quickly
 
 	/// The sound effecte played when our baton is extended.
-	var/on_sound = 'sound/weapons/batonextend.ogg'
+	var/on_sound = 'sound/items/weapons/batonextend.ogg'
 	/// The inhand iconstate used when our baton is extended.
 	var/on_inhand_icon_state = "nullrod"
 	/// The force on extension.
@@ -424,10 +424,10 @@
 	knockdown_time = 1.5 SECONDS
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
-	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
+	on_stun_sound = 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg'
 
 	on_inhand_icon_state = "contractor_baton_on"
-	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	on_sound = 'sound/items/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
 	unfolded_drop_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
@@ -577,7 +577,7 @@
 	cooldown = (1.3 SECONDS)
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	on_stun_sound = 'sound/weapons/egloves.ogg'
+	on_stun_sound = 'sound/items/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
@@ -657,7 +657,7 @@
 	var/turf/source_turf = get_turf(src)
 	var/obj/item/melee/baton/baton = new (source_turf)
 	baton.alpha = 20
-	playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+	playsound(source_turf, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	animate(src, alpha = 0, time = 1 SECONDS)
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
@@ -794,7 +794,7 @@
 	time_on_in_storage += seconds_per_tick SECONDS
 	if(!(time_on_in_storage >= cutoff_time))
 		return
-	playsound(src, 'sound/weapons/magout.ogg', 40, TRUE)
+	playsound(src, 'sound/items/weapons/magout.ogg', 40, TRUE)
 	visible_message(span_warning("\The [src] fizzles and automatically turns off in storage!"))
 	time_on_in_storage = 0
 	turn_off()

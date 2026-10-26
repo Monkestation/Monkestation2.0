@@ -30,7 +30,7 @@
 	. = ..()
 	var/current_turf = get_turf(src)
 
-	playsound(current_turf, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	playsound(current_turf, 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 
 	for(var/i in 1 to rand(5,7))
 		var/mob/living/carbon/human/species/monkey/angry/current_monkey = new(current_turf)

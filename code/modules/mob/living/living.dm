@@ -394,7 +394,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
 
 	if(!supress_message)
-		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		var/sound_to_play = 'sound/items/weapons/thudswoosh.ogg'
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.dna.species.grab_sound)

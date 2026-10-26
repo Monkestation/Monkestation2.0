@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/mecha/reticence
 	desc = "A silent, fast, and nigh-invisible miming exosuit. Popular among mimes and mime assassins."
 	name = "\improper reticence"
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "reticence"
 	base_icon_state = "reticence"
 	movedelay = 2

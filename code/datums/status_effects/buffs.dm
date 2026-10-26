@@ -97,7 +97,7 @@
 	for(var/datum/mind/B as anything in get_antag_minds(/datum/antagonist/cult))
 		if(isliving(B.current))
 			var/mob/living/M = B.current
-			SEND_SOUND(M, sound('sound/hallucinations/veryfar_noise.ogg'))
+			SEND_SOUND(M, sound('sound/effects/hallucinations/veryfar_noise.ogg'))
 			to_chat(M, span_cultlarge("The Cult's Master, [owner], has fallen in \the [A]!"))
 
 /datum/status_effect/cult_master/tick()
@@ -459,7 +459,7 @@
 /datum/status_effect/mayhem/on_apply()
 	. = ..()
 	to_chat(owner, "<span class='reallybig redtext'>RIP AND TEAR</span>")
-	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
+	SEND_SOUND(owner, sound('sound/effects/hallucinations/veryfar_noise.ogg'))
 	owner.cause_hallucination( \
 		/datum/hallucination/delusion/preset/demon, \
 		"[id] status effect", \
@@ -611,7 +611,7 @@
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
 	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
-	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
+	owner.playsound_local(get_turf(owner), 'sound/effects/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
 /datum/status_effect/blessing_of_insanity/on_remove()

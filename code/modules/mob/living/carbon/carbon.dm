@@ -100,7 +100,7 @@
 		victim.impact_fart()
 
 	if(oof_noise)
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(src,'sound/items/weapons/punch1.ogg',50,TRUE)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE

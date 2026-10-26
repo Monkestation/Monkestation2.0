@@ -89,7 +89,7 @@
 		name = "torn emergency space helmet"
 		desc = "A bulky, air-tight helmet meant to protect the user during emergency situations, at least until someone snapped the visor plate."
 		torn = TRUE
-		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/snap.ogg', 50, TRUE)
 
 
@@ -114,6 +114,6 @@
 		name = "torn emergency space suit"
 		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
 		torn = TRUE
-		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/refill.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/alert.ogg', 20, TRUE) //scare them

@@ -192,7 +192,7 @@
 		to_chat(shade, span_userdanger("You are grateful to have been summoned into this word by [user]. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
 	else
 		to_chat(shade, span_boldnotice("You are grateful to have been summoned into this world. You are now a member of this station's crew, Try not to cause any trouble."))
-	playsound(altar_turf, pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg',), 50, TRUE)
+	playsound(altar_turf, pick('sound/effects/hallucinations/growl1.ogg','sound/effects/hallucinations/growl2.ogg','sound/effects/hallucinations/growl3.ogg',), 50, TRUE)
 	return ..()
 
 /datum/religion_rites/cult/summon_god // cult rites parent used to make all cult rites require a certain number of people
