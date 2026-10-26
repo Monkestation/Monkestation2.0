@@ -51,7 +51,7 @@
 	ink.aim_projectile(target, user, modifiers)
 	ink.firer = user
 	ink.fire()
-	playsound(user, 'sound/weapons/pierce.ogg', 20, TRUE, -1)
+	playsound(user, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)
 	user.newtonian_move(get_angle(target, user))
 	StartCooldown()
 	return TRUE
