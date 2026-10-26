@@ -38,7 +38,7 @@
 	//attack flavour
 	speak_emote = list("whispers")
 	attack_verb_simple = "assails"
-	attack_sound = 'sound/magic/voidblink.ogg'
+	attack_sound = 'sound/effects/magic/voidblink.ogg'
 	response_help_simple = "disturbs"
 	response_harm_simple = "flails at"
 

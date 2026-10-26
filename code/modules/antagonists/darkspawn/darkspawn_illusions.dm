@@ -11,7 +11,7 @@
 	speed = -1
 	pass_flags_self = PASSTABLE | PASSMOB | PASSDOORS | PASSMACHINE | PASSGRILLE | PASSGLASS
 
-	attack_sound = 'sound/magic/voidblink.ogg'
+	attack_sound = 'sound/effects/magic/voidblink.ogg'
 	death_sound = 'sound/magic/darkspawn/devour_will_victim.ogg'
 	attack_verb_simple = "gores"
 	bubble_icon = "darkspawn"

@@ -199,7 +199,7 @@
 		return
 	playsound(C, "terminal_type", 50, TRUE)
 	if(prob(25))
-		playsound(C, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+		playsound(C, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 		do_sparks(5, TRUE, get_turf(C))
 
 	if(iterations <= 0)
@@ -211,11 +211,11 @@
 	set waitfor = FALSE
 	if(!C || C.machine_stat || !in_use)
 		return
-	playsound(C, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+	playsound(C, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 	sleep(0.4 SECONDS)
 	if(!C || C.machine_stat || !in_use)
 		return
-	playsound(C, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+	playsound(C, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 
 //////////////////////////////////////////////////////////////////////////
 //-----------------Used for placing things into the world---------------//

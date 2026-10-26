@@ -115,29 +115,29 @@
 
 /obj/item/organ/internal/tongue/proc/get_laugh_sound()
 	if(owner.gender == MALE)
-		return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
+		return pick('sound/mobs/humanoids/human/laugh/manlaugh1.ogg', 'sound/mobs/humanoids/human/laugh/manlaugh2.ogg')
 	else
-		return 'sound/voice/human/womanlaugh.ogg'
+		return 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg'
 
 /obj/item/organ/internal/tongue/proc/get_scream_sound()
 	if(owner.gender == MALE)
 		if(prob(1))
-			return 'sound/voice/human/wilhelm_scream.ogg'
+			return 'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg'
 		return pick(
-			'sound/voice/human/malescream_1.ogg',
-			'sound/voice/human/malescream_2.ogg',
-			'sound/voice/human/malescream_3.ogg',
-			'sound/voice/human/malescream_4.ogg',
-			'sound/voice/human/malescream_5.ogg',
-			'sound/voice/human/malescream_6.ogg',
+			'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+			'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+			'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+			'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+			'sound/mobs/humanoids/human/scream/malescream_5.ogg',
+			'sound/mobs/humanoids/human/scream/malescream_6.ogg',
 		)
 
 	return pick(
-		'sound/voice/human/femalescream_1.ogg',
-		'sound/voice/human/femalescream_2.ogg',
-		'sound/voice/human/femalescream_3.ogg',
-		'sound/voice/human/femalescream_4.ogg',
-		'sound/voice/human/femalescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
 	)
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
@@ -209,16 +209,16 @@
 /obj/item/organ/internal/tongue/lizard/get_scream_sound()
 	if(owner.gender == MALE)
 		return pick(
-		'sound/voice/lizard/lizard_scream_1.ogg',
-		'sound/voice/lizard/lizard_scream_2.ogg',
-		'sound/voice/lizard/lizard_scream_3.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_1.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_3.ogg',
 		'sound/voice/screams/lizard/lizard_scream_4.ogg',
 		)
 
 	return pick(
-		'sound/voice/lizard/lizard_scream_1.ogg',
-		'sound/voice/lizard/lizard_scream_2.ogg',
-		'sound/voice/lizard/lizard_scream_3.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_1.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_3.ogg',
 		'sound/voice/screams/lizard/lizard_scream_5.ogg',
 	)
 
@@ -331,10 +331,10 @@
 
 
 /obj/item/organ/internal/tongue/abductor/get_scream_sound()
-	return 'sound/weather/ashstorm/inside/weak_end.ogg'
+	return 'sound/ambience/weather/ashstorm/inside/weak_end.ogg'
 
 /obj/item/organ/internal/tongue/abductor/get_laugh_sound()
-	return 'sound/weather/ashstorm/inside/weak_end.ogg'
+	return 'sound/ambience/weather/ashstorm/inside/weak_end.ogg'
 
 /obj/item/organ/internal/tongue/abductor/attack_self(mob/living/carbon/human/tongue_holder)
 	if(!istype(tongue_holder))
@@ -522,9 +522,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/bone/plasmaman/get_scream_sound()
 	return pick(
-		'sound/voice/plasmaman/plasmeme_scream_1.ogg',
-		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
-		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_1.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_2.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_3.ogg',
 	)
 
 /obj/item/organ/internal/tongue/robot
@@ -586,9 +586,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/ethereal/get_scream_sound()
 	return pick(
-		'sound/voice/ethereal/ethereal_scream_1.ogg',
-		'sound/voice/ethereal/ethereal_scream_2.ogg',
-		'sound/voice/ethereal/ethereal_scream_3.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_1.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_2.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
 	)
 
 /obj/item/organ/internal/tongue/ethereal/get_laugh_sound()
@@ -610,7 +610,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "bananium tongue"
 	desc = "A bananium geode mostly used for honking."
 	say_mod = "honks"
-	icon = 'icons/obj/weapons/horn.dmi'
+	icon = 'icons/obj/art/horn.dmi'
 	icon_state = "gold_horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
@@ -669,12 +669,12 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	languages_native = list(/datum/language/moffic)
 
 /obj/item/organ/internal/tongue/moth/get_scream_sound()
-	return 'sound/voice/moth/scream_moth.ogg'
+	return 'sound/mobs/humanoids/moth/scream_moth.ogg'
 
 /obj/item/organ/internal/tongue/moth/get_laugh_sound()
 	return pick(
 		'sound/voice/laugh/moth/mothchitter.ogg',
-		'sound/voice/laugh/moth/mothlaugh.ogg',
+		'sound/mobs/humanoids/moth/moth_laugh1.ogg',
 		'sound/voice/laugh/moth/mothsqueak.ogg',
 	)
 
@@ -686,7 +686,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/mush
 	name = "mush-tongue-room"
 	desc = "You poof with this. Got it?"
-	icon = 'icons/obj/hydroponics/seeds.dmi'
+	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
 	say_mod = "poofs"
 	languages_native = list(/datum/language/mushroom)
@@ -713,9 +713,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/floran/get_scream_sound()
 	return pick(
-		'sound/voice/lizard/lizard_scream_1.ogg',
-		'sound/voice/lizard/lizard_scream_2.ogg',
-		'sound/voice/lizard/lizard_scream_3.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_1.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_3.ogg',
 		'sound/voice/screams/lizard/lizard_scream_5.ogg',
 	)
 

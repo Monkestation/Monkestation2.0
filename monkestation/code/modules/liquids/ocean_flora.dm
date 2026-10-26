@@ -61,7 +61,7 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
 	if(first)
 		to_chat(user, span_notice("You start slicing the [src]..."))
 	if(I.use_tool(src, user, 2 SECONDS))

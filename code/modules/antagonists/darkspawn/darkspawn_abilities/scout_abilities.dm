@@ -217,7 +217,7 @@
 	button_icon_state = "shadow_jump"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/visor_reticule.dmi'
 	panel = "Darkspawn"
-	sound = 'sound/magic/voidblink.ogg'
+	sound = 'sound/effects/magic/voidblink.ogg'
 
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 20)
 	cooldown_time = 20 SECONDS

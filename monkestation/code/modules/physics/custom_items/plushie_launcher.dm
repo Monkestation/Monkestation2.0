@@ -12,7 +12,7 @@
 	///the force of the plushie
 	var/plushie_force = 14
 	///fire sound
-	var/fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	///the sound the plushie makes while bouncing
 	var/bounce_sound = 'sound/voice/weh.ogg'
 	///fire count

@@ -20,8 +20,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bumps", "prods")
 	attack_verb_simple = list("bump", "prod")
-	hitsound = 'sound/weapons/smash.ogg'
-	fire_sound = 'sound/magic/cosmic_expansion.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	fire_sound = 'sound/effects/magic/cosmic_expansion.ogg'
 	ammo_type = /obj/item/ammo_casing/mirror_shield_dummy
 	can_charge = TRUE
 	///Up to how many projectiles can we "have stored"
@@ -106,7 +106,7 @@
 		hit_by.speed *= 0.8
 		hit_by.damage *= 1.15
 
-	playsound(src, 'sound/magic/cosmic_expansion.ogg', vol = 120, channel = CHANNEL_SOUND_EFFECTS)
+	playsound(src, 'sound/effects/magic/cosmic_expansion.ogg', vol = 120, channel = CHANNEL_SOUND_EFFECTS)
 	return PROJECTILE_INTERRUPT_HIT | PROJECTILE_INTERRUPT_BLOCK_QDEL
 
 //a dummy casing type to get filled with absorbed projectiles

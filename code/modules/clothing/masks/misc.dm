@@ -45,13 +45,13 @@
 	icon_state = "ook"
 	worn_icon = 'icons/mob/clothing/mask.dmi'
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	alternative_screams = list(	'sound/creatures/monkey/monkey_screech_1.ogg',
-								'sound/creatures/monkey/monkey_screech_2.ogg',
-								'sound/creatures/monkey/monkey_screech_3.ogg',
-								'sound/creatures/monkey/monkey_screech_4.ogg',
-								'sound/creatures/monkey/monkey_screech_5.ogg',
-								'sound/creatures/monkey/monkey_screech_6.ogg',
-								'sound/creatures/monkey/monkey_screech_7.ogg')
+	alternative_screams = list(	'sound/mobs/non-humanoids/monkey/monkey_screech_1.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_2.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_3.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_4.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_5.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_6.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_7.ogg')
 
 	alternative_laughs = list(	'sound/voice/laugh/misc/big_laugh0.ogg',
 								'sound/voice/laugh/misc/big_laugh1.ogg',

@@ -605,12 +605,12 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 //-------------------------------Preview icon-------------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////
 /datum/antagonist/darkspawn/get_preview_icon()
-	var/icon/darkspawn_icon = icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_head")
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_chest"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_r_arm"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_l_arm"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_r_leg"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_l_leg"), ICON_OVERLAY)
+	var/icon/darkspawn_icon = icon('icons/mob/human/bodyparts.dmi', "darkspawn_head")
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_chest"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_r_arm"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_l_arm"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_r_leg"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_l_leg"), ICON_OVERLAY)
 
 	var/class_color = COLOR_STRONG_VIOLET
 	var/class_icon = "classless"

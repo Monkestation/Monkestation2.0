@@ -233,7 +233,7 @@
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
-		playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/glowshroom/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300

@@ -5,7 +5,7 @@
 	//load only what we need from the icon files,format is icon_file_name = list of icon_states we need from this file
 	var/list/essentials = list(
 		'icons/obj/medical/iv_drip.dmi' = list("plumb"),
-		'icons/obj/plumbing/fluid_ducts.dmi' = list("nduct"),
+		'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi' = list("nduct"),
 		'icons/hud/radial.dmi' = list(
 			"plumbing_layer1",
 			"plumbing_layer2",

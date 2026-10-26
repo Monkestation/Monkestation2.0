@@ -1,6 +1,6 @@
 /obj/item/bodypart/head/teratoma
 	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	is_dimorphic = FALSE
@@ -13,7 +13,7 @@
 
 /obj/item/bodypart/chest/teratoma
 	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	is_dimorphic = FALSE
@@ -26,7 +26,7 @@
 
 /obj/item/bodypart/arm/left/teratoma
 	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
@@ -38,7 +38,7 @@
 
 /obj/item/bodypart/arm/right/teratoma
 	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
@@ -50,7 +50,7 @@
 
 /obj/item/bodypart/leg/left/teratoma
 	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
@@ -62,7 +62,7 @@
 
 /obj/item/bodypart/leg/right/teratoma
 	icon_static =  'icons/mob/species/teratoma/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	limb_id = SPECIES_TERATOMA
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM

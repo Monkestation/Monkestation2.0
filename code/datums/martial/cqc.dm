@@ -76,7 +76,7 @@
 		defender.visible_message(span_danger("[attacker] slams [defender] into the ground!"), \
 						span_userdanger("You're slammed into the ground by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 		to_chat(attacker, span_danger("You slam [defender] into the ground!"))
-		playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 50, TRUE, -1)
+		playsound(get_turf(attacker), 'sound/items/weapons/slam.ogg', 50, TRUE, -1)
 		defender.apply_damage(10, BRUTE)
 		defender.Paralyze(12 SECONDS)
 		log_combat(attacker, defender, "slammed (CQC)")
@@ -89,7 +89,7 @@
 		defender.visible_message(span_danger("[attacker] kicks [defender] back!"), \
 						span_userdanger("You're kicked back by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You kick [defender] back!"))
-		playsound(get_turf(attacker), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+		playsound(get_turf(attacker), 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
@@ -100,7 +100,7 @@
 		defender.visible_message(span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"), \
 						span_userdanger("You're knocked unconscious by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
-		playsound(get_turf(attacker), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
+		playsound(get_turf(attacker), 'sound/items/weapons/genhit1.ogg', 50, TRUE, -1)
 		defender.SetSleeping(30 SECONDS)
 		defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 		. = TRUE
@@ -113,7 +113,7 @@
 					span_userdanger("Your neck is punched by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
 	defender.stamina.adjust(-30)
-	playsound(get_turf(attacker), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+	playsound(get_turf(attacker), 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/attacker, mob/living/defender)
@@ -140,7 +140,7 @@
 		defender.visible_message(span_danger("[attacker] strikes [defender]'s abdomen, neck and back consecutively"), \
 						span_userdanger("Your abdomen, neck and back are struck consecutively by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You strike [defender]'s abdomen, neck and back consecutively!"))
-		playsound(get_turf(defender), 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
+		playsound(get_turf(defender), 'sound/items/weapons/cqchit2.ogg', 50, TRUE, -1)
 		var/obj/item/held_item = defender.get_active_held_item()
 		if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
 			attacker.put_in_hands(held_item)
@@ -203,9 +203,9 @@
 		picked_hit_type = "stomp"
 	defender.apply_damage(bonus_damage, BRUTE)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
-		playsound(get_turf(defender), 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
+		playsound(get_turf(defender), 'sound/items/weapons/cqchit2.ogg', 50, TRUE, -1)
 	else
-		playsound(get_turf(defender), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+		playsound(get_turf(defender), 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	defender.visible_message(span_danger("[attacker] [picked_hit_type]ed [defender]!"), \
 					span_userdanger("You're [picked_hit_type]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You [picked_hit_type] [defender]!"))
@@ -244,7 +244,7 @@
 			defender.visible_message(span_danger("[attacker] strikes [defender]'s jaw with [attacker.p_their()] hand!"), \
 							span_userdanger("Your jaw is struck by [attacker], you feel disoriented!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 			to_chat(attacker, span_danger("You strike [defender]'s jaw, leaving [defender.p_them()] disoriented!"))
-			playsound(get_turf(defender), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+			playsound(get_turf(defender), 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 			if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
 				attacker.put_in_hands(held_item)
 			defender.set_jitter_if_lower(4 SECONDS)
@@ -253,7 +253,7 @@
 		defender.visible_message(span_danger("[attacker] fails to disarm [defender]!"), \
 						span_userdanger("You're nearly disarmed by [attacker]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_warning("You fail to disarm [defender]!"))
-		playsound(defender, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		playsound(defender, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return FALSE
 
 GAME_VERB_PROC_DESC(/mob/living, CQC_help, "Remember The Basics", "You try to remember some of the basics of CQC.", "CQC")

@@ -25,7 +25,7 @@
 	return ..() && isethereal(user)
 
 /datum/emote/living/zap/get_sound(mob/living/user)
-	return 'sound/machines/defib_zap.ogg'
+	return 'sound/machines/defib/defib_zap.ogg'
 
 /datum/emote/living/hum
 	key = "hum"
@@ -50,7 +50,7 @@
 
 /datum/emote/living/hiss/get_sound(mob/living/user)
 	if(islizard(user) || isipc(user) || isAI(user) || iscyborg(user))
-		return pick('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg', 'sound/voice/hiss5.ogg', 'sound/voice/hiss6.ogg')
+		return pick('sound/mobs/non-humanoids/hiss/hiss1.ogg', 'sound/mobs/non-humanoids/hiss/hiss2.ogg', 'sound/mobs/non-humanoids/hiss/hiss3.ogg', 'sound/mobs/non-humanoids/hiss/hiss4.ogg', 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 'sound/mobs/non-humanoids/hiss/hiss6.ogg')
 	else if(user.is_cat_enough(include_all_anime = TRUE))
 		return pick('sound/voice/feline/hiss1.ogg', 'sound/voice/feline/hiss2.ogg', 'sound/voice/feline/hiss3.ogg')
 

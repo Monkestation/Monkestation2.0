@@ -53,7 +53,7 @@
 		to_chat(user, span_warning("[src] already has a holotag attached!"))
 		return
 	to_chat(user, span_notice("You affix a holotag to [src]."))
-	playsound(src, 'sound/machines/twobeep.ogg', 100)
+	playsound(src, 'sound/machines/beep/twobeep.ogg', 100)
 	gps_tagged = TRUE
 	assigned_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
@@ -81,7 +81,7 @@
 
 /obj/structure/spawner/syndicate
 	name = "warp beacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
 	mob_types = list(/mob/living/basic/trooper/syndicate/ranged)
@@ -107,7 +107,7 @@
 	name = "Laughing Larry"
 	desc = "A laughing, jovial figure. Something seems stuck in his throat."
 	icon_state = "clownbeacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	max_integrity = 200
 	max_mobs = 15
 	spawn_time = 15 SECONDS
@@ -216,7 +216,7 @@
 
 /obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob as anything in contents)
-		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		living_mob.adjustBruteLoss(60 * seconds_per_tick)
 		new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 		if(living_mob.stat == DEAD)

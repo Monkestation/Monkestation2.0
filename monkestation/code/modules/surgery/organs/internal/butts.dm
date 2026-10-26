@@ -42,7 +42,7 @@
 		cooling_down = TRUE
 		user.audible_message("[user] <font color='green'>farts.</font>")
 		if(prob(fart_instability))
-			playsound(user, "sound/machines/alarm.ogg", 100, FALSE, 50, ignore_walls=TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
+			playsound(user, "sound/announcer/alarm/nuke_alarm.ogg", 100, FALSE, 50, ignore_walls=TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
 			minor_announce("The detonation of a nuclear posterior has been detected in your area. All crew are required to exit the blast radius.", "Nanotrasen Atomics")
 			Person.Paralyze(12 SECONDS)
 			Person.electrocution_animation(12 SECONDS)
@@ -72,7 +72,7 @@
 	desc = "Designed from the ground up to create advanced humor."
 	icon_state = "roboass"
 	organ_flags = ORGAN_ROBOTIC
-	sound_effect = list('sound/machines/buzz-sigh.ogg', 'sound/machines/buzz-two.ogg', 'sound/machines/terminal_error.ogg', 'sound/weapons/ring.ogg')
+	sound_effect = list('sound/machines/buzz/buzz-sigh.ogg', 'sound/machines/buzz/buzz-two.ogg', 'sound/machines/terminal/terminal_error.ogg', 'sound/items/weapons/ring.ogg')
 	atmos_gas = "co2=0.25;TEMP=310.15"
 
 //CLOWN ASS
@@ -234,14 +234,14 @@
 	lighting_start.Beam(src, icon_state = "lightning[rand(1,12)]", time = 1.5 SECONDS)
 	unequip_everything()
 	Paralyze(1.5 SECONDS)
-	playsound(src, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', vol = 50, vary = TRUE)
 	playsound(src, 'sound/misc/dagothgod.ogg', vol = 80)
 	electrocution_animation(1.5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(finish_kill_smite), butt, explode), 1.5 SECONDS)
 
 /mob/living/carbon/human/proc/finish_kill_smite(obj/item/organ/internal/butt/butt, explode = TRUE)
 	var/turf/turf = get_turf(src)
-	playsound(turf, 'sound/effects/explosion3.ogg', vol = 75, vary = TRUE)
+	playsound(turf, 'sound/effects/explosion/explosion3.ogg', vol = 75, vary = TRUE)
 	gib()
 	if(explode)
 		dyn_explosion(turf, 1, 0)

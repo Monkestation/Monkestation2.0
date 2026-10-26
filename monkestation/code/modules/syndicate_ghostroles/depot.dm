@@ -109,7 +109,7 @@
 	name = "depot turret"
 	desc = "A ballistic machine-gun auto-turret. This one has had one of its barrels replaced with a taser."
 	stun_projectile = /obj/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	stun_projectile_sound = 'sound/items/weapons/taser.ogg'
 
 //shipbreaking features
 /obj/machinery/computer/shipbreaker/syndicate_depot
@@ -194,7 +194,7 @@
 		return
 	if(istype(attacking_item, /obj/item/blackbox))
 		user.visible_message(span_notice("[src] buzzes; seems like this type of black-box isn't compatible with the recorder."))
-		playsound(src, 'sound/machines/uplinkerror.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 50, TRUE)
 		return
 	return ..()
 

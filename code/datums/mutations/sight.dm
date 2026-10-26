@@ -279,7 +279,7 @@
 /datum/mutation/laser_eyes/New(datum/mutation/copymut)
 	. = ..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
 
 /datum/mutation/laser_eyes/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
@@ -316,7 +316,7 @@
 ///Projectile type used by laser eyes
 /obj/projectile/beam/laser/laser_eyes
 	name = "beam"
-	icon = 'icons/effects/genetics.dmi'
+	icon = 'icons/mob/effects/genetics.dmi'
 	icon_state = "eyelasers"
 
 /// Laser eyes made by a geneticist

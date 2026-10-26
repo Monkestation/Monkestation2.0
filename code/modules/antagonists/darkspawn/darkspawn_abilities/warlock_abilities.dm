@@ -762,7 +762,7 @@
 	buttontooltipstyle = "alien"
 	button_icon_state = "veiling_touch"
 	panel = "Darkspawn"
-	sound = 'sound/magic/demon_dies.ogg'
+	sound = 'sound/effects/magic/demon_dies.ogg'
 
 	school = SCHOOL_EVOCATION
 	invocation_type = INVOCATION_NONE

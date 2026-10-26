@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/energy/electrode
 	projectile_type = /obj/projectile/energy/electrode
 	select_name = "stun"
-	fire_sound = 'sound/weapons/taser.ogg'
+	fire_sound = 'sound/items/weapons/taser.ogg'
 	e_cost = LASER_SHOTS(5.25, STANDARD_CELL_CHARGE)
 	harmful = FALSE
 	select_sound = 'sound/weapons/gun/energy/egun_toggle_noammo.ogg'
@@ -15,7 +15,7 @@
 	e_cost = LASER_SHOTS(10.25, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/electrode/gun
-	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	e_cost = LASER_SHOTS(10.25, STANDARD_CELL_CHARGE)
 	select_sound = 'sound/weapons/gun/energy/egun_toggle_taser.ogg'
 
@@ -35,7 +35,7 @@
 /obj/item/ammo_casing/energy/disabler/smg
 	projectile_type = /obj/projectile/beam/disabler/weak
 	e_cost = LASER_SHOTS(42, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/weapons/taser3.ogg'
+	fire_sound = 'sound/items/weapons/taser3.ogg'
 
 /obj/item/ammo_casing/energy/disabler/hos
 	e_cost = LASER_SHOTS(30, STANDARD_CELL_CHARGE)

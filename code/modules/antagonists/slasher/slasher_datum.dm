@@ -216,7 +216,7 @@
 			currently_beating |= held
 			if(!(held in heartbeats))
 				heartbeats |= held
-				human.playsound_local(human, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+				human.playsound_local(human, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 
 		if(stage >= 2)
 			current_statics |= held

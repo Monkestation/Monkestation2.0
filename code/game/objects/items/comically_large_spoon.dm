@@ -8,7 +8,7 @@
 	inhand_icon_state = "comically_large_spoon"
 	base_icon_state = "comically_large_spoon"
 	icon_state = "comically_large_spoon"
-	hitsound = 'sound/items/trayhit1.ogg'
+	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK

@@ -38,7 +38,7 @@
 	. = ..()
 	center_turf = get_turf(owner)
 	playsound(center_turf,'sound/magic/wolvesamongsheep_warhorn.ogg', 1000, TRUE, 40)
-	playsound(center_turf,'sound/machines/airlockopen.ogg', 500, TRUE)
+	playsound(center_turf,'sound/machines/airlock/airlockopen.ogg', 500, TRUE)
 	to_transform = list()
 	new /obj/effect/heretic_rune/big(center_turf)
 	addtimer(CALLBACK(src, PROC_REF(create_arena), center_turf), 1 SECONDS)

@@ -401,7 +401,7 @@
 	name = "jay kouri"
 	desc = "Doesn't seem to get a break. From making sure his underlings in the war dont die, to making sure the station's crew doesn't kill each other. Has beautiful blue eyes though, too bad he doesn't take off his sunglasses."
 	icon_state = "jay"
-	squeak_override = list('sound/weapons/gun/rifle/shot.ogg'=1)
+	squeak_override = list('sound/items/weapons/gun/rifle/shot.ogg'=1)
 /datum/loadout_item/plushies/jay
 	name = "Jay Kouri Plush"
 	item_path = /obj/item/toy/plush/admin/jay
@@ -592,7 +592,7 @@
 	desc = "It's Birdion! You feel the urge to beat the shit out of her."
 	icon_state = "birdion"
 	pet_message = "You beat the shit out of birdion. You feel better."
-	squeak_override = list('sound/weapons/punch1.ogg'=1)
+	squeak_override = list('sound/items/weapons/punch1.ogg'=1)
 	gender = FEMALE
 
 /obj/item/toy/plush/admin/birdion/click_alt(mob/user)

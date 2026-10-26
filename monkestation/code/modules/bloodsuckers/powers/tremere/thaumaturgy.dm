@@ -176,7 +176,7 @@
 	handle_shot(user, target)
 
 	pay_cost(THAUMATURGY_BLOOD_COST_PER_CHARGE)
-	playsound(user, 'sound/magic/wand_teleport.ogg', 60, TRUE)
+	playsound(user, 'sound/effects/magic/wand_teleport.ogg', 60, TRUE)
 	charges -= 1
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	if(charges <= 0)

@@ -24,8 +24,8 @@
 	unarmed_damage_high = 4
 	unarmed_damage_low = 4
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	hand_traits = list(TRAIT_PLANT_SAFE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -38,8 +38,8 @@
 	unarmed_damage_high = 4
 	unarmed_damage_low = 4
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	hand_traits = list(TRAIT_PLANT_SAFE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR

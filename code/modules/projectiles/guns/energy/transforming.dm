@@ -192,7 +192,7 @@
 	if(!ignores_cooldown && !COOLDOWN_FINISHED(src, last_speech))
 		return
 	say(pick_list_replacements(speech_json_file, json_string))
-	playsound(src, 'sound/creatures/tourist/tourist_talk.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = rand(2, 2.2))
+	playsound(src, 'sound/mobs/non-humanoids/tourist/tourist_talk.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = rand(2, 2.2))
 	Shake(2, 2, 1 SECONDS)
 	COOLDOWN_START(src, last_speech, MOD_LASER_SPEECH_COOLDOWN)
 
@@ -225,7 +225,7 @@
 /obj/item/gun/energy/modular_laser_rifle/ui_action_click(mob/user, actiontype)
 	if(!istype(actiontype, /datum/action/item_action/toggle_personality))
 		return ..()
-	playsound(src, 'sound/machines/beep.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/beep/beep.ogg', 30, TRUE)
 	personality_mode = !personality_mode
 	speak_up("[personality_mode ? "pickup" : "putdown"]", ignores_personality_toggle = TRUE)
 	return ..()
@@ -769,7 +769,7 @@
 	var/obj/item/stock_parts/power_store/cell/cell = get_cell()
 	if(anger > 20)
 		if(prob(anger-20))
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, -2)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, -2)
 			selectammo(roll(9), null, TRUE)
 	if(anger > 50)
 		if(prob(anger-40))
@@ -782,7 +782,7 @@
 			return
 		if(1 to 20)
 			if(prob(50))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE, -2)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE, -2)
 		if(70 to 99)
 			if(prob(90))
 				return
@@ -886,7 +886,7 @@
 	stamina = 20
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/tap.ogg'
+	hitsound = 'sound/items/weapons/tap.ogg'
 	ricochets_max = 4
 	ricochet_chance = 140
 	ricochet_auto_aim_angle = 50
@@ -913,7 +913,7 @@
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
 	select_name = "execute"
-	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	e_cost = 300 //10%, 10 shots
 	harmful = TRUE
 
@@ -934,14 +934,14 @@
 /obj/item/ammo_casing/energy/lawbringer/hotshot
 	projectile_type = /obj/projectile/lawbringer/hotshot
 	select_name = "hotshot"
-	fire_sound = 'sound/weapons/fwoosh.ogg'
+	fire_sound = 'sound/items/weapons/fwoosh.ogg'
 	e_cost = 600 //20%, 5 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/hotshot
 	name = "proto-plasma"
 	icon_state = "pulse0_bl"
-	hitsound = 'sound/magic/fireball.ogg'
+	hitsound = 'sound/effects/magic/fireball.ogg'
 	damage = 5
 	damage_type = BURN
 
@@ -983,7 +983,7 @@
 /obj/item/ammo_casing/energy/lawbringer/bigshot
 	projectile_type = /obj/projectile/lawbringer/bigshot
 	select_name = "bigshot"
-	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
+	fire_sound = 'sound/items/weapons/gun/hmg/hmg.ogg'
 	e_cost = 1700 //56%, 1 shot
 	harmful = TRUE
 
@@ -1050,7 +1050,7 @@
 				M.dropItemToGround(item_to_strip)
 				to_chat(target, span_reallybig(span_clown("Your blasted right off your shoes!!")))
 				M.visible_message(span_warning("[M] is is sent rocketing off their shoes!"))
-			playsound(src, 'sound/items/airhorn.ogg', 100, TRUE, -1)
+			playsound(src, 'sound/items/airhorn/airhorn.ogg', 100, TRUE, -1)
 			var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 			M.throw_at(throw_target, 200, 8)
 
@@ -1060,7 +1060,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/pulse
 	projectile_type = /obj/projectile/lawbringer/pulse
-	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	fire_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	select_name = "pulse"
 	e_cost = 350 //12%, 8 shots
 	harmful = TRUE
@@ -1099,7 +1099,7 @@
 	stamina = 10 // not for use on the employed
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/tap.ogg'
+	hitsound = 'sound/items/weapons/tap.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
@@ -1117,7 +1117,7 @@
 				C.add_mood_event("tased", /datum/mood_event/tased)
 				to_chat(target, span_warning("As the beam hits you, body seems to crumple under its uselessness."))
 				SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-				playsound(src, 'sound/weapons/taserhit.ogg', 80, TRUE, -1)
+				playsound(src, 'sound/items/weapons/taserhit.ogg', 80, TRUE, -1)
 				C.stamina.adjust(-50)
 				C.Paralyze(10 SECONDS)
 				C.set_jitter_if_lower(40 SECONDS)
@@ -1129,7 +1129,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/ion
 	projectile_type = /obj/projectile/ion/weak
-	fire_sound = 'sound/weapons/ionrifle.ogg'
+	fire_sound = 'sound/items/weapons/ionrifle.ogg'
 	select_name = "ion"
 	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE

@@ -446,7 +446,7 @@
 /datum/action/droppod_item
 	name = "Summon Monster Hunter Tools"
 	desc = "Summon specific monster hunter tools that will aid us with our hunt."
-	button_icon = 'icons/obj/device.dmi'
+	button_icon = 'icons/obj/devices/tracker.dmi'
 	button_icon_state = "beacon"
 
 /datum/action/droppod_item/New(obj/item/target)

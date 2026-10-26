@@ -28,9 +28,9 @@
 	var/warned = FALSE
 	var/list/calculated_projectile_vars
 	/// Sound to play at the end of a burst
-	var/overheatsound = 'sound/weapons/sear.ogg'
+	var/overheatsound = 'sound/items/weapons/sear.ogg'
 	/// Sound to play when firing
-	var/firesound = 'sound/weapons/gun/smg/shot.ogg'
+	var/firesound = 'sound/items/weapons/gun/smg/shot.ogg'
 	/// If using a wrench on the turret will start undeploying it
 	var/can_be_undeployed = FALSE
 	/// What gets spawned if the object is undeployed
@@ -69,7 +69,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
@@ -103,7 +103,7 @@
 	layer = ABOVE_MOB_LAYER
 	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	set_anchored(TRUE)
 	if(M.client)
 		M.client.view_size.setTo(view_range)
@@ -230,8 +230,8 @@
 	number_of_shots = 3
 	cooldown_duration = 2 SECONDS
 	rate_of_fire = 2
-	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	firesound = 'sound/items/weapons/gun/hmg/hmg.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
@@ -249,7 +249,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cooldown_duration = 3 SECONDS
 	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/vehicle/ridden/artillerylight
 	cover_amount = 66 // its has a gunshield
@@ -303,7 +303,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cooldown_duration = 8 SECONDS
 	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/vehicle/ridden/artilleryheavy
 	cover_amount = 88 // its has a gunshield

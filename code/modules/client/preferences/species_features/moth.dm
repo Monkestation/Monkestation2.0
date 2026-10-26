@@ -13,7 +13,7 @@
 	var/static/datum/universal_icon/moth_head
 
 	if (isnull(moth_head))
-		moth_head = uni_icon('icons/mob/species/moth/bodyparts.dmi', "moth_head")
+		moth_head = uni_icon('icons/mob/human/species/moth/bodyparts.dmi', "moth_head")
 		moth_head.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
 		moth_head.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
 
@@ -60,7 +60,7 @@
 
 		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST ? "_m" : ""
-			moth_body.blend_icon(uni_icon('icons/mob/species/moth/bodyparts.dmi', "moth_[body_part][gender]"), ICON_OVERLAY)
+			moth_body.blend_icon(uni_icon('icons/mob/human/species/moth/bodyparts.dmi', "moth_[body_part][gender]"), ICON_OVERLAY)
 
 		moth_body.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
 		moth_body.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
@@ -76,7 +76,7 @@
 			body_part_icon.crop(1, 1, 32, 32)
 			icon_with_markings.blend_icon(body_part_icon, ICON_OVERLAY)
 
-	icon_with_markings.blend_icon(uni_icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_FRONT"), ICON_OVERLAY)
+	icon_with_markings.blend_icon(uni_icon('icons/mob/human/species/moth/moth_wings.dmi', "m_moth_wings_plain_FRONT"), ICON_OVERLAY)
 	icon_with_markings.blend_icon(uni_icon('icons/mob/species/moth/moth_antennae.dmi', "m_moth_antennae_plain_FRONT"), ICON_OVERLAY)
 
 	// Zoom in on the top of the head and the chest

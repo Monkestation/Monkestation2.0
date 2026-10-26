@@ -77,7 +77,7 @@
 	COOLDOWN_START(src, grab_cooldown, cooldown_length)
 	user.visible_message(span_warning("[user] draws back [src] and swings them towards [target]!"), \
 	span_velvet("<b>opehhjaoo</b><br>You swing your tendrils towards [target]!"))
-	playsound(user, 'sound/magic/tail_swing.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/magic/tail_swing.ogg', 50, TRUE)
 	var/obj/projectile/umbral_tendrils/T = new(get_turf(user))
 	T.aim_projectile(target, user)
 	T.twinned = twin

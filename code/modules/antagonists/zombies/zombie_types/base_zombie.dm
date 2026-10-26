@@ -190,6 +190,6 @@
 		blind_message = span_hear("You hear a grotesque cacophony of flesh shifting and tearing!"),
 	)
 
-	playsound(user, 'sound/effects/blobattack.ogg', vol = 80, vary = TRUE)
+	playsound(user, 'sound/effects/blob/blobattack.ogg', vol = 80, vary = TRUE)
 
 #undef FLESH_REQUIRED_TO_EVOLVE
