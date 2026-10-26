@@ -4,7 +4,7 @@
 	desc = "A device that analyzes a slime's internal composition and measures its stats, \
 		including whether it's primed to produce an extract or split next. \
 		Keeps a lock on the last slime you pointed it at."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "slime_scanner"
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
