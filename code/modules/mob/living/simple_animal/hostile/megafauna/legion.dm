@@ -32,7 +32,7 @@
 	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("echoes")
 	armour_penetration = 50
@@ -58,7 +58,7 @@
 	elimination = TRUE
 	appearance_flags = LONG_GLIDE
 	mouse_opacity = MOUSE_OPACITY_ICON
-	rawr_sound = 'sound/magic/RATTLEMEBONES.ogg' // MONKESTATION EDIT ADDITION
+	rawr_sound = 'sound/effects/magic/RATTLEMEBONES.ogg' // MONKESTATION EDIT ADDITION
 	var/size = LEGION_LARGE
 	/// Create Skulls ability
 	var/datum/action/cooldown/mob_cooldown/create_legion_skull/create_legion_skull
