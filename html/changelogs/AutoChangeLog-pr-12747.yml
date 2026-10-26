@@ -1,5 +1,0 @@
-author: "hexakats"
-delete-after: True
-changes:
-  - bugfix: "You can no longer shrink modsuit control units"
-  - refactor: "replaced attackby with item_interaction for the BCK"

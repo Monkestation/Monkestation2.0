@@ -4,7 +4,7 @@
 /obj/vehicle/ridden/wienermobile
 	name = "Wiener Wurstchen Mobile"
 	desc = "A bus that has been themed to look like a hotdog, its absolute Peak."
-	icon = 'icons/obj/car.dmi'
+	icon = 'icons/obj/toys/car.dmi'
 	icon_state = "wienermobile"
 	layer = LYING_MOB_LAYER
 	pixel_y = -48

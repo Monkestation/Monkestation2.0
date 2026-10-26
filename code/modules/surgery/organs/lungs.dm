@@ -980,7 +980,7 @@
 	desc = "Conjure flames within your lungs, before exhaling them in front of yourself."
 	cooldown_time = 1 MINUTES
 	fire_range = 3
-	fire_sound = 'sound/magic/fireball.ogg'
+	fire_sound = 'sound/effects/magic/fireball.ogg'
 	fire_delay = 1.5 DECISECONDS
 	fire_temperature = DRAKE_FIRE_TEMP
 	fire_volume = DRAKE_FIRE_EXPOSURE

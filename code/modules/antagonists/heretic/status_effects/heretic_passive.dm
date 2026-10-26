@@ -196,7 +196,7 @@
 
 /// Does the actual counter-attack
 /datum/status_effect/heretic_passive/blade/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
-	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
+	playsound(get_turf(source), 'sound/items/weapons/parry.ogg', 100, TRUE)
 	source.balloon_alert(source, "riposte used")
 	source.visible_message(
 		span_warning("[source] leans into [attack_text] and delivers a sudden riposte back at [target]!"),
@@ -403,8 +403,8 @@
 		"Sleep immunity, increases the ratio at which your brain damage regenerates.",
 		"Mind gate and Ringleader's rise will channel the moon amulet effects, further inreases brain regeneration."
 	)
-	/// Built-in moon amulet which channels through your spells
-	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
+	/// Whether the moon amulet's effect channels through your spells
+	var/channels_amulet = FALSE
 	/// When were we last attacked?
 	var/last_attack = 0
 	/// How long the combat tag lasts for
@@ -448,7 +448,7 @@
 
 /datum/status_effect/heretic_passive/moon/heretic_level_final()
 	. = ..()
-	amulet = new()
+	channels_amulet = TRUE
 
 /datum/status_effect/heretic_passive/moon/on_remove()
 	var/obj/item/organ/internal/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -457,7 +457,7 @@
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, TRAIT_STATUS_EFFECT(id))
 	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
-	QDEL_NULL(amulet)
+	channels_amulet = FALSE
 	return ..()
 
 //---- Rust Passive

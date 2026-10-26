@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "(SmArtKar) Blood-drunk miner now drops an infernal PKA with an in-built improved rapid repeater modification."
-  - bugfix: "PKA cooldown upgrades now no longer care about what order they're shoved into the PKA."

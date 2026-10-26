@@ -12,7 +12,7 @@
 	force = 18
 	throwforce = 12
 	active_thrown_force = 10
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
@@ -20,6 +20,6 @@
 	. = ..()
 	balloon_alert(user, active ? "extended" : "collapsed")
 	if(active)
-		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', vol = 50)
+		playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', vol = 50)
 	reach = active ? 2 : 1
 	return COMPONENT_NO_DEFAULT_MESSAGE

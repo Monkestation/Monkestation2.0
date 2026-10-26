@@ -42,7 +42,7 @@
 /obj/machinery/growing/soil
 	name = "soil"
 	desc = "A patch of dirt."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	density = FALSE
 
@@ -52,7 +52,7 @@
 
 /obj/machinery/growing/multi
 	name = "soil"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	maximum_seeds = 4
 	density = FALSE

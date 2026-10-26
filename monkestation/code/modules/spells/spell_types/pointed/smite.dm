@@ -5,7 +5,7 @@
 	name = "Smite"
 	desc = "A spell to strike down your foes from the heavens."
 	button_icon_state = "gib"
-	sound = 'sound/magic/disintegrate.ogg'
+	sound = 'sound/effects/magic/disintegrate.ogg'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 40 SECONDS
