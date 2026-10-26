@@ -366,7 +366,7 @@
 
 // Simple overlay so we can add gills to those with fish lungs
 /datum/bodypart_overlay/simple/gills
-	icon = 'icons/mob/species/human/fish_features.dmi'
+	icon = 'icons/mob/human/fish_features.dmi'
 	icon_state = "gills"
 	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 

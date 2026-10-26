@@ -2701,7 +2701,7 @@ MONKESTATION EDIT
 
 ///Used for fish-infused tails, which come in different flavors.
 /datum/sprite_accessory/tails/fish
-	icon = 'icons/mob/species/human/fish_features.dmi'
+	icon = 'icons/mob/human/fish_features.dmi'
 	color_src = TRUE
 
 /datum/sprite_accessory/tails/fish/simple
