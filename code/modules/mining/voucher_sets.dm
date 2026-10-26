@@ -203,7 +203,6 @@
 /datum/voucher_set/security/primary/advanced_taser
 	name = "Hybrid Taser"
 	description = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
-	description = "The standard issue energy gun of Nanotrasen security forces. Comes with it's own holster."
 	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "advtaser"
 	set_items = list(
@@ -213,7 +212,6 @@
 /datum/voucher_set/security/primary/disabler_smg
 	name = "Disabler SMG"
 	description = "An automatic disabler variant, as opposed to the conventional model, boasts a higher ammunition capacity at the cost of slightly reduced beam effectiveness."
-	description = "The standard issue energy gun of Nanotrasen security forces. Comes with it's own holster."
 	icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	icon_state = "disabler_smg"
 	set_items = list(

@@ -280,7 +280,7 @@
 	icon_state = "ignifist"
 	inhand_icon_state = "ignifist"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/ignifist
-	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/rocket_launch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	can_suppress = FALSE
 	burst_size = 1
