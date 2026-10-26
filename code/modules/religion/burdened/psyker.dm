@@ -175,7 +175,7 @@
 	name = "Psychic Booster"
 	desc = "Charge up your mind to shoot firearms faster and home in on your targets. Think smarter, not harder."
 	button_icon_state = "projectile"
-	sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	sound = 'sound/items/weapons/gun/shotgun/rack.ogg'
 	school = SCHOOL_PSYCHIC
 	cooldown_time = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE_MIND

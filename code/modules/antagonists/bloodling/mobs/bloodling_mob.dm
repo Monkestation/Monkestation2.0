@@ -11,7 +11,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	speed = 2.8
@@ -20,7 +20,7 @@
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
 	faction = list(FACTION_BLOODLING)
 	pass_flags = PASSTABLE
-	attack_sound = 'sound/effects/attackblob.ogg'
+	attack_sound = 'sound/effects/blob/attackblob.ogg'
 
 	// This adds a red tinted nightvision
 	lighting_cutoff_red = 40

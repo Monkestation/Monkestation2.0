@@ -2,7 +2,7 @@
 /obj/item/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	verb_say = "beeps"
 	verb_yell = "blares"
 	icon_state = "gps-c"

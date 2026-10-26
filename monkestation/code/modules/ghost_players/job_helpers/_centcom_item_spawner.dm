@@ -3,7 +3,7 @@
 	desc = "This is the abstract type of an object, you should not see this."
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	icon = 'icons/obj/money_machine.dmi'
+	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 	///what do we say() when we fabricate something
 	var/fabrication_phrase = "fabrication complete"

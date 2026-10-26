@@ -13,10 +13,10 @@
 	throwforce = 7
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
-	usesound = 'sound/items/ratchet.ogg'
+	usesound = 'sound/items/tools/ratchet.ogg'
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*1.5)
-	drop_sound = 'sound/items/handling/wrench_drop.ogg'
-	pickup_sound = 'sound/items/handling/wrench_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/wrench_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/wrench_pickup.ogg'
 
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
@@ -34,13 +34,13 @@
 
 /obj/item/wrench/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/wrench/abductor
 	name = "alien wrench"
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	belt_icon_state = "wrench_alien"
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	usesound = 'sound/effects/empulse.ogg'
@@ -69,7 +69,7 @@
 	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
 	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
 	user.set_light(2)
-	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+	user.add_overlay(mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
 
 	// Let the sound effect finish playing
@@ -126,7 +126,7 @@
 	tool_behaviour = active ? TOOL_WRENCH : initial(tool_behaviour)
 	if(user)
 		balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/wrench/combat/proc/on_scan(datum/source, mob/user, list/extra_data)

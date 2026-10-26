@@ -17,7 +17,7 @@
 	inert_mutation = /datum/mutation/wings // MONKESTATION ADDITION
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
-	death_sound = 'sound/voice/moth/moth_death.ogg'
+	death_sound = 'sound/mobs/humanoids/moth/moth_death.ogg'
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
 
 	bodypart_overrides = list(

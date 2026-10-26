@@ -4,8 +4,8 @@
 #define WOUND_RES_CORE_MALUS -20 // ouch!!!
 
 /obj/item/bodypart/head/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
+	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -19,8 +19,8 @@
 	wound_resistance = /obj/item/bodypart/head::wound_resistance + WOUND_RES_CORE_MALUS
 
 /obj/item/bodypart/chest/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
+	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
@@ -89,14 +89,14 @@
 	return ..()
 
 /obj/item/bodypart/arm/left/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
+	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "slash"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
@@ -105,14 +105,14 @@
 	wound_resistance = /obj/item/bodypart/arm/left::wound_resistance + WOUND_RES_LIMB_MALUS
 
 /obj/item/bodypart/arm/right/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
+	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "slash"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
@@ -121,8 +121,8 @@
 	wound_resistance = /obj/item/bodypart/arm/right::wound_resistance + WOUND_RES_LIMB_MALUS
 
 /obj/item/bodypart/leg/left/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
+	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	should_draw_greyscale = FALSE
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
@@ -133,8 +133,8 @@
 	wound_resistance = /obj/item/bodypart/leg/left::wound_resistance + WOUND_RES_LIMB_MALUS
 
 /obj/item/bodypart/leg/right/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
+	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	should_draw_greyscale = FALSE
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
@@ -195,7 +195,7 @@
 // TODO: should be mutant overlay at some point?
 /datum/bodypart_overlay/simple/moth_arms
 	layers = EXTERNAL_FRONT
-	icon = 'icons/mob/species/moth/moth_arms.dmi'
+	icon = 'icons/mob/human/species/moth/moth_arms.dmi'
 	icon_state = "m_moth_arms_generic_FRONT"
 
 #undef BRUTE_MOD
