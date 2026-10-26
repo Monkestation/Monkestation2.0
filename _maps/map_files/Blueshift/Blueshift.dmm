@@ -100,6 +100,7 @@
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/item/book/manual/botanical_lexicon,
 /obj/item/book/manual/chicken_encyclopedia,
+/obj/item/chicken_scanner,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/hydroponics/chicken/backroom)
 "abG" = (
@@ -66123,6 +66124,7 @@
 	},
 /obj/item/book/manual/botanical_lexicon,
 /obj/item/book/manual/chicken_encyclopedia,
+/obj/item/chicken_scanner,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/hydroponics/chicken/backroom)
 "mKX" = (
@@ -71830,7 +71832,7 @@
 /obj/item/reagent_containers/blood,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -79048,6 +79050,7 @@
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/item/book/manual/botanical_lexicon,
 /obj/item/book/manual/chicken_encyclopedia,
+/obj/item/chicken_scanner,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/hydroponics/chicken/backroom)
 "pmr" = (
@@ -84103,6 +84106,7 @@
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/item/book/manual/botanical_lexicon,
 /obj/item/book/manual/chicken_encyclopedia,
+/obj/item/chicken_scanner,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/hydroponics/chicken/backroom)
 "qor" = (

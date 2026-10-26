@@ -91,14 +91,14 @@
 	return to_add
 
 /obj/item/bodypart/head/goblin
-	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	is_dimorphic = FALSE
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/chest/goblin
-	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	is_dimorphic = TRUE
 	speed_modifier = -0.25
@@ -106,25 +106,25 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/left/goblin
-	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/right/goblin
-	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/left/goblin
-	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/right/goblin
-	icon_greyscale = 'icons/mob/species/goblin/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/goblin/bodyparts.dmi'
 	limb_id = SPECIES_GOBLIN
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR

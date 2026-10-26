@@ -21,7 +21,7 @@
 	if(how_cold_is_target < danger_zone)
 		explosion(cold_target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 3) //maybe stand back a bit
 		cold_target.adjust_bodytemperature(40 KELVIN, max_temp = cold_target.standard_body_temperature) //avoids repeat explosions, maybe could be used to heat up again?
-		playsound(cold_target, 'sound/weapons/sear.ogg', 30, TRUE, -1)
+		playsound(cold_target, 'sound/items/weapons/sear.ogg', 30, TRUE, -1)
 
 /obj/projectile/energy/cryo
 	name = "frozen nanite bullet"
@@ -47,4 +47,4 @@
 		hot_target.Knockdown(100)
 		hot_target.apply_damage(20, BURN)
 		hot_target.adjust_bodytemperature(-40 KELVIN, min_temp = hot_target.standard_body_temperature) //avoids repeat knockdowns, maybe could be used to cool down again?
-		playsound(hot_target, 'sound/weapons/sonic_jackhammer.ogg', 30, TRUE, -1)
+		playsound(hot_target, 'sound/items/weapons/sonic_jackhammer.ogg', 30, TRUE, -1)

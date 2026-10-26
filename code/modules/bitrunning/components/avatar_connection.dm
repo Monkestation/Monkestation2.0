@@ -60,7 +60,7 @@
 		var/datum/action/avatar_domain_info/action = new(help_datum)
 		action.Grant(avatar)
 
-	avatar.playsound_local(avatar, 'sound/magic/blink.ogg', 25, TRUE)
+	avatar.playsound_local(avatar, 'sound/effects/magic/blink.ogg', 25, TRUE)
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS)
 
@@ -116,7 +116,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_success.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_success.ogg', 50, vary = TRUE)
 	avatar.throw_alert(
 		ALERT_BITRUNNER_COMPLETED,
 		/atom/movable/screen/alert/bitrunning/qserver_domain_complete,
@@ -158,7 +158,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_alert.ogg', 50, vary = TRUE)
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_CROWBAR,
 		/atom/movable/screen/alert/bitrunning,
@@ -197,7 +197,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_alert.ogg', 50, vary = TRUE)
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_SHUTDOWN,
 		/atom/movable/screen/alert/bitrunning,
@@ -211,7 +211,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_alert.ogg', 50, vary = TRUE)
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_BREACH,
 		/atom/movable/screen/alert/bitrunning,

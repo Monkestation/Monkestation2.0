@@ -58,7 +58,7 @@
 		return
 
 	var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
+	playsound(src, 'sound/items/airhorn/airhorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	if(!ishuman(current_target))
@@ -98,7 +98,7 @@
 
 /mob/living/simple_animal/bot/secbot/honkbot/retaliate(mob/living/carbon/human/attacking_human)
 	. = ..()
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 

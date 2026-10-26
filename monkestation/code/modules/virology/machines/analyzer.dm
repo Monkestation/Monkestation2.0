@@ -151,7 +151,7 @@
 		dish.forceMove(drop_location())
 		dish = null
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', vol = 25, mixer_channel = CHANNEL_MACHINERY)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', vol = 25, mixer_channel = CHANNEL_MACHINERY)
 
 	processing = FALSE
 	update_appearance()
