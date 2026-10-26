@@ -6,7 +6,7 @@
 	inhand_icon_state = "holotool"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	usesound = 'sound/items/pshoom.ogg'
+	usesound = 'sound/items/pshoom/pshoom.ogg'
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	actions_types = list(/datum/action/item_action/change_tool, /datum/action/item_action/change_ht_color)

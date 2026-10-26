@@ -42,7 +42,7 @@
 	var/static/datum/universal_icon/head_icon
 
 	if(isnull(head_icon))
-		head_icon = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
 		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/accessory = GLOB.anime_top_list[value]
@@ -100,7 +100,7 @@
 
 		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST || body_part == BODY_ZONE_HEAD ? "_m" : ""
-			body_icon.blend_icon(uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
+			body_icon.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
 
 		body_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 		body_icon.blend_icon(uni_icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH), ICON_OVERLAY)
@@ -156,7 +156,7 @@
 		body_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
 		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST || body_part == BODY_ZONE_HEAD ? "_m" : ""
-			body_icon.blend_icon(uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
+			body_icon.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
 
 		body_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 		var/datum/universal_icon/jumpsuit_icon = uni_icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH)

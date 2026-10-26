@@ -24,7 +24,7 @@
 	if(SPT_PROB(3, seconds_per_tick))
 		new /obj/effect/temp_visual/steam_release(get_turf(src))
 	if(SPT_PROB(7, seconds_per_tick))
-		playsound(get_turf(src), 'sound/machines/beep.ogg', 20, TRUE)
+		playsound(get_turf(src), 'sound/machines/beep/beep.ogg', 20, TRUE)
 
 /obj/machinery/computer/camera_advanced/ratvar/can_use(mob/living/user)
 	if(!IS_CLOCK(user) || iscogscarab(user))

@@ -28,7 +28,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 	//MONKESTATION EDIT START
-	death_sound = 'sound/creatures/mousesqueek.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 	death_message = "falls limp and lifeless..."
 	//MONKESTATION EDIT STOP
 
@@ -48,9 +48,9 @@
 
 //MONKESTATION EDIT START
 /mob/living/basic/mouse/get_scream_sound()
-	return 'sound/creatures/mousesqueek.ogg'
+	return 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 /mob/living/basic/mouse/get_laugh_sound()
-	return 'sound/creatures/mousesqueek.ogg'
+	return 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 //MONKESTATION EDIT STOP
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
@@ -72,7 +72,7 @@
 		held_state = "mouse_[body_color]" // not handled by variety element
 		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
-	AddComponent(/datum/component/squeak, list('sound/creatures/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
+	AddComponent(/datum/component/squeak, list('sound/mobs/non-humanoids/mouse/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -274,7 +274,7 @@
 			span_notice("You chew through \the [cable]."),
 		)
 
-	playsound(cable, 'sound/effects/sparks2.ogg', 100, TRUE)
+	playsound(cable, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
 	cable.deconstruct()
 
 /mob/living/basic/mouse/white
