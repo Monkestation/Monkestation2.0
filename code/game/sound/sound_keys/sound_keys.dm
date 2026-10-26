@@ -660,6 +660,6 @@
 /datum/sound_effect/fish_pickup
 	key = SFX_FISH_PICKUP
 	file_paths = list(
-		'sound/creatures/fish/fish_pickup1.ogg',
-		'sound/creatures/fish/fish_pickup2.ogg',
+		'sound/mobs/non-humanoids/fish/fish_pickup1.ogg',
+		'sound/mobs/non-humanoids/fish/fish_pickup2.ogg',
 	)
