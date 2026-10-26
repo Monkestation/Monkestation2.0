@@ -216,7 +216,7 @@
 /obj/machinery/power/turbine/inlet_compressor
 	name = "inlet compressor"
 	desc = "The input side of a turbine generator, contains the compressor."
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "inlet_compressor"
 
 	circuit = /obj/item/circuitboard/machine/turbine_compressor
@@ -279,7 +279,7 @@
 /obj/machinery/power/turbine/turbine_outlet
 	name = "turbine outlet"
 	desc = "The output side of a turbine generator, contains the turbine and the stator."
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "turbine_outlet"
 
 	circuit = /obj/item/circuitboard/machine/turbine_stator
@@ -331,7 +331,7 @@
 /obj/machinery/power/turbine/core_rotor
 	name = "core rotor"
 	desc = "The middle part of a turbine generator, contains the rotor and the main computer."
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "core_rotor"
 	can_change_cable_layer = TRUE
 
@@ -624,7 +624,7 @@
 				explosion(src, 2, 5, 7)
 			return PROCESS_KILL
 		radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
-		playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
 	//================ROTOR WORKING============//
 	//The Rotor moves the gases that expands from 1000 L to 3000 L, they cool down and both temperature and pressure lowers

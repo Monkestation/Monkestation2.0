@@ -229,5 +229,5 @@
 /obj/item/anesthetic_machine_kit/attack_self(mob/user)
 	new /obj/machinery/anesthetic_machine(user.loc)
 
-	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/items/weapons/circsawhit.ogg', 50, TRUE)
 	qdel(src)

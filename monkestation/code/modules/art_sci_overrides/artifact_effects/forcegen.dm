@@ -13,7 +13,7 @@
 
 
 /obj/structure/artifact_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /datum/artifact_effect/forcegen
 	weight = ARTIFACT_UNCOMMON
@@ -39,8 +39,8 @@
 
 /datum/artifact_effect/forcegen/setup()
 	shield_iconstate = pick("shieldsparkles","empdisable","shield2","shield-old","shield-red","shield-green","shield-yellow")
-	activation_sound = pick('sound/mecha/mech_shield_drop.ogg')
-	deactivation_sound = pick('sound/mecha/mech_shield_raise.ogg','sound/magic/forcewall.ogg')
+	activation_sound = pick('sound/vehicles/mecha/mech_shield_drop.ogg')
+	deactivation_sound = pick('sound/vehicles/mecha/mech_shield_raise.ogg','sound/effects/magic/forcewall.ogg')
 	shield_time = rand(10,30) SECONDS
 	radius = rand(1,3)
 	cooldown_time = shield_time / 3

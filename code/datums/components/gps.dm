@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	if(!tracking || emped || jammed || is_within_radio_jammer_range(our_gps_device) || our_area.area_flags & AREA_BLOCKS_OUTGOING_RADIO)
 		our_gps_device.say("Signal failure.")
-		playsound(our_gps_device, 'sound/machines/buzz-sigh.ogg', 35, TRUE)
+		playsound(our_gps_device, 'sound/machines/buzz/buzz-sigh.ogg', 35, TRUE)
 		return
 
 	our_gps_device.say("Signal sent.")

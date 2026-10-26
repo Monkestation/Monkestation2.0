@@ -2,7 +2,7 @@
 	unusual_description = "spooky"
 	icon_file = 'goon/icons/effects/particles.dmi'
 	particle_state = "skull3"
-	burst_amount = 4
+	burst_amount = 5
 	duration = 2 SECONDS
 	random_bursts = TRUE
 	spawn_interval = 0.4 SECONDS

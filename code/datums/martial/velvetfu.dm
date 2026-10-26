@@ -147,7 +147,7 @@
 		var/datum/wound/slash/flesh/moderate/crit_wound = new
 		crit_wound.apply_wound(limb)
 	D.apply_damage(15, A.get_attack_type(), wound_bonus = CANT_WOUND)
-	playsound(get_turf(A), 'sound/weapons/slice.ogg', 50, TRUE, -1)
+	playsound(get_turf(A), 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
 	return TRUE
 
 /// Goat Headbutt
@@ -186,7 +186,7 @@
 	if(prob(70) && !D.stat)
 		D.Knockdown(4 SECONDS)
 	D.apply_damage(10, A.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
-	playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+	playsound(get_turf(A), 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
 /// Minor Iris
@@ -204,7 +204,7 @@
 	var/datum/wound/slash/flesh/moderate/crit_wound = new
 	crit_wound.apply_wound(limb)
 	D.apply_damage(30, A.get_attack_type(), wound_bonus = CANT_WOUND)
-	playsound(get_turf(A), 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
+	playsound(get_turf(A), 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return TRUE
 
 

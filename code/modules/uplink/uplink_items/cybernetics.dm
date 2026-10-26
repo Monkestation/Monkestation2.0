@@ -1,6 +1,6 @@
 /datum/uplink_category/cybernetics
 	name = "Cybernetics"
-	weight = 3
+	weight = 4
 
 /datum/uplink_item/cybernetics
 	category = /datum/uplink_category/cybernetics

@@ -78,7 +78,7 @@
 		))
 			undo_shift_callback?.Invoke(current_occupants)
 			return
-		playsound(src, 'sound/weapons/blastcannon.ogg', 20, vary = TRUE)
+		playsound(src, 'sound/items/weapons/blastcannon.ogg', 20, vary = TRUE)
 		opening_door.take_damage(DAMAGE_PER_HIT)
 		opening_door.Shake(3, 3, 2 SECONDS)
 		undo_shift_callback?.Invoke(current_occupants)

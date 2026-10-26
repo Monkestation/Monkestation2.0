@@ -40,8 +40,6 @@
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
 	var/eye_icon_state = "eyes"
-	var/old_eye_color_left = "fff"
-	var/old_eye_color_right = "fff"
 
 	/// Glasses cannot be worn over these eyes. Currently unused
 	var/no_glasses = FALSE
@@ -56,11 +54,18 @@
 		return
 	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(eye_recipient, inserting = TRUE, call_update = TRUE)
+	// Eyes without a color of their own take the mob's current one
+	if(ishuman(eye_recipient))
+		var/mob/living/carbon/human/human_recipient = eye_recipient
+		if(!eye_color_left)
+			eye_color_left = human_recipient.eye_color_left
+		if(!eye_color_right)
+			eye_color_right = human_recipient.eye_color_right
+	refresh(eye_recipient, call_update = TRUE)
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
-/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, inserting = FALSE, call_update = TRUE)
+/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, call_update = TRUE)
 	owner.update_sight()
 	owner.update_tint()
 
@@ -68,17 +73,10 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = eye_owner
-	if(inserting) // we only want to be setting old_eye_color the one time
-		old_eye_color_left = affected_human.eye_color_left
-		old_eye_color_right = affected_human.eye_color_right
-	if(initial(eye_color_left))
-		affected_human.eye_color_left = eye_color_left
-	else
-		eye_color_left = affected_human.eye_color_left
-	if(initial(eye_color_right))
-		affected_human.eye_color_right = eye_color_right
-	else
-		eye_color_right = affected_human.eye_color_right
+	if(eye_color_left)
+		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
+	if(eye_color_right)
+		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
@@ -91,10 +89,7 @@
 	. = ..()
 	if(ishuman(eye_owner))
 		var/mob/living/carbon/human/human_owner = eye_owner
-		if(initial(eye_color_left))
-			human_owner.eye_color_left = old_eye_color_left
-		if(initial(eye_color_right))
-			human_owner.eye_color_right = old_eye_color_right
+		human_owner.remove_eye_color(EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 		if(native_fov)
 			eye_owner.remove_fov_trait(type)
 		human_owner.update_body()
@@ -161,8 +156,8 @@
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
-			eye_right.color = eye_color_right
-			eye_left.color = eye_color_left
+			eye_right.color = parent.get_right_eye_color() || eye_color_right
+			eye_left.color = parent.get_left_eye_color() || eye_color_left
 
 		var/obscured = parent.check_obscured_slots(TRUE)
 		if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
@@ -441,11 +436,11 @@
 		return
 	deactivate(close_ui = TRUE)
 
-/// We have to do this here because on_insert gets called before refresh(), which we need to have been called for old_eye_color vars to be set
+/// We have to do this here because on_insert gets called before Insert() gives us the mob's eye colors
 /obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	current_left_color_string = old_eye_color_left
-	current_right_color_string = old_eye_color_right
+	current_left_color_string = eye_color_left
+	current_right_color_string = eye_color_right
 
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_recipient)
 	. = ..()
