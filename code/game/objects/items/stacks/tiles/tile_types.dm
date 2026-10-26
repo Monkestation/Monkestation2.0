@@ -81,7 +81,7 @@
 
 	target_plating = target_plating.place_on_top(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
 	target_plating.setDir(turf_dir)
-	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(target_plating, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 
 /obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, click_parameters)

@@ -470,12 +470,12 @@
 	QDEL_NULL(database_scanner)
 
 /obj/item/borg/upgrade/surgical_database/ui_action_click(mob/user, actiontype)
-	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, TRUE)
 	user.balloon_alert(user, "downloading surgery data...")
 	if(!do_after(user, 1 SECONDS, user))
 		user.balloon_alert(user, "surgery download interrupted!")
 		return
-	playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 25, TRUE)
 	var/list/surgeries_to_add = list()
 	for(var/obj/nearby_object in range(1, user))
 		if(istype(nearby_object, /obj/machinery/computer/operating))
@@ -530,7 +530,7 @@
 
 /datum/action/item_action/cyborg_surgical_database
 	name = "Update Surgeries"
-	button_icon = 'icons/obj/device.dmi'
+	button_icon = 'icons/obj/devices/scanner.dmi'
 	button_icon_state = "surgical_processor"
 
 /obj/item/borg/upgrade/ai
@@ -574,7 +574,7 @@
 	do_smoke(1, borg, borg.loc)
 	sleep(0.2 SECONDS)
 	for(var/i in 1 to 4)
-		playsound(borg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		playsound(borg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg'), 80, TRUE, -1)
 		sleep(1.2 SECONDS)
 	if(!prev_lockcharge)
 		borg.SetLockdown(FALSE)
@@ -870,7 +870,7 @@
 
 	if(borg.mind)
 		borg.mind.grab_ghost()
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+		playsound(loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 	else
 		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
 

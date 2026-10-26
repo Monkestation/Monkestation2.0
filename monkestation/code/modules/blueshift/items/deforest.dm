@@ -432,8 +432,8 @@
 	righthand_file = 'monkestation/code/modules/blueshift/icons/deforest/inhands/cases_righthand.dmi'
 	inhand_icon_state = "frontier"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/medkit/frontier/stocked
@@ -461,8 +461,8 @@
 	inhand_icon_state = "surgeon"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
 	worn_icon_state = "frontier"
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 
 /obj/item/storage/medkit/combat_surgeon/Initialize(mapload)
 	. = ..()
@@ -493,8 +493,8 @@
 	inhand_icon_state = "satchel"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	slowdown = 0.25
 
@@ -579,8 +579,8 @@
 	inhand_icon_state = "super_surgery"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	slowdown = 0.25
 

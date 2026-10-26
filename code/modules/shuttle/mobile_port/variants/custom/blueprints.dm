@@ -283,9 +283,9 @@
 			user.do_attack_animation(attacked, used_item = hitting_implement)
 			if(hitting_implement && !bottle)
 				if(hitting_implement.force)
-					playsound(hitting_implement, 'sound/weapons/smash.ogg', hitting_implement.get_clamped_volume(), TRUE, hitting_implement.stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
+					playsound(hitting_implement, 'sound/items/weapons/smash.ogg', hitting_implement.get_clamped_volume(), TRUE, hitting_implement.stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 				else
-					playsound(hitting_implement, 'sound/weapons/tap.ogg', hitting_implement.get_clamped_volume(), TRUE, -1)
+					playsound(hitting_implement, 'sound/items/weapons/tap.ogg', hitting_implement.get_clamped_volume(), TRUE, -1)
 			else if(bottle)
 				bottle.smash(attacked, user)
 			else

@@ -50,7 +50,7 @@
 
 	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep/praetorian
 
-	impact_sound = 'sound/weapons/slap.ogg'
+	impact_sound = 'sound/items/weapons/slap.ogg'
 	impact_damage = 20
 	impact_wound_bonus = 10
 
