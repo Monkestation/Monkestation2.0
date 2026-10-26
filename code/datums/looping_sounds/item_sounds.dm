@@ -6,7 +6,7 @@
 
 
 /datum/looping_sound/reverse_bear_trap_beep
-	mid_sounds = list('sound/machines/beep.ogg' = 1)
+	mid_sounds = list('sound/machines/beep/beep.ogg' = 1)
 	mid_length = 60
 	volume = 10
 	use_sound_tokens = TRUE
@@ -35,7 +35,7 @@
 	mid_length = 1 SECONDS
 
 /datum/looping_sound/trapped_machine_beep
-	mid_sounds = list('sound/machines/beep.ogg' = 1)
+	mid_sounds = list('sound/machines/beep/beep.ogg' = 1)
 	mid_length = 10 SECONDS
 	mid_length_vary = 5 SECONDS
 	falloff_exponent = 10
@@ -44,11 +44,11 @@
 	use_sound_tokens = TRUE
 
 /datum/looping_sound/chainsaw
-	start_sound = list('sound/weapons/chainsaw_start.ogg' = 1)
+	start_sound = list('sound/items/weapons/chainsaw_start.ogg' = 1)
 	start_length = 0.85 SECONDS
-	mid_sounds = list('sound/weapons/chainsaw_loop.ogg' = 1)
+	mid_sounds = list('sound/items/weapons/chainsaw_loop.ogg' = 1)
 	mid_length = 0.85 SECONDS
-	end_sound = list('sound/weapons/chainsaw_stop.ogg' = 1)
+	end_sound = list('sound/items/weapons/chainsaw_stop.ogg' = 1)
 	end_volume = 35
 	volume = 40
 	ignore_walls = FALSE

@@ -15,7 +15,7 @@
 	if(!pod_hair.icon_state || pod_hair.icon_state == SPRITE_ACCESSORY_NONE)
 		return uni_icon('icons/mob/landmarks.dmi', "x")
 
-	var/datum/universal_icon/icon_with_hair = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "pod_head_m")
+	var/datum/universal_icon/icon_with_hair = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "pod_head_m")
 
 	var/datum/universal_icon/icon_adj = uni_icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_ADJ")
 	var/datum/universal_icon/icon_front = uni_icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_FRONT")

@@ -129,7 +129,7 @@
 		to_chat(undead, span_userdanger("You are grateful to have been summoned into this word by [user]. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
 	else
 		to_chat(undead, span_boldnotice("You are grateful to have been summoned into this world. You are now a member of this station's crew, Try not to cause any trouble."))
-	playsound(altar_turf, pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg',), 50, TRUE)
+	playsound(altar_turf, pick('sound/effects/hallucinations/growl1.ogg','sound/effects/hallucinations/growl2.ogg','sound/effects/hallucinations/growl3.ogg',), 50, TRUE)
 	return ..()
 
 /datum/religion_rites/raise_dead
@@ -191,7 +191,7 @@
 	raise_target.grab_ghost() // Shove them back in their body.
 	raise_target.revive(HEAL_ALL)
 	raise_target.set_species(/datum/species/zombie)
-	playsound(altar_turf, 'sound/magic/staff_healing.ogg', 50, TRUE)
+	playsound(altar_turf, 'sound/effects/magic/staff_healing.ogg', 50, TRUE)
 	raise_target = null
 	return ..()
 
@@ -252,5 +252,5 @@
 		return
 	C.handcuffed = new /obj/item/restraints/handcuffs/energy/cult(C)
 	C.update_handcuffed()
-	playsound(C, 'sound/magic/smoke.ogg', 50, 1)
+	playsound(C, 'sound/effects/magic/smoke.ogg', 50, 1)
 	C.visible_message(span_warning("Darkness forms around [C]'s wrists as shadowy bindings appear on them!"))

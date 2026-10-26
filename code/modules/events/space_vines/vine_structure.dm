@@ -2,7 +2,7 @@
 /obj/structure/spacevine
 	name = "space vine"
 	desc = "An extremely expansionistic species of vine."
-	icon = 'icons/effects/spacevines.dmi'
+	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "Light1"
 	anchored = TRUE
 	density = FALSE
@@ -102,11 +102,11 @@ GLOBAL_LIST_INIT(spacevine_tile_spread_blacklist, list(
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/weapons/slash.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/slash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/spacevine/proc/on_entered(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER

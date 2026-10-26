@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Relogging no longer stacks a new combat mode button your hud each time"

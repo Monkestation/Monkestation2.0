@@ -61,7 +61,7 @@ GLOBAL_DATUM(thrallnet, /datum/cameranet)
 			return TRUE
 		TIMER_COOLDOWN_START(intruder, type, 10 SECONDS)
 		intruder.adjust_temp_blindness(5 SECONDS)
-		playsound(src, 'sound/creatures/darkspawn/darkspawn_howl.ogg', 70, TRUE)
+		playsound(src, 'sound/mobs/non-humanoids/darkspawn/darkspawn_howl.ogg', 70, TRUE)
 		to_chat(intruder, span_userdanger("You gaze into the orb, and the void gazes back — a thousand eyes snap open at once, and searing darkness floods your sight!"))
 		to_chat(intruder, span_hypnophrase("YOU ARE NOT MEANT TO SEE."))
 		return TRUE
