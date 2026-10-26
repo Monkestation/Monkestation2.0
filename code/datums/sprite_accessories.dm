@@ -2546,7 +2546,7 @@ MONKESTATION EDIT
 /////////////////////////////
 
 /datum/sprite_accessory/body_markings
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
@@ -2665,7 +2665,7 @@ MONKESTATION EDIT
 	icon_state = "hibiscus"
 
 /datum/sprite_accessory/snouts
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/snouts/sharp
@@ -2685,7 +2685,7 @@ MONKESTATION EDIT
 	icon_state = "roundlight"
 
 /datum/sprite_accessory/horns
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/horns/none
@@ -2897,7 +2897,7 @@ MONKESTATION EDIT
 	dimension_y = 32
 
 /datum/sprite_accessory/frills
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 
 /datum/sprite_accessory/frills/none
 	name = "None"
