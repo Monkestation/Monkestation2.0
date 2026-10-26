@@ -15,8 +15,8 @@
 	icon = 'icons/obj/xenobiology/slime_rancher/vacuum.dmi'
 	icon_state = "vacuum_pack"
 	inhand_icon_state = "vacuum_pack"
-	lefthand_file = 'icons/obj/xenobiology/slime_rancher/vacuum_pack_lefthand.dmi'
-	righthand_file = 'icons/obj/xenobiology/slime_rancher/vacuum_pack_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/vacuum_pack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/vacuum_pack_righthand.dmi'
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "waterbackpackjani"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
@@ -164,7 +164,7 @@
 		if(!user.put_in_hands(nozzle))
 			balloon_alert(user, "need a free hand!")
 			return FALSE
-		playsound(src, 'sound/mecha/mechmove03.ogg', 75, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 75, TRUE)
 		return TRUE
 	retract_nozzle()
 	return TRUE
@@ -177,7 +177,7 @@
 	if(ismob(nozzle.loc))
 		var/mob/holder = nozzle.loc
 		holder.temporarilyRemoveItemFromInventory(nozzle, force = TRUE)
-	playsound(src, 'sound/mecha/mechmove03.ogg', vol = 75, vary = TRUE)
+	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', vol = 75, vary = TRUE)
 	nozzle.forceMove(src)
 	retracting = FALSE
 
@@ -189,7 +189,7 @@
 	if(ismob(loc))
 		balloon_alert(loc, "nozzle snaps back")
 	source.forceMove(src)
-	playsound(source, 'sound/mecha/mechmove03.ogg', 75, TRUE)
+	playsound(source, 'sound/vehicles/mecha/mechmove03.ogg', 75, TRUE)
 
 /obj/item/vacuum_pack/proc/is_worn_by(mob/user)
 	return user.get_slot_by_item(src) & slot_flags

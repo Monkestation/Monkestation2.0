@@ -250,7 +250,7 @@
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
@@ -410,9 +410,9 @@
 		do_scatter(tray_item)
 
 	if(prob(50))
-		playsound(M, 'sound/items/trayhit1.ogg', 50, TRUE)
+		playsound(M, 'sound/items/trayhit/trayhit1.ogg', 50, TRUE)
 	else
-		playsound(M, 'sound/items/trayhit2.ogg', 50, TRUE)
+		playsound(M, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 
 	if(ishuman(M))
 		if(prob(10))

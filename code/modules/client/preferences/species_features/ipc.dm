@@ -11,7 +11,7 @@
 /datum/preference/choiced/ipc_antenna/icon_for(value)
 	var/static/datum/universal_icon/ipc_head
 	if(isnull(ipc_head))
-		ipc_head = uni_icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
+		ipc_head = uni_icon('icons/mob/human/species/ipc/bodyparts.dmi', "synth_head")
 
 	var/datum/sprite_accessory/antennae = GLOB.ipc_antennas_list[value]
 
@@ -45,7 +45,7 @@
 
 	var/datum/sprite_accessory/chassis = GLOB.ipc_chassis_list[value]
 
-	var/datum/universal_icon/chassis_icon = uni_icon('icons/mob/species/ipc/ipc_chassis.dmi', "m_ipc_chassis_[chassis.icon_state]_FRONT")
+	var/datum/universal_icon/chassis_icon = uni_icon('icons/mob/human/species/ipc/ipc_chassis.dmi', "m_ipc_chassis_[chassis.icon_state]_FRONT")
 
 	var/datum/universal_icon/final_icon = ipc_body.copy()
 	final_icon.blend_icon(chassis_icon, ICON_OVERLAY)
@@ -79,7 +79,7 @@
 /datum/preference/choiced/ipc_screen/icon_for(value)
 	var/static/datum/universal_icon/ipc_head
 	if(isnull(ipc_head))
-		ipc_head = uni_icon('icons/mob/species/ipc/bodyparts.dmi', "synth_head")
+		ipc_head = uni_icon('icons/mob/human/species/ipc/bodyparts.dmi', "synth_head")
 
 	var/datum/sprite_accessory/screen = GLOB.ipc_screens_list[value]
 	var/datum/universal_icon/icon_with_screen = ipc_head.copy()

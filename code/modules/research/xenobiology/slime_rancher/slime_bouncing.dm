@@ -32,7 +32,7 @@
 /mob/living/basic/slime/proc/flump_against(mob/living/person)
 	// we're about to lunge out from under them, and they'd just hover there
 	dump_riders()
-	playsound(src, 'sound/effects/attackblob.ogg', 25, TRUE, -3)
+	playsound(src, 'sound/effects/blob/attackblob.ogg', 25, TRUE, -3)
 
 	var/start_x = pixel_x
 	var/start_y = pixel_y

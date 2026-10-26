@@ -45,8 +45,8 @@
 		/obj/item/gun/energy = 60)
 	repeatable = TRUE
 	time = 5 SECONDS
-	success_sound = 'sound/magic/lightningbolt.ogg'
-	failure_sound = 'sound/magic/lightningbolt.ogg'
+	success_sound = 'sound/effects/magic/lightningbolt.ogg'
+	failure_sound = 'sound/effects/magic/lightningbolt.ogg'
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE
@@ -80,7 +80,7 @@
 
 /datum/surgery_step/revive/play_preop_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(istype(tool, /obj/item/shockpaddles))
-		playsound(tool, 'sound/machines/defib_charge.ogg', 75, 0)
+		playsound(tool, 'sound/machines/defib/defib_charge.ogg', 75, 0)
 	else
 		..()
 

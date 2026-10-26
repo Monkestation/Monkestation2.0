@@ -14,7 +14,7 @@
 	icon_living = "grey-baby"
 	icon_dead = "grey-baby-dead"
 
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 
 	maxHealth = 150
 	health = 150
@@ -435,7 +435,7 @@
 ///Spawns a crossed slimecore item
 /mob/living/basic/slime/proc/spawn_corecross()
 	visible_message(span_danger("[src] shudders, its mutated core consuming the rest of its body!"))
-	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/smoke.ogg', 50, TRUE)
 	var/selected_crossbreed_path = GLOB.slime_crossbreeds["[crossbreed_modification]|[slime_type.type]"]
 	if(selected_crossbreed_path)
 		new selected_crossbreed_path(loc)

@@ -314,7 +314,7 @@
 		new_planning_subtree |= ability_planning_tree
 
 	if(projectile_type)
-		AddComponent(/datum/component/ranged_attacks, projectile_sound = 'sound/weapons/barragespellhit.ogg', projectile_type = src.projectile_type, cooldown_time = ranged_cooldown)
+		AddComponent(/datum/component/ranged_attacks, projectile_sound = 'sound/items/weapons/barragespellhit.ogg', projectile_type = src.projectile_type, cooldown_time = ranged_cooldown)
 		new_planning_subtree |= /datum/ai_planning_subtree/basic_ranged_attack_subtree/chicken
 
 	for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)

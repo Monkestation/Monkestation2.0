@@ -2,7 +2,7 @@
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
 		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "autosurgeon"
 	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL
@@ -91,7 +91,7 @@
 	stored_organ.Insert(target)//insert stored organ into the user
 	stored_organ = null
 	name = initial(name) //get rid of the organ in the name
-	playsound(target.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
+	playsound(target.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
 	update_appearance()
 
 	uses--
@@ -240,7 +240,7 @@
 	stored_skillchip = null
 
 	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise.") , span_notice("You feel a sharp sting as [src] plunges into your brain.") )
-	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/items/weapons/circsawhit.ogg', 50, TRUE)
 
 	to_chat(user,span_notice("Operation complete! [implanted_chip] successfully implanted. Attempting auto-activation...") )
 

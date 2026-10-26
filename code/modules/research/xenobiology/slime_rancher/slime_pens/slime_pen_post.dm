@@ -53,7 +53,7 @@
 		balloon_alert(user, "not enough room!")
 		return
 	balloon_alert(user, "deploying...")
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 	if(!do_after(user, 0.5 SECONDS, src) || QDELETED(src) || !user.is_holding(src))
 		return
 	if(deploy_location.is_blocked_turf(TRUE, src))

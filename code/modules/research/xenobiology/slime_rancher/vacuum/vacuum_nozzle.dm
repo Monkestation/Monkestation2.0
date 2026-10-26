@@ -5,8 +5,8 @@
 	icon = 'icons/obj/xenobiology/slime_rancher/vacuum.dmi'
 	icon_state = "vacuum_nozzle"
 	inhand_icon_state = "vacuum_nozzle"
-	lefthand_file = 'icons/obj/xenobiology/slime_rancher/vacuum_nozzle_lefthand.dmi'
-	righthand_file = 'icons/obj/xenobiology/slime_rancher/vacuum_nozzle_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/vacuum_nozzle_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/vacuum_nozzle_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = NOBLUDGEON | ABSTRACT
 	slot_flags = NONE
