@@ -60,7 +60,7 @@
 		ignored_mobs = list(attacker),
 	)
 	to_chat(attacker, span_danger("You uppercut [defender]!"), type = MESSAGE_TYPE_COMBAT)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
 	defender.apply_damage(30, attacker.get_attack_type(), affecting, blocked = def_check)
 	defender.emote("flip")
@@ -81,7 +81,7 @@
 		ignored_mobs = list(attacker),
 	)
 	to_chat(attacker, span_danger("You palm strike [defender], corrupting [defender.p_their()] Chi energy!"), type = MESSAGE_TYPE_COMBAT)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
 	defender.apply_damage(45, attacker.get_attack_type(), affecting, blocked = def_check)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
@@ -129,7 +129,7 @@
 
 /// Echo our punching sounds
 /datum/martial_art/the_tunnel_arts/proc/do_attack_sound(atom/playing_from)
-	playsound(playing_from, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(playing_from, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 /datum/martial_art/the_tunnel_arts/grab_act(mob/living/attacker, mob/living/defender)
 	if(!check_usability(attacker)) //allows for deniability

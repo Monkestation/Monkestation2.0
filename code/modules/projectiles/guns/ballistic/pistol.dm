@@ -10,16 +10,16 @@
 	fire_delay = 0
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
-	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
-	dry_fire_sound = 'sound/weapons/gun/pistol/dry_fire.ogg'
-	suppressed_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
-	load_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
-	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
-	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
-	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
+	fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/pistol/dry_fire.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/pistol/shot_suppressed.ogg'
+	load_sound = 'sound/items/weapons/gun/pistol/mag_insert.ogg'
+	load_empty_sound = 'sound/items/weapons/gun/pistol/mag_insert.ogg'
+	eject_sound = 'sound/items/weapons/gun/pistol/mag_release.ogg'
+	eject_empty_sound = 'sound/items/weapons/gun/pistol/mag_release.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/rack_small.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/pistol/lock_small.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
 	suppressor_x_offset = 10
@@ -58,10 +58,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
-	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	fire_sound = 'sound/items/weapons/gun/pistol/shot_alt.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/pistol/slide_drop.ogg'
 
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
@@ -74,10 +74,10 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
 	mag_display = TRUE
-	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	fire_sound = 'sound/items/weapons/gun/rifle/shot.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/pistol/slide_drop.ogg'
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -394,17 +394,17 @@
 	bolt_type = BOLT_TYPE_OPEN
 	bolt_wording = "firearm"
 	fire_delay = 1
-	fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
-	suppressed_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg'
+	fire_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
+	suppressed_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_fire.ogg'
 	suppressed_volume = 60
-	dry_fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	rack_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	lock_back_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	load_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	load_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	eject_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
-	eject_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	rack_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	load_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	load_empty_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	eject_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	eject_empty_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
 
 //april fools edition
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota
@@ -419,7 +419,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	bolt_wording = "firearm"
 	fire_delay = 0.1
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 150 //abraxis this is a bad idea
 	recoil = 5 //it's a pistol firing full-auto, fuck your wrist lmao
 	wield_recoil = 0.75

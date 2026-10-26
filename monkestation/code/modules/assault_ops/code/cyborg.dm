@@ -2,7 +2,7 @@
 /obj/item/antag_spawner/assault_operative
 	name = "syndicate saboteur beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
 	/// The name of the special role given to the recruit
