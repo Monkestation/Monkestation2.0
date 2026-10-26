@@ -8,7 +8,7 @@
 	inhand_icon_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	fire_sound = 'sound/weapons/batonextend.ogg'
+	fire_sound = 'sound/items/weapons/batonextend.ogg'
 	pinless = TRUE
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON

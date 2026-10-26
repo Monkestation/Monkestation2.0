@@ -19,5 +19,5 @@
 	addtimer(CALLBACK(src, PROC_REF(do_explosion)), 90 SECONDS)
 
 /datum/round_event/wizard/fake_explosion/proc/do_explosion()
-	sound_to_playing_players('sound/machines/alarm.ogg')
+	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg')
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/nuke/fake, world), 10 SECONDS)

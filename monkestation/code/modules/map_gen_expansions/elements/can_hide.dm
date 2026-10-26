@@ -33,7 +33,7 @@
 	target.icon_state = "[target.base_icon_state][hiding ? "_hidden" : ""]"
 
 	if(play_feedback)
-		playsound(target, 'sound/effects/bodyfall1.ogg', 50, TRUE)
+		playsound(target, 'sound/effects/bodyfall/bodyfall1.ogg', 50, TRUE)
 		new /obj/effect/temp_visual/mook_dust(get_turf(target))
 
 	target.update_appearance()

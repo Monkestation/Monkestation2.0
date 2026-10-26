@@ -16,7 +16,7 @@
 	whistler = user
 	var/turf/current_turf = get_turf(user)
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
-	playsound(current_turf,'sound/magic/warpwhistle.ogg', 200, TRUE)
+	playsound(current_turf,'sound/effects/magic/warpwhistle.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.

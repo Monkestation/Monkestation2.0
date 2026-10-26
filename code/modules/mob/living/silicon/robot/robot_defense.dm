@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				log_combat(user, src, "pushed")
 				visible_message(span_danger("[user] forces back [src]!"), \
 					span_userdanger("[user] forces back [src]!"), null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()
 	return
@@ -432,7 +432,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!lavaland_equipment_pressure_check(get_turf(borg)))
 		balloon_alert(borg, "the shield didn't absorb the damage!")
 		return ..()
-	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)
+	playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
 	balloon_alert(borg, "absorbed!")
 	borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
 	damage *= 0.5

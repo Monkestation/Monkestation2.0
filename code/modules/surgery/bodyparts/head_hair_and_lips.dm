@@ -152,10 +152,10 @@
 	var/debrain_icon = 'icons/mob/species/human/human_face.dmi'
 	var/debrain_icon_state = "debrained"
 	if(bodytype & BODYTYPE_ALIEN)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_alien"
 	else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_larva"
 
 	var/image/debrain_overlay

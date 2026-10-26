@@ -58,7 +58,7 @@
 
 /obj/vehicle/sealed/car/clowncar/mob_forced_enter(mob/M, silent = FALSE)
 	. = ..()
-	playsound(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
+	playsound(src, pick('sound/vehicles/clown_car/clowncar_load1.ogg', 'sound/vehicles/clown_car/clowncar_load2.ogg'), 75)
 	if(iscarbon(M))
 		var/mob/living/carbon/forced_mob = M
 		if(forced_mob.has_reagent(/datum/reagent/consumable/ethanol/irishcarbomb))
@@ -125,7 +125,7 @@
 						"[WOUND_PICK_HIGHEST_SEVERITY]"
 					)))
 					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
-					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
+					carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 			hittarget_living.adjustBruteLoss(200)
@@ -141,14 +141,14 @@
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
 		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!"))
 		mob_forced_enter(hittarget_living)
-		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
+		playsound(src, pick('sound/vehicles/clown_car/clowncar_ram1.ogg', 'sound/vehicles/clown_car/clowncar_ram2.ogg', 'sound/vehicles/clown_car/clowncar_ram3.ogg'), 75)
 		log_combat(src, hittarget_living, "sucked up")
 		return
 	if(!isclosedturf(bumped))
 		return
 	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
-	playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
-	playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
+	playsound(src, pick('sound/vehicles/clown_car/clowncar_crash1.ogg', 'sound/vehicles/clown_car/clowncar_crash2.ogg'), 75)
+	playsound(src, 'sound/vehicles/clown_car/clowncar_crashpins.ogg', 75)
 	dump_mobs(TRUE)
 	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
 
@@ -166,7 +166,7 @@
 	target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
 	target_pancake.AddElement(/datum/element/squish, 5 SECONDS)
 	target_pancake.Paralyze(2 SECONDS)
-	playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
+	playsound(target_pancake, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', 75)
 	log_combat(src, crossed, "ran over")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -181,7 +181,7 @@
 	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
-	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+	playsound(src, 'sound/vehicles/clown_car/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
@@ -233,7 +233,7 @@
 			addtimer(CALLBACK(src, PROC_REF(stop_dropping_oil)), 3 SECONDS)
 		if(6)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car lets out a comedic toot."))
-			playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+			playsound(src, 'sound/vehicles/clown_car/clowncar_fart.ogg', 100)
 			for(var/mob/living/L in orange(loc, 6))
 				L.emote("laugh")
 			for(var/mob/living/L as anything in occupants)
@@ -262,7 +262,7 @@
 		flick("clowncar_fromfire", src)
 		icon_state = "clowncar"
 		addtimer(CALLBACK(src, PROC_REF(deactivate_cannon)), 2 SECONDS)
-		playsound(src, 'sound/vehicles/clowncar_cannonmode2.ogg', 75)
+		playsound(src, 'sound/vehicles/clown_car/clowncar_cannonmode2.ogg', 75)
 		visible_message(span_danger("[src] starts going back into mobile mode."))
 	else
 		canmove = FALSE //anchor and activate canon
@@ -270,7 +270,7 @@
 		icon_state = "clowncar_fire"
 		visible_message(span_danger("[src] opens up and reveals a large cannon."))
 		addtimer(CALLBACK(src, PROC_REF(activate_cannon)), 2 SECONDS)
-		playsound(src, 'sound/vehicles/clowncar_cannonmode1.ogg', 75)
+		playsound(src, 'sound/vehicles/clown_car/clowncar_cannonmode1.ogg', 75)
 	cannonmode = CLOWN_CANNON_BUSY
 
 ///Finalizes canon activation

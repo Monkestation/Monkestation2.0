@@ -2,7 +2,7 @@
 	name = "slime mutation syringe"
 	desc = "Infuses a mutation into a slime."
 
-	icon = 'icons/obj/xenobiology/mutation_syringe.dmi'
+	icon = 'icons/obj/science/mutation_syringe.dmi'
 	icon_state = "mutation_syringe"
 
 	w_class = WEIGHT_CLASS_SMALL
