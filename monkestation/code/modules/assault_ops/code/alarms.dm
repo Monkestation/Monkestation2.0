@@ -42,7 +42,7 @@
 /obj/machinery/base_alarm/attack_hand(mob/user)
 	add_fingerprint(user)
 	to_chat(user, span_notice("You trigger [src]!"))
-	playsound(src, 'sound/machines/pda_button1.ogg', 100)
+	playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 100)
 	trigger_alarm()
 
 /obj/machinery/base_alarm/attack_ai(mob/user)

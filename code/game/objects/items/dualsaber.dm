@@ -25,7 +25,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 75
-	block_sound = 'sound/weapons/block_blade.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	max_integrity = 200
 	armor_type = /datum/armor/item_dualsaber
 	resistance_flags = FIRE_PROOF
@@ -48,8 +48,8 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = force, \
 		force_wielded = two_hand_force, \
-		wieldsound = 'sound/weapons/saberon.ogg', \
-		unwieldsound = 'sound/weapons/saberoff.ogg', \
+		wieldsound = 'sound/items/weapons/saberon.ogg', \
+		unwieldsound = 'sound/items/weapons/saberoff.ogg', \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
@@ -62,7 +62,7 @@
 			to_chat(user, span_warning("You lack the grace to wield this!"))
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
 	w_class = w_class_on
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
 

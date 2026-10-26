@@ -1,7 +1,7 @@
 /obj/item/bodypart/head/ipc
-	icon = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth" //Overriden in /species/ipc/replace_body()
 	icon_state = "synth_head"
 	is_dimorphic = FALSE
@@ -34,9 +34,9 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/chest/ipc
-	icon = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_chest"
 	is_dimorphic = FALSE
@@ -70,9 +70,9 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/arm/left/ipc
-	icon = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_l_arm"
 	flags_1 = CONDUCT_1
@@ -104,9 +104,9 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/arm/right/ipc
-	icon = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_r_arm"
 	flags_1 = CONDUCT_1
@@ -138,9 +138,9 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/left/ipc
-	icon = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_l_leg"
 	flags_1 = CONDUCT_1
@@ -171,9 +171,9 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/right/ipc
-	icon = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_r_leg"
 	flags_1 = CONDUCT_1
