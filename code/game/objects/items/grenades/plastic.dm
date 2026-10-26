@@ -217,14 +217,14 @@
 /obj/item/grenade/c4/explosivecharge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!(obj_flags & EMAGGED))
 		if(isliving(interacting_with) && !HAS_TRAIT(user, TRAIT_CLUMSY))
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 			user.balloon_alert(user, "can't use this here!")
 			to_chat(user, span_warning("The [src.name]'s clown-proof safety lock prevents this!"))
 			return ITEM_INTERACT_BLOCKING
 
 		var/turf/T = get_turf(interacting_with)
 		if(T && is_station_level(T.z) && !HAS_TRAIT(user, TRAIT_CLUMSY))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			user.balloon_alert(user, "can't use this here!")
 			to_chat(user, span_warning("The [src.name]'s clown-proof safety lock prevents this!"))
 			return ITEM_INTERACT_BLOCKING

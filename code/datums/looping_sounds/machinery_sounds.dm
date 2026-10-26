@@ -92,7 +92,7 @@
 
 /datum/looping_sound/jackpot
 	mid_length = 11
-	mid_sounds = list('sound/machines/roulettejackpot.ogg')
+	mid_sounds = list('sound/machines/roulette/roulettejackpot.ogg')
 	volume = 85
 	vary = TRUE
 
@@ -156,20 +156,20 @@
 	falloff_exponent = 5
 
 /datum/looping_sound/boiling
-	mid_sounds = list('sound/effects/bubbles2.ogg')
+	mid_sounds = list('sound/effects/bubbles/bubbles2.ogg')
 	mid_length = 7 SECONDS
 	volume = 25
 
 /datum/looping_sound/typing
 	mid_sounds = list(
-		'sound/machines/terminal_button01.ogg',
-		'sound/machines/terminal_button02.ogg',
-		'sound/machines/terminal_button03.ogg',
-		'sound/machines/terminal_button04.ogg',
-		'sound/machines/terminal_button05.ogg',
-		'sound/machines/terminal_button06.ogg',
-		'sound/machines/terminal_button07.ogg',
-		'sound/machines/terminal_button08.ogg',
+		'sound/machines/terminal/terminal_button01.ogg',
+		'sound/machines/terminal/terminal_button02.ogg',
+		'sound/machines/terminal/terminal_button03.ogg',
+		'sound/machines/terminal/terminal_button04.ogg',
+		'sound/machines/terminal/terminal_button05.ogg',
+		'sound/machines/terminal/terminal_button06.ogg',
+		'sound/machines/terminal/terminal_button07.ogg',
+		'sound/machines/terminal/terminal_button08.ogg',
 	)
 	mid_length = 0.3 SECONDS
 

@@ -394,7 +394,7 @@
 			if(render_head)
 				limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
 					default_layer = -UPPER_BANDAGE_LAYER, // proc inverts it for us
-					override_file = 'icons/mob/effects/bandage.dmi',
+					override_file = 'icons/mob/human/bandage.dmi',
 					override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
 					)
 				limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
@@ -402,7 +402,7 @@
 			else
 				limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
 					default_layer = -BANDAGE_LAYER, // proc inverts it for us
-					override_file = 'icons/mob/effects/bandage.dmi',
+					override_file = 'icons/mob/human/bandage.dmi',
 					override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
 					)
 				limb_bandage_overlay.color = iter_part.current_gauze.overlay_color

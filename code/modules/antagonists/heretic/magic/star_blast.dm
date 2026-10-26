@@ -7,7 +7,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "star_blast"
 
-	sound = 'sound/magic/cosmic_energy.ogg'
+	sound = 'sound/effects/magic/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 SECONDS // Cooldown is tied to teleportation, not firing
 
@@ -105,5 +105,5 @@
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 
 /obj/projectile/magic/star_ball/Destroy()
-	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
+	playsound(get_turf(src), 'sound/effects/magic/cosmic_energy.ogg', 50, FALSE)
 	return ..()

@@ -333,7 +333,7 @@
 
 	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
 	playsound(owner, SFX_BODYFALL, 50, TRUE)
-	playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+	playsound(owner, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 	owner.revive()
 	owner.emote("gasp")
 	owner.set_jitter_if_lower(200 SECONDS)

@@ -50,7 +50,7 @@
 			for(var/mob/living/carbon/human in toucher.occupants)
 				if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 					say("Please dismount your vehicles before trying to enter.")
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 					COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 				return FALSE
 		if(!isstructure(gate_toucher))
@@ -59,7 +59,7 @@
 		for(var/mob/living/stowaway in cargobay.contents) //nice try bub
 			if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 				say("Stowaway detected in internal contents. Access denied.")
-				playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 				COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 			return FALSE
 	var/mob/living/carbon/the_toucher = gate_toucher
@@ -90,7 +90,7 @@
 			return TRUE
 		if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 			say("Prison ID with ongoing sentence detected. Access denied.")
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 			COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 		return FALSE
 	if(COOLDOWN_FINISHED(src, spam_cooldown_time))
