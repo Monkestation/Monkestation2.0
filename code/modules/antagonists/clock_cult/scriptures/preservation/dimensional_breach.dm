@@ -8,7 +8,7 @@
 	invocation_text = list("Brightest Engine, take my soul...", "To complete our greatest goal...", "through the rifts you now shall come...", "to show them where the light is from!")
 	invokers_required = 6
 	category = SPELLTYPE_PRESERVATION
-	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg' //ironic
+	recital_sound = 'sound/effects/magic/clockwork/narsie_attack.ogg' //ironic
 	fast_invoke_mult = 1
 	cogs_required = 5
 

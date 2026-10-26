@@ -185,7 +185,7 @@
 		camera_ref = null
 		last_camera_turf = null
 		if(!spying)
-			playsound(computer, 'sound/machines/terminal_off.ogg', 25, FALSE)
+			playsound(computer, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 // this is stupid imo
 // there has to be a better solution for this

@@ -126,7 +126,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	var/image/pipe = get_pipe_image('icons/obj/atmospherics/components/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
+	var/image/pipe = get_pipe_image('icons/obj/machines/atmospherics/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
 	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 

@@ -7,7 +7,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cosmic_rune"
 
-	sound = 'sound/magic/forcewall.ogg'
+	sound = 'sound/effects/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
@@ -54,7 +54,7 @@
 	name = "cosmic rune"
 	desc = "A strange rune, that can instantly transport people to another location."
 	anchored = TRUE
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	plane = FLOOR_PLANE
@@ -66,7 +66,7 @@
 
 /obj/effect/cosmic_rune/Initialize(mapload)
 	. = ..()
-	var/image/silicon_image = image(icon = 'icons/obj/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
 	// ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
@@ -130,8 +130,8 @@
 		get_turf(linked_rune_resolved),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
-		asoundin = 'sound/magic/cosmic_energy.ogg',
-		asoundout = 'sound/magic/cosmic_energy.ogg',
+		asoundin = 'sound/effects/magic/cosmic_energy.ogg',
+		asoundout = 'sound/effects/magic/cosmic_energy.ogg',
 	)
 	if(pulled_thing) // Regrab after the teleports are done
 		user.start_pulling(pulled_thing)
@@ -166,7 +166,7 @@
 
 /obj/effect/temp_visual/cosmic_rune_fade
 	name = "cosmic rune"
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_fade"
 	plane = FLOOR_PLANE
 	layer = SIGIL_LAYER
@@ -175,13 +175,13 @@
 
 /obj/effect/temp_visual/cosmic_rune_fade/Initialize(mapload)
 	. = ..()
-	var/image/silicon_image = image(icon = 'icons/obj/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
 
 /obj/effect/temp_visual/rune_light
 	name = "cosmic rune"
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_light"
 	plane = FLOOR_PLANE
 	layer = SIGIL_LAYER
@@ -190,6 +190,6 @@
 
 /obj/effect/temp_visual/rune_light/Initialize(mapload)
 	. = ..()
-	var/image/silicon_image = image(icon = 'icons/obj/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)

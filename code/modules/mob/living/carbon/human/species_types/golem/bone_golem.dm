@@ -68,16 +68,16 @@
 	owner.visible_message(span_warning("[owner] rattles [owner.p_their()] bones harrowingly."), span_notice("You rattle your bones"))
 	last_use = world.time
 	if(prob(snas_chance))
-		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES2.ogg', 100)
+		playsound(get_turf(owner),'sound/effects/magic/RATTLEMEBONES2.ogg', 100)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			var/mutable_appearance/badtime = mutable_appearance('icons/mob/species/human/bodyparts.dmi', "b_golem_eyes", -HIGHEST_LAYER-0.5)
+			var/mutable_appearance/badtime = mutable_appearance('icons/mob/human/bodyparts.dmi', "b_golem_eyes", -HIGHEST_LAYER-0.5)
 			badtime.appearance_flags = RESET_COLOR
 			H.overlays_standing[HIGHEST_LAYER+0.5] = badtime
 			H.apply_overlay(HIGHEST_LAYER+0.5)
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/, remove_overlay), HIGHEST_LAYER+0.5), 25)
 	else
-		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
+		playsound(get_turf(owner),'sound/effects/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
 		if((L.mob_biotypes & MOB_UNDEAD) || isgolem(L) || HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			continue //Do not affect our brothers

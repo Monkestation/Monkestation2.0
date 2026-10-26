@@ -5,7 +5,7 @@
 
 /area/ruin/powered/clownplanet
 	name = "\improper Clown Biodome"
-	ambientsounds = list('sound/ambience/clown.ogg')
+	ambientsounds = list('sound/music/lobby_music/clown.ogg')
 
 /area/ruin/unpowered/gaia
 	name = "\improper Patch of Eden"
@@ -35,7 +35,7 @@
 /area/ruin/syndicate_lava_base
 	name = "\improper Secret Base"
 	ambience_index = AMBIENCE_DANGER
-	ambient_buzz = 'sound/ambience/magma.ogg'
+	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 
 /area/ruin/unpowered/cultaltar
 	name = "\improper Cult Altar"
@@ -85,16 +85,12 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambient_buzz = 'sound/ambience/magma.ogg'
+	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
-	ambient_buzz = 'sound/ambience/magma.ogg'
+	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 
 /area/ruin/unpowered/ratvar
 	outdoors = TRUE
-	ambient_buzz = 'sound/ambience/magma.ogg'
-
-/area/ruin/unpowered/dragonslair
-	name = "Dragons Lair"
-	area_flags = parent_type::area_flags | NOTELEPORT
+	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'

@@ -14,7 +14,7 @@
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "slices", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "slice", "cut", "swipe", "slash")
 	sharpness = SHARP_EDGED
@@ -72,7 +72,7 @@
 					existing_bleed.add_stacks(2)
 				else
 					L.apply_status_effect(/datum/status_effect/stacking/saw_bleed/sickle, 2)
-				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+				playsound(user, 'sound/items/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
 
 			if(!QDELETED(C))
 				C.total_damage += combined_damage

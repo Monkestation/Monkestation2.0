@@ -31,8 +31,6 @@
 	var/datum/callback/on_deployed
 	/// Optional callback triggered before we hide our equipment, before as we may delete it afterwards
 	var/datum/callback/on_removed
-	/// Optional callback triggered when the slot is already taken, passed the item taking it, return TRUE to wear our equipment over that item
-	var/datum/callback/overslot_check
 	/// If we've overslotted a hat or whatever, this is the item we've overslotted.
 	var/obj/item/overslotted
 
@@ -47,7 +45,6 @@
 	datum/callback/on_created,
 	datum/callback/on_deployed,
 	datum/callback/on_removed,
-	datum/callback/overslot_check,
 )
 	. = ..()
 	if (!isitem(parent))
@@ -63,7 +60,6 @@
 	src.on_created = on_created
 	src.on_deployed = on_deployed
 	src.on_removed = on_removed
-	src.overslot_check = overslot_check
 
 	var/obj/item/clothing_parent = parent
 	toggle_action = new(parent)
@@ -93,7 +89,6 @@
 	on_created = null
 	on_deployed = null
 	on_removed = null
-	overslot_check = null
 	return ..()
 
 /// Toggle deployable when the UI button is clicked
@@ -134,7 +129,7 @@
 		return
 	var/obj/item/worn_item = wearer.get_item_by_slot(equipped_slot)
 	// this has to come off before our equipment even exists, the void cloak already hides itself the moment its hood gets made
-	if (worn_item && (!overslot_check?.Invoke(worn_item) || !wearer.transferItemToLoc(worn_item, null)))
+	if (worn_item && !wearer.transferItemToLoc(worn_item, null))
 		parent_gear.balloon_alert(wearer, "slot occupied!")
 		return
 	if (!deployable && !create_deployable())

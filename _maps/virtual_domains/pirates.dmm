@@ -250,7 +250,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "me" = (
