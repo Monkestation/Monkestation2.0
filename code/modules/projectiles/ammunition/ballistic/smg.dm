@@ -27,18 +27,21 @@
 	projectile_type = /obj/projectile/bullet/c45/hp
 	advanced_print_req = TRUE
 
-/obj/item/ammo_casing/c45_caseless ///Yes yes caseless parent, it belongs here.
-	name = "caseless .45 bullet"
+/obj/item/ammo_casing/c45/caseless
+	name = ".45 bullet caseless"
 	desc = "A .45 bullet casing. This one is caseless!"
-	caliber = CALIBER_45
-	can_be_printed = FALSE
 	projectile_type = /obj/projectile/bullet/c45/caseless
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c45/caseless/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
 /obj/item/ammo_box/c45/caseless
 	name = "ammo box (caseless .45)"
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "caseless_45box"
-	ammo_type = /obj/item/ammo_casing/c45_caseless
+	ammo_type = /obj/item/ammo_casing/c45/caseless
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 

@@ -50,7 +50,7 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	set_mouse_pointer()
 	if(!internal_damage)
-		newoccupant.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
+		newoccupant.playsound_local(src, 'sound/vehicles/mecha/nominal.ogg', 50)
 	return TRUE
 
 ///proc called when a new mmi mob tries to enter this mech
@@ -100,7 +100,7 @@
 	setDir(SOUTH)
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
-		brain_mob.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
+		brain_mob.playsound_local(src, 'sound/vehicles/mecha/nominal.ogg', 50)
 	user.log_message("has put the MMI/posibrain of [key_name(brain_mob)] into [src]", LOG_GAME)
 	brain_mob.log_message("was put into [src] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 	return TRUE
@@ -122,10 +122,14 @@
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			newloc = null
+			AI.controlled_equipment = null
+			AI.remote_control = null
 			//We ignore Z-levels here because AIs can control mechs from other levels.
 			if(!AI.relocate(silent = TRUE, kill_otherwise = FALSE, ignore_z_levels = TRUE))
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
 				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+			else
+				moved_already = TRUE
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
@@ -136,10 +140,13 @@
 			AI.remote_control = null
 			mob_container = AI
 			newloc = null
-			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE))
+			if(AI.relocate(silent = TRUE, kill_otherwise = FALSE, ignore_z_levels = TRUE))
 				moved_already = TRUE
 			else
-				to_chat(AI, span_userdanger("No cores available. Core code corrupted."))
+				to_chat(AI, span_userdanger("No cores available. Enabling controls."))
+				AI.controlled_equipment = src
+				AI.remote_control = src
+				return FALSE
 	else
 		return ..()
 	var/mob/living/ejector = M

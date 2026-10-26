@@ -14,17 +14,21 @@
 	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.8
 
 	// Stove icon is 32x48, we'll use a Range for preview instead
-	icon_preview = 'icons/obj/machines/kitchenmachines.dmi'
+	icon_preview = 'icons/obj/machines/kitchen.dmi'
 	icon_state_preview = "range_off"
 
 /obj/machinery/stove/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)
 
-/obj/machinery/stove/attack_robot(mob/user)
+/obj/machinery/stove/attack_robot_secondary(mob/user, list/modifiers)
 	. = ..()
-	attack_hand(user)
-	return TRUE
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!user.Adjacent(src))
+		return
+	attack_hand_secondary(user) // Allows interaction with the stove.
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 // Soup pot for cooking soup
 // Future addention ideas:
@@ -33,7 +37,7 @@
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
 	desc = "A tall soup pot designed to mix and cook all kinds of soup."
-	icon = 'icons/obj/soup_pot.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "pot"
 	base_icon_state = "pot"
 	volume = 200

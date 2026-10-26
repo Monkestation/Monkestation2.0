@@ -57,7 +57,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 		return
 
 	our_artifact.holder.Beam(user, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-	playsound(get_turf(powerholder), 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+	playsound(get_turf(powerholder), 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	var/damage = user.electrocute_act(power_gen / 2 KW, powerholder, flags = SHOCK_NOSTUN)
 	to_chat(user, span_userdanger("You are hit by a burst of electricity from [our_artifact.holder]!"))
 	if(damage > 80)
@@ -82,7 +82,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 	//minor to medium side effects
 	if(power_gen >= (SHITFUCK_THRESHOLD / 3))
 		powerholder.visible_message(span_danger("\The [our_artifact.holder] lets out a shower of thunder!"), span_hear("You hear a loud electrical crack!"))
-		playsound(get_turf(powerholder), 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+		playsound(get_turf(powerholder), 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		tesla_zap(powerholder, rand(2,3), power_gen / 3500)
 
 	//SHIT IS FUCK
@@ -94,9 +94,9 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 		explosion(powerholder, flame_range = rand(1,2), adminlog = FALSE) //doesnt log to not spam
 	else
 		var/datum/gas_mixture/merger = new
-		merger.assert_gas(/datum/gas/carbon_dioxide)
-		merger.gases[/datum/gas/carbon_dioxide][MOLES] = rand(10,120)
-		merger.temperature = rand(200,1000)
+
+		merger.set_gas(/datum/gas/carbon_dioxide, rand(10,120))
+		merger.set_temperature(rand(200,1000))
 		var/turf/holder_turf = get_turf(our_artifact.holder)
 		holder_turf.assume_air(merger)
 

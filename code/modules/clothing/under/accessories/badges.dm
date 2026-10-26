@@ -146,7 +146,7 @@
 		display = span_notice("The dogtag is all scratched up.")
 
 /obj/item/clothing/accessory/dogtag/borg_ready
-	name = "Pre-Approved Cyborg Cantidate dogtag"
+	name = "Pre-Approved Cyborg Candidate dogtag"
 	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
 
 /// Reskins for the pride pin accessory, mapped by display name to icon state
@@ -233,12 +233,12 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 
 	var/mob/living/interacting_living = interacting_with
 	if(user.istate & ISTATE_HARM)
-		playsound(interacting_living, 'sound/weapons/throw.ogg', 30)
+		playsound(interacting_living, 'sound/items/weapons/throw.ogg', 30)
 		examine(interacting_living)
 		to_chat(interacting_living, span_userdanger("[user] shoves [src] up your face!"))
 		user.visible_message(span_warning("[user] have shoved [src] into [interacting_living] face."))
 	else
-		playsound(interacting_living, 'sound/weapons/throwsoft.ogg', 20)
+		playsound(interacting_living, 'sound/items/weapons/throwsoft.ogg', 20)
 		examine(interacting_living)
 		to_chat(interacting_living, span_boldwarning("[user] shows [src] to you."))
 		user.visible_message(span_notice("[user] shows [src] to [interacting_living]."))

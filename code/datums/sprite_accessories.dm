@@ -88,7 +88,7 @@
 
 /datum/sprite_accessory/blank
 	name = "None"
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 //////////////////////
 // Hair Definitions //
@@ -126,7 +126,7 @@
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
-	icon_state = null
+	icon_state = "bald"
 
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"
@@ -355,6 +355,11 @@
 /datum/sprite_accessory/hair/drillhairextended
 	name = "Drill Hair (Extended)"
 	icon_state = "hair_drillhairextended"
+
+/datum/sprite_accessory/hair/einstein
+	icon = 'goon/icons/mob/sprite_accessories/human_hair.dmi'
+	name = "Einstein"
+	icon_state = "hair_einstein"
 
 /datum/sprite_accessory/hair/emo
 	name = "Emo"
@@ -1607,13 +1612,13 @@
 */
 
 /datum/sprite_accessory/gradient
-	icon = 'icons/mob/species/hair_gradients.dmi'
+	icon = 'icons/mob/human/species/hair_gradients.dmi'
 	///whether this gradient applies to hair and/or beards. Some gradients do not work well on beards.
 	var/gradient_category = GRADIENT_APPLIES_TO_HAIR|GRADIENT_APPLIES_TO_FACIAL_HAIR
 
 /datum/sprite_accessory/gradient/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/gradient/fadeup
 	name = "Fade Up"
@@ -1870,7 +1875,7 @@
 
 /datum/sprite_accessory/facial_hair/shaved
 	name = "Shaved"
-	icon_state = null
+	icon_state = "bald"
 	gender = NEUTER
 
 ///////////////////////////
@@ -1882,11 +1887,10 @@
 	use_static = FALSE
 	em_block = TRUE
 
-
 //MALE UNDERWEAR
 /datum/sprite_accessory/underwear/nude
 	name = "Nude"
-	icon_state = null
+	icon_state = SPRITE_ACCESSORY_NONE
 	gender = NEUTER
 
 /datum/sprite_accessory/underwear/male_briefs
@@ -2061,7 +2065,7 @@
 
 /datum/sprite_accessory/undershirt/nude
 	name = "Nude"
-	icon_state = null
+	icon_state = SPRITE_ACCESSORY_NONE
 	gender = NEUTER
 
 // please make sure they're sorted alphabetically and categorized
@@ -2371,7 +2375,7 @@
 
 /datum/sprite_accessory/socks/nude
 	name = "Nude"
-	icon_state = null
+	icon_state = SPRITE_ACCESSORY_NONE
 
 // please make sure they're sorted alphabetically and categorized
 
@@ -2542,11 +2546,11 @@ MONKESTATION EDIT
 /////////////////////////////
 
 /datum/sprite_accessory/body_markings
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/body_markings/dtiger
 	name = "Dark Tiger Body"
@@ -2565,7 +2569,7 @@ MONKESTATION EDIT
 	em_block = TRUE
 
 /datum/sprite_accessory/tails/lizard
-	icon = 'icons/mob/species/lizard/lizard_tails.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
 
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
@@ -2597,7 +2601,7 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
-	icon = 'icons/mob/species/human/cat_features.dmi'
+	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -2607,17 +2611,17 @@ MONKESTATION EDIT
 //Non-Modular change - Removes monkey tails, adds Simian tails instead.
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon = 'icons/mob/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
+	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
 	icon_state = "default"
 	color_src = MUTANT_COLOR //Original: FALSE
 
 /datum/sprite_accessory/tails/monkey/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 	color_src = FALSE
 
 /datum/sprite_accessory/pod_hair
-	icon = 'icons/mob/species/podperson_hair.dmi'
+	icon = 'icons/mob/human/species/podperson_hair.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/pod_hair/ivy
@@ -2661,7 +2665,7 @@ MONKESTATION EDIT
 	icon_state = "hibiscus"
 
 /datum/sprite_accessory/snouts
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/snouts/sharp
@@ -2681,12 +2685,12 @@ MONKESTATION EDIT
 	icon_state = "roundlight"
 
 /datum/sprite_accessory/horns
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/horns/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/horns/simple
 	name = "Simple"
@@ -2725,12 +2729,12 @@ MONKESTATION EDIT
 	icon_state = "drake"
 
 /datum/sprite_accessory/ears
-	icon = 'icons/mob/species/human/cat_features.dmi'
+	icon = 'icons/mob/human/cat_features.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/ears/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
@@ -2740,7 +2744,7 @@ MONKESTATION EDIT
 	palette_key = HAIR_COLOR
 
 /datum/sprite_accessory/ears/fox
-	icon = 'icons/mob/species/human/fox_features.dmi'
+	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = TRUE
@@ -2750,14 +2754,14 @@ MONKESTATION EDIT
 
 /datum/sprite_accessory/wings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/wings
-	icon = 'icons/mob/species/wings.dmi'
+	icon = 'icons/mob/human/species/wings.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/wings_open
-	icon = 'icons/mob/species/wings.dmi'
+	icon = 'icons/mob/human/species/wings.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/wings/angel
@@ -2893,11 +2897,11 @@ MONKESTATION EDIT
 	dimension_y = 32
 
 /datum/sprite_accessory/frills
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 
 /datum/sprite_accessory/frills/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/frills/simple
 	name = "Simple"
@@ -2924,23 +2928,23 @@ MONKESTATION EDIT
 	icon_state = "split"
 
 /datum/sprite_accessory/spines
-	icon = 'icons/mob/species/lizard/lizard_spines.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/spines_animated
-	icon = 'icons/mob/species/lizard/lizard_spines.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/spines/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/spines_animated/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
-	icon = null //These datums exist for selecting legs on preference, and little else
+	icon = SPRITE_ACCESSORY_NONE //These datums exist for selecting legs on preference, and little else
 	em_block = TRUE
 
 /datum/sprite_accessory/legs/none
@@ -2950,7 +2954,7 @@ MONKESTATION EDIT
 	name = DIGITIGRADE_LEGS
 
 /datum/sprite_accessory/caps
-	icon = 'icons/mob/species/mush_cap.dmi'
+	icon = 'icons/mob/human/species/mush_cap.dmi'
 	em_block = TRUE
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -2960,13 +2964,13 @@ MONKESTATION EDIT
 	icon_state = "round"
 
 /datum/sprite_accessory/moth_wings
-	icon = 'icons/mob/species/moth/moth_wings.dmi'
+	icon = 'icons/mob/human/species/moth/moth_wings.dmi'
 	color_src = null
 	em_block = TRUE
 
 /datum/sprite_accessory/moth_wings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/moth_wings/plain
 	name = "Plain"
@@ -3065,12 +3069,12 @@ MONKESTATION EDIT
 	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
-	icon = 'icons/mob/species/moth/moth_antennae.dmi'
+	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
 
 /datum/sprite_accessory/moth_antennae/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/moth_antennae/plain
 	name = "Plain"
@@ -3156,12 +3160,12 @@ MONKESTATION EDIT
 	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
-	icon = 'icons/mob/species/moth/moth_markings.dmi'
+	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
 
 /datum/sprite_accessory/moth_markings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/moth_markings/reddish
 	name = "Reddish"

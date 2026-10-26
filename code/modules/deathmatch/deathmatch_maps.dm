@@ -19,7 +19,7 @@
 
 /datum/lazy_template/deathmatch/random // Not an actual template, but close enough
 	name = "Random"
-	desc = "Lets go gambling! (selects a random map, except for those that would force observers)"
+	desc = "Lets go gambling! (selects a random map appropriate to max players)"
 	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/random)
 	map_name = "ragecage"
 	key = "random"

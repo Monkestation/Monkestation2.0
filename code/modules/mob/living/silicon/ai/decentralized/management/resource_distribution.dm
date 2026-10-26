@@ -158,7 +158,7 @@
 			var/amount = params["amount_cpu"]
 			if(!isnum(amount) || amount < 0)
 				return
-			os_using.set_cpu(target_ai, amount)
+			os_using.set_cpu(target_ai, amount, TRUE)
 			. = TRUE
 
 		if("set_ram")
@@ -176,7 +176,7 @@
 			var/amount = params["amount_ram"]
 			if(!isnum(amount) || amount < 0)
 				return
-			os_using.set_ram(target_ai, amount)
+			os_using.set_ram(target_ai, amount, TRUE)
 
 		if("toggle_human_status")
 			if(!authenticated)

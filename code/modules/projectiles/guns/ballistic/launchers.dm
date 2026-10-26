@@ -7,7 +7,7 @@
 	icon_state = "dshotgun_sawn"
 	inhand_icon_state = "gun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
-	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -24,7 +24,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg
 	desc = "A 6-shot grenade launcher."
 	name = "multi grenade launcher"
-	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_grenadelnchr"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/firing_pin
@@ -37,7 +37,7 @@
 	name = "gyrojet pistol"
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
-	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
 	fire_delay = 0
@@ -52,7 +52,7 @@
 	icon_state = "rocketlauncher"
 	inhand_icon_state = "rocketlauncher"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
-	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/rocket_launch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -221,16 +221,12 @@
 	inhand_icon_state = "china_lake"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	fire_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_fire.ogg'
+	fire_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_fire.ogg'
 	fire_sound_volume = 100
-	rack_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_rack.ogg'
+	rack_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_rack.ogg'
 	rack_delay = 1.5 SECONDS
-	drop_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_drop.ogg'
-	pickup_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_pickup.ogg'
-
-/obj/item/gun/ballistic/shotgun/china_lake/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 10, force_wielded = 10)
+	drop_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_drop.ogg'
+	pickup_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_pickup.ogg'
 
 /obj/item/gun/ballistic/shotgun/china_lake/examine(mob/user)
 	. = ..()
@@ -270,16 +266,16 @@
 	hardiness of most fauna, the blast leaves something to be desired."
 	name = "Proto-Kinetic 'Slab' Grenade Launcher"
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
-	eject_sound = 'sound/weapons/gun/l6/l6_door.ogg'
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	eject_sound = 'sound/items/weapons/gun/l6/l6_door.ogg'
 	worn_icon_state = "protoklauncher"
 	base_pixel_x = -5
 	pixel_x = -5
 	slot_flags = ITEM_SLOT_BACK
 	icon_state = "protoklauncher"
 	inhand_icon_state = "protoklauncher"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher/kinetic
-	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/kinetic
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	pin = /obj/item/firing_pin/wastes
@@ -290,7 +286,7 @@
 	icon_state = "ignifist"
 	inhand_icon_state = "ignifist"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/ignifist
-	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/rocket_launch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	can_suppress = FALSE
 	burst_size = 1

@@ -12,7 +12,7 @@
 /obj/item/organ/internal/brain/clockwork/on_life()
 	. = ..()
 	if(prob(5) && !robust)
-		SEND_SOUND(owner, sound('sound/ambience/ambiruin3.ogg', volume = 25))
+		SEND_SOUND(owner, sound('sound/ambience/ruin/ambiruin3.ogg', volume = 25))
 
 /// A global list of dead/ejected oozeling cores.
 GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slime)
@@ -37,6 +37,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/datum/mind/mind
 	/// The original language holder of the oozeling who died.
 	var/datum/language_holder/stored_language_holder
+
+	// dna doesn't have this for some reason
+	var/stored_physique
 
 ///////
 /// Core storage
@@ -169,7 +172,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		gps_active ? span_notice("You jam your hand into [src], feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into [src], feeling for any dense objects. Slime covers your arm."),
 		span_notice("You hear an obscene squelching sound.")
 	)
-	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
+	playsound(user, 'sound/items/handling/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
 		user.visible_message(
@@ -213,7 +216,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		span_notice("You jam your hand into [src], feeling for the densest point, your prize!"),
 		span_notice("You hear an obscene squelching sound.")
 	)
-	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
+	playsound(user, 'sound/items/handling/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 15 SECONDS, src))
 		user.visible_message(
@@ -248,7 +251,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return ITEM_INTERACT_BLOCKING
-	playsound(user, 'sound/magic/Demon_consume.ogg', vol = 50, vary = TRUE)
+	playsound(user, 'sound/effects/magic/demon_consume.ogg', vol = 50, vary = TRUE)
 	user.balloon_alert_to_viewers("staking core...")
 	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
 		return ITEM_INTERACT_BLOCKING
@@ -313,6 +316,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(slime.voice)
 		copy_voice_from(slime)
 
+	stored_physique = slime.physique
+
 ///////
 /// CORE EJECTION PROC
 /// Makes it so that when a slime dies, their core ejects and their body is qdel'd.
@@ -348,7 +353,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new death_melt_type(death_turf, victim.dir)
 
 	do_steam_effects(death_turf)
-	playsound(victim, 'sound/effects/blobattack.ogg', 80, TRUE)
+	playsound(victim, 'sound/effects/blob/blobattack.ogg', 80, TRUE)
 
 	if(gps_active) // adding the gps signal if they have activated the ability
 		AddComponent(/datum/component/gps/no_bsa, "[victim.real_name]'s Core")
@@ -617,6 +622,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
 	stored_dna.copy_dna(new_body.dna, COPY_DNA_SE | COPY_DNA_SPECIES)
+	new_body.physique = stored_physique
 	new_body.real_name = new_body.dna.real_name
 	new_body.name = new_body.dna.real_name
 	new_body.updateappearance(mutcolor_update = TRUE)
@@ -679,7 +685,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		if(core_item)
 			drop_items(usr, list(core_item))
 
-ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
+ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG_TYPED(core, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj/item/organ/internal/brain/slime)
 	if(QDELETED(core))
 		to_chat(user, span_boldannounce("Invalid Oozeling Core."), confidential = TRUE)
 		return

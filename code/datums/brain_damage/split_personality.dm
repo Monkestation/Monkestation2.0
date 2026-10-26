@@ -15,11 +15,11 @@
 	var/poll_role = "split personality"
 
 /datum/brain_trauma/severe/split_personality/on_gain()
-	var/mob/living/M = owner
-	if(M.stat == DEAD || !M.client) //No use assigning people to a corpse or braindead
+	var/mob/living/brain_owner = owner
+	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch)) //No use assigning people to a corpse or braindead
 		qdel(src)
-		return
-	..()
+		return FALSE
+	. = ..()
 	make_backseats()
 	get_ghost()
 

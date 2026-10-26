@@ -113,7 +113,7 @@
 		turf_list.Add(get_step(user_turf, turn(facing_dir, i * 45 * swing_direction)))
 
 	// do some effects so everyone knows you're swinging a weapon
-	playsound(item, 'sound/weapons/punchmiss.ogg', 50, TRUE)
+	playsound(item, 'sound/items/weapons/punchmiss.ogg', 50, TRUE)
 	new cleave_effect(user.loc, facing_dir)
 
 	// now swing across those turfs

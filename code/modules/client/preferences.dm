@@ -290,7 +290,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/ui_assets(mob/user)
 	var/list/assets = list(
-		get_asset_datum(/datum/asset/spritesheet/preferences),
+		get_asset_datum(/datum/asset/spritesheet_batched/preferences),
 		get_asset_datum(/datum/asset/json/preferences),
 	)
 
@@ -811,10 +811,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	to_chat(parent, span_notice("Selected character '[choice]'"))
 	return options[choice]
 
-/client/verb/change_character_slot()
-	set name = "Change Character Slot"
-	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
-	set category = "OOC"
+GAME_VERB_DESC(/client, change_character_slot, "Change Character Slot", "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu.", "OOC")
 
 	if (prefs.read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_SIMPLE)
 		return prefs.tmp_change_character_slot()

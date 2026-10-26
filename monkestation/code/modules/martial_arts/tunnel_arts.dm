@@ -60,7 +60,7 @@
 		ignored_mobs = list(attacker),
 	)
 	to_chat(attacker, span_danger("You uppercut [defender]!"), type = MESSAGE_TYPE_COMBAT)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
 	defender.apply_damage(30, attacker.get_attack_type(), affecting, blocked = def_check)
 	defender.emote("flip")
@@ -81,7 +81,7 @@
 		ignored_mobs = list(attacker),
 	)
 	to_chat(attacker, span_danger("You palm strike [defender], corrupting [defender.p_their()] Chi energy!"), type = MESSAGE_TYPE_COMBAT)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
 	defender.apply_damage(45, attacker.get_attack_type(), affecting, blocked = def_check)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
@@ -129,7 +129,7 @@
 
 /// Echo our punching sounds
 /datum/martial_art/the_tunnel_arts/proc/do_attack_sound(atom/playing_from)
-	playsound(playing_from, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(playing_from, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 /datum/martial_art/the_tunnel_arts/grab_act(mob/living/attacker, mob/living/defender)
 	if(!check_usability(attacker)) //allows for deniability
@@ -215,10 +215,7 @@
 	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the tunnel arts.
-/mob/living/proc/tunnel_arts_help()
-	set name = "Remember the Arts"
-	set desc = "Remember the martial techniques of Maint Khan, who brought to the Spinward Sector the knowledge of the Tunnel Arts."
-	set category = "The Tunnel Arts"
+GAME_VERB_PROC_DESC(/mob/living, tunnel_arts_help, "Remember the Arts", "Remember the martial techniques of Maint Khan, who brought to the Spinward Sector the knowledge of the Tunnel Arts.", "The Tunnel Arts")
 
 	to_chat(src, "<b><i>You retreat inward and recall the teachings of the Tunnel Arts...</i></b>\n\
 	[span_notice("One Thousand Fists")]: Punch Punch. Deal additional damage every second (consecutive) punch, and potentially conjure forth an illusionary Khan Warrior.\n\

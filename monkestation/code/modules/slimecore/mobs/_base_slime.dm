@@ -196,7 +196,7 @@
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
-	else if(target != src && isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+	else if(can_latch_feed(target))
 		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE)
 		return
 	. = ..()
@@ -207,6 +207,18 @@
 	for(var/datum/slime_mutation_data/data as anything in possible_color_mutations)
 		if(length(data.needed_items))
 			compiled_liked_foods |= data.needed_items
+
+/mob/living/basic/slime/proc/can_latch_feed(mob/target)
+	if(target == src)
+		return FALSE
+	if(!CanReach(target) || QDELING(target))
+		return FALSE
+	if(!isliving(target) || issilicon(target) || HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+		return FALSE
+	var/mob/living/living_target = target
+	if(living_target.mob_biotypes & MOB_ROBOTIC)
+		return FALSE
+	return TRUE
 
 /mob/living/basic/slime/proc/on_blackboard_key_changed(datum/source)
 	SIGNAL_HANDLER
@@ -501,6 +513,6 @@
 /mob/living/basic/slime/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, throwingdatum.thrower, FRIENDSHIP_FRIEND))
-		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom) && !QDELING(hit_atom))
+		if(can_latch_feed(hit_atom))
 			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE)
 			visible_message(span_danger("[throwingdatum.thrower] hucks [src] at [hit_atom] causing the [src] to stick to [hit_atom]."))

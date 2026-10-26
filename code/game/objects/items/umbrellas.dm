@@ -8,11 +8,13 @@
 /obj/item/umbrella
 	name = "umbrella"
 	desc = "A plain umbrella."
-	icon = 'icons/obj/weapons/umbrellas.dmi'
-	icon_state = "umbrella"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("umbrella", "/obj/item/umbrella")
 	inhand_icon_state = "umbrella_closed"
-	lefthand_file = 'icons/mob/inhands/weapons/umbrellas_inhand_lh.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/umbrellas_inhand_rh.dmi'
+	greyscale_config = /datum/greyscale_config/umbrella
+	greyscale_config_inhand_left = /datum/greyscale_config/umbrella_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/umbrella_inhand_right
+	greyscale_colors = "#dddddd"
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -21,7 +23,7 @@
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "pummel")
 	drop_sound = 'sound/items/drop/wooden.ogg'
 	pickup_sound = 'sound/items/pickup/wooden.ogg'
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 
 	//open umbrella offsets for the inhands
 	var/open_x_offset = 2
@@ -31,15 +33,10 @@
 	var/open = FALSE
 
 	/// The sound effect played when our umbrella is opened
-	var/on_sound = 'sound/weapons/batonextend.ogg'
+	var/on_sound = 'sound/items/weapons/batonextend.ogg'
 	/// The inhand icon state used when our umbrella is opened.
 	var/on_inhand_icon_state = "umbrella_on"
 
-	//greyscale stuff
-	greyscale_config = /datum/greyscale_config/umbrella
-	greyscale_config_inhand_left = /datum/greyscale_config/umbrella_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/umbrella_inhand_right
-	greyscale_colors = "#dddddd"
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
@@ -62,7 +59,7 @@
 	AddComponent( \
 		/datum/component/transforming, \
 		force_on = 7, \
-		hitsound_on = "sound/weapons/genhit1.ogg", \
+		hitsound_on = "sound/items/weapons/genhit1.ogg", \
 		w_class_on = WEIGHT_CLASS_BULKY, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("swooshes", "whacks", "fwumps"), \
@@ -125,13 +122,14 @@
 			if(WEST)
 				.[1] += open_x_offset
 
-
-
 //other umbrellas
 
 /obj/item/umbrella/parasol
 	name = "parasol"
 	desc = "A black laced parsol, how intricate."
+	icon = 'icons/obj/weapons/umbrellas.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/umbrellas_inhand_lh.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/umbrellas_inhand_rh.dmi'
 	icon_state = "parasol"
 	inhand_icon_state = "parasol_closed"
 	on_inhand_icon_state = "parasol_on"
@@ -142,3 +140,4 @@
 
 /obj/item/umbrella/consistent
 	random_color = FALSE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1

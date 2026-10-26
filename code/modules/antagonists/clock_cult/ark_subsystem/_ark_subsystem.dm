@@ -73,7 +73,7 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 
 	if(COOLDOWN_FINISHED(src, action_button_update))
 		for (var/datum/mind/member in GLOB.main_clock_cult.members)
-			member.current.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
+			member.current?.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 		COOLDOWN_START(src, action_button_update, 1 SECONDS)
 
 	return TRUE

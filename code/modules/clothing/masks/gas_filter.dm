@@ -67,29 +67,29 @@
 
 	var/danger_points = 0
 
-	for(var/gas_id in breath.gases)
+	for(var/gas_id, amount in breath.moles)
 		if(gas_id in high_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > HIGH_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO, 0)
-				danger_points += 0.5
-				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO, 0)
-			danger_points += 0.05
-			continue
-		if(gas_id in mid_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > MID_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0)
-				danger_points += 0.75
-				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0)
-			danger_points += 0.15
-			continue
-		if(gas_id in low_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > LOW_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0)
+			if(amount > HIGH_FILTERING_MOLES)
+				breath.set_gas(gas_id, max(amount - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO, 0))
 				danger_points += 1
 				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0)
+			breath.set_gas(gas_id, max(amount - filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO, 0))
+			danger_points += 0.2
+			continue
+		if(gas_id in mid_filtering_gases)
+			if(amount > MID_FILTERING_MOLES)
+				breath.set_gas(gas_id, max(amount - filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0))
+				danger_points += 1.25
+				continue
+			breath.set_gas(gas_id, max(amount - filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0))
+			danger_points += 0.25
+			continue
+		if(gas_id in low_filtering_gases)
+			if(amount > LOW_FILTERING_MOLES)
+				breath.set_gas(gas_id, max(amount - filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0))
+				danger_points += 1.5
+				continue
+			breath.set_gas(gas_id, max(amount - filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0))
 			danger_points += 0.5
 			continue
 
@@ -128,29 +128,6 @@
 		/datum/gas/freon,
 		/datum/gas/hypernoblium,
 	)
-
-/obj/item/gas_filter/clown/reduce_filter_status(datum/gas_mixture/breath)
-	breath = ..()
-	var/danger_points = 0
-	if (/datum/gas/nitrous_oxide in breath.gases)
-		var/gas_id = /datum/gas/nitrous_oxide
-		if(breath.get_breath_partial_pressure(breath.gases[gas_id][MOLES]) >= 1)
-			breath.gases[gas_id][MOLES] = max(
-				breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO,
-				(1 * BREATH_VOLUME) / (R_IDEAL_GAS_EQUATION * breath.temperature)
-				)
-			danger_points += 0.5
-	if (/datum/gas/bz in breath.gases)
-		var/gas_id = /datum/gas/bz
-		if(breath.get_breath_partial_pressure(breath.gases[gas_id][MOLES]) >= 2)
-			breath.gases[gas_id][MOLES] = max(
-				breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO,
-				(2 * BREATH_VOLUME) / (R_IDEAL_GAS_EQUATION * breath.temperature)
-				)
-			danger_points += 0.75
-
-	filter_status = max(filter_status - danger_points, 0)
-	return breath
 
 #undef HIGH_FILTERING_MOLES
 #undef HIGH_FILTERING_RATIO

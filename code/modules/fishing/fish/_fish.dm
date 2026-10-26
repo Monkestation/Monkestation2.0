@@ -10,7 +10,7 @@
 	force = 6
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
-	hitsound = 'sound/weapons/slap.ogg'
+	hitsound = 'sound/items/weapons/slap.ogg'
 	///The grind results of the fish. They scale with the weight of the fish.
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
@@ -408,7 +408,7 @@
 	var/datum/gas_mixture/mixture = loc.return_air()
 	if(!mixture)
 		return FALSE
-	if(safe_air_limits && !check_gases(mixture.gases, safe_air_limits))
+	if(safe_air_limits && !mixture.check_gases(safe_air_limits))
 		return FALSE
 	if(!ISINRANGE(mixture.temperature, required_temperature_min, required_temperature_max))
 		return FALSE

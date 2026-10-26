@@ -1,7 +1,8 @@
 ///Checking all powernets to see if they are properly connected and powered.
-/datum/unit_test/cable_powernets
+/datum/unit_test/maptest_cable_powernets
+	test_flags = UNIT_TEST_MAP_TEST
 
-/datum/unit_test/cable_powernets/Run()
+/datum/unit_test/maptest_cable_powernets/Run()
 	for(var/datum/powernet/powernets as anything in SSmachines.powernets)
 
 		//nodes (machines, which includes APCs and SMES)
@@ -26,7 +27,7 @@
 				continue
 			TEST_FAIL("[powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
 
-		if(!powernets.avail && !(locate(/obj/machinery/power/terminal) in powernets.nodes)) //No power roundstart, so check for an SMES connection (Solars, Turbine).
+		if(!powernets.avail && !(locate(/obj/machinery/power/terminal) in powernets.nodes) && !(locate(/obj/machinery/power/smes) in powernets.nodes)) //No power roundstart, so check for an SMES connection (Solars, Turbine).
 			var/obj/structure/cable/random_cable = powernets.cables[1]
 			//Check if they're a station area
 			var/area/cable_area = get_area(random_cable)

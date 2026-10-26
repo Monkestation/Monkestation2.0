@@ -26,12 +26,6 @@
 /obj/structure/barricade/sandbags,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
-"k" = (
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/fakeice/slippery,
-/area/centcom/tdome/arena/actual)
 "l" = (
 /obj/structure/cannon{
 	dir = 4
@@ -88,6 +82,16 @@
 	dir = 8
 	},
 /turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"M" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/floor/fakeice/slippery,
 /area/centcom/tdome/arena/actual)
 "N" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -218,8 +222,8 @@ Q
 a
 O
 c
-k
-H
+c
+M
 a
 a
 a

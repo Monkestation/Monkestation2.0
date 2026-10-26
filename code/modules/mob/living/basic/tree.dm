@@ -1,7 +1,7 @@
 /mob/living/basic/tree
 	name = "pine tree"
 	desc = "A pissed off tree-like alien. It seems annoyed with the festivities..."
-	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
@@ -28,7 +28,7 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_HOSTILE)
@@ -65,13 +65,13 @@
 	if(!isopenturf(loc))
 		return
 	var/turf/open/our_turf = src.loc
-	if(!our_turf.air || !our_turf.air.gases[/datum/gas/carbon_dioxide])
+	if(!our_turf.air || !our_turf.air.moles[/datum/gas/carbon_dioxide])
 		return
-
-	var/co2 = our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES]
+	var/datum/gas_mixture/our_air = our_turf.air
+	var/co2 = our_air.moles[/datum/gas/carbon_dioxide]
 	if(co2 > 0 && SPT_PROB(13, seconds_per_tick))
 		var/amt = min(co2, 9)
-		our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
+		our_air.adjust_gas(/datum/gas/carbon_dioxide, -amt)
 		our_turf.atmos_spawn_air("o2=[amt]")
 
 /mob/living/basic/tree/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)

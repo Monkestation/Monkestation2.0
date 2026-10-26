@@ -119,6 +119,7 @@
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
+#define COLOR_AI_HOLOGRAM_BLUE "#7DB4E1"
 
 #define COLOR_PINK "#FFC0CB"
 #define COLOR_LIGHT_PINK "#FF3CC8"
@@ -448,3 +449,10 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 
 #define COLOR_REVENANT	"#1d2953"
 #define COLOR_REVENANT_PLANTBLIGHT "#823abb"
+
+// Eye color override priorities, lowest priority first
+#define EYE_COLOR_ORGAN_PRIORITY 1
+#define EYE_COLOR_SPECIES_PRIORITY 10
+#define EYE_COLOR_WEED_PRIORITY 20
+#define EYE_COLOR_DEMONEYE_PRIORITY 25
+#define EYE_COLOR_CULT_PRIORITY 30

@@ -134,9 +134,9 @@
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
-	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/stepsound = 'sound/vehicles/mecha/mechstep.ogg'
 	///Sound played when the mech walks
-	var/turnsound = 'sound/mecha/mechturn.ogg'
+	var/turnsound = 'sound/vehicles/mecha/mechturn.ogg'
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
@@ -334,10 +334,11 @@
 			var/turf/ai_location_turf = get_turf(ai_occupant.last_used_data_core || ai_occupant)
 			if(!LAZYLEN(GLOB.data_cores["[ai_location_turf.z]"])) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
-				unlucky_ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
-				unlucky_ai.gib() //No wreck, no AI to recover
+				if(!wreckage)
+					unlucky_ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
+					unlucky_ai.gib() //No wreck, no AI to recover
 			else
-				mob_exit(unlucky_ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
+				mob_exit(ai_occupant, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, forced = TRUE)
 		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
@@ -372,7 +373,7 @@
  */
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
-	user.playsound_local(src, 'sound/machines/beep.ogg', 25)
+	user.playsound_local(src, 'sound/machines/beep/beep.ogg', 25)
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
@@ -785,7 +786,7 @@
 
 		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
-	playsound(src, 'sound/machines/airlock.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/airlock/airlock.ogg', 50, TRUE)
 
 ///fetches temp of the gas mixture we are using
 /obj/vehicle/sealed/mecha/return_temperature()

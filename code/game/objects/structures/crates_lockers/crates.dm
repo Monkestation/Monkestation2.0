@@ -13,8 +13,8 @@
 	dense_when_open = TRUE
 	//One quarter chance of ashing things inside.
 	delivery_icon = "deliverycrate"
-	open_sound = 'sound/machines/crate_open.ogg'
-	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound = 'sound/machines/crate/crate_open.ogg'
+	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
@@ -243,7 +243,7 @@
 		return
 	if(user)
 		to_chat(user, span_notice("You remove the [manifest] from [src]."))
-	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
+	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(drop_location(src))
 	if(ishuman(user))
@@ -264,8 +264,8 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
@@ -587,8 +587,8 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/sandstone
 	material_drop_amount = 8
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
@@ -603,8 +603,8 @@
 	max_integrity = 150
 	material_drop = /obj/item/stack/sheet/mineral/sandstone
 	material_drop_amount = 18
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 30
 	close_sound_volume = 80
 	can_install_electronics = FALSE

@@ -19,7 +19,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
-	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
+	var/load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
 	var/max_syringes = 1 ///The number of syringes it can store.
 	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
@@ -141,9 +141,7 @@
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
 	syringes = list(new /obj/item/reagent_containers/syringe())
-
-/obj/item/gun/syringe/syndicate/prototype/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/syringe/dna
 	name = "modified compact syringe gun"
@@ -204,6 +202,8 @@
 	force = 4
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	pinless = TRUE
+	has_manufacturer = FALSE
+
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message(span_danger("[user] shoots the blowgun!"))
@@ -211,9 +211,6 @@
 	user.stamina.adjust(-20)
 	user.adjustOxyLoss(20)
 	return ..()
-
-/obj/item/gun/syringe/blowgun/give_manufacturer_examine()
-	return
 
 //Prepare thy coders for a PSYCHIC ATTACK.
 
@@ -223,7 +220,7 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"
-	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	has_syringe_overlay = FALSE
 	max_syringes = 2 // Technically makes it a better syringe gun, but at least you have to work for this one.
 	has_manufacturer = FALSE

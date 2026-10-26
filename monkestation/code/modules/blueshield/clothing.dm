@@ -2,47 +2,21 @@
 
 //Uniform items are in command.dm
 
-/obj/item/clothing/head/helmet/space/plasmaman/blueshield
-	name = "blueshield envirosuit helmet"
-	desc = "A plasmaman containment helmet designed for certified blueshields, who's job guarding heads should not include self-combustion... most of the time."
-	armor_type = /datum/armor/suit_armor
-	greyscale_colors = "#39393f#2b3f92#bd6abd"
-	sleek_greyscale_colors = "#39393f#2b3f92"
-
-/obj/item/clothing/under/plasmaman/blueshield
-	name = "blueshield envirosuit"
-	desc = "A plasmaman containment suit designed for certified blueshields, offering a limited amount of extra protection."
-	icon_state = "medal"
-	worn_icon_state = "medal_w"
-	inhand_icon_state = "medal"
-	greyscale_config = /datum/greyscale_config/plasmaman_suit/symbol
-	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/symbol
-	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/symbol
-	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/symbol
-	greyscale_colors = "#39393f#39393f#2b3f92#2b3f92#2b3f92#2b3f92#1e2e6f"
-	sleek_greyscale_colors = "#2b3f92#39393f#39393f#39393f#39393f"
-	armor_type = /datum/armor/clothing_under/under_plasmaman_blueshield
-	sensor_mode = SENSOR_COORDS
-	random_sensor = FALSE
-
-/datum/armor/clothing_under/under_plasmaman_blueshield
-	melee = 10
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/head/beret/blueshield
 	name = "blueshield's beret"
-	desc = "A blue beret made of durathread with a genuine golden badge, denoting its owner as a Blueshield Lieuteneant. It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	desc = "A blue beret made of durathread with a genuine golden badge, denoting its owner as a Blueshield Lieuteneant.\
+		It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/blueshield")
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#3A4E7D#DEB63D"
-	icon_state = "beret_badge_police"
 	armor_type = /datum/armor/suit_armor
 
 /obj/item/clothing/head/beret/blueshield/navy
 	name = "navy blueshield's beret"
-	desc = "A navy-blue beret made of durathread with a silver badge, denoting its owner as a Blueshield Lieuteneant. It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	desc = "A navy-blue beret made of durathread with a silver badge, denoting its owner as a Blueshield Lieuteneant. \
+		It seems to be padded with nano-kevlar, making it tougher than standard reinforced berets."
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/beret/blueshield/navy")
 	greyscale_colors = "#3C485A#BBBBBB"
 
 /obj/item/storage/backpack/blueshield

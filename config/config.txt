@@ -622,3 +622,7 @@ WEBMAP_URL https://maps.monkestation.com/maps/Monkestation/$map
 #FLOXY_URL
 #FLOXY_USERNAME
 #FLOXY_PASSWORD
+
+## While this is uncommented, server initialization will include some asset generation usually useful for development.
+## It increases initialization time significantly so you'll want to disable this in live environments.
+GENERATE_ASSETS_IN_INIT

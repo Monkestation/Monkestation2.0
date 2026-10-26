@@ -320,11 +320,11 @@
 	if(!.)
 		return
 	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
-		mod.wearer.say("Get over here!", forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), "Get over here!", forced = type)
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.aim_projectile(target, mod.wearer)
 	net.firer = mod.wearer
-	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/punchmiss.ogg', 25, TRUE)
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
@@ -342,8 +342,8 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
 	range = 9
-	hitsound = 'sound/items/fultext_deploy.ogg'
-	hitsound_wall = 'sound/items/fultext_deploy.ogg'
+	hitsound = 'sound/items/fulton/fultext_deploy.ogg'
+	hitsound_wall = 'sound/items/fulton/fultext_deploy.ogg'
 	/// Reference to the beam following the projectile.
 	var/line
 	/// Reference to the energy net module.
@@ -410,7 +410,7 @@
 	if(!.)
 		return
 	if(IS_SPACE_NINJA(mod.wearer))
-		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
 	mod.wearer.SetUnconscious(0)
 	mod.wearer.SetStun(0)

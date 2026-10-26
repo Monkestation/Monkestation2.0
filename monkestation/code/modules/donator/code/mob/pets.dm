@@ -464,6 +464,7 @@
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	icon_gib = null
+	gender = MALE
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Flava-Floh")
