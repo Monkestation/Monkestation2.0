@@ -90,7 +90,7 @@
 	projectile_type = /obj/projectile/kinetic/smg
 	select_name = "kinetic"
 	e_cost = 0 // Can't use the macro
-	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
 
 /obj/item/ammo_casing/energy/kinetic/glock
@@ -103,7 +103,7 @@
 
 /obj/item/ammo_casing/energy/kinetic/railgun
 	projectile_type = /obj/projectile/kinetic/railgun
-	fire_sound = 'sound/weapons/beam_sniper.ogg'
+	fire_sound = 'sound/items/weapons/beam_sniper.ogg'
 
 /obj/projectile/kinetic/railgun
 	name = "hyper kinetic force"
@@ -126,7 +126,7 @@
 
 /obj/item/ammo_casing/energy/kinetic/shockwave
 	projectile_type = /obj/projectile/kinetic/shockwave
-	fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 
 /obj/projectile/kinetic/shockwave
 	name = "concussive kinetic force"

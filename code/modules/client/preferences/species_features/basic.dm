@@ -1,7 +1,7 @@
 /proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory)
 	var/static/datum/universal_icon/head_icon
 	if (isnull(head_icon))
-		head_icon = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
 		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	var/datum/universal_icon/final_icon = head_icon.copy()
@@ -97,7 +97,7 @@
 /datum/preference/choiced/facial_hair_gradient/icon_for(value)
 	var/static/datum/universal_icon/head_icon
 	if(isnull(head_icon))
-		head_icon = uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
 		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/hair_accessory = GLOB.facial_hairstyles_list["Beard (Very Long)"]
@@ -209,7 +209,7 @@
 		body_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
 		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST || body_part == BODY_ZONE_HEAD ? "_m" : ""
-			body_icon.blend_icon(uni_icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
+			body_icon.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
 
 		body_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 

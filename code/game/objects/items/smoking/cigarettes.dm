@@ -229,7 +229,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	damtype = BURN
 	force = 4
 	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma) >= 2.5) // the plasma explodes when exposed to fire
