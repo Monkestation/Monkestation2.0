@@ -15,7 +15,7 @@
 /obj/machinery/mentor_machine
 	name = "Mentor Asssistance Button"
 	desc = "A mentor can be requested to assist prospective virtual tutorial users, or choose to spawn themselves into one."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bigred"
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE

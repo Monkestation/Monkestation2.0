@@ -250,7 +250,7 @@
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
 				return
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
 			return
 
 		var/obj/item/card/id/id_card = attacking_item

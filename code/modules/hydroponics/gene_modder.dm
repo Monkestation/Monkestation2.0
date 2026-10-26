@@ -1,7 +1,7 @@
 /obj/machinery/plantgenes
 	name = "plant DNA manipulator"
 	desc = "An advanced device designed to manipulate plant genetic makeup."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
@@ -436,7 +436,7 @@
 	if(copytext(seed.name, 1, 13) == "experimental")//13 == length("experimental") + 1
 		return // Already modded name and icon
 	seed.name = "experimental " + seed.name
-	seed.icon = 'icons/obj/hydroponics/seeds.dmi'
+	seed.icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	seed.icon_state = "seed-x"
 /*
  *  Plant DNA disk

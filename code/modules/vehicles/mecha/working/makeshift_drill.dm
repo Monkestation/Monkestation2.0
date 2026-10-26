@@ -1,14 +1,14 @@
 /obj/vehicle/sealed/mecha/makeshift_drill
 	desc = "a square of rusted sheetmetal bolted to tracks and housing a comically large drill. This pile of junk looks especially fragile."
 	name = "Sheet metal drill"
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "sheetmetaldrill"
 	base_icon_state = "sheetmetaldrill"
 	max_integrity = 65
 	lights_power = 8
 	movedelay = 2.5
-	stepsound = 'sound/mecha/tank_treads.ogg'
-	turnsound = 'sound/mecha/tank_treads.ogg'
+	stepsound = 'sound/vehicles/mecha/tank_treads.ogg'
+	turnsound = 'sound/vehicles/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS //can't strafe bruv
 	armor_type = /datum/armor/scrap_vehicles //Same armour as a locker (like it matters with that hp)
 	internal_damage_threshold = 30 //Its got shitty durability

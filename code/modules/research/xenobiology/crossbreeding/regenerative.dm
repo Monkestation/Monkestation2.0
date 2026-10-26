@@ -148,15 +148,11 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/bluespace
 	colour = "bluespace"
-	effect_desc = "Rapidly heals the target and teleports them to where this core was created." // monkestation edit: updates effect_desc to reflect the rework
+	effect_desc = "Rapidly heals the target and, after a few seconds, teleports them to where this core was created. Resisting or being shoved interrupts it." // monkestation edit: updates effect_desc to reflect the rework
 	var/turf/open/T
 
 /obj/item/slimecross/regenerative/bluespace/core_effect(mob/living/target, mob/user)
-	var/turf/old_location = get_turf(target)
-	if(do_teleport(target, T, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
-		old_location.visible_message(span_warning("[target] disappears in a shower of sparks!"))
-		to_chat(target, span_danger("The milky goo teleports you somewhere it remembers!"))
-
+	target.apply_status_effect(/datum/status_effect/slimerecall/delayed/regenerative, T)
 
 /obj/item/slimecross/regenerative/bluespace/Initialize(mapload)
 	. = ..()
@@ -234,7 +230,7 @@ Regenerative extracts:
 	effect_desc = "Rapidly heals the target and flashes everyone in sight." // monkestation edit: updates effect_desc to reflect the rework
 
 /obj/item/slimecross/regenerative/oil/core_effect(mob/living/target, mob/user)
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	for(var/mob/living/L in view(user,7))
 		L.flash_act()
 
