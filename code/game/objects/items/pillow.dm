@@ -2,7 +2,7 @@
 /obj/item/pillow
 	name = "pillow"
 	desc = "A soft and fluffy pillow. You can smack someone with this!"
-	icon = 'icons/obj/pillow.dmi'
+	icon = 'icons/obj/bed.dmi'
 	icon_state = "pillow_1_t"
 	inhand_icon_state = "pillow_t"
 	lefthand_file = 'icons/mob/inhands/items/pillow_lefthand.dmi'
@@ -39,9 +39,9 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.apply_damage(5, STAMINA) // when hitting with such force we should prolly be getting tired too
-		hit_sound = 'sound/items/pillow_hit2.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit2.ogg'
 	else
-		hit_sound = 'sound/items/pillow_hit.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit.ogg'
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
@@ -100,7 +100,7 @@
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
 	balloon_alert(user, "tag removed")
-	playsound(user,'sound/items/poster_ripped.ogg', 50)
+	playsound(user,'sound/items/poster/poster_ripped.ogg', 50)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -128,7 +128,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
 	allowed = list(/obj/item/pillow) //moar pillow carnage
-	icon = 'icons/obj/pillow.dmi'
+	icon = 'icons/obj/bed.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
@@ -151,7 +151,7 @@
 	name = "pillow hood"
 	desc = "The final piece of the pillow juggernaut"
 	body_parts_covered = HEAD
-	icon = 'icons/obj/pillow.dmi'
+	icon = 'icons/obj/bed.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillowcase_hat"
 	body_parts_covered = HEAD
@@ -165,7 +165,7 @@
 /obj/item/clothing/neck/pillow_tag
 	name = "pillow tag"
 	desc = "A price tag for the pillow. It appears to have space to fill names in."
-	icon = 'icons/obj/pillow.dmi'
+	icon = 'icons/obj/bed.dmi'
 	icon_state = "pillow_tag"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "pillow_tag"

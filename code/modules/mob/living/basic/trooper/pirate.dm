@@ -23,7 +23,7 @@
 	armour_penetration = 75
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/blade1.ogg'
+	attack_sound = 'sound/items/weapons/blade1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee)
 	//MONKESTATION EDIT START - We use `light_(outer|inner)_range` instead of just `light_range`
@@ -67,7 +67,7 @@
 	/// Type of bullet we use
 	var/projectiletype = /obj/projectile/beam/laser
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/laser.ogg'
+	var/projectilesound = 'sound/items/weapons/laser.ogg'
 	/// number of burst shots
 	var/burst_shots = 2
 	/// Time between taking shots

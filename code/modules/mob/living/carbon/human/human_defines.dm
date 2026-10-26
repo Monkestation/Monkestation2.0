@@ -2,7 +2,7 @@
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
-	icon = 'icons/mob/species/human/human.dmi'
+	icon = 'icons/mob/human/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	hud_possible = list(

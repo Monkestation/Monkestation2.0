@@ -65,7 +65,7 @@
 //Warns you about the impenting hands
 /datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
 	to_chat(L, span_hierophant("You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!"))
-	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
+	playsound(L.loc, 'sound/effects/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 	. = ..()
 
 //Sends hands after you for your hubris
@@ -532,7 +532,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.grab_ghost(force = FALSE) //Shoves them back into their freshly reanimated corpse.
 	back_from_the_dead = TRUE
 	affected_mob.emote("gasp")
-	affected_mob.playsound_local(affected_mob, 'sound/health/fastbeat.ogg', 65)
+	affected_mob.playsound_local(affected_mob, 'sound/effects/health/fastbeat.ogg', 65)
 	..()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)

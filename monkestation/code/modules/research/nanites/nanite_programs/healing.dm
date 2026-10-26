@@ -217,11 +217,11 @@
 
 /datum/nanite_program/defib/proc/zap()
 	var/mob/living/carbon/C = host_mob
-	playsound(C, 'sound/machines/defib_charge.ogg', 50, FALSE)
+	playsound(C, 'sound/machines/defib/defib_charge.ogg', 50, FALSE)
 	sleep(3 SECONDS)
-	playsound(C, 'sound/machines/defib_zap.ogg', 50, FALSE)
+	playsound(C, 'sound/machines/defib/defib_zap.ogg', 50, FALSE)
 	if(check_revivable())
-		playsound(C, 'sound/machines/defib_success.ogg', 50, FALSE)
+		playsound(C, 'sound/machines/defib/defib_success.ogg', 50, FALSE)
 		C.set_heartattack(FALSE)
 		C.revive()
 		C.emote("gasp")
@@ -229,7 +229,7 @@
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
 		log_game("[key_name(C)] has been successfully defibrillated by nanites.")
 	else
-		playsound(C, 'sound/machines/defib_failed.ogg', 50, FALSE)
+		playsound(C, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 
 
 //heard you like smoking

@@ -847,7 +847,7 @@
 
 /datum/reagent/consumable/ethanol/b52/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	playsound(drinker, 'sound/effects/explosion_distant.ogg', 100, FALSE)
+	playsound(drinker, 'sound/effects/explosion/explosion_distant.ogg', 100, FALSE)
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
@@ -1257,7 +1257,7 @@
 
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(SPT_PROB(2.5, seconds_per_tick))
-		playsound(get_turf(drinker), 'sound/effects/explosionfar.ogg', 100, TRUE)
+		playsound(get_turf(drinker), 'sound/effects/explosion/explosionfar.ogg', 100, TRUE)
 	return ..()
 
 /datum/reagent/consumable/ethanol/hiveminderaser

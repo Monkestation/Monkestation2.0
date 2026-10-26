@@ -164,7 +164,7 @@
 
 /obj/item/clothing/head/utility/hardhat/welding/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))
-		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 	update_appearance()
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)

@@ -32,7 +32,7 @@
 /datum/preference/choiced/arachnid_chelicerae/icon_for(value)
 	var/static/datum/universal_icon/arachnid_head
 	if(isnull(arachnid_head))
-		arachnid_head = uni_icon('icons/mob/species/arachnid/bodyparts.dmi', "arachnid_head")
+		arachnid_head = uni_icon('icons/mob/human/species/arachnid/bodyparts.dmi', "arachnid_head")
 		arachnid_head.blend_color("#3e3143", ICON_MULTIPLY)
 		arachnid_head.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "[/obj/item/organ/internal/eyes/night_vision/arachnid::eye_icon_state]_l"), ICON_OVERLAY)
 		arachnid_head.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "[/obj/item/organ/internal/eyes/night_vision/arachnid::eye_icon_state]_r"), ICON_OVERLAY)

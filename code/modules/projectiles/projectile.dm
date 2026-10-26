@@ -19,7 +19,7 @@
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 	/// The sound this plays on impact.
-	var/hitsound = 'sound/weapons/pierce.ogg'
+	var/hitsound = 'sound/items/weapons/pierce.ogg'
 	/// Sound played when the projectile hits a wall
 	var/hitsound_wall
 	var/mixer_channel

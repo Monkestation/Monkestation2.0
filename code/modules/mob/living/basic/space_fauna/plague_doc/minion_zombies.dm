@@ -16,7 +16,7 @@
 	melee_damage_upper = 30
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	minimum_survivable_temperature = 0
