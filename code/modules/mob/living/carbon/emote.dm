@@ -60,16 +60,16 @@
 		if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
 			return
 		else
-			return pick('sound/misc/clap1.ogg',
-							'sound/misc/clap2.ogg',
-							'sound/misc/clap3.ogg',
-							'sound/misc/clap4.ogg')
+			return pick('sound/mobs/humanoids/human/clap/clap1.ogg',
+							'sound/mobs/humanoids/human/clap/clap2.ogg',
+							'sound/mobs/humanoids/human/clap/clap3.ogg',
+							'sound/mobs/humanoids/human/clap/clap4.ogg')
 
 /datum/emote/living/carbon/crack
 	key = "crack"
 	key_third_person = "cracks"
 	message = "cracks their knuckles."
-	sound = 'sound/misc/knuckles.ogg'
+	sound = 'sound/mobs/humanoids/human/knuckle_crack/knuckles.ogg'
 	cooldown = 6 SECONDS
 
 /datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
@@ -218,7 +218,7 @@
 
 /datum/emote/living/carbon/snap/get_sound(mob/living/user)
 	if(ishuman(user))
-		return pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
+		return pick('sound/mobs/humanoids/human/snap/fingersnap1.ogg', 'sound/mobs/humanoids/human/snap/fingersnap2.ogg')
 	return null
 
 /datum/emote/living/carbon/shoesteal
@@ -258,7 +258,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "sweatdrop", pixel_x = 10, pixel_y = 10)
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "sweatdrop", pixel_x = 10, pixel_y = 10)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.apply_height(emote_animation, UPPER_BODY)
@@ -274,7 +274,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "annoyed", pixel_x = 10, pixel_y = 10)
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "annoyed", pixel_x = 10, pixel_y = 10)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.apply_height(emote_animation, UPPER_BODY)
@@ -291,7 +291,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "realize", pixel_x = 10, pixel_y = 15)
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "realize", pixel_x = 10, pixel_y = 15)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.apply_height(emote_animation, UPPER_BODY)
@@ -307,7 +307,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "question", pixel_x = 10, pixel_y = 15)
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "question", pixel_x = 10, pixel_y = 15)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.apply_height(emote_animation, UPPER_BODY)
@@ -323,7 +323,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "exclaim", pixel_x = 10, pixel_y = 15)
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "exclaim", pixel_x = 10, pixel_y = 15)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.apply_height(emote_animation, UPPER_BODY)

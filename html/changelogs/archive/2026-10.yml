@@ -246,3 +246,82 @@
       no owner.
   notghosti:
   - bugfix: IPC Examine limb examine text now should reflect their mechanical status
+2026-10-20:
+  AberrantQuerist:
+  - balance: Gene splicer takes into account if traits are removable.
+  - balance: Plant force exceeding 25 will increase chances of unpreventable backfiring.
+  Absolucy:
+  - bugfix: fixed "ghost" entries with grouped stuff in the lootpanel when searching
+  Kmla2:
+  - code_imp: changes how the uplink is sorted, hopefully shouldn't affect anything
+      in-game
+  SmArtKar:
+  - image: Carp infusion now changes how your skin looks to reflect your fishy nature
+2026-10-21:
+  Absolucy:
+  - balance: Moon heretic robes now channel the moonlight amulet's effect thru your
+      blade (the brain damage / sanity damage) on its own, so the amulet isn't required
+      to use it anymore, altho the amulet still gives you bonuses
+  - bugfix: Fixed the Resplendent Regalia's hit message for the wearer
+2026-10-22:
+  Absolucy:
+  - balance: Abductors can no longer teleport if they have a bluespace body bag in
+      their inventory.
+  LettuceGuardian:
+  - bugfix: Guardsman helmet mob side view being misaligned
+  SirNightKnight:
+  - balance: the laser cannon can now be worn on your back.
+  - bugfix: fixed the laser cannon worn sprite not showing properly
+  SmArtKar:
+  - bugfix: Getting deconverted from cult no longer leaves you with black eyes.
+  - bugfix: Eye color effects (cult, weed, silverscale, demoneye) no longer mess up
+      your eye color when they overlap.
+  ashallaryn:
+  - image: modified oozeling "retract limb" "regrow limb" "toggle core signal" and
+      "toggle cleaning" HUD button icons
+2026-10-23:
+  Absolucy:
+  - balance: Stabilized and Regenerative bluespace extracts now have a 3 second window
+      where you can shove someone to prevent them from being teleported (or they can
+      resist out of it if they want)
+2026-10-24:
+  Absolucy:
+  - bugfix: (PapaMichael) chat should actually scroll all the way to the bottom now,
+      instead of making you scroll manually
+  - bugfix: (PapaMichael) imported chat settings now actually save, instead of vanishing
+      next round
+  - bugfix: (sqn) toggling a chat tab's message filters applies right away now
+  - bugfix: chat tooltips starting with a number no longer get cut down to just the
+      number
+  - bugfix: the music player no longer shows a garbage upload date when there isn't
+      one
+  - bugfix: joining a DJ station or walkman song partway through now actually starts
+      it at the right spot, instead of from the beginning
+  - bugfix: new players with no saved chat settings can hear admin music again
+  - bugfix: the "scroll to bottom" button in chat shows up again when you're scrolled
+      up
+  - bugfix: the chat scroll tracking tolerance setting actually does something now
+  - bugfix: chat no longer randomly stops autoscrolling when a big message (like an
+      examine) or a burst of messages comes in
+  - bugfix: Hopefully fixed most chat scrolling issues in general, tbh.
+  - bugfix: chat no longer stays blank for new players, or when chat settings are
+      slow to load
+  - bugfix: the "colored names" chat setting works again
+  - bugfix: chat no longer breaks on every join if your saved chat data got corrupted
+  - qol: chat now tells you whenever something goes wrong with loading or saving your
+      chat data
+  - bugfix: chat highlights now work for terms with punctuation or accents
+  - bugfix: '"Exact" chat highlights now work with accented letters and terms ending
+      in punctuation'
+  - bugfix: the chat highlight list no longer reorders itself after you delete the
+      default highlight
+  - rscadd: You can now see which storage backend your chat settings use.
+  AitorLogedo:
+  - qol: The AI's LOOC now comes from its eye, and it can hear LOOC around its eye.
+  SirNightKnight:
+  - bugfix: fixed eigenstasium not processing in dead mobs.
+  ThePooba:
+  - qol: slab only curses 3 times isntead of 13
+2026-10-25:
+  Absolucy:
+  - bugfix: Relogging no longer stacks a new combat mode button your hud each time

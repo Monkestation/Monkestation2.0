@@ -56,7 +56,7 @@
 		balloon_alert(user, "failed to insert tape!")
 		return ITEM_INTERACT_BLOCKING
 	tape = tool
-	playsound(src, 'sound/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+	playsound(src, 'sound/items/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 	balloon_alert(user, "tape inserted")
 	SStgui.update_uis(src)
 	return ITEM_INTERACT_SUCCESS
@@ -143,7 +143,7 @@
 	if(idx)
 		side.songs.Cut(idx, idx + 1)
 		balloon_alert(user, "track removed")
-		playsound(src, 'sound/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+		playsound(src, 'sound/items/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 	else
 		balloon_alert(user, "error removing track?")
 	SStgui.update_uis(src)
@@ -213,7 +213,7 @@
 	SStgui.update_uis(src)
 	balloon_alert(user, "track added!")
 	to_chat(user, span_notice("Added new track \"[metadata["title"]]\" to [tape]"))
-	playsound(src, 'sound/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+	playsound(src, 'sound/items/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 	return TRUE
 
 /obj/machinery/cassette_deck/ui_assets(mob/user)
