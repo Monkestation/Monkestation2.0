@@ -10,6 +10,10 @@
 	. = ..()
 	var/atom/movable/moving = controller.pawn
 	var/delay = controller.movement_delay
+	var/list/found_path = controller.blackboard[BB_PATH_TO_USE]
+	controller.clear_blackboard_key(BB_PATH_TO_USE)
+	if(LAZYACCESS(found_path, length(found_path)) != get_turf(current_movement_target))
+		found_path = null
 
 	var/datum/move_loop/has_target/jps/astar/loop = GLOB.move_manager.astar_move(moving,
 		current_movement_target,
@@ -18,6 +22,7 @@
 		max_path_length = maximum_length,
 		minimum_distance = controller.get_minimum_distance(),
 		access = controller.get_access(),
+		initial_path = found_path,
 		subsystem = SSai_movement,
 		extra_info = controller,
 	)

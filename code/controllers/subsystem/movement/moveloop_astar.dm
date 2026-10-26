@@ -12,6 +12,7 @@
  * max_path_length - The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * minimum_distance -Minimum distance to the target before path returns
  * access - A list representing what access we have and what doors we can open
+ * initial_path - A path to the target we already found, so the loop can start walking without searching again
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
@@ -25,6 +26,7 @@
 	max_path_length,
 	minimum_distance,
 	list/access,
+	list/initial_path,
 	subsystem,
 	priority,
 	flags,
@@ -41,7 +43,8 @@
 		repath_delay,
 		max_path_length,
 		minimum_distance,
-		access)
+		access,
+		initial_path)
 
 /// Reuses all of the JPS loop's path bookkeeping, only the pathfinder and the stepping are different.
 /datum/move_loop/has_target/jps/astar
@@ -49,6 +52,14 @@
 	var/turf/pathed_to
 	/// Failed steps in a row on the same path node
 	var/blocked_steps = 0
+
+/datum/move_loop/has_target/jps/astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, list/initial_path)
+	. = ..(delay, timeout, chasing, repath_delay, max_path_length, minimum_distance, access)
+	if(!. || !length(initial_path))
+		return
+	on_finish_pathing(initial_path.Copy())
+	if(length(movement_path))
+		pathed_to = get_turf(chasing)
 
 /datum/move_loop/has_target/jps/astar/Destroy()
 	pathed_to = null

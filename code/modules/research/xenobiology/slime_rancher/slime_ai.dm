@@ -284,6 +284,14 @@
 	acting_behavior = /datum/ai_behavior/slime_chase/hunt/meal
 	scans_while_latched = FALSE
 
+// slime_food turns down everyone but grudges for cleaners, so don't scan for meals we'd never eat
+/datum/ai_planning_subtree/slime_target/meal/should_scan(datum/ai_controller/controller)
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(!slime_pawn.cleaner_slime || length(controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]))
+		return TRUE
+	controller.clear_blackboard_key(target_key)
+	return FALSE
+
 /datum/ai_planning_subtree/slime_target/grudge
 	target_key = BB_BASIC_MOB_CURRENT_TARGET
 	finding_behavior = /datum/ai_behavior/slime_find_target/grudge
@@ -491,7 +499,6 @@
 /datum/ai_behavior/slime_find_target/mess/find_candidates(datum/ai_controller/basic_controller/slime/controller, datum/slime_pen/pen)
 	. = ..()
 	controller.mess_nearby = length(.) > 0
-	// the cleaning scan reruns every half second anyway
 	COOLDOWN_START(controller, mess_scan_reuse, 1 SECONDS)
 
 /datum/ai_behavior/slime_find_target/mess/has_candidates(datum/ai_controller/basic_controller/slime/controller)

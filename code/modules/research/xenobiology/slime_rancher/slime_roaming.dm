@@ -107,9 +107,16 @@
 	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
 
 /datum/ai_behavior/slime_find_target/roam/on_path_found(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate, list/path)
+	if(QDELETED(controller))
+		return ..()
+	if(length(path))
+		controller.override_blackboard_key(BB_PATH_TO_USE, path)
+		return ..()
+	// a failed search goes through every tile in reach, so don't keep picking spots in the same locked room
+	if(!controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
+		controller.ignore_target(get_area(candidate), 1 MINUTES)
 	// no path means they're out of reach, so we stop looking instead of standing around for the rest of the minute
-	if(!length(path) && !QDELETED(controller))
-		controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
+	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
 	return ..()
 
 /// Walks to the spot, then remembers the area for a bit so the next few hops go somewhere new
