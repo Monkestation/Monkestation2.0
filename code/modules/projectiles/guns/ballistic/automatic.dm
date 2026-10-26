@@ -132,9 +132,6 @@
 /obj/item/gun/ballistic/automatic/wt550/fss //Slightly worse printable WT-550
 	name = "\improper FSS-550"
 	desc = "A modified printable version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Not only does this gun have less stopping power, the magazine doesn't entirely fit, and it takes a bit of force to jam it in or rip it out. Used by Syndicate agents and rebels in more than 50 systems."
-	icon = 'icons/obj/guns/guns.dmi'
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "fss550"
 	inhand_icon_state = "fss"
 	spread = 2
@@ -311,7 +308,6 @@
 	name = "\improper Bogseo Heavy Submachine Gun"
 	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the hefty .585 cartridge. \
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
 	icon_state = "bogseo"
 	worn_icon_state = "bogseo"
 	inhand_icon_state = "bogseo"
@@ -364,7 +360,6 @@
 	desc = "A short barrel, further compacted conversion of the 'Lanca' rifle to fire pistol caliber .27-54 cartridges. \
 		Due to the intended purpose of the weapon, and less than optimal ranged performance of the projectile, it has \
 		nothing more than basic glow-sights as opposed to the ranged scope Lanca users might be used to."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_48.dmi'
 	icon_state = "miecz"
 	inhand_icon_state = "c20r"
 	worn_icon_state = "gun"
@@ -414,10 +409,7 @@
 /obj/item/gun/ballistic/automatic/sol_smg // Base Sol SMG - Incredibly junky, needs work
 	name = "\improper Sindano Submachine Gun"
 	desc = "A small submachine gun firing .35 Sol. Commonly seen in the hands of PMCs and other unsavory corpos. Accepts any standard Sol pistol magazine."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns32x.dmi'
 	icon_state = "sindano"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
 	inhand_icon_state = "sindano"
 	special_mags = TRUE
 	bolt_type = BOLT_TYPE_OPEN
@@ -635,12 +627,8 @@
 /obj/item/gun/ballistic/automatic/sol_rifle ///The standard rifle rifle, it just works
 	name = "\improper Carwo-Cawil Battle Rifle"
 	desc = "A heavy battle rifle firing .40 Sol. Commonly seen in the hands of SolFed military types. Accepts any standard SolFed rifle magazine."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
 	icon_state = "infanterie"
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "infanterie"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
 	inhand_icon_state = "infanterie"
 	SET_BASE_PIXEL(-8, 0)
 	special_mags = TRUE
@@ -800,12 +788,8 @@
 /obj/item/gun/ballistic/automatic/quarad_lmg /// Light Machine Gun, lives in the heavy armaments locker
 	name = "\improper Qarad Light Machinegun"
 	desc = "A spotless, if outdated machinegun. The same model was used to great effect against xenomorph incursions in the past, hopefully this one doesn't have any manufacturing defects...."
-	icon = 'icons/obj/weapons/guns/guns48x.dmi'
 	icon_state = "outomaties"
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "outomaties"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
 	inhand_icon_state = "outomaties"
 	bolt_type = BOLT_TYPE_OPEN
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum
@@ -852,10 +836,7 @@
 	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 	icon_state = "outomaties_evil"
-	worn_icon = 'icons/mob/inhands/gunsx48_worn.dmi'
 	worn_icon_state = "outomaties_evil"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthandx48.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	fire_delay = 0.1 SECONDS
@@ -868,7 +849,6 @@
 /obj/item/gun/ballistic/automatic/minigun22
 	name = "\improper Miniaturized Minigun"
 	desc = "A Miniaturized Multibarrel rotary gun that fires .22 LR \"peashooter\" ammunition"
-	icon = 'icons/obj/weapons/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	inhand_icon_state = "minigun"
 	slowdown = 0.4
@@ -949,12 +929,8 @@
 	name = "\improper Lanca Battle Rifle"
 	desc = "A relatively compact, long barreled bullpup battle rifle chambered for .310 Strilka. Has an integrated sight with \
 		a surprisingly functional amount of magnification, given its place of origin."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_48.dmi'
 	icon_state = "lanca"
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_worn.dmi'
 	worn_icon_state = "lanca"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_righthand.dmi'
 	inhand_icon_state = "lanca"
 	SET_BASE_PIXEL(-8, 0)
 	special_mags = FALSE
@@ -1011,14 +987,13 @@
 	name = "\improper Wyłom Anti-Materiel Rifle"
 	desc = "A massive, outdated beast of an anti materiel rifle that was once in use by CIN military forces. Fires the devastating .60 Strela caseless round, \
 		the massively overperforming penetration of which being the reason this weapon was discontinued."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_64.dmi'
+	icon = 'icons/obj/weapons/guns/64x.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	base_pixel_x = -16 // This baby is 64 pixels wide
 	pixel_x = -16
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/inhands_64_left.dmi'
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/inhands_64_right.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_worn.dmi'
 	icon_state = "wylom"
 	inhand_icon_state = "wylom"
 	worn_icon_state = "wylom"
@@ -1087,7 +1062,6 @@
 	name = "proto-kinetic 'Rapier' smg"
 	desc = "Using partial ballistic technology and kinetic acceleration, the Mining Research department has managed to make the kinetic accelerator full auto. \
 	While the technology is promising, it is held back by certain factors, specifically limited ammo and no mod capacity, but that shouldn't be an issue with its performance."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "pksmg"
 	burst_size = 2
 	actions_types = list()
@@ -1118,7 +1092,6 @@
 	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
 	to kill a beast. Has a fixed unremovable 150 round magazine with a special loading port on the outside, forcing you to \
 	top off and reload using stripper clips."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "kineticlmg"
 	inhand_icon_state = "kineticlmg"
 	base_icon_state = "kineticlmg"

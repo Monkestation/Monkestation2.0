@@ -1,11 +1,11 @@
 /obj/item/gun/ballistic/SRN_rocketlauncher
 	desc = "A rocket designed with the power of bluespace to send a singularity or tesla back to the shadow realm"
 	name = "Spatial Rift Nullifier"
-	icon = 'icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
 	icon_state = "srnlauncher"
 	inhand_icon_state = "srnlauncher"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
 	fire_sound = 'sound/items/weapons/gun/general/rocket_launch.ogg'
 	item_flags = NONE

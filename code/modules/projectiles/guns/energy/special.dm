@@ -68,6 +68,8 @@
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	icon_state = "meteor_gun"
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
@@ -86,6 +88,7 @@
 	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/belt.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	automatic_charge_overlays = FALSE
 
@@ -322,8 +325,8 @@
 /obj/item/gun/energy/printer
 	name = "cyborg lmg"
 	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
+	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
 	icon_state = "l6_cyborg"
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	cell_type = /obj/item/stock_parts/power_store/cell/secborg
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
@@ -401,7 +404,7 @@
 /obj/item/gun/energy/marksman_revolver
 	name = "marksman revolver"
 	desc = "Uses electric pulses to fire microscopic pieces of metal at incredibly high speeds. Alternate fire flips a coin that can be targeted for extra firepower."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
 	icon_state = "revolver"
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
 	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'

@@ -4,8 +4,11 @@
 /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "revolver"
+	icon = 'icons/obj/weapons/guns/ballistic48x32.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
+	worn_icon = 'icons/mob/clothing/guns/ballistic.dmi'
+	icon_state = "flatgun"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	flags_1 = CONDUCT_1
@@ -22,6 +25,9 @@
 	action_slots = ALL
 	alternate_worn_layer = HANDS_LAYER+0.05
 	appearance_flags = KEEP_TOGETHER
+
+	pickup_sound = 'sound/items/handling/gun_pickup.ogg'
+	drop_sound = 'sound/items/handling/gun_drop.ogg'
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE
@@ -58,9 +64,6 @@
 
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
-
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 	/// True if a gun dosen't need a pin, mostly used for abstract guns like tentacles and meathooks

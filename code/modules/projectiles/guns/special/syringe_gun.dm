@@ -1,10 +1,9 @@
 /obj/item/gun/syringe
 	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon = 'icons/obj/weapons/guns/syringegun.dmi'
 	icon_state = "medicalsyringegun"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	inhand_icon_state = "medicalsyringegun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -110,8 +109,8 @@
 	name = "compact rapid syringe gun"
 	desc = "A modification of the syringe gun design to be more compact and use a rotating cylinder to store up to six syringes."
 	icon_state = "rapidsyringegun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_icon_state = "syringegun"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
@@ -127,8 +126,8 @@
 	name = "dart pistol"
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
 	icon_state = "dartsyringegun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_icon_state = "gun" //Smaller inhand
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
@@ -147,8 +146,8 @@
 	name = "modified compact syringe gun"
 	desc = "A syringe gun that has been modified to be compact and fit DNA injectors instead of normal syringes."
 	icon_state = "dnasyringegun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_icon_state = "syringegun"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
@@ -185,10 +184,9 @@
 /obj/item/gun/syringe/blowgun
 	name = "blowgun"
 	desc = "Fire syringes at a short distance."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "blowgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_icon_state = "blowgun"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
@@ -217,7 +215,6 @@
 /obj/item/gun/syringe/shot_gun
 	name = "double-barreled 'shot' gun"
 	desc = "Fuck yeah, cheers bro! \n\nThis bad-boy is loaded with shot glasses! Just make sure they're full unless you want your patrons swallowing shards of broken glass."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"
 	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'

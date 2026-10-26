@@ -64,7 +64,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire
 	name = "Rapid Fire"
-	button_icon = 'icons/obj/weapons/guns/energy.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires projectiles repeatedly at a given target."
 	cooldown_time = 1.5 SECONDS
@@ -204,7 +204,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast
 	name = "Shotgun Fire"
-	button_icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	button_icon_state = "shotgun"
 	desc = "Fires projectiles in a shotgun pattern."
 	cooldown_time = 2 SECONDS
@@ -259,7 +259,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots
 	name = "Directional Shots"
-	button_icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	button_icon_state = "pistol"
 	desc = "Fires projectiles in specific directions."
 	cooldown_time = 4 SECONDS
@@ -311,7 +311,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	name = "Fire Kinetic Accelerator"
-	button_icon = 'icons/obj/weapons/guns/energy.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy48x32.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires a kinetic accelerator projectile at the target."
 	cooldown_time = 1.5 SECONDS

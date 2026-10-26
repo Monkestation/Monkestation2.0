@@ -3,8 +3,8 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	worn_icon_state = null
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand_64.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -64,15 +64,10 @@
 /obj/item/gun/ballistic/shotgun/riot/sol
 	name = "\improper Renoster Shotgun"
 	desc = "A twelve gauge shotgun with a six shell capacity underneath. Made for and used by SolFed's various military branches."
-
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	icon_state = "renoster"
-
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "renoster"
-
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
 	inhand_icon_state = "renoster"
 
 	inhand_x_dimension = 32
@@ -120,8 +115,7 @@
 // Shotgun but EVIL!
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil
-	desc = "A twleve guage shotgun with an eight shell capacity underneath. This one is painted in a tacticool black."
-
+	desc = "A twelve guage shotgun with an eight shell capacity underneath. This one is painted in a tacticool black."
 	icon_state = "renoster_evil"
 	worn_icon_state = "renoster_evil"
 	inhand_icon_state = "renoster_evil"
@@ -168,10 +162,10 @@
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube
 	name = "cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	icon_state = "cycler"
 	inhand_icon_state = "bulldog"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
@@ -236,8 +230,8 @@
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	weapon_weight = WEAPON_MEDIUM
@@ -427,8 +421,8 @@
 	icon_state = "hookshotgun"
 	worn_icon_state = "gun"
 	inhand_icon_state = "hookshotgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/bounty
@@ -516,10 +510,10 @@
 	name = "six-barreled \"TRABUCO\" shotgun"
 	desc = "Dear fucking god, what the fuck even is this!? Theres a green flag with a blue circle and a yellow diamond around it. Some text in the circle says: \"ORDEM E PROGRESSO.\""
 	icon_state = "shotgun_brazil"
+	worn_icon_state = "dshotgun"
+	inhand_icon_state = "shotgun_brazil"
 	slot_flags = NONE
 	icon = 'icons/obj/guns/48x32guns.dmi'
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15 //blunt edge and really heavy
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/six
@@ -545,6 +539,16 @@
 	if(prob(death))
 		user.gib()
 
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/examine_more(mob/user)
+	. = ..()
+
+	. += "Appears constructed to fire all six shots at once, as a volley.\
+		The firing system looks... fragile."
+
 /obj/item/gun/ballistic/shotgun/doublebarrel/brazil/death
 	name = "Force of Nature"
 	desc = "So you have chosen death."
@@ -561,10 +565,10 @@
 //auto shotgun parent
 /obj/item/gun/ballistic/shotgun/semiauto
 	name = "Semi-Auto Shotgun"
-	desc = "A semi-auto shotgun."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	desc = "A semi-auto shotgun! Something compels you to bug report upon seeing this."
+	icon_state = "flatgun"
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	inhand_icon_state = "autoshotgun"
 	worn_icon_state = "autoshotgun"
 	icon_state = "autoshotgun"
@@ -623,8 +627,8 @@
 	icon_state = "protokshotgun"
 	inhand_icon_state = "protokshotgun"
 	worn_icon_state = "protokshotgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/ballistic/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/ballistic/righthand.dmi'
 	recoil = 3
 	force = 20
 	inhand_x_dimension = 32
@@ -641,5 +645,4 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
-	pb_knockback = 0 //you may have your point blank, but you dont get a fling    Why tf are they worried about this when half the mining guns instantly kill you
-
+	pb_knockback = 0

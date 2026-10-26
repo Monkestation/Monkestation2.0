@@ -73,7 +73,7 @@
 	)
 	result_atoms = list(/obj/item/gun/ballistic/rifle/lionhunter)
 	cost = 2
-	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
+	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic48x32.dmi'
 	research_tree_icon_state = "goldrevolver"
 	drafting_tier = 2
 
