@@ -163,7 +163,7 @@
 	if(!prob(final_knockout_probability))
 		return TRUE
 
-	if(defender.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+	if(defender.get_timed_status_effect_duration(/datum/status_effect/staggered))
 		defender.visible_message(
 			span_danger("[attacker] knocks [defender] out with a haymaker!"),
 			span_userdanger("You're knocked unconscious by [attacker]!"),
@@ -183,8 +183,7 @@
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		defender.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(defender, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE|TIMER_OVERRIDE)
+		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
 

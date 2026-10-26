@@ -173,9 +173,6 @@ DEFINE_BITFIELD(status_flags, list(
 #define SHOVE_KNOCKDOWN_TABLE 20
 #define SHOVE_KNOCKDOWN_COLLATERAL 1
 #define SHOVE_CHAIN_PARALYZE 30
-//Shove slowdown
-#define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
 #define STAGGERED_SLOWDOWN_LENGTH 3 SECONDS
 #define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier

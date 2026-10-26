@@ -85,9 +85,8 @@
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
 
-			if(ishuman(victim) && !victim.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				victim.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+			if(ishuman(victim) && !victim.get_timed_status_effect_duration(/datum/status_effect/staggered))
+				victim.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
 
 			log_combat(src, victim, "crashed into and was blocked by")
 			return
