@@ -27,7 +27,7 @@
 	maxHealth = 2500
 	attack_verb_continuous = "judges"
 	attack_verb_simple = "judge"
-	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
+	attack_sound = 'sound/effects/magic/clockwork/ratvar_attack.ogg'
 	icon_state = "eva"
 	icon_living = "eva"
 	icon_dead = ""
@@ -54,7 +54,7 @@
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 	hardmode_reward = /obj/item/gem/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
@@ -125,14 +125,14 @@
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
 	sparks.set_up(5, 1, loc)
 	sparks.start()
-	playsound(loc, 'sound/magic/blink.ogg', 50, TRUE)
+	playsound(loc, 'sound/effects/magic/blink.ogg', 50, TRUE)
 	visible_message(span_boldwarning("[src] vanishes with blue sparks!"))
 
 	forceMove(target_turf)
 	sparks = new()
 	sparks.set_up(5, 1, target_turf)
 	sparks.start()
-	playsound(target_turf, 'sound/magic/blink.ogg', 50, TRUE)
+	playsound(target_turf, 'sound/effects/magic/blink.ogg', 50, TRUE)
 	visible_message(span_boldwarning("[src] appears with blue sparks dancing around them!"))
 	adjustHealth(-2500)
 
@@ -173,7 +173,7 @@
 		if(viewer.client)
 			flash_color(viewer.client, "#C80000", 1)
 			shake_camera(viewer, 4, 3)
-	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
+	playsound(src, 'sound/effects/magic/clockwork/narsie_attack.ogg', 200, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
@@ -352,7 +352,7 @@
 	active = TRUE
 	set_anchored(TRUE)
 	balloon_alert_to_viewers("charging...")
-	playsound(src, 'sound/magic/disable_tech.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/disable_tech.ogg', 50, TRUE)
 	sleep(use_time)
 	icon_state = initial(icon_state)
 	active = FALSE
@@ -528,7 +528,7 @@
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."
 	activation_method = ACTIVATE_TOUCH
-	activation_sound = 'sound/hallucinations/growl1.ogg'
+	activation_sound = 'sound/effects/hallucinations/growl1.ogg'
 	use_time = 3 SECONDS
 
 /obj/machinery/anomalous_crystal/dark_reprise/ActivationReaction(mob/user, method)

@@ -84,7 +84,7 @@
 
 			if(slime_wetness?.stacks > (HYDROPHOBIA_WETNESS_STACKS - 1) && slime_wetness?.stacks <= HYDROPHOBIA_WETNESS_STACKS)
 				slime.balloon_alert(slime, "membrane restored!")
-				playsound(slime, 'sound/surgery/organ1.ogg', 80, TRUE)
+				playsound(slime, 'sound/items/handling/surgery/organ1.ogg', 80, TRUE)
 				slime.visible_message(
 					span_notice("[slime]'s body forms an oily outer membrance!"),
 					span_nicegreen("Your protective membrance regenerates!"),

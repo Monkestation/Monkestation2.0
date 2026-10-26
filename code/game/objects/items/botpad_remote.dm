@@ -2,7 +2,7 @@
 	name = "orbital bot pad controller"
 	desc = "Use this device to control the connected orbital bot pad."
 	desc_controls = "Use in hand to launch, right-click to recall back to the pad."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "botpad_controller"
 	w_class = WEIGHT_CLASS_SMALL
 	// ID of the remote, used for linking up

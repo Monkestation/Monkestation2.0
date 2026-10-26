@@ -100,14 +100,14 @@
 /obj/item/stake
 	name = "wooden stake"
 	desc = "A simple wooden stake carved to a sharp point."
-	icon = 'icons/bloodsuckers/stakes.dmi'
+	icon = 'icons/obj/antags/bloodsucker/stakes.dmi'
 	icon_state = "wood"
 	inhand_icon_state = "wood"
-	lefthand_file = 'icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'icons/bloodsuckers/bloodsucker_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/bloodsucker_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/bloodsucker_righthand.dmi'
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_SMALL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("staked", "stabbed", "tore into")
 	attack_verb_simple = list("staked", "stabbed", "tore into")
 	sharpness = SHARP_EDGED
@@ -139,7 +139,7 @@
 		return
 
 	to_chat(user, span_notice("You put all your weight into embedding the stake into [target]'s chest..."))
-	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, 1)
 	if(!do_after(user, staketime, target, extra_checks = CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, can_be_staked)))) // user / target / time / uninterruptable / show progress bar / extra checks
 		return
 	// Drop & Embed Stake
@@ -232,9 +232,9 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	name = "\improper Archive of the Kindred"
 	starting_title = "the Archive of the Kindred"
 	desc = "Cryptic documents explaining hidden truths behind Undead beings. It is said only Curators can decipher what they really mean."
-	icon = 'icons/bloodsuckers/vamp_obj.dmi'
-	lefthand_file = 'icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'icons/bloodsuckers/bloodsucker_righthand.dmi'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/bloodsucker_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/bloodsucker_righthand.dmi'
 	icon_state = "kindred_book"
 	inhand_icon_state = "kindred_book"
 	starting_author = "dozens of generations of Curators"

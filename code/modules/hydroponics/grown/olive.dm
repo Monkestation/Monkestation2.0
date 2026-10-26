@@ -10,7 +10,7 @@
 	endurance = 35
 	yield = 50
 	maturation = 10
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "olive-grow"
 	icon_dead = "olive-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/one_bite)

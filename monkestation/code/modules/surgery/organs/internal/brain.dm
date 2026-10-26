@@ -12,7 +12,7 @@
 /obj/item/organ/internal/brain/clockwork/on_life()
 	. = ..()
 	if(prob(5) && !robust)
-		SEND_SOUND(owner, sound('sound/ambience/ambiruin3.ogg', volume = 25))
+		SEND_SOUND(owner, sound('sound/ambience/ruin/ambiruin3.ogg', volume = 25))
 
 /// A global list of dead/ejected oozeling cores.
 GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slime)
@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		gps_active ? span_notice("You jam your hand into [src], feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into [src], feeling for any dense objects. Slime covers your arm."),
 		span_notice("You hear an obscene squelching sound.")
 	)
-	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
+	playsound(user, 'sound/items/handling/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
 		user.visible_message(
@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		span_notice("You jam your hand into [src], feeling for the densest point, your prize!"),
 		span_notice("You hear an obscene squelching sound.")
 	)
-	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
+	playsound(user, 'sound/items/handling/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 15 SECONDS, src))
 		user.visible_message(
@@ -251,7 +251,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return ITEM_INTERACT_BLOCKING
-	playsound(user, 'sound/magic/Demon_consume.ogg', vol = 50, vary = TRUE)
+	playsound(user, 'sound/effects/magic/demon_consume.ogg', vol = 50, vary = TRUE)
 	user.balloon_alert_to_viewers("staking core...")
 	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
 		return ITEM_INTERACT_BLOCKING
@@ -353,7 +353,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new death_melt_type(death_turf, victim.dir)
 
 	do_steam_effects(death_turf)
-	playsound(victim, 'sound/effects/blobattack.ogg', 80, TRUE)
+	playsound(victim, 'sound/effects/blob/blobattack.ogg', 80, TRUE)
 
 	if(gps_active) // adding the gps signal if they have activated the ability
 		AddComponent(/datum/component/gps/no_bsa, "[victim.real_name]'s Core")

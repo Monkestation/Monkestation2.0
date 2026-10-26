@@ -1,6 +1,6 @@
 // TAILS
 /datum/sprite_accessory/oni_tail
-	icon = 'icons/mob/species/oni/oni_tail.dmi'
+	icon = 'icons/mob/human/species/oni/oni_tail.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
@@ -14,7 +14,7 @@
 
 // WINGS
 /datum/sprite_accessory/oni_wings
-	icon = 'icons/mob/species/oni/oni_wings.dmi'
+	icon = 'icons/mob/human/species/oni/oni_wings.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
@@ -32,7 +32,7 @@
 
 // HORNS
 /datum/sprite_accessory/oni_horns
-	icon = 'icons/mob/species/oni/oni_horns.dmi'
+	icon = 'icons/mob/human/species/oni/oni_horns.dmi'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
