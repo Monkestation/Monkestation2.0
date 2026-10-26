@@ -115,3 +115,5 @@
 #define TRAIT_OVERFED "overfed"
 /// Currently has the rainbow color-cycle effect applied
 #define TRAIT_RAINBOWED "rainbowed"
+/// Mask carrying the rebreather element
+#define TRAIT_SLIME_REBREATHER "slime_rebreather"
