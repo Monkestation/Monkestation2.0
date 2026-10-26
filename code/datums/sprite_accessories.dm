@@ -2731,7 +2731,7 @@ MONKESTATION EDIT
 //cerulean species fish tails
 /datum/sprite_accessory/tails/fish/cerulean
 	name = "Cerulean"
-	icon = 'icons/mob/species/cerulean/cerulean_tails.dmi'
+	icon = 'icons/mob/human/species/cerulean/cerulean_tails.dmi'
 	icon_state = "default"
 	gender_specific = TRUE
 	locked = TRUE

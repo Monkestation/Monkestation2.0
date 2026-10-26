@@ -42,7 +42,7 @@
 
 /datum/looping_sound/boombox/robocop
 	mid_sounds = list(
-		'sound/ambience/music/elevator/robocop-short.ogg' = 1,
+		'sound/music/elevator/robocop-short.ogg' = 1,
 	)
 	mid_length = 61 SECONDS
 	volume = 20
