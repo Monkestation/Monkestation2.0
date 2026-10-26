@@ -128,7 +128,19 @@
 
 	return TRUE
 
-/client/MouseDown(datum/object, location, control, params)
+/client/MouseDown(atom/object, atom/location, control, params)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		__MouseDown(object, location, control, params)
+	else
+		// No reason to check here because we will do so later in the call chain, with more detail on who/what is being clicked on
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			__MouseDown(object, location, control, params)
+
+		VERB_TRACKER_FINISH(store_cost)
+
+/client/proc/__MouseDown(atom/object, atom/location, control, params)
 	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
@@ -145,7 +157,19 @@
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
-/client/MouseUp(object, location, control, params)
+/client/MouseUp(atom/object, atom/location, control, params)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		__MouseUp(object, location, control, params)
+	else
+		// No reason to check here because we will do so later in the call chain, with more detail on who/what is being clicked on
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			__MouseUp(object, location, control, params)
+
+		VERB_TRACKER_FINISH(store_cost)
+
+/client/proc/__MouseUp(atom/object, atom/location, control, params)
 	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
 		click_intercept_time = world.time
 	if(mouse_up_icon)
@@ -192,7 +216,20 @@
 /atom/movable/screen/click_catcher/IsAutoclickable()
 	return TRUE
 
-/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+/client/MouseDrag(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		__MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
+		. = ..()
+	else
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			__MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
+			. = ..()
+
+		VERB_TRACKER_FINISH(store_cost)
+
+/client/proc/__MouseDrag(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
 	var/list/modifiers = params2list(params)
 	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if (src_object && src_location != over_location)
@@ -213,20 +250,30 @@
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
-	return ..()
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
 
 /client/MouseDrop(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
+			middragtime = 0
+			middle_drag_atom_ref = null
+		..()
+		drag_start = 0
+		drag_details = null
+	else
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
+				middragtime = 0
+				middle_drag_atom_ref = null
+			..()
+			drag_start = 0
+			drag_details = null
 
-	if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
-		middragtime = 0
-		middle_drag_atom_ref = null
-	..()
-	drag_start = 0
-	drag_details = null
+		VERB_TRACKER_FINISH(store_cost)
 
 #undef LENIENCY_DISTANCE
 #undef LENIENCY_TIME

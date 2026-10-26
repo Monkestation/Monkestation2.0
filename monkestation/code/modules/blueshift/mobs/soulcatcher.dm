@@ -104,7 +104,7 @@ GAME_VERB(/mob/living/soulcatcher_soul, leave_soulcatcher, "Leave Soulcatcher", 
 	return_to_body()
 	qdel(src)
 
-/mob/living/soulcatcher_soul/ghost()
+/mob/living/soulcatcher_soul/ghost_yourself()
 	. = ..()
 	return_to_body()
 	qdel(src)
@@ -137,7 +137,7 @@ GAME_VERB(/mob/living/soulcatcher_soul, leave_soulcatcher, "Leave Soulcatcher", 
 	room.send_message(message, src, FALSE)
 	return TRUE
 
-/mob/living/soulcatcher_soul/me_verb(message as text|null)
+/mob/living/soulcatcher_soul/do_me_verb(message, queue_checked)
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return FALSE
@@ -154,7 +154,7 @@ GAME_VERB(/mob/living/soulcatcher_soul, leave_soulcatcher, "Leave Soulcatcher", 
 	return TRUE
 
 
-/mob/living/soulcatcher_soul/whisper_verb()
+/mob/living/soulcatcher_soul/do_whisper_verb(message, queue_checked)
 	return FALSE
 
 /mob/living/soulcatcher_soul/resist()

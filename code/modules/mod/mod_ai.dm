@@ -48,7 +48,7 @@
 	new_ai.control_disabled = FALSE
 	new_ai.radio_enabled = TRUE
 	new_ai.ai_restore_power()
-	new_ai.cancel_camera()
+	new_ai.actually_cancel_camera()
 	new_ai.controlled_equipment = src
 	new_ai.remote_control = src
 	new_ai.forceMove(src)
