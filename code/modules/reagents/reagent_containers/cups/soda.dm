@@ -22,6 +22,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
 	. = ..()
+	AddElement(/datum/element/trash_if_empty/reagent_container/if_prefilled)
 	AddComponent(/datum/component/edible, \
 		initial_reagents = list(/datum/reagent/iron = 20), \
 		foodtypes = JUNKFOOD, \

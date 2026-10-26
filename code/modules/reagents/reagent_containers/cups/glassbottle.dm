@@ -40,6 +40,10 @@
 	// Should the bottle still break when thrown by a bartender
 	var/override_bartender_throw = FALSE
 
+/obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
+	. = ..()
+	AddElement(/datum/element/trash_if_empty/reagent_container/if_prefilled)
+
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."

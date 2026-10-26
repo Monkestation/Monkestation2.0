@@ -61,6 +61,6 @@
 
 /datum/element/trash_if_empty/reagent_container/if_prefilled/is_empty_or_trash(datum/reagents/source)
 	var/obj/item/reagent_containers/container = source?.my_atom
-	if(!container.list_reagents)
+	if(!length(container.list_reagents))
 		return FALSE
 	return ..()
