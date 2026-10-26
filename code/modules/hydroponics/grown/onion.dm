@@ -12,7 +12,7 @@
 	endurance = 25
 	growthstages = 3
 	weed_chance = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.25)
 	possible_mutations = list(/datum/hydroponics/plant_mutation/red_onion)
 	harvest_age = 80

@@ -43,7 +43,7 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "glasses")
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "glasses")
 	flick_overlay_global(user.apply_height_offsets(emote_animation, UPPER_BODY), GLOB.clients, 1.6 SECONDS)
 
 /datum/emote/living/carbon/human/grumble
@@ -131,7 +131,7 @@ monkestation edit end */
 	message_param = "salutes to %t."
 	hands_use_check = TRUE
 	muzzle_ignore = TRUE
-	sound = 'sound/creatures/salute.ogg'
+	sound = 'sound/mobs/humanoids/human/salute/salute.ogg'
 	cooldown = 1 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 

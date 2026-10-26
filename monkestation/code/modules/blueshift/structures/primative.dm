@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
 		return ..()
-	playsound(src, 'sound/effects/picaxe1.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/pickaxe/picaxe1.ogg', 50, TRUE)
 	balloon_alert_to_viewers("cutting...")
 	if(!do_after(user, 5 SECONDS, target = src))
 		balloon_alert_to_viewers("stopped cutting")
@@ -736,7 +736,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	uses_advanced_reskins = TRUE
 	unique_reskin = list(
 		"Original" = list(
-			RESKIN_ICON = 'icons/obj/hydroponics/equipment.dmi',
+			RESKIN_ICON = 'icons/obj/service/hydroponics/equipment.dmi',
 			RESKIN_ICON_STATE = "plantbag",
 			RESKIN_WORN_ICON = 'icons/mob/clothing/belt.dmi',
 			RESKIN_WORN_ICON_STATE = "plantbag",
@@ -2186,7 +2186,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			minimum_target_temperature = 25
 			forge_level = FORGE_LEVEL_MASTER
 
-	playsound(src, 'sound/weapons/parry.ogg', 50, TRUE) // Play a feedback sound to really let players know we just did an upgrade
+	playsound(src, 'sound/items/weapons/parry.ogg', 50, TRUE) // Play a feedback sound to really let players know we just did an upgrade
 
 //this will allow click dragging certain items
 /obj/structure/reagent_forge/mouse_drop_receive(mob/living/dropped, mob/user, params)
