@@ -337,4 +337,4 @@
 	user.heal_ordered_damage(heal_amount, damage_heal_order)
 	user.visible_message(span_notice("[user] suddenly revives, as [user.p_their()] armor swirls with demonic energy!"), span_notice("You suddenly feel invigorated!"))
 	user.log_message("was resurrected by godslayer armor", LOG_ATTACK)
-	playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
+	playsound(user.loc, 'sound/effects/magic/clockwork/ratvar_attack.ogg', 50)

@@ -11,7 +11,7 @@
 /datum/action/changeling/teratoma/sting_action(mob/living/user)
 	..()
 	if(create_teratoma(user))
-		playsound(user.loc, 'sound/effects/blobattack.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/blob/blobattack.ogg', 50, 1)
 		user.spawn_gibs()
 		user.visible_message(span_danger("Something horrible bursts out of [user]'s chest!"), \
 								span_danger("A living teratoma bursts out of your chest!"), \
@@ -52,5 +52,5 @@
 	goober_mind.transfer_to(goober)
 	goober_mind.add_antag_datum(/datum/antagonist/teratoma)
 	to_chat(goober, span_notice("You burst out from [user]'s chest!"))
-	SEND_SOUND(goober, sound('sound/effects/blobattack.ogg'))
+	SEND_SOUND(goober, sound('sound/effects/blob/blobattack.ogg'))
 	return TRUE

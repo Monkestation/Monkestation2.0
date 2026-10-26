@@ -10,7 +10,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	ui_name = "AntagInfoDarkspawn"
 	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_moodlet = /datum/mood_event/sling
-	stinger_sound = 'sound/ambience/antag/darkspawn/darkspawn.ogg'
+	stinger_sound = 'sound/music/antag/darkspawn/darkspawn.ogg'
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
 	antag_count_points = 20
 
@@ -324,7 +324,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 				deadguy.revive(TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 				revive_notice = FALSE
 				deadguy.visible_message(span_progenitor("[deadguy]'s sigils flare brightly as they are once again in the realm of the living!"), span_progenitor("You rise once more!"))
-				playsound(deadguy, 'sound/magic/darkspawn/demented_outburst_scream.ogg', 40, FALSE)
+				playsound(deadguy, 'sound/effects/magic/darkspawn/demented_outburst_scream.ogg', 40, FALSE)
 		else if(revive_notice)
 			revive_notice = FALSE
 			deadguy.visible_message(span_notice("[deadguy]'s body stills."), span_velvet("Your body stills once more."))
@@ -458,7 +458,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	if(owner.current.stat == DEAD)
 		return
 	to_chat(owner.current, span_userdanger("You feel the skin you're wearing crackling like paper - you will forcefully divulge soon! Get somewhere hidden and dark!"))
-	owner.current.playsound_local(owner.current, 'sound/magic/darkspawn/divulge_01.ogg', 50, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(owner.current, 'sound/effects/magic/darkspawn/divulge_01.ogg', 50, FALSE, pressure_affected = FALSE)
 	addtimer(CALLBACK(src, PROC_REF(force_divulge)), 5 MINUTES)
 
 /datum/antagonist/darkspawn/proc/force_divulge()
@@ -474,7 +474,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		owner.current.gib(TRUE)
 	H.visible_message(span_boldwarning("[H]'s skin begins to slough off in sheets!"), \
 	span_userdanger("You can't maintain your disguise any more! It begins sloughing off!"))
-	playsound(H, 'sound/creatures/darkspawn/darkspawn_force_divulge.ogg', 50, FALSE)
+	playsound(H, 'sound/mobs/non-humanoids/darkspawn/darkspawn_force_divulge.ogg', 50, FALSE)
 	H.do_jitter_animation(1000)
 	var/processed_message = span_progenitor("\[Mindlink\] [H.real_name] has not divulged in time and is now forcefully divulging.")
 	for(var/mob/M in GLOB.player_list)
@@ -581,8 +581,8 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	if(picked_class) //should bring back all powers, might be something i'm overlooking
 		picked_class.refresh_powers()
 
-	playsound(returner, 'sound/magic/darkspawn/divulge_end.ogg', 50, 0)
-	playsound(returner, 'sound/creatures/darkspawn/darkspawn_death.ogg', 50, 0)
+	playsound(returner, 'sound/effects/magic/darkspawn/divulge_end.ogg', 50, 0)
+	playsound(returner, 'sound/mobs/non-humanoids/darkspawn/darkspawn_death.ogg', 50, 0)
 
 	var/processed_message = span_progenitor("<b>\[Mindlink\] [returner] has reformed their body.</b>")
 	for(var/T in GLOB.alive_mob_list)
@@ -605,12 +605,12 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 //-------------------------------Preview icon-------------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////
 /datum/antagonist/darkspawn/get_preview_icon()
-	var/icon/darkspawn_icon = icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_head")
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_chest"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_r_arm"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_l_arm"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_r_leg"), ICON_OVERLAY)
-	darkspawn_icon.Blend(icon('icons/mob//species/human/bodyparts.dmi', "darkspawn_l_leg"), ICON_OVERLAY)
+	var/icon/darkspawn_icon = icon('icons/mob/human/bodyparts.dmi', "darkspawn_head")
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_chest"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_r_arm"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_l_arm"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_r_leg"), ICON_OVERLAY)
+	darkspawn_icon.Blend(icon('icons/mob/human/bodyparts.dmi', "darkspawn_l_leg"), ICON_OVERLAY)
 
 	var/class_color = COLOR_STRONG_VIOLET
 	var/class_icon = "classless"

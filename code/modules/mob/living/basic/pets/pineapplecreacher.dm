@@ -22,7 +22,7 @@
 	melee_damage_upper = 3
 	attack_verb_continuous = "bludgeons"
 	attack_verb_simple = "bludgeon"
-	attack_sound = 'sound/weapons/smash.ogg'
+	attack_sound = 'sound/items/weapons/smash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SMASH
 	ai_controller = /datum/ai_controller/basic_controller/pcreacher
 

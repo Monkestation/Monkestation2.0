@@ -156,7 +156,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
-	hitsound = 'sound/weapons/moonblade_hit.ogg'
+	hitsound = 'sound/items/weapons/moonblade_hit.ogg'
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/Initialize(mapload)
 	. = ..()
@@ -219,7 +219,7 @@
 	if(!isliving(target))
 		return FALSE
 	var/mob/living/living_target = target
-	playsound(user, 'sound/weapons/moonblade_hit.ogg', vol = 200, vary = TRUE, extrarange = -1) // this sound is REALLY quiet, even after amplifying it...
+	playsound(user, 'sound/items/weapons/moonblade_hit.ogg', vol = 200, vary = TRUE, extrarange = -1) // this sound is REALLY quiet, even after amplifying it...
 	if(!ishuman(target))
 		living_target.adjustFireLoss(30)
 		return TRUE

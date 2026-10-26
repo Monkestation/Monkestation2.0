@@ -220,7 +220,7 @@
 				return
 
 			if(!HAS_TRAIT(card_holder, TRAIT_DEAF))
-				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(card.loc)) //If on the ground
 			var/turf/card_location = card.loc
@@ -228,7 +228,7 @@
 				if(!potential_hearer.client || (!(potential_hearer.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 					continue
 				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
-					potential_hearer.playsound_local(card_location, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+					potential_hearer.playsound_local(card_location, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 		else
 			var/atom/sound_atom
@@ -238,7 +238,7 @@
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
-					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 
 /**

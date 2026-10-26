@@ -1267,7 +1267,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					target.Knockdown(200)
 				else
 					target.Knockdown(50)
-				playsound(get_turf(target), 'sound/effects/glassbr1.ogg')
+				playsound(get_turf(target), 'sound/effects/glass/glassbr1.ogg')
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
