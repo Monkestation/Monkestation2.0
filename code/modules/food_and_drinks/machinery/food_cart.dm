@@ -86,7 +86,7 @@
 		return
 	var/obj/item/card/id/id_card = user.get_idcard(hand_first = TRUE)
 	if(!check_access(id_card))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	to_chat(user, span_notice("You attempt to [unpacked ? "pack up" :"unpack"] [src]..."))
 	if(!do_after(user, 5 SECONDS, src))
@@ -134,7 +134,7 @@
 /obj/effect/food_cart_stand
 	name = "food cart tent"
 	desc = "Something to battle the sun, for there are no breaks for the burger flippers."
-	icon = 'icons/obj/3x3.dmi'
+	icon = 'icons/obj/fluff/3x3.dmi'
 	icon_state = "stand"
 	layer = ABOVE_MOB_LAYER//big mobs will still go over the tent, this is fine and cool
 	plane = GAME_PLANE_UPPER

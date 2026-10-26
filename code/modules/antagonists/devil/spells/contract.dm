@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/devil/contract
 	name = "Summon devilish contract"
 	desc = "Summons an infernal contract."
-	sound = 'sound/magic/fireball.ogg'
+	sound = 'sound/effects/magic/fireball.ogg'
 	school = SCHOOL_CONJURATION
 	cooldown_time = 10 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED

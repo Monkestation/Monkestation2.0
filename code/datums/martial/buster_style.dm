@@ -408,14 +408,14 @@ GAME_VERB_PROC_DESC(/mob/living/carbon/human, buster_style_help, "Buster Style",
 		if(limb_to_hit)
 			if(!(limb_to_hit.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)) && limb_to_hit.get_damage() >= limb_to_hit.max_damage)
 				limb_to_hit.drop_limb()
-				playsound(user,	'sound/misc/desecration-01.ogg', 20, 1)
+				playsound(user,	'sound/effects/desecration/desecration-01.ogg', 20, 1)
 				tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [limb_to_hit], severing it from [tossedliving.p_them()]!"), \
 					span_userdanger("[user] tears [limb_to_hit] off!"))
 				// user.put_in_hands(limb_to_hit)
 			else if(limb_to_hit.body_zone == BODY_ZONE_CHEST && limb_to_hit.get_damage() >= (limb_to_hit.max_damage * 0.8)) //targetting the chest works for tail removal too but who cares
 				var/obj/item/organ/tail = tossedliving.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 				if(tail)
-					playsound(user, 'sound/misc/desecration-02.ogg', 20, 1)
+					playsound(user, 'sound/effects/desecration/desecration-02.ogg', 20, 1)
 					tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [tossedliving.p_their()] tail, severing it from [tossedliving.p_them()]!"), \
 						span_userdanger("[user] tears your tail off!")) //"I'm taking this back."
 					tail.Remove(tossedliving)
@@ -478,7 +478,7 @@ GAME_VERB_PROC_DESC(/mob/living/carbon/human, buster_style_help, "Buster Style",
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
 
 	if(impacted)
-		playsound(source, 'sound/weapons/punch1.ogg', 50, TRUE)
+		playsound(source, 'sound/items/weapons/punch1.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/touch/buster/grapple/proc/loop_qdeleted(datum/move_loop/source)
 	SIGNAL_HANDLER
@@ -516,7 +516,7 @@ GAME_VERB_PROC_DESC(/mob/living/carbon/human, buster_style_help, "Buster Style",
 	inhand_icon_state = "greyscale"
 
 /obj/item/melee/touch_attack/buster_grapple/ignition_effect(atom/A, mob/user)
-	playsound(user,'sound/misc/fingersnap2.ogg', 20, 1)
+	playsound(user,'sound/mobs/humanoids/human/snap/fingersnap2.ogg', 20, 1)
 	playsound(user,'sound/effects/sparks4.ogg', 20, 1)
 	do_sparks(5, TRUE, src)
 	. = span_rose("With a single snap, [user] sets [A] alight with sparks from [user.p_their()] metal fingers.")

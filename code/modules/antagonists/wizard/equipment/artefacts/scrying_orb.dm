@@ -8,7 +8,7 @@
 	throwforce = 15
 	damtype = BURN
 	force = 15
-	hitsound = 'sound/items/welder2.ogg'
+	hitsound = 'sound/items/tools/welder2.ogg'
 
 	var/mob/current_owner
 
