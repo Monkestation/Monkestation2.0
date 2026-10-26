@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { chatRenderer } from '../chat/renderer';
 import { FONTS_DISABLED } from './constants';
 import { setClientTheme } from './themes';
 import type { SettingsState } from './types';
@@ -71,4 +72,6 @@ export function generalSettingsHandler(update: SettingsState): void {
   setGlobalFontSize(update.fontSize, update.statFontSize, update.statLinked);
   setGlobalFontFamily(update.fontFamily);
   updateGlobalOverrideRule();
+
+  chatRenderer.setColoredNames(update.coloredNames);
 }

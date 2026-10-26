@@ -37,13 +37,13 @@ name = "Miscellaneous"
 
 [misc.squeaky]
 name = "Squeaky"
-path = "sound/items/toysqueak1.ogg"
+path = "sound/items/toy_squeak/toysqueak1.ogg"
 max_speed = 4
 hidden = true
 
 [misc.beep]
 name = "Beep"
-path = "sound/machines/terminal_select.ogg"
+path = "sound/machines/terminal/terminal_select.ogg"
 max_pitch = 0.7                             #Bringing the pitch higher just hurts your ears :<
 max_speed = 4                               #This soundbyte's too short for larger speeds to not sound awkward
 volume = 0.1
@@ -55,13 +55,13 @@ volume = 0.1
 
 [misc.synthetic_normal]
 name = "Synthetic (Normal)"
-path = "sound/machines/uplinkerror.ogg"
+path = "sound/machines/uplink/uplinkerror.ogg"
 max_speed = 4
 hidden = true
 
 [misc.windy]
 name = "Windy"
-path = "sound/weapons/bulletflyby.ogg"
+path = "sound/items/weapons/bulletflyby.ogg"
 max_pitch = 1.6
 hidden = true
 
@@ -344,5 +344,5 @@ min_pitch = 0.6
 # /datum/bark/honk
 # 	name = "Annoying Honk"
 # 	id = "honk"
-# 	soundpath = 'sound/creatures/goose1.ogg'
+# 	soundpath = 'sound/mobs/non-humanoids/goose/goose1.ogg'
 # 	ignore = TRUE

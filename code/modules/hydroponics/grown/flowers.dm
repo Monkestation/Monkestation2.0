@@ -11,7 +11,7 @@
 	yield = 60
 	potency = 20
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	genes = list(/datum/plant_gene/trait/preserved)
@@ -42,7 +42,7 @@
 	species = "lily"
 	plantname = "Lily Plants"
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	icon_harvest = null
@@ -76,7 +76,7 @@
 	growthstages = 4
 	weed_rate = 2
 	weed_chance = 10
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
 	possible_mutations = list()
@@ -151,7 +151,7 @@
 	potency = 30
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
@@ -178,7 +178,7 @@
 	production = 2
 	yield = 20
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/moon_flower, /datum/hydroponics/plant_mutation/nova_flower)
@@ -281,7 +281,7 @@
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/rose_thorns, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "rose-grow"
 	icon_dead = "rose-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/rose_carbon)
@@ -324,7 +324,7 @@
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/reagent/preset/carbon, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "carbonrose-grow"
 	icon_dead = "carbonrose-dead"
 	reagents_add = list(/datum/reagent/plastic_polymers = 0.05)
@@ -356,7 +356,7 @@
 	potency = 20
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "fleshmass-grow"
 	icon_dead = "fleshmass-dead"
 	reagents_add = list(/datum/reagent/medicine/c2/synthflesh/biocellulose = 0.15, /datum/reagent/blood = 0.07)
@@ -371,5 +371,5 @@
 /obj/item/food/grown/fleshmass/attack_self(mob/user, modifiers)
 	var/resultsheets = round(max(1, qp_sigmoid(5, 10, seed.potency)))
 	new /obj/item/stack/sheet/fleshmass(drop_location(), resultsheets)
-	playsound(src, 'sound/effects/blobattack.ogg', 30, TRUE)
+	playsound(src, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 	qdel(src)

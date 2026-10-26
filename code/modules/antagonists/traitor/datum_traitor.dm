@@ -17,7 +17,7 @@
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
+	stinger_sound = 'sound/music/antag/traitor/tatoralert.ogg'
 	antag_count_points = 8 //gains more points the more objectives they complete, should also add this to things like heretics
 	var/give_objectives = TRUE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
@@ -342,7 +342,7 @@
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
 		if((used_telecrystals == 0) && traitor_won)
-			var/static/icon/badass = icon('icons/ui_icons/antags/badass.dmi', "badass")
+			var/static/icon/badass = icon('icons/ui/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
 
@@ -368,7 +368,7 @@
 		result += span_greentext("The [special_role_text] was successful!")
 	else
 		result += span_redtext("The [special_role_text] has failed!")
-		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	return result.Join("<br>")
 

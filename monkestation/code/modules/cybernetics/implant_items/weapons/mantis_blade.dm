@@ -6,7 +6,7 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/items_and_weapons.dmi'
 	lefthand_file = 'monkestation/code/modules/cybernetics/icons/swords_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/cybernetics/icons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	flags_1 = CONDUCT_1
 	force = 12
 	wound_bonus = 20

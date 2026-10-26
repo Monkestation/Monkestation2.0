@@ -9,7 +9,7 @@
 	maturation = 8
 	potency = 20
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
 	possible_mutations = list(/datum/hydroponics/plant_mutation/snap_corn)

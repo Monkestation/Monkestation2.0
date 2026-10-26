@@ -1,7 +1,7 @@
 #define MAXIMUM_TARGET_TRACKING 2
 /datum/ai_project/advanced_tracking
 	name = "Advanced Tracking"
-	description = "Sets aside processing power to asychronously track multiple targets at once off the central view. Requires Human Examination to research."
+	description = "Sets aside processing power to asynchronously track multiple targets at once off the central view. Requires Human Examination to research."
 	research_cost = 2500
 	ram_required = 4
 	research_requirements = list(/datum/ai_project/examine_humans)

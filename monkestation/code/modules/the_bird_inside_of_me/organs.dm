@@ -41,7 +41,7 @@
 
 	unusual_description = "melody"
 	duration = 2.5 SECONDS
-	burst_amount = 2
+	burst_amount = 3
 	spawn_interval = 0.75 SECONDS
 	offsets = FALSE
 

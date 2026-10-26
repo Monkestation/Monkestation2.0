@@ -597,7 +597,7 @@
 
 /turf/closed/mineral/titanium
 	mineralType = /obj/item/stack/ore/titanium
-	scan_state = "rock_Titanium"
+	scan_state = "rock_titanium"
 
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma
@@ -725,7 +725,7 @@
 
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
-	scan_state = "rock_Gibtonite"
+	scan_state = "rock_gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes

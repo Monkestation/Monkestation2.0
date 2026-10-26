@@ -5,8 +5,8 @@
 /datum/action/cooldown/slime_washing
 	name = "Toggle Slime Cleaning"
 	desc = "Filter grime through your outer membrane, cleaning yourself and your equipment for sustenance. Also cleans the floor, providing your feet are uncovered. For sustenance."
-	button_icon = 'icons/mob/actions/actions_silicon.dmi'
-	button_icon_state = "activate_wash"
+	button_icon = SLIME_ACTIONS_ICON_FILE
+	button_icon_state = "slime_washing"
 	cooldown_time = 1 SECONDS
 
 /datum/action/cooldown/slime_washing/Remove(mob/living/remove_from)
@@ -76,7 +76,7 @@
 /datum/action/innate/core_signal
 	name = "Toggle Core Signal"
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "alter_form"
+	button_icon_state = "core_signal"
 	button_icon = SLIME_ACTIONS_ICON_FILE
 	background_icon_state = "bg_alien"
 

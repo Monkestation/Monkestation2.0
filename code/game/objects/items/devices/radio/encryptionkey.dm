@@ -260,7 +260,7 @@
 /obj/item/encryptionkey/headset_cent/crew/proc/toggle_off()
 	independent = FALSE
 	channels = null
-	playsound(src, 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 25, TRUE)
 	do_sparks(2, FALSE, src)
 	if(istype(src.loc, /obj/item/radio))
 		var/obj/item/radio/our_radio  = src.loc
@@ -269,7 +269,7 @@
 /obj/item/encryptionkey/headset_cent/crew/proc/toggle_on()
 	independent = TRUE
 	channels = list(RADIO_CHANNEL_CENTCOM = 1)
-	playsound(src, 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 25, TRUE)
 	do_sparks(2, FALSE, src)
 	if(istype(src.loc, /obj/item/radio))
 		var/obj/item/radio/our_radio = src.loc

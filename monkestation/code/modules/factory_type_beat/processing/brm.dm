@@ -285,7 +285,7 @@
 	//no more boulders
 	if(!length(SSore_generation.available_boulders))
 		if(feedback)
-			playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+			playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 			balloon_alert_to_viewers("no boulders to collect!")
 		batch_processing = FALSE
 		return FALSE

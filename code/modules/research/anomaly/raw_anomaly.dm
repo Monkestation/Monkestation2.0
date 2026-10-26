@@ -19,53 +19,62 @@
 	name = "raw bluespace core"
 	desc = "The raw core of a bluespace anomaly, glowing and full of potential."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/bluespace
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_bluespace"
 
 /obj/item/raw_anomaly_core/vortex
 	name = "raw vortex core"
 	desc = "The raw core of a vortex anomaly. Feels heavy to the touch."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/vortex
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_vortex"
 
 /obj/item/raw_anomaly_core/grav
 	name = "raw gravity core"
 	desc = "The raw core of a gravity anomaly. The air seems attracted to it."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/grav
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_grav"
 
 /obj/item/raw_anomaly_core/pyro
 	desc = "The raw core of a pyro anomaly. It is warm to the touch."
 	name = "raw pyro core"
 	anomaly_type = /obj/item/assembly/signaler/anomaly/pyro
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_pyro"
 
 /obj/item/raw_anomaly_core/flux
 	name = "raw flux core"
 	desc = "The raw core of a flux anomaly, faintly crackling with energy."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/flux
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_flux"
 
 /obj/item/raw_anomaly_core/hallucination
 	name = "raw hallucination core"
 	desc = "The raw core of a hallucination anomaly, makes your head spin."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/hallucination
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_hallucination"
 
 /obj/item/raw_anomaly_core/random
 	name = "random raw core"
 	desc = "You should not see this!"
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_bluespace"
 
 /obj/item/raw_anomaly_core/bioscrambler
 	name = "raw bioscrambler core"
 	desc = "The raw core of a bioscrambler anomaly, it squirms."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/bioscrambler
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_bioscrambler"
 
 /obj/item/raw_anomaly_core/dimensional
 	name = "raw dimensional core"
 	desc = "The raw core of a dimensional anomaly, vibrating with infinite potential."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/dimensional
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_dimensional"
 
 /obj/item/raw_anomaly_core/ectoplasm //Has no cargo order option, but can sometimes be a roundstart pick
@@ -99,5 +108,5 @@
 /obj/item/inert_anomaly
 	name = "inert anomaly core"
 	desc = "A chunk of fused exotic materials. Useless to you, but some other lab might purchase it."
-	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "rawcore_inert"

@@ -149,17 +149,17 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = TRUE
 		icon_state = "crateopen"
-		playsound(src, 'sound/machines/crate_open.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/crate/crate_open.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in src)
 			movable.forceMove(loc)
 	else
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
 		icon_state = "crate"
-		playsound(src, 'sound/machines/crate_close.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/crate/crate_close.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in get_turf(src))
 			if(movable != src && insert(movable) == CANT_INSERT_FULL)
-				playsound(src, 'sound/items/trayhit2.ogg', 50, TRUE)
+				playsound(src, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 				break
 
 /**

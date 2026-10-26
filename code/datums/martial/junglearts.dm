@@ -32,7 +32,7 @@
 			)
 			to_chat(attacker, span_danger("You latch your tail to [defender], [atk_verb] them to the ground!"))
 			defender.apply_damage(rand(5, 10), attacker.get_attack_type())
-			playsound(attacker, 'sound/weapons/whip.ogg', 50, TRUE, -1)
+			playsound(attacker, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 			defender.Knockdown(2 SECONDS)
 
 		if(6)
@@ -51,7 +51,7 @@
 			)
 			to_chat(attacker, span_danger("In one motion, you [atk_verb] [defender] quickly!"))
 			defender.apply_damage(rand(10, 15), attacker.get_attack_type())
-			playsound(attacker, 'sound/weapons/whip.ogg', 50, TRUE, -1)
+			playsound(attacker, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 			defender.drop_all_held_items()
 
 		else
@@ -69,7 +69,7 @@
 			)
 			to_chat(attacker, span_danger("You [atk_verb] [defender] with vicious force!"))
 			defender.apply_damage(rand(10, 20), damagetype = BRUTE, sharpness = SHARP_POINTY, wound_bonus = 50)
-			playsound(attacker, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+			playsound(attacker, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 
 	if(atk_verb)
 		log_combat(attacker, defender, "[atk_verb] (Jungle Arts)")

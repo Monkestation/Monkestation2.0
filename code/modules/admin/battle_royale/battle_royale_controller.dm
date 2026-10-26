@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		return
 
 	storm_controller.setup()
-	sound_to_playing_players('sound/misc/airraid.ogg', 100, FALSE)
+	sound_to_playing_players('sound/announcer/alarm/airraid.ogg', 100, FALSE)
 	send_to_playing_players(span_boldannounce("A 1 minute grace period has been established. Good luck."))
 	send_to_playing_players(span_boldannounce("WARNING: YOU WILL BE GIBBED IF YOU LEAVE THE STATION Z-LEVEL!"))
 	send_to_playing_players(span_boldannounce("[length(players)] people remain..."))

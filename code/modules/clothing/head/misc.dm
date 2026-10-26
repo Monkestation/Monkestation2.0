@@ -34,10 +34,10 @@
 	alternative_screams = list('sound/misc/cheekibreeki.ogg', 'sound/misc/cyka1.ogg')
 
 /obj/item/clothing/head/cardborg
-	alternative_screams = list('sound/voice/screams/silicon/scream_silicon.ogg')
+	alternative_screams = list('sound/mobs/non-humanoids/cyborg/scream/scream_silicon.ogg')
 
 /obj/item/clothing/head/kitty
-	alternative_screams = list('sound/voice/screams/felinid/scream_cat.ogg')
+	alternative_screams = list('sound/mobs/humanoids/felinid/scream_cat.ogg')
 
 /obj/item/clothing/head/foilhat
 	alternative_screams = list(	'sound/misc/jones/jones0.ogg',

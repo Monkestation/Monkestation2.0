@@ -146,9 +146,9 @@
 		if(!turfs_to_collapse[iterator])
 			continue
 		for(var/i in 1 to (lowpop ? 1 : 2)) //if lowpop then only do one collapse per ring, otherwise do two
-			addtimer(CALLBACK(pick_n_take(turfs_to_collapse[iterator]), TYPE_PROC_REF(/turf, structural_collapse), 6 SECONDS, list(0, 0, 3), list('sound/effects/creak1.ogg', \
-																																					'sound/effects/creak2.ogg', \
-																																					'sound/effects/creak3.ogg'), FALSE), \
+			addtimer(CALLBACK(pick_n_take(turfs_to_collapse[iterator]), TYPE_PROC_REF(/turf, structural_collapse), 6 SECONDS, list(0, 0, 3), list('sound/effects/creak/creak1.ogg', \
+																																					'sound/effects/creak/creak2.ogg', \
+																																					'sound/effects/creak/creak3.ogg'), FALSE), \
 					2 SECONDS * iterator)
 //monkestation edit end
 	priority_announce(
@@ -161,7 +161,7 @@
 /obj/item/weakpoint_locator
 	name = "structural weakpoint locator"
 	desc = "A device that can triangulate station's structural weakpoint. It has to be used in %AREA1% and %AREA2% in order to triangulate the weakpoint. Warning: station's AI will be notified as soon as the process starts!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "weakpoint_locator"
 	inhand_icon_state = "weakpoint_locator"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -204,22 +204,22 @@
 	var/area/user_area = get_area(user)
 	if(!(user_area.type in objective.scan_areas))
 		balloon_alert(user, "invalid area!")
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	if(!objective.scan_areas[user_area.type])
 		balloon_alert(user, "already scanned here!")
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	user.visible_message(span_danger("[user] presses a few buttons on [src] and it starts ominously beeping!"), span_notice("You activate [src] and start scanning the area. Do not exit [get_area_name(user, TRUE)] until the scan finishes!"))
-	playsound(user, 'sound/machines/triple_beep.ogg', 30, TRUE)
+	playsound(user, 'sound/machines/beep/triple_beep.ogg', 30, TRUE)
 	var/alertstr = span_userdanger("Network Alert: Station network probing attempt detected[user_area?" in [get_area_name(user, TRUE)]":". Unable to pinpoint location"].")
 	for(var/mob/living/silicon/ai/ai_player in GLOB.player_list)
 		to_chat(ai_player, alertstr)
 
 	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, PROC_REF(scan_checks), user, user_area, objective), hidden = TRUE))
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	playsound(user, 'sound/machines/ding.ogg', 100, TRUE)

@@ -69,7 +69,7 @@
 	if(occupant && infusing_from)
 		// Abort infusion if the occupant is invalid.
 		if(!is_valid_occupant(occupant, user))
-			playsound(src, 'sound/machines/scanbuzz.ogg', 35, vary = TRUE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 35, vary = TRUE)
 			return
 		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()

@@ -56,7 +56,7 @@
 	if(!do_after(user, repacking_time, target = source))
 		return
 
-	playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)
+	playsound(source, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 
 	var/obj/machinery/rnd/production/omnilathe/omnilathe = source
 	if(istype(omnilathe))

@@ -587,9 +587,9 @@
 	throw_range = 7
 	resistance_flags = null
 
-	hitsound = 'sound/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 
 /obj/item/storage/fancy/a40mm_box/Initialize(mapload)
 	. = ..()

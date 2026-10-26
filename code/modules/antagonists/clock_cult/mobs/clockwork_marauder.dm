@@ -16,7 +16,7 @@
 	melee_damage_upper = 24
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	istate = ISTATE_HARM
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_LARGE
@@ -67,7 +67,7 @@
 /mob/living/basic/clockwork_marauder/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(shield_health && attacking_item.force > 0)
 		damage_shield()
-		playsound(src, 'sound/hallucinations/veryfar_noise.ogg', 40, 1)
+		playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg', 40, 1)
 		return
 
 	if(attacking_item == TOOL_WELDER)
@@ -86,7 +86,7 @@
 /// Damage the marauder's shield by one tick
 /mob/living/basic/clockwork_marauder/proc/damage_shield()
 	shield_health--
-	playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 60, TRUE)
+	playsound(src, 'sound/effects/magic/clockwork/anima_fragment_attack.ogg', 60, TRUE)
 	if(!shield_health)
 		to_chat(src, span_userdanger("Your shield breaks!"))
 		to_chat(src, span_brass("You require a <b>welding tool</b> to repair your damaged shield!"))
@@ -99,7 +99,7 @@
 	to_chat(user, span_notice("You repair some of [src]'s damage."))
 	if(shield_health < MARAUDER_SHIELD_MAX)
 		shield_health++
-		playsound(src, 'sound/magic/charge.ogg', 60, TRUE)
+		playsound(src, 'sound/effects/magic/charge.ogg', 60, TRUE)
 	return TRUE
 
 /datum/language_holder/clockmob

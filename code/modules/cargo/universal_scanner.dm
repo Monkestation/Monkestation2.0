@@ -3,7 +3,7 @@
 /obj/item/universal_scanner
 	name = "universal scanner"
 	desc = "A device used to check objects against Nanotrasen exports database, assign price tags, or ready an item for a custom vending machine."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "export scanner"
 	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -204,7 +204,7 @@
 		to_chat(user, span_notice(message))
 
 	if(price)
-		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_select.ogg', 50, vary = TRUE)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user

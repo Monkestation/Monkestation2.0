@@ -1,7 +1,7 @@
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -117,10 +117,10 @@
 
 		if(new_brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED)) // Brain is from a suicider.
 			to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [new_brain] again."))
-			playsound(src, 'sound/machines/triple_beep.ogg', 5, TRUE)
+			playsound(src, 'sound/machines/beep/triple_beep.ogg', 5, TRUE)
 		else if(new_brain.organ_flags & ORGAN_FAILING) // The brain organ completely failed.
 			to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [new_brain] for damage."))
-			playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
+			playsound(src, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
 		else // Good to use!
 			brainmob.set_stat(CONSCIOUS) // We manually revive the brain mob.
 

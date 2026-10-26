@@ -152,8 +152,8 @@
 	if(!can_pay_cost(blood_cost))
 		owner.balloon_alert(owner, "not enough blood!")
 		return
-	playsound(user, 'sound/magic/summon_karp.ogg', 60)
-	playsound(targeted_turf, 'sound/magic/summon_karp.ogg', 60)
+	playsound(user, 'sound/effects/magic/summon_karp.ogg', 60)
+	playsound(targeted_turf, 'sound/effects/magic/summon_karp.ogg', 60)
 
 	new /obj/effect/particle_effect/fluid/smoke/vampsmoke(user.drop_location())
 	new /obj/effect/particle_effect/fluid/smoke/vampsmoke(targeted_turf)

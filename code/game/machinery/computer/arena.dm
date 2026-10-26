@@ -59,7 +59,7 @@
 	var/list/countdowns = list() //List of countdown effects ticking down to start
 
 	//Sound played when the fight starts.
-	var/start_sound = 'sound/items/airhorn2.ogg'
+	var/start_sound = 'sound/items/airhorn/airhorn2.ogg'
 	var/start_sound_volume = 50
 
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
@@ -362,7 +362,7 @@
 /// Arena spawnpoint
 /obj/machinery/arena_spawn
 	name = "Arena Spawnpoint"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	resistance_flags = INDESTRUCTIBLE
 	/// In case we have multiple arena controllers at once.

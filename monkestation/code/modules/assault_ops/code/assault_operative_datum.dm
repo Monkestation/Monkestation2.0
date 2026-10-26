@@ -40,7 +40,7 @@
 /datum/antagonist/assault_operative/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/target = mob_override || owner.current
 	monitor = target.AddComponent(/datum/component/team_monitor, "goldeneye_key")
-	for(var/obj/item/goldeneye_key/keycard as anything in SSgoldeneye.goldeneye_keys)
+	for(var/obj/item/goldeneye_key/keycard as anything in GLOB.goldeneye.goldeneye_keys)
 		if(QDELETED(keycard))
 			continue
 		monitor.add_to_tracking_network(keycard.beacon)
@@ -91,7 +91,7 @@
 // UI systems
 /datum/antagonist/assault_operative/ui_data(mob/user)
 	return list(
-		"uploaded_keys" = SSgoldeneye.uploaded_keys,
+		"uploaded_keys" = GLOB.goldeneye.uploaded_keys,
 		"available_targets" = get_available_targets(),
 		"extracted_targets" = get_extracted_targets(),
 		"goldeneye_keys" = get_goldeneye_keys(),
@@ -99,14 +99,14 @@
 
 /datum/antagonist/assault_operative/ui_static_data(mob/user)
 	return list(
-		"required_keys" = SSgoldeneye.required_keys,
+		"required_keys" = GLOB.goldeneye.required_keys,
 		"objectives" = get_objectives(),
 	)
 
 /datum/antagonist/assault_operative/proc/get_available_targets()
 	var/list/available_targets_data = list()
 	for(var/datum/mind/iterating_mind in SSjob.get_all_heads())
-		if(iterating_mind in SSgoldeneye.goldeneye_extracted_minds)
+		if(iterating_mind in GLOB.goldeneye.goldeneye_extracted_minds)
 			continue
 		available_targets_data += list(list(
 			"name" = iterating_mind.name,
@@ -116,7 +116,7 @@
 
 /datum/antagonist/assault_operative/proc/get_extracted_targets()
 	var/list/extracted_targets_data = list()
-	for(var/datum/mind/iterating_mind in SSgoldeneye.goldeneye_extracted_minds)
+	for(var/datum/mind/iterating_mind in GLOB.goldeneye.goldeneye_extracted_minds)
 		extracted_targets_data += list(list(
 			"name" = iterating_mind.name,
 			"job" = iterating_mind.assigned_role.title,
@@ -125,7 +125,7 @@
 
 /datum/antagonist/assault_operative/proc/get_goldeneye_keys()
 	. = list()
-	for(var/obj/item/goldeneye_key/keycard as anything in SSgoldeneye.goldeneye_keys)
+	for(var/obj/item/goldeneye_key/keycard as anything in GLOB.goldeneye.goldeneye_keys)
 		if(QDELETED(keycard))
 			continue
 		var/turf/location = get_turf(keycard)
@@ -248,7 +248,7 @@
 		else
 			parts += "<span class='neutraltext big'>Neutral Victory</span>"
 			parts += "<B>Mission aborted!</B>"
-	parts += span_redtext("GoldenEye keys uploaded: [SSgoldeneye.uploaded_keys]/[SSgoldeneye.required_keys]")
+	parts += span_redtext("GoldenEye keys uploaded: [GLOB.goldeneye.uploaded_keys]/[GLOB.goldeneye.required_keys]")
 
 	var/text = "<br><span class='header'>The assault operatives were:</span>"
 	text += printplayerlist(members)
@@ -259,7 +259,7 @@
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/team/assault_operatives/proc/get_result()
-	var/goldeneye_activated = SSgoldeneye.goldeneye_activated
+	var/goldeneye_activated = GLOB.goldeneye.goldeneye_activated
 	var/operatives_dead_status = operatives_dead()
 
 	if(goldeneye_activated && operatives_dead_status == ASSAULTOPS_ALL_ALIVE)

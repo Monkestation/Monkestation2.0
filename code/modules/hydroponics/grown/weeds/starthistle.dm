@@ -13,7 +13,7 @@
 	yield = 20
 	potency = 10
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	possible_mutations = list(/datum/hydroponics/plant_mutation/galaxy_thistle, /datum/hydroponics/plant_mutation/corpse_flower)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
@@ -27,7 +27,7 @@
 	species = "corpse-flower"
 	plantname = "Corpse flower"
 	production = 2
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/gas_production)
 	possible_mutations = list()
 	reagents_add = list(/datum/reagent/toxin/formaldehyde = 0.1, /datum/reagent/fluorine = 0.1)
@@ -47,7 +47,7 @@
 	yield = 20
 	potency = 25
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/invasive/galaxythistle)
 	possible_mutations = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)

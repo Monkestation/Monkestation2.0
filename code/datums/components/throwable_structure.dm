@@ -61,7 +61,7 @@
 			living_target.Knockdown(throw_knockdown)
 		playsound(parent, impact_sound, 40)
 	else
-		playsound(hit_atom, 'sound/weapons/genhit.ogg',80 , TRUE, -1)
+		playsound(hit_atom, 'sound/items/weapons/genhit.ogg',80 , TRUE, -1)
 
 /datum/component/throwable_structure/proc/on_mouse_drop(datum/source, atom/dropping, mob/user)
 	SIGNAL_HANDLER

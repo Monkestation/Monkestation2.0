@@ -17,7 +17,7 @@
 	H.visible_message(span_warning("[H] teleports!"), span_danger("You destabilize and teleport!"))
 	new /obj/effect/particle_effect/sparks(get_turf(H))
 	playsound(get_turf(H), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	do_teleport(H, get_turf(H), 6, asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 
 /datum/species/golem/bluespace/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
@@ -58,7 +58,7 @@
 /datum/action/cooldown/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
 	H.visible_message(span_warning("[H] starts vibrating!"), span_danger("You start charging your bluespace core..."))
-	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(get_turf(H), 'sound/items/weapons/flash.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(teleport), H), 1.5 SECONDS)
 	return TRUE
 
@@ -69,4 +69,4 @@
 	spark_system.set_up(10, 0, src)
 	spark_system.attach(H)
 	spark_system.start()
-	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	do_teleport(H, get_turf(H), 12, asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)

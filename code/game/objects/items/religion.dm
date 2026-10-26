@@ -72,7 +72,7 @@
 	H.AdjustImmobilized(-40)
 	H.AdjustParalyzed(-40)
 	H.AdjustUnconscious(-40)
-	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
+	playsound(H, 'sound/effects/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
 	return

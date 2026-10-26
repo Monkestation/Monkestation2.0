@@ -33,7 +33,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	name = "rune"
 	desc = "An odd collection of symbols drawn in what seems to be blood."
 	anchored = TRUE
-	icon = 'icons/obj/rune.dmi'
+	icon = 'icons/obj/antags/cult/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
@@ -389,14 +389,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 		qdel(sacrificial)
 		return TRUE
 	if(sacrificial && (signal_result & DUST_SACRIFICE)) // No soulstone when dusted
-		playsound(sacrificial, 'sound/magic/teleport_diss.ogg', 100, TRUE)
+		playsound(sacrificial, 'sound/effects/magic/teleport_diss.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially dusted by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.dust(TRUE, FALSE, TRUE)
 	else if (sacrificial)
 		var/obj/item/soulstone/stone = new(loc)
 		if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
 			stone.capture_soul(sacrificial,  invokers[1], forced = TRUE)
-		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
+		playsound(sacrificial, 'sound/effects/magic/disintegrate.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib(/* DROP_ALL_REMAINS */)
 
@@ -744,7 +744,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		else
 			fail_invoke()
 			return
-	SEND_SOUND(mob_to_revive, 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg')
+	SEND_SOUND(mob_to_revive, 'sound/music/antag/bloodcult/bloodcult_gain.ogg')
 	to_chat(mob_to_revive, span_cultlarge("\"PASNAR SAVRAE YAM'TOTH. Arise.\""))
 	mob_to_revive.visible_message(span_warning("[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes."), \
 		span_cultlarge("You awaken suddenly from the void. You're alive!"))
@@ -996,7 +996,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
-		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cultitalic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
@@ -1105,7 +1105,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	intensity = max(60, 360 - (360*(intensity/length(GLOB.player_list) + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
 
-	playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE)
+	playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE)
 	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))
 
 	for(var/mob/living/target in range(src, 3))
@@ -1127,7 +1127,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
 			addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"human_apoc",TRUE), duration)
 			images += A
-			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult/bloodcult_gain.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
+			SEND_SOUND(M, pick(sound('sound/music/antag/bloodcult/bloodcult_gain.ogg'),sound('sound/music/antag/bloodcult/ghost_whisper.ogg'),sound('sound/music/antag/bloodcult/ghosty_wind.ogg')))
 		else
 			var/construct = pick("floater","artificer","behemoth")
 			var/image/B = image('icons/mob/simple/mob.dmi',M,construct, ABOVE_MOB_LAYER)
@@ -1137,7 +1137,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			images += B
 		if(!IS_CULTIST(M))
 			if(M.client)
-				var/image/C = image('icons/effects/cult/effects.dmi', M, "bloodsparkles", ABOVE_MOB_LAYER)
+				var/image/C = image('icons/effects/cult.dmi', M, "bloodsparkles", ABOVE_MOB_LAYER)
 				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/has_antagonist/cult, "cult_apoc", C, NONE)
 				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"cult_apoc",TRUE), duration)
 				images += C

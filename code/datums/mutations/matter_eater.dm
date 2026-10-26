@@ -192,7 +192,7 @@
 
 /datum/action/cooldown/spell/pointed/consumption/proc/start_biting_animation(object, time)
 	if(!time) // Just do it once
-		playsound(owner.loc, 'sound/weapons/bite.ogg', 100, FALSE)
+		playsound(owner.loc, 'sound/items/weapons/bite.ogg', 100, FALSE)
 		owner.do_item_attack_animation(object, ATTACK_EFFECT_BITE)
 		return
 
@@ -201,7 +201,7 @@
 /datum/action/cooldown/spell/pointed/consumption/proc/loop_biting_animation(object, time)
 	var/biting_amount = floor(time / 10 SECONDS)
 	for(var/index in 1 to biting_amount)
-		playsound(owner.loc, 'sound/weapons/bite.ogg', 100, FALSE)
+		playsound(owner.loc, 'sound/items/weapons/bite.ogg', 100, FALSE)
 		owner.do_item_attack_animation(object, ATTACK_EFFECT_BITE)
 		sleep(10 SECONDS)
 		if(!currently_eating)

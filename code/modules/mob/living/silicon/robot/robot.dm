@@ -119,6 +119,13 @@
 	if(istype(model, /obj/item/robot_model/syndicate) || (emagged && !centcom))
 		modularInterface.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
+	else if(istype(model, /obj/item/robot_model/ninja))
+		modularInterface.device_theme = PDA_THEME_SYNDICATE
+		modularInterface.icon_state = "tablet-silicon-ninja"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
 	else
 		modularInterface.device_theme = PDA_THEME_NTOS
 		modularInterface.icon_state = "tablet-silicon"
@@ -153,6 +160,8 @@
 	//Show alerts window if user clicked on "Show alerts" in chat
 	if(href_list["showalerts"])
 		alert_control.ui_interact(src)
+	if(locked && href_list["unlock_self"])
+		toggle_cover()
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -263,6 +272,17 @@
 /// For any special cases for robots after being righted.
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
+
+/// Toggles the cyborg's cover lock. User is provided only if it's someone else doing it (not the cyborg itself).
+/mob/living/silicon/robot/proc/toggle_cover(mob/user)
+	locked = !locked
+	to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
+	update_icons()
+	if(emagged)
+		to_chat(user, span_notice("The cover interface glitches out for a split second."))
+		logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
+	else
+		logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)

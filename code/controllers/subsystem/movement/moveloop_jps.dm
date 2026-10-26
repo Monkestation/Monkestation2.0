@@ -20,7 +20,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/jps_move(moving,
+/datum/move_manager/proc/jps_move(moving,
 	chasing,
 	delay,
 	timeout,

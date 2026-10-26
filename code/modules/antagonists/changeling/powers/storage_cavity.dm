@@ -184,6 +184,6 @@
 	examine_text += span_bolddanger("[user.p_Their()] chest has a large, open cavity!")
 
 /datum/bodypart_overlay/simple/storage_cavity
-	icon = 'icons/mob/species/misc/bodypart_overlay_simple.dmi'
+	icon = 'icons/mob/human/species/misc/bodypart_overlay_simple.dmi'
 	icon_state = "storage_cavity"
 	layers = EXTERNAL_ADJACENT

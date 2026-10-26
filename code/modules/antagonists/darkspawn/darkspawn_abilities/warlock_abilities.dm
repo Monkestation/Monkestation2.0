@@ -51,7 +51,7 @@
 /datum/action/cooldown/spell/toggle/dark_staff/Enable()
 	owner.balloon_alert(owner, "shhouna")
 	owner.visible_message(span_warning("[owner] knits shadows together into a staff!"), span_velvet("You summon your staff. Examine it to see what it does."))
-	playsound(owner, 'sound/magic/darkspawn/pass_create.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_create.ogg', 50, 1)
 	if(!staff)
 		staff = new (owner)
 	if(effect_flags & STAFF_UPGRADE_LIGHTEATER)
@@ -62,7 +62,7 @@
 /datum/action/cooldown/spell/toggle/dark_staff/Disable()
 	owner.balloon_alert(owner, "haoo")
 	owner.visible_message(span_warning("[owner]'s staff dissipates!"), span_velvet("You dispel the staff."))
-	playsound(owner, 'sound/magic/darkspawn/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_dispel.ogg', 50, 1)
 	staff.moveToNullspace()
 
 //////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 60)
 	cooldown_time = 30 SECONDS
-	sound = 'sound/ambience/antag/darkspawn/veil_mind_gasp.ogg'
+	sound = 'sound/music/antag/darkspawn/veil_mind_gasp.ogg'
 	aoe_radius = 6
 	///Secret item stored in the ability to hit things with to trigger light eater
 	var/obj/item/darkspawn_extinguish/bopper
@@ -362,7 +362,7 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 30)
 	cooldown_time = 30 SECONDS
-	sound = 'sound/ambience/antag/darkspawn/veil_mind_scream.ogg'
+	sound = 'sound/music/antag/darkspawn/veil_mind_scream.ogg'
 	var/amount = 10 SECONDS
 
 /datum/action/cooldown/spell/aoe/mass_blindness/cast(atom/cast_on)
@@ -476,9 +476,9 @@
 	jaunt_in_type = /obj/effect/temp_visual/quantum_disruption
 	jaunt_out_type = /obj/effect/temp_visual/quantum_disruption/out
 	/// Sound played when entering the jaunt
-	sound = 'sound/magic/darkspawn/kingcrimson_start.ogg'
+	sound = 'sound/effects/magic/darkspawn/kingcrimson_start.ogg'
 	/// Sound played when exiting the jaunt
-	exit_jaunt_sound = 'sound/magic/darkspawn/kingcrimson_end.ogg'
+	exit_jaunt_sound = 'sound/effects/magic/darkspawn/kingcrimson_end.ogg'
 
 /obj/effect/temp_visual/quantum_disruption
 	name = "warlock jaunt in"
@@ -568,7 +568,7 @@
 	var/power = charge_ticks - times //grow in sound volume and added sound range as it charges
 	var/volume = min(10 + (power * 20), 60)
 	playsound(user, 'sound/effects/magic.ogg', volume, TRUE, power)
-	playsound(user, 'sound/magic/darkspawn/devour_will_begin.ogg', volume, TRUE, power)
+	playsound(user, 'sound/effects/magic/darkspawn/devour_will_begin.ogg', volume, TRUE, power)
 	if(first)
 		new /obj/effect/temp_visual/cult/rune_spawn/rune1(user.loc, 2 SECONDS, "#21007F")
 	else
@@ -586,7 +586,7 @@
 		var/datum/antagonist/darkspawn/darkspawn = IS_DARKSPAWN(user)
 		darkspawn.block_psi(30 SECONDS, type)
 
-	playsound(user, 'sound/magic/darkspawn/devour_will_end.ogg', 100, FALSE, 30)
+	playsound(user, 'sound/effects/magic/darkspawn/devour_will_end.ogg', 100, FALSE, 30)
 	//split in two so the targeted tile is always in the center of the beam
 	for(var/turf/step_target in get_line(targets_from, targets_to))
 		spawn_ground(step_target)
@@ -716,7 +716,7 @@
 	var/power = charge_ticks - times //grow in sound volume and added sound range as it charges
 	var/volume = min(10 + (power * 20), 60)
 	playsound(user, 'sound/effects/magic.ogg', volume, TRUE, power)
-	playsound(user, 'sound/magic/darkspawn/devour_will_begin.ogg', volume, TRUE, power)
+	playsound(user, 'sound/effects/magic/darkspawn/devour_will_begin.ogg', volume, TRUE, power)
 	if(first)
 		new /obj/effect/temp_visual/cult/rune_spawn/rune1(user.loc, 2 SECONDS, "#21007F")
 	else
@@ -732,8 +732,8 @@
 		var/datum/antagonist/darkspawn/darkspawn = IS_DARKSPAWN(user)
 		darkspawn.block_psi(30 SECONDS, type)
 
-	playsound(user, 'sound/magic/darkspawn/devour_will_end.ogg', 100, FALSE, 30)
-	playsound(targets_to,'sound/magic/darkspawn/divulge_end.ogg', 70, TRUE, burst_range)
+	playsound(user, 'sound/effects/magic/darkspawn/devour_will_end.ogg', 100, FALSE, 30)
+	playsound(targets_to,'sound/effects/magic/darkspawn/divulge_end.ogg', 70, TRUE, burst_range)
 
 	var/last_dist = 0
 	var/real_delay = 0
@@ -762,7 +762,7 @@
 	buttontooltipstyle = "alien"
 	button_icon_state = "veiling_touch"
 	panel = "Darkspawn"
-	sound = 'sound/magic/demon_dies.ogg'
+	sound = 'sound/effects/magic/demon_dies.ogg'
 
 	school = SCHOOL_EVOCATION
 	invocation_type = INVOCATION_NONE

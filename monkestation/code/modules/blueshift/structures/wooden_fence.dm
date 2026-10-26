@@ -58,7 +58,7 @@
 	opened = !opened
 	set_density(!opened)
 	icon_state = "[opened ? "gate_open" : "gate"]"
-	playsound(src, (opened ? 'sound/machines/wooden_closet_open.ogg' : 'sound/machines/wooden_closet_close.ogg'), 100, TRUE)
+	playsound(src, (opened ? 'sound/machines/closet/wooden_closet_open.ogg' : 'sound/machines/closet/wooden_closet_close.ogg'), 100, TRUE)
 	update_appearance()
 
 /obj/structure/railing/wooden_fencing/gate/update_icon()
@@ -72,8 +72,8 @@
 	name = "large wooden gate"
 	icon = 'monkestation/code/modules/blueshift/icons/wooden_gate.dmi'
 	icon_state = "gate"
-	openSound = 'sound/machines/wooden_closet_open.ogg'
-	closeSound = 'sound/machines/wooden_closet_close.ogg'
+	openSound = 'sound/machines/closet/wooden_closet_open.ogg'
+	closeSound = 'sound/machines/closet/wooden_closet_close.ogg'
 
 /obj/structure/mineral_door/wood/large_gate/Open()
 	playsound(src, openSound, 100, TRUE)

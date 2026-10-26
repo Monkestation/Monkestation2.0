@@ -20,10 +20,10 @@
 	liked_foodtypes = GORE | MEAT | BUGS | GROSS
 
 /obj/item/organ/internal/tongue/arachnid/get_scream_sound()
-	return 'sound/voice/screams/arachnid/arachnid_scream.ogg'
+	return 'sound/mobs/humanoids/arachnid/arachnid_scream.ogg'
 
 /obj/item/organ/internal/tongue/arachnid/get_laugh_sound()
-	return 'sound/voice/laugh/arachnid/arachnid_laugh.ogg'
+	return 'sound/mobs/humanoids/arachnid/arachnid_laugh.ogg'
 
 /obj/item/organ/internal/tongue/arachnid/modify_speech(datum/source, list/speech_args) //This is flypeople speech
 	var/static/regex/fly_buzz = new("z+", "g")
@@ -67,29 +67,29 @@
 	//organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
 
 /obj/item/organ/internal/tongue/synth/get_scream_sound()
-	return 'sound/voice/screams/silicon/scream_silicon.ogg'
+	return 'sound/mobs/non-humanoids/cyborg/scream/scream_silicon.ogg'
 
 /obj/item/organ/internal/tongue/synth/get_laugh_sound()
 	if(owner.gender == FEMALE)
 		return pick(
-			'sound/voice/laugh/silicon/laugh_siliconF0.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconF1.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconF2.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconF0.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconF1.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconF2.ogg',
 		)
 	if(owner.gender == MALE)
 		return pick(
-			'sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconM2.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconE1M0.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconE1M1.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconM2.ogg',
 		)
 	else
 		return pick(
-			'sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconM2.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconF0.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconF1.ogg',
-			'sound/voice/laugh/silicon/laugh_siliconF2.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconE1M0.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconE1M1.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconM2.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconF0.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconF1.ogg',
+			'sound/mobs/non-humanoids/cyborg/laugh/laugh_siliconF2.ogg',
 		)
 
 /obj/item/organ/internal/tongue/synth/can_speak_language(language)
@@ -279,8 +279,8 @@
 		"Zombie" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "tonguezombie"),
 		"Alien" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "tonguexeno"),
 		"Bone" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "tonguebone"),
-		"Bananium" = image(icon = 'icons/obj/weapons/horn.dmi', icon_state = "gold_horn"),
-		"Mush" = image(icon = 'icons/obj/hydroponics/seeds.dmi', icon_state = "mycelium-angel"),
+		"Bananium" = image(icon = 'icons/obj/art/horn.dmi', icon_state = "gold_horn"),
+		"Mush" = image(icon = 'icons/obj/service/hydroponics/seeds.dmi', icon_state = "mycelium-angel"),
 		"Fly" = image(icon = 'icons/obj/medical/organs/fly_organs.dmi', icon_state = "tongue")
 	)
 	var/obj/item/organ/internal/tongue/polyglot_voicebox/polyglot_voicebox = owner.get_organ_slot(ORGAN_SLOT_TONGUE)

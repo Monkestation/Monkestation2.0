@@ -22,7 +22,7 @@
 		to_chat(victim, span_warning("Your [check_arm] resonates with the glass in \the [glass_to_shatter], shattering it to bits!"))
 		glass_to_shatter.reagents?.expose(victim, TOUCH)
 		new/obj/effect/decal/cleanable/generic(get_turf(victim))
-		playsound(victim, 'sound/effects/glassbr1.ogg', vol = 25, vary = TRUE)
+		playsound(victim, 'sound/effects/glass/glassbr1.ogg', vol = 25, vary = TRUE)
 		addtimer(CALLBACK(src, PROC_REF(deresonate), victim, check_arm), 1 SECONDS)
 		qdel(glass_to_shatter)
 	else if (prob(1))

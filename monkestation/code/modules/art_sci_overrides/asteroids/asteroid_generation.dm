@@ -50,7 +50,7 @@
 
 /turf/closed/mineral/asteroid/tospace/titanium
 	mineralType = /obj/item/stack/ore/titanium
-	scan_state = "rock_Titanium"
+	scan_state = "rock_titanium"
 
 /turf/closed/mineral/asteroid/tospace/plasma
 	mineralType = /obj/item/stack/ore/plasma

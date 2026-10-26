@@ -105,7 +105,7 @@
 /obj/item/mod/module/tether/on_use()
 	if(HAS_TRAIT_FROM(mod.wearer, TRAIT_TETHER_ATTACHED, REF(src)))
 		balloon_alert(mod.wearer, "already tethered!")
-		playsound(src, 'sound/weapons/gun/general/dry_fire.ogg', 25, TRUE)
+		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()
 
@@ -116,7 +116,7 @@
 	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc, src)
 	tether.aim_projectile(target, mod.wearer)
 	tether.firer = mod.wearer
-	playsound(src, 'sound/weapons/batonextend.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
@@ -126,8 +126,8 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
 	range = 10
-	hitsound = 'sound/weapons/batonextend.ogg'
-	hitsound_wall = 'sound/weapons/batonextend.ogg'
+	hitsound = 'sound/items/weapons/batonextend.ogg'
+	hitsound_wall = 'sound/items/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
 	hit_threshhold = ABOVE_NORMAL_TURF_LAYER
 	embed_type = /datum/embedding/tether_projectile

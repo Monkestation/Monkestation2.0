@@ -1,7 +1,7 @@
 /obj/machinery/shipbreaker
 	name = "ship recycler"
 	desc = "An expensive crushing machine used to recycle ship parts somewhat efficiently."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
@@ -10,7 +10,7 @@
 	var/icon_name = "grinder-o"
 	var/bloody = FALSE
 	var/eat_dir = WEST
-	var/item_recycle_sound = 'sound/items/welder.ogg'
+	var/item_recycle_sound = 'sound/items/tools/welder.ogg'
 	var/reclaimed = 0
 
 /obj/machinery/shipbreaker/Initialize(mapload)
@@ -54,7 +54,7 @@
 	if(morsel.resistance_flags & INDESTRUCTIBLE)
 		return
 	if(!istype(morsel, /obj/item/stack/scrap)) //we only eat shipbreaker scrap for now
-		playsound(src, 'sound/machines/buzz-sigh.ogg')
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg')
 		return
 	var/obj/item/stack/scrap/morselstack = morsel
 	if(morselstack.amount > 0)

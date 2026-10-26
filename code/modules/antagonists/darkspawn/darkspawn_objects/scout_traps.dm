@@ -65,7 +65,7 @@
 /obj/structure/trap/darkspawn/nausea/flare()
 	. = ..()
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
-	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 50, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/exit_blood.ogg', 50, TRUE)
 
 /obj/structure/trap/darkspawn/nausea/trap_effect(mob/living/L)
 	L.adjust_disgust(30)
@@ -93,7 +93,7 @@
 /obj/structure/trap/darkspawn/damage/flare()
 	. = ..()
 	playsound(get_turf(src), 'sound/effects/snap.ogg', 30, TRUE, -1)
-	playsound(get_turf(src), 'sound/weapons/bladeslice.ogg', 60, TRUE, -1)
+	playsound(get_turf(src), 'sound/items/weapons/bladeslice.ogg', 60, TRUE, -1)
 
 /obj/structure/trap/darkspawn/damage/trap_effect(mob/living/L)
 	L.apply_damage(30, BRUTE)

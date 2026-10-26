@@ -6,7 +6,7 @@
 	name = "drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a drone shell. Does not need to be manually operated."
 
-	icon = 'icons/obj/machines/droneDispenser.dmi'
+	icon = 'icons/obj/machines/drone_dispenser.dmi'
 	icon_state = "on"
 	density = TRUE
 
@@ -36,7 +36,7 @@
 	// ceasing production. Set to 0 for infinite.
 	var/maximum_idle = 3
 
-	var/work_sound = 'sound/items/rped.ogg'
+	var/work_sound = 'sound/items/tools/rped.ogg'
 	var/create_sound = 'sound/items/deconstruct.ogg'
 	var/recharge_sound = 'sound/machines/ping.ogg'
 

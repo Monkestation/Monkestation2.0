@@ -122,7 +122,7 @@
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
-	playsound(target, 'sound/lavaland/brimdemon_crush.ogg', 100)
+	playsound(target, 'sound/mobs/non-humanoids/brimdemon/brimdemon_crush.ogg', 100)
 
 // Bileworm
 /obj/item/crusher_trophy/bileworm_spewlet
@@ -168,9 +168,9 @@
 	owner_has_control = FALSE
 	cooldown_time = 10 SECONDS
 	projectile_type = /obj/projectile/bileworm_acid
-	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
+	projectile_sound = 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg'
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target, original = TRUE)
 	firing_directions = GLOB.cardinals.Copy()
 	return ..()
 

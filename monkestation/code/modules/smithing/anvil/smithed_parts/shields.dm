@@ -2,7 +2,7 @@
 	icon_state = "buckler"
 	base_name = "unfinished buckler"
 	weapon_name = "buckler"
-	block_sound = 'sound/weapons/block_shield.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
 	desc = "A simple round shield."
 
 	weapon_inhand_icon_state = "buckler"
@@ -40,7 +40,7 @@
 	icon_state = "pavise"
 	base_name = "unfinished pavise"
 	weapon_name = "pavise"
-	block_sound = 'sound/weapons/block_shield.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
 	desc = "A tall, robust shield."
 
 	weapon_inhand_icon_state = "pavise"

@@ -47,6 +47,4 @@
 	r_pocket = /obj/item/megaphone
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
-
-/datum/outfit/job/godzilla/post_equip(mob/living/carbon/human/H, visualsOnly)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/dinojammies(H), ITEM_SLOT_OCLOTHING)
+	suit = /obj/item/clothing/suit/hooded/dinojammies

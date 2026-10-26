@@ -1092,11 +1092,11 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 	if(apc.aidisabled)
 		to_chat(src, span_danger("Hack aborted. [apc] is no longer responding to our systems."))
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 
 	malf_picker.processing_time += 10
@@ -1270,6 +1270,32 @@ GAME_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "AI Comm
 		return
 	jobtitles = !jobtitles
 	to_chat(src, "<b>You are now [jobtitles ? "displaying" : "hiding"] speaker's job titles.</b>")
+
+/mob/living/silicon/ai/point_at(atom/pointed_atom)
+	if(pointed_atom in src)
+		return FALSE
+	var/turf/target_turf = get_turf(pointed_atom)
+	if(!target_turf)
+		return FALSE
+	var/obj/machinery/holopad/best_pad
+	for(var/obj/machinery/holopad/pad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad))
+		if(!pad.on_network || !pad.is_operational || pad.pointing)
+			continue
+		if(!pad.validate_location(target_turf))
+			continue
+		var/turf/pad_turf = get_turf(pad)
+		if(!SScameras.is_visible_by_cameras(pad_turf))
+			continue
+		if(!best_pad || get_dist(pad_turf, target_turf) < get_dist(get_turf(best_pad), target_turf))
+			best_pad = pad
+	if(!best_pad)
+		return FALSE
+	// not passing our invisibility like tg does, our ai mob is invisible so the arrow would be too
+	var/obj/visual = best_pad.holo_point(pointed_atom)
+	if(!visual)
+		return FALSE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual)
+	return TRUE
 
 #undef CALL_BOT_COOLDOWN
 #undef MAX_SPRINT

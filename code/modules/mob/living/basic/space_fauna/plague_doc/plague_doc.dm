@@ -19,7 +19,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	obj_damage = 50
-	attack_sound = 'sound/hallucinations/growl3.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl3.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/plague_doc
 	///spell to summon minions
 	var/datum/action/cooldown/spell/conjure/plague_summon_minions/summon

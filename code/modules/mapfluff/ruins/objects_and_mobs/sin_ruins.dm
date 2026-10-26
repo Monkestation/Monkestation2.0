@@ -32,7 +32,7 @@
 		know it'll be worth it.</span>")
 	icon_screen = "slots_screen_working"
 	update_appearance()
-	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/lavaland/cursed_slot_machine.ogg', 50, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(determine_victor), user), 50)
 
 /obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
@@ -40,7 +40,7 @@
 	update_appearance()
 	obj_flags &= ~IN_USE
 	if(prob(win_prob))
-		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
 		new/obj/structure/cursed_money(get_turf(src))
 		if(user)
 			to_chat(user, span_boldwarning("You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place."))
@@ -112,7 +112,7 @@
 /obj/item/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
 	name = "envy's knife"
 	desc = "Their success will be yours."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -120,7 +120,7 @@
 	force = 18
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, click_parameters)
 	if(!istype(user) || !ishuman(target))

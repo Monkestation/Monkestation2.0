@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	add_memory_in_range(parent, 7, /datum/memory/witnessed_creampie, protagonist = parent)
 
-	creamface = mutable_appearance('icons/effects/creampie.dmi')
+	creamface = mutable_appearance('icons/mob/effects/face_decal.dmi')
 
 	if(ishuman(parent))
 		var/mob/living/carbon/human/H = parent

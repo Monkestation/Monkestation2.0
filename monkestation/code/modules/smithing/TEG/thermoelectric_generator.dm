@@ -354,7 +354,7 @@
 				explosion(src, flame_range = 2)
 				damage -= 15
 		if(22 to 23)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 55, FALSE)
+			playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 55, FALSE)
 			if(prob(5))
 				tesla_zap(src, 7, 7500, ZAP_MOB_STUN)
 			if(prob(5))
@@ -366,7 +366,7 @@
 				explosion(src, flame_range = 2)
 				damage -= 15
 		if(24 to 25)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 55, FALSE)
+			playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 55, FALSE)
 			if(prob(10))
 				tesla_zap(src, 7, 7500, ZAP_MOB_STUN)
 			if(prob(10))
@@ -393,7 +393,7 @@
 				damage -= 30
 
 		if(26 to INFINITY)
-			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 55, FALSE)
+			playsound(src.loc, 'sound/machines/engine_alert/engine_alert3.ogg', 55, FALSE)
 			if(prob(15))
 				var/turf/my_turf = get_turf(src)
 				my_turf.pollute_turf(/datum/pollutant/smoke, 1500)

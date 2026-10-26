@@ -2,7 +2,7 @@
 	. = ..()
 	if(item.tool_behaviour != TOOL_WIRECUTTER)
 		return
-	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
 	to_chat(user, "<span class='notice'>You start cutting the insulation off of [src]...</span>")
 	if(!do_after(user, 1 SECONDS, src))
 		return
@@ -17,7 +17,7 @@
 	. = ..()
 	if(item.tool_behaviour != TOOL_WIRECUTTER)
 		return
-	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
 	to_chat(user, "<span class='notice'>You start whittling away some of [src]...</span>")
 	if(!do_after(user, 1 SECONDS, src))
 		return
@@ -32,7 +32,7 @@
 	. = ..()
 	if(item.tool_behaviour != TOOL_WIRECUTTER)
 		return
-	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
 	to_chat(user, "<span class='notice'>You start whittling away some of [src]...</span>")
 	if(!do_after(user, 1 SECONDS, src))
 		return

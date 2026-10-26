@@ -94,7 +94,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/bluespace
 	colour = "bluespace"
-	effect_desc = "On a two minute cooldown, when the owner enters critical condition, they are teleported to a safe place."
+	effect_desc = "On a two minute cooldown, when the owner enters critical condition, they are teleported to a safe place after a few seconds. Resisting or being shoved interrupts it, but the cooldown still starts."
 
 /obj/item/slimecross/stabilized/sepia
 	colour = "sepia"

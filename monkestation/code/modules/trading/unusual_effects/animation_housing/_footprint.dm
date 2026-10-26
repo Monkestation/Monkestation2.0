@@ -2,6 +2,8 @@
 /datum/component/particle_spewer/movement
 	processes = FALSE
 	var/mob/attached_signal
+	///which way the move that set off the current burst is headed
+	var/move_dir = NONE
 
 /datum/component/particle_spewer/movement/Destroy(force)
 	UnregisterSignal(source_object, COMSIG_MOVABLE_PRE_MOVE)
@@ -29,6 +31,9 @@
 		attached_signal = null
 
 /// Version of spawn_particles that will only (async) spawn particles if we're not abusing our tick time.
-/datum/component/particle_spewer/movement/proc/safe_spawn_particles()
-	if(!TICK_CHECK_LOW)
-		INVOKE_ASYNC(src, PROC_REF(spawn_particles))
+/datum/component/particle_spewer/movement/proc/safe_spawn_particles(atom/movable/mover, atom/newloc)
+	SIGNAL_HANDLER
+	if(TICK_CHECK_LOW)
+		return
+	move_dir = get_dir(mover, newloc)
+	INVOKE_ASYNC(src, PROC_REF(spawn_particles))

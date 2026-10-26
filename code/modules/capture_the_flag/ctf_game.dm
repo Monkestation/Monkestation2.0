@@ -9,7 +9,7 @@
 /obj/machinery/ctf
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -264,7 +264,7 @@
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
-		user.playsound_local(get_turf(user), 'sound/machines/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+		user.playsound_local(get_turf(user), 'sound/machines/buzz/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
 
 /obj/item/ctf_flag/dropped(mob/user)
 	..()

@@ -20,4 +20,4 @@
 				line += " [target.name]"
 		say_text += line
 	say(say_text)
-	playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/defib/defib_success.ogg', 50, FALSE)

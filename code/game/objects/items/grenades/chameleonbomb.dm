@@ -67,7 +67,7 @@
 
 /obj/item/chameleonbomb/proc/make_copy(obj/item/target, mob/user)
 	disguised = TRUE
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
+	playsound(get_turf(src), 'sound/items/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
 	var/obj/item/temp = new /obj/item()
 	temp.appearance = target.appearance
@@ -170,7 +170,7 @@
 	blowingup = TRUE
 	to_chat(user, span_userdanger("\The [src] loses it's decoy, it's a bomb!"))
 	visible_message(span_danger("The disguise on \the [src] [user] is holding falls! It's a bomb!"), span_userdanger("\The [src] loses it's disguise, it's a bomb!"), span_hear("A warbling sound rings out with a few beeps!"))
-	playsound(src, 'sound/machines/triple_beep.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/beep/triple_beep.ogg', 50, FALSE)
 	log_bomber(user, "activated a chameleon bomb disguised as", src)
 	explosion(src, explosive_size[1], explosive_size[2], explosive_size[3])
 	if(iscarbon(user))

@@ -41,7 +41,7 @@
 		var/obj/item/disk/nanite_program/N = tool
 		if (user.transferItemToLoc(N, src))
 			to_chat(user, span_notice("You insert [N] into [src]."))
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 			if(disk)
 				eject(user)
 			disk = N
@@ -227,14 +227,14 @@
 		if("create_backup")
 			var/cloud_id = new_backup_id
 			if(!isnull(cloud_id))
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 				cloud_id = clamp(round(cloud_id, 1), 1, 100)
 				generate_backup(cloud_id, usr)
 			. = TRUE
 		if("delete_backup")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 				qdel(backup)
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
@@ -242,7 +242,7 @@
 			if(current_program)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
-					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 					var/datum/component/nanites/nanites = backup.nanites
 					nanites.add_program(null, current_program.copy())
 					investigate_log("[key_name(usr)] uploaded program [current_program.name] to cloud #[current_view]", INVESTIGATE_NANITES)
@@ -250,7 +250,7 @@
 		if("remove_program")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 				var/datum/component/nanites/nanites = backup.nanites
 				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
@@ -264,7 +264,7 @@
 					return
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
-					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, 0)
 					var/datum/component/nanites/nanites = backup.nanites
 					var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 					var/datum/nanite_rule/rule = rule_template.make_rule(P)
@@ -274,7 +274,7 @@
 		if("remove_rule")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, 0)
 				var/datum/component/nanites/nanites = backup.nanites
 				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				var/datum/nanite_rule/rule = P.rules[text2num(params["rule_id"])]
@@ -285,7 +285,7 @@
 		if("toggle_rule_logic")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 				var/datum/component/nanites/nanites = backup.nanites
 				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				P.all_rules_required = !P.all_rules_required
@@ -299,7 +299,7 @@
 			if(current_program)
 				qdel(current_program)
 			current_program = new downloaded.program_type
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
 			. = TRUE
 		if("refresh")
 			update_static_data(usr)
@@ -374,7 +374,7 @@
 			. = TRUE
 		if("store_backup")
 			if(disk)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					disk.backup = list()
@@ -384,7 +384,7 @@
 			. = TRUE
 		if("load_backup")
 			if(disk)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					var/datum/component/nanites/nanites = backup.nanites

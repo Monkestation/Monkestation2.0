@@ -31,7 +31,7 @@
 
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/pierce.ogg'
+	attack_sound = 'sound/items/weapons/pierce.ogg'
 
 	ai_controller = /datum/ai_controller/basic_controller/slugcat
 

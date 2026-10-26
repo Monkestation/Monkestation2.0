@@ -21,7 +21,7 @@
 /datum/preference/choiced/monkey_tail/icon_for(value)
 	var/static/datum/universal_icon/monkey_chest
 	if(isnull(monkey_chest))
-		monkey_chest = uni_icon('icons/mob/species/monkey/bodyparts.dmi', "monkey_chest")
+		monkey_chest = uni_icon('icons/mob/human/species/monkey/bodyparts.dmi', "monkey_chest")
 
 	var/datum/sprite_accessory/tails/monkey/tail = GLOB.tails_list_monkey[value]
 	var/datum/universal_icon/final_icon = monkey_chest.copy()

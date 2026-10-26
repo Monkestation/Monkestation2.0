@@ -75,7 +75,7 @@
 	desc = "A both professional and stylish pair of footwear that are shockingly comfortable to walk in. They have have been sharpened to allow them to be used as a rudimentary weapon."
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "heels_syndi"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	strip_delay = 2 SECONDS
 	force = 10
 	throwforce = 15

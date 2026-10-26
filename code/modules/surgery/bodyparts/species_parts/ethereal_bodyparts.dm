@@ -1,11 +1,11 @@
 /obj/item/bodypart/head/ethereal
-	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = "ethereal_color"
 	brute_modifier = 1.25
@@ -19,7 +19,7 @@
 		head_flags = HEAD_HAIR | HEAD_FACIAL_HAIR | HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_EYECOLOR
 
 /obj/item/bodypart/chest/ethereal
-	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
@@ -35,13 +35,13 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/arm/left/ethereal
-	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
 	attack_type = BURN //burn bish
 	unarmed_attack_verb = "burn"
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = "ethereal_color"
 	brute_modifier = 1.25
@@ -54,13 +54,13 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/arm/right/ethereal
-	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
 	unarmed_attack_verb = "burn"
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = "ethereal_color"
 	brute_modifier = 1.25
@@ -74,12 +74,12 @@
 
 
 /obj/item/bodypart/leg/left/ethereal
-	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = "ethereal_color"
 	brute_modifier = 1.25
@@ -92,12 +92,12 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/leg/right/ethereal
-	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = "ethereal_color"
 	brute_modifier = 1.25

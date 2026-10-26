@@ -7,7 +7,7 @@
 /obj/item/bitrunning_disk
 	name = "generic bitrunning program"
 	desc = "A disk containing source code."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/module.dmi'
 	base_icon_state = "datadisk"
 	icon_state = "datadisk0"
 	w_class = WEIGHT_CLASS_TINY

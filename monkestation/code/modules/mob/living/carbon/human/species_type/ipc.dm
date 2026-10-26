@@ -194,17 +194,17 @@
 /datum/species/ipc/proc/boot_sequence_fluff(mob/living/carbon/human/booting_ipc)
 	sleep(3 SECONDS)
 	if(booting_ipc.stat == DEAD)
-		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
+		playsound(booting_ipc, 'sound/machines/buzz/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
 	sleep(3 SECONDS)
 	if(booting_ipc.stat == DEAD)
-		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
+		playsound(booting_ipc, 'sound/machines/buzz/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Finalizing setup...")
 	sleep(3 SECONDS)
 	if(booting_ipc.stat == DEAD)
-		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
+		playsound(booting_ipc, 'sound/machines/buzz/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
 	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
@@ -285,7 +285,7 @@
 	owner.face_atom(user)
 	var/threat = pick(phrases)
 	if(threat == "`I seeee youuuuuu.`")
-		playsound(owner, pick(list('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg')), 50, TRUE)
+		playsound(owner, pick(list('sound/effects/hallucinations/i_see_you1.ogg', 'sound/effects/hallucinations/i_see_you2.ogg')), 50, TRUE)
 		owner.whisper(threat)
 		return
 

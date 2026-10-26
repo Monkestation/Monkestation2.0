@@ -33,7 +33,7 @@
 	desc = "A large structure used to remove the heads of traitors and treasonists."
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "guilliotine"
 	can_buckle = TRUE
 	anchored = TRUE
@@ -44,7 +44,7 @@
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	/// The sound the guillotine makes when it successfully cuts off a head
-	var/drop_sound = 'sound/weapons/guillotine.ogg'
+	var/drop_sound = 'sound/items/weapons/guillotine.ogg'
 	/// The current state of the blade
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	/// How sharp the blade is

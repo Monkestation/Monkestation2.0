@@ -258,7 +258,7 @@
 	if(!phase_emitter)
 		balloon_alert(user, "no phase emitter!")
 		return
-	playsound(src, 'sound/items/crowbar.ogg', 70, TRUE)
+	playsound(src, 'sound/items/tools/crowbar.ogg', 70, TRUE)
 	remove_emitter()
 
 /obj/item/gun/microfusion/click_alt(mob/living/user)
@@ -639,7 +639,7 @@
 
 /obj/item/gun/microfusion/proc/remove_attachment(obj/item/microfusion_gun_attachment/microfusion_gun_attachment, mob/living/user)
 	balloon_alert(user, "removed attachment")
-	playsound(src, 'sound/items/screwdriver.ogg', 70)
+	playsound(src, 'sound/items/tools/screwdriver.ogg', 70)
 	microfusion_gun_attachment.forceMove(get_turf(src))
 	attachments -= microfusion_gun_attachment
 	microfusion_gun_attachment.remove_attachment(src)

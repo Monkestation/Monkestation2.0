@@ -24,7 +24,7 @@
 	forge_objectives()
 	var/mob/living/our_mob = owner.current
 	our_mob.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are a horrific blob of flesh who can manifest a million tongues.
-	our_mob.playsound_local(get_turf(our_mob), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	our_mob.playsound_local(get_turf(our_mob), 'sound/music/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	// The midround version of this antag begins as a bloodling, not as a human
 	if(!ishuman(our_mob))
 		return ..()

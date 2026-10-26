@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	priority_announce(
 		text = memo,
 		title = "Declaration of War",
-		sound = 'sound/machines/alarm.ogg',
+		sound = 'sound/announcer/alarm/nuke_alarm.ogg',
 		has_important_message = TRUE,
 		sender_override = "Nuclear Operative Outpost",
 		color_override = "red",
@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	priority_announce(
 		text = memo,
 		title = "Declaration of War",
-		sound = 'sound/machines/alarm.ogg',
+		sound = 'sound/announcer/alarm/nuke_alarm.ogg',
 		has_important_message = TRUE,
 		sender_override = "Nuclear Operative Outpost",
 		color_override = "red",

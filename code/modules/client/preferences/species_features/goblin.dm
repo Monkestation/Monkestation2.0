@@ -12,7 +12,7 @@
 	var/static/datum/universal_icon/goblin_head
 
 	if(isnull(goblin_head))
-		goblin_head = uni_icon('icons/mob/species/goblin/bodyparts.dmi', "goblin_head", color = "#336919")
+		goblin_head = uni_icon('icons/mob/human/species/goblin/bodyparts.dmi', "goblin_head", color = "#336919")
 		var/datum/universal_icon/eyes = uni_icon('icons/mob/species/human/human_face.dmi', "eyes_l")
 		eyes.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "eyes_r"), ICON_OVERLAY)
 		eyes.blend_color(COLOR_GRAY, ICON_MULTIPLY)
@@ -45,8 +45,8 @@
 	var/static/datum/universal_icon/goblin_side
 
 	if(isnull(goblin_side))
-		goblin_side = uni_icon('icons/mob/species/goblin/bodyparts.dmi', "goblin_head", EAST)
-		goblin_side.blend_icon(uni_icon('icons/mob/species/goblin/goblin_ears.dmi', "m_goblin_ears_normal_ADJ", EAST), ICON_OVERLAY)
+		goblin_side = uni_icon('icons/mob/human/species/goblin/bodyparts.dmi', "goblin_head", EAST)
+		goblin_side.blend_icon(uni_icon('icons/mob/human/species/goblin/goblin_ears.dmi', "m_goblin_ears_normal_ADJ", EAST), ICON_OVERLAY)
 		goblin_side.blend_color("#336919", ICON_MULTIPLY)
 
 		var/datum/universal_icon/eyes = uni_icon('icons/mob/species/human/human_face.dmi', "eyes_l", EAST)

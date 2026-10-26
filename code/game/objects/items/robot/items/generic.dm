@@ -27,7 +27,7 @@
 	if(ishuman(attacked_mob))
 		var/mob/living/carbon/human/human = attacked_mob
 		if(human.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
-			playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(attacked_mob, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
@@ -49,7 +49,7 @@
 	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
 
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
 
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [(user.istate & ISTATE_HARM) ? "On" : "Off"])")
 
@@ -105,7 +105,7 @@
 				user.visible_message(span_notice("[user] playfully boops [attacked_mob] on the head!"), \
 								span_notice("You playfully boop [attacked_mob] on the head!"))
 				user.do_attack_animation(attacked_mob, ATTACK_EFFECT_BOOP)
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
+				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE, -1)
 			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
 					user.visible_message(span_notice("[user] shakes [attacked_mob] trying to get [attacked_mob.p_them()] up!"), \
@@ -122,7 +122,7 @@
 			else
 				user.visible_message(span_notice("[user] pets [attacked_mob]!"), \
 						span_notice("You pet [attacked_mob]!"))
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		if(HUG_MODE_HUG)
 			if(ishuman(attacked_mob))
 				attacked_mob.adjust_status_effects_on_shake_up()
@@ -141,7 +141,7 @@
 			else
 				user.visible_message(span_warning("[user] bops [attacked_mob] on the head!"), \
 						span_warning("You bop [attacked_mob] on the head!"))
-			playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE, -1)
 		if(HUG_MODE_SHOCK)
 			if (!COOLDOWN_FINISHED(src, shock_cooldown))
 				return
@@ -157,7 +157,7 @@
 				else
 					user.visible_message(span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect"), \
 						span_danger("You shock [attacked_mob] to no effect."))
-			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/effects/sparks/sparks2.ogg', 50, TRUE, -1)
 			user.cell.charge -= 500
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
@@ -169,7 +169,7 @@
 			else
 				user.visible_message(span_userdanger("[user] crushes [attacked_mob]!"), \
 						span_danger("You crush [attacked_mob]!"))
-			playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE, -1)
 			attacked_mob.adjustBruteLoss(15)
 			user.cell.charge -= 300
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)
@@ -218,7 +218,7 @@
 		mode = CHARGER_MODE_CHARGE
 	else
 		mode = CHARGER_MODE_DRAW
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
@@ -391,7 +391,7 @@
 /obj/item/harmalarm
 	name = "\improper Sonic Harm Prevention Tool"
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "megaphone"
 	/// Harm alarm cooldown
 	COOLDOWN_DECLARE(alarm_cooldown)
@@ -429,7 +429,7 @@
 			carbon.adjust_confusion(6 SECONDS)
 
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/mobs/non-humanoids/cyborg/harmalarm.ogg', 70, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
 		user.log_message("used a Cyborg Harm Alarm", LOG_ATTACK)
 		if(iscyborg(user))

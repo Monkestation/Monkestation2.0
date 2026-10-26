@@ -49,7 +49,7 @@
 		card.transform = Matrix
 		card.update_appearance()
 
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
@@ -124,7 +124,7 @@
 	cards -= card
 
 	update_appearance()
-	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
+	playsound(src, 'sound/items/cards/cardflip.ogg', 50, TRUE)
 	return card
 
 /// Returns the cards in this deck.

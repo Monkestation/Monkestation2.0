@@ -8,7 +8,7 @@
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 	forced_ambience = TRUE
-	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
+	ambient_buzz = 'sound/ambience/maintenance/source_corridor2.ogg'
 	ambient_buzz_vol = 50
 	astar_weight = 10
 	anchor_roundstart_lockers = FALSE

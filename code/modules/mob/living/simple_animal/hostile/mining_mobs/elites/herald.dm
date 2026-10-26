@@ -35,12 +35,12 @@
 	mob_biotypes = MOB_ORGANIC|MOB_MINING
 	attack_verb_continuous = "preaches to"
 	attack_verb_simple = "preach to"
-	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
+	attack_sound = 'sound/effects/magic/clockwork/ratvar_attack.ogg'
 	throw_message = "doesn't affect the purity of"
 	speed = 2
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 	death_message = "begins to shudder as it becomes transparent..."
 	loot_drop = /obj/item/clothing/neck/cloak/herald_cloak
 
@@ -66,7 +66,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	. = ..()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 
 /datum/action/innate/elite_attack/herald_trishot
 	name = "Triple Shot"
@@ -143,14 +143,14 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_trishot(target)
 	ranged_cooldown = world.time + 30
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	var/target_turf = get_turf(target)
 	var/angle_to_target = get_angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, FALSE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 2)
 	addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 4)
 	if(health < maxHealth * 0.5 && !is_mirror)
-		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+		playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 10)
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 12)
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 14)
@@ -169,23 +169,23 @@
 	ranged_cooldown = world.time + 3 SECONDS
 	if(!is_mirror)
 		icon_state = "herald_enraged"
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(herald_circleshot), 0), 5)
 	if(health < maxHealth * 0.5 && !is_mirror)
-		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+		playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, PROC_REF(herald_circleshot), 22.5), 15)
 	addtimer(CALLBACK(src, PROC_REF(unenrage)), 20)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_teleshot(target)
 	ranged_cooldown = world.time + 30
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	var/target_turf = get_turf(target)
 	var/angle_to_target = get_angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, TRUE, FALSE)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_mirror()
 	ranged_cooldown = world.time + 4 SECONDS
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	if(my_mirror != null)
 		qdel(my_mirror)
 		my_mirror = null
@@ -204,7 +204,7 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	death_message = "shatters violently!"
-	death_sound = 'sound/effects/glassbr1.ogg'
+	death_sound = 'sound/effects/glass/glassbr1.ogg'
 	del_on_death = TRUE
 	is_mirror = TRUE
 	move_resist = MOVE_FORCE_OVERPOWERING // no dragging your mirror around
@@ -259,7 +259,7 @@
 /obj/item/clothing/neck/cloak/herald_cloak
 	name = "cloak of the prophet"
 	desc = "A cloak which protects you from the heresy of the world."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "herald_cloak"
 	body_parts_covered = CHEST|GROIN|ARMS
 	hit_reaction_chance = 20
@@ -283,7 +283,7 @@
 		return
 	owner.visible_message(span_danger("[owner]'s [src] emits a loud noise as [owner] is struck!"))
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
-	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 10)
 
 #undef HERALD_TRISHOT

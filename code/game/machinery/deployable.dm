@@ -214,12 +214,12 @@
 		set_density(TRUE)
 		icon_state = "barrier1"
 		locked = TRUE
-		playsound(src, 'sound/machines/boltsup.ogg', 45)
+		playsound(src, 'sound/machines/airlock/boltsup.ogg', 45)
 	else
 		set_density(FALSE)
 		icon_state = "barrier0"
 		locked = FALSE
-		playsound(src, 'sound/machines/boltsdown.ogg', 45)
+		playsound(src, 'sound/machines/airlock/boltsdown.ogg', 45)
 	update_appearance(UPDATE_ICON)
 	balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
 

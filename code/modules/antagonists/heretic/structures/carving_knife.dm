@@ -12,7 +12,7 @@
 	wound_bonus = 20
 	force = 10
 	throwforce = 20
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)
@@ -166,7 +166,7 @@
 		return FALSE
 
 /datum/action/item_action/rune_shatter/do_effect(trigger_flags)
-	owner.playsound_local(get_turf(owner), 'sound/magic/blind.ogg', 50, TRUE)
+	owner.playsound_local(get_turf(owner), 'sound/effects/magic/blind.ogg', 50, TRUE)
 	var/obj/item/melee/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)
 	target_sword.SpinAnimation(5, 1)
@@ -176,7 +176,7 @@
 /obj/structure/trap/eldritch
 	name = "elder carving"
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	max_integrity = 60
 	/// A tip displayed to heretics who examine the rune carver. Explains what the rune does.
 	var/carver_tip
@@ -219,7 +219,7 @@
 	var/mob/living/real_owner = owner?.resolve()
 	if(real_owner)
 		to_chat(real_owner, span_userdanger("[victim.real_name] has stepped foot on the alert rune in [get_area(src)]!"))
-		real_owner.playsound_local(get_turf(real_owner), 'sound/magic/curse.ogg', 50, TRUE)
+		real_owner.playsound_local(get_turf(real_owner), 'sound/effects/magic/curse.ogg', 50, TRUE)
 
 /obj/structure/trap/eldritch/tentacle
 	name = "grasping carving"
@@ -235,7 +235,7 @@
 	carbon_victim.Paralyze(5 SECONDS)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_R_LEG)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_L_LEG)
-	playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
 
 /obj/structure/trap/eldritch/mad
 	name = "mad carving"
@@ -256,4 +256,4 @@
 	carbon_victim.set_dizzy_if_lower(40 SECONDS)
 	carbon_victim.adjust_temp_blindness(4 SECONDS)
 	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
-	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/magic/blind.ogg', 75, TRUE)

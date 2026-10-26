@@ -1,7 +1,7 @@
 /// A spell type that adds mutations to the caster temporarily.
 /datum/action/cooldown/spell/apply_mutations
 	button_icon_state = "mutate"
-	sound = 'sound/magic/mutate.ogg'
+	sound = 'sound/effects/magic/mutate.ogg'
 
 	school = SCHOOL_TRANSMUTATION
 
@@ -10,7 +10,7 @@
 	/// The duration the mutations will last afetr cast (keep this above the minimum cooldown)
 	var/mutation_duration = 10 SECONDS
 
-/datum/action/cooldown/spell/apply_mutations/New(Target)
+/datum/action/cooldown/spell/apply_mutations/New(Target, original = TRUE)
 	. = ..()
 	spell_requirements |= SPELL_REQUIRES_HUMAN // The spell involves mutations, so it always require human / dna
 

@@ -4,7 +4,7 @@
 	particle_state = "drop"
 	duration = 0.9 SECONDS
 	spawn_interval = 0.1 SECONDS
-	burst_amount = 3
+	burst_amount = 4
 
 /datum/component/particle_spewer/rain/animate_particle(obj/effect/abstract/particle/spawned)
 	if(prob(45))

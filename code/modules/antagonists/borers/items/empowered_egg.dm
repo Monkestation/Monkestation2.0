@@ -19,6 +19,8 @@
 	var/burst_time = 3 MINUTES
 	/// What generation the egg will be
 	var/generation = 0
+	/// The team we should make our borers join
+	var/datum/team/cortical_borers/borer_team
 
 /obj/item/organ/internal/empowered_borer_egg/on_find(mob/living/finder)
 	..()
@@ -28,6 +30,10 @@
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
+
+/obj/item/organ/internal/empowered_borer_egg/Destroy(force)
+	borer_team = null
+	return ..()
 
 /obj/item/organ/internal/empowered_borer_egg/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	..()
@@ -58,9 +64,11 @@
 		return
 	var/mob/dead/observer/new_borer = pick(candidates)
 	var/mob/living/basic/cortical_borer/empowered/spawned_cb = new(owner.drop_location())
-	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
 	spawned_cb.generation = generation
 	spawned_cb.PossessByPlayer(new_borer.ckey)
-	spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)
+	if(borer_team)
+		var/datum/antagonist/cortical_borer/antag = spawned_cb.mind.has_antag_datum(/datum/antagonist/cortical_borer)
+		borer_team.add_member(spawned_cb.mind, antag)
 	owner.visible_message(span_danger("[spawned_cb] explodes out of [owner]'s chest, sending gore flying everywhere!"), span_danger("[spawned_cb] explodes out of your chest, giblets flying everywhere!"))
+	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
 	chest.dismember()

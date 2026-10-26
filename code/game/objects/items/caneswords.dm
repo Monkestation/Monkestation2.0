@@ -29,8 +29,8 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
-	block_sound = 'sound/weapons/parry.ogg'
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 15
 	bare_wound_bonus = 25
@@ -54,8 +54,8 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
-	block_sound = 'sound/weapons/parry.ogg'
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 15
 	bare_wound_bonus = 25
@@ -78,8 +78,8 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
-	block_sound = 'sound/weapons/parry.ogg'
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 5
 	bare_wound_bonus = 15

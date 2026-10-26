@@ -3,7 +3,7 @@
 /obj/machinery/recycler
 	name = "recycler"
 	desc = "A large crushing machine used to recycle small items inefficiently. There are lights on the side."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
@@ -16,7 +16,7 @@
 	var/amount_produced = 50
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
-	var/item_recycle_sound = 'sound/items/welder.ogg'
+	var/item_recycle_sound = 'sound/items/tools/welder.ogg'
 	var/datum/component/material_container/materials
 
 /obj/machinery/recycler/Initialize(mapload)
@@ -183,7 +183,7 @@
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten * 5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', (50 + not_eaten * 5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/weapon)
 	. = FALSE
@@ -202,7 +202,7 @@
 	qdel(weapon)
 
 /obj/machinery/recycler/proc/emergency_stop()
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 	safety_mode = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(reboot)), SAFETY_COOLDOWN)
@@ -217,7 +217,7 @@
 	L.forceMove(loc)
 
 	if(issilicon(L))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 

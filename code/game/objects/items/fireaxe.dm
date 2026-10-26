@@ -19,7 +19,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_fireaxe
 	resistance_flags = FIRE_PROOF
@@ -97,7 +97,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	demolition_mod = 2
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	usesound = 'sound/items/crowbar.ogg'
+	usesound = 'sound/items/tools/crowbar.ogg'
 
 /*
  * Energised Fire Axe
@@ -122,7 +122,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	wound_bonus = 10
 	armour_penetration = 75
 	armour_ignorance = 10
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 
 /obj/item/fireaxe/energy/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! Heavens above it's going clean through!"))

@@ -28,7 +28,7 @@
 	///Time the revenant is revealed for when used, or the amount the reveal is extended by when already revealed.
 	var/reveal_duration = 5 SECONDS
 
-/datum/action/cooldown/spell/revenant_reveal/New(Target)
+/datum/action/cooldown/spell/revenant_reveal/New(Target, original = TRUE)
 	. = ..()
 	if(!isrevenant(target))
 		stack_trace("[type] was given to a non-revenant mob, please don't.")
@@ -77,7 +77,7 @@
 	// How long it stuns the revenant
 	var/stun_duration = 2 SECONDS
 
-/datum/action/cooldown/spell/aoe/revenant/New(Target)
+/datum/action/cooldown/spell/aoe/revenant/New(Target, original = TRUE)
 	. = ..()
 	if(!isrevenant(target))
 		stack_trace("[type] was given to a non-revenant mob, please don't.")
@@ -178,7 +178,7 @@
 			human_mob.electrocute_act(shock_damage, to_shock, flags = SHOCK_NOGLOVES)
 
 		do_sparks(4, FALSE, human_mob)
-		playsound(human_mob, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+		playsound(human_mob, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /datum/action/cooldown/spell/aoe/revenant/defile

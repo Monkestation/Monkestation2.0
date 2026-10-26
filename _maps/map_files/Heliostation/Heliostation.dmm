@@ -3920,15 +3920,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/misc/asteroid,
 /area/station/security/prison/rec)
-"awr" = (
-/obj/effect/turf_decal/box/corners,
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
-/obj/machinery/computer/order_console/bitrunning,
-/turf/open/misc/asteroid,
-/area/station/security/prison/rec)
 "aws" = (
 /obj/machinery/netpod,
 /turf/open/misc/asteroid,
@@ -32116,12 +32107,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
-"flX" = (
-/obj/structure/table/reinforced,
-/obj/item/surgery_tray,
-/obj/item/autopsy_scanner,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "flY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
 	dir = 4
@@ -52355,6 +52340,12 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology/isolation)
+"mUb" = (
+/obj/structure/table/reinforced,
+/obj/item/surgery_tray,
+/obj/item/autopsy_scanner,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "mUy" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -71413,6 +71404,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"ubV" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/machinery/computer/order_console/bitrunning,
+/turf/open/misc/asteroid,
+/area/station/security/prison/rec)
 "ucq" = (
 /obj/machinery/power/smes/full,
 /obj/structure/cable,
@@ -101569,7 +101569,7 @@ akK
 awd
 bks
 ajP
-awr
+ubV
 fjj
 aNF
 fjd
@@ -121431,7 +121431,7 @@ nQX
 aBi
 aEd
 tKV
-flX
+mUb
 gKq
 kcv
 dfl

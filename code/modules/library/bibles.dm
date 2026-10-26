@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	throw_range = 7
 	throwforce = 18
 	force = 18
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches", "curses", "smites")
 	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curses", "smites")

@@ -540,7 +540,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "sW" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},

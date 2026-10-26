@@ -23,6 +23,7 @@
 	inverse_chem_val = 0
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
 	data = list("location_created" = null, "ingested" = FALSE)//So we retain the target location and creator between reagent instances
+	self_consuming = TRUE
 	///The creation point assigned during the reaction
 	var/turf/location_created
 	///The return point indicator

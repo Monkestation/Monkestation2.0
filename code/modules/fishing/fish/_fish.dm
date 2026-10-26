@@ -10,7 +10,7 @@
 	force = 6
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
-	hitsound = 'sound/weapons/slap.ogg'
+	hitsound = 'sound/items/weapons/slap.ogg'
 	///The grind results of the fish. They scale with the weight of the fish.
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME

@@ -4,56 +4,74 @@
 #define HEURISTIC_H 4
 #define PREV_NODE 5
 #define NODE_TURN 6
-#define BLOCKED_FROM 7  // Available directions to explore FROM this node
+#define BLOCKED_FROM 7 // despite the name, this is the dirs still left to try from this node
+#define SLOWDOWN 8 // cached get_heuristic_slowdown(), so it's only worked out once per turf
 
 #define ALL_DIRS (NORTH|SOUTH|EAST|WEST)
 
-#define ASTAR_NODE(turf, dist_from_start, heuristic, prev_node, node_turn, blocked_from) \
-	list(turf, (dist_from_start + heuristic * (1 + PF_TIEBREAKER)), dist_from_start, heuristic, prev_node, node_turn, blocked_from)
+/// The lowest weight A* gives a turf: plain floor in a hallway.
+/// A*'s distance guess assumes every step costs at least this on both ends, so anything lighter is raised to it.
+#define ASTAR_MIN_TURF_WEIGHT (/turf::astar_weight + /area/station/hallway::astar_weight)
 
-#define ASTAR_UPDATE_NODE(node, new_prev, new_g, new_h, new_nt) \
-	node[PREV_NODE] = new_prev; \
-	node[DIST_FROM_START_G] = new_g; \
-	node[HEURISTIC_H] = new_h; \
-	node[TOTAL_COST_F] = new_g + new_h * (1 + PF_TIEBREAKER); \
-	node[NODE_TURN] = new_nt
+/// A turf's get_heuristic_slowdown() as A* counts it: never under ASTAR_MIN_TURF_WEIGHT, and a whole number,
+/// because a node's total cost is its index in the open list.
+#define ASTAR_TURF_WEIGHT(turf) (round(max(turf.get_heuristic_slowdown(), ASTAR_MIN_TURF_WEIGHT), 1))
 
-#define ASTAR_CLOSE_ENOUGH_TO_END(end, checking_turf, mintargetdist) \
-	(checking_turf == end || (mintargetdist && (get_dist_3d(checking_turf, end) <= mintargetdist)))
+#define ASTAR_NODE(turf, dist_from_start, heuristic, prev_node, node_turn, blocked_from, slowdown) \
+	list(turf, (dist_from_start + heuristic), dist_from_start, heuristic, prev_node, node_turn, blocked_from, slowdown)
 
-#define SORT_TOTAL_COST_F(list) (list[TOTAL_COST_F])
+#define ASTAR_STEP_COST(from, to, from_slowdown, to_slowdown) \
+	(abs(from.x - to.x) + abs(from.y - to.y) + from_slowdown + to_slowdown + abs(from.z - to.z) * 5)
+
+/// Lower bound on the cost to get within mintargetdist of the goal: every tile of distance is a step paying at least
+/// ASTAR_MIN_TURF_WEIGHT on both ends. Counting the weights here is what stops A* from flooding everything in range.
+/// PF_TIEBREAKER is multiplied in here and the result rounded, so total costs stay whole numbers.
+#define ASTAR_HEURISTIC(from, to, mintargetdist) \
+	(round(max(0, (1 + 2 * ASTAR_MIN_TURF_WEIGHT) * (abs(from.x - to.x) + abs(from.y - to.y) - mintargetdist) + abs(from.z - to.z) * 5) * (1 + PF_TIEBREAKER), 1))
+
+#define ASTAR_OPEN_INSERT(open, cursor, count, node) \
+	do { \
+		var/__idx = node[TOTAL_COST_F] + 1; \
+		if(__idx > length(open)) { \
+			open.len = __idx * 2; \
+		}; \
+		var/list/__bucket = open[__idx]; \
+		if(__bucket) { \
+			__bucket[++__bucket.len] = node; \
+		} else { \
+			open[__idx] = list(node); \
+		}; \
+		if(__idx < cursor) { \
+			cursor = __idx; \
+		}; \
+		count++; \
+	} while(FALSE)
 
 #define PF_TIEBREAKER 0.005
-#define MASK_ODD 85
-#define MASK_EVEN 170
 
 /datum/pathfind/astar
 	/// The movable we are pathing
 	var/atom/movable/requester
 	/// The turf we're trying to path to.
 	var/turf/end
-	/// The proc used to calculate the distance used in every A* calculation (length of path and heuristic)
-	var/dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d)
-	/// The maximum number of nodes the returned path can be (0 = infinite)
-	var/maxnodes
-	/// The maximum number of nodes to search (default: 30, 0 = infinite)
-	var/maxnodedepth
 	/// Minimum distance to the target before path returns,
 	/// could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
 	var/mintargetdist
-	/// The proc that returns the turfs to consider around the actually processed node.
-	var/adjacent = TYPE_PROC_REF(/turf, reachable_turf_test)
 	/// Whether we should do multi-z pathing or not.
 	var/check_z_levels
 	/// Whether to smooth the path by replacing cardinal turns with diagonals
 	var/smooth_diagonals = TRUE
-	/// Binary sorted list of nodes (lowest weight at end for easy Pop)
+	/// Bucket queue of nodes: open[cost + 1] is a list of every queued node with that total cost.
+	/// Can hold stale copies of a node that later found a better path; openc points at the live one.
 	VAR_PRIVATE/list/open
+	/// Index into open. No bucket below it holds a node.
+	VAR_PRIVATE/open_cursor = 1
+	/// How many nodes are in open, stale copies included.
+	VAR_PRIVATE/open_count = 0
 	/// Turf -> node mapping for nodes in open list
-	VAR_PRIVATE/list/openc
+	VAR_PRIVATE/alist/openc
 	/// turf -> bitmask of blocked directions
-	VAR_PRIVATE/list/closed
-	VAR_PRIVATE/list/cur
+	VAR_PRIVATE/alist/closed
 	VAR_PRIVATE/list/path = null
 
 /datum/pathfind/astar/Destroy(force)
@@ -63,20 +81,15 @@
 	open = null
 	openc = null
 	closed = null
-	cur = null
 	path = null
 	pass_info = null
 
-/datum/pathfind/astar/proc/setup(atom/requester, atom/end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, smooth_diagonals = TRUE, list/datum/callback/on_finish)
+/datum/pathfind/astar/proc/setup(atom/requester, atom/end, max_distance = 30, mintargetdist, list/access = list(), turf/exclude, check_z_levels = TRUE, smooth_diagonals = TRUE, list/datum/callback/on_finish)
 	src.requester = requester
 	src.end = get_turf(end)
-	src.dist = dist
-	src.maxnodes = maxnodes
-	src.maxnodedepth = maxnodes || maxnodedepth
+	src.max_distance = max_distance
 	src.mintargetdist = mintargetdist
-	src.adjacent = adjacent
 	src.avoid = exclude
-	src.simulated_only = simulated_only
 	src.pass_info = new(requester, access, multiz_checks = check_z_levels)
 	src.check_z_levels = check_z_levels
 	src.smooth_diagonals = smooth_diagonals
@@ -92,17 +105,17 @@
 		CRASH("Invalid A* start or destination")
 	if (start == end)
 		return FALSE
-	if (maxnodes && start.distance_3d(end) > maxnodes)
+	if (max_distance && start.distance_3d(end) > max_distance)
 		return FALSE
 
 	open = list()
-	openc = new()
-	closed = new()
+	openc = alist()
+	closed = alist()
 
-	cur = ASTAR_NODE(start, 0, start.distance_3d(end), null, 0, ALL_DIRS)
-	var/list/insert_item = list(cur)
-	BINARY_INSERT_DEFINE_REVERSE(insert_item, open, SORT_VAR_NO_TYPE, cur, SORT_TOTAL_COST_F, COMPARE_KEY)
-	openc[start] = cur
+	var/list/start_node = ASTAR_NODE(start, 0, ASTAR_HEURISTIC(start, end, mintargetdist), null, 0, ALL_DIRS, ASTAR_TURF_WEIGHT(start))
+	open_cursor = start_node[TOTAL_COST_F] + 1
+	ASTAR_OPEN_INSERT(open, open_cursor, open_count, start_node)
+	openc[start] = start_node
 
 	return TRUE
 
@@ -113,38 +126,36 @@
 	if(QDELETED(requester))
 		return FALSE
 
-	var/dist = src.dist
-	var/adjacent = src.adjacent
-	var/maxnodedepth = src.maxnodedepth
+	var/max_distance = src.max_distance
+	var/mintargetdist = src.mintargetdist
 	var/list/open = src.open
-	var/list/openc = src.openc
-	var/list/closed = src.closed
+	var/open_cursor = src.open_cursor
+	var/open_count = src.open_count
+	var/alist/openc = src.openc
+	var/alist/closed = src.closed
+	var/turf/end = src.end
 	var/turf/exclude = src.avoid
 	var/datum/can_pass_info/can_pass_info = src.pass_info
 	var/check_z_levels = src.check_z_levels
+	var/list/multiz_levels = SSmapping.multiz_levels
+	var/list/cardinals = GLOB.cardinals
 	var/atom/movable/our_movable
 
-	while (requester && length(open) && !path)
-		// Pop from end (highest priority in reverse sorted list)
-		src.cur = open[length(open)]
-		var/list/cur = src.cur
-		open.len--
+	while (requester && open_count && !path)
+		var/list/bucket = open[open_cursor]
+		while(!length(bucket))
+			bucket = open[++open_cursor]
+		var/list/cur = bucket[length(bucket)]
+		bucket.len--
+		open_count--
 
 		var/turf/cur_turf = cur[ATURF]
+		if(openc[cur_turf] != cur) // stale copy, a better one went in after it
+			continue
 		openc -= cur_turf
 		closed[cur_turf] = ALL_DIRS
 
-		// Destination check - must be exact match or valid closeenough on same Z-level
-		var/is_destination = (cur_turf == end)
-		// Only consider "close enough" if on the same Z-level
-		var/closeenough = FALSE
-		if (!check_z_levels || cur_turf.z == end.z)
-			if (mintargetdist)
-				closeenough = cur_turf.distance_3d(end) <= mintargetdist
-			else
-				closeenough = cur_turf.distance_3d(end) < 1
-
-		if (is_destination || closeenough)
+		if (cur_turf == end || (mintargetdist && cur_turf.z == end.z && (abs(cur_turf.x - end.x) + abs(cur_turf.y - end.y) <= mintargetdist)))
 			path = list(cur_turf)
 			var/list/prev = cur[PREV_NODE]
 			while (prev)
@@ -152,30 +163,51 @@
 				prev = prev[PREV_NODE]
 			break
 
-		if(maxnodedepth && (cur[NODE_TURN] > maxnodedepth))
+		if(max_distance && (cur[NODE_TURN] >= max_distance))
 			if(TICK_CHECK)
-				return TRUE
+				break
 			continue
 
-		for(var/dir_to_check in GLOB.cardinals)
-			if(!(cur[BLOCKED_FROM] & dir_to_check))
-				continue
-
-			var/turf/T = get_step(cur_turf, dir_to_check)
-
+		// none of this cares which way we're stepping, so do it once per node, not per neighbor
+		var/turf/fall_turf
+		var/obj/structure/stairs/stairs
+		if(check_z_levels)
 			if(isopenspaceturf(cur_turf))
 				if(isnull(our_movable))
 					our_movable = can_pass_info.caller_ref?.resolve() || FALSE
-				if(our_movable && our_movable.can_z_move(DOWN, cur_turf, null, ZMOVE_FALL_FLAGS)) // don't use ?. as this can be false if it fails to resolve for some reason
-					var/turf/turf_below = GET_TURF_BELOW(cur_turf)
-					if(turf_below)
-						T = turf_below
+				if(our_movable && our_movable.can_z_move(DOWN, cur_turf, null, ZMOVE_FALL_FLAGS)) // no ?. here, our_movable is FALSE (not null) when the weakref fails to resolve
+					fall_turf = GET_TURF_BELOW(cur_turf)
+			else if(multiz_levels[cur_turf.z][Z_LEVEL_UP])
+				stairs = locate() in cur_turf
+
+		var/cur_slowdown = cur[SLOWDOWN]
+		var/cur_g = cur[DIST_FROM_START_G]
+		var/next_turn = cur[NODE_TURN] + 1
+
+		if(fall_turf)
+			if(fall_turf != exclude && closed[fall_turf] != ALL_DIRS)
+				var/list/landing = openc[fall_turf]
+				var/landing_slowdown = landing ? landing[SLOWDOWN] : ASTAR_TURF_WEIGHT(fall_turf)
+				var/landing_g = cur_g + ASTAR_STEP_COST(cur_turf, fall_turf, cur_slowdown, landing_slowdown)
+				if((!landing || landing_g < landing[DIST_FROM_START_G]) && cur_turf.reachable_turf_test(requester, fall_turf, can_pass_info))
+					// a fall isn't a step in any of the four dirs, so the landing turf gets all of them
+					landing = ASTAR_NODE(fall_turf, landing_g, ASTAR_HEURISTIC(fall_turf, end, mintargetdist), cur, next_turn, ALL_DIRS, landing_slowdown)
+					ASTAR_OPEN_INSERT(open, open_cursor, open_count, landing)
+					openc[fall_turf] = landing
+			if(TICK_CHECK)
+				break
+			continue
+
+		var/dirs_left = cur[BLOCKED_FROM]
+		for(var/dir_to_check in cardinals)
+			if(!(dirs_left & dir_to_check))
+				continue
+
+			var/turf/T
+			if(stairs?.dir == dir_to_check && stairs.isTerminator())
+				T = get_step_multiz(cur_turf, dir_to_check | UP) || get_step(cur_turf, dir_to_check)
 			else
-				var/obj/structure/stairs/stairs = locate() in cur_turf
-				if(stairs?.isTerminator() && stairs.dir == dir_to_check)
-					var/turf/stairs_destination = get_step_multiz(cur_turf, dir_to_check | UP)
-					if(stairs_destination)
-						T = stairs_destination
+				T = get_step(cur_turf, dir_to_check)
 
 			if(!T || T == exclude)
 				continue
@@ -184,42 +216,50 @@
 			if(closed[T] & reverse)
 				continue
 
-			if(!call(cur_turf, adjacent)(requester, T, can_pass_info))
-				closed[T] |= reverse
+			// dense is dense from every side, so mark it done now
+			if(T.density)
+				closed[T] = ALL_DIRS
 				continue
 
 			var/list/CN = openc[T]
-			var/newg = cur[DIST_FROM_START_G] + call(cur_turf, dist)(T, requester)
+			var/newg
+			if(CN)
+				newg = cur_g + ASTAR_STEP_COST(cur_turf, T, cur_slowdown, CN[SLOWDOWN])
+				if(newg >= CN[DIST_FROM_START_G])
+					continue
+
+			var/reachable
+			if(T.z == cur_turf.z)
+				reachable = T.can_cross_safely(requester) && !cur_turf.LinkBlockedWithAccess(T, can_pass_info)
+			else
+				reachable = cur_turf.reachable_turf_test(requester, T, can_pass_info)
+			if(!reachable)
+				closed[T] |= reverse
+				continue
 
 			if(CN)
-				// Already in open list, check if this is a better path
-				if(newg < CN[DIST_FROM_START_G])
-					// Remove old instance
-					var/list/old_item = list(CN)
-					open -= old_item
+				// the old copy stays in open and gets skipped when popped, digging it out of the bucket costs more
+				var/list/better = ASTAR_NODE(T, newg, CN[HEURISTIC_H], cur, next_turn, CN[BLOCKED_FROM], CN[SLOWDOWN])
+				ASTAR_OPEN_INSERT(open, open_cursor, open_count, better)
+				openc[T] = better
+				continue
 
-					// Update node
-					ASTAR_UPDATE_NODE(CN, cur, newg, CN[HEURISTIC_H], cur[NODE_TURN] + 1)
-
-					// Re-insert with new priority
-					var/list/new_item = list(CN)
-					BINARY_INSERT_DEFINE_REVERSE(new_item, open, SORT_VAR_NO_TYPE, CN, SORT_TOTAL_COST_F, COMPARE_KEY)
-			else
-				// Not in open list, create new node
-				CN = ASTAR_NODE(T, newg, call(T, dist)(end, requester), cur, cur[NODE_TURN] + 1, ALL_DIRS^reverse)
-				var/list/new_item = list(CN)
-				BINARY_INSERT_DEFINE_REVERSE(new_item, open, SORT_VAR_NO_TYPE, CN, SORT_TOTAL_COST_F, COMPARE_KEY)
-				openc[T] = CN
+			var/t_slowdown = ASTAR_TURF_WEIGHT(T)
+			newg = cur_g + ASTAR_STEP_COST(cur_turf, T, cur_slowdown, t_slowdown)
+			CN = ASTAR_NODE(T, newg, ASTAR_HEURISTIC(T, end, mintargetdist), cur, next_turn, ALL_DIRS^reverse, t_slowdown)
+			ASTAR_OPEN_INSERT(open, open_cursor, open_count, CN)
+			openc[T] = CN
 
 		if(TICK_CHECK)
-			return TRUE
+			break
 
+	src.open_cursor = open_cursor
+	src.open_count = open_count
 	return TRUE
 
 /datum/pathfind/astar/finished()
 	if(path)
-		for(var/i = 1 to round(0.5 * length(path)))
-			path.Swap(i, length(path) - i + 1)
+		reverse_range(path)
 
 		if(smooth_diagonals)
 			path = smooth_path_diagonals(path)
@@ -240,7 +280,6 @@
 		var/turf/current = input_path[i]
 		smoothed += current
 
-		// need at least 2 more turfs to check for smoothing
 		if(i + 2 > length(input_path))
 			i++
 			continue
@@ -251,7 +290,6 @@
 		var/dir1 = get_dir(current, next)
 		var/dir2 = get_dir(next, after_next)
 
-		//if card and perp hen attempt to see if diagonal possible
 		if(!ISDIAGONALDIR(dir1) && !ISDIAGONALDIR(dir2) && dir1 != dir2 && dir1 != REVERSE_DIR(dir2))
 			var/diagonal_dir = dir1 | dir2
 			var/turf/diagonal_target = get_step(current, diagonal_dir)
@@ -278,34 +316,32 @@
 	var/turf/intermediate1 = get_step(from, dir1)
 	var/turf/intermediate2 = get_step(from, dir2)
 
-	if(intermediate1 && !intermediate1.density && call(from, adjacent)(requester, intermediate1, pass_info))
-		if(call(intermediate1, adjacent)(requester, end, pass_info))
+	if(intermediate1 && !intermediate1.density && from.reachable_turf_test(requester, intermediate1, pass_info))
+		if(intermediate1.reachable_turf_test(requester, end, pass_info))
 			return TRUE
 
-	if(intermediate2 && !intermediate2.density && call(from, adjacent)(requester, intermediate2, pass_info))
-		if(call(intermediate2, adjacent)(requester, end, pass_info))
+	if(intermediate2 && !intermediate2.density && from.reachable_turf_test(requester, intermediate2, pass_info))
+		if(intermediate2.reachable_turf_test(requester, end, pass_info))
 			return TRUE
 
 	return FALSE
 
-/proc/heap_path_weight_compare_astar(list/a, list/b)
-	return b[TOTAL_COST_F] - a[TOTAL_COST_F]
-
-/turf/proc/reachable_turf_test(requester, turf/target, datum/can_pass_info/pass_info)
+/turf/proc/reachable_turf_test(atom/movable/requester, turf/target, datum/can_pass_info/pass_info)
 	if(!target || target.density)
 		return FALSE
-	if(!target.can_cross_safely(requester)) // dangerous turf! lava or openspace (or others in the future)
+	if(!target.can_cross_safely(requester)) // lava, openspace, etc
 		return FALSE
 	var/z_distance = abs(target.z - z)
-	if(!z_distance) // standard check for same-z pathing
+	if(!z_distance)
 		return !LinkBlockedWithAccess(target, pass_info)
-	if(z_distance != 1) // no single movement lets you move more than one z-level at a time (currently; update if this changes)
+	if(z_distance != 1) // nothing moves more than one z-level at a time
 		return FALSE
-	if(target.z > z) // going up stairs
+	if(target.z > z)
 		var/obj/structure/stairs/stairs = locate() in src
 		if(stairs?.isTerminator() && target == get_step_multiz(src, stairs.dir | UP))
-			return TRUE
-	else if(isopenspaceturf(src)) // going down stairs
+			// same two checks stair_ascend does before it moves anyone
+			return requester.can_z_move(UP, src, null, ZMOVE_ALLOW_BUCKLED) && !requester.can_z_move(DOWN, target, null, ZMOVE_FALL_FLAGS)
+	else if(isopenspaceturf(src))
 		var/turf/turf_below = GET_TURF_BELOW(src)
 		if(!turf_below || target != turf_below)
 			return FALSE
@@ -314,17 +350,12 @@
 			return TRUE
 	return FALSE
 
-/proc/get_dist_3d(atom/source, atom/target)
-	var/turf/source_turf = get_turf(source)
-	return source_turf.distance_3d(get_turf(target))
-
-// Add a helper function to compute 3D Manhattan distance
 /turf/proc/distance_3d(turf/T)
 	if (!istype(T))
 		return 0
 	var/dx = abs(x - T.x)
 	var/dy = abs(y - T.y)
-	var/dz = abs(z - T.z) * 5 // Weight z-level differences higher
+	var/dz = abs(z - T.z) * 5
 	return (dx + dy + dz)
 
 #undef ATURF
@@ -334,8 +365,12 @@
 #undef PREV_NODE
 #undef NODE_TURN
 #undef BLOCKED_FROM
+#undef SLOWDOWN
 #undef ALL_DIRS
+#undef ASTAR_MIN_TURF_WEIGHT
+#undef ASTAR_TURF_WEIGHT
 #undef ASTAR_NODE
-#undef ASTAR_UPDATE_NODE
-#undef ASTAR_CLOSE_ENOUGH_TO_END
-#undef SORT_TOTAL_COST_F
+#undef ASTAR_STEP_COST
+#undef ASTAR_HEURISTIC
+#undef ASTAR_OPEN_INSERT
+#undef PF_TIEBREAKER

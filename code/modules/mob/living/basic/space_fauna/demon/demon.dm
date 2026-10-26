@@ -23,7 +23,7 @@
 	status_flags = CANPUSH
 
 	istate = ISTATE_HARM | ISTATE_BLOCKING
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	faction = list(FACTION_HELL)
 
@@ -33,7 +33,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	death_message = "screams in agony as it sublimates into a sulfurous smoke."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	bodytemp_cold_damage_limit = T0C - 25 //Weak to cold
@@ -69,5 +69,5 @@
 	mind.special_role = ROLE_SLAUGHTER_DEMON
 	mind.add_antag_datum(antag_type)
 
-	SEND_SOUND(src, 'sound/magic/demon_dies.ogg')
+	SEND_SOUND(src, 'sound/effects/magic/demon_dies.ogg')
 	to_chat(src, span_bold("You are currently not currently in the same plane of existence as the station. Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))

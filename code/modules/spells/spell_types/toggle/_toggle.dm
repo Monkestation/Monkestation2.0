@@ -4,7 +4,7 @@
 	/// Whether we're active or not
 	var/active = FALSE
 
-/datum/action/cooldown/spell/toggle/New()
+/datum/action/cooldown/spell/toggle/New(Target, original = TRUE)
 	..()
 	START_PROCESSING(SSfastprocess, src)
 

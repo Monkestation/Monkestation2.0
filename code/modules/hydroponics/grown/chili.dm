@@ -11,7 +11,7 @@
 	production = 20
 	yield = 40
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "chili-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

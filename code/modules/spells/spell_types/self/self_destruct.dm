@@ -3,7 +3,7 @@
 	name = "Self Destruct"
 	desc = "Bathes your body in the heat of a dozen supernovas, dusting it immediately."
 
-	sound = 'sound/magic/wandodeath.ogg'
+	sound = 'sound/effects/magic/wandodeath.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 1.25 SECONDS

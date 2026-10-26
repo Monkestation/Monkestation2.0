@@ -15,7 +15,7 @@
 	health = 300
 	ranged = TRUE
 	projectiletype = /obj/projectile/leaper
-	projectilesound = 'sound/weapons/pierce.ogg'
+	projectilesound = 'sound/items/weapons/pierce.ogg'
 	ranged_cooldown_time = 30
 	pixel_x = -16
 	base_pixel_x = -16

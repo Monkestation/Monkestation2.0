@@ -1,7 +1,7 @@
 /obj/item/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "implant"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 60 SECONDS
@@ -17,8 +17,8 @@
 		imp_in.balloon_alert(imp_in, "no teleport pads detected!")
 		return
 
-	home.Retrieve(imp_in)
-	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
+	if(home.Retrieve(imp_in))
+		on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
 
 /obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(!..())

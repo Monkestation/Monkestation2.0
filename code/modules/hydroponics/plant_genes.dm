@@ -49,6 +49,7 @@
 /datum/plant_gene/core
 	/// The number value of our core gene.
 	var/value = 0
+	mutability_flags = PLANT_GENE_REMOVABLE
 
 /datum/plant_gene/core/get_name()
 	return "[name] [value]"
@@ -914,7 +915,7 @@
 	icon = FA_ICON_FACE_LAUGH_SQUINT
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Sounds that play when this trait triggers
-	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
+	var/list/sounds = list('sound/items/sitcom_laugh/SitcomLaugh1.ogg', 'sound/items/sitcom_laugh/SitcomLaugh2.ogg', 'sound/items/sitcom_laugh/SitcomLaugh3.ogg')
 
 /datum/plant_gene/trait/plant_laughter/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -957,7 +958,7 @@
 	if(!.)
 		return
 
-	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
+	googly = mutable_appearance('icons/obj/service/hydroponics/harvest.dmi', "eyes")
 	googly.appearance_flags = RESET_COLOR
 	our_plant.add_overlay(googly)
 

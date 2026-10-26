@@ -10,7 +10,7 @@
 	production = 1
 	yield = 50
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	possible_mutations = list(/datum/hydroponics/plant_mutation/parsnip)
 	reagents_add = list(/datum/reagent/medicine/oculine = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
@@ -67,7 +67,7 @@
 	lifespan = 60
 	endurance = 50
 	yield = 60
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/redbeet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/sugar = 0.2, /datum/reagent/consumable/nutriment = 0.05)
@@ -92,7 +92,7 @@
 	lifespan = 60
 	endurance = 50
 	yield = 50
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/maxchem)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)

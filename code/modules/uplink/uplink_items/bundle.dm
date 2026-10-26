@@ -1,7 +1,7 @@
 //All bundles and telecrystals
 /datum/uplink_category/bundle
 	name = "Bundles"
-	weight = 10
+	weight = 12
 
 /datum/uplink_item/bundles_tc
 	category = /datum/uplink_category/bundle
@@ -77,7 +77,7 @@
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
-			Contents are sorted to always be worth 100 TC. The Syndicate will only provide one surplus item per agent."
+			Contents are sorted to always be worth 75 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 25
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)

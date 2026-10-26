@@ -20,8 +20,8 @@
 
 /proc/try_servant_warp(mob/living/servant, turf/target_turf)
 	var/mob/living/pulled = servant.pulling
-	playsound(servant, 'sound/magic/magic_missile.ogg', 50, TRUE) //doing this manually for sound volume reasons
-	playsound(target_turf, 'sound/magic/magic_missile.ogg', 50, TRUE)
+	playsound(servant, 'sound/effects/magic/magic_missile.ogg', 50, TRUE) //doing this manually for sound volume reasons
+	playsound(target_turf, 'sound/effects/magic/magic_missile.ogg', 50, TRUE)
 	do_sparks(3, TRUE, servant)
 	do_sparks(3, TRUE, target_turf)
 	do_teleport(servant, target_turf, 0, no_effects = TRUE, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)

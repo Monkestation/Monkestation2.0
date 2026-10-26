@@ -15,7 +15,7 @@
 /datum/mutation/telekinesis/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
 /datum/mutation/telekinesis/setup()
 	. = ..()

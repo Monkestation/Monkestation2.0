@@ -15,7 +15,7 @@
 	var/list/granted_actions = list()
 
 	/// File that bodypart_overlay_icon_states pulls from.
-	var/list/bodypart_overlay_icon = 'icons/mob/species/zombie/special_zombie_overlays.dmi'
+	var/list/bodypart_overlay_icon = 'icons/mob/human/species/zombie/special_zombie_overlays.dmi'
 
 	/// Associative list of bodypart overlays by body zone.
 	var/list/bodypart_overlay_icon_states = list()
@@ -190,6 +190,6 @@
 		blind_message = span_hear("You hear a grotesque cacophony of flesh shifting and tearing!"),
 	)
 
-	playsound(user, 'sound/effects/blobattack.ogg', vol = 80, vary = TRUE)
+	playsound(user, 'sound/effects/blob/blobattack.ogg', vol = 80, vary = TRUE)
 
 #undef FLESH_REQUIRED_TO_EVOLVE

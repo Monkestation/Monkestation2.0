@@ -211,7 +211,7 @@
 	applied_gun.disabled_for_other_reasons = TRUE
 	applied_gun.attack_verb_continuous = list("slashes", "cuts")
 	applied_gun.attack_verb_simple = list("slash", "cut")
-	applied_gun.hitsound = 'sound/weapons/rapierhit.ogg'
+	applied_gun.hitsound = 'sound/items/weapons/rapierhit.ogg'
 
 /datum/laser_weapon_mode/sword/remove_from_weapon(obj/item/gun/energy/modular_laser_rifle/applied_gun)
 	playsound(src, 'sound/items/sheath.ogg', 25, TRUE)

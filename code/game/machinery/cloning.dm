@@ -465,7 +465,7 @@
 		flash_color(mob_occupant, flash_color="#960000", flash_time=100)
 		to_chat(mob_occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
-		SEND_SOUND(mob_occupant, sound('sound/hallucinations/veryfar_noise.ogg',0,1,50))
+		SEND_SOUND(mob_occupant, sound('sound/effects/hallucinations/veryfar_noise.ogg',0,1,50))
 		log_cloning("[key_name(mob_occupant)] destroyed within [src] at [AREACOORD(src)] due to malfunction.")
 		QDEL_IN(mob_occupant, 40)
 
@@ -501,10 +501,10 @@
 
 /obj/machinery/clonepod/proc/horrifyingsound()
 	for(var/i in 1 to 5)
-		playsound(src,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
+		playsound(src,pick('sound/effects/hallucinations/growl1.ogg','sound/effects/hallucinations/growl2.ogg','sound/effects/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
 		sleep(1)
 	sleep(10)
-	playsound(src,'sound/hallucinations/wail.ogg', 100, TRUE)
+	playsound(src,'sound/effects/hallucinations/wail.ogg', 100, TRUE)
 
 /obj/machinery/clonepod/deconstruct(disassembled = TRUE)
 	if(occupant)

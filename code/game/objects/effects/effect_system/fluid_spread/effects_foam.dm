@@ -43,7 +43,7 @@
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
 		plane = FLOOR_PLANE
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
-	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
+	playsound(src, 'sound/effects/bubbles/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	SSfoam.start_processing(src)
 
@@ -347,7 +347,7 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -356,7 +356,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.istate & ISTATE_HARM)

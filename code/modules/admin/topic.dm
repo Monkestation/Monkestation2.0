@@ -1809,23 +1809,23 @@
 //monkestation edit end
 // Token Panel Addition START
 	else if(href_list["token_manager"])
-		SStoken_manager.ui_interact(usr)
+		GLOB.token_manager.ui_interact(usr)
 		return
 	else if(href_list["token_action"])
 		switch(href_list["token_action"])
 			if("accepted")
-				to_chat(usr, span_admin("Tokens accepted this round: [SStoken_manager.accepted_count]"))
+				to_chat(usr, span_admin("Tokens accepted this round: [GLOB.token_manager.accepted_count]"))
 			if("pending")
 				// Show pending requests
-				var/list/pending = SStoken_manager.get_pending_requests_for_panel()
+				var/list/pending = GLOB.token_manager.get_pending_requests_for_panel()
 				if(!length(pending))
 					to_chat(usr, span_admin("No pending token requests."))
 				else
 					for(var/list/request in pending)
 						to_chat(usr, span_admin("[request["requester"]] - [request["type"]]: [request["details"]]"))
 			if("rejected")
-				to_chat(usr, span_admin("Tokens rejected this round: [SStoken_manager.rejected_count]"))
+				to_chat(usr, span_admin("Tokens rejected this round: [GLOB.token_manager.rejected_count]"))
 			if("timed_out")
-				to_chat(usr, span_admin("Tokens timed out this round: [SStoken_manager.timed_out_count]"))
+				to_chat(usr, span_admin("Tokens timed out this round: [GLOB.token_manager.timed_out_count]"))
 		return
 // Token Panel Addition END

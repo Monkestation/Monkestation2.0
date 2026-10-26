@@ -8,14 +8,14 @@
 	resistance_flags = FIRE_PROOF //if it's channeling a cyborg's excess heat, it's probably fireproof
 	force = 5
 	damtype = BURN
-	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg') //the usesounds of a lit welder
-	hitsound = 'sound/items/welder.ogg' //the hitsound of a lit welder
+	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg') //the usesounds of a lit welder
+	hitsound = 'sound/items/tools/welder.ogg' //the hitsound of a lit welder
 
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
 	name = "\improper hyperkinetic dampening projector"
 	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "shield0"
 	base_icon_state = "shield"
 	/// The cyborg who is actively using us.
@@ -375,7 +375,7 @@
 	var/turf/target_turf = get_turf(target)
 	var/obj/effect/portal/inorganic/tunnel = new(current_turf, 1.5 SECONDS, null, FALSE, target_turf)
 	if(tunnel.teleport(user))
-		playsound(user, 'sound/magic/blink.ogg', 25, TRUE)
+		playsound(user, 'sound/effects/magic/blink.ogg', 25, TRUE)
 		current_turf.Beam(target_turf, "light_beam", time = 0.5 SECONDS)
 	return TRUE
 
@@ -388,7 +388,7 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 	if(loc)
-		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
+		playsound(loc, 'sound/effects/magic/charge.ogg', 50, TRUE)
 		if(ismob(loc))
 			balloon_alert(loc, "[current_charges]/[maximum_charges] charges!")
 

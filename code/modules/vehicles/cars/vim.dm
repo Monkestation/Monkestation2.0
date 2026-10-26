@@ -91,7 +91,7 @@
 	update_appearance()
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(atom_integrity == max_integrity)
-		newoccupant.playsound_local(src, 'sound/mecha/nominal.ogg', 50)
+		newoccupant.playsound_local(src, 'sound/vehicles/mecha/nominal.ogg', 50)
 
 /obj/vehicle/sealed/car/vim/mob_try_exit(mob/pilot, mob/user, silent = FALSE, randomstep = FALSE)
 	. = ..()

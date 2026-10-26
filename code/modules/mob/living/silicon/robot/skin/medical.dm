@@ -36,3 +36,21 @@
 		"south" = list(0, 0),
 		"west" = list(0, 0),
 	)
+
+/datum/robot_skin/medical/kerfus
+	name = "Medical Kerfus"
+	icon_state = "kerfus_medical"
+	icon_state_light = "kerfus_medical"
+	hat_offset = list(
+		"north" = list(0, -3),
+		"east" = list(0, -3),
+		"south" = list(0, -3),
+		"west" = list(0, -3),
+	)
+	badge_offset = list(
+		"north" = list(0, -6),
+		"east" = list(0, -6),
+		"south" = list(0, -6),
+		"west" = list(0, -6),
+	)
+	traits = list(TRAIT_CAT)

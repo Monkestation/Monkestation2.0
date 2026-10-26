@@ -86,7 +86,7 @@
 		var/mob/living/current_mob = things[i]
 		var/mob/living/next_mob = things[i + 1]
 		current_mob.mind.transfer_to(next_mob, TRUE)
-		SEND_SOUND(next_mob, sound('sound/magic/mandswap.ogg'))
+		SEND_SOUND(next_mob, sound('sound/effects/magic/mandswap.ogg'))
 		next_mob.Unconscious(unconscious_amount)
 	caster_mind.transfer_to(things[1])
 	caster_body = caster_mind.current

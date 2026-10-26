@@ -285,7 +285,7 @@
 	var/design_delta = length(cached_designs) - previous_design_count
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/twobeep_high.ogg', 25, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 25, TRUE)
 
 	update_static_data_for_all_viewers()
 
@@ -446,7 +446,7 @@
 			ammo_fill_finish(FALSE)
 		update_ammotypes()
 		update_appearance()
-		playsound(loc, 'sound/weapons/autoguninsert.ogg', 18, TRUE)
+		playsound(loc, 'sound/items/weapons/autoguninsert.ogg', 18, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(isliving(user) && materials?.mat_container)
@@ -714,7 +714,7 @@
 	loaded_magazine.update_appearance()
 	flick("ammobench_process", src)
 	directly_use_energy(ROUND_UP(initial(active_power_usage) * 0.1))
-	playsound(loc, 'sound/machines/piston_raise.ogg', 30, TRUE)
+	playsound(loc, 'sound/machines/piston/piston_raise.ogg', 30, TRUE)
 
 	if(length(loaded_magazine.stored_ammo) >= loaded_magazine.max_ammo)
 		ammo_error_message = "CONTAINER IS FULL"
@@ -737,7 +737,7 @@
 		playsound(loc, 'sound/machines/ping.ogg', 20, TRUE)
 		flick("colony_lathe_finish_print", src)
 	else
-		playsound(loc, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		playsound(loc, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 	update_appearance()
 	SStgui.update_uis(src)
 
@@ -776,7 +776,7 @@
 		return
 
 	balloon_alert(user, "deploying...")
-	playsound(src, 'sound/items/ratchet.ogg', 25, TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 25, TRUE)
 	if(!do_after(user, deploy_time, src))
 		return
 

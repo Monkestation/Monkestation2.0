@@ -1,7 +1,7 @@
 /datum/component/particle_spewer/movement/weh
 	unusual_description = "weh"
 	duration = 5 SECONDS
-	burst_amount = 3
+	burst_amount = 4
 
 	particle_state = "map_plushie_lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
@@ -22,4 +22,3 @@
 	animate(spawned, transform = first, time = 0.4 SECONDS, pixel_y = rand(-1, 12) + spawned.pixel_y, pixel_x = rand(-32, 32) + spawned.pixel_x, easing = JUMP_EASING)
 	animate(transform = second, time = 0.5 SECONDS, pixel_y = spawned.pixel_y - 32)
 	animate(spawned, alpha = 0, time = duration)
-	QDEL_IN(spawned, duration)

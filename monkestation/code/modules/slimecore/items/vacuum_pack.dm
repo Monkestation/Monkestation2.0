@@ -614,7 +614,7 @@
 		to_chat(user, span_warning("You need a free hand to hold [nozzle]!"))
 		return
 
-	playsound(user, 'sound/mecha/mechmove03.ogg', 75, TRUE)
+	playsound(user, 'sound/vehicles/mecha/mechmove03.ogg', 75, TRUE)
 
 /obj/item/vacuum_pack/backpack/proc/remove_nozzle()
 	if(QDELETED(nozzle))
@@ -622,7 +622,7 @@
 	if(ismob(nozzle.loc))
 		var/mob/wearer = nozzle.loc
 		wearer.temporarilyRemoveItemFromInventory(nozzle, TRUE)
-		playsound(loc, 'sound/mecha/mechmove03.ogg', 75, TRUE)
+		playsound(loc, 'sound/vehicles/mecha/mechmove03.ogg', 75, TRUE)
 	nozzle.forceMove(src)
 
 /obj/item/vacuum_nozzle

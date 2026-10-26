@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/dropper
 	var/static/dropper_sounds = list(
-		'sound/chemistry/transfer/dropper1.ogg',
-		'sound/chemistry/transfer/dropper2.ogg',
+		'sound/effects/chemistry/transfer/dropper1.ogg',
+		'sound/effects/chemistry/transfer/dropper2.ogg',
 	)
 
 /obj/item/reagent_containers/dropper/proc/after_pour(trans, atom/transed_to, mob/user)

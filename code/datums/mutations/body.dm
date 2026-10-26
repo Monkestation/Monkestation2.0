@@ -527,7 +527,7 @@
 		if(prob(15))
 			owner.acid_act(rand(30, 50) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 10)
 			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
-			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
+			playsound(owner,'sound/items/weapons/sear.ogg', 50, TRUE)
 
 /datum/mutation/gigantism
 	name = "Gigantism"
@@ -1131,4 +1131,4 @@
 	var/obj/item/organ/internal/ears/ears = owner.get_organ_slot(ORGAN_SLOT_EARS) // RIP THEM OUT TO STOP THE NOISE
 	if(ears && SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		to_chat(owner, span_warning("Your ears start to ring!"))
-		SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg', 0, 1, 0, 250))
+		SEND_SOUND(owner, sound('sound/items/weapons/flash_ring.ogg', 0, 1, 0, 250))

@@ -6,9 +6,9 @@
 	/// You can use this var for item path, it would be converted into an item on New().
 	var/obj/item/active_item
 	/// Sound played when extending
-	var/extend_sound = 'sound/mecha/mechmove03.ogg'
+	var/extend_sound = 'sound/vehicles/mecha/mechmove03.ogg'
 	/// Sound played when retracting
-	var/retract_sound = 'sound/mecha/mechmove03.ogg'
+	var/retract_sound = 'sound/vehicles/mecha/mechmove03.ogg'
 
 /obj/item/organ/internal/cyberimp/arm/item_set/Initialize(mapload)
 	. = ..()

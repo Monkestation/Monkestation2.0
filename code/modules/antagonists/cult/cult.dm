@@ -17,7 +17,7 @@
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	antag_hud_name = "cult"
-	stinger_sound = 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg'
+	stinger_sound = 'sound/music/antag/bloodcult/bloodcult_gain.ogg'
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
@@ -296,7 +296,7 @@
 	if(ratio > CULT_RISEN && !cult_risen)
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
-				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_eyes.ogg')
+				SEND_SOUND(mind.current, 'sound/music/antag/bloodcult/bloodcult_eyes.ogg')
 				to_chat(mind.current, span_cultlarge(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
 				mind.current.AddElement(/datum/element/cult_eyes)
 		cult_risen = TRUE
@@ -305,7 +305,7 @@
 	if(ratio > CULT_ASCENDENT && !cult_ascendent)
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
-				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_halos.ogg')
+				SEND_SOUND(mind.current, 'sound/music/antag/bloodcult/bloodcult_halos.ogg')
 				to_chat(mind.current, span_cultlarge(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
@@ -541,7 +541,7 @@
 			continue
 
 		to_chat(cultist.current, span_bold(span_cultlarge("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
-		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
+		SEND_SOUND(cultist.current, sound(pick('sound/effects/hallucinations/over_here2.ogg','sound/effects/hallucinations/over_here3.ogg'), 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 
 	if(duration != INFINITY)
@@ -586,8 +586,7 @@
 	r_hand = /obj/item/melee/blood_magic/stun
 
 /datum/outfit/cultist/post_equip(mob/living/carbon/human/equipped, visualsOnly)
-	equipped.eye_color_left = BLOODCULT_EYE
-	equipped.eye_color_right = BLOODCULT_EYE
+	equipped.set_eye_color(BLOODCULT_EYE)
 	equipped.update_body()
 
 #undef CULT_LOSS

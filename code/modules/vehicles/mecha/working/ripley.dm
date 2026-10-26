@@ -24,8 +24,8 @@
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
 	/// Custom Ripley step and turning sounds (from TGMC)
-	stepsound = 'sound/mecha/powerloader_step.ogg'
-	turnsound = 'sound/mecha/powerloader_turn2.ogg'
+	stepsound = 'sound/vehicles/mecha/powerloader_step.ogg'
+	turnsound = 'sound/vehicles/mecha/powerloader_turn2.ogg'
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -246,7 +246,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		LAZYREMOVE(miner.cargo, crate)
 		if(crate == miner.ore_box)
 			miner.ore_box = null
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [crate]. Cargo compartment capacity: [miner.cargo_capacity - LAZYLEN(miner.cargo)]", LOG_MECHA)
 		return TRUE
 
@@ -282,7 +282,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
 		passenger.forceMove(drop_location())
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		var/obj/vehicle/sealed/mecha/ripley/miner = chassis
 		if(miner)
 			log_message("Unloaded [passenger]. Cargo compartment capacity: [miner.cargo_capacity - contents.len]", LOG_MECHA)
@@ -299,7 +299,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	if(!do_after(user, breakout_time, target = chassis))
 		return
 	to_chat(user, span_notice("You break out of the [src]."))
-	playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)
+	playsound(chassis, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 	cheese_it(user)
 	for(var/mob/freebird in contents)
 		if(user != freebird)

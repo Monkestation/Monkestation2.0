@@ -249,7 +249,7 @@
 
 /datum/action/cooldown/cyborg_miner_shield/New(Target, original)
 	. = ..()
-	shield_overlay = mutable_appearance('icons/mecha/durand_shield.dmi', "borg_shield")
+	shield_overlay = mutable_appearance('icons/mob/effects/durand_shield.dmi', "borg_shield")
 
 /datum/action/cooldown/cyborg_miner_shield/Activate()
 	var/mob/living/silicon/robot/borg = owner
@@ -258,10 +258,10 @@
 		return
 	active = !active
 	if(active)
-		playsound(borg, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
+		playsound(borg, 'sound/vehicles/mecha/mech_shield_raise.ogg', 50, FALSE)
 		RegisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_shield_overlay_update), override = TRUE)
 	else
-		playsound(borg, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
+		playsound(borg, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
 		UnregisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS)
 	borg.update_appearance()
 

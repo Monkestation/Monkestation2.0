@@ -77,20 +77,11 @@
 	metabolized_traits = list(TRAIT_UNNATURAL_RED_GLOWY_EYES, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_FEARLESS, TRAIT_ANALGESIA)
 	/// How much time has the drug been in them?
 	var/constant_dose_time = 0
-	/// What the original color of the user's left eye is
-	var/user_left_eye_color
-	/// What the original color of the user's right eye is
-	var/user_right_eye_color
 
 /datum/reagent/drug/demoneye/on_mob_metabolize(mob/living/carbon/human/our_guy)
 	. = ..()
 
-	user_left_eye_color = our_guy.eye_color_left
-	user_right_eye_color = our_guy.eye_color_right
-
-	our_guy.eye_color_left = BLOODCULT_EYE
-	our_guy.eye_color_right = BLOODCULT_EYE
-	our_guy.update_body()
+	our_guy.add_eye_color(BLOODCULT_EYE, EYE_COLOR_DEMONEYE_PRIORITY)
 
 	our_guy.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 
@@ -109,9 +100,7 @@
 /datum/reagent/drug/demoneye/on_mob_end_metabolize(mob/living/carbon/human/our_guy)
 	. = ..()
 
-	our_guy.eye_color_left = user_left_eye_color
-	our_guy.eye_color_right = user_right_eye_color
-	our_guy.update_body()
+	our_guy.remove_eye_color(EYE_COLOR_DEMONEYE_PRIORITY)
 
 	our_guy.sound_environment_override = NONE
 
@@ -350,7 +339,7 @@
 		span_danger("[source] effortlessly dodges [hitting_projectile]!"),
 		span_userdanger("You effortlessly evade [hitting_projectile]!"),
 	)
-	playsound(source, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	playsound(source, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), 75, TRUE)
 	source.add_filter(TWITCH_BLUR_EFFECT, 2, gauss_blur_filter(5))
 	addtimer(CALLBACK(source, TYPE_PROC_REF(/datum, remove_filter), TWITCH_BLUR_EFFECT), 0.5 SECONDS)
 	return COMPONENT_BULLET_PIERCED

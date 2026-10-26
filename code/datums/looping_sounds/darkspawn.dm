@@ -1,5 +1,5 @@
 /datum/looping_sound/sacrament
-	mid_sounds = list('sound/magic/darkspawn/sacrament_heartbeat_01.ogg' = 1, 'sound/magic/darkspawn/sacrament_heartbeat_02.ogg' = 1, 'sound/magic/darkspawn/sacrament_heartbeat_03.ogg' = 1)
+	mid_sounds = list('sound/effects/magic/darkspawn/sacrament_heartbeat_01.ogg' = 1, 'sound/effects/magic/darkspawn/sacrament_heartbeat_02.ogg' = 1, 'sound/effects/magic/darkspawn/sacrament_heartbeat_03.ogg' = 1)
 	mid_length = 10
 	volume = 30
 	var/stage = 1

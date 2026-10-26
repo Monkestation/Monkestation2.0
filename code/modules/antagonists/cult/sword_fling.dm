@@ -18,7 +18,7 @@
 	active_msg = "You ready yourself to attempt to leap!"
 	var/obj/item/melee/cultblade/haunted/flinged_sword
 
-/datum/action/cooldown/spell/pointed/sword_fling/New(Target, to_fling)
+/datum/action/cooldown/spell/pointed/sword_fling/New(Target, original = TRUE, to_fling)
 	. = ..()
 	flinged_sword = to_fling
 
@@ -61,7 +61,7 @@
 
 		new particle_to_spawn(get_turf(loccer))
 		// loccer.shake_up_animation()
-		playsound(loccer, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		playsound(loccer, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if(prob(resist_chance))
 			flinged_sword.forceMove(get_turf(loccer))

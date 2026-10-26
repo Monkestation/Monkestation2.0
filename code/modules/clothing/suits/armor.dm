@@ -360,7 +360,7 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/balloon_vest/proc/pop()
-	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, vary = TRUE)
 	qdel(src)
 
 /obj/item/clothing/suit/armor/bone

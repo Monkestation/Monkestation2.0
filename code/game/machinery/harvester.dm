@@ -75,15 +75,15 @@
 			var/obj/item/I = A
 			if(!(HAS_TRAIT(I, TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 				return
 	if(!(C.mob_biotypes & MOB_ORGANIC))
 		say("Subject is not organic.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	if(!allow_living && !(C.stat == DEAD || HAS_TRAIT(C, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
 		say("Subject is still alive.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	return TRUE
 
@@ -151,7 +151,7 @@
 	open_machine()
 	if (!success)
 		say("Protocol interrupted. Aborting harvest.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 	else
 		say("Subject has been successfully harvested.")
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)

@@ -22,10 +22,10 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8)
 	attack_verb_continuous = list("pinches", "nips")
 	attack_verb_simple = list("pinch", "nip")
-	hitsound = 'sound/items/wirecutter.ogg'
-	usesound = 'sound/items/wirecutter.ogg'
-	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
-	pickup_sound = 'sound/items/handling/wirecutter_pickup.ogg'
+	hitsound = 'sound/items/tools/wirecutter.ogg'
+	usesound = 'sound/items/tools/wirecutter.ogg'
+	drop_sound = 'sound/items/handling/tools/wirecutter_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/wirecutter_pickup.ogg'
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
 	armor_type = /datum/armor/item_wirecutters
@@ -66,7 +66,7 @@
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"
 	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	icon_state = "cutters"
 	toolspeed = 0.1

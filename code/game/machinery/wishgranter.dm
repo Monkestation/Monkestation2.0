@@ -1,7 +1,7 @@
 /obj/machinery/wish_granter
 	name = "wish granter"
 	desc = "You're not so sure about this, anymore..."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -50,7 +50,7 @@
 			if(QDELETED(player) || isnewplayer(player) || issilicon(player))
 				continue
 			to_chat(player, span_userdanger("An ominous wave of pressure fills the air around you, as if a chaotic malignant blaze had ignited elsewhere."))
-			player.playsound_local(null, 'sound/ambience/antag/wishgranter_awaken.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE)
+			player.playsound_local(null, 'sound/music/antag/wishgranter_awaken.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE)
 			if(isliving(player))
 				var/mob/living/living_player = player
 				living_player.add_mood_event("wishgranter_awakening", /datum/mood_event/wishgranter_awakening)

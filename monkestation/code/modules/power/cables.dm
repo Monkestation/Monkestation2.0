@@ -41,7 +41,7 @@
 	if(!do_after(usr, 5 SECONDS, src))
 		to_chat(usr, span_warning("Your hand slips, and the monitoring equipment is destroyed!"))
 		do_sparks(5, TRUE, src)
-		playsound(usr, 'sound/effects/sparks2.ogg', 100, TRUE)
+		playsound(usr, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
 		new /obj/item/stack/cable_coil(drop_location(), 1)
 		qdel(src) // those electronics are fragile
 		return

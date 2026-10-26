@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/mecha/gygax
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
 	name = "\improper Gygax"
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "gygax"
 	base_icon_state = "gygax"
 	movedelay = 3

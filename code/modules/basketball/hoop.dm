@@ -12,7 +12,7 @@
 /obj/structure/hoop
 	name = "basketball hoop"
 	desc = "Boom, shakalaka!"
-	icon = 'icons/obj/toys/basketball_hoop.dmi'
+	icon = 'icons/obj/fluff/basketball_hoop.dmi'
 	icon_state = "hoop"
 	anchored = TRUE
 	density = TRUE
@@ -38,7 +38,7 @@
 
 /obj/structure/hoop/proc/score(obj/item/toy/basketball/ball, mob/living/baller, points)
 	// we still play buzzer sound regardless of the object
-	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 
 	if(!istype(ball))
 		return
@@ -135,7 +135,7 @@
 	loser.forceMove(loc)
 	loser.Paralyze(100)
 	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
-	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 	baller.stamina.adjust(-STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 

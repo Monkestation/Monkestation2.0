@@ -70,7 +70,7 @@
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
 	speak = list("baaa","baaaAAAAAH!","baaah")
-	sound = list('sound/creatures/sheep1.ogg', 'sound/creatures/sheep2.ogg', 'sound/creatures/sheep3.ogg')
+	sound = list('sound/mobs/non-humanoids/sheep/sheep1.ogg', 'sound/mobs/non-humanoids/sheep/sheep2.ogg', 'sound/mobs/non-humanoids/sheep/sheep3.ogg')
 	emote_hear = list("bleats.")
 	emote_see = list("shakes her head.", "stares into the distance.")
 
@@ -105,7 +105,7 @@
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
-	sound = list('sound/creatures/cow.ogg')
+	sound = list('sound/mobs/non-humanoids/cow/cow.ogg')
 	emote_hear = list("brays.")
 	emote_see = list("shakes her head.")
 
@@ -156,7 +156,7 @@
 	speak = list("oink?","oink","snurf")
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
-	sound = list('sound/creatures/pig1.ogg', 'sound/creatures/pig2.ogg')
+	sound = list('sound/mobs/non-humanoids/pig/pig1.ogg', 'sound/mobs/non-humanoids/pig/pig2.ogg')
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
 

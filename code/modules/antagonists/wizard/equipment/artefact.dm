@@ -17,7 +17,7 @@
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	var/charges = 1
 	var/spawn_type = /obj/tear_in_reality
 	var/spawn_amt = 1

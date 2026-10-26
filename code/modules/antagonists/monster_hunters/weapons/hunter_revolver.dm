@@ -19,7 +19,7 @@
 	can_hold_up = FALSE // no need, really
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/gun/ballistic/revolver/hunter_revolver/examine(mob/user)
 	. = ..()

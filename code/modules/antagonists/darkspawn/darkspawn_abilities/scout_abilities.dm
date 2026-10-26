@@ -29,7 +29,7 @@
 /datum/action/cooldown/spell/toggle/light_eater/Enable()
 	owner.balloon_alert(owner, "akna")
 	owner.visible_message(span_warning("[owner]'s arm contorts into a blade!"), span_velvet("You transform your arm into a blade."))
-	playsound(owner, 'sound/magic/darkspawn/pass_create.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_create.ogg', 50, 1)
 	if(!armblade)
 		armblade = new(owner)
 	owner.put_in_hands(armblade)
@@ -37,7 +37,7 @@
 /datum/action/cooldown/spell/toggle/light_eater/Disable()
 	owner.balloon_alert(owner, "haoo")
 	owner.visible_message(span_warning("[owner]'s blade transforms back!"), span_velvet("You dispel the blade."))
-	playsound(owner, 'sound/magic/darkspawn/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_dispel.ogg', 50, 1)
 	if(armblade)
 		armblade.moveToNullspace()
 
@@ -72,7 +72,7 @@
 /datum/action/cooldown/spell/toggle/shadow_caster/Enable()
 	owner.balloon_alert(owner, "crxkna")
 	owner.visible_message(span_warning("[owner]'s arm contorts into a bow!"), span_velvet("You transform your arm into a bow."))
-	playsound(owner, 'sound/magic/darkspawn/pass_create.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_create.ogg', 50, 1)
 	if(!bow)
 		bow = new (owner)
 	owner.put_in_hands(bow)
@@ -80,7 +80,7 @@
 /datum/action/cooldown/spell/toggle/shadow_caster/Disable()
 	owner.balloon_alert(owner, "haoo")
 	owner.visible_message(span_warning("[owner]'s bow transforms back!"), span_velvet("You dispel the bow."))
-	playsound(owner, 'sound/magic/darkspawn/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_dispel.ogg', 50, 1)
 	if(bow)
 		bow.moveToNullspace()
 
@@ -193,7 +193,7 @@
 	cooldown_time = 90 SECONDS
 
 	sound = 'sound/effects/bamf.ogg'
-	exit_jaunt_sound = 'sound/magic/darkspawn/devour_will_begin.ogg'
+	exit_jaunt_sound = 'sound/effects/magic/darkspawn/devour_will_begin.ogg'
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ninja/cloak
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/ninja
 
@@ -217,7 +217,7 @@
 	button_icon_state = "shadow_jump"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/visor_reticule.dmi'
 	panel = "Darkspawn"
-	sound = 'sound/magic/voidblink.ogg'
+	sound = 'sound/effects/magic/voidblink.ogg'
 
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 20)
 	cooldown_time = 20 SECONDS
@@ -250,7 +250,7 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 65)
 	cooldown_time = 60 SECONDS
-	sound = 'sound/ambience/antag/darkspawn/veil_mind_scream.ogg'
+	sound = 'sound/music/antag/darkspawn/veil_mind_scream.ogg'
 	aoe_radius = 3
 
 /datum/action/cooldown/spell/aoe/permafrost/cast(atom/cast_on)
@@ -288,7 +288,7 @@
 	///boolean, if the chameleon projector is active
 	var/active = FALSE
 
-/datum/action/cooldown/spell/pointed/disguise/New(Target)
+/datum/action/cooldown/spell/pointed/disguise/New(Target, original = TRUE)
 	. = ..()
 	handler = new()
 

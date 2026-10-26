@@ -10,8 +10,7 @@
 	human.set_facial_hairstyle(random_facial_hairstyle(human.gender), update = FALSE)
 	human.set_haircolor("#[random_color()]", update = FALSE)
 	human.set_facial_haircolor(human.hair_color, update = FALSE)
-	human.eye_color_left = random_eye_color()
-	human.eye_color_right = human.eye_color_left
+	human.set_eye_color(random_eye_color())
 	human.skin_tone = random_skin_tone()
 	human.dna.species.randomize_active_underwear_only(human)
 	// Needs to be called towards the end to update all the UIs just set above

@@ -15,7 +15,7 @@
 /obj/vehicle/sealed/mecha/savannah_ivanov
 	name = "\improper Savannah-Ivanov"
 	desc = "An insanely overbulked mecha that handily crushes single-pilot opponents. The price is that you need two pilots to use it."
-	icon = 'icons/mecha/coop_mech.dmi'
+	icon = 'icons/mob/rideables/coop_mech.dmi'
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
@@ -114,7 +114,7 @@
 	switch(skyfall_charge_level)
 		if(1)
 			chassis.visible_message(span_warning("[chassis] clicks and whirrs for a moment, with a low hum emerging from the legs."))
-			playsound(chassis, 'sound/items/rped.ogg', 50, TRUE)
+			playsound(chassis, 'sound/items/tools/rped.ogg', 50, TRUE)
 		if(2)
 			chassis.visible_message(span_warning("[chassis] begins to shake, the sounds of electricity growing louder."))
 			chassis.Shake(1, 1, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
@@ -125,12 +125,12 @@
 			chassis.update_appearance(UPDATE_ICON_STATE)
 		if(4)
 			chassis.visible_message(span_warning("[chassis] sparks and shutters as it finalizes preparation."))
-			playsound(chassis, 'sound/mecha/skyfall_power_up.ogg', 50, TRUE)
+			playsound(chassis, 'sound/vehicles/mecha/skyfall_power_up.ogg', 50, TRUE)
 			chassis.Shake(3, 3, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			chassis.spark_system.start()
 		if(SKYFALL_CHARGELEVEL_LAUNCH)
 			chassis.visible_message(span_danger("[chassis] leaps into the air!"))
-			playsound(chassis, 'sound/weapons/gun/general/rocket_launch.ogg', 50, TRUE)
+			playsound(chassis, 'sound/items/weapons/gun/general/rocket_launch.ogg', 50, TRUE)
 	if(skyfall_charge_level != SKYFALL_CHARGELEVEL_LAUNCH)
 		skyfall_charge_loop()
 		return
@@ -176,7 +176,7 @@
 /datum/action/vehicle/sealed/mecha/skyfall/proc/land()
 	var/turf/landed_on = get_turf(chassis)
 	chassis.visible_message(span_danger("[chassis] lands from above!"))
-	playsound(chassis, 'sound/effects/explosion1.ogg', 50, 1)
+	playsound(chassis, 'sound/effects/explosion/explosion1.ogg', 50, 1)
 	chassis.resistance_flags &= ~INDESTRUCTIBLE
 	chassis.mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
 	chassis.phasing = initial(chassis.phasing)
@@ -293,7 +293,7 @@
 	owner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
 	owner.update_mouse_pointer()
 	owner.overlay_fullscreen("ivanov", /atom/movable/screen/fullscreen/ivanov_display, 1)
-	owner.playsound_local(src, 'sound/machines/terminal_on.ogg', 100) //spammable so I don't want to make it audible to anyone else
+	owner.playsound_local(src, 'sound/machines/terminal/terminal_on.ogg', 100) //spammable so I don't want to make it audible to anyone else
 
 /**
  * ## end_missile_targeting
@@ -335,7 +335,7 @@
 	rockets_left--
 	if(rockets_left <= 0)
 		end_missile_targeting()
-	owner.playsound_local(src, 'sound/machines/triple_beep.ogg', 100)
+	owner.playsound_local(src, 'sound/machines/beep/triple_beep.ogg', 100)
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_MISSILE_STRIKE, strike_cooldown_time)
 	podspawn(list(
 		"target" = target_turf,

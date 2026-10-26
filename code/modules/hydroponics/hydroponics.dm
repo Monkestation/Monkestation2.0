@@ -1169,7 +1169,7 @@
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
 	desc = "A patch of dirt."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	gender = PLURAL
 	circuit = null

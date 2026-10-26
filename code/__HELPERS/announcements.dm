@@ -26,7 +26,7 @@
 	title = "",
 	players,
 	play_sound = TRUE,
-	sound_override = 'sound/ai/default/attention.ogg',
+	sound_override = 'sound/announcer/default/attention.ogg',
 	sender_override = "Server Admin Announcement",
 	encode_title = TRUE,
 	encode_text = FALSE,

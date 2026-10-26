@@ -65,7 +65,7 @@
 	if(isliving(grabbed_atom))
 		var/mob/living/grabbed_mob = grabbed_atom
 		grabbed_mob.Stun(mob_stun_time)
-	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
+	playsound(grabbed_atom, 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg', 75, TRUE)
 	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
@@ -193,7 +193,7 @@
 	return TRUE
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch()
-	playsound(grabbed_atom, 'sound/magic/repulse.ogg', 100, TRUE)
+	playsound(grabbed_atom, 'sound/effects/magic/repulse.ogg', 100, TRUE)
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, grabbed_atom), get_turf(src), 10)
 	grabbed_atom.throw_at(target_turf, range = grab_range, speed = grabbed_atom.density ? 3 : 4, thrower = mod.wearer, spin = isitem(grabbed_atom))

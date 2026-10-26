@@ -16,7 +16,7 @@
 	to_chat(user, span_notice("You feel an itching, both inside and outside as your tissues knit and reknit."))
 	var/mob/living/carbon/carbon_user = user
 	if(length(carbon_user.get_missing_limbs()))
-		playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		carbon_user.visible_message(
 			span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
 			span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),

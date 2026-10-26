@@ -29,9 +29,9 @@
 		/obj/item/weldingtool = 55,
 		/obj/item/lighter = 35)
 	time = 52
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/organ1.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
+	success_sound = 'sound/items/handling/surgery/organ1.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 
 /datum/surgery_step/splenorrhaphy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

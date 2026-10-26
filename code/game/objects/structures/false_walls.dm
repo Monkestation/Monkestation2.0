@@ -132,7 +132,7 @@
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)

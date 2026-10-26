@@ -158,27 +158,6 @@
 		. += mutable_appearance(icon, "brakes_down")
 		. += emissive_appearance(icon, "brakes_down", src, alpha = src.alpha)
 
-/obj/structure/bed/medical/emergency/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/emergency_bed/silicon))
-		var/obj/item/emergency_bed/silicon/silicon_bed = item
-		if(silicon_bed.loaded)
-			to_chat(user, span_warning("You already have a medical bed docked!"))
-			return
-
-		if(has_buckled_mobs())
-			if(buckled_mobs.len > 1)
-				unbuckle_all_mobs()
-				user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
-			else
-				user_unbuckle_mob(buckled_mobs[1],user)
-		else
-			silicon_bed.loaded = src
-			forceMove(silicon_bed)
-			user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
-		return TRUE
-	else
-		return ..()
-
 /obj/structure/bed/medical/emergency/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -203,21 +182,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
-
-/obj/item/emergency_bed/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/emergency_bed/silicon))
-		var/obj/item/emergency_bed/silicon/silicon_bed = item
-		if(silicon_bed.loaded)
-			to_chat(user, span_warning("[silicon_bed] already has a roller bed loaded!"))
-			return
-
-		user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [silicon_bed]."))
-		silicon_bed.loaded = new/obj/structure/bed/medical/emergency(silicon_bed)
-		qdel(src) //"Load"
-		return
-
-	else
-		return ..()
 
 /obj/item/emergency_bed/attack_self(mob/user)
 	deploy_bed(user, user.loc)
@@ -246,26 +210,59 @@
 		deployed.user_buckle_mob(patient, user, FALSE)
 	qdel(src)
 
-/obj/item/emergency_bed/silicon // ROLLER ROBO DA!
+/obj/item/emergency_bed/silicon
 	name = "emergency bed dock"
 	desc = "A collapsed medical bed that can be ejected for emergency use. Must be collected or replaced after use."
+	/// The roller bed that we have stored.
 	var/obj/structure/bed/medical/emergency/loaded = null
 
 /obj/item/emergency_bed/silicon/Initialize(mapload)
 	. = ..()
 	loaded = new(src)
 
+/obj/item/emergency_bed/silicon/Destroy(force)
+	. = ..()
+	if(loaded)
+		QDEL_NULL(loaded)
+
 /obj/item/emergency_bed/silicon/examine(mob/user)
 	. = ..()
 	. += "The dock is [loaded ? "loaded" : "empty"]."
 
+/obj/item/emergency_bed/silicon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/emergency_bed))
+		if(loaded)
+			to_chat(user, span_warning("[src] already has a roller bed docked!"))
+			return ITEM_INTERACT_BLOCKING
+		user.visible_message(span_notice("[user] loads [interacting_with]."), span_notice("You load [interacting_with] into [src]."))
+		loaded = new /obj/structure/bed/medical/emergency(src)
+		qdel(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/structure/bed/medical/emergency))
+		if(loaded)
+			to_chat(user, span_warning("[src] already has a medical bed docked!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!has_buckled_mobs())
+			var/obj/structure/bed/medical/emergency/interacting_bed = interacting_with
+			user.visible_message(span_notice("[user] collects [interacting_bed]."), span_notice("You collect [interacting_bed]."))
+			loaded = interacting_with
+			interacting_bed.forceMove(src)
+			return ITEM_INTERACT_SUCCESS
+		if(length(buckled_mobs.len) > 1)
+			user.visible_message(span_notice("[user] unbuckles all creatures from [interacting_with]."))
+			unbuckle_all_mobs()
+			return ITEM_INTERACT_SUCCESS
+		user_unbuckle_mob(buckled_mobs[1], user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
 /obj/item/emergency_bed/silicon/deploy_bed(mob/user, atom/location)
-	if(loaded)
-		loaded.forceMove(location)
-		user.visible_message(span_notice("[user] deploys [loaded]."), span_notice("You deploy [loaded]."))
-		loaded = null
-	else
+	if(!loaded)
 		to_chat(user, span_warning("The dock is empty!"))
+		return
+	user.visible_message(span_notice("[user] deploys [loaded]."), span_notice("You deploy [loaded]."))
+	loaded.forceMove(location)
+	loaded = null
 
 /// Dog bed
 /obj/structure/bed/dogbed

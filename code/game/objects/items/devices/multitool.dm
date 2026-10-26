@@ -24,12 +24,12 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	drop_sound = 'sound/items/handling/multitool_drop.ogg'
-	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/multitool_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/multitool_pickup.ogg'
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
-	usesound = 'sound/weapons/empty.ogg'
+	usesound = 'sound/items/weapons/empty.ogg'
 	var/datum/weakref/buffer // simple machine buffer for device linkage
 	var/mode = 0
 	var/apc_scanner = TRUE
@@ -305,7 +305,7 @@
 /obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "multitool"
 	belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
@@ -331,7 +331,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
 	tool_behaviour = TOOL_MULTITOOL
-	usesound = 'sound/weapons/etherealhit.ogg'
+	usesound = 'sound/items/weapons/etherealhit.ogg'
 	toolspeed = 0.2
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY

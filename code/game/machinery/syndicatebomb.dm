@@ -2,7 +2,7 @@
 #define BUTTON_DELAY 50 //five seconds
 
 /obj/machinery/syndicatebomb
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	name = "syndicate bomb"
 	icon_state = "syndicate-bomb"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
@@ -321,7 +321,7 @@
 /obj/item/bombcore
 	name = "bomb payload"
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bombcore"
 	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -515,7 +515,7 @@
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
-		playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
 	if(adminlog)
@@ -602,7 +602,7 @@
 /obj/item/syndicatedetonator
 	name = "big red button"
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bigred"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

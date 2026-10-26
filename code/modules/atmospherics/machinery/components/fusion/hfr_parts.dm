@@ -431,7 +431,7 @@
 /obj/item/hfr_box
 	name = "HFR box"
 	desc = "If you see this, call the police."
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "error"
 	///What kind of box are we handling?
 	var/box_type = "impossible"

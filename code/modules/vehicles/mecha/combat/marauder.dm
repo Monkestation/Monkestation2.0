@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/mecha/marauder
 	desc = "Heavy-duty, combat exosuit, developed after the Durand model. Rarely found among civilian populations."
 	name = "\improper Marauder"
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "marauder"
 	base_icon_state = "marauder"
 	movedelay = 5
@@ -93,7 +94,7 @@
 	to_chat(owner, "[icon2html(chassis, owner)]<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
 	if(chassis.zoom_mode)
 		owner.client.view_size.setTo(4.5)
-		owner.playsound_local(src, 'sound/mecha/imag_enh.ogg', 50)
+		owner.playsound_local(src, 'sound/vehicles/mecha/imag_enh.ogg', 50)
 	else
 		owner.client.view_size.resetToDefault()
 	build_all_button_icons()

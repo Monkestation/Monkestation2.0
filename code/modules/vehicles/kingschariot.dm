@@ -4,7 +4,7 @@
 /obj/vehicle/ridden/kingschariot
 	name = "The Kings Chariot"
 	desc = "It is foretold that it cannot be stopped, we beg you to try."
-	icon = 'icons/obj/car.dmi'
+	icon = 'icons/obj/toys/car.dmi'
 	icon_state = "kingschariot"
 	layer = LYING_MOB_LAYER
 	pixel_y = -48

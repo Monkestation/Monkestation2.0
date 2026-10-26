@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 
 	busy = TRUE
 	balloon_alert(user, "printing cassette...")
-	playsound(src, 'sound/machines/terminal_processing.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 50, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_printing), selected_cassette, user), 2 SECONDS)
 

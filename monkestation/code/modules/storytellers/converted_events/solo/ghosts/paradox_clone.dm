@@ -80,7 +80,7 @@
 	var/datum/antagonist/paradox_clone/new_datum = antag_mind.add_antag_datum(/datum/antagonist/paradox_clone)
 	new_datum.original_ref = WEAKREF(clone_victim.mind)
 	new_datum.setup_clone()
-	playsound(new_human, 'sound/weapons/zapbang.ogg', 30, TRUE)
+	playsound(new_human, 'sound/items/weapons/zapbang.ogg', 30, TRUE)
 	new /obj/item/storage/toolbox/mechanical(new_human.loc) //so they dont get stuck in maints
 
 	message_admins("[ADMIN_LOOKUPFLW(new_human)] has been made into a Paradox Clone by the midround ruleset.")

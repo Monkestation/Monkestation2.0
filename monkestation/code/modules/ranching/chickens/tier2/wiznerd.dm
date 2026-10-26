@@ -49,7 +49,7 @@
 	icon_state = "arcane_barrage"
 	damage = 10
 	damage_type = BURN
-	hitsound = 'sound/weapons/barragespellhit.ogg'
+	hitsound = 'sound/items/weapons/barragespellhit.ogg'
 
 
 /datum/action/cooldown/spell/pointed/projectile/arcane_barrage
@@ -57,7 +57,7 @@
 	desc = "This spell fires a series of arcane bolts at a target."
 	button_icon_state = "arcane_barrage"
 
-	sound = 'sound/magic/fireball.ogg'
+	sound = 'sound/effects/magic/fireball.ogg'
 	school = SCHOOL_EVOCATION
 	cooldown_time = 45 SECONDS
 

@@ -1,6 +1,6 @@
 /datum/uplink_category/melees
 	name = "Melees"
-	weight = 7
+	weight = 9
 
 /datum/uplink_item/melees
 	category = /datum/uplink_category/melees

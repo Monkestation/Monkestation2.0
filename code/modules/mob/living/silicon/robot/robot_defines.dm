@@ -304,3 +304,34 @@
 		Your cyborg chameleon projector allows you to assume the appearance and registered name of a Nanotrasen engineering borg, and undertake covert actions on the station \
 		Be aware that almost any physical contact or incidental damage will break your camouflage \
 		<i>Help the operatives secure the disks at all costs!</i></b>"
+
+/mob/living/silicon/robot/model/ninja
+	model = /obj/item/robot_model/ninja
+	icon_state = "ninja_sec"
+	faction = list(ROLE_NINJA)
+	lawupdate = FALSE
+	scrambledcodes = TRUE
+	ionpulse = TRUE
+	cell = /obj/item/stock_parts/power_store/cell/hyper
+
+/mob/living/silicon/robot/model/ninja/Initialize(mapload)
+	laws = new /datum/ai_laws/ninja_override()
+	laws.associate(src)
+	return ..()
+
+/mob/living/silicon/robot/model/ninja/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/ninja(src)
+		modularInterface.imprint_id(job_name = "Cyborg")
+	return ..()
+
+/mob/living/silicon/robot/model/ninja/reset_model()
+	return // Let them stay on the model forever.
+
+/mob/living/silicon/robot/model/ninja/medical
+	model = /obj/item/robot_model/ninja/medical
+	icon_state = "ninja_medical"
+
+/mob/living/silicon/robot/model/ninja/saboteur
+	model = /obj/item/robot_model/ninja/saboteur
+	icon_state = "ninja_engi"

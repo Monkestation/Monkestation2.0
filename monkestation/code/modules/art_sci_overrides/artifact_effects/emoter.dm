@@ -40,8 +40,8 @@
 	for(var/i = 1 to rand(3,4))
 		picked_emotes += pick(all_emotes)
 
-	activation_sound = pick('sound/mecha/mech_shield_drop.ogg')
-	deactivation_sound = pick('sound/mecha/mech_shield_raise.ogg','sound/magic/forcewall.ogg')
+	activation_sound = pick('sound/vehicles/mecha/mech_shield_drop.ogg')
+	deactivation_sound = pick('sound/vehicles/mecha/mech_shield_raise.ogg','sound/effects/magic/forcewall.ogg')
 	shield_time = rand(10,40) SECONDS
 	radius = rand(1,10)
 	cooldown_time = shield_time / 3

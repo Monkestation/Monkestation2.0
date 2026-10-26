@@ -24,7 +24,7 @@
 	/// Sharpness while active.
 	var/active_sharpness = SHARP_EDGED
 	/// Hitsound played attacking while active.
-	var/active_hitsound = 'sound/weapons/blade1.ogg'
+	var/active_hitsound = 'sound/items/weapons/blade1.ogg'
 	/// Weight class while active.
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
@@ -122,7 +122,7 @@
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
 		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 	update_appearance(UPDATE_ICON_STATE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -136,7 +136,7 @@
 	base_icon_state = "axe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
 	force = 40
@@ -189,7 +189,7 @@
 	armour_penetration = 50
 	armour_ignorance = 5
 	block_chance = 50
-	block_sound = 'sound/weapons/block_blade.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	embed_type = /datum/embedding/esword
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -223,12 +223,15 @@
 		return
 	attack_self(user)
 
+/obj/item/melee/energy/sword/cyborg/ninja
+	sword_color_icon = "green"
+
 /obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "esaw"
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
 	force = 18
 	hitcost = 75 // Costs more than a standard cyborg esword.
 	w_class = WEIGHT_CLASS_NORMAL
@@ -242,6 +245,9 @@
 
 /obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
+
+/obj/item/melee/energy/sword/cyborg/saw/ninja
+	icon_state = "esaw_ninja"
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
@@ -321,7 +327,7 @@
 	base_icon_state = "blade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	force = 30

@@ -19,8 +19,8 @@ Chilling extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-	playsound(src, 'sound/effects/glassbr1.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr1.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/chilling/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -173,8 +173,7 @@ Chilling extracts:
 	to_chat(user, span_notice("You feel [src] pulse as it begins charging bluespace energies..."))
 	active = TRUE
 	for(var/mob/living/M in allies)
-		var/datum/status_effect/slimerecall/S = M.apply_status_effect(/datum/status_effect/slimerecall)
-		S.target = user
+		M.apply_status_effect(/datum/status_effect/slimerecall, user)
 	if(do_after(user, 10 SECONDS, target=src))
 		to_chat(user, span_notice("[src] shatters as it tears a hole in reality, snatching the linked individuals from the void!"))
 		for(var/mob/living/M in allies)

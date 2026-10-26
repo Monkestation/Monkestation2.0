@@ -3,7 +3,7 @@
 	desc = "This spell charges your hand with an unholy energy \
 		that can be used to cause a touched victim to violently explode."
 	button_icon_state = "gib"
-	sound = 'sound/magic/disintegrate.ogg'
+	sound = 'sound/effects/magic/disintegrate.ogg'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 1 MINUTES

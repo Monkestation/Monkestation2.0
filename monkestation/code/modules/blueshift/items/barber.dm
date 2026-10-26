@@ -152,14 +152,14 @@
 	proj.firer = user
 	proj.fired_from = user
 	proj.fire((dir2angle(user.dir) + rand(-projectile_aim_radius, projectile_aim_radius)))
-	playsound(src, 'sound/weapons/effects/batreflect.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/effects/batreflect.ogg', 25, TRUE)
 	//get rid of what we just launched to let projectile_drop spawn a new one
 	qdel(src)
 
 /obj/projectile/bullet/hair_tie
 	icon = 'monkestation/code/modules/blueshift/icons/items.dmi'
 	icon_state = "hairtie"
-	hitsound = 'sound/weapons/genhit.ogg'
+	hitsound = 'sound/items/weapons/genhit.ogg'
 	damage = 0 //its just about the knockdown
 	sharpness = NONE
 	shrapnel_type = NONE //no embedding pls
@@ -283,7 +283,7 @@
 /obj/machinery/vending/barbervend
 	name = "Fab-O-Vend"
 	desc = "It would seem it vends dyes, and other stuff to make you pretty."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "barbervend"
 	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
 	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"

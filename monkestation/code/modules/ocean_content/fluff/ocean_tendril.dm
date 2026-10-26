@@ -20,7 +20,7 @@
 /obj/effect/collapse/ocean/collapse()
 	for(var/mob/M in range(7,src))
 		shake_camera(M, 15, 1)
-	playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, TRUE)
+	playsound(get_turf(src),'sound/effects/explosion/explosionfar.ogg', 200, TRUE)
 	visible_message(span_boldannounce("The tendril falls inward, the ground around it filling with magma!"))
 	for(var/turf/T in RANGE_TURFS(2,src))
 		if(!T.density)

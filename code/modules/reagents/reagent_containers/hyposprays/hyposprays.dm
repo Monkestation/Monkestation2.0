@@ -45,9 +45,9 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 	//	Sound Vars	//
 	/// The sound that plays when you insert a vial into the hypospray
-	var/load_sound = 'sound/weapons/autoguninsert.ogg'
+	var/load_sound = 'sound/items/weapons/autoguninsert.ogg'
 	/// The sound that plays when you eject a vial from the hypospray
-	var/eject_sound = 'sound/weapons/empty.ogg'
+	var/eject_sound = 'sound/items/weapons/empty.ogg'
 	/// The sound that plays when you inject someone with the hypospray
 	var/inject_sound = 'sound/items/hypospray.ogg'
 	/// The sound that plays when you spray someone with the hypospray

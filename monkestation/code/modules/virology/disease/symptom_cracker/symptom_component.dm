@@ -116,14 +116,14 @@
 
 
 /datum/component/symptom_genes/proc/on_puzzle_fail()
-	playsound(current_user, 'sound/machines/defib_failed.ogg', 50, FALSE)
+	playsound(current_user, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 	current_choice = null
 	current_user = null
 	current_extrapolator = null
 	cleanup_puzzle()
 
 /datum/component/symptom_genes/proc/on_puzzle_success()
-	playsound(current_user, 'sound/machines/defib_success.ogg', 50, FALSE)
+	playsound(current_user, 'sound/machines/defib/defib_success.ogg', 50, FALSE)
 	var/mob/living/carbon/human/human = parent
 	var/uncapped = FALSE
 	if(human.mind)

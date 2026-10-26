@@ -29,7 +29,7 @@
 
 		for(var/body_part in body_parts)
 			var/gender = body_part == BODY_ZONE_CHEST ? "_m" : ""
-			floran_body.blend_icon(uni_icon('icons/mob/species/floran/bodyparts.dmi', "floran_[body_part][gender]"), ICON_OVERLAY)
+			floran_body.blend_icon(uni_icon('icons/mob/human/species/floran/bodyparts.dmi', "floran_[body_part][gender]"), ICON_OVERLAY)
 
 		floran_body.blend_color("#8fc433", ICON_MULTIPLY)
 		floran_body.blend_icon(uni_icon('icons/mob/species/human/human_face.dmi', "[/obj/item/organ/internal/eyes/floran::eye_icon_state]_l"), ICON_OVERLAY)

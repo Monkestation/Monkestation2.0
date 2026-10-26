@@ -565,6 +565,15 @@
 	/// damage modifier to all incoming damage, which is also converted to brain damage
 	var/damage_modifier = 1
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_gained(mob/living/user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	if(heretic_datum?.heretic_path?.route != PATH_MOON)
+		return
+	user.AddComponentFrom(REF(src), /datum/component/moon_blade_channel)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_lost(mob/living/user)
+	user.RemoveComponentSource(REF(src), /datum/component/moon_blade_channel)
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!ishuman(user) || !(slot_flags & slot))
@@ -698,7 +707,7 @@
 	visible_message = replacetext(visible_message, "%ATTACKER", attacker.get_visible_name())
 
 	var/self_message = pick(self_message_list)
-	self_message = replacetext(self_message_list, "%ATTACKER", attacker.get_visible_name())
+	self_message = replacetext(self_message, "%ATTACKER", attacker.get_visible_name())
 
 	var/blind_message = pick(blind_message_list)
 	victim.visible_message(span_danger(visible_message), span_userdanger(self_message), span_danger(blind_message))
@@ -1089,7 +1098,7 @@
 			continue
 		victim.apply_status_effect(/datum/status_effect/void_chill, 1)
 	new /obj/effect/temp_visual/circle_wave/void_armor(get_turf(owner))
-	playsound(owner, 'sound/magic/voidblink.ogg', vol = 20, vary = TRUE, frequency = 2)
+	playsound(owner, 'sound/effects/magic/voidblink.ogg', vol = 20, vary = TRUE, frequency = 2)
 	return TRUE
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void

@@ -30,8 +30,8 @@
 		/obj/item/stack/cable_coil = 10,
 		/obj/item/stack/sticky_tape = 10,
 	)
-	preop_sound = 'sound/surgery/hemostat1.ogg'
-	success_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	time = 6 SECONDS
 	repeatable = TRUE
 

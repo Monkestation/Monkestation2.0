@@ -437,7 +437,7 @@
 	name = "\improper Hua Mulan congee"
 	desc = "Nobody is quite sure why this smiley bowl of rice porridge with eggs and bacon is named after a mythological Chinese figure- \
 		it's just sorta what it's always been called."
-	icon = 'icons/obj/food/moth.dmi'
+	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "hua_mulan_congee"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,

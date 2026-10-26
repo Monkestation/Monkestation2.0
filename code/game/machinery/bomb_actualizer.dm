@@ -42,8 +42,8 @@
 	var/next_beep = null
 	//sounds for scaryness
 	var/beepsound = 'sound/items/timer.ogg'
-	var/scarywarning = 'sound/misc/bloblarm.ogg'
-	var/verybadsound = 'sound/machines/engine_alert1.ogg'
+	var/scarywarning = 'sound/announcer/alarm/bloblarm.ogg'
+	var/verybadsound = 'sound/machines/engine_alert/engine_alert1.ogg'
 	var/youdied = 'sound/misc/guitarreverb.ogg'
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
 	///Our internal radio
@@ -150,7 +150,7 @@
 			begin_processing()
 			priority_announce("DANGER - Tampering of bluespace ordinance dampeners detected, Resulting explosion may be catastrophic to station integrity. \
 						Remove the tampering device within 7 Minutes or evacuate the localized areas. \
-						Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/misc/notice3.ogg')
+						Location: [alerthere].", "Doppler Array Detection - DANGER", 'sound/announcer/notice/notice3.ogg')
 			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
 			return
 		say("UNKNOWN ERROR: Nice try nerd. ")
