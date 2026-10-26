@@ -15,7 +15,7 @@
 	demolition_mod = 0.75
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 10
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 6
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)

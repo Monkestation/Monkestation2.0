@@ -27,8 +27,8 @@
 	unarmed_attack_verb = "bite"
 	//grappled_attack_verb = "maul"
 	unarmed_attack_effect = ATTACK_EFFECT_BITE
-	unarmed_attack_sound = 'sound/weapons/bite.ogg'
-	unarmed_miss_sound = 'sound/weapons/bite.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/bite.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/bite.ogg'
 	unarmed_damage_low = 60
 	unarmed_damage_high = 75
 	//unarmed_effectiveness = 50
@@ -60,8 +60,8 @@ IMPL_UPDATE_SPECIES_COLOR(chest)
 	unarmed_attack_verb = "slash"
 	//grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	unarmed_damage_low = 20
 	unarmed_damage_high = 25
 	//unarmed_effectiveness = 20
@@ -80,8 +80,8 @@ IMPL_UPDATE_SPECIES_COLOR(arm/left)
 	unarmed_attack_verb = "slash"
 	//grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	unarmed_damage_low = 20
 	unarmed_damage_high = 25
 	//unarmed_effectiveness = 20

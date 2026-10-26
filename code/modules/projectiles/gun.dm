@@ -31,14 +31,14 @@
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE
-	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
-	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
+	var/dry_fire_sound = 'sound/items/weapons/gun/general/dry_fire.ogg'
 	var/dry_fire_sound_volume = 30
 	var/suppressed = null //whether or not a message is displayed when fired
 	var/can_suppress = FALSE
-	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE
 	var/recoil = 0 //boom boom shake the room

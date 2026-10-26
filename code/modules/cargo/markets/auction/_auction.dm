@@ -136,7 +136,7 @@
 			logger.Log(LOG_CATEGORY_BLACKMARKET, "[user] has just bought the [current_auction.item] for [price] in the [name]")
 			if(ismob(user))
 				var/mob/m_user = user
-				m_user.playsound_local(get_turf(m_user), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+				m_user.playsound_local(get_turf(m_user), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 			return TRUE
 		return FALSE
 

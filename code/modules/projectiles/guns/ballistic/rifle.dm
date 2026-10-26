@@ -10,10 +10,10 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	internal_magazine = TRUE
-	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/rifle/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/rifle/bolt_out.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
+	rack_sound = 'sound/items/weapons/gun/rifle/bolt_out.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 	gun_flags = GUN_SMOKE_PARTICLES
 	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
@@ -89,7 +89,7 @@
 			else
 				unjam_chance += 10
 				balloon_alert(user, "jammed!")
-				playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
+				playsound(user,'sound/items/weapons/jammed.ogg', 75, TRUE)
 				return FALSE
 	..()
 
@@ -171,12 +171,12 @@
 	righthand_file = 'icons/mob/inhands/ballistic/righthand_64.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	initial_caliber = CALIBER_SHOTGUN
 	alternative_caliber = CALIBER_A762
-	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	initial_fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	alternative_fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
 	can_misfire = FALSE
 	can_be_sawn_off = FALSE
@@ -213,7 +213,7 @@
 /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage
 	name = "arcane barrage"
 	desc = "Pew Pew Pew."
-	fire_sound = 'sound/weapons/emitter.ogg'
+	fire_sound = 'sound/items/weapons/emitter.ogg'
 	pin = /obj/item/firing_pin/magic
 	icon_state = "arcane_barrage"
 	inhand_icon_state = "arcane_barrage"
@@ -264,11 +264,11 @@
 	weapon_weight = WEAPON_HEAVY
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
-	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
-	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
-	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
 	internal_magazine = FALSE
@@ -410,10 +410,10 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	recoil = 8 //ow my back
-	fire_sound = 'sound/weapons/gun/shotgun/quadfire.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/quadfire.ogg'
 	fire_sound_volume = 200 // L O U D
-	rack_sound = 'sound/weapons/gun/shotgun/quadrack.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/shotgun/quadinsert.ogg'
+	rack_sound = 'sound/items/weapons/gun/shotgun/quadrack.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/shotgun/quadinsert.ogg'
 	need_bolt_lock_to_interact = TRUE
 	pin = /obj/item/firing_pin/wastes //hey so yeah did you see how much damage the bullet this thing fires does ok cool so you know why this is NEVER EVER coming off
 

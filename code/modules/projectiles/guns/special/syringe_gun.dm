@@ -18,7 +18,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
-	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
+	var/load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
 	var/max_syringes = 1 ///The number of syringes it can store.
 	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
@@ -217,7 +217,7 @@
 	desc = "Fuck yeah, cheers bro! \n\nThis bad-boy is loaded with shot glasses! Just make sure they're full unless you want your patrons swallowing shards of broken glass."
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"
-	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	has_syringe_overlay = FALSE
 	max_syringes = 2 // Technically makes it a better syringe gun, but at least you have to work for this one.
 	has_manufacturer = FALSE

@@ -71,7 +71,7 @@
 /obj/item/borg/hydraulic_clamp
 	name = "integrated hydraulic clamp"
 	desc = "A neat way to lift and move around few small packages for quick and painless deliveries!"
-	icon = 'icons/mecha/mecha_equipment.dmi' // Just some temporary sprites because I don't have any unique one yet
+	icon = 'icons/obj/devices/mecha_equipment.dmi' // Just some temporary sprites because I don't have any unique one yet
 	icon_state = "mecha_clamp"
 	/// How much power does it draw per operation?
 	var/charge_cost = 0.02 * STANDARD_CELL_CHARGE
@@ -88,7 +88,7 @@
 	/// Can it hold mobs? (Dangerous, it is recommended to leave this to FALSE)
 	var/can_hold_mobs = FALSE
 	/// Audio for using the hydraulic clamp.
-	var/clamp_sound = 'sound/mecha/hydraulic.ogg'
+	var/clamp_sound = 'sound/vehicles/mecha/hydraulic.ogg'
 	/// Volume of the clamp's loading and unloading noise.
 	var/clamp_sound_volume = 25
 	/// Cooldown for the clamp.
@@ -301,7 +301,7 @@
 	whitelisted_item_description = "enveloppes"
 	item_weight_limit = WEIGHT_CLASS_NORMAL
 	clamp_sound_volume = 25
-	clamp_sound = 'sound/items/pshoom.ogg'
+	clamp_sound = 'sound/items/pshoom/pshoom.ogg'
 
 
 

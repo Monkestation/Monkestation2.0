@@ -10,7 +10,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	hardcore_random_bonus = TRUE
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
-	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
+	stinger_sound = 'sound/music/antag/traitor/tatoralert.ogg'
 	antag_count_points = 5 //duo antag
 	var/datum/action/bb/comms/comms_action
 	var/datum/action/bb/gear/gear_action

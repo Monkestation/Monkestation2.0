@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = STAMINA
 	stamina = 7
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 10
 
 /obj/projectile/energy/net/Initialize(mapload)
@@ -57,7 +57,7 @@
 	if(teletarget)
 		for(var/mob/living/carbon/living_carbon in get_turf(src))
 			if(!living_carbon.handcuffed && living_carbon.canBeHandcuffed())
-				playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+				playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/dragnet/used(living_carbon))
 				living_carbon.update_handcuffed()
 		for(var/mob/living/living_mob in get_turf(src))
@@ -65,7 +65,7 @@
 	else
 		for(var/mob/living/carbon/living_carbon in get_turf(src))
 			if(!living_carbon.handcuffed && living_carbon.canBeHandcuffed())
-				playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+				playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 				living_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/dragnet/used(living_carbon))
 				living_carbon.update_handcuffed()
 		for(var/mob/living/living_mob in get_turf(src))
@@ -176,7 +176,7 @@
 /obj/projectile/energy/trap
 	name = "energy snare"
 	icon_state = "e_snare"
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 4
 
 /obj/projectile/energy/trap/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -190,7 +190,7 @@
 /obj/effect/energy_snare
 	name = "deploying energy snare"
 	desc = "A soon to be hard-light snare"
-	icon = 'icons/obj/restraints.dmi'
+	icon = 'icons/obj/weapons/restraints.dmi'
 	icon_state = "e_snare0"
 	light_outer_range = 3
 	anchored = TRUE
@@ -206,7 +206,7 @@
 /obj/projectile/energy/trap/cyborg
 	name = "Energy Bola"
 	icon_state = "e_snare"
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 10
 
 /obj/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0, pierce_hit)

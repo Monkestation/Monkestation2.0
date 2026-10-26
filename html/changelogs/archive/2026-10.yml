@@ -322,3 +322,6 @@
   - bugfix: fixed eigenstasium not processing in dead mobs.
   ThePooba:
   - qol: slab only curses 3 times isntead of 13
+2026-10-25:
+  Absolucy:
+  - bugfix: Relogging no longer stacks a new combat mode button your hud each time
