@@ -29,6 +29,10 @@
 	)
 	// idling cancels every action, which would unlatch a whole pen the moment the xenobiologist walks off
 	can_idle = FALSE
+	/// Until this runs out, roaming and stacking reuse the last mess scan instead of doing their own
+	COOLDOWN_DECLARE(mess_scan_reuse)
+	/// Whether the last mess scan found any mess we'd go for
+	var/mess_nearby = FALSE
 
 /// TRAIT_AI_PAUSED only stops process(), and we don't want to plan while paused either
 /datum/ai_controller/basic_controller/slime/able_to_plan()
@@ -346,10 +350,7 @@
 		return
 	controller.clear_blackboard_key(target_key)
 
-	var/list/candidates = list()
-	for(var/atom/candidate as anything in get_candidates(controller))
-		if(is_candidate(controller, candidate, pen))
-			candidates += candidate
+	var/list/candidates = find_candidates(controller, pen)
 	if(!length(candidates))
 		finish_action(controller, FALSE)
 		return
@@ -389,14 +390,17 @@
 		return FALSE
 	return is_valid_target(controller, candidate)
 
+/// Everything from get_candidates() that passes is_candidate().
+/datum/ai_behavior/slime_find_target/proc/find_candidates(datum/ai_controller/basic_controller/slime/controller, datum/slime_pen/pen)
+	. = list()
+	for(var/atom/candidate as anything in get_candidates(controller))
+		if(is_candidate(controller, candidate, pen))
+			. += candidate
+
 /// Whether there's anything around we'd go for, without actually picking it.
 /datum/ai_behavior/slime_find_target/proc/has_candidates(datum/ai_controller/basic_controller/slime/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	var/datum/slime_pen/pen = must_be_reachable ? slime_pawn.pen : null
-	for(var/atom/candidate as anything in get_candidates(controller))
-		if(is_candidate(controller, candidate, pen))
-			return TRUE
-	return FALSE
+	return length(find_candidates(controller, must_be_reachable ? slime_pawn.pen : null)) > 0
 
 /// Everything nearby that could be a target.
 /datum/ai_behavior/slime_find_target/proc/get_candidates(datum/ai_controller/controller)
@@ -483,6 +487,17 @@
 	if(length(messy_turfs) < 15 || other_cleaner_around)
 		return list()
 	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
+
+/datum/ai_behavior/slime_find_target/mess/find_candidates(datum/ai_controller/basic_controller/slime/controller, datum/slime_pen/pen)
+	. = ..()
+	controller.mess_nearby = length(.) > 0
+	// the cleaning scan reruns every half second anyway
+	COOLDOWN_START(controller, mess_scan_reuse, 1 SECONDS)
+
+/datum/ai_behavior/slime_find_target/mess/has_candidates(datum/ai_controller/basic_controller/slime/controller)
+	if(!COOLDOWN_FINISHED(controller, mess_scan_reuse))
+		return controller.mess_nearby
+	return ..()
 
 /datum/ai_behavior/slime_find_target/mess/pick_target(datum/ai_controller/controller, list/candidates)
 	return get_closest_atom(/atom/movable, candidates, controller.pawn)
