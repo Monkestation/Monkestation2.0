@@ -432,7 +432,7 @@
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE

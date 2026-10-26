@@ -195,7 +195,7 @@
 /obj/item/ammo_casing/energy/laser/explorer
 	projectile_type = /obj/projectile/beam/laser/hardlight
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/gun/energy/laser/explorer/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)

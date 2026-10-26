@@ -1,7 +1,7 @@
 /obj/machinery/plantgenes
 	name = "plant DNA manipulator"
 	desc = "An advanced device designed to manipulate plant genetic makeup."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes

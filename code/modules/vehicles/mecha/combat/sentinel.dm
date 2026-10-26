@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/sentinel
 	desc = "A super-heavy seige walker, the Sentinel renders defenses to rubble."
 	name = "\improper Sentinel"
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "sentinel"
 	base_icon_state = "sentinel"
 	movedelay = 5

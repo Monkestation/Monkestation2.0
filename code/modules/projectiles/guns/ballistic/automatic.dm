@@ -74,7 +74,7 @@
 	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	inhand_icon_state = "c20r"
-	fire_sound = 'sound/weapons/gun/smg/gunshot_c20.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/gunshot_c20.ogg'
 	selector_switch_icon = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45
 	fire_delay = 2
@@ -107,7 +107,7 @@
 		underfunded security personnel, cargo technicians, theoretical physicists and gang bangers out on the rim. \
 		Light-weight and fully automatic. Uses 4.6x30mm rounds."
 	icon_state = "wt550"
-	fire_sound = 'sound/weapons/gun/smg/gunshot_wt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/gunshot_wt.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wt550m9
@@ -872,7 +872,7 @@
 	icon_state = "minigun_spin"
 	inhand_icon_state = "minigun"
 	slowdown = 0.4
-	fire_sound = 'sound/weapons/gun/minigun10burst.ogg'
+	fire_sound = 'sound/items/weapons/gun/minigun10burst.ogg'
 	fire_sound_volume = 50
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -1075,7 +1075,7 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
 
 

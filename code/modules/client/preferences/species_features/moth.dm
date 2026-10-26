@@ -77,7 +77,7 @@
 			icon_with_markings.blend_icon(body_part_icon, ICON_OVERLAY)
 
 	icon_with_markings.blend_icon(uni_icon('icons/mob/human/species/moth/moth_wings.dmi', "m_moth_wings_plain_FRONT"), ICON_OVERLAY)
-	icon_with_markings.blend_icon(uni_icon('icons/mob/species/moth/moth_antennae.dmi', "m_moth_antennae_plain_FRONT"), ICON_OVERLAY)
+	icon_with_markings.blend_icon(uni_icon('icons/mob/human/species/moth/moth_antennae.dmi', "m_moth_antennae_plain_FRONT"), ICON_OVERLAY)
 
 	// Zoom in on the top of the head and the chest
 	icon_with_markings.scale(64, 64)

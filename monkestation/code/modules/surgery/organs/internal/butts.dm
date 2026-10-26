@@ -107,14 +107,14 @@
 	name = "Skeletal Butt"
 	desc = "You don't understand how this works!"
 	atmos_gas = "o2=0.25;TEMP=310.15"
-	sound_effect = list("sound/voice/laugh/skeleton/skeleton_laugh.ogg")
+	sound_effect = list("sound/mobs/humanoids/skeleton/skeleton_laugh.ogg")
 	icon_state =  "skeleass"
 
 //PLASMAMAN ASS
 /obj/item/organ/internal/butt/plasma
 	name = "Plasmaman Butt"
 	desc = "You REALLY don't understand how this works!"
-	sound_effect = list("sound/voice/laugh/skeleton/skeleton_laugh.ogg")
+	sound_effect = list("sound/mobs/humanoids/skeleton/skeleton_laugh.ogg")
 	fart_instability = 5
 	atmos_gas = "plasma=0.25;TEMP=310.15"
 	icon_state = "plasmaass"

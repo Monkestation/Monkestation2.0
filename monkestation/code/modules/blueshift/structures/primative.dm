@@ -736,7 +736,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	uses_advanced_reskins = TRUE
 	unique_reskin = list(
 		"Original" = list(
-			RESKIN_ICON = 'icons/obj/hydroponics/equipment.dmi',
+			RESKIN_ICON = 'icons/obj/service/hydroponics/equipment.dmi',
 			RESKIN_ICON_STATE = "plantbag",
 			RESKIN_WORN_ICON = 'icons/mob/clothing/belt.dmi',
 			RESKIN_WORN_ICON_STATE = "plantbag",

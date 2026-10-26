@@ -1612,7 +1612,7 @@
 */
 
 /datum/sprite_accessory/gradient
-	icon = 'icons/mob/species/hair_gradients.dmi'
+	icon = 'icons/mob/human/species/hair_gradients.dmi'
 	///whether this gradient applies to hair and/or beards. Some gradients do not work well on beards.
 	var/gradient_category = GRADIENT_APPLIES_TO_HAIR|GRADIENT_APPLIES_TO_FACIAL_HAIR
 
@@ -2611,7 +2611,7 @@ MONKESTATION EDIT
 //Non-Modular change - Removes monkey tails, adds Simian tails instead.
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon = 'icons/mob/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
+	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi' //Original: 'icons/mob/species/monkey/monkey_tail.dmi'
 	icon_state = "default"
 	color_src = MUTANT_COLOR //Original: FALSE
 
@@ -2757,11 +2757,11 @@ MONKESTATION EDIT
 	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/wings
-	icon = 'icons/mob/species/wings.dmi'
+	icon = 'icons/mob/human/species/wings.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/wings_open
-	icon = 'icons/mob/species/wings.dmi'
+	icon = 'icons/mob/human/species/wings.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/wings/angel
@@ -3069,7 +3069,7 @@ MONKESTATION EDIT
 	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
-	icon = 'icons/mob/species/moth/moth_antennae.dmi'
+	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
 
 /datum/sprite_accessory/moth_antennae/none
@@ -3160,7 +3160,7 @@ MONKESTATION EDIT
 	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
-	icon = 'icons/mob/species/moth/moth_markings.dmi'
+	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
 
 /datum/sprite_accessory/moth_markings/none

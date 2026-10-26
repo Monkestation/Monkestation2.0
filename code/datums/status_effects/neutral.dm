@@ -607,7 +607,7 @@
 	shadowing.visible_message(span_warning("[owner] breaks away from [shadowing]'s shadow!"), \
 	span_userdanger("You feel a sense of freezing cold pass through you!"))
 	to_chat(owner, span_velvet("You break away from [shadowing]."))
-	playsound(owner, 'sound/magic/darkspawn/devour_will_form.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_form.ogg', 50, TRUE)
 	owner.setDir(SOUTH)
 
 /datum/status_effect/tagalong/proc/on_equip()

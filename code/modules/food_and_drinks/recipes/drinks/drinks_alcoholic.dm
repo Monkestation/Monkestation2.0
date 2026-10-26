@@ -672,7 +672,7 @@
 		/datum/reagent/copper = 0.6
 	)
 	mix_message = "The mixture develops a golden glow."
-	mix_sound = 'sound/magic/clockwork/scripture_tier_up.ogg'
+	mix_sound = 'sound/effects/magic/clockwork/scripture_tier_up.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/boston_sour

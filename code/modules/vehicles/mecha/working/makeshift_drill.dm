@@ -7,8 +7,8 @@
 	max_integrity = 65
 	lights_power = 8
 	movedelay = 2.5
-	stepsound = 'sound/mecha/tank_treads.ogg'
-	turnsound = 'sound/mecha/tank_treads.ogg'
+	stepsound = 'sound/vehicles/mecha/tank_treads.ogg'
+	turnsound = 'sound/vehicles/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS //can't strafe bruv
 	armor_type = /datum/armor/scrap_vehicles //Same armour as a locker (like it matters with that hp)
 	internal_damage_threshold = 30 //Its got shitty durability

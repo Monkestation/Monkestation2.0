@@ -238,7 +238,7 @@
 /obj/machinery/deployable_turret/artillerylight
 	name = "NT Model-2508 Field Cannon"
 	desc = "A small field cannon based off a centuries old design, updated with modern materials to make it much lighter and safe to fire on stations."
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "artillery_light"
 	max_integrity = 300
 	armor_type = /datum/armor/artillery
@@ -248,7 +248,7 @@
 	number_of_shots = 1
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cooldown_duration = 3 SECONDS
-	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	firesound = 'sound/items/weapons/gun/general/lighttankgun.ogg'
 	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/vehicle/ridden/artillerylight
@@ -292,7 +292,7 @@
 /obj/machinery/deployable_turret/artilleryheavy
 	name = "M1938 122mm Artillery Gun"
 	desc = "A large Soviet howitzer not much newer then the legendary Mosin Nagant, its way to heavy to be safe on the station, and its shell likewise is too dangerous for orbital use."
-	icon = 'icons/mecha/supertanks.dmi'
+	icon = 'icons/mob/rideables/supertanks.dmi'
 	icon_state = "m1938"
 	max_integrity = 450
 	armor_type = /datum/armor/artillery
@@ -302,7 +302,7 @@
 	number_of_shots = 1
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cooldown_duration = 8 SECONDS
-	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	firesound = 'sound/items/weapons/gun/general/lighttankgun.ogg'
 	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/vehicle/ridden/artilleryheavy

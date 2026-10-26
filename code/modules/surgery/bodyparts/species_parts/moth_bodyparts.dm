@@ -1,5 +1,5 @@
 /obj/item/bodypart/head/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	is_dimorphic = FALSE
@@ -10,7 +10,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/chest/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	is_dimorphic = TRUE
@@ -21,7 +21,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/left/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
@@ -33,7 +33,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/right/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
@@ -45,7 +45,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/left/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	should_draw_greyscale = FALSE
 	limb_id = SPECIES_MOTH
@@ -53,7 +53,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/right/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
+	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	should_draw_greyscale = FALSE
 	limb_id = SPECIES_MOTH

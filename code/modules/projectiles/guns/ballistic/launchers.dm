@@ -221,12 +221,12 @@
 	inhand_icon_state = "china_lake"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	fire_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_fire.ogg'
+	fire_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_fire.ogg'
 	fire_sound_volume = 100
-	rack_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_rack.ogg'
+	rack_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_rack.ogg'
 	rack_delay = 1.5 SECONDS
-	drop_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_drop.ogg'
-	pickup_sound = 'sound/weapons/gun/china_lake_sfx/china_lake_pickup.ogg'
+	drop_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_drop.ogg'
+	pickup_sound = 'sound/items/weapons/gun/china_lake_sfx/china_lake_pickup.ogg'
 
 /obj/item/gun/ballistic/shotgun/china_lake/examine(mob/user)
 	. = ..()

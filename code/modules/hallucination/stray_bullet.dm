@@ -201,7 +201,7 @@
 	name = "laser"
 	damage_type = BURN
 	hal_icon_state = "laser"
-	hal_fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	hal_fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	hal_hitsound = 'sound/items/weapons/sear.ogg'
 	hal_hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser"
@@ -248,7 +248,7 @@
 	name = "disabler beam"
 	damage_type = STAMINA
 	hal_icon_state = "omnilaser"
-	hal_fire_sound = 'sound/weapons/gun/energy/Laser2.ogg'
+	hal_fire_sound = 'sound/items/weapons/gun/energy/Laser2.ogg'
 	hal_hitsound = 'sound/items/weapons/tap.ogg'
 	hal_hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser_blue"

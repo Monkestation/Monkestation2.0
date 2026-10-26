@@ -3,7 +3,7 @@
 	desc = "An afront to both chemists and atmospheric technicans."
 
 	icon_state = "reaction_chamber"
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 
 	initialize_directions = EAST
 

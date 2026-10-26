@@ -14,7 +14,7 @@
 	///fire sound
 	var/fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	///the sound the plushie makes while bouncing
-	var/bounce_sound = 'sound/voice/weh.ogg'
+	var/bounce_sound = 'sound/mobs/humanoids/lizard/weh.ogg'
 	///fire count
 	var/fire_count = 1
 

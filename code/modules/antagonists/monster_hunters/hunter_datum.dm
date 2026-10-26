@@ -9,7 +9,7 @@
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoMonsterHunter"
-	stinger_sound = 'sound/ambience/antag/monster_hunter.ogg'
+	stinger_sound = 'sound/music/antag/monster_hunter.ogg'
 	var/list/datum/action/powers = list()
 	/// Have we chosen a weapon yet?
 	var/weapon_claimed = FALSE

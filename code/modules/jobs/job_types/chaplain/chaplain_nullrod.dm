@@ -285,7 +285,7 @@
 /obj/item/nullrod/scythe
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "scythe1"
 	inhand_icon_state = "scythe1"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'

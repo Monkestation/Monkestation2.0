@@ -53,11 +53,11 @@
 								'sound/mobs/non-humanoids/monkey/monkey_screech_6.ogg',
 								'sound/mobs/non-humanoids/monkey/monkey_screech_7.ogg')
 
-	alternative_laughs = list(	'sound/voice/laugh/misc/big_laugh0.ogg',
-								'sound/voice/laugh/misc/big_laugh1.ogg',
-								'sound/voice/laugh/misc/big_laugh2.ogg',
-								'sound/voice/laugh/misc/big_laugh3.ogg',
-								'sound/voice/laugh/misc/big_laugh4.ogg')
+	alternative_laughs = list(	'sound/mobs/humanoids/misc/laugh/big_laugh0.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh1.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh2.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh3.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh4.ogg')
 
 /obj/item/clothing/mask/breath/sec_bandana
 	desc = "An incredibly dense synthetic thread bandana that can be used as an internals mask."

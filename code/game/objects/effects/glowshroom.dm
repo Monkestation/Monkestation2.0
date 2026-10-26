@@ -4,7 +4,7 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
-	icon = 'icons/obj/flora/glowshroom.dmi'
+	icon = 'icons/obj/fluff/flora/glowshroom.dmi'
 	icon_state = "glowshroom1"
 	layer = ABOVE_OPEN_TURF_LAYER
 	max_integrity = GLOWSHROOM_BASE_INTEGRITY

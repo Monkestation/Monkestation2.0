@@ -10,7 +10,7 @@
 	inhand_y_dimension = 64
 	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/shotgun/shotgunpump.ogg'
+	rack_sound = 'sound/items/weapons/gun/shotgun/shotgunpump.ogg'
 	load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
@@ -134,8 +134,8 @@
 
 // Automatic Shotguns//
 /obj/item/gun/ballistic/shotgun/automatic
-	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
-	load_sound = 'sound/weapons/gun/shotgun/shotgun_shell_insert.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shotgun_small.ogg'
+	load_sound = 'sound/items/weapons/gun/shotgun/shotgun_shell_insert.ogg'
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
@@ -528,9 +528,9 @@
 	unique_reskin = null
 	recoil = 5
 	weapon_weight = WEAPON_LIGHT
-	fire_sound = 'sound/weapons/gun/shotgun/quadfire.ogg'
-	rack_sound = 'sound/weapons/gun/shotgun/quadrack.ogg'
-	load_sound = 'sound/weapons/gun/shotgun/quadinsert.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/quadfire.ogg'
+	rack_sound = 'sound/items/weapons/gun/shotgun/quadrack.ogg'
+	load_sound = 'sound/items/weapons/gun/shotgun/quadinsert.ogg'
 	fire_sound_volume = 50
 	rack_sound_volume = 50
 	can_be_sawn_off = FALSE
@@ -596,7 +596,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun/syndicate
 	show_bolt_icon = TRUE
 	can_suppress = TRUE
-	fire_sound = 'sound/weapons/gun/shotgun/shotgun_small.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shotgun_small.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
 	pbk_gentle = FALSE
 

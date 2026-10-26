@@ -27,7 +27,7 @@
 	desc = "What's under the bag, anyway?"
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "ook"
-	squeak_override = list('sound/voice/laugh/simian/monkey_laugh_1.ogg'=1)
+	squeak_override = list('sound/mobs/humanoids/simian/monkey_laugh_1.ogg'=1)
 	suicide_text = "is overcome with curiosity and tries to pull the bag off of"
 	creepy_plush_type = "monkey"
 	has_creepy_icons = TRUE
@@ -47,7 +47,7 @@
 	desc = "Voted cutest monke 2023"
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "sammi"
-	squeak_override = list('sound/voice/laugh/simian/monkey_laugh_1.ogg'=1)
+	squeak_override = list('sound/mobs/humanoids/simian/monkey_laugh_1.ogg'=1)
 
 /obj/item/toy/plush/knightplush
 	name = "knight plush"

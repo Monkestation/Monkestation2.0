@@ -250,7 +250,7 @@
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE

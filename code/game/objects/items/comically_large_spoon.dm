@@ -68,7 +68,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/comically_large_spoon/proc/on_wield(atom/source, mob/living/user)
-	hitsound = 'sound/weapons/bat_hit.ogg'
+	hitsound = 'sound/items/weapons/bat_hit.ogg'
 	block_chance = block_chance_wielded
 	demolition_mod = demolition_mod_wielded
 

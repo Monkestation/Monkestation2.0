@@ -68,7 +68,7 @@
 	owner.visible_message(span_warning("[owner] rattles [owner.p_their()] bones harrowingly."), span_notice("You rattle your bones"))
 	last_use = world.time
 	if(prob(snas_chance))
-		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES2.ogg', 100)
+		playsound(get_turf(owner),'sound/effects/magic/RATTLEMEBONES2.ogg', 100)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/mutable_appearance/badtime = mutable_appearance('icons/mob/human/bodyparts.dmi', "b_golem_eyes", -HIGHEST_LAYER-0.5)

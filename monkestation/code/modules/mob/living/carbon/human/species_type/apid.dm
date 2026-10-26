@@ -143,9 +143,9 @@
 
 /obj/item/organ/internal/tongue/apid/get_laugh_sound()
 	return pick(
-		'sound/voice/laugh/moth/mothchitter.ogg',
+		'sound/mobs/humanoids/moth/mothchitter.ogg',
 		'sound/mobs/humanoids/moth/moth_laugh1.ogg',
-		'sound/voice/laugh/moth/mothsqueak.ogg',
+		'sound/mobs/humanoids/moth/mothsqueak.ogg',
 	)
 
 /datum/species/apid/create_pref_unique_perks()

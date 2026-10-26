@@ -578,7 +578,7 @@
 	name = "Robert McPlushie"
 	desc = "Holy fuck, he McStole a plushie tank."
 	icon_state = "mcsteal"
-	squeak_override = list('sound/weapons/gun/general/lighttankgun.ogg'=1)
+	squeak_override = list('sound/items/weapons/gun/general/lighttankgun.ogg'=1)
 /datum/loadout_item/plushies/mcsteal
 	name = "McSteal Plush"
 	item_path = /obj/item/toy/plush/admin/mcsteal

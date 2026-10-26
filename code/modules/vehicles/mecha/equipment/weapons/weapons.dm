@@ -93,7 +93,7 @@
 	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/projectile/beam/laser
-	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	harmful = TRUE
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
@@ -107,7 +107,7 @@
 	projectile = /obj/projectile/beam/disabler/weak
 	variance = 25
 	projectiles_per_shot = 5
-	fire_sound = 'sound/weapons/gun/energy/Laser2.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser2.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
@@ -138,7 +138,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/projectile/ion
-	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
@@ -643,7 +643,7 @@
 	name = "40mm tank cannon"
 	desc = "A centuries-old tank cannon. It seems ominously overbuilt for its age. It has no autoloader or mounting bolts, you doubt it would work on anything else."
 	icon_state = "mecha_light_tank_cannon"
-	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
 	projectile = /obj/projectile/bullet/rocket/lighttankshell
 	equip_cooldown = 8 SECONDS
@@ -657,7 +657,7 @@
 	name = "Sentinel Cannon"
 	desc = "A large artillery cannon affixed to a turret."
 	icon_state = "sentinel_cannon"
-	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
 	projectile = /obj/projectile/bullet/rocket/sentinelshell
 	equip_cooldown = 12 SECONDS

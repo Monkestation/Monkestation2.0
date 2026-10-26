@@ -4,10 +4,10 @@
 
 
 /obj/item/melee/viking
-	icon = 'icons/viking/viking_items.dmi'
-	lefthand_file = 'icons/viking/axes_lefthand.dmi'
-	righthand_file = 'icons/viking/axes_righthand.dmi'
-	worn_icon = 'icons/viking/viking_armor.dmi'
+	icon = 'icons/obj/weapons/viking_items.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/viking_axes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/viking_axes_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/viking_armor.dmi'
 
 /datum/embedding/viking_axe
 	embed_chance = 50

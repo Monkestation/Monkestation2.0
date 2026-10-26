@@ -279,7 +279,7 @@
 			H.physiology.stamina_mod = antag.stam_mod
 
 /datum/species/shadow/darkspawn/spec_death(gibbed, mob/living/carbon/human/H)
-	playsound(H, 'sound/creatures/darkspawn/darkspawn_death.ogg', 50, FALSE)
+	playsound(H, 'sound/mobs/non-humanoids/darkspawn/darkspawn_death.ogg', 50, FALSE)
 
 /datum/species/shadow/darkspawn/check_roundstart_eligible()
 	return FALSE

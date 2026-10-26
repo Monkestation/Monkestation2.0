@@ -126,7 +126,7 @@
 /obj/structure/punji_sticks
 	name = "punji sticks"
 	desc = "Don't step on this."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "punji"
 	resistance_flags = FLAMMABLE
 	max_integrity = 30

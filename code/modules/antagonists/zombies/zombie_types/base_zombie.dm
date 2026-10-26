@@ -15,7 +15,7 @@
 	var/list/granted_actions = list()
 
 	/// File that bodypart_overlay_icon_states pulls from.
-	var/list/bodypart_overlay_icon = 'icons/mob/species/zombie/special_zombie_overlays.dmi'
+	var/list/bodypart_overlay_icon = 'icons/mob/human/species/zombie/special_zombie_overlays.dmi'
 
 	/// Associative list of bodypart overlays by body zone.
 	var/list/bodypart_overlay_icon_states = list()

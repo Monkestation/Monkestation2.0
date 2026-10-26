@@ -139,7 +139,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_charging"
 	send_clock_message(span_bigbrass("The Ark's many cogs suddenly whir to life, steam gushing out of its many crevices; it will open in 5 minutes!"), \
-					   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
+					   sent_sound = 'sound/effects/magic/clockwork/scripture_tier_up.ogg')
 	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD) //MOVE THIS TO A LOOP ON THE ARK SS
 
 /obj/structure/destructible/clockwork/the_ark/proc/open_gateway()
@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_active"
 	send_clock_message(span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."), \
-					   sent_sound = 'sound/magic/clockwork/ark_activation_sequence.ogg')
+					   sent_sound = 'sound/effects/magic/clockwork/ark_activation_sequence.ogg')
 	addtimer(CALLBACK(src, PROC_REF(announce_gateway)), 27 SECONDS)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()

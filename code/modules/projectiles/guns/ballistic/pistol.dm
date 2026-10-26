@@ -394,17 +394,17 @@
 	bolt_type = BOLT_TYPE_OPEN
 	bolt_wording = "firearm"
 	fire_delay = 1
-	fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
-	suppressed_sound = 'sound/weapons/gun/whispering_jester_45/jester_fire.ogg'
+	fire_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
+	suppressed_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_fire.ogg'
 	suppressed_volume = 60
-	dry_fire_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	rack_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	lock_back_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
-	load_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	load_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
-	eject_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
-	eject_empty_sound = 'sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	rack_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	load_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	load_empty_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	eject_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	eject_empty_sound = 'sound/items/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
 
 //april fools edition
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota

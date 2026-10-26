@@ -246,7 +246,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 /obj/item/wendigo_skull
 	name = "wendigo skull"
 	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/mining_zones/artifacts.dmi'
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0

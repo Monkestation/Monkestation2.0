@@ -2,7 +2,7 @@
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 	select_name = "kill"
-	select_sound = 'sound/weapons/gun/energy/egun_toggle_laser.ogg'
+	select_sound = 'sound/items/weapons/gun/energy/egun_toggle_laser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/energy/laser/hitscan
@@ -25,7 +25,7 @@
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
-	select_sound = 'sound/weapons/gun/energy/egun_toggle_laser.ogg'
+	select_sound = 'sound/items/weapons/gun/energy/egun_toggle_laser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/energy/laser/lasrifle
@@ -133,7 +133,7 @@
 /obj/item/ammo_casing/energy/mindflayer
 	projectile_type = /obj/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
-	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/ammo_casing/energy/laser/minigun
 	select_name = "kill"

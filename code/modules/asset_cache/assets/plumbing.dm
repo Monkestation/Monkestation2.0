@@ -13,7 +13,7 @@
 			"plumbing_layer8",
 			"plumbing_layer16",
 		),
-		'icons/obj/plumbing/plumbers.dmi' = list(
+		'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi' = list(
 			"synthesizer",
 			"reaction_chamber",
 			"grinder_chemical",

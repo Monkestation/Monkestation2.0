@@ -1213,7 +1213,7 @@
 						if(!do_after(user, rand(8, 10), target = src))
 							SEND_SIGNAL(user.mind, COMSIG_MIND_SPEND_ANTAG_RESOURCE, list(ANTAG_RESOURCE_DARKSPAWN = 30))
 							return
-					playsound(src, 'sound/magic/darkspawn/pass_smash_door.ogg', 50, TRUE)
+					playsound(src, 'sound/effects/magic/darkspawn/pass_smash_door.ogg', 50, TRUE)
 					take_damage(max_integrity / rand(8, 15))
 					to_chat(user, "<span class='velvet bold'>klaj.</span>")
 				ex_act(EXPLODE_DEVASTATE)
