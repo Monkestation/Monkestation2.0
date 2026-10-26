@@ -134,7 +134,7 @@
 		new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(get_turf(user))
 		new /obj/item/lighter(get_turf(user))
 		to_chat(user, span_notice("...oh, someone left some cigarettes in here."))
-	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 	qdel(src)
 
 /obj/item/storage/box/survival/centcom

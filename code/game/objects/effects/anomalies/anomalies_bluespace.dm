@@ -25,7 +25,7 @@
 
 /obj/effect/anomaly/bluespace/detonate()
 	new /obj/effect/temp_visual/circle_wave/bluespace(get_turf(src))
-	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50)
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50)
 
 	var/turf/impact_turf = pick(get_area_turfs(impact_area))
 	if(!impact_turf)

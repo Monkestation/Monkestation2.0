@@ -5,7 +5,7 @@
 	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
 		owner.visible_message(span_danger("A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!"))
-		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, TRUE)
+		playsound(get_turf(owner), 'sound/items/weapons/flashbang.ogg', 100, TRUE)
 		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!"))
 		owner.adjust_fire_stacks(20)
 		owner.ignite_mob()
@@ -183,8 +183,8 @@
 	icon_state = "steel"
 	inhand_icon_state = "steel"
 	toolspeed = 0.6 //faster than a pickaxe
-	usesound = 'sound/weapons/drill.ogg'
-	hitsound = 'sound/weapons/drill.ogg'
+	usesound = 'sound/items/weapons/drill.ogg'
+	hitsound = 'sound/items/weapons/drill.ogg'
 	/// How recent the spin emote was
 	var/recent_spin = 0
 	/// The delay for how often you should be able to do it to prevent spam
@@ -221,6 +221,6 @@ GAME_VERB_DESC(/obj/item/pickaxe/drill/implant, spin_drill, "Spin Drillbit", "Cl
 	toolspeed = 0.2
 	force = 20
 	demolition_mod = 1.25
-	usesound = 'sound/weapons/drill.ogg'
-	hitsound = 'sound/weapons/drill.ogg'
+	usesound = 'sound/items/weapons/drill.ogg'
+	hitsound = 'sound/items/weapons/drill.ogg'
 

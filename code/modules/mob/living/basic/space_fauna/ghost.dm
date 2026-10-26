@@ -17,7 +17,7 @@
 	attack_verb_continuous = "grips"
 	attack_verb_simple = "grip"
 	unsuitable_atmos_damage = 0
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	death_message = "wails, disintegrating into a pile of ectoplasm!"
 	gold_core_spawnable = NO_SPAWN //too spooky for science
 	light_system = OVERLAY_LIGHT

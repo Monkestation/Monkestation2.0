@@ -663,7 +663,7 @@
 	icon_state = "gorilla"
 	worn_icon_state = "gorilla"
 	hoodtype = /obj/item/clothing/head/hooded/gorilla
-	alternative_screams = list('sound/creatures/gorilla.ogg')
+	alternative_screams = list('sound/mobs/non-humanoids/gorilla/gorilla.ogg')
 
 /obj/item/clothing/head/hooded/gorilla
 	desc = "A gorilla costume hood."

@@ -20,7 +20,7 @@
 	var/finished_icon_state = icon_state_builder.Join("_")
 
 	if(layer_index == EXTERNAL_ADJACENT && istype(limb, /obj/item/bodypart/head/floran))
-		icon = 'icons/mob/species/floran/floran_hair.dmi'
+		icon = 'icons/mob/human/species/floran/floran_hair.dmi'
 		finished_icon_state = get_base_icon_state()
 
 	var/mutable_appearance/appearance = mutable_appearance(icon, finished_icon_state, layer = -HAIR_LAYER)

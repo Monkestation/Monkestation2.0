@@ -53,7 +53,7 @@
 	if(istype(hand_item, weapon_type))
 		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
-			playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
+			playsound(user, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 			user.visible_message(span_warning("With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!"), span_notice("We assimilate the [weapon_name_simple] back into our body."), "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		user.update_held_items()
 		return TRUE
@@ -78,7 +78,7 @@
 	var/obj/item/W = new weapon_type(user, silent)
 	user.put_in_hands(W)
 	if(!silent)
-		playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
+		playsound(user, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 	return W
 
 
@@ -188,7 +188,7 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
@@ -230,7 +230,7 @@
 		if(opening.hasPower())
 			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [opening] open."), \
 			span_hear("You hear a metal screeching sound."))
-			playsound(opening, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+			playsound(opening, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 			if(!do_after(user, 10 SECONDS, target = opening))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
@@ -335,7 +335,7 @@
 	damage = 0
 	damage_type = BRUTE
 	range = 8
-	hitsound = 'sound/weapons/thudswoosh.ogg'
+	hitsound = 'sound/items/weapons/thudswoosh.ogg'
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 	///Click params that were used to fire the tentacle shot
