@@ -1,6 +1,6 @@
 /datum/element/trash_if_empty
 	var/attach_type = /obj
-	var/static/list/update_signals = list(
+	var/list/update_signals = list(
 		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXITED
 	)
@@ -40,7 +40,7 @@
 // Variant for reagent containers
 /datum/element/trash_if_empty/reagent_container
 	attach_type = /obj/item/reagent_containers
-	var/static/list/reagent_signals = list(
+	var/list/reagent_signals = list(
 		COMSIG_REAGENTS_NEW_REAGENT,
 		COMSIG_REAGENTS_ADD_REAGENT,
 		COMSIG_REAGENTS_DEL_REAGENT,
@@ -48,7 +48,7 @@
 	)
 
 /datum/element/trash_if_empty/reagent_container/register_signals(obj/item/reagent_containers/source)
-	RegisterSignals(source.reagents, reagent_signals, PROC_REF(update_trash_trait))
+	RegisterSignals(source.reagents, reagent_signals, PROC_REF(update_trash_trait), override = TRUE)
 
 /datum/element/trash_if_empty/reagent_container/unregister_signals(obj/item/reagent_containers/source)
 	UnregisterSignal(source.reagents, reagent_signals)
