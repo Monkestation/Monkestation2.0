@@ -301,6 +301,9 @@
 	for(var/datum/action/action as anything in actions)
 		remove_item_action(action)
 
+	if(viruses)
+		GLOB.infected_items -= src
+	clear_pathogen_image()
 	return ..()
 
 
