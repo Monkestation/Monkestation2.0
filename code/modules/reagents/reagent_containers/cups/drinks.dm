@@ -238,7 +238,6 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
 	. = ..()
-	AddElement(/datum/element/trash_if_empty/reagent_container/if_prefilled)
 	if(cap_on)
 		spillable = FALSE
 		update_appearance()

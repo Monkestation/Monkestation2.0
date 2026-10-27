@@ -17,7 +17,7 @@
 	return ..()
 
 /datum/element/trash_if_empty/proc/register_signals(datum/source)
-	RegisterSignals(source, update_signals, PROC_REF(update_trash_trait), override = TRUE)
+	RegisterSignals(source, update_signals, PROC_REF(update_trash_trait))
 
 /datum/element/trash_if_empty/proc/unregister_signals(datum/source)
 	UnregisterSignal(source, update_signals)
@@ -48,7 +48,7 @@
 	)
 
 /datum/element/trash_if_empty/reagent_container/register_signals(obj/item/reagent_containers/source)
-	RegisterSignals(source.reagents, reagent_signals, PROC_REF(update_trash_trait), override = TRUE)
+	RegisterSignals(source.reagents, reagent_signals, PROC_REF(update_trash_trait))
 
 /datum/element/trash_if_empty/reagent_container/unregister_signals(obj/item/reagent_containers/source)
 	UnregisterSignal(source.reagents, reagent_signals)
