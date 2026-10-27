@@ -53,7 +53,7 @@
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
 	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
-	var/audio_index = 1
+	var/audio_index = 0
 
 	// Args
 	/// Do we skip the starting sounds?
@@ -208,8 +208,8 @@
 		var/mob/mob_parent = parent
 		if(!mob_parent?.client)
 			return
-		sound_to_play.channel = sound_channel || guess_mixer_channel(soundfile) || SSsounds.random_available_channel()
-		sound_to_play.volume = volume_override || calculate_mixed_volume(mob_parent.client, sound_to_play.volume, sound_to_play.channel)
+		sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
+		sound_to_play.volume = calculate_mixed_volume(mob_parent.client, volume_override || volume, sound_channel || guess_mixer_channel(soundfile))
 		SEND_SOUND(mob_parent, sound_to_play)
 	else
 		playsound(
