@@ -214,6 +214,9 @@
 			if(!isnull(target.client))
 				SEND_SOUND(target, mixed_sound)
 
+	if(players == GLOB.player_list)
+		replay_record_global_chat(announcement)
+
 /proc/send_formatted_admin_message(
 	text,
 	title = "Admin Alert",

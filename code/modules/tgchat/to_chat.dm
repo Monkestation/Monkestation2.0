@@ -39,7 +39,7 @@
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
 
 	// send it immediately
-	SSchat.send_immediate(target, message)
+	SSchat.send_immediate(target, message, confidential)
 
 /**
  * Sends the message to the recipient (target).
@@ -87,4 +87,4 @@
 	if(html) message["html"] = html
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
 
-	SSchat.queue(target, message)
+	SSchat.queue(target, message, confidential)
