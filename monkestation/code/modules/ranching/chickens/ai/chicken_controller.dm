@@ -4,6 +4,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_target/low_health,
+		/datum/ai_planning_subtree/random_speech/chicken,
 		)
 	idle_behavior = /datum/idle_behavior/chicken
 	blackboard = list(
@@ -179,5 +180,6 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/random_speech/chick,
 		/datum/ai_planning_subtree/look_for_adult,
 	)

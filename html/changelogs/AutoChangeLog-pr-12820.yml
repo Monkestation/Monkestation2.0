@@ -1,0 +1,6 @@
+author: "Ben10Omintrix, tattle"
+delete-after: True
+changes:
+  - bugfix: "Basic mobs that couldn't find anything to attack no longer freeze up forever, duct spiders spin webs again."
+  - bugfix: "Basic mobs play sounds on their audible emotes, with new sounds for insects, mice, crabs, chickens, chicks and ponies."
+  - bugfix: "Chickens and chicks cluck and cheep on their own now."

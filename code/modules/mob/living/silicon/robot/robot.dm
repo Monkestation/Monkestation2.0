@@ -26,8 +26,6 @@
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
 
-	ident = rand(1, 999)
-
 	previous_health = health
 
 	if(ispath(cell))
@@ -177,6 +175,11 @@
 		return
 	prompt_full_transformation()
 
+/// We have our name-making proc to call after we make our mmi, just set identifier here
+/mob/living/silicon/robot/set_name()
+	if(identifier == 0)
+		identifier = rand(1, 999)
+
 /// Used to setup the a basic and (somewhat) unique name for the robot.
 /mob/living/silicon/robot/proc/setup_default_name()
 	var/new_name
@@ -211,7 +214,7 @@
 
 
 /mob/living/silicon/robot/proc/get_standard_name()
-	return "[(designation ? "[designation] " : "")][(mmi ? mmi.braintype : "Cyborg")]-[ident]"
+	return "[(designation ? "[designation] " : "")][(mmi ? mmi.braintype : "Cyborg")]-[identifier]"
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
@@ -761,7 +764,7 @@
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
-	name = "Empty AI Shell-[ident]"
+	name = "Empty AI Shell-[identifier]"
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
@@ -780,7 +783,7 @@
 		qdel(boris)
 	shell = FALSE
 	GLOB.available_ai_shells -= src
-	name = "Unformatted Cyborg-[ident]"
+	name = "Unformatted Cyborg-[identifier]"
 	real_name = name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
@@ -793,7 +796,7 @@
  * * AI - AI unit that initiated the deployment into the AI shell
  */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] [designation] Shell-[ident]"
+	real_name = "[AI.real_name] [designation] Shell-[identifier]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too
