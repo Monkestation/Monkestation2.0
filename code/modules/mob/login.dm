@@ -30,6 +30,7 @@
 	if(!client)
 		return FALSE
 	canon_client = client
+	replay_record_client("mob", client.ckey, src)
 	client.persistent_client.set_mob(src)
 	add_to_player_list()
 	lastKnownIP = client.address

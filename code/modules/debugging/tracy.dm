@@ -20,7 +20,9 @@ GLOBAL_REAL(Tracy, /datum/tracy)
 /datum/tracy/Destroy()
 #ifndef OPENDREAM_REAL
 	if(enabled)
-		call_ext(TRACY_DLL_PATH, "destroy")()
+		var/stop_result = byond_tracy_stop()
+		if(stop_result)
+			SEND_TEXT(world.log, "Error stopping byond-tracy: [stop_result]")
 #endif
 	return ..()
 
@@ -35,36 +37,31 @@ GLOBAL_REAL(Tracy, /datum/tracy)
 		SEND_TEXT(world.log, "Error initializing byond-tracy: [error]")
 		return FALSE
 
-	var/init_result = call_ext(TRACY_DLL_PATH, "init")("block")
-	if(length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
-		SEND_TEXT(world.log, "byond-tracy initialized (logfile: [init_result])")
-		enabled = TRUE
-		trace_path = init_result
-		return TRUE
-	else if(init_result == "already initialized") // not gonna question it.
-		enabled = TRUE
-		SEND_TEXT(world.log, "byond-tracy already initialized ([trace_path ? "logfile: [trace_path]" : "no logfile"])")
-		return TRUE
-	else if(init_result != "0")
+	var/init_result = byond_tracy_init()
+	if(init_result != "SUCCESS")
 		error = init_result
 		SEND_TEXT(world.log, "Error initializing byond-tracy: [init_result]")
 		return FALSE
-	else
-		enabled = TRUE
-		SEND_TEXT(world.log, "byond-tracy initialized (no logfile)")
-		return TRUE
+	var/start_result = byond_tracy_start()
+	if(start_result)
+		error = start_result
+		SEND_TEXT(world.log, "Error starting byond-tracy: [start_result]")
+		return FALSE
+	enabled = TRUE
+	trace_path = byond_tracy_status()["path"]
+	SEND_TEXT(world.log, "byond-tracy initialized (logfile: [trace_path])")
+	return TRUE
 #else
 	error = "OpenDream not supported"
 	return FALSE
 #endif
 
 /datum/tracy/proc/flush()
-	// if trace_path is set, that means we're using para-tracy, which should have this.
-	if(!enabled || !trace_path)
+	if(!enabled)
 		return
 	SEND_TEXT(world.log, "Flushing byond-tracy log")
-	var/flush_result = call_ext(TRACY_DLL_PATH, "flush")()
-	if(flush_result != "0")
+	var/flush_result = byond_tracy_flush()
+	if(flush_result)
 		SEND_TEXT(world.log, "Error flushing byond-tracy log: [flush_result]")
 		CRASH("Error flushing byond-tracy log: [flush_result]")
 	SEND_TEXT(world.log, "Flushed byond-tracy log")
