@@ -22,7 +22,7 @@
 		if(msg)
 			user.balloon_alert(user, "primed [src]!")
 			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
-	playsound(src, 'sound/weapons/jackinthebomb.ogg', volume, vary = TRUE)
+	playsound(src, 'sound/items/weapons/jackinthebomb.ogg', volume, vary = TRUE)
 	if(istype(user))
 		user.add_mob_memory(/datum/memory/bomb_planted, protagonist = user, antagonist = src)
 	active = TRUE

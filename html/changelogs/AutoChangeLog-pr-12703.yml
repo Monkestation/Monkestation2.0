@@ -1,4 +1,0 @@
-author: "Kmla2"
-delete-after: True
-changes:
-  - code_imp: "changes how the uplink is sorted, hopefully shouldn't affect anything in-game"

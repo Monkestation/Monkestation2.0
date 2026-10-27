@@ -19,7 +19,7 @@
 	endurance = 50
 	yield = 40
 	potency = 15
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	possible_mutations = list(/datum/hydroponics/plant_mutation/orange)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
@@ -43,7 +43,7 @@
 	endurance = 50
 	yield = 50
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -70,7 +70,7 @@
 	lifespan = 55
 	endurance = 45
 	yield = 40
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -89,7 +89,7 @@
 	ADD_TRAIT(user, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
 	user.set_light(2)
-	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+	user.add_overlay(mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	var/matrix/M = matrix()
 	M.Scale(1.4, 1.2)
 	animate(src, time = 10, transform = M, easing = SINE_EASING)
@@ -138,7 +138,7 @@
 	endurance = 50
 	yield = 50
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

@@ -5,7 +5,7 @@
 /obj/structure/geyser
 	name = "geyser"
 	desc = "A geyser that contains some form of chemicals inside. A liquid pump can be used to extract it's chemicals." //monkestation addition
-	icon = 'icons/obj/lavaland/terrain.dmi'
+	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "geyser"
 	anchored = TRUE
 
@@ -40,7 +40,7 @@
 	if(erupting_state)
 		icon_state = erupting_state
 	else
-		var/mutable_appearance/I = mutable_appearance('icons/obj/lavaland/terrain.dmi', "[icon_state]_soup")
+		var/mutable_appearance/I = mutable_appearance('icons/obj/mining_zones/terrain.dmi', "[icon_state]_soup")
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
 

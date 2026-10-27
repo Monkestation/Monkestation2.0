@@ -143,7 +143,7 @@
 	throw_speed = 4
 	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/science
@@ -264,7 +264,7 @@
 	throw_speed = 4
 	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
@@ -375,7 +375,7 @@
 	throw_speed = 4
 	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/sunglasses/gar/orange
@@ -404,7 +404,7 @@
 	name = "suspicious contact lens case"
 	desc = "A sinister red case that contains two shiny black contact lenses."
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "contacts"
 
 /obj/item/syndicate_contacts/attack_self(mob/user, modifiers)

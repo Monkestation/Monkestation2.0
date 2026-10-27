@@ -156,7 +156,7 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
-	hitsound = 'sound/weapons/bladeslice.ogg' // has a blade
+	hitsound = 'sound/items/weapons/bladeslice.ogg' // has a blade
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	sharpness = SHARP_EDGED
@@ -175,7 +175,7 @@
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
-	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg' // fine spelling there chap
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
@@ -334,7 +334,7 @@
 
 	if (user)
 		to_chat(user, span_notice("You install the modkit."))
-		playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
+		playsound(loc, 'sound/items/tools/screwdriver.ogg', 100, TRUE)
 	KA.modkits |= src
 
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
