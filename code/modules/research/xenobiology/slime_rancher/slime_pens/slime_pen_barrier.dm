@@ -84,18 +84,21 @@
 	var/obj/structure/slime_pen_barrier/twin = find_twin()
 	// two pens sharing an edge would draw the same fence twice, so one of us hides - south always takes priority over north or east
 	var/hidden = twin && (dir & (NORTH|EAST))
-	alpha = hidden ? 0 : 255
 	var/final_color = barrier_color
 	if(twin && twin.barrier_color != barrier_color)
 		final_color = blend_hue_colors(barrier_color, twin.barrier_color)
-	if(final_color == SLIME_PEN_DEFAULT_COLOR)
+	set_shown(!hidden, final_color)
+	twin?.set_shown(hidden, final_color)
+
+/// Shows or hides this piece, only coloring it while shown
+/obj/structure/slime_pen_barrier/proc/set_shown(shown, final_color)
+	alpha = shown ? 255 : 0
+	// the client still runs filters on alpha 0 icons, so the hidden twin can't keep its color filter
+	if(!shown || final_color == SLIME_PEN_DEFAULT_COLOR)
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	else
 		add_atom_colour(color_transition_filter(final_color), FIXED_COLOUR_PRIORITY)
 	update_appearance()
-	if(twin)
-		twin.alpha = hidden ? 255 : 0
-		twin.update_appearance()
 
 /// fancy HSL color blend that actually looks kinda good
 /proc/blend_hue_colors(first_color, second_color)
