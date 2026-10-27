@@ -220,9 +220,9 @@
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/smartfridge/atom_break(damage_flag)
 	playsound(src, SFX_SHATTER, 50, TRUE)
@@ -231,9 +231,9 @@
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/smartfridge/atom_break(damage_flag)
 	playsound(src, SFX_SHATTER, 50, TRUE)
@@ -432,7 +432,7 @@
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
@@ -710,7 +710,7 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	pass_flags = PASSTABLE
 	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE

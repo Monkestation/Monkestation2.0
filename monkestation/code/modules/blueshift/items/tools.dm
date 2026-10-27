@@ -23,8 +23,8 @@
 	throw_range = 3
 	attack_verb_continuous = list("drills", "screws", "jabs", "whacks")
 	attack_verb_simple = list("drill", "screw", "jab", "whack")
-	hitsound = 'sound/items/drill_hit.ogg'
-	usesound = 'sound/items/drill_use.ogg'
+	hitsound = 'sound/items/tools/drill_hit.ogg'
+	usesound = 'sound/items/tools/drill_use.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 1
 	random_color = FALSE
@@ -83,7 +83,7 @@
 		if("Screwdriver")
 			tool_behaviour = TOOL_SCREWDRIVER
 			sharpness = SHARP_POINTY
-	playsound(src, 'sound/items/change_drill.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/tools/change_drill.ogg', 50, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 
 /obj/item/screwdriver/omni_drill/proc/check_menu(mob/user)

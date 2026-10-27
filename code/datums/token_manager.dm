@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(token_manager, /datum/token_manager, new)
 
 	for(var/client/admin_client as anything in GLOB.admins)
 		to_chat(admin_client, "[admin_message][admin_href]")
-		SEND_SOUND(admin_client, sound('sound/machines/buzz-sigh.ogg', volume = 50))
+		SEND_SOUND(admin_client, sound('sound/machines/buzz/buzz-sigh.ogg', volume = 50))
 
 
 /// Pulls the info from the request

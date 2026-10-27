@@ -31,7 +31,7 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = BLOOD_TYPE_LIZARD
 	inert_mutation = /datum/mutation/firebreath
-	death_sound = 'sound/voice/lizard/deathsound.ogg'
+	death_sound = 'sound/mobs/humanoids/lizard/deathsound.ogg'
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_FORCED //Monkestation Edit: OPTIONAL > FORCED
 

@@ -1,7 +1,7 @@
 /datum/action/cooldown/slasher/recall_traps
 	name = "Recall Traps"
 	desc = "Recall all of your traps to your belt, replacing any destroyed traps."
-	button_icon = 'icons/obj/restraints.dmi'
+	button_icon = 'icons/obj/weapons/restraints.dmi'
 	button_icon_state = "beartrap"
 	cooldown_time = 30 SECONDS
 

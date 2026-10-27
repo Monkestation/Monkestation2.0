@@ -3,9 +3,9 @@
 	dupe_mode = COMPONENT_DUPE_SOURCES
 	/// List of possible sounds.
 	var/static/list/possible_sounds = list(
-		'sound/items/SitcomLaugh1.ogg',
-		'sound/items/SitcomLaugh2.ogg',
-		'sound/items/SitcomLaugh3.ogg',
+		'sound/items/sitcom_laugh/SitcomLaugh1.ogg',
+		'sound/items/sitcom_laugh/SitcomLaugh2.ogg',
+		'sound/items/sitcom_laugh/SitcomLaugh3.ogg',
 	)
 
 /datum/component/moon_blade_channel/Initialize()
