@@ -6329,7 +6329,7 @@
 /obj/effect/turf_decal/box,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -10845,7 +10845,7 @@
 /obj/machinery/shower/directional/south,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -14875,7 +14875,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "dCL" = (
@@ -24682,7 +24682,7 @@
 "gGs" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/clothing/mask/surgical,
 /obj/machinery/camera/directional/north{
 	c_tag = "Medical - Morgue";
@@ -39563,7 +39563,7 @@
 /obj/item/multitool,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /obj/machinery/camera/directional/north{
-	c_tag = "Secure - Tech Stortage"
+	c_tag = "Secure - Tech Storage"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
@@ -47784,7 +47784,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -60459,7 +60459,7 @@
 /obj/machinery/shower/directional/west,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -69447,10 +69447,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
-/obj/structure/filingcabinet/chestdrawer,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 9
-	},
 /obj/machinery/button/door/directional/west{
 	id = "atmos";
 	name = "Atmospherics Lockdown";
@@ -71335,7 +71331,7 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/item/radio/intercom/directional/south,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "uWn" = (
@@ -77071,13 +77067,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
-"wEZ" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
 "wFq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -81013,7 +81002,7 @@
 /area/station/hallway/primary/tram/center)
 "xYa" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "xYc" = (
@@ -107398,7 +107387,7 @@ aac
 aac
 aac
 dvu
-wEZ
+dvu
 aac
 aac
 aac

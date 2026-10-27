@@ -5295,7 +5295,7 @@
 /area/station/engineering/atmos)
 "cKU" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
@@ -31460,7 +31460,7 @@
 /obj/machinery/shower/directional/west,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},

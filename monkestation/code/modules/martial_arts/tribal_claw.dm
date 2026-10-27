@@ -19,10 +19,10 @@
 	//originally wanted to do inverse correlation but it donbt work :pensive:
 
 /datum/armor/scales
-	melee = 40
-	bullet = 40
-	laser = 40
-	wound = 50
+	melee = 20
+	bullet = 20
+	laser = 20
+	wound = 20
 
 /datum/martial_art/tribal_claw/teach(mob/living/carbon/human/target, make_temporary = FALSE)
 	. = ..()
@@ -75,7 +75,7 @@
 	defender.adjust_confusion(5 SECONDS)
 	defender.adjust_eye_blur(5 SECONDS)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
-	playsound(get_turf(defender), 'sound/weapons/slash.ogg', 50, 1, -1)
+	playsound(get_turf(defender), 'sound/items/weapons/slash.ogg', 50, 1, -1)
 
 /*
 Jugular Cut
@@ -120,7 +120,7 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 		defender.losebreath = clamp(defender.losebreath + 10, 0, 50)
 	defender.adjustOxyLoss(10)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
-	playsound(get_turf(defender), 'sound/weapons/slash.ogg', 50, 1, -1)
+	playsound(get_turf(defender), 'sound/items/weapons/slash.ogg', 50, 1, -1)
 
 
 
@@ -153,10 +153,7 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/tribal_claw_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Tribal Claw"
-	set category = "Tribal Claw"
+GAME_VERB_PROC_DESC(/mob/living/carbon/human, tribal_claw_help, "Recall Teachings", "Remember the martial techniques of the Tribal Claw", "Tribal Claw")
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Tribal Claw...</i></b>")
 

@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
-	if(SSmove_manager.processing_on(user, SSspacedrift))
+	if(GLOB.move_manager.processing_on(user, SSspacedrift))
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !SSmove_manager.processing_on(user, SSspacedrift))
+		if(drifting && !GLOB.move_manager.processing_on(user, SSspacedrift))
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -527,17 +527,16 @@ GLOBAL_LIST_EMPTY(species_list)
 		. += borg
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=FALSE, z = null)
+/proc/active_ais(check_mind = FALSE, z = null)
 	. = list()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
 			continue
 		if(ai.control_disabled)
 			continue
-		if(check_mind)
-			if(!ai.mind)
-				continue
-		if(z && !(z == ai.z) && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+		if(check_mind && !ai.mind)
+			continue
+		if(!isnull(z) && z != ai.z && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
 			continue
 		. += ai
 

@@ -1,7 +1,7 @@
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 	density = TRUE
 	opacity = FALSE
@@ -84,7 +84,7 @@
 			ready = FALSE
 			addtimer(CALLBACK(src, PROC_REF(set_ready)),injection_cooldown)
 	else
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 	update_appearance()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)

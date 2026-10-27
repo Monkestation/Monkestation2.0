@@ -4544,6 +4544,10 @@
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Hydroponics, Backroom";
+	name = "service camera"
+	},
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics/chicken)
 "bwX" = (
@@ -12707,18 +12711,6 @@
 /obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"ecG" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6
-	},
-/obj/structure/table/reinforced/rglass,
-/obj/item/emergency_bed{
-	pixel_y = 14
-	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/machinery/defibrillator_mount/directional/south,
-/turf/open/floor/iron/white,
-/area/station/medical/surgery)
 "ecI" = (
 /obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
@@ -16828,6 +16820,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"fwA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/turf/open/floor/stone,
+/area/station/smithing)
 "fwB" = (
 /obj/machinery/duct,
 /turf/open/floor/plating,
@@ -28460,17 +28457,6 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/station/ai_monitored/command/storage/satellite)
-"jhB" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/airalarm/directional/south,
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/folder/white,
-/obj/item/pen,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/autopsy_scanner,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "jhE" = (
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
@@ -36911,6 +36897,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"lQC" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/airalarm/directional/south,
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/folder/white,
+/obj/item/pen,
+/obj/item/surgery_tray,
+/obj/item/autopsy_scanner,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "lQK" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
@@ -44203,18 +44200,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
-"oiW" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10
-	},
-/obj/structure/table/reinforced/rglass,
-/obj/item/emergency_bed{
-	pixel_y = 14
-	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/machinery/defibrillator_mount/directional/south,
-/turf/open/floor/iron/white,
-/area/station/medical/surgery)
 "ojr" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/electroplater,
@@ -45937,6 +45922,19 @@
 /obj/machinery/telecomms/server/presets/service,
 /turf/open/floor/circuit/green/telecomms,
 /area/station/tcommsat/server)
+"oNe" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/obj/structure/table,
+/obj/item/healthanalyzer{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/obj/item/surgery_tray,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "oNk" = (
 /turf/closed/wall/r_wall,
 /area/station/command/teleporter)
@@ -57830,11 +57828,6 @@
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine/atmos)
-"sIW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
-/turf/open/floor/stone,
-/area/station/smithing)
 "sJa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -58400,19 +58393,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"sQL" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/obj/structure/table,
-/obj/item/healthanalyzer{
-	pixel_x = -1;
-	pixel_y = 6
-	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/turf/open/floor/iron/white,
-/area/station/science/robotics/lab)
 "sQN" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -66420,6 +66400,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"voS" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/item/emergency_bed{
+	pixel_y = 14
+	},
+/obj/item/surgery_tray,
+/obj/machinery/defibrillator_mount/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/surgery)
 "voY" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot_white/left,
@@ -68643,6 +68635,7 @@
 "vVN" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/newscaster/directional/north,
+/obj/machinery/egg_incubator,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -68952,10 +68945,6 @@
 "wbw" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Service - Hydroponics, Backroom";
-	name = "service camera"
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table,
@@ -71842,6 +71831,18 @@
 /obj/machinery/duct,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
+"wWF" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/item/emergency_bed{
+	pixel_y = 14
+	},
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/item/surgery_tray,
+/turf/open/floor/iron/white,
+/area/station/medical/surgery)
 "wWJ" = (
 /obj/effect/turf_decal/trimline/dark_blue/warning{
 	dir = 4
@@ -107701,7 +107702,7 @@ kwK
 uiX
 jki
 uiX
-sIW
+fwA
 uiX
 oCJ
 ekn
@@ -107955,7 +107956,7 @@ ogk
 wEA
 lTB
 mZc
-sIW
+fwA
 uiX
 uiX
 aoX
@@ -108216,7 +108217,7 @@ pkR
 ojr
 voi
 xjB
-sIW
+fwA
 ajR
 vNF
 tZr
@@ -110576,7 +110577,7 @@ hAV
 etJ
 bcz
 pDy
-oiW
+wWF
 tgG
 uAC
 lku
@@ -112118,7 +112119,7 @@ hWa
 lkX
 wfv
 eZS
-ecG
+voS
 tgG
 wnF
 pZj
@@ -113146,7 +113147,7 @@ dZW
 vuw
 jNd
 gJJ
-jhB
+lQC
 bID
 cZa
 cMc
@@ -117218,7 +117219,7 @@ auK
 mxF
 dxk
 flU
-sQL
+oNe
 lpk
 eoA
 sYI

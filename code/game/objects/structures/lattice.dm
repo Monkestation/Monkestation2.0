@@ -172,7 +172,7 @@
 		var/obj/item/stack/tile/iron/P = C
 		if(P.use(1))
 			to_chat(user, span_notice("You construct a floor plating, as lava settles around the rods."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			new /turf/open/floor/plating(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one floor tile to build atop [src]."))

@@ -11,10 +11,7 @@
 
 /mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST)
 	RETURN_TYPE(/obj/item/bodypart)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone != zone)
-			continue
-		return bodypart
+	return real_bodypart_cache[zone]
 
 /**
  * Returns all bodyparts this mob has, optionally including stumps.
@@ -30,6 +27,12 @@
 		var/obj/item/bodypart/bodypart = get_bodypart(zone)
 		if(bodypart)
 			. += bodypart
+
+/mob/living/carbon/get_bodyparts()
+	var/list/parts = list()
+	for(var/key, limb in real_bodypart_cache)
+		parts += limb
+	return parts
 
 ///Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)

@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(action == "override_order")
 		if(!(override_access in id_card.GetAccess()))
 			balloon_alert(usr, "requires head of staff access!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 			return
 
 		if(department_order && (department_order in SSshuttle.shopping_list))
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 	if(!check_access(id_card))
 		balloon_alert(usr, "access denied!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	. = TRUE
@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			break
 
 	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once!")
 		return
 

@@ -1,7 +1,7 @@
 /obj/structure/signboard
 	name = "sign"
 	desc = "A foldable sign."
-	icon = 'icons/obj/structures/signboards.dmi'
+	icon = 'icons/obj/signboards.dmi'
 	icon_state = "sign"
 	base_icon_state = "sign"
 	density = TRUE

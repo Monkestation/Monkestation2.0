@@ -108,7 +108,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 
 /obj/item/mail/attack_self(mob/user)
 	if(recipient_ref)
@@ -131,7 +131,7 @@
 			collector.adjust_money(/datum/export/mail_token::cost / 2)
 	else
 		user.put_in_hands(new /obj/item/cargo/mail_token)
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/mail/examine_more(mob/user)

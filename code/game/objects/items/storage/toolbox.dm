@@ -16,9 +16,9 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
-	hitsound = 'sound/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
@@ -430,7 +430,7 @@
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
 	to_chat(user, span_warning("You prime [src]'s evidence disposal bomb!"))
 	log_bomber(user, "has activated a", src, "for detonation")
-	playsound(src, 'sound/weapons/armbomb.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/armbomb.ogg', 50, TRUE)
 	currently_exploding = TRUE
 	update_appearance()
 
@@ -468,34 +468,36 @@
 
 /obj/item/storage/toolbox/guncase/traitor/autoshotgun
 	name = "\improper Syndicate auto shotgun gun case"
+	icon_state = "infiltrator_case"
+	base_icon_state = "infiltrator_case"
 	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/semiauto/syndicate
 	extra_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate
 
-/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun
 	name = "\improper Syndicate auto shotgun buckshot magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate
 
-/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/slug
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/slug
 	name = "\improper Syndicate auto shotgun slug magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/slug
 
-/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/rubbershot
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/rubbershot
 	name = "\improper Syndicate auto shotgun rubbershot magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/rubbershot
 
-/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/beanbag
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/beanbag
 	name = "\improper Syndicate auto shotgun beanbags magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/beanbag
 
-/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/uraniumpen
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/uraniumpen
 	name = "\improper Syndicate auto shotgun uranium penetrator magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/uraniumpen
 
-/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/trickshot
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/trickshot
 	name = "\improper Syndicate auto shotgun trickshot magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/autoshotgun/syndicate/trickshot
 
-/obj/item/storage/toolbox/guncase/traitor/autoshotgun/ammunition/PopulateContents()
+/obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/PopulateContents()
 	for(var/i in 1 to 2)
 		new weapon_to_spawn(src)
 

@@ -23,7 +23,7 @@
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 /mob/living/carbon/alien/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	create_bodyparts() //initialize bodyparts
@@ -103,8 +103,8 @@ Des: Removes all infected images from the alien.
 		span_noticealien("You begin to evolve!"),
 	)
 	new_xeno.setDir(dir)
-	if(numba && unique_name)
-		new_xeno.numba = numba
+	if(identifier && unique_name)
+		new_xeno.identifier = identifier
 		new_xeno.set_name()
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name

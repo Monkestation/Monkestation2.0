@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	req_access = list()
 
-	var/icon/canister_overlay_file = 'icons/obj/atmospherics/canisters.dmi'
+	var/icon/canister_overlay_file = 'icons/obj/pipes_n_cables/canisters.dmi'
 
 	///Is the valve open?
 	var/valve_open = FALSE
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	. = ..()
 	if(!allowed(user))
 		to_chat(user, span_alert("Error - Unauthorized User."))
-		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 50, TRUE)
 		return
 
 /obj/machinery/portable_atmospherics/canister/examine(user)

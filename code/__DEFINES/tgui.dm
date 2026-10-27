@@ -48,6 +48,15 @@
 #define TGUI_CREATE_MESSAGE(type, payload) ( \
 	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
 )
+
+/// Pre-encoded TGUI message for verbs/focus with null payload, used in the Tab macro.
+/// This is TGUI_CREATE_MESSAGE("verbs/focus", null), unit tested in tgui_panel_focus_message.
+#define TGUI_PANEL_FOCUS_MESSAGE "%7b%22type%22%3a%22verbs/focus%22%2c%22payload%22%3anull%7d"
+
+/// Pre-encoded TGUI message for verbs/clear with null payload, used in the Backspace macro.
+/// This is TGUI_CREATE_MESSAGE("verbs/clear", null), unit tested in tgui_panel_clear_message.
+#define TGUI_PANEL_CLEAR_MESSAGE "%7b%22type%22%3a%22verbs/clear%22%2c%22payload%22%3anull%7d"
+
 /**
  * Gets a ui_state that checks to see if the user has specific admin permissions.
  * MENTOR_STATE works exactly the same just uses mentor rights, such as [R_MENTOR]
