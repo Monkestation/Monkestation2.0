@@ -130,7 +130,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!amount)
-		playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 		flick_overlay_view("[base_icon_state]_deny", 1 SECONDS)
 		return ITEM_INTERACT_BLOCKING
 	if(amount > money_collected)
