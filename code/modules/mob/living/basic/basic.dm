@@ -102,6 +102,10 @@
 	var/unsuitable_cold_damage = 1
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
+	/// Old name of [minimum_survivable_temperature], only kept so xenobio slimes keep compiling. Don't use it.
+	var/bodytemp_cold_damage_limit
+	/// Old name of [maximum_survivable_temperature], only kept so xenobio slimes keep compiling. Don't use it.
+	var/bodytemp_heat_damage_limit
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
@@ -128,6 +132,10 @@
 		speak_emote = string_list(speak_emote)
 
 	apply_atmos_requirements()
+	if(!isnull(bodytemp_cold_damage_limit))
+		minimum_survivable_temperature = bodytemp_cold_damage_limit
+	if(!isnull(bodytemp_heat_damage_limit))
+		maximum_survivable_temperature = bodytemp_heat_damage_limit
 	apply_temperature_requirements()
 
 /// Ensures this mob can take atmospheric damage if it's supposed to

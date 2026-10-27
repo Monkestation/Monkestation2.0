@@ -23,7 +23,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, STAMINA = 1, OXY = 1) //Healed by fire
 	unsuitable_cold_damage = 15
 	unsuitable_heat_damage = 0
-	maximum_survivable_temperature = INFINITY
+	bodytemp_heat_damage_limit = INFINITY
 	habitable_atmos = null
 	mob_biotypes = MOB_SLIME
 
@@ -44,8 +44,8 @@
 
 	can_be_held = TRUE
 
-	minimum_survivable_temperature = 100
-	maximum_survivable_temperature = 600
+	bodytemp_cold_damage_limit = 100
+	bodytemp_heat_damage_limit = 600
 
 	// canstun and canknockdown don't affect slimes because they ignore stun and knockdown variables
 	// for the sake of cleanliness, though, here they are.
