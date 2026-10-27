@@ -484,8 +484,11 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	cpu_values[cpu_index] = real_cpu
 	tick_info.mc_usage[cpu_index] = tick_info.mc_finished_usage[cpu_index] - tick_info.mc_start_usage[cpu_index]
 	tick_info.post_mc_usage[cpu_index] = tick_info.pre_tick_cpu_usage[cpu_index] - tick_info.mc_finished_usage[cpu_index]
-	// world.cpu is continuious cpu from tick start to right after maptick, so we can doooo this
-	tick_info.maptick_usage[cpu_index] = cpu_values[cpu_index] - tick_info.tick_cpu_usage[cpu_index]
+	if(auxcpu_map_loaded)
+		tick_info.maptick_usage[cpu_index] = current_true_map_cpu()
+	else
+		// world.cpu is continuious cpu from tick start to right after maptick, so we can doooo this
+		tick_info.maptick_usage[cpu_index] = cpu_values[cpu_index] - tick_info.tick_cpu_usage[cpu_index]
 	tick_info.verb_cost[cpu_index] = total_verb_cost
 	tick_info.verb_timings[cpu_index] = list(verb_spans, cost_breakdown)
 	tick_info.last_verb_ran[cpu_index] = last_verb_finished

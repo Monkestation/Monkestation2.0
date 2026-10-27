@@ -20,6 +20,8 @@
 
 /// Set by setup_external_cpu(), everything below falls back to world.cpu while this is FALSE
 GLOBAL_REAL_VAR(auxcpu_loaded = FALSE)
+/// Set by setup_external_cpu(), the map send signatures are found separately and can miss on their own
+GLOBAL_REAL_VAR(auxcpu_map_loaded = FALSE)
 
 /proc/current_true_cpu()
 #if defined(USE_AUXCPU) && !defined(OPENDREAM)
@@ -29,6 +31,16 @@ GLOBAL_REAL_VAR(auxcpu_loaded = FALSE)
 		return call_ext(__current_true_cpu)()
 #endif
 	return world.cpu
+
+/// world.map_cpu for just the last tick instead of a 16 tick average
+/proc/current_true_map_cpu()
+#if defined(USE_AUXCPU) && !defined(OPENDREAM)
+	if(auxcpu_map_loaded)
+		var/static/__current_true_map_cpu
+		__current_true_map_cpu ||= load_ext(AUXCPU_DLL, "byond:current_true_map_cpu")
+		return call_ext(__current_true_map_cpu)()
+#endif
+	return world.map_cpu
 
 /proc/current_cpu_index()
 #if defined(USE_AUXCPU) && !defined(OPENDREAM)
@@ -84,6 +96,9 @@ GLOBAL_REAL_VAR(auxcpu_loaded = FALSE)
 		world.log << "auxcpu failed to load: [error]"
 		return FALSE
 	world.log << "auxcpu signatures found"
+	auxcpu_map_loaded = call_ext(AUXCPU_DLL, "byond:map_cpu_signatures_found")()
+	if(!auxcpu_map_loaded)
+		world.log << "auxcpu failed to find map cpu signatures, map cpu will be averaged"
 
 #ifdef MAPTICK_HOOK
 	var/maptick_err = call_ext(AUXCPU_DLL, "byond:maptick_init")()
@@ -100,6 +115,7 @@ GLOBAL_REAL_VAR(auxcpu_loaded = FALSE)
 
 /world/proc/cleanup_external_cpu()
 	auxcpu_loaded = FALSE
+	auxcpu_map_loaded = FALSE
 
 /proc/meowtonin_stack_trace(message, source, line, full_info)
 	var/list/info = list("[message || "N/A"]")
