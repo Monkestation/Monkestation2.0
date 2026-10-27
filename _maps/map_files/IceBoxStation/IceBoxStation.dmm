@@ -5216,9 +5216,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
 /area/station/medical/pathology)
-"bCy" = (
-/turf/open/floor/engine,
-/area/station/maintenance/aft/lesser)
 "bCL" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/glass,
@@ -21463,7 +21460,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/engine,
-/area/station/maintenance/aft/lesser)
+/area/station/science/xenobiology/cell)
 "gAM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -25900,7 +25897,7 @@
 /obj/structure/table,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/engine,
-/area/station/maintenance/aft/lesser)
+/area/station/science/xenobiology/cell)
 "hVB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -27159,7 +27156,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /obj/structure/liquid_barrier,
 /turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
+/area/station/science/xenobiology)
 "ipw" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -38137,10 +38134,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
-"lEr" = (
-/obj/structure/table,
-/turf/open/floor/engine,
-/area/station/maintenance/aft/lesser)
 "lEt" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron/dark/side,
@@ -40628,7 +40621,7 @@
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/station/maintenance/aft/lesser)
+/area/station/science/xenobiology/cell)
 "mvU" = (
 /obj/machinery/button/door/directional/east{
 	id = "cmoprivacy";
@@ -41013,10 +41006,6 @@
 /obj/machinery/telecomms/server/presets/common,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
-"mDg" = (
-/obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/aft/lesser)
 "mDn" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -49991,15 +49980,6 @@
 /obj/effect/spawner/random/techstorage/engineering_all,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
-"pjr" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio6";
-	name = "Xenobio Pen 6 Blast Door"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
 "pjw" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck{
@@ -56560,15 +56540,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"rkl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobiomain";
-	name = "Containment Blast Door"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
 "rkm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 9
@@ -56777,15 +56748,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
-"rnQ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio1";
-	name = "Xenobio Pen 1 Blast Door"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
 "roa" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -186974,15 +186936,15 @@ ffe
 ffe
 ffe
 oxO
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
+exR
+exR
+exR
+exR
+exR
+exR
+exR
+exR
+exR
 mLo
 jQi
 wbx
@@ -187231,34 +187193,34 @@ xMq
 xMq
 alM
 oxO
-ffe
+exR
 hVw
-bCy
-bCy
+kog
+kog
 gAL
-bCy
-bCy
-lEr
+kog
+kog
+eOS
 mvL
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
 nPI
 dSX
 alM
@@ -187488,7 +187450,7 @@ xMq
 xMq
 alM
 oxO
-ffe
+exR
 qGe
 kog
 cku
@@ -187515,7 +187477,7 @@ sbN
 bjk
 ajo
 vxD
-rnQ
+lqU
 nPI
 wzg
 alM
@@ -187745,7 +187707,7 @@ scw
 xMq
 alM
 oxO
-ffe
+exR
 viR
 kog
 kog
@@ -187772,7 +187734,7 @@ fks
 aAW
 qoT
 ibH
-rnQ
+lqU
 nPI
 alM
 alM
@@ -188002,7 +187964,7 @@ iDt
 xMq
 alM
 oxO
-ffe
+exR
 exR
 kwa
 uHS
@@ -188029,7 +187991,7 @@ fks
 aAW
 qoT
 ibH
-rnQ
+lqU
 nPI
 alM
 thA
@@ -188259,7 +188221,7 @@ iDt
 iDt
 alM
 nsp
-ffe
+qLY
 gEc
 kdj
 jed
@@ -188286,7 +188248,7 @@ ebF
 cob
 iXY
 fLL
-mDg
+ctF
 nPI
 alM
 alM
@@ -188516,7 +188478,7 @@ iDt
 iDt
 alM
 oxO
-ffe
+qLY
 xEU
 pMF
 mqe
@@ -188543,7 +188505,7 @@ tfX
 tfX
 tfX
 tfX
-ffe
+qLY
 nPI
 ipw
 alM
@@ -188773,7 +188735,7 @@ xMq
 iDt
 alM
 jCr
-ffe
+qLY
 hNN
 kNz
 jea
@@ -188800,7 +188762,7 @@ fvk
 fvk
 fvk
 clW
-rkl
+tIv
 nPI
 oxO
 alM
@@ -189030,7 +188992,7 @@ iDt
 iDt
 alM
 oxO
-ffe
+qLY
 qdQ
 qhL
 qhL
@@ -189057,7 +189019,7 @@ jPG
 jPG
 jPG
 jPG
-ffe
+qLY
 nPI
 aaq
 alM
@@ -189287,7 +189249,7 @@ iDt
 iDt
 alM
 oxO
-ffe
+qLY
 gGh
 llw
 pMF
@@ -189314,7 +189276,7 @@ vxD
 vYS
 dvG
 njv
-mDg
+ctF
 pQG
 tRd
 alM
@@ -189544,7 +189506,7 @@ iDt
 iDt
 alM
 oxO
-ffe
+qLY
 lvb
 hyr
 aZk
@@ -189571,7 +189533,7 @@ ibH
 lpt
 gvO
 cPv
-pjr
+jBh
 nPI
 nPI
 alM
@@ -189801,7 +189763,7 @@ iDt
 iDt
 alM
 jOp
-ffe
+qLY
 dss
 vHq
 pMF
@@ -189828,7 +189790,7 @@ ibH
 lpt
 gvO
 cPv
-pjr
+jBh
 tRd
 iWM
 alM
@@ -190058,7 +190020,7 @@ iDt
 alM
 alM
 oxO
-ffe
+qLY
 rDw
 vHq
 obZ
@@ -190085,7 +190047,7 @@ fLL
 uQA
 voZ
 jsu
-pjr
+jBh
 tRd
 iWM
 alM
@@ -190315,34 +190277,34 @@ iDt
 alM
 wOH
 oxO
-ffe
-ffe
+qLY
+qLY
 ipi
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
-ffe
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
+qLY
 tRd
 iWM
 alM
