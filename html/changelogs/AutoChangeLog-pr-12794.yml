@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds Carptongue language, spoken by space carps."
+  - rscadd: "Space dragons can speak Draconic and Carptongue."
+  - rscadd: "Ash drakes and ice whelps now speak Draconic."
+  - rscadd: "Fire sharks now speak Carptongue."
+  - rscadd: "Sleeping carp grants you Carptongue."
