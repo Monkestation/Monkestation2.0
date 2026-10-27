@@ -1,0 +1,8 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Changed how colorful reagent and crayon powder work: douse your victims to color their clothing, bodyparts and even internal organs!"
+  - rscadd: "Showers wash colorful reagent off your skin"
+  - bugfix: "You can color robotic limbs with left click (again)"
+  - bugfix: "Losing hulk after becoming a carp no longer turns you black"
+  - bugfix: "Severed limbs with wounds no longer look like two limbs when they land sideways"
