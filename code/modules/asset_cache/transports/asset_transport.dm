@@ -55,6 +55,7 @@
 			return OACI
 
 	SSassets.cache[asset_name] = ACI
+	replay_record_asset(get_asset_url(asset_name, ACI), ACI.resource)
 	return ACI
 
 /// Immediately removes an asset from the asset cache.
