@@ -17,7 +17,7 @@
 	return ..()
 
 /datum/element/trash_if_empty/proc/register_signals(datum/source)
-	RegisterSignals(source, update_signals, PROC_REF(update_trash_trait))
+	RegisterSignals(source, update_signals, PROC_REF(update_trash_trait), override = TRUE)
 
 /datum/element/trash_if_empty/proc/unregister_signals(datum/source)
 	UnregisterSignal(source, update_signals)
