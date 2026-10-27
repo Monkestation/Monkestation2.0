@@ -90,14 +90,10 @@
 	set_shown(!hidden, final_color)
 	twin?.set_shown(hidden, final_color)
 
-/// Shows or hides this piece, only coloring it while shown
+/// Shows or hides this piece and tints it
 /obj/structure/slime_pen_barrier/proc/set_shown(shown, final_color)
 	alpha = shown ? 255 : 0
-	// the client still runs filters on alpha 0 icons, so the hidden twin can't keep its color filter
-	if(!shown || final_color == SLIME_PEN_DEFAULT_COLOR)
-		remove_atom_colour(FIXED_COLOUR_PRIORITY)
-	else
-		add_atom_colour(color_transition_filter(final_color), FIXED_COLOUR_PRIORITY)
+	add_atom_colour(final_color, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
 /// fancy HSL color blend that actually looks kinda good
