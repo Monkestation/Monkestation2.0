@@ -126,7 +126,7 @@
 	reset_streak(defender)
 	defender.visible_message("<span class='warning'>[attacker] strikes [defender] in the head with [attacker.p_their()] palm!</span>", \
 						"<span class='userdanger'>[attacker] strikes you with [attacker.p_their()] palm!</span>")
-	playsound(get_turf(attacker), 'sound/weapons/slap.ogg', 40, TRUE, -1)
+	playsound(get_turf(attacker), 'sound/items/weapons/slap.ogg', 40, TRUE, -1)
 	defender.apply_damage(10, STAMINA)
 	defender.adjust_confusion(5 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Discombobulate")
@@ -136,7 +136,7 @@
 	reset_streak(defender)
 	defender.visible_message("<span class='warning'>[attacker] jabs [defender] in [attacker.p_their()] eyes!</span>", \
 						"<span class='userdanger'>[attacker] jabs you in the eyes!</span>")
-	playsound(get_turf(attacker), 'sound/weapons/whip.ogg', 40, TRUE, -1)
+	playsound(get_turf(attacker), 'sound/items/weapons/whip.ogg', 40, TRUE, -1)
 	defender.apply_damage(10, BRUTE)
 	defender.adjust_eye_blur_up_to(5,30)
 	defender.set_temp_blindness(2 SECONDS)
@@ -154,7 +154,7 @@
 		return MARTIAL_ATTACK_INVALID
 	defender.visible_message("<span class='warning'>[attacker] judo throws [defender] to ground!</span>", \
 						"<span class='userdanger'>[attacker] judo throws you to the ground!</span>")
-	playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
+	playsound(get_turf(attacker), 'sound/items/weapons/slam.ogg', 40, TRUE, -1)
 	defender.apply_damage(25, STAMINA)
 	defender.Knockdown(7 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Judo Throw")
@@ -166,7 +166,7 @@
 		return MARTIAL_ATTACK_INVALID
 	defender.visible_message("<span class='warning'>[attacker] puts [defender] into an armbar!</span>", \
 						"<span class='userdanger'>[attacker] wrestles you into an armbar!</span>")
-	playsound(get_turf(attacker), 'sound/weapons/slashmiss.ogg', 40, TRUE, -1)
+	playsound(get_turf(attacker), 'sound/items/weapons/slashmiss.ogg', 40, TRUE, -1)
 	if(attacker.body_position == STANDING_UP)
 		defender.drop_all_held_items()
 	defender.apply_damage(45, STAMINA)
@@ -182,12 +182,12 @@
 	if(attacker.body_position == STANDING_UP)
 		defender.visible_message("<span class='warning'>[attacker] raises [defender] over [attacker.p_their()] shoulder, and slams [defender.p_them()] into the ground!</span>", \
 							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
-		playsound(get_turf(attacker), 'sound/magic/tail_swing.ogg', 40, TRUE, -1)
+		playsound(get_turf(attacker), 'sound/effects/magic/tail_swing.ogg', 40, TRUE, -1)
 		defender.SpinAnimation(10, 1)
 	else
 		defender.visible_message("<span class='warning'>[attacker] manages to get a hold onto [defender], and pinning [defender.p_them()] to the ground!</span>", \
 							"<span class='userdanger'>[attacker] throws you over [attacker.p_their()] shoulder, slamming you into the ground!</span>")
-		playsound(get_turf(attacker), 'sound/weapons/slam.ogg', 40, TRUE, -1)
+		playsound(get_turf(attacker), 'sound/items/weapons/slam.ogg', 40, TRUE, -1)
 	defender.apply_damage(120, STAMINA)
 	defender.Knockdown(15 SECONDS)
 	defender.set_confusion(10 SECONDS)
@@ -198,12 +198,12 @@
 	reset_streak(defender)
 	defender.visible_message("<span class='warning'>[attacker] blasts [defender] with energy, sending [defender.p_them()] to the ground!</span>", \
 						"<span class='userdanger'>[attacker] makes strange hand gestures, screams wildly and prods you directly in the chest! You feel the wrath of the GOLDEN BOLT surge through your body! You've been utterly robusted!</span>")
-	playsound(get_turf(defender), 'sound/weapons/taser.ogg', 55, TRUE, -1)
-	playsound(get_turf(defender), 'sound/weapons/taserhit.ogg', 55, TRUE, -1)
+	playsound(get_turf(defender), 'sound/items/weapons/taser.ogg', 55, TRUE, -1)
+	playsound(get_turf(defender), 'sound/items/weapons/taserhit.ogg', 55, TRUE, -1)
 	defender.SpinAnimation(10, 1)
 	do_sparks(5, FALSE, defender)
 	attacker.say("GOLDEN BLAST!")
-	playsound(get_turf(defender), 'sound/weapons/goldenblast.ogg', 60, TRUE, -1)
+	playsound(get_turf(defender), 'sound/items/weapons/goldenblast.ogg', 60, TRUE, -1)
 	defender.apply_damage(120, STAMINA)
 	defender.Knockdown(30 SECONDS)
 	defender.set_confusion(30 SECONDS)
