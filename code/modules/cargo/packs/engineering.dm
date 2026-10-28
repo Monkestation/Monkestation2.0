@@ -23,7 +23,6 @@
 	desc = "A do-it-yourself kit for building an ALPU MK-I \"Ripley\", designed for lifting, \
 		carrying heavy equipment, and other station tasks. Batteries not included."
 	cost = CARGO_CRATE_VALUE * 10
-	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/mecha_parts/chassis/ripley,
 					/obj/item/mecha_parts/part/ripley_torso,
 					/obj/item/mecha_parts/part/ripley_right_arm,
@@ -104,11 +103,11 @@
 		shuttle engine into one tiny little crate."
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_CE
-	access_view = ACCESS_CE
+	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst/cargo)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-	special = TRUE
+	hidden = TRUE
 
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
@@ -158,8 +157,7 @@
 		devastating feat of human engineering and testament to wartime determination. \
 		Highly advanced research is required for proper construction."
 	cost = CARGO_CRATE_VALUE * 30
-	special = TRUE
-	access_view = ACCESS_COMMAND
+	hidden = TRUE
 	contains = list(/obj/item/circuitboard/machine/bsa/front,
 					/obj/item/circuitboard/machine/bsa/middle,
 					/obj/item/circuitboard/machine/bsa/back,
@@ -173,8 +171,7 @@
 		library of scientific knowledge, capable of granting superhuman powers and abilities. \
 		Highly advanced research is required for proper construction. Also contains five DNA probes."
 	cost = CARGO_CRATE_VALUE * 24
-	special = TRUE
-	access_view = ACCESS_COMMAND
+	hidden = TRUE
 	contains = list(/obj/item/circuitboard/machine/dna_vault,
 					/obj/item/dna_probe = 5,
 				)
@@ -184,8 +181,7 @@
 	name = "DNA Vault Samplers"
 	desc = "Contains five DNA probes for use in the DNA vault."
 	cost = CARGO_CRATE_VALUE * 6
-	special = TRUE
-	access_view = ACCESS_COMMAND
+	hidden = TRUE
 	contains = list(/obj/item/dna_probe = 5)
 	crate_name= "dna samplers crate"
 
@@ -195,8 +191,7 @@
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. \
 		Contains three Shield Generator Satellites."
 	cost = CARGO_CRATE_VALUE * 6
-	special = TRUE
-	access_view = ACCESS_COMMAND
+	hidden = TRUE
 	contains = list(/obj/machinery/satellite/meteor_shield = 3)
 	crate_name= "shield sat crate"
 
@@ -207,8 +202,7 @@
 	name = "Shield System Control Board"
 	desc = "A control system for the Shield Generator Satellite system."
 	cost = CARGO_CRATE_VALUE * 10
-	special = TRUE
-	access_view = ACCESS_COMMAND
+	hidden = TRUE
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 

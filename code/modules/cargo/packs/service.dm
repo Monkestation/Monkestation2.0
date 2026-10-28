@@ -169,7 +169,6 @@
 		cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade."
 	cost = CARGO_CRATE_VALUE * 4
 	access = ACCESS_QM
-	access_view = ACCESS_MINING_STATION
 	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure

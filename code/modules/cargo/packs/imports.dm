@@ -91,7 +91,7 @@
 	name = "NULL_ENTRY"
 	desc = "(*!&@#OKAY, OPERATIVE, WE SEE HOW MUCH MONEY YOU'RE FLAUNTING. FINE. HAVE THIS, AND GOOD LUCK PUTTING IT TOGETHER!#@*$"
 	cost = CARGO_CRATE_VALUE * 100
-	hidden = TRUE
+	emag_only = TRUE
 	contains = list(/obj/item/book/granter/crafting_recipe/regal_condor)
 
 /datum/supply_pack/imports/mafia
@@ -160,7 +160,7 @@
 	name = "Shocktrooper Crate"
 	desc = "(*!&@#WANT TO PUT THE FEAR OF DEATH INTO YOUR ENEMIES? THIS CRATE OF GOODIES CAN HELP MAKE THAT A REALITY. \
 		CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, TWO GLUON GRENADES AND TWO FRAG GRENADES!#@*$"
-	hidden = TRUE
+	emag_only = TRUE
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
 		/obj/item/storage/box/emps,
@@ -173,7 +173,7 @@
 	name = "Special Ops Crate"
 	desc = "(*!&@#THE PIGS ON YOUR TAIL? MAYBE YOU CAN BUY SOME TIME WITH THIS CRATE! \
 		CONTAINS A CHAMELEON MASK, A CHAMELEON JUMPSUIT AND AN AGENT CARD! AND A KNIFE!!#@*$"
-	hidden = TRUE
+	emag_only = TRUE
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
 		/obj/item/clothing/mask/chameleon,
@@ -189,7 +189,7 @@
 		espionage uniform used by the very best. Providing the best \
 		flexibility, with our latest Camo-tech threads. Perfect for \
 		risky espionage hallway operations. Enjoy our product!"
-	hidden = TRUE
+	emag_only = TRUE
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(
 		/obj/item/clothing/under/syndicate/floortilecamo = 4,
@@ -238,7 +238,7 @@
 		Then we have the perfect weapon for you! Special price for good friends! \
 		We don't have enough spare ammo, so you'll have to pick up the weapon of \
 		dead comrade when you run out."
-	hidden = TRUE
+	emag_only = TRUE
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/gun/ballistic/rifle/boltaction = 6)
 

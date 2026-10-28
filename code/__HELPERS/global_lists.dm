@@ -289,7 +289,15 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/structure/light_construct,
 )))
 
+/// A static typecache of all the money-based items that can be actively used as currency.
+GLOBAL_LIST_INIT(allowed_money, typecacheof(list(
+	/obj/item/coin,
+	/obj/item/holochip,
+	/obj/item/stack/spacecash,
+)))
+
 /proc/init_religion_sects()
 	for(var/path in subtypesof(/datum/religion_sect))
 		var/datum/religion_sect/each_sect = new path()
 		GLOB.religion_sect_datums += each_sect
+

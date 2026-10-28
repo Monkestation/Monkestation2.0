@@ -14,8 +14,8 @@
 	outfit = /datum/outfit/job/cargo_tech
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
-	paycheck = PAYCHECK_CREW
-	paycheck_department = ACCOUNT_CAR
+	paycheck = PAYCHECK_UNION_CREW
+	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
 	bounty_types = CIV_JOB_RANDOM
 	departments_list = list(
