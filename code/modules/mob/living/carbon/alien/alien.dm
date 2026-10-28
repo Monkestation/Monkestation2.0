@@ -116,8 +116,8 @@ Des: Removes all infected images from the alien.
 		span_noticealien("You begin to evolve!"),
 	)
 	new_xeno.setDir(dir)
-	if(numba && unique_name)
-		new_xeno.numba = numba
+	if(identifier && unique_name)
+		new_xeno.identifier = identifier
 		new_xeno.set_name()
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name

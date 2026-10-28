@@ -134,7 +134,7 @@
 	)
 	log_combat(user, target, "dressed burns in", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 	pierce_wound.adjust_blood_flow(-0.5)
-	if(pierce_wound.blood_flow > 0)
+	if(!QDELETED(pierce_wound) && pierce_wound.blood_flow > 0)
 		surgery.status = REALIGN_INNARDS
 		to_chat(user, span_notice("<i>There still seems to be misaligned blood vessels to finish...</i>"))
 	else
