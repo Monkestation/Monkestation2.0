@@ -25,7 +25,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	light_power = 0.75
 	light_inner_range = 0.1
 	light_outer_range = 4
-	light_falloff_curve = 5
 	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.

@@ -84,6 +84,11 @@
 	var/light_power = 1
 	///Hexadecimal RGB string representing the colour of the light. White by default.
 	var/light_color = COLOR_WHITE
+	/// Angle of light to show in light_dir
+	/// 360 is a circle, 90 is a cone, etc.
+	var/light_angle = 360
+	/// What angle to project light in
+	var/light_dir = NORTH
 	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
 	var/light_on = TRUE
 	///Bitflags to determine lighting-related atom properties.

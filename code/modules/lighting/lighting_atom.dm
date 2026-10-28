@@ -1,7 +1,7 @@
 
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
-/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = LIGHTING_DEFAULT_FALLOFF_CURVE, l_color = NONSENSICAL_VALUE, l_on, update = TRUE)
+/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = NONSENSICAL_VALUE, l_color = NONSENSICAL_VALUE, l_on, update = TRUE, l_angle, l_dir)
 	if(!isnum(l_power) && !isnull(l_power))
 		return
 	if(l_outer_range > 0 && l_outer_range < MINIMUM_USEFUL_LIGHT_RANGE)
@@ -24,6 +24,12 @@
 
 	if(l_color != NONSENSICAL_VALUE)
 		set_light_color(l_color)
+
+	if(!isnull(l_angle))
+		set_light_angle(l_angle)
+
+	if(!isnull(l_dir))
+		set_light_dir(l_dir)
 
 	if(!isnull(l_on))
 		set_light_on(l_on)
@@ -154,6 +160,26 @@
 	light_color = new_color
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
 
+/// Setter for the light angle of this atom
+/atom/proc/set_light_angle(new_value)
+	if(new_value == light_angle)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ANGLE, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_angle
+	light_angle = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ANGLE, .)
+
+/// Setter for the light direction of this atom
+/atom/proc/set_light_dir(new_value)
+	if(new_value == light_dir)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_DIR, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_dir
+	light_dir = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_DIR, .)
+
 /// Setter for whether or not this atom's light is on.
 /atom/proc/set_light_on(new_value)
 	if(new_value == light_on)
@@ -173,3 +199,6 @@
 	. = light_flags
 	light_flags = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)
+
+/atom/proc/get_light_offset()
+	return list(0, 0)
