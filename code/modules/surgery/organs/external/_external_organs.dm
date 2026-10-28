@@ -347,6 +347,8 @@
 /datum/bodypart_overlay/mutant/antennae
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "moth_antennae"
+	palette = /datum/color_palette/generic_colors
+	palette_key = "antennae_color"
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
 	///Are we burned? If so we draw differently

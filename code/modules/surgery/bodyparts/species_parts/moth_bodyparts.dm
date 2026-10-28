@@ -4,7 +4,7 @@
 	limb_id = SPECIES_MOTH
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR
+	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR | HEAD_EYECOLOR
 	bodypart_traits = list(TRAIT_ANTENNAE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
