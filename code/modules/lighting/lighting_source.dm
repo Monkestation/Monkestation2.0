@@ -36,6 +36,9 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 	var/lum_g
 	var/lum_b
 
+	/// The height of the light. The larger this is, the dimmer we'll start
+	var/light_height
+
 	/// What direction our angled light is pointed
 	var/light_dir = NONE
 	/// How many degrees of a circle should our light show. 360 is all of it, 180 is half, etc
@@ -216,49 +219,49 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 /// otherwise it's just two, x then y
 /datum/light_source/proc/get_sheet(multiz = FALSE)
 	var/bound_range = ceil(light_outer_range) + visual_offset
-	var/key = "[light_inner_range]-[light_outer_range]-[light_falloff_curve]-[bound_range]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[multiz]-[SSmapping.max_plane_offset]"
+	var/key = "[light_inner_range]-[light_outer_range]-[light_falloff_curve]-[bound_range]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[light_height]-[multiz]-[SSmapping.max_plane_offset]"
 	var/list/hand_back = GLOB.lighting_sheets[key]
 	if(!hand_back)
 		if(multiz)
-			hand_back = generate_sheet_multiz(light_inner_range, light_outer_range, light_falloff_curve, bound_range, offset_x, offset_y, light_dir, light_angle)
+			hand_back = generate_sheet_multiz(light_inner_range, light_outer_range, light_falloff_curve, bound_range, offset_x, offset_y, light_dir, light_angle, light_height)
 		else
-			hand_back = generate_sheet(light_inner_range, light_outer_range, light_falloff_curve, bound_range, offset_x, offset_y, light_dir, light_angle)
+			hand_back = generate_sheet(light_inner_range, light_outer_range, light_falloff_curve, bound_range, offset_x, offset_y, light_dir, light_angle, light_height)
 		GLOB.lighting_sheets[key] = hand_back
 	return hand_back
 
 /// Returns a list of lists that encodes the light falloff of our source
 /// Takes anything that impacts our generation as input
 /// This function should be "pure", no side effects or reads from the source object
-/datum/light_source/proc/generate_sheet(inner_range, outer_range, curve, bound_range, x_offset, y_offset, center_dir, angle, z_level = 0)
+/datum/light_source/proc/generate_sheet(inner_range, outer_range, curve, bound_range, x_offset, y_offset, center_dir, angle, height, z_level = 0)
 	var/list/encode = list()
 	// Corners are placed at 0.5 offsets
 	// We need our coords to reflect that (though x_offsets that change the basis for how things are calculated are fine too)
 	for(var/x in (-(bound_range) + x_offset - 0.5) to (bound_range + x_offset + 0.5))
 		var/list/row = list()
 		for(var/y in (-(bound_range) + y_offset - 0.5) to (bound_range + y_offset + 0.5))
-			row += falloff_at_coord(x, y, z_level, inner_range, outer_range, curve, center_dir, angle)
+			row += falloff_at_coord(x, y, z_level, inner_range, outer_range, curve, center_dir, angle, height)
 		encode += list(row)
 	return encode
 
 /// Returns a THREE dimensional list of lists that encodes the lighting falloff of our source
 /// Takes anything that impacts our generation as input
 /// This function should be "pure", no side effects or reads from the passed object
-/datum/light_source/proc/generate_sheet_multiz(inner_range, outer_range, curve, bound_range, x_offset, y_offset, center_dir, angle)
+/datum/light_source/proc/generate_sheet_multiz(inner_range, outer_range, curve, bound_range, x_offset, y_offset, center_dir, angle, height)
 	var/list/encode = list()
 	var/z_range = SSmapping.max_plane_offset // Let's just be safe yeah?
 	for(var/z in -z_range to z_range)
-		var/list/sheet = generate_sheet(inner_range, outer_range, curve, bound_range, x_offset, y_offset, center_dir, angle, z)
+		var/list/sheet = generate_sheet(inner_range, outer_range, curve, bound_range, x_offset, y_offset, center_dir, angle, height, z)
 		encode += list(sheet)
 	return encode
 
 // Assuming a brightness of 1 at range 1, formula should be (brightness = 1 / distance^2)
 // However, due to the weird range factor, brightness = (-(distance - full_dark_start) / (full_dark_start - full_light_end)) ^ light_max_bright
 /// Returns a value between 0 and 1, 0 being dark on that tile, 1 being fully lit
-/datum/light_source/proc/falloff_at_coord(x, y, z, inner_range, outer_range, curve, center_dir, angle)
+/datum/light_source/proc/falloff_at_coord(x, y, z, inner_range, outer_range, curve, center_dir, angle, height)
 	// You may notice we use squares here even though there are three components
 	// Because z diffs are so functionally small, cubes and cube roots are too aggressive
 	// The larger the distance is, the less bright our light will be
-	var/multiplier = CLAMP01(-(((x ** 2 + y ** 2 + z ** 2) ** 0.5 - outer_range) / max(outer_range - inner_range, 1))) ** curve
+	var/multiplier = CLAMP01(-(((x ** 2 + y ** 2 + z ** 2 + height) ** 0.5 - outer_range) / max(outer_range - inner_range, 1))) ** curve
 	if(angle >= 360 || angle <= 0)
 		return multiplier
 
@@ -429,6 +432,10 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 
 	if (source_atom.light_angle != light_angle)
 		light_angle = source_atom.light_angle
+		update = TRUE
+
+	if(source_atom.light_height != light_height)
+		light_height = source_atom.light_height
 		update = TRUE
 
 	var/list/light_offset = top_atom.get_light_offset()

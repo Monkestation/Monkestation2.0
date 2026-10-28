@@ -24,12 +24,6 @@
 	var/cache_g = LIGHTING_SOFT_THRESHOLD
 	var/cache_b = LIGHTING_SOFT_THRESHOLD
 
-	//additive light values
-	var/add_r = 0
-	var/add_g = 0
-	var/add_b = 0
-	var/applying_additive = FALSE
-
 	///the maximum of lum_r, lum_g, and lum_b. if this is > 1 then the three cached color values are divided by this
 	var/largest_color_luminosity = 0
 
@@ -122,10 +116,6 @@
 	var/old_g = cache_g
 	var/old_b = cache_b
 
-	var/old_add_r = add_r
-	var/old_add_g = add_g
-	var/old_add_b = add_b
-
 	if (largest_color_luminosity > 1)
 		. = 1 / largest_color_luminosity
 
@@ -142,23 +132,12 @@
 	cache_b = round(lum_b * ., LIGHTING_ROUND_VALUE)
 	#endif
 
-	add_r = clamp((lum_r - 1.35) * 0.3, 0, 0.22)
-	add_g = clamp((lum_g - 1.35) * 0.3, 0, 0.22)
-	add_b = clamp((lum_b - 1.35) * 0.3, 0, 0.22)
-
-	// Client-shredding, does not cull any additive overlays.
-	//applying_additive = add_r || add_g || add_b
-	// Cull additive overlays that would be below 0.03 alpha in any color.
-	applying_additive = max(add_r, add_g, add_b) > 0.03
-	// Cull additive overlays whose color alpha sum is lower than 0.03
-	//applying_additive = (add_r + add_g + add_b) > 0.03
-
 	src.largest_color_luminosity = round(largest_color_luminosity, LIGHTING_ROUND_VALUE)
 #ifdef VISUALIZE_LIGHT_UPDATES
-	if(!SSlighting.allow_duped_corners && old_r == cache_r && old_g == cache_g && old_b == cache_b && old_add_r == add_r && old_add_b == add_b && old_add_g == add_g)
+	if(!SSlighting.allow_duped_corners && old_r == cache_r && old_g == cache_g && old_b == cache_b)
 		return
 #else
-	if(old_r == cache_r && old_g == cache_g && old_b == cache_b && old_add_r == add_r && old_add_b == add_b && old_add_g == add_g)
+	if(old_r == cache_r && old_g == cache_g && old_b == cache_b)
 		return
 #endif
 

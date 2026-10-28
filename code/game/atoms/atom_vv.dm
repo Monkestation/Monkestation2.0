@@ -255,8 +255,15 @@
 			if(light_system == COMPLEX_LIGHT)
 				set_light(l_dir = var_value)
 				. = TRUE
+		if(NAMEOF(src, light_height))
+			if(light_system == COMPLEX_LIGHT)
+				set_light(l_height = var_value)
+				. = TRUE
 		if(NAMEOF(src, light_on))
-			set_light_on(var_value)
+			if(light_system == COMPLEX_LIGHT)
+				set_light(l_on = var_value)
+			else
+				set_light_on(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_flags))
 			set_light_flags(var_value)

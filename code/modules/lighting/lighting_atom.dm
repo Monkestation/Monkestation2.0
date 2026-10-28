@@ -1,7 +1,7 @@
 
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
-/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = NONSENSICAL_VALUE, l_color = NONSENSICAL_VALUE, l_on, update = TRUE, l_angle, l_dir)
+/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = NONSENSICAL_VALUE, l_color = NONSENSICAL_VALUE, l_on, update = TRUE, l_angle, l_dir, l_height)
 	if(!isnum(l_power) && !isnull(l_power))
 		return
 	if(l_outer_range > 0 && l_outer_range < MINIMUM_USEFUL_LIGHT_RANGE)
@@ -33,6 +33,9 @@
 
 	if(!isnull(l_on))
 		set_light_on(l_on)
+
+	if(!isnull(l_height))
+		set_light_height(l_height)
 
 	if(update)
 		update_light()
@@ -189,6 +192,16 @@
 	. = light_on
 	light_on = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
+
+/// Setter for the height of our light
+/atom/proc/set_light_height(new_value)
+	if(new_value == light_height)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_HEIGHT, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_height
+	light_height = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_HEIGHT, .)
 
 /// Setter for the light flags of this atom.
 /atom/proc/set_light_flags(new_value)

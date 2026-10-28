@@ -79,7 +79,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		set_light(0)
 		return
 	if(chosen_sign && chosen_sign.neon_color)
-		set_light(MINIMUM_USEFUL_LIGHT_RANGE, 0.7, chosen_sign.neon_color)
+		set_light(l_outer_range = MINIMUM_USEFUL_LIGHT_RANGE, l_power = 0.7, l_color = chosen_sign.neon_color)
 
 /obj/machinery/barsign/proc/set_sign_by_name(sign_name)
 	for(var/datum/barsign/sign as anything in subtypesof(/datum/barsign))
