@@ -4,7 +4,7 @@
 /obj/structure/chemical_tank/factory
 	name = "remote factory output"
 	desc = "Produces patchs, pills or bottles on demand."
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "bottler"
 	component_name = "Factory Output"
 

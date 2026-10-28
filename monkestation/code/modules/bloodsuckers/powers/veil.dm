@@ -67,7 +67,7 @@
 // CAST EFFECT // General effect (poof, splat, etc) when you cast. Doesn't happen automatically!
 /datum/action/cooldown/bloodsucker/veil/proc/cast_effect()
 	// Effect
-	playsound(get_turf(owner), 'sound/magic/smoke.ogg', 20, 1)
+	playsound(get_turf(owner), 'sound/effects/magic/smoke.ogg', 20, 1)
 	var/datum/effect_system/steam_spread/bloodsucker/puff = new /datum/effect_system/steam_spread/()
 	puff.set_up(3, 0, get_turf(owner))
 	puff.attach(owner) //OPTIONAL

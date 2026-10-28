@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - rscadd: "Rats raised by the rat king now have their own names"
