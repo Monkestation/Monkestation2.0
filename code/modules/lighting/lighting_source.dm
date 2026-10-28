@@ -1,3 +1,6 @@
+/// Cached global list of generated lighting sheets. See: datum/light_source/proc/get_sheet()
+GLOBAL_LIST_EMPTY(lighting_sheets)
+
 // This is where the fun begins.
 // These are the main datums that emit light.
 
@@ -11,6 +14,8 @@
 	var/turf/source_turf
 	///The turf the top_atom appears to over.
 	var/turf/pixel_turf
+	/// How many tiles pixel_turf can sit away from source_turf. Our light sheet has to be this much larger to still cover everything view() finds
+	var/visual_offset = 0
 	///Intensity of the emitter light.
 	var/light_power
 	/// The range of the emitted light.
@@ -134,35 +139,36 @@
 /datum/light_source/proc/vis_update()
 	EFFECT_UPDATE(LIGHTING_VIS_UPDATE)
 
-// Read out of our sources light sheet, a map of offsets -> the luminosity to use
-//#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
-
-// This is the define used to calculate falloff.
-// Assuming a brightness of 1 at range 1, formula should be (brightness = 1 / distance^2)
-// However, due to the weird range factor, brightness = (-(distance - full_dark_start) / (full_dark_start - full_light_end)) ^ light_max_bright
-//#define LUM_FALLOFF(C, T)(CLAMP01(-((((C.x - T.x) ** 2 +(C.y - T.y) ** 2) ** 0.5 - light_outer_range) / max(light_outer_range - light_inner_range, 1))) ** light_falloff_curve)
-
-#define LUM_FALLOFF(C) (CLAMP01(-((((C.x - _turf_x) ** 2 +(C.y - _turf_y) ** 2) ** 0.5 - light_outer_range) / _range_divisor)) ** light_falloff_curve)
-
 // This exists so we can cache the vars used in this macro, and save MASSIVE time :)
 // Most of this is saving off datum var accesses, tho some of it does actually cache computation
 // You will NEED to call this before you call APPLY_CORNER
 #define SETUP_CORNERS_CACHE(lighting_source) \
 	var/_turf_x = lighting_source.pixel_turf.x; \
 	var/_turf_y = lighting_source.pixel_turf.y; \
-	var/_range_divisor = max(1, lighting_source.light_outer_range - lighting_source.light_inner_range); \
+	var/_turf_z = lighting_source.pixel_turf.z; \
+	var/list/_sheet = get_sheet(); \
+	var/list/_multiz_sheet = list(); \
+	if(!!GET_LOWEST_STACK_OFFSET(source_turf.z)) { \
+		_multiz_sheet = get_sheet(multiz = TRUE); \
+	} \
+	var/_range_offset = ceil(lighting_source.light_outer_range) + 0.5 + 1 + lighting_source.visual_offset; \
+	var/_multiz_offset = SSmapping.max_plane_offset + 1; \
 	var/_light_power = lighting_source.light_power; \
 	var/_applied_lum_r = lighting_source.applied_lum_r; \
 	var/_applied_lum_g = lighting_source.applied_lum_g; \
 	var/_applied_lum_b = lighting_source.applied_lum_b; \
 	var/_lum_r = lighting_source.lum_r; \
 	var/_lum_g = lighting_source.lum_g; \
-	var/_lum_b = lighting_source.lum_b; \
+	var/_lum_b = lighting_source.lum_b;
 
 #define SETUP_CORNERS_REMOVAL_CACHE(lighting_source) \
 	var/_applied_lum_r = lighting_source.applied_lum_r; \
 	var/_applied_lum_g = lighting_source.applied_lum_g; \
 	var/_applied_lum_b = lighting_source.applied_lum_b;
+
+// Read out of our sources light sheet, a map of offsets -> the luminosity to use
+#define LUM_FALLOFF(C) _sheet[C.x - _turf_x + _range_offset][C.y - _turf_y + _range_offset]
+#define LUM_FALLOFF_MULTIZ(C) _multiz_sheet[C.z - _turf_z + _multiz_offset][C.x - _turf_x + _range_offset][C.y - _turf_y + _range_offset]
 
 // Macro that applies light to a new corner.
 // It is a macro in the interest of speed, yet not having to copy paste it.
@@ -170,7 +176,12 @@
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
 #define APPLY_CORNER(C)                          \
-	. = LUM_FALLOFF(C);              \
+	if(C.z == _turf_z) {                         \
+		. = LUM_FALLOFF(C);                      \
+	}                                            \
+	else {                                       \
+		. = LUM_FALLOFF_MULTIZ(C)                \
+	}                                            \
 	. *= (_light_power ** 2);                \
 	. *= _light_power < 0 ? -1:1;            \
 	var/OLD = effect_str[C];                     \
@@ -190,6 +201,91 @@
 		. * _applied_lum_g,                       \
 		. * _applied_lum_b                        \
 	);
+
+/// Returns a list of lists, indexed with ints, that can be read to get the lighting multiplier at any one point
+/// If the requested sheet is multiz, this will be 3 lists deep, first handling z level then x and y
+/// otherwise it's just two, x then y
+/datum/light_source/proc/get_sheet(multiz = FALSE)
+	var/bound_range = ceil(light_outer_range) + visual_offset
+	var/key = "[light_inner_range]-[light_outer_range]-[light_falloff_curve]-[bound_range]-[multiz]-[SSmapping.max_plane_offset]"
+	var/list/hand_back = GLOB.lighting_sheets[key]
+	if(!hand_back)
+		if(multiz)
+			hand_back = generate_sheet_multiz(light_inner_range, light_outer_range, light_falloff_curve, bound_range)
+		else
+			hand_back = generate_sheet(light_inner_range, light_outer_range, light_falloff_curve, bound_range)
+		GLOB.lighting_sheets[key] = hand_back
+	return hand_back
+
+/// Returns a list of lists that encodes the light falloff of our source
+/// Takes anything that impacts our generation as input
+/// This function should be "pure", no side effects or reads from the source object
+/datum/light_source/proc/generate_sheet(inner_range, outer_range, curve, bound_range, z_level = 0)
+	var/list/encode = list()
+	// Corners are placed at 0.5 offsets
+	// We need our coords to reflect that
+	for(var/x in (-(bound_range) - 0.5) to (bound_range + 0.5))
+		var/list/row = list()
+		for(var/y in (-(bound_range) - 0.5) to (bound_range + 0.5))
+			row += falloff_at_coord(x, y, z_level, inner_range, outer_range, curve)
+		encode += list(row)
+	return encode
+
+/// Returns a THREE dimensional list of lists that encodes the lighting falloff of our source
+/// Takes anything that impacts our generation as input
+/// This function should be "pure", no side effects or reads from the passed object
+/datum/light_source/proc/generate_sheet_multiz(inner_range, outer_range, curve, bound_range)
+	var/list/encode = list()
+	var/z_range = SSmapping.max_plane_offset // Let's just be safe yeah?
+	for(var/z in -z_range to z_range)
+		var/list/sheet = generate_sheet(inner_range, outer_range, curve, bound_range, z)
+		encode += list(sheet)
+	return encode
+
+// Assuming a brightness of 1 at range 1, formula should be (brightness = 1 / distance^2)
+// However, due to the weird range factor, brightness = (-(distance - full_dark_start) / (full_dark_start - full_light_end)) ^ light_max_bright
+/// Returns a value between 0 and 1, 0 being dark on that tile, 1 being fully lit
+/datum/light_source/proc/falloff_at_coord(x, y, z, inner_range, outer_range, curve)
+	// You may notice we use squares here even though there are three components
+	// Because z diffs are so functionally small, cubes and cube roots are too aggressive
+	// The larger the distance is, the less bright our light will be
+	return CLAMP01(-(((x ** 2 + y ** 2 + z ** 2) ** 0.5 - outer_range) / max(outer_range - inner_range, 1))) ** curve
+
+/// Dumps the content of a lighting sheet to chat, for debugging
+/datum/light_source/proc/print_sheet()
+	var/list/sheet = get_sheet()
+	var/list/output = list()
+	var/multiz_depth = 1
+	// If we have a list 3 layers down we're multiz
+	if(length(sheet[1][1]))
+		multiz_depth = length(sheet)
+	var/column_seperator = ""
+	for(var/i in 1 to length(sheet))
+		column_seperator += "----"
+	output += column_seperator
+	for(var/i in 1 to multiz_depth)
+		for(var/list/column in sheet)
+			var/list/print_column = list()
+			for(var/row in column)
+				print_column += round(row, 0.1)
+			output += print_column.Join(", ")
+		output += column_seperator
+	to_chat(usr, "\n[output.Join("\n")]")
+
+/// Debug proc, for when lighting sheets fuck up
+/// Accepts the sheet (2 or 3 (multiz) dimensional list of lighting values at some offset)
+/// alongside x and y delta values and the sheet's "offset", which is the amount required to ensure everything indexes at 1
+/// Optionally, you can pass similar values for multiz stuff
+/proc/read_sheet(list/sheet, x, y, offset, z, z_offset)
+	var/list/working = sheet
+	var/offset_x = x + offset
+	var/offset_y = y + offset
+	var/offset_z = z + z_offset
+	if(z)
+		working = sheet[offset_z]
+	var/list/line = working[offset_x]
+	var/word = line[offset_y]
+	return word
 
 /// This is the define used to calculate falloff.
 /datum/light_source/proc/remove_lum()
@@ -294,6 +390,8 @@
 			remove_lum()
 		return
 
+	visual_offset = max(abs(pixel_turf.x - source_turf.x), abs(pixel_turf.y - source_turf.y))
+
 	if (source_atom.light_falloff_curve != light_falloff_curve)
 		light_falloff_curve = source_atom.light_falloff_curve
 		update = TRUE
@@ -321,9 +419,9 @@
 	if (source_turf)
 		var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
 		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = CEILING(light_outer_range, 1)
+		source_turf.luminosity = ceil(light_outer_range)
 		if(!uses_multiz) // Yes I know this could be acomplished with an if in the for loop, but it's fukin lighting code man
-			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
+			for(var/turf/T in view(ceil(light_outer_range), source_turf))
 				if(IS_OPAQUE_TURF(T))
 					continue
 				if (!T.lighting_corners_initialised)
@@ -334,7 +432,7 @@
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
 		else
-			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
+			for(var/turf/T in view(ceil(light_outer_range), source_turf))
 				if(IS_OPAQUE_TURF(T))
 					continue
 				if (!T.lighting_corners_initialised)
@@ -437,6 +535,7 @@
 #undef EFFECT_UPDATE
 #undef INSERT_CORNERS
 #undef LUM_FALLOFF
+#undef LUM_FALLOFF_MULTIZ
 #undef SETUP_CORNERS_REMOVAL_CACHE
 #undef SETUP_CORNERS_CACHE
 #undef GENERATE_MISSING_CORNERS

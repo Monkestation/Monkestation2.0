@@ -41,6 +41,7 @@
 	. = ..()
 	src.x = x + 0.5
 	src.y = y + 0.5
+	src.z = z
 
 	// Alright. We're gonna take a set of coords, and from them do a loop clockwise
 	// To build out the turfs adjacent to us. This is pretty fast
