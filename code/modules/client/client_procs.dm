@@ -663,6 +663,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	SSambience.remove_ambience_client(src)
 	SSmouse_entered.hovers -= src
 	SSping.currentrun -= src
+	SSsound_tokens.clients_needing_update -= src
+	SSsound_tokens.currentrun -= src
 	QDEL_NULL(imode)
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
