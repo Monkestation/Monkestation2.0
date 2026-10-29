@@ -585,8 +585,9 @@ export function CommandBar() {
         return;
       case 'Tab':
         e.preventDefault();
-        if (!tabAutocomplete || !hasSuggestions || !selectCurrentSuggestion()) {
         if (!hasSuggestions) {
+          blurToMap();
+        } else if (!tabAutocomplete) {
           blurToMap();
         } else if (!displaySuggestions) {
           setShowSuggestions(true);
