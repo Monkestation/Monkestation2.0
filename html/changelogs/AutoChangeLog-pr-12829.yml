@@ -1,6 +1,0 @@
-author: "Iamgoofball, Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "Carps migrating through the station no longer idle so they don't get stuck after spawning until someone walks by."
-  - bugfix: "mobs in the same faction will no longer be at odds against one another"
-  - bugfix: "mobs will no longer be starting and stopping when chasing targets"

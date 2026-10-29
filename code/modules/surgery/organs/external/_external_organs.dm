@@ -85,6 +85,8 @@
 
 	if(external_bodytypes)
 		receiver.synchronize_bodytypes()
+	if(external_bodyshapes)
+		receiver.synchronize_bodyshapes()
 
 	receiver.update_body_parts()
 
@@ -129,6 +131,8 @@
 		ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 		if(ownerlimb.owner && external_bodytypes)
 			ownerlimb.owner.synchronize_bodytypes()
+		if(ownerlimb.owner && external_bodyshapes)
+			ownerlimb.owner.synchronize_bodyshapes()
 	ownerlimb = null
 	return ..()
 
@@ -199,6 +203,7 @@
 /datum/bodypart_overlay/mutant/horns
 	layers = EXTERNAL_ADJACENT
 	feature_key = "horns"
+	offset_location = UPPER_BODY
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
@@ -229,6 +234,7 @@
 /datum/bodypart_overlay/mutant/frills
 	layers = EXTERNAL_ADJACENT
 	feature_key = "frills"
+	offset_location = UPPER_BODY
 
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
@@ -251,7 +257,7 @@
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
 
 	preference = "feature_lizard_snout"
-	external_bodytypes = BODYTYPE_SNOUTED
+	external_bodyshapes = BODYSHAPE_SNOUTED
 
 	dna_block = DNA_SNOUT_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -280,6 +286,7 @@
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
 	feature_key = "snout"
+	offset_location = UPPER_BODY
 
 /datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
@@ -355,6 +362,7 @@
 /datum/bodypart_overlay/mutant/antennae
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "moth_antennae"
+	offset_location = UPPER_BODY
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
 	///Are we burned? If so we draw differently

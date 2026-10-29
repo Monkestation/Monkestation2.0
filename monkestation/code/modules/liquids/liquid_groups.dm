@@ -76,10 +76,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		add_to_group(created_liquid.my_turf)
 		cached_edge_turfs[created_liquid.my_turf] = list(NORTH, SOUTH, EAST, WEST)
 	SSliquids.active_groups |= src
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(removed_reagent))
 
 /datum/liquid_group/Destroy()
-	UnregisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT)
 	SSliquids.active_groups -= src
 	SSliquids.active_turf_group_queue -= src
 	SSliquids.arrayed_groups -= src /// Someone made a massive fucky wucky if this is happening
@@ -100,12 +98,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	always_evaporates = from.always_evaporates
 	evaporation_multiplier = from.evaporation_multiplier
 
-/datum/liquid_group/proc/removed_reagent(datum/reagents/source, datum/reagent/modified)
-	for(var/turf/member as anything in members)
-		if(QDELETED(member.liquids))
-			continue
-		modified.remove_from_member(member.liquids)
-
 ///GROUP CONTROLLING
 /datum/liquid_group/proc/add_to_group(turf/T)
 	if(QDELETED(T))
@@ -120,8 +112,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	members[T] = TRUE
 	T.liquids.liquid_group = src
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		reagent.add_to_member(T.liquids)
 
 	reagents.maximum_volume += 1000 /// each turf will hold 1000 units plus the base amount spread across the group
 	if(group_color)
@@ -136,10 +126,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		burning_members -= T
 	if(members)
 		members -= T
+	if(cached_edge_turfs)
+		cached_edge_turfs -= T
 	T.liquids?.liquid_group = null
-
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		reagent.remove_from_member(T.liquids)
 
 	if(QDELING(src))
 		return
@@ -168,10 +157,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	add_reagents(reagent_list = created_reagent_list, chem_temp = otherg.group_temperature)
 	cached_edge_turfs |= otherg.cached_edge_turfs
-
-	for(var/turf/liquid_turf as anything in members)
-		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-			reagent.add_to_member(liquid_turf.liquids)
 
 	for(var/turf/liquid_turf as anything in otherg.members)
 		otherg.remove_from_group(liquid_turf)
@@ -210,12 +195,12 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	handle_visual_changes()
 	reagents.my_atom = pick(members) /// change the location of explosions and sounds every group process
 
-	for(var/turf/turf as anything in members)
-		if(isopenturf(turf))
-			continue
-		remove_from_group(turf)
-
 	if(from_SS)
+		for(var/turf/turf as anything in members)
+			if(isopenturf(turf))
+				continue
+			remove_from_group(turf)
+
 		total_reagent_volume = reagents.total_volume
 
 		if(!total_reagent_volume || !members)
@@ -633,7 +618,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			SSliquids.burning_turfs |= adjacent_turf
 			for(var/atom/movable/movable in adjacent_turf)
 				movable.fire_act((T20C+50) + (50*adjacent_turf.liquids.fire_state), 125)
-				member.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
+			member.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
 
 /datum/liquid_group/proc/extinguish_all()
 	group_burn_power = 0
@@ -641,14 +626,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	for(var/turf/member in burning_members)
 		member.liquids.fire_state = LIQUID_FIRE_STATE_NONE
 		member.liquids.set_fire_effect()
-		if(burning_members[member])
-			burning_members -= member
-		if(SSliquids.burning_turfs[member])
-			SSliquids.burning_turfs -= member
+		burning_members -= member
+		SSliquids.burning_turfs -= member
 
 /datum/liquid_group/proc/extinguish(turf/member)
-	if(SSliquids.burning_turfs[member])
-		SSliquids.burning_turfs -= member
+	SSliquids.burning_turfs -= member
 	burning_members -= member
 	if(QDELETED(member.liquids))
 		return
@@ -669,15 +651,24 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		return FALSE
 	return TRUE
 
+/// Spreads from every edge turf. Returns TRUE if it ran out of tick and stopped early.
 /datum/liquid_group/proc/process_cached_edges()
 	for(var/turf/cached_turf in cached_edge_turfs)
+		if(TICK_CHECK)
+			return TRUE
 		for(var/direction in cached_edge_turfs[cached_turf])
 			var/turf/directional_turf = get_step(cached_turf, direction)
 			if(!directional_turf || isclosedturf(directional_turf) || !TURFS_CAN_SHARE(cached_turf, directional_turf) || HAS_TRAIT(directional_turf, TRAIT_BLOCK_LIQUID_SPREAD))
 				continue
-			if(spread_liquid(directional_turf, cached_turf))
-				cached_edge_turfs[cached_turf] -= direction
-				if(!length(cached_edge_turfs[cached_turf]))
+			var/spread = spread_liquid(directional_turf, cached_turf)
+			if(QDELETED(src))
+				return
+			var/list/directions = cached_edge_turfs[cached_turf]
+			if(!directions)
+				break
+			if(spread)
+				directions -= direction
+				if(!length(directions))
 					cached_edge_turfs -= cached_turf
 
 /datum/liquid_group/proc/check_edges(turf/checker)
@@ -791,6 +782,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		current_head.temporary_split_key = generated_key
 		adjacent_liquid_count++
 
+	if(adjacent_liquid_count == 0)
+		return
 	if(adjacent_liquid_count > 0) ///if there is only 1 adjacent liquid it physically can't split
 		return FALSE
 
@@ -856,6 +849,15 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(!length(connected_array))
 		return
 
+	// the biggest piece stays in this group instead of being moved tile by tile into a new one
+	var/list/largest_piece = connected_array[1]
+	for(var/list/piece as anything in connected_array)
+		if(length(piece) > length(largest_piece))
+			largest_piece = piece
+	connected_array -= list(largest_piece)
+	if(!length(connected_array))
+		return
+
 	splitting_array = connected_array
 	SSliquids.arrayed_groups += src
 
@@ -868,6 +870,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/plucked_array = list()
 	var/pick_count = 3
 	while(pick_count > 0 && length(splitting_array))
+		pick_count--
 		var/list/temp = pick(splitting_array)
 		plucked_array += list(temp)
 		splitting_array -= list(temp)
@@ -902,7 +905,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		var/new_group_length = length(new_group.members)
 		if(new_group.total_reagent_volume == 0 || new_group.reagents_per_turf == 0 || !new_group_length)
 			qdel(new_group)
-			return
+			continue
 
 		for(var/turf/new_turf in new_group.members)
 			if(new_turf in members)
@@ -910,7 +913,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 		if(!length(new_group.members))
 			qdel(new_group)
-			return
+			continue
 
 
 
@@ -970,7 +973,12 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		water_rush(new_turf, source_turf)
 
 	else if(!QDELETED(source_turf?.liquids?.liquid_group) && !QDELETED(new_turf?.liquids?.liquid_group) && new_turf.liquids.liquid_group != source_turf.liquids.liquid_group && source_turf.turf_height == new_turf.turf_height && new_turf.liquids.liquid_group.can_merge)
-		merge_group(new_turf.liquids.liquid_group)
+		var/datum/liquid_group/other_group = new_turf.liquids.liquid_group
+		// merging moves tiles one at a time, so move the smaller flood
+		if(can_merge && length(other_group.members) > length(members))
+			other_group.merge_group(src)
+		else
+			merge_group(other_group)
 		return FALSE
 	else if(source_turf.turf_height != new_turf.turf_height)
 		if(new_turf.turf_height < source_turf.turf_height) // your going down
