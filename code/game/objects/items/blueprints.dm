@@ -239,7 +239,7 @@
 /obj/item/blueprints/slime/edit_area(mob/user)
 	. = ..()
 	var/area/area = get_area(src)
-	var/list/turf_matrix = color_transition_filter("#2956B2")
+	var/list/turf_matrix = color_transition_filter("#2956B2", SATURATION_OVERRIDE)
 	for(var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
