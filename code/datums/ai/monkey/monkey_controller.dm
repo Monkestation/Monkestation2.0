@@ -107,10 +107,10 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/TryFindWeapon()
 	var/mob/living/living_pawn = pawn
 
-	if(!(locate(/obj/item) in living_pawn.held_items))
+	if(!(living_pawn.is_holding_item_of_type(/obj/item)))
 		set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, 0)
 
-	if(blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
+	if(blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (living_pawn.is_holding_item_of_type(/obj/item/gun)))
 		// We have a gun, what could we possibly want?
 		return FALSE
 
@@ -119,21 +119,21 @@ have ways of interacting with a specific mob and control it.
 	for(var/obj/item/item in oview(2, living_pawn))
 		nearby_items += item
 
-	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
+	for(var/obj/item/item as anything in living_pawn.get_held_items()) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
 		if(item.force < 2)
 			living_pawn.dropItemToGround(item)
 
-	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
+	weapon = GetBestWeapon(src, nearby_items, living_pawn.get_held_items())
 
 	var/pickpocket = FALSE
 	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
-		var/obj/item/held_weapon = GetBestWeapon(src, human.held_items + weapon, living_pawn.held_items)
+		var/obj/item/held_weapon = GetBestWeapon(src, human.get_held_items() + weapon, living_pawn.get_held_items())
 		if(held_weapon == weapon) // It's just the same one, not a held one
 			continue
 		pickpocket = TRUE
 		weapon = held_weapon
 
-	if(!weapon || (weapon in living_pawn.held_items))
+	if(!weapon || living_pawn.is_holding(weapon))
 		return FALSE
 
 	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
