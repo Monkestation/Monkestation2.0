@@ -37,3 +37,9 @@
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_datum = /datum/antagonist/traitor/infiltrator/sleeper_agent
 	prompted_picking = TRUE
+
+/datum/round_event_control/antagonist/traitor/latejoin
+	name = "Syndicate Infiltrator (Traitor)"
+	track = EVENT_TRACK_LATEJOIN
+	earliest_start = BASE_LATEJOIN_SPAWN_TIME
+	maximum_antags = 1
