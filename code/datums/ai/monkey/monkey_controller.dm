@@ -171,7 +171,9 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
 	SIGNAL_HANDLER
-	if(prob(MONKEY_RETALIATE_PROB))
+	// penned monkeys have become jaded to getting glomped, and thus are less likely to lose their mcfucking marbles
+	var/mob/living/basic/slime/slime = astype(attacker)
+	if(prob(slime?.is_ranched() ? PENNED_MONKEY_RETALIATE_PROB : MONKEY_RETALIATE_PROB))
 		retaliate(attacker)
 
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
