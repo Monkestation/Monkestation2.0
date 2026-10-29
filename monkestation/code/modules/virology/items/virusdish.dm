@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	if(open)//If the dish is open, we may get infected by the disease inside on top of those that might be stuck on it.
 		var/block = 0
 		var/bleeding = 0
-		if(src in perp.held_items)
+		if(perp.is_holding(src))
 			block = perp.check_contact_sterility(BODY_ZONE_ARMS)
 			bleeding = perp.check_bodypart_bleeding(BODY_ZONE_ARMS)
 			if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))

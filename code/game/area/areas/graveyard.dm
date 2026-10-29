@@ -48,8 +48,6 @@
 /area/graveyard/tunnels
 	name = "Tunnels"
 	ambience_index = AMBIENCE_MINING
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 	always_unpowered = TRUE
 	outdoors = FALSE

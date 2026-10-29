@@ -1,0 +1,389 @@
+import { useState } from 'react';
+import {
+  Box,
+  Icon,
+  NoticeBox,
+  ProgressBar,
+  Tabs,
+  Tooltip,
+} from 'tgui-core/components';
+import { type BooleanLike, classes } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
+import {
+  RequirementCell,
+  SlimeName,
+  SlimePips,
+  SlimePortrait,
+} from './common/SlimeRancher';
+import {
+  SLIMEPEDIA_TABS,
+  Slimepedia,
+  type SlimepediaPage,
+  useSlimepediaData,
+} from './Slimepedia';
+
+type Requirement = {
+  name: string;
+  icon: string;
+  icon_state: string;
+};
+
+type WantedItem = Requirement & {
+  done: BooleanLike;
+};
+
+type WantedDrain = Requirement & {
+  total: number;
+  drained: number;
+};
+
+type Mutation = {
+  color: string;
+  color_hex: string;
+  ready: BooleanLike;
+  items: WantedItem[];
+  drains: WantedDrain[];
+};
+
+// static data
+type BuiltInNumberData = {
+  max_growth: number;
+  max_crossbreed_progress: number;
+  max_nutrition: number;
+  nutrition_starving: number;
+  nutrition_hungry: number;
+  extract_cost: number;
+  extract_cap: number;
+};
+
+type BaseSlimeData = {
+  scanned: BooleanLike;
+  name: string;
+  color: string;
+  color_hex: string;
+  sprite_icon: string;
+  sprite_state: string;
+  transparent: BooleanLike;
+};
+
+type SlimeInfoData = {
+  mood_state: string | null;
+  life_stage: string;
+  health: number;
+  max_health: number;
+  nutrition: number;
+  cores: number;
+  nearby_extracts: number;
+  growth: number;
+  ranch_progress: number;
+  split_cost: number;
+};
+
+type SlimeMutationData = {
+  mutation_chance: number;
+  crossbreed_modification: string | null;
+  crossbreed_progress: number;
+  mutations: Mutation[];
+};
+
+// i just split these into multiple subtypes then mushed them together bc like i thought one data type was just too fucking huge ~Lucy
+type Data = {
+  scanned: BooleanLike;
+} & BaseSlimeData &
+  SlimeInfoData &
+  SlimeMutationData &
+  BuiltInNumberData;
+
+function MutationRow(props: { mutation: Mutation }) {
+  const { mutation } = props;
+
+  return (
+    <Box
+      className={classes([
+        'SlimeRancherScanner__recipe',
+        !!mutation.ready && 'SlimeRancherScanner__recipe--ready',
+      ])}
+    >
+      <Box className="SlimeRancherScanner__recipe-heading">
+        <SlimeName color={mutation.color} hex={mutation.color_hex} />
+        {!!mutation.ready && (
+          <span className="SlimeRancherScanner__ready">
+            <Icon name="check" /> Ready
+          </span>
+        )}
+      </Box>
+      <Box className="SlimeRancherScanner__requirements">
+        {mutation.items.map((item) => (
+          <RequirementCell key={item.name} requirement={item}>
+            {!!item.done && (
+              <Icon name="check" className="SlimeRancherScanner__completed" />
+            )}
+          </RequirementCell>
+        ))}
+        {mutation.drains.map((drain) => {
+          const done = drain.drained >= drain.total;
+          return (
+            <RequirementCell key={drain.name} requirement={drain}>
+              <ProgressBar
+                value={drain.drained}
+                maxValue={drain.total}
+                color={done ? 'good' : 'average'}
+              >
+                {drain.drained} / {drain.total}
+              </ProgressBar>
+            </RequirementCell>
+          );
+        })}
+      </Box>
+    </Box>
+  );
+}
+
+function Vitals() {
+  const { data } = useBackend<Data>();
+  const {
+    color,
+    color_hex,
+    sprite_icon,
+    sprite_state,
+    mood_state,
+    transparent,
+    life_stage,
+    health,
+    max_health,
+    nutrition,
+    max_nutrition,
+    nutrition_starving,
+    nutrition_hungry,
+    cores,
+    nearby_extracts,
+    growth,
+    max_growth,
+    ranch_progress,
+    split_cost,
+    extract_cost,
+    extract_cap,
+    mutation_chance,
+    crossbreed_modification,
+    crossbreed_progress,
+    max_crossbreed_progress,
+    mutations,
+  } = data;
+  const anyReady = mutations.some((mutation) => !!mutation.ready);
+  const primed = split_cost > 0;
+  const ranchTarget = primed ? split_cost : extract_cost;
+
+  const starving = nutrition < nutrition_starving;
+  const hungry = nutrition < nutrition_hungry;
+  const crowded = nearby_extracts >= extract_cap;
+
+  return (
+    <Box className="SlimeRancher__card SlimeRancherScanner__vitals">
+      <Box className="SlimeRancherScanner__identity">
+        <Box className="SlimeRancherScanner__portrait-well">
+          <SlimePortrait
+            icon={sprite_icon}
+            state={sprite_state}
+            mood={mood_state}
+            transparent={transparent}
+          />
+        </Box>
+        <Box className="SlimeRancherScanner__identity-text">
+          <h1>
+            <SlimeName color={color} hex={color_hex} suffix="slime" />
+          </h1>
+          <span className="SlimeRancher__chip SlimeRancherScanner__life-stage">
+            {capitalizeAll(life_stage)}
+          </span>
+        </Box>
+      </Box>
+      {!!starving && (
+        <NoticeBox danger>
+          This slime is starving, feed the poor thing soon!
+        </NoticeBox>
+      )}
+      {!starving && !!hungry && <NoticeBox>This slime is hungry.</NoticeBox>}
+      {crowded && (
+        <NoticeBox danger>
+          Too many extracts are lying around, this slime won't secrete more
+          until some get cleared out.
+        </NoticeBox>
+      )}
+      <hr className="SlimeRancher__rule" />
+      <Box className="SlimeRancherScanner__meters">
+        <Box className="SlimeRancherScanner__meter">
+          <span>Health</span>
+          <ProgressBar
+            value={health}
+            maxValue={max_health}
+            ranges={{
+              good: [max_health * 0.5, Infinity],
+              average: [max_health * 0.25, max_health * 0.5],
+              bad: [-Infinity, max_health * 0.25],
+            }}
+          >
+            {health} / {max_health}
+          </ProgressBar>
+        </Box>
+        <Box className="SlimeRancherScanner__meter">
+          <span>Nutrition</span>
+          {/* colored off the flags rather than a range, so it matches the game's own hunger thresholds */}
+          <ProgressBar
+            value={nutrition}
+            maxValue={max_nutrition}
+            color={starving ? 'bad' : hungry ? 'average' : 'good'}
+          >
+            {nutrition} / {max_nutrition}
+          </ProgressBar>
+        </Box>
+        <Box className="SlimeRancherScanner__meter">
+          <span>{primed ? 'Next: split' : 'Next: extract'}</span>
+          <ProgressBar
+            value={ranch_progress}
+            maxValue={ranchTarget}
+            color={primed ? 'good' : undefined}
+          >
+            {ranch_progress} / {ranchTarget}
+          </ProgressBar>
+        </Box>
+        <Tooltip
+          content={
+            anyReady
+              ? 'Chance this slime mutates instead of secreting an extract, once a recipe is ready.'
+              : 'No recipe is finished yet, so this slime will only secrete extracts.'
+          }
+        >
+          <Box className="SlimeRancherScanner__meter">
+            <span>Mutation chance {!anyReady && <Icon name="lock" />}</span>
+            <ProgressBar
+              className={
+                !anyReady
+                  ? 'SlimeRancherScanner__instability--locked'
+                  : undefined
+              }
+              value={mutation_chance}
+              maxValue={100}
+            >
+              {mutation_chance}%
+            </ProgressBar>
+          </Box>
+        </Tooltip>
+      </Box>
+      <hr className="SlimeRancher__rule" />
+      <SlimePips label="Growth" value={growth} maxValue={max_growth} />
+      {!!crossbreed_modification && (
+        <SlimePips
+          label={`Core mutation: ${crossbreed_modification}`}
+          value={crossbreed_progress}
+          maxValue={max_crossbreed_progress}
+        />
+      )}
+      <Box className="SlimeRancherScanner__readings">
+        <Box className="SlimeRancher__well">
+          <span>Cores</span>
+          <strong>{cores}</strong>
+        </Box>
+        <Box className="SlimeRancher__well">
+          <span>Nearby extracts</span>
+          <strong>
+            {nearby_extracts} / {extract_cap}
+          </strong>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+function Mutations() {
+  const { data } = useBackend<Data>();
+  const { mutations } = data;
+  const anyReady = mutations.some((mutation) => !!mutation.ready);
+  const sorted = [...mutations].sort(
+    (a, b) => Number(!!b.ready) - Number(!!a.ready),
+  );
+
+  if (mutations.length === 0) {
+    return (
+      <Box className="SlimeRancher__card SlimeRancherScanner__mutations">
+        <h2 className="SlimeRancher__heading SlimeRancherScanner__badge">
+          Mutations
+        </h2>
+        <p>This slime has nowhere left to mutate to.</p>
+      </Box>
+    );
+  }
+
+  return (
+    <Box className="SlimeRancher__card SlimeRancherScanner__mutations">
+      <h2 className="SlimeRancher__heading">Mutations</h2>
+      <Box className="SlimeRancherScanner__recipes">
+        {sorted.map((mutation) => (
+          <MutationRow key={mutation.color} mutation={mutation} />
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
+enum ScannerTab {
+  Scan = 'scan',
+}
+
+export const SlimeRancherScanner = () => {
+  const { data } = useBackend<Data>();
+  const { scanned, color } = data;
+  const slimepedia = useSlimepediaData();
+  const [tab, setTab] = useState<ScannerTab | SlimepediaPage>(ScannerTab.Scan);
+
+  return (
+    <Window width={780} height={600} theme="slime_rancher">
+      <Window.Content className="SlimeRancherScanner">
+        <Tabs className="SlimeRancher__tabs">
+          <Tabs.Tab
+            icon="crosshairs"
+            selected={tab === ScannerTab.Scan}
+            onClick={() => setTab(ScannerTab.Scan)}
+          >
+            Scan
+          </Tabs.Tab>
+          {SLIMEPEDIA_TABS.map((entry) => (
+            <Tabs.Tab
+              key={entry.page}
+              icon={entry.icon}
+              selected={tab === entry.page}
+              onClick={() => setTab(entry.page)}
+            >
+              {entry.label}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
+        {tab === ScannerTab.Scan ? (
+          <Box className="SlimeRancher__scroll SlimeRancherScanner__scan">
+            {!scanned ? (
+              <Box className="SlimeRancher__empty">
+                <Icon name="crosshairs" size={3} />
+                <h1>No slime currently scanned.</h1>
+                <p>Point the scanner at any slime you can see.</p>
+              </Box>
+            ) : (
+              <>
+                <Vitals />
+                <Mutations />
+              </>
+            )}
+          </Box>
+        ) : (
+          <Slimepedia
+            data={slimepedia}
+            page={tab}
+            onPageChange={setTab}
+            initialColorName={scanned ? color : undefined}
+          />
+        )}
+      </Window.Content>
+    </Window>
+  );
+};

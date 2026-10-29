@@ -16,6 +16,8 @@
 	var/fallback_key
 	///list of palette keys to colors used if the accessory says it needs multiple colors
 	var/list/color_keys
+	/// Determines body area of the overlay for height offsets
+	var/offset_location = ENTIRE_BODY
 
 ///Wrapper for getting the proper image, colored and everything
 /datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
@@ -79,7 +81,7 @@
 			return -BODY_FRONT_LAYER
 
 ///Check whether we can draw the overlays. You generally don't want lizard snouts to draw over an EVA suit
-/datum/bodypart_overlay/proc/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/proc/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	return TRUE
 
 ///Colorizes the limb it's inserted to, if required.

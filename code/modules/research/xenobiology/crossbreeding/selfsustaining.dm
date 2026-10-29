@@ -25,7 +25,7 @@ Self-sustaining extracts:
 		A.icon = icon
 		A.icon_state = icon_state
 		A.color = color
-		A.name = "self-sustaining " + colour + " extract"
+		A.name = "self-sustaining [slime_type::color] extract"
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/autoslime/Initialize(mapload)
@@ -64,88 +64,88 @@ Self-sustaining extracts:
 
 /obj/item/slimecross/selfsustaining/grey
 	extract_type = /obj/item/slime_extract/grey
-	colour = "grey"
+	slime_type = /datum/slime_type/grey
 
 /obj/item/slimecross/selfsustaining/orange
 	extract_type = /obj/item/slime_extract/orange
-	colour = "orange"
+	slime_type = /datum/slime_type/orange
 
 /obj/item/slimecross/selfsustaining/purple
 	extract_type = /obj/item/slime_extract/purple
-	colour = "purple"
+	slime_type = /datum/slime_type/purple
 
 /obj/item/slimecross/selfsustaining/blue
 	extract_type = /obj/item/slime_extract/blue
-	colour = "blue"
+	slime_type = /datum/slime_type/blue
 
 /obj/item/slimecross/selfsustaining/metal
 	extract_type = /obj/item/slime_extract/metal
-	colour = "metal"
+	slime_type = /datum/slime_type/metal
 
 /obj/item/slimecross/selfsustaining/yellow
 	extract_type = /obj/item/slime_extract/yellow
-	colour = "yellow"
+	slime_type = /datum/slime_type/yellow
 
 /obj/item/slimecross/selfsustaining/darkpurple
 	extract_type = /obj/item/slime_extract/darkpurple
-	colour = "dark purple"
+	slime_type = /datum/slime_type/darkpurple
 
 /obj/item/slimecross/selfsustaining/darkblue
 	extract_type = /obj/item/slime_extract/darkblue
-	colour = "dark blue"
+	slime_type = /datum/slime_type/darkblue
 
 /obj/item/slimecross/selfsustaining/silver
 	extract_type = /obj/item/slime_extract/silver
-	colour = "silver"
+	slime_type = /datum/slime_type/silver
 
 /obj/item/slimecross/selfsustaining/bluespace
 	extract_type = /obj/item/slime_extract/bluespace
-	colour = "bluespace"
+	slime_type = /datum/slime_type/bluespace
 
 /obj/item/slimecross/selfsustaining/sepia
 	extract_type = /obj/item/slime_extract/sepia
-	colour = "sepia"
+	slime_type = /datum/slime_type/sepia
 
 /obj/item/slimecross/selfsustaining/cerulean
 	extract_type = /obj/item/slime_extract/cerulean
-	colour = "cerulean"
+	slime_type = /datum/slime_type/cerulean
 
 /obj/item/slimecross/selfsustaining/pyrite
 	extract_type = /obj/item/slime_extract/pyrite
-	colour = "pyrite"
+	slime_type = /datum/slime_type/pyrite
 
 /obj/item/slimecross/selfsustaining/red
 	extract_type = /obj/item/slime_extract/red
-	colour = "red"
+	slime_type = /datum/slime_type/red
 
 /obj/item/slimecross/selfsustaining/green
 	extract_type = /obj/item/slime_extract/green
-	colour = "green"
+	slime_type = /datum/slime_type/green
 
 /obj/item/slimecross/selfsustaining/pink
 	extract_type = /obj/item/slime_extract/pink
-	colour = "pink"
+	slime_type = /datum/slime_type/pink
 
 /obj/item/slimecross/selfsustaining/gold
 	extract_type = /obj/item/slime_extract/gold
-	colour = "gold"
+	slime_type = /datum/slime_type/gold
 
 /obj/item/slimecross/selfsustaining/oil
 	extract_type = /obj/item/slime_extract/oil
-	colour = "oil"
+	slime_type = /datum/slime_type/oil
 
 /obj/item/slimecross/selfsustaining/black
 	extract_type = /obj/item/slime_extract/black
-	colour = "black"
+	slime_type = /datum/slime_type/black
 
 /obj/item/slimecross/selfsustaining/lightpink
 	extract_type = /obj/item/slime_extract/lightpink
-	colour = "light pink"
+	slime_type = /datum/slime_type/lightpink
 
 /obj/item/slimecross/selfsustaining/adamantine
 	extract_type = /obj/item/slime_extract/adamantine
-	colour = "adamantine"
+	slime_type = /datum/slime_type/adamantine
 
 /obj/item/slimecross/selfsustaining/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
-	colour = "rainbow"
+	slime_type = /datum/slime_type/rainbow

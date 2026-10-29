@@ -38,6 +38,7 @@
 #define EVENT_TRACK_MAJOR "Major"
 #define EVENT_TRACK_ROLESET "Roleset"
 #define EVENT_TRACK_OBJECTIVES "Objectives"
+#define EVENT_TRACK_LATEJOIN "Latejoin"
 #define STORYTELLER_TRACK_BOOSTER "Booster"
 
 #define ALL_EVENTS "All"
@@ -74,7 +75,7 @@
 #define STORYTELLER_VOTE "storyteller"
 
 #define EVENT_TRACKS list(EVENT_TRACK_MUNDANE, EVENT_TRACK_MODERATE, EVENT_TRACK_MAJOR, EVENT_TRACK_ROLESET, EVENT_TRACK_OBJECTIVES)
-#define EVENT_PANEL_TRACKS list(EVENT_TRACK_MUNDANE, EVENT_TRACK_MODERATE, EVENT_TRACK_MAJOR, EVENT_TRACK_ROLESET, EVENT_TRACK_OBJECTIVES, UNCATEGORIZED_EVENTS, ALL_EVENTS)
+#define EVENT_PANEL_TRACKS list(EVENT_TRACK_MUNDANE, EVENT_TRACK_MODERATE, EVENT_TRACK_MAJOR, EVENT_TRACK_ROLESET, EVENT_TRACK_OBJECTIVES, EVENT_TRACK_LATEJOIN, UNCATEGORIZED_EVENTS, ALL_EVENTS)
 
 /// Defines for the antag cap to prevent midround injections.
 #define ANTAG_CAP_FLAT 30
@@ -96,6 +97,14 @@
 #define ROUNDSTART_VALID_TIMEFRAME 3 MINUTES
 ///when do the first midround rolesets start spawning
 #define BASE_MIDROUND_SPAWN_TIME 20 MINUTES
+///when can latejoiners first be rolled for a latejoin antag
+#define BASE_LATEJOIN_SPAWN_TIME 5 MINUTES
+
+///the shortest and longest wait after a latejoin antag before another one can be rolled
+#define LATEJOIN_ANTAG_COOLDOWN_LOW (20 MINUTES)
+#define LATEJOIN_ANTAG_COOLDOWN_HIGH (35 MINUTES)
+///multiplier on the latejoin antag chance before BASE_MIDROUND_SPAWN_TIME
+#define LATEJOIN_ANTAG_EARLY_MULTIPLIER 0.2
 
 //used for sorting uncategorized events
 #define WIZARD_EVENT_UNCATEGORIZED "wizard_event"
