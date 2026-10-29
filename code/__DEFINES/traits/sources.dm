@@ -366,3 +366,7 @@
 #define NISOFT_TRAIT "nifsoft"
 // Trait sources
 #define GHOSTROLE_TRAIT "ghostrole"
+/// Pauses a slime's AI during a split or mutation wind-up
+#define SLIME_WINDUP_TRAIT "slime_windup"
+/// Pauses a slime's AI while it sits in a vacuum pack
+#define VACUUM_STORED_TRAIT "vacuum_stored"
