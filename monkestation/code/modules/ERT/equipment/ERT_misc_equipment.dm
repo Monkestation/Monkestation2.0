@@ -1,7 +1,7 @@
 /obj/item/implant/dust
 	name = "self immolation implant"
 	desc = "Dust to dust."
-	icon = 'icons/obj/nuke_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "supermatter_sliver_pulse"
 	actions_types = list(/datum/action/item_action/dust_implant)
 	var/popup = FALSE // is the window open?

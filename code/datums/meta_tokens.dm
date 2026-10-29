@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	GLOB.token_manager.record_rejected() // Token Panel Addition
 
-	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
+	SEND_SOUND(owner, sound('sound/machines/compiler/compiler-failure.ogg', volume = 50))
 	QDEL_NULL(in_queue)
 	QDEL_NULL(current_antag_request)	// Token Panel Addition
 	in_queued_tier = null
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	GLOB.token_manager.record_timeout() 	// Token Panel Addition
 	QDEL_NULL(current_antag_request)	// Token Panel Addition
 
-	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
+	SEND_SOUND(owner, sound('sound/machines/compiler/compiler-failure.ogg', volume = 50))
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE
@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	to_chat(owner, span_boldwarning("Your request to trigger [queued_token_event] has been denied."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been denied.")
-	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
+	SEND_SOUND(owner, sound('sound/machines/compiler/compiler-failure.ogg', volume = 50))
 	queued_token_event = null
 	if(event_timeout)
 		deltimer(event_timeout)
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has timed out.")
 	to_chat(owner, span_boldwarning("Your request to trigger [queued_token_event] wasn't answered within 5 minutes. Better luck next time!"))
-	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
+	SEND_SOUND(owner, sound('sound/machines/compiler/compiler-failure.ogg', volume = 50))
 	queued_token_event = null
 	event_timeout = null
 

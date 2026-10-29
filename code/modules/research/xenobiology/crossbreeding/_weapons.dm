@@ -20,7 +20,7 @@ Slimecrossing Weapons
 /obj/item/knife/rainbowknife
 	name = "rainbow knife"
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "rainbowknife"
 	inhand_icon_state = "rainbowknife"
 	force = 15
@@ -32,15 +32,15 @@ Slimecrossing Weapons
 		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
 	switch(damtype)
 		if(BRUTE)
-			hitsound = 'sound/weapons/bladeslice.ogg'
+			hitsound = 'sound/items/weapons/bladeslice.ogg'
 			attack_verb_continuous = string_list(list("slashes", "slices", "cuts"))
 			attack_verb_simple = string_list(list("slash", "slice", "cut"))
 		if(BURN)
-			hitsound = 'sound/weapons/sear.ogg'
+			hitsound = 'sound/items/weapons/sear.ogg'
 			attack_verb_continuous = string_list(list("burns", "singes", "heats"))
 			attack_verb_simple = string_list(list("burn", "singe", "heat"))
 		if(TOX)
-			hitsound = 'sound/weapons/pierce.ogg'
+			hitsound = 'sound/items/weapons/pierce.ogg'
 			attack_verb_continuous = string_list(list("poisons", "doses", "toxifies"))
 			attack_verb_simple = string_list(list("poison", "dose", "toxify"))
 		if(OXY)
@@ -87,7 +87,7 @@ Slimecrossing Weapons
 /obj/item/gun/magic/bloodchill
 	name = "blood chiller"
 	desc = "A horrifying weapon made of your own bone and blood vessels. It shoots slowing globules of your own blood. Ech."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "bloodgun"
 	inhand_icon_state = "bloodgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -100,7 +100,7 @@ Slimecrossing Weapons
 	max_charges = 1 //Recharging costs blood.
 	recharge_rate = 1
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
-	fire_sound = 'sound/effects/attackblob.ogg'
+	fire_sound = 'sound/effects/blob/attackblob.ogg'
 
 /obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()

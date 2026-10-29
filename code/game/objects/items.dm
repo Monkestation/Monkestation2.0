@@ -96,7 +96,7 @@
 
 	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_price
-	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
+	///Price of a premium and contraband item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
@@ -281,7 +281,7 @@
 
 	if(!hitsound)
 		if(damtype == BURN)
-			hitsound = 'sound/items/welder.ogg'
+			hitsound = 'sound/items/tools/welder.ogg'
 		if(damtype == BRUTE)
 			hitsound = SFX_SWING_HIT
 
@@ -879,9 +879,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 			else if(hitsound)
 				playsound(hit_atom, hitsound, volume, TRUE, -1)
 			else
-				playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+				playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
 		else
-			playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+			playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', 1, volume, -1)
 
 	else
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
@@ -951,7 +951,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
-		. = 'sound/weapons/sear.ogg'
+		. = 'sound/items/weapons/sear.ogg'
 	else
 		. = SFX_DESECRATION
 

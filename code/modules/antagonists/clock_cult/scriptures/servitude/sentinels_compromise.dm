@@ -13,7 +13,7 @@
 	category = SPELLTYPE_SERVITUDE //you have a healing spell please please PLEASE use it
 	slab_overlay = "compromise"
 	use_time = 0
-	recital_sound = 'sound/magic/magic_missile.ogg'
+	recital_sound = 'sound/effects/magic/magic_missile.ogg'
 	fast_invoke_mult = 0.8
 
 /datum/scripture/slab/sentinels_compromise/check_special_requirements(mob/user)

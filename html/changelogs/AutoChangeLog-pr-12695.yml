@@ -1,0 +1,5 @@
+author: "Runian"
+delete-after: True
+changes:
+  - rscadd: "Engineering cyborgs can pick up conveyor belts and switches."
+  - rscadd: "Using a screwdriver on an unattached sign will attach to it to a wall you're facing."

@@ -336,11 +336,11 @@ GAME_VERB(/mob/dead/new_player, observe, "Observe", "IC")
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
 	var/is_captain = IS_NOT_CAPTAIN
-	var/captain_sound = 'sound/misc/notice2.ogg'
+	var/captain_sound = 'sound/announcer/notice/notice2.ogg'
 	// If we already have a captain, are they a "Captain" rank and are we allowing multiple of them to be assigned?
 	if(is_captain_job(job))
 		is_captain = IS_FULL_CAPTAIN
-		captain_sound = 'sound/misc/announce.ogg'
+		captain_sound = 'sound/announcer/announcement/announce.ogg'
 	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
 	else if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank] && !is_banned_from(ckey, list(JOB_CAPTAIN)))
 		is_captain = IS_ACTING_CAPTAIN
@@ -379,10 +379,10 @@ GAME_VERB(/mob/dead/new_player, observe, "Observe", "IC")
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-					SSticker.mode.make_antag_chance(humanc)
+					SSgamemode.try_latejoin_antag(humanc)
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergency_call_time)*0.5)
-						SSticker.mode.make_antag_chance(humanc)
+						SSgamemode.try_latejoin_antag(humanc)
 
 	if((job.job_flags & JOB_ASSIGN_QUIRKS) && humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client)

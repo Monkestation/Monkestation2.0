@@ -4,14 +4,12 @@
 	ambience_index = AMBIENCE_MEDICAL
 	airlock_wires = /datum/wires/airlock/medbay
 	sound_environment = SOUND_AREA_STANDARD_STATION
-	min_ambience_cooldown = 90 SECONDS
-	max_ambience_cooldown = 180 SECONDS
 
 /area/station/medical/abandoned
 	name = "\improper Abandoned Medbay"
 	icon_state = "abandoned_medbay"
 	ambientsounds = list(
-		'sound/ambience/signal.ogg',
+		'sound/ambience/misc/signal.ogg',
 		)
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
@@ -130,5 +128,5 @@
 	mood_bonus = 3
 	mood_message = "I feel at ease here."
 	ambientsounds = list(
-		'sound/ambience/aurora_caelus_short.ogg',
+		'sound/ambience/aurora_caelus/aurora_caelus_short.ogg',
 		)

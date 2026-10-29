@@ -330,8 +330,9 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 	whitelist_storables = list(
 		/obj/item/stack/sheet,
 		/obj/item/stack/rods,
-		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stack/tile,
+		/obj/item/stack/conveyor,
+		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/flatpacked_machine
 	)
 
@@ -369,6 +370,7 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 		/obj/item/electronics,
 		/obj/item/stock_parts,
 		/obj/item/assembly,
+		/obj/item/conveyor_switch_construct,
 		/obj/item/flatpacked_machine
 	)
 	allow_electronics_interaction = TRUE

@@ -32,32 +32,42 @@
 	/// The sound we play upon successfully treating the wound
 	var/treatment_sound = 'sound/items/duct_tape_rip.ogg'
 
-// This is only relevant for the types of wounds defined, we can't work if there are none
-/obj/item/stack/medical/wound_recovery/try_heal(mob/living/patient, mob/user, silent, looping)
-
+/obj/item/stack/medical/wound_recovery/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
 	if(patient.has_status_effect(/datum/status_effect/vulnerable_to_damage))
-		patient.balloon_alert(user, "still recovering from last use!")
-		return
+		if(!silent)
+			patient.balloon_alert(user, "still recovering from last use!")
+		return FALSE
+	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
+	if(!limb)
+		if(!silent)
+			patient.balloon_alert(user, "missing limb!")
+		return FALSE
+	if(!LAZYLEN(limb.wounds))
+		if(!silent)
+			patient.balloon_alert(user, "no wounds!")
+		return FALSE
+	if(!get_treatable_wound(limb))
+		if(!silent)
+			patient.balloon_alert(user, "can't heal those!")
+		return FALSE
+	return TRUE
 
+/// Returns the first wound on the limb that we can treat
+/obj/item/stack/medical/wound_recovery/proc/get_treatable_wound(obj/item/bodypart/limb)
+	for(var/datum/wound/woundies as anything in limb.wounds)
+		if((woundies.wound_flags & ACCEPTS_GAUZE) && is_type_in_list(woundies, applicable_wounds))
+			return woundies
+	return null
+
+// This is only relevant for the types of wounds defined, we can't work if there are none
+/obj/item/stack/medical/wound_recovery/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 
-	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
+	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	if(!limb)
-		patient.balloon_alert(user, "missing limb!")
 		return
-	if(!LAZYLEN(limb.wounds))
-		patient.balloon_alert(user, "no wounds!")
-		return
-
-	var/splintable_wound = FALSE
-	var/datum/wound/woundies
-	for(var/found_wound in limb.wounds)
-		woundies = found_wound
-		if((woundies.wound_flags & ACCEPTS_GAUZE) && is_type_in_list(woundies, applicable_wounds))
-			splintable_wound = TRUE
-			break
-	if(!splintable_wound)
-		patient.balloon_alert(user, "can't heal those!")
+	var/datum/wound/woundies = get_treatable_wound(limb)
+	if(!woundies)
 		return
 
 	if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
@@ -432,8 +442,8 @@
 	righthand_file = 'monkestation/code/modules/blueshift/icons/deforest/inhands/cases_righthand.dmi'
 	inhand_icon_state = "frontier"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/medkit/frontier/stocked
@@ -461,8 +471,8 @@
 	inhand_icon_state = "surgeon"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
 	worn_icon_state = "frontier"
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 
 /obj/item/storage/medkit/combat_surgeon/Initialize(mapload)
 	. = ..()
@@ -493,8 +503,8 @@
 	inhand_icon_state = "satchel"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	slowdown = 0.25
 
@@ -579,8 +589,8 @@
 	inhand_icon_state = "super_surgery"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/deforest/worn/worn.dmi'
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	slowdown = 0.25
 

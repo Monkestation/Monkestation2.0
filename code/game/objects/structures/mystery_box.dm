@@ -102,8 +102,8 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	max_integrity = 99999
 	damage_deflection = 100
 
-	var/crate_open_sound = 'sound/machines/crate_open.ogg'
-	var/crate_close_sound = 'sound/machines/crate_close.ogg'
+	var/crate_open_sound = 'sound/machines/crate/crate_open.ogg'
+	var/crate_close_sound = 'sound/machines/crate/crate_close.ogg'
 	var/open_sound = 'sound/effects/mysterybox/mbox_full.ogg'
 	var/grant_sound = 'sound/effects/mysterybox/mbox_end.ogg'
 	/// The box's current state, and whether it can be interacted with in different ways
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	update_icon_state()
 	presented_item = new(loc)
 	presented_item.start_animation(src)
-	current_sound_channel = SSsounds.reserve_sound_channel(src)
+	current_sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	playsound(src, crate_open_sound, 80)
 
