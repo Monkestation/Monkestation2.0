@@ -262,7 +262,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			continue
 		if(pulled_reagent.type in turf_reagents.previous_reagent_list)
 			turf_reagents.remove_all_type(pulled_reagent.type, 100000)
-		turf_reagents.add_reagent(pulled_reagent.type, amount)
+		turf_reagents.add_reagent(pulled_reagent.type, amount, no_react = TRUE)
 		if(pulled_reagent.turf_exposure && amount > 10)
 			exposure = TRUE
 		if(pulled_reagent.slippery)
