@@ -159,6 +159,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	cached_edge_turfs |= otherg.cached_edge_turfs
 
 	for(var/turf/liquid_turf as anything in otherg.members)
+		if(liquid_turf in otherg.burning_members)
+			burning_members |= liquid_turf
 		otherg.remove_from_group(liquid_turf)
 		add_to_group(liquid_turf)
 
@@ -354,7 +356,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	process_group()
 
 /datum/liquid_group/proc/remove_any(obj/effect/abstract/liquid_turf/remover, amount)
-	reagents.remove_all(amount)
+	// not remove_all(), else we eat shit from chem reactions
+	if(reagents.total_volume > 0)
+		var/part = amount / reagents.total_volume
+		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+			reagents.remove_reagent(reagent.type, reagent.volume * part)
 	if(!QDELETED(remover))
 		check_liquid_removal(remover, amount)
 	if(!length(members) || !reagents.total_volume)
@@ -516,6 +522,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	total_burn_power /= reagents.total_volume //We get burn power per unit.
 	if(total_burn_power <= REQUIRED_FIRE_POWER_PER_UNIT)
+		group_burn_power = 0
 		return FALSE
 	//Finally, we burn
 	var/old_burn = group_burn_power
@@ -613,7 +620,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	for(var/turf/open/adjacent_turf in cached_fire_spreads[member])
 		if(!QDELETED(adjacent_turf.liquids) && adjacent_turf.liquids.liquid_group == src && adjacent_turf.liquids.fire_state < member.liquids.fire_state)
 			adjacent_turf.liquids.fire_state = group_fire_state
-			member.liquids.set_fire_effect()
+			adjacent_turf.liquids.set_fire_effect()
 			burning_members |= adjacent_turf
 			SSliquids.burning_turfs |= adjacent_turf
 			for(var/atom/movable/movable in adjacent_turf)
