@@ -36,8 +36,10 @@
 	 * Set to BIO_STANDARD_UNJOINTED because most species have both flesh bone and blood in their limbs.
 	 */
 	var/biological_state = BIO_STANDARD_UNJOINTED
-	///A bitfield of bodytypes for clothing, surgery, and misc information
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	///A bitfield of bodytypes for surgery, and misc information
+	var/bodytype = BODYTYPE_ORGANIC
+	///A bitfield of bodyshapes for clothing and other sprite information
+	var/bodyshape = BODYSHAPE_HUMANOID
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
@@ -1205,13 +1207,25 @@
 			for(var/masked_image in masked_generated_overlays)
 				.[masked_image] = generated_overlay_flags
 
+	var/has_height = !dropped && !isnull(owner)
+	// Apply height to the overlays we generated so far
+	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
+	if(has_height)
+		for(var/image/generated_overlay in .)
+			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
+			// it's more important to keep it consistent for things like getflaticon
+			owner.apply_height(generated_overlay, ENTIRE_BODY)
+
 	// And finally put bodypart_overlays on if not husked
 	if(!is_husked)
 		//Draw external organs like horns and frills
+		// Height is applied again in here so we can specify where the overlay is set (ie offset_location)
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
 			for(var/actual_overlay, actual_overlay_flags in overlay.get_all_overlays(src))
+				if(has_height)
+					owner.apply_height(actual_overlay, overlay.offset_location)
 				.[actual_overlay] = actual_overlay_flags
 
 		// Then texture everything at once, including bodypart overlays

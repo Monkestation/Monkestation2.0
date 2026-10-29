@@ -77,6 +77,15 @@
 	max_occurrences = 1
 	typepath = /datum/round_event/antagonist/heretic/midround
 
+/datum/round_event_control/antagonist/heretic/latejoin
+	antag_flag = ROLE_HERETIC_SMUGGLER
+	name = "Heretic Smuggler"
+	track = EVENT_TRACK_LATEJOIN
+	earliest_start = BASE_LATEJOIN_SPAWN_TIME
+	maximum_antags = 1
+	max_occurrences = 1
+	typepath = /datum/round_event/antagonist/heretic/midround
+
 /datum/round_event/antagonist/heretic/start()
 	. = ..()
 	// go ahead and try to load the heretic sacrifice template after we make our heretics

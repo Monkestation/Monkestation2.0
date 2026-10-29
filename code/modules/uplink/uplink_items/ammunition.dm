@@ -1,6 +1,6 @@
 /datum/uplink_category/ammo
 	name = "Ammunition"
-	weight = 11
+	weight = 12
 
 /datum/uplink_item/ammo
 	category = /datum/uplink_category/ammo
