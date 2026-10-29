@@ -561,6 +561,8 @@
 				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 				future_pancake.add_splatter_floor(location)
 				log_combat(src, future_pancake, "crushed")
+			if(prob(1)) //no clip out of reality into the backrooms
+				INVOKE_ASYNC(future_pancake, TYPE_PROC_REF(/mob/living, clip_into_backrooms))
 		for(var/obj/vehicle/sealed/mecha/mech in get_turf(src)) // Your fancy metal won't save you here!
 			mech.take_damage(DOOR_CRUSH_DAMAGE)
 			log_combat(src, mech, "crushed")

@@ -274,3 +274,7 @@
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		spawn_loot_chance = 0
 	return ..()
+
+/obj/effect/spawner/random/food_or_drink/random_meat
+	name = "meat loot spawner"
+	loot_type_path = /obj/item/food/meat/slab

@@ -8,6 +8,8 @@
 	dir = NORTH
 	var/room_width = 0
 	var/room_height = 0
+	/// If FALSE, the room can be a template that already ran out of stock, and loading it won't use any stock up
+	var/uses_stock = TRUE
 
 /obj/effect/spawner/room/New(loc, ...)
 	. = ..()
@@ -23,16 +25,17 @@
 	shuffle_inplace(SSmapping.random_room_templates)
 	for(var/ID in SSmapping.random_room_templates)
 		candidate = SSmapping.random_room_templates[ID]
-		if(candidate.spawned || room_height != candidate.template_height || room_width != candidate.template_width)
+		if((uses_stock && candidate.spawned) || room_height != candidate.template_height || room_width != candidate.template_width)
 			candidate = null
 			continue
 		possibletemplates[candidate] = candidate.weight
 	if(possibletemplates.len)
 		var/datum/map_template/random_room/template = pick_weight(possibletemplates)
-		template.stock --
-		template.weight = (template.weight / 2)
-		if(template.stock <= 0)
-			template.spawned = TRUE
+		if(uses_stock)
+			template.stock --
+			template.weight = (template.weight / 2)
+			if(template.stock <= 0)
+				template.spawned = TRUE
 		template.load(get_turf(src), centered = template.centerspawner)
 	return INITIALIZE_HINT_QDEL
 

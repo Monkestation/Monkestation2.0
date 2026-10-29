@@ -39847,6 +39847,13 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
+"ilB" = (
+/obj/effect/spawner/backrooms_portal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "ilI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible,
 /obj/machinery/meter,
@@ -119929,7 +119936,7 @@ kpu
 cyj
 cGF
 cih
-cjZ
+ilB
 cjZ
 oNS
 cnx

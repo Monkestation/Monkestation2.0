@@ -56372,6 +56372,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/checkpoint/medical)
+"kOn" = (
+/obj/effect/spawner/backrooms_portal,
+/turf/open/floor/iron/smooth,
+/area/station/cargo/warehouse)
 "kOo" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -169380,7 +169384,7 @@ opv
 kaX
 lxR
 lbj
-uWp
+kOn
 wBX
 vvh
 gbS

@@ -866,6 +866,9 @@
 
 	add_memory_in_range(crushed, 7, /datum/memory/witness_vendor_crush, protagonist = crushed, antagonist = src)
 
+	if(prob(1)) //send them to the backrooms
+		INVOKE_ASYNC(crushed, TYPE_PROC_REF(/mob/living, clip_into_backrooms))
+
 	return ..()
 
 /**

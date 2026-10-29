@@ -1327,3 +1327,25 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/requests_console/ore_update/payload(obj/machinery/requests_console/console)
 	console.receive_ore_updates = TRUE
 
+/// Spawns a pair of border firelocks facing each other, across the tile vertically or horizontally
+/obj/effect/mapping_helpers/firedoor_border_spawner
+	/// Whether the firelocks block the tile vertically or horizontally
+	var/orientation = VERTICAL
+
+/obj/effect/mapping_helpers/firedoor_border_spawner/Initialize(mapload, _orientation)
+	. = ..()
+	if(_orientation)
+		orientation = _orientation
+	var/obj/machinery/door/firedoor/border_only/door1 = new(loc)
+	var/obj/machinery/door/firedoor/border_only/door2 = new(loc)
+	switch(orientation)
+		if(VERTICAL)
+			door1.setDir(SOUTH)
+			door2.setDir(NORTH)
+		if(HORIZONTAL)
+			door1.setDir(EAST)
+			door2.setDir(WEST)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/firedoor_border_spawner/horizontal
+	orientation = HORIZONTAL

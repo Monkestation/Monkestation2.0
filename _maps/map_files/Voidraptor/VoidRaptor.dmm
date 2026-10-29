@@ -66102,6 +66102,10 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
+"szc" = (
+/obj/effect/spawner/backrooms_portal,
+/turf/open/floor/iron/textured_large,
+/area/station/cargo/warehouse)
 "szi" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -126604,7 +126608,7 @@ uRm
 pNh
 nMh
 kyQ
-vFv
+szc
 dme
 pqh
 pGC

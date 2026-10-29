@@ -129,6 +129,8 @@
 		carbon_mob.start_leaning(src)
 
 /turf/closed/wall/ex_act(severity, target)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return FALSE
 	if(target == src)
 		dismantle_wall(TRUE, TRUE)
 		return
@@ -217,6 +219,8 @@
 	return
 
 /turf/closed/wall/proc/dismantle_wall(devastated = FALSE, explode = FALSE)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	if(devastated)
 		devastate_wall()
 	else

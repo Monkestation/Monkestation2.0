@@ -77,6 +77,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
 #define ZTRAIT_RESERVED "Transit/Reserved"
+/// Z level that holds the procedurally generated maintenance of the backrooms
+#define ZTRAIT_PROCEDURAL_MAINTS "Random Maints"
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
@@ -145,6 +147,15 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_AWAY list(ZTRAIT_AWAY = TRUE)
 ///Z level traits for Secret Away Missions
 #define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE, ZTRAIT_NOPHASE = TRUE)
+///Z level traits for the backrooms
+#define ZTRAITS_BACKROOM_MAINTS list(\
+	ZTRAIT_PROCEDURAL_MAINTS = TRUE, \
+	ZTRAIT_LINKAGE = SELFLOOPING, \
+	ZTRAIT_GRAVITY = TRUE, \
+	ZTRAIT_NOPHASE = TRUE, \
+	ZTRAIT_NOXRAY = TRUE, \
+	ZTRAIT_BOMBCAP_MULTIPLIER = 0.5, \
+	ZTRAIT_BASETURF = /turf/open/floor/plating/backrooms)
 ///List of ztraits the reebe Z level has
 #define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, \
 						ZTRAIT_NOPHASE = TRUE, \

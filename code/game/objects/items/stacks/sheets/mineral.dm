@@ -219,6 +219,9 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 /obj/item/stack/sheet/mineral/plasma/five
 	amount = 5
 
+/obj/item/stack/sheet/mineral/plasma/ten
+	amount = 10
+
 /obj/item/stack/sheet/mineral/plasma/twenty
 	amount = 20
 

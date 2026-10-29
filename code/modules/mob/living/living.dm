@@ -2641,3 +2641,27 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return TRUE
 
 	return FALSE
+
+/// Plays a short clipping animation, then sends the mob into the backrooms
+/mob/living/proc/clip_into_backrooms()
+	if(!length(SSmapping.levels_by_trait(ZTRAIT_PROCEDURAL_MAINTS)))
+		return
+	playsound(get_turf(src), 'sound/effects/backrooms_clipping.ogg', 80, FALSE)
+	set_resting(FALSE)
+	Immobilize(1.9 SECONDS, TRUE)
+	var/old_pixel_x = pixel_x
+	var/old_pixel_y = pixel_y
+	var/matrix/old_transform = transform
+	var/x_diff = 4
+	var/y_diff = 1
+	var/rotation = 40
+	if(prob(50))
+		rotation *= -1
+	animate(src, pixel_x = x_diff, pixel_y = y_diff, time = 0.5, transform = matrix(rotation + x_diff, MATRIX_ROTATE), loop = 18, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_x = -x_diff , pixel_y = -y_diff, transform = matrix(rotation - x_diff, MATRIX_ROTATE), time = 0.5, flags = ANIMATION_RELATIVE)
+	sleep(1.8 SECONDS)
+	pixel_x = old_pixel_x
+	pixel_y = old_pixel_y
+	set_resting(FALSE)
+	transform = old_transform
+	send_to_backrooms()
