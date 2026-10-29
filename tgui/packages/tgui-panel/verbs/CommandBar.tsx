@@ -13,6 +13,7 @@ import {
   clearCommandBarAtom,
   focusCommandBarAtom,
   hotkeysAtom,
+  tabAutocompleteAtom,
   typepathsAtom,
   type Verb,
   type VerbArg,
@@ -178,6 +179,7 @@ export function CommandBar() {
   const focusSignal = useAtomValue(focusCommandBarAtom);
   const clearSignal = useAtomValue(clearCommandBarAtom);
   const hotkeys = useAtomValue(hotkeysAtom);
+  const tabAutocomplete = useAtomValue(tabAutocompleteAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
@@ -480,7 +482,7 @@ export function CommandBar() {
         return;
       case 'Tab':
         e.preventDefault();
-        if (!hasSuggestions || !selectCurrentSuggestion()) {
+        if (!tabAutocomplete || !hasSuggestions || !selectCurrentSuggestion()) {
           blurToMap();
         }
         return;
