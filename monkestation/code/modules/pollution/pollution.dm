@@ -144,10 +144,10 @@
 		SET_UNACTIVE_POLLUTION(src)
 		return
 	var/list/sharing_turfs
-	var/list/already_processed_cache = SSpollution.processed_this_run
+	var/alist/already_processed_cache = SSpollution.processed_this_run
 	var/list/potential_activers
 	for(var/turf/open/open_turf in my_turf.atmos_adjacent_turfs)
-		if(!already_processed_cache[open_turf])
+		if(!already_processed_cache[open_turf.pollution])
 			if(can_share_with(open_turf))
 				LAZYSET(sharing_turfs, open_turf, TRUE)
 			else
@@ -212,6 +212,7 @@
 	if(length(pollutants) == 1)
 		pollutant = SSpollution.singletons[pollutants[1]]
 		if(!(pollutant.pollutant_flags & POLLUTANT_APPEARANCE))
+			QDEL_NULL(managed_overlay)
 			return
 		total_thickness = total_amount * pollutant.thickness
 	else
@@ -228,14 +229,18 @@
 				total_thickness = calc_thickness
 
 	if(!total_thickness || total_thickness < POLLUTANT_APPEARANCE_THICKNESS_THRESHOLD)
+		QDEL_NULL(managed_overlay)
 		return
 
 	if(!managed_overlay)
 		managed_overlay = new /obj/effect/abstract/pollution(my_turf)
 		RegisterSignal(managed_overlay, COMSIG_QDELETING, PROC_REF(on_managed_overlay_deleted))
 
-	managed_overlay.alpha = FLOOR(pollutant.alpha * total_thickness * THICKNESS_ALPHA_COEFFICIENT, 1)
-	managed_overlay.color = pollutant.color
+	var/overlay_alpha = clamp(FLOOR(pollutant.alpha * total_thickness * THICKNESS_ALPHA_COEFFICIENT, 1), 0, 255)
+	if(managed_overlay.alpha != overlay_alpha)
+		managed_overlay.alpha = overlay_alpha
+	if(managed_overlay.color != pollutant.color)
+		managed_overlay.color = pollutant.color
 
 ///Atmos adjacency has been updated on this turf, see if it affects any of our pollutants
 /turf/proc/update_adjacent_pollutants()
