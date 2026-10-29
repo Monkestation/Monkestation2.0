@@ -131,6 +131,7 @@
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_LAVALAND
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	allow_shuttle_docking = TRUE
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -187,6 +188,7 @@
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	allow_shuttle_docking = TRUE
 
 /area/icemoon/surface
 	name = "Icemoon"

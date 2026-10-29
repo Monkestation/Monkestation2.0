@@ -17,6 +17,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	health = 15
 	maxHealth = 15
+	biomass_value = 0.1
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	speak_emote = list("sniffles", "twitches")

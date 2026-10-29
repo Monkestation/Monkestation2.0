@@ -134,7 +134,7 @@
 	var/fall_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
-	for(var/obj/item/cane/cane in owner.held_items) // crutches will lessen the chance of you falling.
+	for(var/obj/item/cane/cane as anything in owner.get_held_items_of_type(/obj/item/cane)) // crutches will lessen the chance of you falling.
 		fall_chance /= 2
 	if(SPT_PROB(0.5 * fall_chance, seconds_per_tick) && owner.body_position == STANDING_UP)
 		to_chat(owner, span_warning("Your leg gives out!"))
@@ -290,14 +290,14 @@
 
 /datum/brain_trauma/mild/possessive/on_lose(silent)
 	. = ..()
-	for(var/obj/item/thing in owner.held_items)
+	for(var/obj/item/thing as anything in owner.get_held_items())
 		clear_trait(thing)
 
 /datum/brain_trauma/mild/possessive/on_life(seconds_per_tick, times_fired)
 	if(!SPT_PROB(5, seconds_per_tick))
 		return
 
-	var/obj/item/my_thing = pick(owner.held_items) // can pick null, that's fine
+	var/obj/item/my_thing = pick(owner.get_hand_slots()) // can pick null, that's fine
 	if(isnull(my_thing) || HAS_TRAIT(my_thing, TRAIT_NODROP) || (my_thing.item_flags & (HAND_ITEM|ABSTRACT)))
 		return
 

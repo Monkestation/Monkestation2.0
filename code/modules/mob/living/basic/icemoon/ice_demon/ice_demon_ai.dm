@@ -94,7 +94,7 @@
 		return
 	var/mob/living/carbon/human_target = target
 
-	for(var/obj/held_item in human_target.held_items)
+	for(var/obj/held_item as anything in human_target.get_held_items())
 		if(!is_type_in_list(held_item, controller.blackboard[BB_LIST_SCARY_ITEMS]))
 			continue
 		if(!held_item.light_on)

@@ -46,6 +46,8 @@
 
 /// Try and fire off the scheduled event
 /datum/scheduled_event/proc/try_fire()
+	// avvoids issue with eepy ban stuff
+	SSgamemode.remove_scheduled_event(src, FALSE)
 	/// Remove our fake occurence pre-emptively for the checks.
 	remove_occurence()
 
@@ -57,8 +59,17 @@
 
 	///Trigger the event and remove the scheduled datum
 	message_admins("Scheduled Event: [event] successfully triggered.")
-	SSgamemode.remove_scheduled_event(src, FALSE)
-	SSgamemode.TriggerEvent(event, ignores_checks)
+	var/datum/round_event/antagonist/round_event = SSgamemode.TriggerEvent(event, ignores_checks)
+	if(round_event == EVENT_INTERRUPTED && !QDELETED(src))
+		message_admins("Scheduled Event: [event] was interrupted and has been refunded.")
+		SSgamemode.refund_scheduled_event(src)
+		return
+	if(istype(round_event) && cost)
+		var/picked_count = length(round_event.setup_minds)
+		if(picked_count < round_event.antag_count)
+			var/refund = cost * (round_event.antag_count - picked_count) / round_event.antag_count
+			SSgamemode.event_tracks[event.track].points += refund
+			message_admins("Scheduled Event: [event] only got [picked_count]/[round_event.antag_count] antags, refunded [refund] points.")
 	qdel(src)
 
 /datum/scheduled_event/Destroy()

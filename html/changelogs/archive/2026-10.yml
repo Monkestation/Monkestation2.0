@@ -386,6 +386,53 @@
   - bugfix: Severed limbs with wounds no longer look like two limbs when they land
       sideways
 2026-10-29:
+  13spacemen:
+  - refactor: Bodytypes to do with character sprite shape now have their own bodyshape
+      var, all sprite handling is done with bodyshape and not bodytype anymore
+  Absolucy:
+  - bugfix: fixed AI advanced tracking probably lagging the shit out of the server.
+  - bugfix: Hopefully reduced FPS lag when there's a lot of people of varying heights
+      wearing clothes and such.
+  - bugfix: big floods cause way less lag
+  - bugfix: burning liquid no longer spams smoke, and burnt-out fires actually go
+      out
+  - rscadd: Storytellers now support latejoin antags!
+  - bugfix: Fixed the roundstart roleset pick ignoring the storyteller's tag multipliers.
+  - bugfix: Fixed scheduled events eating points if they failed their last-second
+      recheck.
+  - bugfix: Fixed scheduled events possibly firing twice, or track possibly buying
+      two events, if a ban check slept at the wrong time.
+  - bugfix: Antag events that get nobody now refund their points and don't use up
+      an occurrence
+  - bugfix: Xenos/paradox clones with nowhere to spawn get refunded instead of hanging
+      around forever
+  - balance: Antag events that only get some of their antags refund the rest
+  - rscadd: Xenobiology is now literally slime rancher.
+  - rscadd: Slime vacuum packs now have built-in extract storage, upgradable with
+      a matter bin.
+  - rscadd: Vacuum packs hold extracts now. shoot them into the fridge, dump them
+      in a bag, or right-click to grab one.
+  - rscadd: Slime pens now actually look decent and have more space.
+  - rscadd: Crossbreeds are now made with an "extract compressor", which consumes
+      both biomass and slime extracts.
+  - rscadd: Slime scanners are now used to remotely scan a slime and stay up to date
+      on that specific slime's stats and such.
+  - rscadd: Instead of mulching slimes for extracts, slimes now produce extracts when
+      fed enough.
+  - rscadd: Slimes won't split on their own - instead, you need to feed them "breeding
+      pellets" from the biomass recycler, or if you are the slime's friend, order
+      them to do so, and they will split or mutate whenever they can instead. This
+      does not apply to "wild" slimes that haven't been in a pen recently, and player
+      slimes can still manually split whenever.
+  - rscadd: Catslimes now harmlessly boop people nearby :3
+  - rscadd: Cleaner slimes go wander off to look for messes when there's nothing nearby,
+      and sometimes go find a random player
+  - rscadd: Cleaner slimes (and slimes you've sicced on something) can use stairs
+      now
+  - bugfix: Mobs no longer freeze up after changing floors until someone walks up
+      to them
+  - admin: select equipment's quirk and holy/unholy options work again, and now apply
+      to the person being dressed
   ArcaneMusic, CabinetOnFire, Kapu, grungussuss, Melbert, vinylspiders, EnnyDaiz:
   - rscadd: Cargo can now buy a Nanomusic boombox! Comes with a demo tape, more tapes
       can be found as goodies, on the black market, in the game vendor and in the
@@ -412,3 +459,93 @@
   - bugfix: Changing a volume slider updates sounds that follow you right away.
   - bugfix: The alt siren starts on its start sound.
   - bugfix: Randomly pitched sounds no longer lean low on 48 kHz files.
+  ? LettuceWarlock, EssentialTomato, Y0SH1_M4S73R, jlsnow301, Kylerace, ArcaneMusic,
+    Paxilmaniac, Notamaniac, timothymtorres, Gboster-0, MrMelbert, SmArtKar, Cruix,
+    Ghommie
+  : - rscadd: Shuttle blueprints, the tool used to construct and modify custom shuttles.
+        Print a set at a science, engineering, or cargo techfab after researching
+        Shuttle Engineering, or craft a crude set from the crafting menu.
+    - rscadd: Shuttle blueprint database upgrade for engineering cyborgs, printable
+        from the Exosuit Fabricator after researching Shuttle Engineering. A version
+        of shuttle blueprints designed for use by cyborgs.
+    - rscadd: Shuttle frame rods, usable to construct custom shuttles. Hand-craft
+        by using 5 rods on 1 titanium sheet, or by printing them at a science, engineering,
+        or cargo techfab after researching Shuttle Engineering.
+    - rscadd: Custom shuttle flight control and navigation boards, printable from
+        a science, engineering, or cargo techfab after researching Shuttle Engineering.
+    - rscadd: Shuttle engine boards can be printed from a science, engineering, or
+        cargo techfab after researching shuttle engineering.
+    - rscadd: The shuttle engine supply pack is no longer locked behind the purchase
+        of the Build Your Own Shuttle kit.
+    - rscadd: Shuttle Construction Starter Kit goodie pack, containing a set of shuttle
+        blueprints, flight control and navigation console boards, and two engine boards,
+        can be purchased from cargo for 1200 credits. Requires aux base access to
+        purchase.
+    - refactor: Shuttles now keep track of what areas are underneath each of their
+        individual turfs, so that the areas left behind on movement are consistent
+        with what they were beforehand.
+    - refactor: Shuttle ceilings now place themselves down as baseturfs, instead of
+        only appearing if the turf above is open space.
+    - rscadd: The station blueprints can be used to toggle whether custom shuttles
+        can be built/expanded/docked within station areas.
+    - qol: Custom areas do not have to be completely contained within shuttle frames,
+        as long as the APC isn't attached to the frame.
+    - rscadd: Custom shuttles with functioning engines will fly off into the sunset
+        when the emergency shuttle leaves.
+    - rscadd: Custom shuttle navigation computers can view space levels adjacent to
+        the one the shuttle is currently docked at.
+    - rscadd: Shuttle navigation computers now show the location of airlocks, turrets,
+        and the shuttle control consoles on the ship outline while placing a custom
+        landing location.
+    - qol: Gigabeacons no longer need to be constructed like standard machines, instead
+        being printed as items that can be deployed quickly inhand without tools.
+    - image: Navigation gigabeacons now have their own unique sprites, inspired by
+        maritime EPIRB devices. If you find a yellow box with an antenna on it, you
+        probably found a nav beacon!
+    - qol: Explorers now start with a gigabeacon in their loadout.
+    - qol: Shuttle engines now tell you how to install them in their screentips and
+        their examine text.
+    - image: Shuttle and heat resistant (aka lavaproof) rods now have unique sprites.
+    - bugfix: Replaced floor tiles on shuttles no longer get left behind when the
+        shuttle moves.
+    - bugfix: Walls and floors made of custom materials keep their material when the
+        shuttle they're on moves.
+    - bugfix: The "Move Up" and "Move Down" verbs properly respect multi-z connectivity
+        when operating a remote camera.
+    - bugfix: Shuttle flight control computers will show you when the linked shuttle
+        cannot move.
+    - bugfix: Holodeck is slightly less likely to explode the server
+    - bugfix: Fix shuttle engines built from a circuit board having it's anchored
+        state not matching the correct engine_state. This would consider the engine
+        to be anchored already when it was not and allow someone to weld it despite
+        it being able to be dragged and moved around.
+    - bugfix: Shuttle engines no longer provide negative power to your shuttles if
+        you unwrench them.
+  Runian:
+  - rscadd: Engineering cyborgs can pick up conveyor belts and switches.
+  - rscadd: Using a screwdriver on an unattached sign will attach to it to a wall
+      you're facing.
+  SmArtKar:
+  - bugfix: Hulk and infusions no longer color or texture robotic limbs.
+  - bugfix: Limbs attached while you have a carp infusion or hulk now match the rest
+      of your body.
+  Tractor-Maam:
+  - spellcheck: Integration Cog installs now say "apc" in their balloon alert instead
+      of "aPC".
+  - bugfix: 'Cyborgs will now link to AIs again.
+
+      fix; AI Uploads now work again.'
+  ashallaryn:
+  - image: added hair_bedhead_glorppy sprites
+  - image: added hair_bedhead_nestia sprites
+  - image: updated hair sprite for hair_floorlength_bedhead "Floorlength Bedhead"
+  - image: updated hair sprite for hair_longer_bedhead "Longer Bedhead"
+  - image: updated hair sprite for hair_long_bedhead "Long Bedhead"
+  - image: updated hair sprite for hair_longstraightponytail "Ponytail (Long)"
+  - image: updated hair sprite for hair_highponytail "Ponytail (High)"
+  tontyGH:
+  - refactor: A lot of code relating to hands was altered for technical reasons
+  - bugfix: Items that could block did not correctly block push/shuffle attempts
+  - bugfix: The swap hands tutorial did not account for 3+ hands
+  - bugfix: High-tenning a mob did not account for more than 2 hands (you can high-twenty
+      now!)

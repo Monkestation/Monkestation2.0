@@ -64,7 +64,7 @@
 		playsound(cast_on, 'sound/effects/bang.ogg', 50, vary = TRUE)
 		return
 
-	var/turf/closed/wall/new_wall = cast_on.PlaceOnTop(/turf/closed/wall)
+	var/turf/closed/wall/new_wall = cast_on.place_on_top(/turf/closed/wall)
 	if(!istype(new_wall))
 		return
 

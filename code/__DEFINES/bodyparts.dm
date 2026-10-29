@@ -6,3 +6,6 @@
 #define LIMB_COLOR_CARP_INFUSION 20
 /// Base priority for atom colors, gets atom priorities added to it
 #define LIMB_COLOR_ATOM_COLOR 30
+
+// Overlay priorities
+#define BODYPART_OVERLAY_CARP_INFUSION 1

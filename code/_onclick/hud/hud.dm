@@ -478,7 +478,7 @@ GAME_VERB_HIDDEN(/mob, button_pressed_F12, "F12")
 			static_inventory -= H
 	hand_slots = list()
 	var/atom/movable/screen/inventory/hand/hand_box
-	for(var/i in 1 to mymob.held_items.len)
+	for(var/i in 1 to mymob.get_num_hand_slots())
 		hand_box = new /atom/movable/screen/inventory/hand(null, src)
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
