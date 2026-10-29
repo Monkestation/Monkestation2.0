@@ -964,7 +964,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 	if(ismob(location))
 		var/mob/pyromanic = location
 		var/success = FALSE
-		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || (src in pyromanic.held_items))
+		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || pyromanic.is_holding(src))
 			success = TRUE
 		if(success)
 			location = get_turf(pyromanic)
@@ -1189,18 +1189,10 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 		return ..()
 
 	var/mob/M = loc
-	var/hand_index = M.get_held_index_of_item(src)
-	if(!hand_index)
+	if(!M.is_holding(src))
 		return ..()
 
-	M.held_items[hand_index] = null
-	M.update_held_items()
-	if(M.client)
-		M.client.screen -= src
-	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
-	appearance_flags &= ~NO_CLIENT_COLOR
-	dropped(M, FALSE)
+	M.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	return ..()
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)

@@ -43,7 +43,7 @@
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/his_grace in owner.held_items)
+	for(var/obj/item/his_grace/his_grace as anything in owner.get_held_items_of_type(/obj/item/his_grace))
 		if(his_grace.bloodthirst > bloodlust)
 			bloodlust = his_grace.bloodthirst
 		if(his_grace.awakened)

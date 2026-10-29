@@ -40,9 +40,9 @@
 /// Removes weapon if it exists, returns true if we removed something
 /datum/action/changeling/weapon/proc/unequip_held(mob/user)
 	var/found_weapon = FALSE
-	for(var/obj/item/held in user.held_items)
+	for(var/obj/item/held as anything in user.get_held_items())
 		found_weapon = check_weapon(user, held) || found_weapon
-	return found_weapon
+	return !!found_weapon
 
 /datum/action/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if (unequip_held(user))
@@ -362,7 +362,7 @@
 			return
 		C.grabbedby(H)
 		C.grippedby(H, instant = TRUE) //instant aggro grab
-		for(var/obj/item/I in H.held_items)
+		for(var/obj/item/I as anything in H.get_held_items())
 			if(I.get_sharpness())
 				C.visible_message(span_danger("[H] impales [C] with [H.p_their()] [I.name]!"), span_userdanger("[H] impales you with [H.p_their()] [I.name]!"))
 				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST, attacking_item = I)
