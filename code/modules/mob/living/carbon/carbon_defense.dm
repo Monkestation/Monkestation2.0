@@ -477,7 +477,7 @@
 						null, span_hear("You hear a honk!"), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You honk [src]'s nose."))
 			to_chat(src, span_notice("[helper] honks your clown nose, honk! "))
-		else if(src.dna.species.bodytype & BODYTYPE_SNOUTED)
+		else if(src.bodyshape & BODYSHAPE_SNOUTED)
 			helper.visible_message(span_notice("[helper] boops [src]'s snout."), \
 						null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You boop [src] on the snout."))

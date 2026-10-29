@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 	if (!istype(D))
 		return
 
-	if (src in perp.held_items)
+	if (perp.is_holding(src))
 		bodypart = BODY_ZONE_ARMS
 
 	if (bodypart)
@@ -55,8 +55,8 @@ GLOBAL_LIST_INIT(infected_items, list())
 		var/datum/disease/acute/D = disease.Copy()
 		D.log += "<br />[ROUND_TIME()] Infected \a [src] [notes]"
 
-		GLOB.infected_items |= src
-
+		if(!viruses)
+			GLOB.infected_items += src
 		LAZYADD(viruses, D)
 		//SSdisease.active_diseases += D
 		D.after_add()
@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 			addtimer(CALLBACK(src, PROC_REF(remove_disease), D), (disease.infectionchance/10) MINUTES)
 
 /obj/item/proc/remove_disease(datum/disease/disease)
-	viruses -= disease
+	LAZYREMOVE(viruses, disease)
 	SSdisease.active_diseases -= disease
 	if(!length(viruses))
 		GLOB.infected_items -= src
