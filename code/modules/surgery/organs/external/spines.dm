@@ -42,7 +42,10 @@
 /datum/bodypart_overlay/mutant/spines/get_base_icon_state()
 	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
 
-/datum/bodypart_overlay/mutant/spines/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/spines/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	. = ..()
 	if(human.obscured_slots & (HIDEJUMPSUIT|HIDETAIL))
 		return FALSE
