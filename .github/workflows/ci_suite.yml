@@ -59,6 +59,17 @@ jobs:
       map_config: ${{ needs.collect_data.outputs.map_config }}
       max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
+  # not in completion_gate on purpose, it only gives JIT runtime errors a baseline
+  run_baseline_test:
+    name: Baseline Test (no JIT)
+    needs: [collect_data, setup_build_artifacts]
+    uses: ./.github/workflows/run_integration_tests.yml
+    with:
+      map: icebox
+      map_config: ${{ needs.collect_data.outputs.map_config }}
+      max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
+      dmeow: false
+
   run_alternate_tests:
     if: needs.collect_data.outputs.alternate_tests != '[]'
     name: Alternate Tests

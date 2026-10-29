@@ -142,24 +142,14 @@
 
 
 /datum/component/plant_growing/proc/try_plant_seed(datum/source, obj/item/seeds/seed, mob/living/user)
-	//SIGNAL_HANDLER (commented so we can use check_tick)
+	SIGNAL_HANDLER
 	if(istype(seed, /obj/item/seeds/sample))
 		return FALSE
 	if(istype(seed, /obj/item/storage/bag/plants))
 		if(!pre_harvest_checks(user) || harvesting)
 			return COMPONENT_NO_AFTERATTACK
 		harvesting = TRUE
-		for(var/_id, item in managed_seeds)
-			var/obj/item/seeds/harvest = item
-			if(!harvest || istype(seed, /obj/item/seeds/sample))
-				continue
-			SEND_SIGNAL(harvest, COMSIG_PLANT_TRY_HARVEST, user)
-			CHECK_TICK
-
-		for(var/obj/item/food/grown/grown in get_turf(user))
-			seed.atom_storage?.attempt_insert(grown, user, TRUE)
-			CHECK_TICK
-		harvesting = FALSE
+		INVOKE_ASYNC(src, PROC_REF(harvest_into_bag), seed, user)
 		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/movable/movable_parent = parent
@@ -189,6 +179,20 @@
 	movable_parent.update_appearance()
 	return COMPONENT_NO_AFTERATTACK
 
+// separate proc so it can run async and not sleep during signals
+/datum/component/plant_growing/proc/harvest_into_bag(obj/item/storage/bag/plants/bag, mob/living/user)
+	for(var/_id, item in managed_seeds)
+		var/obj/item/seeds/harvest = item
+		if(!harvest)
+			continue
+		SEND_SIGNAL(harvest, COMSIG_PLANT_TRY_HARVEST, user)
+		CHECK_TICK
+
+	for(var/obj/item/food/grown/grown in get_turf(user))
+		bag.atom_storage?.attempt_insert(grown, user, TRUE)
+		CHECK_TICK
+	harvesting = FALSE
+
 /datum/component/plant_growing/proc/pre_harvest_checks(mob/living/user)
 	var/atom/movable/movable_parent = parent
 	if(isobj(movable_parent) && !movable_parent.anchored)
@@ -215,6 +219,7 @@
 
 
 /datum/component/plant_growing/proc/try_harvest(datum/source, mob/living/user)
+	SIGNAL_HANDLER
 	if(!length(managed_seeds) || harvesting)
 		return
 
@@ -222,6 +227,10 @@
 		return
 
 	harvesting = TRUE
+	INVOKE_ASYNC(src, PROC_REF(harvest_all), user)
+
+// separate proc so it can run async and not sleep during signals
+/datum/component/plant_growing/proc/harvest_all(mob/living/user)
 	for(var/_item, seed_item in managed_seeds)
 		var/obj/item/seeds/seed = seed_item
 		SEND_SIGNAL(seed, COMSIG_PLANT_TRY_HARVEST, user)
