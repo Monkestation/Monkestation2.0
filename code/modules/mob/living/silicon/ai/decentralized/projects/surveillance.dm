@@ -7,25 +7,24 @@
 	research_requirements = list(/datum/ai_project/examine_humans)
 	category = AI_PROJECT_SURVEILLANCE
 	///List of mobs that we check on each tick if it's on camnet or not and whether or not to spawn an arrow to it.
-	var/list/mobs_to_track = list()
+	var/list/datum/weakref/mobs_to_track = list()
 
 /datum/ai_project/advanced_tracking/process()
-	//check if any of the targets are in camera net observable view.
-	var/list/trackable_mobs = ai.ai_tracking_tool.find_trackable_mobs()
-	var/list/hit_mobs = list()
+	if(!length(mobs_to_track))
+		ai.target_list = null
+		return
 
-	for(var/weakref_mob in trackable_mobs)
-		var/datum/weakref/ref = trackable_mobs[weakref_mob]
+	var/list/hit_mobs = list()
+	for(var/datum/weakref/ref as anything in mobs_to_track)
 		var/mob/living/trackable_mob = ref.resolve()
+		if(isnull(trackable_mob))
+			mobs_to_track -= ref
+			continue
 		if(trackable_mob.can_track())
-			if(trackable_mob in mobs_to_track)
-				hit_mobs += trackable_mob
+			hit_mobs += trackable_mob
 
 	//send bingo hit mobs to AI, and spawns arrows to them
 	ai.target_list = hit_mobs
-
-	if(!hit_mobs)
-		return
 
 	for(var/mob/tracked_mob in hit_mobs)
 		var/area/their_turf = get_turf(tracked_mob)
@@ -78,7 +77,7 @@
 		to_chat(ai, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
 
-	mobs_to_track += mob_ref.resolve()
+	mobs_to_track += mob_ref
 
 //button to activate these
 /datum/action/innate/ai/advanced_tracking

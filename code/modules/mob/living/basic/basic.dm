@@ -11,6 +11,12 @@
 
 	var/basic_mob_flags = NONE
 
+	/// Biomass credited when this creature is recycled. Positive values also allow vacuum capture and printing.
+	var/biomass_value = 0
+
+	/// Scales how much a slime gets out of draining this creature. Over 1 is a fatter meal.
+	var/slime_meal_multiplier = 1
+
 	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
 	///How much stamina the mob recovers per second

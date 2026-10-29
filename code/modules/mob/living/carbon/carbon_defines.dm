@@ -120,7 +120,10 @@
 	var/last_top_offset
 
 	/// A bitfield of "bodytypes", updated by /mob/living/carbon/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	var/bodytype = BODYTYPE_ORGANIC
+
+	/// A bitfield of "bodyshapes", updated by /mob/living/carbon/proc/synchronize_bodyshapes()
+	var/bodyshape = BODYSHAPE_HUMANOID
 
 	var/is_leaning = FALSE
 

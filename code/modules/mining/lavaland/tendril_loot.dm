@@ -538,6 +538,10 @@
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
+/obj/item/reagent_containers/cup/bottle/potion/flight/Initialize(mapload, vol)
+	. = ..()
+	AddElement(/datum/element/trash_if_empty/reagent_container)
+
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
