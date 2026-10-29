@@ -9,9 +9,6 @@
 	restricted = TRUE // STOP SHOVING ALL THE WINDOWS AROUND
 
 // Reagents that shouldn't be in the random pool, as they're either completely useless or shouldn't exist on their own.
-/datum/reagent/slime_ooze
-	restricted = TRUE
-
 /datum/reagent/reaction_agent
 	restricted = TRUE
 

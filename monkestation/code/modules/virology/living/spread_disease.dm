@@ -6,6 +6,14 @@
 	///image
 	var/image/pathogen
 
+/// Takes our pathogen image back from every virus viewer and drops it.
+/atom/proc/clear_pathogen_image()
+	if(!pathogen)
+		return
+	for(var/mob/viewer as anything in GLOB.virus_viewers)
+		viewer.client?.images -= pathogen
+	pathogen = null
+
 /mob/living/proc/spread_airborne_diseases()
 	//spreading our own airborne viruses
 	if (diseases && diseases.len > 0)
