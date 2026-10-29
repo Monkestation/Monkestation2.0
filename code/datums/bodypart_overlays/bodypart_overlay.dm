@@ -27,6 +27,8 @@
 	var/fallback_key
 	///list of palette keys to colors used if the accessory says it needs multiple colors
 	var/list/color_keys
+	/// Determines body area of the overlay for height offsets
+	var/offset_location = ENTIRE_BODY
 
 /datum/bodypart_overlay/New()
 	. = ..()

@@ -2,6 +2,7 @@
 /datum/bodypart_overlay/simple/emote
 	icon = 'icons/mob/human/emote_visuals.dmi'
 	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	offset_location = UPPER_BODY
 	///The body zone to attach the overlay to, overlay won't be added if no bodypart can be found with this
 	var/attached_body_zone = BODY_ZONE_CHEST
 	///The feature key used to figure out what specific bodily feature we offset this to follow
