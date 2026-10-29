@@ -339,9 +339,7 @@
 	return ..()
 
 /mob/living/carbon/human/p_themselves(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
+	if((obscured_slots & (HIDEJUMPSUIT|HIDEFACE)) == (HIDEJUMPSUIT|HIDEFACE))
 		temp_gender = PLURAL
 	return ..()
 
