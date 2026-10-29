@@ -459,6 +459,68 @@
   - bugfix: Changing a volume slider updates sounds that follow you right away.
   - bugfix: The alt siren starts on its start sound.
   - bugfix: Randomly pitched sounds no longer lean low on 48 kHz files.
+  ? LettuceWarlock, EssentialTomato, Y0SH1_M4S73R, jlsnow301, Kylerace, ArcaneMusic,
+    Paxilmaniac, Notamaniac, timothymtorres, Gboster-0, MrMelbert, SmArtKar, Cruix,
+    Ghommie
+  : - rscadd: Shuttle blueprints, the tool used to construct and modify custom shuttles.
+        Print a set at a science, engineering, or cargo techfab after researching
+        Shuttle Engineering, or craft a crude set from the crafting menu.
+    - rscadd: Shuttle blueprint database upgrade for engineering cyborgs, printable
+        from the Exosuit Fabricator after researching Shuttle Engineering. A version
+        of shuttle blueprints designed for use by cyborgs.
+    - rscadd: Shuttle frame rods, usable to construct custom shuttles. Hand-craft
+        by using 5 rods on 1 titanium sheet, or by printing them at a science, engineering,
+        or cargo techfab after researching Shuttle Engineering.
+    - rscadd: Custom shuttle flight control and navigation boards, printable from
+        a science, engineering, or cargo techfab after researching Shuttle Engineering.
+    - rscadd: Shuttle engine boards can be printed from a science, engineering, or
+        cargo techfab after researching shuttle engineering.
+    - rscadd: The shuttle engine supply pack is no longer locked behind the purchase
+        of the Build Your Own Shuttle kit.
+    - rscadd: Shuttle Construction Starter Kit goodie pack, containing a set of shuttle
+        blueprints, flight control and navigation console boards, and two engine boards,
+        can be purchased from cargo for 1200 credits. Requires aux base access to
+        purchase.
+    - refactor: Shuttles now keep track of what areas are underneath each of their
+        individual turfs, so that the areas left behind on movement are consistent
+        with what they were beforehand.
+    - refactor: Shuttle ceilings now place themselves down as baseturfs, instead of
+        only appearing if the turf above is open space.
+    - rscadd: The station blueprints can be used to toggle whether custom shuttles
+        can be built/expanded/docked within station areas.
+    - qol: Custom areas do not have to be completely contained within shuttle frames,
+        as long as the APC isn't attached to the frame.
+    - rscadd: Custom shuttles with functioning engines will fly off into the sunset
+        when the emergency shuttle leaves.
+    - rscadd: Custom shuttle navigation computers can view space levels adjacent to
+        the one the shuttle is currently docked at.
+    - rscadd: Shuttle navigation computers now show the location of airlocks, turrets,
+        and the shuttle control consoles on the ship outline while placing a custom
+        landing location.
+    - qol: Gigabeacons no longer need to be constructed like standard machines, instead
+        being printed as items that can be deployed quickly inhand without tools.
+    - image: Navigation gigabeacons now have their own unique sprites, inspired by
+        maritime EPIRB devices. If you find a yellow box with an antenna on it, you
+        probably found a nav beacon!
+    - qol: Explorers now start with a gigabeacon in their loadout.
+    - qol: Shuttle engines now tell you how to install them in their screentips and
+        their examine text.
+    - image: Shuttle and heat resistant (aka lavaproof) rods now have unique sprites.
+    - bugfix: Replaced floor tiles on shuttles no longer get left behind when the
+        shuttle moves.
+    - bugfix: Walls and floors made of custom materials keep their material when the
+        shuttle they're on moves.
+    - bugfix: The "Move Up" and "Move Down" verbs properly respect multi-z connectivity
+        when operating a remote camera.
+    - bugfix: Shuttle flight control computers will show you when the linked shuttle
+        cannot move.
+    - bugfix: Holodeck is slightly less likely to explode the server
+    - bugfix: Fix shuttle engines built from a circuit board having it's anchored
+        state not matching the correct engine_state. This would consider the engine
+        to be anchored already when it was not and allow someone to weld it despite
+        it being able to be dragged and moved around.
+    - bugfix: Shuttle engines no longer provide negative power to your shuttles if
+        you unwrench them.
   Runian:
   - rscadd: Engineering cyborgs can pick up conveyor belts and switches.
   - rscadd: Using a screwdriver on an unattached sign will attach to it to a wall
@@ -481,3 +543,9 @@
   - image: updated hair sprite for hair_long_bedhead "Long Bedhead"
   - image: updated hair sprite for hair_longstraightponytail "Ponytail (Long)"
   - image: updated hair sprite for hair_highponytail "Ponytail (High)"
+  tontyGH:
+  - refactor: A lot of code relating to hands was altered for technical reasons
+  - bugfix: Items that could block did not correctly block push/shuffle attempts
+  - bugfix: The swap hands tutorial did not account for 3+ hands
+  - bugfix: High-tenning a mob did not account for more than 2 hands (you can high-twenty
+      now!)
