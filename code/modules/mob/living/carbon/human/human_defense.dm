@@ -761,8 +761,7 @@
 
 	if(glasses && !(obscured & ITEM_SLOT_EYES))
 		burning_items += glasses
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
-		burning_items += wear_mask
+	// monkestation edit: masks don't burn while you're on fire
 	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
 		burning_items += wear_neck
 	if(ears && !(obscured & ITEM_SLOT_EARS))
