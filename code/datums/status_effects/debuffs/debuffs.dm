@@ -56,7 +56,7 @@
 
 	// anti-drop logic (for shuttle dock or tripped)
 	if(prevent_drop)
-		for(var/obj/item/held_item in owner.held_items)
+		for(var/obj/item/held_item as anything in owner.get_held_items())
 			ADD_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 	// Apply floored trait so the mob falls over
@@ -67,7 +67,7 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_prevent_drop)), 0)
 
 /datum/status_effect/incapacitating/knockdown/proc/clear_prevent_drop()
-	for(var/obj/item/held_item in owner.held_items)
+	for(var/obj/item/held_item as anything in owner.get_held_items())
 		REMOVE_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
@@ -357,7 +357,7 @@
 	alerttooltipstyle = "hisgrace"
 
 /datum/status_effect/his_wrath/tick()
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG as anything in owner.get_held_items_of_type(/obj/item/his_grace))
 		qdel(src)
 		return
 	owner.adjustBruteLoss(0.1)

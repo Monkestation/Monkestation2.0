@@ -233,6 +233,10 @@
 	mood_change = 3
 	timeout = 45 SECONDS
 
+/datum/mood_event/high_ten/add_effects(high_what)
+	if(high_what)
+		description = "AMAZING! A [uppertext(high_what)]!"
+
 /datum/mood_event/down_low
 	description = "HA! What a rube, they never stood a chance..."
 	mood_change = 4

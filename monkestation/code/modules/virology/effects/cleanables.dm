@@ -22,6 +22,7 @@ GLOBAL_LIST_EMPTY(infected_cleanables)
 
 /obj/effect/decal/cleanable/Destroy()
 	GLOB.infected_cleanables -= src
+	clear_pathogen_image()
 	return ..()
 
 /obj/effect/decal/cleanable/Entered(mob/living/perp)

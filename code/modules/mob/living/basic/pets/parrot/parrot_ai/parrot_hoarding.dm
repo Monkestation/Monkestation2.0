@@ -66,7 +66,7 @@
 	return null
 
 /datum/ai_behavior/find_and_set/hoard_item/proc/holding_valuable(datum/ai_controller/controller, mob/living/human_target)
-	for(var/obj/item/potential_item in human_target.held_items)
+	for(var/obj/item/potential_item as anything in human_target.get_held_items())
 		if(is_type_in_typecache(potential_item, controller.blackboard[BB_IGNORE_ITEMS]))
 			continue
 		if(potential_item.w_class <= WEIGHT_CLASS_SMALL)

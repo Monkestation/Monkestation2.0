@@ -1225,9 +1225,14 @@ SUBSYSTEM_DEF(job)
 	var/sanity = 0
 	var/max_sane_loops = length(subtypesof(/datum/round_event_control/antagonist) - typesof(/datum/round_event_control/antagonist/from_ghosts)) //not exact, but its close enough
 	pick_desired_roundstart()
-	while(!handle_roundstart_antags() && !sanity >= max_sane_loops)
+	while(!handle_roundstart_antags() && sanity < max_sane_loops)
 		sanity++
+		var/datum/round_event_control/antagonist/failed_event = SSgamemode.current_roundstart_event
 		pick_desired_roundstart()
+		// ah well, we're stuck with it.
+		if(SSgamemode.current_roundstart_event == failed_event)
+			break
+		SSgamemode.roundstart_antag_minds.Cut()
 		CHECK_TICK
 
 	if(sanity >= max_sane_loops)
@@ -1396,9 +1401,10 @@ SUBSYSTEM_DEF(job)
 		if(!roleset.roundstart || !roleset.can_spawn_event(player_count))
 			valid_rolesets -= roleset
 		else
-			var/weight = roleset.get_weight()
+			var/weight = SSgamemode.current_storyteller.calculate_single_weight(roleset)
 			log_storyteller("p_d_r [roleset] weight: [weight][roleset.weight != weight ? " (base: [roleset.weight])" : ""]")
-			actual_valid_rolesets[roleset] = weight
+			if(weight > 0)
+				actual_valid_rolesets[roleset] = weight
 	valid_rolesets = actual_valid_rolesets
 	log_storyteller("p_d_r actual_valid_rolesets: [english_list(actual_valid_rolesets)]")
 

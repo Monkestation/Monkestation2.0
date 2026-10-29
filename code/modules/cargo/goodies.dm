@@ -359,6 +359,19 @@
 	cost = PAYCHECK_CREW * 1.5
 	contains = list(/obj/item/pet_carrier/small/mouse)
 
+/datum/supply_pack/goody/shuttle_construction_kit
+	name = "Shuttle Construction Starter Kit"
+	desc = "Contains a set of shuttle blueprints, and the circuitboards necessary for constructing your own shuttle. \
+			Well at least the ones you can't source yourself without Science's help."
+	cost = PAYCHECK_COMMAND * 12 //You assistants with shipwrighting ambitions can do a couple bounties, can't you?
+	access_view = ACCESS_AUX_BASE //Engineers have it, QM can give it to whoever, and scientists can just research the tech.
+	contains = list(
+		/obj/item/shuttle_blueprints,
+		/obj/item/circuitboard/computer/shuttle/flight_control,
+		/obj/item/circuitboard/computer/shuttle/docker,
+		/obj/item/circuitboard/machine/engine/propulsion = 2,
+	)
+
 /datum/supply_pack/goody/summoner_nifsoft
 	name = "Grimoire Caeruleam NIFSoft"
 	desc = "Contains a single Grimoire Caeruleam NIFSoft uploader disk."
@@ -387,3 +400,15 @@
 	cost = PAYCHECK_COMMAND * 2.5
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/mod/module/megaphone)
+
+/datum/supply_pack/goody/rock_tape
+	name = "Boombox tape (Rock)"
+	desc = "A classic rock track by George Patel, 'Bainrock'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/rock)
+
+/datum/supply_pack/goody/hiphop_tape
+	name = "Boombox tape (HipHop)"
+	desc = "A trendy hiphop track by F'norkiz Gamma, 'Groovepad'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/hiphop)

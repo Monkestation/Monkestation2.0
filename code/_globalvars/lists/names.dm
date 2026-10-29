@@ -30,6 +30,7 @@ GLOBAL_LIST_INIT(simian_names_female, file2list("strings/names/simian_female_fir
 GLOBAL_LIST_INIT(simian_names_male, file2list("strings/names/simian_male_first.txt"))
 GLOBAL_LIST_INIT(cyberauth_names, file2list("strings/names/cyberauth.txt"))
 GLOBAL_LIST_INIT(random_monkey_names, file2list("strings/names/random_monkey_names.txt"))
+GLOBAL_LIST_INIT(random_rat_names, file2list("strings/names/random_rat_names.txt"))
 GLOBAL_LIST_INIT(syndicate_monkey_names, file2list("strings/names/syndicate_monkey.txt"))
 GLOBAL_LIST_INIT(guardian_first_names, file2list("strings/names/guardian_descriptions.txt"))
 GLOBAL_LIST_INIT(guardian_tech_surnames, file2list("strings/names/guardian_gamepieces.txt"))
