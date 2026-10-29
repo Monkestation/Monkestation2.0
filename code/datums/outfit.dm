@@ -324,7 +324,7 @@
 		H.l_store.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.r_store)
 		H.r_store.add_fingerprint(H, ignoregloves = TRUE)
-	for(var/obj/item/I in H.held_items)
+	for(var/obj/item/I as anything in H.get_held_items())
 		I.add_fingerprint(H, ignoregloves = TRUE)
 	return TRUE
 

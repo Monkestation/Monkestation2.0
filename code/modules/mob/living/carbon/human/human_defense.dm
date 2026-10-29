@@ -79,8 +79,8 @@
 	if(head)
 		if(head.IsReflect(def_zone))
 			return TRUE
-	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone))
+	for(var/obj/item/item as anything in get_held_items())
+		if(item.IsReflect(def_zone))
 			return TRUE
 	return FALSE
 
@@ -93,10 +93,10 @@
 	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
-			if(worn_thing in held_items)
+			if(is_holding(worn_thing))
 				continue
 		// Things that are supposed to be held, being worn = cannot block
-		else if(!(worn_thing in held_items))
+		else if(!is_holding(worn_thing))
 			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
@@ -530,9 +530,9 @@
 		if(belt)
 			inventory_items_to_kill += belt
 
-		inventory_items_to_kill += held_items
+		inventory_items_to_kill += get_held_items()
 
-	for(var/obj/item/inventory_item in inventory_items_to_kill)
+	for(var/obj/item/inventory_item as anything in inventory_items_to_kill)
 		inventory_item.acid_act(acidpwr, acid_volume)
 	return TRUE
 
