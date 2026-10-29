@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	update_icon_state()
 	presented_item = new(loc)
 	presented_item.start_animation(src)
-	current_sound_channel = SSsounds.reserve_sound_channel(src)
+	current_sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	playsound(src, crate_open_sound, 80)
 
