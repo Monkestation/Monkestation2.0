@@ -1,0 +1,209 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/template_noop)
+"t" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"v" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/template_noop)
+"y" = (
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/template_noop)
+"z" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"A" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/remains/human,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"C" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"D" = (
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"J" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/template_noop)
+"L" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"N" = (
+/turf/closed/wall,
+/area/template_noop)
+"R" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
+/area/template_noop)
+"S" = (
+/obj/machinery/light/small/directional/north,
+/obj/item/toy/plush/lizard_plushie,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"X" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"Y" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+v
+C
+N
+C
+C
+C
+N
+L
+C
+X
+"}
+(2,1,1) = {"
+g
+C
+C
+C
+N
+N
+N
+N
+D
+r
+"}
+(3,1,1) = {"
+y
+C
+C
+N
+N
+C
+C
+C
+C
+t
+"}
+(4,1,1) = {"
+N
+N
+C
+C
+Y
+C
+N
+N
+N
+N
+"}
+(5,1,1) = {"
+C
+N
+N
+N
+N
+C
+N
+Y
+C
+C
+"}
+(6,1,1) = {"
+C
+C
+C
+R
+N
+k
+C
+C
+N
+C
+"}
+(7,1,1) = {"
+N
+N
+C
+N
+N
+C
+N
+C
+C
+C
+"}
+(8,1,1) = {"
+A
+N
+C
+C
+C
+C
+N
+J
+N
+C
+"}
+(9,1,1) = {"
+z
+N
+N
+N
+C
+N
+N
+N
+N
+C
+"}
+(10,1,1) = {"
+C
+C
+C
+C
+C
+C
+e
+N
+S
+C
+"}

@@ -1,0 +1,74 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/obj/machinery/computer/pandemic,
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/cup/bottle/random_virus{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/bottle/mutagen,
+/turf/open/floor/plating,
+/area/template_noop)
+"l" = (
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/plating,
+/area/template_noop)
+"v" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"y" = (
+/obj/item/reagent_containers/cup/bottle/synaptizine,
+/obj/structure/table/glass,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating,
+/area/template_noop)
+"T" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+T
+d
+i
+"}
+(2,1,1) = {"
+l
+e
+v
+"}
+(3,1,1) = {"
+c
+f
+y
+"}

@@ -1,0 +1,87 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"f" = (
+/obj/structure/mop_bucket/janitorialcart,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/east,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"s" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"C" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/mirror{
+	pixel_y = 28
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/closet{
+	name = "maid locker"
+	},
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/gloves/color/white,
+/obj/item/clothing/accessory/maidapron{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/clothing/under/costume/maid,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/west,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/mop,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"S" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/storage/belt/janitor,
+/obj/item/storage/bag/trash,
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/north,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+
+(1,1,1) = {"
+S
+n
+J
+"}
+(2,1,1) = {"
+s
+n
+n
+"}
+(3,1,1) = {"
+C
+n
+f
+"}

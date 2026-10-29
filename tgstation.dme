@@ -5230,6 +5230,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\whiteshipruin_box.dm"
 #include "code\modules\mapping\access_helpers.dm"
 #include "code\modules\mapping\mail_sorting_helpers.dm"
+#include "code\modules\mapping\maint_room_templates.dm"
 #include "code\modules\mapping\map_template.dm"
 #include "code\modules\mapping\mapping_helpers.dm"
 #include "code\modules\mapping\merge_conflicts.dm"

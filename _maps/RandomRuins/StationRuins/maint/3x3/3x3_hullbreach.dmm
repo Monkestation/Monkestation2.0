@@ -1,0 +1,29 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"t" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"A" = (
+/obj/item/airlock_painter,
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/template_noop)
+"Q" = (
+/obj/item/paper/crumpled,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+t
+t
+t
+"}
+(2,1,1) = {"
+t
+A
+t
+"}
+(3,1,1) = {"
+Q
+t
+t
+"}

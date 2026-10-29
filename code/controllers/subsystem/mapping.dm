@@ -638,7 +638,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/item in (subtypesof(/datum/map_template/random_room) - typesof(/datum/map_template/random_room/random_bar) - typesof(/datum/map_template/random_room/random_engines)))
 		var/datum/map_template/random_room/room_type = item
 		if(!(initial(room_type.mappath)))
-			message_admins("Template [initial(room_type.name)] found without mappath. Yell at coders")
+			if(initial(room_type.room_id)) // types without an id are just bases for others
+				message_admins("Template [initial(room_type.name)] found without mappath. Yell at coders")
 			continue
 		var/datum/map_template/random_room/R = new room_type()
 		random_room_templates[R.room_id] = R

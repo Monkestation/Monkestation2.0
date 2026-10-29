@@ -1,0 +1,562 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/bamboo,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"ak" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"bv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"kF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/iron/white,
+/area/template_noop)
+"lf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner,
+/turf/open/floor/wood,
+/area/template_noop)
+"li" = (
+/turf/open/water,
+/area/template_noop)
+"nH" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken/directional/south,
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"of" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"oW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"pj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"qR" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/water,
+/area/template_noop)
+"rS" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"sb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/obj/structure/railing,
+/turf/open/floor/wood,
+/area/template_noop)
+"tg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/fishing_rod,
+/obj/structure/rack,
+/obj/item/poster/random_contraband,
+/obj/item/picket_sign,
+/obj/item/picket_sign,
+/obj/item/picket_sign,
+/obj/item/picket_sign,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"tw" = (
+/obj/machinery/griddle,
+/obj/item/food/deadmouse,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"tO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"uj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/west,
+/obj/structure/table/glass,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"vX" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"wk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"xi" = (
+/obj/item/fish/goldfish{
+	bitecount = 0;
+	length = 1;
+	weight = 2
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"xG" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/grill,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"yw" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"zC" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"AR" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"BO" = (
+/obj/machinery/smartfridge/food,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"Cj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"Ei" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"ED" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner,
+/turf/open/floor/wood,
+/area/template_noop)
+"EH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/smartfridge/drying_rack,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"EQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/cola{
+	tilted = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"FV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"GH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"GJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"GL" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"He" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"Ig" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Ke" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"KU" = (
+/obj/effect/landmark/blobstart,
+/turf/open/water,
+/area/template_noop)
+"LT" = (
+/obj/structure/rack,
+/obj/item/radio,
+/obj/item/assembly/signaler,
+/obj/item/fishing_rod,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"Mq" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Mw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"MA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/wood,
+/area/template_noop)
+"MI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/fishing_rod,
+/obj/structure/rack,
+/obj/item/pet_carrier,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"Ng" = (
+/obj/machinery/smartfridge/drinks,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/west,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"Og" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Ou" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"OV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Pj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing,
+/turf/open/floor/wood,
+/area/template_noop)
+"Qj" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/water,
+/area/template_noop)
+"Rc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"SA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/bamboo,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"SM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Uj" = (
+/obj/structure/rack,
+/obj/item/soap/homemade,
+/obj/item/soap/homemade,
+/obj/item/fishing_rod,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"Wi" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"Xp" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"YR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Ze" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken/directional/south,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"ZB" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/wood,
+/area/template_noop)
+"ZO" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/mouse,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+
+(1,1,1) = {"
+Wi
+tO
+tO
+uj
+FV
+Pj
+Ng
+BO
+of
+xG
+"}
+(2,1,1) = {"
+SA
+SA
+ag
+SA
+FV
+sb
+Ou
+of
+of
+tw
+"}
+(3,1,1) = {"
+Cj
+rS
+ED
+yw
+Xp
+ZB
+xi
+Mq
+AR
+zC
+"}
+(4,1,1) = {"
+Rc
+GL
+Pj
+qR
+li
+li
+li
+FV
+AR
+nH
+"}
+(5,1,1) = {"
+oW
+oW
+ak
+li
+Qj
+li
+li
+bv
+oW
+oW
+"}
+(6,1,1) = {"
+Og
+Og
+MA
+li
+li
+KU
+li
+Ig
+Og
+Og
+"}
+(7,1,1) = {"
+Ei
+Ou
+Pj
+li
+li
+li
+qR
+FV
+Mw
+Ze
+"}
+(8,1,1) = {"
+EH
+Ou
+GJ
+oW
+OV
+lf
+oW
+YR
+vX
+kF
+"}
+(9,1,1) = {"
+EH
+Ou
+ZO
+Ou
+FV
+Pj
+He
+Ke
+pj
+kF
+"}
+(10,1,1) = {"
+GH
+Ou
+MI
+tg
+SM
+Pj
+Uj
+LT
+wk
+EQ
+"}

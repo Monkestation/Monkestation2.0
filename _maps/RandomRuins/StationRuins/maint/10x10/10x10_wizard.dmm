@@ -1,0 +1,228 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/turf/closed/wall,
+/area/template_noop)
+"f" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/machinery/light/directional/west,
+/obj/structure/table/wood/fancy/purple,
+/obj/item/greentext/quiet,
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"h" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/chair/wood/wings,
+/obj/item/bedsheet/wiz{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/chair/wood/wings{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"i" = (
+/obj/machinery/light/directional/east,
+/obj/structure/table/wood/fancy/purple,
+/obj/item/storage/dice{
+	icon_state = "magicdicebag"
+	},
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"k" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/toy/figure/wizard,
+/obj/item/clothing/gloves/rapid,
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"n" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"A" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"E" = (
+/obj/machinery/light/directional/east,
+/obj/structure/table/wood/fancy/purple,
+/obj/item/clothing/suit/wizrobe/red,
+/obj/item/clothing/head/wizard/red,
+/obj/item/clothing/shoes/sandal/magic,
+/obj/item/staff,
+/obj/item/clothing/mask/gas/tiki_mask/yalp_elor,
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"G" = (
+/obj/machinery/light/directional/west,
+/obj/structure/table/wood/fancy/purple,
+/obj/machinery/microwave{
+	name = "box of cooking";
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"N" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"O" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"R" = (
+/obj/machinery/door/airlock/uranium,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/carpet/purple,
+/area/template_noop)
+"V" = (
+/obj/machinery/door/airlock/uranium,
+/obj/structure/barricade/wooden,
+/turf/open/floor/carpet/purple,
+/area/template_noop)
+"W" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/book/random,
+/turf/open/floor/carpet/green,
+/area/template_noop)
+"Y" = (
+/turf/closed/wall/mineral/uranium,
+/area/template_noop)
+
+(1,1,1) = {"
+N
+d
+e
+N
+N
+N
+N
+N
+N
+d
+"}
+(2,1,1) = {"
+N
+N
+n
+d
+N
+N
+A
+N
+N
+N
+"}
+(3,1,1) = {"
+e
+n
+Y
+Y
+V
+V
+Y
+Y
+b
+e
+"}
+(4,1,1) = {"
+N
+A
+Y
+G
+r
+r
+g
+Y
+N
+N
+"}
+(5,1,1) = {"
+N
+d
+f
+k
+r
+r
+O
+f
+N
+d
+"}
+(6,1,1) = {"
+N
+N
+f
+W
+r
+r
+h
+f
+N
+N
+"}
+(7,1,1) = {"
+N
+N
+Y
+i
+r
+r
+E
+Y
+N
+A
+"}
+(8,1,1) = {"
+e
+n
+Y
+Y
+R
+V
+Y
+Y
+n
+e
+"}
+(9,1,1) = {"
+N
+A
+d
+N
+N
+d
+N
+n
+A
+d
+"}
+(10,1,1) = {"
+N
+N
+N
+N
+d
+N
+N
+e
+N
+N
+"}
