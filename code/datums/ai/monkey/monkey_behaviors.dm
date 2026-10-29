@@ -57,7 +57,7 @@
 		return
 
 	// EVERYTHING ELSE
-	else if(living_pawn.get_empty_held_indexes())
+	else if(length(living_pawn.get_empty_held_indexes()))
 		living_pawn.put_in_hands(target)
 		finish_action(controller, TRUE)
 		return
@@ -98,7 +98,7 @@
 
 	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && living_pawn.CanReach(victim))
 
-		for(var/obj/item/I in victim.held_items)
+		for(var/obj/item/I as anything in victim.get_held_items())
 			if(I == target)
 				victim.visible_message(span_danger("[living_pawn] snatches [target] from [victim]."), span_userdanger("[living_pawn] snatched [target]!"))
 				if(victim.temporarilyRemoveItemFromInventory(target))
@@ -160,7 +160,7 @@
 	if(isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
 		// check if target has a weapon
 		var/obj/item/W
-		for(var/obj/item/I in target.held_items)
+		for(var/obj/item/I as anything in target.get_held_items())
 			if(!(I.item_flags & ABSTRACT))
 				W = I
 				break
@@ -189,7 +189,7 @@
 
 	living_pawn.changeNext_move(CLICK_CD_MELEE) //We play fair
 
-	var/obj/item/weapon = locate(/obj/item) in living_pawn.held_items
+	var/obj/item/weapon = living_pawn.is_holding_item_of_type(/obj/item)
 
 	living_pawn.face_atom(target)
 
@@ -213,7 +213,7 @@
 		if(prob(10)) // Artificial miss
 			real_target = pick(oview(2, target))
 
-		var/obj/item/gun/gun = locate() in living_pawn.held_items
+		var/obj/item/gun/gun = living_pawn.is_holding_item_of_type(__IMPLIED_TYPE__)
 		var/can_shoot = gun?.can_shoot() || FALSE
 		if(gun && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
 			// We attempt to attack even if we can't shoot so we get the effects of pulling the trigger
