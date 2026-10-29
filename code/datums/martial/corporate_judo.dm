@@ -52,15 +52,13 @@
 
 /obj/item/storage/belt/security/blueshield/corpjudo/equipped(mob/living/user, slot)
 	. = ..()
-	if(ishuman(user) && slot & ITEM_SLOT_BELT)
+	if(!QDELETED(style) && ishuman(user) && slot & ITEM_SLOT_BELT)
 		style.teach(user, TRUE)
-		user.apply_status_effect(/datum/status_effect/weapon_lock)
 
 /obj/item/storage/belt/security/blueshield/corpjudo/dropped(mob/living/user)
 	. = ..()
-	if(ishuman(user) && user.get_item_by_slot(ITEM_SLOT_BELT) == src)
+	if(!QDELETED(style) && ishuman(user) && user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		style.remove(user)
-		user.remove_status_effect(/datum/status_effect/weapon_lock)
 
 ///
 // MARTIAL ART STYLE
@@ -87,9 +85,11 @@
 	. = ..()
 	if(.)
 		to_chat(owner, span_userdanger("You suddenly feel like you could negotiate with gravity itself... well at least your Boss."))
+		owner.apply_status_effect(/datum/status_effect/weapon_lock)
 
 /datum/martial_art/corpjudo/remove(mob/living/owner)
 	. = ..()
+	owner.remove_status_effect(/datum/status_effect/weapon_lock)
 	if(.)
 		to_chat(owner, span_userdanger("As the belt leaves your waist, the secrets of Judo vanish like quarterly profits."))
 
