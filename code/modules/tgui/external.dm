@@ -91,6 +91,9 @@
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return TRUE
+	if(action == "change_ui_state")
+		//write_preferences will make sure it's valid for href exploits.
+		ui.user.client?.prefs?.write_preference(GLOB.preference_entries[layout_prefs_used], params["new_state"])
 
 /**
  * public
@@ -168,10 +171,7 @@
  *
  * required uiref ref The UI that was closed.
  */
-/client/verb/uiclose(window_id as text)
-	// Name the verb, and hide it from the user panel.
-	set name = "uiclose"
-	set hidden = TRUE
+GAME_VERB_NATIVE(/client, uiclose, "uiclose", null, window_id as text)
 	var/mob/user = src?.mob
 	if(!user)
 		return

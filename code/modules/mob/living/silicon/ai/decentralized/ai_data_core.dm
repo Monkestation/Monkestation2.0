@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 				to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
 			else
 				to_chat(AI, span_userdanger("Data core in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
-			AI.playsound_local(AI, 'sound/machines/engine_alert2.ogg', 30)
+			AI.playsound_local(AI, 'sound/machines/engine_alert/engine_alert2.ogg', 30)
 
 /obj/machinery/ai/data_core/process_atmos()
 	. = ..()

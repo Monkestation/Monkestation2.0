@@ -353,6 +353,12 @@
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
 
+/datum/supply_pack/goody/pet_mouse
+	name = "Pet Mouse"
+	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
+	cost = PAYCHECK_CREW * 1.5
+	contains = list(/obj/item/pet_carrier/small/mouse)
+
 /datum/supply_pack/goody/summoner_nifsoft
 	name = "Grimoire Caeruleam NIFSoft"
 	desc = "Contains a single Grimoire Caeruleam NIFSoft uploader disk."
@@ -381,3 +387,15 @@
 	cost = PAYCHECK_COMMAND * 2.5
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/mod/module/megaphone)
+
+/datum/supply_pack/goody/rock_tape
+	name = "Boombox tape (Rock)"
+	desc = "A classic rock track by George Patel, 'Bainrock'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/rock)
+
+/datum/supply_pack/goody/hiphop_tape
+	name = "Boombox tape (HipHop)"
+	desc = "A trendy hiphop track by F'norkiz Gamma, 'Groovepad'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/hiphop)

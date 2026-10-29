@@ -1,5 +1,5 @@
 /mob/living/carbon/human/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
@@ -434,10 +434,7 @@
 /mob/living/carbon/human/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE) && user)
-		if(!target_zone)
-			target_zone = get_bodypart(check_zone(user.zone_selected))
-		var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
-		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
+		balloon_alert(user, "no exposed skin on [target_zone || check_zone(user.zone_selected)]!")
 
 /mob/living/carbon/human/get_footprint_sprite()
 	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
@@ -986,6 +983,58 @@
 
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
+
+/// Adds a left eye color override with the given priority, the highest priority override is the one shown
+/mob/living/carbon/human/proc/add_eye_color_left(color, color_priority, update_body = TRUE)
+	LAZYSET(eye_color_left_overrides, "[color_priority]", color)
+	if (update_body)
+		update_body()
+
+/// Adds a right eye color override with the given priority, the highest priority override is the one shown
+/mob/living/carbon/human/proc/add_eye_color_right(color, color_priority, update_body = TRUE)
+	LAZYSET(eye_color_right_overrides, "[color_priority]", color)
+	if (update_body)
+		update_body()
+
+/// Adds an eye color override for both eyes with the given priority
+/mob/living/carbon/human/proc/add_eye_color(color, color_priority, update_body = TRUE)
+	add_eye_color_left(color, color_priority, update_body = FALSE)
+	add_eye_color_right(color, color_priority, update_body = update_body)
+
+/// Removes the eye color overrides of both eyes with the given priority
+/mob/living/carbon/human/proc/remove_eye_color(color_priority, update_body = TRUE)
+	LAZYREMOVE(eye_color_left_overrides, "[color_priority]")
+	LAZYREMOVE(eye_color_right_overrides, "[color_priority]")
+	if (update_body)
+		update_body()
+
+/// Returns the right eye color we should show, the highest priority override or our natural color
+/mob/living/carbon/human/proc/get_right_eye_color()
+	if (!LAZYLEN(eye_color_right_overrides))
+		return eye_color_right
+
+	var/eye_color = eye_color_right
+	var/priority
+	for (var/override_priority in eye_color_right_overrides)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
+			eye_color = eye_color_right_overrides[override_priority]
+	return eye_color
+
+/// Returns the left eye color we should show, the highest priority override or our natural color
+/mob/living/carbon/human/proc/get_left_eye_color()
+	if (!LAZYLEN(eye_color_left_overrides))
+		return eye_color_left
+
+	var/eye_color = eye_color_left
+	var/priority
+	for (var/override_priority in eye_color_left_overrides)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
+			eye_color = eye_color_left_overrides[override_priority]
+	return eye_color
 
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey

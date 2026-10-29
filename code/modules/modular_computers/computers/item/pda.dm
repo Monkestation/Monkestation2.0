@@ -11,7 +11,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	inhand_icon_state = "electronic"
 
-	overlays_icon = 'icons/obj/modular_pda.dmi'
+	overlays_icon = 'icons/obj/devices/modular_pda.dmi'
 
 	steel_sheet_cost = 2
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
@@ -165,7 +165,7 @@
 		return
 	balloon_alert(user, "inserted [attacking_item]")
 	inserted_item = attacking_item
-	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 50, TRUE)
 
 /obj/item/modular_computer/pda/item_ctrl_click(mob/user)
 	remove_pen(user)
@@ -190,7 +190,7 @@
 		user.put_in_hands(inserted_item)
 		inserted_item = null
 		update_appearance()
-		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/pda_button/pda_button2.ogg', 50, TRUE)
 
 /obj/item/modular_computer/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
 	var/turf/current_turf = get_turf(src)
@@ -294,7 +294,7 @@
  */
 /obj/item/modular_computer/pda/silicon
 	name = "modular interface"
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "tablet-silicon"
 	base_icon_state = "tablet-silicon"
 	greyscale_config = null
@@ -344,7 +344,7 @@
 /obj/item/modular_computer/pda/silicon/ai/get_ntnet_status()
 	return NTNET_ETHERNET_SIGNAL
 
-/obj/item/modular_computer/pda/silicon/ai/alert_call(datum/computer_file/program/origin, alerttext, sound = 'sound/machines/twobeep_high.ogg', vision_distance = DEFAULT_MESSAGE_RANGE) //doing a visible message results in AIs being unable to see their own notifications.
+/obj/item/modular_computer/pda/silicon/ai/alert_call(datum/computer_file/program/origin, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg', vision_distance = DEFAULT_MESSAGE_RANGE) //doing a visible message results in AIs being unable to see their own notifications.
 	if(QDELETED(loc) || QDELETED(origin) || !origin.alert_able || origin.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
@@ -471,3 +471,13 @@
 	if(iscyborg(silicon_owner))
 		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
+
+/obj/item/modular_computer/pda/silicon/cyborg/ninja
+	icon_state = "tablet-silicon-ninja"
+	device_theme = PDA_THEME_SYNDICATE
+
+/obj/item/modular_computer/pda/silicon/cyborg/ninja/Initialize(mapload)
+	. = ..()
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
+		robo.lamp_color = COLOR_GREEN // Ninja likes it green.

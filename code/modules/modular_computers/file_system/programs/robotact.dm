@@ -135,12 +135,7 @@
 	switch(action)
 		if("coverunlock")
 			if(cyborg.locked)
-				cyborg.locked = FALSE
-				cyborg.update_icons()
-				if(cyborg.emagged)
-					cyborg.logevent("ChÃ¥vÃis cover lock has been [cyborg.locked ? "engaged" : "released"]") //"The cover interface glitches out for a split second"
-				else
-					cyborg.logevent("Chassis cover lock has been [cyborg.locked ? "engaged" : "released"]")
+				cyborg.toggle_cover()
 
 		if("lawchannel")
 			cyborg.set_autosay()
@@ -153,7 +148,7 @@
 				if(!cyborg.cell || !cyborg.cell.charge)
 					cyborg.visible_message(span_notice("The power warning light on [span_name("[cyborg]")] flashes urgently."), \
 						"You announce you are operating in low power mode.")
-					playsound(cyborg, 'sound/machines/buzz-two.ogg', 50, FALSE)
+					playsound(cyborg, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 
 		if("toggleSensors")
 			cyborg.toggle_sensors()

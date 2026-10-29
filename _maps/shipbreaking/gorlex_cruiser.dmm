@@ -394,7 +394,7 @@
 	},
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/closet/crate/medical,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark/smooth_large,
 /area/template_noop)

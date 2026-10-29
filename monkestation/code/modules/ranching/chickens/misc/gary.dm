@@ -137,7 +137,7 @@
 		if(!user.transferItemToLoc(attacking_item, src))
 			return TRUE
 		if(istype(attacking_item, /obj/item/knife))
-			attack_sound = 'sound/weapons/bladeslice.ogg'
+			attack_sound = 'sound/items/weapons/bladeslice.ogg'
 			melee_damage_upper = attacking_item.force //attack dmg inherits knife dmg
 			melee_damage_lower = attacking_item.force
 			icon_state = "crow_gary_knife"

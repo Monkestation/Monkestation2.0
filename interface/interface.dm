@@ -12,10 +12,8 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 ))
 
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki()
-	set name = "wiki"
-	set desc = "Open the wiki."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, wiki, "wiki")
+
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
 		if(tgui_alert(src, "This will open the wiki in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -25,10 +23,8 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
 	return
 
-/client/verb/forum()
-	set name = "forum"
-	set desc = "Visit the forum."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, forum, "forum")
+
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
 		if(tgui_alert(src, "This will open the forum in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -38,10 +34,8 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
 	return
 
-/client/verb/rules()
-	set name = "rules"
-	set desc = "Show Server Rules."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, rules, "rules")
+
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
 		if(tgui_alert(src, "This will open the rules in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -51,10 +45,8 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
 	return
 
-/client/verb/github()
-	set name = "github"
-	set desc = "Visit Github"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, github, "github")
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
 		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",, list("Yes","No"))!="Yes")
@@ -64,10 +56,8 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 	return
 
-/client/verb/reportissue()
-	set name = "report-issue"
-	set desc = "Report an issue"
-	set hidden = TRUE
+GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	var/issue_key = CONFIG_GET(string/issue_key)
 	if(!issue_key)
@@ -145,12 +135,12 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		)
 	)
 	to_chat(src, span_notice("Sending issue report..."))
-	SEND_SOUND(src, 'sound/misc/compiler-stage1.ogg')
+	SEND_SOUND(src, 'sound/machines/compiler/compiler-stage1.ogg')
 	issue_report.begin_async()
 	UNTIL(issue_report.is_complete() || !src) //Client fuckery.
 	var/datum/http_response/issue_response = issue_report.into_response()
 	if(issue_response.errored || issue_response.status_code != 201)
-		SEND_SOUND(src, 'sound/misc/compiler-failure.ogg')
+		SEND_SOUND(src, 'sound/machines/compiler/compiler-failure.ogg')
 		to_chat(src, "[span_alertwarning("Bug report FAILED!")]\n\
 		[span_warning("Please adminhelp immediately!")]\n\
 		[span_notice("Code:[issue_response.status_code || "9001 CATASTROPHIC ERROR"]")]")
@@ -167,12 +157,11 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		)
 
 		return
-	SEND_SOUND(src, 'sound/misc/compiler-stage2.ogg')
+	SEND_SOUND(src, 'sound/machines/compiler/compiler-stage2.ogg')
 	to_chat(src, span_notice("Bug submitted successfully."))
 
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
+GAME_VERB(/client, changelog, "Changelog", "OOC")
+
 	if(!GLOB.changelog_tgui)
 		GLOB.changelog_tgui = new /datum/changelog()
 
@@ -182,19 +171,14 @@ GLOBAL_LIST_INIT(important_interface_verbs, list(
 		prefs.save_preferences()
 		winset(src, "infobuttons.changelog", "font-style=;")
 
-/client/verb/hotkeys_help()
-	set name = "Hotkeys Help"
-	set category = "OOC"
+GAME_VERB(/client, hotkeys_help, "Hotkeys Help", "OOC")
 
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
 
-/client/verb/show_tickets()
-	set name = "Tickets"
-	set desc = "Show list of tickets"
-	set category = "Admin"
+GAME_VERB(/client, show_tickets, "Tickets", "Admin")
 
 	if(!holder)
 		if(current_ticket && current_ticket.state == AHELP_ACTIVE)

@@ -148,7 +148,7 @@
 		battlecruiser_called = TRUE
 		caller_card.use_charge(user)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(summon_battlecruiser), caller_card.team), rand(20 SECONDS, 1 MINUTES))
-		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 		return TRUE
 
 	if(obj_flags & EMAGGED)
@@ -157,7 +157,7 @@
 	if (authenticated)
 		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 	balloon_alert(user, "routing circuits scrambled")
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	return TRUE
 
 /obj/machinery/computer/communications/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -216,11 +216,11 @@
 				var/obj/item/card/id/id_card = held_item?.GetID()
 				if (!istype(id_card))
 					to_chat(user, span_warning("You need to swipe your ID!"))
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				if (!(ACCESS_CAPTAIN in id_card.access))
 					to_chat(user, span_warning("You are not authorized to do this!"))
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
 			// monkestation start: prevent lowering alert level from delta
@@ -230,7 +230,7 @@
 			var/datum/security_level/current_sec_level = SSsecurity_level.current_security_level
 			if(!current_sec_level.can_crew_change_alert)
 				to_chat(user, span_warning("Alert cannot be manually lowered from the current security level!"))
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
 				return
 			if(!new_sec_level.can_set_via_comms_console)
 				return
@@ -241,7 +241,7 @@
 			SSsecurity_level.set_level(new_sec_level.name)
 
 			to_chat(user, span_notice("Authorization confirmed. Modifying security level."))
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			// Only notify people if an actual change happened
 			user.log_message("changed the security level to [params["newSecurityLevel"]] with [src].", LOG_GAME)
@@ -266,7 +266,7 @@
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
 
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
 
 			var/emagged = obj_flags & EMAGGED
@@ -340,7 +340,7 @@
 			to_chat(user, span_notice("Request sent."))
 			user.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
 			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [user]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("restoreBackupRoutingData")
 			if (!authenticated_as_non_silicon_captain(user))
@@ -348,7 +348,7 @@
 			if (!(obj_flags & EMAGGED))
 				return
 			to_chat(user, span_notice("Backup routing data restored."))
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 			obj_flags &= ~EMAGGED
 		if ("sendToOtherSector")
 			if (!authenticated_as_non_silicon_captain(user))
@@ -362,7 +362,7 @@
 			if (!message)
 				return
 
-			SScommunications.soft_filtering = FALSE
+			GLOB.communications_controller.soft_filtering = FALSE
 			var/list/hard_filter_result = is_ic_filtered(message)
 			if(hard_filter_result)
 				tgui_alert(user, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
@@ -374,9 +374,9 @@
 					return
 				message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
 				log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
-				SScommunications.soft_filtering = TRUE
+				GLOB.communications_controller.soft_filtering = TRUE
 
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			var/destination = params["destination"]
 
@@ -385,13 +385,13 @@
 				GLOB.admins,
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
-					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
 					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
 
-			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), user, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), user, destination, message), GLOB.communications_controller.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -450,7 +450,7 @@
 				authenticated = FALSE
 				authorize_access = null
 				authorize_name = null
-				playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, FALSE)
 				return
 
 			if (obj_flags & EMAGGED)
@@ -458,7 +458,7 @@
 				authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 				authorize_name = "Unknown"
 				to_chat(user, span_warning("[src] lets out a quiet alarm as its login is overridden."))
-				playsound(src, 'sound/machines/terminal_alert.ogg', 25, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 25, FALSE)
 			else if(isliving(user))
 				var/mob/living/L = user
 				var/obj/item/card/id/id_card = L.get_idcard(hand_first = TRUE)
@@ -468,7 +468,7 @@
 					authorize_name = "[id_card.registered_name] - [id_card.assignment]"
 
 			state = STATE_MAIN
-			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
 		if ("toggleEmergencyAccess")
 			if(emergency_access_cooldown(user)) //if were in cooldown, dont allow the following code
 				return
@@ -512,7 +512,7 @@
 			if(can_print_ai_codes(user))
 				if(!COOLDOWN_FINISHED(src, important_action_cooldown))
 					return
-				playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+				playsound(loc, 'sound/items/poster/poster_being_created.ogg', 100, 1)
 				GLOB.ai_control_code = random_nukecode(6)
 				new /obj/item/paper/ai_control_code(loc)
 				COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
@@ -545,7 +545,7 @@
 	var/network_name = CONFIG_GET(string/cross_comms_network)
 	if(network_name)
 		payload["network"] = network_name
-	if(SScommunications.soft_filtering)
+	if(GLOB.communications_controller.soft_filtering)
 		payload["is_filtered"] = TRUE
 
 	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
@@ -553,7 +553,7 @@
 	user.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[user.real_name]", user, message_type = DEADCHAT_ANNOUNCEMENT)
-	SScommunications.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
+	GLOB.communications_controller.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -723,7 +723,7 @@
 			return
 
 		deltimer(send_cross_comms_message_timer)
-		SScommunications.soft_filtering = FALSE
+		GLOB.communications_controller.soft_filtering = FALSE
 		send_cross_comms_message_timer = null
 
 		log_admin("[key_name(usr)] has cancelled the outgoing cross-comms message.")
@@ -796,7 +796,7 @@
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = issilicon(user)
-	if(!SScommunications.can_announce(user, is_ai))
+	if(!GLOB.communications_controller.can_announce(user, is_ai))
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
@@ -816,7 +816,7 @@
 		)
 
 	var/list/players = get_communication_players()
-	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
+	GLOB.communications_controller.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/get_communication_players()

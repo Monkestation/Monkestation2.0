@@ -11,20 +11,25 @@
 	volume = 20
 
 /datum/looping_sound/supermatter
-	mid_sounds = list('sound/machines/sm/loops/calm.ogg')
-	mid_length = 60
+	start_sound = 'sound/machines/sm/loops/calm_start.ogg'
+	start_length = 1.6 SECONDS
+	mid_sounds = 'sound/machines/sm/loops/calm.ogg'
+	mid_length = 4 SECONDS
+	end_sound = 'sound/machines/sm/loops/calm_end.ogg'
 	volume = 40
 	extra_range = 25
 	falloff_exponent = 10
 	falloff_distance = 5
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/destabilized_crystal
 	mid_sounds = list('sound/machines/sm/loops/delamming.ogg')
 	mid_length = 60
 	volume = 55
-	extra_range = 15
+	extra_range = 35
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/hypertorus
 	mid_sounds = list('sound/machines/hypertorus/loops/hypertorus_nominal.ogg')
@@ -32,6 +37,7 @@
 	volume = 55
 	extra_range = 15
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/generator
 	start_sound = 'sound/machines/generator/generator_start.ogg'
@@ -52,15 +58,16 @@
 		'sound/machines/fryer/deep_fryer_1.ogg',
 		'sound/machines/fryer/deep_fryer_2.ogg',
 	)
-	mid_length = 2
+	mid_length = 1 SECONDS
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
 	volume = 15
-
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/grill
 	mid_sounds = list('sound/machines/grill/grillsizzle.ogg')
 	mid_length = 18
 	volume = 50
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/oven
 	start_sound = 'sound/machines/oven/oven_loop_start.ogg' //my immersions
@@ -70,14 +77,7 @@
 	end_sound = 'sound/machines/oven/oven_loop_end.ogg'
 	volume = 100
 	falloff_exponent = 4
-
-/datum/looping_sound/deep_fryer
-	mid_length = 2
-	mid_sounds = list(
-		'sound/machines/fryer/deep_fryer_1.ogg',
-		'sound/machines/fryer/deep_fryer_2.ogg',
-	)
-	volume = 30
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/microwave
 	start_sound = 'sound/machines/microwave/microwave-start.ogg'
@@ -89,12 +89,14 @@
 	mid_length = 10
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/jackpot
 	mid_length = 11
-	mid_sounds = list('sound/machines/roulettejackpot.ogg')
+	mid_sounds = list('sound/machines/roulette/roulettejackpot.ogg')
 	volume = 85
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/server
 	mid_sounds = list(
@@ -126,50 +128,54 @@
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
 	volume = 2
-	falloff_exponent = 5 //Ultra quiet very fast
+	falloff_exponent = 4 //Ultra quiet very fast
 	extra_range = -12
-	falloff_distance = 1 //Instant falloff after initial tile
+	falloff_distance = 0 //Instant falloff after initial tile
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/gravgen
 	start_sound = 'sound/machines/gravgen/grav_gen_start.ogg'
 	start_length = 1 SECONDS
 	mid_sounds = list(
-		'sound/machines/gravgen/grav_gen_mid1.ogg' = 12,
-		'sound/machines/gravgen/grav_gen_mid2.ogg' = 1,
+		'sound/machines/gravgen/grav_gen_mid1.ogg'
 	)
-	mid_length = 1.1 SECONDS
+	mid_length = 2.4 SECONDS
 	end_sound = 'sound/machines/gravgen/grav_gen_end.ogg'
 	extra_range = 8
 	vary = TRUE
 	volume = 70
 	falloff_distance = 5
-	falloff_exponent = 20
+	falloff_exponent = 10
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/firealarm
 	mid_sounds = list('sound/machines/FireAlarm1.ogg' , 'sound/machines/FireAlarm2.ogg', 'sound/machines/FireAlarm3.ogg', 'sound/machines/FireAlarm4.ogg')
 	mid_length = 2.4 SECONDS
 	volume = 30
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/gravgen/kinesis
 	volume = 20
 	falloff_distance = 2
 	falloff_exponent = 5
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/boiling
-	mid_sounds = list('sound/effects/bubbles2.ogg')
+	mid_sounds = list('sound/effects/bubbles/bubbles2.ogg')
 	mid_length = 7 SECONDS
 	volume = 25
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/typing
 	mid_sounds = list(
-		'sound/machines/terminal_button01.ogg',
-		'sound/machines/terminal_button02.ogg',
-		'sound/machines/terminal_button03.ogg',
-		'sound/machines/terminal_button04.ogg',
-		'sound/machines/terminal_button05.ogg',
-		'sound/machines/terminal_button06.ogg',
-		'sound/machines/terminal_button07.ogg',
-		'sound/machines/terminal_button08.ogg',
+		'sound/machines/terminal/terminal_button01.ogg',
+		'sound/machines/terminal/terminal_button02.ogg',
+		'sound/machines/terminal/terminal_button03.ogg',
+		'sound/machines/terminal/terminal_button04.ogg',
+		'sound/machines/terminal/terminal_button05.ogg',
+		'sound/machines/terminal/terminal_button06.ogg',
+		'sound/machines/terminal/terminal_button07.ogg',
+		'sound/machines/terminal/terminal_button08.ogg',
 	)
 	mid_length = 0.3 SECONDS
 

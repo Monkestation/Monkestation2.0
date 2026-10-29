@@ -17,11 +17,13 @@
 	desc = "An advanced energy-based laser cannon that fires heavily concentrated beams of light which pass through glass and thin metal."
 	icon_state = "lasercannon"
 	inhand_icon_state = null
+	worn_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
 	fire_delay = 10
 	ammo_x_offset = 3
 	weapon_weight = WEAPON_HEAVY
 	shaded_charge = FALSE
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
@@ -31,7 +33,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "lasrifle"
 	fire_delay = 10
-	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasrifle)
 
@@ -104,6 +106,7 @@
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
 	inhand_icon_state = null
+	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
@@ -156,7 +159,7 @@
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator
 	select_name = "accelerator"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
 /obj/projectile/beam/laser/accelerator
 	name = "accelerator laser"
@@ -197,12 +200,10 @@
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
 	inhand_icon_state = null
+	has_manufacturer = FALSE
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
-
-/obj/item/gun/energy/laser/bluetag/give_manufacturer_examine()
-	return
 
 /obj/item/gun/energy/laser/redtag
 	name = "laser tag gun"
@@ -216,12 +217,10 @@
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
 	inhand_icon_state = null
+	has_manufacturer = FALSE
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
-
-/obj/item/gun/energy/laser/redtag/give_manufacturer_examine()
-	return
 
 //Inferno and Cryo Pistols
 

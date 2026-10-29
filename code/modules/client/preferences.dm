@@ -301,6 +301,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/set_channel_volume(channel, vol)
 	parent.mob.update_media_volume(channel)
+	SSsound_tokens.clients_needing_update[parent] = TRUE // tokens aren't in SoundQuery() with a real volume, let them redo it
 
 	//we gotta take into account existing sounds repeating/waiting, otherwise we completely wipe looping sounds (such as whitenoise).
 	for(var/sound/S in parent.SoundQuery())
@@ -811,10 +812,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	to_chat(parent, span_notice("Selected character '[choice]'"))
 	return options[choice]
 
-/client/verb/change_character_slot()
-	set name = "Change Character Slot"
-	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
-	set category = "OOC"
+GAME_VERB_DESC(/client, change_character_slot, "Change Character Slot", "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu.", "OOC")
 
 	if (prefs.read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_SIMPLE)
 		return prefs.tmp_change_character_slot()

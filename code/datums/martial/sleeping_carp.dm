@@ -31,11 +31,13 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	target.faction |= FACTION_CARP //:D
+	target.grant_language(/datum/language/carptongue, ALL, type)
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
 	REMOVE_TRAITS_IN(target, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
 	target.faction -= FACTION_CARP //:(
+	target.remove_language(/datum/language/carptongue, ALL, type)
 	. = ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
@@ -69,7 +71,7 @@
 		ignored_mobs = attacker
 	)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
-	playsound(defender, 'sound/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
 	log_combat(attacker, defender, "strong punched ([log_name])") //monke edit
 	defender.apply_damage(damage, attacker.get_attack_type(), affecting, wound_bonus = wounding, blocked = def_check, sharpness = damage_sharpness)
 
@@ -139,7 +141,7 @@
 		return TRUE
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender, 'sound/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
 	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.stamina.current <= 50) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking [defender.p_them()] out cold"),
@@ -196,7 +198,7 @@
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"), type = MESSAGE_TYPE_COMBAT)
 
 	defender.apply_damage(15, attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND, blocked = def_check)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "punched ([log_name]])") //monke edit
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -209,7 +211,7 @@
 		return TRUE
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender, 'sound/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
+	playsound(defender, 'sound/items/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
 	defender.stamina.adjust(-25)
 	log_combat(attacker, defender, "disarmed ([log_name])") //monke edit
 
@@ -244,7 +246,7 @@
 		span_userdanger("You deflect [hitting_projectile]!"),
 	)
 	COOLDOWN_START(src, block_cooldown, deflect_cooldown)// monke edit start
-	playsound(carp_user, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), vol = 75, vary = TRUE)
+	playsound(carp_user, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), vol = 75, vary = TRUE)
 	carp_user.stamina?.adjust(deflect_stamcost) //monke edit end
 	hitting_projectile.firer = carp_user
 	hitting_projectile.set_angle(rand(0, 360))//SHING
@@ -282,10 +284,7 @@
 	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the art of the sleeping carp.
-/mob/living/proc/sleeping_carp_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Sleeping Carp clan."
-	set category = "Sleeping Carp"
+GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Remember the martial techniques of the Sleeping Carp clan.", "Sleeping Carp")
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
 	[span_notice("Gnashing Teeth")]: Punch Punch. Deal additional damage every second (consecutive) punch! Very good chance to wound!\n\

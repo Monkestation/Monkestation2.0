@@ -180,9 +180,7 @@
 	return NONE
 
 /// A right-click verb, for those not using hotkey mode.
-/obj/item/borg/apparatus/verb/verb_drop_stored_item()
-	set category = "Object"
-	set name = "Drop"
+GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 
 	if(usr != loc || !stored)
 		return

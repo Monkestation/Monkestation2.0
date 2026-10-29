@@ -55,6 +55,8 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/attack/mouse
 	)
+	/// Rat names already given out this round, so every rat gets a different one
+	var/static/list/used_rat_names = list()
 	/// Commands you can give to glockroaches
 	var/static/list/glockroach_commands = list(
 		/datum/pet_command/idle,
@@ -124,9 +126,10 @@
 		return FALSE
 
 	var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
-	// Change name
+	// Every rat in the army gets its own name, like monkeys do
 	if (nearby_mouse.name == "mouse")
-		nearby_mouse.name = initial(rat_path.name)
+		nearby_mouse.name = pick_rat_name()
+		nearby_mouse.real_name = nearby_mouse.name
 	// Buffs our combat stats to that of a rat
 	nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
 	nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
@@ -137,6 +140,17 @@
 	nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
 	make_minion(nearby_mouse, " ...Except this one looks corrupted and aggressive.")
 	return TRUE
+
+/// Picks a rat name nobody got yet, numbering it once we run out of names
+/datum/action/cooldown/mob_cooldown/riot/proc/pick_rat_name()
+	var/list/free_names = GLOB.random_rat_names - used_rat_names
+	if (length(free_names))
+		. = pick(free_names)
+		used_rat_names += .
+		return .
+	var/base_name = pick(GLOB.random_rat_names)
+	used_rat_names[base_name] = max(used_rat_names[base_name], 1) + 1
+	return "[base_name] ([used_rat_names[base_name]])"
 
 /// Turns a roach into an angry roach
 /datum/action/cooldown/mob_cooldown/riot/proc/convert_roach(mob/living/basic/cockroach/nearby_roach, list/converted_check_list)
