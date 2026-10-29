@@ -170,7 +170,7 @@
 	extra_settings[NES_DIRECTIVE] = new /datum/nanite_extra_setting/text("...")
 
 /datum/nanite_program/comm/mind_control/on_trigger(comm_message)
-	if(host_mob.stat == DEAD || HAS_MIND_TRAIT(host_mob, TRAIT_UNCONVERTABLE) || HAS_TRAIT(host_mob, TRAIT_MINDSHIELD))
+	if(host_mob.stat == DEAD || HAS_MIND_TRAIT(host_mob, TRAIT_UNCONVERTABLE) || HAS_TRAIT_NOT_FROM(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT))
 		return
 	var/sent_directive = comm_message
 	if(!comm_message)
@@ -184,7 +184,8 @@
 
 /datum/nanite_program/comm/mind_control/proc/on_mindshield_added(datum/source)
 	SIGNAL_HANDLER
-	end_brainwashing()
+	if(HAS_TRAIT_NOT_FROM(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT))
+		end_brainwashing()
 
 /datum/nanite_program/comm/mind_control/proc/end_brainwashing()
 	UnregisterSignal(host_mob, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD))
