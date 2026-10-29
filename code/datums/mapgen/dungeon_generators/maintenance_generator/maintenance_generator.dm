@@ -47,12 +47,22 @@
 
 /datum/map_generator/dungeon_generator/maintenance/build_dungeon()
 	. = ..()
+	load_ruins()
 	if(atmos_control)
 		add_atmos_control()
 	if(include_apcs)
 		add_apcs()
 		wire_apcs()
 	add_maint_loot()
+
+/// Loads the room templates of the ruin rooms. Done once every room is built, so the rooms don't build over them
+/datum/map_generator/dungeon_generator/maintenance/proc/load_ruins()
+	for(var/datum/dungeon_room/room as anything in generated_rooms)
+		var/datum/dungeon_room_theme/maintenance/ruin/ruin_theme = room.room_theme
+		if(!istype(ruin_theme))
+			continue
+		ruin_theme.load_ruin()
+		CHECK_TICK
 
 /// Splits the maintenance up with lines of firelocks or fans, so a breach doesn't space all of it
 /datum/map_generator/dungeon_generator/maintenance/proc/add_atmos_control()

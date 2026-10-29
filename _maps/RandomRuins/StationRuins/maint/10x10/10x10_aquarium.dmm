@@ -98,13 +98,6 @@
 	},
 /turf/open/floor/plating,
 /area/template_noop)
-"v" = (
-/mob/living/basic/carp/passive{
-	dir = 8;
-	startDead = 1
-	},
-/turf/open/misc/beach/sand,
-/area/template_noop)
 "w" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/six,
@@ -137,13 +130,6 @@
 /area/template_noop)
 "C" = (
 /obj/effect/decal/remains/human,
-/turf/open/misc/beach/sand,
-/area/template_noop)
-"D" = (
-/mob/living/basic/carp/passive{
-	dir = 4;
-	startDead = 1
-	},
 /turf/open/misc/beach/sand,
 /area/template_noop)
 "E" = (
@@ -182,6 +168,10 @@
 	},
 /turf/open/floor/plating,
 /area/template_noop)
+"K" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/misc/beach/sand,
+/area/template_noop)
 "L" = (
 /obj/item/bot_assembly/cleanbot,
 /obj/structure/flora/grass/brown,
@@ -211,13 +201,6 @@
 /obj/structure/flora/grass/both,
 /turf/open/misc/beach/sand,
 /area/template_noop)
-"Q" = (
-/mob/living/basic/carp/passive{
-	startDead = 1
-	},
-/obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/misc/beach/sand,
-/area/template_noop)
 "R" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/five,
@@ -225,6 +208,14 @@
 /area/template_noop)
 "S" = (
 /turf/open/floor/plating,
+/area/template_noop)
+"T" = (
+/obj/item/toy/beach_ball{
+	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen";
+	name = "Nanotrasen-brand beach ball";
+	pixel_y = 7
+	},
+/turf/open/misc/beach/sand,
 /area/template_noop)
 "U" = (
 /obj/structure/rack,
@@ -237,15 +228,6 @@
 /obj/item/paper,
 /obj/item/pen/red,
 /turf/open/floor/plating,
-/area/template_noop)
-"X" = (
-/obj/item/toy/beach_ball{
-	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen";
-	item_state = "beachball";
-	name = "Nanotrasen-brand beach ball";
-	pixel_y = 7
-	},
-/turf/open/misc/beach/sand,
 /area/template_noop)
 "Y" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -311,7 +293,7 @@ j
 g
 y
 y
-D
+y
 y
 g
 S
@@ -333,9 +315,9 @@ S
 S
 S
 g
-v
 y
-X
+y
+T
 y
 y
 g
@@ -348,7 +330,7 @@ g
 g
 g
 N
-Q
+K
 y
 h
 t

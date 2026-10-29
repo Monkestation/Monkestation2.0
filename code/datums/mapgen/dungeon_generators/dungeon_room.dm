@@ -230,7 +230,7 @@
 		else
 			if(!room_theme.weighted_possible_wall_types.Find(room_turf.type))
 
-				room_turf.PlaceOnTop(pick(room_theme.get_random_wall()), flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
+				room_turf.place_on_top(pick(room_theme.get_random_wall()), flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
 	return
 
 ///Build the flooring for the room. Potentially not necessary based on the build area, but making sure the room doesn't construct over space or gen turf is a good idea
@@ -240,7 +240,7 @@
 	for(var/turf/room_turf in interior)
 		//we want to remove everything in the loc but don't want to change the loc type in this way
 		clear_turf(room_turf)
-		room_turf.PlaceOnTop(pick(room_theme.get_random_flooring()), flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
+		room_turf.place_on_top(pick(room_theme.get_random_flooring()), flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
 
 	return
 
@@ -271,7 +271,7 @@
 				num_of_doors_to_gen--
 				continue
 			clear_turf(door_spot)
-			door_spot.PlaceOnTop(pick(room_theme.get_random_flooring()), flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
+			door_spot.place_on_top(pick(room_theme.get_random_flooring()), flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
 			var/door_path = room_theme.get_random_door()
 			if(ispath(door_path))
 				var/obj/machinery/door/new_door = new door_path(door_spot)

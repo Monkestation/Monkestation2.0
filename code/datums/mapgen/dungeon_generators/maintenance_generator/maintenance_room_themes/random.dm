@@ -248,7 +248,7 @@
 		)
 
 	weighted_feature_spawn_list = list(
-		/obj/machinery/slime_compressor = 1,
+		/obj/machinery/extract_compressor = 1,
 		/obj/item/extinguisher = 2,
 		list(/obj/structure/table, /obj/item/slime_extract/grey, /obj/item/storage/box/monkeycubes, /obj/item/reagent_containers/syringe/plasma) = 1,
 		list(/obj/structure/table, /obj/item/reagent_containers/cup/glass/waterbottle, /obj/item/food/monkeycube) = 1,

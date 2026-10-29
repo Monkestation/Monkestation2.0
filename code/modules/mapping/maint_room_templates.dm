@@ -2,6 +2,8 @@
 /datum/map_template/random_room/maint
 	centerspawner = FALSE
 	weight = 4
+	// they have all their turfs, putting them on top of the room's floors would just stack baseturfs
+	should_place_on_top = FALSE
 
 /datum/map_template/random_room/maint/threexthree
 	template_width = 3

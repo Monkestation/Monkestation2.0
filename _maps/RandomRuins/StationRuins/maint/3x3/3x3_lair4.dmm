@@ -5,23 +5,23 @@
 /obj/item/weldingtool,
 /obj/item/clothing/glasses/welding,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/template_noop)
 "x" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/coffin/metalcoffin{
 	anchored = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/template_noop)
 "z" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/template_noop)
 "K" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/restraints/handcuffs/cable/red,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/template_noop)
 "R" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -29,9 +29,7 @@
 /area/template_noop)
 "S" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/template_noop)
 

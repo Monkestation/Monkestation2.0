@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(backrooms)
 	for(var/turf/current_turf as anything in block(min_x, min_y, z_level, max_x, max_y, z_level))
 		if(current_turf.x == min_x || current_turf.x == max_x || current_turf.y == min_y || current_turf.y == max_y)
 			current_turf.empty(FALSE, flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
-			var/turf/wall = current_turf.PlaceOnTop(border, flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
+			var/turf/wall = current_turf.place_on_top(border, flags = CHANGETURF_DEFER_CHANGE | CHANGETURF_IGNORE_AIR)
 			wall.resistance_flags |= INDESTRUCTIBLE //make the wall indestructible
 
 /// Scatters golden versions of some items around the backrooms that cargo can sell for a lot

@@ -26,6 +26,17 @@
 	},
 /turf/open/floor/wood,
 /area/template_noop)
+"fG" = (
+/obj/item/fish/goldfish,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
 "kF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line,
@@ -129,21 +140,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/template_noop)
-"xi" = (
-/obj/item/fish/goldfish{
-	bitecount = 0;
-	length = 1;
-	weight = 2
-	},
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/wood,
 /area/template_noop)
 "xG" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -471,7 +467,7 @@ ED
 yw
 Xp
 ZB
-xi
+fG
 Mq
 AR
 zC

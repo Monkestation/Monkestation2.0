@@ -248,24 +248,6 @@
 /obj/item/stack/medical/ointment,
 /turf/open/floor/iron,
 /area/template_noop)
-"vw" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/north,
-/obj/structure/table,
-/obj/item/food/sandwich/notasandwich{
-	bitecount = 1
-	},
-/turf/open/floor/iron,
-/area/template_noop)
 "xh" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -299,6 +281,22 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"zy" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/north,
+/obj/structure/table,
+/obj/item/food/sandwich/notasandwich,
 /turf/open/floor/iron,
 /area/template_noop)
 "zE" = (
@@ -604,7 +602,7 @@ FX
 Ns
 "}
 (9,1,1) = {"
-vw
+zy
 NL
 zE
 iF

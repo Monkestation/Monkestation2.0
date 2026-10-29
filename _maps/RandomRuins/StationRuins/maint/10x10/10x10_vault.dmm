@@ -38,18 +38,17 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/template_noop)
-"P" = (
-/obj/item/paper/crumpled{
-	info = "Next time don't build your vault next to space, dumbass! Did you forget we don't live in a 2d world? NT's finest my foot! -J";
-	infolang = /datum/language/common
-	},
-/turf/open/floor/mineral/gold{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/template_noop)
 "R" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/template_noop)
+"S" = (
+/obj/item/paper/crumpled{
+	default_raw_text = "Next time don't build your vault next to space, dumbass! Did you forget we don't live in a 2d world? NT's finest my foot! -J"
+	},
+/turf/open/floor/mineral/gold{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/template_noop)
@@ -132,7 +131,7 @@ n
 V
 b
 I
-P
+S
 b
 V
 n

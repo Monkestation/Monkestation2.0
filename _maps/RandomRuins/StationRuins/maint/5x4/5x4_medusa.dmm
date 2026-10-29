@@ -60,16 +60,7 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/template_noop)
-"L" = (
-/obj/structure/mirror{
-	broken = 1;
-	icon_state = "mirror_broke";
-	pixel_y = -32
-	},
-/obj/structure/sink/directional/north,
-/turf/open/floor/plating,
-/area/template_noop)
-"M" = (
+"K" = (
 /obj/structure/statue/petrified{
 	dir = 4
 	},
@@ -78,13 +69,21 @@
 	color = "#808080";
 	desc = "A sword of ancient design. Strangely, the blade is made of stone....";
 	force = 6;
-	materials = list("$metal" = 1);
 	name = "ancient sabre";
 	pixel_x = 8;
 	pixel_y = 4;
 	sharpness = 0;
 	throwforce = 6
 	},
+/turf/open/floor/plating,
+/area/template_noop)
+"L" = (
+/obj/structure/mirror{
+	broken = 1;
+	icon_state = "mirror_broke";
+	pixel_y = -32
+	},
+/obj/structure/sink/directional/north,
 /turf/open/floor/plating,
 /area/template_noop)
 "O" = (
@@ -101,7 +100,7 @@
 /area/template_noop)
 
 (1,1,1) = {"
-M
+K
 B
 B
 a

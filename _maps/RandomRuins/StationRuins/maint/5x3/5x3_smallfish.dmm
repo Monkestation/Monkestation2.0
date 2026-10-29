@@ -20,25 +20,22 @@
 	},
 /turf/open/floor/wood,
 /area/template_noop)
-"J" = (
-/obj/machinery/light/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/wood,
-/area/template_noop)
-"N" = (
+"r" = (
 /obj/structure/chair/stool/bamboo,
 /obj/item/fishing_rod{
 	pixel_x = -6;
 	pixel_y = 7
 	},
 /obj/item/fish/goldfish{
-	bitecount = 0;
-	length = 1;
 	pixel_x = 7;
-	pixel_y = 9;
-	weight = 2
+	pixel_y = 9
 	},
+/turf/open/floor/wood,
+/area/template_noop)
+"J" = (
+/obj/machinery/light/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/wood,
 /area/template_noop)
 "R" = (
@@ -63,7 +60,7 @@ R
 "}
 (4,1,1) = {"
 b
-N
+r
 b
 "}
 (5,1,1) = {"
