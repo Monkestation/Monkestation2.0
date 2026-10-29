@@ -212,7 +212,7 @@
 /mob/living/basic/mouse/mob_pickup(mob/living/user)
 	var/obj/item/clothing/head/mob_holder/mouse/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	if(tame)
-		holder.toolspeed += 0.3
+		holder.toolspeed -= 0.3
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
 	SEND_SIGNAL(src, COMSIG_MOB_PICKED_UP, user, holder)
@@ -433,11 +433,11 @@
 
 /obj/item/clothing/head/mob_holder/mouse
 	tool_behaviour = TOOL_WIRECUTTER
-	toolspeed = 0.6
+	toolspeed = 1.4
 
 /obj/item/clothing/head/mob_holder/mouse/examine(mob/user)
 	. = ..()
-	if(toolspeed <= initial(toolspeed))
+	if(toolspeed >= initial(toolspeed))
 		. += span_notice("You could probably use them to cut wires, though not very efficiently.")
 	else
 		. += span_notice("Their jaws look ready to cut wires.")
