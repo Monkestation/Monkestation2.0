@@ -197,8 +197,8 @@
 
 /mob/living/basic/bloodling/proper/proc/evolution_mind_change(mob/living/basic/bloodling/proper/new_bloodling)
 	new_bloodling.setDir(dir)
-	if(numba)
-		new_bloodling.numba = numba
+	if(identifier)
+		new_bloodling.identifier = identifier
 		new_bloodling.set_name()
 	new_bloodling.name = name
 	new_bloodling.real_name = real_name
