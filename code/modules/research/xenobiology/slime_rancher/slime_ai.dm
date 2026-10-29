@@ -98,7 +98,7 @@
 	if(is_latched() || !length(wanted_types))
 		return FALSE
 	for(var/mob/living/neighbor in oview(1, src))
-		for(var/obj/item/held in neighbor.held_items)
+		for(var/obj/item/held as anything in neighbor.get_held_items())
 			if(!wanted_types[held.type])
 				continue
 			var/held_name = "\the [held]" // get this bc eating it might delete the item
