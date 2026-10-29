@@ -203,8 +203,12 @@
 /datum/bodypart_overlay/mutant/horns
 	layers = EXTERNAL_ADJACENT
 	feature_key = "horns"
+	offset_location = UPPER_BODY
 
-/datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return !(human.obscured_slots & HIDEHAIR)
 
 /datum/bodypart_overlay/mutant/horns/get_global_feature_list()
@@ -228,8 +232,12 @@
 /datum/bodypart_overlay/mutant/frills
 	layers = EXTERNAL_ADJACENT
 	feature_key = "frills"
+	offset_location = UPPER_BODY
 
-/datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return !(human.obscured_slots & HIDEEARS)
 
 /datum/bodypart_overlay/mutant/frills/get_global_feature_list()
@@ -274,8 +282,12 @@
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
 	feature_key = "snout"
+	offset_location = UPPER_BODY
 
-/datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return !(human.obscured_slots & HIDESNOUT)
 
 /datum/bodypart_overlay/mutant/snout/get_global_feature_list()
@@ -344,6 +356,7 @@
 /datum/bodypart_overlay/mutant/antennae
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "moth_antennae"
+	offset_location = UPPER_BODY
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
 	///Are we burned? If so we draw differently
@@ -360,7 +373,10 @@
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return !(human.obscured_slots & HIDEANTENNAE)
 
 ///The leafy hair of a podperson
@@ -407,5 +423,8 @@
 	else
 		overlay.color = null
 
-/datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return !(human.obscured_slots & HIDEHAIR)

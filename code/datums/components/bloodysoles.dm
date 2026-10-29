@@ -317,6 +317,7 @@
 		return
 
 	bloody_feet.color = wielder.get_blood_dna_color()
+	wielder.apply_height(bloody_feet, ENTIRE_BODY)
 	wielder.overlays_standing[SHOES_LAYER] = bloody_feet
 	wielder.apply_overlay(SHOES_LAYER)
 

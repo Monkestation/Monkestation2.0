@@ -86,7 +86,10 @@
 /datum/bodypart_overlay/mutant/tail/get_global_feature_list()
 	return GLOB.tails_list_human
 
-/datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return !(human.obscured_slots & (HIDEJUMPSUIT|HIDETAIL))
 
 /obj/item/organ/external/tail/cat
