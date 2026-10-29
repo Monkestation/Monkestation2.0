@@ -52,6 +52,7 @@
 		subsystem = locate(life_subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
 	GLOB.infected_contact_mobs -= src
+	clear_pathogen_image()
 	if(imaginary_group)
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
@@ -1782,7 +1783,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	//No one is left after we're gone, shut off inactive ones
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
-			controller.set_ai_status(AI_STATUS_OFF)
+			controller.set_ai_status(controller.get_expected_ai_status())
 
 	if(new_z)
 		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.

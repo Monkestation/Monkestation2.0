@@ -97,9 +97,6 @@
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
 		return
 
-	if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
-		sound_to_use.volume *= 0.2
-
 	if(vary)
 		if(frequency)
 			sound_to_use.frequency = frequency
@@ -159,6 +156,10 @@
 			sound_to_use.echo[3] = -10000
 			sound_to_use.echo[4] = -10000
 
+	// after the falloff, otherwise it eats the whole volume one tile away
+	if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		sound_to_use.volume *= 0.2
+
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
@@ -211,7 +212,7 @@
 	to_chat(src, span_notice("Lobby music: <b>[track.title]</b> by <b>[track.artist]</b>."))
 
 /proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
+	return rand(73, 125) / 100 // multiplier, so it works with any sample rate
 
 /proc/get_sfx(soundin)
 	if(!istext(soundin))

@@ -26,7 +26,7 @@
 	src.falloff_exponent = falloff_exponent
 	src.tracker = new(max_distance, max_distance, 1)
 	src.falloff_distance = min(falloff_distance, max_distance - 1)
-	update_cells(init = TRUE)
+	update_cells()
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_source_qdeleting))
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_source_moved))
 
@@ -104,7 +104,7 @@
 		update_cells()
 		update_for_all_listeners()
 
-/datum/media_source/object/proc/update_cells(init = FALSE)
+/datum/media_source/object/proc/update_cells()
 	if(QDELETED(src) || QDELETED(source) || QDELETED(tracker))
 		return
 	var/turf/our_turf = get_turf(source)
@@ -124,9 +124,9 @@
 			continue
 		RegisterSignal(new_grid, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
 		RegisterSignal(new_grid, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
-		if(init)
-			for(var/mob/listener in new_grid.client_contents)
-				add_listener(listener)
+		// Shuttles can move people into these cells before us, and they won't enter them again, so pick them up here.
+		for(var/mob/listener in new_grid.client_contents)
+			add_listener(listener)
 
 /datum/media_source/object/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER

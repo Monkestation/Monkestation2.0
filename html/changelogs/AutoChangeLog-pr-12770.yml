@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Medical stacks (sutures, meshes, ointment...) now have two modes. Left click heals in auto mode, which switches between damaged bodyparts by itself, prioritizing your targeted limb. Right click heals in manual mode, which works like before and is 10% faster."
-  - qol: "Suturing cuts and meshing burns is now part of the normal heal, no more separate interaction for the wound."
-  - qol: "Bleeding wounds go away the moment they're fully healed."
-  - bugfix: "Fixed a runtime when cauterizing a cut with a laser gun closed it."

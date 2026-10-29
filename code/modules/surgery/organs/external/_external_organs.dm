@@ -201,6 +201,7 @@
 /datum/bodypart_overlay/mutant/horns
 	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = "horns"
+	offset_location = UPPER_BODY
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
@@ -230,6 +231,7 @@
 	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = "frills"
 	color_source = ORGAN_COLOR_OVERRIDE
+	offset_location = UPPER_BODY
 
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
@@ -284,6 +286,7 @@
 /datum/bodypart_overlay/mutant/snout
 	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = "snout"
+	offset_location = UPPER_BODY
 
 /datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
@@ -360,6 +363,7 @@
 		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
 	)
 	feature_key = "moth_antennae"
+	offset_location = UPPER_BODY
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
 	///Are we burned? If so we draw differently
