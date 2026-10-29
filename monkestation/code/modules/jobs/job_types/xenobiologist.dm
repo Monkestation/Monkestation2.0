@@ -38,6 +38,10 @@
 	job_flags = STATION_JOB_FLAGS
 
 
+/datum/job/xenobiologist/get_spawn_message_information(chosen_title)
+	. = ..()
+	. += span_slightly_larger(span_boldnotice("You can use the 'Slimepedia' app on your PDA, or on a slime scanner, to learn about the various slime types, mutations, and extract effects!"))
+
 /datum/outfit/job/xenobiologist
 	name = "Xenobiologist"
 	jobtype = /datum/job/xenobiologist

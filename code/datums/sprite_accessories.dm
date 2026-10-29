@@ -148,17 +148,29 @@
 	name = "Bedhead 4x"
 	icon_state = "hair_bedheadv4"
 
-/datum/sprite_accessory/hair/bedheadlong
+/datum/sprite_accessory/hair/bedhead_long
 	name = "Long Bedhead"
 	icon_state = "hair_long_bedhead"
 
-/datum/sprite_accessory/hair/bedheadfloorlength
+/datum/sprite_accessory/hair/monke/bedhead_longer
+	name = "Longer Bedhead"
+	icon_state = "hair_longer_bedhead"
+
+/datum/sprite_accessory/hair/bedhead_floorlength
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
 
-/datum/sprite_accessory/hair/badlycut
+/datum/sprite_accessory/hair/monke/bedhead_glorppy
+	name = "Bedhead (Glorppy ver.)"
+	icon_state = "hair_bedhead_glorppy"
+
+/datum/sprite_accessory/hair/monke/bedhead_nestia
+	name = "Bedhead (Nestia ver.)"
+	icon_state = "hair_bedhead_nestia"
+
+/datum/sprite_accessory/hair/shorter_long_bedhead
 	name = "Shorter Long Bedhead"
-	icon_state = "hair_verybadlycut"
+	icon_state = "hair_shorter_long_bedhead"
 
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
@@ -993,10 +1005,6 @@
 /datum/sprite_accessory/hair/monke/pigtails4
 	name = "Pigtails 4"
 	icon_state = "hair_pigtailss"
-
-/datum/sprite_accessory/hair/monke/bedhead_long
-	name = "Longer Bedhead"
-	icon_state = "hair_longer_bedhead"
 
 /datum/sprite_accessory/hair/monke/dave
 	name = "Dave"
