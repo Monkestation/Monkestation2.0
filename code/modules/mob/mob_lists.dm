@@ -53,6 +53,7 @@
 		GLOB.keyloop_list |= src
 	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
 		GLOB.keyloop_list |= src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAYER_LOGIN, src)
 	if(!SSticker?.mode)
 		return
 	if(stat == DEAD)
@@ -65,6 +66,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	GLOB.player_list -= src
 	GLOB.keyloop_list -= src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAYER_LOGOUT, src)
 	if(!SSticker?.mode)
 		return
 	if(stat == DEAD)
