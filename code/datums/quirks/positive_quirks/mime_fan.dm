@@ -4,6 +4,7 @@
 	icon = FA_ICON_THUMBTACK
 	value = 2
 	mob_trait = TRAIT_MIME_FAN
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
 	gain_text = span_notice("You are a big fan of the Mime.")
 	lose_text = span_danger("The mime doesn't seem so great.")
 	medical_record_text = "Patient reports being a big fan of mimes."

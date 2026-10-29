@@ -1,6 +1,5 @@
 #define DAMAGE_WATER_STACKS 5
 #define REGEN_WATER_STACKS 1
-#define HEALTH_HEALED 2.5
 
 /datum/species/oozeling
 	name = "\improper Oozeling"
@@ -48,7 +47,6 @@
 	/// Typepaths of the default oozeling actions to give.
 	var/static/list/default_actions = list(
 		/datum/action/cooldown/slime_washing,
-		/datum/action/innate/core_signal,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
 	var/list/extra_actions = list()
@@ -99,10 +97,6 @@
 		if(findname(.))
 			. = .(gender, TRUE, lastname, ++attempts)
 
-//////
-/// HEALING SECTION
-/// Handles passive healing and water damage.
-
 /datum/species/oozeling/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	. = ..()
 	if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
@@ -113,18 +107,8 @@
 
 /// Checks if the oozeling is hydrophobic due to having 10 oozeling wet stacks.
 /datum/species/oozeling/proc/is_slime_hydrophobic(mob/living/carbon/human/slime)
-	if(!slime)
-		return FALSE
-
 	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
-
-	if(!slime_wetness)
-		return FALSE
-
-	if(slime_wetness.stacks >= HYDROPHOBIA_WETNESS_STACKS)
-		return TRUE
-
-	return FALSE
+	return slime_wetness?.stacks >= HYDROPHOBIA_WETNESS_STACKS
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
@@ -138,11 +122,12 @@
 
 	if(wetness.stacks >= DAMAGE_WATER_STACKS)
 		remove_blood_volume(slime, 10 * seconds_per_tick)
-		slime.balloon_alert(slime, "too wet, dry off!")
-		if(SPT_PROB(25, seconds_per_tick))
+		if(COOLDOWN_FINISHED(src, wet_alert_cooldown))
+			slime.balloon_alert(slime, "too wet, dry off!")
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
+			COOLDOWN_START(src, wet_alert_cooldown, 2 SECONDS)
 
-	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
+	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick))
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
 		remove_blood_volume(slime, seconds_per_tick)
 		slime.balloon_alert(slime, "you're dripping wet!")
@@ -181,10 +166,6 @@
 		slimesucker.AddBloodVolume(-amount)
 	else
 		slime.blood_volume = max(slime.blood_volume - amount, 0)
-
-///////
-/// CHEMICAL HANDLING
-/// Here's where slimes heal off plasma and where they hate drinking water.
 
 // values shamelessly stolen from `get_insulation()`
 #define WATER_PROTECTION_HEAD 0.3
@@ -330,3 +311,6 @@
 	)
 
 	return to_add
+
+#undef REGEN_WATER_STACKS
+#undef DAMAGE_WATER_STACKS

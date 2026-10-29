@@ -4,6 +4,7 @@
 	icon = FA_ICON_TAPE
 	value = 4
 	mob_trait = TRAIT_POSTERBOY
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
 	medical_record_text = "Patient reports a desire to cover walls with homemade objects."
 	mail_goodies = list(/obj/item/poster/random_official)
 

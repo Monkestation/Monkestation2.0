@@ -4,6 +4,7 @@
 	icon = FA_ICON_GUITAR
 	value = 2
 	mob_trait = TRAIT_MUSICIAN
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
 	gain_text = span_notice("You know everything about musical instruments.")
 	lose_text = span_danger("You forget how musical instruments work.")
 	medical_record_text = "Patient brain scans show a highly-developed auditory pathway."
