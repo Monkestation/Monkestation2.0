@@ -18,7 +18,7 @@
 	if(!.)
 		return FALSE
 	var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
-	if(board?.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
+	if(board?.challenge && STATION_TIME_PASSED() < SYNDICATE_CHALLENGE_TIMER)
 		to_chat(user, span_warning("You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare."))
 		return FALSE
 	board.moved = TRUE
