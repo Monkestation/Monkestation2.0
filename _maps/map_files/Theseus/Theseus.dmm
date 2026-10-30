@@ -31684,7 +31684,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "jqf" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
@@ -32986,7 +32986,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "jHE" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -81280,7 +81280,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "xyL" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

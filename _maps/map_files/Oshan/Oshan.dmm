@@ -76804,7 +76804,7 @@
 "xta" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/bot,
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "xtj" = (

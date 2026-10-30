@@ -900,12 +900,27 @@
 		return
 
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
-	var/skills_space = "" //cobby told me to do this
+	var/skills_space
+	var/fitness_level = mind?.get_skill_level(/datum/skill/athletics) - 1
+	var/experience_reward = ATHLETICS_SKILL_MISC_EXP
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
-		carrydelay = 3 SECONDS
-		skills_space = " very quickly"
+		carrydelay -= 2 SECONDS
+		experience_reward *= 3
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
-		carrydelay = 4 SECONDS
+		carrydelay -= 1 SECONDS
+		experience_reward *= 2
+
+	// can remove up to 2 seconds at legendary
+	carrydelay -= fitness_level * (1/3) SECONDS
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		carrydelay *= potential_spine.athletics_boost_multiplier
+		experience_reward += experience_reward * potential_spine.athletics_boost_multiplier
+
+	if(carrydelay <= 3 SECONDS)
+		skills_space = " very quickly"
+	else if(carrydelay <= 4 SECONDS)
 		skills_space = " quickly"
 
 	visible_message(span_notice("[src] starts[skills_space] lifting [target] onto [p_their()] back..."),
@@ -918,6 +933,8 @@
 	if(!can_be_firemanned(target) || incapacitated(IGNORE_GRAB) || target.buckled)
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
+
+	mind?.adjust_experience(/datum/skill/athletics, round(experience_reward/(fitness_level || 1), 1)) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
 
 	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 

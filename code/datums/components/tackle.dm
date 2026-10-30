@@ -96,7 +96,7 @@
 		to_chat(user, span_warning("You're not ready to tackle!"))
 		return
 
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved or tackled recently
+	if(user.get_timed_status_effect_duration(/datum/status_effect/staggered)) // can't tackle if you just got shoved or tackled recently
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
 
@@ -124,9 +124,7 @@
 	user.stamina.adjust(-stamina_cost)
 
 	if(ishuman(user))
-		if (!user.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-			user.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+		user.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
 
 	user.throw_at(clicked_atom, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
@@ -181,9 +179,7 @@
 		user.get_up(TRUE)
 
 		if (ishuman(target))
-			if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+			target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
 		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 	switch(roll)
@@ -203,9 +199,7 @@
 
 			user.Knockdown(30)
 			if(ishuman(target))
-				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					target.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
-				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2, TIMER_UNIQUE | TIMER_OVERRIDE)
+				target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH * 2)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message(span_warning("[user] lands a passable [tackle_word] on [target], sending them both tumbling!"), span_userdanger("You land a passable [tackle_word] on [target], sending you both tumbling!"), ignored_mobs = target)
@@ -335,6 +329,10 @@
 			if(rust_robes.rusted)
 				defense_mod += 10
 
+		var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = tackle_target.get_organ_slot(ORGAN_SLOT_SPINAL)
+		if(istype(potential_spine))
+			defense_mod += potential_spine.strength_bonus
+
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
 	var/sacker_drunkenness = sacker.get_drunk_amount()
@@ -358,6 +356,10 @@
 //	if(sacker_wing) // MONKESTATION EDIT OLD -- Arachnids use the external wing slot aswell, so we have to check for actual wings
 	if(sacker_wing && istype(sacker_wing)) // MONKESTATION EDIT NEW
 		attack_mod += 2
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = sacker.get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		attack_mod += potential_spine.strength_bonus
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker
@@ -406,6 +408,10 @@
 
 	oopsie_mod -= floor(user.getarmor(BODY_ZONE_HEAD, MELEE) * 0.18)
 	oopsie_mod -= floor(user.getarmor(BODY_ZONE_CHEST, MELEE) * 0.12)
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINAL) // Can't snap that spine if it's made of metal.
+	if(istype(potential_spine))
+		oopsie_mod -= potential_spine.strength_bonus
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!

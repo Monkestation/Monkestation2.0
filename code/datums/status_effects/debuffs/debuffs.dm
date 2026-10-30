@@ -209,8 +209,10 @@
 	tick_interval = initial(tick_interval)
 
 #define HEALING_SLEEP_DEFAULT 0.2
+/// The sleep multipler for fitness xp conversion
+#define SLEEP_QUALITY_WORKOUT_MULTIPLER 10
 
-/datum/status_effect/incapacitating/sleeping/tick()
+/datum/status_effect/incapacitating/sleeping/tick(seconds_between_ticks)
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = HEALING_SLEEP_DEFAULT
@@ -256,6 +258,16 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
+		if(healing > 0 && iscarbon(owner))
+			var/mob/living/carbon/carbon_owner = owner
+			var/datum/status_effect/exercised/exercised = carbon_owner.has_status_effect(/datum/status_effect/exercised)
+			if(exercised && carbon_owner.mind)
+				// the better you sleep, the more xp you gain
+				carbon_owner.mind.adjust_experience(/datum/skill/athletics, seconds_between_ticks * healing * SLEEP_QUALITY_WORKOUT_MULTIPLER)
+				carbon_owner.adjust_timed_status_effect(-1 * seconds_between_ticks * healing * SLEEP_QUALITY_WORKOUT_MULTIPLER, /datum/status_effect/exercised)
+				if(prob(2))
+					to_chat(carbon_owner, span_notice("You feel your fitness improving!"))
+
 		if(healing > 0 && health_ratio > 0.8)
 			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
 			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
@@ -272,6 +284,7 @@
 		owner.emote("snore")
 
 #undef HEALING_SLEEP_DEFAULT
+#undef SLEEP_QUALITY_WORKOUT_MULTIPLER
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"

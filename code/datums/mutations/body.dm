@@ -350,6 +350,7 @@
 		return
 
 	ADD_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
 	RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
 	RegisterSignal(owner, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
 	for(var/body_part in affected_limbs)
@@ -365,6 +366,7 @@
 		return
 
 	REMOVE_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
 	UnregisterSignal(owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
 	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = owner.get_bodypart(check_zone(body_part))
@@ -422,6 +424,18 @@
 	difficulty = 16
 	instability = 20
 	power_coeff = 1
+
+/datum/mutation/stimmed/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
+
+/datum/mutation/stimmed/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	REMOVE_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
 
 /datum/mutation/stimmed/on_life(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
