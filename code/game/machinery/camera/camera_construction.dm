@@ -224,7 +224,7 @@
 				potential_viewer << browse("<HTML><HEAD><TITLE>[title]</TITLE></HEAD><BODY><TT>[text]</TT></BODY></HTML>", "window=[title]")
 
 /obj/machinery/camera/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	if(istype(tool, /obj/item/stack/sheet/mineral/plasma))
 		return plasma_act(user, tool)
