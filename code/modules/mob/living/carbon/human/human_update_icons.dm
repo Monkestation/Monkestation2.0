@@ -1125,6 +1125,8 @@ generate/load female uniform sprites matching all previously decided variables
 			mask_icon = 'icons/effects/cut_96x48.dmi'
 		else if(icon_height == 64 && icon_width <= 64)
 			mask_icon = 'icons/effects/cut_64x64.dmi'
+		else if(icon_height == 32 && icon_width > 32 && icon_width <= 64) // like the 38 wide fish tail
+			mask_icon = 'icons/effects/cut_64x32.dmi'
 		else if(icon_height != 32 || icon_width > 32)
 			stack_trace("Bad dimensions (w[icon_width],h[icon_height]) for icon '[appearance.icon]'")
 
