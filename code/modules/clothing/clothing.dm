@@ -306,7 +306,7 @@
 	if(!istype(wearer))
 		return
 
-	wearer.update_clothing(slot_flags)
+	wearer.update_clothing(slot_flags | wearer.get_slot_by_item(src))
 
 
 /**
@@ -597,7 +597,8 @@ BLIND     // can't see anything
 	if(user.is_holding(src))
 		user.update_held_items()
 		return TRUE
-	user.update_clothing(slot_flags)
+	// masks pushed up into hats change their slot_flags, so also redraw the slot we're actually worn in
+	user.update_clothing(slot_flags | user.get_slot_by_item(src))
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
