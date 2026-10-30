@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(pollution)
 	/// Currently processed batch of pollutants
 	var/list/current_run = list()
 	/// Already processed pollutants in cell process
-	var/alist/processed_this_run = alist()
+	var/list/processed_this_run = list()
 	/// Ticker for dissipation task
 	var/dissapation_ticker = 0
 	/// What's the current task we're doing
@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(pollution)
 	if(pollution_task == POLLUTION_TASK_PROCESS)
 		if(!resumed)
 			current_run = active_pollution.Copy()
-			processed_this_run = alist()
+			processed_this_run = list()
 		current_run_cache = current_run
 		while(length(current_run_cache))
 			var/datum/pollution/pollution = current_run_cache[length(current_run_cache)]

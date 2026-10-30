@@ -144,7 +144,7 @@
 		SET_UNACTIVE_POLLUTION(src)
 		return
 	var/list/sharing_turfs
-	var/alist/already_processed_cache = SSpollution.processed_this_run
+	var/list/already_processed_cache = SSpollution.processed_this_run
 	var/list/potential_activers
 	for(var/turf/open/open_turf in my_turf.atmos_adjacent_turfs)
 		if(!already_processed_cache[open_turf.pollution])
