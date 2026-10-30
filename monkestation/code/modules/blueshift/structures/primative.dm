@@ -750,7 +750,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	)
 
 // This is so the linen reskin shows properly in the suit storage.
-/obj/item/storage/bag/plants/build_worn_icon(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, mutant_styles)
+/obj/item/storage/bag/plants/build_worn_icon(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, mutant_styles, bodyshape)
 	if(default_layer == SUIT_STORE_LAYER && current_skin == RESKIN_LINEN)
 		override_file = 'monkestation/code/modules/blueshift/icons/plant_bag_worn_mirror.dmi'
 

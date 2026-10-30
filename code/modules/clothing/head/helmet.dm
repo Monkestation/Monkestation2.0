@@ -187,6 +187,9 @@
 		flags_cover |= HEADCOVERSEYES
 		flags_inv |= HIDEEYES
 		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.refresh_obscured()
 	user.update_worn_glasses()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
@@ -215,7 +218,7 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
@@ -265,6 +268,9 @@
 		flags_cover |= (HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
 		flags_inv |= (HIDEEARS|HIDEHAIR)
 		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.refresh_obscured()
 	user.update_worn_glasses()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
