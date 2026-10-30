@@ -88,7 +88,7 @@
 	name = "Scroll of the Awakened Dragon"
 	desc = "A scroll penned by the infamous Awakened Dragon, penned with the blood of their \
 			disciples, it appears to have clues towards true enlightenment in the path of the Sleeping Carp. \
-			The Dragon only shares its secrets when there are enough worthy rivals aboard."
+			The Dragon will only part with it when there are enough worthy rivals aboard."
 	cost = 25
 	surplus = 5 // Rare but not impossible.
 	item = /obj/item/book/granter/martial/carp/true
@@ -100,7 +100,7 @@
 
 /datum/uplink_item/melees/martialarts/advanced/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	if(length(GLOB.alive_player_list) < minimum_alive_players)
-		to_chat(user, span_warning("The honor of the Awakened Dragon forbids it from fighting so few rivals. Its scroll refuses to answer your call."))
+		to_chat(user, span_warning("The honor of the Awakened Dragon forbids it from fighting so few rivals. The scroll can't be bought yet."))
 		return FALSE
 	return ..()
 
