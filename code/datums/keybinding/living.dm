@@ -198,7 +198,7 @@
 	SEND_SIGNAL(user.mob, COMSIG_KB_LIVING_PIXEL_TILT_UP)
 
 /datum/keybinding/living/interaction_toggle_wield
-	hotkey_keys = list("ShiftX")
+	hotkey_keys = list("Unbound")
 	name = "keybinding_living_toggle_wield"
 	full_name = "Wield"
 	description = "Wield an object in two hands, such as a gun."
