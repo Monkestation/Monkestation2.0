@@ -13,10 +13,10 @@
 /datum/keybinding/living/rest
 	goon_keys = list("=")
 
-/datum/keybinding/mob/swap_hands
+/datum/keybinding/dextrous/swap_hands/row
 	goon_keys = list("E")
 
-/datum/keybinding/mob/activate_inhand
+/datum/keybinding/dextrous/activate_inhand
 	goon_keys = list("C")
 
 /datum/keybinding/living/interaction_toggle_wield
