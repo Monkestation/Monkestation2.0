@@ -1,7 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - qol: "Added multiple new keybinds for hand control"
-  - qol: "Hand-related keybinds were moved to DEXTROUS category"
-  - bugfix: "Cycling hands would get stuck on offhand items instead of skipping over them"
-  - bugfix: "Tentacle's aggro grab had weird behaviour that made it ignore a lot of systems"
