@@ -70,3 +70,5 @@
 #define ALERT_BITRUNNER_GLITCH "bitrunning_glitch"
 
 #define ALERT_BRAINWASHED "brainwashed"
+
+#define ALERT_SILICON_RECORDING "silicon_recording"

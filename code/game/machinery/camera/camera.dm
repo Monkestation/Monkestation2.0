@@ -87,7 +87,7 @@
 	var/alarm_on = FALSE
 	///How many times this camera has been EMP'ed consecutively, will reset back to 0 when fixed.
 	var/emped
-	///Boolean on whether the AI can even turn on this camera's light- borg caneras dont have one, for example.
+	///Boolean on whether the AI can even turn on this camera's light- borg cameras dont have one, for example.
 	var/internal_light = TRUE
 	///Number of AIs watching this camera with lights on, used for icons.
 	var/in_use_lights = 0
@@ -538,3 +538,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 #undef XRAY_POWER_MOD
 #undef MOTION_POWER_MOD
 #undef EMP_POWER_MOD
+
+///Called when the camera starts being watched on a camera console.
+/obj/machinery/camera/proc/on_start_watching()
+	return
+
+///Called when the camera stops being watched on a camera console.
+/obj/machinery/camera/proc/on_stop_watching()
+	return
