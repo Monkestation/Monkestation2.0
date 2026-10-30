@@ -40,6 +40,7 @@ type UplinkItem = {
   restricted_roles: string;
   restricted_species: string;
   progression_minimum: number;
+  population_minimum: number;
   cost_override_string: string;
   lock_other_purchases: BooleanLike;
   lock_secondary_objectives: BooleanLike;
@@ -49,6 +50,7 @@ type UplinkItem = {
 type UplinkData = {
   telecrystals: number;
   progression_points: number;
+  joined_population?: number;
   lockable: BooleanLike;
   current_expected_progression: number;
   progression_scaling_deviance: number;
@@ -185,6 +187,7 @@ export class Uplink extends Component<any, UplinkState> {
     const {
       telecrystals,
       progression_points,
+      joined_population,
       primary_objectives,
       can_renegotiate,
       active_objectives,
@@ -219,6 +222,8 @@ export class Uplink extends Component<any, UplinkState> {
     }
     for (let i = 0; i < itemsToAdd.length; i++) {
       const item = itemsToAdd[i];
+      const hasEnoughPop =
+        !joined_population || joined_population >= item.population_minimum;
 
       let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
@@ -271,8 +276,14 @@ export class Uplink extends Component<any, UplinkState> {
             )}
           </Box>
         ),
+        population_tooltip:
+          'This item is not cleared for operations performed against stations crewed by fewer than ' +
+          item.population_minimum +
+          ' people.',
+        insufficient_population: !hasEnoughPop,
         disabled:
           !canBuy ||
+          !hasEnoughPop ||
           (item.lock_other_purchases && purchased_items > 0) ||
           locked,
         is_locked: locked,
