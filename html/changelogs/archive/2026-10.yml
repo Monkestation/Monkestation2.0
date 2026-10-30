@@ -555,6 +555,18 @@
       mid-room.
   - bugfix: Flying blood drops carry diseases to their splatter.
   - bugfix: Items and blood drops flung in zero gravity stop instead of drifting forever.
+  AitorLogedo:
+  - bugfix: Pushing up a kitsune mask or bandana while wearing it updates your sprite
+      again.
+  - bugfix: Alt-clicking the kitsune mask puts it above your hair like using it in
+      hand does.
+  - bugfix: Recoloring, washing or spraypainting a pushed up mask you're wearing updates
+      your sprite.
+  AitorLogedo, Jacquerel:
+  - balance: The Scroll of the Awakened Dragon can only be bought when there are at
+      least 30 living players.
+  - qol: Uplink items that need more crew show up locked with how many people they
+      need.
   Fikou, Melbert, SmArtKar:
   - refactor: Visors, masks and helmets all toggle the same way now, report anything
       that doesn't change sprite or hide things right when you push it up or down
@@ -582,8 +594,17 @@
   - sound: Fish flopping sounds when fish people crawl.
   - code_imp: Reagents have a purge multiplier for how fast other reagents flush them
       out.
+  LettuceGuardian:
+  - rscadd: Autopsy scanners spawn inside surgery bags.
+  - rscadd: Deforest satchel can store ambubags.
   SirNightKnight:
   - balance: chamaeleon gas masks are pepperproof.
+  SmArtKar:
+  - bugfix: Fixed explorer masks going invisible when you put on a goliath hood
+  - qol: 'Improved the strip menu: items you can see but can''t reach show up semi
+      transparent instead of hidden, and icons are no longer blurry'
+  - rscadd: Fish infusion now gives you scales, and tail color if you get enough fish
+      organs
   notghosti:
   - balance: War op declaration is swapped from world time to station time.
   tontyGH:
