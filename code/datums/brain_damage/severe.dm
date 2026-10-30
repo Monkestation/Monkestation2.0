@@ -489,7 +489,7 @@
 	if(!COOLDOWN_FINISHED(src, steal_cd))
 		return
 
-	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
+	if(!owner.has_active_hand() || !length(owner.get_empty_held_indexes()))
 		return
 
 	if(prob(pickpocket_chance_percent))
