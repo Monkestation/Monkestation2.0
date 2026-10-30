@@ -599,6 +599,12 @@
   - rscadd: Deforest satchel can store ambubags.
   SirNightKnight:
   - balance: chamaeleon gas masks are pepperproof.
+  SmArtKar:
+  - bugfix: Fixed explorer masks going invisible when you put on a goliath hood
+  - qol: 'Improved the strip menu: items you can see but can''t reach show up semi
+      transparent instead of hidden, and icons are no longer blurry'
+  - rscadd: Fish infusion now gives you scales, and tail color if you get enough fish
+      organs
   notghosti:
   - balance: War op declaration is swapped from world time to station time.
   tontyGH:

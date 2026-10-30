@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed explorer masks going invisible when you put on a goliath hood"
-  - qol: "Improved the strip menu: items you can see but can't reach show up semi transparent instead of hidden, and icons are no longer blurry"
