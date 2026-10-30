@@ -37,7 +37,7 @@
 	var/turf/our_turf = get_turf(src)
 
 	if(our_turf)
-		our_turf.opacity = FALSE
+		our_turf.set_opacity(FALSE)
 
 	// Ideally this'd be part of the SM component, but the SM itself snowflakes bullets (emitters are bullets).
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(eat_bullets))
