@@ -115,6 +115,7 @@
 	to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
 	return ITEM_INTERACT_SUCCESS
 
+/// Adds the X-ray upgrade by putting an analyzer in the open camera
 /obj/machinery/camera/proc/gas_analyzer_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
 		return NONE
@@ -128,6 +129,7 @@
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 
+/// Adds the EMP proofing upgrade by using a sheet of plasma on the open camera
 /obj/machinery/camera/proc/plasma_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
 		return NONE
@@ -140,6 +142,7 @@
 	to_chat(user, span_notice("You attach [tool] into [src]'s inner circuits."))
 	return ITEM_INTERACT_SUCCESS
 
+/// Adds the motion sensor upgrade by putting a proximity sensor in the open camera
 /obj/machinery/camera/proc/prox_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
 		return NONE
@@ -153,6 +156,7 @@
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 
+/// Wires up a welded camera assembly with two lengths of cable
 /obj/machinery/camera/proc/cable_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state != CAMERA_STATE_WELDED)
 		return NONE
@@ -163,6 +167,7 @@
 	camera_construction_state = CAMERA_STATE_WIRED
 	return ITEM_INTERACT_SUCCESS
 
+/// Shows the note of a modular computer's notepad to whoever is watching the camera
 /obj/machinery/camera/proc/computer_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state != CAMERA_STATE_FINISHED)
 		return NONE
@@ -177,6 +182,7 @@
 	display_note(user, note_name, note_text, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
+/// Shows a copy of a paper to whoever is watching the camera
 /obj/machinery/camera/proc/paper_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state != CAMERA_STATE_FINISHED)
 		return NONE
@@ -187,6 +193,7 @@
 	display_note(user, note_name, null, FALSE)
 	return ITEM_INTERACT_SUCCESS
 
+/// Sends a held up note or paper to every AI and console user watching through this camera
 /obj/machinery/camera/proc/display_note(mob/living/user, title, text, is_computer)
 	to_chat(user, span_notice("You hold up \the [title] up to the camera..."))
 	user.log_talk(title, LOG_GAME, "Pressed to camera", TRUE)

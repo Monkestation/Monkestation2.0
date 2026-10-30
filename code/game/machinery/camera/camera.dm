@@ -523,6 +523,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 	return TRUE
 
+/// Sets how much power the camera uses based on its upgrades, nothing if it can't be used
 /obj/machinery/camera/proc/calculate_active_power()
 	if(!can_use())
 		active_power_usage = 0
