@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(init_profiler)
 
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
-	rustg_file_write(json_encode(current_profile_data), "[GLOB.log_directory]/[INIT_PROFILE_NAME]")
+	rustg_file_write(json_encode(current_profile_data, JSON_PRETTY_PRINT), "[GLOB.log_directory]/[INIT_PROFILE_NAME]")
 	world.Profile(PROFILE_CLEAR) //Now that we're written this data out, dump it. We don't want it getting mixed up with our current round data
 
 #undef INIT_PROFILE_NAME

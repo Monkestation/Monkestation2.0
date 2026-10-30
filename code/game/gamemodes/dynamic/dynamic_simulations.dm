@@ -95,7 +95,7 @@ ADMIN_VERB(run_dynamic_simulations, R_ADMIN, FALSE, "Run Dynamic Simulations", "
 			log_world("[count]/[simulations]")
 
 	message_admins("Writing file...")
-	WRITE_FILE(file("[GLOB.log_directory]/dynamic_simulations.json"), json_encode(outputs))
+	WRITE_FILE(file("[GLOB.log_directory]/dynamic_simulations.json"), json_encode(outputs, JSON_PRETTY_PRINT))
 	message_admins("Writing complete.")
 
 /proc/export_dynamic_json_of(ruleset_list)
