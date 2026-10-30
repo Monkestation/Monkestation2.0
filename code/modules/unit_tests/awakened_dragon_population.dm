@@ -16,14 +16,16 @@
 	handler.telecrystals = 50
 
 	GLOB.alive_player_list = list()
+	TEST_ASSERT(handler.not_enough_population(scroll), "The uplink thinks there's enough living players with none")
 	TEST_ASSERT(!handler.purchase_item(buyer, scroll), "The scroll could be bought with no living players")
 	TEST_ASSERT_EQUAL(handler.telecrystals, 50, "Telecrystals were spent on a purchase that should have failed")
 
 	var/list/enough_players = list()
-	for(var/i in 1 to scroll.minimum_alive_players)
+	for(var/i in 1 to scroll.population_minimum)
 		enough_players += buyer
 	GLOB.alive_player_list = enough_players
-	TEST_ASSERT(handler.purchase_item(buyer, scroll), "The scroll couldn't be bought with [scroll.minimum_alive_players] living players")
+	TEST_ASSERT(!handler.not_enough_population(scroll), "The uplink thinks there aren't enough living players with [scroll.population_minimum]")
+	TEST_ASSERT(handler.purchase_item(buyer, scroll), "The scroll couldn't be bought with [scroll.population_minimum] living players")
 	TEST_ASSERT_EQUAL(handler.telecrystals, 50 - scroll.cost, "Buying the scroll didn't cost the right amount of telecrystals")
 
 	GLOB.alive_player_list = old_alive_players

@@ -95,14 +95,7 @@
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
-	/// How many living players there need to be before this can be bought
-	var/minimum_alive_players = 30
-
-/datum/uplink_item/melees/martialarts/advanced/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
-	if(length(GLOB.alive_player_list) < minimum_alive_players)
-		to_chat(user, span_warning("The honor of the Awakened Dragon forbids it from fighting so few rivals. The scroll can't be bought yet."))
-		return FALSE
-	return ..()
+	population_minimum = 30
 
 /datum/uplink_item/melees/edagger
 	name = "Energy Dagger"
