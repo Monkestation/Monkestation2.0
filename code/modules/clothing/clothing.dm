@@ -599,7 +599,8 @@ BLIND     // can't see anything
 		return TRUE
 	if(up)
 		user.update_obscured_slots(visor_flags_inv)
-	user.update_clothing(slot_flags)
+	// masks pushed up into hats change their slot_flags, so redraw the slot we're actually worn in
+	user.update_clothing(user.get_slot_by_item(src) || slot_flags)
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
