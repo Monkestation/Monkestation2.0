@@ -617,12 +617,8 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	if(isclothing(head))
-		tint += head.tint
-	if(isclothing(wear_mask))
-		tint += wear_mask.tint
-	if(isclothing(glasses))
-		tint += glasses.tint
+	for(var/obj/item/clothing/worn_item in get_equipped_items())
+		tint += worn_item.tint
 
 	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -1187,47 +1183,21 @@
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()
-
 	// Wash equipped stuff that cannot be covered
 	for(var/obj/item/held_thing in held_items)
 		if(held_thing.wash(clean_types))
 			. = TRUE
 
-	if(back?.wash(clean_types))
-		update_worn_back(0)
-		. = TRUE
-
-	if(head?.wash(clean_types))
-		update_worn_head()
-		. = TRUE
-
-	// Check and wash stuff that can be covered
-	var/obscured = check_obscured_slots()
-
-	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
-		update_worn_glasses()
-		. = TRUE
-
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
-		update_worn_mask()
-		. = TRUE
-
-	if(ears && !(obscured & ITEM_SLOT_EARS) && ears.wash(clean_types))
-		update_inv_ears()
-		. = TRUE
-
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK) && wear_neck.wash(clean_types))
-		update_worn_neck()
-		. = TRUE
-
-	if(shoes && !(obscured & ITEM_SLOT_FEET) && shoes.wash(clean_types))
-		update_worn_shoes()
-		. = TRUE
-
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES) && gloves.wash(clean_types))
-		update_worn_gloves()
-		. = TRUE
+	// Check and wash stuff that isn't covered
+	var/covered = check_covered_slots()
+	for(var/obj/item/worn as anything in get_equipped_items())
+		var/slot = get_slot_by_item(worn)
+		// Don't wash glasses if something other than them is covering our eyes
+		if(slot == ITEM_SLOT_EYES && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD))
+			continue
+		if(!(covered & slot))
+			// /obj/item/wash() already updates our clothing slot
+			. ||= worn.wash(clean_types)
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()

@@ -29,3 +29,8 @@
 	texture_icon_state = "carpskin"
 	texture_icon = 'icons/mob/human/textures.dmi'
 	overlay_priority = BODYPART_OVERLAY_CARP_INFUSION
+
+/datum/bodypart_overlay/texture/fishscale
+	texture_icon_state = "fishscale"
+	texture_icon = 'icons/mob/human/textures.dmi'
+	overlay_priority = BODYPART_OVERLAY_FISH_INFUSION
