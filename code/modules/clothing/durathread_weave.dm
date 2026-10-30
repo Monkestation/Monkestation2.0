@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 	if(isstack(interacting_with) || (!isclothing(interacting_with) && interacting_with.atom_storage))
 		return NONE
 	var/obj/item/welder
-	for(var/obj/item/thingy in user.held_items)
+	for(var/obj/item/thingy as anything in user.get_held_items())
 		if(thingy.tool_behaviour == TOOL_WELDER)
 			welder = thingy
 			break
