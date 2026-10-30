@@ -33557,6 +33557,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"gfc" = (
+/obj/structure/lattice,
+/obj/item/toy/plush/argemia,
+/turf/open/space,
+/area/space/nearstation)
 "gfi" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 2
@@ -112287,7 +112292,7 @@ aaa
 aaa
 aby
 cFB
-abI
+gfc
 cFB
 aby
 aaa
