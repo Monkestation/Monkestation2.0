@@ -87,13 +87,22 @@
 /datum/uplink_item/melees/martialarts/advanced
 	name = "Scroll of the Awakened Dragon"
 	desc = "A scroll penned by the infamous Awakened Dragon, penned with the blood of their \
-			disciples, it appears to have clues towards true enlightenment in the path of the Sleeping Carp."
+			disciples, it appears to have clues towards true enlightenment in the path of the Sleeping Carp. \
+			Only available when there are at least 30 living crew."
 	cost = 25
 	surplus = 5 // Rare but not impossible.
 	item = /obj/item/book/granter/martial/carp/true
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
+	/// How many living players there need to be before this can be bought
+	var/minimum_alive_players = 30
+
+/datum/uplink_item/melees/martialarts/advanced/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	if(length(GLOB.alive_player_list) < minimum_alive_players)
+		to_chat(user, span_warning("There aren't enough people around to be worth the [name], it needs at least [minimum_alive_players] living crew."))
+		return FALSE
+	return ..()
 
 /datum/uplink_item/melees/edagger
 	name = "Energy Dagger"
