@@ -123,7 +123,7 @@
 
 	if(ismob(usr))
 		var/mob/M = usr
-		M.cycle_hand()
+		M.swap_hand()
 	return 1
 
 /atom/movable/screen/navigate

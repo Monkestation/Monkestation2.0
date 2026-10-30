@@ -8,7 +8,6 @@
 		/obj/item/fish/greenchromis = 15,
 		/obj/item/fish/lanternfish = 5,
 		/obj/item/fish/clownfish/lube = 3,
-		/obj/item/fish/squid = 8,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,

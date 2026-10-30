@@ -106,9 +106,6 @@
 		else
 			. += span_warning("This fool serves a different king!")
 
-	if(ishuman(user))
-		. += span_notice("You could probably pick them up and use them to cut wires.")
-
 /// Kills the rat and changes its icon state to be splatted (bloody).
 /mob/living/basic/mouse/proc/splat()
 	icon_dead = "mouse_[body_color]_splat"
@@ -207,15 +204,6 @@
 	tame = TRUE
 	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing
-
-/// Replaces the default mob_holder with our version
-/mob/living/basic/mouse/mob_pickup(mob/living/user)
-	var/obj/item/clothing/head/mob_holder/mouse/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
-	if(tame)
-		holder.toolspeed -= 0.3
-	user.visible_message(span_warning("[user] scoops up [src]!"))
-	user.put_in_hands(holder)
-	SEND_SIGNAL(src, COMSIG_MOB_PICKED_UP, user, holder)
 
 /// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
@@ -430,17 +418,6 @@
 	foodtypes = GORE | MEAT | RAW | GROSS
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
 	preserved_food = TRUE
-
-/obj/item/clothing/head/mob_holder/mouse
-	tool_behaviour = TOOL_WIRECUTTER
-	toolspeed = 1.4
-
-/obj/item/clothing/head/mob_holder/mouse/examine(mob/user)
-	. = ..()
-	if(toolspeed >= initial(toolspeed))
-		. += span_notice("You could probably use them to cut wires, though not very efficiently.")
-	else
-		. += span_notice("Their jaws look ready to cut wires.")
 
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse

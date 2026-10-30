@@ -18,8 +18,8 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
-/obj/item/clothing/mask/gas/slasher/adjust_visor(mob/living/user)
-	return FALSE
+/obj/item/clothing/mask/gas/slasher/adjustmask()
+	return
 
 /obj/item/clothing/mask/gas/slasher/cluwne
 	name = "cluwne mask"

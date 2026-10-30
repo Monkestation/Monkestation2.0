@@ -20,6 +20,57 @@
 		M.stop_pulling()
 	return TRUE
 
+/datum/keybinding/mob/swap_hands
+	hotkey_keys = list("X")
+	name = "swap_hands"
+	full_name = "Swap hands"
+	description = ""
+	keybind_signal = COMSIG_KB_MOB_SWAPHANDS_DOWN
+
+/datum/keybinding/mob/swap_hands/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/M = user.mob
+	M.swap_hand()
+	return TRUE
+
+/datum/keybinding/mob/activate_inhand
+	hotkey_keys = list("Z")
+	name = "activate_inhand"
+	full_name = "Activate in-hand"
+	description = "Uses whatever item you have inhand"
+	keybind_signal = COMSIG_KB_MOB_ACTIVATEINHAND_DOWN
+
+/datum/keybinding/mob/activate_inhand/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/M = user.mob
+	M.mode()
+	return TRUE
+
+/datum/keybinding/mob/drop_item
+	hotkey_keys = list("Q")
+	name = "drop_item"
+	full_name = "Drop Item"
+	description = ""
+	keybind_signal = COMSIG_KB_MOB_DROPITEM_DOWN
+
+/datum/keybinding/mob/drop_item/down(client/user)
+	. = ..()
+	if(.)
+		return
+	if(iscyborg(user.mob)) //cyborgs can't drop items
+		return FALSE
+	var/mob/M = user.mob
+	var/obj/item/I = M.get_active_held_item()
+	if(!I)
+		to_chat(user, span_warning("You have nothing to drop in your hand!"))
+	else
+		user.mob.dropItemToGround(I)
+	return TRUE
+
 /datum/keybinding/mob/toggle_move_intent
 	hotkey_keys = list("ShiftC")
 	name = "toggle_move_intent"

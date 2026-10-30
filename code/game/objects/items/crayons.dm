@@ -980,7 +980,7 @@
 		if(holder.is_holding(target_item))
 			holder.update_held_items()
 		else
-			holder.update_clothing(target_item.slot_flags | holder.get_slot_by_item(target_item))
+			holder.update_clothing(target_item.slot_flags)
 
 	if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 		use_charges(user, 2, requires_full = FALSE)

@@ -1692,7 +1692,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/infested_flotilla)
 "jM" = (
-/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/particle,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/neon/simple/red/airless,
 /area/ruin/space/has_grav/infested_flotilla)
@@ -4910,7 +4910,7 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/infested_flotilla)
 "Ct" = (
-/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/particle,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/item/cigbutt,
 /obj/structure/broken_flooring/singular/directional/south,
@@ -6254,7 +6254,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
 "Jz" = (
-/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/particle,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

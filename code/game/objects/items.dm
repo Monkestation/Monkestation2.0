@@ -1321,7 +1321,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 
 	if(ismob(loc) && ..())
 		var/mob/mob_loc = loc
-		mob_loc.update_clothing(slot_flags | mob_loc.get_slot_by_item(src))
+		mob_loc.update_clothing(slot_flags)
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, click_parameters)

@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(istype(action, /datum/action/item_action/halt))
 		halt()
 	else
-		adjust_visor(user)
+		adjustmask(user)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()

@@ -210,7 +210,7 @@
 		to_chat(user, span_notice("[src] retracts back into the [our_machine]."))
 		our_machine.retract_mask()
 
-/obj/item/clothing/mask/breath/anesthetic/adjust_visor(mob/living/user)
+/obj/item/clothing/mask/breath/anesthetic/adjustmask(mob/living/carbon/user)
 	. = ..()
 	// Air only goes through the mask, so temporarily pause airflow if mask is getting adjusted.
 	// Since the mask is NODROP, the only possible user is the wearer

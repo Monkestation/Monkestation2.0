@@ -116,25 +116,28 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
-	if(user.can_perform_action(src))
-		adjust_visor(user)
+	toggle_welding_screen(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
-		adjust_visor(user)
+		toggle_welding_screen(user)
 		return
 
 	return ..()
 
-/obj/item/clothing/head/helmet/space/plasmaman/adjust_visor(mob/living/user)
-	. = ..()
-	if(!.)
+/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
+	if(!weldingvisortoggle(user))
 		return
 	if(helmet_on)
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 		helmet_on = FALSE
 		set_light_on(FALSE)
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE) //Welding visors don't just come from nothing
+	update_appearance(UPDATE_ICON)
+
+/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling()
+	. = ..()
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()

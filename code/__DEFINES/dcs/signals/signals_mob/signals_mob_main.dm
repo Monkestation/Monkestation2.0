@@ -144,15 +144,6 @@
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
-/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
-/// Ran before hand cycling behaviour is started<br>
-#define COMSIG_MOB_CYCLE_HAND "mob_cycle_hand"
-	#define COMPONENT_BLOCK_CYCLE (1<<0) //! Do not continue cycling hands
-/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
-/// Ran while hands are being cycled, firing once a hand_index has been selected<br>
-/// hand_index: the hand index we want to react to
-#define COMSIG_MOB_CYCLE_HAND_INDEX(hand_index) "mob_cycle_hand_index_[hand_index]"
-	#define COMPONENT_CONTINUE_CYCLE (1<<1) //! This index was invalid, but don't give up yet
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
 #define COMSIG_MOB_SWAPPING_HANDS "mob_swapping_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)

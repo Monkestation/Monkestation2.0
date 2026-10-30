@@ -1,6 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "Pushing up a kitsune mask or bandana while wearing it updates your sprite again."
-  - bugfix: "Alt-clicking the kitsune mask puts it above your hair like using it in hand does."
-  - bugfix: "Recoloring, washing or spraypainting a pushed up mask you're wearing updates your sprite."
