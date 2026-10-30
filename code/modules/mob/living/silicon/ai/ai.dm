@@ -539,17 +539,17 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
 		if(!cyborg)
 			return
-		ai_tracking_tool.set_tracked_target(cyborg)
+		ai_tracking_tool.set_tracked_target(cyborg, src)
 	if(href_list["track_ipc"])
 		var/mob/living/carbon/human/connected_ipc = locate(href_list["track_ipc"]) in connected_ipcs
 		if(!connected_ipc)
 			return
-		ai_tracking_tool.set_tracked_target(connected_ipc)
+		ai_tracking_tool.set_tracked_target(connected_ipc, src)
 	if(href_list["track_target"])
 		var/mob/living/carbon/human/target_lock = locate(href_list["track_target"]) in target_list
 		if(!target_lock)
 			return
-		ai_tracking_tool.set_tracked_target(target_lock)
+		ai_tracking_tool.set_tracked_target(target_lock, src)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
