@@ -78,6 +78,7 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 	l_pocket = /obj/item/modular_computer/pda/signal
+	r_pocket = /obj/item/paper/monitorkey
 
 	skillchips = list(/obj/item/skillchip/job/engineer)
 
