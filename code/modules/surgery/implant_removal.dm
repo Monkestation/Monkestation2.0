@@ -65,7 +65,7 @@
 		implant.removed(target)
 
 		var/obj/item/implantcase/case
-		for(var/obj/item/implantcase/implant_case in user.held_items)
+		for(var/obj/item/implantcase/implant_case as anything in user.get_held_items_of_type(/obj/item/implantcase))
 			case = implant_case
 			break
 		if(!case)
