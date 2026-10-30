@@ -1,0 +1,14 @@
+author: "Ghommie, 00-Steven, SmArtKar, vinylspiders"
+delete-after: True
+changes:
+  - rscadd: "Fish infusion. Infusing fish in the DNA infuser gives you gills, a fish stomach and a fish tail, plus a fish liver or semi aquatic lungs depending on the fish traits."
+  - rscadd: "With 3 fish organs you get a bonus: while wet you can't slip, you're slippery when lying down, crawl faster, resist grabs and dry out slower, but being dry makes you weaker."
+  - rscadd: "Water adapted fish people get healed a bit by showers and drinking water."
+  - rscadd: "Squids, an ink producing fish you can catch in the ocean. Infusing one gives you a tongue that spits ink to blind people."
+  - rscadd: "Fish tails can be filleted with a knife, and gibbing someone with a fish tail gives fish tail fillets."
+  - rscadd: "Fish livers make tetrodotoxin heal you instead of poisoning you."
+  - qol: "The DNA infuser now accepts fish."
+  - balance: "Fishing rods hit fish infused people a bit harder."
+  - image: "Fish tail sprites and fish organ sprites."
+  - sound: "Fish flopping sounds when fish people crawl."
+  - code_imp: "Reagents have a purge multiplier for how fast other reagents flush them out."
