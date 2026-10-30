@@ -453,6 +453,8 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "poob_mask"
 	inhand_icon_state = null
+	actions_types = null
+	adjustable = FALSE
 	flags_inv = HIDEFACE
 
 /obj/item/clothing/suit/toggle/menacing_jacket
@@ -890,7 +892,11 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/owl_mask/hunter_owl/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/gas/owl_mask/hunter_owl/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/owl_mask/hunter_owl/up
 
@@ -914,7 +920,11 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/gaster/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/gas/gaster/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/gaster/up
 

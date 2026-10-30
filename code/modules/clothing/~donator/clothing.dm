@@ -319,7 +319,7 @@
 		to_chat(user, span_notice("You focus all your willpower to put the goggles down on your eyes."))
 	goggles = !goggles
 	if(user)
-		user.head_update(src, forced = 1)
+		user.update_worn_head()
 		user.update_mob_action_buttons()
 
 /obj/item/clothing/head/avipilot/ui_action_click(mob/living/carbon/user, action)
@@ -766,7 +766,7 @@
 	slot_flags = up ? ITEM_SLOT_EYES | ITEM_SLOT_HEAD : ITEM_SLOT_EYES
 	toggle_vision_effects()
 
-/obj/item/clothing/glasses/welding/steampunk_goggles/weldingvisortoggle(mob/user)
+/obj/item/clothing/glasses/welding/steampunk_goggles/adjust_visor(mob/living/user)
 	. = ..()
 	handle_sight_updating(user)
 
@@ -790,9 +790,7 @@
 
 	to_chat(user, span_notice("You slide \the [src]'s welding shutters slider, [welding_protection ? "closing" : "opening"] them."))
 	playsound(user, shutters_sound, 100, TRUE)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = 1)
+	user.update_clothing(slot_flags)
 	update_item_action_buttons()
 	return TRUE
 
@@ -824,7 +822,7 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
 			carbon_user.update_tint()
-			carbon_user.head_update(src, forced = TRUE)
+		user.update_clothing(slot_flags)
 
 /obj/item/clothing/glasses/welding/steampunk_goggles/ui_action_click(mob/user, actiontype, is_welding_toggle = FALSE)
 	if(!is_welding_toggle)
@@ -957,6 +955,8 @@
 	icon = 'icons/obj/clothing/donator/masks.dmi'
 	worn_icon = 'icons/mob/clothing/donator/mask.dmi'
 	icon_state = "death"
+	actions_types = null
+	adjustable = FALSE
 
 // Donation reward for 1ceres
 /obj/item/clothing/glasses/rosecolored
