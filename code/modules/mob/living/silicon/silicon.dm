@@ -44,7 +44,6 @@
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/bodycamera/builtInCamera = null
-	var/updating = FALSE //portable camera camerachunk update
 	///Whether we have been emagged
 	var/emagged = FALSE
 	var/centcom = FALSE
