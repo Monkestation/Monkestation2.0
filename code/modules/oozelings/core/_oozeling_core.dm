@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	name = "core"
 	desc = "The center core of a slimeperson, technically their 'extract.' Where the cytoplasm, membrane, and organelles come from; perhaps this is also a mitochondria?"
 	zone = BODY_ZONE_CHEST
-	icon = 'monkestation/code/modules/smithing/icons/oozeling.dmi'
+	icon = 'icons/obj/medical/organs/oozeling.dmi'
 	icon_state = "slime_core"
 	resistance_flags = FIRE_PROOF
 
