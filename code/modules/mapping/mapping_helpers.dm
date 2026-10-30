@@ -1215,6 +1215,37 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to break [target] but it's already broken!")
 	target.set_machine_stat(target.machine_stat | BROKEN)
 
+/obj/effect/mapping_helpers/sticker_placer
+	name = "sticker placer"
+	icon = /obj/item/sticker::icon
+	icon_state = /obj/item/sticker/smile::icon_state
+	/// Sticker type to spawn
+	var/sticker_type = /obj/item/sticker/smile
+	///Will stick onto atoms of this type
+	var/target_type
+	///Will stick onto atoms with this name
+	var/target_name
+
+/obj/effect/mapping_helpers/sticker_placer/Initialize(mapload)
+	var/turf/target_turf = get_turf(src)
+	for(var/atom/atom_on_turf as anything in target_turf.get_all_contents())
+		if(atom_on_turf == src)
+			continue
+		if(target_name && atom_on_turf.name != target_name)
+			continue
+		if(target_type && !istype(atom_on_turf, target_type))
+			continue
+		var/obj/item/sticker/sticker = new sticker_type(target_turf)
+		atom_on_turf.AddComponent( \
+			/datum/component/sticker, \
+			sticker, \
+			NORTH, \
+			pixel_x + pixel_w + (ICON_SIZE_X / 2), \
+			pixel_y + pixel_z + (ICON_SIZE_Y / 2), \
+		)
+		return INITIALIZE_HINT_QDEL
+	return ..()
+
 ///Basic mob flag helpers for things like deleting on death.
 /obj/effect/mapping_helpers/basic_mob_flags
 	name = "Basic mob flags helper"

@@ -13,6 +13,7 @@
 	custom_price = PAYCHECK_CREW * 3
 	can_be_tied = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/shoes/galoshes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "galoshes")

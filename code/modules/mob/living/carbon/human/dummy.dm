@@ -92,9 +92,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		qdel(delete)
 
 /mob/living/carbon/human/dummy/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(FALSE) // assuming direct control
 	item.item_flags |= IN_INVENTORY
-	. = item.visual_equipped(src, slot, initial)
-	update_obscured_slots(item.flags_inv)
+	if(!item.visual_equipped(src, slot, initial))
+		return FALSE
+
+	add_item_coverage(item)
+	return TRUE
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
@@ -164,6 +168,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	palette.mutant_color_secondary = COLOR_VIBRANT_LIME
 	palette.ethereal_color = COLOR_WHITE
 	target.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
+	target.dna.features["fish_tail_color"] = "#8AC7ED"
 	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly
 	// In practice this doesn't matter, but this is for the sake of 100%(ish) consistency
 	var/static/consistent_UF

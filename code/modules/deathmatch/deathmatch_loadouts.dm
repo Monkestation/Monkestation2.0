@@ -35,6 +35,7 @@
 
 		else // If both hands are taken, just turn them human
 			user.set_species(/datum/species/human)
+	user.dna.species.give_important_for_life(user) //i think its worth it to let plasmemes play DM at the cost of outfits
 
 	for(var/datum/action/act as anything in spells_to_add)
 		var/datum/action/new_ability = new act(user)

@@ -221,3 +221,8 @@
 
 /atom/movable/screen/stream_viewers/proc/update_maptext(amt)
 	maptext = "<div align='left' valign='top' style='position: relative; top: 0px; left: 6px'>Viewers: <font color='#33FF33'>[amt]</font></div>"
+
+/obj/item/broadcast_camera/siren_pirates
+	name = "Livestreaming Camera"
+	broadcast_name = "Siren Shimai!"
+	camera_networks = list(CAMERA_NETWORK_PIRATE)

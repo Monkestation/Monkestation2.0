@@ -158,7 +158,7 @@
 	if(.)
 		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -212,7 +212,11 @@
 	visor_flags_inv = NONE
 	visor_state = "weldvisor_atmos"
 
-/obj/item/clothing/head/utility/hardhat/welding/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/utility/hardhat/welding/atmos/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/firesuit)
+
+/obj/item/clothing/head/utility/hardhat/welding/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
@@ -245,7 +249,7 @@
 	if(light_on)
 		. += emissive_appearance(icon, "carved_pumpkin-emissive", src, alpha = src.alpha)
 
-/obj/item/clothing/head/utility/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(light_on && !isinhands)
 		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", src, alpha = src.alpha)

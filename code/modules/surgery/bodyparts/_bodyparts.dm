@@ -172,6 +172,8 @@
 	var/list/obj/item/organ/external/external_organs = list()
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
+	///A list of all bodypart textures to apply
+	var/list/bodypart_textures
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
@@ -219,7 +221,7 @@
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 	/// A potential texturing overlay to put on the limb
-	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
+	var/datum/bodypart_texture/texture_bodypart_overlay
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -248,7 +250,7 @@
 
 	if(texture_bodypart_overlay)
 		texture_bodypart_overlay = new texture_bodypart_overlay()
-		add_bodypart_overlay(texture_bodypart_overlay)
+		add_bodypart_texture(texture_bodypart_overlay, update = FALSE)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
@@ -977,6 +979,8 @@
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
+
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
@@ -1075,7 +1079,7 @@
 
 	cut_overlays()
 	var/list/standing = get_limb_icon(dropped = TRUE)
-	if(!standing.len)
+	if(!length(standing))
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
 	for(var/image/img as anything in standing)
@@ -1121,9 +1125,10 @@
 				var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 				if(brute_damage_overlay)
 					brute_blood_overlay.overlays += brute_damage_overlay
-				. += brute_blood_overlay
+				.[brute_blood_overlay] = NONE
 			if(burnstate)
-				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
+				var/image/burn_damage_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
+				.[burn_damage_overlay] = NONE
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
@@ -1132,8 +1137,8 @@
 	if(is_invisible)
 		limb.icon = icon_invisible
 		limb.icon_state = "invisible_[body_zone]"
-		. += limb
-		return .
+		.[limb] = NONE
+		return assoc_to_keys(.)
 
 	// This is the MEAT of limb icon code
 	limb.icon = icon_greyscale
@@ -1147,11 +1152,11 @@
 
 	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
-	. += limb
+	.[limb] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	if(aux_zone) //Hand shit
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
-		. += aux
+		.[aux] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	update_draw_color()
 
@@ -1174,32 +1179,35 @@
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
-			. += limb_em_block
+			.[limb_em_block] = LIMB_OVERLAY_META
 
 			if(aux_zone)
 				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 				aux_em_block.dir = image_dir
-				. += aux_em_block
+				.[aux_em_block] = LIMB_OVERLAY_META
 		if(is_emissive)
 			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
 			limb_em.dir = image_dir
-			. += limb_em
+			.[limb_em] = LIMB_OVERLAY_META
 
 			if(aux_zone)
 				var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
 				aux_em.dir = image_dir
-				. += aux_em
+				.[aux_em] = LIMB_OVERLAY_META
 	//EMISSIVE CODE END
 
-		//No need to handle leg layering if dropped, we only face south anyways
-	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
-	//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-		var/obj/item/bodypart/leg/leg_source = src
-		for(var/image/limb_image in .)
-			//remove the old, unmasked image
-			. -= limb_image
-			//add two masked images based on the old one
-			. += leg_source.generate_masked_leg(limb_image, image_dir)
+	// No need to handle leg layering if dropped, we only face south anyways
+	if(!dropped)
+		// Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
+		for(var/generated_overlay, generated_overlay_flags in .)
+			var/list/masked_generated_overlays = handle_masking(generated_overlay, image_dir)
+			if(!length(masked_generated_overlays))
+				continue
+			// Remove the old, unmasked image
+			. -= generated_overlay
+			// Add in the new, masked images (with the same flags)
+			for(var/masked_image in masked_generated_overlays)
+				.[masked_image] = generated_overlay_flags
 
 	var/has_height = !dropped && !isnull(owner)
 	// Apply height to the overlays we generated so far
@@ -1217,25 +1225,30 @@
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
-			//Some externals have multiple layers for background, foreground and between
-			for(var/external_layer in overlay.all_layers)
-				if(!(overlay.layers & external_layer))
-					continue
-				var/list/external_overlays = list(overlay.get_overlay(external_layer, src))
-				external_overlays += overlay.get_emissive_overlay(external_layer, src)
-				external_overlays += overlay.get_secondary_overlay(external_layer, src)
-				for(var/image/external_overlay in external_overlays)
-					if(has_height)
-						owner.apply_height(external_overlay, overlay.offset_location)
-					. += external_overlay
-				for(var/image/extended_overlay in overlay.get_extended_overlay(external_layer, src))
-					if(has_height)
-						owner.apply_height(extended_overlay, ENTIRE_BODY)
-					. += extended_overlay
-			for(var/datum/layer in .)
-				overlay.modify_bodypart_appearance(layer)
+			for(var/actual_overlay, actual_overlay_flags in overlay.get_all_overlays(src))
+				if(has_height)
+					owner.apply_height(actual_overlay, overlay.offset_location)
+				.[actual_overlay] = actual_overlay_flags
 
-	return .
+		// Then texture everything at once, including bodypart overlays
+		for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
+			if(!texture.can_texture_bodypart(src))
+				continue
+			for(var/generated_overlay, generated_overlay_flags in .)
+				if(!(generated_overlay_flags & LIMB_OVERLAY_TEXTURED))
+					continue
+
+				texture.modify_bodypart_appearance(generated_overlay, generated_overlay_flags)
+
+#ifndef UNIT_TESTS
+	if(PERFORM_ALL_TESTS(focus_only/bodypart_overlay_flags))
+		for(var/generated_overlay, generated_overlay_flags in .)
+			var/image/generated_overlay_real = generated_overlay
+			if(PLANE_TO_TRUE(generated_overlay_real.plane) == EMISSIVE_PLANE && !(generated_overlay_flags & LIMB_OVERLAY_META))
+				stack_trace("Emissive overlay without meta tag (icon state: [generated_overlay_real.icon_state])")
+#endif
+
+	return assoc_to_keys(.)
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)
@@ -1257,6 +1270,50 @@
 /obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay)
 	bodypart_overlays -= overlay
 	overlay.removed_from_limb(src)
+
+/**
+ * Adds a bodypart texture to the limb
+ *
+ * * texture: The texture to add. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the proc will avoid creating duplicates.
+ * * update: Whether to call update procs after adding the texture.
+ * Set this to FALSE if you are adding multiple textures at once.
+ */
+/obj/item/bodypart/proc/add_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		if(locate(texture) in bodypart_textures)
+			return
+		texture = new texture()
+
+	LAZYADD(bodypart_textures, texture)
+	if(!update)
+		return
+	if(isnull(owner))
+		update_icon_dropped()
+	else
+		owner.update_body_parts()
+
+/**
+ * Removes a bodypart texture from the limb
+ *
+ * * texture: The texture to remove. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the first texture of that typepath found will be removed.
+ * * update: Whether to call update procs after removing the texture.
+ * Set this to FALSE if you are removing multiple textures at once.
+ */
+/obj/item/bodypart/proc/remove_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		texture = locate(texture) in bodypart_textures
+		if(isnull(texture))
+			return
+
+	LAZYREMOVE(bodypart_textures, texture)
+	if(!update)
+		return
+	if(isnull(owner))
+		update_icon_dropped()
+	else
+		owner.update_body_parts()
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1498,6 +1555,22 @@
 
 /obj/item/bodypart/head/get_soon_dismember_message()
 	return ", threatening to split it open" // we don't sever, we cranial fissure when "dismembered" // we also don't dismember i think
+
+/// Add a bodyshape to the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/add_bodyshape(new_shape)
+	if(bodyshape & new_shape)
+		return
+
+	bodyshape |= new_shape
+	owner?.synchronize_bodyshapes()
+
+/// Remove a bodyshape from the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/remove_bodyshape(old_shape)
+	if(!(bodyshape & old_shape))
+		return
+
+	bodyshape &= ~old_shape
+	owner?.synchronize_bodyshapes()
 
 /obj/item/bodypart/proc/return_compoostion_precent(mob/living/carbon/checker)
 	var/matching_ids = 0

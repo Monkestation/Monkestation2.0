@@ -67,6 +67,8 @@
 			throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		if("n2")
 			throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
+		if("water_vapor")
+			throw_alert(ALERT_NOT_ENOUGH_WATER, /atom/movable/screen/alert/not_enough_water)
 	return FALSE
 
 /mob/living/carbon/human/handle_random_events(seconds_per_tick, times_fired)

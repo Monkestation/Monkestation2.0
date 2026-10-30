@@ -9,6 +9,8 @@
 	gender = PLURAL
 	body_parts_covered = GROIN
 	female_sprite_flags = NO_FEMALE_UNIFORM
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 //	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION Digi clothes don't support GAGS yet.
 	can_adjust = FALSE
 	species_exception = list(/datum/species/golem)
@@ -22,6 +24,7 @@
 	greyscale_config = /datum/greyscale_config/jeanshorts
 	greyscale_config_worn = /datum/greyscale_config/jeanshorts_worn
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	greyscale_colors = "#787878#723E0E#4D7EAC"
 
 /obj/item/clothing/under/shorts/red

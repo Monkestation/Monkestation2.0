@@ -31,7 +31,10 @@
 
 ///Bodypart overlay for spines (wagging gets updated by tail)
 /datum/bodypart_overlay/mutant/spines
-	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "spines"
 	///Spines moth with the tail, so track it
 	var/wagging = FALSE
@@ -47,7 +50,5 @@
 	if(!istype(human))
 		return TRUE
 	. = ..()
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return FALSE
-	if(human.w_uniform?.flags_inv & HIDETAIL)
+	if(human.obscured_slots & (HIDEJUMPSUIT|HIDETAIL))
 		return FALSE

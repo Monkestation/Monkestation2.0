@@ -213,7 +213,7 @@
 	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
 
-/datum/species/ipc/replace_body(mob/living/carbon/target, datum/species/new_species)
+/datum/species/ipc/replace_body(mob/living/carbon/target, datum/species/new_species, datum/species/old_species)
 	. = ..()
 	update_chassis(target)
 

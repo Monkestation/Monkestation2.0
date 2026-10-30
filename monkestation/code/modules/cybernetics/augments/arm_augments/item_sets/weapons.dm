@@ -133,7 +133,8 @@
 /datum/bodypart_overlay/simple/razorwire
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "razorwire_right"
-	layers = EXTERNAL_FRONT
+	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER)
+	overlay_flags = NONE
 
 /datum/bodypart_overlay/simple/razorwire/unique_properties(obj/item/organ/internal/cyberimp/called_from)
 	if(called_from.zone == BODY_ZONE_L_ARM)
@@ -163,8 +164,9 @@
 
 /datum/bodypart_overlay/simple/steel_drill
 	icon = 'monkestation/code/modules/cybernetics/icons/implants_onmob.dmi'
-	layers = EXTERNAL_FRONT // look into novas external front over
+	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER) // look into novas external front over
 	icon_state = "steel_right"
+	overlay_flags = NONE
 
 /datum/bodypart_overlay/simple/steel_drill/unique_properties(obj/item/organ/internal/cyberimp/called_from)
 	if(called_from.zone == BODY_ZONE_L_ARM)

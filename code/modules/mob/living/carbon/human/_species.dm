@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
 	var/plural_form
 
-	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
+	/// Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
 	///does our chosen bodytype have visual difference
 	var/visual_gender =TRUE
@@ -67,6 +67,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	  * Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts] below.
 	  */
 	var/list/mutant_bodyparts = list()
+	///A list to override what gets put in a species' survival box. keys are defined in code\__DEFINES\survival_box.dm
+	var/list/survival_box_overrides = list()
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
 	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
@@ -214,6 +216,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	/// Should we preload this species's organs?
 	var/preload = TRUE
+
+	/// Should the character preview dummy load all organs? Required for i.e organ_set_bonus visual effects
+	var/character_preview_load_all_organs = FALSE
 
 	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
@@ -533,7 +538,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.physiology?.heat_mod *= heatmod
 
 	if (old_species.type != type)
-		replace_body(C, src)
+		replace_body(C, src, old_species)
 
 	if(!C.get_bloodtype()?.is_species_universal) // Clown blood is forever.
 		//Assigns exotic blood type if the species has one
@@ -542,6 +547,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
 			C.set_blood_type(random_human_blood_type())
+
+	if(character_preview_load_all_organs)
+		C.visual_only_organs = FALSE
 
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
@@ -715,7 +723,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
+					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
@@ -727,7 +735,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(undershirt)
 				var/mutable_appearance/working_shirt
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
+					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon, undershirt.icon), layer = -BODY_LAYER)
 				else
 					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
 				standing += working_shirt
@@ -738,7 +746,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/mutable_appearance/socks_overlay
 			if(socks)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
-					socks_overlay = mutable_appearance(wear_female_version(socks.icon_state, socks.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
+					socks_overlay = mutable_appearance(wear_female_version(socks.icon_state, socks.icon, socks.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
 					socks_overlay = mutable_appearance(socks.icon, socks.icon_state, layer = -BODY_LAYER)
 				if(!socks.use_static)
@@ -788,7 +796,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 // MONKESTATION ADDITION START
 	if(mutant_bodyparts["ipc_screen"])
-		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || !source.is_face_visible() || !noggin)
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || (source.obscured_slots & HIDEFACE) || !noggin)
 			bodyparts_to_add -= "ipc_screen"
 // MONKESTATION ADDITION END
 
@@ -1000,7 +1008,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+			if((H.bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
 				if(!(I.supports_variations_flags & DIGITIGRADE_VARIATIONS))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
@@ -1107,6 +1115,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Equips the necessary species-relevant gear before putting on the rest of the uniform.
 /datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	return
+
+/// Equips species-relevant gear after putting on an outfit.
+/datum/species/proc/post_equip_species_outfit(mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
 
 /**
@@ -1799,7 +1811,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return to_add
 
 ///Handles replacing all of the bodyparts with their species version during set_species()
-/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species)
+/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species, datum/species/old_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
@@ -1819,6 +1831,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
+
+	if(isnull(old_species))
+		return
+	var/list/new_bodypart_overrides = new_species.bodypart_overrides
+	var/list/old_bodypart_overrides = old_species.bodypart_overrides.Copy()
+	if(length(new_bodypart_overrides) <= length(old_bodypart_overrides))
+		return // we updated all the limbs the character deserves
+	// but there are cases where the old species naturally lacked limbs
+	for(var/zone in new_bodypart_overrides)
+		// find a limb that the character doesn't have because of their old species
+		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides.Find(zone))
+			continue
+		var/path = new_bodypart_overrides[zone]
+		if(!path)
+			return
+
+		var/obj/item/bodypart/new_part = new path()
+		new_part.replace_limb(target, TRUE)
+		new_part.update_limb(is_creating = TRUE)
 
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)

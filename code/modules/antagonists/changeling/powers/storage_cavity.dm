@@ -186,4 +186,4 @@
 /datum/bodypart_overlay/simple/storage_cavity
 	icon = 'icons/mob/human/species/misc/bodypart_overlay_simple.dmi'
 	icon_state = "storage_cavity"
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)

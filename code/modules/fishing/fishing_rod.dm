@@ -306,11 +306,11 @@
 			bait_state = real_bait.rod_overlay_icon_state
 		. += bait_state
 
-/obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
-	. += get_fishing_worn_overlays(standing, isinhands, icon_file)
+	. += get_fishing_worn_overlays(standing, isinhands, icon_file, bodyshape)
 
-/obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = list()
 	var/line_color = line?.line_color || default_line_color
 	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay")
@@ -500,7 +500,7 @@
 		return list()
 	return ..()
 
-/obj/item/fishing_rod/telescopic/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/telescopic/get_fishing_worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	if(!active)
 		return list()
 	return ..()

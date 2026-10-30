@@ -12,6 +12,7 @@
 /obj/item/clothing/suit/utility
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	cerulean_flipper_palette = FLIPPERS
 
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
@@ -39,6 +40,10 @@
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/utility/fire/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/firesuit)
+
 /datum/armor/utility_fire
 	melee = 15
 	bullet = 5
@@ -49,10 +54,10 @@
 	fire = 100
 	acid = 50
 
-/obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance((bodyshape & BODYSHAPE_CERULEAN) ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
@@ -60,6 +65,7 @@
 
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	cerulean_flipper_palette = "#725c3e"
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
@@ -74,6 +80,7 @@
 	icon_state = "atmos_firesuit"
 	inhand_icon_state = "firefighter_atmos"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	cerulean_flipper_palette = "#525765"
 
 
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
@@ -89,7 +96,8 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	armor_type = /datum/armor/utility_bomb_hood
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/bombsuit
 
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 
@@ -98,6 +106,10 @@
 	equip_delay_other = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+
+/obj/item/clothing/head/utility/bomb_hood/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, texture_type)
 
 /datum/armor/utility_bomb_hood
 	melee = 20
@@ -119,6 +131,8 @@
 	slowdown = 2
 	armor_type = /datum/armor/utility_bomb_suit
 	flags_inv = HIDEJUMPSUIT
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/bombsuit
 
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 
@@ -126,6 +140,10 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE
+
+/obj/item/clothing/suit/utility/bomb_suit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /datum/armor/utility_bomb_suit
 	melee = 20
@@ -139,19 +157,23 @@
 /obj/item/clothing/head/utility/bomb_hood/security
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_red
 
 /obj/item/clothing/suit/utility/bomb_suit/security
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_red
 
 /obj/item/clothing/head/utility/bomb_hood/white
 	icon_state = "bombsuit_white"
 	inhand_icon_state = null
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_white
 
 /obj/item/clothing/suit/utility/bomb_suit/white
 	icon_state = "bombsuit_white"
 	inhand_icon_state = null
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_white
 
 /*
 * Radiation protection
@@ -177,6 +199,7 @@
 /obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/black)
 
 /obj/item/clothing/suit/utility/radiation
 	name = "radiation suit"
@@ -197,7 +220,9 @@
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+	cerulean_flipper_palette = "#ffdb57"
 
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/black)
