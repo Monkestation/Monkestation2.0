@@ -393,6 +393,8 @@
 	desc = "A pair of very professional bunny ears attached to a headband. The ears themselves came from an endangered species of green rabbits."
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "playbunny_ears_centcom"
+	clothing_flags = SNUG_FIT
+	worn_icon = 'icons/mob/clothing/head_32x48.dmi'
 	greyscale_colors = null
 	greyscale_config = null
 	greyscale_config_worn = null
