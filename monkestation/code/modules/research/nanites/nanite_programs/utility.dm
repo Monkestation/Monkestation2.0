@@ -355,7 +355,7 @@
 
 /datum/nanite_program/repeat/register_extra_settings()
 	. = ..()
-	extra_settings[NES_SENT_CODE_SIGNAL] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
 	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
 
 /datum/nanite_program/repeat/on_trigger(comm_message)
@@ -372,7 +372,7 @@
 
 /datum/nanite_program/relay_repeat/register_extra_settings()
 	. = ..()
-	extra_settings[NES_SENT_CODE_SIGNAL] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
 	extra_settings[NES_RELAY_CHANNEL] = new /datum/nanite_extra_setting/number(1, 1, 9999)
 	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
 
@@ -385,7 +385,7 @@
 	if(activated && relay.get_value())
 		for(var/X in SSnanites.nanite_relays)
 			var/datum/nanite_program/relay/N = X
-			var/datum/nanite_extra_setting/code = extra_settings[NES_SENT_CODE_SIGNAL]
+			var/datum/nanite_extra_setting/code = extra_settings[NES_SENT_CODE]
 			N.relay_signal(code.get_value(), relay.get_value(), "a [name] program")
 
 /datum/nanite_program/dermal_button

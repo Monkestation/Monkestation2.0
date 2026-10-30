@@ -333,10 +333,10 @@
 		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code_value, "a [name] program")
 
 /datum/nanite_program/proc/send_code()
-	send_code_any(NES_SENT_CODE_SIGNAL)
+	send_code_any(NES_SENT_CODE)
 
 /datum/nanite_program/proc/send_code_inverted()
-	send_code_any(NES_SENT_CODE_SIGNAL_INVERTED)
+	send_code_any(NES_SENT_CODE_INVERTED)
 
 /datum/nanite_program/proc/send_trigger_code()
 	send_code_any(NES_SENT_CODE_TRIGGER)
