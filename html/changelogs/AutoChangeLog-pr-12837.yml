@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Blood splatters from flying drops land on the wall they hit instead of mid-room."
+  - bugfix: "Flying blood drops carry diseases to their splatter."
+  - bugfix: "Items and blood drops flung in zero gravity stop instead of drifting forever."
