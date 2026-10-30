@@ -16,6 +16,7 @@
 	var/require_twohands = FALSE /// Does it have to be held in both hands
 	var/icon_wielded = FALSE /// The icon that will be used when wielded
 	var/obj/item/offhand/offhand_item = null /// Reference to the offhand created for the item
+	var/offhand_index = 0 /// The index of the offhand item.
 	var/sharpened_increase = 0 /// The amount of increase recived from sharpening the item
 	/// A callback on the parent to be called when the item is wielded
 	var/datum/callback/wield_callback
@@ -226,7 +227,9 @@
 	offhand_item.wielded = TRUE
 	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(offhand_item, COMSIG_QDELETING, PROC_REF(on_destroy))
-	user.put_in_inactive_hand(offhand_item)
+	offhand_index = user.get_inactive_hand_index()
+	user.put_in_hand(offhand_item, offhand_index)
+	RegisterSignal(user, COMSIG_MOB_CYCLE_HAND_INDEX(offhand_index), PROC_REF(on_cycling_hands))
 
 /**
  * Unwield the two handed item
@@ -295,6 +298,8 @@
 		qdel(offhand_item)
 	// Clear any old refrence to an item that should be gone now
 	offhand_item = null
+	UnregisterSignal(user, COMSIG_MOB_CYCLE_HAND_INDEX(offhand_index))
+	offhand_index = 0
 
 /**
  * on_attack triggers on attack with the parent item
@@ -330,13 +335,18 @@
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
  */
-/datum/component/two_handed/proc/on_swapping_hands(mob/user, obj/item/held_item)
+/datum/component/two_handed/proc/on_swapping_hands(mob/user, held_index, silent)
 	SIGNAL_HANDLER
 
-	if(!held_item)
-		return
-	if(held_item == parent)
+	if(held_index == offhand_index)
+		if(!silent)
+			to_chat(user, span_warning("\The [user.get_held_index_name(held_index)] is too busy holding [parent]."))
 		return COMPONENT_BLOCK_SWAP
+
+/datum/component/two_handed/proc/on_cycling_hands(mob/source, cycle_dir, climb, silent)
+	SIGNAL_HANDLER
+
+	return COMPONENT_CONTINUE_CYCLE
 
 /**
  * on_sharpen Triggers on usage of a sharpening stone on the item

@@ -83,39 +83,23 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/floortilebalaclava/ui_action_click(mob/user, datum/action/action)
-	adjustmask(user)
+	adjust_visor(user)
 	return TRUE
 
-/obj/item/clothing/mask/floortilebalaclava/adjustmask(mob/living/carbon/user)
-	if(user?.incapacitated())
-		return
-
-	mask_adjusted = !mask_adjusted
-
-	if(!mask_adjusted)
-		REMOVE_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
-		clothing_flags |= visor_flags
-		flags_inv |= visor_flags_inv
-		flags_cover |= visor_flags_cover
-		slot_flags = initial(slot_flags)
-		to_chat(user, span_notice("You pull \the [src] back over your face."))
-	else
+/obj/item/clothing/mask/floortilebalaclava/visor_toggling(mob/living/user)
+	. = ..()
+	if(up)
 		ADD_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
-		clothing_flags &= ~visor_flags
-		flags_inv &= ~visor_flags_inv
-		flags_cover &= ~visor_flags_cover
-		if(adjusted_flags)
-			slot_flags = adjusted_flags
-		to_chat(user, span_notice("You pull \the [src] down off your face."))
+	else
+		REMOVE_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
 
-	if(user.wear_mask == src)
-		user.wear_mask_update(src, toggle_off = mask_adjusted)
-
-	if(loc == user)
-		user.update_mob_action_buttons()
+// Pulled down it just stops showing on the mob, the item sprite stays the same
+/obj/item/clothing/mask/floortilebalaclava/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state)
 
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"

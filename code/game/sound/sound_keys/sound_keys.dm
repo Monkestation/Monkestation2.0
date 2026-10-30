@@ -666,3 +666,10 @@
 		'sound/items/reel/reel4.ogg',
 		'sound/items/reel/reel5.ogg',
 	)
+
+/datum/sound_effect/fish_pickup
+	key = SFX_FISH_PICKUP
+	file_paths = list(
+		'sound/mobs/non-humanoids/fish/fish_pickup1.ogg',
+		'sound/mobs/non-humanoids/fish/fish_pickup2.ogg',
+	)
