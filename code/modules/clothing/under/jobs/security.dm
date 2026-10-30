@@ -379,3 +379,11 @@
 
 /obj/item/clothing/under/rank/security/officer/tactical/blue
 	icon_state = "security_tactical_blue"
+
+/obj/item/clothing/under/rank/security/officer/tactical/red
+	desc = "A red security uniform with cargo pants, complete with Nanotrasen belt buckle."
+	icon_state = "security_tactical_red"
+
+/obj/item/clothing/under/rank/security/officer/tactical/white
+	desc = "A white security uniform with cargo pants, complete with Nanotrasen belt buckle."
+	icon_state = "security_tactical_white"
