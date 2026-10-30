@@ -159,6 +159,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	. = ..()
 	SScameras.camera_moved(src, get_turf(old_loc), get_turf(loc))
 
+/// Makes this camera update the cameranet when anything holding it moves, for cameras inside items or mobs that don't do it themselves
+/obj/machinery/camera/proc/follow_holder()
+	AddComponent(/datum/component/connect_containers, src, list(COMSIG_MOVABLE_MOVED = PROC_REF(on_holder_moved)))
+
+/// Called when something holding this camera moves, see [/obj/machinery/camera/proc/follow_holder]
+/obj/machinery/camera/proc/on_holder_moved(atom/movable/source, atom/old_loc)
+	SIGNAL_HANDLER
+	SScameras.camera_moved(src, get_turf(old_loc), get_turf(src), 0.5 SECONDS)
+
 /obj/machinery/camera/proc/default_camera_net()
 	return SScameras.default_net
 
