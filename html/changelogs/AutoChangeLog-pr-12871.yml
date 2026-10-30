@@ -1,5 +1,0 @@
-author: "AitorLogedo, Jacquerel"
-delete-after: True
-changes:
-  - balance: "The Scroll of the Awakened Dragon can only be bought when there are at least 30 living players."
-  - qol: "Uplink items that need more crew show up locked with how many people they need."

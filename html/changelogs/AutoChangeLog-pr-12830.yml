@@ -1,5 +1,0 @@
-author: "LettuceGuardian"
-delete-after: True
-changes:
-  - rscadd: "Autopsy scanners spawn inside surgery bags."
-  - rscadd: "Deforest satchel can store ambubags."
