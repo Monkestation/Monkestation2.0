@@ -296,7 +296,7 @@
 
 /datum/nanite_program/sensor/species
 	name = "Species Sensor"
-	desc = "The nanites receive a signal when they detect that the host is/isn't the target species."
+	desc = "The nanites receive a singal when they detect that the host is/isn't the target species."
 	can_rule = TRUE
 
 	var/static/list/species_list = list(
