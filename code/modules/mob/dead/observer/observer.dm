@@ -24,7 +24,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	rclick_always_context_menu = TRUE
 
 	// to-do: move this to /mob parent without breaking shit, dunno think it might
-	var/list/speak_emote = list("wails", "laments", "weeps", "bemoans", "mourns", "malds", "complains", "bewails", "cries", "reflects", "moans", "mutters", "whispers", "murmurs", "grieves", "regrests", "sorrows")
+	var/list/speak_emote = list("wails", "laments", "weeps", "bemoans", "mourns", "malds", "complains", "bewails", "cries", "moans", "mutters", "whispers", "murmurs", "grieves", "regrets", "sorrows")
 
 	var/can_reenter_corpse
 	var/bootime = 0
