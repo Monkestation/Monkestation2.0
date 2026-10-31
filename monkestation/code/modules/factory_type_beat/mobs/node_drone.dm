@@ -27,7 +27,7 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"

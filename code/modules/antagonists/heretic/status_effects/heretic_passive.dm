@@ -503,9 +503,7 @@
 
 	if(source.is_touching_rust())
 		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
-		owner.add_homeostasis_level(id, owner.standard_body_temperature, 5 KELVIN)
 	else
-		owner.remove_homeostasis_level(id)
 		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /**
@@ -539,6 +537,8 @@
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
+	// Slowly regulates your body temp
+	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature) / 5)
 	for(var/datum/reagent/reagent as anything in source.reagents?.reagent_list)
 		source.reagents.remove_reagent(reagent.type, delta_time)
 

@@ -235,32 +235,8 @@
 	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
 	var/reach_length = 1
 
-	/// Body temp we homeostasize to
-	var/standard_body_temperature = BODYTEMP_NORMAL
-	/// Temperature of our insides
-	var/bodytemperature = BODYTEMP_NORMAL
-	/// Lazylist of targets we homeostasize to
-	/// This allows multiple effects to add a different target to the list, which is averaged
-	/// (So you can have both a fever and a cold at the same time)
-	/// If empty just defaults to standard_body_temperature
-	var/list/homeostasis_targets
-
-	/// How cold to start sustaining cold damage
-	var/bodytemp_cold_damage_limit = -1 // -1 = no cold damage ever
-	/// How hot to start sustaining heat damage
-	var/bodytemp_heat_damage_limit = INFINITY // INFINITY = no heat damage ever
-
-	/// How fast the mob's temperature normalizes to their environment
-	var/temperature_normalization_speed = 0.1
-	/// How fast the mob's temperature normalizes to their homeostasis
-	/// Also gets multiplied by metabolism_efficiency.
-	/// Note that more of this = more nutrition is consumed every life tick.
-	var/temperature_homeostasis_speed = 0.5
-	/// Protection (insulation) from temperature changes, max 1
-	var/temperature_insulation = 0.15
-
-	/// Whether we currently have temp alerts, minor optimization
-	VAR_PRIVATE/temp_alerts = FALSE
+	/// List of changes to body temperature, used by desease symtoms like fever
+	var/list/body_temp_changes = list()
 
 	/// A weak reference to the team monitor component contained within the monitor holder, used for certain antagoists so they can track
 	var/datum/component/team_monitor/team_monitor

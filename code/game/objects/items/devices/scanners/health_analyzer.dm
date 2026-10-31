@@ -376,19 +376,18 @@
 			|| istype(humantarget.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
-	var/skin_temp = target.get_skin_temperature()
-	var/skin_temperature_message = "Skin temperature: [round(KELVIN_TO_CELCIUS(skin_temp), 0.1)] &deg;C ([round(KELVIN_TO_FAHRENHEIT(skin_temp), 0.1)] &deg;F)"
-	if(skin_temp >= target.bodytemp_heat_damage_limit)
-		render_list += "<span class='alert ml-1'>☼ [skin_temperature_message] ☼</span>\n"
-	else if(skin_temp <= target.bodytemp_cold_damage_limit)
-		render_list += "<span class='alert ml-1'>❄ [skin_temperature_message] ❄</span>\n"
-	else
-		render_list += "<span class='info ml-1'>[skin_temperature_message]</span>\n"
+		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"
+		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit())
+			render_list += "<span class='alert ml-1'>☼ [core_temperature_message] ☼</span>\n"
+		else if(humantarget.coretemperature <= humantarget.get_body_temp_cold_damage_limit())
+			render_list += "<span class='alert ml-1'>❄ [core_temperature_message] ❄</span>\n"
+		else
+			render_list += "<span class='info ml-1'>[core_temperature_message]</span>\n"
 
-	var/body_temperature_message = "Body temperature: [round(KELVIN_TO_CELCIUS(target.bodytemperature), 0.1)] &deg;C ([round(KELVIN_TO_FAHRENHEIT(target.bodytemperature), 0.1)] &deg;F)"
-	if(target.bodytemperature >= target.bodytemp_heat_damage_limit)
+	var/body_temperature_message = "Body temperature: [round(target.bodytemperature-T0C, 0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)"
+	if(target.bodytemperature >= target.get_body_temp_heat_damage_limit())
 		render_list += "<span class='alert ml-1'>☼ [body_temperature_message] ☼</span>\n"
-	else if(target.bodytemperature <= target.bodytemp_cold_damage_limit)
+	else if(target.bodytemperature <= target.get_body_temp_cold_damage_limit())
 		render_list += "<span class='alert ml-1'>❄ [body_temperature_message] ❄</span>\n"
 	else
 		render_list += "<span class='info ml-1'>[body_temperature_message]</span>\n"

@@ -132,6 +132,8 @@
 		part.set_armor(theme.armor_type)
 		part.resistance_flags = theme.resistance_flags
 		part.flags_1 |= theme.atom_flags //flags like initialization or admin spawning are here, so we cant set, have to add
+		part.heat_protection = NONE
+		part.cold_protection = NONE
 		part.max_heat_protection_temperature = theme.max_heat_protection_temperature
 		part.min_cold_protection_temperature = theme.min_cold_protection_temperature
 		part.siemens_coefficient = theme.siemens_coefficient

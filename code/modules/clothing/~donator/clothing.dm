@@ -126,6 +126,7 @@
 	inhand_icon_state = "hostrench"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 
 
 // Donation reward for Thedragmeme
@@ -302,7 +303,7 @@
 	icon_state = "avipilotup"
 	inhand_icon_state = "rus_ushanka"
 	flags_inv = HIDEEARS|HIDEHAIR
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT //about as warm as an ushanka
 	actions_types = list(/datum/action/item_action/adjust)
 	var/goggles = FALSE
@@ -710,7 +711,7 @@
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "greycoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for Cherno_00
@@ -721,7 +722,7 @@
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "chernocoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for GoldenAlpharex

@@ -28,8 +28,8 @@
 	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = 270
-	bodytemp_heat_damage_limit = INFINITY
+	minimum_survivable_temperature = 270
+	maximum_survivable_temperature = INFINITY
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
