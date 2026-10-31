@@ -9,6 +9,9 @@
 	/// If present response body will be saved to this file.
 	var/output_file
 
+	/// If present request will timeout after this duration
+	var/timeout_seconds
+
 	var/_raw_response
 
 /datum/http_request/New(...)
@@ -22,7 +25,7 @@
 	RETURN_TYPE(/datum/http_request)
 	return new /datum/http_request(arglist(args))
 
-/datum/http_request/proc/prepare(method, url, body = "", list/headers, output_file)
+/datum/http_request/proc/prepare(method, url, body = "", list/headers, output_file, timeout_seconds)
 	if (!length(headers))
 		headers = json_encode(list("User-Agent" = get_useragent()))
 	else
@@ -35,6 +38,7 @@
 	src.body = body
 	src.headers = headers
 	src.output_file = output_file
+	src.timeout_seconds = timeout_seconds
 
 /datum/http_request/proc/fire_and_forget()
 	var/result = rustg_http_request_fire_and_forget(method, url, body, headers, build_options())
@@ -57,9 +61,10 @@
 		in_progress = TRUE
 
 /datum/http_request/proc/build_options()
-	if(output_file)
-		return json_encode(list("output_filename"=output_file,"body_filename"=null))
-	return null
+	return json_encode(list(
+		"output_filename"=(output_file ? output_file : null),
+		"body_filename"=null,
+		"timeout_seconds"=(timeout_seconds ? timeout_seconds : null)))
 
 /datum/http_request/proc/is_complete()
 	if (isnull(id))
