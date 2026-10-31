@@ -1,3 +1,4 @@
+/// How the limbs of species with TRAIT_GREYSCALE_TOGGLE look: classic, colored by the mutant color, or tundra fur
 /datum/preference/choiced/limb_style
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "limb_style"
