@@ -788,7 +788,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 // MONKESTATION ADDITION START
 	if(mutant_bodyparts["ipc_screen"])
-		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || !source.is_face_visible() || !noggin)
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || (source.obscured_slots & HIDEFACE) || !noggin)
 			bodyparts_to_add -= "ipc_screen"
 // MONKESTATION ADDITION END
 
