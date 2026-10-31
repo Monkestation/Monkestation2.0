@@ -47,6 +47,7 @@
 	item = /obj/item/dualsaber
 	cost = 16
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_SPY)
+	population_minimum = 30
 
 /datum/uplink_item/melees/doublesword/get_discount_value(discount_type)
 	switch(discount_type)

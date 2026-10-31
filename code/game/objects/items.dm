@@ -581,7 +581,8 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 		return
 	return attempt_pickup(user)
 
-/obj/item/proc/attempt_pickup(mob/user)
+/// Tries to pick up the item, skip_grav skips the heavy gravity delay
+/obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
 	. = TRUE
 
 	if(resistance_flags & ON_FIRE)
@@ -607,14 +608,14 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
 		return
 
-	//Heavy gravity makes picking up things very slow.
-	var/grav = user.has_gravity()
-	if(grav > STANDARD_GRAVITY)
-		var/grav_power = min(3,grav - STANDARD_GRAVITY)
-		to_chat(user,span_notice("You start picking up [src]..."))
-		if(!do_after(user, 30 * grav_power, src))
-			return
-
+	if(!skip_grav)
+		//Heavy gravity makes picking up things very slow.
+		var/grav = user.has_gravity()
+		if(grav > STANDARD_GRAVITY)
+			var/grav_power = min(3,grav - STANDARD_GRAVITY)
+			to_chat(user,span_notice("You start picking up [src]..."))
+			if(!do_after(user, 30 * grav_power, src))
+				return
 
 	//If the item is in a storage item, take it out
 	var/outside_storage = !loc.atom_storage
