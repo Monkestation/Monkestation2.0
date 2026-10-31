@@ -197,6 +197,14 @@
 	layers = EXTERNAL_FRONT
 	icon = 'icons/mob/human/species/moth/moth_arms.dmi'
 	icon_state = "m_moth_arms_generic_FRONT"
+	/// Icon state used when the chest is greyscaled (mutant colors), so the arms get the same color as the body
+	var/greyscale_icon_state = "m_moth_arms_greyscale_FRONT"
+
+/datum/bodypart_overlay/simple/moth_arms/get_image(layer, obj/item/bodypart/limb)
+	return image(icon, limb?.should_draw_greyscale ? greyscale_icon_state : icon_state, layer = layer)
+
+/datum/bodypart_overlay/simple/moth_arms/color_image(image/overlay, layer, obj/item/bodypart/limb)
+	overlay.color = limb?.should_draw_greyscale ? limb.draw_color : null
 
 #undef BRUTE_MOD
 #undef BURN_MOD
