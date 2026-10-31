@@ -1100,19 +1100,23 @@
 
 /obj/projectile/lawbringer/tideshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/new_target = target
-		if(new_target.mind)
-			if(is_assistant_job(new_target.mind.assigned_role))
-				var/mob/living/carbon/C = target
-				C.add_mood_event("tased", /datum/mood_event/tased)
-				to_chat(target, span_warning("As the beam hits you, body seems to crumple under its uselessness."))
-				SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-				playsound(src, 'sound/weapons/taserhit.ogg', 80, TRUE, -1)
-				C.stamina.adjust(-50)
-				C.Paralyze(10 SECONDS)
-				C.set_jitter_if_lower(40 SECONDS)
-				C.set_stutter(40 SECONDS)
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/new_target = target
+	if(!wearing_grey_jumpsuit(new_target))
+		return
+	var/mob/living/carbon/C = new_target
+	C.add_mood_event("tased", /datum/mood_event/tased)
+	to_chat(target, span_warning("As the beam hits you, body seems to crumple under its uselessness."))
+	SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
+	playsound(src, 'sound/weapons/taserhit.ogg', 80, TRUE, -1)
+	C.stamina.adjust(-50)
+	C.Paralyze(10 SECONDS)
+	C.set_jitter_if_lower(40 SECONDS)
+	C.set_stutter(40 SECONDS)
+
+/obj/projectile/lawbringer/tideshot/proc/wearing_grey_jumpsuit(mob/living/carbon/human/target)
+	return istype(target.w_uniform, /obj/item/clothing/under/color/grey) || istype(target.w_uniform, /obj/item/clothing/under/color/jumpskirt/grey)
 
 /**
  * lawbringer ion mode:
