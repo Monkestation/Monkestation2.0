@@ -1,0 +1,279 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"c" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/turf/baseturf_bottom,
+/area/template_noop)
+"e" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/rack,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance/two,
+/obj/item/holosign_creator/atmos,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/fifty,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/rack,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/template_noop)
+"o" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"p" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance/five,
+/turf/open/floor/plating,
+/area/template_noop)
+"q" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+"u" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/template_noop)
+"v" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/airlock_painter,
+/turf/open/floor/plating,
+/area/template_noop)
+"w" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance/seven,
+/turf/open/floor/plating,
+/area/template_noop)
+"x" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"y" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating,
+/area/template_noop)
+"A" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"B" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/plating,
+/area/template_noop)
+"D" = (
+/obj/structure/lattice,
+/turf/baseturf_bottom,
+/area/template_noop)
+"E" = (
+/obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/window/right/directional/north,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/plating,
+/area/template_noop)
+"G" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/plating,
+/area/template_noop)
+"H" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/rack,
+/obj/item/stack/rods/fifty,
+/turf/open/floor/plating,
+/area/template_noop)
+"M" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/window/left/directional/south,
+/obj/machinery/door/window/left/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"P" = (
+/obj/structure/closet/crate/science,
+/obj/effect/spawner/random/techstorage/engineering_all,
+/turf/open/floor/plating,
+/area/template_noop)
+"R" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/closet/secure_closet/engineering_welding,
+/turf/open/floor/plating,
+/area/template_noop)
+"T" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+b
+b
+b
+o
+b
+b
+o
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+P
+R
+p
+T
+u
+w
+y
+b
+b
+"}
+(3,1,1) = {"
+b
+e
+d
+D
+d
+d
+D
+d
+A
+b
+"}
+(4,1,1) = {"
+c
+h
+D
+D
+D
+D
+D
+D
+A
+B
+"}
+(5,1,1) = {"
+b
+M
+d
+D
+d
+d
+D
+d
+A
+b
+"}
+(6,1,1) = {"
+b
+E
+d
+D
+d
+d
+D
+d
+A
+b
+"}
+(7,1,1) = {"
+c
+i
+D
+D
+D
+D
+D
+D
+A
+B
+"}
+(8,1,1) = {"
+b
+H
+d
+D
+d
+d
+D
+d
+A
+b
+"}
+(9,1,1) = {"
+b
+k
+n
+q
+f
+v
+x
+G
+b
+b
+"}
+(10,1,1) = {"
+b
+b
+b
+r
+b
+b
+r
+b
+b
+b
+"}

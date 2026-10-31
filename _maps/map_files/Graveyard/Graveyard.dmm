@@ -47511,6 +47511,11 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
+"syp" = (
+/obj/effect/spawner/backrooms_portal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "syw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -146276,7 +146281,7 @@ ckV
 ohY
 gsq
 swn
-xNN
+syp
 tDv
 vsh
 vNc

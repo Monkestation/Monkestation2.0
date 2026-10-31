@@ -1783,3 +1783,14 @@
 	if(!("[REF(target)]" in faction_src))
 		faction_target -= "[REF(target)]" //same thing here.
 	return faction_check(faction_src, faction_target, TRUE)
+
+/// Sends the movable to a random safe spot of the backrooms, if they exist. Returns TRUE if it was sent
+/atom/movable/proc/send_to_backrooms()
+	var/list/backrooms_level = SSmapping.levels_by_trait(ZTRAIT_PROCEDURAL_MAINTS)
+	if(!length(backrooms_level))
+		return FALSE
+	var/turf/destination = find_safe_turf(zlevels = backrooms_level, dense_atoms = FALSE)
+	if(!destination)
+		return FALSE
+	forceMove(destination)
+	return TRUE

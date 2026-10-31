@@ -1,6 +1,4 @@
 #define SINGLE "single"
-#define VERTICAL "vertical"
-#define HORIZONTAL "horizontal"
 
 #define METAL 1
 #define WOOD 2
@@ -347,8 +345,6 @@
 	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, delete_on_use = TRUE)
 
 #undef SINGLE
-#undef VERTICAL
-#undef HORIZONTAL
 
 #undef METAL
 #undef WOOD

@@ -89,3 +89,7 @@
 		/obj/structure/mecha_wreckage/ripley = 3,
 		/obj/vehicle/sealed/mecha/ripley/mining = 1,
 	)
+
+/obj/effect/spawner/random/exotic/anomaly_core
+	name = "anomaly core spawner"
+	loot_subtype_path = /obj/item/assembly/signaler/anomaly

@@ -1,0 +1,100 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/structure/easel,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/structure/closet,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Takes you to a whole new level of thinking.";
+	name = "Meta-Cider"
+	},
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/costume/poncho,
+/obj/item/clothing/head/costume/sombrero,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/structure/rack,
+/obj/item/book/manual/wiki/engineering_guide{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/effect/spawner/random/maintenance,
+/obj/item/storage/box/lights/mixed,
+/turf/open/floor/plating,
+/area/template_noop)
+"C" = (
+/obj/structure/table,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = -8
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = -8
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"I" = (
+/obj/item/mmi,
+/obj/effect/spawner/random/maintenance,
+/obj/item/rack_parts,
+/turf/open/floor/plating,
+/area/template_noop)
+"V" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/fyellow,
+/obj/effect/spawner/random/maintenance,
+/obj/structure/sink/kitchen/directional/south{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink"
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/storage/belt/utility,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+V
+c
+g
+"}
+(2,1,1) = {"
+C
+c
+h
+"}
+(3,1,1) = {"
+c
+c
+c
+"}
+(4,1,1) = {"
+d
+c
+c
+"}
+(5,1,1) = {"
+e
+I
+i
+"}

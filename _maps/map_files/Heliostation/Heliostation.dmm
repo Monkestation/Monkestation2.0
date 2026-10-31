@@ -76713,6 +76713,13 @@
 "wiS" = (
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
+"wjf" = (
+/obj/effect/spawner/backrooms_portal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "wjy" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Engineering Maintenance"
@@ -119712,7 +119719,7 @@ kpu
 cyj
 cGF
 cih
-cjZ
+wjf
 cjZ
 oNS
 cnx

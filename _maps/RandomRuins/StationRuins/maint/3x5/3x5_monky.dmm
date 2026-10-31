@@ -1,0 +1,76 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/floor/grass,
+/area/template_noop)
+"c" = (
+/obj/structure/flora/bush/flowers_yw,
+/turf/open/floor/grass,
+/area/template_noop)
+"d" = (
+/obj/structure/flora/bush/flowers_pp,
+/mob/living/carbon/human/species/monkey,
+/turf/open/floor/grass,
+/area/template_noop)
+"e" = (
+/obj/structure/flora/bush/large,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/template_noop)
+"g" = (
+/obj/item/food/grown/banana,
+/turf/open/floor/grass,
+/area/template_noop)
+"h" = (
+/obj/structure/water_source/puddle,
+/obj/structure/flora/bush/reed{
+	pixel_y = 5
+	},
+/turf/open/floor/grass,
+/area/template_noop)
+"i" = (
+/obj/structure/flora/bush/jungle/b,
+/mob/living/carbon/human/species/monkey,
+/turf/open/floor/grass,
+/area/template_noop)
+"k" = (
+/obj/item/toy/beach_ball{
+	pixel_y = 6
+	},
+/turf/open/floor/grass,
+/area/template_noop)
+"M" = (
+/obj/structure/flora/bush/sunny,
+/turf/open/floor/grass,
+/area/template_noop)
+"W" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/grass,
+/area/template_noop)
+"X" = (
+/obj/structure/flora/grass/jungle,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/template_noop)
+
+(1,1,1) = {"
+M
+d
+g
+c
+h
+"}
+(2,1,1) = {"
+b
+e
+h
+X
+i
+"}
+(3,1,1) = {"
+c
+W
+i
+k
+c
+"}

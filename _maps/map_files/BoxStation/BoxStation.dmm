@@ -61295,6 +61295,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"tMl" = (
+/obj/effect/spawner/backrooms_portal,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "tMn" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
@@ -91462,7 +91466,7 @@ bnl
 dVe
 oUG
 cEG
-oUG
+tMl
 eSC
 rDR
 sUv

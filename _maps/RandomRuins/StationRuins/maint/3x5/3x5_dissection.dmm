@@ -1,0 +1,109 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"e" = (
+/obj/structure/sink/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"h" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/template_noop)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/template_noop)
+"k" = (
+/obj/structure/table/glass,
+/obj/item/surgical_drapes,
+/obj/item/scalpel,
+/obj/item/hemostat,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/template_noop)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer{
+	dir = 4;
+	icon_state = "0"
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+"m" = (
+/turf/open/floor/iron/white,
+/area/template_noop)
+"x" = (
+/obj/structure/closet/l3closet,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/template_noop)
+"M" = (
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron,
+/area/template_noop)
+"N" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/table_frame,
+/turf/open/floor/iron/white,
+/area/template_noop)
+"O" = (
+/obj/structure/closet/crate/freezer,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/organ/internal/eyes,
+/obj/item/organ/internal/eyes/moth,
+/obj/item/organ/internal/eyes/robotic,
+/obj/item/organ/internal/eyes/snail,
+/turf/open/floor/iron/white,
+/area/template_noop)
+"R" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/iron,
+/area/template_noop)
+"X" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/template_noop)
+
+(1,1,1) = {"
+x
+R
+f
+N
+l
+"}
+(2,1,1) = {"
+b
+b
+X
+j
+m
+"}
+(3,1,1) = {"
+M
+e
+h
+k
+O
+"}

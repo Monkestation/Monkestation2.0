@@ -115,3 +115,6 @@
 
 /// Sent when supermatter begins its delam countdown/when the suppression system is triggered: (var/trigger_reason)
 #define COMSIG_MAIN_SM_DELAMINATING "delam_time"
+
+/// Global signal sent when the backrooms finish generating: (No arguments)
+#define COMSIG_GLOB_BACKROOMS_INITIALIZED "!backrooms_initialized"
