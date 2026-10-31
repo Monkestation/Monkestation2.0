@@ -193,7 +193,7 @@
 /mob/living/silicon/ai/proc/ai_deactivate_power()
 	disconnect_shell()
 	view_core()
-	ai_tracking_tool.set_tracked_target(src) //track the data core we're in
+	ai_tracking_tool.set_tracked_target(src, src) //track the data core we're in
 	technically_unpowered = TRUE
 	to_chat(src, span_alert("You've lost access to an APC!"))
 

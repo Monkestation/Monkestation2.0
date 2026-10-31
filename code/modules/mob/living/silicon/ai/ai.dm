@@ -240,10 +240,11 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
+	//They aren't given a c_tag so they don't show up in camera consoles
 	builtInCamera = new(src)
-	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 
 	ai_tracking_tool = new(src)
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_STARTED, PROC_REF(on_track_started))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
@@ -505,6 +506,12 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 
 	ai_tracking_tool.track_input(src)
 
+///Called when an AI starts tracking a new target, before the eye moves. Saves the return point for the "last camera" hotkey.
+/mob/living/silicon/ai/proc/on_track_started(datum/trackable/source, atom/movable/target)
+	SIGNAL_HANDLER
+	if(eyeobj)
+		cam_prev = get_turf(eyeobj)
+
 ///Called when an AI finds their tracking target.
 /mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, atom/movable/target)
 	SIGNAL_HANDLER
@@ -539,17 +546,17 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
 		if(!cyborg)
 			return
-		ai_tracking_tool.set_tracked_target(cyborg)
+		ai_tracking_tool.set_tracked_target(cyborg, src)
 	if(href_list["track_ipc"])
 		var/mob/living/carbon/human/connected_ipc = locate(href_list["track_ipc"]) in connected_ipcs
 		if(!connected_ipc)
 			return
-		ai_tracking_tool.set_tracked_target(connected_ipc)
+		ai_tracking_tool.set_tracked_target(connected_ipc, src)
 	if(href_list["track_target"])
 		var/mob/living/carbon/human/target_lock = locate(href_list["track_target"]) in target_list
 		if(!target_lock)
 			return
-		ai_tracking_tool.set_tracked_target(target_lock)
+		ai_tracking_tool.set_tracked_target(target_lock, src)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()

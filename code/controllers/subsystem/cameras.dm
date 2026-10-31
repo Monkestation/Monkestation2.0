@@ -5,6 +5,10 @@ SUBSYSTEM_DEF(cameras)
 	priority = FIRE_PRIORITY_CAMERAS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 2 MINUTES
+	dependencies = list(
+		// Required to get plane offset for static images
+		/datum/controller/subsystem/mapping,
+	)
 
 	/// The default camera network.
 	var/datum/cameranet/default_net
@@ -49,7 +53,7 @@ SUBSYSTEM_DEF(cameras)
 	while(current_run.len)
 		var/datum/camerachunk/chunk = current_run[current_run.len]
 		if(chunk.yield_update())
-			current_run.len--
+			current_run -= chunk
 		if(MC_TICK_CHECK)
 			break
 
@@ -153,3 +157,6 @@ SUBSYSTEM_DEF(cameras)
 
 ADMIN_VERB(pause_camera_updates, R_ADMIN, FALSE, "Toggle Camera Updates", "Stop security cameras from updating, meaning what they see now is what they will see forever.", ADMIN_CATEGORY_DEBUG)
 	SScameras.disable_camera_updates = !SScameras.disable_camera_updates
+	log_admin("[key_name_admin(user)] [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
+	message_admins("Admin [key_name_admin(user)] has [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
+	BLACKBOX_LOG_ADMIN_VERB("Toggle Camera Updates")

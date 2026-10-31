@@ -43,8 +43,8 @@
 	var/crew_hud = DATA_HUD_CREW //MONKE, lets silicons tell who is crew.
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/bodycamera/builtInCamera = null
-	var/updating = FALSE //portable camera camerachunk update
+	///The camera built into us, lets us be seen through camera consoles
+	var/obj/machinery/camera/silicon/builtInCamera
 	///Whether we have been emagged
 	var/emagged = FALSE
 	var/centcom = FALSE
