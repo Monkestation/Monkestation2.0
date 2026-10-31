@@ -91,6 +91,9 @@
 		flags_inv = HIDEFACIALHAIR | HIDESNOUT
 	else
 		flags_inv = HIDEFACIALHAIR
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.refresh_obscured()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/neck/maid_neck_cover

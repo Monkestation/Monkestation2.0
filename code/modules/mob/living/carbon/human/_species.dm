@@ -788,7 +788,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 // MONKESTATION ADDITION START
 	if(mutant_bodyparts["ipc_screen"])
-		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || !source.is_face_visible() || !noggin)
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || (source.obscured_slots & HIDEFACE) || !noggin)
 			bodyparts_to_add -= "ipc_screen"
 // MONKESTATION ADDITION END
 
@@ -1000,7 +1000,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+			if((H.bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
 				if(!(I.supports_variations_flags & DIGITIGRADE_VARIATIONS))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))

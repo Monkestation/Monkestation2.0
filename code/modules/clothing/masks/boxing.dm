@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 		user.update_worn_mask()
 		if(iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
+			carbon_user.refresh_obscured()
 			carbon_user.update_body_parts()
 		return TRUE
 
