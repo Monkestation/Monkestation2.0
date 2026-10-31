@@ -161,6 +161,19 @@
 	var/tgui_theme = PDA_THEME_NTOS
 	/// Should we play a sound upon injecting someone?
 	var/injection_sound = 'sound/items/autoinjector.ogg'
+	/// How long it takes to inject through thick clothing, if we're allowed to at all.
+	var/pierce_delay = 2 SECONDS
+	/// MOD themes whose wearers we inject through without the [pierce_delay].
+	var/list/instant_pierce_mod_themes
+	/// Reagents that can't be injected into someone who already has this many units of them.
+	var/static/alist/capped_reagent_types = alist(
+		/datum/reagent/medicine/haloperidol = 10,
+		/datum/reagent/peaceborg/tire = 10,
+		/datum/reagent/toxin/fentanyl = 10,
+		/datum/reagent/toxin/sodium_thiopental = 10,
+		/datum/reagent/toxin/staminatoxin = 10,
+		/datum/reagent/toxin/sulfonal = 10,
+	)
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
@@ -190,9 +203,23 @@
 	if(!injectee.reagents) // They should have reagents, but just in case.
 		balloon_alert(user, "unable to inject!")
 		return
-	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
+	if(over_reagent_cap(injectee, user))
+		return
+	var/needs_pierce = !injectee.can_inject(user, user.zone_selected)
+	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : NONE)))
 		balloon_alert(user, "[parse_zone(user.zone_selected)] is blocked!")
 		return
+	if(needs_pierce)
+		var/obj/item/mod/control/suit = locate(/obj/item/mod/control) in injectee.get_equipped_items()
+		if(!is_type_in_list(suit?.theme, instant_pierce_mod_themes))
+			injectee.visible_message(
+				span_danger("[user] is trying to inject [injectee]!"),
+				span_userdanger("[user] is trying to inject you!"),
+			)
+			if(!do_after(user, pierce_delay, injectee))
+				return
+			if(!has_reagents_for_injection(user) || over_reagent_cap(injectee, user))
+				return
 	var/datum/reagents/reagent_injector = create_reagent_injector()
 	to_chat(injectee, span_warning("You feel a tiny prick!"))
 	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent_typepath ? selected_reagent_typepath.name : selected_recipe_id])."))
@@ -268,6 +295,24 @@
 				return FALSE
 		return TRUE
 	balloon_alert(user, "no reagent selected!")
+	return FALSE
+
+/// Checks if the next injection contains a capped reagent that the target already has too much of.
+/obj/item/reagent_containers/borghypo/proc/over_reagent_cap(mob/living/carbon/injectee, mob/user)
+	var/list/datum/reagent/shot_reagent_typepaths = list()
+	if(selected_reagent_typepath)
+		shot_reagent_typepaths += selected_reagent_typepath
+	else if(selected_recipe_id)
+		for(var/reagent_name in saved_recipes[selected_recipe_id])
+			var/datum/reagent/reagent_typepath = GLOB.name2reagent[reagent_name]
+			if(reagent_typepath)
+				shot_reagent_typepaths += reagent_typepath
+	for(var/datum/reagent/reagent_typepath as anything in shot_reagent_typepaths)
+		var/cap = capped_reagent_types[reagent_typepath]
+		if(isnull(cap) || injectee.reagents.get_reagent_amount(reagent_typepath) < cap)
+			continue
+		balloon_alert(user, "too much [reagent_typepath.name] in [injectee]!")
+		return TRUE
 	return FALSE
 
 /// Creates the reagents.
@@ -473,10 +518,16 @@
 	recharge_time = 2 SECONDS
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
+	instant_pierce_mod_themes = list(
+		/datum/mod_theme/syndicate,
+		/datum/mod_theme/elite,
+		/datum/mod_theme/infiltrator,
+	)
 
 /// Ninja medical cyborg hypospray.
 /obj/item/reagent_containers/borghypo/syndicate/ninja
 	name = "ninja cyborg hypospray"
+	instant_pierce_mod_themes = list(/datum/mod_theme/ninja)
 	desc = "An experimental piece of Ninja technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. \
 		Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
 	icon_state = "borghypo_n"
