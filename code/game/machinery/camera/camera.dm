@@ -390,24 +390,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	if(special_camera)
 		return
 	var/xray_module = isXRay(TRUE) ? "xray" : ""
-	if(!camera_enabled || (machine_stat & EMPED))
+	if(!camera_enabled)
 		icon_state = "[xray_module][base_icon_state]_off"
 		return ..()
-	icon_state = "[xray_module][base_icon_state]"
+	if(machine_stat & EMPED)
+		icon_state = "[xray_module][base_icon_state]_emp"
+		return ..()
+	icon_state = "[xray_module][base_icon_state][in_use_lights ? "_in_use" : ""]"
 	return ..()
 
 /obj/machinery/camera/update_overlays()
 	. = ..()
-	if(special_camera)
+	if(special_camera || !camera_enabled)
 		return
-	var/xray_module = isXRay(TRUE) ? "xray" : ""
-	if(machine_stat & EMPED)
-		. += "[xray_module][base_icon_state]_emp"
-		. += emissive_appearance(icon, "[xray_module][base_icon_state]_emp", src, alpha = src.alpha)
-		return
-	if(camera_enabled)
-		. += "[xray_module][base_icon_state]_[in_use_lights ? "in_use" : "on"]"
-		. += emissive_appearance(icon, "[xray_module][base_icon_state]_[in_use_lights ? "in_use" : "on"]", src, alpha = src.alpha)
+	// our camera sprites are animated as a whole, so every lit state has a matching one with just its lights
+	. += emissive_appearance(icon, "[icon_state]_emissive", src, alpha = src.alpha)
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
