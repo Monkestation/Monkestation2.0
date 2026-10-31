@@ -44,6 +44,7 @@
 				current_record["name"] = person.name
 				current_record["rank"] = person.rank
 				current_record["species"] = person.species
+				current_record["voice"] = person.voice
 				current_record["wanted"] = person.wanted_status
 
 				all_records += list(current_record)

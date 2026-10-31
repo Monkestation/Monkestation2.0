@@ -243,6 +243,11 @@
 			var/obj/item/clothing/clothing_target = item_target
 			var/obj/item/clothing/picked_clothing = picked_item
 			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
+		if(istype(item_target, /obj/item/clothing/mask) && ispath(picked_item, /obj/item/clothing/mask))
+			var/obj/item/clothing/mask/mask_used = item_target
+			var/obj/item/clothing/mask/mask_picked = picked_item
+			mask_used.voice_filter = initial(mask_picked.voice_filter)
+			mask_used.use_radio_beeps_tts = initial(mask_picked.use_radio_beeps_tts)
 	if(initial(picked_item.greyscale_config) && initial(picked_item.greyscale_colors))
 		atom_target.icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config), initial(picked_item.greyscale_colors))
 	else
@@ -873,10 +878,47 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
+/obj/item/clothing/mask/chameleon/proc/after_input_check(mob/user)
+	if(QDELETED(user) || QDELETED(src) || !user.client || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 
 	if(chameleon_action.hidden)
 		return ..()
+
+	if(voice_change)
+		voice_override = null
+	else if(SStts.tts_enabled)
+		var/popup_input = tgui_input_list(user, "Choose Action", "Chameleon Mask", list("Spoof Crew Manifest Voice", "Spoof Any Voice", "Cancel"))
+		if(!popup_input || !after_input_check(user))
+			return
+		switch(popup_input)
+			if("Spoof Crew Manifest Voice")
+				var/list/possible_voices = list()
+				for(var/datum/record/crew/target in GLOB.manifest.general)
+					if(target.voice && (target.voice in SStts.available_speakers))
+						possible_voices += target.name
+					CHECK_TICK
+				var/voice_choice = tgui_input_list(user, "Choose what voice to use as a disguise", "Voice Selection", possible_voices)
+				if(isnull(voice_choice) || !after_input_check(user))
+					to_chat(user, span_warning("No choice selected, audible voice changing disabled."))
+					voice_override = null
+				else
+					var/datum/record/crew/crew_record = find_record(voice_choice)
+					if(crew_record?.voice && (crew_record.voice in SStts.available_speakers))
+						voice_override = crew_record.voice
+					else
+						to_chat(user, span_warning("Crewmember's record's voice has been changed, please select another."))
+						voice_override = null
+			if("Spoof Any Voice")
+				var/voice_choice = tgui_input_list(user, "Choose what voice to use as a disguise", "Voice Selection", SStts.available_speakers)
+				if(isnull(voice_choice) || !after_input_check(user))
+					to_chat(user, span_warning("No choice selected, audible voice changing disabled."))
+					voice_override = null
+				else
+					voice_override = voice_choice
 
 	voice_change = !voice_change
 	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
