@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	armor_type = /datum/armor/mask_gas
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	voice_filter = "lowpass=f=750,volume=2"
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -284,6 +285,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	has_fov = FALSE
 	starting_filter_type = /obj/item/gas_filter/clown
 	var/list/clownmask_designs = list()
+	voice_filter = null // performer masks expect to be talked through
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman

@@ -26,6 +26,8 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_DELTA_SIRENS,
 	CHANNEL_ADMIN_SOUNDS,
 	CHANNEL_SHUTTLES,
+	CHANNEL_TTS,
+	CHANNEL_TTS_RADIO,
 ))
 
 GLOBAL_LIST_INIT(proxy_sound_channels, list(
@@ -43,6 +45,8 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_VOICES,
 	CHANNEL_ADMIN_SOUNDS,
 	CHANNEL_SHUTTLES,
+	CHANNEL_TTS,
+	CHANNEL_TTS_RADIO,
 ))
 
 GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())

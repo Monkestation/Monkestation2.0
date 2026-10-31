@@ -9,6 +9,7 @@ import {
   Flex,
   Input,
   NumberInput,
+  Slider,
   Stack,
   Tooltip,
 } from 'tgui/components';
@@ -363,6 +364,26 @@ export const FeatureNumberInput = (
     />
   );
 };
+
+export function FeatureSliderInput(
+  props: FeatureValueProps<number, number, FeatureNumericData>,
+) {
+  const { serverData, handleSetValue, value } = props;
+
+  return (
+    <Slider
+      onChange={(e, value) => {
+        handleSetValue(value);
+      }}
+      disabled={!serverData}
+      minValue={serverData?.minimum || 0}
+      maxValue={serverData?.maximum || 100}
+      step={serverData?.step || 1}
+      value={value ?? serverData?.minimum ?? 0}
+      stepPixelSize={10}
+    />
+  );
+}
 
 export const FeatureValueInput = (props: {
   feature: Feature<unknown>;

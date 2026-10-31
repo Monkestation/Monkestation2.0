@@ -15,6 +15,10 @@
 	master_category = /datum/log_category/debug
 #endif
 
+/datum/log_category/debug_tts
+	category = LOG_CATEGORY_DEBUG_TTS
+	master_category = /datum/log_category/debug
+
 /datum/log_category/debug_href
 	category = LOG_CATEGORY_DEBUG_HREF
 	master_category = /datum/log_category/debug

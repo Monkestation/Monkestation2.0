@@ -41,6 +41,8 @@
 					new_latejoin += shuttle_chair
 				if(isnull(console))
 					console = locate() in arrival_turf
+					if(SStts.tts_enabled && console)
+						console.voice = SStts.tram_voice
 		areas += arrival_area
 
 	if(SSjob.latejoin_trackers.len)

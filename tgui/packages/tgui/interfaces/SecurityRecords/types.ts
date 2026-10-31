@@ -23,6 +23,7 @@ export type SecurityRecord = {
   note: string;
   rank: string;
   species: string;
+  voice: string;
   wanted_status: string;
 };
 

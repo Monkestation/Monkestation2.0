@@ -60,6 +60,8 @@
 	var/sound
 	/// Used for the honk borg emote.
 	var/vary = FALSE
+	/// If this emote's sound is affected by TTS pitch
+	var/affected_by_pitch = TRUE
 	/// Can only code call this event instead of the player.
 	var/only_forced_audio = FALSE
 	/// The cooldown between the uses of the emote.
@@ -126,11 +128,16 @@
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		var/tmp_vary = should_vary(user)
+		var/frequency = null
+		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
+			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * SIGN(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
+			tmp_vary = TRUE // playsound only uses the frequency on varied sounds
 		playsound(
 			source = user,
 			soundin = tmp_sound,
 			vol = get_emote_volume(user),
 			vary = tmp_vary,
+			frequency = frequency,
 			extrarange = extra_range,
 			falloff_exponent = falloff_exponent,
 			mixer_channel = get_mixer_channel(user, params, type_override, intentional)

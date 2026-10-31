@@ -39,6 +39,18 @@
 
 	update_appearance()
 
+	if(!SStts.tts_enabled)
+		return
+
+	voice = SStts.random_tts_voice()
+	if(SStts.pitch_enabled)
+		if(findtext(voice, "Woman"))
+			pitch = 12 // up-pitch by one octave
+		else
+			pitch = 24 // up-pitch by 2 octaves
+	else
+		voice_filter = "rubberband=pitch=1.5" // Use the filter to pitch up if we can't naturally pitch up.
+
 /mob/living/basic/parrot/poly/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback) // we do the memory writing stuff on death, but this is important to yeet as fast as we can if we need to destroy
 	roundend_callback = null
