@@ -1436,7 +1436,6 @@
 	set_opacity(0)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
-	update_freelook_sight()
 	sleep(0.4 SECONDS)
 	set_density(FALSE)
 	if(multi_tile)
@@ -1541,7 +1540,6 @@
 		set_opacity(TRUE)
 		if(multi_tile)
 			filler.set_opacity(TRUE)
-	update_freelook_sight()
 	sleep(0.1 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
