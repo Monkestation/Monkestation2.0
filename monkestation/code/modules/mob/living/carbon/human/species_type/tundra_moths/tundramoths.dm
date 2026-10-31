@@ -20,6 +20,13 @@
 	coldmod = 0.67
 	heatmod = 1.5
 
+/datum/species/moth/tundra/create_pref_unique_perks()
+	. = list()
+	// tundra limbs aren't moth limbs, so no chest arms and no fragility
+	for(var/list/perk as anything in ..())
+		if(!(perk[SPECIES_PERK_NAME] in list("Handy", "Fragile")))
+			. += list(perk)
+
 
 //Body parts
 /obj/item/bodypart/head/tundramoth
