@@ -228,4 +228,7 @@
 	window.send_message("metadata", metadata)
 
 /datum/tgui_panel/proc/send_hotkey_mode()
-	window.send_message("verbs/hotkey_mode", list("hotkeys" = client.hotkeys))
+	window.send_message("verbs/hotkey_mode", list(
+		"hotkeys" = client.hotkeys,
+		"tab_autocomplete" = client.prefs.read_preference(/datum/preference/toggle/commandbar_tab_autocomplete),
+	))
