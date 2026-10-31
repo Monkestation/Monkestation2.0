@@ -28,6 +28,7 @@
 		if(!has_status_effect_from_source(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ))
 			to_chat(src, span_danger("Nerve gas in the air has put you in stasis!"))
 			apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
+			adjust_power_level(-SLIME_MAX_POWER)
 			ai_controller?.set_blackboard_key(BB_SLIME_RABID, FALSE)
 	else if(has_status_effect_from_source(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ))
 		to_chat(src, span_notice("You wake up from the stasis."))
@@ -63,4 +64,14 @@
 			adjust_nutrition(-2.5 * seconds_per_tick)
 			amount_grown++
 
+		if(powerlevel < SLIME_MAX_POWER && SPT_PROB(30-powerlevel*2, seconds_per_tick))
+			adjust_power_level(1)
+
+	else if (powerlevel < SLIME_MEDIUM_POWER && SLIME_HUNGER_NUTRITION <= nutrition && SPT_PROB(25-powerlevel*5, seconds_per_tick))
+		adjust_power_level(1)
+
 	update_mob_action_buttons()
+
+///Given a number to adjust by, changes our powerlevel.
+/mob/living/basic/slime/proc/adjust_power_level(to_adjust)
+	powerlevel = clamp(powerlevel + to_adjust, SLIME_MIN_POWER, SLIME_MAX_POWER)

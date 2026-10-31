@@ -158,6 +158,7 @@
 		return
 
 	var/new_nutrition = floor(nutrition * 0.9)
+	var/new_powerlevel = floor(powerlevel * 0.25)
 	var/turf/drop_loc = drop_location()
 
 	var/list/slime_friends = list()
@@ -184,6 +185,7 @@
 	for(var/mob/living/basic/slime/slime as anything in list(src, baby))
 		if(ckey) // Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 			slime.set_nutrition(new_nutrition)
+		slime.powerlevel = new_powerlevel
 		slime.mutation_chance = mutation_chance ? clamp(mutation_chance + rand(-5, 5), 0, 100) : 0
 
 	set_life_stage(SLIME_LIFE_STAGE_BABY)

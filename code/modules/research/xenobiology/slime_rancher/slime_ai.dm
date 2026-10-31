@@ -138,7 +138,7 @@
 	refresh_wanted_targets()
 	balloon_alert_to_viewers("shakes [p_them()]self off")
 
-/// What a slime will chase down and drain. Grudges count too, but only if they're actually edible.
+/// What a slime will chase down and drain. Grudges count too, even inedible ones - those just get fought.
 /datum/targeting_strategy/slime_food
 
 /datum/targeting_strategy/slime_food/can_attack(mob/living/living_mob, atom/target, vision_range)
@@ -149,9 +149,7 @@
 
 	if(target in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
 		var/datum/targeting_strategy/grudge_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends)
-		if(!grudge_strategy.can_attack(living_mob, target, vision_range))
-			return FALSE
-		return hunter.buckled == target || hunter.can_feed_on(target, silent = TRUE)
+		return grudge_strategy.can_attack(living_mob, target, vision_range)
 
 	var/mob/living/candidate = target
 	// checked before the latched-meal line, so flipping either on mid-meal makes us let go
@@ -208,7 +206,10 @@
 
 	var/atom/contained_in = slime_pawn.loc
 	if(!isturf(contained_in) && !ismob(contained_in) && !istype(contained_in, /obj/item/clothing/head/mob_holder))
-		controller.queue_behavior(/datum/ai_behavior/resist)
+		if(slime_pawn.obj_damage > contained_in.damage_deflection)
+			controller.queue_behavior(/datum/ai_behavior/slime_break_out)
+		else
+			controller.queue_behavior(/datum/ai_behavior/resist)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	var/mob/puller = slime_pawn.pulledby
@@ -219,6 +220,19 @@
 	if(HAS_TRAIT(slime_pawn, TRAIT_RESTRAINED))
 		controller.queue_behavior(/datum/ai_behavior/resist)
 		return SUBTREE_RETURN_FINISH_PLANNING
+
+/// Keeps hitting whatever we're stuck inside of
+/datum/ai_behavior/slime_break_out
+
+/datum/ai_behavior/slime_break_out/perform(seconds_per_tick, datum/ai_controller/controller)
+	. = ..()
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	var/atom/container = slime_pawn.loc
+	if(isturf(container) || QDELETED(container))
+		finish_action(controller, TRUE)
+		return
+	slime_pawn.melee_attack(container)
+	finish_action(controller, TRUE)
 
 /datum/ai_planning_subtree/use_mob_ability/slime_evolve
 	ability_key = BB_SLIME_EVOLVE
@@ -602,12 +616,13 @@
 		return
 
 	if(!slime_pawn.can_feed_on(target, silent = TRUE, check_adjacent = TRUE))
-		var/datum/ai_controller/basic_controller/slime/slime_controller = controller
-		slime_controller.ignore_target(target, SLIME_CHASE_GIVE_UP_TIME)
-		controller.clear_blackboard_key(target_key)
-		finish_action(controller, FALSE, target_key)
+		slime_pawn.melee_attack(target)
 		return
-	slime_pawn.start_feeding(target)
+	// a healthy player on their feet gets softened up a bit first
+	if(target.body_position != STANDING_UP || prob(20) || !target.client || target.health < 20)
+		slime_pawn.start_feeding(target)
+		return
+	slime_pawn.melee_attack(target)
 
 /datum/ai_behavior/slime_chase/hunt/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
@@ -696,6 +711,8 @@
 		return
 	if(slime_pawn.buckled == target || slime_pawn.can_feed_on(target, silent = TRUE, check_friendship = TRUE))
 		controller.queue_behavior(/datum/ai_behavior/slime_chase/hunt/pet, BB_CURRENT_PET_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	..()
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 #undef SLIME_REACH_DISTANCE
