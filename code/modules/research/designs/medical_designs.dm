@@ -1462,3 +1462,10 @@
 	id = "surgery_wing_reconstruction"
 	surgery = /datum/surgery/advanced/wing_reconstruction
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/antennae_reconstruction
+	name = "Antennae Reconstruction"
+	desc = "An experimental surgical procedure that reconstructs the damaged antennae of moth people. Requires Synthflesh."
+	id = "surgery_antennae_reconstruction"
+	surgery = /datum/surgery/advanced/antennae_reconstruction
+	research_icon_state = "surgery_head"
