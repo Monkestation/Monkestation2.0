@@ -52,6 +52,7 @@
 		subsystem = locate(life_subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
 	GLOB.infected_contact_mobs -= src
+	clear_pathogen_image()
 	if(imaginary_group)
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
@@ -209,10 +210,9 @@
 		if((borg.istate & ISTATE_HARM) && borg.stat != DEAD)
 			return TRUE
 	//anti-riot equipment is also anti-push
-	for(var/obj/item/I in M.held_items)
-		if(!isclothing(M))
-			if(prob(I.block_chance*2))
-				return
+	for(var/obj/item/I as anything in M.get_held_items())
+		if(!isclothing(M) && prob(I.block_chance*2))
+			return TRUE
 
 /mob/living/proc/can_mobswap_with(mob/other)
 	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
@@ -1136,7 +1136,10 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 			if(puller_art?.can_use(human_puller))
 				altered_grab_state += puller_art.grab_state_modifier
 				escape_chance += puller_art.grab_escape_chance_modifier
-		var/resist_chance = (escape_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE))
+			altered_grab_state--
+		///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		var/resist_chance = altered_grab_state ? (escape_chance / altered_grab_state) : 100
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -1779,7 +1782,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	//No one is left after we're gone, shut off inactive ones
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
-			controller.set_ai_status(AI_STATUS_OFF)
+			controller.set_ai_status(controller.get_expected_ai_status())
 
 	if(new_z)
 		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
@@ -1823,7 +1826,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user))
 		return
-	if(!user.get_empty_held_indexes())
+	if(!length(user.get_empty_held_indexes()))
 		to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
 	if(buckled)

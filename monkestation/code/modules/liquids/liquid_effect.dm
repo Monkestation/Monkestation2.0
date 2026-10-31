@@ -29,6 +29,7 @@
 	var/static/obj/effect/abstract/fire/small_fire/small_fire
 	var/static/obj/effect/abstract/fire/medium_fire/medium_fire
 	var/static/obj/effect/abstract/fire/big_fire/big_fire
+	var/static/alist/depth_overlays = alist()
 
 	var/mutable_appearance/displayed_content
 	/// State-specific message chunks for examine_turf()
@@ -136,9 +137,18 @@
 /obj/effect/abstract/liquid_turf/update_overlays()
 	. = ..()
 	var/number = liquid_state - 1
-	if(number != 0)
-		. += mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_spokesman = my_turf, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER)
-		. += mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_top", offset_spokesman = my_turf, plane =GAME_PLANE, layer = GATEWAY_UNDERLAY_LAYER)
+	if(number == 0)
+		return
+	var/offset = GET_TURF_PLANE_OFFSET(my_turf)
+	var/cache_key = "[number]_[offset]"
+	var/list/stage_overlays = depth_overlays[cache_key]
+	if(!stage_overlays)
+		stage_overlays = list(
+			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_const = offset, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER),
+			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_top", offset_const = offset, plane = GAME_PLANE, layer = GATEWAY_UNDERLAY_LAYER),
+		)
+		depth_overlays[cache_key] = stage_overlays
+	. += stage_overlays
 
 /obj/effect/abstract/liquid_turf/proc/set_fire_effect()
 	if(displayed_content)

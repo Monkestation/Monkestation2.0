@@ -169,7 +169,7 @@
 	update_id_inv()
 	update_worn_head()
 
-/mob/living/basic/possession_holder/update_worn_head()
+/mob/living/basic/possession_holder/update_worn_head(update_obscured = FALSE)
 	remove_overlay(2)
 
 	if(head)
