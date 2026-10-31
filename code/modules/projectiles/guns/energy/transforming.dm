@@ -1112,6 +1112,8 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/new_target = target
 		if(new_target.mind)
+			if(length(new_target.mind.antag_datums))
+				return
 			if(is_assistant_job(new_target.mind.assigned_role))
 				var/mob/living/carbon/C = target
 				C.add_mood_event("tased", /datum/mood_event/tased)
