@@ -657,6 +657,16 @@
 		'sound/effects/magic/void_deflect3.ogg',
 	)
 
+/datum/sound_effect/reel
+	key = SFX_REEL
+	file_paths = list(
+		'sound/items/reel/reel1.ogg',
+		'sound/items/reel/reel2.ogg',
+		'sound/items/reel/reel3.ogg',
+		'sound/items/reel/reel4.ogg',
+		'sound/items/reel/reel5.ogg',
+	)
+
 /datum/sound_effect/fish_pickup
 	key = SFX_FISH_PICKUP
 	file_paths = list(
