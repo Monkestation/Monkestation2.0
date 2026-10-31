@@ -1109,7 +1109,7 @@
 	C.add_mood_event("tased", /datum/mood_event/tased)
 	to_chat(target, span_warning("As the beam hits you, body seems to crumple under its uselessness."))
 	SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-	playsound(src, 'sound/weapons/taserhit.ogg', 80, TRUE, -1)
+	playsound(src, 'sound/items/weapons/taserhit.ogg', 80, TRUE, -1)
 	C.stamina.adjust(-50)
 	C.Paralyze(10 SECONDS)
 	C.set_jitter_if_lower(40 SECONDS)
