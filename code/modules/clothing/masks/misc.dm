@@ -12,10 +12,10 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsuneblack/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/kitsuneblack/click_alt(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/kitsunewhite
@@ -32,10 +32,10 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsunewhite/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/kitsunewhite/click_alt(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/ookmask
@@ -66,6 +66,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "sec_bandana_default"
 	actions_types = null
+	adjustable = FALSE
 
 	var/obj/item/clothing/suit/armor/secduster/suit
 

@@ -33,6 +33,8 @@
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
+	///Does this organ have any bodyshapes to pass to it's ownerlimb?
+	var/external_bodyshapes = NONE
 
 	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
 	var/prev_damage = 0
@@ -47,6 +49,10 @@
 	var/useable = TRUE
 	/// Food reagents if the organ is edible
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	/// Foodtypes if the organ is edible
+	var/foodtype_flags = RAW | MEAT | GORE
+	/// Overrides tastes if the organ is edible
+	var/food_tastes
 	/// The size of the reagent container if the organ is edible
 	var/reagent_vol = 10
 
@@ -76,8 +82,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
-			foodtypes = RAW | MEAT | GORE,\
+			foodtypes = foodtype_flags,\
 			volume = reagent_vol,\
+			tastes = food_tastes,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 
 /*

@@ -536,8 +536,11 @@ GLOBAL_LIST_EMPTY(species_list)
 			continue
 		if(check_mind && !ai.mind)
 			continue
-		if(!isnull(z) && z != ai.z && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
-			continue
+		if(!isnull(z))
+			var/turf/ai_turf = get_turf(ai)
+			var/ai_z = ai_turf.z
+			if(z != ai_z && (!is_station_level(z) || !is_station_level(ai_z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+				continue
 		. += ai
 
 //Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
