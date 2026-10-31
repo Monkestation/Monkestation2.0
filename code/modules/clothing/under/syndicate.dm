@@ -150,7 +150,7 @@
 	name = "combat uniform"
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
-	can_adjust = FALSE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
