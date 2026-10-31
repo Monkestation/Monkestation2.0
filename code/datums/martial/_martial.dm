@@ -133,7 +133,7 @@
 
 /datum/martial_art/proc/remove(mob/living/holder_living)
 	if(!istype(holder_living) || !holder_living.mind || holder_living.mind.martial_art != src)
-		return
+		return FALSE
 	on_remove(holder_living)
 	if(base)
 		base.teach(holder_living)
@@ -141,6 +141,7 @@
 		var/datum/martial_art/default = holder_living.mind.default_martial_art
 		default.teach(holder_living)
 	holder = null
+	return TRUE
 
 /datum/martial_art/proc/on_remove(mob/living/holder_living)
 	if(help_verb)
