@@ -587,6 +587,28 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
 #FORBID_ADMIN_PROFILING
 
+## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
+#TTS_HTTP_URL http://localhost:5002
+
+## Token that can be used to prevent misuse of your TTS server that you've set up.
+#TTS_HTTP_TOKEN coolio
+
+## The maximum number of concurrent tts http requests that can be made by the server at once.
+#TTS_MAX_CONCURRENT_REQUESTS 4
+
+## The number of seconds before tts https requests timeout (0 for infinite not recommended)
+#TTS_HTTP_TIMEOUT_SECONDS 30
+
+## Add voices to the TTS voice blacklist.
+#TTS_VOICE_BLACKLIST Sans Undertale
+#TTS_VOICE_BLACKLIST Papyrus Undertale
+
+## Override the voice that the Tram system uses. If left undefined, the tram will pick a random voice.
+#TTS_TRAM_ANNOUNCER_OVERRIDE Sans Undertale
+
+## Override the voice that computers use. If left undefined, the subsystem will pick a random consistent computer voice.
+#TTS_COMPUTER_VOICE_OVERRIDE Papyrus Undertale
+
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
 TOAST_NOTIFICATION_ON_INIT

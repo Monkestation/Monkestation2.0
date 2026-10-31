@@ -32,6 +32,10 @@
 #define CHANNEL_DELTA_SIRENS 996
 #define CHANNEL_ADMIN_SOUNDS 995
 #define CHANNEL_SHUTTLES 994
+/// Mixer channel for TTS speech, the sounds themselves play on random channels
+#define CHANNEL_TTS 993
+/// Mixer channel for TTS heard over the radio
+#define CHANNEL_TTS_RADIO 992
 
 /* Calculates the volume of a sound based on distance
  *
@@ -62,7 +66,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 993
+#define CHANNEL_HIGHEST_AVAILABLE 991
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
