@@ -1,0 +1,5 @@
+author: "chumtoadmonke"
+delete-after: True
+changes:
+  - rscdel: "Removed infectious exo-locomotion program"
+  - balance: "Brainwashing nanites will check if you have a mindshield"
