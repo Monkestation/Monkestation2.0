@@ -22,6 +22,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_power = 2
 	light_on = FALSE
 	rclick_always_context_menu = TRUE
+
+	// to-do: move this to /mob parent without breaking shit, dunno think it might
+	var/list/speak_emote = list("wails", "laments", "weeps", "bemoans", "mourns", "malds", "complains", "bewails", "cries", "moans", "mutters", "whispers", "murmurs", "grieves", "regrets", "sorrows")
+
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -179,6 +183,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	QDEL_NULL(spawners_menu)
 	QDEL_NULL(minigames_menu)
+	return ..()
+
+/mob/dead/observer/say_mod(input, list/message_mods = list())
+	if(length(speak_emote))
+		verb_say = pick(speak_emote)
 	return ..()
 
 /*
