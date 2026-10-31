@@ -379,7 +379,7 @@ export function FeatureSliderInput(
       minValue={serverData?.minimum || 0}
       maxValue={serverData?.maximum || 100}
       step={serverData?.step || 1}
-      value={value}
+      value={value ?? serverData?.minimum ?? 0}
       stepPixelSize={10}
     />
   );

@@ -18,3 +18,7 @@
 #define TTS_GHOST_RADIO "GHOST RADIO"
 #define TTS_BLIPS_MASCULINE "Masculine"
 #define TTS_BLIPS_FEMININE "Feminine"
+/// Blip base preference that uses the character's voice pack barks instead of the TTS server's blips
+#define TTS_BLIPS_VOICE_PACK "Voice Pack"
+/// The blip_base of atoms that bark with their voice pack instead of using the TTS server's blips
+#define TTS_BLIP_BASE_VOICE_PACK "voice_pack"

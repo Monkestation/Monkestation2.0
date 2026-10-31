@@ -59,19 +59,22 @@
 	return ..()
 
 /datum/preference/choiced/tts_blip_base/init_possible_values()
-	return list(TTS_BLIPS_MASCULINE, TTS_BLIPS_FEMININE)
+	return list(TTS_BLIPS_VOICE_PACK, TTS_BLIPS_MASCULINE, TTS_BLIPS_FEMININE)
 
 /datum/preference/choiced/tts_blip_base/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(SStts.tts_enabled)
-		if(value == TTS_BLIPS_MASCULINE)
-			target.blip_base = "male"
-		else
-			target.blip_base = "female"
+		switch(value)
+			if(TTS_BLIPS_VOICE_PACK)
+				target.blip_base = TTS_BLIP_BASE_VOICE_PACK
+			if(TTS_BLIPS_MASCULINE)
+				target.blip_base = "male"
+			else
+				target.blip_base = "female"
 	else
 		target.blip_base = "male"
 
 /datum/preference/choiced/tts_blip_base/create_default_value()
-	return pick(list("Masculine", "Feminine"))
+	return TTS_BLIPS_VOICE_PACK
 
 /datum/preference/numeric/tts_blip_number
 	savefile_identifier = PREFERENCE_CHARACTER

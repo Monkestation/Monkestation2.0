@@ -5,6 +5,8 @@
 	hud_type = /datum/hud/living
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
+	// Living mobs bark with their voice pack instead of using the TTS server's blips, players pick their own in prefs
+	blip_base = TTS_BLIP_BASE_VOICE_PACK
 
 	/// Default typepath of the subsystem used for Life()
 	/// If this mob has a client/mind, it will always use SSclient_mobs.
