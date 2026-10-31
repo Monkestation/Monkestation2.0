@@ -28,8 +28,7 @@
 	atom_storage.max_slots = 3
 	atom_storage.remove_all()
 	atom_storage.set_holdable(list(
-		/obj/item/grenade/flashbang,
-		/obj/item/grenade/chem_grenade/teargas,
+		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash/handheld,
@@ -42,7 +41,12 @@
 		/obj/item/clothing/gloves,
 		/obj/item/citationinator, //monkestation edit
 		/obj/item/food/spaghetti/security, //monkestation change: tactical belt
-		/obj/item/radio
+		/obj/item/radio,
+		/obj/item/restraints/legcuffs/bola,
+		/obj/item/gps,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/lighter,
+		/obj/item/taperecorder,
 	))
 	PopulateContents()
 
@@ -68,7 +72,7 @@
 	id = MARTIALART_JUDO
 	display_combos = TRUE
 	max_streak_length = 12
-	combo_timer = 2.5  SECONDS
+	combo_timer = 3.5  SECONDS
 
 	help_verb = /mob/living/carbon/human/proc/judo_help
 
@@ -127,7 +131,7 @@
 	defender.visible_message("<span class='warning'>[attacker] strikes [defender] in the head with [attacker.p_their()] palm!</span>", \
 						"<span class='userdanger'>[attacker] strikes you with [attacker.p_their()] palm!</span>")
 	playsound(get_turf(attacker), 'sound/items/weapons/slap.ogg', 40, TRUE, -1)
-	defender.apply_damage(10, STAMINA)
+	defender.apply_damage(25, STAMINA)
 	defender.adjust_confusion(5 SECONDS)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Discombobulate")
 	return MARTIAL_ATTACK_SUCCESS
@@ -219,7 +223,7 @@
 		return MARTIAL_ATTACK_INVALID
 
 	add_to_streak("E", defender)
-	check_streak(attacker, defender)
+	return check_streak(attacker, defender)
 
 /datum/martial_art/corpjudo/harm_act(mob/living/attacker, mob/living/defender)
 	if(attacker == defender || !can_use(attacker))
