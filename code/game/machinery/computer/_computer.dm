@@ -7,6 +7,7 @@
 	integrity_failure = 0.5
 	armor_type = /datum/armor/machinery_computer
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	/// How bright we are when turned on.
 	light_inner_range = 0.1
 	light_outer_range = 2
@@ -36,6 +37,11 @@
 	. = ..()
 
 	power_change()
+
+/obj/machinery/computer/post_machine_initialize()
+	. = ..()
+	if(SStts.tts_enabled)
+		voice = SStts.computer_voice
 
 /obj/machinery/computer/process(seconds_per_tick)
 	if(machine_stat & (NOPOWER|BROKEN))

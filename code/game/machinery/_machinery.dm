@@ -96,6 +96,7 @@
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.3
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT

@@ -456,6 +456,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(mask.use_radio_beeps_tts)
 		special_filter |= TTS_FILTER_RADIO
 
+/mob/living/silicon/get_tts_voice(list/filter, list/special_filter)
+	. = ..()
+	special_filter |= TTS_FILTER_SILICON
+
 /mob/living/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
 
