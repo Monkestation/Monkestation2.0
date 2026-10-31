@@ -1180,7 +1180,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 		return
 	if(last_used_shell)
 		var/mob/living/silicon/ai/AI = owner
-		AI.deploy_to_shell(last_used_shell)
+		AI.select_shell(last_used_shell)
 	else
 		Remove(owner) //If the last shell is blown, destroy it.
 
