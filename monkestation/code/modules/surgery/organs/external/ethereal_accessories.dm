@@ -12,7 +12,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/ethereal_horns
 
 /datum/bodypart_overlay/mutant/ethereal_horns
-	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+	)
 	feature_key = "ethereal_horns"
 	palette = /datum/color_palette/generic_colors
 	palette_key = "ethereal_color"
@@ -41,7 +44,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/ethereal
 
 /datum/bodypart_overlay/mutant/tail/ethereal
-	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "ethereal_tail"
 	palette = /datum/color_palette/generic_colors
 	palette_key = "ethereal_color"

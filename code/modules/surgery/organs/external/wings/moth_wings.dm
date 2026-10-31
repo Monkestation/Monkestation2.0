@@ -82,7 +82,10 @@
 ///Moth wing bodypart overlay, including burn functionality!
 /datum/bodypart_overlay/mutant/wings/moth
 	feature_key = "moth_wings"
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_wings/burnt_off
 	///Are we burned? If so we draw differently

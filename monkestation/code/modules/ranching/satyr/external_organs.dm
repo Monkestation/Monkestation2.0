@@ -24,7 +24,7 @@
 		qdel(headbutt)
 
 /datum/bodypart_overlay/mutant/satyr_fluff
-	layers = EXTERNAL_ADJACENT //| EXTERNAL_FRONT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER) //| EXTERNAL_FRONT
 	feature_key = "satyr_fluff"
 	color_source = ORGAN_COLOR_HAIR
 
@@ -53,7 +53,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/satyr_horns
 
 /datum/bodypart_overlay/mutant/satyr_horns
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "satyr_horns"
 
 /datum/bodypart_overlay/mutant/satyr_horns/get_global_feature_list()
@@ -84,7 +87,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_tail
 
 /datum/bodypart_overlay/mutant/oni_tail
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "oni_tail"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 
@@ -114,7 +120,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_wings
 
 /datum/bodypart_overlay/mutant/oni_wings
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "oni_wings"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 
@@ -144,7 +153,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/oni_horns
 
 /datum/bodypart_overlay/mutant/oni_horns
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "oni_horns"
 	color_source = DNA_MUTANT_COLOR_BLOCK
 

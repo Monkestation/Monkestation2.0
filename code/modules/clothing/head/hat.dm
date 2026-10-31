@@ -58,6 +58,7 @@
 	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /datum/armor/bio_hood_plague
 	bio = 100
