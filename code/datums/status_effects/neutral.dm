@@ -584,7 +584,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	//Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
-	var/list/bannedtypes = list(/obj/item/melee/baton, /obj/item/borg/stun, /obj/item/gun)
+	var/list/bannedtypes = list(/obj/item/melee/baton, /obj/item/borg/stun)
 
 /datum/status_effect/weapon_lock/on_creation(mob/living/new_owner, ...)
 	. = ..()
