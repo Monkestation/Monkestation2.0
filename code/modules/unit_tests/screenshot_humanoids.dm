@@ -29,9 +29,10 @@
 	tundramoth.dna.features["moth_antennae"] = "Tundra"
 	tundramoth.dna.features["moth_markings"] = "Tundra"
 	tundramoth.dna.features["moth_wings"] = "Tundra"
-	tundramoth.set_species(/datum/species/moth/tundra)
+	tundramoth.limb_style = LIMB_STYLE_TUNDRA
+	tundramoth.set_species(/datum/species/moth)
 	tundramoth.equipOutfit(/datum/outfit/job/doctor, visualsOnly = TRUE)
-	test_screenshot("[/datum/species/moth/tundra]", get_flat_icon_for_all_directions(tundramoth))
+	test_screenshot("[/datum/species/moth]_tundra", get_flat_icon_for_all_directions(tundramoth))
 
 	var/mob/living/carbon/human/apid = allocate(/mob/living/carbon/human/dummy/consistent)
 	apid.dna.features["apid_antenna"] = "Horns"

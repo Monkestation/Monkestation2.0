@@ -123,8 +123,8 @@
 	var/list/alternative_laughs
 	///stored list of alternate deathgasps
 	var/list/alternative_deathgasps
-	///if we should greyscale limbs or set a preset color to them
-	var/greyscale_limbs = FALSE
+	///Which look our limbs use if our species has TRAIT_GREYSCALE_TOGGLE, see the LIMB_STYLE defines
+	var/limb_style = LIMB_STYLE_CLASSIC
 
 	///Boolean on whether symptoms for the mob has been created.
 	var/created_symptoms = FALSE
