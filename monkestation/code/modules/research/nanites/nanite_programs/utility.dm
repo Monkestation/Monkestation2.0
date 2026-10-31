@@ -55,7 +55,7 @@
 /datum/nanite_program/research
 	name = "Research Network Integration"
 	desc = "The nanites contribute processing power to the research network, generating useful data and heat. Higher usage rates will consume more nanites. Requires a live host."
-	rogue_types = list(/datum/nanite_program/spreading, /datum/nanite_program/mitosis) // it researches itself into oblivion
+	rogue_types = list(/datum/nanite_program/mitosis) // it researches itself into oblivion
 	use_rate = 0.5
 
 	var/research_speed
@@ -270,35 +270,6 @@
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
 /datum/nanite_program/access/on_trigger(comm_message)
 	access = host_mob.get_access()
-
-/datum/nanite_program/spreading
-	name = "Infective Exo-Locomotion"
-	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
-			resulting in an extremely infective strain of nanites."
-	use_rate = 1.50
-	rogue_types = list(/datum/nanite_program/aggressive_replication, /datum/nanite_program/necrotic)
-	var/spread_cooldown = 0
-
-/datum/nanite_program/spreading/active_effect()
-	if(world.time < spread_cooldown)
-		return
-	spread_cooldown = world.time + 50
-	var/list/mob/living/target_hosts = list()
-	for(var/mob/living/L in oview(5, host_mob))
-		if(!prob(25))
-			continue
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(L))
-			continue
-		target_hosts += L
-	if(!target_hosts.len)
-		return
-	var/mob/living/infectee = pick(target_hosts)
-	if(prob(100 - (infectee.getarmor(null, BIO))))
-		//this will potentially take over existing nanites!
-		infectee.AddComponent(/datum/component/nanites, 10)
-		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
-		infectee.investigate_log("was infected by spreading nanites with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
 	name = "Nanite Sting"
