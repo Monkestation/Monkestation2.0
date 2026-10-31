@@ -878,6 +878,7 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
+/// Checks if the user can still use the mask after waiting on an input
 /obj/item/clothing/mask/chameleon/proc/after_input_check(mob/user)
 	if(QDELETED(user) || QDELETED(src) || !user.client || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return FALSE

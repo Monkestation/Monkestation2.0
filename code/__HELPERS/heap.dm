@@ -20,6 +20,7 @@
 	return !length(L)
 
 //insert and place at its position a new node in the heap
+/// Adds an element to the heap, keeping it sorted
 /datum/heap/proc/insert(A)
 	L[++L.len] = A
 	swim(length(L))
@@ -69,6 +70,7 @@
 		return index * 2
 
 //Replaces a given node so it verify the heap condition
+/// Moves an element whose sort value changed back to the right place in the heap
 /datum/heap/proc/resort(A)
 	var/index = L.Find(A)
 

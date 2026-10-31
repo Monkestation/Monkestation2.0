@@ -49,6 +49,7 @@
 		playsound(speaking_pawn, speech_sound, 80, vary = TRUE)
 	finish_action(controller, TRUE)
 
+/// Makes the parrot imitate the TTS voice of whoever it heard say the phrase
 /datum/ai_behavior/perform_speech/parrot/proc/modify_voice(mob/living/speaking_pawn, list/speech)
 	if(SStts.available_speakers.Find(speech["voice"]))
 		speaking_pawn.voice = speech["voice"]

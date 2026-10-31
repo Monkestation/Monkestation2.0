@@ -1,4 +1,5 @@
 /atom/movable
+	/// The voice pack barks we make when talking
 	var/datum/atom_voice/atom_voice = null
 	/// When barks are queued, this gets passed to the bark proc. If long_bark_start_time doesn't match the args passed to the bark proc (if passed at all), then the bark simply doesn't play. Basic curtailing of spam~
 	var/long_bark_start_time = -1

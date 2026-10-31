@@ -6,23 +6,39 @@
 #define MUTE_VOLUME (1<<1)
 
 /datum/threed_sound
+	/// The atom the sound plays from and follows around
 	var/atom/parent
+	/// The sound we send to every listener
 	var/sound/our_sound
+	/// The file of the sound being played
 	var/sound_path
+	/// If mobs can start hearing this sound after it started playing
 	var/can_add_new_listeners = TRUE
+	/// Assoc list of the mobs hearing this sound to their sound status flags
 	var/list/mob/listeners = list()
+	/// Base volume of the sound, before falloff and the volume mixer
 	var/volume = 50
+	/// How far away the sound can be heard, a number or a view size string
 	var/sound_range
+	/// Horizontal distance past which listeners get muted, worked out from sound_range
 	var/x_cutoff
+	/// Vertical distance past which listeners get muted, worked out from sound_range
 	var/z_cutoff
+	/// The sound channel this sound plays on for every listener
 	var/our_channel
+	/// How long the sound lasts before we delete ourselves
 	var/sound_length = 5 SECONDS
+	/// Timer that deletes us once the sound is over
 	var/deletion_timer
 	/// Volume mixer channel that scales this sound for each listener
 	var/mixer_channel
+	/// Signal sent to listeners when their volume for this sound changes
 	var/preference_signal
+	/// Distance at which the sound starts falling off
 	var/falloff_distance
+	/// How quickly the sound falls off with distance
 	var/falloff_exponent
+	/// If low pressure muffles the sound
 	var/pressure_affected = TRUE
 
 /datum/threed_sound/New(atom/new_parent, sound/new_sound, list/current_listeners, can_add_new_listeners = FALSE, volume = 50, sound_range = SOUND_RANGE, sound_length = 5 SECONDS, channel, mixer_channel, preference_signal, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, pressure_affected = TRUE)
@@ -69,6 +85,7 @@
 	our_sound = null
 	return ..()
 
+/// Deletes us along with the atom playing the sound
 /datum/threed_sound/proc/parent_delete(datum/source)
 	SIGNAL_HANDLER
 	selfdelete()
@@ -96,19 +113,23 @@
 	our_sound.environment = new_env
 	update_all()
 
+/// Stops the sound for everyone listening to it
 /datum/threed_sound/proc/unlisten_all()
 	for(var/mob/listening as anything in listeners)
 		deregister_listener(listening)
 	our_sound = null
 
+/// Updates the position and volume of the sound for everyone listening to it
 /datum/threed_sound/proc/update_all()
 	for(var/mob/listening as anything in listeners)
 		update_listener(listening)
 
+/// Makes every mob in range start hearing the sound
 /datum/threed_sound/proc/start_music()
 	for(var/mob/nearby in hearers(sound_range, parent))
 		register_listener(nearby)
 
+/// Returns the listeners that are not muted right now
 /datum/threed_sound/proc/get_active_listeners()
 	var/list/all_listeners = list()
 	for(var/mob/listener as anything in listeners)
@@ -117,6 +138,7 @@
 		all_listeners += listener
 	return all_listeners
 
+/// Starts playing the sound to a mob and keeps track of what could change how they hear it
 /datum/threed_sound/proc/register_listener(mob/new_listener)
 	PROTECTED_PROC(TRUE)
 
@@ -146,19 +168,23 @@
 	update_listener(new_listener)
 	listeners[new_listener] |= SOUND_UPDATE
 
+/// Stops tracking a listener that got deleted
 /datum/threed_sound/proc/listener_deleted(mob/source)
 	SIGNAL_HANDLER
 	deregister_listener(source)
 
+/// Updates the sound for a listener that moved or changed their volume
 /datum/threed_sound/proc/listener_moved(mob/source)
 	SIGNAL_HANDLER
 	update_listener(source)
 
+/// Starts the sound again for a listener that got a client
 /datum/threed_sound/proc/listener_login(mob/source)
 	SIGNAL_HANDLER
 	deregister_listener(source)
 	register_listener(source)
 
+/// Mutes or unmutes a listener when they go deaf or stop being deaf
 /datum/threed_sound/proc/listener_deaf(mob/source)
 	SIGNAL_HANDLER
 
@@ -169,6 +195,7 @@
 	update_listener(source)
 
 
+/// Unmutes a listener if nothing else is keeping them muted, returns TRUE if they got unmuted
 /datum/threed_sound/proc/unmute_listener(mob/listener, reason)
 	reason = ~reason
 
@@ -194,6 +221,7 @@
 	listeners[listener] &= ~SOUND_MUTE
 	return TRUE
 
+/// Stops the sound for a mob and stops tracking them
 /datum/threed_sound/proc/deregister_listener(mob/no_longer_listening)
 	PROTECTED_PROC(TRUE)
 
@@ -210,6 +238,7 @@
 		unregister_signals += preference_signal
 	UnregisterSignal(no_longer_listening, unregister_signals)
 
+/// Sends the sound to a listener with the right position and volume for where they are
 /datum/threed_sound/proc/update_listener(mob/listener)
 	PROTECTED_PROC(TRUE)
 	our_sound.status = listeners[listener] || NONE
@@ -274,10 +303,12 @@
 /datum/threed_sound/proc/get_mixer_volume(mob/listener)
 	return calculate_mixed_volume(listener.client, 100, mixer_channel)
 
+/// Updates the sound for everyone when the atom playing it moves
 /datum/threed_sound/proc/on_moved(datum/source, ...)
 	SIGNAL_HANDLER
 	update_all()
 
+/// Changes the reverb of the sound to match the area it moved into
 /datum/threed_sound/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
 	set_new_environment(area_to_register.sound_environment || SOUND_ENVIRONMENT_NONE)

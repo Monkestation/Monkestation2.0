@@ -39,6 +39,7 @@
 			spamcheck = world.time + 50
 			speech_args[SPEECH_SPANS] |= voicespan
 
+/// Makes TTS sound like it is coming out of the megaphone
 /obj/item/megaphone/proc/add_tts_filter(mob/living/carbon/user, list/message_args)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(user, TRAIT_SIGN_LANG) || user.get_active_held_item() != src)

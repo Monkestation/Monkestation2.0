@@ -25,6 +25,7 @@
 	RETURN_TYPE(/datum/http_request)
 	return new /datum/http_request(arglist(args))
 
+/// Sets up the request, call begin_async() or execute_blocking() to actually send it
 /datum/http_request/proc/prepare(method, url, body = "", list/headers, output_file, timeout_seconds)
 	if (!length(headers))
 		headers = json_encode(list("User-Agent" = get_useragent()))

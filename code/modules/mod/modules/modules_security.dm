@@ -177,6 +177,7 @@
 	speech_args[SPEECH_SPANS] |= voicespan
 	drain_power(use_energy_cost)
 
+/// Makes TTS sound like it is coming out of the megaphone
 /obj/item/mod/module/megaphone/proc/add_tts_filter(mob/living/carbon/user, list/message_args)
 	SIGNAL_HANDLER
 	///A sharper and louder sound with a bit of echo

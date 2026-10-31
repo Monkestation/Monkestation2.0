@@ -20,6 +20,7 @@
 */
 
 /datum/changeling_profile
+	/// The voice pack barks of the profile source
 	var/datum/atom_voice/atom_voice
 
 /datum/antagonist/changeling/create_profile(mob/living/carbon/human/target, protect = 0)

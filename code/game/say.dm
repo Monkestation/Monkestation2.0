@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/can_speak(allow_mimes = FALSE)
 	return TRUE
 
+/// Queues a TTS message of what we said for the people who heard it
 /atom/movable/proc/do_tts_message(message, language, message_mods, list/tts_filter, list/hearers)
 	set waitfor = FALSE
 
@@ -94,6 +95,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/list/special_filter = list()
 	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(message), language, get_tts_voice(filter, special_filter), filter.Join(","), hearers, message_range = 7, pitch = pitch, special_filters = special_filter.Join("|"), blip_base = blip_base, blip_number = blip_number, identifier = message_mods[MODE_TTS_IDENTIFIER])
 
+/// Returns the TTS voice we speak with, can add to the filter lists passed in
 /atom/movable/proc/get_tts_voice(list/filter, list/special_filter)
 	. = voice
 
@@ -118,6 +120,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		if(tts_pref == TTS_SOUND_BLIPS || !holder?.has_language(language))
 			. += hearer
 
+/// Makes everyone who can hear us hear the message, then plays our barks and TTS for it
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
 	var/list/hearers = get_hearers_in_view(range, source)
 	var/list/listened = list()

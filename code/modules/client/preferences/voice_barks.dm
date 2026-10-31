@@ -14,9 +14,12 @@
 		"play_bark" = PROC_REF(play_bark),
 		"open_voice_screen" = PROC_REF(open_voice_screen),
 	)
+	/// The voice pack picker window, if it was opened
 	var/datum/voice_screen/voice_screen
+	/// Dummy movable used to preview voice pack barks
 	var/atom/movable/barker
 
+/// Opens the voice pack picker window
 /datum/preference_middleware/bark/proc/open_voice_screen(list/params, mob/user)
 	if(voice_screen)
 		voice_screen.ui_interact(user)
@@ -27,6 +30,7 @@
 		return FALSE
 	// return TRUE
 
+/// Plays a preview of the selected voice pack barks
 /datum/preference_middleware/bark/proc/play_bark(list/params, mob/user)
 	if(!COOLDOWN_FINISHED(src, bark_cooldown))
 		return TRUE

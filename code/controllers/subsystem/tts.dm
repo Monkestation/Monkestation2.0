@@ -64,6 +64,7 @@ SUBSYSTEM_DEF(tts)
 	msg = "\n  Active:[length(in_process_http_messages)]|Standby:[length(queued_http_messages?.L)]|Avg:[average_tts_messages_time]"
 	return ..()
 
+/// Sorts TTS requests so shorter messages get sent to the TTS server first.
 /proc/cmp_word_length_asc(datum/tts_request/a, datum/tts_request/b)
 	return length(b.message) - length(a.message)
 
@@ -123,6 +124,7 @@ SUBSYSTEM_DEF(tts)
 		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
+/// Plays a finished TTS message (or its blips) to everyone who heard it, following the speaker around while it plays.
 /datum/controller/subsystem/tts/proc/play_tts(datum/weakref/target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS, mixer_channel = CHANNEL_TTS, volume_signal = COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED, bark_blips = FALSE)
 	var/atom/actual_target = target?.resolve()
 	var/turf/turf_source
@@ -446,6 +448,7 @@ SUBSYSTEM_DEF(tts)
 
 #undef TTS_ARBRITRARY_DELAY
 
+/// Sends the HTTP requests to generate a TTS message and queues it to be played once they are done.
 /datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0, pitch = 0, special_filters = "", blip_base = "male", blip_number = "1", force_blips = FALSE, identifier = "invalid")
 	if(!tts_enabled)
 		return
@@ -502,6 +505,7 @@ SUBSYSTEM_DEF(tts)
 	else
 		queued_http_messages.insert(current_request)
 
+/// Forgets everything about a played or expired TTS message and the radios waiting on it.
 /datum/controller/subsystem/tts/proc/clear_radio_message(identifier)
 	completed_tts_messages[identifier] -= TTS_REQUEST_REF // don't stick around
 	completed_tts_messages -= identifier
@@ -570,9 +574,13 @@ SUBSYSTEM_DEF(tts)
 	var/sound/audio_file_radio_gibberish
 	/// The audio length of this tts request.
 	var/audio_length
+	/// The audio length of the blips version of this tts request.
 	var/audio_length_blips
+	/// The audio length of the radio version of this tts request.
 	var/audio_length_radio
+	/// The audio length of the radio blips version of this tts request.
 	var/audio_length_blips_radio
+	/// The audio length of the radio gibberish version of this tts request.
 	var/audio_length_radio_gibberish
 	/// When the audio file should play at the minimum
 	var/when_to_play = 0
@@ -607,6 +615,7 @@ SUBSYSTEM_DEF(tts)
 	src.force_blips = force_blips
 	start_time = world.time
 
+/// Starts the HTTP requests this message needs, local previews only need the one they will play.
 /datum/tts_request/proc/start_requests()
 	if(istype(target, /client))
 		var/client/current_client = target
@@ -625,6 +634,7 @@ SUBSYSTEM_DEF(tts)
 		request_blips_radio.begin_async()
 		request_radio_gibberish.begin_async()
 
+/// Returns the HTTP request whose audio actually gets played.
 /datum/tts_request/proc/get_primary_request()
 	if(local)
 		if(use_blips || force_blips)
@@ -634,6 +644,7 @@ SUBSYSTEM_DEF(tts)
 	else
 		return request
 
+/// Returns the response of the HTTP request whose audio actually gets played.
 /datum/tts_request/proc/get_primary_response()
 	if(local)
 		if(use_blips || force_blips)
@@ -643,6 +654,7 @@ SUBSYSTEM_DEF(tts)
 	else
 		return request.into_response()
 
+/// Returns TRUE if any of the HTTP requests this message needs failed.
 /datum/tts_request/proc/requests_errored()
 	if(local)
 		var/datum/http_response/response
@@ -659,6 +671,7 @@ SUBSYSTEM_DEF(tts)
 		var/datum/http_response/response_radio_gibberish = request_radio_gibberish.into_response()
 		return response.errored || response_blips.errored || response_radio.errored || response_blips_radio.errored || response_radio_gibberish.errored
 
+/// Returns TRUE once all the HTTP requests this message needs are done.
 /datum/tts_request/proc/requests_completed()
 	if(local)
 		if(use_blips || force_blips)
