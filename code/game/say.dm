@@ -102,19 +102,23 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /**
  * Returns which of the passed hearers should hear our voice pack barks for a message.
  *
- * Without TTS everyone barks like before. With TTS, voice pack barks stand in for the TTS server's blips,
- * so they only go to people who would get blips: those who picked blips only, or who don't understand the language.
+ * Without TTS everyone barks like before, and so does anyone who turned TTS off.
+ * Otherwise voice pack barks stand in for the TTS server's blips, so they only go to people who would get blips:
+ * those who picked blips only, or who don't understand the language.
  */
 /atom/movable/proc/get_bark_hearers(list/hearers, datum/language/language, list/message_mods)
 	if(!SStts.tts_enabled || !voice || HAS_TRAIT(src, TRAIT_SIGN_LANG) || HAS_TRAIT(src, TRAIT_UNKNOWN) || message_mods?[MODE_CUSTOM_SAY_ERASE_INPUT])
 		return hearers
-	if(blip_base != TTS_BLIP_BASE_VOICE_PACK)
-		return list()
 	. = list()
 	for(var/mob/hearer in hearers)
 		var/mob/listening_mob = hearer.get_listening_mob()
-		var/tts_pref = listening_mob?.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
-		if(isnull(tts_pref) || tts_pref == TTS_SOUND_OFF)
+		if(isnull(listening_mob?.client))
+			continue
+		var/tts_pref = listening_mob.client.prefs.read_preference(/datum/preference/choiced/sound_tts)
+		if(tts_pref == TTS_SOUND_OFF)
+			. += hearer
+			continue
+		if(blip_base != TTS_BLIP_BASE_VOICE_PACK)
 			continue
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		if(tts_pref == TTS_SOUND_BLIPS || !holder?.has_language(language))

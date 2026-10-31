@@ -29,6 +29,7 @@ export const sound_tts: FeatureChoiced = {
   description: `
     When enabled, be able to hear text-to-speech sounds in game.
     When set to "Blips", text to speech will be replaced with blip sounds based on the voice.
+    When disabled, you hear voice pack barks like when there is no text to speech.
   `,
   component: FeatureDropdownInput,
 };
