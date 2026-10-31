@@ -78,7 +78,10 @@
 /datum/bodypart_overlay/mutant/tail
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
 	feature_key = "tail_monkey"
+	/// Tracks if it's currently wagging or not
 	var/wagging = FALSE
+	/// If TRUE the tail is shown when over supported suits like space suits
+	var/mesh_in_suits = FALSE
 
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
 	return "[wagging ? "wagging_" : ""][sprite_datum.icon_state]" //add the wagging tag if we be wagging
@@ -91,7 +94,10 @@
 	if(!istype(human))
 		return TRUE
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return FALSE
+		if(!mesh_in_suits)
+			return FALSE
+		if(!(locate(/datum/bodypart_texture/mesh) in bodypart_owner.bodypart_textures))
+			return FALSE
 	if(human.w_uniform?.flags_inv & HIDETAIL)
 		return FALSE
 	return TRUE
@@ -165,6 +171,7 @@
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard
 	feature_key = "tail_lizard"
+	mesh_in_suits = TRUE
 
 /datum/bodypart_overlay/mutant/tail/lizard/get_global_feature_list()
 	return GLOB.tails_list_lizard

@@ -172,6 +172,8 @@
 	var/list/obj/item/organ/external/external_organs = list()
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
+	///A list of all bodypart textures to apply
+	var/list/bodypart_textures
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
@@ -219,7 +221,7 @@
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 	/// A potential texturing overlay to put on the limb
-	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
+	var/datum/bodypart_texture/texture_bodypart_overlay
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -248,7 +250,7 @@
 
 	if(texture_bodypart_overlay)
 		texture_bodypart_overlay = new texture_bodypart_overlay()
-		add_bodypart_overlay(texture_bodypart_overlay)
+		add_bodypart_texture(texture_bodypart_overlay, update = FALSE)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
@@ -1232,8 +1234,17 @@
 					if(has_height)
 						owner.apply_height(extended_overlay, ENTIRE_BODY)
 					. += extended_overlay
-			for(var/datum/layer in .)
-				overlay.modify_bodypart_appearance(layer)
+
+		// Then texture everything at once, including bodypart overlays
+		for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
+			if(!texture.can_texture_bodypart(src))
+				continue
+			for(var/image/generated_overlay as anything in .)
+				var/appearance_plane = PLANE_TO_TRUE(generated_overlay.plane)
+				if(appearance_plane != FLOAT_PLANE && appearance_plane != GAME_PLANE)
+					continue
+
+				texture.modify_bodypart_appearance(generated_overlay)
 
 	return .
 
@@ -1257,6 +1268,50 @@
 /obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay)
 	bodypart_overlays -= overlay
 	overlay.removed_from_limb(src)
+
+/**
+ * Adds a bodypart texture to the limb
+ *
+ * * texture: The texture to add. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the proc will avoid creating duplicates.
+ * * update: Whether to call update procs after adding the texture.
+ * Set this to FALSE if you are adding multiple textures at once.
+ */
+/obj/item/bodypart/proc/add_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		if(locate(texture) in bodypart_textures)
+			return
+		texture = new texture()
+
+	LAZYADD(bodypart_textures, texture)
+	if(!update)
+		return
+	if(isnull(owner))
+		update_icon_dropped()
+	else
+		owner.update_body_parts()
+
+/**
+ * Removes a bodypart texture from the limb
+ *
+ * * texture: The texture to remove. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the first texture of that typepath found will be removed.
+ * * update: Whether to call update procs after removing the texture.
+ * Set this to FALSE if you are removing multiple textures at once.
+ */
+/obj/item/bodypart/proc/remove_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		texture = locate(texture) in bodypart_textures
+		if(isnull(texture))
+			return
+
+	LAZYREMOVE(bodypart_textures, texture)
+	if(!update)
+		return
+	if(isnull(owner))
+		update_icon_dropped()
+	else
+		owner.update_body_parts()
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
