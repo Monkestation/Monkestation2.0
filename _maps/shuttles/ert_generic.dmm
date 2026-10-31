@@ -287,12 +287,12 @@
 "ln" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/storage/box/smart_metal_foam,
-/obj/item/storage/box/smart_metal_foam{
+/obj/item/storage/box/smart_metalfoam,
+/obj/item/storage/box/smart_metalfoam{
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/storage/box/smart_metal_foam{
+/obj/item/storage/box/smart_metalfoam{
 	pixel_x = -3;
 	pixel_y = 4
 	},
@@ -1522,7 +1522,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table/reinforced/rglass,
 /obj/item/clothing/gloves/latex/surgical,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_x = -1;
 	pixel_y = 13
 	},

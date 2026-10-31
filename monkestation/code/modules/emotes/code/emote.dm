@@ -8,7 +8,7 @@
 
 /datum/emote/living/click/get_sound(mob/living/user)
 	if(ismoth(user) || isflyperson(user) || isarachnid(user) || istype(user, /mob/living/basic/mothroach))
-		return 'monkestation/sound/creatures/rattle.ogg'
+		return 'sound/creatures/rattle.ogg'
 	else if(isipc(user))
 		return 'sound/machines/click.ogg'
 	else
@@ -25,7 +25,7 @@
 	return ..() && isethereal(user)
 
 /datum/emote/living/zap/get_sound(mob/living/user)
-	return 'sound/machines/defib_zap.ogg'
+	return 'sound/machines/defib/defib_zap.ogg'
 
 /datum/emote/living/hum
 	key = "hum"
@@ -50,9 +50,9 @@
 
 /datum/emote/living/hiss/get_sound(mob/living/user)
 	if(islizard(user) || isipc(user) || isAI(user) || iscyborg(user))
-		return pick('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg', 'sound/voice/hiss5.ogg', 'sound/voice/hiss6.ogg')
-	else if(is_cat_enough(user, include_all_anime = TRUE))
-		return pick('monkestation/sound/voice/feline/hiss1.ogg', 'monkestation/sound/voice/feline/hiss2.ogg', 'monkestation/sound/voice/feline/hiss3.ogg')
+		return pick('sound/mobs/non-humanoids/hiss/hiss1.ogg', 'sound/mobs/non-humanoids/hiss/hiss2.ogg', 'sound/mobs/non-humanoids/hiss/hiss3.ogg', 'sound/mobs/non-humanoids/hiss/hiss4.ogg', 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 'sound/mobs/non-humanoids/hiss/hiss6.ogg')
+	else if(user.is_cat_enough(include_all_anime = TRUE))
+		return pick('sound/mobs/humanoids/felinid/hiss1.ogg', 'sound/mobs/humanoids/felinid/hiss2.ogg', 'sound/mobs/humanoids/felinid/hiss3.ogg')
 
 /datum/emote/living/thumbs_up
 	key = "thumbsup"
@@ -143,23 +143,23 @@
 	return ..()
 
 /datum/emote/living/scream/get_sound(mob/living/user)
-	if ((is_cat_enough(user, TRUE) && issilicon(user)) || (is_cat_enough(user, FALSE) && isipc(user)))
+	if ((user.is_cat_enough(TRUE) && issilicon(user)) || (user.is_cat_enough(FALSE) && isipc(user)))
 		return pick(
-			'monkestation/sound/voice/screams/silicon/catscream1.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream2.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream3.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream4.ogg',
-			'monkestation/sound/voice/screams/silicon/catscream5.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/catscream1.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/catscream2.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/catscream3.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/catscream4.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/catscream5.ogg',
 		)
 	if(issilicon(user))
 		return pick(
-			'monkestation/sound/voice/screams/silicon/robotAUGH1.ogg',
-			'monkestation/sound/voice/screams/silicon/robotAUGH2.ogg',
-			'monkestation/sound/voice/screams/silicon/robotAUGH3.ogg',
-			'monkestation/sound/voice/screams/silicon/robotAUGH4.ogg',
-			'monkestation/sound/voice/screams/silicon/robotAUGH5.ogg')
-	if(is_cat_enough(user))
-		return pick('monkestation/sound/voice/feline/scream1.ogg', 'monkestation/sound/voice/feline/scream2.ogg', 'monkestation/sound/voice/feline/scream3.ogg')
+			'sound/mobs/non-humanoids/cyborg/scream/robotAUGH1.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/robotAUGH2.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/robotAUGH3.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/robotAUGH4.ogg',
+			'sound/mobs/non-humanoids/cyborg/scream/robotAUGH5.ogg')
+	if(user.is_cat_enough())
+		return pick('sound/mobs/humanoids/felinid/scream1.ogg', 'sound/mobs/humanoids/felinid/scream2.ogg', 'sound/mobs/humanoids/felinid/scream3.ogg')
 	// It's not fair to NOT scream like a cat when we're cat, so alt screams get lowest priority
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
@@ -172,7 +172,7 @@
 		. = mob.get_scream_sound()
 
 /datum/emote/living/scream/should_vary(mob/living/user)
-	if(ishuman(user) && !is_cat_enough(user))
+	if(ishuman(user) && !user.is_cat_enough())
 		return TRUE
 	return ..()
 
@@ -198,33 +198,33 @@
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
 
-/datum/emote/living/meow/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	return ..() && is_cat_enough(user, include_all_anime = TRUE)
+/datum/emote/living/meow/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return ..() && user.is_cat_enough(include_all_anime = TRUE)
 
 /datum/emote/living/meow/get_sound(mob/living/user)
 	if(issilicon(user) || isipc(user))
 		return pick(
-			'monkestation/sound/voice/feline/silicon/meow1.ogg',
-			'monkestation/sound/voice/feline/silicon/meow2.ogg',
-			'monkestation/sound/voice/feline/silicon/meow3.ogg',
+			'sound/mobs/non-humanoids/cyborg/meow/meow1.ogg',
+			'sound/mobs/non-humanoids/cyborg/meow/meow2.ogg',
+			'sound/mobs/non-humanoids/cyborg/meow/meow3.ogg',
 		)
 	if(prob(5))
-		return 'monkestation/sound/voice/feline/funnymeow.ogg'
+		return 'sound/mobs/humanoids/felinid/funnymeow.ogg'
 	// classy wants her characters to only have her meows play
 	if(user?.ckey == "missclassypineapple")
 		return pick(
-			'monkestation/sound/voice/feline/meow5.ogg',
-			'monkestation/sound/voice/feline/meow6.ogg',
-			'monkestation/sound/voice/feline/meow7.ogg',
+			'sound/mobs/humanoids/felinid/meow5.ogg',
+			'sound/mobs/humanoids/felinid/meow6.ogg',
+			'sound/mobs/humanoids/felinid/meow7.ogg',
 		)
 	return pick(
-		'monkestation/sound/voice/feline/meow1.ogg',
-		'monkestation/sound/voice/feline/meow2.ogg',
-		'monkestation/sound/voice/feline/meow3.ogg',
-		'monkestation/sound/voice/feline/meow4.ogg',
-		'monkestation/sound/voice/feline/meow5.ogg',
-		'monkestation/sound/voice/feline/meow6.ogg',
-		'monkestation/sound/voice/feline/meow7.ogg',
+		'sound/mobs/humanoids/felinid/meow1.ogg',
+		'sound/mobs/humanoids/felinid/meow2.ogg',
+		'sound/mobs/humanoids/felinid/meow3.ogg',
+		'sound/mobs/humanoids/felinid/meow4.ogg',
+		'sound/mobs/humanoids/felinid/meow5.ogg',
+		'sound/mobs/humanoids/felinid/meow6.ogg',
+		'sound/mobs/humanoids/felinid/meow7.ogg',
 	)
 
 /datum/emote/living/mggaow
@@ -237,11 +237,11 @@
 	vary = TRUE
 	audio_cooldown = 1.5 SECONDS
 
-/datum/emote/living/mggaow/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	return ..() && is_cat_enough(user, include_all_anime = TRUE)
+/datum/emote/living/mggaow/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return ..() && user.is_cat_enough(include_all_anime = TRUE)
 
 /datum/emote/living/mggaow/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/feline/mggaow.ogg'
+	return 'sound/mobs/humanoids/felinid/mggaow.ogg'
 
 /datum/emote/living/bark
 	key = "bark"
@@ -260,9 +260,9 @@
 
 /datum/emote/living/bark/get_sound(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
-		return 'monkestation/sound/voice/feline/bark.ogg'
+		return 'sound/mobs/humanoids/felinid/bark.ogg'
 	else
-		return pick('monkestation/sound/voice/feline/bark.ogg', 'monkestation/sound/voice/feline/bark2.ogg') // Yes, bark trait in feline folder [Bad To The Bone]
+		return pick('sound/mobs/humanoids/felinid/bark.ogg', 'sound/mobs/humanoids/felinid/bark2.ogg') // Yes, bark trait in feline folder [Bad To The Bone]
 
 /datum/emote/living/purr
 	key = "purr"
@@ -273,11 +273,11 @@
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 8 SECONDS
 
-/datum/emote/living/purr/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	return ..() && is_cat_enough(user, include_all_anime = TRUE)
+/datum/emote/living/purr/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return ..() && user.is_cat_enough(include_all_anime = TRUE)
 
 /datum/emote/living/purr/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/feline/purr.ogg'
+	return 'sound/mobs/humanoids/felinid/purr.ogg'
 
 /datum/emote/living/weh
 	key = "weh"
@@ -289,7 +289,7 @@
 	vary = TRUE
 
 /datum/emote/living/weh/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/weh.ogg'
+	return 'sound/mobs/humanoids/lizard/weh.ogg'
 
 /datum/emote/living/weh/can_run_emote(mob/user, status_check, intentional)
 	return ..() && islizard(user)
@@ -306,7 +306,7 @@
 	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/living/squeal/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/lizard/squeal.ogg' //This is from Bay
+	return 'sound/mobs/humanoids/lizard/squeal.ogg' //This is from Bay
 
 /datum/emote/living/squeal/can_run_emote(mob/user, status_check, intentional)
 	return ..() && islizard(user)
@@ -319,7 +319,7 @@
 	vary = TRUE
 
 /datum/emote/living/tailthump/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/lizard/tailthump.ogg' //https://freesound.org/people/TylerAM/sounds/389665/
+	return 'sound/mobs/humanoids/lizard/tailthump.ogg' //https://freesound.org/people/TylerAM/sounds/389665/
 
 /datum/emote/living/tailthump/can_run_emote(mob/user, status_check, intentional)
 	return ..() && islizard(user)
@@ -493,7 +493,7 @@
 	reagent_state = LIQUID
 	taste_mult = 1
 	taste_description = "metallic saltiness"
-	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	nutriment_factor = 0.5
 	penetrates_skin = NONE
 
 /datum/emote/spin/speen
@@ -509,7 +509,7 @@
 	extra_range = SHORT_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/spin/speen/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/speen.ogg'
+	return 'sound/voice/speen.ogg'
 
 /datum/emote/living/breathein
 	key = "breathein"
@@ -519,10 +519,10 @@
 	message_param = "breathes in at %t."
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
-	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+	falloff_exponent = 1
 
 /datum/emote/living/breathein/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/breathein.ogg'
+	return 'sound/mobs/humanoids/breathing/breathein.ogg'
 
 /datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
 	return ..() && IS_SLASHER(user)
@@ -535,10 +535,10 @@
 	message_param = "breathes out at %t."
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
-	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+	falloff_exponent = 1
 
 /datum/emote/living/breatheout/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/breatheout.ogg'
+	return 'sound/mobs/humanoids/breathing/breatheout.ogg'
 
 /datum/emote/living/breatheout/can_run_emote(mob/user, status_check, intentional)
 	return ..() && IS_SLASHER(user)

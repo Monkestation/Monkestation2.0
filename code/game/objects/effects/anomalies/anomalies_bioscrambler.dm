@@ -3,7 +3,6 @@
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
 	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
 	/// Who are we moving towards?
@@ -25,7 +24,7 @@
 		return
 
 	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
-	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 	for(var/mob/living/carbon/nearby in hearers(range, src))
 		nearby.bioscramble(name)

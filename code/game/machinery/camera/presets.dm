@@ -8,6 +8,15 @@
 	camera_enabled = FALSE
 
 /**
+ * Wired Camera
+ * Used by rcd and requires less steps.
+ */
+/obj/machinery/camera/autoname/wired
+	icon_state = "camera_off"
+	camera_construction_state = CAMERA_STATE_WIRED
+	camera_enabled = FALSE
+
+/**
  * EMP Proof
  * Starts off with the EMP protection upgrade, and can't start unactivated.
  */

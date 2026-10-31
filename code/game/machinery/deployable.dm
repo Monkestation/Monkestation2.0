@@ -81,9 +81,19 @@
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
 			if(do_after(user, 5 SECONDS, target=src) && W.use(5))
 				var/turf/T = get_turf(src)
-				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
+				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
 				return
+	return ..()
+
+/obj/structure/barricade/wooden/CanAllowThrough(atom/movable/mover, border_dir)
+	if(HAS_TRAIT(mover, TRAIT_GOES_THROUGH_WOODEN_BARRICADES))
+		return TRUE
+	return ..()
+
+/obj/structure/barricade/wooden/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(pass_info.goes_thru_barricades)
+		return TRUE
 	return ..()
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
@@ -204,12 +214,12 @@
 		set_density(TRUE)
 		icon_state = "barrier1"
 		locked = TRUE
-		playsound(src, 'sound/machines/boltsup.ogg', 45)
+		playsound(src, 'sound/machines/airlock/boltsup.ogg', 45)
 	else
 		set_density(FALSE)
 		icon_state = "barrier0"
 		locked = FALSE
-		playsound(src, 'sound/machines/boltsdown.ogg', 45)
+		playsound(src, 'sound/machines/airlock/boltsdown.ogg', 45)
 	update_appearance(UPDATE_ICON)
 	balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
 

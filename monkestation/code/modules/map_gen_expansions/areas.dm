@@ -6,7 +6,7 @@
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	//ambience_index = AMBIENCE_ICEMOON
 	sound_environment = SOUND_ENVIRONMENT_PLAIN
-	ambient_buzz = 'monkestation/sound/ambience/forest_ambience.ogg'
+	ambient_buzz = 'sound/ambience/forest_ambience.ogg'
 	name = "Forest Planet"
 	icon_state = "explored"
 	always_unpowered = TRUE
@@ -14,8 +14,6 @@
 	power_equip = FALSE
 	power_light = FALSE
 	requires_power = TRUE
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/forestplanet/outdoors // parent that defines if something is on the exterior of the station.
 	name = "Woodlands"

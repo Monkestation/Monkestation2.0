@@ -103,7 +103,7 @@
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
 	balloon_alert(user, "system jailbroken...")
-	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
+	playsound(src, 'sound/effects/sparks/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
@@ -166,10 +166,18 @@
 
 	servo_bonus = servo_rating
 
-/obj/machinery/quantum_server/tutorial_coop
+/obj/machinery/quantum_server/tutorial
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+	capacitor_coefficient = 0.4
+
+/obj/machinery/quantum_server/tutorial/coop
 	bitrunning_id = "tutorial_coop"
 	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
 
-/obj/machinery/quantum_server/tutorial_solo
-	bitrunning_id = "tutorial_solo"
+/obj/machinery/quantum_server/tutorial/solo_1
+	bitrunning_id = "tutorial_solo_1"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+
+/obj/machinery/quantum_server/tutorial/solo_2
+	bitrunning_id = "tutorial_solo_2"
 	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL

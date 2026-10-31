@@ -29,9 +29,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/sexes = TRUE
 	///does our chosen bodytype have visual difference
 	var/visual_gender =TRUE
-	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
-
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
 	///This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If "mutcolor", it uses the H's mutant_color. If "fixedmutcolor", it uses fixedmutcolor
@@ -46,7 +43,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Never, Optional, or Forced digi legs?
 	var/digitigrade_customization = DIGITIGRADE_NEVER
 	/// If your race uses a non standard bloodtype (typepath)
-	var/datum/blood_type/exotic_bloodtype
+	///Reagent that your species bleeds, and what chemical can be used to recover lost blood depend on this
+	var/exotic_bloodtype
 	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
@@ -235,7 +233,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///health mod of a species
 	var/maxhealthmod = 1
-	///Path to BODYTYPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
+	///Path to BODYSHAPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
 	///Override of the eyes icon file, used for Monkeys.
 	var/eyes_icon
@@ -490,7 +488,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			replacement.Insert(organ_holder, special=TRUE, drop_if_replaced=FALSE)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
-	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
+	for(var/obj/item/equipped_item in wearer.get_equipped_items(INCLUDE_POCKETS))
 		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
 		if(!equipped_item.mob_can_equip(wearer, equipped_item_slot, bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
 			wearer.dropItemToGround(equipped_item, force = TRUE)
@@ -536,6 +534,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if (old_species.type != type)
 		replace_body(C, src)
+
+	if(!C.get_bloodtype()?.is_species_universal) // Clown blood is forever.
+		//Assigns exotic blood type if the species has one
+		if(exotic_bloodtype && C.get_bloodtype()?.id != exotic_bloodtype)
+			C.set_blood_type(get_blood_type(exotic_bloodtype))
+		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
+		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
+			C.set_blood_type(random_human_blood_type())
 
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
@@ -704,7 +710,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//Underwear, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
-		if(species_human.underwear && !(species_human.dna.species.bodytype & BODYTYPE_DIGITIGRADE)) //MONKESTATION EDIT
+		if(species_human.underwear && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE)) //MONKESTATION EDIT
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
@@ -726,7 +732,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
 				standing += working_shirt
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.dna.species.bodytype & BODYTYPE_DIGITIGRADE))
+		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			//MONKESTATION EDITS FOR COLOURABLE SOCKS
 			var/mutable_appearance/socks_overlay
@@ -741,6 +747,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			//MONKESTATION EDITS END
 
 	if(standing.len)
+		for(var/image/overlay in standing)
+			species_human.apply_height(overlay, ENTIRE_BODY)
 		species_human.overlays_standing[BODY_LAYER] = standing
 
 	species_human.apply_overlay(BODY_LAYER)
@@ -848,12 +856,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = source.dna.features["animehalocolor"]
 				else
 					accessory_overlay.color = forced_colour
-			standing += accessory_overlay
+			var/list/accessory_overlays = list(accessory_overlay)
 			if(accessory.is_emissive)
-				standing += emissive_appearance_copy(accessory_overlay, source)
+				accessory_overlays += emissive_appearance_copy(accessory_overlay, source)
 
 			if(length(accessory.body_slots) || length(accessory.external_slots) || istype(source, /mob/living/carbon/human/dummy/extra_tall))
-				standing += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
+				accessory_overlays += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
 
 			if(accessory.hasinner)
 				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
@@ -865,9 +873,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(accessory.center)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
 
-				standing += inner_accessory_overlay
+				accessory_overlays += inner_accessory_overlay
 				if(accessory.is_emissive)
-					standing += emissive_appearance_copy(accessory_overlay, source)
+					accessory_overlays += emissive_appearance_copy(accessory_overlay, source)
+
+			var/body_area = (bodypart == "ears" || bodypart == "caps") ? UPPER_BODY : ENTIRE_BODY
+			for(var/image/overlay in accessory_overlays)
+				source.apply_height(overlay, body_area)
+			standing += accessory_overlays
 
 		source.overlays_standing[layer] = standing.Copy()
 		standing = list()
@@ -967,7 +980,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	switch(slot)
 		if(ITEM_SLOT_HANDS)
-			if(H.get_empty_held_indexes())
+			if(length(H.get_empty_held_indexes()))
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_MASK)
@@ -987,7 +1000,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
 				if(!(I.supports_variations_flags & DIGITIGRADE_VARIATIONS))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
@@ -1095,44 +1108,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Equips the necessary species-relevant gear before putting on the rest of the uniform.
 /datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
-
-/**
- * Handling special reagent types.
- *
- * Return False to run the normal on_mob_life() for that reagent.
- * Return True to not run the normal metabolism effects.
- * NOTE: If you return TRUE, that reagent will not be removed liike normal! You must handle it manually.
- */
-/datum/species/proc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
-	// Cringe but blood handles this on its own
-	// This also has problems of its own but that's better fixed later I think
-	if(!istype(chem, /datum/reagent/blood))
-		var/datum/blood_type/blood = affected.get_blood_type()
-		if(chem.type == blood?.reagent_type)
-			affected.blood_volume = min(affected.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-			affected.reagents.del_reagent(chem.type)
-			return TRUE
-		if(chem.type == blood?.restoration_chem && affected.blood_volume < BLOOD_VOLUME_NORMAL)
-			affected.blood_volume += 0.25 * seconds_per_tick
-			affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
-			return TRUE
-
-	//This handles dumping unprocessable reagents.
-	var/dump_reagent = TRUE
-	if((chem.process_flags & SYNTHETIC) && (affected.dna.species.reagent_tag & PROCESS_SYNTHETIC))		//SYNTHETIC-oriented reagents require PROCESS_SYNTHETIC
-		dump_reagent = FALSE
-	if((chem.process_flags & ORGANIC) && (affected.dna.species.reagent_tag & PROCESS_ORGANIC))		//ORGANIC-oriented reagents require PROCESS_ORGANIC
-		dump_reagent = FALSE
-	if(dump_reagent)
-		chem.holder.remove_reagent(chem.type, chem.metabolization_rate)
-		return TRUE
-
-	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
-		chem.overdosed = TRUE
-		chem.overdose_start(affected)
-		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
-	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.
@@ -1299,7 +1274,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					target.Knockdown(200)
 				else
 					target.Knockdown(50)
-				playsound(get_turf(target), 'sound/effects/glassbr1.ogg')
+				playsound(get_turf(target), 'sound/effects/glass/glassbr1.ogg')
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
@@ -1691,6 +1666,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/create_pref_blood_perks()
 	var/list/to_add = list()
+	var/datum/blood_type/blood_type = exotic_bloodtype ? get_blood_type(exotic_bloodtype) : null
 
 	// TRAIT_NOBLOOD takes priority by default
 	if(TRAIT_NOBLOOD in inherent_traits)
@@ -1702,12 +1678,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		))
 
 	// Otherwise otherwise, see if they have an exotic bloodtype set
-	else if(exotic_bloodtype)
+	else if(ispath(blood_type?.reagent_type))
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = "[initial(exotic_bloodtype.name)] Blood",
-			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_bloodtype.name)], which can make recieving medical treatment more difficult.",
+			SPECIES_PERK_NAME = initial(blood_type.reagent_type.name),
+			SPECIES_PERK_DESC = "[name] blood is [initial(blood_type.reagent_type.name)], which can make receiving medical treatment harder.",
 		))
 
 	return to_add

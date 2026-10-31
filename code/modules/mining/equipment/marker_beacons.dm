@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	"Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/item/stack/marker_beacon/update_icon_state()
-	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
+	icon_state = "[initial(icon_state)][LOWER_TEXT(picked_color)]"
 	return ..()
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	set_light(light_outer_range, light_inner_range, light_power, l_color = GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/update_icon_state()
-	icon_state = "[icon_prefix][lowertext(picked_color)]-on"
+	icon_state = "[icon_prefix][LOWER_TEXT(picked_color)]-on"
 	return ..()
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user, list/modifiers)
@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
 		A.desc += "\nLooks like this used to be \a [src] some time ago."
 		visible_message(span_danger("[src] is disintegrated by [attacking_item]!"))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		qdel(src)
 		return
 	return ..()

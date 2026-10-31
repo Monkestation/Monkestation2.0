@@ -9,7 +9,6 @@
 		. += 1
 	if(. == FREQ_SYNDICATE && !syndie) // Prevents people from picking (or rounding up) into the syndie frequency
 		. = FREQ_COMMON
-	// monkestation start: prevents people from picking (or rounding up) into the radio frequency
 	if(. == FREQ_RADIO && !radio_host)
 		. = FREQ_COMMON
 

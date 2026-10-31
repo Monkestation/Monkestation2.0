@@ -378,3 +378,51 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
+
+/datum/design/board/ai_server_overview
+	name = "AI Server Overview Console Board"
+	desc = "Allows for the construction of circuit boards used to build an AI Server Overview console."
+	id = "ai_server_overview"
+	build_path = /obj/item/circuitboard/computer/ai_server_overview
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
+
+/datum/design/board/ai_overclocking
+	name = "AI Overclocking Workstation Console Board"
+	desc = "Allows for the construction of circuit boards used to build an AI Overclocking Workstation."
+	id = "ai_overclocking"
+	build_path = /obj/item/circuitboard/computer/ai_overclocking
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
+
+/datum/design/board/ai_resource_distribution
+	name = "AI Resource Distribution Console Board"
+	desc = "Allows for the construction of circuit boards used to build an AI Resource Distribution console."
+	id = "ai_resource_distribution"
+	build_path = /obj/item/circuitboard/computer/ai_resource_distribution
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_NETMIN
+
+/datum/design/board/shuttle
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SHUTTLE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/shuttle/flight_control
+	name = "Shuttle Flight Controls"
+	desc = "Allows for the construction of circuit boards used to build a console that enables shuttle flight"
+	id = "shuttle_control"
+	build_path = /obj/item/circuitboard/computer/shuttle/flight_control
+
+/datum/design/board/shuttle/shuttle_docker
+	name = "Shuttle Navigation Computer"
+	desc = "Allows for the construction of circuit boards used to build a console that enables the targetting of custom flight locations"
+	id = "shuttle_docker"
+	build_path = /obj/item/circuitboard/computer/shuttle/docker

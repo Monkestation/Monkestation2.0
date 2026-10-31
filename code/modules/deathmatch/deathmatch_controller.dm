@@ -11,14 +11,26 @@
 
 /datum/deathmatch_controller/New()
 	. = ..()
-	if (GLOB.deathmatch_game)
+	if(GLOB.deathmatch_game)
 		qdel(src)
 		CRASH("A deathmatch controller already exists.")
 	GLOB.deathmatch_game = src
 
-	for (var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch))
-		var/map_name = initial(template.name)
-		maps[map_name] = new template
+	var/max_players = /datum/lazy_template/deathmatch::min_players
+	for(var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch) - /datum/lazy_template/deathmatch/random)
+		template = new template()
+		maps[template.name] = template
+		if(length(template.allowed_loadouts) > 1)
+			template.allowed_loadouts.Insert(1, /datum/outfit/deathmatch_loadout/random)
+		if(max_players < template.max_players)
+			max_players = template.max_players
+
+	maps = sort_list(maps)
+	var/datum/lazy_template/deathmatch/random/random_template = new()
+	random_template.max_players = max_players
+	maps.Insert(1, random_template.name)
+	maps[random_template.name] = random_template
+
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
 	modifiers = sortTim(init_subtypes_w_path_keys(/datum/deathmatch_modifier), GLOBAL_PROC_REF(cmp_deathmatch_mods), associative = TRUE)
 
@@ -51,16 +63,16 @@
 	.["lobbies"] = list()
 	.["hosting"] = FALSE
 	.["admin"] = check_rights_for(user.client, R_ADMIN)
-	for (var/ckey in lobbies)
+	for(var/ckey in lobbies)
 		var/datum/deathmatch_lobby/lobby = lobbies[ckey]
-		if (user.ckey == ckey)
+		if(user.ckey == ckey)
 			.["hosting"] = TRUE
-		if (user.ckey in (lobby.observers+lobby.players))
+		if(user.ckey in (lobby.observers+lobby.players))
 			.["playing"] = ckey
 		.["lobbies"] += list(list(
 			name = ckey,
 			players = lobby.players.len,
-			max_players = initial(lobby.map.max_players),
+			max_players = lobby.map.max_players,
 			map = initial(lobby.map.name),
 			playing = lobby.playing
 		))
@@ -76,26 +88,26 @@
 	if(. || !isobserver(usr))
 		return
 	switch (action)
-		if ("host")
+		if("host")
 			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
 				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
 				return
-			if (lobbies[usr.ckey])
+			if(lobbies[usr.ckey])
 				return
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr, "The round hasn't started yet!")
 				return
 			ui.close()
 			create_new_lobby(usr)
-		if ("join")
+		if("join")
 			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
 				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
 				return
-			if (!lobbies[params["id"]])
+			if(!lobbies[params["id"]])
 				return
 			var/datum/deathmatch_lobby/playing_lobby = find_lobby_by_user(usr.ckey)
 			var/datum/deathmatch_lobby/chosen_lobby = lobbies[params["id"]]
-			if (!isnull(playing_lobby) && playing_lobby != chosen_lobby)
+			if(!isnull(playing_lobby) && playing_lobby != chosen_lobby)
 				playing_lobby.leave(usr.ckey)
 
 			if(isnull(playing_lobby))
@@ -103,9 +115,9 @@
 				chosen_lobby.join(usr)
 
 			chosen_lobby.ui_interact(usr)
-		if ("spectate")
+		if("spectate")
 			var/datum/deathmatch_lobby/playing_lobby = find_lobby_by_user(usr.ckey)
-			if (!lobbies[params["id"]])
+			if(!lobbies[params["id"]])
 				return
 			var/datum/deathmatch_lobby/chosen_lobby = lobbies[params["id"]]
 			// if the player is in this lobby
@@ -115,21 +127,21 @@
 				chosen_lobby.ui_interact(usr)
 				return
 			// they werent in the lobby, lets add them
-			if (!chosen_lobby.playing)
+			if(!chosen_lobby.playing)
 				chosen_lobby.add_observer(usr)
 				chosen_lobby.ui_interact(usr)
 			else
 				chosen_lobby.spectate(usr)
 			log_game("[usr.ckey] joined deathmatch lobby [params["id"]] as an observer.")
-		if ("admin")
-			if (!check_rights(R_ADMIN))
+		if("admin")
+			if(!check_rights(R_ADMIN))
 				message_admins("[usr.key] has attempted to use admin functions in the deathmatch panel!")
 				log_admin("[key_name(usr)] tried to use the deathmatch panel admin functions without authorization.")
 				return
 			var/lobby = params["id"]
 			switch (params["func"])
-				if ("Close")
+				if("Close")
 					remove_lobby(lobby)
 					log_admin("[key_name(usr)] removed deathmatch lobby [lobby].")
-				if ("View")
+				if("View")
 					lobbies[lobby].ui_interact(usr)

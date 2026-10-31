@@ -123,7 +123,7 @@
 
 	if(ismob(usr))
 		var/mob/M = usr
-		M.swap_hand()
+		M.cycle_hand()
 	return 1
 
 /atom/movable/screen/navigate
@@ -1120,7 +1120,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
  */
 /atom/movable/screen/blood_level
 	name = "Blood Level"
-	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
+	icon = 'icons/mob/actions/actions_bloodsucker.dmi'
 	icon_state = "blood_display"
 	screen_loc = ui_blooddisplay
 

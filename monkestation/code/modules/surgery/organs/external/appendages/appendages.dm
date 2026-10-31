@@ -2,7 +2,7 @@
 	name = "arachnid appendages"
 	desc = "Extra legs that go on your back, don't actually work for walking sadly."
 	icon_state = "arachnid_appendages"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_arachnid_appendages"
 	zone = BODY_ZONE_CHEST
@@ -21,5 +21,8 @@
 /datum/bodypart_overlay/mutant/arachnid_appendages/get_base_icon_state()
 	return sprite_datum.icon_state //i hate you
 
-/datum/bodypart_overlay/mutant/arachnid_appendages/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/arachnid_appendages/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE //show them anyway no matter what you're wearing

@@ -1,7 +1,7 @@
 /obj/item/implant/dust
 	name = "self immolation implant"
 	desc = "Dust to dust."
-	icon = 'icons/obj/nuke_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "supermatter_sliver_pulse"
 	actions_types = list(/datum/action/item_action/dust_implant)
 	var/popup = FALSE // is the window open?
@@ -97,8 +97,8 @@
 /obj/item/clothing/mask/gas/sechailer/swat/ert
 	name = "\improper emergency response team mask"
 	desc = "A close-fitting tactical mask with a toned down Compli-o-nator 3000. This one is designed for Nanotrasen emergency response teams and has an inbuilt air-freshener. Fancy!"
-	icon = 'monkestation/icons/obj/clothing/masks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "ert"
 	aggressiveness = 1
 

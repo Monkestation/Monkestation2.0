@@ -56,7 +56,7 @@
 			helbent = TRUE
 		to_chat(affected_mob, span_hierophant("Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?"))
 		var/timeisticking = world.time
-		var/RPSchoice = tgui_alert(affected_mob, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", list("rock" , "paper" , "scissors"), 60)
+		var/RPSchoice = tgui_alert(affected_mob, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", list("rock" , "paper" , "scissors"), 60 SECONDS)
 		if(QDELETED(affected_mob) || (timeisticking+(1.1 MINUTES) < world.time))
 			reaping = FALSE
 			return //good job, you ruined it
@@ -165,6 +165,8 @@
 	reagent_state = LIQUID
 	color = "#6171FF"
 	ph = 4.7
+	inverse_chem_val = 0.4
+	inverse_chem = /datum/reagent/impurity/lentslurri
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -362,7 +364,7 @@
 		var/amount2purge = 3
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
-		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(the_reagent2.type, the_reagent2.purge_multiplier * amount2purge * REM * seconds_per_tick)
 	..()
 	return TRUE
 
@@ -399,7 +401,7 @@
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		affected_mob.reagents.remove_reagent(R.type, 0.4 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * 0.4 * REM * seconds_per_tick)
 
 	..()
 	. = TRUE
@@ -428,7 +430,7 @@
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		affected_mob.reagents.remove_reagent(R.type, 0.2 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * 0.2 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 
@@ -458,6 +460,14 @@
 	color = "#FFEBEB"
 	ph = 7.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// How much brute damage is healed on application, times the application amount
+	var/brute_heal_amt = -1.25
+	/// how much burn damage is healed on application, times the application amount
+	var/burn_heal_amt = -1.25
+	/// Wether or not this version of synth can unhusk burnt bodies
+	var/unhusks = TRUE
+	/// How much tox damage is dealt per unit of health healed
+	var/toxmutipler = 0.66
 
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -469,20 +479,20 @@
 		if(istype(humans.dna.species, /datum/species/ipc))
 			return
 	if(carbies.stat == DEAD)
-		show_message = 0
+		show_message = FALSE
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	var/harmies = min(carbies.getBruteLoss(), carbies.adjustBruteLoss(-1.25 * reac_volume, required_bodytype = affected_bodytype)*-1)
-	var/burnies = min(carbies.getFireLoss(), carbies.adjustFireLoss(-1.25 * reac_volume, required_bodytype = affected_bodytype)*-1)
+	var/harmies = min(carbies.getBruteLoss(), carbies.adjustBruteLoss(brute_heal_amt * reac_volume, required_bodytype = affected_bodytype)*-1)
+	var/burnies = min(carbies.getFireLoss(), carbies.adjustFireLoss(burn_heal_amt * reac_volume, required_bodytype = affected_bodytype)*-1)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
-	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))), required_biotype = affected_biotype) //0.5 - 0.75
+	carbies.adjustToxLoss((harmies+burnies)*(toxmutipler), required_biotype = affected_biotype)
 	if(show_message)
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 
-	if(!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) || carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+	if(!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) || carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD || !unhusks)
 		return
 	var/synthflesh_amount = carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) // Yes, this includes the amount we've added from our gel
 	if(methods & TOUCH) //touch does not apply chems to blood, we want to combine the two volumes before attempting to unhusk
@@ -570,4 +580,16 @@
 
 
 /******NICHE******/
-//todo
+//todo (it was never todone)
+///Biocellulose, a weaker version of synthflesh that doesnt cause toxin damage but also cannot unhusk
+/datum/reagent/medicine/c2/synthflesh/biocellulose
+	name = "Biocellulose"
+	description = "A weaker, biological version of synthflesh that heals brute and burn, at the cost of causing more toxin damage, and being unable to unhusk. Touch application only."
+	reagent_state = LIQUID
+	color = "#ee5c5c"
+	ph = 7.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	brute_heal_amt = -0.75
+	burn_heal_amt = -0.75
+	unhusks = FALSE
+	toxmutipler = 0.8

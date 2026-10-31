@@ -56,7 +56,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/number_of_hands = user_looking.held_items.len
+	var/number_of_hands = user_looking.get_num_hand_slots()
 	while(number_of_hands > user_looking.default_hand_amount)
 		number_of_hands /= user_looking.default_hand_amount
 		screen_start_y++
@@ -142,7 +142,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/list/usable_modules = robot_model.get_usable_modules()
+	var/list/usable_modules = robot_model.usable_modules.Copy()
 
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y
@@ -150,7 +150,7 @@
 
 	for(var/i in 1 to length(usable_modules))
 		var/atom/movable/item = usable_modules[i]
-		if(item in robot_model.robot.held_items)
+		if(robot_model.cyborg_owner.is_holding(item))
 			current_x++
 			if(current_x - screen_start_x < columns)
 				continue

@@ -6,7 +6,7 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/items_and_weapons.dmi'
 	lefthand_file = 'monkestation/code/modules/cybernetics/icons/swords_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/cybernetics/icons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	flags_1 = CONDUCT_1
 	force = 12
 	wound_bonus = 20
@@ -149,8 +149,8 @@
 	. = ..()
 	r_hand = owner.get_held_items_for_side(RIGHT_HANDS, FALSE)
 	l_hand = owner.get_held_items_for_side(LEFT_HANDS, FALSE)
-	r_hand.block_chance += 65
-	l_hand.block_chance += 65
+	r_hand.block_chance += 50
+	l_hand.block_chance += 50
 	ADD_TRAIT(owner, TRAIT_CANT_ATTACK, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shield_blades)
 	owner.balloon_alert_to_viewers("starts blocking!")

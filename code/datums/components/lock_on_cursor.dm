@@ -45,25 +45,31 @@
 	datum/callback/can_target_callback,
 	catcher_default_click = TRUE, //monkestation edit
 )
+
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
+
 	if (lock_amount < 1 || lock_cursor_range < 0)
 		CRASH("Invalid range or amount argument")
+
 	src.lock_cursor_range = lock_cursor_range
 	src.target_typecache = target_typecache
 	src.on_click_callback = on_click_callback
 	src.lock_amount = lock_amount
 	src.on_lock = on_lock
 	src.can_target_callback = can_target_callback ? can_target_callback : CALLBACK(src, PROC_REF(can_target))
+
 	immune_weakrefs = list(WEAKREF(parent) = TRUE) //Manually take this out if you want..
 	for(var/immune_thing in immune)
 		if(isweakref(immune_thing))
 			immune_weakrefs[immune_thing] = TRUE
 		else if(isatom(immune_thing))
 			immune_weakrefs[WEAKREF(immune_thing)] = TRUE
+
 	lock_appearance = mutable_appearance(icon = icon, icon_state = icon_state, layer = FLOAT_LAYER)
 	var/mob/owner = parent
 	mouse_tracker = owner.overlay_fullscreen("lock_on", /atom/movable/screen/fullscreen/cursor_catcher/lock_on, 0)
+	mouse_tracker.default_click = catcher_default_click
 	mouse_tracker.assign_to_mob(owner)
 	if(on_click_callback)
 		RegisterSignal(mouse_tracker, COMSIG_CLICK, PROC_REF(on_catcher_click))

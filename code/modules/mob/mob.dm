@@ -200,9 +200,7 @@
 /**
  * Some kind of debug verb that gives atmosphere environment details
  */
-/mob/proc/Cell()
-	set category = "Admin"
-	set hidden = TRUE
+GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 
 	if(!loc)
 		return
@@ -211,10 +209,10 @@
 
 	var/t = "[span_notice("Coordinates: [x],[y] ")]\n"
 	t += "[span_danger("Temperature: [environment.temperature] ")]\n"
-	for(var/id in environment.gases)
-		var/gas = environment.gases[id]
-		if(gas[MOLES])
-			t+="[span_notice("[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] ")]\n"
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+	for(var/gas_id, gas_moles in environment.moles)
+		if(gas_moles)
+			t += "[span_notice("[cached_gas_name[gas_id]]: [gas_moles] ")]\n"
 
 	to_chat(usr, t)
 
@@ -566,9 +564,8 @@
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-/mob/verb/examinate(atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
-	set name = "Examine"
-	set category = "IC"
+GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", "IC", /atom)
+	VERB_ARG_TYPED(examinify, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
@@ -763,10 +760,7 @@
  *
  * Calls attack self on the item and updates the inventory hud for hands
  */
-/mob/verb/mode()
-	set name = "Activate Held Object"
-	set category = "Object"
-	set src = usr
+GAME_VERB_SRC(/mob, mode, usr, "Activate Held Object", "Object")
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
@@ -793,9 +787,7 @@
  *
  * Only works if flag/norespawn is allowed in config
  */
-/mob/verb/abandon_mob()
-	set name = "Respawn"
-	set category = "OOC"
+GAME_VERB(/mob, abandon_mob, "Respawn", "OOC")
 
 	if (CONFIG_GET(flag/norespawn))
 		if (!check_rights_for(usr.client, R_ADMIN))
@@ -833,23 +825,15 @@
 /**
  * Sometimes helps if the user is stuck in another perspective or camera
  */
-/mob/verb/cancel_camera()
-	set name = "Cancel Camera View"
-	set category = "OOC"
+GAME_VERB(/mob, cancel_camera, "Cancel Camera View", "OOC")
 	reset_perspective(null)
 	unset_machine()
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
-/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
-	set name = ".click"
-	set hidden = TRUE
-	set category = null
+GAME_VERB_NATIVE(/mob, DisClick, ".click", null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
-/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
-	set name = ".dblclick"
-	set hidden = TRUE
-	set category = null
+GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
 /**
@@ -903,31 +887,88 @@
 
 	return data
 
-/mob/proc/swap_hand(held_index)
-	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
-
-	var/obj/item/held_item = get_active_held_item()
-	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
-		to_chat(src, span_warning("Your other hand is too busy holding [held_item]."))
+/**
+ * Attempts to cycle through hands to select a new hand.
+ *
+ * - cycle_dir: A cardinal (NORTH, SOUTH, EAST, WEST) direction. Defaults to WEST, which is forwards.
+ * - climb: If TRUE, wrapping will also shift rows/columns.
+ * - silent: If applicable and TRUE, will output messages to the mob.
+ * - intial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
+ */
+/mob/proc/cycle_hand(cycle_dir = WEST, climb = TRUE, silent = FALSE, initial_index = active_hand_index)
+	if(!(cycle_dir in GLOB.cardinals))
+		stack_trace("received invalid cycle_dir [!isnull(cycle_dir) ? cycle_dir : "null"]")
 		return FALSE
 
-	var/result = perform_hand_swap(held_index)
-	if (result)
-		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS)
+	if(SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND, cycle_dir, climb, silent) & COMPONENT_BLOCK_CYCLE)
+		return FALSE
 
-	return result
+	var/step = ((cycle_dir & NORTHWEST) != 0) ? 1 : -1
+	var/by_row = cycle_dir & (NORTH|SOUTH)
+
+	var/hand_count = held_items.len
+	var/num_rows = floor(hand_count / 2)
+	var/row = floor((initial_index - 1) / 2)
+	var/column = (initial_index - 1) % 2
+
+	var/max_iterations // worst case, we iterate this many times up to our initial_index
+	if(climb)
+		max_iterations = hand_count
+	else if(!by_row)
+		max_iterations = 2
+	else
+		max_iterations = num_rows
+	for(var/i in 1 to max_iterations)
+		if(by_row) // vertically
+			row += step
+			if(row < 0 || row >= num_rows)
+				row = ((row % num_rows) + num_rows) % num_rows
+				if(climb)
+					column = abs(column + step) % 2
+		else // horizontally
+			column += step
+			if(column < 0 || column >= 2)
+				column = abs(column) % 2
+				if(climb)
+					row = (((row + step) % num_rows) + num_rows) % num_rows
+
+		var/desired_index = (row * 2 + column) + 1
+
+		var/sigresult = SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND_INDEX(desired_index), cycle_dir, climb, silent)
+		if(sigresult & COMPONENT_BLOCK_CYCLE)
+			return FALSE
+		if(sigresult & COMPONENT_CONTINUE_CYCLE)
+			continue
+
+		return swap_hand(desired_index, silent = silent)
+	return FALSE
+
+/// Swaps the mob's active hand to the specified held_index.
+/// If intending to swap to the "next" hand, use [/mob/proc/cycle_hand] instead.
+/mob/proc/swap_hand(held_index, silent = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
+
+	if(!isnum(held_index))
+		stack_trace("You passed [held_index] into swap_hand instead of a number. WTF man")
+		return FALSE
+
+	if(held_index < 1 || held_index > get_num_hand_slots())
+		stack_trace("held_index out of bounds ([held_index])")
+		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_index, silent) & COMPONENT_BLOCK_SWAP)
+		return FALSE
+
+	var/obj/item/old_active_held_item = get_active_held_item()
+	. = perform_hand_swap(held_index)
+	if(.)
+		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), old_active_held_item)
 
 /// Performs the actual ritual of swapping hands, such as setting the held index variables
 /mob/proc/perform_hand_swap(held_index)
 	PROTECTED_PROC(TRUE)
 	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
 		return FALSE
-
-	if(!held_index)
-		held_index = (active_hand_index % held_items.len) + 1
-
-	if(!isnum(held_index))
-		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
@@ -949,7 +990,7 @@
 		selected_hand = (active_hand_index % held_items.len)+1
 
 	if(istext(selected_hand))
-		selected_hand = lowertext(selected_hand)
+		selected_hand = LOWER_TEXT(selected_hand)
 		if(selected_hand == "right" || selected_hand == "r")
 			selected_hand = 2
 		if(selected_hand == "left" || selected_hand == "l")
@@ -1039,29 +1080,29 @@
 		)
 		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
-		playsound(src, 'sound/magic/magic_block.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/magic_block.ogg', 50, TRUE)
 
 	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
 		visible_message(
 			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
 			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
 		)
-		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
-		playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 
 	else if(magic_flags & MAGIC_RESISTANCE_MIND)
 		visible_message(
 			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
 			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
 		)
-		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
-		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/magic_block_mind.ogg', 50, TRUE)
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/human = src
-		human.apply_height_filters(antimagic_effect)
+		human.apply_height(antimagic_effect, ENTIRE_BODY)
 
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
@@ -1184,7 +1225,6 @@
 		log_message("[src] failed name change as the new name was the same as the old one: [oldname]", LOG_OWNERSHIP)
 		return FALSE
 	if(!istext(newname) && !isnull(newname))
-		stack_trace("[src] attempted to change its name from [oldname] to the non string value [newname]")
 		return FALSE
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
@@ -1305,11 +1345,12 @@
 /**
  * Proc that returns TRUE if the mob can write using the writing_instrument, FALSE otherwise.
  *
- * This proc a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
+ * This proc has a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
  */
-/mob/proc/can_write(obj/item/writing_instrument)
+/mob/proc/can_write(obj/item/writing_instrument, silent_if_not_writing_tool = FALSE)
 	if(!istype(writing_instrument))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		if(!silent_if_not_writing_tool)
+			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
 	if(!is_literate())
@@ -1322,7 +1363,8 @@
 
 	var/pen_info = writing_instrument.get_writing_implement_details()
 	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		if(!silent_if_not_writing_tool)
+			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
 	if(has_gravity())
@@ -1459,9 +1501,7 @@
 	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
-/mob/verb/open_language_menu_verb()
-	set name = "Open Language Menu"
-	set category = "IC"
+GAME_VERB(/mob, open_language_menu_verb, "Open Language Menu", "IC")
 
 	get_language_holder().open_language_menu(usr)
 
@@ -1537,11 +1577,6 @@
 	stat = new_stat
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
 
-/// Proc used for custom metabolization of reagents, if any
-/mob/proc/reagent_check(datum/reagent/chem, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_CHECK, chem, seconds_per_tick, times_fired)
-
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, control_object))
@@ -1593,10 +1628,7 @@
 	canon_client = null
 
 ///Shows a tgui window with memories
-/mob/verb/memory()
-	set name = "Memories"
-	set category = "IC"
-	set desc = "View your character's memories."
+GAME_VERB_DESC(/mob, memory, "Memories", "View your character's memories.", "IC")
 	if(!mind)
 		var/fail_message = "You have no mind!"
 		if(isobserver(src))
@@ -1648,9 +1680,7 @@
 	data["memories"] = memories
 	return data
 
-/mob/verb/view_skills()
-	set category = "IC"
-	set name = "View Skills"
+GAME_VERB(/mob, view_skills, "View Skills", "IC")
 
 	mind?.print_levels(src)
 
@@ -1702,4 +1732,3 @@
  */
 /mob/proc/get_access() as /list
 	return list()
-

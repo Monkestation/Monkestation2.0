@@ -1,12 +1,12 @@
 #define KILLS_FOR_BLOOD_HUNGER 3 //how many do we need to kill for our bloody sprite/forced blood hunger
 #define EXECUTE_TIME 10 SECONDS //how long it takes to execute someone using the animatronic
 #define PHRASES_TO_ADD_ON_HUNGER list("GIVE ME CHILD TO EAT" = 2, "FEED ME SOULS" = 2, "I HUNGER FOR FLESH" = 2)
-#define SOUNDS_TO_ADD_ON_HUNGER list('sound/voice/ghost_whisper.ogg', 'sound/hallucinations/radio_static.ogg')
+#define SOUNDS_TO_ADD_ON_HUNGER list('sound/music/antag/bloodcult/ghost_whisper.ogg', 'sound/effects/hallucinations/radio_static.ogg')
 //very similar to living statues however we cant make it a subtype due to needing to handle a few things differently, mainly say()
 /mob/living/basic/monkey_animatronic
 	name = "Monke"
 	desc = "A lovable and legally distinct mascot!"
-	icon = 'monkestation/icons/mob/basic/monkey_animatronic.dmi'
+	icon = 'icons/mob/basic/monkey_animatronic.dmi'
 	icon_state = "monkey_animatronic_1"
 	icon_living = "monkey_animatronic_1"
 	icon_dead = "monkey_animatronic_1"
@@ -64,9 +64,9 @@
 							    "The other performers died. IN THE WAR." = 1)
 	///list of sounds we can play
 	var/list/sound_list = list('sound/machines/copier.ogg',
-							   'sound/mecha/hydraulic.ogg',
-							   'sound/mecha/mechmove01.ogg',
-							   'sound/mecha/mechmove04.ogg',
+							   'sound/vehicles/mecha/hydraulic.ogg',
+							   'sound/vehicles/mecha/mechmove01.ogg',
+							   'sound/vehicles/mecha/mechmove04.ogg',
 							   'sound/machines/destructive_scanner/ScanSafe.ogg')
 
 /mob/living/basic/monkey_animatronic/Initialize(mapload)

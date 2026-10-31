@@ -114,10 +114,10 @@
 /datum/action/cooldown/spell/conjure_item/hardlight_spear
 	name = "Hardlight Spear"
 	desc = "Summon a spear of light to strike down your foes."
-	button_icon = 'monkestation/icons/obj/items_and_weapons.dmi'
+	button_icon = 'icons/obj/items_and_weapons.dmi'
 	button_icon_state = "lightspear"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_INCAPACITATED
-	sound = 'sound/weapons/saberon.ogg'
+	sound = 'sound/items/weapons/saberon.ogg'
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 20 SECONDS
@@ -170,7 +170,7 @@
 /obj/item/gun/magic/hardlight_spear //listen man
 	name = "hardlight spear"
 	desc = "A spear made out of hardened light."
-	fire_sound = 'sound/weapons/fwoosh.ogg'
+	fire_sound = 'sound/items/weapons/fwoosh.ogg'
 	pinless = TRUE
 	force = 30
 	demolition_mod = 1.5
@@ -182,13 +182,13 @@
 	sharpness = SHARP_POINTY
 	w_class = WEIGHT_CLASS_HUGE
 	antimagic_flags = NONE
-	hitsound = 'sound/weapons/blade1.ogg'
-	icon = 'monkestation/icons/obj/items_and_weapons.dmi'
+	hitsound = 'sound/items/weapons/blade1.ogg'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "lightspear"
 	inhand_icon_state = "lightspear"
 	worn_icon_state = "none"
-	lefthand_file = 'monkestation/icons/mob/inhands/polearms_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/polearms_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/polearms_righthand.dmi'
 	slot_flags = null
 	can_charge = FALSE //ITS A SPEAR
 	interaction_flags_item = NONE
@@ -227,17 +227,17 @@
 		if(0)
 			return
 		if(1)
-			back_spear_overlay = mutable_appearance('monkestation/icons/effects/hardlightspear.dmi', "spear1", MOB_SHIELD_LAYER)
+			back_spear_overlay = mutable_appearance('icons/effects/hardlightspear.dmi', "spear1", MOB_SHIELD_LAYER)
 		if(2)
-			back_spear_overlay = mutable_appearance('monkestation/icons/effects/hardlightspear.dmi', "spear2", MOB_SHIELD_LAYER)
+			back_spear_overlay = mutable_appearance('icons/effects/hardlightspear.dmi', "spear2", MOB_SHIELD_LAYER)
 		if(3)
-			back_spear_overlay = mutable_appearance('monkestation/icons/effects/hardlightspear.dmi', "spear3", MOB_SHIELD_LAYER)
+			back_spear_overlay = mutable_appearance('icons/effects/hardlightspear.dmi', "spear3", MOB_SHIELD_LAYER)
 		if(4)
-			back_spear_overlay = mutable_appearance('monkestation/icons/effects/hardlightspear.dmi', "spear4", MOB_SHIELD_LAYER)
+			back_spear_overlay = mutable_appearance('icons/effects/hardlightspear.dmi', "spear4", MOB_SHIELD_LAYER)
 		if(5)
-			back_spear_overlay = mutable_appearance('monkestation/icons/effects/hardlightspear.dmi', "spear5", MOB_SHIELD_LAYER)
+			back_spear_overlay = mutable_appearance('icons/effects/hardlightspear.dmi', "spear5", MOB_SHIELD_LAYER)
 		if(6)
-			back_spear_overlay = mutable_appearance('monkestation/icons/effects/hardlightspear.dmi', "spear6", MOB_SHIELD_LAYER)
+			back_spear_overlay = mutable_appearance('icons/effects/hardlightspear.dmi', "spear6", MOB_SHIELD_LAYER)
 	back_spear_overlay.pixel_x = -32
 	. += back_spear_overlay
 
@@ -267,7 +267,7 @@
 
 /obj/projectile/bullet/hardlight_spear
 	name = "hardlight spear"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "lightspear"
 	damage = 30
 	armour_penetration = 50
@@ -278,8 +278,8 @@
 	shrapnel_type = /obj/item/shrapnel/bullet/spear
 	light_outer_range = 1
 	light_power = 1
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	hitsound_wall = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	hitsound_wall = 'sound/items/weapons/parry.ogg'
 	embed_type = /datum/embedding/hardlight_spear
 
 /datum/embedding/hardlight_spear
@@ -294,7 +294,7 @@
 
 /obj/item/shrapnel/bullet/spear
 	name = "hardlight spear"
-	icon = 'monkestation/icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "lightspear"
 
 /datum/embedding/hardlight_spear/stop_embedding()

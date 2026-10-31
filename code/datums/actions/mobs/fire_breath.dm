@@ -7,7 +7,7 @@
 	/// The range of the fire
 	var/fire_range = 15
 	/// The sound played when you use this ability
-	var/fire_sound = 'sound/magic/fireball.ogg'
+	var/fire_sound = 'sound/effects/magic/fireball.ogg'
 	/// Time to wait between spawning each fire turf
 	var/fire_delay = 1.5 DECISECONDS
 	/// How hot is our fire
@@ -119,6 +119,8 @@
 	var/breath_delay = 2.5 SECONDS
 	/// How many full circles do we perform?
 	var/total_spins = 3
+	/// Makes us stronger if true
+	var/boosted = FALSE
 
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/Activate(atom/target_atom)
 	target_atom = get_step(owner, owner.dir) // Just shoot it forwards, we don't need to click on someone for this one
@@ -126,6 +128,11 @@
 
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/attack_sequence(atom/target)
 	var/queued_spins = 0
+	if(boosted && prob(50) && !HAS_TRAIT_FROM(owner, TRAIT_UNDENSE, SWOOPING_TRAIT))
+		var/datum/action/cooldown/mob_cooldown/meteors/meteors = locate(/datum/action/cooldown/mob_cooldown/meteors) in owner.actions
+		if(meteors)
+			meteors.StartCooldown(0)
+			meteors.Trigger(target = target)
 	for (var/i in 1 to total_spins)
 		if(HAS_TRAIT_FROM(owner, TRAIT_UNDENSE, SWOOPING_TRAIT))
 			return

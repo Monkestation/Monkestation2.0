@@ -37,7 +37,7 @@
 
 /obj/item/ammo_box/magazine/wt550m9/wtrub
 	name = "wt550 magazine (Rubber 4.6x30mm)"
-	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "46x30mmtR-20"
 	base_icon_state = "46x30mmtR"
 	ammo_type = /obj/item/ammo_casing/c46x30mm/rub
@@ -48,7 +48,7 @@
 
 /obj/item/ammo_box/magazine/wt550m9/wtsalt
 	name = "wt550 magazine (Saltshot 4.6x30mm)"
-	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "46x30mmtS-20"
 	base_icon_state = "46x30mmtS"
 	ammo_type = /obj/item/ammo_casing/c46x30mm/salt

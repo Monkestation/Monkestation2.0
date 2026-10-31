@@ -10,7 +10,7 @@
 	preview_outfit = /datum/outfit/spy
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Rob the station blind."
-	stinger_sound = 'sound/ambience/antag/spy.ogg'
+	stinger_sound = 'sound/music/antag/spy.ogg'
 	/// Whether an uplink has been created (successfully or at all)
 	var/uplink_created = FALSE
 	/// String displayed in the antag panel pointing the spy to where their uplink is.
@@ -216,12 +216,12 @@
 		stack_trace("[type] created on invalid target [Target || "null"]")
 		qdel(src)
 
-/datum/action/backup_uplink/Trigger(mob/clicker, trigger_flags)
+/datum/action/backup_uplink/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
 
-	var/mob/living/spy = clicker
+	var/mob/living/spy = owner
 	var/obj/item/held_thing = spy.get_active_held_item()
 	if(isnull(held_thing))
 		spy.balloon_alert(spy, "you need to hold something!")

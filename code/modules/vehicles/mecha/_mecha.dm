@@ -134,9 +134,9 @@
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
-	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/stepsound = 'sound/vehicles/mecha/mechstep.ogg'
 	///Sound played when the mech walks
-	var/turnsound = 'sound/mecha/mechturn.ogg'
+	var/turnsound = 'sound/vehicles/mecha/mechturn.ogg'
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
@@ -268,8 +268,12 @@
 	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
+	var/list/mob/living/silicon/ai/loaded_ais
 	for(var/ejectee in occupants)
-		mob_exit(ejectee, silent = TRUE)
+		if(isAI(ejectee))
+			LAZYADD(loaded_ais, ejectee)
+		else
+			mob_exit(ejectee, silent = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -278,6 +282,10 @@
 
 	STOP_PROCESSING(SSobj, src)
 	LAZYCLEARLIST(flat_equipment)
+
+	if(LAZYLEN(loaded_ais))
+		for(var/mob/living/silicon/ai/occupant_ai as anything in loaded_ais)
+			occupant_ai.gib() //No wreck, no AI to recover
 
 	QDEL_NULL(ore_box)
 
@@ -322,13 +330,15 @@
 	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
-			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			var/mob/living/silicon/ai/ai_occupant = occupant
+			var/turf/ai_location_turf = get_turf(ai_occupant.last_used_data_core || ai_occupant)
+			if(!LAZYLEN(GLOB.data_cores["[ai_location_turf.z]"])) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
-				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
-				ai.gib() //No wreck, no AI to recover
+				if(!wreckage)
+					unlucky_ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
+					unlucky_ai.gib() //No wreck, no AI to recover
 			else
-				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
+				mob_exit(ai_occupant, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, forced = TRUE)
 		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
@@ -363,7 +373,7 @@
  */
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
-	user.playsound_local(src, 'sound/machines/beep.ogg', 25)
+	user.playsound_local(src, 'sound/machines/beep/beep.ogg', 25)
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
@@ -474,11 +484,8 @@
 			. += span_notice("You can see [occupante] inside.")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			for(var/held_item in H.held_items)
-				if(!isgun(held_item))
-					continue
+			if(H.is_holding_item_of_type(/obj/item/gun))
 				. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
-				break //in case user is holding two guns
 
 /obj/vehicle/sealed/mecha/generate_integrity_message()
 	var/examine_text = ""
@@ -776,7 +783,7 @@
 
 		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
-	playsound(src, 'sound/machines/airlock.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/airlock/airlock.ogg', 50, TRUE)
 
 ///fetches temp of the gas mixture we are using
 /obj/vehicle/sealed/mecha/return_temperature()

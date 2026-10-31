@@ -261,7 +261,7 @@
 		data["beaker_reagent_color"] = mix_color_from_reagents(beaker.reagents.reagent_list)
 	return data
 
-/obj/structure/chem_separator/ui_act(action, params)
+/obj/structure/chem_separator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return TRUE
 	switch(action)

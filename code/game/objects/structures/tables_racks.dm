@@ -698,7 +698,7 @@
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/rglass
 	name = "reinforced glass table"
@@ -738,6 +738,27 @@
 	custom_materials = list(/datum/material/alloy/plastitaniumglass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plastitaniumglass
 	max_integrity = 300
+
+/obj/structure/table/sandstone
+	name = "sandstone table"
+	desc = "Woah! A sandstone TABLE!!"
+	icon = 'icons/obj/smooth_structures/sandstone_table.dmi'
+	icon_state = "brass_table-0" //brass table is my best friend
+	base_icon_state = "brass_table" //brass table is my best friend
+	resistance_flags = FIRE_PROOF
+	buildstack = /obj/item/stack/sheet/mineral/sandstone
+	buildstackamount = 6
+	framestackamount = 0
+	smoothing_groups = SMOOTH_GROUP_SANDSTONE_TABLES
+	canSmoothWith = SMOOTH_GROUP_SANDSTONE_TABLES
+
+/obj/structure/table/silk
+	name = "silk table"
+	desc = "Really stable. Do not set on fire."
+	icon = 'icons/obj/smooth_structures/silk_table.dmi'
+	buildstack = /obj/item/stack/sheet/silk
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
 
 /*
  * Surgery Tables
@@ -792,6 +813,10 @@
 		qdel(breath_mask)
 	breath_mask = null
 	return ..()
+
+/obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
+	. = ..()
+	buckle_mob(pushed_mob)
 
 /obj/structure/table/optable/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -1167,9 +1192,9 @@
 			if(damage_amount)
 				playsound(loc, 'sound/items/dodgeball.ogg', 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 40, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 40, TRUE)
 
 /*
  * Rack destruction

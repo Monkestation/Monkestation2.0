@@ -101,12 +101,12 @@
 			span_danger("[src] inside [mod.wearer]'s [mod.name] activates!"),
 			span_danger("Your body is quickly caught by your suit.")
 		)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 50, TRUE)
 	else
 		mod.wearer.visible_message(
 			span_danger("[src] inside [mod.wearer]'s [mod.name] fails to actuate."),
 		)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 25, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 25, TRUE)
 
 
 
@@ -117,12 +117,13 @@
 	icon_state = "rave_visor"
 	complexity = 1
 	overlay_state_inactive = "module_rave"
+
 	/// The client colors applied to the wearer.
 	var/datum/client_colour/rave_screen
 	/// The current element in the rainbow_order list we are on.
 	var/rave_number = 1
 	/// The track we selected to play.
-	var/datum/track/selection
+	var/datum/media_track/selection
 	/// A list of all the songs we can play.
 	var/list/songs = list()
 	/// A list of the colors the module can take.
@@ -137,29 +138,23 @@
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()
-	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
-	for(var/sound in tracks)
-		var/datum/track/track = new()
-		track.song_path = file("[global.config.directory]/jukebox_music/sounds/[sound]")
-		var/list/sound_params = splittext(sound,"+")
-		if(length(sound_params) != 3)
-			continue
-		track.song_name = sound_params[1]
-		track.song_length = text2num(sound_params[2])
-		track.song_beat = text2num(sound_params[3])
-		songs[track.song_name] = track
+	for(var/datum/media_track/song in SSmedia_tracks.jukebox_tracks)
+		songs += song.title
+		songs[song.title] = song
+
 	if(length(songs))
-		var/song_name = pick(songs)
-		selection = songs[song_name]
+		var/random_song_title = pick(songs)
+		selection = songs[random_song_title]
 
 /obj/item/mod/module/visor/rave/on_activation()
 	. = ..()
 	if(!.)
 		return
+
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
+		mod?.wearer?.client?.tgui_panel?.play_music(selection.url, null)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -170,7 +165,7 @@
 		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
 		if(deleting)
 			return
-		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
+		SEND_SOUND(mod.wearer, sound('sound/machines/terminal/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
@@ -187,19 +182,16 @@
 /obj/item/mod/module/visor/rave/get_configuration()
 	. = ..()
 	if(length(songs))
-		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, clean_songs())
+		.["selection"] = add_ui_configuration("Song", "list", selection.title, assoc_to_keys(songs))
 
 /obj/item/mod/module/visor/rave/configure_edit(key, value)
 	switch(key)
 		if("selection")
 			if(active)
 				return
+			if(QDELETED(src))
+				return
 			selection = songs[value]
-
-/obj/item/mod/module/visor/rave/proc/clean_songs()
-	. = list()
-	for(var/track in songs)
-		. += track
 
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
@@ -282,7 +274,7 @@
 
 	// Up to a 30% chance to set the sheet on fire, +2% per sheet made
 	if(prob(min(num_sheets_dispensed * 2, 30)))
-		if(crisp_paper in mod.wearer.held_items)
+		if(mod.wearer.is_holding(crisp_paper))
 			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
 		crisp_paper.balloon_alert(mod.wearer, UNLINT("PC LOAD LETTER!"))
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
@@ -337,7 +329,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/effects/curseattack.ogg', 50)
+	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
@@ -352,7 +344,7 @@
 	if(!.)
 		return
 	if(deleting)
-		playsound(src, 'sound/effects/curseattack.ogg', 50)
+		playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_SAY))
 	step_count = 0

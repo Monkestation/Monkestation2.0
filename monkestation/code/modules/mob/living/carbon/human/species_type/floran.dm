@@ -19,7 +19,7 @@
 	heatmod = 0.67 //Same as lizard people
 	coldmod = 1.5 //Same as lizard people
 	meat = /obj/item/food/meat/slab/human/mutant/plant
-	exotic_bloodtype = /datum/blood_type/water
+	exotic_bloodtype = BLOOD_TYPE_H2O
 	inert_mutation = list(/datum/mutation/spores, /datum/mutation/sapblood)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
@@ -35,6 +35,7 @@
 	mutanttongue = /obj/item/organ/internal/tongue/floran
 	mutanteyes = /obj/item/organ/internal/eyes/floran
 	mutantheart = /obj/item/organ/internal/heart/pod
+	mutantliver = /obj/item/organ/internal/liver/pod
 
 /datum/species/floran/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
@@ -49,18 +50,6 @@
 			H.heal_overall_damage(brute = 0.25 * seconds_per_tick, burn = 0.10 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
 			H.adjustToxLoss(-0.25 * seconds_per_tick)
 			H.adjustOxyLoss(-0.25 * seconds_per_tick)
-
-/datum/species/floran/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	if(chem.type == /datum/reagent/toxin/plantbgone)
-		H.adjustToxLoss(3 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	if(chem.type == /datum/reagent/potassium) //Floran "blood" is water, water does not like potassium
-		to_chat(H, span_danger("You feel your skin bubble and pop painfully!"))
-		H.adjustBruteLoss(10*REM, FALSE)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	return ..()
 
 /datum/species/floran/get_species_description()
 	return "Plant-based humanoids, they are extremely violent carnivores with no central government or power structure, \

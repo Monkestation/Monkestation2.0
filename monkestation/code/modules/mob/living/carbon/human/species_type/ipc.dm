@@ -55,7 +55,7 @@
 	mutantbladder = null
 	mutantspleen = null
 	mutantappendix = null
-	exotic_bloodtype = /datum/blood_type/oil
+	exotic_bloodtype = BLOOD_TYPE_OIL
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/ipc,
@@ -187,24 +187,24 @@
 	revived_ipc.grab_ghost()
 	revived_ipc.dna.features["ipc_screen"] = "BSOD"
 	revived_ipc.update_body()
-	playsound(revived_ipc, 'monkestation/sound/voice/dialup.ogg', 25)
+	playsound(revived_ipc, 'sound/voice/dialup.ogg', 25)
 	revived_ipc.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
 	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), revived_ipc) //We have to hand this off to not stall the revive() on the sleep()s.
 
 /datum/species/ipc/proc/boot_sequence_fluff(mob/living/carbon/human/booting_ipc)
 	sleep(3 SECONDS)
 	if(booting_ipc.stat == DEAD)
-		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
+		playsound(booting_ipc, 'sound/machines/buzz/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
 	sleep(3 SECONDS)
 	if(booting_ipc.stat == DEAD)
-		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
+		playsound(booting_ipc, 'sound/machines/buzz/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Finalizing setup...")
 	sleep(3 SECONDS)
 	if(booting_ipc.stat == DEAD)
-		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
+		playsound(booting_ipc, 'sound/machines/buzz/buzz-two.ogg', 25)
 		return
 	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
 	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
@@ -285,7 +285,7 @@
 	owner.face_atom(user)
 	var/threat = pick(phrases)
 	if(threat == "`I seeee youuuuuu.`")
-		playsound(owner, pick(list('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg')), 50, TRUE)
+		playsound(owner, pick(list('sound/effects/hallucinations/i_see_you1.ogg', 'sound/effects/hallucinations/i_see_you2.ogg')), 50, TRUE)
 		owner.whisper(threat)
 		return
 
@@ -432,17 +432,3 @@
 		)
 
 	return to_add
-
-/datum/species/ipc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/ipc, seconds_per_tick, times_fired)
-	if(chem?.synthetic_boozepwr)
-		var/booze_power = chem.synthetic_boozepwr
-		if(ipc.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
-			ipc.adjust_nutrition(booze_power * 0.055) //one full glass of acetone = 1 full charge if my math is correct
-		if(HAS_TRAIT(ipc, TRAIT_ALCOHOL_TOLERANCE))
-			booze_power *= 0.7
-		if(HAS_TRAIT(ipc, TRAIT_LIGHT_DRINKER))
-			booze_power *= 2
-		if(ipc.get_drunk_amount() < chem.volume * chem.synthetic_boozepwr)
-			ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
-		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/20)
-	return ..()

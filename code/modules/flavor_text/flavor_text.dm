@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(flavor_texts)
 		return
 
 	if(shorten && length(found_text) > EXAMINE_FLAVOR_MAX_DISPLAYED)
-		found_text = TextPreview(found_text, EXAMINE_FLAVOR_MAX_DISPLAYED)
+		found_text = text_preview(found_text, EXAMINE_FLAVOR_MAX_DISPLAYED)
 		found_text += " <a href='byond://?src=[REF(src)];flavor_text=1'>\[More\]</a>"
 
 	return found_text

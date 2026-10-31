@@ -106,13 +106,13 @@
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
 
-	/// Monkestation Addition. Do we force ethernet connection.
-	var/ethernet_forced = FALSE
-
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
+
+	/// This is where our overlays reside
+	var/overlays_icon = 'icons/obj/computer.dmi'
 
 /datum/armor/item_modular_computer
 	bullet = 20
@@ -267,15 +267,21 @@
 	if(computer_id_slot)
 		return FALSE
 
-	computer_id_slot = inserting_id
-	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
-	else
-		inserting_id.forceMove(src)
+	var/obj/item/card/id/real_id = inserting_id
+	if(!istype(real_id))
+		if(user)
+			balloon_alert(user, "not an ID card")
+		return FALSE
 
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	if(user)
+		if(!user.transferItemToLoc(real_id, src))
+			return FALSE
+		balloon_alert(user, "inserted [real_id]")
+	else
+		real_id.forceMove(src)
+
+	computer_id_slot = real_id
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
@@ -302,7 +308,7 @@
 		computer_id_slot.forceMove(drop_location())
 
 	computer_id_slot = null
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	balloon_alert(user, "removed ID")
 	to_chat(user, span_notice("You remove the card from the card slot."))
 
@@ -424,15 +430,11 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-	if(!init_icon)
-		return
-
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_open_overlay) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += mutable_appearance(overlays_icon, "bsod")
+		. += mutable_appearance(overlays_icon, "broken")
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
@@ -523,7 +525,7 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/origin, alerttext, sound = 'sound/machines/twobeep_high.ogg', vision_distance = DEFAULT_MESSAGE_RANGE)
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/origin, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg', vision_distance = DEFAULT_MESSAGE_RANGE)
 	if(QDELETED(loc) || QDELETED(origin) || !origin.alert_able || origin.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
@@ -533,7 +535,7 @@
 	if(!use_energy(check_programs = FALSE))
 		return
 	// Get the messenger app's new sound settings || Monkestation Addition START
-	var/sound_to_play = 'sound/machines/twobeep_high.ogg' //defaults to the original
+	var/sound_to_play = 'sound/machines/beep/twobeep_high.ogg' //defaults to the original
 	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
 	if(messenger?.ringtone_sound)
 		var/selected_sound = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
@@ -541,7 +543,7 @@
 			sound_to_play = selected_sound
 	// Monkestation Addition END
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE, mixer_channel = CHANNEL_RINGTONES)
+		playsound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg'), 50, TRUE, mixer_channel = CHANNEL_RINGTONES)
 	else
 		playsound(src, sound_to_play, 50, TRUE, mixer_channel = CHANNEL_RINGTONES) // Monkestation change
 	ringtone = "*[ringtone]*"
@@ -553,12 +555,12 @@
 	// Monkestation Addition START
 	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
 	if(!messenger)
-		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
 		return
 
 	var/sound_file = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
 	if(!sound_file)
-		sound_file = 'sound/machines/terminal_success.ogg'
+		sound_file = 'sound/machines/terminal/terminal_success.ogg'
 
 	playsound(src, sound_file, 15, TRUE)
 	// Monkestation Addition END
@@ -666,9 +668,6 @@
 /obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
-		return NTNET_ETHERNET_SIGNAL
-
-	if(ethernet_forced) //Monkestation Addition - Add a check for forced ethernet
 		return NTNET_ETHERNET_SIGNAL
 
 	// NTNet is down and we are not connected via wired connection. No signal.
@@ -854,13 +853,13 @@
 			return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
-		//MONKESTATION EDIT START
-		// Don't allow plastic cards (including the spare ID safe code biscuits!) to be inserted
+		var/obj/item/paper/attacking_paper = tool
 		if(istype(tool, /obj/item/paper/paperslip/corporate))
 			return ITEM_INTERACT_BLOCKING
-		//MONKESTATION EDIT END
 		if(stored_paper >= max_paper)
 			balloon_alert(user, "no more room!")
+			return ITEM_INTERACT_BLOCKING
+		if(!attacking_paper.is_empty() && tgui_alert(user, "\the [attacking_paper] has contents on it! Are you sure you want to recycle it?", "Recycling", list("Yes", "No")) != "Yes")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(tool))
 			return FALSE

@@ -2,33 +2,20 @@
 	name = "Input Closet"
 	desc = "Please deposit the requested item to complete the tutorial!"
 	resistance_flags = INDESTRUCTIBLE
-	var/list/players_that_completed = list()
+	var/datum/tutorial_reward/reward
 	var/obj/item/item_to_be_checked = /obj/item/flashlight
 
 /obj/structure/closet/tutorial/Initialize(mapload)
 	. = ..()
 	set_light(l_outer_range = 3, l_power = 1.4, l_color = LIGHT_COLOR_BLUE)
+	reward = new(TUTORIAL_REWARD_LOW)
 
 /obj/structure/closet/tutorial/after_close(mob/living/user, force)
 	. = ..()
-	var/input_succeded
-	if(user.ckey in players_that_completed)
-		to_chat(user, span_warning("You have already completed this tutorial!"))
-		return
-
 	for(var/obj/item/stuff in contents)
 		if(check_stuff(user, stuff))
-			input_succeded = TRUE
-			players_that_completed += user.ckey
 			qdel(stuff)
 			break
-
-	if(input_succeded)
-		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50)
-		visible_message(span_notice("[user] has completed the tutorial!"))
-	else
-		playsound(src, 'sound/machines/buzz-two.ogg', 50)
-		visible_message(span_notice("Required item was not detected!"))
 
 /**
  * Checks if items has the typepath (or its subtypes) of item_to_be_checked
@@ -41,7 +28,7 @@
  */
 /obj/structure/closet/tutorial/proc/check_stuff(mob/living/user, obj/item/stuff)
 	if(istype(stuff, item_to_be_checked))
-		user.reward_tutorial_completion(user, TUTORIAL_REWARD_LOW)
+		reward.award(user)
 		return TRUE
 
 	return FALSE

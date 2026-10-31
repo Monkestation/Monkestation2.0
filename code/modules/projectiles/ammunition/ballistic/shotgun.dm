@@ -24,6 +24,8 @@
 	caliber = CALIBER_SHOTGUN
 	custom_materials = AMMO_MATS_SHOTGUN
 	projectile_type = /obj/projectile/bullet/shotgun_slug
+	bullet_bounce_sound = 'sound/items/weapons/gun/shotgun/shotgun_shell_bounce.ogg'
+	bullet_bounce_sound_volume = 35
 
 /obj/item/ammo_casing/shotgun/executioner
 	name = "executioner slug"
@@ -249,7 +251,7 @@
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/beehive
 	pellets = 4
 	variance = 15
-	fire_sound = 'sound/weapons/taser.ogg'
+	fire_sound = 'sound/items/weapons/taser.ogg'
 	harmful = FALSE
 	custom_materials = AMMO_MATS_SHOTGUN_HIVE
 	advanced_print_req = TRUE
@@ -262,7 +264,7 @@
 	pellets = 8 // 8 * 7 for 56 stamina damage, plus whatever the embedded shells do
 	variance = 50
 	harmful = FALSE
-	fire_sound = 'sound/weapons/taser.ogg'
+	fire_sound = 'sound/items/weapons/taser.ogg'
 	custom_materials = AMMO_MATS_SHOTGUN_TIDE
 	advanced_print_req = TRUE
 
@@ -270,7 +272,7 @@
 /obj/item/ammo_casing/shotgun/trickshot
 	name = "trickshot shell"
 	desc = "A 12 gauge trickshot shell. Specially made to bounce up to five times!"
-	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
+	icon = 'icons/obj/guns/ammunition.dmi'
 	icon_state = "trickshell"
 	projectile_type = /obj/projectile/bullet/pellet/trickshot
 	can_be_printed = FALSE
@@ -280,7 +282,7 @@
 /obj/item/ammo_casing/shotgun/uraniumpen
 	name = "uranium penetrator"
 	desc = "A uranium penetrator. Not radioactive, but capable of punching through walls and objects."
-	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
+	icon = 'icons/obj/guns/ammunition.dmi'
 	icon_state = "uraniumpenetrator"
 	projectile_type = /obj/projectile/bullet/uraniumpen
 	can_be_printed = FALSE
@@ -288,7 +290,7 @@
 /obj/item/ammo_casing/shotgun/beeshot
 	name = "beeshot"
 	desc = "A strange buzzing shell. It sort of resembles a bee."
-	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
+	icon = 'icons/obj/guns/ammunition.dmi'
 	icon_state = "beeshot"
 	projectile_type = /obj/projectile/bullet/pellet/beeshot
 	can_be_printed = FALSE

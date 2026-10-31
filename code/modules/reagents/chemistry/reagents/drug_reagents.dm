@@ -111,6 +111,8 @@
 	overdose_threshold = 20
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/krokodil
 	addiction_types = list(/datum/addiction/opioids = 18) //7.2 per 2 seconds
 
 
@@ -224,6 +226,8 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	taste_description = "salt" // because they're bathsalts?
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/bath_salts
 	addiction_types = list(/datum/addiction/stimulants = 25)  //8 per 2 seconds
 	ph = 8.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -275,6 +279,8 @@
 	reagent_state = LIQUID
 	color = "#78FFF0"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.5
+	inverse_chem = /datum/reagent/inverse/aranesp
 	addiction_types = list(/datum/addiction/stimulants = 8)
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -297,6 +303,8 @@
 	overdose_threshold = 20
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	taste_description = "paint thinner"
+	inverse_chem_val = 0.4
+	inverse_chem = /datum/reagent/inverse/happiness
 	addiction_types = list(/datum/addiction/hallucinogens = 18)
 	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 
@@ -677,7 +685,7 @@
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/invisible_man)
 	. = ..()
-	playsound(invisible_man, 'sound/chemistry/saturnx_fade.ogg', 40)
+	playsound(invisible_man, 'sound/effects/chemistry/saturnx_fade.ogg', 40)
 	to_chat(invisible_man, span_nicegreen("You feel pins and needles all over your skin as your body suddenly becomes transparent!"))
 	addtimer(CALLBACK(src, PROC_REF(turn_man_invisible), invisible_man), 10) //just a quick delay to synch up the sound.
 	if(!invisible_man.hud_used)

@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
-	if(SSmove_manager.processing_on(user, SSspacedrift))
+	if(GLOB.move_manager.processing_on(user, SSspacedrift))
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !SSmove_manager.processing_on(user, SSspacedrift))
+		if(drifting && !GLOB.move_manager.processing_on(user, SSspacedrift))
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -394,12 +394,12 @@ GLOBAL_LIST_EMPTY(species_list)
 			for(var/ignored_key in prefs.ignoring)
 				LAZYADD(ignoring, ckey(ignored_key))
 		if(admin_only)
-			if (!M.client?.holder?.check_for_rights(R_ADMIN)) // monkestation edit: only include admins with the +ADMIN permission
+			if (!M.client?.holder?.check_for_rights(R_ADMIN))
 				return
 			else
 				message += span_deadsay(" (This is viewable to admins only).")
 		var/override = FALSE
-		if(M.client?.holder?.check_for_rights(R_ADMIN) && (chat_toggles & CHAT_DEAD)) // monkestation edit: only include admins with the +ADMIN permission
+		if(M.client?.holder?.check_for_rights(R_ADMIN) && (chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
 			override = TRUE
@@ -527,18 +527,20 @@ GLOBAL_LIST_EMPTY(species_list)
 		. += borg
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=FALSE, z = null)
+/proc/active_ais(check_mind = FALSE, z = null)
 	. = list()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
 			continue
 		if(ai.control_disabled)
 			continue
-		if(check_mind)
-			if(!ai.mind)
-				continue
-		if(z && !(z == ai.z) && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+		if(check_mind && !ai.mind)
 			continue
+		if(!isnull(z))
+			var/turf/ai_turf = get_turf(ai)
+			var/ai_z = ai_turf.z
+			if(z != ai_z && (!is_station_level(z) || !is_station_level(ai_z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+				continue
 		. += ai
 
 //Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
@@ -806,3 +808,53 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		. = invoked_callback.Invoke()
 	usr = temp
+
+/proc/random_human_blood_type()
+	RETURN_TYPE(/datum/blood_type)
+	return get_blood_type(pick_weight(
+		list(
+			BLOOD_TYPE_O_MINUS = 4,
+			BLOOD_TYPE_O_PLUS = 36,
+			BLOOD_TYPE_A_MINUS = 3,
+			BLOOD_TYPE_A_PLUS = 28,
+			BLOOD_TYPE_B_MINUS= 1,
+			BLOOD_TYPE_B_PLUS = 20,
+			BLOOD_TYPE_AB_MINUS = 1,
+			BLOOD_TYPE_AB_PLUS = 5,
+		)))
+
+/**
+ * Gets the mind from a variable, whether it be a mob, or a mind itself.
+ * Also works on brains - it will try to fetch the brainmob's mind.
+ * If [include_last] is true, then it will also return last_mind for carbons if there isn't a current mind.
+ */
+/proc/get_mind(target, include_last = FALSE) as /datum/mind
+	RETURN_TYPE(/datum/mind)
+	if(istype(target, /datum/mind))
+		return target
+	else if(ismob(target))
+		var/mob/mob_target = target
+		if(mob_target.mind)
+			return mob_target.mind
+		if(include_last && iscarbon(mob_target))
+			var/mob/living/carbon/carbon_target = mob_target
+			if(carbon_target.last_mind)
+				return carbon_target.last_mind
+	else if(istype(target, /obj/item/organ/internal/brain))
+		if(is_oozeling_core(target))
+			var/obj/item/organ/internal/brain/slime/core = target
+			if(core.mind)
+				return core.mind
+		var/obj/item/organ/internal/brain/brain = target
+		if(brain.brainmob?.mind)
+			return brain.brainmob.mind
+
+/proc/is_late_arrival(mob/living/player)
+	var/static/cached_result
+	if(!isnull(cached_result))
+		return cached_result
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) || (STATION_TIME_PASSED() > 1 MINUTES))
+		return cached_result = FALSE
+	if(QDELETED(player) || !istype(get_area(player), /area/shuttle/arrival))
+		return FALSE
+	return TRUE

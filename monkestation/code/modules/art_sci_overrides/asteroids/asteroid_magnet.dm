@@ -125,7 +125,7 @@
 		ping_result += ": AZIMUTH [human_angle]"
 	else
 		ping_result = "LOCATING NEW ASTEROID FIELD[ellipsis()]"
-		COOLDOWN_START(src,summon_cd,3 MINUTE)
+		COOLDOWN_START(src,summon_cd, 3 MINUTES)
 		GenerateMap(FALSE)
 
 /// Test to see if we should clear the magnet area.
@@ -153,7 +153,7 @@
 	var/magnet_error = check_for_magnet_errors(template)
 	if(magnet_error)
 		status = magnet_error
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 		updateUsrDialog()
 		return
 
@@ -186,7 +186,7 @@
 	A.area_flags &= ~NOTELEPORT // Annnnd done
 	summon_in_progress = FALSE
 	template.summoned = TRUE
-	COOLDOWN_START(src, summon_cd, 1.5 MINUTE)
+	COOLDOWN_START(src, summon_cd, 1.5 MINUTES)
 	status = STATUS_OKAY
 	updateUsrDialog()
 

@@ -47,6 +47,8 @@
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("wrap_paper", "/obj/item/stack/wrapping_paper/xmas")
 	greyscale_colors = "#00FF00#FF0000"
 
 /obj/item/stack/wrapping_paper/use(used, transfer, check = TRUE)
@@ -232,3 +234,4 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
+	hitsound = 'sound/items/cardboard_tube.ogg'

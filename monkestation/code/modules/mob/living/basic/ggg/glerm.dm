@@ -1,7 +1,7 @@
 /mob/living/basic/ggg/glerm
 	name = "\improper glerm"
 	desc = "A little guy. Seems to be glerming."
-	icon = 'monkestation/icons/mob/ggg/glerm.dmi'
+	icon = 'icons/mob/ggg/glerm.dmi'
 	icon_state = "glerm"
 	icon_living = "glerm"
 	icon_dead = "glerm_dead"
@@ -35,7 +35,7 @@
 /mob/living/basic/ggg/glerm/cool
 	name = "\improper cool glerm"
 	desc = "A cool little guy. Seems to be glerming harder than the rest."
-	icon = 'monkestation/icons/mob/ggg/glerm.dmi'
+	icon = 'icons/mob/ggg/glerm.dmi'
 	icon_state = "glerm_cool"
 	icon_living = "glerm_cool"
 	icon_dead = "glerm_cool_dead"

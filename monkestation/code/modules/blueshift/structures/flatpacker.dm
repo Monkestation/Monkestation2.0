@@ -74,7 +74,7 @@
 
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
@@ -105,15 +105,6 @@
 /// Adds the manufacturer examine element to the flatpack machine, but can be overridden in the future
 /obj/item/flatpacked_machine/proc/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-
-/obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
-	. = ..()
-	storable += /obj/item/flatpacked_machine
-
-/obj/item/borg/apparatus/circuit/Initialize(mapload)
-	. = ..()
-	storable += /obj/item/flatpacked_machine
-
 
 /obj/item/flatpacked_machine/generic
 	name = "generic flat-packed machine"

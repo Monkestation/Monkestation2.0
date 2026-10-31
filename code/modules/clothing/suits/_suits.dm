@@ -11,12 +11,14 @@
 		/obj/item/storage/belt/holster,
 		)
 	armor_type = /datum/armor/none
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	slot_flags = ITEM_SLOT_OCLOTHING
 	blood_overlay_type = "suit"
 	limb_integrity = 0 // disabled for most exo-suits
 	var/suittoggled = FALSE // sec duster toggling and more
+	/// tackling bonus
+	var/tackle_mod = 0
 
 /obj/item/clothing/suit/Initialize(mapload)
 	. = ..()
@@ -29,6 +31,11 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
+
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 	var/mob/living/carbon/human/wearer = loc
 	if(!ishuman(wearer) || !wearer.w_uniform)

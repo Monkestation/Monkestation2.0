@@ -50,6 +50,7 @@
 	fulltile = TRUE
 	glass_type = /obj/item/stack/sheet/plastic_wall_panel
 	glass_amount = 1
+	uses_color = FALSE
 
 /obj/structure/grille/attackby(obj/item/item_in_question, mob/user, params)
 	if(!istype(item_in_question, /obj/item/stack/sheet/plastic_wall_panel))

@@ -13,7 +13,7 @@
 /obj/item/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. You can activate it in-hand to locate the nearest APC."
-	icon = 'monkestation/icons/obj/device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "multitool"
 	inhand_icon_state = "multitool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -24,12 +24,12 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	drop_sound = 'sound/items/handling/multitool_drop.ogg'
-	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/multitool_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/multitool_pickup.ogg'
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
-	usesound = 'sound/weapons/empty.ogg'
+	usesound = 'sound/items/weapons/empty.ogg'
 	var/datum/weakref/buffer // simple machine buffer for device linkage
 	var/mode = 0
 	var/apc_scanner = TRUE
@@ -228,7 +228,7 @@
 	var/turf/our_turf = get_turf(src)
 	detect_state = PROXIMITY_NONE
 
-	for(var/mob/eye/camera/ai/AI_eye as anything in GLOB.camera_eyes)
+	for(var/mob/eye/camera/ai/AI_eye in GLOB.camera_eyes)
 		if(!AI_eye.ai_detector_visible)
 			continue
 
@@ -285,7 +285,7 @@
 
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(x, y, epicenter.z)
+			var/datum/camerachunk/chunk = SScameras.generate_chunk(x, y, epicenter.z)
 			// removing cameras in build mode didnt affect it and i guess it needs an AI eye to update so we have to do this manually
 			// unless we only want to see static in a jank manner only if an eye updates it
 			chunk?.update() // UPDATE THE FUCK NOW
@@ -305,7 +305,7 @@
 /obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "multitool"
 	belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
@@ -331,7 +331,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
 	tool_behaviour = TOOL_MULTITOOL
-	usesound = 'sound/weapons/etherealhit.ogg'
+	usesound = 'sound/items/weapons/etherealhit.ogg'
 	toolspeed = 0.2
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY

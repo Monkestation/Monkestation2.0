@@ -429,7 +429,7 @@
 	if(!chassis.Adjacent(S))
 		to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
 		return FALSE
-	S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = user)
+	S.reagents.trans_to(src, S.reagents.total_volume, transferred_by = user)
 	S.forceMove(src)
 	LAZYADD(syringes,S)
 	to_chat(user, "[icon2html(src, user)][span_notice("Syringe loaded.")]")
@@ -520,7 +520,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
 	name = "mounted stretcher"
-	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_mounted_stretcher"
 	desc = "A mangled bunched of medical equipment connecting to a strecher, It can transport and stabilize patients fine. just don't expect anything more"
 	inject_amount = 0

@@ -21,7 +21,7 @@
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	job_rank = ROLE_BATTLECRUISER_CREW
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
-	stinger_sound = 'sound/ambience/antag/ops.ogg'
+	stinger_sound = 'sound/music/antag/ops.ogg'
 	/// Team to place the crewmember on.
 	var/datum/team/battlecruiser/battlecruiser_team
 
@@ -36,6 +36,16 @@
 /datum/antagonist/battlecruiser/ally
 	name = "Battlecruiser Ally"
 	show_to_ghosts = FALSE
+
+/datum/antagonist/battlecruiser/ally/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/target = mob_override || owner.current
+	target.faction |= ROLE_SYNDICATE
+
+/datum/antagonist/battlecruiser/ally/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/target = mob_override || owner.current
+	target.faction -= ROLE_SYNDICATE
 
 /datum/antagonist/battlecruiser/captain
 	name = "Battlecruiser Captain"

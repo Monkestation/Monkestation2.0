@@ -1,5 +1,5 @@
 /obj/structure/flora/ocean
-	icon = 'monkestation/icons/obj/flora/ocean_flora.dmi'
+	icon = 'icons/obj/fluff/flora/ocean_flora.dmi'
 	var/random_variants = 0
 
 /obj/structure/flora/ocean/Initialize(mapload)
@@ -43,7 +43,7 @@
 /obj/structure/flora/scrap
 	name = "scrap metal"
 	desc = "A huge chunk of metal, rusted and worn. Perhaps it can still be salvaged into something useful."
-	icon = 'monkestation/icons/obj/flora/scrap.dmi'
+	icon = 'icons/obj/fluff/flora/scrap.dmi'
 	icon_state = "scrap"
 	anchored = FALSE
 	density = TRUE
@@ -61,7 +61,7 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
 	if(first)
 		to_chat(user, span_notice("You start slicing the [src]..."))
 	if(I.use_tool(src, user, 2 SECONDS))

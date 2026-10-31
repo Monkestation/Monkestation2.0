@@ -104,6 +104,9 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	. = ..()
 	. += span_notice("You can build a sandbag by right clicking on an empty floor.")
 
+/obj/item/stack/sheet/mineral/sandbags/five
+	amount = 5
+
 /obj/item/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."
@@ -340,6 +343,26 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	. = ..()
 	. += GLOB.titanium_recipes
 
+/obj/item/stack/sheet/mineral/titanium/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/old_rods = W
+		if(old_rods.merge_type != /obj/item/stack/rods)
+			to_chat(user, span_warning("You can't craft shuttle frame rods with this type of rod!"))
+		if (old_rods.get_amount() >= 5 && get_amount() >= 1)
+			var/obj/item/stack/rods/shuttle/five/new_rods = new (get_turf(user))
+			if(!QDELETED(new_rods))
+				new_rods.add_fingerprint(user)
+			var/replace = user.get_inactive_held_item() == src
+			old_rods.use(5)
+			use(1)
+			if(QDELETED(src) && replace && !QDELETED(new_rods))
+				user.put_in_hands(new_rods)
+		else
+			to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
+		return
+	return ..()
+
 /obj/item/stack/sheet/mineral/titanium/twenty
 	amount = 20
 
@@ -460,7 +483,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
  */
 /obj/item/stack/sheet/mineral/abductor
 	name = "alien alloy"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "sheet-abductor"
 	inhand_icon_state = "sheet-abductor"
 	singular_name = "alien alloy sheet"

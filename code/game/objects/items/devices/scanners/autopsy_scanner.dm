@@ -1,7 +1,7 @@
 /obj/item/autopsy_scanner
 	name = "autopsy scanner"
 	desc = "Used in surgery to extract information from a cadaver."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "autopsy_scanner"
 	inhand_icon_state = "autopsy_scanner"
 	worn_icon_state = "autopsy_scanner"
@@ -90,15 +90,12 @@
 		else
 			autopsy_information += "Unknown causes.</br>"
 	else
-		var/datum/blood_type/blood_id = scanned.get_blood_type()
-		if(blood_id)
+		var/datum/blood_type/blood_type = scanned.get_bloodtype()
+		if(blood_type)
 			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type = scanned.dna.human_blood_type
-			if(blood_id != /datum/reagent/blood)
-				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
-				blood_type = reagents ? reagents.name : blood_id
-				autopsy_information += "Blood Type: [blood_type]<br>"
-				autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]) %<br>"
+			if (blood_type.get_type())
+				autopsy_information += "[blood_type.get_blood_name()] Type: [blood_type.get_type()]<br>"
+			autopsy_information += "[blood_type.get_blood_name()] Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"

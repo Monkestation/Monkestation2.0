@@ -8,6 +8,7 @@
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
 	cover_amount = 40
+	movedelay = 1
 
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
 	var/obj/item/food/grown/banana/eddie_murphy

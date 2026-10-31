@@ -32,7 +32,7 @@
 	icon_state = "rebar"
 	damage = 60
 	dismemberment = 2 //It's a budget sniper rifle.
-	armour_penetration = 30 //A bit better versus armor.
+	armour_penetration = 60 //A bit better versus armor.
 	wound_bonus = 10
 	bare_wound_bonus = 20
 	embed_falloff_tile = -3

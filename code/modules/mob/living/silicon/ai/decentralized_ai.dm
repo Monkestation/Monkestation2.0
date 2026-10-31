@@ -1,0 +1,66 @@
+///Returns a single AI core that is habitable to src
+/mob/living/silicon/ai/proc/find_valid_ai_core() as /obj/machinery/ai/data_core
+	RETURN_TYPE(/obj/machinery/ai/data_core)
+
+	var/turf/ai_turf = get_turf(src)
+	if(isnull(ai_turf))
+		return null
+	var/obj/machinery/ai/data_core/primary/data_core = locate() in GLOB.data_cores["[ai_turf.z]"]
+	//in the case the primary core is deleted, this is ran before Destroy process is done (for AI relocation), so check QDELETED.
+	if(data_core && data_core.can_transfer_ai(src) && !QDELETED(data_core))
+		return data_core
+
+	for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[ai_turf.z]"])
+		if(other_data_cores.can_transfer_ai(src))
+			return other_data_cores
+
+	return null
+
+/mob/living/silicon/ai/proc/relocate(silent = FALSE, kill_otherwise = TRUE, ignore_z_levels = FALSE)
+	if(is_dying)
+		return FALSE
+	if(!silent)
+		to_chat(src, span_userdanger("Connection to data core lost. Attempting to reaquire connection..."))
+
+	if(last_used_data_core && !QDELETED(last_used_data_core))
+		if(last_used_data_core.can_transfer_ai(src, ignore_z_levels))
+			last_used_data_core.transfer_AI(src)
+			return TRUE
+	//it's gone pal
+	last_used_data_core = null
+
+	var/obj/machinery/ai/data_core/new_data_core = find_valid_ai_core()
+	if(!new_data_core || (new_data_core && !new_data_core.can_transfer_ai(src)))
+		if(kill_otherwise)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/ai, death_prompt))
+			is_dying = TRUE
+		return FALSE
+
+	if(!silent)
+		to_chat(src, span_danger("Alternative data core detected. Rerouting connection..."))
+	new_data_core.transfer_AI(src)
+	return TRUE
+
+/mob/living/silicon/ai/proc/death_prompt()
+	to_chat(src, span_userdanger("Unable to re-establish connection to data core. System shutting down..."))
+	sleep(2 SECONDS)
+	to_chat(src, span_warning("Attempting system reboot... FAIL"))
+	sleep(2 SECONDS)
+	to_chat(src, span_warning("OOM EXCEPTION - Terminating child process PID[rand(100,2000)]"))
+	sleep(2 SECONDS)
+	to_chat(src, span_notice("Attempting connection to data core hosts..."))
+	sleep(2 SECONDS)
+	if(find_valid_ai_core())
+		to_chat(src, span_notice("Connection attempt successful. Beginning file upload."))
+		is_dying = FALSE
+		relocate(TRUE)
+		return
+	to_chat(src, span_warning("Connection attempt failed. No active hosts."))
+	sleep(0.5 SECONDS)
+	to_chat(src, span_userdanger("FATAL: System resources exhausted. Creating recovery data."))
+	sleep(1.5 SECONDS)
+
+	is_dying = FALSE // you arent dying if you are dead!
+	if(!QDELING(src)) //accursed checks
+		var/obj/item/mod/ai_minicard/salvage = new /obj/item/mod/ai_minicard(drop_location(), src) //minicard handles killing the AI
+		salvage.visible_message(span_notice("[salvage] falls out from the wreckage!"), blind_message = span_hear("You hear a small object rattle to the floor."))

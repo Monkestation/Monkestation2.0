@@ -82,7 +82,7 @@
 	name = "40mm HE grenade"
 	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
 	caliber = CALIBER_40MM
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
@@ -103,7 +103,7 @@
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber slug shell"
 	desc = "A cased rubber slug. The big brother of the beanbag slug, this thing will knock someone out in one. Doesn't do so great against anyone in armor."
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon = 'icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mmRUBBER"
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag/a40mm
 

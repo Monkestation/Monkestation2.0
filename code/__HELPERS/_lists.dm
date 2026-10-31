@@ -232,33 +232,6 @@
 		};\
 	} while(FALSE)
 
-/// The above but the tree is sorted in reverse.
-#define BINARY_INSERT_DEFINE_REVERSE(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
-	do {\
-		var/list/__BIN_LIST = LIST;\
-		var/__BIN_CTTL = length(__BIN_LIST);\
-		if(!__BIN_CTTL) {\
-			__BIN_LIST += INPUT;\
-		} else {\
-			var/__BIN_LEFT = 1;\
-			var/__BIN_RIGHT = __BIN_CTTL;\
-			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			##TYPECONT(__BIN_ITEM);\
-			while(__BIN_LEFT < __BIN_RIGHT) {\
-				__BIN_ITEM = COMPTYPE;\
-				if(##COMPARISON(__BIN_ITEM) >= ##COMPARISON(COMPARE)) {\
-					__BIN_LEFT = __BIN_MID + 1;\
-				} else {\
-					__BIN_RIGHT = __BIN_MID;\
-				};\
-				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			};\
-			__BIN_ITEM = COMPTYPE;\
-			__BIN_MID = ##COMPARISON(__BIN_ITEM) < ##COMPARISON(COMPARE) ? __BIN_MID : __BIN_MID + 1;\
-			__BIN_LIST.Insert(__BIN_MID, INPUT);\
-		};\
-	} while(FALSE)
-
 ///Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = length(input)
@@ -524,7 +497,7 @@
  * C would have a 10% chance of being picked,
  * and D would have a 0% chance of being picked.
  */
-/proc/pick_weight(list/list_to_pick) // monkestation edit: port superior pick_weight impl
+/proc/pick_weight(list/list_to_pick)
 	var/total = 0
 	var/item
 	for(item in list_to_pick)
@@ -1376,4 +1349,20 @@
 				&& log_1["line"] == log_2["line"]\
 				&& deep_compare_list(log_1["stack"], log_2["stack"])
 		else
+			return TRUE
+
+/proc/cycle_inplace(list/c_list) //increases the value of each object in the list by 1 and then puts the final object in the starting location of the first object
+	if(!length(c_list))
+		return
+
+	var/first_obj = c_list[1]
+	for(var/i = 1, i < length(c_list), ++i)
+		c_list[i] = c_list[i+1]
+	c_list[length(c_list)] = first_obj
+
+/// Returns TRUE if the list has any items that are in said typecache, FALSE otherwise.
+/proc/typecached_item_in_list(list/things, list/typecache)
+	. = FALSE
+	for(var/datum/thingy as anything in things)
+		if(is_type_in_typecache(thingy, typecache))
 			return TRUE

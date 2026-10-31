@@ -81,7 +81,7 @@
 		target.reagents.trans_to(owner.current, amount = 1, methods = INGEST) // Run transfer of 1 unit of reagent from them to me.
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', vol = 40, vary = TRUE) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 	total_blood_drank += blood_taken
-	if(target.mind && !IS_VASSAL(target)) // Checks if the target has a mind and is not a vassal
+	if(target.mind && !IS_BLOODSUCKER_OR_VASSAL(target)) // Checks if the target has a mind and is not another bloodsucker or vassal
 		blood_level_gain += blood_taken
 		total_blood_level_gain += blood_taken
 	return blood_taken
@@ -99,6 +99,8 @@
 	if(owner.current.am_staked())
 		return FALSE
 	if(!in_torpor && HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
+		return FALSE
+	if(HAS_TRAIT(owner.current, TRAIT_BLOODSILVER_CURSE))
 		return FALSE
 	var/in_coffin = istype(owner.current.loc, /obj/structure/closet/crate/coffin)
 	var/actual_regen = bloodsucker_regen_rate + additional_regen
@@ -165,7 +167,7 @@
 		var/obj/item/bodypart/missing_bodypart = user.get_bodypart(missing_limb) // 2) Limb returns Damaged
 		missing_bodypart.brute_dam = 60
 		to_chat(user, span_notice("Your flesh knits as it regrows your [missing_bodypart]!"))
-		playsound(user, 'sound/magic/demon_consume.ogg', vol = 50, vary = TRUE)
+		playsound(user, 'sound/effects/magic/demon_consume.ogg', vol = 50, vary = TRUE)
 		return TRUE
 
 /*

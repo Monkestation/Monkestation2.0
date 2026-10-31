@@ -180,7 +180,7 @@
 		if(thorn && prob(40) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE)) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
 			victim.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			victim.Stun(1 SECONDS) //Stopped in place for a moment.
-			playsound(living_mob, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
+			playsound(living_mob, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 			living_mob.visible_message(span_danger("[living_mob] is nailed by a sharp thorn!"), \
 			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
@@ -188,7 +188,7 @@
 			if(prob(80) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 				victim.Knockdown(2 SECONDS)
-				playsound(victim, 'sound/weapons/whip.ogg', 50, TRUE, -1)
+				playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 				living_mob.visible_message(span_danger("[living_mob] is lacerated by an outburst of vines!"), \
 				span_userdanger("You are lacerated by an outburst of vines!"))
 				log_combat(vine, living_mob, "aggressively lacerated")
@@ -203,7 +203,7 @@
 				log_combat(vine, living_mob, "aggressively smashed")
 	else //Living but not a carbon? Maybe a silicon? Can't be wounded so have a big chunk of simple bruteloss with no special effects. They can be entangled.
 		living_mob.adjustBruteLoss(75)
-		playsound(living_mob, 'sound/weapons/whip.ogg', 50, TRUE, -1)
+		playsound(living_mob, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 		living_mob.visible_message(span_danger("[living_mob] is brutally threshed by [vine]!"), \
 		span_userdanger("You are brutally threshed by [vine]!"))
 		log_combat(vine, living_mob, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
@@ -218,65 +218,53 @@
 	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 
-/datum/spacevine_mutation/oxy_eater
+/datum/spacevine_mutation/gas_eater
+	/// Type of gas consumed by this mutation
+	var/datum/gas/gas_type = null
+
+/datum/spacevine_mutation/gas_eater/process_mutation(obj/structure/spacevine/holder)
+	if(isnull(gas_type))
+		stack_trace("gas_type not set for gas_eater mutation [type]")
+		return
+
+	var/turf/open/floor/turf = holder.loc
+	if(!istype(turf))
+		return
+
+	var/datum/gas_mixture/gas_mix = turf.air
+	if(!gas_mix.moles[gas_type])
+		return
+
+	gas_mix.set_gas(gas_type, max(gas_mix.moles[gas_type] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0))
+	gas_mix.garbage_collect()
+
+/datum/spacevine_mutation/gas_eater/oxy_eater
 	name = "Oxygen consuming"
 	hue = "#28B5B5"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	gas_type = /datum/gas/oxygen
 
-/datum/spacevine_mutation/oxy_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/oxygen])
-			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/nitro_eater
+/datum/spacevine_mutation/gas_eater/nitro_eater
 	name = "Nitrogen consuming"
 	hue = "#FF7B54"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	gas_type = /datum/gas/nitrogen
 
-/datum/spacevine_mutation/nitro_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/nitrogen])
-			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/carbondioxide_eater
+/datum/spacevine_mutation/gas_eater/carbondioxide_eater
 	name = "CO2 consuming"
 	hue = "#798777"
 	severity = SEVERITY_MINOR
 	quality = POSITIVE
+	gas_type = /datum/gas/carbon_dioxide
 
-/datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
-			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/plasma_eater
+/datum/spacevine_mutation/gas_eater/plasma_eater
 	name = "Plasma consuming"
 	hue = "#9074b6"
 	severity = SEVERITY_AVERAGE
 	quality = POSITIVE
-
-/datum/spacevine_mutation/plasma_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/plasma])
-			return
-		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
+	gas_type = /datum/gas/plasma
 
 /datum/spacevine_mutation/thorns
 	name = "Thorny"
@@ -364,9 +352,9 @@
 
 /datum/spacevine_mutation/weeping/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/item, expected_damage)
 	var/scream = pick(
-		'sound/voice/human/malescream_1.ogg',
-		'sound/voice/human/femalescream_1.ogg',
-		'sound/voice/lizard/lizard_scream_2.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
 		)
 	playsound(holder, scream, 90, TRUE, frequency = 1.5)
 	var/mob/living/victim = hitter

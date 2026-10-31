@@ -107,7 +107,7 @@
 /obj/effect/client_image_holder/phobetor
 	name = "phobetor tear"
 	desc = "A subdimensional rip in reality, which gives extra-spacial passage to those who have woken from the sleepless dream."
-	image_icon = 'monkestation/icons/effects/phobetor_tear.dmi'
+	image_icon = 'icons/effects/phobetor_tear.dmi'
 	image_state = "phobetor_tear"
 	// Place this above shadows so it always glows.
 	image_layer = ABOVE_MOB_LAYER
@@ -169,5 +169,5 @@
 		to_chat(user, span_warning("Your destination is being watched."))
 		return
 	to_chat(user, span_notice("You slip unseen through [src]."))
-	user.playsound_local(null, 'sound/magic/wand_teleport.ogg', 30, FALSE, pressure_affected = FALSE)
+	user.playsound_local(null, 'sound/effects/magic/wand_teleport.ogg', 30, FALSE, pressure_affected = FALSE)
 	user.forceMove(get_turf(linked_to))

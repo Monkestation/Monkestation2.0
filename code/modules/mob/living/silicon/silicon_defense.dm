@@ -10,7 +10,7 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		if (prob(90))
 			log_combat(user, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message(span_danger("[user] slashes at [src]!"), \
 							span_userdanger("[user] slashes at you!"), null, null, user)
 			to_chat(user, span_danger("You slash at [src]!"))
@@ -20,7 +20,7 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/slashmiss.ogg', 25, TRUE, -1)
 			visible_message(span_danger("[user]'s swipe misses [src]!"), \
 							span_danger("You avoid [user]'s swipe!"), null, null, user)
 			to_chat(user, span_warning("Your swipe misses [src]!"))
@@ -112,7 +112,7 @@
 	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 	var/armor_block = run_armor_check(attack_flag = MELEE)
 
-	playsound(src, 'monkestation/sound/weapons/bat_hit.ogg', 15, TRUE)
+	playsound(src, 'sound/items/weapons/bat_hit.ogg', 15, TRUE)
 	visible_message(
 		span_danger("[attacker] [atk_verb]ed [src]!"),
 		span_userdanger("You're [atk_verb]ed by [attacker]!"),

@@ -19,7 +19,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_fireaxe
 	resistance_flags = FIRE_PROOF
@@ -73,10 +73,10 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
  * Bone Axe
  */
 /obj/item/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
-	icon = 'monkestation/icons/obj/items_and_weapons.dmi' //Monkestation Edit
-	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/melee_righthand.dmi' //End Of Monke Edit
+	icon = 'icons/obj/items_and_weapons.dmi' //Monkestation Edit
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi' //End Of Monke Edit
 	icon_state = "bone_axe0"
 	base_icon_state = "bone_axe"
 	name = "bone axe"
@@ -97,7 +97,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	demolition_mod = 2
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	usesound = 'sound/items/crowbar.ogg'
+	usesound = 'sound/items/tools/crowbar.ogg'
 
 /*
  * Energised Fire Axe
@@ -122,7 +122,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	wound_bonus = 10
 	armour_penetration = 75
 	armour_ignorance = 10
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 
 /obj/item/fireaxe/energy/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! Heavens above it's going clean through!"))

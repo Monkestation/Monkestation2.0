@@ -9,7 +9,7 @@
 /obj/machinery/ctf
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -20,9 +20,7 @@
 
 /obj/machinery/ctf/Initialize(mapload)
 	. = ..()
-	ctf_game = GLOB.ctf_games[game_id]
-	if(isnull(ctf_game))
-		ctf_game = create_ctf_game(game_id)
+	ctf_game = create_ctf_game(game_id)
 
 ///A spawn point for CTF, ghosts can interact with this to vote for CTF or spawn in if a game is running.
 /obj/machinery/ctf/spawner
@@ -266,7 +264,7 @@
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
-		user.playsound_local(get_turf(user), 'sound/machines/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+		user.playsound_local(get_turf(user), 'sound/machines/buzz/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
 
 /obj/item/ctf_flag/dropped(mob/user)
 	..()
@@ -439,10 +437,10 @@
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	. = ..()
 	ctf_game = GLOB.ctf_games[game_id]
-	ctf_game.barricades += src
+	ctf_game?.barricades += src
 
 /obj/effect/ctf/dead_barricade/Destroy()
-	ctf_game.barricades -= src
+	ctf_game?.barricades -= src
 	return ..()
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
@@ -461,10 +459,8 @@
 ///Proc that handles toggling and unloading CTF.
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE, area/ctf_area = /area/centcom/ctf)
 	var/static/loading = CTF_LOADING_UNLOADED
-	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[activated_id]
-	if(isnull(ctf_controller))
-		ctf_controller = create_ctf_game(activated_id)
-	if(unload == TRUE)
+	var/datum/ctf_controller/ctf_controller = create_ctf_game(activated_id)
+	if(unload)
 		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
 		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
 		if(loading == CTF_LOADING_UNLOADED)

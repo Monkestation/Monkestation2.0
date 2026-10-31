@@ -28,7 +28,7 @@
 	name = "pry off plating (crowbar)"
 	implements = list(
 		TOOL_CROWBAR = 100,
-		TOOL_HEMOSTAT = 10,
+		TOOL_HEMOSTAT = 75,
 	)
 	time = 2.4 SECONDS
 

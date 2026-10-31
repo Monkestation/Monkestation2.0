@@ -354,7 +354,7 @@ export const NtosRobotactContent = (props) => {
               <LabeledList.Item label="Status">
                 <Box color={masterAI_online ? 'good' : 'bad'}>
                   {!MasterAI_connected
-                    ? 'No Conection'
+                    ? 'No Connection'
                     : masterAI_online
                       ? 'Online'
                       : 'Unresponsive'}

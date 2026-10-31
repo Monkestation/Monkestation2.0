@@ -44,7 +44,7 @@
 	sight = SEE_MOBS | SEE_TURFS | SEE_OBJS
 
 	//flavour
-	attack_sound = 'sound/creatures/darkspawn/progenitor_attack.ogg'
+	attack_sound = 'sound/mobs/non-humanoids/darkspawn/progenitor_attack.ogg'
 	attack_verb_simple = "rends"
 	friendly_verb_simple = "stares down"
 	speech_span = SPAN_PROGENITOR //pretty sure this is how i'd go about doing this, hopefully
@@ -112,7 +112,7 @@
 	//have them fade into existence and play a sound cry when they finish fading in
 	alpha = 0
 	animate(src, alpha = 255, time = 4 SECONDS)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sound_to_playing_players), 'sound/magic/darkspawn/sacrament_complete.ogg', 50), 4 SECONDS, TIMER_UNIQUE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sound_to_playing_players), 'sound/effects/magic/darkspawn/sacrament_complete.ogg', 50), 4 SECONDS, TIMER_UNIQUE)
 	time_to_next_roar = world.time + roar_cooldown //prevent immediate roaring causing sound overlap
 	update_appearance(UPDATE_OVERLAYS)
 	//make u smol
@@ -124,7 +124,7 @@
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget(atom/attacked_target)
 	if(istype(attacked_target, /obj/machinery/door) || istype(attacked_target, /obj/structure/door_assembly))
-		playsound(get_turf(attacked_target), 'sound/magic/darkspawn/pass_smash_door.ogg', 100, FALSE)
+		playsound(get_turf(attacked_target), 'sound/effects/magic/darkspawn/pass_smash_door.ogg', 100, FALSE)
 	return ..()
 
 //////////////////////////////////////////////////////////////////////////
@@ -141,10 +141,10 @@
 		roar()
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/proc/roar()
-	playsound(src, 'sound/creatures/darkspawn/progenitor_roar.ogg', 70, TRUE)
+	playsound(src, 'sound/mobs/non-humanoids/darkspawn/progenitor_roar.ogg', 70, TRUE)
 	for(var/mob/M in GLOB.player_list)
 		if(get_dist(M, src) > 7)
-			M.playsound_local(src, 'sound/creatures/darkspawn/progenitor_distant.ogg', 35, FALSE, falloff_exponent = 5)
+			M.playsound_local(src, 'sound/mobs/non-humanoids/darkspawn/progenitor_distant.ogg', 35, FALSE, falloff_exponent = 5)
 		else if(IS_TEAM_DARKSPAWN(M) || M==src) //the progenitor is PROBABLY a darkspawn, but just in case
 			continue
 		else if(isliving(M))
@@ -183,7 +183,7 @@
 /datum/action/cooldown/spell/pointed/progenitor_curse
 	name = "Viscerate Mind"
 	desc = "Unleash a powerful psionic barrage into the mind of the target."
-	button_icon = 'yogstation/icons/mob/actions/actions_darkspawn.dmi'
+	button_icon = 'icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "sacrament(old)"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"

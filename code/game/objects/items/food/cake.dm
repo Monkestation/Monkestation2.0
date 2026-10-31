@@ -235,7 +235,7 @@
 	desc = "Just enough calories for a whole nuclear operative squad."
 	icon_state = "energycake"
 	force = 5
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/sprinkles = 10,
@@ -252,7 +252,7 @@
 /obj/item/food/cake/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake, you accidentally hurt yourself on the embedded energy sword!</font>")
 	user.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
+	playsound(user, 'sound/items/weapons/blade1.ogg', 5, TRUE)
 
 /obj/item/food/cake/birthday/energy/attack(mob/living/target_mob, mob/living/user)
 	. = ..()
@@ -265,7 +265,7 @@
 	desc = "For the traitor on the go."
 	icon_state = "energycakeslice"
 	force = 2
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/sprinkles = 2,
@@ -278,7 +278,7 @@
 /obj/item/food/cakeslice/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake slice, you accidentally hurt yourself on the embedded energy dagger!</font>")
 	user.apply_damage(18, BRUTE, BODY_ZONE_HEAD)
-	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
+	playsound(user, 'sound/items/weapons/blade1.ogg', 5, TRUE)
 
 /obj/item/food/cakeslice/birthday/energy/attack(mob/living/target_mob, mob/living/user)
 	. = ..()
@@ -665,3 +665,36 @@
 	)
 	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
 	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE
+
+/obj/item/food/cake/yellow_cake
+	name = "yellow cake"
+	desc = "A chalky yellow cake.. has a weird aura about it."
+	icon_state = "yellow_cake"
+	food_reagents = list(
+		/datum/reagent/uranium = 18,
+		/datum/reagent/consumable/sugar = 12,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/toxin/polonium = 12,
+	)
+	tastes = list("uranium" = 2, "chalk" = 4)
+	foodtypes = GRAIN | DAIRY | SUGAR | GROSS
+	slice_type = /obj/item/food/cakeslice/yellow_cake
+
+/obj/item/food/cake/yellow_cake/make_processable()
+	. = ..()
+	radiation_pulse(src, 50)
+
+/obj/item/food/cakeslice/yellow_cake
+	name = "yellow cake slice"
+	desc = "A chalky yellow cake.. has a weird aura about it."
+	icon_state = "yellow_cake_slice"
+	food_reagents = list(
+		/datum/reagent/uranium = 3,
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/toxin/polonium = 2,
+	)
+	tastes = list("uranium" = 2, "chalk" = 4)
+	foodtypes = GRAIN | DAIRY | SUGAR | GROSS

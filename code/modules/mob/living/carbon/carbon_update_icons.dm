@@ -1,36 +1,7 @@
-/mob/living/carbon/human/update_clothing(slot_flags)
-	if(slot_flags & ITEM_SLOT_BACK)
-		update_worn_back()
-	if(slot_flags & ITEM_SLOT_MASK)
-		update_worn_mask()
-	if(slot_flags & ITEM_SLOT_NECK)
-		update_worn_neck()
-	if(slot_flags & ITEM_SLOT_HANDCUFFED)
-		update_worn_handcuffs()
-	if(slot_flags & ITEM_SLOT_LEGCUFFED)
-		update_worn_legcuffs()
-	if(slot_flags & ITEM_SLOT_BELT)
-		update_worn_belt()
-	if(slot_flags & ITEM_SLOT_ID)
-		update_worn_id()
-	if(slot_flags & ITEM_SLOT_EARS)
-		update_inv_ears()
-	if(slot_flags & ITEM_SLOT_EYES)
-		update_worn_glasses()
-	if(slot_flags & ITEM_SLOT_GLOVES)
-		update_worn_gloves()
-	if(slot_flags & ITEM_SLOT_HEAD)
-		update_worn_head()
-	if(slot_flags & ITEM_SLOT_FEET)
-		update_worn_shoes()
-	if(slot_flags & ITEM_SLOT_OCLOTHING)
-		update_worn_oversuit()
-	if(slot_flags & ITEM_SLOT_ICLOTHING)
-		update_worn_undersuit()
-	if(slot_flags & ITEM_SLOT_SUITSTORE)
-		update_suit_storage()
-	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
-		update_pockets()
+/mob/living/carbon/update_obscured_slots(obscured_flags)
+	..()
+	if(obscured_flags & (HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS))
+		update_body()
 
 	/// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)
@@ -44,7 +15,7 @@
 		if(OFFSET_GLASSES)
 			update_worn_glasses()
 		if(OFFSET_EARS)
-			update_inv_ears()
+			update_worn_ears()
 		if(OFFSET_SHOES)
 			update_worn_shoes()
 		if(OFFSET_S_STORE)
@@ -348,48 +319,78 @@
 	if(isnull(damage_overlay))
 		return
 
+	apply_height(damage_overlay, ENTIRE_BODY)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
-/mob/living/carbon/update_wound_overlays()
+/// Handles bleeding overlays
+/mob/living/carbon/proc/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(!blood_type || !can_bleed())
+		return
 
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
-			wound_overlay ||= mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			blood_overlay.color = blood_type.get_wound_color(src)
+			wound_overlay ||= blood_overlay
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 
 	if(isnull(wound_overlay))
 		return
 
+	apply_height(wound_overlay, ENTIRE_BODY)
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
 
 /mob/living/carbon/proc/update_bandage_overlays()
 	remove_overlay(BANDAGE_LAYER)
+	remove_overlay(UPPER_BANDAGE_LAYER)
 
 	var/mutable_appearance/bandage_overlay
+	var/mutable_appearance/upper_bandage_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		var/render_head = FALSE
+		if(istype(iter_part, /obj/item/bodypart/head))
+			render_head = TRUE
+
 		if(isnull(bandage_overlay))
 			bandage_overlay = mutable_appearance(layer = -BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+		if(isnull(upper_bandage_overlay))
+			upper_bandage_overlay = mutable_appearance(layer = -UPPER_BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
 
 		if(iter_part.current_gauze)
-			var/mutable_appearance/limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
-			default_layer = -BANDAGE_LAYER, // proc inverts it for us
-			override_file = 'icons/mob/effects/bandage.dmi',
-			override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
-		)
-			limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
-			bandage_overlay.add_overlay(limb_bandage_overlay)
+			var/mutable_appearance/limb_bandage_overlay
+			if(render_head)
+				limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
+					default_layer = -UPPER_BANDAGE_LAYER, // proc inverts it for us
+					override_file = 'icons/mob/human/bandage.dmi',
+					override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
+					)
+				limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
+				upper_bandage_overlay.add_overlay(limb_bandage_overlay)
+			else
+				limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
+					default_layer = -BANDAGE_LAYER, // proc inverts it for us
+					override_file = 'icons/mob/human/bandage.dmi',
+					override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
+					)
+				limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
+				bandage_overlay.add_overlay(limb_bandage_overlay)
 
-	if(isnull(bandage_overlay))
-		return
+	if(!isnull(bandage_overlay))
+		apply_height(bandage_overlay, ENTIRE_BODY)
+		overlays_standing[BANDAGE_LAYER] = bandage_overlay
+		apply_overlay(BANDAGE_LAYER)
+	if(!isnull(upper_bandage_overlay))
+		apply_height(upper_bandage_overlay, ENTIRE_BODY)
+		overlays_standing[UPPER_BANDAGE_LAYER] = upper_bandage_overlay
+		apply_overlay(UPPER_BANDAGE_LAYER)
 
-	overlays_standing[BANDAGE_LAYER] = bandage_overlay
-	apply_overlay(BANDAGE_LAYER)
-
-/mob/living/carbon/update_worn_mask()
+/mob/living/carbon/update_worn_mask(update_obscured = TRUE)
 	remove_overlay(FACEMASK_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -400,13 +401,15 @@
 		inv.update_appearance()
 
 	if(wear_mask)
+		if(update_obscured)
+			update_obscured_slots(wear_mask.flags_inv)
 		if(!(check_obscured_slots() & ITEM_SLOT_MASK))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
 
-/mob/living/carbon/update_worn_neck()
+/mob/living/carbon/update_worn_neck(update_obscured = TRUE)
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -414,13 +417,15 @@
 		inv.update_appearance()
 
 	if(wear_neck)
+		if(update_obscured)
+			update_obscured_slots(wear_neck.flags_inv)
 		if(!(check_obscured_slots() & ITEM_SLOT_NECK))
 			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/update_worn_back()
+/mob/living/carbon/update_worn_back(update_obscured = TRUE)
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
@@ -428,20 +433,26 @@
 		inv.update_appearance()
 
 	if(back)
+		if(update_obscured)
+			update_obscured_slots(back.flags_inv)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
 
-/mob/living/carbon/update_worn_legcuffs()
+/mob/living/carbon/update_worn_legcuffs(update_obscured = TRUE)
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		if(update_obscured)
+			update_obscured_slots(legcuffed.flags_inv)
+		var/mutable_appearance/legcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		apply_height(legcuff_overlay, ENTIRE_BODY)
+		overlays_standing[LEGCUFF_LAYER] = legcuff_overlay
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
-/mob/living/carbon/update_worn_head()
+/mob/living/carbon/update_worn_head(update_obscured = TRUE)
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -452,19 +463,24 @@
 		inv.update_appearance()
 
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		if(update_obscured)
+			update_obscured_slots(head.flags_inv)
+		if(!(check_obscured_slots() & ITEM_SLOT_HEAD))
+			overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
 
 
-/mob/living/carbon/update_worn_handcuffs()
+/mob/living/carbon/update_worn_handcuffs(update_obscured = TRUE)
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
+		if(update_obscured)
+			update_obscured_slots(handcuffed.flags_inv)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
-
+		apply_height(handcuff_overlay, LOWER_BODY) // low hanging
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
 
@@ -538,7 +554,7 @@
 	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
-			var/bodypart_icon = limb.get_limb_icon()
+			var/bodypart_icon = limb.get_limb_icon(dropped = FALSE, update_on = src)
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
@@ -581,7 +597,7 @@
 	if(is_invisible)
 		. += "-invisible"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(owner))
+		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))

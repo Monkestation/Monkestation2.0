@@ -25,7 +25,7 @@
 
 /datum/action/cooldown/spell/pointed/blood_siphon/cast(mob/living/cast_on)
 	. = ..()
-	playsound(owner, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
 	if(cast_on.can_block_magic())
 		owner.balloon_alert(owner, "spell blocked!")
 		cast_on.visible_message(
@@ -36,14 +36,18 @@
 
 	cast_on.visible_message(
 		span_danger("[cast_on] turns pale as a red glow envelops [cast_on.p_them()]!"),
-		span_danger("You pale as a red glow enevelops you!"),
+		span_danger("You pale as a red glow envelops you!"),
 	)
 
 	var/mob/living/living_owner = owner
 	cast_on.adjustBruteLoss(20)
 	living_owner.adjustBruteLoss(-20)
 
-	cast_on.transfer_blood_to(living_owner, 20, forced = TRUE /* ignore_low_blood = TRUE, ignore_incompatibility = TRUE, transfer_viruses = FALSE */)
+	var/datum/blood_type/heretic_blood = living_owner.get_bloodtype()
+	if(!isnull(heretic_blood))
+		var/transfer_amount = min(cast_on.blood_volume, 20)
+		cast_on.blood_volume -= transfer_amount
+		living_owner.blood_volume = min(living_owner.blood_volume + transfer_amount, BLOOD_VOLUME_MAXIMUM)
 
 	if(!iscarbon(cast_on) || !iscarbon(owner))
 		return TRUE

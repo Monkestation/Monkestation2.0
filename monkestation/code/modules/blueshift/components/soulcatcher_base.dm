@@ -388,9 +388,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 
 	joining_soul.join_soulcatcher()
 
-/mob/dead/observer/verb/join_soulcatcher()
-	set name = "Enter Soulcatcher"
-	set category = "Ghost"
+GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 
 	var/list/joinable_soulcatchers = list()
 	for(var/datum/component/soulcatcher/soulcatcher in GLOB.soulcatchers)
@@ -623,7 +621,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 					if(istype(nifsoft_soulcatcher))
 						available_rooms.Add(nifsoft_soulcatcher.soulcatcher_rooms)
 
-				for(var/obj/item/held_item in human_user.held_items)
+				for(var/obj/item/held_item as anything in human_user.get_held_items())
 					if(parent == held_item)
 						continue
 

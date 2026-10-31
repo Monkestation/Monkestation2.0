@@ -85,7 +85,7 @@
 	data["isReacting"] = reagents.is_reacting
 	return data
 
-/obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
+/obj/machinery/plumbing/reaction_chamber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -169,7 +169,7 @@
 	.["reagentAcidic"] = acidic_limit
 	.["reagentAlkaline"] = alkaline_limit
 
-/obj/machinery/plumbing/reaction_chamber/chem/ui_act(action, params)
+/obj/machinery/plumbing/reaction_chamber/chem/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

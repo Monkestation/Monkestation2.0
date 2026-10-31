@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT(pronouns_valid, list(
 	"hyr", "hyrs",
 	"they", "them", "their","theirs",
 	"it", "its",
+	"any", "all",
 	"xey", "xe", "xem", "xyr", "xyrs",
 	"ze", "zir", "zirs",
 	"ey", "em", "eir", "eirs",
@@ -16,7 +17,7 @@ GLOBAL_LIST_INIT(pronouns_valid, list(
 
 // at least one is required
 GLOBAL_LIST_INIT(pronouns_required, list(
-	"he", "her", "she", "they", "them", "it", "fae", "its"
+	"he", "her", "she", "they", "them", "it", "fae", "its", "any", "all"
 ))
 
 /// The color admins will speak in for OOC.
@@ -43,7 +44,7 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 	return ""
 
 /datum/preference/text/ooc_pronouns/is_valid(value)
-	value = lowertext(value)
+	value = LOWER_TEXT(value)
 
 	if (!value || trim(value) == "")
 		return TRUE
@@ -106,3 +107,23 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 	return TRUE
 
 #undef MAX_PRONOUNS
+
+/datum/preference/toggle/twitch_public
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "twitch_public"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/twitch_public/is_accessible(datum/preferences/preferences)
+	if(preferences.parent?.persistent_client?.twitch?.access_rank < 1)
+		return FALSE
+	return ..()
+
+/datum/preference/toggle/patreon_public
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "patreon_public"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/patreon_public/is_accessible(datum/preferences/preferences)
+	if(preferences.parent?.persistent_client?.patreon?.access_rank < 1)
+		return FALSE
+	return ..()

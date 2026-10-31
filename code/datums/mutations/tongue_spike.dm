@@ -184,7 +184,7 @@
 		return FALSE
 
 	to_chat(transfered, span_warning("You feel a tiny prick!"))
-	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
+	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
 

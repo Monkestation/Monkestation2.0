@@ -9,7 +9,7 @@
 	state_open = TRUE
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/sleeper
-	clicksound = 'sound/machines/pda_button1.ogg'
+	clicksound = 'sound/machines/pda_button/pda_button1.ogg'
 
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
@@ -113,6 +113,13 @@
 
 /obj/machinery/sleeper/mouse_drop_receive(atom/target, mob/user, params)
 	if(!iscarbon(target))
+		return
+	target.visible_message(span_warning(
+		"[user] starts buckling [target] to [src]!"),
+		span_userdanger("[user] starts buckling you to [src]!"),
+		span_hear("You hear metal clanking."),
+	)
+	if(!do_after(user, 1 SECONDS, target))
 		return
 	close_machine(target)
 

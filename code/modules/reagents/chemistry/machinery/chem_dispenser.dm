@@ -93,7 +93,8 @@
 		/datum/reagent/medicine/mine_salve,
 		/datum/reagent/medicine/painkiller/morphine,
 		/datum/reagent/drug/space_drugs,
-		/datum/reagent/australium
+		/datum/reagent/australium,
+		/datum/reagent/lead,
 	)
 
 	var/list/recording_recipe
@@ -333,7 +334,7 @@
 				return
 			var/reagent_name = params["reagent"]
 			if(!recording_recipe)
-				var/reagent = GLOB.name2reagent[clean_reagent_name(reagent_name)] // MONKE EDIT: clean_reagent_name until https://github.com/tgstation/tgstation/pull/78637
+				var/reagent = GLOB.name2reagent[reagent_name]
 				if(beaker && dispensable_reagents.Find(reagent))
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(amount, holder.maximum_volume - holder.total_volume))
@@ -372,7 +373,7 @@
 			if(!LAZYLEN(chemicals_to_dispense))
 				return
 			for(var/key in chemicals_to_dispense)
-				var/reagent = GLOB.name2reagent[clean_reagent_name(key)] // MONKE EDIT: clean_reagent_name
+				var/reagent = GLOB.name2reagent[key]
 				var/dispense_amount = chemicals_to_dispense[key]
 				if(!dispensable_reagents.Find(reagent))
 					return
@@ -413,11 +414,11 @@
 				return
 			if(name && recording_recipe)
 				for(var/reagent in recording_recipe)
-					var/reagent_id = GLOB.name2reagent[clean_reagent_name(reagent)] // MONKE EDIT: clean_reagent_name
+					var/reagent_id = GLOB.name2reagent[reagent]
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
 						to_chat(ui.user, span_warning("[src] cannot find <b>[reagent]</b>!"))
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+						playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -729,7 +730,7 @@
 /obj/machinery/chem_dispenser/abductor
 	name = "reagent synthesizer"
 	desc = "Synthesizes a variety of reagents using proto-matter."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "chem_dispenser"
 	base_icon_state = "chem_dispenser"
 	has_panel_overlay = FALSE

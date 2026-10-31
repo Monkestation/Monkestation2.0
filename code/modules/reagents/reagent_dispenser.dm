@@ -248,7 +248,6 @@
 	desc = "A tank full of firefighting foam."
 	icon_state = "foam"
 	reagent_id = /datum/reagent/firefighting_foam
-	tank_volume = 500
 	openable = TRUE
 	can_buckle = TRUE //Monkestation edit start
 	buckle_lying = 0
@@ -314,10 +313,13 @@
 			return
 		var/obj/item/weldingtool/welder = attacking_item
 		if(istype(welder) && !welder.welding)
-			if(welder.reagents.has_reagent(/datum/reagent/fuel, welder.max_fuel))
+			if(!welder.reagents)
+				to_chat(user, span_warning("Your [welder.name] doesn't use fuel!"))
+				return
+			if(welder.reagents.total_volume >= welder.reagents.maximum_volume)
 				to_chat(user, span_warning("Your [welder.name] is already full!"))
 				return
-			reagents.trans_to(welder, welder.max_fuel, transfered_by = user)
+			reagents.trans_to(welder, welder.reagents.maximum_volume, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [welder.name]."), span_notice("You refill [welder]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			welder.update_appearance()
@@ -333,7 +335,7 @@
 	name = "high capacity fuel tank"
 	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
 	icon_state = "fuel_high"
-	tank_volume =SHEET_MATERIAL_AMOUNT * 2.5
+	tank_volume = 2500
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
@@ -357,7 +359,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
 	desc = "A machine that dispenses liquid to drink."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = TRUE
 	tank_volume = 500

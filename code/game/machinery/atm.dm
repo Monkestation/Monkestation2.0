@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY_TYPED(lottery_ticket_owners, /datum/bank_account)
 
 	max_integrity = 10000
 
-	icon = 'monkestation/icons/obj/machines/atm.dmi'
+	icon = 'icons/obj/machines/atm.dmi'
 	icon_state = "atm"
 
 	///the flash sale item if avaliable

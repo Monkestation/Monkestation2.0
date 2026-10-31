@@ -1,7 +1,7 @@
 /obj/item/melee/trick_weapon
-	icon = 'monkestation/icons/obj/weapons/trick_weapons.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/trick_weapon_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/trick_weapon_righthand.dmi'
+	icon = 'icons/obj/weapons/trick_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/trick_weapon_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/trick_weapon_righthand.dmi'
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	damtype = BURN
 	/// Upgrade level of the weapon.

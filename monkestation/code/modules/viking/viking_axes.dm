@@ -4,10 +4,10 @@
 
 
 /obj/item/melee/viking
-	icon = 'monkestation/icons/viking/viking_items.dmi'
-	lefthand_file = 'monkestation/icons/viking/axes_lefthand.dmi'
-	righthand_file = 'monkestation/icons/viking/axes_righthand.dmi'
-	worn_icon = 'monkestation/icons/viking/viking_armor.dmi'
+	icon = 'icons/obj/weapons/viking_items.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/viking_axes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/viking_axes_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/viking_armor.dmi'
 
 /datum/embedding/viking_axe
 	embed_chance = 50
@@ -17,7 +17,7 @@
 	icon_state = "hand_axe"
 	worn_icon_state = "hand_axe_worn"
 	desc = "A one handed axe used by vikings."
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	force = 20
 	throwforce = 45
 	embed_type = /datum/embedding/viking_axe
@@ -30,7 +30,7 @@
 	icon_state = "hand_axe_frost"
 	worn_icon_state = "hand_axe_frost_worn"
 	desc = "An axe with no equal to its power."
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	force = 25
 	throwforce = 65
 	embed_type = /datum/embedding/viking_axe/godly
@@ -60,7 +60,7 @@
 	throwforce = 60
 	embed_type = /datum/embedding/viking_axe
 	sharpness = SHARP_EDGED
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	wound_bonus = 30
 	block_chance = 30
 	slot_flags = ITEM_SLOT_BACK
@@ -85,7 +85,7 @@
 	righthand_file = "hooking_axe_inhand_R"
 	worn_icon_state = "hooking_axe_worn"
 	desc = "An axe meant to disarm the users opponent."
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	force = 18
 	throwforce = 40
 	embed_type = /datum/embedding/viking_axe
@@ -111,7 +111,7 @@
 	throwforce = 60
 	embed_type = /datum/embedding/viking_axe
 	sharpness = SHARP_EDGED
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	wound_bonus = 50
 	block_chance = 78
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF

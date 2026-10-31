@@ -1,13 +1,9 @@
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
 /obj/item/proc/juice(datum/reagents/target_holder, mob/user)
-	if(on_juice() == -1 || !reagents?.total_volume)
+	if(on_juice() == -1)
 		return FALSE
 
-	for(var/datum/reagent/juice_typepath as anything in juice_results)
-		if(ispath(juice_typepath))
-			reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
-
+	target_holder.add_reagent_list(juice_results)
 	return TRUE
 
 ///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
@@ -20,7 +16,7 @@
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
 	if(reagents?.total_volume)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 		. = TRUE
 
 /datum/reagents/proc/convert_reagent(
@@ -118,7 +114,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
 		return ..()
-	playsound(src, 'sound/effects/picaxe1.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/pickaxe/picaxe1.ogg', 50, TRUE)
 	balloon_alert_to_viewers("cutting...")
 	if(!do_after(user, 5 SECONDS, target = src))
 		balloon_alert_to_viewers("stopped cutting")
@@ -740,7 +736,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	uses_advanced_reskins = TRUE
 	unique_reskin = list(
 		"Original" = list(
-			RESKIN_ICON = 'icons/obj/hydroponics/equipment.dmi',
+			RESKIN_ICON = 'icons/obj/service/hydroponics/equipment.dmi',
 			RESKIN_ICON_STATE = "plantbag",
 			RESKIN_WORN_ICON = 'icons/mob/clothing/belt.dmi',
 			RESKIN_WORN_ICON_STATE = "plantbag",
@@ -1475,7 +1471,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	return data
 
-/obj/item/glassblowing/blowing_rod/ui_act(action, params)
+/obj/item/glassblowing/blowing_rod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1635,7 +1631,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	to_chat(user, span_notice("You begin to [step_id] [src]."))
 	if(!do_after(user, actioning_speed, target = src))
 		fail_message("You interrupt an action!", user)
-		REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+		REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 		return FALSE
 
 	if(glass.steps_remaining)
@@ -1645,7 +1641,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			if(check_finished(glass))
 				glass.is_finished = TRUE
 
-	REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+	REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 	in_use = FALSE
 
 	to_chat(user, span_notice("You finish trying to [step_id] [src]."))
@@ -1690,7 +1686,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			balloon_alert(user, "already glassblowing!")
 			return FALSE
 
-		ADD_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+		ADD_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 		return user
 
 	var/obj/item/glassblowing/used_tool
@@ -1710,7 +1706,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		balloon_alert(user, "already in use!")
 		return FALSE
 
-	ADD_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
+	ADD_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING, GLASSBLOWING_TRAIT)
 	return used_tool
 
 /**
@@ -2190,7 +2186,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			minimum_target_temperature = 25
 			forge_level = FORGE_LEVEL_MASTER
 
-	playsound(src, 'sound/weapons/parry.ogg', 50, TRUE) // Play a feedback sound to really let players know we just did an upgrade
+	playsound(src, 'sound/items/weapons/parry.ogg', 50, TRUE) // Play a feedback sound to really let players know we just did an upgrade
 
 //this will allow click dragging certain items
 /obj/structure/reagent_forge/mouse_drop_receive(mob/living/dropped, mob/user, params)

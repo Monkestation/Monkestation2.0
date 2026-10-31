@@ -1,7 +1,6 @@
 /datum/species/teratoma
 	name = "Teratoma"
 	id = SPECIES_TERATOMA
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 
 	inherent_traits = list(
 		TRAIT_BADDNA,
@@ -57,7 +56,7 @@
 	return SFX_SCREECH
 
 /obj/item/organ/internal/tongue/teratoma/get_laugh_sound()
-	return 'monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'
+	return 'sound/mobs/humanoids/simian/monkey_laugh_1.ogg'
 
 /obj/item/organ/internal/brain/teratoma
 	name = "vaguely brain-shaped mass"
@@ -110,7 +109,7 @@
 	. = ..()
 	if(is_banned_chem(chem))
 		chem.holder?.remove_reagent(chem.type, chem.volume)
-		return COMSIG_MOB_STOP_REAGENT_CHECK
+		return COMSIG_MOB_STOP_REAGENT_TICK
 
 /obj/item/organ/internal/liver/teratoma/proc/is_banned_chem(reagent)
 	var/static/list/disallowed_chems_typecache

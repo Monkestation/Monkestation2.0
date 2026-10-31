@@ -171,7 +171,7 @@
 	var/check_above = direction.get_value()
 	var/damage_amt = 0
 
-	switch(lowertext(type.get_value()))
+	switch(LOWER_TEXT(type.get_value()))
 		if(BRUTE)
 			damage_amt = host_mob.getBruteLoss()
 		if(BURN)
@@ -289,7 +289,7 @@
 		else
 			send_code_inverted()
 	else
-		if(lowertext(hearing_args[HEARING_RAW_MESSAGE]) == lowertext(sentence.get_value()))
+		if(LOWER_TEXT(hearing_args[HEARING_RAW_MESSAGE]) == LOWER_TEXT(sentence.get_value()))
 			send_code()
 		else
 			send_code_inverted()

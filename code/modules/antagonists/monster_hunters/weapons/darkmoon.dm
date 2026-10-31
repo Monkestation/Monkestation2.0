@@ -17,7 +17,7 @@
 	light_on = FALSE
 	throwforce = 12
 	active_thrown_force = 20
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	inhand_icon_change = FALSE
@@ -34,7 +34,7 @@
 	. = ..()
 	balloon_alert(user, active ? "glows with power" : "turns dormant")
 	if(active)
-		playsound(src, 'monkestation/sound/weapons/moonlightsword.ogg', vol = 50)
+		playsound(src, 'sound/items/weapons/moonlightsword.ogg', vol = 50)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -66,7 +66,7 @@
 	var/obj/projectile/moonbeam/moon = new(proj_turf)
 	moon.aim_projectile(target, user, modifiers)
 	moon.firer = user
-	playsound(src, 'monkestation/sound/weapons/moonlightbeam.ogg', vol = 50)
+	playsound(src, 'sound/items/weapons/moonlightbeam.ogg', vol = 50)
 	moon.fire()
 
 /obj/projectile/moonbeam
@@ -79,5 +79,5 @@
 	light_power = 1
 	light_color = "#44acb1"
 	damage_type = BURN
-	hitsound = 'sound/weapons/sear.ogg'
-	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
+	hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'

@@ -4,8 +4,8 @@
 	valid_slots = ITEM_SLOT_HANDS
 
 /datum/hallucination/nearby_fake_item/clockwork_slab
-	left_hand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
-	right_hand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
+	left_hand_file = 'icons/mob/clock_cult/clockwork_lefthand.dmi'
+	right_hand_file = 'icons/mob/clock_cult/clockwork_righthand.dmi'
 	image_icon_state = "clockwork_slab"
 
 /datum/hallucination/hazard/clockwork_skewer
@@ -14,7 +14,7 @@
 
 /obj/effect/client_image_holder/hallucination/danger/clockwork_skewer
 	name = "brass skewer"
-	image_icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	image_icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	image_state = "brass_skewer"
 
 /obj/effect/client_image_holder/hallucination/danger/clockwork_skewer/on_hallucinator_entered(mob/living/afflicted)
@@ -44,12 +44,12 @@
 	return ..()
 
 /datum/hallucination/fake_sound/weird/clockcult_kindle
-	sound_type = 'sound/magic/staff_animation.ogg'
+	sound_type = 'sound/effects/magic/staff_animation.ogg'
 
 /datum/hallucination/fake_sound/weird/clockcult_kindle/play_fake_sound(turf/source, sound_to_play)
 	. = ..()
 	if(prob(50))
-		queue_fake_sound(source, 'sound/weapons/handcuffs.ogg', delay = 4 SECONDS)
+		queue_fake_sound(source, 'sound/items/weapons/handcuffs.ogg', delay = 4 SECONDS)
 
 /datum/hallucination/fake_sound/weird/clockcult_warp
-	sound_type = 'sound/magic/magic_missile.ogg'
+	sound_type = 'sound/effects/magic/magic_missile.ogg'

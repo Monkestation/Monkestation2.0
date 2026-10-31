@@ -41,8 +41,8 @@
 		/obj/item/pen = 55)
 	repeatable = TRUE
 	time = 25
-	success_sound = 'sound/surgery/retractor2.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	var/brutehealing = 0
 	var/burnhealing = 0
 	var/brute_multiplier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.
@@ -125,6 +125,26 @@
 	brute_dealt += round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
 	burn_dealt += round((target.getFireLoss() * (burn_multiplier * 0.5)),0.1)
 	target.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus=CANT_WOUND)
+	return FALSE
+
+/datum/surgery_step/heal/proc/get_perfect_information(mob/user, mob/target)
+	if(issilicon(user))
+		return TRUE
+
+	if(user.is_holding_item_of_type(/obj/item/healthanalyzer))
+		return TRUE
+
+	for(var/obj/machinery/computer/puter in range(2, target))
+		if(istype(puter, /obj/machinery/computer/operating))
+			var/obj/machinery/computer/operating/op_comp = puter
+			if(op_comp.table?.patient == target)
+				return TRUE
+		if(istype(puter, /obj/machinery/computer/vitals_reader))
+			var/obj/machinery/computer/vitals_reader/vr_comp = puter
+			if(vr_comp.patient == target)
+				return TRUE
+
+	// melbert todo : add modsuit health analyzer to this
 	return FALSE
 
 /***************************BRUTE***************************/

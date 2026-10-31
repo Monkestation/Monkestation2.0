@@ -25,6 +25,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
 		copy_to_turf.icon = icon
+	if(length(custom_materials))
+		copy_to_turf.set_custom_materials(custom_materials)
 	if(color)
 		copy_to_turf.atom_colours = atom_colours.Copy()
 		copy_to_turf.update_atom_colour()
@@ -135,6 +137,16 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		new_turf.AfterChange(flags, old_type)
 
+	if(flags & CHANGETURF_GENERATE_SHUTTLE_CEILING)
+		var/turf/above = get_step_multiz(src, UP)
+		if(above)
+			if(!(istype(above, /turf/open/floor/engine/hull/ceiling) || above.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
+				if(istype(above, /turf/open/openspace) || istype(above, /turf/open/space/openspace))
+					above.place_on_top(/turf/open/floor/engine/hull/ceiling)
+				else
+					above.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
+					above.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
+
 	new_turf.blueprint_data = old_bp
 	new_turf.rcd_memory = old_rcd_memory
 	new_turf.explosion_throw_details = old_explosion_throw_details
@@ -190,7 +202,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			space_tile.enable_starlight()
 
 	if(old_opacity != opacity && SSticker)
-		GLOB.cameranet.bareMajorChunkChange(src)
+		SScameras.bare_major_chunk_change(src)
 
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])
@@ -272,7 +284,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		return
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
-	var/list/total_gases = total.gases
 	//Stolen blatently from self_breakdown
 	var/list/turf_list = atmos_adjacent_turfs + src
 	var/turflen = turf_list.len
@@ -288,14 +299,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
-		var/list/giver_gases = mix.gases
-		for(var/giver_id in giver_gases)
-			ASSERT_GAS_IN_LIST(giver_id, total_gases)
-			total_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
+		for(var/giver_id, amount in mix.moles)
+			total.adjust_gas(giver_id, amount)
 
 	total.temperature = energy / heat_cap
-	for(var/id in total_gases)
-		total_gases[id][MOLES] /= turflen
+	var/list/cached_total_moles = total.moles
+	for(var/id in cached_total_moles)
+		cached_total_moles[id] /= turflen
 
 	for(var/turf/open/turf in turf_list)
 		turf.air.copy_from(total)
@@ -305,8 +315,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /// Attempts to replace a tile with lattice. Amount is the amount of tiles to scrape away.
 /turf/proc/attempt_lattice_replacement(amount = 2)
 	if(lattice_underneath)
+		var/list/successful_replacement_callbacks = list()
+		SEND_SIGNAL(src, COMSIG_TURF_ATTEMPT_LATTICE_REPLACEMENT, successful_replacement_callbacks)
 		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
 		if(!istype(new_turf, /turf/open/floor))
-			new /obj/structure/lattice(src)
+			var/new_lattice = new /obj/structure/lattice(src)
+			for(var/datum/callback/callback as anything in successful_replacement_callbacks)
+				callback.Invoke(new_lattice)
 	else
 		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)

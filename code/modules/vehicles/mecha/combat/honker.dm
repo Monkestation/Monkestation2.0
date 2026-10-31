@@ -2,6 +2,7 @@
 	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
 	name = "\improper H.O.N.K"
 	ui_theme = "neutral"
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "honker"
 	base_icon_state = "honker"
 	movedelay = 3
@@ -34,6 +35,16 @@
 	if(squeak)
 		playsound(src, SFX_CLOWN_STEP, 70, 1)
 	squeak = !squeak
+
+
+/obj/vehicle/sealed/mecha/honker/loaded
+	equip_by_category = list(
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/honker,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove,
+		MECHA_UTILITY = list(),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
+	)
 
 
 //DARK H.O.N.K.

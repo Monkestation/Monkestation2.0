@@ -1,7 +1,7 @@
 /obj/structure/microscope
 	name = "Microscope"
 	desc = "A simple microscope, allowing you to examine micro-organisms."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "microscope"
 	var/obj/item/petri_dish/current_dish
 
@@ -67,7 +67,7 @@
 	return reagent_list.Join(", ")
 
 
-/obj/structure/microscope/ui_act(action, params)
+/obj/structure/microscope/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

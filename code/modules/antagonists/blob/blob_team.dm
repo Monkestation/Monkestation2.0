@@ -66,7 +66,7 @@
 
 	if(resource_delay <= world.time)
 		var/amount_to_give = round(blobstrain?.core_process(), 0.1) || 0 //make sure amount_to_give is always a num
-		resource_delay = world.time + (1 SECOND)
+		resource_delay = world.time + (1 SECONDS)
 		main_overmind?.add_points(amount_to_give)
 		if(length(overminds) > 1)
 			amount_to_give = ceil(amount_to_give / 2)

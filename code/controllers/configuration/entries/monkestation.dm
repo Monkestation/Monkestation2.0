@@ -99,6 +99,9 @@
 		return FALSE
 	return ..()
 
+// The current server ID as defined in the plexora config
+/datum/config_entry/string/plexora_server_id
+
 /datum/config_entry/flag/require_discord_verification
 
 // Role ID to check if a user has in order for them to be let in.

@@ -1,7 +1,7 @@
 /obj/item/bodypart/head/ipc
-	icon = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth" //Overriden in /species/ipc/replace_body()
 	icon_state = "synth_head"
 	is_dimorphic = FALSE
@@ -9,7 +9,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	head_flags = HEAD_HAIR |  HEAD_LIPS | HEAD_EYECOLOR | HEAD_LIPS
 	brute_modifier = 1.2
 	burn_modifier = 1.2
@@ -20,14 +21,22 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/chest/ipc
-	icon = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_chest"
 	is_dimorphic = FALSE
@@ -35,7 +44,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	bodypart_traits = list(TRAIT_LIMBATTACHMENT)
 	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	body_damage_coeff = 1	//IPC Chest at default
@@ -47,14 +57,22 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	biological_state = (BIO_ROBOTIC)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/arm/left/ipc
-	icon = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_l_arm"
 	flags_1 = CONDUCT_1
@@ -62,7 +80,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
@@ -72,14 +91,22 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/arm/right/ipc
-	icon = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_r_arm"
 	flags_1 = CONDUCT_1
@@ -87,7 +114,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
@@ -97,14 +125,22 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/left/ipc
-	icon = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_l_leg"
 	flags_1 = CONDUCT_1
@@ -112,7 +148,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
@@ -121,14 +158,22 @@
 
 	disabling_threshold_percentage = 1
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 /obj/item/bodypart/leg/right/ipc
-	icon = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
-	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/human/species/ipc/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
 	icon_state = "synth_r_leg"
 	flags_1 = CONDUCT_1
@@ -136,7 +181,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
@@ -145,6 +191,15 @@
 	step_sounds = list('sound/effects/servostep.ogg')
 
 	disabling_threshold_percentage = 1
+
+
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 

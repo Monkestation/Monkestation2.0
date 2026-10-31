@@ -63,32 +63,48 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-ADMIN_VERB(spawn_atom, R_SPAWN, FALSE, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text)
-	if(!object)
-		return
+ADMIN_VERB(spawn_atom, R_SPAWN, FALSE, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
+	var/static/list/atom_types
+	if (isnull(atom_types))
+		atom_types = subtypesof(/atom)
 
-	var/list/preparsed = splittext(object,":")
-	var/path = preparsed[1]
+	var/chosen_path = null
+	var/list/preparsed = null
+	if (object)
+		preparsed = splittext(object, ":")
+		var/list/matches = filter_fancy_list(atom_types, preparsed[1])
+		if (length(matches) == 1)
+			chosen_path = matches[1]
+
+	if(!chosen_path)
+		var/datum/spawn_menu/menu = user.holder.spawn_menu
+		if (!menu)
+			menu = new()
+			user.holder.spawn_menu = menu
+		menu.init_value = object
+		menu.ui_interact(user.mob)
+		BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
+		return TRUE
+
 	var/amount = 1
-	if(length(preparsed) > 1) //MONKE EDIT
-		amount = clamp(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
+	if (length(preparsed) > 1)
+		amount = clamp(text2num(preparsed[2]), 1, ADMIN_SPAWN_CAP)
 
-	var/chosen = pick_closest_path(path)
-	if(!chosen)
-		return
-	var/turf/T = get_turf(user.mob)
-
-	if(ispath(chosen, /turf))
-		T.ChangeTurf(chosen)
+	var/turf/target_turf = get_turf(user.mob)
+	if (ispath(chosen_path, /turf))
+		target_turf.ChangeTurf(chosen_path)
 	else
-		for(var/i in 1 to amount)
-			var/atom/A = new chosen(T)
-			A.flags_1 |= ADMIN_SPAWNED_1
+		for (var/i in 1 to amount)
+			var/atom/spawned = new chosen_path(target_turf)
+			spawned.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(user)] spawned [amount] x [chosen] at [AREACOORD(user.mob)]")
+	log_admin("[key_name(user.mob)] spawned [amount] x [chosen_path] at [AREACOORD(user.mob)]")
 	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
+	return TRUE
 
-ADMIN_VERB(spawn_atom_pod, R_SPAWN, FALSE, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(spawn_atom_pod, R_SPAWN, FALSE, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 
 	if(!check_rights(R_SPAWN))
 		return
@@ -112,7 +128,8 @@ ADMIN_VERB(spawn_atom_pod, R_SPAWN, FALSE, "PodSpawn", "Spawn an atom via supply
 	log_admin("[key_name(user)] pod-spawned [chosen] at [AREACOORD(user.mob)]")
 	BLACKBOX_LOG_ADMIN_VERB("Podspawn Atom")
 
-ADMIN_VERB(spawn_cargo, R_SPAWN, FALSE, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(spawn_cargo, R_SPAWN, FALSE, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)
 		return
@@ -225,5 +242,79 @@ ADMIN_VERB(create_or_modify_area, R_DEBUG, FALSE, "Create Or Modify Area", "Crea
 
 	if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
 		message_admins("Admin login: [key_name(src)]")
+
+/datum/admins/proc/adminmoreinfo(mob/subject)
+	if(!ismob(subject))
+		to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 		return
 
+	var/location_description = ""
+	var/special_role_description = ""
+	var/health_description = ""
+	var/gender_description = ""
+	var/turf/position = get_turf(subject)
+
+	//Location
+	if(isturf(position))
+		if(isarea(position.loc))
+			location_description = "[subject.loc == position ? "at coordinates" : "in [position.loc] at coordinates"] [position.x], [position.y], [position.z] in area <b>[position.loc]</b>"
+		else
+			location_description = "[subject.loc == position ? "at coordinates" : "in [subject.loc] at coordinates"] [position.x], [position.y], [position.z]"
+
+	//Job + antagonist
+	if(subject.mind)
+		special_role_description = "Role: <b>[subject.mind.assigned_role.title]</b>; Antagonist: <font color='red'><b>"
+
+		if(subject.mind.antag_datums)
+			var/iterable = 0
+			for(var/datum/antagonist/role in subject.mind.antag_datums)
+				special_role_description += "[role.name]"
+				iterable++
+				if(iterable != length(subject.mind.antag_datums))
+					special_role_description += ", "
+			special_role_description += "</b></font>"
+		else
+			special_role_description += "None</b></font>"
+	else
+		special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
+
+	//Health
+	if(isliving(subject))
+		var/mob/living/lifer = subject
+		var/status
+		switch (subject.stat)
+			if(CONSCIOUS)
+				status = "Alive"
+			if(SOFT_CRIT)
+				status = "<font color='orange'><b>Dying</b></font>"
+			if(UNCONSCIOUS)
+				status = "<font color='orange'><b>Unconscious</b></font>"
+			if(HARD_CRIT)
+				status = "<font color='orange'><b>Unconscious and Dying</b></font>"
+			if(DEAD)
+				status = "<font color='red'><b>Dead</b></font>"
+		health_description = "Status: [status]"
+		health_description += "<br>Brute: [lifer.getBruteLoss()] - Burn: [lifer.getFireLoss()] - Toxin: [lifer.getToxLoss()] - Suffocation: [lifer.getOxyLoss()]"
+		health_description += "<br>Clone: [lifer.getCloneLoss()] - Brain: [lifer.get_organ_loss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.stamina.loss]"
+	else
+		health_description = "This mob type has no health to speak of."
+
+	//Gender
+	switch(subject.gender)
+		if(MALE,FEMALE,PLURAL)
+			gender_description = "[subject.gender]"
+		else
+			gender_description = "<font color='red'><b>[subject.gender]</b></font>"
+
+	//Full Output
+	var/exportable_text = "[span_bold("Info about [subject.name]:")]<br>"
+	exportable_text += "Key - [span_bold(subject.key)]<br>"
+	exportable_text += "Mob Type - [subject.type]<br>"
+	exportable_text += "Gender - [gender_description]<br>"
+	exportable_text += "[health_description]<br>"
+	exportable_text += "Name: [span_bold(subject.name)] - Real Name: [subject.real_name] - Mind Name: [subject.mind?"[subject.mind.name]":""]<br>"
+	exportable_text += "Location is [location_description]<br>"
+	exportable_text += "[special_role_description]<br>"
+	exportable_text += ADMIN_FULLMONTY_NONAME(subject)
+
+	to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)

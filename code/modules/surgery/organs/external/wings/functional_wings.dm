@@ -88,7 +88,7 @@
 
 	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-	for(var/obj/item/choking_hazard in human.held_items)
+	for(var/obj/item/choking_hazard as anything in human.get_held_items())
 		human.accident(choking_hazard)
 
 	var/olddir = human.dir
@@ -142,6 +142,19 @@
 	VAR_PRIVATE/wings_open = FALSE
 	///Feature render key for opened wings
 	var/open_feature_key = "wingsopen"
+
+/datum/bodypart_overlay/mutant/wings/functional/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
+	if(human.w_uniform?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+	if(human.wear_neck?.flags_inv & HIDEMUTWINGS)
+		return FALSE
+
+	return ..()
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)

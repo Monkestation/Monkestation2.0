@@ -1,7 +1,7 @@
 /obj/item/tome
 	name = "arcane tome"
 	desc = "An old, dusty tome with frayed edges and a sinister-looking cover."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
@@ -10,7 +10,7 @@
 /obj/item/melee/cultblade/dagger
 	name = "ritual dagger"
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
 	worn_icon_state = "render"
@@ -25,7 +25,7 @@
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
@@ -72,8 +72,8 @@ Striking a noncultist, however, will tear their flesh."}
 	block_chance = 50 // now it's officially a cult esword
 	wound_bonus = -50
 	bare_wound_bonus = 20
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	/// If TRUE, it can be used at will by anyone, non-cultists included
@@ -118,7 +118,7 @@ Striking a noncultist, however, will tear their flesh."}
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)
 	. = ..()
@@ -278,7 +278,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!do_after(user, 6 SECONDS, src))
 		to_chat(user, span_notice("You were interrupted!"))
 		return
-	playsound(user, 'sound/weapons/slice.ogg', 30, TRUE)
+	playsound(user, 'sound/items/weapons/slice.ogg', 30, TRUE)
 	return TRUE
 
 /obj/item/melee/cultblade/haunted/proc/on_heresy_handle(mob/living/user, actiontype)
@@ -337,7 +337,7 @@ Striking a noncultist, however, will tear their flesh."}
 	update_light()
 	trapped_entity.update_mob_action_buttons()
 
-	playsound(src ,'sound/voice/insane_low_laugh.ogg', 200, TRUE) //quiet
+	playsound(src ,'sound/misc/insane_low_laugh.ogg', 200, TRUE) //quiet
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/proc/rebind_blade(mob/user)
@@ -354,7 +354,7 @@ Striking a noncultist, however, will tear their flesh."}
 		wielder_spell.Remove(user)
 	trapped_entity.update_mob_action_buttons()
 
-	playsound(src ,'sound/hallucinations/wail.ogg', 20, TRUE)	// add BOUND alert and UNBOUND
+	playsound(src ,'sound/effects/hallucinations/wail.ogg', 20, TRUE)	// add BOUND alert and UNBOUND
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
@@ -491,8 +491,8 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "Use the sword to shear open the flimsy fabric of this reality and teleport to your target."
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "phaseshift"
-	dash_sound = 'sound/magic/enter_blood.ogg'
-	recharge_sound = 'sound/magic/exit_blood.ogg'
+	dash_sound = 'sound/effects/magic/enter_blood.ogg'
+	recharge_sound = 'sound/effects/magic/exit_blood.ogg'
 	beam_effect = "sendbeam"
 	phasein = /obj/effect/temp_visual/dir_setting/cult/phase
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
@@ -741,9 +741,25 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 60
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
-	AddComponent(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
+	. = ..()
+	AddComponent( \
+		/datum/component/shielded, \
+		recharge_start_delay = 0 SECONDS, \
+		shield_icon_file = 'icons/effects/cult.dmi', \
+		shield_icon = "shield-cult", \
+		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
+	)
 
-/// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
+	..()
+	if(!IS_CULTIST(user))
+		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
+		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
+		user.dropItemToGround(src, TRUE)
+		user.set_dizzy_if_lower(1 MINUTES)
+		user.Paralyze(100)
+
+///Callback when the shield breaks, since cult robes are stupid and have different effects.
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
 	wearer.visible_message(span_danger("[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!"))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(wearer))
@@ -847,7 +863,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/shuttle_curse
 	name = "cursed orb"
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the emergency escape shuttle. "
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state = "shuttlecurse"
 	///how many times has the shuttle been cursed so far?
 	var/static/totalcurses = 0
@@ -892,7 +908,7 @@ Striking a noncultist, however, will tear their flesh."}
 			SSshuttle.block_recall(surplus)
 		totalcurses++
 		to_chat(user, span_danger("You shatter the orb! A dark essence spirals into the air, then disappears."))
-		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
+		playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 50, TRUE)
 
 		if(!remaining_curses)
 			remaining_curses = strings(CULT_SHUTTLE_CURSE, "curse_announce")
@@ -900,7 +916,7 @@ Striking a noncultist, however, will tear their flesh."}
 		var/curse_message = pick_n_take(remaining_curses) || "Something has gone horrendously wrong..."
 
 		curse_message += " The shuttle will be delayed by three minutes."
-		priority_announce("[curse_message]", "System Failure", 'sound/misc/notice1.ogg')
+		priority_announce("[curse_message]", "System Failure", 'sound/announcer/notice/notice1.ogg')
 		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
 			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.")))
 		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
@@ -910,7 +926,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 		if(totalcurses >= MAX_SHUTTLE_CURSES && (world.time < first_curse_time + SHUTTLE_CURSE_OMFG_TIMESPAN))
 			var/omfg_message = pick_list(CULT_SHUTTLE_CURSE, "omfg_announce") || "LEAVE US ALONE!"
-			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(priority_announce), omfg_message, "Priority Alert", 'sound/misc/announce_syndi.ogg', null, "Nanotrasen Department of Transportation: Central Command"), rand(2 SECONDS, 6 SECONDS))
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(priority_announce), omfg_message, "Priority Alert", 'sound/announcer/announcement/announce_syndi.ogg', null, "Nanotrasen Department of Transportation: Central Command"), rand(2 SECONDS, 6 SECONDS))
 			for(var/mob/iter_player as anything in GLOB.player_list)
 				if(IS_CULTIST(iter_player))
 					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)
@@ -922,7 +938,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/cult_shift
 	name = "veil shifter"
 	desc = "This relic instantly teleports you, and anything you're pulling, forward by a moderate distance."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state ="shifter"
 	///How many uses does the item have before becoming inert
 	var/uses = 4
@@ -1056,8 +1072,8 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_continuous = list("attacks", "slices", "shreds", "sunders", "lacerates", "cleaves")
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")
 	sharpness = SHARP_EDGED
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
 
 /obj/item/melee/cultblade/halberd/Initialize(mapload)
@@ -1087,7 +1103,7 @@ Striking a noncultist, however, will tear their flesh."}
 		var/mob/living/target = hit_atom
 
 		if(IS_CULTIST(target) && target.put_in_active_hand(src))
-			playsound(src, 'sound/weapons/throwtap.ogg', 50)
+			playsound(src, 'sound/items/weapons/throwtap.ogg', 50)
 			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
 		if(target.can_block_magic() || IS_CULTIST(target))
@@ -1107,7 +1123,7 @@ Striking a noncultist, however, will tear their flesh."}
 			T.visible_message(span_warning("[src] shatters and melts back into blood!"))
 			new /obj/effect/temp_visual/cult/sparks(T)
 			new /obj/effect/decal/cleanable/blood/splatter(T)
-			playsound(T, 'sound/effects/glassbr3.ogg', 100)
+			playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
 	qdel(src)
 
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -1157,7 +1173,7 @@ Striking a noncultist, however, will tear their flesh."}
 	color = "#ff0000"
 	guns_left = 24
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/blood
-	fire_sound = 'sound/magic/wand_teleport.ogg'
+	fire_sound = 'sound/effects/magic/wand_teleport.ogg'
 
 /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)
@@ -1260,7 +1276,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/blood_beam/proc/charge(mob/user)
 	var/obj/O
-	playsound(src, 'sound/magic/lightning_chargeup.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/magic/lightning_chargeup.ogg', 100, TRUE)
 	for(var/i in 1 to 12)
 		if(!charging)
 			break
@@ -1289,7 +1305,7 @@ Striking a noncultist, however, will tear their flesh."}
 		second = !second //Handles beam firing in pairs
 		if(!firing)
 			break
-		playsound(src, 'sound/magic/exit_blood.ogg', 75, TRUE)
+		playsound(src, 'sound/effects/magic/exit_blood.ogg', 75, TRUE)
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
 		for(var/turf/T in get_line(targets_from,temp_target))
@@ -1317,7 +1333,7 @@ Striking a noncultist, however, will tear their flesh."}
 					if(L.density)
 						L.Paralyze(20)
 						L.adjustBruteLoss(45)
-						playsound(L, 'sound/hallucinations/wail.ogg', 50, TRUE)
+						playsound(L, 'sound/effects/hallucinations/wail.ogg', 50, TRUE)
 						L.emote("scream")
 		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
 
@@ -1339,8 +1355,8 @@ Striking a noncultist, however, will tear their flesh."}
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bumps", "prods")
 	attack_verb_simple = list("bump", "prod")
-	hitsound = 'sound/weapons/smash.ogg'
-	block_sound = 'sound/weapons/effects/ric5.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	block_sound = 'sound/items/weapons/effects/ric5.ogg'
 	var/illusions = 2
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -1352,7 +1368,7 @@ Striking a noncultist, however, will tear their flesh."}
 					var/turf/T = get_turf(owner)
 					T.visible_message(span_warning("The sheer force from [P] shatters the mirror shield!"))
 					new /obj/effect/temp_visual/cult/sparks(T)
-					playsound(T, 'sound/effects/glassbr3.ogg', 100)
+					playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
 					owner.Paralyze(25)
 					qdel(src)
 					return FALSE
@@ -1406,7 +1422,7 @@ Striking a noncultist, however, will tear their flesh."}
 			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
 			return
 		if(IS_CULTIST(target) && target.put_in_active_hand(src))
-			playsound(src, 'sound/weapons/throwtap.ogg', 50)
+			playsound(src, 'sound/items/weapons/throwtap.ogg', 50)
 			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
 		if(!..())

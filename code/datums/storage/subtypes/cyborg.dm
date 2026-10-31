@@ -6,12 +6,17 @@
 	silent = TRUE
 	screen_max_columns = 8
 	storage_type = /datum/storage_interface/silicon
+	emp_shielded = TRUE
 
 /datum/storage/cyborg_internal_storage/can_insert(obj/item/to_insert, mob/living/silicon/robot/user, messages = TRUE, force = STORAGE_NOT_LOCKED)
-	return (to_insert in user.model.modules)
+	return (to_insert in user.model.usable_modules)
 
 /datum/storage/cyborg_internal_storage/attempt_insert(obj/item/to_insert, mob/living/silicon/robot/user, override = FALSE, force = STORAGE_NOT_LOCKED, messages = TRUE)
 	user.deactivate_module(to_insert)
+
+/datum/storage/cyborg_internal_storage/get_contents_to_show()
+	var/obj/item/robot_model/model = real_location
+	return model.usable_modules
 
 /**
  * Cyborg internal storage orienting
@@ -24,7 +29,7 @@
 /datum/storage/cyborg_internal_storage/orient_storage()
 	var/obj/item/robot_model/model = real_location
 
-	var/adjusted_contents = length(model.modules)
+	var/adjusted_contents = length(model.usable_modules)
 	var/list/datum/numbered_display/numbered_contents
 	if(numerical_stacking)
 		numbered_contents = process_numerical_display()

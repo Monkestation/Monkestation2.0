@@ -18,6 +18,7 @@
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. = ..()
 
+	real_bodypart_cache.Cut()
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
@@ -100,7 +101,7 @@
 		victim.impact_fart()
 
 	if(oof_noise)
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(src,'sound/items/weapons/punch1.ogg',50,TRUE)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -218,8 +219,8 @@
 		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
-		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE))
+		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)]" + (cuffs.breakout_while_moving ? ".)" : " and you need to stand still.)")))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check_continue))))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -228,7 +229,7 @@
 		breakouttime = 5 SECONDS
 		visible_message(span_warning("[src] is trying to break [cuffs]!"))
 		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check_continue))))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to break [cuffs]!"))
@@ -236,6 +237,17 @@
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		. = clear_cuffs(cuffs, cuff_break)
 	cuffs.item_flags &= ~BEING_REMOVED
+
+/mob/living/carbon/proc/cuff_resist_check_continue()
+	var/obj/item/handcuffs = get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+	if(handcuffs?.item_flags & BEING_REMOVED)
+		return TRUE
+
+	var/obj/item/legcuffs = get_item_by_slot(ITEM_SLOT_LEGCUFFED)
+	if(legcuffs?.item_flags & BEING_REMOVED)
+		return TRUE
+
+	return FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -444,7 +456,7 @@
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
-	bite.reagents?.trans_to(spew, amount, transfered_by = src)
+	bite.reagents?.trans_to(spew, amount, transferred_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -605,12 +617,8 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	if(isclothing(head))
-		tint += head.tint
-	if(isclothing(wear_mask))
-		tint += wear_mask.tint
-	if(isclothing(glasses))
-		tint += glasses.tint
+	for(var/obj/item/clothing/worn_item in get_equipped_items())
+		tint += worn_item.tint
 
 	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -992,6 +1000,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	bodyparts += new_bodypart
+	real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
@@ -1005,6 +1014,7 @@
 				set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
@@ -1012,6 +1022,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	old_bodypart.on_removal()
 	bodyparts -= old_bodypart
+	real_bodypart_cache -= old_bodypart.body_zone
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
@@ -1023,6 +1034,7 @@
 				set_usable_hands(usable_hands - 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 
 ///Updates the bodypart speed modifier based on our bodyparts.
@@ -1171,47 +1183,21 @@
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()
-
 	// Wash equipped stuff that cannot be covered
 	for(var/obj/item/held_thing in held_items)
 		if(held_thing.wash(clean_types))
 			. = TRUE
 
-	if(back?.wash(clean_types))
-		update_worn_back(0)
-		. = TRUE
-
-	if(head?.wash(clean_types))
-		update_worn_head()
-		. = TRUE
-
-	// Check and wash stuff that can be covered
-	var/obscured = check_obscured_slots()
-
-	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
-		update_worn_glasses()
-		. = TRUE
-
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
-		update_worn_mask()
-		. = TRUE
-
-	if(ears && !(obscured & ITEM_SLOT_EARS) && ears.wash(clean_types))
-		update_inv_ears()
-		. = TRUE
-
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK) && wear_neck.wash(clean_types))
-		update_worn_neck()
-		. = TRUE
-
-	if(shoes && !(obscured & ITEM_SLOT_FEET) && shoes.wash(clean_types))
-		update_worn_shoes()
-		. = TRUE
-
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES) && gloves.wash(clean_types))
-		update_worn_gloves()
-		. = TRUE
+	// Check and wash stuff that isn't covered
+	var/covered = check_covered_slots()
+	for(var/obj/item/worn as anything in get_equipped_items())
+		var/slot = get_slot_by_item(worn)
+		// Don't wash glasses if something other than them is covering our eyes
+		if(slot == ITEM_SLOT_EYES && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD))
+			continue
+		if(!(covered & slot))
+			// /obj/item/wash() already updates our clothing slot
+			. ||= worn.wash(clean_types)
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
@@ -1307,10 +1293,6 @@
 	handcuffed = new_value
 	if(old_value)
 		if(!handcuffed)
-
-			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
-				src.remove_status_effect(/datum/status_effect/silver_cuffed)
-
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
@@ -1357,6 +1339,29 @@
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
+/// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
+/mob/living/carbon/proc/update_cached_blood_dna_info()
+	var/list/blood_dna_info = get_blood_dna_list()
+	for(var/obj/item/organ/organ in organs)
+		organ.blood_dna_info = blood_dna_info
+	for(var/obj/item/bodypart/bodypart in bodyparts)
+		bodypart.blood_dna_info = blood_dna_info
+
+/// Setter for changing a mob's blood type
+/mob/living/carbon/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(isnull(dna))
+		return
+
+	if(get_bloodtype() == new_blood_type) // already has this blood type, we don't need to do anything.
+		return
+
+	dna.blood_type = new_blood_type
+	if(update_cached_blood_dna_info)
+		update_cached_blood_dna_info()
+	SEND_SIGNAL(src, COMSIG_CARBON_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)
+
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
 	if(can_be_shoved_into)
@@ -1379,7 +1384,7 @@
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		return ..()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!can_bleed())
 		to_chat(src, span_notice("You get a headache."))
 		return
 	head.adjustBleedStacks(5)
@@ -1390,6 +1395,10 @@
 		return hit_zone
 	// When a limb is missing the damage is actually passed to the chest
 	return BODY_ZONE_CHEST
+
+/mob/living/carbon/get_bloodtype()
+	RETURN_TYPE(/datum/blood_type)
+	return dna?.blood_type
 
 /mob/living/carbon/death(gibbed)
 	if (stat == DEAD)
@@ -1434,7 +1443,7 @@
 		playsound(src, pick(butt.sound_effect), 50, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/carbon/proc/gib_fart(freq=0)
-	if (stat == DEAD && world.time - timeofdeath > 1 SECOND)
+	if (stat == DEAD && world.time - timeofdeath > 1 SECONDS)
 		return
 
 	if(HAS_TRAIT(src, TRAIT_LOUD_ASS))

@@ -222,7 +222,7 @@
 				if(!noglass)
 					if(!glass)
 						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+							playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 							user.visible_message(span_notice("[user] adds [G.name] to \the [src]."), \
 												span_notice("You start to install [G.name] into \the [src]..."))
 							if(do_after(user, 1 SECONDS, target = src))
@@ -245,7 +245,7 @@
 								to_chat(user, span_warning("You cannot add [G] to [src]!"))
 								return
 							if(G.get_amount() >= 2)
-								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+								playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 								user.visible_message(span_notice("[user] adds [G.name] to \the [src]."), \
 									span_notice("You start to install [G.name] into \the [src]..."))
 								if(do_after(user, 1 SECONDS, target = src))
@@ -387,10 +387,20 @@
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
+	else if(((state == AIRLOCK_ASSEMBLY_NEEDS_WIRES) || (state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 2 SECONDS, "cost" = 1)
+
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
+		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
+			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+			span_notice("You adapt a airlock circuit and slot it into the assembly."))
+			electronics = the_rcd.airlock_electronics.create_copy(electronics)
+			state = AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER
+			update_appearance()
+			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span_notice("You deconstruct [src]."))
 			qdel(src)

@@ -9,8 +9,8 @@
 #define POLL_IGNORE_CARGORILLA "cargorilla"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_CONSTRUCT "construct"
-#define POLL_IGNORE_CORTICAL_BORER "cortical_borer" // MONKESTATION ADDITION -- CORTICAL_BORERS
-#define POLL_IGNORE_TERATOMA "teratoma" // MONKESTATION ADDITION -- TERATOMAS
+#define POLL_IGNORE_CORTICAL_BORER "cortical_borer"
+#define POLL_IGNORE_TERATOMA "teratoma"
 #define POLL_IGNORE_DRONE "drone"
 #define POLL_IGNORE_FIRE_SHARK "fire_shark"
 #define POLL_IGNORE_FUGITIVE "fugitive"
@@ -25,6 +25,7 @@
 #define POLL_IGNORE_PAI "pai"
 #define POLL_IGNORE_POSIBRAIN "posibrain"
 #define POLL_IGNORE_POSSESSED_BLADE "possessed_blade"
+#define POLL_IGNORE_HOLYUNDEAD "holy_undead"
 #define POLL_IGNORE_PYROSLIME "slime"
 #define POLL_IGNORE_RAW_PROPHET "raw_prophet"
 #define POLL_IGNORE_REGAL_RAT "regal_rat"
@@ -54,8 +55,8 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_CONSTRUCT = "Construct",
-	POLL_IGNORE_CORTICAL_BORER = "Cortical Borer", // MONKESTATION ADDITION -- CORTICAL_BORERS
-	POLL_IGNORE_TERATOMA = "Teratoma", // MONKESTATION ADDITION -- TERATOMAS
+	POLL_IGNORE_CORTICAL_BORER = "Cortical Borer",
+	POLL_IGNORE_TERATOMA = "Teratoma",
 	POLL_IGNORE_DRONE = "Drone shells",
 	POLL_IGNORE_FIRE_SHARK = "Fire Shark",
 	POLL_IGNORE_FUGITIVE = "Fugitive Hunter",

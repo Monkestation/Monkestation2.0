@@ -1,7 +1,7 @@
 /obj/machinery/splicer
 	name = "Splicer"
 	desc = "Splices two seeds together."
-	icon = 'monkestation/icons/obj/machines/hydroponics.dmi'
+	icon = 'icons/obj/machines/hydroponics.dmi'
 	base_icon_state = "splicer"
 	icon_state = "splicer"
 	circuit = /obj/item/circuitboard/machine/splicer
@@ -120,7 +120,7 @@
 		ui.set_autoupdate(TRUE)
 		ui.open()
 
-/obj/machinery/splicer/ui_act(action, params)
+/obj/machinery/splicer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

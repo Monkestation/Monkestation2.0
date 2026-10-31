@@ -10,12 +10,11 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
 
-//MONKESTATION EDIT START
 /obj/item/storage/box/sec_smokebomb
 	name = "box of smoke grenades (WARNING)"
 	desc = "The rest of the warning label is torn off..."
 	icon_state = "secbox"
-	illustration = "grenade"
+	illustration = "secsmoke"
 
 /obj/item/storage/box/sec_smokebomb/PopulateContents()
 	for(var/i in 1 to 7)
@@ -25,18 +24,17 @@
 	name = "box of smoke grenades (WARNING)"
 	desc = "The rest of the warning label is torn off..."
 	icon_state = "secbox"
-	illustration = "grenade"
+	illustration = "smoke"
 
 /obj/item/storage/box/smokebomb/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/smokebomb(src)
-//MONKESTATION EDIT STOP
 
 /obj/item/storage/box/stingbangs
 	name = "box of stingbangs (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
 	icon_state = "secbox"
-	illustration = "flashbang"
+	illustration = "stingbang"
 
 /obj/item/storage/box/stingbangs/PopulateContents()
 	for(var/i in 1 to 5)
@@ -274,3 +272,13 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
+
+/obj/item/storage/box/buckshotroulette
+	name = "box of blank shotgun shells"
+	desc = "A box full of shells that do not contain any projectiles."
+	icon_state = "beanbagshot_box"
+	illustration = null
+
+/obj/item/storage/box/buckshotroulette/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/beanbag/blank(src)

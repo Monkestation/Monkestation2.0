@@ -30,7 +30,7 @@
 	if((limb_id == SPECIES_OOZELING))
 		to_chat(limb_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
 		if(sound)
-			playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
+			playsound(limb_owner, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
 // MONKESTATION ADDITION START
@@ -38,6 +38,9 @@
 		owner.dna.features["ipc_screen"] = "Blank"
 		playsound(get_turf(owner), 'sound/announcer/vox_fem/swhitenoise.ogg', 60, TRUE)
 // MONKESTATION ADDITION END
+
+	if (can_bleed())
+		limb_owner.bleed(rand(20, 40))
 
 	drop_limb()
 
@@ -52,8 +55,8 @@
 		burn()
 		return TRUE
 	if (can_bleed())
-		add_mob_blood(limb_owner)
 		limb_owner.bleed(rand(20, 40))
+
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -89,6 +92,7 @@
 	update_limb(dropping_limb = TRUE)
 	//limb is out and about, it can't really be considered an implant
 	bodypart_flags &= ~BODYPART_IMPLANTED
+	add_mob_blood(owner)
 	owner.remove_bodypart(src)
 	if(speed_modifier)
 		owner.update_bodypart_speed_modifier()
@@ -344,7 +348,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !(mob_chest.acceptable_bodyshape & bodyshape) && !special)
 		return FALSE
 	return TRUE
 

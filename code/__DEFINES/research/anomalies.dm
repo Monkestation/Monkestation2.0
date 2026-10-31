@@ -50,7 +50,6 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/internal/tongue/dullahan,
 	/obj/item/organ/internal/vocal_cords/colossus,
 	/obj/item/organ/internal/zombie_infection,
-	// monkestation additions
 	/obj/item/organ/internal/heart/gland/egg,
 	/obj/item/organ/internal/heart/gland/electric,
 	/obj/item/organ/internal/heart/gland/mindshock,
@@ -72,6 +71,7 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/internal/empowered_borer_egg,
 	/obj/item/organ/internal/butt/atomic,
 	/obj/item/organ/internal/borer_body,
+	/obj/item/organ/internal/heart/shadow_ritual,
 )) - subtypesof(/obj/item/organ/external/wings/functional) - typesof(/obj/item/organ/external/wings/moth))
 
 /// List of body parts we can apply to people

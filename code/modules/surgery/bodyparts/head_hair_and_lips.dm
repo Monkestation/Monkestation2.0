@@ -11,32 +11,10 @@
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
 	if(human_head_owner)
-		if(human_head_owner.head)
-			var/obj/item/hat = human_head_owner.head
-			if(hat.flags_inv & HIDEHAIR)
+		for(var/obj/item/worn_item in human_head_owner.get_equipped_items())
+			if(worn_item.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
-			if(hat.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.wear_mask)
-			var/obj/item/mask = human_head_owner.wear_mask
-			if(mask.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(mask.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.wear_neck)
-			var/obj/item/item_neck = human_head_owner.wear_neck
-			if(item_neck.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(item_neck.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.w_uniform)
-			var/obj/item/item_uniform = human_head_owner.w_uniform
-			if(item_uniform.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(item_uniform.flags_inv & HIDEFACIALHAIR)
+			if(worn_item.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
 		//invisibility and husk stuff
 		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
@@ -174,10 +152,10 @@
 	var/debrain_icon = 'icons/mob/species/human/human_face.dmi'
 	var/debrain_icon_state = "debrained"
 	if(bodytype & BODYTYPE_ALIEN)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_alien"
 	else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_larva"
 
 	var/image/debrain_overlay
@@ -228,12 +206,17 @@
 	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
 	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
 	if(hopefully_a_head)
+		var/datum/action/innate/lipstick_kiss/existing_action = locate() in actions
+		if(existing_action)
+			qdel(existing_action)
 		hopefully_a_head.stored_lipstick_trait = null
 		hopefully_a_head.lip_style = new_style
 		hopefully_a_head.lip_color = new_color
 	if(new_style && apply_trait)
 		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
 		hopefully_a_head?.stored_lipstick_trait = apply_trait
+		var/datum/action/innate/lipstick_kiss/kiss_action = new(src)
+		kiss_action.Grant(src)
 
 	if(update)
 		update_body_parts()
@@ -249,6 +232,16 @@
 		return FALSE
 	update_lips(null, null, update = TRUE)
 	return TRUE
+
+/datum/action/innate/lipstick_kiss
+	name = "Blow Kiss"
+	desc = "Prepare to blow a kiss at your target."
+	button_icon = 'icons/mob/simple/animal.dmi'
+	button_icon_state = "heart"
+
+/datum/action/innate/lipstick_kiss/Activate()
+	. = ..()
+	owner.emote("kiss", intentional = TRUE)
 
 /**
  * Set the hair style of a human.

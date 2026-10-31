@@ -10,11 +10,15 @@
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0 //Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0 //but separated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = 0 //flags that are added/removed when an item is adjusted up/down
-	var/visor_flags_inv = 0 //same as visor_flags, but for flags_inv
-	var/visor_flags_cover = 0 //same as above, but for flags_cover
-	///What to toggle when toggled with weldingvisortoggle()
+	///Whether the visor (or the mask) is pushed up / out of the way
+	var/up = FALSE
+	///Flags that are added/removed when an item is adjusted up/down
+	var/visor_flags = NONE
+	///Same as visor_flags, but for flags_inv
+	var/visor_flags_inv = NONE
+	///Same as above, but for flags_cover
+	var/visor_flags_cover = NONE
+	///What to toggle when toggled with adjust_visor()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
 	///Sound this item makes when its visor is flipped down
 	var/visor_toggle_down_sound = null
@@ -239,7 +243,9 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
 		REMOVE_CLOTHING_TRAIT(user, trait)
-
+	if(iscarbon(user) && tint)
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.update_tint()
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
@@ -269,6 +275,9 @@
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 		for(var/trait in clothing_traits)
 			ADD_CLOTHING_TRAIT(user, trait)
+		if(iscarbon(user) && tint)
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.update_tint()
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -297,7 +306,7 @@
 	if(!istype(wearer))
 		return
 
-	wearer.update_clothing(slot_flags)
+	wearer.update_clothing(slot_flags | wearer.get_slot_by_item(src))
 
 
 /**
@@ -562,20 +571,6 @@ BLIND     // can't see anything
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
-/obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(!can_use(user))
-		return FALSE
-
-	visor_toggling()
-
-	to_chat(user, span_notice("You adjust \the [src] [up ? "up" : "down"]."))
-
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.head_update(src, forced = 1)
-	update_item_action_buttons()
-	return TRUE
-
 /// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles etc.
 /obj/item/clothing/proc/adjust_visor(mob/living/user)
 	if(!can_use(user))
@@ -602,12 +597,13 @@ BLIND     // can't see anything
 	if(user.is_holding(src))
 		user.update_held_items()
 		return TRUE
-	user.update_clothing(slot_flags)
+	if(up)
+		user.update_obscured_slots(visor_flags_inv)
+	// masks pushed up into hats change their slot_flags, so also redraw the slot we're actually worn in
+	user.update_clothing(slot_flags | user.get_slot_by_item(src))
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
-	if(up)
-		carbon_user.head_update(src, forced = 1)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
 	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
@@ -619,32 +615,18 @@ BLIND     // can't see anything
 	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
-	flags_cover ^= initial(flags_cover)
-	icon_state = "[initial(icon_state)][up ? "up" : ""]"
+	flags_cover ^= visor_flags_cover
 	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
-	update_icon_state()
-
-/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
-	up = !up
-	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
-	clothing_flags ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	icon_state = "[initial(icon_state)]"
-	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
-		flash_protect ^= initial(flash_protect)
-	if(visor_vars_to_toggle & VISOR_TINT)
-		tint ^= initial(tint)
+	update_appearance() //most of the time the sprite changes
 
 /obj/item/clothing/proc/can_use(mob/user)
-	if(user && ismob(user))
-		if(!user.incapacitated())
-			return 1
-	return 0
+	return istype(user) && !user.incapacitated()
 
-/obj/item/clothing/proc/_spawn_shreds()
+/// Leaves shreds of the clothing behind when it gets destroyed
+/obj/item/clothing/proc/spawn_shreds()
 	new /obj/effect/decal/cleanable/shreds(get_turf(src), name)
 
 /obj/item/clothing/atom_destruction(damage_flag)
@@ -652,7 +634,7 @@ BLIND     // can't see anything
 		return ..()
 	if(damage_flag == BOMB)
 		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK(src, PROC_REF(_spawn_shreds)), 1)
+		addtimer(CALLBACK(src, PROC_REF(spawn_shreds)), 1)
 		deconstruct(FALSE)
 	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
 		var/turf/current_position = get_turf(src)
@@ -695,24 +677,18 @@ BLIND     // can't see anything
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
 
-/obj/item/clothing/proc/appears_bloody()
-	return GET_ATOM_BLOOD_DNA_LENGTH(src) && can_be_bloody && !(item_flags & NO_BLOOD_ON_ITEM)
-
-/obj/item/clothing/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	if(isinhands)
+/// Returns a list of overlays with our blood, if we're bloodied
+/obj/item/clothing/proc/get_blood_overlay(blood_state)
+	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 
-	if(blood_overlay_type && appears_bloody())
-		var/mutable_appearance/blood_overlay
-		//MONKESTATION EDIT START
-		/* - MONKESTATION EDIT ORIGINAL -
-		if(clothing_flags & LARGE_WORN_ICON)
-			blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "[blood_overlay_type]blood_large")
-		else
-			blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		*/
-		blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		//MONKESTATION EDIT END
-		blood_overlay.color = get_blood_dna_color()
-		. += blood_overlay
+	var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_state]blood")
+
+	blood_overlay.color = get_blood_dna_color()
+
+	var/emissive_alpha = get_blood_emissive_alpha(is_worn = TRUE)
+	if (emissive_alpha)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha)
+		blood_overlay.overlays += emissive_overlay
+
+	return blood_overlay

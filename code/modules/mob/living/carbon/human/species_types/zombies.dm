@@ -38,7 +38,7 @@
 	mutantliver = null
 	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
+	var/static/list/spooks = list('sound/effects/hallucinations/growl1.ogg','sound/effects/hallucinations/growl2.ogg','sound/effects/hallucinations/growl3.ogg','sound/effects/hallucinations/veryfar_noise.ogg','sound/effects/hallucinations/wail.ogg')
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
@@ -77,6 +77,40 @@
 	))
 
 	return to_add
+
+/datum/species/zombie/fragile
+	name = "Shambler"
+	id = SPECIES_ZOMBIE_SHAMBLER
+	inherent_traits = list(
+		// SHARED WITH ALL ZOMBIES
+		TRAIT_NO_ZOMBIFY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_FAKEDEATH,
+		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_NODEATH,
+		TRAIT_NOHUNGER,
+		TRAIT_LIVERLESS_METABOLISM,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_TOXIMMUNE,
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_NO_SHOCK_BUILDUP,
+		// HIGH FUNCTIONING UNIQUE
+		TRAIT_NOBLOOD,
+		TRAIT_SUCCUMB_OVERRIDE,
+		// FRAGILE ZOMBIES
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_PRIMITIVE,
+	)
+	maxhealthmod = 0.5
+
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"

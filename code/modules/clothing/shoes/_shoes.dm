@@ -13,7 +13,6 @@
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
 	blood_overlay_type = "shoe"
-	// var/offset = 0 MONKESTATION REMOVAL - dead code
 	var/equipped_before_drop = FALSE
 	///Whether these shoes have laces that can be tied/untied
 	var/can_be_tied = TRUE
@@ -43,7 +42,7 @@
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
 		for(var/i in 1 to 3)
 			sleep(0.3 SECONDS)
-			playsound(user, 'sound/weapons/genhit2.ogg', 50, TRUE)
+			playsound(user, 'sound/items/weapons/genhit2.ogg', 50, TRUE)
 		return BRUTELOSS
 
 /obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
@@ -53,6 +52,11 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
+
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()
@@ -65,28 +69,11 @@
 	else if(tied == SHOES_KNOTTED)
 		. += "The shoelaces are all knotted together."
 
-/* MONKESTATION REMOVAL - dead code
-/obj/item/clothing/shoes/visual_equipped(mob/user, slot)
-	..()
-	if(offset && (slot_flags & slot))
-		user.pixel_y += offset
-		worn_y_dimension -= (offset * 2)
-		user.update_worn_shoes()
-		equipped_before_drop = TRUE
-*/
-
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
 	if(can_be_tied && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
-
-/* MONKESTATION REMOVAL - dead code
-/obj/item/clothing/shoes/proc/restore_offsets(mob/user)
-	equipped_before_drop = FALSE
-	user.pixel_y -= offset
-	worn_y_dimension = world.icon_size
-*/
 
 /obj/item/clothing/shoes/dropped(mob/user)
 	var/atom/movable/screen/alert/our_alert = our_alert_ref?.resolve()
@@ -94,10 +81,6 @@
 		our_alert_ref = null
 	if(our_alert?.owner == user)
 		user.clear_alert(ALERT_SHOES_KNOT)
-	/* MONKESTATION REMOVAL - dead code
-	if(offset && equipped_before_drop)
-		restore_offsets(user)
-	*/
 	. = ..()
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
@@ -244,9 +227,9 @@
 
 			if(6 to 13) // .7% chance to stumble and fling what we're holding
 				var/have_anything = FALSE
-				for(var/obj/item/I in our_guy.held_items)
+				for(var/obj/item/item as anything in our_guy.get_held_items())
 					have_anything = TRUE
-					our_guy.accident(I)
+					our_guy.accident(item)
 				to_chat(our_guy, span_danger("You trip on your shoelaces a bit[have_anything ? ", flinging what you were holding" : ""]!"))
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)

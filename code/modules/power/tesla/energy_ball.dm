@@ -14,7 +14,7 @@
 /obj/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
-	icon = 'icons/obj/engine/energy_ball.dmi'
+	icon = 'icons/obj/machines/engine/energy_ball.dmi'
 	icon_state = "energy_ball"
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
@@ -70,7 +70,7 @@
 
 	move(4 + length(orbiting_balls) * 1.5)
 
-	playsound(src.loc, 'sound/magic/lightningbolt.ogg', vol = 100, vary = TRUE, extrarange = 30, falloff_exponent = 10, mixer_channel = CHANNEL_MACHINERY)
+	playsound(src.loc, 'sound/effects/magic/lightningbolt.ogg', vol = 100, vary = TRUE, extrarange = 30, falloff_exponent = 10, mixer_channel = CHANNEL_MACHINERY)
 
 	pixel_x = 0
 	pixel_y = 0
@@ -126,7 +126,7 @@
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.25
 
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', vol = 100, vary = TRUE, extrarange = 30, falloff_exponent = 10, mixer_channel = CHANNEL_MACHINERY)
+		playsound(src.loc, 'sound/effects/magic/lightning_chargeup.ogg', vol = 100, vary = TRUE, extrarange = 30, falloff_exponent = 10, mixer_channel = CHANNEL_MACHINERY)
 		addtimer(CALLBACK(src, PROC_REF(new_mini_ball)), 100)
 	else if(energy < energy_to_lower && length(orbiting_balls))
 		energy_to_raise = energy_to_raise / 1.25
@@ -360,6 +360,9 @@
 		shocked_targets += shocked_copy
 	else
 		tesla_zap(closest_atom, next_range, power, zap_flags, shocked_targets)
+
+/obj/energy_ball/immovable/can_move(turf/to_move)
+	return FALSE
 
 #undef BIKE
 #undef COIL

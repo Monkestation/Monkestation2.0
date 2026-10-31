@@ -1,21 +1,25 @@
 /obj/item/rabbit_locator
 	name = "Accursed Red Queen card"
 	desc = "Hunts down the white rabbits.\n<b>This does <i>NOT</i> track down monster targets, it tracks down the rabbits you must collect.</b>"
-	icon = 'monkestation/icons/obj/items/monster_hunter.dmi'
+	icon = 'icons/obj/items/monster_hunter.dmi'
 	icon_state = "locator"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///the hunter the card is tied too
 	var/datum/antagonist/monsterhunter/hunter
 	COOLDOWN_DECLARE(locator_timer)
+	///the sound channel every ping plays on, so a new ping cuts off the last one
+	var/sound_channel
 
 /obj/item/rabbit_locator/Initialize(mapload, datum/antagonist/monsterhunter/owner)
 	. = ..()
+	sound_channel = SSsounds.reserve_sound_channel()
 	if(!QDELETED(owner))
 		hunter = owner
 		hunter.locator = src
 
 /obj/item/rabbit_locator/Destroy()
+	SSsounds.free_sound_channel(sound_channel)
 	if(hunter?.locator == src)
 		hunter.locator = null
 	return ..()
@@ -58,8 +62,27 @@
 	if(distance < 10)
 		sound_value = 100
 		to_chat(user, span_warning("Here... the white rabbit is definitely here!"))
-	user.playsound_local(bnuuy_turf, 'monkestation/sound/effects/rabbitlocator.ogg', vol = sound_value, pressure_affected = FALSE)
-	COOLDOWN_START(src, locator_timer, 7 SECONDS)
+	COOLDOWN_START(src, locator_timer, 3 SECONDS)
+	if(!sound_value)
+		return
+	// straight to the client so the volume sliders and falloff can't eat it, only direction is 3D here
+	var/sound/ping = sound('sound/effects/rabbitlocator.ogg')
+	ping.volume = sound_value / 2
+	ping.channel = sound_channel
+	var/dx = bnuuy_turf.x - user_turf.x
+	var/dy = bnuuy_turf.y - user_turf.y
+	var/dz = bnuuy_turf.z - user_turf.z
+	var/spread = abs(dx) + abs(dy) + abs(dz)
+	if(spread)
+		ping.x = 3 * dx / spread
+		ping.y = 3 * dz / spread
+		ping.z = 3 * dy / spread
+		ping.falloff = 3
+		// stereo can't tell north from south, so rabbits to the south sound dull, like they're behind you
+		var/list/echo_settings = list(0, 0, -10000, -10000, 0, 0, 0, 0.25, 1.5, 1.0, 0, 1.0, 0, 0, 0, 0, 1.0, 7)
+		echo_settings[2] = -3000 * max(0, -dy) / spread
+		ping.echo = echo_settings
+	SEND_SOUND(user, ping)
 
 /obj/item/rabbit_locator/proc/get_nearest_rabbit(mob/user)
 	var/dist = 1000

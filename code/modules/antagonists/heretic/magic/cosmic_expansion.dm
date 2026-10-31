@@ -1,13 +1,13 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion
 	name = "Cosmic Expansion"
-	desc = "This spell generates a 5x5 domain of cosmic fields. \
+	desc = "This spell generates a 3x3 domain of cosmic fields. \
 		Creatures up to 7 tiles away will also receive a star mark."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cosmic_domain"
 
-	sound = 'sound/magic/cosmic_expansion.ogg'
+	sound = 'sound/effects/magic/cosmic_expansion.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
@@ -15,8 +15,8 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	summon_amount = 25
-	summon_radius = 2
+	summon_amount = 9
+	summon_radius = 1
 	summon_type = list(/obj/effect/forcefield/cosmic_field)
 	/// The range at which people will get marked with a star mark.
 	var/star_mark_range = 7

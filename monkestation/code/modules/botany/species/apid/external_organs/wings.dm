@@ -3,7 +3,7 @@
 	name = "apid wings"
 	desc = "Spread your wings and FLOOOOAAAAAT!"
 	icon_state = "apid_wings"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	preference = "feature_apid_wings"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/apid
@@ -42,8 +42,11 @@
 /datum/bodypart_overlay/mutant/wings/apid/get_global_feature_list()
 	return GLOB.apid_wings_list
 
-/datum/bodypart_overlay/mutant/wings/apid/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+/datum/bodypart_overlay/mutant/wings/apid/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
+	if(!(human.w_uniform?.flags_inv & HIDEMUTWINGS) && !(human.wear_suit?.flags_inv & HIDEMUTWINGS))
 		return TRUE
 	return FALSE
 
@@ -58,4 +61,3 @@
 /datum/sprite_accessory/apid_wings/normal
 	name = "Normal"
 	icon_state = "normal"
-

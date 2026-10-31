@@ -1,7 +1,7 @@
 /obj/vehicle/ridden/monkey_ball
 	name = "Monkey Ball"
 	desc = "An ominously monkey-sized ball."
-	icon = 'monkestation/icons/obj/vehicles.dmi'
+	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "monkey_ball"
 	max_integrity = 100
 	layer = ABOVE_MOB_LAYER

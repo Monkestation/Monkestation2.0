@@ -58,3 +58,35 @@
 /datum/species/skeleton/get_species_description()
 	return "A rattling skeleton! They descend upon Space Station 13 \
 		Every year to spook the crew! \"I've got a BONE to pick with you!\""
+
+/datum/species/skeleton/fragile
+	name = "Cracked Skeleton"
+	id = SPECIES_SKELETON_FRAGILE
+	inherent_traits = list(
+		TRAIT_NO_HUSK,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_FAKEDEATH,
+		TRAIT_GENELESS,
+		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_LIVERLESS_METABOLISM,
+		TRAIT_RADIMMUNE,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_TOXIMMUNE,
+		TRAIT_XENO_IMMUNE,
+		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
+		TRAIT_SPLEENLESS_METABOLISM,
+		// FRAGILE SKELETONS
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_PRIMITIVE,
+	)
+	maxhealthmod = 0.5

@@ -11,26 +11,28 @@
 	yield = 60
 	potency = 20
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	genes = list(/datum/plant_gene/trait/preserved)
-	possible_mutations = list(/datum/hydroponics/plant_mutation/geranium, /datum/hydroponics/plant_mutation/lily)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/geranium, /datum/hydroponics/plant_mutation/lily, /datum/hydroponics/plant_mutation/fleshmass)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/poppy
 	seed = /obj/item/seeds/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
-	icon_state = "map_flower"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_flower", "/obj/item/food/grown/poppy")
+	greyscale_config = /datum/greyscale_config/flower_simple
+	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
+	greyscale_colors = "#d23838"
+
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
-	greyscale_config = /datum/greyscale_config/flower_simple
-	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
-	greyscale_colors = "#d23838"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -40,7 +42,7 @@
 	species = "lily"
 	plantname = "Lily Plants"
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	icon_harvest = null
@@ -48,15 +50,16 @@
 	possible_mutations = list(/datum/hydroponics/plant_mutation/trumpet)
 
 /obj/item/food/grown/poppy/lily
-	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "lily"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/lily
 
-	//Spacemans's Trumpet
+//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
 	name = "pack of spaceman's trumpet seeds"
 	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."
@@ -73,7 +76,7 @@
 	growthstages = 4
 	weed_rate = 2
 	weed_chance = 10
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
 	possible_mutations = list()
@@ -101,13 +104,14 @@
 	possible_mutations = list(/datum/hydroponics/plant_mutation/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
-	seed = /obj/item/seeds/poppy/geranium
-	icon_state = "geranium"
 	name = "geranium"
 	desc = "A beautiful blue flower."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "geranium"
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/geranium
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -124,14 +128,11 @@
 
 ///Fraxinella Flowers.
 /obj/item/food/grown/poppy/geranium/fraxinella
-	seed = /obj/item/seeds/poppy/geranium/fraxinella
 	name = "fraxinella"
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_colors = null
+	seed = /obj/item/seeds/poppy/geranium/fraxinella
 
 // Harebell
 /obj/item/seeds/harebell
@@ -150,7 +151,7 @@
 	potency = 30
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
@@ -177,7 +178,7 @@
 	production = 2
 	yield = 20
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/moon_flower, /datum/hydroponics/plant_mutation/nova_flower)
@@ -280,7 +281,7 @@
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/rose_thorns, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "rose-grow"
 	icon_dead = "rose-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/rose_carbon)
@@ -323,7 +324,7 @@
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/reagent/preset/carbon, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "carbonrose-grow"
 	icon_dead = "carbonrose-dead"
 	reagents_add = list(/datum/reagent/plastic_polymers = 0.05)
@@ -341,3 +342,34 @@
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
+
+//Fleshmass
+/obj/item/seeds/fleshmass
+	name = "pack of fleshmass seeds"
+	desc = "These seeds grow into a fleshmass bush."
+	icon_state = "seed-fleshmass"
+	species = "fleshmass"
+	plantname = "Fleshmass Bush"
+	product = /obj/item/food/grown/fleshmass
+	endurance = 30
+	yield = 8
+	potency = 20
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/preserved)
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
+	icon_grow = "fleshmass-grow"
+	icon_dead = "fleshmass-dead"
+	reagents_add = list(/datum/reagent/medicine/c2/synthflesh/biocellulose = 0.15, /datum/reagent/blood = 0.07)
+
+/obj/item/food/grown/fleshmass
+	seed = /obj/item/seeds/fleshmass
+	name = "fleshbulb"
+	desc = "A pulsating bulb of flesh, dripping blood."
+	icon_state = "fleshbulb"
+	foodtypes = MEAT | GROSS | RAW | GORE
+
+/obj/item/food/grown/fleshmass/attack_self(mob/user, modifiers)
+	var/resultsheets = round(max(1, qp_sigmoid(5, 10, seed.potency)))
+	new /obj/item/stack/sheet/fleshmass(drop_location(), resultsheets)
+	playsound(src, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	qdel(src)

@@ -12,7 +12,7 @@ import {
   Table,
 } from '../components';
 import { Window } from '../layouts';
-import { PageSelect } from './LibraryConsole';
+import { PageSelect } from './LibraryConsole/components/PageSelect';
 
 export const LibraryVisitor = (props) => {
   return (

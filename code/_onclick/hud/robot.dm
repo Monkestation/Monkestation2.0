@@ -8,21 +8,20 @@
 
 /atom/movable/screen/robot/Click()
 	if(isobserver(usr))
-		return 1
+		return TRUE
+	return FALSE
 
 /atom/movable/screen/robot/module/Click(location, control, params)
 	. = ..()
 	var/mob/living/silicon/robot/robot_owner = hud.mymob
-	if(robot_owner.model.type == /obj/item/robot_model)
-		if(.)
-			return
-		robot_owner.pick_model()
+	if(!robot_owner.has_model())
+		if(!.)
+			robot_owner.pick_model()
 		return
 	var/list/modifiers = params2list(params)
-	if(robot_owner.module_active && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
+	if(robot_owner.get_active_held_item() && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
 		robot_owner.uneq_active()
 		return
-
 	// Observers can look at a cyborg's inventory, so we ignore parent return value here, unlike everywhere else.
 	if(usr.active_storage == robot_owner.model.atom_storage)
 		robot_owner.model.atom_storage.hide_contents(usr)
@@ -147,6 +146,7 @@
 //Installed Module
 	robit.hands = new /atom/movable/screen/robot/module(null, src)
 	robit.hands.screen_loc = ui_borg_module
+	robit.hands.icon_state = robit.model ? robit.model.hud_icon_state : "nomod"
 	static_inventory += robit.hands
 
 	pull_icon = new /atom/movable/screen/pull(null, src)
@@ -169,8 +169,8 @@
 
 	if(screenmob.hud_used)
 		if(screenmob.hud_used.hud_shown)
-			for(var/i in 1 to R.held_items.len)
-				var/obj/item/I = R.held_items[i]
+			for(var/i in 1 to R.get_num_hand_slots())
+				var/obj/item/I = R.get_item_for_held_index(i)
 				if(I)
 					switch(i)
 						if(BORG_CHOOSE_MODULE_ONE)
@@ -183,7 +183,7 @@
 							return
 					screenmob.client.screen += I
 		else
-			for(var/obj/item/I in R.held_items)
+			for(var/obj/item/I as anything in R.get_held_items())
 				screenmob.client.screen -= I
 
 /atom/movable/screen/robot/lamp

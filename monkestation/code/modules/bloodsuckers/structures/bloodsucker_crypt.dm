@@ -42,7 +42,7 @@
 
 /obj/structure/bloodsucker/attackby(obj/item/item, mob/living/user, params)
 	if(IS_BLOODSUCKER(user) && item.tool_behaviour == TOOL_WRENCH && !anchored)
-		user.playsound_local(null, 'sound/machines/buzz-sigh.ogg', 40, FALSE, pressure_affected = FALSE)
+		user.playsound_local(null, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE, pressure_affected = FALSE)
 		to_chat(user, span_announce("* Bloodsucker Tip: Examine Bloodsucker structures to understand how they function!"))
 		return TRUE
 	return ..()
@@ -69,7 +69,7 @@
 			return FALSE
 		switch(secure_response)
 			if("Yes")
-				user.playsound_local(null, 'sound/items/ratchet.ogg', 70, FALSE, pressure_affected = FALSE)
+				user.playsound_local(null, 'sound/items/tools/ratchet.ogg', 70, FALSE, pressure_affected = FALSE)
 				bolt(user)
 				return FALSE
 		return FALSE
@@ -110,7 +110,7 @@
 /obj/structure/bloodsucker/vassalrack
 	name = "persuasion rack"
 	desc = "If this wasn't meant for torture, then someone has some fairly horrifying hobbies."
-	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj.dmi'
 	icon_state = "vassalrack"
 	anchored = FALSE
 	density = TRUE
@@ -479,7 +479,7 @@
 /obj/structure/bloodsucker/candelabrum
 	name = "candelabrum"
 	desc = "It burns slowly, but doesn't radiate any heat."
-	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj.dmi'
 	icon_state = "candelabrum"
 	base_icon_state = "candelabrum"
 	light_color = "#66FFFF"
@@ -572,7 +572,7 @@
 /obj/structure/bloodsucker/bloodthrone
 	name = "wicked throne"
 	desc = "Twisted metal shards jut from the arm rests. Very uncomfortable looking. It would take a masochistic sort to sit on this jagged piece of furniture."
-	icon = 'monkestation/icons/bloodsuckers/vamp_obj_64.dmi'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj_64.dmi'
 	icon_state = "throne"
 	buckle_lying = 0
 	anchored = FALSE
@@ -607,7 +607,7 @@
 
 // Armrests
 /obj/structure/bloodsucker/bloodthrone/proc/GetArmrest()
-	return mutable_appearance('monkestation/icons/bloodsuckers/vamp_obj_64.dmi', "thronearm")
+	return mutable_appearance('icons/obj/antags/bloodsucker/vamp_obj_64.dmi', "thronearm")
 
 /obj/structure/bloodsucker/bloodthrone/proc/update_armrest()
 	if(has_buckled_mobs())

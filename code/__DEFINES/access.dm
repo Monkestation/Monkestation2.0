@@ -35,9 +35,9 @@
 /// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
 #define ACCESS_HOP "hop"
 /// Access for Blueshield to their office and locker, as well as access to the NT Representitive Office
-#define ACCESS_BLUESHIELD "blueshield" //monkestation edit
+#define ACCESS_BLUESHIELD "blueshield"
 /// Access for NT Rep to their office and locker, as well as access to the Blueshield Office
-#define ACCESS_NT_REPRESENTATVE "nt_rep" //monkestation edit
+#define ACCESS_NT_REPRESENTATVE "nt_rep"
 
 /// Security's General Access. In mapping, grants access to spaces such as to the "meeting room" or firing range, as well as being the general access that Tablet/Computer Programs check for "heads". Also unlocks other types of security equipment.
 #define ACCESS_SECURITY "security"
@@ -148,6 +148,14 @@
 #define ACCESS_JANITOR "janitor"
 /// Access to the Lawyer's office.
 #define ACCESS_LAWYER "lawyer"
+/// Access to clockwork cult stuff.
+#define ACCESS_CLOCKCULT "clockcult"
+/// Access to permabrig. [ACCESS_BRIG] also grants permabrig access, this is just for ONLY permabrig accesss, for security assistants.
+#define ACCESS_PERMABRIG "permabrig"
+/// Bounty Hunter access, to lock shitters out of easy access to bounty hunter ships. Bounty Hunter access JUST for their ships.
+#define ACCESS_BOUNTY_HUNTER "bounty_hunter"
+/// Access to the NTSL console. It's important because only the network admin and CE should have it.
+#define ACCESS_TCOMMS_ADMIN "tcomms_admin"
 
 /// - - - AWAY MISSIONS - - -
 /*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
@@ -337,8 +345,7 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-)  // monkestation edit: add permabrig-only access.  also added brig physician
-
+)
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
 	ACCESS_AI_UPLOAD, \
@@ -357,7 +364,6 @@
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
 )
-// MONKESTATION ADDITION -- NTSL -- added: ACCESS_TCOMMS_ADMIN up there
 
 /// Private head of staff offices, usually only granted to most cards by trimming. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND)
 #define PRIVATE_COMMAND_ACCESS list( \
@@ -370,7 +376,6 @@
 	ACCESS_BLUESHIELD, \
 	ACCESS_NT_REPRESENTATVE, \
 )
-// MONKESTATION ADDITION: Added blueshield and nt rep above
 
 /// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
 #define CAPTAIN_ACCESS list( \
@@ -504,7 +509,6 @@
 	ACCESS_TCOMMS_ADMIN, \
 	ACCESS_TECH_STORAGE, \
 )
-// MONKESTATION ADDITION -- NTSL -- added: ACCESS_TCOMMS_ADMIN up there
 
 /// Name for the Supply region.
 #define REGION_SUPPLY "Supply"
@@ -539,14 +543,12 @@
 	ACCESS_BLUESHIELD, \
 	ACCESS_NT_REPRESENTATVE, \
 )
-// MONKESTATION ADDITION: Added blueshield and nt rep to command region above
 
 /// Name for the Centcom region.
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
 #define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
 
-/// MONKESTATION ADDITION - Adds Charlie Station region, for the Charlie Station ID console.
 /// Name for the Charlie Station region.
 #define REGION_CHARLIE_STATION "Ancient Station"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all ACCESS_AWAY regional accesses.

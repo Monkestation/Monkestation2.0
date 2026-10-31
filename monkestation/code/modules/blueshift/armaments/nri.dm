@@ -63,7 +63,7 @@
 	subcategory = "Miscellaneous Supplies"
 
 /datum/armament_entry/company_import/nri_surplus/misc/flares
-	item_type = /obj/item/storage/box/nri_flares
+	item_type = /obj/item/storage/box/flares
 	cost = PAYCHECK_LOWER
 
 /datum/armament_entry/company_import/nri_surplus/misc/binoculars

@@ -67,6 +67,29 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	/obj/item/circular_saw,
 ))
 
+GLOBAL_LIST_INIT(mystery_magic, list(
+//	/obj/item/gun/magic/wand/arcane_barrage,
+//	/obj/item/gun/magic/wand/arcane_barrage/blood,
+	/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage,
+	/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood,
+	/obj/item/gun/magic/wand/fireball,
+	/obj/item/gun/magic/wand/resurrection,
+	/obj/item/gun/magic/wand/teleport,
+	/obj/item/gun/magic/wand/door,
+	/obj/item/gun/magic/wand/nothing,
+	/obj/item/storage/belt/wands/full,
+//	/obj/item/storage/belt/wands/full/discount,
+	/obj/item/gun/magic/staff/healing,
+	/obj/item/gun/magic/staff/chaos,
+	/obj/item/gun/magic/staff/door,
+	/obj/item/gun/magic/staff/honk,
+	/obj/item/gun/magic/staff/spellblade,
+	/obj/item/gun/magic/staff/flying,
+	/obj/item/gun/magic/staff/babel,
+	/obj/item/singularityhammer,
+//	/obj/item/runic_vendor_scepter,
+))
+
 
 /obj/structure/mystery_box
 	name = "mystery box"
@@ -79,8 +102,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	max_integrity = 99999
 	damage_deflection = 100
 
-	var/crate_open_sound = 'sound/machines/crate_open.ogg'
-	var/crate_close_sound = 'sound/machines/crate_close.ogg'
+	var/crate_open_sound = 'sound/machines/crate/crate_open.ogg'
+	var/crate_close_sound = 'sound/machines/crate/crate_close.ogg'
 	var/open_sound = 'sound/effects/mysterybox/mbox_full.ogg'
 	var/grant_sound = 'sound/effects/mysterybox/mbox_end.ogg'
 	/// The box's current state, and whether it can be interacted with in different ways
@@ -142,7 +165,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	update_icon_state()
 	presented_item = new(loc)
 	presented_item.start_animation(src)
-	current_sound_channel = SSsounds.reserve_sound_channel(src)
+	current_sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	playsound(src, crate_open_sound, 80)
 
@@ -206,6 +229,12 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /obj/structure/mystery_box/tdome/generate_valid_types()
 	valid_types = GLOB.mystery_box_guns + GLOB.mystery_box_extended
+
+/obj/structure/mystery_box/wands
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different magical items."
+
+/obj/structure/mystery_box/wands/generate_valid_types()
+	valid_types = GLOB.mystery_magic
 
 
 /// This represents the item that comes out of the box and is constantly changing before the box finishes deciding. Can probably be just an /atom or /movable.

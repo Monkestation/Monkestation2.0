@@ -148,7 +148,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	SSmove_manager.stop_looping(src)
+	GLOB.move_manager.stop_looping(src)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
@@ -165,7 +165,7 @@
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
 		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
-		playsound(src, 'sound/machines/defib_zap.ogg', 50)
+		playsound(src, 'sound/machines/defib/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
 /mob/living/simple_animal/bot/secbot/Exited(atom/movable/gone, direction)
@@ -270,7 +270,7 @@
 
 	if(bot_type == HONK_BOT)
 		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
+		playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
@@ -315,7 +315,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/current_target)
 	mode = BOT_ARREST
-	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
 	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
@@ -335,7 +335,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	//var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5
@@ -372,7 +372,7 @@
 	switch(mode)
 
 		if(BOT_IDLE) // idle
-			SSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if((mode == BOT_IDLE) && bot_mode_flags & BOT_MODE_AUTOPATROL) // didn't start hunting during look_for_perp, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -380,7 +380,7 @@
 		if(BOT_HUNT) // hunting for perp
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				SSmove_manager.stop_looping(src)
+				GLOB.move_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -398,7 +398,7 @@
 
 			// not next to perp
 			var/turf/olddist = get_dist(src, target)
-			SSmove_manager.move_to(src, target, 1, 4)
+			GLOB.move_manager.move_to(src, target, 1, 4)
 			if((get_dist(src, target)) >= (olddist))
 				frustration++
 			else
@@ -487,13 +487,13 @@
 			switch(bot_type)
 				if(ADVANCED_SEC_BOT)
 					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
+					playsound(src, pick('sound/mobs/non-humanoids/ed209/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 				if(HONK_BOT)
 					speak("Honk!")
 					playsound(src, pick('sound/items/bikehorn.ogg'), 50, FALSE)
 				else
 					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+					playsound(src, pick('sound/mobs/non-humanoids/beepsky/criminal.ogg', 'sound/mobs/non-humanoids/beepsky/justice.ogg', 'sound/mobs/non-humanoids/beepsky/freeze.ogg'), 50, FALSE)
 
 			visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
 			mode = BOT_HUNT
@@ -540,7 +540,7 @@
 			new /obj/item/assembly/prox_sensor(Tsec)
 			drop_part(baton_type, Tsec)
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)

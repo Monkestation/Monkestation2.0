@@ -18,17 +18,22 @@
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
+	allow_shuttle_docking = TRUE
 
 
 /area/space/Initialize(mapload)
 	. = ..()
 	set_base_lighting(GLOB.starlight_color, alpha)
 
-
 /area/space/nearstation
 	icon_state = "space_near"
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	static_lighting = TRUE
+
+/area/space/shipbreak
+	name = "Shipbreak Zone"
+	icon_state = "escape"
+
 /area/misc/start
 	name = "start area"
 	icon_state = "start"

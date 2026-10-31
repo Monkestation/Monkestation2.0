@@ -3,7 +3,7 @@
 // ********************************************************
 
 /obj/item/seeds
-	icon = 'icons/obj/hydroponics/seeds.dmi'
+	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "seed" // Unknown plant seed - these shouldn't exist in-game.
 	worn_icon_state = "seed"
 	w_class = WEIGHT_CLASS_TINY
@@ -17,7 +17,7 @@
 	/// Used to update icons. Should match the name in the sprites unless all icon_* are overridden.
 	var/species = ""
 	///the file that stores the sprites of the growing plant from this seed.
-	var/growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	var/growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	/// Used to override grow icon (default is `"[species]-grow"`). You can use one grow icon for multiple closely related plants with it.
 	var/icon_grow
 	/// Used to override dead icon (default is `"[species]-dead"`). You can use one dead icon for multiple closely related plants with it.
@@ -347,7 +347,7 @@
 				var/amount = max(1, round(grown_edible_volume * potency_rate * reagents_add[rid] * fitting_proportion, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
 				var/list/data
 				if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-					data = list("blood_type" = /datum/blood_type/crew/human/o_minus)
+					data = list("blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS))
 				if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 					data = grown_edible.tastes // apple tastes of apple.
 				T.reagents.add_reagent(rid, amount, data)
@@ -580,7 +580,7 @@
 					return
 				if(!user.can_perform_action(src))
 					return
-				name = "[lowertext(newplantname)]"
+				name = "[LOWER_TEXT(newplantname)]"
 				plantname = newplantname
 			if("Seed Description")
 				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)

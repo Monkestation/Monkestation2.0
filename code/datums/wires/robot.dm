@@ -105,7 +105,7 @@
 			log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)] via wire")
 		if(WIRE_RESET_MODEL)
 			if(R.has_model() && !mend)
-				R.ResetModel()
+				R.reset_model()
 				log_silicon("[key_name(usr)] reset [key_name(R)]'s module via wire")
 		if(WIRE_MOTIVATIONAL)
 			R.logevent("Motivational Controller fault [mend?"cleared":"detected"]")

@@ -7,7 +7,8 @@
 /obj/item/clothing/suit/toggle/jacket/hoodie
 	name = "hoodie"
 	desc = "A warm hoodie. you cant help but mess with the zipper..."
-	icon_state = "hoodie"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie")
 	greyscale_config = /datum/greyscale_config/hoodie
 	greyscale_config_worn = /datum/greyscale_config/hoodie/worn
 	greyscale_colors = "#FFFFFF"
@@ -16,14 +17,14 @@
 	min_cold_protection_temperature = T0C - 20	//Not as good as the base jacket
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/trim
-	icon_state = "hoodie_trim"
+	SETUP_MAP_ICONS("hoodie_trim", "/obj/item/clothing/suit/toggle/jacket/hoodie/trim")
 	greyscale_config = /datum/greyscale_config/hoodie_trim
 	greyscale_config_worn = /datum/greyscale_config/hoodie_trim/worn
 	greyscale_colors = "#ffffff#313131"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/trim/alt
-	icon_state = "hoodie_trim_alt"
+	SETUP_MAP_ICONS("hoodie_trim_alt", "/obj/item/clothing/suit/toggle/jacket/hoodie/trim/alt")
 	greyscale_colors = "#ffffff#313131"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -32,30 +33,37 @@
 */
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/grey
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie/grey")
 	greyscale_colors = "#a8a8a8"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/black
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie/black")
 	greyscale_colors = "#313131"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/red
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie/red")
 	greyscale_colors = "#D13838"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/blue
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie/blue")
 	greyscale_colors = "#034A8D"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/green
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie/green")
 	greyscale_colors = "#1DA103"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/orange
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie/orange")
 	greyscale_colors = "#F79305"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/yellow
+	SETUP_MAP_ICONS("hoodie", "/obj/item/clothing/suit/toggle/jacket/hoodie/yellow")
 	greyscale_colors = "#F0D655"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/branded
 	name = "NT hoodie"
-	desc = "A warm, blue sweatshirt.  It proudly bears the silver Nanotrasen insignia lettering on the back.  The edges are trimmed with silver."
-	icon_state = "hoodie_NT"
+	desc = "A warm, blue sweatshirt. It proudly bears the silver Nanotrasen insignia lettering on the back. The edges are trimmed with silver."
+	SETUP_MAP_ICONS("hoodie_NT", "/obj/item/clothing/suit/toggle/jacket/hoodie/branded")
 	greyscale_config = /datum/greyscale_config/hoodie_branded
 	greyscale_config_worn = /datum/greyscale_config/hoodie_branded/worn
 	greyscale_colors = "#02519A#ffffff"	//white to prevent changing the actual color of the icon. I've no clue why it REQUIRES two inputs despite being set otherwise.
@@ -64,38 +72,37 @@
 /obj/item/clothing/suit/toggle/jacket/hoodie/branded/nrti
 	name = "New Reykjavik Technical Institute hoodie"
 	desc = "A warm, gray sweatshirt. It bears the letters NRT on the back, in reference to Sif's premiere technical institute."
-	icon_state = "hoodie_NRTI"
+	SETUP_MAP_ICONS("hoodie_NRTI", "/obj/item/clothing/suit/toggle/jacket/hoodie/branded/nrti")
 	greyscale_colors = "#747474#a83232"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/branded/mu
 	name = "mojave university hoodie"
-	desc = "A warm, gray sweatshirt.  It bears the letters MU on the front, a lettering to the well-known public college, Mojave University."
-	icon_state = "hoodie_MU"
+	desc = "A warm, gray sweatshirt.  It bears the letters MU on the front, a lettering to the well-known public college, Mojave University."
+	SETUP_MAP_ICONS("hoodie_MU", "/obj/item/clothing/suit/toggle/jacket/hoodie/branded/mu")
 	greyscale_colors = "#747474#ffffff"
-
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/branded/cti
 	name = "CTI hoodie"
-	desc = "A warm, black sweatshirt.  It bears the letters CTI on the back, a lettering to the prestigious university in Tau Ceti, Ceti Technical Institute.  There is a blue supernova embroidered on the front, the emblem of CTI."
-	icon_state = "hoodie_CTI"
+	desc = "A warm, black sweatshirt.  It bears the letters CTI on the back, a lettering to the prestigious university in Tau Ceti, Ceti Technical Institute. \
+		There is a blue supernova embroidered on the front, the emblem of CTI."
+	SETUP_MAP_ICONS("hoodie_CTI", "/obj/item/clothing/suit/toggle/jacket/hoodie/branded/cti")
 	greyscale_colors = "#313131#ffffff"
 
 /obj/item/clothing/suit/toggle/jacket/hoodie/branded/smw
 	name = "Space Mountain Wind hoodie"
-	desc = "A warm, black sweatshirt.  It has the logo for the popular softdrink Space Mountain Wind on both the front and the back."
-	icon_state = "hoodie_SMW"
+	desc = "A warm, black sweatshirt.  It has the logo for the popular soft drink Space Mountain Wind on both the front and the back."
+	SETUP_MAP_ICONS("hoodie_SMW", "/obj/item/clothing/suit/toggle/jacket/hoodie/branded/smw")
 	greyscale_colors = "#313131#ffffff"
-
 
 /obj/item/clothing/under/suit/fancy
 	name = "fancy suit"
 	desc = "A fancy suit and jacket with an elegant shirt."
-	icon_state = "fancy_suit"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("fancy_suit", "/obj/item/clothing/under/suit/fancy")
 	greyscale_config = /datum/greyscale_config/fancy_suit
 	greyscale_config_worn = /datum/greyscale_config/fancy_suit/worn
 	greyscale_colors = "#FFFFFA#0075C4#7C787D"
 	flags_1 = IS_PLAYER_COLORABLE_1
-
 
 // Modular Overwrites
 /obj/item/clothing/under/suit

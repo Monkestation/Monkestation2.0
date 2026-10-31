@@ -58,6 +58,8 @@
 	var/income_modifier = 1
 	///An additive bonus applied to all research gain, given by the Research Network Integration nanite program
 	var/nanite_bonus = 0
+	///Boolean on whether AIs are boosting research point generation.
+	var/ai_boosted = FALSE
 	///The amount of research points generated the techweb generated the latest time it generated.
 	var/last_income
 

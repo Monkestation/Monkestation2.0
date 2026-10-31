@@ -42,6 +42,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SECURITY)
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/datatheory //Computer science
 	id = "datatheory"
@@ -54,6 +55,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SERVICE, RADIO_CHANNEL_SUPPLY)
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
@@ -105,12 +107,11 @@
 		"smartfridge",
 		"stove",
 		"biomass_recycler",
-		"corral_corner",
-		"slime_extract_requestor",
-		"slime_market_pad",
-		"slime_market",
-		"slimevac",
-
+		"extract_compressor",
+		"slime_pen_post",
+		"slime_rancher_scanner",
+		"vacuum_pack",
+		"vacuum_upgrade_printer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = TECHWEB_TIER_2_POINTS) //Big discount to reinforce doing it.

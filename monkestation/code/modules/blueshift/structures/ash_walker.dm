@@ -153,7 +153,7 @@
 
 /obj/structure/spawner/lavaland/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/cursed_dagger))
-		playsound(get_turf(src), 'sound/magic/demon_attack1.ogg', 50, TRUE)
+		playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		cursed = !cursed
 		if(cursed)
 			src.add_atom_colour("#41007e", TEMPORARY_COLOUR_PRIORITY)
@@ -253,7 +253,7 @@
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You place [src] on [interacting_with]."))
 	new /obj/structure/railroad(interacting_with)
-	playsound(interacting_with, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(interacting_with, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railroad
@@ -477,12 +477,13 @@
 
 	src_mixture.assert_gases(/datum/gas/carbon_dioxide, /datum/gas/oxygen, /datum/gas/nitrogen)
 
-	var/proportion = src_mixture.gases[/datum/gas/carbon_dioxide][MOLES]
+	var/list/cached_moles = src_mixture.moles
+	var/proportion = cached_moles[/datum/gas/carbon_dioxide]
 	if(proportion) //if there is carbon dioxide in the air, lets turn it into oxygen
-		src_mixture.gases[/datum/gas/carbon_dioxide][MOLES] -= proportion
-		src_mixture.gases[/datum/gas/oxygen][MOLES] += proportion
+		cached_moles[/datum/gas/carbon_dioxide] -= proportion
+		cached_moles[/datum/gas/oxygen] += proportion
 
-	src_mixture.gases[/datum/gas/nitrogen][MOLES] += MOLES_CELLSTANDARD //the nitrogen cycle-- plants (and bacteria) participate in the nitrogen cycle
+	cached_moles[/datum/gas/nitrogen] += MOLES_CELLSTANDARD //the nitrogen cycle-- plants (and bacteria) participate in the nitrogen cycle
 
 /obj/structure/plant_tank/wrench_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "[anchored ? "un" : ""]bolting")
@@ -572,7 +573,7 @@
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, span_warning("Your [W.name] is already full!"))
 				return
-			reagents.trans_to(W, W.max_fuel, transfered_by = user)
+			reagents.trans_to(W, W.max_fuel, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_appearance()
@@ -597,7 +598,7 @@
 	if(!regen_core.preserve())
 		balloon_alert(user, "organ decayed!")
 		return
-	playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	balloon_alert_to_viewers("[src] revitalizes [regen_core]!")
 	return
 
@@ -635,7 +636,7 @@
 
 	if(allow_transform < REQUIRED_OBSERVERS)
 		balloon_alert_to_viewers("[src] rejects the request, not enough viewers!")
-		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		human_user.adjustBruteLoss(10)
 		return
 
@@ -645,7 +646,7 @@
 
 		if(choice != "Yes")
 			balloon_alert_to_viewers("[src] feels rejected and punishes [human_user]!")
-			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 			human_user.adjustBruteLoss(50)
 			return
 
@@ -661,7 +662,7 @@
 			ADD_TRAIT(human_user, TRAIT_RESISTCOLD, ROUNDSTART_TRAIT)
 
 		ADD_TRAIT(human_user, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
-		playsound(src, 'sound/magic/demon_dies.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/demon_dies.ogg', 50, TRUE)
 		meat_counter++
 
 	return ..()
@@ -689,7 +690,7 @@
 		else
 			meat_counter++
 
-		playsound(get_turf(src),'sound/magic/demon_consume.ogg', 100, TRUE)
+		playsound(get_turf(src),'sound/effects/magic/demon_consume.ogg', 100, TRUE)
 		var/delivery_key = viewable_living.fingerprintslast //key of whoever brought the body
 		var/mob/living/delivery_mob = get_mob_by_key(delivery_key) //mob of said key
 
@@ -890,11 +891,11 @@
 		else
 			icon_state = "[planted_seed.icon_grow][planted_seed.growthstages]"
 
-		name = lowertext(planted_seed.plantname)
+		name = LOWER_TEXT(planted_seed.plantname)
 
 	else
 		icon_state = "[planted_seed.icon_grow]1"
-		name = lowertext("harvested [planted_seed.plantname]")
+		name = LOWER_TEXT("harvested [planted_seed.plantname]")
 
 	return ..()
 
@@ -1097,7 +1098,7 @@
 	name = "\improper Ashland Clothing Storage"
 	desc = "A large container, filled with various clothes for the Ash Walkers."
 	product_ads = "Praise the Necropolis"
-	icon = 'monkestation/icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
 	use_power = NO_POWER_USE

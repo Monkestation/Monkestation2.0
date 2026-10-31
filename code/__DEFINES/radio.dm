@@ -82,8 +82,8 @@
 #define FREQ_ENGINEERING 1357 // Engineering comms frequency, orange
 #define FREQ_SECURITY 1359 // Security comms frequency, red
 #define FREQ_ENTERTAINMENT 1415 // Used by entertainment monitors, cyan
-#define FREQ_RADIO 1361 //monkestation edit
-#define FREQ_UNCOMMON 1363 //monkestation addition, Light gray
+#define FREQ_RADIO 1361
+#define FREQ_UNCOMMON 1363
 #define FREQ_HOLOGRID_SOLUTION 1433
 #define FREQ_STATUS_DISPLAYS 1435
 
@@ -96,6 +96,7 @@
 #define FREQ_ELECTROPACK 1449
 #define FREQ_MAGNETS 1449
 #define FREQ_LOCATOR_IMPLANT 1451
+#define FREQ_RADIO_NAV_BEACON 1455
 #define FREQ_SIGNALER 1457 // the default for new signalers
 #define FREQ_COMMON 1459 // Common comms frequency, dark green
 #define MIN_UNUSED_FREQ 1461 // Prevents rolling AI Private or Common

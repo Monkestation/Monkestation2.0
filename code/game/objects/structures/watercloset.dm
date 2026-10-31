@@ -387,7 +387,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			return FALSE
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
-				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transfered_by = user)
+				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transferred_by = user)
 				begin_reclamation()
 				to_chat(user, span_notice("You fill [RG] from [src]."))
 				return TRUE
@@ -410,7 +410,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
 			return FALSE
-		reagents.trans_to(O, 5, transfered_by = user)
+		reagents.trans_to(O, 5, transferred_by = user)
 		begin_reclamation()
 		to_chat(user, span_notice("You wet [O] in [src]."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
@@ -803,11 +803,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, TRUE)
+				playsound(src.loc, 'sound/items/weapons/slash.ogg', 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 80, TRUE)
 
 /obj/structure/curtain/bounty
 	icon_type = "bounty"

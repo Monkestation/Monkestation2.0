@@ -137,7 +137,7 @@
 /turf/open/floor/circuit/red/airless,
 /area/ruin/space/has_grav/old_infiltrator)
 "jt" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/has_grav/old_infiltrator)

@@ -20,7 +20,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = 3 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -40,7 +40,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = 2 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -49,14 +49,14 @@
 	name = "syndicate laser musket"
 	desc = "A powerful laser(?) weapon, its 4 tetradimensional capacitors can hold 2 shots each, totaling to 8 shots. \
 	Putting your hand on the control panel gives you a strange tingling feeling, this is probably how you charge it."
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	icon_state = "musket_syndie"
 	inhand_icon_state = "musket_syndie"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	worn_icon_state = "las_musket_syndie"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/syndicate)
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/musket/syndicate/Initialize(mapload) //it takes two hand slots and costs 12 tc, they deserve fast recharging
 	. = ..()
@@ -65,14 +65,14 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE * 0.25, \
 		cooldown_time = 1.5 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		)
 
 /obj/item/ammo_casing/energy/laser/musket/syndicate
 	projectile_type = /obj/projectile/beam/laser/musket/syndicate
 	e_cost = LASER_SHOTS(8, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/weapons/laser2.ogg'
+	fire_sound = 'sound/items/weapons/laser2.ogg'
 
 /obj/item/gun/energy/disabler/smoothbore
 	name = "smoothbore disabler"
@@ -90,7 +90,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = 2 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -115,7 +115,7 @@
 /obj/item/gun/energy/laser/plasmacore //NTrep gun
 	name = "PlasmaCore-6e"
 	desc = "The PlasmaCore-6e is the newest gun in Nanotrasen's cutting edge line of laser weaponry. Featuring an experimental plasma based cell that can be mechanically recharged. Glory to Nanotrasen."
-	icon = 'monkestation/icons/obj/weapons/guns/plasmacoresixe.dmi'
+	icon = 'icons/obj/weapons/guns/plasmacoresixe.dmi'
 	icon_state = "plasma_core_six"
 	charge_sections = 6
 	cell_type = /obj/item/stock_parts/power_store/cell/plasmacore
@@ -132,7 +132,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE * 0.1, \
 		cooldown_time = 1.5 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		)
 	mutable_appearance(icon, "plasma_core_six_cell_backwards")
@@ -168,7 +168,7 @@
 	desc = "A decomissioned military lasergun. Acid damage has left it's internal recharging battery fused inside with pitiful capacity. It can be hand charged for extra speed. \
 	Fires hardlight lasers, dealing more damage at the cost of dissipating extremely fast and being unable to pass through glass."
 	pin = /obj/item/firing_pin/explorer/unremovable
-	icon = 'monkestation/icons/obj/guns/explorer.dmi'
+	icon = 'icons/obj/guns/explorer.dmi'
 	icon_state = "explorer"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/explorer)
 	selfcharge = 1
@@ -187,7 +187,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE * 0.25, \
 		cooldown_time = 1.5 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -195,7 +195,7 @@
 /obj/item/ammo_casing/energy/laser/explorer
 	projectile_type = /obj/projectile/beam/laser/hardlight
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/gun/energy/laser/explorer/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)

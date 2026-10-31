@@ -46,13 +46,6 @@
 	},
 /turf/open/floor/engine,
 /area/centcom/tdome/arena/actual)
-"gw" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/engine,
-/area/centcom/tdome/arena/actual)
 "hA" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
@@ -263,6 +256,15 @@
 /area/centcom/tdome/arena/actual)
 "Hl" = (
 /turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"HA" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/closed/indestructible/reinforced,
 /area/centcom/tdome/arena/actual)
 "IF" = (
 /obj/machinery/conveyor/auto{
@@ -545,8 +547,8 @@ yr
 Ye
 bs
 os
-gw
-bs
+os
+HA
 uT
 Uz
 Xo
