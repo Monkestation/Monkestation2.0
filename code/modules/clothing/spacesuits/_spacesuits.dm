@@ -26,6 +26,10 @@
 	resistance_flags = NONE
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/space/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
+
 /datum/armor/helmet_space
 	bio = 100
 	fire = 80
@@ -82,6 +86,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /// Start Processing on the space suit when it is worn to heat the wearer
 /obj/item/clothing/suit/space/equipped(mob/living/user, slot)

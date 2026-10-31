@@ -12,6 +12,10 @@
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
+/obj/item/clothing/head/mod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
+
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
@@ -31,6 +35,10 @@
 
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
+
+/obj/item/clothing/suit/mod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"

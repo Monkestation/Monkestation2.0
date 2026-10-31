@@ -34,7 +34,10 @@
 		var/datum/bodypart_overlay/simple/overlay = new
 		overlay.icon = bodypart_overlay_icon
 		overlay.icon_state = overlay_state
-		overlay.layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+		overlay.set_layers(list(
+			EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+			EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		))
 
 		bodypart.add_bodypart_overlay(overlay)
 
