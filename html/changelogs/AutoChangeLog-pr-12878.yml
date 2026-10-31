@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - balance: "The Double-Bladed Energy Sword can only be bought when there are at least 30 living players."
