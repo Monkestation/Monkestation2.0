@@ -170,18 +170,25 @@
 	extra_settings[NES_DIRECTIVE] = new /datum/nanite_extra_setting/text("...")
 
 /datum/nanite_program/comm/mind_control/on_trigger(comm_message)
-	if(host_mob.stat == DEAD || HAS_MIND_TRAIT(host_mob, TRAIT_UNCONVERTABLE))
+	if(host_mob.stat == DEAD || HAS_MIND_TRAIT(host_mob, TRAIT_UNCONVERTABLE) || HAS_TRAIT_NOT_FROM(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT))
 		return
 	var/sent_directive = comm_message
 	if(!comm_message)
 		var/datum/nanite_extra_setting/ES = extra_settings[NES_DIRECTIVE]
 		sent_directive = ES.get_value()
 	directive = brainwash(host_mob, sent_directive, nanites.cloud_id ? "nanites in cloud [nanites.cloud_id]" : "nanites")
+	RegisterSignal(host_mob, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD), PROC_REF(on_mindshield_added))
 	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[sent_directive]'.")
 	host_mob.log_message("has been brainwashed with the objective '[sent_directive]' triggered by a mind control nanite program.", LOG_ATTACK)
 	addtimer(CALLBACK(src, PROC_REF(end_brainwashing)), 5 MINUTES)
 
+/datum/nanite_program/comm/mind_control/proc/on_mindshield_added(datum/source)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT_NOT_FROM(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT))
+		end_brainwashing()
+
 /datum/nanite_program/comm/mind_control/proc/end_brainwashing()
+	UnregisterSignal(host_mob, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD))
 	unbrainwash(host_mob, directive)
 	log_game("[key_name(host_mob)] is no longer brainwashed by nanites.")
 
