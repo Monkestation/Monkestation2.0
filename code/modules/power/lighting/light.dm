@@ -12,6 +12,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	always_area_sensitive = TRUE
+	light_angle = 170
 	///What overlay the light should use
 	var/overlay_icon = 'icons/obj/lighting_overlay.dmi'
 	///base description and icon_state
@@ -35,6 +36,8 @@
 	var/status = LIGHT_OK
 	///Should we flicker?
 	var/flickering = FALSE
+	///Whether a flicker is in progress at all. Unlike flickering, this stays TRUE for the whole run, so a second flicker can't start another loop.
+	var/flicker_running = FALSE
 	///The type of light item
 	var/light_type = /obj/item/light/tube
 	///String of the light type, used in descriptions and in examine
@@ -120,6 +123,8 @@
 	if(is_station_level(z))
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
+	// Light projects out backwards from the dir of the light
+	set_light(l_dir = turn(dir, 180))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(alert_level_updated))
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -142,6 +147,22 @@
 		on = FALSE
 	QDEL_NULL(cell)
 	return ..()
+
+/obj/machinery/light/setDir(newdir)
+	. = ..()
+	set_light(l_dir = turn(dir, 180))
+
+// If we're adjacent to the source, we make this sorta indentation for our light to ensure it stays lit (and to make distances look right)
+// By shifting the light position we use forward a bit, towards something that isn't off by 0.5 from being in angle
+// Because angle calculation is kinda harsh it's hard to find a happy point between fulldark and fullbright for the corners behind the light. this is good enough tho
+/obj/machinery/light/get_light_offset()
+	if(light_angle >= 360)
+		return ..()
+	var/list/hand_back = ..()
+	var/list/dir_offset = dir2offset(turn(dir, 180))
+	hand_back[1] += dir_offset[1] * 0.5
+	hand_back[2] += dir_offset[2] * 0.5
+	return hand_back
 
 /obj/machinery/light/update_icon_state()
 	switch(status) // set icon_states
@@ -169,6 +190,9 @@
 
 	var/area/local_area = get_room_area()
 
+	if(flickering)
+		. += mutable_appearance(overlay_icon, "[base_state]_flickering")
+		return
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
@@ -234,7 +258,12 @@
 		if(reagents)
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area = get_room_area()
-		if (local_area?.fire)
+		if (flickering)
+			IR = bulb_inner_range * bulb_low_power_brightness_mul
+			brightness_set = bulb_outer_range * bulb_low_power_brightness_mul
+			power_set = bulb_low_power_pow_mul
+			color_set = nightshift_light_color
+		else if (local_area?.fire)
 			color_set = fire_colour
 			brightness_set = fire_brightness
 		else if (nightshift_enabled)
@@ -522,25 +551,40 @@
 	return TRUE
 
 
-/obj/machinery/light/proc/flicker(amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(amount = 1)
 	set waitfor = FALSE
-	if(flickering)
+	if(flicker_running || !on || status != LIGHT_OK)
 		return
-	flickering = TRUE
-	if(on && status == LIGHT_OK)
-		for(var/i in 1 to amount)
-			if(status != LIGHT_OK || !has_power())
-				break
-			on = !on
-			update(FALSE)
-			sleep(rand(5, 15))
-		if(has_power())
-			on = (status == LIGHT_OK)
-		else
-			on = FALSE
+
+	. = TRUE // did we actually flicker? Send this now because we expect immediate response, before sleeping.
+	flicker_running = TRUE
+	set_light(
+		l_outer_range = bulb_outer_range * bulb_low_power_brightness_mul,
+		l_inner_range = bulb_inner_range * bulb_low_power_brightness_mul,
+		l_power = bulb_low_power_pow_mul,
+		l_falloff_curve = bulb_falloff,
+		l_color = nightshift_light_color,
+	)
+	cut_overlays()
+	stoplag(0.7 SECONDS)
+	if(prob(30))
+		do_sparks(number = 2, cardinal_only = TRUE, source = src)
+
+	for(var/i in 1 to amount)
+		if(status != LIGHT_OK || !has_power())
+			break
+		flickering = !flickering
 		update(FALSE)
-		. = TRUE //did we actually flicker?
+		stoplag(pick(list(2 SECONDS, 4 SECONDS, 6 SECONDS)))
+
+	if(has_power())
+		on = (status == LIGHT_OK)
+	else
+		on = FALSE
+
 	flickering = FALSE
+	flicker_running = FALSE
+	update(FALSE)
 
 // ai attack - make lights flicker, because why not
 
@@ -737,6 +781,7 @@
 	base_state = "floor" // base description and icon_state
 	icon_state = "floor"
 	bulb_outer_range = 4
+	light_angle = 360
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb

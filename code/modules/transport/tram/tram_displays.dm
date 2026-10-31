@@ -31,7 +31,7 @@
 	max_integrity = 50
 	light_outer_range = 2
 	light_power = 0.7
-	/* light_angle = 115 */
+	light_angle = 115
 	flags_1 = NONE
 
 /obj/item/wallframe/indicator_display
@@ -50,16 +50,16 @@
 	available_faces = list(
 		TRAMSTATION_LINE_1,
 	)
-	/* set_light(l_dir = REVERSE_DIR(dir)) */
+	set_light(l_dir = REVERSE_DIR(dir))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/transport/destination_sign/Destroy()
 	SStransport.displays -= src
 	. = ..()
 
-/* /obj/machinery/transport/destination_sign/indicator/setDir(newdir)
+/obj/machinery/transport/destination_sign/indicator/setDir(newdir)
 	. = ..()
-	set_light(l_dir = REVERSE_DIR(dir)) */
+	set_light(l_dir = REVERSE_DIR(dir))
 
 /obj/machinery/transport/destination_sign/indicator/LateInitialize(mapload)
 	. = ..()

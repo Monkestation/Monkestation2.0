@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_opacity = opacity
 	// I'm so sorry brother
 	// This is used for a starlight optimization
-	var/old_light_range = light_outer_range
+	var/old_light = !isnull(light)
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			lit_turf.update_starlight()
 			for(var/turf/open/space/space_tile in RANGE_TURFS(1, src) - src)
 				space_tile.update_starlight()
-		else if(old_light_range)
+		else if(old_light)
 			lit_turf.enable_starlight()
 
 	// If we're a cordon we count against a light, but also don't produce any ourselves

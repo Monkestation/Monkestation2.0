@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 50
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2 //bitflag
@@ -60,6 +61,18 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/LateInitialize(mapload_arg)
 	update_appearance(UPDATE_ICON)
 	is_fully_initialized = TRUE
+
+/obj/structure/cable/atom_destruction(damage_flag)
+	if(!powernet || damage_flag != BOMB)
+		return ..()
+
+	powernet.propagate_light_flicker(src)
+	return ..()
+
+/obj/structure/cable/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_flag == BOMB && HAS_TRAIT(src, TRAIT_UNDERFLOOR))
+		damage_amount *= 0.25
+	return ..()
 
 /obj/structure/cable/examine(mob/user)
 	. = ..()
