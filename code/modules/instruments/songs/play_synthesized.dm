@@ -68,7 +68,7 @@
 			L.apply_status_effect(/datum/status_effect/good_music)
 		if(!(M?.client?.prefs?.channel_volume["[channel_used]"]))
 			continue
-		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, null, channel, null, copy, mixer_channel = channel_used)
+		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, exponential_falloff, channel, null, copy, mixer_channel = channel_used)
 		// Could do environment and echo later but not for now
 
 /**

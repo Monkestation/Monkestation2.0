@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed big manipulators trying to interact with underfloor pipes"
-  - rscadd: "Added a \"Skip Non-Dense\" option to big manipulator interactions."

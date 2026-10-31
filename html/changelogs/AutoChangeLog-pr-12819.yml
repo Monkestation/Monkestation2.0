@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "The dark matt-eor from emagged meteor satellites actually flies at the station now instead of sitting there and missing."
-  - bugfix: "Fixed station level checks giving random results for things in nullspace."

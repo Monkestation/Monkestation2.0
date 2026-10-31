@@ -325,3 +325,90 @@
 2026-10-25:
   Absolucy:
   - bugfix: Relogging no longer stacks a new combat mode button your hud each time
+2026-10-27:
+  Absolucy:
+  - bugfix: Fixed big manipulators trying to interact with underfloor pipes
+  - rscadd: Added a "Skip Non-Dense" option to big manipulator interactions.
+  Ben10Omintrix, tattle:
+  - bugfix: Basic mobs that couldn't find anything to attack no longer freeze up forever,
+      duct spiders spin webs again.
+  - bugfix: Basic mobs play sounds on their audible emotes, with new sounds for insects,
+      mice, crabs, chickens, chicks and ponies.
+  - bugfix: Chickens and chicks cluck and cheep on their own now.
+  Fikou:
+  - bugfix: The dark matt-eor from emagged meteor satellites actually flies at the
+      station now instead of sitting there and missing.
+  - bugfix: Fixed station level checks giving random results for things in nullspace.
+2026-10-28:
+  AitorLogedo:
+  - rscadd: Rats raised by the rat king now have their own names
+  Iamgoofball, Ben10Omintrix:
+  - bugfix: Carps migrating through the station no longer idle so they don't get stuck
+      after spawning until someone walks by.
+  - bugfix: mobs in the same faction will no longer be at odds against one another
+  - bugfix: mobs will no longer be starting and stopping when chasing targets
+  Melbert:
+  - rscadd: Adds Carptongue language, spoken by space carps.
+  - rscadd: Space dragons can speak Draconic and Carptongue.
+  - rscadd: Ash drakes and ice whelps now speak Draconic.
+  - rscadd: Fire sharks now speak Carptongue.
+  - rscadd: Sleeping carp grants you Carptongue.
+  - qol: Medical stacks (sutures, meshes, ointment...) now have two modes. Left click
+      heals in auto mode, which switches between damaged bodyparts by itself, prioritizing
+      your targeted limb. Right click heals in manual mode, which works like before
+      and is 10% faster.
+  - qol: Suturing cuts and meshing burns is now part of the normal heal, no more separate
+      interaction for the wound.
+  - qol: Bleeding wounds go away the moment they're fully healed.
+  - bugfix: Fixed a runtime when cauterizing a cut with a laser gun closed it.
+  Mothblocks, hry-gh, JohnFulpWillard, FalloutFalcon:
+  - bugfix: Typepath suggestions in the command bar are now filtered on the frontend.
+  - bugfix: In the command bar, exact matches now enter the verb.
+  - bugfix: Quotes aren't required around arguments in the command bar anymore, letting
+      you use quotes yourself in messages.
+  - bugfix: Removes a ton of pick up verbs from the command bar.
+  - qol: Added a setting to disable showing command bar suggestions as you type (unless
+      you press space).
+  - qol: The command bar now starts on Say instead of Command mode.
+  - qol: Pressing backspace while unfocused now clears your command bar.
+  - qol: The command bar's last used mode is now kept between rounds.
+  - admin: Asay is now properly sanitized.
+  - bugfix: When typing in the command bar, thinking/typing indicators will be reflected
+      in game again.
+  - bugfix: The command bar no longer goes into Say on login when you had Command
+      saved.
+  SmArtKar:
+  - rscadd: 'Changed how colorful reagent and crayon powder work: douse your victims
+      to color their clothing, bodyparts and even internal organs!'
+  - rscadd: Showers wash colorful reagent off your skin
+  - bugfix: You can color robotic limbs with left click (again)
+  - bugfix: Losing hulk after becoming a carp no longer turns you black
+  - bugfix: Severed limbs with wounds no longer look like two limbs when they land
+      sideways
+2026-10-29:
+  ArcaneMusic, CabinetOnFire, Kapu, grungussuss, Melbert, vinylspiders, EnnyDaiz:
+  - rscadd: Cargo can now buy a Nanomusic boombox! Comes with a demo tape, more tapes
+      can be found as goodies, on the black market, in the game vendor and in the
+      Pizza Party domain.
+  - rscadd: The boombox can also play approved cassettes.
+  - sound: Looping sounds like the supermatter, grav gen and kitchen machines now
+      update as you move, and you can hear long sounds even if you arrive halfway
+      through.
+  - sound: Sound falloff is softer.
+  - sound: The supermatter has start and stop sounds.
+  - sound: Ambience waits for the last sound to finish before playing a new one.
+  - sound: Sounds are stereo again and no longer get a forced echo, so positional
+      audio sounds a lot more 3D.
+  - sound: Most of the station no longer has hangar sized reverb.
+  - bugfix: Looping sounds and boombox tapes follow whoever is carrying them, and
+      cassettes no longer restart when you change z-levels.
+  - bugfix: Cassettes playing on a shuttle no longer cut out for the passengers when
+      it takes off.
+  - bugfix: Looping sounds no longer steal the voice, ringtone, siren, admin sound
+      and shuttle channels.
+  - bugfix: Ear damage makes things quieter instead of making you deaf past one tile.
+  - bugfix: Elevator music and other direct loops respect their volume and your volume
+      sliders.
+  - bugfix: Changing a volume slider updates sounds that follow you right away.
+  - bugfix: The alt siren starts on its start sound.
+  - bugfix: Randomly pitched sounds no longer lean low on 48 kHz files.
