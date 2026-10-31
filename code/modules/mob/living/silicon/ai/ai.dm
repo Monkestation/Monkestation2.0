@@ -498,7 +498,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose
 	else
 		return SScameras.turf_visible_by_cameras(target_turf)
 
-/mob/living/silicon/ai/cancel_camera()
+/mob/living/silicon/ai/actually_cancel_camera()
 	view_core()
 
 GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
@@ -1212,11 +1212,11 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 		if(past_os && (current_turf.z != new_turf.z))
 			past_os.remove_ai(src)
 
-/mob/living/silicon/ai/up()
+/mob/living/silicon/ai/do_move_up()
 	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
-/mob/living/silicon/ai/down()
+/mob/living/silicon/ai/do_move_down()
 	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 

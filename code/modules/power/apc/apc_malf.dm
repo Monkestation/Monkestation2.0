@@ -53,7 +53,7 @@
 		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/return_action = new
 	return_action.Grant(occupier)
-	occupier.cancel_camera()
+	occupier.actually_cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
@@ -62,7 +62,7 @@
 		occupier.mind.transfer_to(occupier.parent)
 		occupier.parent.shunted = FALSE
 		occupier.parent.setOxyLoss(occupier.getOxyLoss())
-		occupier.parent.cancel_camera()
+		occupier.parent.actually_cancel_camera()
 		qdel(occupier)
 		return
 	to_chat(occupier, span_danger("Primary core damaged, unable to return core processes."))
@@ -128,7 +128,7 @@
 	occupier.forceMove(card)
 	card.AI = occupier
 	occupier.parent.shunted = FALSE
-	occupier.cancel_camera()
+	occupier.actually_cancel_camera()
 	occupier = null
 	transfer_in_progress = FALSE
 	return TRUE

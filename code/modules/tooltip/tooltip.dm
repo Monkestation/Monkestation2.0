@@ -36,16 +36,19 @@ Notes:
 	..()
 
 
-/datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
+/datum/tooltip/proc/show_on_atom(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
 		return FALSE
 
 	if (!isnull(last_target))
 		UnregisterSignal(last_target, COMSIG_QDELETING)
-
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(on_target_qdel))
-
 	last_target = thing
+	return show(thing.screen_loc, params, title, content, theme, special)
+
+/datum/tooltip/proc/show(tooltip_location, params = null, title = null, content = null, theme = "default", special = "none")
+	if (!tooltip_location || !params || (!title && !content) || !owner || !isnum(world.icon_size))
+		return FALSE
 
 	if (!init)
 		//Initialize some vars
@@ -67,7 +70,7 @@ Notes:
 	title = replacetext(title, "\improper", "")
 
 	//Make our dumb param object
-	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
+	params = {"{ "cursor": "[params]", "screenLoc": "[tooltip_location]" }"}
 
 	//Send stuff to the tooltip
 	var/view_size = getviewsize(owner.view)
@@ -107,7 +110,7 @@ Notes:
 //Open a tooltip for user, at a location based on params
 //Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro, etc)
 //Includes sanity.checks
-/proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null,title = "",content = "",theme = "")
+/proc/openToolTip(mob/user = null, tip_location = null, params = null,title = "",content = "",theme = "")
 	if(istype(user))
 		if(user.client && user.client.tooltips)
 			var/ui_style = user.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
@@ -115,7 +118,10 @@ Notes:
 				theme = LOWER_TEXT(ui_style)
 			if(!theme)
 				theme = "default"
-			user.client.tooltips.show(tip_src, params,title,content,theme)
+			if(isatom(tip_location))
+				user.client.tooltips.show_on_atom(tip_location, params, title, content, theme)
+			else if(istext(tip_location))
+				user.client.tooltips.show(tip_location, params, title, content, theme)
 
 
 //Arbitrarily close a user's tooltip

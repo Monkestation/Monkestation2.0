@@ -500,7 +500,9 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 
 ///Moves a mob upwards in z level
 GAME_VERB(/mob, up, "Move Upwards", "IC")
+	do_move_up()
 
+/mob/proc/do_move_up()
 	var/turf/current_turf = get_turf(src)
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
@@ -519,7 +521,9 @@ GAME_VERB(/mob, up, "Move Upwards", "IC")
 
 ///Moves a mob down a z level
 GAME_VERB(/mob, down, "Move Down", "IC")
+	do_move_down()
 
+/mob/proc/do_move_down()
 	var/turf/current_turf = get_turf(src)
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
