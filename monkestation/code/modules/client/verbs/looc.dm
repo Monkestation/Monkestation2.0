@@ -111,7 +111,7 @@ GAME_VERB_DESC(/client, looc, "LOOC", "Local OOC, seen only by those in view.", 
 		var/prefix = "[hearers[admin_client] ? "" : "(R)"]LOOC"
 		if(admin_client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
 			admin_client.mob?.create_chat_message(looc_source, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
-		to_chat(admin_client, span_looc("[span_prefix("[prefix]:")] <EM>[ADMIN_LOOKUPFLW(mob)]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (admin_client == src))
+		to_chat(admin_client, span_looc("[span_prefix("[prefix]:")] <EM>[ADMIN_LOOKUPFLW(mob)]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (admin_client == src), confidential = TRUE)
 
 /// Logging for messages sent in LOOC
 /proc/log_looc(text, list/data)
