@@ -223,6 +223,29 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/turbine_computer
 
+/obj/item/circuitboard/computer/shuttle
+	/// The id of the shuttle consoles built from this board link to, if not set they link to the shuttle they are built on
+	var/shuttle_id
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+
+/obj/item/circuitboard/computer/shuttle/configure_machine(obj/machinery/machine)
+	var/obj/docking_port/mobile/custom/shuttle = shuttle_id ? SSshuttle.getShuttle(shuttle_id) : SSshuttle.get_containing_shuttle(machine)
+	if(!shuttle)
+		var/on_shuttle_frame = HAS_TRAIT((get_turf(machine)), TRAIT_SHUTTLE_CONSTRUCTION_TURF)
+		machine.say(on_shuttle_frame ? "Console will automatically link on shuttle completion." : "No shuttle available for linking.")
+	else if(!istype(shuttle))
+		machine.say("Cannot link to this kind of shuttle!")
+	else
+		machine.connect_to_shuttle(TRUE, shuttle)
+
+/obj/item/circuitboard/computer/shuttle/flight_control
+	name = "Shuttle Flight Control"
+	build_path = /obj/machinery/computer/shuttle/custom_shuttle
+
+/obj/item/circuitboard/computer/shuttle/docker
+	name = "Shuttle Navigation Computer"
+	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom
+
 //Generic
 
 /obj/item/circuitboard/computer/arcade/amputation
@@ -447,6 +470,26 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/mechpad
 
+/obj/item/circuitboard/computer/ai_upload_download
+	name = "AI Control Console"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/ai_control_console
+
+/obj/item/circuitboard/computer/ai_server_overview
+	name = "AI Server Overview Console"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/ai_server_console
+
+/obj/item/circuitboard/computer/ai_overclocking
+	name = "AI Overclocking Workstation Console"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/ai_overclocking
+
+/obj/item/circuitboard/computer/ai_resource_distribution
+	name = "AI Resource Distribution Console"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/ai_resource_distribution
+
 //Security
 
 /obj/item/circuitboard/computer/labor_shuttle
@@ -637,3 +680,33 @@
 	name = "Medical Order"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/computer/department_orders/medical
+
+/obj/item/circuitboard/computer/cloning
+	name = "Cloning"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/cloning
+
+/obj/item/circuitboard/computer/prototype_cloning
+	name = "Prototype Cloning (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/prototype_cloning
+
+/obj/item/circuitboard/computer/nanite_chamber_control
+	name = "Nanite Chamber Control"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/nanite_chamber_control
+
+/obj/item/circuitboard/computer/nanite_cloud_controller
+	name = "Nanite Cloud Control (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/goldeneye_helm
+	name = "goldeneye cruiser helm"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/computer/shuttle/goldeneye_cruiser
+
+/obj/item/circuitboard/computer/goldeneye_recall
+	name = "goldeneye cruiser recall"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/computer/shuttle/goldeneye_cruiser/recall

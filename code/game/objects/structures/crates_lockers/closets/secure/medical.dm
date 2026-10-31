@@ -42,15 +42,14 @@
 	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
-	new /obj/item/breathing_bag(src)
 	return
 
 /obj/structure/closet/secure_closet/psychology
 	name = "psychology locker"
 	req_access = list(ACCESS_PSYCHOLOGY)
 	icon_state = "cabinet"
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 

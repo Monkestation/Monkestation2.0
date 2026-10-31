@@ -1,7 +1,7 @@
 /obj/item/holosign_creator
 	name = "holographic sign projector"
 	desc = "A handy-dandy holographic projector that displays a janitorial sign."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "signmaker"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -36,6 +36,12 @@
 	if(!signs)
 		return
 	. += span_notice("It is currently maintaining <b>[length(signs)]/[max_signs]</b> projections.")
+
+/obj/item/holosign_creator/emp_act(severity)
+	. = ..()
+	for(var/obj/structure/holosign/sign as anything in signs)
+		if(prob(90 / severity))
+			qdel(sign)
 
 /obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
@@ -141,7 +147,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, human))
 		return ITEM_INTERACT_BLOCKING
 	log_combat(user, human, "attempted to handcuff")
-	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 	human.visible_message(span_danger("[user] begins restraining [human] with [src]!"), \
 	span_userdanger("[user] begins shaping a holographic field around your hands!"))
 	if(!do_after(user, 4.5 SECONDS, human, extra_checks = CALLBACK(src, PROC_REF(can_handcuff), user))) // he is up for grabs, so lets handcuff them
@@ -238,7 +244,7 @@
 	icon_state = "signmaker_med"
 	holosign_type = /obj/structure/holosign/barrier/medical
 	creation_time = 3 SECONDS
-	max_signs = 3
+	max_signs = 6
 
 /obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"

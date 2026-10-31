@@ -175,7 +175,7 @@
  * cultist - the mob doing the destroying
  */
 /datum/component/cult_ritual_item/proc/do_destroy_girder(obj/structure/girder/cult/cult_girder, mob/living/cultist)
-	playsound(cult_girder, 'sound/weapons/resonator_blast.ogg', 40, TRUE, ignore_walls = FALSE)
+	playsound(cult_girder, 'sound/items/weapons/resonator_blast.ogg', 40, TRUE, ignore_walls = FALSE)
 	cultist.visible_message(
 		span_warning("[cultist] strikes [cult_girder] with [parent]!"),
 		span_notice("You demolish [cult_girder].")
@@ -221,7 +221,7 @@
 		cultist.log_message("erased a [rune.cultist_name] rune with [parent].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(cultist)] erased a [rune.cultist_name] rune with [parent].")
 
-	to_chat(cultist, span_notice("You carefully erase the [lowertext(rune.cultist_name)] rune."))
+	to_chat(cultist, span_notice("You carefully erase the [LOWER_TEXT(rune.cultist_name)] rune."))
 	qdel(rune)
 
 /*
@@ -311,7 +311,7 @@
 	if(!initial(rune_to_scribe.no_scribe_boost) && (our_turf.type in turfs_that_boost_us))
 		scribe_mod *= 0.5
 
-	SEND_SOUND(cultist, sound('sound/weapons/slice.ogg', 0, 1, 10))
+	SEND_SOUND(cultist, sound('sound/items/weapons/slice.ogg', 0, 1, 10))
 	if(!do_after(cultist, scribe_mod, target = get_turf(cultist), timed_action_flags = IGNORE_SLOWDOWNS))
 		cleanup_shields()
 		return FALSE
@@ -328,8 +328,8 @@
 	var/obj/effect/rune/made_rune = new rune_to_scribe(our_turf, chosen_keyword)
 	made_rune.add_mob_blood(cultist)
 
-	to_chat(cultist, span_cult("The [lowertext(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
-	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
+	to_chat(cultist, span_cult("The [LOWER_TEXT(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
+	cultist.log_message("scribed \a [LOWER_TEXT(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, made_rune.cultist_name)
 
 	return TRUE
@@ -360,7 +360,7 @@
 	var/area/summon_location = get_area(cultist)
 	priority_announce(
 		text = "Figments from an eldritch god are being summoned by [cultist.real_name] into [summon_location.get_original_area_name()] from an unknown dimension. Disrupt the ritual at all costs!",
-		sound = 'sound/ambience/antag/bloodcult/bloodcult_scribe.ogg',
+		sound = 'sound/music/antag/bloodcult/bloodcult_scribe.ogg',
 		sender_override = "[command_name()] Higher Dimensional Affairs",
 		has_important_message = TRUE,
 	)

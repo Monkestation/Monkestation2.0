@@ -193,7 +193,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
 
 export const AntagsPage = () => {
   return (
-    <Stack vertical>
+    <Stack vertical overflowY="scroll" maxHeight="100%">
       <Stack.Item>
         <AntagSelection
           name="Roundstart"
@@ -210,6 +210,12 @@ export const AntagsPage = () => {
         <AntagSelection
           name="Ghost"
           antagonists={antagsByCategory.get(Category.Ghost)!}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <AntagSelection
+          name="Latejoin"
+          antagonists={antagsByCategory.get(Category.Latejoin)!}
         />
       </Stack.Item>
     </Stack>

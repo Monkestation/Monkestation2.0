@@ -21,10 +21,14 @@
 		"electrolyzer",
 		"emergency_oxygen_engi",
 		"emergency_oxygen",
+		"nitrogen_tank",
+		//"emergency_nitrogen_engi", //incase you wanna add a nitrogen breathing species uncomment these
+		//"emergency_nitrogen",
 		"emitter",
 		"firealarm_electronics",
 		"firelock_board",
 		"generic_tank",
+		"fuel_canister",
 		"grounding_rod",
 		"high_battery",
 		"high_cell",
@@ -33,6 +37,7 @@
 		"microwave_engineering",
 		"nano_mani",
 		"oxygen_tank",
+		"yellow_oxygen_tank",
 		"pacman",
 		"plasma_tank",
 		"plasmaman_tank_belt",
@@ -64,6 +69,8 @@
 		"tram_display",
 		"crossing_signal",
 		"guideway_sensor",
+		"big_manipulator",
+		"manipulator_task_disk",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = TECHWEB_TIER_3_POINTS)
@@ -86,6 +93,7 @@
 		"magboots",
 		"rcd_loaded",
 		"rcd_ammo",
+		"rcd_ammo_large",
 		"rpd_loaded",
 		"rtd_loaded",
 		"sheetifier",
@@ -216,6 +224,22 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
+
+/datum/techweb_node/shuttle_engineering
+	id = "shuttle_eng"
+	display_name = "Shuttle Engineering"
+	description = "Materials and equipment for constructing shuttles"
+	prereq_ids = list("adv_power", "practical_bluespace")
+	design_ids = list(
+		"borg_upgrade_engineering_shuttle_blueprints",
+		"propulsion_engine",
+		"shuttle_blueprints",
+		"shuttle_control",
+		"shuttle_docker",
+		"shuttlerods",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/integrated_hud
 	id = "integrated_HUDs"

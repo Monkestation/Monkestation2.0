@@ -44,6 +44,7 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		//special non-nullrod subtyped shit
 		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
+		rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
@@ -97,7 +98,7 @@
 	slot_flags = null
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
 	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
@@ -119,7 +120,7 @@
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 50
-	block_sound = 'sound/weapons/genhit.ogg'
+	block_sound = 'sound/items/weapons/genhit.ogg'
 	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
@@ -130,7 +131,7 @@
 		var/mutable_appearance/shield = mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/human_holder = loc
-			human_holder.apply_height_filters(shield)
+			human_holder.apply_height(shield, ENTIRE_BODY)
 		. += shield
 
 /obj/item/nullrod/staff/blue
@@ -152,9 +153,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 30
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp claymore which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
@@ -175,7 +176,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	hitsound = 'sound/hallucinations/growl1.ogg'
+	hitsound = 'sound/effects/hallucinations/growl1.ogg'
 	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/chainsaw_sword
@@ -187,7 +188,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
+	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //slower than a real saw
 	menu_description = "A sharp chainsaw sword which provides a low chance of blocking incoming melee attacks. Can be used as a slower saw tool. Can be worn on the belt."
@@ -241,8 +242,8 @@
 	inhand_icon_state = "e_sword_on_blue"
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/weapons/blade1.ogg'
-	block_sound = 'sound/weapons/block_blade.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	menu_description = "A sharp energy sword which provides a low chance of blocking incoming melee attacks. Can be worn on the belt."
 
 /obj/item/nullrod/claymore/saber/red
@@ -271,7 +272,7 @@
 	force = 4.13
 	throwforce = 1
 	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Fits in pockets. Can be worn on the belt."
@@ -284,7 +285,7 @@
 /obj/item/nullrod/scythe
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "scythe1"
 	inhand_icon_state = "scythe1"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
@@ -316,7 +317,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
 	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/spellblade
@@ -328,7 +329,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "spellblade"
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/talking
@@ -342,7 +343,7 @@
 	worn_icon_state = "talking_sword"
 	attack_verb_continuous = list("chops", "slices", "cuts")
 	attack_verb_simple= list("chop", "slice", "cut")
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/talking/Initialize(mapload)
@@ -359,7 +360,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
+	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
@@ -396,7 +397,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
+	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 2 //slower than a real saw
 	menu_description = "An undroppable sharp chainsaw hand. Can be used as a very slow saw tool. Capable of slowly butchering bodies. Disappears if the arm holding it is cut off."
@@ -456,7 +457,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	menu_description = "A hammer dealing a little less damage due to its user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
 
 /obj/item/nullrod/pride_hammer/Initialize(mapload)
@@ -483,7 +484,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes")
 	attack_verb_simple = list("whip", "lash")
-	hitsound = 'sound/weapons/chainhit.ogg'
+	hitsound = 'sound/items/weapons/chainhit.ogg'
 	menu_description = "A whip. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/fedora
@@ -542,8 +543,8 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	SETUP_MAP_ICONS("map_plushie_carp", "/obj/item/nullrod/carp")
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
@@ -553,7 +554,7 @@
 	force = 15
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
-	hitsound = 'sound/weapons/bite.ogg'
+	hitsound = 'sound/items/weapons/bite.ogg'
 	menu_description = "A plushie dealing a little less damage due to its cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/carp/Initialize(mapload)
@@ -565,7 +566,7 @@
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
 	force = 15
 	block_chance = 40
-	block_sound = 'sound/weapons/genhit.ogg'
+	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = NONE
@@ -591,7 +592,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	slot_flags = null
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
@@ -629,7 +630,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("pokes", "impales", "pierces", "jabs")
 	attack_verb_simple = list("poke", "impale", "pierce", "jab")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	menu_description = "A sharp pitchfork. Can be worn on the back."
 
@@ -679,5 +680,88 @@
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
+
+
+/obj/item/nullrod/cross
+	name = "golden crucifix"
+	desc = "Resist the devil, and he will flee from you."
+	icon = 'icons/obj/misc.dmi'
+	icon_state = "cross"
+	inhand_icon_state = "cross"
+	force = 0 // How often we forget
+	throwforce = 0 // Faith without works is...
+	attack_verb_simple = list("blessed")
+	var/held_up = FALSE
+	var/mutable_appearance/holy_glow_fx
+	var/obj/effect/dummy/lighting_obj/moblight/holy_glow_light
+	COOLDOWN_DECLARE(holy_notification)
+
+/obj/item/nullrod/cross/Destroy()
+	qdel(holy_glow_light)
+	holy_glow_fx = null
+	return ..()
+
+/obj/item/nullrod/cross/attack_self(mob/living/user)
+	. = ..()
+	if(!istype(user))
+		return // sanity
+	if(held_up)
+		unwield(user)
+		return
+	if(!do_after(user, 0.5 SECONDS, target = src))
+		return
+	user.visible_message(span_notice("[user] raises \the [src]."), span_notice("You raise \the [src]."))
+	held_up = TRUE
+	w_class = WEIGHT_CLASS_GIGANTIC // Heavy, huh?
+	slot_flags = 0
+	holy_glow_fx = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+	user.add_overlay(holy_glow_fx)
+	holy_glow_light = user.mob_light(color = LIGHT_COLOR_HOLY_MAGIC, range = 2)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(unwield))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(unwield))
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/nullrod/cross/proc/unwield(mob/user)
+	if(!held_up)
+		return
+	user.visible_message(span_notice("[user] lowers \the [src]."), span_notice("You lower \the [src]."))
+	held_up = FALSE
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	user.cut_overlay(holy_glow_fx)
+	qdel(holy_glow_light)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/item/nullrod/cross/process()
+	if(!held_up)
+		return PROCESS_KILL // something has gone terribly wrong
+	if(!isliving(loc))
+		return PROCESS_KILL // something has gone terribly wrong
+
+	var/notify = FALSE
+	if(COOLDOWN_FINISHED(src, holy_notification))
+		COOLDOWN_START(src, holy_notification, 0.8 SECONDS)
+		notify = TRUE
+
+	var/list/chapview = view(4, get_turf(loc))
+	for(var/mob/living/L in range(2, get_teleport_loc(get_turf(loc), loc, 2)))
+		if(!L.mind?.holy_role && (L in chapview)) // Priests are unaffected, trying to use it as a non-priest will harm you
+			if(notify)
+				to_chat(L, span_userdanger("The holy light burns you!"))
+				new /obj/effect/temp_visual/cult/sparks(get_turf(L))
+			// Unholy creatures take more damage
+			// Everyone else still takes damage but less real damage
+			// Average DPS is 5|15 or 10|10 if unholy (burn|stam)
+			// Should be incredibly difficult to metacheck with this due to RNG and fast processing
+			if(IS_CULTIST(L) || IS_CLOCK(L) || IS_WIZARD(L) || isvampire(L) || IS_BLOODSUCKER(L) || IS_VASSAL(L) || IS_HERETIC_OR_MONSTER(L))
+				L.adjustFireLoss(rand(3,5) * 0.5) // 1.5-2.5 AVG 2.0
+			else
+				L.adjustFireLoss(rand(1,3) * 0.5) // 0.5-1.5 AVG 1.0
+
+/obj/item/nullrod/cross/examine(mob/user)
+	. = ..()
+	. += "[span_notice("Use in-hand while facing evil to ")][span_danger("purge it.")]"

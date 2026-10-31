@@ -29,9 +29,6 @@
 /obj/item/clothing/suit/jacket/det_suit/noir/armoured
 	armor_type = /datum/armor/heister
 
-/obj/item/clothing/head/frenchberet/armoured
-	armor_type = /datum/armor/cosmetic_sec
-
 /obj/item/clothing/under/suit/black/armoured
 	armor_type = /datum/armor/clothing_under/syndicate
 
@@ -195,7 +192,7 @@
 /obj/item/antag_granter/clock_cultist
 	name = "brass contraption"
 	desc = "A cogwheel-shaped device of brass, with a glass lens floating, suspended in the center."
-	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
+	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "vanguard_cogwheel"
 	antag_datum = /datum/antagonist/clock_cultist/solo
 	user_message = "A whirring fills your ears as <span class='brass'>knowledge of His Eminence fills your mind</span>."
@@ -203,7 +200,7 @@
 /obj/item/antag_granter/blood_cultist
 	name = "bloody knife"
 	desc = "A ancient knife, caked in blood, both fresh and dried."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
 	antag_datum = /datum/antagonist/cult
 	user_message = span_cult("Ancient, bloody knoweldge floods your mind as you look into the dagger.")
@@ -233,7 +230,7 @@
 	desc = "Hmm... what is this for?"
 	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
 	special_desc = "A remote that can be used to transmit a fake announcement of your own design."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	icon_state = "inspector"

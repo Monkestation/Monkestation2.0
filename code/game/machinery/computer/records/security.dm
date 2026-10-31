@@ -2,8 +2,6 @@
 #define PRINTOUT_MISSING "Missing"
 #define PRINTOUT_RAPSHEET "Rapsheet"
 #define PRINTOUT_WANTED "Wanted"
-/// Editing this will cause UI issues.
-#define MAX_CRIME_NAME_LEN 24
 
 /obj/machinery/computer/records/security
 	name = "security records console"
@@ -176,12 +174,6 @@
 			print_record(user, target, params)
 			return TRUE
 
-		if("set_note")
-			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
-			investigate_log("[key_name(user)] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
-			target.security_note = note
-			return TRUE
-
 		if("set_wanted")
 			var/wanted_status = params["status"]
 			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
@@ -203,13 +195,13 @@
 	var/input_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/max = CONFIG_GET(number/maxfine)
 	if(params["fine"] > max)
 		to_chat(usr, span_warning("The maximum fine is [max] credits."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/input_details
@@ -307,7 +299,7 @@
 /// Finishes printing, resets the printer.
 /obj/machinery/computer/records/security/proc/print_finish(obj/item/printable)
 	printing = FALSE
-	playsound(src, 'sound/machines/terminal_eject.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 100, TRUE)
 	printable.forceMove(loc)
 
 	return TRUE
@@ -316,7 +308,7 @@
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
 		balloon_alert(user, "printer busy")
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	printing = TRUE
@@ -509,4 +501,3 @@
 #undef PRINTOUT_MISSING
 #undef PRINTOUT_RAPSHEET
 #undef PRINTOUT_WANTED
-#undef MAX_CRIME_NAME_LEN

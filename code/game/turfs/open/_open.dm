@@ -95,7 +95,7 @@
  */
 /turf/open/proc/replace_floor(turf/open/new_floor_path, flags)
 	if (!overfloor_placed && initial(new_floor_path.overfloor_placed))
-		PlaceOnTop(new_floor_path, flags = flags)
+		place_on_top(new_floor_path, flags = flags)
 		return
 	ChangeTurf(new_floor_path, flags = flags)
 
@@ -143,6 +143,10 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
+	light_outer_range = 4
+	light_power = 1.4
+	light_color = LIGHT_COLOR_CYAN
+	light_on = TRUE
 
 /turf/open/indestructible/plating
 	icon_state = "plating"
@@ -331,6 +335,8 @@
 	if(lube & SLIDE_ICE)
 		// Ice slides only go 1 tile, this is so you will slip across ice until you reach a non-slip tile
 		slide_distance = 1
+	else if(lube & SUPER_DUPER_SLIDE)
+		slide_distance = 255
 	else if(HAS_TRAIT(slipper, TRAIT_CURSED))
 		// When cursed, all slips send you flying
 		lube |= SLIDE
@@ -358,7 +364,7 @@
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 	if(force_drop)
-		for(var/obj/item/item in slipper.held_items)
+		for(var/obj/item/item as anything in slipper.get_held_items())
 			slipper.accident(item)
 
 	var/olddir = slipper.dir
@@ -410,18 +416,19 @@
 
 	if(catwalk_bait)
 		if(used_rods.use(1))
-			qdel(catwalk_bait)
 			to_chat(user, span_notice("You construct a catwalk."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			new /obj/structure/lattice/catwalk(src)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+			catwalk_bait.replace_with_catwalk()
 		else
 			to_chat(user, span_warning("You need two rods to build a catwalk!"))
 		return
 
 	if(used_rods.use(1))
 		to_chat(user, span_notice("You construct a lattice."))
-		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-		new /obj/structure/lattice(src)
+		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+		var/obj/structure/lattice/new_lattice = new (src)
+		if(istype(used_rods, /obj/item/stack/rods/shuttle) && !istype(loc, /area/shuttle))
+			new_lattice.AddElement(/datum/element/shuttle_construction_lattice)
 	else
 		to_chat(user, span_warning("You need one rod to build a lattice."))
 
@@ -436,8 +443,10 @@
 		balloon_alert(user, "need a floor tile to build!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+	var/turf/open/floor/plating/new_plating = place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	if(istype(loc, /area/shuttle))
+		new_plating.insert_baseturf(turf_type = /turf/baseturf_skipover/shuttle)
 	if(lattice)
 		qdel(lattice)
 	else
@@ -449,7 +458,7 @@
 			return TRUE
 	return FALSE
 
-/turf/open/get_heuristic_slowdown(mob/traverser, travel_dir)
+/turf/open/get_heuristic_slowdown()
 	. = ..()
 	if(slowdown)
 		. += slowdown * 10
@@ -489,7 +498,7 @@
 		balloon_alert(user, "no tile!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new used_tiles.tile_type(src)
 
 /// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
@@ -502,5 +511,5 @@
 		balloon_alert(user, "not enough titanium!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new /obj/structure/girder/tram(src)

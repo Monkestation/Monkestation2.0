@@ -1,7 +1,8 @@
 /**
  * This test checks that all expected areas are connected to a starting area
  */
-/datum/unit_test/atmospherics_sanity
+/datum/unit_test/maptest_atmospherics_sanity
+	test_flags = UNIT_TEST_MAP_TEST
 	// we iterate over all atmospherics devices on the starting networks
 	priority = TEST_LONGER
 
@@ -18,7 +19,7 @@
 	/// This is to prevent stack overflow mostly
 	var/crawls = 0
 
-/datum/unit_test/atmospherics_sanity/proc/get_areas()
+/datum/unit_test/maptest_atmospherics_sanity/proc/get_areas()
 	starting_areas = list()
 	for(var/obj/effect/landmark/atmospheric_sanity/start_area/start_marker in GLOB.landmarks_list)
 		var/area/starting_area = get_area(start_marker)
@@ -73,7 +74,7 @@
 	for(var/obj/effect/landmark/atmospheric_sanity/ignore_area/ignore_marker in GLOB.landmarks_list)
 		remaining_areas -= get_area(ignore_marker)
 
-/datum/unit_test/atmospherics_sanity/proc/mark_station_areas_as_goals()
+/datum/unit_test/maptest_atmospherics_sanity/proc/mark_station_areas_as_goals()
 	// We don't want to check these areas
 	var/static/list/area/ignored_types = list(
 		/area/station/asteroid,
@@ -95,7 +96,7 @@
 		if(!isnull(station_area))
 			remaining_areas += station_area
 
-/datum/unit_test/atmospherics_sanity/Run()
+/datum/unit_test/maptest_atmospherics_sanity/Run()
 	get_areas()
 	crawl_areas()
 	UNTIL(crawls == 0)
@@ -107,7 +108,7 @@
 			TEST_NOTICE(src, "Disconnected Area '[missed]'([missed.type]) with no turfs?")
 
 /// Iterates over starting_areas and ensures that all goal areas are connected to atleast one start
-/datum/unit_test/atmospherics_sanity/proc/crawl_areas()
+/datum/unit_test/maptest_atmospherics_sanity/proc/crawl_areas()
 	crawled_areas = list()
 	for(var/area/start_area as anything in starting_areas)
 		ASYNC
@@ -115,7 +116,7 @@
 	starting_areas = null
 
 /// Crawls through an area, iterating over all vents/scrubbers and their connected pipelines
-/datum/unit_test/atmospherics_sanity/proc/crawl_area(area/the_area)
+/datum/unit_test/maptest_atmospherics_sanity/proc/crawl_area(area/the_area)
 	if(the_area in crawled_areas)
 		return
 
@@ -136,7 +137,7 @@
 	crawls -= 1
 
 /// Crawls through a pipeline, iterating over all connected machines and their connected areas
-/datum/unit_test/atmospherics_sanity/proc/crawl_pipeline(datum/pipeline/pipeline)
+/datum/unit_test/maptest_atmospherics_sanity/proc/crawl_pipeline(datum/pipeline/pipeline)
 	for(var/obj/machinery/atmospherics/machinery in pipeline.other_atmos_machines)
 		var/area/other_area = get_area(machinery)
 		remaining_areas -= other_area

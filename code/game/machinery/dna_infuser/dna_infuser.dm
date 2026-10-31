@@ -14,6 +14,7 @@
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/dna_infuser
 
+	var/static/list/chromosome_ckey_list = null
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
 	///currently infusing a vict- subject
@@ -68,7 +69,7 @@
 	if(occupant && infusing_from)
 		// Abort infusion if the occupant is invalid.
 		if(!is_valid_occupant(occupant, user))
-			playsound(src, 'sound/machines/scanbuzz.ogg', 35, vary = TRUE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 35, vary = TRUE)
 			return
 		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()
@@ -82,15 +83,12 @@
 	var/fail_title = ""
 	var/fail_reason = ""
 	// Replace infusing_into with a [/datum/infuser_entry]
-	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
-		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
-			continue
-		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
-			if(entry.tier > max_tier_allowed)
-				fail_title = "Overcomplexity"
-				fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
-			infusing_into = entry
-			break
+	var/datum/infuser_entry/entry = infusing_from.get_infusion_entry()
+	if(entry)
+		if(entry.tier > max_tier_allowed)
+			fail_title = "Overcomplexity"
+			fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
+		infusing_into = entry
 	if(!infusing_into)
 		//no valid recipe, so you get a fly mutation
 		if(!fail_reason)
@@ -131,19 +129,21 @@
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
 	if(!ishuman(target))
 		return FALSE
+
 	var/obj/item/organ/new_organ = pick_organ(target)
 	if(!new_organ)
 		return FALSE
+
 	// Valid organ successfully picked.
 	new_organ = new new_organ()
-	// monkestation start: ensure skillchips don't get nuked
+
 	var/list/skillchips
 	if(ispath(new_organ, /obj/item/organ/internal/brain))
 		skillchips = target.clone_skillchip_list()
 		target.destroy_all_skillchips(silent = TRUE)
-	// monkestation end
+
 	new_organ.replace_into(target)
-	// monkestation start: ensure skillchips don't get nuked
+
 	if(skillchips)
 		for(var/chip in skillchips)
 			var/chip_type = chip["type"]
@@ -154,8 +154,20 @@
 				qdel(skillchip)
 				continue
 			skillchip.set_metadata(chip)
-	// monkestation end
+
 	check_tier_progression(target)
+
+	if(isnull(chromosome_ckey_list))
+		chromosome_ckey_list = list()
+
+	if(!chromosome_ckey_list[target.ckey])
+		chromosome_ckey_list[target.ckey] = TRUE
+		for(var/i in 1 to 2)
+			var/chromosome_path = generate_chromosome()
+			new chromosome_path(get_turf(src))
+
+		say("New DNA detected, extraction of 2 chromosomes successfull.")
+
 	return TRUE
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
@@ -167,9 +179,9 @@
 /obj/machinery/dna_infuser/proc/pick_organ(mob/living/carbon/human/target)
 	if(!infusing_into)
 		return FALSE
-	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
+	var/list/obj/item/organ/potential_new_organs = infusing_into.get_output_organs(target, infusing_from)
 	// Remove organ typepaths from the list if they're incompatible with target.
-	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
+	for(var/obj/item/organ/new_organ as anything in potential_new_organs.Copy())
 		var/obj/item/organ/old_organ = target.get_organ_slot(initial(new_organ.slot))
 		if(old_organ)
 			if((old_organ.type != new_organ) && (!IS_ROBOTIC_ORGAN(old_organ) || IS_ORGAN_UNREMOVABLE(old_organ)))
@@ -298,6 +310,8 @@
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
 			return FALSE
+	else if(istype(target, /obj/item/fish)) // fish aren't edible here like on tg, so let them in directly for the fish infusion
+		return TRUE
 	else if(food_comp)
 		if(!(food_comp.foodtypes & GORE))
 			balloon_alert(user, "only creatures!")

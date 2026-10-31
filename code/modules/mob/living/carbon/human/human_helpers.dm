@@ -36,14 +36,21 @@
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name(add_id_name = TRUE)
-	var/face_name = get_face_name("")
-	var/id_name = get_id_name("")
+	var/list/identity = list(null, null, null)
+	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
+	var/signal_face = LAZYACCESS(identity, VISIBLE_NAME_FACE)
+	var/signal_id = LAZYACCESS(identity, VISIBLE_NAME_ID)
+	if(LAZYACCESS(identity, VISIBLE_NAME_FORCED))
+		return signal_face
+
+	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
+	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return "Unknown"
 	if(name_override)
 		return name_override
 	if(face_name)
-		if(id_name && (id_name != face_name))
+		if(id_name && (id_name != face_name) && add_id_name)
 			return "[face_name] (as [id_name])"
 		return face_name
 	if(id_name)
@@ -74,11 +81,18 @@
 	var/obj/item/storage/wallet/wallet = wear_id
 	var/obj/item/modular_computer/pda = wear_id
 	var/obj/item/card/id/id = wear_id
+	var/obj/item/card/cardboard/cardboard_id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
+		var/list/identity = list(null, null, null)
+		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
+		if(identity[VISIBLE_NAME_FORCED])
+			return identity[VISIBLE_NAME_FACE]
 	if(istype(wallet))
 		id = wallet.front_id
-	if(istype(id))
+	if(istype(cardboard_id))
+		. = cardboard_id.scribbled_name
+	else if(istype(id))
 		. = id.registered_name
 	else if(istype(pda) && pda.computer_id_slot)
 		. = pda.computer_id_slot.registered_name
@@ -150,7 +164,7 @@
 		return
 
 	var/path = "data/player_saves/[ckey[1]]/[ckey]/scars.sav"
-	var/loaded_char_slot = client.prefs.default_slot
+	var/loaded_char_slot = client.prefs.active_slot
 
 	if(!loaded_char_slot || !fexists(path))
 		return FALSE
@@ -272,3 +286,17 @@
 	socks = backup["socks"]
 	socks_color = backup["socks_color"]
 	jumpsuit_style = backup["jumpsuit_style"]
+
+/// Sets both mob's and eye organ's eye color values
+/// If color_right is not passed, its assumed to be the same as color_left
+/mob/living/carbon/human/proc/set_eye_color(color_left, color_right)
+	if (!color_right)
+		color_right = color_left
+	eye_color_left = color_left
+	eye_color_right = color_right
+	// Doesn't assign eye color if they already have one from their type
+	var/obj/item/organ/internal/eyes/eyes = get_organ_by_type(/obj/item/organ/internal/eyes)
+	if (istype(eyes) && !initial(eyes.eye_color_left) && !initial(eyes.eye_color_right))
+		eyes.eye_color_left = color_left
+		eyes.eye_color_right = color_right
+		eyes.refresh(src, FALSE)

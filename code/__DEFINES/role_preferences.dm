@@ -17,8 +17,8 @@
 #define ROLE_COMMANDO_OPERATIVE "Commando Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
-#define ROLE_BLOODLING "Bloodling" // monkestation edit
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
+#define ROLE_BLOODLING "Bloodling"
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
 #define ROLE_DARKSPAWN "Darkspawn"
@@ -64,6 +64,7 @@
 #define ROLE_BINGLE "Bingle"
 #define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
 #define ROLE_WILLING_HOST "Willing Host"
+#define ROLE_ABANDONED_IPC "Abandoned IPC"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -86,6 +87,7 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
+#define ROLE_HOLY_SUMMONED "Holy Summoned"
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
@@ -93,7 +95,7 @@
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
-#define ROLE_BLOODLING_THRALL "Bloodling Thrall" // monkestation edit
+#define ROLE_BLOODLING_THRALL "Bloodling Thrall"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -111,7 +113,7 @@
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_ASHWALKER "Ash Walker"
-#define ROLE_BAR_DRONE "Bardrone" // monkestation addition
+#define ROLE_BAR_DRONE "Bardrone"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_FREE_MINER "Free Miner"
@@ -204,6 +206,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TERATOMA = 0,
 	ROLE_JUNIOR_LONE_OPERATIVE = 0,
 	ROLE_BINGLE = 0,
+	ROLE_ABANDONED_IPC = 0,
 //darkspawns role classes
 	ROLE_DARKSPAWN_WARLOCK = 0,
 	ROLE_DARKSPAWN_SCOUT = 0,

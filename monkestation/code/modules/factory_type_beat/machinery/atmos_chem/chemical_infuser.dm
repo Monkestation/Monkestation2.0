@@ -5,7 +5,7 @@
 	layer = BELOW_OBJ_LAYER
 
 	icon_state = "reaction_chamber"
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 
 	initialize_directions = EAST
 
@@ -49,7 +49,7 @@
 		for(var/datum/gas/gas as anything in chosen_recipe.required_gases)
 			var/datum/gas_mixture/mixture = airs[1]
 			mixture.assert_gas(gas)
-			var/gas_amount = mixture.gases[gas][MOLES]
+			var/gas_amount = mixture.moles[gas]
 			. += "[gas.name]: [gas_amount] / [chosen_recipe.required_gases[gas]]"
 
 /obj/machinery/atmospherics/components/unary/chemical_infuser/process_atmos()
@@ -60,7 +60,7 @@
 	for(var/datum/gas/gas as anything in chosen_recipe.required_gases)
 		var/datum/gas_mixture/mixture = airs[1]
 		mixture.assert_gas(gas)
-		var/gas_amount = mixture.gases[gas][MOLES]
+		var/gas_amount = mixture.moles[gas]
 		if(gas_amount < chosen_recipe.required_gases[gas])
 			passes_all_gases = FALSE
 			break
@@ -77,7 +77,7 @@
 		return
 
 	if(!processing)
-		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg', 25, TRUE)
 		var/list/seen = viewers(4, get_turf(src))
 		var/iconhtml = icon2html(src, seen)
 		audible_message(span_notice("[iconhtml] The solution bubbles fiercely!"))

@@ -34,7 +34,7 @@
 		if(iscarbon(affected_mob))
 			for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 				affected_mob.dropItemToGround(W)
-			for(var/obj/item/I in affected_mob.held_items)
+			for(var/obj/item/I as anything in affected_mob.get_held_items())
 				affected_mob.dropItemToGround(I)
 		var/mob/living/new_mob = new form(affected_mob.loc)
 		if(istype(new_mob))
@@ -74,6 +74,13 @@
 	new_form = /mob/living/silicon/robot
 	bantype = JOB_CYBORG
 	desc = "Restructures the subject cells into a Cyborg. Cure: Synthetic Cleaner"
+
+/datum/symptom/transformation/jungle_fever
+	name = "Jungle Fever"
+	desc = "Restructures the subject cells into a Monkey. Cure: Pulped Banana"
+
+/datum/symptom/transformation/jungle_fever/activate(mob/living/carbon/mob)
+	mob.monkeyize() // so that they keep the virus
 
 /datum/symptom/transformation/xeno
 	name = "Xenomorph Transformation"

@@ -8,13 +8,13 @@
 	key = SFX_MEOW
 	file_paths = list(
 		list(
-			'monkestation/sound/voice/feline/meow1.ogg',
-			'monkestation/sound/voice/feline/meow2.ogg',
-			'monkestation/sound/voice/feline/meow3.ogg',
-			'monkestation/sound/voice/feline/meow4.ogg',
+			'sound/mobs/humanoids/felinid/meow1.ogg',
+			'sound/mobs/humanoids/felinid/meow2.ogg',
+			'sound/mobs/humanoids/felinid/meow3.ogg',
+			'sound/mobs/humanoids/felinid/meow4.ogg',
 		) = 100,
 		list(
-			'monkestation/sound/voice/feline/mggaow.ogg' = 10,
-			'monkestation/sound/voice/feline/funnymeow.ogg' = 1,
+			'sound/mobs/humanoids/felinid/mggaow.ogg' = 10,
+			'sound/mobs/humanoids/felinid/funnymeow.ogg' = 1,
 		) = 1,
 	)

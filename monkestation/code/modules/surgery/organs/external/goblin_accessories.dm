@@ -2,7 +2,7 @@
 	name = "big ears"
 	desc = "They don't actually let you hear better."
 	icon_state = "goblin_ears"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_goblin_ears"
 	zone = BODY_ZONE_HEAD
@@ -21,14 +21,17 @@
 /datum/bodypart_overlay/mutant/goblin_ears/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/goblin_ears/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/goblin_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/goblin_nose
 	name = "goblin nose"
 	desc = "It doesn't actually let you smell better."
 	icon_state = "goblin_nose"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_goblin_nose"
 	zone = BODY_ZONE_HEAD
@@ -47,5 +50,8 @@
 /datum/bodypart_overlay/mutant/goblin_nose/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/goblin_nose/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/goblin_nose/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE

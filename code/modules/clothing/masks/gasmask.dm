@@ -57,11 +57,11 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	cig?.equipped(equipee, slot)
 	return ..()
 
-/obj/item/clothing/mask/gas/adjustmask(mob/living/carbon/user)
-	if(isnull(cig))
-		return ..()
-	balloon_alert(user, "there's a cig in the way!")
-
+/obj/item/clothing/mask/gas/adjust_visor(mob/living/user)
+	if(!isnull(cig))
+		balloon_alert(user, "cig in the way!")
+		return FALSE
+	return ..()
 
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
@@ -219,6 +219,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
 
 /datum/armor/gas_welding
@@ -228,9 +229,16 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	acid = 55
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
 
-/obj/item/clothing/mask/gas/welding/up
+/obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
+	. = ..()
+	if(.)
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
+
+/obj/item/clothing/mask/gas/welding/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/welding/up/Initialize(mapload)
 	. = ..()
@@ -274,6 +282,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
+	starting_filter_type = /obj/item/gas_filter/clown
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
@@ -306,6 +315,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		update_item_action_buttons()
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
+
+/obj/item/clothing/mask/gas/clown_hat/yellow
+	name = "yellow clown wig and mask"
+	desc = "A true prankster's facial attire. But yellow! A clown is incomplete without his wig and mask."
+	icon_state = "clown_yellow"
+	actions_types = null
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"

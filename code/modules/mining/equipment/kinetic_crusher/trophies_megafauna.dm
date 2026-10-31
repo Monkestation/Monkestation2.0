@@ -28,7 +28,7 @@
 	for(var/mob/living/living_target in oview(2, user))
 		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
-		playsound(living_target, 'sound/magic/fireball.ogg', 20, TRUE)
+		playsound(living_target, 'sound/effects/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(living_target.loc)
 		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
 		living_target.adjustFireLoss(bonus_value, forced = TRUE)
@@ -153,7 +153,7 @@
 /obj/item/crusher_trophy/broodmother_tongue
 	name = "broodmother tongue"
 	desc = "The tongue of a broodmother. If attached a certain way, makes for a suitable crusher trophy.  It also feels very spongey, I wonder what would happen if you squeezed it?..."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "broodmother_tongue"
 	denied_type = /obj/item/crusher_trophy/broodmother_tongue
 	bonus_value = 10
@@ -186,7 +186,7 @@
 /obj/item/crusher_trophy/legionnaire_spine
 	name = "legionnaire spine"
 	desc = "The spine of a legionnaire. With some creativity, you could use it as a crusher trophy. Alternatively, shaking it might do something as well."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "legionnaire_spine"
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
 	bonus_value = 20
@@ -216,3 +216,24 @@
 	var/mob/living/basic/mining/legion_brood/minion = new (LivingUser.loc)
 	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
+
+/obj/item/crusher_trophy/hardmode
+	name = "HRD-MDE crusher injector"
+	desc = "An experimental attachment to a kinetic crusher that can make megafauna crystallize a core, making them harder."
+	icon_state = "crevice_shard"
+	denied_type = /obj/item/crusher_trophy/hardmode
+
+/obj/item/crusher_trophy/hardmode/examine_more(mob/user)
+	. = ..()
+	. += span_notice("An experimental injector developed by the Nanotrasen Science Division used to force a megafauna to crystallize a core.")
+	. += span_notice("Due to the crystallization process the megafauna becomes much stronger, however the core can be extracted post-death.")
+	. += span_notice("A use for crystallized cores has not yet been found, but many experienced miners show them off just like trophies.")
+
+/obj/item/crusher_trophy/hardmode/effect_desc()
+	return "the next mark detonation on a compatible megafauna to crystallize its core, destroying itself"
+
+/obj/item/crusher_trophy/hardmode/on_mark_detonation(mob/living/simple_animal/hostile/megafauna/target, mob/living/user)
+	if(istype(target) && target.hardmode_reward != null && !target.hardmode && !is_station_level(target.z))
+		target.activate_hardmode()
+		log_combat(user, target, "turned on hardmode for", src)
+		qdel(src)

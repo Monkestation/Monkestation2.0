@@ -52,6 +52,8 @@
 			span_warning("[user] discards [user.p_their()] restraints like it's nothing!"),
 			span_warning("We break through our restraints!"),
 		)
+		if(user.buckled)
+			user.buckled.unbuckle_mob(user)
 		user.clear_cuffs(cuffs, TRUE)
 		used = TRUE
 
@@ -133,7 +135,7 @@
 			target.Knockdown(min(5, rand(10, 10 * powerlevel)))
 		// Attack!
 		owner.balloon_alert(owner, "you punch [target]!")
-		playsound(get_turf(target), 'sound/weapons/punch4.ogg', 60, 1, -1)
+		playsound(get_turf(target), 'sound/items/weapons/punch4.ogg', 60, 1, -1)
 		user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(target.zone_selected))
 		target.apply_damage(hitStrength, BRUTE, affecting)

@@ -7,9 +7,8 @@
 PROCESSING_SUBSYSTEM_DEF(greyscale)
 	name = "Greyscale"
 	flags = SS_BACKGROUND | SS_HIBERNATE
-	init_order = INIT_ORDER_GREYSCALE
 	wait = 3 SECONDS
-
+	init_stage = INITSTAGE_EARLY
 	var/list/datum/greyscale_config/configurations = list()
 	var/list/datum/greyscale_layer/layer_types = list()
 #ifdef USE_RUSTG_ICONFORGE_GAGS
@@ -18,8 +17,8 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 /datum/controller/subsystem/processing/greyscale/Initialize()
-	for(var/datum/greyscale_layer/fake_type as anything in subtypesof(/datum/greyscale_layer))
-		layer_types[initial(fake_type.layer_type)] = fake_type
+	for(var/datum/greyscale_layer/greyscale_layer as anything in subtypesof(/datum/greyscale_layer))
+		layer_types[initial(greyscale_layer.layer_type)] = greyscale_layer
 
 	for(var/greyscale_type in subtypesof(/datum/greyscale_config))
 		var/datum/greyscale_config/config = new greyscale_type()

@@ -50,7 +50,7 @@
 /obj/item/processing/dirty_dust
 	name = "dirty dust"
 	desc = "After crushing some clumps we are left with this. Still contaminated with residue and needs enriching."
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
+	icon = 'icons/obj/items/drugs.dmi'
 	icon_state = "crack"
 
 /obj/item/processing/clumps

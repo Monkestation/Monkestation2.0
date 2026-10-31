@@ -59,7 +59,7 @@ const BASEICONS = {
   'Security Officer (Medical)': 'shield-halved',
   'Security Officer (Science)': 'shield-halved',
   'Security Officer': 'shield-halved',
-  'Signal Technician': 'signal', // MONKESTATION ADDITION -- NTSL
+  'Network Admin': 'signal',
   'Shaft Miner': 'digging',
   Skeleton: 'skull-crossbones',
   'Station Engineer': 'gears',
@@ -298,9 +298,9 @@ const ALTTITLES = {
   'Hall Monitor': BASEICONS['Security Assistant'],
   'Assistant Officer': BASEICONS['Security Assistant'],
   'Professional Snitch': BASEICONS['Security Assistant'],
-  // Signal Technician - signal
-  'Network Admin': BASEICONS['Signal Technician'], // MONKESTATION ADDITION -- NTSL
-  'Telecomunications Engineer': BASEICONS['Signal Technician'], // MONKESTATION ADDITION -- NTSL
+  // Network Admin - signal
+  'Signal Technician': BASEICONS['Network Admin'],
+  'Telecomunications Engineer': BASEICONS['Network Admin'],
   // Shaft Miner - digging
   'Union Miner': BASEICONS['Shaft Miner'],
   Excavator: BASEICONS['Shaft Miner'],
@@ -330,6 +330,7 @@ const ALTTITLES = {
   Cytologist: BASEICONS.Xenobiologist,
   Cryptozoologist: BASEICONS.Xenobiologist,
   'Slime Mage': BASEICONS.Xenobiologist,
+  'Slime Rancher': BASEICONS.Xenobiologist,
 } as const;
 
 // Combine the Base icons and ALt titles

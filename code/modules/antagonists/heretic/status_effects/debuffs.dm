@@ -232,6 +232,7 @@
 	. = ..()
 	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
 	moon_insanity_overlay.appearance_flags |= RESET_COLOR
+	moon_insanity_overlay.pixel_y = 12
 
 /datum/status_effect/moon_converted/Destroy()
 	moon_insanity_overlay = null

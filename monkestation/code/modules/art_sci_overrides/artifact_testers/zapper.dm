@@ -37,7 +37,7 @@
 		ui = new(user, src, "ArtifactZapper", name)
 		ui.open()
 
-/obj/machinery/artifact_zapper/ui_act(action, params)
+/obj/machinery/artifact_zapper/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -65,7 +65,7 @@
 		return
 
 	Beam(component.parent, icon_state="lightning[rand(1,12)]", time = pulse_cooldown_time)
-	playsound(get_turf(src), 'sound/magic/lightningshock.ogg', 60, TRUE, extrarange = 2)
+	playsound(get_turf(src), 'sound/effects/magic/lightningshock.ogg', 60, TRUE, extrarange = 2)
 	use_energy(chosen_level)
 	if(!into_wand_mode)
 		component.process_stimuli(STIMULUS_SHOCK, chosen_level)

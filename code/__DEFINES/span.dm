@@ -137,12 +137,15 @@
 #define span_unconscious(str) ("<span class='unconscious'>" + str + "</span>")
 #define span_uncommonradio(str) ("<span class='uncommonradio'>" + str + "</span>")
 #define span_userdanger(str) ("<span class='userdanger'>" + str + "</span>")
+#define span_usernotice(str) ("<span class='usernotice'>" + str + "</span>")
 #define span_velvet(str) ("<span class='velvet'>" + str + "</span>")
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
 #define span_center(str) ("<span class='center'>[str]</span>")
-
+#define span_ratvar(str) ("<span class='ratvar'>" + str + "</span>")
+#define span_italics(str) ("<span class='italics'>" + str + "</span>")
+#define span_kbity(str) ("<span class='kbity'>" + str + "</span>")
 #define span_stargazer(str) ("<span class='stargazer'>[str]</span>")
 #define span_stargazer_big(str) ("<span class='stargazer_big'>[str]</span>")
 

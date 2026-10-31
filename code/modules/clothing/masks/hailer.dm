@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
-	alternative_deathgasps = list('sound/voice/sec_death.ogg')
+	alternative_deathgasps = list('sound/items/sec_hailer/sec_death.ogg')
 	COOLDOWN_DECLARE(hailer_cooldown)
 	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
@@ -101,9 +101,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 
 /obj/item/clothing/mask/gas/sechailer/swat/alt
-	name = "\improper SWAT gas mask"
 	icon_state = "swat1"
-	max_filters = 3
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/gas/sechailer/swat/alt/pig
@@ -120,7 +118,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
 	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "taperecorder_idle"
 	slot_flags = null
 	aggressiveness = AGGR_GOOD_COP // Borgs are nicecurity!
@@ -146,7 +144,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(istype(action, /datum/action/item_action/halt))
 		halt()
 	else
-		adjustmask(user)
+		adjust_visor(user)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
@@ -157,10 +155,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
 		return ..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/halt()
-	set category = "Object"
-	set name = "HALT"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/mask/gas/sechailer, halt, usr, "HALT", "Object")
+
 	if(!isliving(usr) || !can_use(usr) || !COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
 	if(broken_hailer)
@@ -258,7 +254,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	//user.audible_message("<font color='red' size='5'><b>HALT!</b></font>") monkestation removal
 	user.audible_message("[user] signals on their whistle!") //monkestation edit
-	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4, ignore_walls = FALSE)
+	playsound(src, 'sound/items/whistle/whistle.ogg', 50, FALSE, 4, ignore_walls = FALSE)
 
 /datum/action/item_action/halt
 	name = "HALT!"
@@ -280,7 +276,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(pointing_mob == pointed_at)
 		return
 	pointing_mob.audible_message("[pointing_mob] signals on their whistle!") //monkestation edit
-	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
+	playsound(src, 'sound/items/whistle/whistle.ogg', 50, FALSE, 4)
 	pointed_at.do_alert_animation()
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 

@@ -39,7 +39,7 @@
 		JOB_CHAPLAIN,
 		JOB_CURATOR,
 	)
-	required_enemies = 6
+	required_enemies = 5
 	min_players = 20
 	weight = 5
 	maximum_antags = 2
@@ -55,6 +55,15 @@
 	antag_flag = ROLE_VAMPIRICACCIDENT
 	name = "Vampiric Accident"
 	prompted_picking = TRUE
+	max_occurrences = 1
+
+/datum/round_event_control/antagonist/bloodsucker/latejoin
+	typepath = /datum/round_event/antagonist/bloodsucker
+	antag_flag = ROLE_BLOODSUCKERBREAKOUT
+	name = "Bloodsucker Breakout"
+	track = EVENT_TRACK_LATEJOIN
+	earliest_start = BASE_LATEJOIN_SPAWN_TIME
+	maximum_antags = 1
 	max_occurrences = 1
 
 /datum/round_event/antagonist/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)

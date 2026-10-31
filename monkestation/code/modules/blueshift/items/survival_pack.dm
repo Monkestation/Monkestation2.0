@@ -11,7 +11,7 @@
 	new /obj/item/stack/spacecash/c1000(src)
 	new /obj/item/storage/pill_bottle/iron(src)
 	new /obj/item/storage/box/nri_pens(src)
-	new /obj/item/storage/box/nri_flares(src)
+	new /obj/item/storage/box/flares(src)
 	new /obj/item/crowbar/red(src)
 
 /obj/item/storage/box/nri_pens
@@ -30,11 +30,11 @@
 	new /obj/item/reagent_containers/medipen/atropine(src)
 	new /obj/item/reagent_containers/medipen/blood_loss(src)
 
-/obj/item/storage/box/nri_flares
+/obj/item/storage/box/flares
 	name = "box of flares"
 	desc = "A box full of red emergency flares."
 	illustration = "firecracker"
 
-/obj/item/storage/box/nri_flares/PopulateContents()
+/obj/item/storage/box/flares/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/flashlight/flare(src)

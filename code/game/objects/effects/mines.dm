@@ -197,7 +197,7 @@
 
 /obj/effect/mine/sound/spooky
 	name = "the rattler"
-	sound = 'monkestation/sound/misc/spinal_laugh.ogg'
+	sound = 'sound/misc/spinal_laugh.ogg'
 
 /obj/effect/mine/sound/mineEffect(mob/victim)
 	playsound(loc, sound, 100, TRUE)
@@ -246,7 +246,7 @@
 /obj/item/minespawner
 	name = "landmine deployment device"
 	desc = "When activated, will deploy an Asset Protection landmine after 3 seconds passes, perfect for high ranking NT officers looking to cover their assets from afar."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
 
 	var/mine_type = /obj/effect/mine/shrapnel/capspawn
@@ -258,7 +258,7 @@
 		return
 
 
-	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
+	playsound(src, 'sound/items/weapons/armbomb.ogg', 70, TRUE)
 	to_chat(user, span_warning("You arm \the [src], causing it to shake! It will deploy in 3 seconds."))
 	active = TRUE
 	addtimer(CALLBACK(src, PROC_REF(deploy_mine)), 3 SECONDS)

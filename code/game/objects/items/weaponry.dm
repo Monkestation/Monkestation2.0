@@ -66,7 +66,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
-	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
 	if (!isliving(target))
 		return
 	switch(target.mob_mood.sanity)
@@ -77,6 +77,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
 		if (SANITY_NEUTRAL to SANITY_GREAT)
 			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+
+	if(user.istate & ISTATE_HARM)
+		return ..(target, user)
 
 /obj/item/sord
 	name = "\improper SORD"
@@ -90,7 +93,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 1
 	w_class = WEIGHT_CLASS_NORMAL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
@@ -107,7 +110,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
@@ -116,7 +119,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
@@ -295,18 +298,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.update_held_items()
 
 	name = new_name
-	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	playsound(user, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "claymore_cyborg"
-	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize(mapload)
-	var/obj/item/robot_model/kiltkit = loc
-	robot = kiltkit.loc
 	. = ..()
-	if(!istype(robot))
+	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
@@ -326,11 +326,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_katana
@@ -479,7 +479,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 3
 	throw_range = 6
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6)
-	hitsound = 'sound/weapons/genhit.ogg'
+	hitsound = 'sound/items/weapons/genhit.ogg'
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
@@ -504,7 +504,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		throwforce_on = 23, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = SHARP_EDGED, \
-		hitsound_on = 'sound/weapons/bladeslice.ogg', \
+		hitsound_on = 'sound/items/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
@@ -527,7 +527,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "red_phone"
 	force = 3
 	throwforce = 2
@@ -536,7 +536,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("calls", "rings")
 	attack_verb_simple = list("call", "ring")
-	hitsound = 'sound/weapons/ring.ogg'
+	hitsound = 'sound/items/weapons/ring.ogg'
 
 /obj/item/phone/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
@@ -616,7 +616,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
@@ -780,6 +780,40 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "hoverboard_nt"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 
+/obj/item/melee/skateboard/holyboard
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	icon_state = "hoverboard_holy_held"
+	inhand_icon_state = "hoverboard_holy"
+	force = 18
+	throwforce = 6
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("bashes", "crashes", "grinds", "skates")
+	attack_verb_simple = list("bash", "crash", "grind", "skate")
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+
+/obj/item/melee/skateboard/holyboard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGICKS!!", \
+		tip_text = "Clear rune", \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+
+/obj/item/melee/skateboard/holyboard/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
+
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."
@@ -824,7 +858,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_warning("You're already ready to do a home run!"))
 		return ..()
 	to_chat(user, span_warning("You begin gathering strength..."))
-	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/lightning_chargeup.ogg', 65, TRUE)
 	if(do_after(user, 9 SECONDS, target = src))
 		to_chat(user, span_userdanger("You gather power! Time for a home run!"))
 		homerun_ready = TRUE
@@ -842,7 +876,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(!QDELETED(target))
 			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
-		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+		playsound(get_turf(src), 'sound/items/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = FALSE
 		return
 	else if(!QDELETED(target) && !target.anchored)
@@ -860,7 +894,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(!QDELETED(target))
 			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
-		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+		playsound(get_turf(src), 'sound/items/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = FALSE
 		return
 	else if(!QDELETED(target) && !target.anchored)
@@ -913,7 +947,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return TRUE
 
 /obj/item/melee/baseball_bat/proc/launch_back(atom/movable/target, mob/living/user, turf/target_turf, datum_throw_speed)
-	playsound(target, 'sound/magic/tail_swing.ogg', 50, TRUE)
+	playsound(target, 'sound/effects/magic/tail_swing.ogg', 50, TRUE)
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
 	target.mouse_opacity = initial(target.mouse_opacity)
 	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
@@ -944,7 +978,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 12
 	throwforce = 15
 	mob_thrower = TRUE
-	block_sound = 'sound/weapons/effects/batreflect.ogg'
+	block_sound = 'sound/items/weapons/effects/batreflect.ogg'
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
 	return TRUE
@@ -952,7 +986,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "flyswatter"
 	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -1058,11 +1092,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 20
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	force = 14
 	throwforce = 12
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
@@ -1085,7 +1119,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_speed = CLICK_CD_HYPER_RAPID
 	embed_type = /datum/embedding/hfr_blade
 	block_chance = 25
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -1117,7 +1151,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+			playsound(src, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), 75, TRUE)
 			return TRUE
 		return FALSE
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
@@ -1158,8 +1192,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	previous_target = WEAKREF(target)
 	previous_x = x_slashed
 	previous_y = y_slashed
-	playsound(src, 'sound/weapons/bladeslice.ogg', 100, vary = TRUE)
-	playsound(src, 'sound/weapons/zapbang.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/weapons/bladeslice.ogg', 100, vary = TRUE)
+	playsound(src, 'sound/items/weapons/zapbang.ogg', 50, vary = TRUE)
 	if(isliving(target))
 		var/mob/living/living_target = target
 		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, def_zone = user.zone_selected)
@@ -1219,3 +1253,65 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/obj/item/melee/sledgehammer
+	name = "sledgehammer"
+	desc = "An hefty tool used for smashing apart windows, machinery, and other structures. Printers beware."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "sledgehammer"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	force = 5 /// The weapon requires two hands
+	throwforce = 12
+	throw_range = 3 /// Doesn't throw very far
+	demolition_mod = 3 // BREAK THINGS
+	armour_penetration = 10
+	armour_ignorance = 0
+	hitsound = 'sound/items/weapons/smash.ogg' /// Hitsound when thrown at someone
+	attack_verb_continuous = list("slams", "crushes", "smashes", "flattens", "pounds")
+	attack_verb_simple = list("slam", "crush", "smash", "flatten", "pound")
+	custom_materials = list(/datum/material/iron=6000)
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = ITEM_SLOT_BACK
+	wound_bonus = -15
+	bare_wound_bonus = 15
+
+/obj/item/melee/sledgehammer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_wielded = 12, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), require_twohands = FALSE)
+
+/obj/item/melee/sledgehammer/proc/on_wield(atom/source, mob/living/user)
+	hitsound = "swing_hit"
+
+/obj/item/melee/sledgehammer/proc/on_unwield(atom/source, mob/living/user)
+	hitsound = initial(hitsound)
+
+/obj/item/melee/sledgehammer/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		/// This will already do low damage, so it doesn't need to be intercepted earlier
+		to_chat(user, span_danger("\The [src] is too heavy to attack effectively without being wielded!"))
+		return
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humantarget = target
+		if(!HAS_TRAIT(target, TRAIT_SPLEENLESS_METABOLISM) && humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN) && !isnull(humantarget.dna.species.mutantspleen))
+			var/obj/item/organ/internal/spleen/target_spleen = humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN)
+			target_spleen.apply_organ_damage(5)
+
+	if(target.uses_integrity)
+		if(!QDELETED(target))
+			if(istype(get_area(target), /area/space/shipbreak))
+				if(isstructure(target))
+					target.take_damage(src.force * demolition_mod, BRUTE, MELEE, FALSE, null, 80) // Breaks "structures pretty good"
+				if(ismachinery(target))
+					target.take_damage(src.force * demolition_mod, BRUTE, MELEE, FALSE, null, 80) // A luddites friend, Sledghammer good at break machine
+			playsound(src, 'sound/effects/bang.ogg', 40, 1)
+
+/obj/item/melee/sledgehammer/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle = FALSE, quickstart)
+	. = ..()
+	if(iscarbon(thrower))
+		var/mob/living/carbon/C = thrower
+		C.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/sledgehammer_thrown_stagger, update=TRUE)
+		addtimer(CALLBACK(C, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/status_effect/sledgehammer_thrown_stagger), 4 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		to_chat(target, span_danger("You are staggered from throwing such a heavy object!"))

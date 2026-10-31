@@ -215,6 +215,19 @@
 	},
 /turf/open/floor/carpet/neon/simple/red/nodots,
 /area/centcom/tdome/arena/actual)
+"rx" = (
+/obj/effect/portal/permanent{
+	color = "#800080";
+	id = "arenapurple"
+	},
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/floor/carpet/neon/simple/purple/nodots,
+/area/centcom/tdome/arena/actual)
 "rF" = (
 /obj/effect/turf_decal/siding/thinplating/light/corner{
 	dir = 4
@@ -222,16 +235,6 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
-/turf/open/floor/fakespace{
-	density = 1
-	},
-/area/centcom/tdome/arena/actual)
-"rN" = (
-/obj/effect/turf_decal/siding/thinplating/dark,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/obj/structure/railing,
 /turf/open/floor/fakespace{
 	density = 1
 	},
@@ -643,8 +646,8 @@ HK
 UK
 nB
 NQ
-rN
-nB
+Fp
+rx
 KY
 Kv
 Wl

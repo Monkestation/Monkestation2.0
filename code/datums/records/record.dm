@@ -1,4 +1,3 @@
-/* monkestation: replaced by [monkestation\code\datums\records\record.dm]
 /**
  * Record datum. Used for crew records and admin locked records.
  */
@@ -25,6 +24,8 @@
 	var/species
 	/// The character's ID trim
 	var/trim
+	/// Reference to the [/datum/mind] that this record was originally created for.
+	var/datum/weakref/mind_ref
 
 /datum/record/New(
 	age = 18,
@@ -38,6 +39,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	datum/mind/mind_ref
 )
 	src.age = age
 	src.blood_type = blood_type
@@ -50,6 +52,10 @@
 	src.rank = rank
 	src.species = species
 	src.trim = trim
+	if(istype(mind_ref, /datum/mind))
+		src.mind_ref = WEAKREF(mind_ref)
+	else if(istype(mind_ref, /datum/weakref))
+		src.mind_ref = mind_ref
 
 /**
  * Crew record datum
@@ -81,7 +87,6 @@
 	var/security_note
 	/// Current arrest status
 	var/wanted_status = WANTED_NONE
-
 	///Photo used for records, which we store here so we don't have to constantly make more of.
 	var/list/obj/item/photo/record_photos
 
@@ -97,6 +102,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	datum/mind/mind_ref,
 	/// Crew specific
 	lock_ref,
 	major_disabilities = "None",
@@ -121,7 +127,7 @@
 
 /datum/record/crew/Destroy()
 	GLOB.manifest.general -= src
-	QDEL_LAZYLIST(record_photos)
+	QDEL_LAZYASSOCLIST(record_photos)
 	return ..()
 
 /**
@@ -130,8 +136,6 @@
 /datum/record/locked
 	/// Mob's dna
 	var/datum/dna/locked_dna
-	/// Mind datum
-	var/datum/weakref/mind_ref
 	/// Typepath of species used by player, for usage in respawning via records
 	var/species_type
 
@@ -147,13 +151,12 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	datum/mind/mind_ref,
 	/// Locked specific
 	datum/dna/locked_dna,
-	datum/mind/mind_ref,
 )
 	. = ..()
 	src.locked_dna = locked_dna
-	src.mind_ref = WEAKREF(mind_ref)
 	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src
@@ -186,6 +189,7 @@
 		qdel(existing_photo)
 		LAZYREMOVE(record_photos, field_name)
 
+
 /**
  * You shouldn't be calling this directly, use `get_front_photo()` or `get_side_photo()`
  * instead.
@@ -207,6 +211,7 @@
 /datum/record/crew/proc/get_photo(field_name, orientation = SOUTH)
 	if(!field_name)
 		return
+
 	if(!character_appearance)
 		return new /icon()
 	var/obj/item/photo/existing_photo = LAZYACCESS(record_photos, field_name)
@@ -227,6 +232,7 @@
 		appearance.setDir(orientation)
 		if(add_height_chart)
 			appearance.underlays += mutable_appearance('icons/obj/machines/photobooth.dmi', "height_chart", alpha = 125, appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM)
+
 		picture_image = getFlatIcon(appearance)
 	else
 		picture_image = character_appearance
@@ -304,4 +310,3 @@
 	printed_paper.update_appearance()
 
 	return printed_paper
-*/

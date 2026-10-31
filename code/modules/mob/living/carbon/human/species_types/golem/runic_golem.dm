@@ -70,14 +70,3 @@
 	QDEL_NULL(abyssal_gaze)
 	QDEL_NULL(dominate)
 	return ..()
-
-/datum/species/golem/runic/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	. = ..()
-	if(istype(chem, /datum/reagent/water/holywater))
-		H.adjustFireLoss(4 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-
-	if(chem.type == /datum/reagent/fuel/unholywater)
-		H.adjustBruteLoss(-4 * REM * seconds_per_tick)
-		H.adjustFireLoss(-4 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)

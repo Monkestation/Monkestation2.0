@@ -24,7 +24,12 @@
 
 /obj/item/retractor/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_retractor"
+	icon_state = "toolkit_mediborg_retractor"
+
+/obj/item/retractor/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_retractor_alien"
+	toolspeed = 0.25
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -54,7 +59,12 @@
 
 /obj/item/hemostat/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_hemostat"
+	icon_state = "toolkit_mediborg_hemostat"
+
+/obj/item/hemostat/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_hemostat_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery
 	name = "cautery"
@@ -87,7 +97,11 @@
 
 /obj/item/cautery/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_cautery"
+	icon_state = "toolkit_mediborg_cautery"
+
+/obj/item/cautery/cyborg/alien
+	icon_state = "toolkit_mediborg_cautery_alien"
+	toolspeed = 0.25
 
 /obj/item/cautery/advanced
 	name = "searing tool"
@@ -99,7 +113,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT, /datum/material/uranium = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*1.5)
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	light_system = OVERLAY_LIGHT
@@ -137,7 +151,7 @@
 		set_light_color(LIGHT_COLOR_ORANGE)
 
 	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
-	playsound(user ? user : src, 'sound/weapons/tap.ogg', 50, TRUE)
+	playsound(user ? user : src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/cautery/advanced/examine()
@@ -152,7 +166,7 @@
 	inhand_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*3)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -185,13 +199,18 @@
 
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
 /obj/item/surgicaldrill/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_drill"
+	icon_state = "toolkit_mediborg_drill"
+
+/obj/item/surgicaldrill/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_drill_alien"
+	toolspeed = 0.25
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -212,7 +231,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
@@ -244,7 +263,12 @@
 /obj/item/scalpel/cyborg
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_scalpel"
+	icon_state = "toolkit_mediborg_scalpel"
+
+/obj/item/scalpel/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_scalpel_alien"
+	toolspeed = 0.25
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -254,8 +278,8 @@
 	inhand_icon_state = "saw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	hitsound = 'sound/weapons/circsawhit.ogg'
-	mob_throw_hit_sound = 'sound/weapons/pierce.ogg'
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	mob_throw_hit_sound = 'sound/items/weapons/pierce.ogg'
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -280,7 +304,7 @@
 	speed = 4 SECONDS * toolspeed, \
 	effectiveness = 100, \
 	bonus_modifier = 5, \
-	butcher_sound = 'sound/weapons/circsawhit.ogg', \
+	butcher_sound = 'sound/items/weapons/circsawhit.ogg', \
 	)
 	//saws are very accurate and fast at butchering
 
@@ -294,7 +318,12 @@
 
 /obj/item/circular_saw/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_saw"
+	icon_state = "toolkit_mediborg_saw"
+
+/obj/item/circular_saw/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_saw_alien"
+	toolspeed = 0.25
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -314,12 +343,12 @@
 
 /obj/item/surgical_drapes/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_surgicaldrapes"
+	icon_state = "toolkit_mediborg_surgicaldrapes"
 
 /obj/item/surgical_processor
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "surgical_processor"
 	item_flags = NOBLUDGEON
 	// List of surgeries downloaded into the device.
@@ -358,7 +387,7 @@
 	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
 		return NONE
 	balloon_alert(user, "copying designs...")
-	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, TRUE)
 	if(do_after(user, 1 SECONDS, target = design_holder))
 		if(istype(design_holder, /obj/item/disk/surgery))
 			var/obj/item/disk/surgery/surgery_disk = design_holder
@@ -366,7 +395,7 @@
 		else
 			var/obj/machinery/computer/operating/surgery_computer = design_holder
 			loaded_surgeries |= surgery_computer.advanced_surgeries
-		playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 25, TRUE)
 		downloaded = TRUE
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
@@ -480,7 +509,7 @@
 
 	tool_behaviour = (active ? TOOL_HEMOSTAT : TOOL_RETRACTOR)
 	balloon_alert(user, "gears set to [active ? "clamp" : "retract"]")
-	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	playsound(user ? user : src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/retractor/advanced/examine()
@@ -504,7 +533,7 @@
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
-	custom_premium_price = PAYCHECK_CREW * 14
+	custom_premium_price = PAYCHECK_CREW * 10
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
 	if(!iscarbon(amputee) || (user.istate & ISTATE_HARM))
@@ -540,14 +569,14 @@
 	var/amputation_speed_mod = 1
 
 	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [candidate_name]."), span_userdanger("[user] begins to secure [src] around your [candidate_name]!"))
-	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
+	playsound(get_turf(patient), 'sound/items/tools/ratchet.ogg', 20, TRUE)
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
 	if(patient.stat != DEAD && patient.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to secure the shears, even if you can't otherwise move
 		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
 
 	if(do_after(user,  toolspeed * 15 SECONDS * amputation_speed_mod, target = patient))
-		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 250, TRUE)
+		playsound(get_turf(patient), 'sound/items/weapons/bladeslice.ogg', 250, TRUE)
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
 			tail_snip_candidate.Remove(patient)
 			tail_snip_candidate.forceMove(get_turf(patient))
@@ -562,7 +591,7 @@
 		if(thing.body_part == CHEST)
 			continue
 		addtimer(CALLBACK(thing, TYPE_PROC_REF(/obj/item/bodypart/, dismember)), timer)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), user, 'sound/weapons/bladeslice.ogg', 70), timer)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), user, 'sound/items/weapons/bladeslice.ogg', 70), timer)
 		timer += 1 SECONDS
 	sleep(timer)
 	return BRUTELOSS
@@ -588,7 +617,12 @@
 
 /obj/item/bonesetter/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
-	icon_state = "toolkit_medborg_bonesetter"
+	icon_state = "toolkit_mediborg_bonesetter"
+
+/obj/item/bonesetter/cyborg/alien
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_mediborg_bonesetter_alien"
+	toolspeed = 0.25
 
 /obj/item/blood_filter
 	name = "blood filter"
@@ -664,7 +698,7 @@
 	icon_state = "biocorrector"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	inhand_icon_state = "adv_retractor"
+	inhand_icon_state = "biocorrector"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3)
 	toolspeed = 0.7
 
@@ -692,7 +726,7 @@
 
 	tool_behaviour = (active ? TOOL_BONESET : TOOL_BLOODFILTER)
 	balloon_alert(user, "rebuilt to [active ? "bone manipulation" : "blood filtration"]")
-	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	playsound(user ? user : src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 // 	Ambu bag
@@ -706,27 +740,41 @@
 	inhand_icon_state = "m_mask"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_SMALL
-	toolspeed = 1
 
 /obj/item/breathing_bag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /mob/living) && can_see(user, interacting_with, 1))
-		var/mob/living/mob = interacting_with
-		if(mob == user)
+	if(user == interacting_with || !user.Adjacent(interacting_with) || !isliving(interacting_with))
+		return NONE
+	var/mob/living/target = interacting_with
+	if(!target.appears_alive())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be alive!"))
+		return ITEM_INTERACT_BLOCKING
+	if(target.is_mouth_covered())
+		to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Applying a breathing mask to [target] face."))
+	if(!can_repeat_healing(user, target, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	. = ITEM_INTERACT_SUCCESS
+	playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
+	for(var/loop_attempt in 1 to 15)
+		if(!can_repeat_healing(user, target, 1 SECONDS))
 			return
-		if (mob.is_mouth_covered())
-			to_chat(user, span_warning("To perform mechanical ventilation, the patient must be unmasked!"))
-			return
-		to_chat(user, span_notice("Applying a breathing mask to [mob] face."))
-		if(!do_after(user, 3 SECONDS, user))
-			to_chat(user, span_warning("It doesn't work!"))
-			return
-		. = ..()
-		playsound(user,'sound/items/breathing_bag.ogg', 100, TRUE)
-		for(var/ivl in 1 to 15)
-			if(!do_after(user, 1 SECONDS, user))
-				return
-			if(get_dist(user, mob) > 1)
-				to_chat(user, span_notice("Where did he go?"))
-				return
-			to_chat(user, span_notice("Performing artificial ventilation!"))
-			mob.adjustOxyLoss(-15)
+		to_chat(user, span_notice("Performing artificial ventilation!"))
+		// Ventilation will only help if the target can make use of the air that comes with it.
+		if(!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+			continue
+		if(HAS_TRAIT(target, TRAIT_NOBREATH))
+			continue
+		target.adjustOxyLoss(-10)
+
+/// Checks if the target can be interacted with.
+/obj/item/breathing_bag/proc/can_repeat_healing(mob/living/user, mob/living/target, delay_length)
+	if(delay_length && !do_after(user, delay_length, target, IGNORE_TARGET_LOC_CHANGE)) // Target is free to move around a little.
+		return FALSE
+	if(!user.Adjacent(target))
+		return FALSE
+	if(!target.appears_alive())
+		return FALSE
+	if(target.is_mouth_covered())
+		return FALSE
+	return TRUE

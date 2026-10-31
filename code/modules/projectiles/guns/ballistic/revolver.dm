@@ -3,11 +3,12 @@
 	desc = "A suspicious revolver. Uses .357 ammo."
 	icon_state = "revolver"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
-	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
-	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
+	recoil = 0.6
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
+	load_sound = 'sound/items/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/items/weapons/gun/revolver/empty.ogg'
 	fire_sound_volume = 90
-	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/revolver/dry_fire.ogg'
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -41,6 +42,8 @@
 	chamber_round()
 
 /obj/item/gun/ballistic/revolver/click_alt(mob/user)
+	if(suppressed) //probably want to remove the suppressor instead of spinning it.
+		return ..()
 	spin()
 	return CLICK_ACTION_SUCCESS
 
@@ -51,18 +54,14 @@
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
 
-/obj/item/gun/ballistic/revolver/verb/spin()
-	set name = "Spin Chamber"
-	set category = "Object"
-	set desc = "Click to spin your revolver's chamber."
-
+GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	var/mob/user = usr
 
 	if(user.stat || !in_range(user, src))
@@ -112,7 +111,7 @@
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
-	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/gun/ballistic/revolver/c38/detective
@@ -121,9 +120,9 @@
 
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_38
-	initial_fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	initial_fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	alternative_caliber = CALIBER_357
-	alternative_fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	alternative_fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	alternative_ammo_misfires = TRUE
 	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
@@ -162,15 +161,13 @@
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
-
-/obj/item/gun/ballistic/revolver/mateba/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
 	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
 	icon_state = "goldrevolver"
-	fire_sound = 'sound/weapons/resonator_blast.ogg'
+	fire_sound = 'sound/items/weapons/resonator_blast.ogg'
 	recoil = 8
 	pin = /obj/item/firing_pin
 
@@ -193,6 +190,7 @@
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN
+	has_manufacturer = FALSE
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
@@ -283,9 +281,6 @@
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(span_danger("[user.name] fires [src] at [user.p_their()] head!"), span_userdanger("You fire [src] at your head!"), span_hear("You hear a gunshot!"))
 
-/obj/item/gun/ballistic/revolver/russian/give_manufacturer_examine()
-	return
-
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
@@ -359,10 +354,12 @@
 	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
+	inhand_icon_state = "takbok"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
-	suppressor_x_offset = 5
+	suppressor_x_offset = 8
+	suppressor_y_offset = 1
 	can_suppress = TRUE
 	fire_delay = 1 SECONDS
 	recoil = 3
@@ -394,6 +391,7 @@
 /obj/item/gun/ballistic/revolver/takbok/blueshield
 	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
 	icon_state = "takbok_blueshield"
+	inhand_icon_state = "takbok_blueshield"
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
 	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
@@ -427,7 +425,7 @@
 	name = "\improper .45 Long Revolver"
 	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
 	icon_state = "45revolver"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
 	obj_flags = UNIQUE_RENAME
 
@@ -450,10 +448,10 @@
 	icon_state = "miningbigiron"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/govmining
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
-	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
-	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
+	load_sound = 'sound/items/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/items/weapons/gun/revolver/empty.ogg'
 	fire_sound_volume = 100
-	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/revolver/dry_fire.ogg'
 	pin = /obj/item/firing_pin/wastes
 
 /obj/item/gun/ballistic/revolver/govmining/give_manufacturer_examine()

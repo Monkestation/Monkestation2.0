@@ -1,5 +1,5 @@
 /datum/action/cooldown/spell/conjure
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 	school = SCHOOL_CONJURATION
 
 	/// The radius around the caster the items will appear. 0 = spawns on top of the caster.
@@ -44,7 +44,7 @@
 				if (spawn_place.overfloor_placed)
 					spawn_place.ChangeTurf(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
 				else
-					spawn_place.PlaceOnTop(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
+					spawn_place.place_on_top(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
 				continue
 			var/turf/open/open_turf = spawn_place
 			open_turf.replace_floor(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)

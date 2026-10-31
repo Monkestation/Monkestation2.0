@@ -299,10 +299,10 @@
 		return
 	if(!talking_movable.try_speak(message))
 		return
-	//MONKESTATION EDIT START
-	if(istype(get_area(src), /area/centcom/heretic_sacrifice))
+
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & AREA_BLOCKS_OUTGOING_RADIO)
 		return
-	//MONKESTATION EDIT STOP
 
 	if(use_command)
 		spans |= SPAN_COMMAND
@@ -567,6 +567,18 @@
 	set_on(TRUE)
 	return TRUE
 
+/// Sends an uncompressed subspace transmission that all radios on connected z-levels can hear.
+/// Bypasses tcomms servers - this is mainly used for the radio host.
+/obj/item/radio/proc/universal_transmission(datum/signal/subspace/vocal/signal)
+	var/turf/our_turf = get_turf(src)
+	if (signal.data["done"] && (our_turf.z in signal.levels))
+		return
+	signal.data["compression"] = 0
+	signal.transmission_method = TRANSMISSION_SUBSPACE
+	signal.levels = SSmapping.get_connected_levels(our_turf)
+	signal.broadcast()
+
+
 ///////////////////////////////
 //////////Borg Radios//////////
 ///////////////////////////////
@@ -577,6 +589,7 @@
 	subspace_transmission = TRUE
 	subspace_switchable = TRUE
 	dog_fashion = null
+	canhear_range = 0
 
 /obj/item/radio/borg/resetChannels()
 	. = ..()

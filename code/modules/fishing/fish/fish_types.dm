@@ -30,6 +30,7 @@
 /obj/item/fish/guppy
 	name = "guppy"
 	desc = "Guppy is also known as rainbow fish because of the brightly colored body and fins."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "guppy"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#91AE64"
@@ -44,6 +45,7 @@
 /obj/item/fish/plasmatetra
 	name = "plasma tetra"
 	desc = "Due to their small size, tetras are prey to many predators in their watery world, including eels, crustaceans, and invertebrates."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "plastetra"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#D30EB0"
@@ -56,6 +58,7 @@
 /obj/item/fish/catfish
 	name = "cory catfish"
 	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "catfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#907420"
@@ -76,6 +79,7 @@
 /obj/item/fish/clownfish
 	name = "clownfish"
 	desc = "Clownfish catch prey by swimming onto the reef, attracting larger fish, and luring them back to the anemone. The anemone will sting and eat the larger fish, leaving the remains for the clownfish."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "clownfish"
 	dedicated_in_aquarium_icon_state = "clownfish_small"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -104,6 +108,7 @@
 /obj/item/fish/cardinal
 	name = "cardinalfish"
 	desc = "Cardinalfish are often found near sea urchins, where the fish hide when threatened."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "cardinalfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -117,6 +122,7 @@
 /obj/item/fish/greenchromis
 	name = "green chromis"
 	desc = "The Chromis can vary in color from blue to green depending on the lighting and distance from the lights."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "greenchromis"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#00ff00"
@@ -132,6 +138,7 @@
 /obj/item/fish/firefish
 	name = "firefish goby"
 	desc = "To communicate in the wild, the firefish uses its dorsal fin to alert others of potential danger."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "firefish"
 	sprite_width = 6
 	sprite_height = 5
@@ -147,6 +154,7 @@
 /obj/item/fish/pufferfish
 	name = "pufferfish"
 	desc = "They say that one pufferfish contains enough toxins to kill 30 people, although in the last few decades they've been genetically engineered en masse to be less poisonous."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "pufferfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_width = 8
@@ -159,9 +167,24 @@
 
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
 
+/obj/item/fish/squid
+	name = "squid"
+	desc = "An elongated mollusk with eight tentacles, natural camouflage and ink clouds to spray at predators. One of the most intelligent, well-equipped invertebrates out there."
+	icon_state = "squid"
+	sprite_width = 4
+	sprite_height = 5
+	stable_population = 6
+	average_size = 50
+	average_weight = 500 //They're quite lighter than they're long.
+	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	required_temperature_min = MIN_AQUARIUM_TEMP+5
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
+	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/ink, /datum/fish_trait/wary)
+
 /obj/item/fish/lanternfish
 	name = "lanternfish"
 	desc = "Typically found in areas below 6600 feet below the surface of the ocean, they live in complete darkness."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "lanternfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	random_case_rarity = FISH_RARITY_VERY_RARE
@@ -180,6 +203,7 @@
 /obj/item/fish/dwarf_moonfish
 	name = "dwarf moonfish"
 	desc = "Ordinarily in the wild, the Zagoskian moonfish is around the size of a tuna, however through selective breeding a smaller breed suitable for being kept as an aquarium pet has been created."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "dwarf_moonfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 2
@@ -192,6 +216,7 @@
 /obj/item/fish/gunner_jellyfish
 	name = "gunner jellyfish"
 	desc = "So called due to their resemblance to an artillery shell, the gunner jellyfish is native to Tizira, where it is enjoyed as a delicacy. Produces a mild hallucinogen that is destroyed by cooking."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "gunner_jellyfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
@@ -202,6 +227,7 @@
 /obj/item/fish/needlefish
 	name = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "needlefish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
@@ -215,6 +241,7 @@
 /obj/item/fish/armorfish
 	name = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "armorfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
@@ -227,6 +254,7 @@
 /obj/item/fish/chasm_crab
 	name = "chasm chrab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "chrab"
 	dedicated_in_aquarium_icon_state = "chrab_small"
 	sprite_height = 9
@@ -272,6 +300,7 @@
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
 	desc = "A lab-grown donkfish. Its invention was an accident for the most part, as it was intended to be consumed in donk pockets. Unfortunately, it tastes horrible, so it has now become a pseudo-mascot."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "donkfish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -284,6 +313,7 @@
 /obj/item/fish/emulsijack
 	name = "toxic emulsijack"
 	desc = "Ah, the terrifying emulsijack. Created in a laboratory, the only real use of this slimey, scaleless fish is for completely ruining a tank."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "emulsijack"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
@@ -295,6 +325,7 @@
 /obj/item/fish/ratfish
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "ratfish"
 	random_case_rarity = FISH_RARITY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -320,6 +351,7 @@
 /obj/item/fish/sludgefish
 	name = "sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "sludgefish"
 	dedicated_in_aquarium_icon_state = "sludgefish_small"
 	sprite_width = 7
@@ -346,6 +378,7 @@
 /obj/item/fish/slimefish
 	name = "acquatic slime"
 	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
 	dedicated_in_aquarium_icon_state = "slimefish_small"
@@ -375,6 +408,7 @@
 /obj/item/fish/boned
 	name = "unmarine bonemass"
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "bonemass"
 	dedicated_in_aquarium_icon_state = "bonemass_small"
 	sprite_width = 10
@@ -397,9 +431,9 @@
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
-	icon = 'icons/obj/aquarium_wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
 	pixel_x = -16
@@ -457,6 +491,7 @@
 /obj/item/fish/holo/crab
 	name = "holographic crab"
 	desc = "A holographic represantion of a soul-crushingly soulless crab, unlike the cuter ones occasionally roaming around. It stares at you, with empty, beady eyes."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "crab"
 	dedicated_in_aquarium_icon_state = "crab_small"
 	average_weight = 1000
@@ -480,6 +515,7 @@
 
 /obj/item/fish/holo/clown
 	name = "holographic clownfish"
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "holo_clownfish"
 	desc = "A holographic representation of a clownfish, or at least how they used to look like five centuries ago."
 	dedicated_in_aquarium_icon_state = "holo_clownfish_small"
@@ -490,6 +526,7 @@
 /obj/item/fish/holo/checkered
 	name = "unrendered holographic fish"
 	desc = "A checkered silhoutte of searing purple and pitch black presents itself before your eyes, like a tear in fabric of reality. It hurts to watch."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "checkered" //it's a meta joke, buddy.
 	dedicated_in_aquarium_icon_state = "checkered_small"
 	sprite_width = 4
@@ -497,6 +534,7 @@
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"
 	desc = "A holographic representation of... a fish reduced to all bones, except for its head. Isn't it supposed to be dead? Ehr, holo-dead?"
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "half_fish"
 	dedicated_in_aquarium_icon_state = "half_fish_small"
 	sprite_height = 4
@@ -506,6 +544,7 @@
 /obj/item/fish/starfish
 	name = "cosmostarfish"
 	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "starfish"
 	dedicated_in_aquarium_icon_state = "starfish_small"
 	icon_state_dead = "starfish_dead"

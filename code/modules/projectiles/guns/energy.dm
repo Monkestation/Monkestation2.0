@@ -224,6 +224,10 @@
 	chambered = null
 	recharge_newshot(TRUE)
 	update_appearance()
+	if(cell.charge >= shot.e_cost)
+		playsound(src, shot.select_sound, 50, TRUE)
+	else
+		playsound(src, shot.select_sound_no_ammo, 50, TRUE)
 
 /obj/item/gun/energy/update_icon_state()
 	var/skip_inhand = initial(inhand_icon_state) //only build if we aren't using a preset inhand icon

@@ -97,7 +97,7 @@
 	var/obj/item/item_parent = parent
 	COOLDOWN_START(src, charge_add_cd, charge_increment_delay)
 	adjust_charge(charge_recovery) // set the number of charges to current + recovery per increment, clamped from zero to max_charges
-	playsound(item_parent, 'sound/magic/charge.ogg', 50, TRUE)
+	playsound(item_parent, 'sound/effects/magic/charge.ogg', 50, TRUE)
 	if(current_charges == max_charges)
 		playsound(item_parent, 'sound/machines/ding.ogg', 50, TRUE)
 
@@ -110,10 +110,10 @@
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if((slot & ITEM_SLOT_HANDS) && !shield_inhand)
+	if(user.is_holding(parent) && !shield_inhand)
 		lost_wearer(source, user)
 		return
-	set_wearer(source, user)
+	set_wearer(user)
 
 /// Either we've been dropped or our wearer has been QDEL'd. Either way, they're no longer our problem
 /datum/component/shielded/proc/lost_wearer(datum/source, mob/user)
@@ -125,6 +125,9 @@
 		wearer = null
 
 /datum/component/shielded/proc/set_wearer(mob/user)
+	if(wearer == user)
+		return
+
 	wearer = user
 	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(wearer, COMSIG_QDELETING, PROC_REF(lost_wearer))
@@ -140,7 +143,7 @@
 		shield_appearance.alpha = (current_charges/max_charges)*255
 	if(ishuman(wearer))
 		var/mob/living/carbon/human/human_wearer = wearer
-		human_wearer.apply_height_filters(shield_appearance)
+		human_wearer.apply_height(shield_appearance, ENTIRE_BODY)
 	overlays += shield_appearance
 
 /**
@@ -151,6 +154,14 @@
 	SIGNAL_HANDLER
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
+
+	//No wearer? No block.
+	if(isnull(wearer))
+		return
+
+	//if our wearer isn't the owner of the block, don't block
+	if(owner != wearer)
+		return
 
 	if(current_charges <= 0)
 		return

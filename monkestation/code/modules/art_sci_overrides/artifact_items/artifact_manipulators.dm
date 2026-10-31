@@ -60,7 +60,7 @@
 	if(ISINRANGE(selected_mode, 2, 5))
 		return
 	visible_message(span_notice("[user] begins to summon an artifact using [src]!"),span_notice("You begin attempting to summon an artifact using [src]..."))
-	if(do_after(user,5 SECOND))
+	if(do_after(user, 5 SECONDS))
 		var/obj/new_artifact = spawn_artifact(attempt_location)
 		var/datum/component/artifact/art_comp = new_artifact.GetComponent(/datum/component/artifact)
 		if(!art_comp)
@@ -120,7 +120,7 @@
 	var/datum/component/artifact/art_comp = attacked_atom.GetComponent(/datum/component/artifact)
 	if(art_comp && slotted_disk)
 		visible_message(span_notice("[user] begins trying to configure [attacked_atom] with [src]!"),span_notice("You begin trying to configure the [attacked_atom] with [src]..."))
-		if(do_after(user,5 SECOND))
+		if(do_after(user, 5 SECONDS))
 			var/added_anything = FALSE
 			switch(selected_mode)
 				if(0)

@@ -20,7 +20,7 @@
 	name = "bee fuzz"
 	desc = "How could you do this."
 	singular_name = "bee fuzz piece"
-	icon = 'monkestation/icons/mob/simple/bees.dmi'
+	icon = 'icons/mob/simple/bees_big.dmi'
 	icon_state = "sheet-bee_fuzz"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/bee
@@ -28,7 +28,7 @@
 /obj/item/food/pollensac
 	name = "pollen sac"
 	desc = "A pollen sac dropped from a bee."
-	icon = 'monkestation/icons/mob/simple/bees.dmi'
+	icon = 'icons/mob/simple/bees_big.dmi'
 	icon_state = "pollen_sac"
 	bite_consumption = 1
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)

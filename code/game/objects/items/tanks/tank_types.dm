@@ -6,13 +6,13 @@
  * Plasma
  * Emergency Oxygen
  * Generic
+ * Nitrogen
+ * Emergency Nitrogen
  */
 
 /// Allows carbon to toggle internals via AltClick of the equipped tank.
-//MONKESTATION EDIT START
 /obj/item/tank/internals
 	alternate_worn_layer = ABOVE_HEAD_LAYER
-//MONKESTATION EDIT STOP
 	interaction_flags_click = FORBID_TELEKINESIS_REACH|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/tank/internals/click_alt(mob/user)
@@ -38,8 +38,7 @@
 
 
 /obj/item/tank/internals/oxygen/populate_gas()
-	air_contents.assert_gas(/datum/gas/oxygen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/oxygen, (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 
 /obj/item/tank/internals/oxygen/yellow
@@ -49,12 +48,8 @@
 	tank_holder_icon_state = "holder_oxygen_f"
 	dog_fashion = null
 
-/obj/item/tank/internals/oxygen/red
-	desc = "A tank of oxygen, this one is red."
-	icon_state = "oxygen_fr"
-	inhand_icon_state = "oxygen_fr_tank"
-	tank_holder_icon_state = "holder_oxygen_fr"
-	dog_fashion = null
+/obj/item/tank/internals/oxygen/yellow/empty/populate_gas()
+	return
 
 /obj/item/tank/internals/oxygen/empty/populate_gas()
 	return
@@ -65,8 +60,7 @@
 	Which could mean nothing."
 
 /obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead/populate_gas()
-	air_contents.assert_gas(/datum/gas/carbon_dioxide)
-	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/carbon_dioxide, (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 /*
  * Anesthetic
@@ -80,9 +74,8 @@
 	force = 10
 
 /obj/item/tank/internals/anesthetic/populate_gas()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.set_gas(/datum/gas/oxygen, (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD)
+	air_contents.set_gas(/datum/gas/nitrous_oxide, (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD)
 
 /*
  * Plasma
@@ -100,8 +93,7 @@
 
 
 /obj/item/tank/internals/plasma/populate_gas()
-	air_contents.assert_gas(/datum/gas/plasma)
-	air_contents.gases[/datum/gas/plasma][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/plasma, (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 /obj/item/tank/internals/plasma/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/flamethrower))
@@ -117,8 +109,7 @@
 		return ..()
 
 /obj/item/tank/internals/plasma/full/populate_gas()
-	air_contents.assert_gas(/datum/gas/plasma)
-	air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/plasma, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 /obj/item/tank/internals/plasma/empty/populate_gas()
 	return
@@ -137,12 +128,10 @@
 	distribute_pressure = TANK_PLASMAMAN_RELEASE_PRESSURE
 
 /obj/item/tank/internals/plasmaman/populate_gas()
-	air_contents.assert_gas(/datum/gas/plasma)
-	air_contents.gases[/datum/gas/plasma][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/plasma, (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 /obj/item/tank/internals/plasmaman/full/populate_gas()
-	air_contents.assert_gas(/datum/gas/plasma)
-	air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/plasma, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 
 /obj/item/tank/internals/plasmaman/belt
@@ -157,8 +146,7 @@
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
-	air_contents.assert_gas(/datum/gas/plasma)
-	air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/plasma, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 /obj/item/tank/internals/plasmaman/belt/empty/populate_gas()
 	return
@@ -185,8 +173,7 @@
 
 
 /obj/item/tank/internals/emergency_oxygen/populate_gas()
-	air_contents.assert_gas(/datum/gas/oxygen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.set_gas(/datum/gas/oxygen, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 
 /obj/item/tank/internals/emergency_oxygen/empty/populate_gas()
@@ -234,12 +221,8 @@
  * Funny internals
  */
 /obj/item/tank/internals/emergency_oxygen/engi/clown
-	//MONKESTATION EDIT START
-	// name = "funny emergency oxygen tank"
-	// desc = "Used for emergencies. Contains very little oxygen with an extra of a funny gas, so try to conserve it until you actually need it."
 	name = "'enhanced' emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it. This one has been topped up with a free bonus gas!"
-	//MONKESTATION EDIT END
 	icon_state = "emergency_clown"
 	inhand_icon_state = "emergency_clown"
 	worn_icon_state = "emergency_clown"
@@ -249,21 +232,68 @@
 /obj/item/tank/internals/emergency_oxygen/engi/clown/n2o
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/n2o/populate_gas()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.95
-	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.05
+	air_contents.set_gas(/datum/gas/oxygen, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.95)
+	air_contents.set_gas(/datum/gas/nitrous_oxide, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.05)
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/bz
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/bz/populate_gas()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/bz)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.9
-	air_contents.gases[/datum/gas/bz][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.1
+	air_contents.set_gas(/datum/gas/oxygen,(10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.9)
+	air_contents.set_gas(/datum/gas/bz,(10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.1)
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/helium
 	distribute_pressure = TANK_CLOWN_RELEASE_PRESSURE + 2
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/helium/populate_gas()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/helium)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.75
-	air_contents.gases[/datum/gas/helium][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.25
+	air_contents.set_gas(/datum/gas/oxygen, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.75)
+	air_contents.set_gas(/datum/gas/helium, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.25)
+
+/*
+ * Nitrogen
+ */
+/obj/item/tank/internals/nitrogen
+	name = "nitrogen tank"
+	desc = "A tank of nitrogen, this one is red."
+	icon_state = "nitrogen"
+	inhand_icon_state = "nitrogen_tank"
+	tank_holder_icon_state = "holder_nitrogen"
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	force = 10
+	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/tank/internals/nitrogen/populate_gas()
+	air_contents.set_gas(/datum/gas/nitrogen, (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+
+
+/obj/item/tank/internals/nitrogen/empty/populate_gas()
+	return
+/*
+ * Emergency Nitrogen
+ */
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen
+	name = "emergency nitrogen tank"
+	desc = "Used for emergencies. Contains very little nitrogen, so try to conserve it until you actually need it."
+	icon_state = "emergency_nitrogen"
+	inhand_icon_state = "emergency_nitrogen_tank"
+	worn_icon_state = "emergency_nitrogen"
+	tank_holder_icon_state = "holder_emergency_nitrogen"
+
+
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/populate_gas()
+	air_contents.set_gas(/datum/gas/nitrogen, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+
+
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/empty/populate_gas()
+	return
+
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi
+	name = "extended-capacity emergency nitrogen tank"
+	icon_state = "emergency_nitrogen_engi"
+	inhand_icon_state = "emergency_nitrogen_engi_tank"
+	worn_icon_state = "emergency_nitrogen_engi"
+	tank_holder_icon_state = "holder_emergency_nitrogen_engi"
+	worn_icon = null
+	volume = 6 // should last 24 minutes if full
+
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi/empty/populate_gas()
+	return

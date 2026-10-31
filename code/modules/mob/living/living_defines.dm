@@ -150,7 +150,7 @@
 	///if a mob's name should be appended with an id when created e.g. Mob (666)
 	var/unique_name = FALSE
 	///the id a mob gets when it's created
-	var/numba = 0
+	var/identifier = 0
 
 	///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
 	var/list/butcher_results = null
@@ -261,3 +261,8 @@
 
 	/// Whether we currently have temp alerts, minor optimization
 	VAR_PRIVATE/temp_alerts = FALSE
+
+	/// A weak reference to the team monitor component contained within the monitor holder, used for certain antagoists so they can track
+	var/datum/component/team_monitor/team_monitor
+	///a reference to a stored /datum/component/tracking_beacon used by victims of antags
+	var/datum/component/tracking_beacon/tracking_beacon

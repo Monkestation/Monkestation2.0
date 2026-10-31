@@ -39,18 +39,15 @@
 	. = ..()
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
 	. += span_notice("The [src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to a nearby operating computer.")
-	. += span_notice("patient = [patient]")
-	. += span_notice("op_computer = [op_computer]")
-	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)

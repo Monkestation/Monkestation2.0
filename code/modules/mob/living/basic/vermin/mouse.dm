@@ -28,7 +28,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 	//MONKESTATION EDIT START
-	death_sound = 'sound/effects/mousesqueek.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 	death_message = "falls limp and lifeless..."
 	//MONKESTATION EDIT STOP
 
@@ -48,9 +48,9 @@
 
 //MONKESTATION EDIT START
 /mob/living/basic/mouse/get_scream_sound()
-	return 'sound/effects/mousesqueek.ogg'
+	return 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 /mob/living/basic/mouse/get_laugh_sound()
-	return 'sound/effects/mousesqueek.ogg'
+	return 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 //MONKESTATION EDIT STOP
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
@@ -72,7 +72,7 @@
 		held_state = "mouse_[body_color]" // not handled by variety element
 		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
-	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
+	AddComponent(/datum/component/squeak, list('sound/mobs/non-humanoids/mouse/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -105,6 +105,9 @@
 			. += span_notice("You both serve the same king.")
 		else
 			. += span_warning("This fool serves a different king!")
+
+	if(ishuman(user))
+		. += span_notice("You could probably pick them up and use them to cut wires.")
 
 /// Kills the rat and changes its icon state to be splatted (bloody).
 /mob/living/basic/mouse/proc/splat()
@@ -205,6 +208,15 @@
 	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing
 
+/// Replaces the default mob_holder with our version
+/mob/living/basic/mouse/mob_pickup(mob/living/user)
+	var/obj/item/clothing/head/mob_holder/mouse/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	if(tame)
+		holder.toolspeed -= 0.3
+	user.visible_message(span_warning("[user] scoops up [src]!"))
+	user.put_in_hands(holder)
+	SEND_SIGNAL(src, COMSIG_MOB_PICKED_UP, user, holder)
+
 /// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
 	// Royal cheese will evolve us into a regal rat
@@ -274,7 +286,7 @@
 			span_notice("You chew through \the [cable]."),
 		)
 
-	playsound(cable, 'sound/effects/sparks2.ogg', 100, TRUE)
+	playsound(cable, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
 	cable.deconstruct()
 
 /mob/living/basic/mouse/white
@@ -418,6 +430,17 @@
 	foodtypes = GORE | MEAT | RAW | GROSS
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
 	preserved_food = TRUE
+
+/obj/item/clothing/head/mob_holder/mouse
+	tool_behaviour = TOOL_WIRECUTTER
+	toolspeed = 1.4
+
+/obj/item/clothing/head/mob_holder/mouse/examine(mob/user)
+	. = ..()
+	if(toolspeed >= initial(toolspeed))
+		. += span_notice("You could probably use them to cut wires, though not very efficiently.")
+	else
+		. += span_notice("Their jaws look ready to cut wires.")
 
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse

@@ -11,7 +11,7 @@
 	maturation = 40
 	production = 5
 	growthstages = 5
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "cherry-grow"
 	icon_dead = "cherry-dead"
 	icon_harvest = "cherry-harvest"
@@ -30,7 +30,7 @@
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
-	wine_power = 30
+	distill_reagent = /datum/reagent/consumable/ethanol/maraschino
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue

@@ -9,7 +9,7 @@
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
 	remove_from_manifest = TRUE
-	stinger_sound = 'sound/ambience/antag/ops.ogg'
+	stinger_sound = 'sound/music/antag/ops.ogg'
 	antag_count_points = 12
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
@@ -245,8 +245,19 @@
 	l_hand = /obj/item/modular_computer/pda/nukeops
 	r_hand = /obj/item/shield/energy
 
+/datum/outfit/nuclear_operative_junior
+	name = "Nuclear Operative (Junior, Preview only)"
+
+	glasses = /obj/item/clothing/glasses/night
+	belt = /obj/item/storage/belt/military
+	back = /obj/item/storage/backpack/fireproof
+	head = /obj/item/clothing/head/helmet/space/syndicate
+	suit = /obj/item/clothing/suit/space/syndicate
+	uniform = /obj/item/clothing/under/syndicate
+	suit_store = /obj/item/tank/jetpack/oxygen
+
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/shield/energy/shield = locate() in H.held_items
+	var/obj/item/shield/energy/shield = H.is_holding_item_of_type(__IMPLIED_TYPE__)
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_held_items()
 
@@ -344,7 +355,7 @@
 /datum/antagonist/nukeop/lone/junior
 	name = "Junior Lone Operative"
 	nukeop_outfit = /datum/outfit/syndicate/junior
-	preview_outfit = /datum/outfit/syndicate/junior
+	preview_outfit = /datum/outfit/nuclear_operative_junior
 
 /datum/antagonist/nukeop/lone/junior/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke)
@@ -565,7 +576,7 @@ their person at all times.
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && GLOB.station_was_nuked && !are_all_operatives_dead())
-		text += "<BIG>[icon2html('icons/ui_icons/antags/badass.dmi', world, "badass")]</BIG>"
+		text += "<BIG>[icon2html('icons/ui/antags/badass.dmi', world, "badass")]</BIG>"
 
 	parts += text
 

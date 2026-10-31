@@ -10,7 +10,7 @@
 /obj/structure/bonfire
 	name = "bonfire"
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
 	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
@@ -59,7 +59,7 @@
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
 				to_chat(user, span_notice("You add a rod to \the [src]."))
-				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
@@ -106,10 +106,8 @@
 /obj/structure/bonfire/proc/check_oxygen()
 	if(isopenturf(loc))
 		var/turf/open/bonfire_turf = loc
-		if(bonfire_turf.air)
-			var/loc_gases = bonfire_turf.air.gases
-			if(loc_gases[/datum/gas/oxygen] && loc_gases[/datum/gas/oxygen][MOLES] >= 5)
-				return TRUE
+		if(bonfire_turf.air?.moles[/datum/gas/oxygen] >= 5)
+			return TRUE
 	return FALSE
 
 /obj/structure/bonfire/proc/start_burning()

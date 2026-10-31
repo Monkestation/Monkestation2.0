@@ -29,6 +29,9 @@
 			/mob/living/basic/gorilla/cargorilla,
 			/mob/living/basic/sloth/citrus,
 			/mob/living/basic/sloth/paperwork,
+		),
+		JOB_BLUESHIELD = list(
+			/mob/living/basic/pet/dog/dobermann/walter,
 		)
 	)
 	/// The head that we are targeting

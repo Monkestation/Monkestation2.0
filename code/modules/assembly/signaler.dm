@@ -26,6 +26,8 @@
 	var/hearing_range = 1
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
+	/// Signal range, see /datum/radio_frequency/proc/post_signal
+	var/range = 0 //Everywhere
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
@@ -46,7 +48,7 @@
 	user.set_suicide(TRUE)
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(FALSE)
-	playsound(user, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	playsound(user, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)
 
 /obj/item/assembly/signaler/Initialize(mapload)
@@ -153,7 +155,7 @@
 	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
-	radio_connection.post_signal(src, signal)
+	radio_connection.post_signal(src, signal, range = range)
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
@@ -171,7 +173,7 @@
 	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
@@ -203,3 +205,8 @@
 	if(ispAI(user))
 		return TRUE
 	. = ..()
+
+/obj/item/assembly/signaler/low_range
+	name = "low-power remote signaling device"
+	desc = "Used to remotely activate devices, within a small range of 9 tiles. Allows for syncing when using a secure signaler on another."
+	range = 9

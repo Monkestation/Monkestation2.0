@@ -4,7 +4,9 @@
 	button_icon_state = "power_veil"
 	power_explanation = "Veil of Many Faces: \n\
 		Activating Veil of Many Faces will shroud you in smoke and forge you a new identity.\n\
-		Your name and appearance will be completely randomized, and turning the ability off again will undo it all."
+		Your name and appearance will be completely randomized, and turning the ability off again will undo it all.\n\
+		Be warned, for this power will not hide the ID you are wearing, which can make it rather obvious that you are not who you claim.\n\
+		Do not expect your temporary identity to hold up to much scrutiny. It's best to not stay in the same veil for too long, and avoid being arrested."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_FRENZY | BP_ALLOW_WHILE_SILVER_CUFFED
 	purchase_flags = BLOODSUCKER_DEFAULT_POWER
@@ -65,7 +67,7 @@
 // CAST EFFECT // General effect (poof, splat, etc) when you cast. Doesn't happen automatically!
 /datum/action/cooldown/bloodsucker/veil/proc/cast_effect()
 	// Effect
-	playsound(get_turf(owner), 'sound/magic/smoke.ogg', 20, 1)
+	playsound(get_turf(owner), 'sound/effects/magic/smoke.ogg', 20, 1)
 	var/datum/effect_system/steam_spread/bloodsucker/puff = new /datum/effect_system/steam_spread/()
 	puff.set_up(3, 0, get_turf(owner))
 	puff.attach(owner) //OPTIONAL

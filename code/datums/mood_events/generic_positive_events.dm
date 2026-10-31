@@ -230,6 +230,10 @@
 	mood_change = 3
 	timeout = 45 SECONDS
 
+/datum/mood_event/high_ten/add_effects(high_what)
+	if(high_what)
+		description = "AMAZING! A [uppertext(high_what)]!"
+
 /datum/mood_event/down_low
 	description = "HA! What a rube, they never stood a chance..."
 	mood_change = 4
@@ -374,8 +378,8 @@
 	description = "This hat fills me with whimsical joy!"
 	mood_change = 2
 
-/datum/mood_event/has_borer
-	description = "i feel content, the melody completes me."
+/datum/mood_event/willing_borer
+	description = "I feel content, the melody completes me."
 	mood_change = 5
 
 /datum/mood_event/thrall_darkspawn

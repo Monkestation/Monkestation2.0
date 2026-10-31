@@ -16,7 +16,7 @@
 
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	verb_say = "states"
 	verb_ask = "queries"
@@ -40,7 +40,7 @@
 
 /mob/living/basic/hivebot/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/effect/decal/cleanable/robot_debris)
+	var/static/list/death_loot = list(/obj/effect/decal/cleanable/blood/gibs/robot_debris)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/appearance_on_aggro, overlay_icon = icon, overlay_state = "[initial(icon_state)]_attack")
 	if(!ranged_attacker)

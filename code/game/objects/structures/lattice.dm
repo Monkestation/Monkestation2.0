@@ -80,20 +80,28 @@
 		to_chat(user, span_notice("You build a floor."))
 		var/turf/T = src.loc
 		if(isgroundlessturf(T))
-			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			T.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			qdel(src)
 			return TRUE
 	if(passed_mode == RCD_CATWALK)
 		to_chat(user, span_notice("You build a catwalk."))
-		var/turf/turf = loc
-		qdel(src)
-		new /obj/structure/lattice/catwalk(turf)
+		replace_with_catwalk()
 		return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
+
+/// Replaces the lattice with a catwalk, calling any callbacks added through COMSIG_LATTICE_PRE_REPLACE_WITH_CATWALK with the new catwalk
+/obj/structure/lattice/proc/replace_with_catwalk()
+	var/list/post_replacement_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_LATTICE_PRE_REPLACE_WITH_CATWALK, post_replacement_callbacks)
+	var/turf/turf = loc
+	qdel(src)
+	var/new_catwalk = new /obj/structure/lattice/catwalk(turf)
+	for(var/datum/callback/callback as anything in post_replacement_callbacks)
+		callback.Invoke(new_catwalk)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -172,7 +180,7 @@
 		var/obj/item/stack/tile/iron/P = C
 		if(P.use(1))
 			to_chat(user, span_notice("You construct a floor plating, as lava settles around the rods."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			new /turf/open/floor/plating(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one floor tile to build atop [src]."))

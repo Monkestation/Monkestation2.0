@@ -253,7 +253,7 @@
 	density = 1;
 	desc = "Generates power from lava!";
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon = 'icons/obj/pipes_n_cables/simple.dmi';
 	icon_state = "compressor";
 	name = "geothermal generator"
 	},
@@ -960,7 +960,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Generates power from lava!";
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon = 'icons/obj/pipes_n_cables/simple.dmi';
 	icon_state = "turbine";
 	name = "geothermal generator"
 	},
@@ -1795,7 +1795,7 @@
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "No, I am not going through this.";
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "water";
 	name = "dirty water"
 	},
@@ -1915,7 +1915,7 @@
 /area/awaymission/cabin/caves/mountain)
 "gL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "gM" = (
@@ -2056,7 +2056,7 @@
 /area/awaymission/cabin)
 "hr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/generic,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3588,7 +3588,7 @@
 "su" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass3";
 	name = "frozen flora"
 	},
@@ -3697,13 +3697,13 @@
 	},
 /area/awaymission/cabin/caves)
 "uz" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "uK" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass2";
 	name = "frozen flora"
 	},
@@ -3989,7 +3989,7 @@
 "Af" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass3";
 	name = "frozen flora"
 	},
@@ -4141,7 +4141,7 @@
 "Hn" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass";
 	name = "frozen flora"
 	},
@@ -4204,7 +4204,7 @@
 "Lc" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass2";
 	name = "frozen flora"
 	},
@@ -4371,7 +4371,7 @@
 "Ow" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass_sw";
 	name = "frozen flora"
 	},
@@ -4726,7 +4726,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Wy" = (

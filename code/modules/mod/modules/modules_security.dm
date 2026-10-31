@@ -125,10 +125,10 @@
 		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
 			holstered = holding
 			balloon_alert(mod.wearer, "weapon holstered")
-			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+			playsound(src, 'sound/items/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else if(mod.wearer.put_in_active_hand(holstered, forced = FALSE, ignore_animation = TRUE))
 		balloon_alert(mod.wearer, "weapon drawn")
-		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+		playsound(src, 'sound/items/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else
 		balloon_alert(mod.wearer, "holster full!")
 
@@ -236,14 +236,14 @@
 		return
 	linked_bodybag = new bodybag_type(target_turf)
 	linked_bodybag.take_contents()
-	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(linked_bodybag, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 	RegisterSignal(linked_bodybag, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 
 /obj/item/mod/module/criminalcapture/proc/packup()
 	if(!linked_bodybag)
 		return
-	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(linked_bodybag, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 	apply_wibbly_filters(linked_bodybag)
 	animate(linked_bodybag, 0.5 SECONDS, alpha = 50, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, PROC_REF(delete_bag), linked_bodybag), 0.5 SECONDS)
@@ -313,10 +313,6 @@
 	cooldown_time = 1.5 SECONDS
 	/// Radius of the dampening field.
 	var/field_radius = 2
-	/// Damage multiplier on projectiles.
-	var/damage_multiplier = 0.75
-	/// Speed multiplier on projectiles, higher means slower.
-	var/speed_multiplier = 0.4
 	/// List of all tracked projectiles.
 	var/list/tracked_projectiles = list()
 	/// Effect image on projectiles.
@@ -359,7 +355,7 @@
 	if(!.)
 		return
 	balloon_alert(mod.wearer, "readying sonar...")
-	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mod.wearer, 'sound/vehicles/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
 		return
 	var/creatures_detected = 0

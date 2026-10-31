@@ -331,7 +331,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	throwforce = 10
 	demolition_mod = 1.25
 	throw_range = 3
-	hitsound = 'sound/items/trayhit1.ogg'
+	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 	hit_reaction_chance = 50
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	var/break_chance = 5 //Likely hood of smashing the chair.
@@ -423,7 +423,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	name = "bamboo stool"
 	icon_state = "bamboo_stool"
 	inhand_icon_state = "stool_bamboo"
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
 	break_chance = 50	//Submissive and breakable unlike the chad iron stool
 
@@ -436,7 +436,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "woodenchair"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
 	break_chance = 50
@@ -566,3 +566,41 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
 	particles = new /particles/musical_notes
 	origin_type = /obj/structure/chair/musical
+
+/obj/structure/chair/stool/sandstone
+	name = "sandstone stool"
+	desc = "Apply dummy thick cheeks."
+	icon = 'icons/obj/sandstone_structures.dmi'
+	icon_state = "stool"
+	resistance_flags = FIRE_PROOF
+	can_buckle = FALSE
+	buildstacktype = /obj/item/stack/sheet/mineral/sandstone
+	buildstackamount = 1
+	item_chair = /obj/item/chair/stool/sandstone
+
+/obj/item/chair/stool/sandstone
+	name = "sandstone stool"
+	icon = 'icons/obj/sandstone_structures.dmi'
+	icon_state = "stool_toppled"
+	inhand_icon_state = null
+	origin_type = /obj/structure/chair/stool/sandstone
+
+/obj/structure/chair/silk
+	name = "silk chair"
+	icon = 'icons/obj/silk_structures.dmi'
+	icon_state = "chair"
+	buildstacktype = /obj/item/stack/sheet/silk
+	buildstackamount = 3
+	item_chair = /obj/item/chair/silk
+	resistance_flags = FLAMMABLE
+
+/obj/item/chair/silk
+	name = "silk chair"
+	desc = "It's way too soft for it to make a dent on anything."
+	icon = 'icons/obj/silk_structures.dmi'
+	icon_state = "chair_toppled"
+	origin_type = /obj/structure/chair/silk
+	custom_materials = null
+	force = 0 //It's just silk
+	throwforce = 0
+	throw_range = 6

@@ -14,7 +14,7 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
-	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
+	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
 	antag_count_points = 1 //its revs, you get nothing
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why
@@ -567,7 +567,7 @@
 	var/extra_detail = try_auto_call_shuttle() \
 		? "For the safety of our staff, we are expediting an emergency shuttle for remaining members of security and command." \
 		: "For the safety of our staff, we have blacklisted your station for new employment of security and command."
-	var/propaganda = pick(world.file2list("strings/anti_union_propaganda.txt"))
+	var/propaganda = pick(file2list("strings/anti_union_propaganda.txt"))
 
 	priority_announce(
 		"[message_header]\n\n[extra_detail]\n\n[propaganda]",

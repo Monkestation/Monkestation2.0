@@ -26,7 +26,7 @@
 	var/authenticated = FALSE
 	/// Will projectiles be able to pass over this computer?
 	var/projectiles_pass_chance = 50
-	pass_flags_self = LETPASSTHROW //monkestation addition
+	pass_flags_self = LETPASSTHROW | PASSMACHINE | LETPASSCLICKS
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -37,7 +37,7 @@
 
 	power_change()
 
-/obj/machinery/computer/process()
+/obj/machinery/computer/process(seconds_per_tick)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	return TRUE
@@ -86,9 +86,9 @@
 			if(machine_stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+				playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/computer/CanAllowThrough(atom/movable/mover, border_dir) // allows projectiles to fly over the computer
 	. = ..()
@@ -112,7 +112,7 @@
 		return
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 		set_light(0)
 
 /obj/machinery/computer/emp_act(severity)

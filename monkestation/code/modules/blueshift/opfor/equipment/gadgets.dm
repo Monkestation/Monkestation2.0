@@ -61,11 +61,16 @@
 	description = "A fully supplied toolbelt, includes combat-grade wrench."
 	item_type = /obj/item/storage/belt/utility/syndicate
 
+/datum/opposing_force_equipment/gadget_stealth/deathjaws
+	name = "Jaws of Death"
+	item_type = /obj/item/crowbar/power/death
+	description = "A syndicate-powered refitting of Nanotrasen's standard jaws of life. This powerful tool serves as both a crowbar and a pair of wirecutters. \
+	In its crowbar configuration, it can force open airlocks. Very useful for entering the station or its departments."
+
 /datum/opposing_force_equipment/gadget_stealth/syndiejaws
-	name = "Syndicate Jaws of Life"
+	name = "Compact Jaws of Death"
 	item_type = /obj/item/crowbar/power/syndicate
-	description = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
-	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
+	description = "A compacted version of the jaws of death that can fit in your pocket."
 
 /datum/opposing_force_equipment/gadget_stealth/hair_tie
 	name = "Syndicate Hair Tie"

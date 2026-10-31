@@ -2,7 +2,7 @@
 	name = "satyr fluff"
 	desc = "A goat's fur"
 	icon_state = "satyr_fluff"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_satyr_fluff"
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -34,7 +34,10 @@
 /datum/bodypart_overlay/mutant/satyr_fluff/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/satyr_fluff/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/satyr_fluff/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 
@@ -42,7 +45,7 @@
 	name = "satyr horns"
 	desc = "A goat's horns"
 	icon_state = "satyr_horns"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_satyr_horns"
 
@@ -59,7 +62,10 @@
 /datum/bodypart_overlay/mutant/satyr_horns/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/satyr_horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/satyr_horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 //ONI STUFF
@@ -68,7 +74,7 @@
 	name = "oni tail"
 	desc = "An Oni's tail. Put it back!"
 	icon_state = ""
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_oni_tail"
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -88,14 +94,17 @@
 /datum/bodypart_overlay/mutant/oni_tail/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_tail/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/oni_wings
 	name = "oni wings"
 	desc = "An Oni's wings. Put it back!"
 	icon_state = ""
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_oni_wings"
 	zone = BODY_ZONE_CHEST
@@ -115,14 +124,17 @@
 /datum/bodypart_overlay/mutant/oni_wings/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_wings/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE
 
 /obj/item/organ/external/oni_horns
 	name = "oni horns"
 	desc = "An Oni's horns. Put them back!"
 	icon_state = ""
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_oni_horns"
 	zone = BODY_ZONE_HEAD
@@ -142,5 +154,8 @@
 /datum/bodypart_overlay/mutant/oni_horns/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/oni_horns/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/oni_horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE

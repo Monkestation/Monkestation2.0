@@ -830,9 +830,7 @@
 	if(isbodypart(target))
 		var/obj/item/bodypart/limb = target
 		if(IS_ROBOTIC_LIMB(limb))
-			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Restyle robotic limb"
-	else
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Copy color"
+			context[SCREENTIP_CONTEXT_LMB] = "Restyle robotic limb"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -855,7 +853,7 @@
 	update_appearance()
 	if(actually_paints)
 		user.update_lips("spray_face", paint_color)
-	reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
+	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
@@ -881,15 +879,16 @@
 	return ..()
 
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
-	if (LAZYACCESS(modifiers, CTRL_CLICK))
-		return ctrl_interact(target, user)
-
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(check_empty(user))
 		return ITEM_INTERACT_BLOCKING
+
+	if (isbodypart(target))
+		if (color_limb(target, user))
+			return ITEM_INTERACT_SUCCESS
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
@@ -926,7 +925,7 @@
 			target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
 		use_charges(user, 2, requires_full = FALSE)
-		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
@@ -944,7 +943,7 @@
 	if(!actually_paints)
 		if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 			use_charges(user, 2, requires_full = FALSE)
-		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
@@ -981,41 +980,21 @@
 		if(holder.is_holding(target_item))
 			holder.update_held_items()
 		else
-			holder.update_clothing(target_item.slot_flags)
+			holder.update_clothing(target_item.slot_flags | holder.get_slot_by_item(target_item))
 
 	if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 		use_charges(user, 2, requires_full = FALSE)
-	reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+	reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
 	if(pre_noise || post_noise)
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/toy/crayon/spraycan/proc/ctrl_interact(atom/interacting_with, mob/living/user)
-	if(is_capped)
-		if(!interacting_with.color)
-			// let's be generous and assume if they're trying to match something with no color, while capped,
-			// we shouldn't be blocking further interactions
-			return NONE
-		balloon_alert(user, "take the cap off first!")
-		return ITEM_INTERACT_BLOCKING
-
-	if(check_empty(user))
-		return ITEM_INTERACT_BLOCKING
-
-	if(!isbodypart(interacting_with) || !actually_paints)
-		if(interacting_with.color)
-			paint_color = interacting_with.color
-			balloon_alert(user, "matched colour of target")
-			update_appearance()
-			return ITEM_INTERACT_BLOCKING
-		balloon_alert(user, "can't match those colours!")
-		return ITEM_INTERACT_BLOCKING
-
-	var/obj/item/bodypart/limb = interacting_with
+/// Lets the user pick a new style for a robotic limb, returns FALSE if the limb isnt robotic
+/obj/item/toy/crayon/spraycan/proc/color_limb(obj/item/bodypart/limb, mob/living/user)
 	if(!IS_ROBOTIC_LIMB(limb))
-		return ITEM_INTERACT_BLOCKING
+		return FALSE
 
 	var/list/skins = list()
 	var/static/list/style_list_icons = list(
@@ -1034,7 +1013,7 @@
 	if(choice && (use_charges(user, 5, requires_full = FALSE)))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
-	return ITEM_INTERACT_SUCCESS
+	return TRUE
 
 /obj/item/toy/crayon/spraycan/click_alt(mob/user)
 	if(!has_cap)

@@ -373,7 +373,7 @@
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
-	if(!internal_connector.gas_connector.nodes[1] || !internal_connector.gas_connector.airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.moles.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
@@ -606,7 +606,7 @@
 	data["beakerContents"] = beakerContents
 	return data
 
-/obj/machinery/cryo_cell/ui_act(action, params)
+/obj/machinery/cryo_cell/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

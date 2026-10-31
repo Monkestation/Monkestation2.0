@@ -45,6 +45,7 @@
 	desc = "An all-natural fishing line made of stretched out sinew."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_sinew"
+	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#d1cca3"
 
 /datum/crafting_recipe/sinew_line

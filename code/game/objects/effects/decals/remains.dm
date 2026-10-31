@@ -5,7 +5,7 @@
 
 /obj/effect/decal/remains/acid_act()
 	visible_message(span_warning("[src] dissolve[gender == PLURAL?"":"s"] into a puddle of sizzling goop!"))
-	playsound(src, 'sound/items/welder.ogg', 150, TRUE)
+	playsound(src, 'sound/items/tools/welder.ogg', 150, TRUE)
 	new /obj/effect/decal/cleanable/greenglow(drop_location())
 	qdel(src)
 	return TRUE
@@ -61,6 +61,6 @@
 	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "remainsrobot"
 
-/obj/effect/decal/cleanable/robot_debris/old
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old
 	name = "dusty robot debris"
 	desc = "Looks like nobody has touched this in a while."

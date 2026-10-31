@@ -1744,6 +1744,8 @@
 /obj/item/seeds/reishi,
 /obj/item/seeds/reishi,
 /obj/item/seeds/cannabis,
+/obj/item/seeds/cocoapod/bungotree,
+/obj/item/seeds/cocoapod/bungotree,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "Ew" = (
@@ -1946,8 +1948,7 @@
 "IM" = (
 /obj/structure/rack/wooden,
 /obj/item/stack/medical/aloe{
-	pixel_x = -5;
-	pixel_y = 12
+	pixel_x = -10
 	},
 /obj/item/food/grown/aloe,
 /obj/item/food/grown/aloe{
@@ -1956,6 +1957,17 @@
 /obj/item/food/grown/aloe{
 	pixel_y = 0;
 	pixel_x = 10
+	},
+/obj/item/food/grown/bungofruit{
+	pixel_y = 9
+	},
+/obj/item/food/grown/bungofruit{
+	pixel_y = 9;
+	pixel_x = -5
+	},
+/obj/item/food/grown/bungofruit{
+	pixel_y = 9;
+	pixel_x = 5
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)

@@ -31,6 +31,8 @@
 	var/datum/callback/on_deployed
 	/// Optional callback triggered before we hide our equipment, before as we may delete it afterwards
 	var/datum/callback/on_removed
+	/// If we've overslotted a hat or whatever, this is the item we've overslotted.
+	var/obj/item/overslotted
 
 /datum/component/toggle_attached_clothing/Initialize(
 	deployable_type,
@@ -125,12 +127,21 @@
 	if (wearer.is_holding(parent_gear))
 		parent_gear.balloon_alert(wearer, "wear it first!")
 		return
-	if (wearer.get_item_by_slot(equipped_slot))
+	var/obj/item/worn_item = wearer.get_item_by_slot(equipped_slot)
+	// this has to come off before our equipment even exists, the void cloak already hides itself the moment its hood gets made
+	if (worn_item && !wearer.transferItemToLoc(worn_item, null))
 		parent_gear.balloon_alert(wearer, "slot occupied!")
 		return
 	if (!deployable && !create_deployable())
+		if (worn_item)
+			return_overslot(worn_item, wearer)
 		return
+	if (worn_item)
+		worn_item.forceMove(deployable)
+		overslotted = worn_item
 	if (!wearer.equip_to_slot_if_possible(deployable, slot = equipped_slot))
+		if (worn_item)
+			return_overslot(worn_item, wearer)
 		if(destroy_on_removal)
 			remove_deployable()
 		return
@@ -167,6 +178,7 @@
 	RegisterSignal(deployable, COMSIG_ITEM_DROPPED, PROC_REF(on_deployed_dropped))
 	RegisterSignal(deployable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_deployed_equipped))
 	RegisterSignal(deployable, COMSIG_QDELETING, PROC_REF(on_deployed_destroyed))
+	RegisterSignal(deployable, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
 	on_created?.Invoke(deployable)
 	return TRUE
 
@@ -185,8 +197,17 @@
 /// Undeploy gear if it is deleted
 /datum/component/toggle_attached_clothing/proc/on_deployed_destroyed()
 	SIGNAL_HANDLER
+	overslotted?.forceMove(deployable.drop_location())
 	remove_deployable()
 	deployable = null
+
+/// Ensures to clear the overslot ref
+/datum/component/toggle_attached_clothing/proc/on_overslot_exit(obj/item/source, atom/movable/gone, direction)
+	SIGNAL_HANDLER
+	if (gone != overslotted)
+		return
+	overslotted = null
+	source.update_slot_icon()
 
 /// Removes our deployed equipment from the wearer
 /datum/component/toggle_attached_clothing/proc/remove_deployable()
@@ -211,8 +232,18 @@
 	if (QDELETED(deployable))
 		deployable = null
 		return
+	var/obj/item/overslot = overslotted // overslotted will be nulled by `on_overslot_exit` when we move it, so just... keep this here
 	if (!ishuman(deployable.loc))
+		overslot?.forceMove(deployable.drop_location())
 		deployable.forceMove(parent)
 		return
 	var/mob/living/carbon/human/wearer = deployable.loc
+	overslot?.moveToNullspace()
 	wearer.transferItemToLoc(deployable, parent, force = TRUE, silent = TRUE)
+	if (overslot)
+		return_overslot(overslot, wearer)
+
+/// Puts an item our gear was worn over back into its slot, or drops it if it won't go back on
+/datum/component/toggle_attached_clothing/proc/return_overslot(obj/item/overslot, mob/living/carbon/human/wearer)
+	if (!wearer.equip_to_slot_if_possible(overslot, equipped_slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
+		wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)

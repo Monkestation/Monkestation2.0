@@ -300,7 +300,7 @@
 		return
 	if(!M.reagents)
 		return
-	reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
+	reagents.trans_to(M, reagents.total_volume, transferred_by = user, methods = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize(mapload)
@@ -336,7 +336,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, \
 	speed = 6 SECONDS, \
-	butcher_sound = 'sound/weapons/blade1.ogg', \
+	butcher_sound = 'sound/items/weapons/blade1.ogg', \
 	)
 	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
@@ -417,7 +417,7 @@
 
 	if(user)
 		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -497,7 +497,7 @@
 /obj/item/pen/screwdriver/on_transform(obj/item/source, mob/user, active)
 	if(user)
 		balloon_alert(user, active ? "extended" : "retracted")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
 	if(!active)
 		tool_behaviour = initial(tool_behaviour)

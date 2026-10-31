@@ -1,7 +1,7 @@
 //Structure as this doesn't need any power to work
 /obj/structure/drain
 	name = "drain"
-	icon = 'monkestation/icons/obj/structures/drains.dmi'
+	icon = 'icons/obj/structures/drains.dmi'
 	icon_state = "drain"
 	desc = "Drainage inlet embedded in the floor to prevent flooding."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -27,7 +27,7 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
 	to_chat(user, span_notice("You start [welded ? "unwelding" : "welding"] [src]..."))
 	if(I.use_tool(src, user, 2 SECONDS))
 		to_chat(user, span_notice("You [welded ? "unweld" : "weld"] [src]."))

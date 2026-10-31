@@ -3,7 +3,7 @@
 /obj/machinery/lapvend
 	name = "computer vendor"
 	desc = "A vending machine with microfabricator capable of dispensing various NT-branded computers."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "robotics"
 	layer = 2.9
 	density = TRUE
@@ -44,7 +44,7 @@
 		total_price = 199
 	return FALSE
 
-/obj/machinery/lapvend/ui_act(action, params)
+/obj/machinery/lapvend/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -9,7 +9,7 @@
 		WIRE_PANIC, WIRE_ALARM
 	)
 	add_duds(3)
-	..()
+	return ..()
 
 /datum/wires/airalarm/interactable(mob/user)
 	if(!..())
@@ -25,6 +25,12 @@
 	status += "The short indicator is [A.shorted ? "lit" : "off"]."
 	status += "The AI connection light is [!A.aidisabled ? "on" : "off"]."
 	return status
+
+/datum/wires/airalarm/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
+		return TRUE
+
+	return ..()
 
 /datum/wires/airalarm/on_pulse(wire)
 	var/obj/machinery/airalarm/A = holder

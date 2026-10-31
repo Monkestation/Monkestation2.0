@@ -310,6 +310,16 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Colorable Bunny Suit"
 	item_path = /obj/item/clothing/under/costume/playbunny
 
+/datum/loadout_item/under/miscellaneous/captain/bunnysuit
+	name = "Captain's Bunnysuit"
+	item_path = /obj/item/clothing/under/rank/captain/bunnysuit
+	restricted_roles = list(JOB_CAPTAIN)
+
+/datum/loadout_item/under/miscellaneous/security/bunnysuit
+	name = "Head of Security's Bunnysuit"
+	item_path = /obj/item/clothing/under/rank/security/head_of_security/bunnysuit
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+
 /datum/loadout_item/under/miscellaneous/hula
 	name = "Hula Skirt"
 	item_path = /obj/item/clothing/under/dress/hula
@@ -709,6 +719,26 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	item_path = /obj/item/clothing/under/rank/captain/nova/utility
 	restricted_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_RESEARCH_DIRECTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CHIEF_ENGINEER)
 	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/gnome_green
+	name = "Green Gnome Uniform"
+	item_path = /obj/item/clothing/under/gnome_green
+
+/datum/loadout_item/under/jumpsuit/gnome_blue
+	name = "Blue Gnome Uniform"
+	item_path = /obj/item/clothing/under/gnome_blue
+
+/datum/loadout_item/shoes/gnome_boots
+	name = "Leather Gnome Boots"
+	item_path = /obj/item/clothing/shoes/gnome_boots
+
+/datum/loadout_item/head/gnome_hat
+	name = "Gnome Hat"
+	item_path = /obj/item/clothing/head/gnome_hat
+
+/datum/loadout_item/head/gnome_hat_tall
+	name = "Tall Gnome Hat"
+	item_path = /obj/item/clothing/head/gnome_hat_tall
 
 /*
  *	MISC UNDERSUITS

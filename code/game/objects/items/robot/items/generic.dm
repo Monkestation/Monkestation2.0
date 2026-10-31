@@ -9,6 +9,9 @@
 #define HARM_ALARM_NO_SAFETY_COOLDOWN (60 SECONDS)
 #define HARM_ALARM_SAFETY_COOLDOWN (20 SECONDS)
 
+#define CHARGER_MODE_DRAW "draw"
+#define CHARGER_MODE_CHARGE "charge"
+
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
@@ -24,7 +27,7 @@
 	if(ishuman(attacked_mob))
 		var/mob/living/carbon/human/human = attacked_mob
 		if(human.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
-			playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(attacked_mob, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
@@ -46,7 +49,7 @@
 	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
 
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
 
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [(user.istate & ISTATE_HARM) ? "On" : "Off"])")
 
@@ -102,7 +105,7 @@
 				user.visible_message(span_notice("[user] playfully boops [attacked_mob] on the head!"), \
 								span_notice("You playfully boop [attacked_mob] on the head!"))
 				user.do_attack_animation(attacked_mob, ATTACK_EFFECT_BOOP)
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
+				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE, -1)
 			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
 					user.visible_message(span_notice("[user] shakes [attacked_mob] trying to get [attacked_mob.p_them()] up!"), \
@@ -119,7 +122,7 @@
 			else
 				user.visible_message(span_notice("[user] pets [attacked_mob]!"), \
 						span_notice("You pet [attacked_mob]!"))
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		if(HUG_MODE_HUG)
 			if(ishuman(attacked_mob))
 				attacked_mob.adjust_status_effects_on_shake_up()
@@ -138,7 +141,7 @@
 			else
 				user.visible_message(span_warning("[user] bops [attacked_mob] on the head!"), \
 						span_warning("You bop [attacked_mob] on the head!"))
-			playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE, -1)
 		if(HUG_MODE_SHOCK)
 			if (!COOLDOWN_FINISHED(src, shock_cooldown))
 				return
@@ -154,7 +157,7 @@
 				else
 					user.visible_message(span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect"), \
 						span_danger("You shock [attacked_mob] to no effect."))
-			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/effects/sparks/sparks2.ogg', 50, TRUE, -1)
 			user.cell.charge -= 500
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
@@ -166,7 +169,7 @@
 			else
 				user.visible_message(span_userdanger("[user] crushes [attacked_mob]!"), \
 						span_danger("You crush [attacked_mob]!"))
-			playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE, -1)
 			attacked_mob.adjustBruteLoss(15)
 			user.cell.charge -= 300
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)
@@ -179,24 +182,43 @@
 
 /obj/item/borg/charger
 	name = "power connector"
+	desc = "An energy probe that can charge batteries and energy-dependent weapons (using the cyborg battery, in both directions), as well as recharge the cyborg from all types of chargers, APC or even other cyborgs, the effectiveness depends on the components of the machine."
 	icon_state = "charger_draw"
 	item_flags = NOBLUDGEON
 	/// Charging mode
-	var/mode = "draw"
+	var/mode = CHARGER_MODE_DRAW
+	var/datum/looping_sound/charger/soundloop
+	var/busy = FALSE
 	/// Whitelist of charging machines
-	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
+	var/static/list/charge_machines = typecacheof(list(
+		/obj/machinery/cell_charger,
+		/obj/machinery/cell_charger_multi,
+		/obj/machinery/recharger,
+		/obj/machinery/recharge_station,
+		/obj/machinery/mech_bay_recharge_port,
+		/obj/machinery/power/apc,
+	))
 	/// Whitelist of chargable items
-	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/power_store/cell, /obj/item/gun/energy))
+	var/static/list/charge_items = typecacheof(list(
+		/obj/item/stock_parts/power_store/cell,
+		/obj/item/gun/energy,
+		/obj/item/melee/baton/security,
+	))
+
+/obj/item/borg/charger/Initialize(mapload)
+	. = ..()
+	soundloop = new(src, FALSE)
 
 /obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
 	return ..()
 
 /obj/item/borg/charger/attack_self(mob/user)
-	if(mode == "draw")
-		mode = "charge"
+	if(mode == CHARGER_MODE_DRAW)
+		mode = CHARGER_MODE_CHARGE
 	else
-		mode = "draw"
+		mode = CHARGER_MODE_DRAW
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
@@ -205,106 +227,171 @@
 		return NONE
 
 	. = ITEM_INTERACT_BLOCKING
-	if(mode == "draw")
-		if(is_type_in_list(target, charge_machines))
-			var/obj/machinery/target_machine = target
-			if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
-				to_chat(user, span_warning("[target_machine] is unpowered!"))
-				return
 
-			to_chat(user, span_notice("You connect to [target_machine]'s power line..."))
-			while(do_after(user, 1.5 SECONDS, target = target_machine, progress = FALSE))
-				if(!user || !user.cell || mode != "draw")
-					return
-
-				if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
-					break
-
-				target_machine.charge_cell(0.15 * STANDARD_CELL_CHARGE, user.cell)
-
-			to_chat(user, span_notice("You stop charging yourself."))
-
-		else if(is_type_in_list(target, charge_items))
-			var/obj/item/stock_parts/power_store/cell/cell = target
-			if(!istype(cell))
-				cell = locate(/obj/item/stock_parts/power_store/cell) in target
-			if(!cell)
-				to_chat(user, span_warning("[target] has no power cell!"))
-				return
-
-			if(istype(target, /obj/item/gun/energy))
-				var/obj/item/gun/energy/energy_gun = target
-				if(!energy_gun.can_charge)
-					to_chat(user, span_warning("[target] has no power port!"))
-					return
-
-			if(!cell.charge)
-				to_chat(user, span_warning("[target] has no power!"))
-
-
-			to_chat(user, span_notice("You connect to [target]'s power port..."))
-
-			while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
-				if(!user || !user.cell || mode != "draw")
-					return
-
-				if(!cell || !target)
-					return
-
-				if(cell != target && cell.loc != target)
-					return
-
-				var/draw = min(cell.charge, cell.chargerate*0.5, user.cell.maxcharge - user.cell.charge)
-				if(!cell.use(draw))
-					break
-				if(!user.cell.give(draw))
-					break
-				target.update_appearance()
-
-			to_chat(user, span_notice("You stop charging yourself."))
-
-	else if(is_type_in_list(target, charge_items))
-		var/obj/item/stock_parts/power_store/cell/cell = target
-		if(!istype(cell))
-			cell = locate(/obj/item/stock_parts/power_store/cell) in target
-		if(!cell)
-			to_chat(user, span_warning("[target] has no power cell!"))
+	if(busy)
+		to_chat(user, span_warning("Can not be used while charging!"))
+		return
+/////	Machines	/////
+	if(is_type_in_list(target, charge_machines))
+		if(mode == CHARGER_MODE_CHARGE)
+			to_chat(user, span_warning("You can't charge [target]"))
 			return
 
+		var/obj/machinery/target_machine = target
+		if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
+			to_chat(user, span_warning("[target_machine] is unpowered!"))
+			return
+
+		var/capacitor_rate = 1
+		for(var/datum/stock_part/capacitor/capacitor_parts in target_machine.component_parts)
+			if(capacitor_parts)
+				capacitor_rate = capacitor_parts.tier
+
+		var/cell_rate = 1
+		for(var/obj/item/stock_parts/power_store/cell_parts in target_machine.component_parts)
+			if(cell_parts)
+				if(istype(cell_parts, /obj/item/stock_parts/power_store/cell))
+					cell_rate = cell_parts.chargerate / STANDARD_CELL_RATE * 2
+				if(istype(cell_parts, /obj/item/stock_parts/power_store/battery))
+					cell_rate = cell_parts.chargerate / STANDARD_BATTERY_RATE * 2
+
+		busy = TRUE
+		soundloop.start()
+		to_chat(user, span_notice("You connect to [target_machine]'s power line..."))
+		while(do_after(user, 1.5 SECONDS, target = target_machine, progress = FALSE))
+			if(!user || !user.cell || mode != CHARGER_MODE_DRAW)
+				break
+
+			if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
+				break
+
+			target_machine.charge_cell(0.3 * STANDARD_CELL_CHARGE * capacitor_rate * cell_rate, user.cell)
+			do_sparks(1, FALSE, target)
+			to_chat(user, span_nicegreen("Battery level: <b>[round(user.cell.percent(), 0.1)]%</b>."))
+
+		busy = FALSE
+		soundloop.stop()
+		to_chat(user, span_notice("You stop charging yourself."))
+
+/////	Cells & Guns	/////
+	if(is_type_in_list(target, charge_items))
+		var/obj/item/stock_parts/power_store/cell/target_cell = target
+		var/charge_ratio = 1
+
+		if(!istype(target_cell))
+			target_cell = locate(/obj/item/stock_parts/power_store/cell) in target
+		if(!target_cell)
+			to_chat(user, span_warning("[target] has no power cell!"))
+			return
 		if(istype(target, /obj/item/gun/energy))
 			var/obj/item/gun/energy/energy_gun = target
+			charge_ratio = 3
 			if(!energy_gun.can_charge)
 				to_chat(user, span_warning("[target] has no power port!"))
 				return
 
-		if(cell.charge >= cell.maxcharge)
+		if(mode == CHARGER_MODE_DRAW && !target_cell.charge)
+			to_chat(user, span_warning("[target] has no power!"))
+			return
+		if(mode == CHARGER_MODE_CHARGE && target_cell.charge >= target_cell.maxcharge)
 			to_chat(user, span_warning("[target] is already charged!"))
+			return
 
+	// Charging process
+		busy = TRUE
+		soundloop.start()
 		to_chat(user, span_notice("You connect to [target]'s power port..."))
-
 		while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
-			if(!user || !user.cell || mode != "charge")
+			if(!target_cell || !target)
+				return
+			if(target_cell != target && target_cell.loc != target)
+				return
+			if(!user || !user.cell)
 				return
 
-			if(!cell || !target)
-				return
+			if(mode == CHARGER_MODE_DRAW)
+				var/draw = min(target_cell.charge, target_cell.chargerate * charge_ratio, user.cell.maxcharge - user.cell.charge)
+				if(!target_cell.use(draw))
+					break
+				if(!user.cell.give(draw))
+					break
+			else
+				var/draw = min(user.cell.charge, target_cell.chargerate * charge_ratio, target_cell.maxcharge - target_cell.charge)
+				if(!user.cell.use(draw))
+					break
+				if(!target_cell.give(draw))
+					break
 
-			if(cell != target && cell.loc != target)
-				return
-
-			var/draw = min(user.cell.charge, cell.chargerate * 0.5, cell.maxcharge - cell.charge)
-			if(!user.cell.use(draw))
-				break
-			if(!cell.give(draw))
-				break
 			target.update_appearance()
+			do_sparks(1, FALSE, target)
+			to_chat(user, span_nicegreen("Battery level: <b>[round(user.cell.percent(), 0.1)]%</b>, [target.name] battery level: <b>[round(target_cell.percent(), 0.1)]%</b>."))
 
-		to_chat(user, span_notice("You stop charging [target]."))
+		busy = FALSE
+		soundloop.stop()
+		to_chat(user, span_notice("You stop charging [mode == CHARGER_MODE_CHARGE ? "[target]" : "yourself"]."))
+
+/////	Cyborgs		/////
+	if(istype(target, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/borg = target
+		var/charge_ratio = 1
+
+		if(target == user)
+			to_chat(user, span_warning("You can't charging yourself!"))
+			return
+		if(!borg.cell)
+			to_chat(user, span_warning("[target] has no power cell!"))
+			return
+		if(mode == CHARGER_MODE_DRAW && !borg.cell.charge)
+			to_chat(user, span_warning("[target] has no power!"))
+			return
+		if(mode == CHARGER_MODE_CHARGE && borg.cell.charge >= borg.cell.maxcharge - 100)
+			to_chat(user, span_warning("[target] is already charged!"))
+			return
+
+	// Charging process
+		busy = TRUE
+		soundloop.start()
+		to_chat(user, span_notice("You connect to [target]'s power port..."))
+		while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
+			if(!borg.cell || !target)
+				return
+			if(borg.cell != target && borg.cell.loc != target)
+				return
+			if(!user || !user.cell)
+				return
+			if(get_dist(user, target) > 1)
+				to_chat(user, span_notice("Where did he go?"))
+				return
+
+			if(mode == CHARGER_MODE_DRAW)
+				var/draw = min(borg.cell.charge, borg.cell.chargerate * charge_ratio, user.cell.maxcharge - user.cell.charge)
+				if(!borg.cell.use(draw))
+					break
+				if(!user.cell.give(draw))
+					break
+			else
+				var/draw = min(user.cell.charge, borg.cell.chargerate * charge_ratio, borg.cell.maxcharge - borg.cell.charge)
+				if(!user.cell.use(draw))
+					break
+				if(!borg.cell.give(draw))
+					break
+
+			target.update_appearance()
+			do_sparks(1, FALSE, target)
+			to_chat(user, span_nicegreen("Battery level: <b>[round(user.cell.percent(), 0.1)]%</b>, [target.name] battery level: <b>[round(borg.cell.percent(), 0.1)]%</b>."))
+
+		busy = FALSE
+		soundloop.stop()
+		to_chat(user, span_notice("You stop charging [mode == CHARGER_MODE_CHARGE ? "[target]" : "yourself"]."))
+
+/obj/item/borg/charger/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/item/harmalarm
 	name = "\improper Sonic Harm Prevention Tool"
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "megaphone"
 	/// Harm alarm cooldown
 	COOLDOWN_DECLARE(alarm_cooldown)
@@ -342,7 +429,7 @@
 			carbon.adjust_confusion(6 SECONDS)
 
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/mobs/non-humanoids/cyborg/harmalarm.ogg', 70, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
 		user.log_message("used a Cyborg Harm Alarm", LOG_ATTACK)
 		if(iscyborg(user))
@@ -376,3 +463,6 @@
 
 #undef HARM_ALARM_NO_SAFETY_COOLDOWN
 #undef HARM_ALARM_SAFETY_COOLDOWN
+
+#undef CHARGER_MODE_DRAW
+#undef CHARGER_MODE_CHARGE

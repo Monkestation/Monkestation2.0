@@ -459,9 +459,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	build_hand_slots()
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12()
-	set name = "F12"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob, button_pressed_F12, "F12")
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
@@ -480,7 +478,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			static_inventory -= H
 	hand_slots = list()
 	var/atom/movable/screen/inventory/hand/hand_box
-	for(var/i in 1 to mymob.held_items.len)
+	for(var/i in 1 to mymob.get_num_hand_slots())
 		hand_box = new /atom/movable/screen/inventory/hand(null, src)
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style

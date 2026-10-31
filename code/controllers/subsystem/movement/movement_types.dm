@@ -129,10 +129,6 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
 
-	if(result == MOVELOOP_FAILURE && ishuman(src.moving) && istype(src, /datum/move_loop/has_target/move_towards)) // Tell the mob we slipped and what happened
-		var/datum/move_loop/has_target/move_towards/collide_move = src
-		SEND_SIGNAL(src.moving, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay, collide_move.moving_towards, src)
-
 	if(QDELETED(src) || result != MOVELOOP_SUCCESS) //Can happen
 		return
 
@@ -166,7 +162,7 @@
 	paused = FALSE
 
 ///Removes the atom from some movement subsystem. Defaults to SSmovement
-/datum/controller/subsystem/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
+/datum/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
 	var/datum/movement_packet/our_info = moving.move_packet
 	if(!our_info)
 		return FALSE
@@ -187,7 +183,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move, priority, flags, extra_info, delay, timeout, direction)
 
 ///Replacement for walk()
@@ -227,7 +223,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_to_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_to_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move/move_to, priority, flags, extra_info, delay, timeout, direction)
 
 /datum/move_loop/move/move_to
@@ -253,7 +249,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/force_move_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/force_move_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move/force, priority, flags, extra_info, delay, timeout, direction)
 
 /datum/move_loop/move/force
@@ -310,7 +306,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, priority, flags, extra_info, delay, timeout, chasing)
 
 ///Used for force-move loops
@@ -363,7 +359,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, priority, flags, extra_info, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
@@ -377,7 +373,8 @@
 	if(!.)
 		return
 	var/atom/old_loc = moving.loc
-	step_to(moving, target)
+	var/turf/next = get_step_to(moving, target)
+	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /**
@@ -396,7 +393,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, priority, flags, extra_info, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
@@ -410,9 +407,9 @@
 	if(!.)
 		return
 	var/atom/old_loc = moving.loc
-	step_away(moving, target)
+	var/turf/next = get_step_away(moving, target)
+	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
-
 
 /**
  * Helper proc for the move_towards datum
@@ -430,7 +427,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, priority, flags, extra_info, delay, timeout, chasing, home)
 
 /**
@@ -449,7 +446,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return move_towards(moving, chasing, delay, TRUE, timeout, subsystem, priority, flags, extra_info)
 
 ///Used as a alternative to walk_towards
@@ -495,6 +492,11 @@
 	return ..()
 
 /datum/move_loop/has_target/move_towards/move()
+	//YOU FOUND THEM! GOOD JOB
+	if(home && get_turf(moving) == get_turf(target))
+		x_rate = 0
+		y_rate = 0
+		return
 	//Move our tickers forward a step, we're guaranteed at least one step forward because of how the code is written
 	if(x_rate) //Did you know that rounding by 0 throws a divide by 0 error?
 		x_ticker = FLOOR(x_ticker + x_rate, x_rate)
@@ -512,7 +514,7 @@
 	if(y_ticker >= 1)
 		y_ticker = MODULUS(x_ticker, 1)
 	var/atom/old_loc = moving.loc
-	moving.Move(moving_towards, get_dir(moving, moving_towards))
+	moving.Move(moving_towards, get_dir(moving, moving_towards), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 
 	//YOU FOUND THEM! GOOD JOB
 	if(home && get_turf(moving) == get_turf(target))
@@ -585,7 +587,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, priority, flags, extra_info, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
@@ -594,7 +596,7 @@
 /datum/move_loop/has_target/move_towards_budget/move()
 	var/turf/target_turf = get_step_towards(moving, target)
 	var/atom/old_loc = moving.loc
-	moving.Move(target_turf, get_dir(moving, target_turf))
+	moving.Move(target_turf, get_dir(moving, target_turf), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /**
@@ -611,7 +613,7 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  */
-/datum/controller/subsystem/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/freeze, priority, flags, extra_info, delay, timeout, halted_turf)
 
 /// As close as you can get to a "do-nothing" move loop, the pure intention of this is to absolutely resist all and any automated movement until the move loop times out.
@@ -635,7 +637,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	if(!directions)
 		directions = GLOB.alldirs
 	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, priority, flags, extra_info, delay, timeout, directions)
@@ -667,7 +669,7 @@
 		var/testdir = pick(potential_dirs)
 		var/turf/moving_towards = get_step(moving, testdir)
 		var/atom/old_loc = moving.loc
-		moving.Move(moving_towards, testdir)
+		moving.Move(moving_towards, testdir, FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 		if(old_loc != moving?.loc)  //If it worked, we're done
 			return MOVELOOP_SUCCESS
 		potential_dirs -= testdir
@@ -687,7 +689,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, priority, flags, extra_info, delay, timeout)
 
 ///Wrapper around step_rand
@@ -695,8 +697,10 @@
 
 /datum/move_loop/move_to_rand/move()
 	var/atom/old_loc = moving.loc
-	step_rand(moving)
+	var/turf/next = get_step_rand(moving)
+	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
+
 
 /**
  * Snowflake disposal movement. Moves a disposal holder along a chain of disposal pipes
@@ -712,7 +716,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/disposal_holder, priority, flags, extra_info, delay, timeout)
 
 /// Disposal holders need to move through a chain of pipes
@@ -736,3 +740,105 @@
 	var/atom/old_loc = moving.loc
 	holder.current_pipe = holder.current_pipe.transfer(holder)
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
+
+/**
+ * Attempts to replicate the movement of /atom/movable/throw_at()
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * chasing - The atom we want to move towards
+ * maxrange - The maximum number of turfs that the thrownthing will travel to reach it's target.
+ * init_dir - The initial direction of the thrower of the thrownthing for building the trajectory of the throw.
+ * diagonals_first - A variable that helps in describing objects thrown at an angle, if it should be moved diagonally first or last.
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ *
+**/
+/datum/move_manager/proc/throw_at(moving, chasing, \
+	maxrange, init_dir, diagonals_first,\
+	delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/throw_at, priority, flags, extra_info, delay, timeout, chasing, maxrange, init_dir, diagonals_first)
+
+/datum/move_loop/has_target/throw_at
+	var/maxrange
+	var/init_dir
+	var/diagonals_first
+	var/pure_diagonal
+
+	var/dist_travelled = 0
+	var/dist_x
+	var/dist_y
+	var/dx
+	var/dy
+	var/diagonal_error
+
+/datum/move_loop/has_target/throw_at/setup(delay, timeout, atom/chasing, maxrange, init_dir, max_dist, diagonals_first)
+	. = ..()
+	if(!.)
+		return
+	target = get_turf(target)
+	src.maxrange = maxrange
+	src.init_dir = init_dir
+	src.diagonals_first = diagonals_first
+
+	dist_x = abs(target.x - moving.x)
+	dist_y = abs(target.y - moving.y)
+	dx = (target.x > moving.x) ? EAST : WEST
+	dy = (target.y > moving.y) ? NORTH : SOUTH
+
+	if(dist_x == dist_y)
+		pure_diagonal = 1
+	else if(dist_x <= dist_y)
+		var/olddist_x = dist_x
+		var/olddx = dx
+		dist_x = dist_y
+		dist_y = olddist_x
+		dx = dy
+		dy = olddx
+
+/datum/move_loop/has_target/throw_at/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, maxrange, init_dir, diagonals_first)
+	if(..() && maxrange == src.maxrange && init_dir == src.init_dir && diagonals_first == src.diagonals_first)
+		return TRUE
+	return FALSE
+
+/datum/move_loop/has_target/throw_at/proc/get_next_turf()
+	var/turf/next
+	if (dist_travelled <= max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
+		next = get_step(moving, get_dir(moving, target))
+	else
+		next = get_step(moving, init_dir)
+
+	if (!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
+		if (diagonal_error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
+			next = get_step(moving, dx)
+	return next
+
+/datum/move_loop/has_target/throw_at/move()
+	if(dist_travelled >= maxrange || moving.loc == target)
+		lifetime = 0
+		return MOVELOOP_NOT_READY
+
+	var/atom/next
+	if (dist_travelled <= max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
+		next = get_step(moving, get_dir(moving, target))
+	else
+		next = get_step(moving, init_dir)
+
+	if (!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
+		if (diagonal_error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
+			next = get_step(moving, dx)
+		diagonal_error += (diagonal_error < 0) ? dist_x/2 : -dist_y
+
+	if(!moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE)))
+		lifetime = 0
+		return MOVELOOP_FAILURE
+
+	dist_travelled++
+	if(dist_travelled >= maxrange || moving.loc == target)
+		lifetime = 0
+	return MOVELOOP_SUCCESS

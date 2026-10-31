@@ -1,5 +1,5 @@
 /datum/component/squeak
-	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
+	var/static/list/default_squeak_sounds = list('sound/items/toy_squeak/toysqueak1.ogg'=1, 'sound/items/toy_squeak/toysqueak2.ogg'=1, 'sound/items/toy_squeak/toysqueak3.ogg'=1)
 	var/list/override_squeak_sounds
 	var/mob/holder
 
@@ -79,8 +79,14 @@
 		else
 			playsound(parent, pick_weight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, mixer_channel = CHANNEL_SQUEAK) // monkestation edit: volume mixer
 
-/datum/component/squeak/proc/step_squeak()
+/datum/component/squeak/proc/step_squeak(obj/item/clothing/source)
 	SIGNAL_HANDLER
+
+	var/mob/living/carbon/human/owner = source.loc
+	if(CHECK_MOVE_LOOP_FLAGS(owner, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+		return
+	if(owner.buckled || owner.throwing || (owner.movement_type & (VENTCRAWLING|FLOATING|FLYING)))
+		return
 
 	if(istype(parent, /obj/item/clothing/shoes/clown_shoes/cluwne))
 		var/obj/item/clothing/shoes/clown_shoes/cluwne/shoe = parent

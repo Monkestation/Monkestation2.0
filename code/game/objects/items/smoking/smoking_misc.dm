@@ -41,7 +41,7 @@
 	icon_state = "match_lit"
 	damtype = BURN
 	force = 3
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	inhand_icon_state = "cigon"
 	name = "lit [initial(name)]"
 	desc = "A [initial(name)]. This one is lit."
@@ -54,6 +54,7 @@
 	if(!lit)
 		return
 
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
 	lit = FALSE
 	burnt = TRUE
 	damtype = BRUTE

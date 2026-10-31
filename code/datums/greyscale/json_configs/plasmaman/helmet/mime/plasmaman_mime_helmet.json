@@ -1,0 +1,46 @@
+{
+	"plasmaman_helmet": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_helmet/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mime_screen",
+			"blend_mode": "overlay"
+		}
+	],
+	"plasmaman_helmet_light": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_helmet/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mime_screen",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mime_screen_light",
+			"blend_mode": "overlay"
+		}
+	],
+	"plasmaman_helmet_welding": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_helmet/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mime_screen_welding",
+			"blend_mode": "overlay"
+		}
+	]
+}

@@ -89,21 +89,26 @@
 
 /obj/machinery/suit_storage_unit/engine
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/clothing/shoes/magboots
 	mod_type = /obj/item/mod/control/pre_equipped/engineering
+	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
+	storage_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/atmos
 	mask_type = /obj/item/clothing/mask/gas/atmos
 	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
+	suit_type = /obj/item/clothing/suit/space/hardsuit/atmos
+	storage_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/ce
-	mask_type = /obj/item/clothing/mask/breath
+	mask_type = /obj/item/clothing/mask/gas/atmos
 	storage_type = /obj/item/clothing/shoes/magboots/advance
 	mod_type = /obj/item/mod/control/pre_equipped/advanced
 
 /obj/machinery/suit_storage_unit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	mod_type = /obj/item/mod/control/pre_equipped/security
+	suit_type = /obj/item/clothing/suit/space/hardsuit/sec
+	storage_type = /obj/item/tank/jetpack/security
 
 /obj/machinery/suit_storage_unit/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
@@ -127,16 +132,29 @@
 /obj/machinery/suit_storage_unit/cmo
 	mask_type = /obj/item/clothing/mask/breath/medical
 	storage_type = /obj/item/tank/internals/oxygen
+	suit_type = /obj/item/clothing/suit/bio_suit/cmo
+	helmet_type = /obj/item/clothing/head/bio_hood/cmo
 	mod_type = /obj/item/mod/control/pre_equipped/rescue
 
 /obj/machinery/suit_storage_unit/rd
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/oxygen
 	mod_type = /obj/item/mod/control/pre_equipped/research
+	suit_type = /obj/item/clothing/suit/bio_suit/scientist
+	helmet_type = /obj/item/clothing/head/bio_hood/scientist
+
+/obj/machinery/suit_storage_unit/blueshield
+	mask_type = /obj/item/clothing/mask/gas/sechailer
+	mod_type = /obj/item/mod/control/pre_equipped/blueshield
+	suit_type = /obj/item/clothing/suit/space/hardsuit/sec
+	storage_type = /obj/item/tank/jetpack/security
 
 /obj/machinery/suit_storage_unit/syndicate
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear
+	storage_type = /obj/item/tank/jetpack/harness
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate
+	suit_type = /obj/item/clothing/suit/space/syndicate
 
 /obj/machinery/suit_storage_unit/interdyne
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -499,7 +517,7 @@
 		locked = FALSE
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 50, TRUE)
 			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
 			smoke.set_up(0, holder = src, location = src)
 			smoke.start()
@@ -516,7 +534,7 @@
 			else
 				visible_message(span_warning("[src]'s door slides open, barraging you with the nauseating smell of charred flesh."))
 				qdel(mob_occupant.GetComponent(/datum/component/irradiated))
-			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
+			playsound(src, 'sound/machines/airlock/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
 				things_to_clear += suit

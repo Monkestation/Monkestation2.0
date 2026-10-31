@@ -7463,6 +7463,7 @@
 	name = "Mining Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/production)
 "Ra" = (

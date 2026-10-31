@@ -7,7 +7,7 @@
 /obj/item/surgery_tray
 	name = "surgery tray"
 	desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
-	icon = 'icons/obj/medicart.dmi'
+	icon = 'icons/obj/medical/medicart.dmi'
 	icon_state = "tray"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 1
@@ -30,7 +30,6 @@
 		/obj/item/stack/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
-		/obj/item/breathing_bag,
 	)
 
 /obj/item/surgery_tray/deployed
@@ -208,6 +207,7 @@
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
 		/obj/item/breathing_bag,
+		/obj/item/autopsy_scanner,
 	))
 
 /obj/item/surgery_tray/craftable

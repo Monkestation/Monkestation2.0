@@ -140,7 +140,7 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/firebot/ui_act(action, params)
+/mob/living/simple_animal/bot/firebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
@@ -178,10 +178,10 @@
 		return
 
 	if(prob(1) && target_fire == null)
-		var/list/messagevoice = list("No fires detected." = 'sound/voice/firebot/nofires.ogg',
-		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
-		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
-		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
+		var/list/messagevoice = list("No fires detected." = 'sound/mobs/non-humanoids/firebot/nofires.ogg',
+		"Only you can prevent station fires." = 'sound/mobs/non-humanoids/firebot/onlyyou.ogg',
+		"Temperature nominal." = 'sound/mobs/non-humanoids/firebot/tempnominal.ogg',
+		"Keep it cool." = 'sound/mobs/non-humanoids/firebot/keepitcool.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], 50)
@@ -211,10 +211,10 @@
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
-				playsound(src, 'sound/voice/firebot/stopdropnroll.ogg', 50, FALSE)
+				playsound(src, 'sound/mobs/non-humanoids/firebot/stopdropnroll.ogg', 50, FALSE)
 			else
 				speak("Extinguishing!")
-				playsound(src, 'sound/voice/firebot/extinguishing.ogg', 50, FALSE)
+				playsound(src, 'sound/mobs/non-humanoids/firebot/extinguishing.ogg', 50, FALSE)
 			speech_cooldown = world.time
 
 			flick("firebot1_use", src)
@@ -264,7 +264,7 @@
 
 	if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
 		speak("Fire detected!")
-		playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
+		playsound(src, 'sound/mobs/non-humanoids/firebot/detected.ogg', 50, FALSE)
 		detected_cooldown = world.time
 		return scan_target
 

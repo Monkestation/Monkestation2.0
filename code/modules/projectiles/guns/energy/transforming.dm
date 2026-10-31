@@ -192,7 +192,7 @@
 	if(!ignores_cooldown && !COOLDOWN_FINISHED(src, last_speech))
 		return
 	say(pick_list_replacements(speech_json_file, json_string))
-	playsound(src, 'sound/creatures/tourist/tourist_talk.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = rand(2, 2.2))
+	playsound(src, 'sound/mobs/non-humanoids/tourist/tourist_talk.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = rand(2, 2.2))
 	Shake(2, 2, 1 SECONDS)
 	COOLDOWN_START(src, last_speech, MOD_LASER_SPEECH_COOLDOWN)
 
@@ -225,7 +225,7 @@
 /obj/item/gun/energy/modular_laser_rifle/ui_action_click(mob/user, actiontype)
 	if(!istype(actiontype, /datum/action/item_action/toggle_personality))
 		return ..()
-	playsound(src, 'sound/machines/beep.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/beep/beep.ogg', 30, TRUE)
 	personality_mode = !personality_mode
 	speak_up("[personality_mode ? "pickup" : "putdown"]", ignores_personality_toggle = TRUE)
 	return ..()
@@ -283,7 +283,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_kill
 	projectile_type = /obj/projectile/beam/cybersun_laser
-	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(28, STANDARD_CELL_CHARGE)
 	select_name = "Kill"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
 
@@ -324,6 +324,8 @@
 	icon_state = "disable_large"
 	damage = 0
 	stamina = 25
+	armor_flag = ENERGY
+	damage_type = STAMINA
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 
@@ -417,7 +419,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_disabler
 	projectile_type = /obj/projectile/beam/cybersun_laser/disable_bounce
-	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(14, STANDARD_CELL_CHARGE)
 	select_name = "Disable"
 	harmful = FALSE
 
@@ -425,6 +427,8 @@
 	icon_state = "disable_bounce"
 	damage = 0
 	stamina = 25
+	armor_flag = ENERGY
+	damage_type = STAMINA
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 	ricochet_auto_aim_angle = 30
@@ -443,7 +447,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_launcher
 	projectile_type = /obj/projectile/beam/cybersun_laser/flare
-	e_cost = LASER_SHOTS(5, 1000)
+	e_cost = LASER_SHOTS(3, STANDARD_CELL_CHARGE)
 	select_name = "Flare"
 
 /obj/projectile/beam/cybersun_laser/flare
@@ -595,7 +599,7 @@
 
 	//placeholder code for figuring out a way of making this not an if string
 	//ammo selector v8
-	var/fixed_message = "[lowertext(raw_message)]"
+	var/fixed_message = "[LOWER_TEXT(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
 		selectammo(DETAIN, speaker)
 		return TRUE
@@ -765,7 +769,7 @@
 	var/obj/item/stock_parts/power_store/cell/cell = get_cell()
 	if(anger > 20)
 		if(prob(anger-20))
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, -2)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, -2)
 			selectammo(roll(9), null, TRUE)
 	if(anger > 50)
 		if(prob(anger-40))
@@ -778,7 +782,7 @@
 			return
 		if(1 to 20)
 			if(prob(50))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE, -2)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE, -2)
 		if(70 to 99)
 			if(prob(90))
 				return
@@ -866,7 +870,7 @@
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	e_cost = 600 //20%, 5 shots
 	pellets = 4
 	variance = 50
@@ -881,8 +885,8 @@
 	damage_type = STAMINA
 	stamina = 20
 	paralyze_timer = 5 SECONDS
-	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
-	hitsound = 'sound/weapons/tap.ogg'
+	armor_flag = ENERGY
+	hitsound = 'sound/items/weapons/tap.ogg'
 	ricochets_max = 4
 	ricochet_chance = 140
 	ricochet_auto_aim_angle = 50
@@ -897,14 +901,19 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/projectile/lawbringer/detain/check_ricochet_flag(atom/reflecting_atom)
+	if((reflecting_atom.flags_ricochet & RICOCHET_HARD) || (reflecting_atom.flags_ricochet & RICOCHET_SHINY))
+		return TRUE
+	return FALSE
+
 /**
  * lawbringer execute mode:
- * It fires a 15 damage bullet
+ * It fires a 20 damage bullet
  */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
 	select_name = "execute"
-	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	e_cost = 300 //10%, 10 shots
 	harmful = TRUE
 
@@ -925,14 +934,14 @@
 /obj/item/ammo_casing/energy/lawbringer/hotshot
 	projectile_type = /obj/projectile/lawbringer/hotshot
 	select_name = "hotshot"
-	fire_sound = 'sound/weapons/fwoosh.ogg'
+	fire_sound = 'sound/items/weapons/fwoosh.ogg'
 	e_cost = 600 //20%, 5 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/hotshot
 	name = "proto-plasma"
 	icon_state = "pulse0_bl"
-	hitsound = 'sound/magic/fireball.ogg'
+	hitsound = 'sound/effects/magic/fireball.ogg'
 	damage = 5
 	damage_type = BURN
 
@@ -974,7 +983,7 @@
 /obj/item/ammo_casing/energy/lawbringer/bigshot
 	projectile_type = /obj/projectile/lawbringer/bigshot
 	select_name = "bigshot"
-	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
+	fire_sound = 'sound/items/weapons/gun/hmg/hmg.ogg'
 	e_cost = 1700 //56%, 1 shot
 	harmful = TRUE
 
@@ -1041,7 +1050,7 @@
 				M.dropItemToGround(item_to_strip)
 				to_chat(target, span_reallybig(span_clown("Your blasted right off your shoes!!")))
 				M.visible_message(span_warning("[M] is is sent rocketing off their shoes!"))
-			playsound(src, 'sound/items/airhorn.ogg', 100, TRUE, -1)
+			playsound(src, 'sound/items/airhorn/airhorn.ogg', 100, TRUE, -1)
 			var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 			M.throw_at(throw_target, 200, 8)
 
@@ -1051,7 +1060,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/pulse
 	projectile_type = /obj/projectile/lawbringer/pulse
-	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	fire_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	select_name = "pulse"
 	e_cost = 350 //12%, 8 shots
 	harmful = TRUE
@@ -1076,7 +1085,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	select_name = "tideshot"
 	e_cost = 250 //8%, 12 shots
 	harmful = FALSE
@@ -1090,7 +1099,7 @@
 	stamina = 10 // not for use on the employed
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/tap.ogg'
+	hitsound = 'sound/items/weapons/tap.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
@@ -1124,7 +1133,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/ion
 	projectile_type = /obj/projectile/ion/weak
-	fire_sound = 'sound/weapons/ionrifle.ogg'
+	fire_sound = 'sound/items/weapons/ionrifle.ogg'
 	select_name = "ion"
 	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE

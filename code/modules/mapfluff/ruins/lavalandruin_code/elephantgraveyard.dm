@@ -20,7 +20,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "rib"
 
 /obj/structure/statue/bone/skull
@@ -29,7 +29,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "skull"
 
 /obj/structure/statue/bone/skull/half
@@ -37,7 +37,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "halfskull"
 
 //***Wasteland floor and rock turfs here.
@@ -122,7 +122,7 @@
 		return ..()
 
 /obj/structure/sink/oil_well/drop_materials()
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 
 //***Grave mounds.
 /// has no items inside unless you use the filled subtype
@@ -141,7 +141,7 @@
 	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
-	cutting_tool = /obj/item/shovel
+	cutting_tool_behaviour = TOOL_SHOVEL
 	can_install_electronics = FALSE
 	paint_jobs = null
 
@@ -208,7 +208,7 @@
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(!(user.istate & ISTATE_HARM)) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
-			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+			if(S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
 				if (do_after(user,20, target = src))
 					grave_dug_open = TRUE
@@ -228,7 +228,7 @@
 			return 1
 
 	else if(((user.istate & ISTATE_HARM)) && opened) //checks to attempt to remove the grave entirely.
-		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+		if(S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
 			if (do_after(user,15, target = src))
 				to_chat(user, span_notice("You remove \the [src]  completely."))

@@ -51,6 +51,11 @@
 	/// Useful for final objectives as they don't need a reward.
 	var/needs_reward = TRUE
 
+	///a bitfield for what types of uplinks can gain this objective
+	var/valid_uplinks = UPLINK_TRAITORS //this is a secret tool that will help us later
+	///how much contractor rep this gives for completion
+	var/given_contractor_rep
+
 /// Returns a list of variables that can be changed by config, allows for balance through configuration.
 /// It is not recommended to finetweak any values of objectives on your server.
 /datum/traitor_objective/proc/supported_configuration_changes()
@@ -218,10 +223,10 @@
 /datum/traitor_objective/proc/finish_objective(mob/user)
 	switch(objective_state)
 		if(OBJECTIVE_STATE_FAILED, OBJECTIVE_STATE_INVALID)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			return TRUE
 		if(OBJECTIVE_STATE_COMPLETED)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			completion_payout()
 			return TRUE
 	return FALSE

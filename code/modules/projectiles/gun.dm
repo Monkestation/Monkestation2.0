@@ -21,17 +21,18 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
 	alternate_worn_layer = HANDS_LAYER+0.05
+	appearance_flags = KEEP_TOGETHER
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE
-	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
-	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
+	var/dry_fire_sound = 'sound/items/weapons/gun/general/dry_fire.ogg'
 	var/dry_fire_sound_volume = 30
 	var/suppressed = null //whether or not a message is displayed when fired
 	var/can_suppress = FALSE
-	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE
 	var/recoil = 0 //boom boom shake the room
@@ -379,7 +380,7 @@
 	var/loop_counter = 0
 	if(ishuman(user) && (user.istate & ISTATE_HARM))
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/gun/gun in H.held_items)
+		for(var/obj/item/gun/gun as anything in H.get_held_items_of_type(/obj/item/gun))
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))

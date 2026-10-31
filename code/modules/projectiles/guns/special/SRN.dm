@@ -1,13 +1,13 @@
 /obj/item/gun/ballistic/SRN_rocketlauncher
 	desc = "A rocket designed with the power of bluespace to send a singularity or tesla back to the shadow realm"
 	name = "Spatial Rift Nullifier"
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
 	icon_state = "srnlauncher"
 	inhand_icon_state = "srnlauncher"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
-	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/rocket_launch.ogg'
 	item_flags = NONE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	fire_sound_volume = 80
@@ -46,7 +46,7 @@
 	name = "\improper Spatial Rift Nullifier Rocket"
 	desc = "A prototype Spatial Rift Nullifier (SRN) Rocket. Fire at a rogue singularity or Tesla and pray it hits"
 	caliber = "84mm"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	base_icon_state = "srn_rocket"
 	icon_state = "srn_rocket"
 	projectile_type = /obj/projectile/bullet/SRN_rocket
@@ -62,7 +62,7 @@
 /// SRN Rocket Projectile
 /obj/projectile/bullet/SRN_rocket
 	name = "SRN rocket"
-	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "srn_rocket"
 	hitsound = "sound/effects/meteorimpact.ogg"
 	damage = 10
@@ -72,7 +72,7 @@
 /obj/projectile/bullet/SRN_rocket/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		playsound(src.loc, 'sound/weapons/pierce.ogg', vol = 100, vary = TRUE)
+		playsound(src.loc, 'sound/items/weapons/pierce.ogg', vol = 100, vary = TRUE)
 		target_human.adjustOxyLoss(5)
 		to_chat(target_human, span_alert("You are struck by a spatial nullifier! Thankfully it didn't affect you... much."))
 		INVOKE_ASYNC(target_human, TYPE_PROC_REF(/mob, emote), "scream")
@@ -98,7 +98,7 @@
 		INVOKE_ASYNC(hero, TYPE_PROC_REF(/mob, emote), "scream")
 
 	for(var/mob/player as anything in GLOB.player_list)
-		player.playsound_local(null, 'sound/magic/charge.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		player.playsound_local(null, 'sound/effects/magic/charge.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		to_chat(player, span_boldannounce("You feel reality distort for a moment..."))
 		shake_camera(player, 1.5 SECONDS, 3)
 

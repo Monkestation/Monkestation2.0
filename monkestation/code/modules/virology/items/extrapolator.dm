@@ -16,7 +16,7 @@
 
 /obj/item/extrapolator
 	name = "virus extrapolator"
-	icon = 'monkestation/icons/obj/device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "extrapolator_scan"
 	desc = "A scanning device, used to extract genetic material of potential pathogens."
 	item_flags = NOBLUDGEON

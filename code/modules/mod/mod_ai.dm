@@ -143,7 +143,7 @@
 		return FALSE
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown_active)
 	subtract_charge(CHARGE_PER_STEP)
-	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
+	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg', 25, TRUE)
 	if(ismovable(wearer?.loc))
 		return wearer.loc.relaymove(wearer, direction)
 	else if(wearer)
@@ -187,7 +187,7 @@
 
 /obj/item/mod/ai_minicard/examine(mob/user)
 	. = ..()
-	. += span_notice("You see [stored_ai.resolve() || "no AI"] stored inside.")
+	. += span_notice("You see [stored_ai?.resolve() || "no AI"] stored inside.")
 
 /obj/item/mod/ai_minicard/transfer_ai(interaction, mob/user, mob/living/silicon/ai/intAI, obj/item/aicard/card)
 	. = ..()

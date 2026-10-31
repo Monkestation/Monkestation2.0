@@ -17,6 +17,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	health = 15
 	maxHealth = 15
+	biomass_value = 0.1
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	speak_emote = list("sniffles", "twitches")
@@ -24,7 +25,7 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"

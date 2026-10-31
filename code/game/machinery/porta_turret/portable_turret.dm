@@ -736,6 +736,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	always_up = initial(always_up)
 	manual_control = FALSE
 	remote_controller = null
+	if(!QDELETED(src))
+		INVOKE_ASYNC(src, PROC_REF(popDown))
 	return TRUE
 
 /obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/user, params, atom/A)
@@ -759,8 +761,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	mode = TURRET_LETHAL
 	stun_projectile = /obj/projectile/bullet
 	lethal_projectile = /obj/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
-	stun_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
+	stun_projectile_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
@@ -770,6 +772,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/syndicate/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "turret", FALSE)
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
@@ -781,9 +784,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_state = "standard_lethal"
 	base_icon_state = "standard"
 	stun_projectile = /obj/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	stun_projectile_sound = 'sound/items/weapons/taser.ogg'
 	lethal_projectile = /obj/projectile/beam/laser
-	lethal_projectile_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	desc = "An energy blaster auto-turret."
 	armor_type = /datum/armor/syndicate_turret
 
@@ -805,14 +808,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_state = "standard_lethal"
 	base_icon_state = "standard"
 	stun_projectile = /obj/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	stun_projectile_sound = 'sound/items/weapons/taser.ogg'
 	lethal_projectile = /obj/projectile/beam/laser/heavylaser
-	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy/raven
 	stun_projectile = /obj/projectile/beam/laser
-	stun_projectile_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	stun_projectile_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
 /obj/machinery/porta_turret/syndicate/pod
@@ -823,9 +826,9 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/syndicate/irs
 	lethal_projectile = /obj/projectile/bullet/c10mm/ap
-	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg'
 	stun_projectile = /obj/projectile/bullet/c10mm/ap
-	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	stun_projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg'
 	armor_type = /datum/armor/syndicate_turret
 	faction = list(FACTION_PIRATE)
 
@@ -834,8 +837,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	shot_delay = 3
 	stun_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
-	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
-	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg'
+	stun_projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg'
 	armor_type = /datum/armor/syndicate_shuttle
 
 /datum/armor/syndicate_shuttle
@@ -868,7 +871,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	installation = null
 	uses_stored = FALSE
 	lethal_projectile = /obj/projectile/plasma/turret
-	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET,FACTION_TAMED,FACTION_BOSS) //Minebots, medibots, etc that should not be shot.
 
@@ -895,8 +898,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	scan_range = 9
 	stun_projectile = /obj/projectile/beam/laser
 	lethal_projectile = /obj/projectile/beam/laser
-	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
-	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/plasma_cutter.ogg'
+	stun_projectile_sound = 'sound/items/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)

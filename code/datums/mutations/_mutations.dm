@@ -22,6 +22,8 @@
 	var/layer_used = MUTATIONS_LAYER
 	/// To restrict mutation to only certain species
 	var/list/species_allowed
+	/// To blacklist mutation from a certain species
+	var/list/species_blacklist
 	/// Minimum health required to acquire the mutation
 	var/health_req
 	/// Required limbs to acquire this mutation
@@ -99,12 +101,12 @@
 /datum/mutation/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
 		return FALSE
-	// MONKESTATION ADDITION START -- CORTICAL_BORERS
-	if(acquirer.has_borer())
+	if(has_borer(acquirer))
 		to_chat(acquirer, span_warning("Something inside holds dearly to your humanity!"))
 		return FALSE
-	// MONKESTATION ADDITION END
 	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id))
+		return FALSE
+	if(species_blacklist && species_blacklist.Find(acquirer.dna.species.id))
 		return FALSE
 	if(health_req && acquirer.health < health_req)
 		return FALSE
@@ -128,7 +130,7 @@
 			mut_overlay |= get_visual_indicator()
 		owner.remove_overlay(layer_used)
 		owner.overlays_standing[layer_used] = mut_overlay
-		owner.apply_overlay(layer_used)
+		owner.apply_mutation_overlay(layer_used)
 	grant_power() //we do checks here so nothing about hulk getting magic
 	return TRUE
 
@@ -152,10 +154,17 @@
 		owner.remove_overlay(layer_used)
 		mut_overlay.Remove(get_visual_indicator())
 		owner.overlays_standing[layer_used] = mut_overlay
-		owner.apply_overlay(layer_used)
+		owner.apply_mutation_overlay(layer_used)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
+
+/mob/living/carbon/human/proc/apply_mutation_overlay(layer_used)
+	// it's okay for these layers to use shared appearences so long as the filters are reset before adding them as overlays
+	// this is because adding an appearence to `overlays` copies it
+	for(var/image/indicator in overlays_standing[layer_used])
+		apply_height_filter(indicator)
+	apply_overlay(layer_used)
 
 /mob/living/carbon/human/update_mutations_overlay()
 	for(var/datum/mutation/mutation as anything in dna.mutations)
@@ -174,7 +183,7 @@
 				mut_overlay.Remove(indicator_to_remove)
 			mut_overlay |= indicator_to_add
 			overlays_standing[mutation.layer_used] = mut_overlay
-			apply_overlay(mutation.layer_used)
+			apply_mutation_overlay(mutation.layer_used)
 
 /**
  * Called after on_aquiring, or when a chromosome is applied.

@@ -20,6 +20,7 @@
 		/obj/item/stack/sheet/titaniumglass = 2,
 		exotic_material = 2 // this needs to be refactored properly
 	)
+	pressure_resistance = 35
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -99,7 +100,7 @@
 						return
 					rod.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/mineral/iron)
+					T.place_on_top(/turf/closed/wall/mineral/iron)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -149,7 +150,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall)
+					T.place_on_top(/turf/closed/wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -194,7 +195,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/r_wall)
+					T.place_on_top(/turf/closed/wall/r_wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -238,7 +239,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/r_wall/syndicate)
+					T.place_on_top(/turf/closed/wall/r_wall/syndicate)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -265,7 +266,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/mineral/plastitanium)
+					T.place_on_top(/turf/closed/wall/mineral/plastitanium)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -330,9 +331,9 @@
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
 					if(sheets.walltype)
-						T.PlaceOnTop(sheets.walltype)
+						T.place_on_top(sheets.walltype)
 					else
-						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
+						var/turf/newturf = T.place_on_top(/turf/closed/wall/material)
 						var/list/material_list = list()
 						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
 						if(material_list)
@@ -520,7 +521,7 @@
 				return
 			R.use(amount)
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/mineral/cult)
+			T.place_on_top(/turf/closed/wall/mineral/cult)
 			qdel(src)
 
 	else
@@ -549,7 +550,7 @@
 	var/turf/T = get_turf(src)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
-			T.PlaceOnTop(/turf/closed/wall)
+			T.place_on_top(/turf/closed/wall)
 			qdel(src)
 			return TRUE
 		if(RCD_DECONSTRUCT)
@@ -586,7 +587,7 @@
 				return
 			B.use(amount)
 			var/turf/T = get_turf(src)
-			IS_CLOCK(user) ? T.PlaceOnTop(/turf/closed/wall/clockwork) : T.PlaceOnTop(/turf/closed/wall/mineral/bronze) //monkestation edit: clock cultists make clockwork walls
+			IS_CLOCK(user) ? T.place_on_top(/turf/closed/wall/clockwork) : T.place_on_top(/turf/closed/wall/mineral/bronze) //monkestation edit: clock cultists make clockwork walls
 			qdel(src)
 
 	else

@@ -1,7 +1,7 @@
 /obj/item/book/manual/botanical_lexicon
 	name = "Botanical Lexicon"
 	desc = "A transcribed list of all known plant mutations and how to acquire them"
-	icon = 'monkestation/icons/obj/ranching.dmi'
+	icon = 'icons/obj/ranching.dmi'
 	icon_state = "chicken_book"
 	unique = TRUE
 

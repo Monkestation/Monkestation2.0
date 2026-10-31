@@ -4,12 +4,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/mob/living/carbon/transfer_blood_to(atom/movable/AM, amount, forced)
-	. = ..()
-
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
-	bloodsuckerdatum?.bloodsucker_blood_volume -= amount
-
 /// Prevents using a Memento Mori
 /obj/item/clothing/neck/necklace/memento_mori/memento(mob/living/carbon/human/user)
 	if(IS_BLOODSUCKER(user))
@@ -40,7 +34,6 @@
 	enrico.hairstyle = "Undercut"
 	enrico.hair_color = "FFF"
 	enrico.skin_tone = "african2"
-	enrico.eye_color_left = "#663300"
-	enrico.eye_color_right = "#663300"
+	enrico.set_eye_color("#663300")
 
 	enrico.update_body(is_creating = TRUE)

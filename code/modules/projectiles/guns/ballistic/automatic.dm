@@ -5,10 +5,10 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
-	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	rack_sound = 'sound/items/weapons/gun/smg/smgrack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'
 	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
 	var/selector_switch_icon = FALSE ///if it has an icon for a selector switch indicating current firemode.
 	gun_flags = GUN_SMOKE_PARTICLES
@@ -42,7 +42,7 @@
 		fire_delay = initial(fire_delay)
 		balloon_alert(user, "switched to [burst_size]-round burst")
 
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 	update_item_action_buttons()
 
@@ -74,6 +74,7 @@
 	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	inhand_icon_state = "c20r"
+	fire_sound = 'sound/items/weapons/gun/smg/gunshot_c20.ogg'
 	selector_switch_icon = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45
 	fire_delay = 2
@@ -100,12 +101,13 @@
 
 /obj/item/gun/ballistic/automatic/wt550
 	name = "\improper WT-550 Autorifle"
-	desc = "Recalled by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
+	desc = "Recalled commercially by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
 		This outcry was fabricated through various Syndicate-backed misinformation operations to force Nanotrasen to abandon \
 		its ballistics weapon program, cornering them into the energy weapons market. Most often found today in the hands of pirates, \
-		underfunded security personnel, cargo technicians, theoritical physicists and gang bangers out on the rim. \
+		underfunded security personnel, cargo technicians, theoretical physicists and gang bangers out on the rim. \
 		Light-weight and fully automatic. Uses 4.6x30mm rounds."
 	icon_state = "wt550"
+	fire_sound = 'sound/items/weapons/gun/smg/gunshot_wt.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wt550m9
@@ -130,9 +132,9 @@
 /obj/item/gun/ballistic/automatic/wt550/fss //Slightly worse printable WT-550
 	name = "\improper FSS-550"
 	desc = "A modified printable version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Not only does this gun have less stopping power, the magazine doesn't entirely fit, and it takes a bit of force to jam it in or rip it out. Used by Syndicate agents and rebels in more than 50 systems."
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon = 'icons/obj/guns/guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "fss550"
 	inhand_icon_state = "fss"
 	spread = 2
@@ -205,7 +207,7 @@
 	mag_display = TRUE
 	empty_indicator = TRUE
 	special_mags = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
 	name = "\improper PP-96 SMG"
@@ -260,7 +262,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
-	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
 
 /obj/item/gun/ballistic/automatic/tommygun
 	name = "\improper Thompson SMG"
@@ -311,8 +313,7 @@
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
 	icon_state = "bogseo"
-	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_lefthand.dmi'
-	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_righthand.dmi'
+	worn_icon_state = "bogseo"
 	inhand_icon_state = "bogseo"
 	special_mags = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
@@ -323,8 +324,8 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 	can_suppress = TRUE
 	suppressor_x_offset = 9
-	burst_size = 2
-	fire_delay = 0.5 SECONDS
+	fire_delay = 0.3 SECONDS
+	burst_size = 1
 	actions_types = list()
 	spread = 14.5
 	// Hope you didn't need to see anytime soon
@@ -334,7 +335,7 @@
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
-///	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/examine(mob/user)
 	. = ..()
@@ -496,7 +497,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/m90/Initialize(mapload)
 	. = ..()
@@ -733,9 +734,9 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	tac_reloads = FALSE
-	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
-	rack_sound = 'sound/weapons/gun/l6/l6_rack.ogg'
-	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	fire_sound = 'sound/items/weapons/gun/l6/shot.ogg'
+	rack_sound = 'sound/items/weapons/gun/l6/l6_rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
@@ -756,7 +757,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
-	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
+	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -799,7 +800,7 @@
 /obj/item/gun/ballistic/automatic/quarad_lmg /// Light Machine Gun, lives in the heavy armaments locker
 	name = "\improper Qarad Light Machinegun"
 	desc = "A spotless, if outdated machinegun. The same model was used to great effect against xenomorph incursions in the past, hopefully this one doesn't have any manufacturing defects...."
-	icon = 'monkestation/icons/obj/weapons/guns/guns48x.dmi'
+	icon = 'icons/obj/weapons/guns/guns48x.dmi'
 	icon_state = "outomaties"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "outomaties"
@@ -851,10 +852,10 @@
 	name = "\improper Suspicious Qarad Light Machinegun"
 	desc = "A heavily modified machinegun, complete with bluespace barrel extender! More bullet per bullet, more barrel per inch!"
 	icon_state = "outomaties_evil"
-	worn_icon = 'monkestation/icons/mob/inhands/gunsx48_worn.dmi'
+	worn_icon = 'icons/mob/inhands/gunsx48_worn.dmi'
 	worn_icon_state = "outomaties_evil"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthandx48.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthandx48.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthandx48.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthandx48.dmi'
 	inhand_icon_state = "outomaties_evil"
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	fire_delay = 0.1 SECONDS
@@ -871,7 +872,7 @@
 	icon_state = "minigun_spin"
 	inhand_icon_state = "minigun"
 	slowdown = 0.4
-	fire_sound = 'sound/weapons/gun/minigun10burst.ogg'
+	fire_sound = 'sound/items/weapons/gun/minigun10burst.ogg'
 	fire_sound_volume = 50
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -1074,7 +1075,7 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
 
 
@@ -1092,11 +1093,12 @@
 	actions_types = list()
 	mag_display = TRUE
 	empty_indicator = TRUE
+	can_suppress = FALSE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/pksmgmag
 	pin = /obj/item/firing_pin/wastes
 	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
-	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
 //FLASHLIGHTTTTTT
 /obj/item/gun/ballistic/automatic/proto/pksmg/add_seclight_point()
@@ -1131,4 +1133,4 @@
 	spread = 3
 	fire_delay = 1
 	pin = /obj/item/firing_pin/wastes
-	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
+	fire_sound = 'sound/items/weapons/gun/hmg/hmg.ogg'

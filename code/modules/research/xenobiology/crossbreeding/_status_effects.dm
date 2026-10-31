@@ -61,32 +61,75 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	var/interrupted = FALSE
-	var/mob/target
-	var/icon/bluespace
+	var/atom/destination
+	var/precision = 0
+	var/channel = TELEPORT_CHANNEL_QUANTUM //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
 
-/datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resistField))
-	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
-	to_chat(owner, span_notice("Resist if you wish avoid the force!"))
-	bluespace = icon('icons/effects/effects.dmi',"chronofield")
-	owner.add_overlay(bluespace)
+/datum/status_effect/slimerecall/on_creation(mob/living/new_owner, atom/destination, precision = 0)
+	src.destination = destination
+	src.precision = precision
 	return ..()
 
-/datum/status_effect/slimerecall/proc/resistField()
+/datum/status_effect/slimerecall/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resist_field))
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
+	to_chat(owner, span_notice("Resist if you wish to avoid the force!"))
+	return ..()
+
+/datum/status_effect/slimerecall/proc/resist_field()
 	SIGNAL_HANDLER
 	interrupted = TRUE
-	owner.remove_status_effect(src)
+	qdel(src)
+
+/datum/status_effect/slimerecall/proc/on_update_overlays(mob/living/source, list/overlays)
+	SIGNAL_HANDLER
+	overlays += mutable_appearance('icons/effects/effects.dmi', "chronofield")
 
 /datum/status_effect/slimerecall/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
-	owner.cut_overlay(bluespace)
-	if(interrupted || !ismob(target))
+	UnregisterSignal(owner, list(COMSIG_LIVING_RESIST, COMSIG_ATOM_UPDATE_OVERLAYS))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	if(interrupted || QDELETED(destination))
 		to_chat(owner, span_warning("The bluespace tug fades away, and you feel that the force has passed you by."))
 		return
 	var/turf/old_location = get_turf(owner)
-	if(do_teleport(owner, target.loc, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
-		old_location.visible_message(span_warning("[owner] disappears in a flurry of sparks!"))
-		to_chat(owner, span_warning("The unknown force snatches briefly you from reality, and deposits you next to [target]!"))
+	if(do_teleport(owner, get_turf(destination), precision, channel = channel))
+		on_teleport(old_location)
+
+/datum/status_effect/slimerecall/proc/on_teleport(turf/old_location)
+	old_location.visible_message(span_warning("[owner] disappears in a flurry of sparks!"))
+	to_chat(owner, span_warning("The unknown force snatches briefly you from reality, and deposits you next to [destination]!"))
+
+/datum/status_effect/slimerecall/delayed
+	duration = 3 SECONDS
+
+/datum/status_effect/slimerecall/delayed/on_apply()
+	RegisterSignal(owner, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_shoved))
+	owner.visible_message(span_warning("[owner] flickers as bluespace tugs at [owner.p_them()]!"), ignored_mobs = list(owner))
+	return ..()
+
+/// Interrupts the teleport when we're shoved.
+/datum/status_effect/slimerecall/delayed/proc/on_shoved(datum/source, mob/living/shover, zone)
+	SIGNAL_HANDLER
+	owner.visible_message(span_warning("[shover] knocks [owner] out of the bluespace pull!"))
+	interrupted = TRUE
+	qdel(src)
+
+/datum/status_effect/slimerecall/delayed/on_remove()
+	UnregisterSignal(owner, COMSIG_HUMAN_DISARM_HIT)
+	return ..()
+
+/datum/status_effect/slimerecall/delayed/regenerative/on_teleport(turf/old_location)
+	old_location.visible_message(span_warning("[owner] disappears in a shower of sparks!"))
+	to_chat(owner, span_danger("The milky goo teleports you somewhere it remembers!"))
+
+/datum/status_effect/slimerecall/delayed/stabilized
+	channel = TELEPORT_CHANNEL_BLUESPACE
+
+/datum/status_effect/slimerecall/delayed/stabilized/on_teleport(turf/old_location)
+	to_chat(owner, span_notice("The extract will take some time to re-align you on the bluespace axis."))
+	do_sparks(5, FALSE, owner)
 
 /atom/movable/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
@@ -385,7 +428,7 @@
 	duration = 300
 
 /datum/status_effect/spookcookie/on_apply()
-	var/image/I = image(icon = 'icons/mob/species/human/human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = owner)
+	var/image/I = image(icon = 'icons/mob/human/human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = owner)
 	I.override = 1
 	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
 	return ..()
@@ -444,8 +487,8 @@
 	alert_type = null
 	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
-	/// Colour of the extract providing the buff
-	var/colour = "null"
+	/// Slime type of the extract providing the buff
+	var/datum/slime_type/slime_type
 
 /datum/status_effect/stabilized/Destroy()
 	if(linked_extract?.linked_effect == src)
@@ -463,7 +506,7 @@
 		return
 	if(linked_extract.get_held_mob() == owner)
 		return
-	owner.balloon_alert(owner, "[colour] extract faded!")
+	owner.balloon_alert(owner, "[slime_type::color] extract faded!")
 	qdel(src)
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
@@ -473,16 +516,16 @@
 //Stabilized effects start below.
 /datum/status_effect/stabilized/grey
 	id = "stabilizedgrey"
-	colour = "grey"
+	slime_type = /datum/slime_type/grey
 
 /datum/status_effect/stabilized/grey/tick()
 	for(var/mob/living/basic/slime/new_friend in range(3, get_turf(owner)))
-		SEND_SIGNAL(new_friend, COMSIG_FRIENDSHIP_CHANGE, owner, 2)
+		new_friend.befriend(owner)
 	return ..()
 
 /datum/status_effect/stabilized/orange
 	id = "stabilizedorange"
-	colour = "orange"
+	slime_type = /datum/slime_type/orange
 
 /datum/status_effect/stabilized/orange/tick()
 	owner.update_homeostasis_level(id, owner.standard_body_temperature, 0.5 KELVIN)
@@ -493,7 +536,7 @@
 
 /datum/status_effect/stabilized/purple
 	id = "stabilizedpurple"
-	colour = "purple"
+	slime_type = /datum/slime_type/purple
 	/// Whether we healed from our last tick
 	var/healed_last_tick = FALSE
 	/// How much damage is healed per tick.
@@ -527,7 +570,7 @@
 
 /datum/status_effect/stabilized/blue
 	id = "stabilizedblue"
-	colour = "blue"
+	slime_type = /datum/slime_type/blue
 
 /datum/status_effect/stabilized/blue/on_apply()
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
@@ -538,7 +581,7 @@
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
-	colour = "metal"
+	slime_type = /datum/slime_type/metal
 	var/cooldown = 30
 	var/max_cooldown = 30
 
@@ -562,7 +605,7 @@
 
 /datum/status_effect/stabilized/yellow
 	id = "stabilizedyellow"
-	colour = "yellow"
+	slime_type = /datum/slime_type/yellow
 	var/cooldown = 10
 	var/max_cooldown = 10
 
@@ -593,7 +636,7 @@
 
 /datum/status_effect/stabilized/darkpurple
 	id = "stabilizeddarkpurple"
-	colour = "dark purple"
+	slime_type = /datum/slime_type/darkpurple
 	var/obj/item/hothands/fire
 
 /datum/status_effect/stabilized/darkpurple/on_apply()
@@ -619,7 +662,7 @@
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
-	colour = "dark blue"
+	slime_type = /datum/slime_type/darkblue
 	/// Typecache of items to ignore extingushing.
 	var/static/list/ignore_typecache
 
@@ -661,7 +704,7 @@
 
 /datum/status_effect/stabilized/silver
 	id = "stabilizedsilver"
-	colour = "silver"
+	slime_type = /datum/slime_type/silver
 
 /datum/status_effect/stabilized/silver/on_apply()
 	if(ishuman(owner))
@@ -687,35 +730,55 @@
 
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
-	colour = "bluespace"
+	slime_type = /datum/slime_type/bluespace
 	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
+
+	/// thingy so we can do an immediate check after bluespace stabilization wears off
+	var/was_cooling_down = FALSE
+
+/datum/status_effect/stabilized/bluespace/on_apply()
+	. = ..()
+	if(.)
+		RegisterSignals(owner, list(COMSIG_LIVING_HEALTH_UPDATE, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)), PROC_REF(check_health))
+
+/datum/status_effect/stabilized/bluespace/on_remove()
+	. = ..()
+	UnregisterSignal(owner, list(COMSIG_LIVING_HEALTH_UPDATE, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)))
+
+/// Teleports the owner to safety when they drop into crit, unless on cooldown.
+/datum/status_effect/stabilized/bluespace/proc/check_health()
+	SIGNAL_HANDLER
+	if(owner.has_status_effect(/datum/status_effect/bluespacestabilization))
+		return
+	if(owner.stat < SOFT_CRIT && owner.health > owner.crit_threshold)
+		return
+	var/turf/safe_turf = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
+	var/range = 0
+	if(!safe_turf)
+		safe_turf = get_turf(owner)
+		range = 50
+	if(!owner.apply_status_effect(/datum/status_effect/slimerecall/delayed/stabilized, safe_turf, range))
+		return
+	owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
+	owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
+	was_cooling_down = TRUE
 
 /datum/status_effect/stabilized/bluespace/tick()
 	if(owner.has_status_effect(/datum/status_effect/bluespacestabilization))
 		linked_alert.desc = "The stabilized bluespace extract is still aligning you with the bluespace axis."
 		linked_alert.icon_state = "slime_bluespace_off"
-		return ..()
+		was_cooling_down = TRUE
 	else
 		linked_alert.desc = "The stabilized bluespace extract will try to redirect you from harm!"
 		linked_alert.icon_state = "slime_bluespace_on"
-
-	if(owner.stat >= SOFT_CRIT)
-		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
-		do_sparks(5,FALSE,owner)
-		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
-		var/range = 0
-		if(!F)
-			F = get_turf(owner)
-			range = 50
-		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
-			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
-			do_sparks(5,FALSE,owner)
-			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
+		if(was_cooling_down)
+			check_health()
+		was_cooling_down = FALSE
 	return ..()
 
 /datum/status_effect/stabilized/sepia
 	id = "stabilizedsepia"
-	colour = "sepia"
+	slime_type = /datum/slime_type/sepia
 	var/mod = 0
 
 /datum/status_effect/stabilized/sepia/tick()
@@ -733,7 +796,7 @@
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
-	colour = "cerulean"
+	slime_type = /datum/slime_type/cerulean
 	var/mob/living/clone
 
 /datum/status_effect/stabilized/cerulean/on_apply()
@@ -777,7 +840,7 @@
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
-	colour = "pyrite"
+	slime_type = /datum/slime_type/pyrite
 
 /datum/status_effect/stabilized/pyrite/tick()
 	var/new_color = rgb(rand(0, 360), 100, 50, space = COLORSPACE_HSL)
@@ -789,7 +852,7 @@
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
-	colour = "red"
+	slime_type = /datum/slime_type/red
 	var/static/list/affected_modifiers = list(
 		/datum/movespeed_modifier/equipment_speedmod,
 		/datum/movespeed_modifier/belt_satchel,
@@ -805,7 +868,7 @@
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"
-	colour = "green"
+	slime_type = /datum/slime_type/green
 	var/datum/dna/originalDNA
 	var/original_name
 	var/alist/original_clothing_prefs
@@ -857,7 +920,7 @@
 
 /datum/status_effect/stabilized/pink
 	id = "stabilizedpink"
-	colour = "pink"
+	slime_type = /datum/slime_type/pink
 	/// List of weakrefs to mobs we have pacified
 	var/list/mobs = list()
 	/// Name of our faction
@@ -929,7 +992,7 @@
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
-	colour = "oil"
+	slime_type = /datum/slime_type/oil
 
 /datum/status_effect/stabilized/oil/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
@@ -952,7 +1015,7 @@
 
 /datum/status_effect/stabilized/black
 	id = "stabilizedblack"
-	colour = "black"
+	slime_type = /datum/slime_type/black
 	/// How much we heal per tick (also how much we damage per tick times DRAIN_DAMAGE_MULTIPLIER).
 	var/heal_amount = 1
 	/// Weakref to the mob we're currently draining every tick.
@@ -981,6 +1044,7 @@
 	draining_ref = WEAKREF(draining)
 	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
 	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
+	owner.balloon_alert_to_viewers("hands melt around neck!")
 
 /datum/status_effect/stabilized/black/get_examine_text()
 	var/mob/living/draining = draining_ref?.resolve()
@@ -1020,7 +1084,7 @@
 
 /datum/status_effect/stabilized/lightpink
 	id = "stabilizedlightpink"
-	colour = "light pink"
+	slime_type = /datum/slime_type/lightpink
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
@@ -1040,14 +1104,14 @@
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"
-	colour = "adamantine"
+	slime_type = /datum/slime_type/adamantine
 
 /datum/status_effect/stabilized/adamantine/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] [owner.p_have()] strange metallic coating on [owner.p_their()] skin.")
 
 /datum/status_effect/stabilized/gold
 	id = "stabilizedgold"
-	colour = "gold"
+	slime_type = /datum/slime_type/gold
 	var/mob/living/simple_animal/familiar
 
 /datum/status_effect/stabilized/gold/tick()
@@ -1090,7 +1154,7 @@
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
-	colour = "rainbow"
+	slime_type = /datum/slime_type/rainbow
 	var/trigger_after_cooldown = FALSE
 
 /datum/status_effect/stabilized/rainbow/on_apply()

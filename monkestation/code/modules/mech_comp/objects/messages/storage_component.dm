@@ -2,7 +2,7 @@
 	name = "storage component"
 	desc = "acts as a one way storage device, only other components can deposit into it"
 
-	icon = 'monkestation/icons/obj/mechcomp.dmi'
+	icon = 'icons/obj/mechcomp.dmi'
 	icon_state = "comp_storage"
 	base_icon_state = "comp_storage"
 

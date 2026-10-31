@@ -23,7 +23,6 @@
 	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
 	instant_grab = TRUE
-	snap_grab_state = GRAB_NECK //you can kill people a little faster
 	damage_sharpness = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)
@@ -80,10 +79,7 @@
 	defender.adjustOxyLoss(30)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
-/mob/living/proc/awakened_dragon_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Awakened Dragon."
-	set category = "Awakened Dragon"
+GAME_VERB_PROC_DESC(/mob/living, awakened_dragon_help, "Recall Teachings", "Remember the martial techniques of the Awakened Dragon.", "Awakened Dragon")
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the venerable Awakened Dragon...</i></b>\n\
 	[span_notice("Crushing Maw")]: Punch Punch. Deal additional damage every second (consecutive) punch! Extremely good chance to wound!\n\

@@ -9,7 +9,6 @@
 #define SEC_LEVEL_GREEN		0
 /// Security level is blue. (caution advised)
 #define SEC_LEVEL_BLUE		1
-// monkestation start: additional alert levels
 /// Security level is yellow. (Engineering issue)
 #define SEC_LEVEL_YELLOW	2
 /// Security level is amber. (biological issue, so blob or bloodlings)
@@ -24,4 +23,3 @@
 #define SEC_LEVEL_LAMBDA	7
 // Security level is epsilon. (yall fucked up)
 #define SEC_LEVEL_EPSILON	8
-// monkestation end

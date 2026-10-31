@@ -1,5 +1,5 @@
 /obj/item/abductor
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
@@ -289,7 +289,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	icon_state = "wonderprodStun"
@@ -304,7 +304,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	cooldown = 0 SECONDS
 	stamina_damage = 0
 	knockdown_time = 14 SECONDS
-	on_stun_sound = 'sound/weapons/egloves.ogg'
+	on_stun_sound = 'sound/items/weapons/egloves.ogg'
 	affect_cyborg = TRUE
 
 	var/mode = BATON_STUN
@@ -312,14 +312,54 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/sleep_time = 1 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
+	var/charges = 5
+	var/max_charges = 5
+	var/charge_rate = 15 SECONDS
+	var/charging = FALSE
+	COOLDOWN_DECLARE(next_charge)
+
+
 /obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/melee/baton/abductor/proc/toggle(mob/living/user=usr)
+/obj/item/melee/baton/abductor/Destroy(force)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/melee/baton/abductor/examine(mob/user)
+	. = ..()
+	if(isobserver(user) || AbductorCheck(user))
+		. += span_notice("It has <b>[charges]</b> charge\s remaining.")
+		. += span_notice("It takes [DisplayTimeText(charge_rate)] to regenerate 1 charge.")
+
+/obj/item/melee/baton/abductor/process(seconds_per_tick)
+	if(COOLDOWN_FINISHED(src, next_charge))
+		charges = min(charges + 1, max_charges)
+		playsound(src, 'sound/machines/beep/twobeep.ogg', vol = 10, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		COOLDOWN_START(src, next_charge, charge_rate)
+	if(charges >= max_charges)
+		charging = FALSE
+		return PROCESS_KILL
+
+/obj/item/melee/baton/abductor/proc/use_charge(mob/living/user)
+	if(!charging)
+		charging = TRUE
+		START_PROCESSING(SSobj, src)
+		COOLDOWN_START(src, next_charge, charge_rate)
+
+	if(charges >= 1)
+		charges--
+		to_chat(user, span_notice("[icon2html(src, user)] <b>[charges]</b> charge\s remaining."))
+		return TRUE
+
+	to_chat(user, span_warning("[icon2html(src, user)] Out of charges! Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, next_charge))] for the next charge!"))
+	return FALSE
+
+/obj/item/melee/baton/abductor/proc/toggle(mob/living/user)
 	if(!AbductorCheck(user))
 		return
-	mode = (mode+1)%BATON_MODES
+	mode = (mode + 1) % BATON_MODES
 	var/txt
 	switch(mode)
 		if(BATON_STUN)
@@ -337,7 +377,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	affect_cyborg = is_stun_mode
 	log_stun_attack = is_stun_mode // other modes have their own log entries.
 	stun_animation = is_stun_or_sleep
-	on_stun_sound = is_stun_or_sleep ? 'sound/weapons/egloves.ogg' : null
+	on_stun_sound = is_stun_or_sleep ? 'sound/items/weapons/egloves.ogg' : null
 
 	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
 	update_appearance()
@@ -361,10 +401,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/melee/baton/abductor/baton_attack(mob/target, mob/living/user, modifiers)
 	if(!AbductorCheck(user))
 		return BATON_ATTACK_DONE
-	// monkestation edit: limited charges
+
 	if((mode == BATON_STUN || mode == BATON_SLEEP) && !use_charge(user))
 		return BATON_ATTACK_DONE
-	// monkestation end
+
 	return ..()
 
 /obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
@@ -426,7 +466,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
-			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+			playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
@@ -501,7 +541,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/radio/headset/abductor
 	name = "alien headset"
 	desc = "An advanced alien headset designed to monitor communications of human space stations. Why does it have a microphone? No one knows."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "abductor_headset"
 	keyslot2 = /obj/item/encryptionkey/heads/captain
 
@@ -517,7 +557,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"
 	desc = "A beacon designed to instantly tele-construct abductor machinery."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "beacon"
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/spawned_machine
@@ -526,7 +566,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	..()
 	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
 	user.dropItemToGround(src)
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50)
 	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 30)
 
 /obj/item/abductor_machine_beacon/proc/try_spawn_machine()
@@ -543,7 +583,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		visible_message(span_notice("[new_machine] warps on top of the beacon!"))
 		qdel(src)
 	else
-		playsound(src, 'sound/machines/buzz-two.ogg', 50)
+		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50)
 
 /obj/item/abductor_machine_beacon/chem_dispenser
 	name = "beacon - Reagent Synthesizer"
@@ -552,35 +592,35 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/scalpel/alien
 	name = "alien scalpel"
 	desc = "It's a gleaming sharp knife made out of silvery-green metal."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "scalpel_alien"
 	toolspeed = 0.25
 
 /obj/item/hemostat/alien
 	name = "alien hemostat"
 	desc = "You've never seen this before."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "hemostat_alien"
 	toolspeed = 0.25
 
 /obj/item/retractor/alien
 	name = "alien retractor"
 	desc = "You're not sure if you want the veil pulled back."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "retractor_alien"
 	toolspeed = 0.25
 
 /obj/item/circular_saw/alien
 	name = "alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "saw_alien"
 	toolspeed = 0.25
 
 /obj/item/surgicaldrill/alien
 	name = "alien drill"
 	desc = "Maybe alien surgeons have finally found a use for the drill."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "drill_alien"
 	toolspeed = 0.25
 
@@ -588,7 +628,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien cautery"
 	desc = "Why would bloodless aliens have a tool to stop bleeding? \
 		Unless..."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	surgical_tray_overlay = "cautery_alien"
 	toolspeed = 0.25
 
@@ -602,15 +642,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot_flags & slot)
-		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+		RegisterSignal(user, COMSIG_MOVABLE_CAN_TRACK, PROC_REF(track_person))
 	else
-		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+		UnregisterSignal(user, COMSIG_MOVABLE_CAN_TRACK)
 
 /obj/item/clothing/head/helmet/abductor/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+	UnregisterSignal(user, COMSIG_MOVABLE_CAN_TRACK)
 
-/obj/item/clothing/head/helmet/abductor/proc/can_track(datum/source, mob/user)
+/obj/item/clothing/head/helmet/abductor/proc/track_person(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	return COMPONENT_CANT_TRACK
@@ -622,7 +662,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	inhand_icon_state = "silencer"
 	toolspeed = 0.25
 	tool_behaviour = null
-	usesound = 'sound/items/pshoom.ogg'
+	usesound = 'sound/items/pshoom/pshoom.ogg'
 	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
 	var/list/tool_list = list()
 	///Which toolset do we have active currently?
@@ -710,24 +750,24 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/abductor/alien_omnitool/proc/set_toolset(mob/user)
 	if(active_toolset == TOOLSET_MEDICAL)
 		tool_list = list(
-			"Crowbar" = image(icon = 'icons/obj/abductor.dmi', icon_state = "crowbar"),
-			"Multitool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "multitool"),
-			"Screwdriver" = image(icon = 'icons/obj/abductor.dmi', icon_state = "screwdriver_a"),
-			"Wirecutters" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cutters"),
-			"Wrench" = image(icon = 'icons/obj/abductor.dmi', icon_state = "wrench"),
-			"Welding Tool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "welder"),
+			"Crowbar" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "crowbar"),
+			"Multitool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "multitool"),
+			"Screwdriver" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "screwdriver_a"),
+			"Wirecutters" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cutters"),
+			"Wrench" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "wrench"),
+			"Welding Tool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "welder"),
 		)
 		active_toolset = TOOLSET_HACKING
 		if(user)
 			balloon_alert(user, "hacking toolset selected")
 	else
 		tool_list = list(
-			"Retractor" = image(icon = 'icons/obj/abductor.dmi', icon_state = "retractor"),
-			"Hemostat" = image(icon = 'icons/obj/abductor.dmi', icon_state = "hemostat"),
-			"Cautery" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cautery"),
-			"Drill" = image(icon = 'icons/obj/abductor.dmi', icon_state = "drill"),
-			"Scalpel" = image(icon = 'icons/obj/abductor.dmi', icon_state = "scalpel"),
-			"Saw" = image(icon = 'icons/obj/abductor.dmi', icon_state = "saw"),
+			"Retractor" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "retractor"),
+			"Hemostat" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "hemostat"),
+			"Cautery" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cautery"),
+			"Drill" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "drill"),
+			"Scalpel" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "scalpel"),
+			"Saw" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "saw"),
 			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
 			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
 		)

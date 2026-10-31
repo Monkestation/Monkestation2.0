@@ -20,7 +20,7 @@
 	bare_wound_bonus = 15
 	toolspeed = 0.375
 	demolition_mod = 0.8
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	armour_penetration = 60
 	armour_ignorance = 5
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
@@ -128,7 +128,7 @@
 		to_chat(user, span_warning("[interacting_with] is already lit!"))
 		return ITEM_INTERACT_BLOCKING
 	interacting_with.light()
-	playsound(user, 'sound/weapons/fwoosh.ogg', vol = 50, vary = TRUE)
+	playsound(user, 'sound/items/weapons/fwoosh.ogg', vol = 50, vary = TRUE)
 	user.visible_message(span_notice("[user] swiftly slashes the tip of [interacting_with] with [src], igniting it with the blade's flame, that's cool as hell."))
 	return ITEM_INTERACT_SUCCESS
 
@@ -151,10 +151,10 @@
 		max_blood = INFINITY,\
 	)
 
-	/* AddComponent(
+	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
-	) */
+	)
 
 // Path of Void's blade
 /obj/item/melee/sickly_blade/void
@@ -202,7 +202,7 @@
 	living_target.AdjustParalyzed(1.5 SECONDS)
 	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	living_target.balloon_alert(user, "backstab!")
-	playsound(living_target, 'sound/weapons/guillotine.ogg', 100, TRUE)
+	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
 /obj/item/melee/sickly_blade/dark/dropped(mob/user, silent)
 	. = ..()
@@ -313,7 +313,7 @@
 	if(prob(15))
 		to_chat(user, span_cultlarge(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
 		user.apply_damage(5, BURN, user.get_active_hand())
-		playsound(src, 'sound/weapons/sear.ogg', 25, TRUE)
+		playsound(src, 'sound/items/weapons/sear.ogg', 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))

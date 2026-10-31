@@ -23,13 +23,13 @@
 	return ..()
 
 /obj/projectile/kinetic/prehit_pierce(atom/target)
+	if(is_type_in_typecache(target, kinetic_gun?.ignored_mob_types))
+		return PROJECTILE_PIERCE_PHASE
 	. = ..()
 	if(. == PROJECTILE_PIERCE_PHASE)
 		return
-	if(kinetic_gun)
-		var/list/mods = kinetic_gun.modkits
-		for(var/obj/item/borg/upgrade/modkit/modkit in mods)
-			modkit.projectile_prehit(src, target, kinetic_gun)
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in kinetic_gun?.modkits)
+		modkit_upgrade.projectile_prehit(src, target, kinetic_gun)
 	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(target)))
 		name = "weakened [name]"
 		damage = damage * pressure_decrease
@@ -56,10 +56,10 @@
 		target_turf = get_turf(src)
 	if(kinetic_gun) //hopefully whoever shot this was not very, very unfortunate.
 		var/list/mods = kinetic_gun.modkits
-		for(var/obj/item/borg/upgrade/modkit/M in mods)
-			M.projectile_strike_predamage(src, target_turf, target, kinetic_gun)
-		for(var/obj/item/borg/upgrade/modkit/M in mods)
-			M.projectile_strike(src, target_turf, target, kinetic_gun)
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in mods)
+			modkit_upgrade.projectile_strike_predamage(src, target_turf, target, kinetic_gun)
+		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in mods)
+			modkit_upgrade.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer, TRUE)
@@ -90,7 +90,7 @@
 	projectile_type = /obj/projectile/kinetic/smg
 	select_name = "kinetic"
 	e_cost = 0 // Can't use the macro
-	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
 
 /obj/item/ammo_casing/energy/kinetic/glock
@@ -103,7 +103,7 @@
 
 /obj/item/ammo_casing/energy/kinetic/railgun
 	projectile_type = /obj/projectile/kinetic/railgun
-	fire_sound = 'sound/weapons/beam_sniper.ogg'
+	fire_sound = 'sound/items/weapons/beam_sniper.ogg'
 
 /obj/projectile/kinetic/railgun
 	name = "hyper kinetic force"
@@ -126,7 +126,7 @@
 
 /obj/item/ammo_casing/energy/kinetic/shockwave
 	projectile_type = /obj/projectile/kinetic/shockwave
-	fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 
 /obj/projectile/kinetic/shockwave
 	name = "concussive kinetic force"

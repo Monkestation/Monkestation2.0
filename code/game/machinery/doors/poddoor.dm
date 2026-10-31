@@ -1,7 +1,7 @@
 /obj/machinery/door/poddoor
 	name = "blast door"
 	desc = "A heavy duty blast door that opens mechanically."
-	icon = 'icons/obj/doors/blastdoor.dmi'
+	icon = 'icons/obj/doors/blast_door.dmi'
 	icon_state = "closed"
 	layer = BLASTDOOR_LAYER
 	closingLayer = CLOSED_BLASTDOOR_LAYER
@@ -14,11 +14,14 @@
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	can_open_with_hands = FALSE
+	door_align_type = /obj/machinery/door/poddoor
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
-	var/open_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
-	var/close_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
+	var/open_sound = 'sound/machines/poddoors/blastdoor.ogg'
+	var/close_sound = 'sound/machines/poddoors/blastdoor.ogg'
+	/// If TRUE, the blast door shows up on shuttle navigation computers
+	var/show_nav_computer_icon = TRUE
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -28,6 +31,11 @@
 	bomb = 50
 	fire = 100
 	acid = 70
+
+/obj/machinery/door/poddoor/Initialize(mapload)
+	. = ..()
+	if(show_nav_computer_icon)
+		AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -157,7 +165,7 @@
 		user.visible_message(span_warning("[user] begins prying open [src]."),\
 					span_noticealien("You begin digging your claws into [src] with all your might!"),\
 					span_warning("You hear groaning metal..."))
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
 		var/time_to_open = 5 SECONDS
 		if(hasPower())

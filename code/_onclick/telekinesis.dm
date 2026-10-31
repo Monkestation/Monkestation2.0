@@ -101,6 +101,7 @@
 	///Object focused / selected by the TK user
 	var/atom/movable/focus
 	var/mob/living/carbon/tk_user
+	var/added_damage // The damage we have given our target, we store it in a var to avoid adding chromosomes breaking things
 
 /obj/item/tk_grab/Initialize(mapload)
 	. = ..()
@@ -110,6 +111,8 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	focus = null
 	tk_user = null
+	if(!QDELETED(focus) && added_damage)
+		focus.throwforce -= added_damage
 	return ..()
 
 /obj/item/tk_grab/process()
@@ -229,11 +232,24 @@
 
 /obj/item/tk_grab/proc/focus_object(obj/target)
 	if(!check_if_focusable(target))
-		return
+		return FALSE
+
 	focus = target
 	update_appearance()
 	apply_focus_overlay()
-	return TRUE
+
+	. = TRUE
+
+	var/datum/mutation/telekinesis/telekinesis = locate(/datum/mutation/telekinesis) in tk_user.dna.mutations
+	if(!telekinesis)
+		return
+
+	var/mutation_power = GET_MUTATION_POWER(telekinesis)
+	if(mutation_power <= 1)
+		return
+
+	added_damage = mutation_power * 4
+	focus.throwforce += added_damage
 
 /obj/item/tk_grab/proc/check_if_focusable(obj/target)
 	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(/datum/mutation/telekinesis))

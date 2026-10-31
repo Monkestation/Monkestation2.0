@@ -456,6 +456,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/yellow_oxygen_tank
+	name = "Yellow Oxygen Tank"
+	desc = "An empty yellow oxygen tank."
+	id = "yellow_oxygen_tank"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/tank/internals/oxygen/yellow/empty
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/plasma_tank
 	name = "Plasma Tank"
 	desc = "An empty oxygen tank."
@@ -502,6 +514,28 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/shuttle_rods
+	name = "Shuttle Frame Rods"
+	id = "shuttlerods"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/rods/shuttle
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/radio_navigation_beacon
+	name = "Compact Radio Navigation Gigabeacon"
+	id = "gigabeacon"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/folded_navigation_gigabeacon
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/plasticducky
 	name = "Rubber Ducky"
@@ -826,6 +860,25 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
+/datum/design/security_trap
+	name = "Security Trap"
+	desc = "A rubber padded trap used to catch criminals non-lethally. Relies on security record data to function."
+	id = "security_trap"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/titanium =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/restraints/legcuffs/beartrap/security
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/zipties
 	name = "Zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
@@ -871,6 +924,23 @@
 	build_path = /obj/item/inspector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/bodycam
+	name = "Body Camera"
+	desc = /obj/item/bodycam_upgrade::desc
+	id = "bodycam"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/bodycam_upgrade
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 

@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	// Do not change them to addtimer, since the timer SS might not be running at this time.
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
-			return savefile.get_entry("character[default_slot]")
+			return savefile.get_entry("character[active_slot]")
 		if (PREFERENCE_PLAYER)
 			return savefile.get_entry()
 		else

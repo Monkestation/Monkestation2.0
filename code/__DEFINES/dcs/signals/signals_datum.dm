@@ -46,3 +46,9 @@
 
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
+
+///from base of /datum/preference_middleware/jobs/proc/set_job_title() and /datum/preference_middleware/jobs/proc/set_job_preference: ()
+#define COMSIG_JOB_PREF_UPDATED "job_pref_updated"
+
+///from /datum/component/bubble_icon_override/get_bubble_icon(): (list/holder)
+#define COMSIG_GET_BUBBLE_ICON "get_bubble_icon"

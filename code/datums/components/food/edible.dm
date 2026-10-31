@@ -227,7 +227,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		examine_list += span_notice("It is [lowertext(english_list(types))].")
+		examine_list += span_notice("It is [LOWER_TEXT(english_list(types))].")
 
 	var/quality = get_perceived_food_quality(user)
 	if(quality > 0)
@@ -472,7 +472,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/fraction = 0.3
 	fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
+	owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = INGEST)
 	eater.hud_used?.hunger?.update_hunger_bar()
 	bitecount++
 	var/desired_mask = (total_bites / bitecount)
@@ -602,6 +602,10 @@ Behavior that's still missing from this component that original food items had t
 /// Get food quality adjusted according to eater's preferences
 /datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
 	var/food_quality = get_recipe_complexity()
+	var/list/extra_quality = list()
+	SEND_SIGNAL(eater, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, src, extra_quality)
+	for(var/quality in extra_quality)
+		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		if(!isoozeling(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
@@ -627,7 +631,11 @@ Behavior that's still missing from this component that original food items had t
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		if(HAS_TRAIT(eater, TRAIT_AGEUSIA)) //if you can't taste it, it doesn't taste good
 			return 0
-		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
+		var/disliked_foodtypes = eater.get_disliked_foodtypes()
+		if(HAS_TRAIT(eater, TRAIT_FISH_EATER) && (foodtypes & SEAFOOD)) //fish people don't mind raw fish
+			disliked_foodtypes &= ~(RAW|GORE)
+			food_quality += LIKED_FOOD_QUALITY_CHANGE
+		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, disliked_foodtypes)
 		food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
 
 	return food_quality
@@ -724,7 +732,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		var/atom/eaten_food = parent
-		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transfered_by = eater)
+		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transferred_by = eater)
 		eater.visible_message(span_warning("[src] eats [eaten_food]!"), span_notice("You eat [eaten_food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(eaten_food)

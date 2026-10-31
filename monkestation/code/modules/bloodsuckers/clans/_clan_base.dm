@@ -17,7 +17,7 @@
 	///The clan objective that is required to greentext.
 	var/datum/objective/bloodsucker/clan_objective
 	///The icon of the radial icon to join this clan.
-	var/join_icon = 'monkestation/icons/bloodsuckers/clan_icons.dmi'
+	var/join_icon = 'icons/ui/antags/bloodsucker_clans.dmi'
 	///Same as join_icon, but the state
 	var/join_icon_state = "caitiff"
 	///Description shown when trying to join the clan.
@@ -142,7 +142,7 @@
  */
 /datum/bloodsucker_clan/proc/on_vassal_made(datum/antagonist/bloodsucker/source, mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
-	user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
+	user.playsound_local(null, 'sound/effects/explosion/explosion_distant.ogg', 40, TRUE)
 	target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	target.set_timed_status_effect(15 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "laugh")

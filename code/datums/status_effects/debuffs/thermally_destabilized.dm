@@ -17,5 +17,5 @@
 /atom/movable/screen/alert/status_effect/thermally_destabilized
 	name = "Thermally Destabilized"
 	desc = "Your body temperature is being disrupted. Natural warming and cooling is temporarily impossible."
-	icon = 'monkestation/icons/hud/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "stabilization"

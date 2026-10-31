@@ -201,13 +201,14 @@
 
 /obj/effect/spawner/random/structure/billboard
 	name = "billboard spawner"
-	icon = 'icons/obj/billboard.dmi'
+	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_random"
 	loot = list(
 		/obj/structure/billboard/azik = 50,
 		/obj/structure/billboard/donk_n_go = 50,
 		/obj/structure/billboard/space_cola = 50,
 		/obj/structure/billboard/nanotrasen = 35,
+		/obj/structure/billboard/shrimp = 35,
 		/obj/structure/billboard/nanotrasen/defaced = 15,
 	)
 

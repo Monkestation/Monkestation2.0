@@ -176,7 +176,7 @@
 
 		// play moth flutter noise if moth wing
 		if(istype(wings, /obj/item/organ/external/wings/moth))
-			playsound(H, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+			playsound(H, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -250,7 +250,7 @@
 	animate(pixel_y = user.pixel_y - 4, time = 0.1 SECONDS)
 
 /datum/emote/living/jump/get_sound(mob/living/user)
-	return 'sound/weapons/thudswoosh.ogg'
+	return 'sound/items/weapons/thudswoosh.ogg'
 
 /datum/emote/living/kiss
 	key = "kiss"
@@ -360,11 +360,11 @@
 	if(!issilicon(user))
 		return
 	return pick(
-		'monkestation/sound/voice/screams/silicon/robotAUGH1.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH2.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH3.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH4.ogg',
-		'monkestation/sound/voice/screams/silicon/robotAUGH5.ogg')
+		'sound/voice/screams/silicon/robotAUGH1.ogg',
+		'sound/voice/screams/silicon/robotAUGH2.ogg',
+		'sound/voice/screams/silicon/robotAUGH3.ogg',
+		'sound/voice/screams/silicon/robotAUGH4.ogg',
+		'sound/voice/screams/silicon/robotAUGH5.ogg')
 monkestation edit end */
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
@@ -410,8 +410,9 @@ monkestation edit end */
 	. = ..()
 	if(!ishuman(user))
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "sigh")
-	flick_overlay_global(user.apply_height_offsets(emote_animation, UPPER_BODY), GLOB.clients, 2.0 SECONDS)
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "sigh")
+	user.apply_height(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 2.0 SECONDS)
 
 /datum/emote/living/sit
 	key = "sit"

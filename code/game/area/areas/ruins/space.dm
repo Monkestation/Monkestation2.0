@@ -55,7 +55,7 @@
 
 /area/ruin/space/has_grav/powered/aesthetic
 	name = "Aesthetic"
-	ambientsounds = list('sound/ambience/ambivapor1.ogg')
+	ambientsounds = list('sound/ambience/misc/ambivapor1.ogg')
 
 
 //Ruin of Hotel
@@ -324,7 +324,7 @@
 /area/ruin/space/ancientstation/delta/ai
 	name = "\improper Delta Station AI Core"
 	icon_state = "os_delta_ai"
-	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
+	ambientsounds = list('sound/ambience/misc/ambimalf.ogg', 'sound/ambience/engineering/ambitech.ogg', 'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambiatmos.ogg', 'sound/ambience/engineering/ambiatmos2.ogg')
 
 /area/ruin/space/ancientstation/delta/storage
 	name = "\improper Delta Station Storage"
@@ -364,39 +364,35 @@
 	icon_state = "ks13_singulo"
 */
 
-//MONKESTATION ADDITION
-/area/ruin/space/ks13/monke/engineering
-	icon = 'monkestation/icons/area/areas_derelict.dmi'
-
-/area/ruin/space/ks13/monke/engineering/engine_hallway
+/area/ruin/space/ks13/engineering/engine_hallway
 	name = "\improper Derelict Engineering Hallway"
 	icon_state = "ks13_engineering_hallway"
 
-/area/ruin/space/ks13/monke/engineering/engine_room
+/area/ruin/space/ks13/engineering/engine_room
 	name = "\improper Derelict Engine Room"
 	icon_state = "ks13_engine_room"
 
-/area/ruin/space/ks13/monke/engineering/engine_control_room
+/area/ruin/space/ks13/engineering/engine_control_room
 	name = "\improper Derelict Engine Control Room"
 	icon_state = "ks13_engine_control_room"
 
-/area/ruin/space/ks13/monke/engineering/engine_storage
+/area/ruin/space/ks13/engineering/engine_storage
 	name = "\improper Derelict Engineering Storage"
 	icon_state = "ks13_engineering_storage"
 
-/area/ruin/space/ks13/monke/engineering/engine_gas_storage
+/area/ruin/space/ks13/engineering/engine_gas_storage
 	name = "\improper Derelict Engineering Gas Storage"
 	icon_state = "ks13_engineering_gas_storage"
 
-/area/ruin/space/ks13/monke/engineering/aux_engine
+/area/ruin/space/ks13/engineering/aux_engine
 	name = "\improper Derelict Aux Engine"
 	icon_state = "ks13_auxiliary_engine"
 
-/area/ruin/space/ks13/monke/engineering/escape_pod_bay
+/area/ruin/space/ks13/engineering/escape_pod_bay
 	name = "\improper Derelict Escape Pod Bay"
 	icon_state = "ks13_escape_pods"
 
-/area/ruin/space/ks13/monke/engineering/repair_bay
+/area/ruin/space/ks13/engineering/repair_bay
 	name = "\improper Derelict Repair Bay"
 	icon_state = "ks13_repair_bay"
 //END OF ADDITION
@@ -574,14 +570,14 @@
 
 /area/ruin/space/abandoned_tele
 	name = "\improper Abandoned Teleporter"
-	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/signal.ogg')
+	ambientsounds = list('sound/ambience/misc/ambimalf.ogg', 'sound/ambience/misc/signal.ogg')
 
 //OLD AI SAT
 
 /area/ruin/space/tcommsat_oldaisat // Since tcommsat was moved to /area/station/, this turf doesn't inhereit its properties anymore
 	name = "\improper Abandoned Satellite"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
-											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambisin2.ogg', 'sound/ambience/misc/signal.ogg', 'sound/ambience/misc/signal.ogg', 'sound/ambience/general/ambigen10.ogg', 'sound/ambience/engineering/ambitech.ogg',\
+											'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambitech3.ogg', 'sound/ambience/misc/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 
 //ABANDONED BOX WHITESHIP
@@ -615,7 +611,7 @@
 // The planet of the clowns
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
-	ambientsounds = list('sound/ambience/clown.ogg')
+	ambientsounds = list('sound/music/lobby_music/clown.ogg')
 
 //DERELICT SULACO
 /area/ruin/space/has_grav/derelictsulaco
@@ -683,7 +679,7 @@
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "ruins"
 	requires_power = FALSE
-	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
+	ambientsounds = list('sound/ambience/general/ambigen13.ogg','sound/ambience/general/ambigen14.ogg','sound/ambience/medical/ambinice.ogg')
 
 // the outlet
 /area/ruin/space/has_grav/the_outlet/storefront
@@ -775,3 +771,44 @@
 //Infested Flotilla
 /area/ruin/space/has_grav/infested_flotilla
 	name = "Infested Flotilla"
+
+// Shrimp Restaurant
+/area/ruin/space/has_grav/powered/shrimp
+	name = "Shrimp Restaurant"
+	ambientsounds = list('sound/ambience/shrimpmassacre.ogg')
+
+// Specifically for the antennas of the shrimp. im not a shrimxpert.
+/area/ruin/space/shrimptennas
+	name = "Shrimp Outside"
+
+/area/ruin/space/has_grav/listeningstation
+	name = "\improper Listening Post"
+
+/area/ruin/space/has_grav/listeningstation/dorms
+	name = "Listening Post Dormitories"
+
+/area/ruin/space/has_grav/listeningstation/lobby
+	name = "Listening Post Lobby"
+
+/area/ruin/space/has_grav/listeningstation/lounge
+	name = "Listening Post Lounge"
+
+/area/ruin/space/has_grav/listeningstation/support
+	name = "Listening Post Support Facilities"
+
+/area/ruin/space/has_grav/listeningstation/asteroid
+	name = "Suspicious Asteroid"
+
+/area/ruin/space/has_grav/listeningstation/comms
+	name = "Listening Post Communications"
+
+/area/ruin/space/has_grav/listeningstation/medical
+	name = "Listening Post Infirmary"
+
+// abandoned infiltrator area
+/area/ruin/space/has_grav/old_infiltrator
+	name = "Abandoned Syndicate Infiltrator"
+	//i dont know where to put a no charge apc so im just gonna do this
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE

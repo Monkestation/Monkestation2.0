@@ -15,7 +15,7 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
-	block_sound = 'sound/weapons/block_shield.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -107,7 +107,7 @@
 	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	transparent = TRUE
 	max_integrity = 75
-	shield_break_sound = 'sound/effects/glassbr3.ogg'
+	shield_break_sound = 'sound/effects/glass/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
@@ -242,7 +242,7 @@
 	throwforce = 3
 	throw_speed = 3
 	breakable_by_damage = FALSE
-	block_sound = 'sound/weapons/block_blade.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	/// Whether the shield is currently extended and protecting the user.
 	var/enabled = FALSE
 	/// Force of the shield when active.
@@ -292,7 +292,7 @@
 
 	if(user)
 		balloon_alert(user, active ? "activated" : "deactivated")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele
@@ -340,8 +340,24 @@
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/datum/armor/item_shield/improvised
+	melee = 40
+	bullet = 30
+	laser = 30
+
+/obj/item/shield/improvised
+	name = "improvised shield"
+	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
+	icon_state = "improvised"
+	inhand_icon_state = "improvised"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	max_integrity = 35
+	shield_break_leftover = /obj/item/stack/rods/two
+	armor_type = /datum/armor/item_shield/improvised
+	block_sound = 'sound/items/trayhit/trayhit2.ogg'
 
 #undef BATON_BASH_COOLDOWN
 

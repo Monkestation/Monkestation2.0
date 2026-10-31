@@ -6,7 +6,7 @@
 /mob/living/basic/chick
 	name = "\improper chick"
 	desc = "Adorable! They make such a racket though."
-	icon = 'monkestation/icons/mob/ranching/chickens.dmi'
+	icon = 'icons/mob/ranching/chickens.dmi'
 	icon_state = "chick"
 	icon_living = "chick"
 	icon_dead = "chick_dead"
@@ -32,9 +32,9 @@
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	held_state = "chick"
-	head_icon = 'monkestation/icons/mob/pets_held.dmi'
-	held_lh = 'monkestation/icons/mob/pets_held_lh.dmi'
-	held_rh = 'monkestation/icons/mob/pets_held_rh.dmi'
+	head_icon = 'icons/mob/pets_held.dmi'
+	held_lh = 'icons/mob/pets_held_lh.dmi'
+	held_rh = 'icons/mob/pets_held_rh.dmi'
 
 	ai_controller = /datum/ai_controller/basic_controller/chick
 

@@ -40,6 +40,7 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	ammo_x_offset = 1
 
@@ -112,10 +113,10 @@
 	gun_flags = NOT_A_REAL_GUN
 
 	heat = 3800
-	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
+	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
-	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
+	var/charge_weld = (0.025 * STANDARD_CELL_CHARGE) //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -124,7 +125,7 @@
 		speed = 2.5 SECONDS, \
 		effectiveness = 105, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/plasma_cutter.ogg', \
+		butcher_sound = 'sound/items/weapons/plasma_cutter.ogg', \
 	)
 	AddElement(/datum/element/tool_flash, 1)
 
@@ -195,6 +196,7 @@
 	inhand_icon_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
+	toolspeed = 0.4
 
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2
@@ -402,7 +404,7 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	automatic_charge_overlays = FALSE
 	/// How many coins we can have at a time. Set to 0 for infinite
 	var/max_coins = 4

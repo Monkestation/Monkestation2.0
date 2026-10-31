@@ -102,7 +102,7 @@
 	processing = FALSE
 	locked = FALSE
 	human_occupant = null
-	playsound(src, 'sound/machines/buzz-two.ogg', 100)
+	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 100)
 	balloon_alert_to_viewers("process aborted!")
 	if(timer_id)
 		deltimer(timer_id)
@@ -137,9 +137,9 @@
 	if(human_occupant.stat == DEAD && !HAS_TRAIT(human_occupant, TRAIT_SUICIDED))
 		balloon_alert_to_viewers("occupant is dead!")
 		return
-	if(!SSgoldeneye.check_goldeneye_target(human_occupant.mind)) // Preventing abuse by method of duplication.
+	if(!GLOB.goldeneye.check_goldeneye_target(human_occupant.mind)) // Preventing abuse by method of duplication.
 		balloon_alert_to_viewers("no GoldenEye data!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100)
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100)
 		return
 	if(handle_victim_suicide(human_occupant))
 		return
@@ -165,10 +165,10 @@
 /obj/machinery/interrogator/proc/stage_one()
 	if(!check_requirements())
 		say("Critical error! Aborting.")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100)
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100)
 		return
 	to_chat(human_occupant, span_danger("As [src] whirrs to life you feel some cold metal restraints deploy around you, you can't move!"))
-	playsound(loc, 'sound/items/rped.ogg', 60)
+	playsound(loc, 'sound/items/tools/rped.ogg', 60)
 	say("Stage one complete!")
 	minor_announce("SECURITY BREACH DETECTED, NETWORK COMPROMISED! LOCATION UNTRACEABLE.", "GoldenEye Defence Network")
 	timer_id = addtimer(CALLBACK(src, PROC_REF(stage_two)), rand(STAGE_PROCESS_TIME_LOWER, STAGE_PROCESS_TIME_UPPER), TIMER_STOPPABLE|TIMER_UNIQUE)
@@ -176,20 +176,20 @@
 /obj/machinery/interrogator/proc/stage_two()
 	if(!check_requirements())
 		say("Critical error! Aborting.")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100)
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100)
 		return
 	to_chat(human_occupant, span_userdanger("You feel a sharp pain as a drill penetrates your skull, it's unbearable!"))
 	human_occupant.emote("scream")
 	human_occupant.adjustBruteLoss(30)
 	playsound(src, 'sound/effects/wounds/blood1.ogg', 100)
-	playsound(src, 'sound/items/drill_use.ogg', 100)
+	playsound(src, 'sound/items/tools/drill_use.ogg', 100)
 	say("Stage two complete!")
 	timer_id = addtimer(CALLBACK(src, PROC_REF(stage_three)), rand(STAGE_PROCESS_TIME_LOWER, STAGE_PROCESS_TIME_UPPER), TIMER_STOPPABLE|TIMER_UNIQUE)
 
 /obj/machinery/interrogator/proc/stage_three()
 	if(!check_requirements())
 		say("Critical error! Aborting.")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100)
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100)
 		return
 	to_chat(human_occupant, span_userdanger("You feel something penetrating your brain, it feels as though your childhood memories are fading! Please, make it stop! After a moment of silence, you realize you can't remember what happened to you!"))
 	human_occupant.emote("scream")
@@ -229,7 +229,7 @@
 		new_key = new
 	new_key.extract_name = human_occupant.real_name
 	// Add them to the goldeneye extracted list. This list is capable of having nulls.
-	SSgoldeneye.extract_mind(human_occupant.mind)
+	GLOB.goldeneye.extract_mind(human_occupant.mind)
 	var/obj/structure/closet/supplypod/pod = new
 	new /obj/effect/pod_landingzone(landingzone, pod, new_key)
 
@@ -263,7 +263,7 @@
 		safe_turf = get_turf(backup_loc)
 		stack_trace("[type] - return_target was unable to find a safe turf for [human_occupant] to return to. Defaulting to observer start turf.")
 
-	if(!do_teleport(human_occupant, safe_turf, asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM, forced = TRUE))
+	if(!do_teleport(human_occupant, safe_turf, asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM, forced = TRUE))
 		safe_turf = get_turf(backup_loc)
 		human_occupant.forceMove(safe_turf)
 		stack_trace("[type] - return_target was unable to teleport [human_occupant] to the observer start turf. Forcemoving.")

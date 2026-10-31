@@ -27,6 +27,7 @@
 	bodytemp_heat_damage_limit = (T0C + 100)
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
+	blood_volume = BLOOD_VOLUME_NORMAL
 	faction = list(FACTION_CLOWN)
 	ai_controller = /datum/ai_controller/basic_controller/clown
 	speed = 1.4 //roughly close to simpleanimal clowns
@@ -49,7 +50,7 @@
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
 	//im not putting dynamic humans or whatever its called here because this is the base path of nonhuman clownstrosities
 	if(waddles)
-		AddElement(/datum/element/waddling)
+		AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	if(length(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
@@ -66,6 +67,11 @@
 	var/obj/item/food/grown/banana/bunch/unripe_bunch = target
 	unripe_bunch.start_ripening()
 	log_combat(src, target, "explosively ripened")
+
+/mob/living/basic/clown/get_bloodtype()
+	if (check_holidays(APRIL_FOOLS))
+		return get_blood_type(BLOOD_TYPE_CLOWN)
+	return ..()
 
 /mob/living/basic/clown/lube
 	name = "Living Lube"
@@ -242,7 +248,7 @@
 	armour_penetration = 20
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
-	attack_sound = 'sound/items/airhorn2.ogg'
+	attack_sound = 'sound/items/airhorn/airhorn2.ogg'
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/effect/spawner/foam_starter/small,
@@ -581,7 +587,7 @@
 	var/peels_to_spawn = min(peel_amount, reachable_turfs.len)
 	for(var/i in 1 to peels_to_spawn)
 		new banana_type(pick_n_take(reachable_turfs))
-	playsound(owner, 'sound/creatures/clown/clownana_rustle.ogg', 60)
+	playsound(owner, 'sound/mobs/non-humanoids/clown/clownana_rustle.ogg', 60)
 	animate(owner, time = 1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
 	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
 	animate(time = 1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
@@ -612,7 +618,7 @@
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
-	playsound(owner, 'sound/creatures/clown/hehe.ogg', 100)
+	playsound(owner, 'sound/mobs/non-humanoids/clown/hehe.ogg', 100)
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
@@ -623,5 +629,5 @@
 	. = ..()
 	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
 	playsound(owner, 'sound/items/bikehorn.ogg', 60)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/mobs/non-humanoids/clown/hohoho.ogg', 100, 1), 1 SECONDS)
 	StartCooldown()

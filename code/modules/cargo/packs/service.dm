@@ -308,3 +308,23 @@
 		/obj/item/storage/box/lethalshot,
 		/obj/item/magazine_shuffler,
 	)
+
+/datum/supply_pack/service/dance_machine
+	name = "Dance Machine Crate"
+	desc = "Contains one radiant dance machine. Dance like your local megacorporation isn't watching you."
+	cost = CARGO_CRATE_VALUE * 25 //if this gets spammed everywhere it might lag clients out
+	contains = list(/obj/machinery/jukebox/disco)
+	crate_name = "dance machine crate"
+	crate_type = /obj/structure/closet/crate/large
+	contraband = TRUE
+
+/datum/supply_pack/service/boombox
+	name = "MC Starter Kit & Boombox"
+	desc = "A top of the line, Nanomusic boombox. \
+		Can play specialized music tapedecks for you, and possibly even your coworkers, to enjoy. Comes with a free demo tape."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(
+		/obj/item/boombox = 1,
+		/obj/item/music_tape = 1,
+	)
+	crate_name = "boombox crate"
