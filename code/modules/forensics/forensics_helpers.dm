@@ -191,7 +191,7 @@
 
 	var/dirty_hands = !!(target_flags & (ITEM_SLOT_GLOVES|ITEM_SLOT_HANDS))
 	var/dirty_feet = !!(target_flags & ITEM_SLOT_FEET)
-	var/slots_to_bloody = target_flags & ~check_obscured_slots()
+	var/slots_to_bloody = target_flags & ~check_covered_slots()
 	var/list/all_worn = get_equipped_items()
 	for(var/obj/item/thing as anything in all_worn)
 		if(thing.slot_flags & slots_to_bloody)
@@ -202,7 +202,7 @@
 			dirty_feet = FALSE
 
 	if(slots_to_bloody & ITEM_SLOT_HANDS)
-		for(var/obj/item/thing in held_items)
+		for(var/obj/item/thing as anything in get_held_items())
 			thing.add_blood_DNA(blood_DNA_to_add)
 
 	cached_blood_color = null

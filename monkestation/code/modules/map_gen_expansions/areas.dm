@@ -14,8 +14,6 @@
 	power_equip = FALSE
 	power_light = FALSE
 	requires_power = TRUE
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/forestplanet/outdoors // parent that defines if something is on the exterior of the station.
 	name = "Woodlands"
