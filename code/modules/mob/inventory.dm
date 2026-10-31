@@ -64,8 +64,8 @@
 /mob/proc/get_inactive_hand_index()
 	return get_offhand_index(active_hand_index)
 
-//Finds the opposite index for the given hand index (eg: upper left arm will find the item in upper right arm)
-//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/// Finds the opposite index for the given hand index (eg: upper left arm will find the item in upper right arm)
+/// So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_offhand_index(hand_index)
 	if(hand_index > held_items.len || hand_index <= 0)
 		return 0
