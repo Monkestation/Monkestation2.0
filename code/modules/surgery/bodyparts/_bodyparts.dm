@@ -213,6 +213,8 @@
 	///this is our color palette we pull colors from
 	var/datum/color_palette/palette
 	var/palette_key
+	///Icons used instead of icon_static for the limb styles of TRAIT_GREYSCALE_TOGGLE, limb style -> icon
+	var/list/style_icons
 
 	///limb flags for the specific limb
 	var/limb_flags
@@ -1007,10 +1009,16 @@
 	var/mob/living/carbon/human/human_owner = owner
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 	if (HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE))
-		if (human_owner.greyscale_limbs)
-			should_draw_greyscale = TRUE
+		should_draw_greyscale = (human_owner.limb_style == LIMB_STYLE_MUTANT_COLORS)
+		var/style_icon = style_icons?[human_owner.limb_style]
+		if(style_icon)
+			icon_static = style_icon
 		else
-			should_draw_greyscale = FALSE
+			// back to normal from another style
+			for(var/style in style_icons)
+				if(icon_static == style_icons[style])
+					icon_static = initial(icon_static)
+					break
 	if(HAS_TRAIT(human_owner, TRAIT_USES_SKINTONES))
 		skin_tone = human_owner.skin_tone
 	else if(HAS_TRAIT(human_owner, TRAIT_MUTANT_COLORS))
