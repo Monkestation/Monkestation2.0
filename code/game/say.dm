@@ -36,8 +36,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
 
 
+/// Called when this movable hears a message from a source.
+/// Returns TRUE if the message was received.
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+	return TRUE
 
 /**
  * Checks if our movable can speak the provided message, passing it through filters
@@ -76,14 +79,51 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/can_speak(allow_mimes = FALSE)
 	return TRUE
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
+/atom/movable/proc/do_tts_message(message, language, message_mods, list/tts_filter, list/hearers)
+	set waitfor = FALSE
+
+	if(!SStts.tts_enabled || !voice || HAS_TRAIT(src, TRAIT_SIGN_LANG) || HAS_TRAIT(src, TRAIT_UNKNOWN) || message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		return
+
+	var/list/filter = list()
+	if(length(voice_filter) > 0)
+		filter += voice_filter
+
+	if(length(tts_filter) > 0)
+		filter += tts_filter.Join(",")
+	var/list/special_filter = list()
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(message), language, get_tts_voice(filter, special_filter), filter.Join(","), hearers, message_range = 7, pitch = pitch, special_filters = special_filter.Join("|"), blip_base = blip_base, blip_number = blip_number, identifier = message_mods[MODE_TTS_IDENTIFIER])
+
+/atom/movable/proc/get_tts_voice(list/filter, list/special_filter)
+	. = voice
+
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
 	var/list/hearers = get_hearers_in_view(range, source)
+	var/list/listened = list()
 	get_voice().start_barking(message, hearers, range, say_test(message), FALSE, src)
+
+	var/tts_message_to_use = tts_message
+	if(!tts_message_to_use)
+		tts_message_to_use = message
+
+	var/list/filter = list()
+	if(length(voice_filter) > 0)
+		filter += voice_filter
+
+	if(length(tts_filter) > 0)
+		filter += tts_filter.Join(",")
+
+	var/shell_scrubbed_input = tts_speech_filter(html_decode(tts_message_to_use))
+	var/identifier = "[sha1(voice + filter.Join(",") + num2text(pitch) + shell_scrubbed_input + blip_base + num2text(blip_number))].[world.time]"
+	message_mods[MODE_TTS_IDENTIFIER] = identifier
 	for(var/atom/movable/hearing_movable as anything in hearers)
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
-		hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range)
+		if(hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range))
+			listened += hearing_movable
+
+	do_tts_message(tts_message_to_use, message_language, message_mods, tts_filter, listened)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE, visible_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
