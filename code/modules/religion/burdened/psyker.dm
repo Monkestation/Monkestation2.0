@@ -44,7 +44,7 @@
 		return
 	new_head_owner.become_blind(bodypart_trait_source)
 
-/obj/item/bodypart/head/psyker/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/head/psyker/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	owner.cure_blind(bodypart_trait_source)
 	return ..()
 

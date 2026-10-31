@@ -112,26 +112,17 @@
 	active_item.slot_flags = null
 	active_item.set_custom_materials(null)
 
-	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
-	var/hand = owner.get_empty_held_index_for_side(side)
-	if(hand)
-		owner.put_in_hand(active_item, hand)
-	else
-		var/list/hand_items = owner.get_held_items_for_side(side, all = TRUE)
-		var/success = FALSE
-		var/list/failure_message = list()
-		for(var/i in 1 to hand_items.len) //Can't just use *in* here.
-			var/hand_item = hand_items[i]
-			if(!owner.dropItemToGround(hand_item))
-				failure_message += span_warning("Your [hand_item] interferes with [src]!")
-				continue
-			to_chat(owner, span_notice("You drop [hand_item] to activate [src]!"))
-			success = owner.put_in_hand(active_item, owner.get_empty_held_index_for_side(side))
-			break
-		if(!success)
-			for(var/i in failure_message)
-				to_chat(owner, i)
+	// always the hand of the arm we're in, extra hands on the same side (moth chest arms) don't count
+	var/obj/item/bodypart/arm = hand
+	var/hand_index = arm ? arm.held_index : (zone == BODY_ZONE_R_ARM ? RIGHT_HANDS : LEFT_HANDS)
+	var/obj/item/interfering_item = owner.get_item_for_held_index(hand_index)
+	if(interfering_item)
+		if(!owner.dropItemToGround(interfering_item))
+			to_chat(owner, span_warning("Your [interfering_item] interferes with [src]!"))
 			return
+		to_chat(owner, span_notice("You drop [interfering_item] to activate [src]!"))
+	if(!owner.put_in_hand(active_item, hand_index))
+		return
 	owner.visible_message(span_notice("[owner] extends [active_item] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_notice("You extend [active_item] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_hear("You hear a short mechanical noise."))

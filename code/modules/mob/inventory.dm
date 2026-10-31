@@ -53,23 +53,26 @@
 /mob/proc/get_inactive_held_item() as /obj/item
 	return get_item_for_held_index(get_inactive_hand_index())
 
+/// Returns the items in your "active hand set", essentially your active hand and offhand
+/mob/proc/get_active_handset_items() as /list
+	RETURN_TYPE(/list/obj/item)
+	
+	var/list/ret = list(get_active_held_item(), get_inactive_held_item())
+	ret.RemoveAll(null)
+	return ret
 
-/**
- * Returns the hand *opposite* to the [active hand][/mob/var/active_hand_index].
- *
- * The "opposite" hand refers to the other side of a given "set" of hands.<br>
- * The opposite of the left hand would be the right hand,
- * but it will not be an upper/lower right hand.
- */
 /mob/proc/get_inactive_hand_index()
-	var/other_hand = 0
-	if(!(active_hand_index % 2))
-		other_hand = active_hand_index-1 //finding the matching "left" limb
+	return get_offhand_index(active_hand_index)
+
+/// Finds the opposite index for the given hand index (eg: upper left arm will find the item in upper right arm)
+/// So we're treating each "pair" of limbs as a team, so "both" refers to them
+/mob/proc/get_offhand_index(hand_index)
+	if(hand_index > held_items.len || hand_index <= 0)
+		return 0
+	if(IS_RIGHT_INDEX(hand_index))
+		return hand_index-1 //finding the matching "left" limb
 	else
-		other_hand = active_hand_index+1 //finding the matching "right" limb
-	if(other_hand < 0 || other_hand > held_items.len)
-		other_hand = 0
-	return other_hand
+		return hand_index+1 //finding the matching "right" limb
 
 /// Returns the item at the specified hand index.
 /mob/proc/get_item_for_held_index(i)
@@ -518,39 +521,22 @@ GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 
 //Inventory.dm is -kind of- an ok place for this I guess
 
-//This is NOT for dismemberment, as the user still technically has 2 "hands"
-//This is for multi-handed mobs, such as a human with a third limb installed
-//This is a very rare proc to call (besides admin fuckery) so
-//any cost it has isn't a worry
+/// Changes the amount of hands that a mob thinks it can have.
+/// Note that this does not change the amount of hands that it actually has,
+/// Just the amount that it thinks it can hold.
 /mob/proc/change_number_of_hands(amt)
 	if(amt < held_items.len)
-		for(var/i in held_items.len to amt step -1)
+		for(var/i in held_items.len to amt + 1 step -1)
 			dropItemToGround(held_items[i])
+		// Move the active hand onto one of the remaining hands
+		if(amt && active_hand_index > amt)
+			var/fallback_index = min(IS_RIGHT_INDEX(active_hand_index) ? RIGHT_HANDS : LEFT_HANDS, amt)
+			if(!swap_hand(fallback_index, silent = TRUE))
+				active_hand_index = fallback_index
 	held_items.len = amt
 
 	if(hud_used)
 		hud_used.build_hand_slots()
-
-/mob/living/carbon/human/change_number_of_hands(amt)
-	var/old_limbs = held_items.len
-	if(amt < old_limbs)
-		for(var/i in hand_bodyparts.len to amt step -1)
-			var/obj/item/bodypart/BP = hand_bodyparts[i]
-			BP.dismember()
-			hand_bodyparts[i] = null
-		hand_bodyparts.len = amt
-	else if(amt > old_limbs)
-		hand_bodyparts.len = amt
-		for(var/i in old_limbs+1 to amt)
-			var/path = /obj/item/bodypart/arm/left
-			if(!(i % 2))
-				path = /obj/item/bodypart/arm/right
-
-			var/obj/item/bodypart/BP = new path ()
-			BP.held_index = i
-			BP.try_attach_limb(src, TRUE)
-			hand_bodyparts[i] = BP
-	..() //Don't redraw hands until we have organs for them
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/proc/get_all_gear(accessories = TRUE, recursive = TRUE)
