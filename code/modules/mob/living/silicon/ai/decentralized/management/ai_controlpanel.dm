@@ -105,11 +105,15 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 /obj/machinery/computer/ai_control_console/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		if(downloading)
+			stop_download()
 		return
 
 	if(downloading && download_progress >= 50 && !download_warning)
 		var/turf/T = get_turf(src)
-		to_chat(downloading, span_userdanger("Warning! Download is 50% completed! Download location: [get_area(src)] ([T.x], [T.y], [T.z])!"))
+		var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
+		to_chat(message_target, span_userdanger("Warning! Download is 50% completed! Download location: [get_area(src)] ([T.x], [T.y], [T.z])!"))
+		message_target.playsound_local(message_target, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 		download_warning = TRUE
 	if(downloading && download_progress >= 100)
 		finish_download()
@@ -239,15 +243,17 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(!downloading)
 		return
 	if(!silent)
-		to_chat(downloading, span_userdanger("Download stopped."))
+		var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
+		to_chat(message_target, span_userdanger("Download stopped."))
 	downloading = null
 	user_downloading = null
 	download_progress = 0
 	download_warning = FALSE
 
 /obj/machinery/computer/ai_control_console/proc/upload_ai(silent = FALSE)
-	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, FALSE)
-	to_chat(intellicard.AI, span_notice("You are being uploaded. Please stand by..."))
+	if(!silent)
+		playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, FALSE)
+		to_chat(intellicard.AI, span_notice("You are being uploaded. Please stand by..."))
 	intellicard.AI.radio_enabled = TRUE
 	intellicard.AI.control_disabled = FALSE
 	intellicard.AI.relocate(TRUE)
@@ -333,7 +339,9 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				return
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 			downloading = target
-			to_chat(downloading, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here to finish download instantly</a>)"))
+			var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
+			to_chat(message_target, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here [downloading.deployed_shell ? "while in your core " : ""]to finish download instantly</a>)"))
+			message_target.playsound_local(message_target, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 			user_downloading = user
 			download_progress = 0
 			. = TRUE
