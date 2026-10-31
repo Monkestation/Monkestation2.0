@@ -10,6 +10,8 @@
 #define COMSIG_SLIME_UPDATE_MOOD "slime_update_mood"
 /// From /datum/status_effect/slime_leech/tick(): (mob/living/meal, drained)
 #define COMSIG_SLIME_LATCH_DRAINED "slime_latch_drained"
+/// From /mob/living/basic/slime/proc/on_slime_pre_attack(), when a slime shocks a carbon: (mob/living/carbon/shocked)
+#define COMSIG_SLIME_SHOCKED "slime_shocked"
 
 /// From /obj/item/vacuum_pack/proc/store(): (mob/living/stored_mob)
 #define COMSIG_VACUUM_STORED "vacuum_stored"

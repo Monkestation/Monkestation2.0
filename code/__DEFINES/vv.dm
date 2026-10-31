@@ -143,6 +143,7 @@
 // /mob/living/basic/slime
 #define VV_HK_SLIME_SET_TYPE "slime_set_type"
 #define VV_HK_SLIME_SET_LIFE_STAGE "slime_set_life_stage"
+#define VV_HK_SLIME_SET_POWER "slime_set_power"
 #define VV_HK_SLIME_SET_BEHAVIOR "slime_set_behavior"
 #define VV_HK_SLIME_FILL_GROWTH "slime_fill_growth"
 #define VV_HK_SLIME_FORCE_SPLIT "slime_force_split"
