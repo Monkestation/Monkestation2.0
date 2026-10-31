@@ -1,0 +1,5 @@
+author: "HoggyHart"
+delete-after: True
+changes:
+  - bugfix: "voice sensor nanites work now"
+  - spellcheck: "species sensor description \"singal\" -> \"signal\""
