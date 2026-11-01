@@ -1,0 +1,7 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "AIs in shells now receive download alerts"
+  - rscadd: "AI download alerts now make an audio cue."
+  - balance: "AI Control Consoles now stop downloads when depowered (previously paused)"
+  - bugfix: "the silent variable on control console upload ai now actually makes it silent."
