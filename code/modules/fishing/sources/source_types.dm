@@ -903,6 +903,75 @@
 	if(reward && !QDELETED(rod.bait) && rod.bait.get_item_credit_value()) //you pay for what you get
 		qdel(rod.bait) // fishing_rod.Exited() will handle clearing the hard ref.
 
+/datum/fish_source/dimensional_rift
+	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	radial_state = "cursed" // placeholder
+	overlay_state = "portal_rift_2" // yeah good luck adaptin the rift sprite to this template. recolored randomizer's the best you're getting
+	fish_table = list(
+		FISHING_INFLUENCE = 6,
+		/obj/item/fish/starfish/chrystarfish = 7,
+		/obj/item/fish/dolphish = 7,
+		/obj/item/fish/flumpulus = 7,
+		/obj/item/fish/gullion = 7,
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
+		/obj/item/eldritch_potion/crucible_soul = 1,
+		/obj/item/eldritch_potion/duskndawn = 1,
+		/obj/item/eldritch_potion/wounded = 1,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
+	)
+	fish_counts = list(
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
+		/obj/item/eldritch_potion/crucible_soul = 1,
+		/obj/item/eldritch_potion/duskndawn = 1,
+		/obj/item/eldritch_potion/wounded = 1,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
+	)
+	fish_count_regen = list(
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3 MINUTES,
+		/obj/item/eldritch_potion/crucible_soul = 5 MINUTES,
+		/obj/item/eldritch_potion/duskndawn = 5 MINUTES,
+		/obj/item/eldritch_potion/wounded = 5 MINUTES,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2.5 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 35
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
+
+/datum/fish_source/dimensional_rift/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
+	. = ..()
+
+	if(challenge.reward_path != FISHING_INFLUENCE)
+		return
+	var/mob/living/carbon/human/human_user
+	if(ishuman(user))
+		human_user = user
+
+	user.visible_message(span_danger("[user] reels [user.p_their()] [challenge.used_rod] in, catching.. nothing?"), span_notice("You catch.. a glimpse into the workings of the Mansus itself!"))
+	// Heretics that fish in the rift gain knowledge.
+	if(IS_HERETIC(user))
+		human_user?.add_mood_event("rift fishing", /datum/mood_event/rift_fishing)
+		var/obj/effect/heretic_influence/fishfluence = challenge.location
+		// But only if it's an open rift
+		if(!istype(fishfluence))
+			to_chat(user, span_notice("You glimpse something fairly uninteresting."))
+			return
+		fishfluence.after_drain(user)
+		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+		if(heretic_datum)
+			heretic_datum.knowledge_points++
+			to_chat(user, "[span_hear("You hear a whisper...")] [span_hypnophrase("THE HIGHER I RISE, THE MORE I FISH.")]")
+			// They can also gain an extra influence point if they infused their rod.
+			if(HAS_TRAIT(challenge.used_rod, TRAIT_ROD_MANSUS_INFUSED))
+				heretic_datum.knowledge_points++
+			to_chat(user, span_boldnotice("Your infused rod improves your knowledge gain!"))
+		return
+
+	// Non-heretics instead go crazy
+	human_user?.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	human_user?.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	// Hand fires at them from the location
+	fire_curse_hand(user, get_turf(challenge.location))
+
+// Handled above
 /datum/fish_source/dimensional_rift/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(reward_path != FISHING_INFLUENCE)
 		return ..()
