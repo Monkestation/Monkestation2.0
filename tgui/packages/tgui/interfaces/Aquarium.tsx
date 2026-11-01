@@ -73,12 +73,12 @@ export const Aquarium = (props) => {
                 ))}
               </Flex>
             </LabeledControls.Item>
-            <LabeledControls.Item label="Reproduction Prevention">
+            <LabeledControls.Item label="Reproduction and Growth">
               <Button
-                selected={!allow_breeding}
+                selected={allow_breeding}
                 onClick={() => act('allow_breeding')}
               >
-                {allow_breeding ? 'Offline' : 'Online'}
+                {allow_breeding ? 'Online' : 'Offline'}
               </Button>
             </LabeledControls.Item>
             <LabeledControls.Item label="Feeding Interval">
