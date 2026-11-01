@@ -18,6 +18,7 @@
 	update_appearance()
 	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
 		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
+	AddElement(/datum/element/fish_safe_storage)
 
 /obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
