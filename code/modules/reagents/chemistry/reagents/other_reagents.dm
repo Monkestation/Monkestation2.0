@@ -186,7 +186,6 @@
 /// How many wet stacks you get per unit of water when it's applied by vapor. Much less effective than by touch, of course.
 #define WATER_TO_WET_STACKS_FACTOR_VAPOR 0.1
 
-
 /**
  * Water reaction to a mob
  */
@@ -202,6 +201,9 @@
 
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
+
+	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
+		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
 
 	if(!exposed_mob.is_cat_enough(include_all_anime = TRUE) || HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION)) // fish infused people don't fear water
 		return
@@ -238,9 +240,9 @@
 		affected_mob.blood_volume += blood_restored * REM * seconds_per_tick // water is good for you!
 	if(water_adaptation)
 		affected_mob.adjust_drunk_effect(-0.5 * REM * seconds_per_tick) // fish drink like fish
-		var/need_mob_update = affected_mob.adjustToxLoss(-0.2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += affected_mob.adjustFireLoss(-0.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjustBruteLoss(-0.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		var/need_mob_update = affected_mob.adjustToxLoss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustFireLoss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustBruteLoss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		return need_mob_update ? TRUE : .
 
 /datum/reagent/water/salt

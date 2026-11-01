@@ -67,6 +67,10 @@
 	inhand_icon_state = "ducky_shoes"
 	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
 
+/obj/item/clothing/shoes/clown_shoes/ducky_shoes/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -7) //deploy tactical duckling lure
+
 /obj/item/clothing/shoes/clown_shoes/cluwne
 	name = "cluwne shoes"
 	desc = "A sense of bloodlust washes over you as you wear these shoes. Ctrl-click to toggle waddle dampeners. Alt-click to toggle sound dampeners."

@@ -190,12 +190,12 @@
 
 /obj/item/clothing/under/syndicate/bloodred/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //extra-tactical
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //extra-tactical
 
 /obj/item/clothing/under/syndicate/floortilecamo/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //tacticool
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
 
 /obj/item/clothing/under/syndicate/scrubs/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!

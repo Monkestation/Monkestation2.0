@@ -176,7 +176,7 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "Object")
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 	if(add_element) //monkestation edit
 		AddElement(/datum/element/skill_reward, /datum/skill/fishing)
 

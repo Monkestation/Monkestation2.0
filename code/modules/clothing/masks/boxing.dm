@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 
 /obj/item/clothing/mask/floortilebalaclava/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //tacticool
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
 
 /obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
 	adjust_visor(user)

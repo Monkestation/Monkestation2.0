@@ -219,4 +219,4 @@
 
 /obj/item/clothing/under/misc/adminsuit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -15)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -25)

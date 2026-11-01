@@ -59,7 +59,7 @@
 
 /obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 
 /obj/item/clothing/gloves/radio
@@ -209,7 +209,7 @@
 /obj/item/clothing/gloves/fishing/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/athletic(src))
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //on top of the extra that you get from the athletics skill.
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //on top of the extra that you get from the athletics skill.
 
 /obj/item/clothing/gloves/fishing/equipped(mob/user, slot)
 	. = ..()
@@ -290,15 +290,15 @@
 
 /obj/item/clothing/gloves/race/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
 
 /obj/item/clothing/gloves/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
 
 /obj/item/clothing/gloves/latex/nitrile/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
 
 /obj/item/clothing/gloves/atmos/Initialize(mapload)
 	. = ..()

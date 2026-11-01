@@ -177,6 +177,7 @@
 /obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 7)
 
 /obj/item/clothing/suit/utility/radiation
 	name = "radiation suit"
@@ -201,6 +202,7 @@
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 7)
 
 
 /obj/item/clothing/suit/utility/fire/Initialize(mapload)

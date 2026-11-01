@@ -695,7 +695,6 @@
 
 /obj/item/clothing/glasses/sunglasses/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -1)
 
 /obj/item/clothing/glasses/welding/Initialize(mapload)
 	. = ..()
@@ -712,10 +711,6 @@
 /obj/item/clothing/glasses/blindfold/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
-
-/obj/item/clothing/glasses/thermal/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/glasses/debug/Initialize(mapload)
 	. = ..()

@@ -43,4 +43,4 @@
 
 /obj/item/clothing/gloves/combat/wizard/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //something something wizard casting
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //something something wizard casting

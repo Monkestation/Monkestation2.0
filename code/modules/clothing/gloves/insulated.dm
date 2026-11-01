@@ -129,8 +129,8 @@
 
 /obj/item/clothing/gloves/cut/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/gloves/chief_engineer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)

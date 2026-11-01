@@ -299,7 +299,7 @@
 	material_flags = NONE
 	custom_price = PAYCHECK_CREW * 3
 	///How much holding this affects fishing difficulty
-	var/fishing_modifier = -2
+	var/fishing_modifier = -4
 
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
@@ -308,7 +308,7 @@
 		/obj/item/fishing_rod,
 	))
 	atom_storage.exception_hold = exception_cache
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2, ITEM_SLOT_HANDS)
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier, ITEM_SLOT_HANDS)
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
@@ -336,10 +336,10 @@
 
 /obj/item/storage/toolbox/fishing/master
 	name = "super fishing toolbox"
-	desc = "Contains EVERYTHING (almost) you need for your fishing trip."
+	desc = "Contains (almost) EVERYTHING you need for your fishing trip."
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
-	fishing_modifier = -7
+	fishing_modifier = -10
 
 /obj/item/storage/toolbox/fishing/master/PopulateContents()
 	new /obj/item/fishing_rod/telescopic/master(src)
@@ -349,7 +349,6 @@
 	new /obj/item/fish_feed(src)
 	new /obj/item/aquarium_kit(src)
 	new /obj/item/fish_analyzer(src)
-	new /obj/item/experi_scanner(src)
 
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"
