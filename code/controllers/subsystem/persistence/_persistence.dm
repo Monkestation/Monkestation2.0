@@ -25,6 +25,9 @@ SUBSYSTEM_DEF(persistence)
 	var/list/picture_logging_information = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
+
+	/// json database linking to data/trophy_fishes.json, for persistent trophy fish mount.
+	var/datum/json_database/trophy_fishes_database
 	var/rounds_since_engine_exploded = 0
 	var/delam_highscore = 0
 	var/tram_hits_this_round = 0

@@ -964,6 +964,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH "stop_fish_reproduction_and_growth"
 /// This is an aquarium with an open panel
 #define TRAIT_AQUARIUM_PANEL_OPEN "aquarium_panel_open"
+/// For locations that prevent fish flopping animation, namely aquariums
+#define TRAIT_STOP_FISH_FLOPPING "stop_fish_flopping"
 /**
  * This bait won't apply TRAIT_ROD_REMOVE_FISHING_DUD to the rod it's attached on,
  * instead, it'll allow the fishing dud to be there unless there's at least one fish that likes the bait
