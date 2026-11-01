@@ -115,7 +115,25 @@
  * * buffer - the new object to assign to the multitool's buffer
  */
 /obj/item/multitool/proc/set_buffer(datum/buffer)
+	var/datum/old_buffer = src.buffer?.resolve()
+	if(old_buffer)
+		UnregisterSignal(old_buffer, COMSIG_QDELETING)
+		remove_buffer(old_buffer)
 	src.buffer = WEAKREF(buffer)
+	if(!QDELETED(buffer))
+		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(remove_buffer))
+
+/// Clears the object buffer, letting the old buffer know it's been removed
+/obj/item/multitool/proc/remove_buffer(datum/source)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(src, COMSIG_MULTITOOL_REMOVE_BUFFER, source)
+	buffer = null
+
+/obj/item/multitool/Destroy()
+	var/datum/old_buffer = buffer?.resolve()
+	if(old_buffer)
+		remove_buffer(old_buffer)
+	return ..()
 
 /**
  * Sets the multitool component buffer
