@@ -842,6 +842,17 @@
 	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
 
+/datum/status_effect/go_away/deletes_mob
+	id = "go_away_deletes_mob"
+	duration = INFINITY
+
+/datum/status_effect/go_away/deluxe/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
+
+/datum/status_effect/go_away/deluxe/proc/wipe_bozo()
+	qdel(owner)
+
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"
 	desc = "I must go, my people need me!"
