@@ -88,8 +88,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "background_default"
 	var/fish_source_flags = NONE
-	/// If FISH_SOURCE_FLAG_EXPLOSIVE_MALUS is set, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
-	var/list/exploded_turfs
+	/// If FISH_SOURCE_FLAG_EXPLOSIVE_MALUS is set, this will track of how much we're "exhausting" the system by bombing it repeatedly.
+	var/explosive_fishing_score = 0
 	///When linked to a fishing portal, this will be the icon_state of this option in the radial menu
 	var/radial_state = "default"
 	///When selected by the fishing portal, this will be the icon_state of the overlay shown on the machine.
@@ -126,7 +126,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		stack_trace("wait_time_range for [type] is set but has length different than two")
 
 /datum/fish_source/Destroy()
-	exploded_turfs = null
+	if(explosive_fishing_score)
+		STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 ///Called when src is set as the fish source of a fishing spot component
@@ -474,32 +475,28 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		info = span_tooltip("boldened are the fish you're more likely to catch with your current setup. The opposite is true for smaller names", info)
 	examine_text += boxed_message(span_info("[info]: [english_list(known_fishes)]."))
 
-/// Called when there's an explosion on a fishing spot that uses this source
+///How much the explosive_fishing_score impacts explosive fishing. The higher the value, the stronger the malus for repeated calls
+#define EXPLOSIVE_FISHING_MALUS_EXPONENT 0.55
+///How much the explosive_fishing_score is reduced each second.
+#define EXPLOSIVE_FISHING_RECOVERY_RATE 0.18
+
+/// Called when there's an explosion on a fishing spot that uses this source. Spawns loot based on how strong the explosion was, fish come out dead
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
-	if(!(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS))
-		explosive_spawn(isturf(location) ? location : location.drop_location(), severity)
-		return
-	if(isnull(exploded_turfs))
-		exploded_turfs = list()
-		addtimer(CALLBACK(src, PROC_REF(post_explosion_spawn)), 1) //run this the next tick.
-	var/turf/turf = get_turf(location)
-	var/peak_severity = max(exploded_turfs[turf], severity)
-	exploded_turfs[turf] = peak_severity
-
-/// Spawns the loot for every turf that exploded this tick, with less loot the more turfs exploded
-/datum/fish_source/proc/post_explosion_spawn()
-	var/multiplier = 1/(length(exploded_turfs)**0.5)
-	for(var/turf/turf as anything in exploded_turfs)
-		explosive_spawn(turf, exploded_turfs[turf], multiplier)
-	exploded_turfs = null
-
-/// Spawns loot on the location based on how strong the explosion was, fish come out dead
-/datum/fish_source/proc/explosive_spawn(atom/location, severity, multiplier = 1)
+	SIGNAL_HANDLER
+	var/multiplier = 1
+	if(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS)
+		if(explosive_fishing_score <= 0)
+			explosive_fishing_score = 1
+			START_PROCESSING(SSprocessing, src)
+		else
+			explosive_fishing_score++
+			multiplier = explosive_fishing_score**-EXPLOSIVE_FISHING_MALUS_EXPONENT
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
 		var/reward_loot = pick_weight(get_fish_table(from_explosion = TRUE))
-		var/atom/movable/reward = simple_dispense_reward(reward_loot, location, location)
+		var/atom/spawn_location = isturf(location) ? location : location.drop_location()
+		var/atom/movable/reward = simple_dispense_reward(reward_loot, spawn_location, location)
 		if(isnull(reward))
 			continue
 		if(isfish(reward))
@@ -510,6 +507,16 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			reward.pixel_y = rand(-9, 9)
 		if(severity >= EXPLODE_DEVASTATE)
 			reward.ex_act(EXPLODE_LIGHT)
+
+/// Slowly lowers the explosive fishing malus over time
+/datum/fish_source/process(seconds_per_tick)
+	explosive_fishing_score -= EXPLOSIVE_FISHING_RECOVERY_RATE * seconds_per_tick
+	if(explosive_fishing_score <= 0)
+		STOP_PROCESSING(SSprocessing, src)
+		explosive_fishing_score = 0
+
+#undef EXPLOSIVE_FISHING_MALUS_EXPONENT
+#undef EXPLOSIVE_FISHING_RECOVERY_RATE
 
 ///Called when releasing a fish in a fishing spot with the TRAIT_CATCH_AND_RELEASE trait.
 /datum/fish_source/proc/readd_fish(obj/item/fish/fish, mob/living/releaser)
