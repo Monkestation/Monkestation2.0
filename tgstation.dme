@@ -1628,6 +1628,7 @@
 #include "code\datums\elements\series.dm"
 #include "code\datums\elements\shuttle_construction_lattice.dm"
 #include "code\datums\elements\shuttle_construction_turf.dm"
+#include "code\datums\elements\shiny_bait.dm"
 #include "code\datums\elements\sideway_movement.dm"
 #include "code\datums\elements\simple_flying.dm"
 #include "code\datums\elements\skill_reward.dm"

@@ -1215,6 +1215,11 @@
 			transform = 0
 	return ..()
 
+/datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
+	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
+		fish.adjust_health(fish.health - 30)
+		return TRUE
+
 /datum/reagent/toxin/bungotoxin
 	name = "Bungotoxin"
 	description = "A horrible cardiotoxin that protects the humble bungo pit."
