@@ -839,7 +839,7 @@
 		return
 	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 	if(equipped)
-		gloves.AddComponent(/datum/component/profound_fisher, equipped)
+		gloves.AddComponent(/datum/component/profound_fisher, equipped, delete_rod_when_deleted = FALSE)
 
 /obj/item/mod/module/fishing_glove/on_suit_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.gauntlets
