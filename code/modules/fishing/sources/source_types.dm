@@ -174,15 +174,10 @@
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
 	var/obj/item/fish/caught_fish = new reward_path(spawn_location, FALSE)
-	var/list/fixed_traits = list()
-	for(var/trait_type in caught_fish.fish_traits)
-		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		if(caught_fish.type in trait.guaranteed_inheritance_types)
-			fixed_traits += trait_type
 	var/list/new_traits = list()
 	for(var/iteration in rand(1, 4))
 		new_traits |= pick_weight(weighted_traits)
-	caught_fish.inherit_traits(new_traits, fixed_traits = fixed_traits)
+	caught_fish.inherit_traits(new_traits)
 	caught_fish.randomize_size_and_weight(deviation = 0.3)
 	caught_fish.progenitors = full_capitalize(caught_fish.name)
 	return caught_fish
@@ -250,10 +245,11 @@
 		/obj/item/fish/lavaloop/plasma_river = 120,
 		/obj/item/coin/plasma = 24,
 		/obj/item/stack/ore/plasma = 24,
-		/mob/living/basic/mining/lobstrosity = 8,
 		/obj/effect/decal/remains/plasma = 8,
 		/obj/item/stack/sheet/mineral/mythril = 3,
 		/obj/item/stack/sheet/mineral/adamantine = 8,
+		/mob/living/basic/mining/lobstrosity = 4,
+		/mob/living/basic/mining/lobstrosity/juvenile = 4,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
