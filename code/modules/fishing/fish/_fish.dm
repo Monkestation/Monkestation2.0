@@ -230,6 +230,7 @@
  * Monkestation take on tg's floor diseases, using our virology (same strength as rot infections).
  */
 /proc/get_raw_fish_diseases()
+	RETURN_TYPE(/list)
 	var/static/list/raw_fish_diseases
 	if(!isnull(raw_fish_diseases))
 		return raw_fish_diseases
