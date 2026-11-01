@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "Balaclavas, emotion masks, clown and mime masks, vapes and facehuggers no longer reset their look when changing z levels."
