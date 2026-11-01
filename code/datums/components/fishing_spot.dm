@@ -38,10 +38,7 @@
 ///If the fish source has fishes that are shown in the
 /datum/component/fishing_spot/proc/on_examined(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
-		return
-
-	if(!fish_source.has_known_fishes(source))
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source.has_known_fishes(source))
 		return
 
 	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
@@ -49,7 +46,7 @@
 /// Lists the fishes you can catch here when examining it closer with enough fishing skill
 /datum/component/fishing_spot/proc/on_examined_more(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source.has_known_fishes(source))
 		return
 
 	fish_source.get_catchable_fish_names(user, parent, examine_text)
