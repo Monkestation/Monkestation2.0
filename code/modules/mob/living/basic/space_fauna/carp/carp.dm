@@ -19,7 +19,7 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	movement_type = FLYING
 	health = 25
 	maxHealth = 25

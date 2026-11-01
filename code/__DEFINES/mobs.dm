@@ -107,6 +107,8 @@
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
+/// Mob is fish or water-related.
+#define MOB_AQUATIC (1 << 12)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)

@@ -25,6 +25,7 @@
 	limb_overlay = /datum/bodypart_overlay/texture/fishscale
 	/// Are we at all five organs?
 	var/color_active = FALSE
+	bonus_biotype = MOB_AQUATIC
 
 /datum/status_effect/organ_set_bonus/fish/enable_bonus()
 	. = ..()

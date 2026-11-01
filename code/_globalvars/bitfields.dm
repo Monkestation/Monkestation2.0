@@ -259,6 +259,7 @@ DEFINE_BITFIELD(mecha_flags, list(
 ))
 
 DEFINE_BITFIELD(mob_biotypes, list(
+	"MOB_AQUATIC" = MOB_AQUATIC,
 	"MOB_BEAST" = MOB_BEAST,
 	"MOB_BUG" = MOB_BUG,
 	"MOB_EPIC" = MOB_EPIC,
