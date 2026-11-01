@@ -105,7 +105,7 @@
 		spec_slime_hunger(slime, seconds_per_tick)
 	spec_slime_wetness(slime, seconds_per_tick)
 
-/// Checks if the oozeling is hydrophobic due to having 10 oozeling wet stacks.
+/// Checks if the oozeling is hydrophobic due to having 20 oozeling wet stacks.
 /datum/species/oozeling/proc/is_slime_hydrophobic(mob/living/carbon/human/slime)
 	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
 	return slime_wetness?.stacks >= HYDROPHOBIA_WETNESS_STACKS
@@ -237,7 +237,7 @@
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
 
-	slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+	slime.adjust_wet_stacks(-HYDROPHOBIA_WATER_EXPOSURE_COST, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 
 	if(is_slime_hydrophobic(slime))
 		if(!quiet_if_protected)
