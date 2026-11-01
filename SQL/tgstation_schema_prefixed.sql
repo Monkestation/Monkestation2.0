@@ -569,14 +569,15 @@ CREATE TABLE `SS13_achievement_metadata` (
 	PRIMARY KEY (`achievement_key`)
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `SS13_metacoin_item_purchases`;
-CREATE TABLE `SS13_metacoin_item_purchases` (
-	`ckey` varchar(32) NOT NULL,
-	`purchase_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-	`item_id` varchar(50) NOT NULL,
-	`amount` tinyint(4) unsigned NOT NULL,
-	PRIMARY KEY (`ckey`,`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+-- Table structure for table 'SS13_x_progress'
+
+DROP TABLE IF EXISTS `SS13_fish_progress`;
+CREATE TABLE `SS13_fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `SS13_ticket`
