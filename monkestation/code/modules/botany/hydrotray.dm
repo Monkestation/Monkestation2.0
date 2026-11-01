@@ -19,6 +19,7 @@
 /obj/machinery/growing/tray/Initialize(mapload)
 	AddComponent(/datum/component/plant_tray_overlay, icon, "hydrotray_gaia", "hydrotray_water_", "hydrotray_pests", "hydrotray_harvest", "hydrotray_nutriment", "hydrotray_health", 0, 0)
 	. = ..()
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
 
 /obj/machinery/growing/tray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!(user.istate & ISTATE_HARM))

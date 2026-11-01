@@ -74,5 +74,5 @@
 		floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 		for(var/mob/living/carbon/victim in floor)
 			victim.stamina.adjust(-stamina_damage)
-			victim.adjust_bodytemperature(victim.bodytemperature - temp_adjust, use_insulation = TRUE)
+			victim.adjust_bodytemperature(temp_adjust)
 	qdel(src)

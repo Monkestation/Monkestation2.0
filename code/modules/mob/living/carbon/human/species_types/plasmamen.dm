@@ -46,7 +46,7 @@
 	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
 	// The minimum amount they stabilize per tick is reduced making hot areas harder to deal with
-	temperature_normalization_speed = /mob/living/carbon/human::temperature_normalization_speed * 0.5
+	bodytemp_autorecovery_min = 2
 	// They are hurt at hot temps faster as it is harder to hold their form
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
 	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
