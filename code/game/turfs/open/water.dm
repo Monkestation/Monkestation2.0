@@ -48,6 +48,10 @@
 /turf/open/water/jungle
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
+/turf/open/water/no_planet_atmos
+	baseturfs = /turf/open/water/no_planet_atmos
+	planetary_atmos = FALSE
+
 //This version of the beach turf uses low pressure, inherieted from above
 /turf/open/water/beach
 	planetary_atmos = FALSE
@@ -75,3 +79,107 @@
 //the tram beachside bar has 1 tile of this
 /turf/open/water/beach/biodome/sinking/deep
 	max_sinkage = 28
+
+/turf/open/water/lavaland_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/water/beach/tizira
+	desc = "Shallow water. It somehow reminds you of lizardfolk."
+	icon_state = "tizira_water"
+	base_icon_state = "tizira_water"
+	baseturfs = /turf/open/water/beach/tizira
+
+/**
+ * A special subtype of water with steam particles and a status effect similar to showers, that's however only applied if
+ * the living mob inside the turf is actually immersed in it (eg. not flying, not floating).
+ */
+/turf/open/water/hot_spring
+	name = "hot spring"
+	icon_state = "pool_1"
+	desc = "Water kept warm through some unknown heat source, possibly a geothermal heat source far underground. \
+		Whatever it is, it feels pretty damn nice to swim, and you can even catch a glimpse of \
+		the odd fish darting through the water."
+	baseturfs = /turf/open/water/hot_spring
+	planetary_atmos = FALSE
+	fishing_datum = /datum/fish_source/hot_spring
+	/// Holder for the steam particles
+	var/obj/effect/abstract/particle_holder/cached/particle_effect
+
+/turf/open/water/hot_spring/Initialize(mapload)
+	. = ..()
+	icon_state = "pool_[rand(1, 4)]"
+	particle_effect = new(src, /particles/hotspring_steam, 4)
+	//render the steam over mobs and objects on the game plane
+	particle_effect.vis_flags &= ~VIS_INHERIT_PLANE
+	//And be unaffected by ambient occlusions, which would render the steam grey
+	particle_effect.plane = MUTATE_PLANE(MASSIVE_OBJ_PLANE, src)
+	add_filter("hot_spring_waves", 1, wave_filter(y = 1, size = 1, offset = 0, flags = WAVE_BOUNDED))
+	var/filter = get_filter("hot_spring_waves")
+	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = SINE_EASING|EASE_IN|EASE_OUT)
+	animate(offset = -1, time = 3 SECONDS, easing = SINE_EASING|EASE_IN|EASE_OUT)
+
+	/**
+	 * turf/Initialize() calls Entered on its contents, however
+	 * we need to wait for movables that still need to be initialized.
+	 */
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(enter_initialized_movable))
+
+/turf/open/water/hot_spring/Destroy()
+	QDEL_NULL(particle_effect)
+	remove_filter("hot_spring_waves")
+	for(var/atom/movable/movable as anything in contents)
+		exit_hot_spring(movable)
+	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
+	return ..()
+
+/turf/open/water/hot_spring/Entered(atom/movable/arrived, atom/old_loc)
+	. = ..()
+	if(!(flags_1 & INITIALIZED_1))
+		return
+	enter_hot_spring(arrived)
+
+/turf/open/water/hot_spring/proc/enter_initialized_movable(datum/source, atom/movable/movable)
+	SIGNAL_HANDLER
+	enter_hot_spring(movable)
+
+///Calls dip_in if the movable is actually in the water (not flying or floating over it). MONKESTATION EDIT: no immerse element
+/turf/open/water/hot_spring/proc/enter_hot_spring(atom/movable/movable)
+	if(movable.movement_type & (FLYING|FLOATING))
+		return
+	dip_in(movable)
+
+///Handles washing the movable and adding a status effect plus mood event to living mobs.
+/turf/open/water/hot_spring/proc/dip_in(atom/movable/movable)
+	movable.wash(CLEAN_RAD | CLEAN_WASH)
+	if(!isliving(movable))
+		return
+
+	var/mob/living/living = movable
+	if(living.has_status_effect(/datum/status_effect/washing_regen/hot_spring))
+		return
+	living.apply_status_effect(/datum/status_effect/washing_regen/hot_spring)
+	if(!living.is_cat_enough(include_all_anime = TRUE) || HAS_TRAIT(living, TRAIT_WATER_ADAPTATION))
+		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring)
+	else
+		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_hater)
+
+/turf/open/water/hot_spring/Exited(atom/movable/gone, atom/new_loc)
+	. = ..()
+	exit_hot_spring(gone)
+
+//Unregister the signals and remove the status effect from mobs unless they're moving to another hot spring turf.
+/turf/open/water/hot_spring/proc/exit_hot_spring(atom/movable/movable)
+	if(!isliving(movable))
+		return
+	var/mob/living/living = movable
+	if(!living.has_status_effect(/datum/status_effect/washing_regen/hot_spring) || istype(living.loc, /turf/open/water/hot_spring))
+		return
+	dip_out(living)
+
+///Handles removing the status effect from mobs.
+/turf/open/water/hot_spring/proc/dip_out(mob/living/living)
+	living.remove_status_effect(/datum/status_effect/washing_regen/hot_spring)
+	if(!living.is_cat_enough(include_all_anime = TRUE) || HAS_TRAIT(living, TRAIT_WATER_ADAPTATION))
+		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_left)
+	else
+		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_hater_left)
