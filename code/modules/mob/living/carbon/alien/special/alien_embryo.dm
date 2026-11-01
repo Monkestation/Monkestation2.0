@@ -84,7 +84,7 @@
 		for(var/datum/surgery/operations as anything in owner.surgeries)
 			if(operations.location != BODY_ZONE_CHEST)
 				continue
-			if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
+			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
 				continue
 			INVOKE_ASYNC(src, PROC_REF(attempt_grow))
 			return
