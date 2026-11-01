@@ -286,6 +286,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	max_integrity = 100
 	damage_deflection = 30
 	grant_extra_mag = FALSE
+	anchored = FALSE
 
 /obj/structure/mystery_box/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)

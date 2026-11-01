@@ -11,6 +11,7 @@
 /// VDOM
 
 /area/virtual_domain
+	unlimited_fishing = TRUE
 	name = "Virtual Domain"
 	icon = 'icons/area/areas_station.dmi'
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
@@ -40,6 +41,7 @@
 /// Custom subtypes
 
 /area/lavaland/surface/outdoors/virtual_domain
+	unlimited_fishing = TRUE
 	name = "Virtual Domain Lava Ruins"
 	icon_state = "bit_ruin"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
@@ -57,11 +59,13 @@
 	icon_state = "bit_safe"
 
 /area/icemoon/underground/explored/virtual_domain
+	unlimited_fishing = TRUE
 	name = "Virtual Domain Ice Ruins"
 	icon_state = "bit_ice"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/ruin/space/has_grav/powered/virtual_domain
+	unlimited_fishing = TRUE
 	name = "Virtual Domain Space Ruins"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_space"

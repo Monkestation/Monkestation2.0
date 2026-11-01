@@ -25,6 +25,8 @@
 	var/list/list/turf/turfs_to_uncontain_by_zlevel = list()
 
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	/// Fishing here won't remove unique/limited loot from sources that are also used outside of it (UNLIMITED_FISHING area flag on tg, our area_flags are full)
+	var/unlimited_fishing = FALSE
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
