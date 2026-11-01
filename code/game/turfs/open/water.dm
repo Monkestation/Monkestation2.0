@@ -20,9 +20,13 @@
 	var/sinking = FALSE
 	///If we have one then what should our player_sink max_sinkage be set to, leave unset for default sinkage
 	var/max_sinkage
+	/// Fishing element for this specific water tile
+	var/datum/fish_source/fishing_datum = /datum/fish_source/river
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
+	if(!isnull(fishing_datum))
+		AddElement(/datum/element/lazy_fishing_spot, fishing_datum)
 	if(sinking)
 		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_add_sinking))
 
@@ -52,10 +56,7 @@
 	icon_state = "water"
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
-
-/turf/open/water/beach/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/ocean/beach)
+	fishing_datum = /datum/fish_source/ocean/beach
 
 //Same turf, but instead used in the Beach Biodome
 /turf/open/water/beach/biodome

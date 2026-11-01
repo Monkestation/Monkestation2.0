@@ -30,6 +30,8 @@
 	if(grill_time > 30)
 		this_food.AddComponent(/datum/component/edible, foodtypes = FRIED)
 
+	SEND_SIGNAL(this_food, COMSIG_ITEM_BARBEQUE_GRILLED)
+
 /datum/element/grilled_item/Detach(atom/source, ...)
 	source.name = initial(source.name)
 	source.desc = initial(source.desc)

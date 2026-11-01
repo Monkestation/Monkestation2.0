@@ -23,6 +23,8 @@
 
 /obj/item/stock_parts/power_store/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_POISONOUS_BAIT, INNATE_TRAIT) //bro is fishing using lithium...
 
 /obj/item/stock_parts/power_store/cell/create_reagents(max_vol, flags)
 	. = ..()

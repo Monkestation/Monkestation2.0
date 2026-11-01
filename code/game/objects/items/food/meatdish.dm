@@ -36,6 +36,34 @@
 	w_class = WEIGHT_CLASS_SMALL
 	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
+/obj/item/food/fishmeat/quality
+	name = "quality fish fillet"
+	desc = "A fillet of some precious fish meat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	bite_consumption = 7
+
+/obj/item/food/fishmeat/quality/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_1)
+
+/obj/item/food/fishmeat/salmon
+	name = "salmon fillet"
+	desc = "a chunky, fatty fillet of salmon meat."
+	icon_state = "salmon"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/cooking_oil = 2,
+	)
+	bite_consumption = 4.5
+
+/obj/item/food/fishmeat/salmon/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_1)
+
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat."

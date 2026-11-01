@@ -105,14 +105,13 @@ DEFINE_BITFIELD(foodtypes, list(
 #define FOOD_QUALITY_AMAZING 6
 #define FOOD_QUALITY_TOP 7
 
-/* MONKESTATION REMOVAL START - food complexity is unported
+// MONKESTATION NOTE: food complexity (crafting_complexity) is unported, these are only used for the extra complexity from quality ingredients
 #define FOOD_COMPLEXITY_0 0
 #define FOOD_COMPLEXITY_1 1
 #define FOOD_COMPLEXITY_2 2
 #define FOOD_COMPLEXITY_3 3
 #define FOOD_COMPLEXITY_4 4
 #define FOOD_COMPLEXITY_5 5
-*/
 
 /// Labels for food quality
 GLOBAL_ALIST_INIT(food_quality_description, alist(
