@@ -145,12 +145,13 @@
 
 /datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, atom/movable/target)
 	SIGNAL_HANDLER
-	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(get_turf(target))
+	var/target_turf = get_turf(target)
+	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(target_turf)
 	if(!target_camerachunk)
 		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
 	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras["[target.z]"])
-		var/found_target = locate(target) in cameras.can_see()
-		if(!found_target)
+		// We need to find a particular camera that can see this turf
+		if(!(length(cameras.can_see() & list(target_turf))))
 			continue
 		var/new_camera = WEAKREF(cameras)
 		if(camera_ref == new_camera)
