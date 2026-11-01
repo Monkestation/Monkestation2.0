@@ -13,15 +13,6 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 	area_flags = UNIQUE_AREA
 
-/area/awaymission/beach
-	name = "Beach"
-	icon_state = "away"
-	static_lighting = FALSE
-	base_lighting_alpha = 255
-	base_lighting_color = "#FFFFCC"
-	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	ambientsounds = list('sound/ambience/beach/shore.ogg', 'sound/ambience/beach/seag1.ogg','sound/ambience/beach/seag2.ogg','sound/ambience/beach/seag2.ogg','sound/ambience/misc/ambiodd.ogg','sound/ambience/medical/ambinice.ogg')
 
 /area/awaymission/errorroom
 	name = "Super Secret Room"
