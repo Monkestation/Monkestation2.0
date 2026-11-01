@@ -27,6 +27,7 @@
 	. = ..()
 	if(!isnull(fishing_datum))
 		AddElement(/datum/element/lazy_fishing_spot, fishing_datum)
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	if(sinking)
 		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_add_sinking))
 
