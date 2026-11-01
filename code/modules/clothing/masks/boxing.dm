@@ -43,7 +43,8 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		var/list/options = GLOB.balaclava_options
-		icon_state = options[choice]
+		base_icon_state = options[choice]
+		icon_state = base_icon_state
 		update_item_action_buttons()
 		var/handling_text = "adjust"
 		switch(choice)
