@@ -58,6 +58,10 @@
 	baseturfs = /turf/open/water/beach
 	fishing_datum = /datum/fish_source/ocean/beach
 
+/turf/open/water/beach/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
 //Same turf, but instead used in the Beach Biodome
 /turf/open/water/beach/biodome
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS

@@ -32,6 +32,14 @@
 	base_icon_state = "sandwater_t"
 	baseturfs = /turf/open/misc/beach/coastline_t
 
+/turf/open/misc/beach/coastline_t/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
+/turf/open/misc/beach/coastline_b/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
 /turf/open/misc/beach/sand/coastline_t/break_tile()
 	. = ..()
 	icon_state = "sandwater_t"

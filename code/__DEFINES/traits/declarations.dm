@@ -328,6 +328,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISHING_SPOT "fishing_spot"
 ///Trait given to mobs that can fish without a rod
 #define TRAIT_PROFOUND_FISHER "profound_fisher"
+/// If an atom has this trait, then you can toss a bottle with a message in it.
+#define TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION "message_in_a_bottle_location"
 /// Stops the mob from slipping on water, or banana peels, or pretty much anything that doesn't have [GALOSHES_DONT_HELP] set
 #define TRAIT_NO_SLIP_WATER "noslip_water"
 /// Stops the mob from slipping on permafrost ice (not any other ice) (but anything with [SLIDE_ICE] set)
