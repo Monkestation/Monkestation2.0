@@ -2,6 +2,19 @@
   AitorLogedo:
   - balance: The Double-Bladed Energy Sword can only be bought when there are at least
       30 living players.
+  - bugfix: Balaclavas, emotion masks, clown and mime masks, vapes and facehuggers
+      no longer reset their look when changing z levels.
+  - balance: Body temperature works like tg. Space, cold and hot rooms, fire and hot
+      or cold reagents actually affect your body temperature again.
+  - balance: Clothing protects you from heat and cold based on what it covers and
+      the temperature it's rated for.
+  - balance: Fire burns you by heating you up instead of dealing extra direct damage.
+  - balance: The temperature gun changes body temperature way more, can heat or cool
+      beakers and the heat beam dries wet people.
+  - balance: Cold and hot drinks and reagents, leporazine, traps, thermal regulators
+      and a lot of other temperature stuff are back to their old values.
+  - rscdel: Removed homeostasis, your body doesn't burn hunger to keep its temperature
+      anymore.
   ? Ghommie, MrMelbert, vinylspiders, ArcaneMusic, san7890, Ben10Omintrix, tralezab,
     JohnFulpWillard, jwc1015, Zenitheevee, Paxilmaniac, homexp13, Y0SH1M4S73R
   : - rscadd: Fish analyzers can be used for fish scanning experiments and can be
@@ -57,9 +70,17 @@
   - rscadd: Two new tactical sec jumpsuits. Nanotrasen advises that LARPing in company
       time leads to lower efficiency.
   - rscadd: Roll up sleeves for the syndicate combat jumpsuit.
+  Tractor-Maam:
+  - rscadd: AIs in shells now receive download alerts
+  - rscadd: AI download alerts now make an audio cue.
+  - balance: AI Control Consoles now stop downloads when depowered (previously paused)
+  - bugfix: the silent variable on control console upload ai now actually makes it
+      silent.
   chumtoadmonke:
   - rscdel: Removed infectious exo-locomotion program
   - balance: Brainwashing nanites will check if you have a mindshield
   notghosti:
   - bugfix: '"Reconnect to shell" verb, action, and key bind now all properly reconnect
       you the last shell used as a AI'
+  - bugfix: Drones have the following traits returned, Unobservant, silicon access,
+      and reagent scanner

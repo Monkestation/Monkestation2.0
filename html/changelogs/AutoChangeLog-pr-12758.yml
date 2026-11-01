@@ -1,9 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - balance: "Body temperature works like tg. Space, cold and hot rooms, fire and hot or cold reagents actually affect your body temperature again."
-  - balance: "Clothing protects you from heat and cold based on what it covers and the temperature it's rated for."
-  - balance: "Fire burns you by heating you up instead of dealing extra direct damage."
-  - balance: "The temperature gun changes body temperature way more, can heat or cool beakers and the heat beam dries wet people."
-  - balance: "Cold and hot drinks and reagents, leporazine, traps, thermal regulators and a lot of other temperature stuff are back to their old values."
-  - rscdel: "Removed homeostasis, your body doesn't burn hunger to keep its temperature anymore."
