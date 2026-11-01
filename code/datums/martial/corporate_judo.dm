@@ -74,6 +74,8 @@
 	max_streak_length = 12
 	combo_timer = 3.5  SECONDS
 
+	var/datum/action/jigotai/jigotai = new()
+
 	help_verb = /mob/living/carbon/human/proc/judo_help
 
 	var/list/combo_moves = list(
@@ -90,10 +92,12 @@
 	if(.)
 		to_chat(owner, span_userdanger("You suddenly feel like you could negotiate with gravity itself... well at least your Boss."))
 		owner.apply_status_effect(/datum/status_effect/weapon_lock)
+		jigotai.Grant(owner)
 
 /datum/martial_art/corpjudo/remove(mob/living/owner)
 	. = ..()
 	owner.remove_status_effect(/datum/status_effect/weapon_lock)
+	jigotai.Remove(owner)
 	if(.)
 		to_chat(owner, span_userdanger("As the belt leaves your waist, the secrets of Judo vanish like quarterly profits."))
 
@@ -102,7 +106,7 @@
 	set desc = "Focus on your Sensi's words and remember your training."
 	set category = "Corporate Judo"
 
-	to_chat(usr, "<b><i>An old wise voice echos your mind, it's voice distance and calm. You focus on voice; the world falls silent. With a satisfied treble, it begins to teach.</i></b>")
+	to_chat(usr, "<b><i>An old wise voice echos your mind, it's voice distance and calm. You focus on the voice; the world falls silent. With a satisfied treble, it begins to teach.</i></b>")
 
 	var/list/teach_msg = list()
 
@@ -121,6 +125,7 @@
 		if(owner)
 			remove(owner) // Clean up the martial art effects from the owner
 	combo_moves = null
+	QDEL_NULL(jigotai)
 	return ..()
 
 ///
@@ -152,7 +157,7 @@
 	if(!attacker.body_position == STANDING_UP || !defender.body_position == STANDING_UP)
 		return MARTIAL_ATTACK_INVALID
 
-	if(!defender.pulledby || !(defender.pulledby == attacker))
+	if(defender.pulledby != attacker)
 		defender.visible_message("<span class='warning'>[defender] managed to struggle out of [attacker]'s throw.</span>", \
 						"<span class='userdanger'>You wrestle out of [attacker]'s grip!</span>")
 		return MARTIAL_ATTACK_INVALID
@@ -285,3 +290,80 @@
 		return MARTIAL_ATTACK_INVALID
 
 #undef MIN_COMBO
+
+///
+// Judo Abilities
+///
+/datum/action/jigotai
+	name = "Jigotai"
+	desc = "Enter a defensive stance, readying yourself for an opponent's strike. If struck, use their own force against them to throw them to the ground."
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS|AB_CHECK_LYING
+
+	var/active = FALSE
+	//RegisterSignal(owner, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+
+/datum/action/jigotai/Remove(mob/remove_from)
+	..()
+	deactivate(remove_from)
+
+/datum/action/jigotai/Trigger(trigger_flags)
+	if(active) // Can deactivate while stunned and what not.
+		deactivate(owner)
+		return TRUE
+	. = ..()
+	if(!.)
+		return .
+	if(!do_after(owner, 1 SECONDS, extra_checks = CALLBACK(src, PROC_REF(IsAvailable))))
+		return FALSE
+	owner.visible_message(span_danger("[owner] assumes a defensive posture."), "<b><i>Your body is ready for an attack. You will counter if struck.</i></b>")
+	active = TRUE
+	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
+
+/datum/action/jigotai/proc/deactivate(mob/deactivate_from)
+	var/mob/deactivater = deactivate_from
+	if(!istype(deactivate_from))
+		deactivater = owner
+
+	active = FALSE
+	UnregisterSignal(deactivater, COMSIG_LIVING_CHECK_BLOCK)
+
+/datum/action/jigotai/proc/check_block(mob/living/carbon/human/source,
+	atom/movable/hitby,
+	damage = 0,
+	attack_text = "the attack",
+	attack_type = MELEE_ATTACK,
+	armour_penetration = 0,
+	damage_type = BRUTE,)
+
+	SIGNAL_HANDLER
+
+	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK)
+		return FAILED_BLOCK
+	if(!IsAvailable())
+		deactivate(source)
+		return FAILED_BLOCK
+
+	var/mob/living/carbon/human/attacker = GET_ASSAILANT(hitby)
+	if(!ishuman(attacker) || !source.Adjacent(attacker))
+		return FAILED_BLOCK
+
+	deactivate(source)
+	attacker.apply_damage(15+damage, STAMINA)
+	INVOKE_ASYNC(src, PROC_REF(counter_throw), source, attacker)
+	return SUCCESSFUL_BLOCK
+
+/datum/action/jigotai/proc/counter_throw(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
+	if(!defender.Adjacent(attacker))
+		return
+	defender.grab(attacker)
+
+	if(QDELETED(defender) || QDELETED(attacker))
+		return
+	var/datum/martial_art/corpjudo/judo_user = astype(defender.mind?.martial_art)
+	if(QDELETED(judo_user))
+		return
+	judo_user.judo_throw(defender, attacker)
+
+///datum/action/jigotai/proc/on_attackby(mob/living/carbon/human/carp_user, obj/item/melee/touch_attack/touch_weapon, mob/attacker, params)
+//	SIGNAL_HANDLER //Used if we want to counter touch_attack weapons and even cause them to be applied to attacker. Hold for now
+//	to_chat(owner, "hit")
