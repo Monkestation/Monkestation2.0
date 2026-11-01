@@ -159,12 +159,19 @@
 /obj/item/fishing_rod/proc/reel(mob/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
 		return
+
 	playsound(src, SFX_REEL, 50, vary = FALSE)
-	if(!do_after(user, 0.8 SECONDS, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
+	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS
+	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
+
 	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
 		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
 		return
+
+	//About thirty minutes of non-stop reeling to get from zero to master... not worth it but hey, you do what you do.
+	user.mind?.adjust_experience(/datum/skill/fishing, time * 1.3)
+
 	//Try to move it 'till it's under the user's feet, then try to pick it up
 	if(isitem(currently_hooked))
 		var/obj/item/item = currently_hooked
@@ -241,7 +248,7 @@
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!CheckToolReach(src, source.target, cast_range))
+	if(!CheckToolReach(src, source.target, get_cast_range()))
 		qdel(source)
 		return BEAM_CANCEL_DRAW
 
