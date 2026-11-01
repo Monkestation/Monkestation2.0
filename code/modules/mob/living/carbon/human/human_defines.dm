@@ -2,7 +2,7 @@
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
-	icon = 'icons/mob/species/human/human.dmi'
+	icon = 'icons/mob/human/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	hud_possible = list(
@@ -48,11 +48,15 @@
 	var/facial_hair_color = "#000000"
 	var/facial_hairstyle = "Shaved"
 
-	//Eye colour
+	// Base "natural" eye color
 	var/eye_color_left = "#000000"
 	var/eye_color_right = "#000000"
 	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite shit
 	var/eye_color_heterochromatic = FALSE
+	/// Left eye color overrides, assoc list of priority key to hex color
+	var/list/eye_color_left_overrides
+	/// Right eye color overrides, assoc list of priority key to hex color
+	var/list/eye_color_right_overrides
 
 	var/skin_tone = "caucasian1" //Skin tone
 

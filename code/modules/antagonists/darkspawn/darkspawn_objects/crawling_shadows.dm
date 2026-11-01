@@ -33,12 +33,12 @@
 	//death variables
 	del_on_death = TRUE
 	death_message = "trembles, form rapidly dispersing."
-	death_sound = 'sound/magic/darkspawn/devour_will_victim.ogg'
+	death_sound = 'sound/effects/magic/darkspawn/devour_will_victim.ogg'
 
 	//attack flavour
 	speak_emote = list("whispers")
 	attack_verb_simple = "assails"
-	attack_sound = 'sound/magic/voidblink.ogg'
+	attack_sound = 'sound/effects/magic/voidblink.ogg'
 	response_help_simple = "disturbs"
 	response_harm_simple = "flails at"
 

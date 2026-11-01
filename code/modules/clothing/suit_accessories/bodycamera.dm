@@ -50,11 +50,11 @@
 	if(existing_upgrade)
 		//this is where your mouse is, so more likely where you're looking.
 		installing_into.balloon_alert(user, "camera already installed!")
-		playsound(installing_into, 'sound/machines/buzz-two.ogg', 20, TRUE, -1)
+		playsound(installing_into, 'sound/machines/buzz/buzz-two.ogg', 20, TRUE, -1)
 		return FALSE
 	installing_into.add_overlay(equipped_overlay)
 	forceMove(installing_into)
-	playsound(installing_into, 'sound/items/drill_use.ogg', 20, TRUE, -1)
+	playsound(installing_into, 'sound/items/tools/drill_use.ogg', 20, TRUE, -1)
 	RegisterSignal(installing_into, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(installing_into, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 	RegisterSignal(installing_into, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
@@ -100,7 +100,7 @@
 		builtin_bodycamera.c_tag = "-Body Camera: [(user.name)]"
 	if(user)
 		user.balloon_alert(user, "bodycamera activated")
-		playsound(loc, 'sound/machines/beep.ogg', get_clamped_volume(), TRUE, -1)
+		playsound(loc, 'sound/machines/beep/beep.ogg', get_clamped_volume(), TRUE, -1)
 	builtin_bodycamera.network = network //sync the network of the camera to us, the upgrade.
 	builtin_bodycamera.camera_enabled = TRUE
 
@@ -108,7 +108,7 @@
 /obj/item/bodycam_upgrade/proc/turn_off(mob/user)
 	if(user)
 		user.balloon_alert(user, "bodycamera deactivated")
-		playsound(loc, 'sound/machines/beep.ogg', get_clamped_volume(), TRUE, -1)
+		playsound(loc, 'sound/machines/beep/beep.ogg', get_clamped_volume(), TRUE, -1)
 	builtin_bodycamera.camera_enabled = FALSE
 
 /**
@@ -143,7 +143,7 @@
 /obj/item/bodycam_upgrade/proc/on_screwdriver_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
-	playsound(source, 'sound/items/drill_use.ogg', tool.get_clamped_volume(), TRUE, -1)
+	playsound(source, 'sound/items/tools/drill_use.ogg', tool.get_clamped_volume(), TRUE, -1)
 	INVOKE_ASYNC(src, PROC_REF(uninstall_camera), source, user)
 
 /**

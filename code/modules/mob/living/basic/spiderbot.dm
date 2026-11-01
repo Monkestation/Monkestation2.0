@@ -146,7 +146,7 @@
 	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attack_sound = 'sound/machines/defib_zap.ogg'
+	attack_sound = 'sound/machines/defib/defib_zap.ogg'
 	apply_emagged_directive()
 	return TRUE
 

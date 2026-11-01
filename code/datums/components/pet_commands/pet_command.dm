@@ -42,6 +42,10 @@
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
 		return
+	// penned slimes only respond to voice commands if ur in the same pen as them
+	var/mob/living/basic/slime/slime = astype(parent)
+	if (slime?.pen && !slime.pen.turfs[speaker.loc])
+		return
 	if (!can_see(parent, speaker, sense_radius)) // Basically the same rules as hearing
 		return
 

@@ -209,7 +209,7 @@
 	H.transferItemToLoc(mask, src, TRUE)
 	H.update_worn_oversuit()
 	to_chat(H, "<span class='notice'>You pull down the bandana.</span>")
-	playsound(src.loc, 'sound/items/handling/cloth_drop.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/handling/cloth/cloth_drop1.ogg', 50, 1)
 	user.update_action_buttons()
 
 /obj/item/clothing/suit/armor/secduster/dropped(mob/living/user)
@@ -238,7 +238,7 @@
 		to_chat(H, "<span class='notice'>You pull up the bandana over your face.</span>")
 		suittoggled = TRUE
 		H.update_worn_oversuit()
-		playsound(H, 'sound/items/handling/cloth_drop.ogg', 50, 1)
+		playsound(H, 'sound/items/handling/cloth/cloth_drop1.ogg', 50, 1)
 
 
 /obj/item/clothing/suit/armor/secduster/Destroy()

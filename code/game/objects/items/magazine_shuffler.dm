@@ -18,7 +18,7 @@
 	else
 		return NONE
 	balloon_alert(user, "shuffling...")
-	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 	if(do_after(user, 3 SECONDS, interacting_with))
 		shuffle_inplace(target.stored_ammo)
 		balloon_alert(user, "magazine shuffled")

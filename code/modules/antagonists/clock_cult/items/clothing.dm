@@ -64,7 +64,7 @@
 	desc = "A strong, brass helmet worn by the soldiers of the Ratvarian armies. Includes an integrated light-dimmer for flash protection, \
 			as well as occult-grade muffling for factory based environments."
 	icon = 'icons/obj/clock_cult/clockwork_garb.dmi'
-	worn_icon = 'icons/mob/clock_cult/clockwork_garb_worn.dmi'
+	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 	icon_state = "clockwork_helmet"
 	armor_type = /datum/armor/helmet_clockwork
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -218,7 +218,7 @@
 		ASYNC
 			animate(owner.get_filter("clock_cloak"), 0.3 SECONDS, x = prob(50) ? rand(4, 5) : rand(-4, -5), y = prob(50) ? rand(4, 5) : rand(-4, -5), flags = ANIMATION_PARALLEL)
 			animate(time = 0.3 SECONDS, x = 0, y = 0)
-		playsound(src, 'sound/weapons/etherealmiss.ogg', BLOCK_SOUND_VOLUME, vary = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'sound/items/weapons/etherealmiss.ogg', BLOCK_SOUND_VOLUME, vary = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		return TRUE
 
 /obj/item/clothing/suit/hooded/clockwork/cloak/proc/remove_phase_filter(mob/living/remove_from)
@@ -306,7 +306,9 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = TRUE)
+		carbon_user.update_tint()
+		carbon_user.update_sight()
+		carbon_user.update_clothing(slot_flags)
 
 /// "enable" the spectacles, flipping them down and applying their effects, calling on_toggle_eyes() if someone is wearing them
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/enable()
@@ -425,7 +427,9 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = TRUE)
+		carbon_user.update_tint()
+		carbon_user.update_sight()
+		carbon_user.update_clothing(slot_flags)
 
 /// Turn on the visor, calling apply_to_wearer() and changing the icon state
 /obj/item/clothing/glasses/clockwork/judicial_visor/proc/enable()

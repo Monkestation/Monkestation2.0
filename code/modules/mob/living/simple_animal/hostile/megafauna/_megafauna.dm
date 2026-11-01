@@ -65,7 +65,7 @@
 	var/obj/item/gem/hardmode_reward = null
 	/// The list of players we have warned [mob.tag = world.time]
 	var/alist/warned_players = list()
-	var/rawr_sound = 'sound/creatures/space_dragon_roar.ogg'
+	var/rawr_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	/// The cooldown of our roar
 	COOLDOWN_DECLARE(rawr_cooldown)
 	// MONKESTATION EDIT ADDITION END

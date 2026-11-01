@@ -43,7 +43,7 @@
 	active = FALSE
 
 	tesla_zap(src, rand(STORM_MIN_RANGE, STORM_MAX_RANGE), STORM_POWER_LEVEL)
-	playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 100, TRUE)
 
 	if(isspaceturf(src) || !isopenturf(get_turf(src)))
 		return

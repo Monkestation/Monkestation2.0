@@ -46,7 +46,7 @@
 			defender.visible_message(span_danger("[attacker] [atk_verb]s [defender]!"), \
 							span_userdanger("You're [atk_verb]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 			to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
-			playsound(get_turf(defender), 'sound/weapons/punch1.ogg', 40, TRUE, -1)
+			playsound(get_turf(defender), 'sound/items/weapons/punch1.ogg', 40, TRUE, -1)
 			defender.apply_damage(rand(5,10), attacker.get_attack_type(), BODY_ZONE_HEAD)
 			attacker.apply_damage(rand(5,10), attacker.get_attack_type(), BODY_ZONE_HEAD)
 			if(iscarbon(defender))

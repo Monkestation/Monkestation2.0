@@ -28,4 +28,4 @@
 	owner.vomit(20)
 
 	var/mob/living/basic/slime/friend = new(owner.drop_location())
-	SEND_SIGNAL(friend, COMSIG_FRIENDSHIP_CHANGE, owner, 110)
+	friend.befriend(owner)

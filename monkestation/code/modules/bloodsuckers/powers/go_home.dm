@@ -82,7 +82,7 @@
 	if(drop_item)
 		user.unequip_everything()
 
-	playsound(current_turf, 'sound/magic/summon_karp.ogg', vol = 60, vary = TRUE)
+	playsound(current_turf, 'sound/effects/magic/summon_karp.ogg', vol = 60, vary = TRUE)
 
 	var/datum/effect_system/steam_spread/bloodsucker/puff = new /datum/effect_system/steam_spread/bloodsucker()
 	puff.set_up(3, 0, current_turf)

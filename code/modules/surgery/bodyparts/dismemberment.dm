@@ -30,7 +30,7 @@
 	if((limb_id == SPECIES_OOZELING))
 		to_chat(limb_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
 		if(sound)
-			playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
+			playsound(limb_owner, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
 	if(isipc(owner))
@@ -345,7 +345,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !(mob_chest.acceptable_bodyshape & bodyshape) && !special)
 		return FALSE
 	return TRUE
 

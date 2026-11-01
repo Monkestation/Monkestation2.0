@@ -29,9 +29,9 @@
 	/// Can we toggle this light on and off (used for contexual screentips only)
 	var/toggle_context = TRUE
 	/// The sound the light makes when it's turned on
-	var/sound_on = 'sound/weapons/magin.ogg'
+	var/sound_on = 'sound/items/weapons/magin.ogg'
 	/// The sound the light makes when it's turned off
-	var/sound_off = 'sound/weapons/magout.ogg'
+	var/sound_off = 'sound/items/weapons/magout.ogg'
 	/// Is the light turned on or off currently
 	var/on = FALSE
 	var/start_on = FALSE
@@ -335,7 +335,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
 	light_outer_range = 5 // A little better than the standard flashlight.
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp
@@ -403,7 +403,7 @@
 	if(on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
-		hitsound = 'sound/items/welder.ogg'
+		hitsound = 'sound/items/tools/welder.ogg'
 		force = on_damage
 		damtype = BURN
 		update_brightness()
@@ -430,7 +430,7 @@
 	name = "lit [initial(name)]"
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	force = on_damage
 	damtype = BURN
 	. = ..()

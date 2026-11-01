@@ -6,7 +6,7 @@
 /obj/item/ipc_core
 	name = "ipc core"
 	desc = "An incomplete IPC chassis. Install synthetic organs, attach IPC limbs plus a secured head assembly, install an IPC screen, then finish the shell with a multitool."
-	icon = 'icons/mob/species/ipc/bodyparts.dmi'
+	icon = 'icons/mob/human/species/ipc/bodyparts.dmi'
 	icon_state = "synth_chest"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	interaction_flags_item = NONE

@@ -6,7 +6,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
 
-	icon = 'icons/obj/money_machine.dmi'
+	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 
 

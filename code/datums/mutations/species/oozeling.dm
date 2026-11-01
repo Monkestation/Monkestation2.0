@@ -27,7 +27,7 @@
 	desc = "Concentrate to move acid into your hand, using some of your blood."
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
-	sound = 'sound/chemistry/bufferadd.ogg'
+	sound = 'sound/effects/chemistry/bufferadd.ogg'
 	cooldown_time = 10 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE

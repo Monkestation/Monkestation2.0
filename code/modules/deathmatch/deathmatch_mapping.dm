@@ -42,7 +42,7 @@
 /obj/lightning_thrower/process(seconds_per_tick)
 	var/list/dirs = throw_diagonals ? GLOB.diagonals : GLOB.cardinals
 	throw_diagonals = !throw_diagonals
-	playsound(src, 'sound/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	playsound(src, 'sound/effects/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	if(length(signal_turfs))
 		clear_signals()
 	for(var/direction in dirs)

@@ -36,7 +36,7 @@
 	held_state = "cat2"
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
+	attack_sound = 'sound/items/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 
 	footstep_type = FOOTSTEP_MOB_CLAW

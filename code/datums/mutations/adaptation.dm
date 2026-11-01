@@ -11,7 +11,7 @@
 /datum/mutation/temperature_adaptation/New(datum/mutation/copymut)
 	. = ..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "fire", -MUTATIONS_LAYER))
 
 /datum/mutation/temperature_adaptation/setup()
 	. = ..()
@@ -47,7 +47,7 @@
 /datum/mutation/pressure_adaptation/New(datum/mutation/copymut)
 	. = ..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "pressure", -MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "cold", -MUTATIONS_LAYER))
 
 /datum/mutation/pressure_adaptation/setup()
 	. = ..()

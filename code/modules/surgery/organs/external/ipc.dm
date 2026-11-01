@@ -35,7 +35,7 @@
 	icon_state = "ipc_screen"
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	/// Icon containing the full-size display art used by IPC screen overlays.
-	var/screen_icon = 'icons/mob/species/ipc/ipc_screens.dmi'
+	var/screen_icon = 'icons/mob/human/species/ipc/ipc_screens.dmi'
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SCREEN

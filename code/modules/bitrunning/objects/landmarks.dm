@@ -34,7 +34,7 @@
 
 /// Spawns the crate with some effects
 /obj/effect/landmark/bitrunning/loot_signal/proc/reveal()
-	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 
 	var/turf/tile = get_turf(src)
 	var/obj/structure/closet/crate/secure/bitrunning/encrypted/loot = new(tile)

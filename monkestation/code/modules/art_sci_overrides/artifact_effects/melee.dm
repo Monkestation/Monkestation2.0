@@ -37,7 +37,7 @@
 		else
 			weapon.attack_verb_continuous = list("slashes", "slices", "cuts")
 			weapon.attack_verb_simple = list("slash", "slice", "cut")
-		weapon.hitsound = 'sound/weapons/bladeslice.ogg'
+		weapon.hitsound = 'sound/items/weapons/bladeslice.ogg'
 		potency += 9
 	if(prob(30))
 		active_woundbonus = rand(3,20)

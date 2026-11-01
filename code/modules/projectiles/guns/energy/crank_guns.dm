@@ -20,7 +20,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = 3 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -40,7 +40,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = 2 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -65,14 +65,14 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE * 0.25, \
 		cooldown_time = 1.5 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		)
 
 /obj/item/ammo_casing/energy/laser/musket/syndicate
 	projectile_type = /obj/projectile/beam/laser/musket/syndicate
 	e_cost = LASER_SHOTS(8, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/weapons/laser2.ogg'
+	fire_sound = 'sound/items/weapons/laser2.ogg'
 
 /obj/item/gun/energy/disabler/smoothbore
 	name = "smoothbore disabler"
@@ -90,7 +90,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = 2 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -132,7 +132,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE * 0.1, \
 		cooldown_time = 1.5 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		)
 	mutable_appearance(icon, "plasma_core_six_cell_backwards")
@@ -187,7 +187,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE * 0.25, \
 		cooldown_time = 1.5 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.3 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		)
@@ -195,7 +195,7 @@
 /obj/item/ammo_casing/energy/laser/explorer
 	projectile_type = /obj/projectile/beam/laser/hardlight
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 
 /obj/item/gun/energy/laser/explorer/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)

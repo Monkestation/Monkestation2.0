@@ -51,15 +51,15 @@ bellalert.ogg -
 https://github.com/goonstation/goonstation/blob/master/sound/machines/bellalert.ogg
 
 engine_alert1.ogg -
-	OG Commit sound/machines/engine_alert1.ogg
+	OG Commit sound/machines/engine_alert/engine_alert1.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_alert1.ogg
 
 engine_alert2.ogg -
-	OG Commit sound/machines/engine_alert2.ogg
+	OG Commit sound/machines/engine_alert/engine_alert2.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_alert2.ogg
 
 engine_alert3.ogg -
-	OG Commit sound/machines/engine_alert3.ogg
+	OG Commit sound/machines/engine_alert/engine_alert3.ogg
 https://github.com/goonstation/goonstation/blob/master/sound/machines/engine_alert3.ogg
 
 engine_grump1.ogg -

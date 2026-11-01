@@ -14,7 +14,7 @@
 	throwforce = 20
 	throw_speed = 4
 	armour_penetration = 10
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore")
 	sharpness = SHARP_EDGED
@@ -177,7 +177,7 @@
 	else
 		recalled_spear.forceMove(cast_on.drop_location())
 		recalled_spear.loc.visible_message(span_warning("[recalled_spear] suddenly appears!"))
-	playsound(get_turf(recalled_spear), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+	playsound(get_turf(recalled_spear), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 
 /obj/item/clockwork/weapon/brass_battlehammer
 	name = "brass battle-hammer"
@@ -192,7 +192,7 @@
 	attack_speed = CLICK_CD_LARGE_WEAPON
 	clockwork_desc = "Enemies hit by this will be flung back while you are on bronze tiles."
 	sharpness = FALSE
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	block_chance = 10
 	COOLDOWN_DECLARE(knockback_cooldown)
 
@@ -239,7 +239,7 @@
 	new /obj/effect/temp_visual/emp/pulse(get_turf(target))
 	addtimer(CALLBACK(src, PROC_REF(send_message), user), 25 SECONDS)
 	to_chat(user, span_brass("You strike [target] with an electromagnetic pulse!"))
-	playsound(user, 'sound/magic/lightningshock.ogg', 40)
+	playsound(user, 'sound/effects/magic/lightningshock.ogg', 40)
 
 /obj/item/clockwork/weapon/brass_sword/atom_hit_effect(obj/vehicle/sealed/mecha/target, mob/living/user, thrown)
 	if(!istype(target) || !COOLDOWN_FINISHED(src, emp_cooldown))
@@ -250,7 +250,7 @@
 	new /obj/effect/temp_visual/emp/pulse(get_turf(target))
 	addtimer(CALLBACK(src, PROC_REF(send_message), user), 20 SECONDS)
 	to_chat(user, span_brass("You strike [target] with an electromagnetic pulse!"))
-	playsound(user, 'sound/magic/lightningshock.ogg', 40)
+	playsound(user, 'sound/effects/magic/lightningshock.ogg', 40)
 
 /obj/item/clockwork/weapon/brass_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	return attack_type == MELEE_ATTACK && ..()

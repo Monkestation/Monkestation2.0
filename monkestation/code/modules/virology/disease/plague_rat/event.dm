@@ -35,7 +35,7 @@
 		dragon.PossessByPlayer(key)
 		dragon.mind.special_role = ROLE_PLAGUERAT
 		dragon.mind.add_antag_datum(/datum/antagonist/plague_rat)
-		playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+		playsound(dragon, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 		message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a plague rat by an event.")
 		dragon.log_message("was spawned as a plague rat by an event.", LOG_GAME)
 		spawned_mobs += dragon

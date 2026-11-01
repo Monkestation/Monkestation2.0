@@ -1,6 +1,6 @@
 /datum/greyscale_config/canister
 	name = "Default Canister"
-	icon_file = 'icons/obj/atmospherics/canisters.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/canisters.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_default.json'
 
 /datum/greyscale_config/canister/base
@@ -144,7 +144,7 @@
 
 /datum/greyscale_config/tablet
 	name = "PDA"
-	icon_file = 'icons/obj/modular_pda.dmi'
+	icon_file = 'icons/obj/devices/modular_pda.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
 /datum/greyscale_config/tablet/chaplain
@@ -318,7 +318,7 @@
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"
-	icon_file = 'icons/obj/hydroponics/harvest.dmi'
+	icon_file = 'icons/obj/service/hydroponics/harvest.dmi'
 	json_config = 'code/datums/greyscale/json_configs/simple_flower.json'
 
 /datum/greyscale_config/flower_simple_worn
@@ -456,17 +456,17 @@
 
 /datum/greyscale_config/meter
 	name = "Meter"
-	icon_file = 'icons/obj/atmospherics/pipes/meter.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/meter.dmi'
 	json_config = 'code/datums/greyscale/json_configs/meter.json'
 
 /datum/greyscale_config/thermomachine
 	name = "Thermomachine"
-	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	icon_file = 'icons/obj/machines/atmospherics/thermomachine.dmi'
 	json_config = 'code/datums/greyscale/json_configs/thermomachine.json'
 
 /datum/greyscale_config/janicart_upgrade
 	name = "Janicart Upgrade"
-	icon_file = 'icons/obj/janicart_upgrade.dmi'
+	icon_file = 'icons/obj/service/janicart_upgrade.dmi'
 	json_config = 'code/datums/greyscale/json_configs/janicart_upgrade.json'
 
 /datum/greyscale_config/janicart_upgrade/installed
@@ -474,27 +474,27 @@
 
 /datum/greyscale_config/bench_middle
 	name = "Bench Middle"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_middle.json'
 
 /datum/greyscale_config/bench_left
 	name = "Bench Left"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_left.json'
 
 /datum/greyscale_config/bench_right
 	name = "Bench Right"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
 
 /datum/greyscale_config/bench_solo
 	name = "Bench Solo"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_solo.json'
 
 /datum/greyscale_config/bench_corner
 	name = "Bench Corner"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_corner.json'
 
 /datum/greyscale_config/ctf_standard
@@ -969,7 +969,7 @@
 
 /datum/greyscale_config/digitigrade
 	name = "Digitigrade Clothes"
-	icon_file = 'icons/mob/clothing/digi_template.dmi'
+	icon_file = 'icons/mob/clothing/digi_template_equipment.dmi'
 	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
 
 /datum/greyscale_config/witch_hat
@@ -1065,7 +1065,7 @@
 
 /datum/greyscale_config/quantum_keycard
 	name = "Quantum Keycard"
-	icon_file = 'icons/obj/device.dmi'
+	icon_file = 'icons/obj/devices/tool.dmi'
 	json_config = 'code/datums/greyscale/json_configs/quantum_keycard.json'
 
 /datum/greyscale_config/heretic_rune

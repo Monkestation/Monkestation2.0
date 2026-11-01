@@ -6,7 +6,7 @@
 /obj/machinery/destructive_scanner
 	name = "Experimental Destructive Scanner"
 	desc = "A much larger version of the hand-held scanner, a charred label warns about its destructive capabilities."
-	icon = 'icons/obj/machines/experisci.dmi'
+	icon = 'icons/obj/machines/destructive_scanner.dmi'
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
 	layer = MOB_LAYER
@@ -37,7 +37,7 @@
 	var/aggressive = FALSE
 	for(var/mob/living/living_mob in pickup_zone)
 		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emagged.
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 			say("Cannot scan with humans inside.")
 			return
 		aggressive = TRUE

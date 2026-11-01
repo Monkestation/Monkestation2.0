@@ -14,7 +14,7 @@
 	show_to_ghosts = TRUE
 	count_against_dynamic_roll_chance = FALSE
 	can_assign_self_objectives = FALSE
-	stinger_sound = 'sound/ambience/antag/malf.ogg'
+	stinger_sound = 'sound/music/antag/malf.ogg'
 	/// A weak reference to the mob that emagged the chassis. Null if they can no longer be traced.
 	var/datum/weakref/master_ref
 

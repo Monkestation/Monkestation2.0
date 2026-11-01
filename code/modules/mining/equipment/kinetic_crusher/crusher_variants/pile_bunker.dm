@@ -16,7 +16,7 @@
 	throwforce = 0
 	throw_speed = 0
 	armour_penetration = 100 //yknow what fuck you, its a pile bunker
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	attack_verb_continuous = list("impales", "stabs", "destroys", "strikes")
 	attack_verb_simple = list("impale", "stab", "destroy", "strike")
 	sharpness = SHARP_POINTY
@@ -83,7 +83,7 @@
 		if(!QDELETED(L))
 			if(!QDELETED(C))
 				C.total_damage += target_health - L.health
-				playsound(user, 'sound/weapons/blastcannon.ogg', 100, TRUE)
+				playsound(user, 'sound/items/weapons/blastcannon.ogg', 100, TRUE)
 				shake_camera(user, 10, 3)
 				var/atom/throw_target = get_edge_target_turf(user, get_dir(target, user))
 				user.throw_at(throw_target, 3, 5, gentle = FALSE)
@@ -102,7 +102,7 @@
 
 /obj/item/kinetic_crusher/pilebunker/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!armed)
-		playsound(user, 'sound/mecha/hydraulic.ogg', 100, TRUE)
+		playsound(user, 'sound/vehicles/mecha/hydraulic.ogg', 100, TRUE)
 		if(do_after(user, 3 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_SLOWDOWNS))
 			armed = TRUE
 			update_appearance()
@@ -148,7 +148,7 @@
 	pixel_x = -126
 	inhand_x_dimension = -194
 	armour_penetration = 1000
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	attack_verb_continuous = list("absolutely obliterates")
 	attack_verb_simple = list("absolutely obliterates")
 	sharpness = SHARP_EDGED
@@ -209,7 +209,7 @@
 		if(!QDELETED(L))
 			if(!QDELETED(C))
 				C.total_damage += target_health - L.health
-				playsound(user, 'sound/weapons/blastcannon.ogg', 100, TRUE)
+				playsound(user, 'sound/items/weapons/blastcannon.ogg', 100, TRUE)
 				var/atom/throw_target = get_edge_target_turf(user, get_dir(target, user))
 				user.throw_at(throw_target, 100, 1000, gentle = FALSE)
 			new /obj/effect/temp_visual/explosion/fast(get_turf(L))
@@ -227,7 +227,7 @@
 
 /obj/item/kinetic_crusher/adminpilebunker/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!armed)
-		playsound(user, 'sound/mecha/hydraulic.ogg', 100, TRUE)
+		playsound(user, 'sound/vehicles/mecha/hydraulic.ogg', 100, TRUE)
 		if(do_after(user, 0.1 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_SLOWDOWNS))
 			armed = TRUE
 			update_appearance()

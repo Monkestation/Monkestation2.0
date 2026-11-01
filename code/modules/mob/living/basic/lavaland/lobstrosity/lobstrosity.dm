@@ -17,7 +17,7 @@
 	melee_damage_upper = 19
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE //  Closer than a scratch to a crustacean pinching effect
 	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(
@@ -30,11 +30,18 @@
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
 	/// Things we will eat if we see them (arms, chiefly)
-	var/static/list/target_foods = list(/obj/item/bodypart/arm)
+	var/static/list/target_foods = list(/obj/item/bodypart/arm, /obj/item/fish/lavaloop)
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	var/static/list/food_types = list(/obj/item/fish/lavaloop)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
+	var/static/list/fishing_preset = list(
+		/turf/open/lava = /datum/fish_source/lavaland,
+		/turf/open/lava/plasma = /datum/fish_source/lavaland/icemoon,
+	)
+	AddComponent(/datum/component/profound_fisher, npc_fishing_preset = fishing_preset)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)

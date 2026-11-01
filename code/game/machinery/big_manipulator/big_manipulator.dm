@@ -778,6 +778,17 @@
 				return TRUE
 			return FALSE
 
+		if("toggle_skip_non_dense")
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
+				var/datum/manipulator_task/cargo/dropoff_base/use/dense_target = target_task
+				dense_target.skip_non_dense = !dense_target.skip_non_dense
+				return TRUE
+			if(istype(target_task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/dense_target = target_task
+				dense_target.skip_non_dense = !dense_target.skip_non_dense
+				return TRUE
+			return FALSE
+
 /// Cycles the given value in the given list.
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
 	var/current_index = possible_values.Find(current_value)
@@ -887,6 +898,7 @@
 			task_data["worker_use_rmb"] = task_use.worker_use_rmb
 			task_data["worker_combat_mode"] = task_use.worker_combat_mode
 			task_data["skip_anchored"] = task_use.skip_anchored
+			task_data["skip_non_dense"] = task_use.skip_non_dense
 
 		if(istype(task, /datum/manipulator_task/cargo/interact))
 			var/datum/manipulator_task/cargo/interact/task_interact = task
@@ -895,6 +907,7 @@
 			task_data["worker_use_rmb"] = task_interact.worker_use_rmb
 			task_data["worker_combat_mode"] = task_interact.worker_combat_mode
 			task_data["skip_anchored"] = task_interact.skip_anchored
+			task_data["skip_non_dense"] = task_interact.skip_non_dense
 
 		if(istype(task, /datum/manipulator_task/simple/wait))
 			var/datum/manipulator_task/simple/wait/task_wait = task

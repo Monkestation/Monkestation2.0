@@ -159,7 +159,7 @@
 			defender.visible_message("<span class='danger'>[attacker] disarms [defender]!</span>", \
 				"<span class='userdanger'>You're disarmed by [attacker]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, attacker)
 			to_chat(attacker, "<span class='danger'>You disarm [defender]!</span>")
-			playsound(defender, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(defender, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	log_combat(attacker, defender, "shoved (Krav Maga)", "[stuff_in_hand ? " removing \the [stuff_in_hand]" : ""]")
 	return FALSE
 

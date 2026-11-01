@@ -118,27 +118,3 @@
 	SIGNAL_HANDLER
 	if(ban_explosions)
 		return COMSIG_CANCEL_EXPLOSION
-
-// Override that handles teleporting ghost player's mobs back to Centcom ghostspawn, if they try to
-// move out of it during the round.
-/area/Entered(atom/movable/thing)
-	. = ..()
-
-	// For the atom that just entered this area, as well as each of its contents...
-	for(var/atom/movable/atom_inside as anything in thing.get_all_contents())
-		// ...check if any of them are a ghost player mob...
-		if(istype(atom_inside, /mob/living/carbon/human/ghost))
-			// ...and if so, run the checks.
-			teleport_ghost_mob_if_needed(atom_inside)
-
-// Teleports a ghost's mob to ghostspawn, if this area does not meet certain requirements.
-/area/proc/teleport_ghost_mob_if_needed(mob/living/carbon/human/ghost/ghost)
-	// We should teleport, if...
-	var/should_teleport = FALSE
-	// ...this is not an area allowed to be inhabited by ghost characters
-	should_teleport |= (!(area_flags & GHOST_AREA))
-	// ...this is an area ghosts are prohibited to inhabit during a round, and the round is ongoing
-	should_teleport |= ((area_flags & NO_GHOSTS_DURING_ROUND) && SSticker.current_state != GAME_STATE_FINISHED)
-
-	if(should_teleport)
-		ghost.move_to_ghostspawn()

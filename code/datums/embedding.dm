@@ -224,7 +224,7 @@
 	if (!is_harmless(consider_stamina = TRUE))
 		owner.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
 		if (!is_harmless())
-			playsound(owner,'sound/weapons/bladeslice.ogg', 40)
+			playsound(owner,'sound/items/weapons/bladeslice.ogg', 40)
 			if (owner_limb.can_bleed())
 				parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
 		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))

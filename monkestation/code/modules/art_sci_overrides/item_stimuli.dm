@@ -25,7 +25,7 @@
 	if(defib.deductcharge(2000))
 		interacted.holder.visible_message(span_warning("[user] zaps the artifact with the [src]!"))
 		interacted.process_stimuli(STIMULUS_SHOCK, 2000)
-		playsound(user,'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+		playsound(user,'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
 
 /obj/item/circuitboard/on_artifact_interact(datum/component/artifact/interacted, mob/user)
 	interacted.holder.visible_message(span_notice("[user] presses the [src] against the artifact."))

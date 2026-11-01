@@ -21,7 +21,7 @@
 	var/final_message = "reaches a catastrophic overload, cracks forming at its surface!"
 	var/sound/active_alarm = 'sound/effects/alert.ogg' // plays every alarm_cooldown_time when active
 	var/alarm_cooldown_time = 3 SECONDS
-	var/sound/final_sound = 'sound/misc/bloblarm.ogg'
+	var/sound/final_sound = 'sound/announcer/alarm/bloblarm.ogg'
 	COOLDOWN_DECLARE(activation_cooldown)
 	COOLDOWN_DECLARE(alarm_cooldown)
 	var/timer_id

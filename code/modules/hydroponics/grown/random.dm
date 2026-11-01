@@ -58,6 +58,7 @@
 		/datum/reagent/prefactor_b,
 		/datum/reagent/reaction_agent,
 		/datum/reagent/spider_extract,
+		/datum/reagent/toxin/fakebeer,
 		/datum/reagent/healium,
 		/datum/reagent/tatp,
 		/datum/reagent/rdx,

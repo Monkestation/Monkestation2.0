@@ -4,7 +4,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	name = "positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	desc_controls = "Use in hand to request an unbound personality. Right-click before its first activation to imprint it to yourself, then use it in hand to request a master-bound personality. Once activated, it can no longer be imprinted. Alt-click to set a personality seed."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "posibrain"
 	base_icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL

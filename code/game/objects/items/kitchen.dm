@@ -30,7 +30,7 @@
 	flags_1 = CONDUCT_1
 	attack_verb_continuous = list("attacks", "stabs", "pokes")
 	attack_verb_simple = list("attack", "stab", "poke")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	armor_type = /datum/armor/kitchen_fork
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
@@ -111,7 +111,7 @@
 	force = 0
 	throwforce = 0
 	sharpness = SHARP_EDGED
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	tool_behaviour = TOOL_KNIFE
@@ -121,7 +121,7 @@
 	. += " It's fitted with a [tool_behaviour] head."
 
 /obj/item/knife/kitchen/silicon/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour != TOOL_ROLLINGPIN)
 		tool_behaviour = TOOL_ROLLINGPIN
 		to_chat(user, span_notice("You attach the rolling pin bit to the [src]."))
@@ -137,7 +137,7 @@
 		icon_state = "sili_knife"
 		force = 0
 		sharpness = SHARP_EDGED
-		hitsound = 'sound/weapons/bladeslice.ogg'
+		hitsound = 'sound/items/weapons/bladeslice.ogg'
 		attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 		attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 

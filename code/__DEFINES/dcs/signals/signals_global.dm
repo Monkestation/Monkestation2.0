@@ -107,5 +107,11 @@
 /// Sent whenever a monster hunter initiates the Wonderland Apocalypse
 #define COMSIG_GLOB_WONDERLAND_APOCALYPSE "!wonderland_apocalypse"
 
+///Global signal sent when the player list grows. Called by [mob/add_to_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGIN "!player_login"
+
+///Global signal sent when the player list shrinks. Called by [mob/remove_from_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGOUT "!player_logout"
+
 /// Sent when supermatter begins its delam countdown/when the suppression system is triggered: (var/trigger_reason)
 #define COMSIG_MAIN_SM_DELAMINATING "delam_time"

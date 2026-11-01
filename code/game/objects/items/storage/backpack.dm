@@ -310,7 +310,7 @@
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
 	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 25) // MEAT
 	///Sounds used in the squeak component
-	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
+	var/list/meat_sounds = list('sound/effects/blob/blobattack.ogg' = 1)
 	///Reagents added to the edible component, ingested when you EAT the MEAT
 	var/list/meat_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 10,
@@ -614,6 +614,7 @@
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/razor(src)
 	new /obj/item/blood_filter(src)
+	new /obj/item/autopsy_scanner(src)
 
 /obj/item/storage/backpack/duffelbag/sec
 	name = "security duffel bag"
@@ -641,6 +642,7 @@
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/blood_filter(src)
+	new /obj/item/autopsy_scanner(src)
 
 /obj/item/storage/backpack/duffelbag/engineering
 	name = "industrial duffel bag"

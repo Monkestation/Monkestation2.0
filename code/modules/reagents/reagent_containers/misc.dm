@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/cup/maunamug
 	name = "mauna mug"
 	desc = "A drink served in a classy mug. Now with built-in heating!"
-	icon = 'icons/obj/mauna_mug.dmi'
+	icon = 'icons/obj/devices/mauna_mug.dmi'
 	icon_state = "maunamug"
 	base_icon_state = "maunamug"
 	spillable = TRUE
@@ -166,7 +166,7 @@
 /obj/item/reagent_containers/cup/fuelcanister
 	name = "fuel canister"
 	desc = "A canister full of industrial welding fuel. Do not puncture."
-	icon = 'icons/obj/atmospherics/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	desc_controls = "Alt-Click to close or open the fuel nozzle cap."
@@ -177,7 +177,7 @@
 	reagent_flags = SEALED_CONTAINER
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	flags_1 = CONDUCT_1
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	resistance_flags = FIRE_PROOF
 	force = 5
@@ -254,7 +254,7 @@
 			cap_lost = TRUE
 		else
 			to_chat(user, span_notice("You remove the cap from [src]."))
-			playsound(src, 'sound/effects/can_open1.ogg', 50, TRUE)
+			playsound(src, 'sound/items/can/can_open1.ogg', 50, TRUE)
 	else
 		cap_on = TRUE
 		icon_state = "[base_icon_state]"
@@ -377,7 +377,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/amount_to_spill = rand(10, 25)
-	playsound(src, 'sound/effects/can_shake.ogg', 50, TRUE, 3)
+	playsound(src, 'sound/items/can/can_shake.ogg', 50, TRUE, 3)
 	spill(interacting_with, amount_to_spill, user)
 	user.visible_message(span_warning("[user] shakes the contents of \the [src] onto \the [interacting_with]!"), span_notice("You shake the contents of \the [src] onto \the [interacting_with]!"))
 	if(ismob(interacting_with))

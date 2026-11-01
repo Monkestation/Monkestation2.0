@@ -416,4 +416,5 @@
 		"Cytologist",
 		"Cryptozoologist",
 		"Slime Mage",
+		"Slime Rancher",
 	)

@@ -54,7 +54,7 @@
 
 /obj/machinery/power/rtg/abductor
 	name = "Void Core"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "core"
 	desc = "An alien power source that produces energy seemingly out of nowhere."
 	circuit = /obj/item/circuitboard/machine/abductor/core
@@ -69,7 +69,7 @@
 	going_kaboom = TRUE
 	visible_message(span_danger("\The [src] lets out a shower of sparks as it starts to lose stability!"),\
 		span_hear("You hear a loud electrical crack!"))
-	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+	playsound(src.loc, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 2, 3, 4, null, 8), 10 SECONDS) // Not a normal explosion.
 

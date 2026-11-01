@@ -312,20 +312,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp = "<br><center><h3>you take a defensive stance and gain back 10 mp!</h3></center>"
 			player_mp += 10
 			arcade_action(usr,"defend",attackamt)
-			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
+			playsound(src, 'sound/machines/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
 		//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
 		else if(href_list["counter_attack"] && player_mp >= 10)
 			temp = "<br><center><h3>you prepare yourself to counter the next attack!</h3></center>"
 			player_mp -= 10
 			arcade_action(usr,"counter_attack",attackamt)
-			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
+			playsound(src, 'sound/machines/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
 		else if(href_list["counter_attack"] && player_mp < 10)
 			temp = "<br><center><h3>you don't have the mp necessary to counter attack and defend yourself instead</h3></center>"
 			player_mp += 10
 			arcade_action(usr,"defend",attackamt)
-			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
+			playsound(src, 'sound/machines/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
 		//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
 		else if (href_list["power_attack"] && player_mp >= 20)
@@ -364,9 +364,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	blocked = TRUE
 	if(player_stance == "attack" || player_stance == "power_attack")
 		if(attackamt > 40)
-			playsound(src, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3)
+			playsound(src, 'sound/machines/arcade/boom.ogg', 50, TRUE, extrarange = -3)
 		else
-			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
+			playsound(src, 'sound/machines/arcade/hit.ogg', 50, TRUE, extrarange = -3)
 
 	timer_id = addtimer(CALLBACK(src, PROC_REF(enemy_action),player_stance,user),1 SECONDS,TIMER_STOPPABLE)
 	gameover_check(user)
@@ -535,7 +535,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		list_temp += "<br><center><h3>You have weakened [enemy_name] enough for them to show their weak point, you will do 10 times as much damage with your next attack!<center><h3> "
 		finishing_move = TRUE
 
-	playsound(src, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3)
+	playsound(src, 'sound/machines/arcade/heal.ogg', 50, TRUE, extrarange = -3)
 
 	temp = list_temp.Join()
 	gameover_check(user)
@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			gameover = TRUE
 			blocked = FALSE
 			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
-			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
+			playsound(loc, 'sound/machines/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
@@ -578,7 +578,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			timer_id = null
 		gameover = TRUE
 		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
-		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/arcade/lose.ogg', 50, TRUE)
 		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
 			var/mob/living/living_user = user
@@ -670,7 +670,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	user.played_game()
 	var/obj/item/bodypart/chopchop = user.get_active_hand()
 	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(do_they_still_have_that_hand), user, chopchop)))
-		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
+		playsound(src, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		chopchop.dismember()
 		qdel(chopchop)
@@ -683,13 +683,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			to_chat(user, span_warning("Your arm breaks \the [src]! Making it dispense a weird soup..."))
 //monkestation edit end, the else below this is also an edit
 		else
-			playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/arcade/win.ogg', 50, TRUE)
 			new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
 			to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
 		return
 	else if(!do_they_still_have_that_hand(user, chopchop))
 		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
-		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
+		playsound(src, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 	else
 		to_chat(user, span_notice("You (wisely) decide against putting your hand in the machine."))
 	user.lost_game()

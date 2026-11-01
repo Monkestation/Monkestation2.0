@@ -29,7 +29,7 @@
 
 	attack_verb_continuous = "bings"
 	attack_verb_simple = "bing"
-	attack_sound = 'sound/effects/blobattack.ogg' //'monkestation/code/moduoles/veth_misc_items/bingle/sound/bingle_attack.ogg'
+	attack_sound = 'sound/effects/blob/blobattack.ogg' //'monkestation/code/moduoles/veth_misc_items/bingle/sound/bingle_attack.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE //nom nom nom
 	butcher_results = null
 

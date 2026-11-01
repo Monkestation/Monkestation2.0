@@ -111,6 +111,7 @@
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/signal_commander,
 		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/slimepedia,
 	)
 
 /obj/item/modular_computer/pda/heads/ntrep
@@ -245,6 +246,7 @@
 		/datum/computer_file/program/signal_commander,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/slimepedia,
 	)
 
 /obj/item/modular_computer/pda/roboticist
@@ -271,6 +273,9 @@
 	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/xenobiologist")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#FF66CC"
+	starting_programs = list(
+		/datum/computer_file/program/slimepedia,
+	)
 
 /**
  * Medical
@@ -430,7 +435,7 @@
 
 /obj/item/modular_computer/pda/clown
 	name = "clown PDA"
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-clown"
 	inserted_disk = /obj/item/computer_disk/virus/clown
 	greyscale_config = null
@@ -476,7 +481,7 @@
 /obj/item/modular_computer/pda/curator
 	name = "curator PDA"
 	desc = "A small experimental microcomputer."
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-library"
 	greyscale_config = null
 	greyscale_colors = null
@@ -519,7 +524,7 @@
 
 /obj/item/modular_computer/pda/clear
 	name = "clear PDA"
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-clear"
 	greyscale_config = null
 	greyscale_colors = null

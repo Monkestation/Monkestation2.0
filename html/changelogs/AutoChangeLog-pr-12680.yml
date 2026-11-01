@@ -1,4 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - bugfix: "IPC Examine limb examine text now should reflect their mechanical status"

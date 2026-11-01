@@ -16,6 +16,7 @@
 	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
 	has_limbs = TRUE
 	hud_type = /datum/hud/robot
+	unique_name = TRUE
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 	default_hand_amount = 3
 
@@ -111,8 +112,6 @@
 	var/lockcharge = FALSE
 	///Boolean of whether the borg was locked by its AI or nothing
 	var/ai_lockdown = FALSE
-	///Random serial number generated for each cyborg upon its initialization
-	var/ident = 0
 	var/locked = TRUE
 	req_one_access = list(ACCESS_ROBOTICS)
 

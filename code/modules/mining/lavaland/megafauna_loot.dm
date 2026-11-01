@@ -57,7 +57,7 @@
 	force = 15
 	attack_verb_continuous = list("clubs", "beats", "pummels")
 	attack_verb_simple = list("club", "beat", "pummel")
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/vortex_recall)
 	action_slots = ALL
@@ -87,7 +87,7 @@
 	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
 	user.visible_message(span_suicide("[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!"))
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
-	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
+	playsound(user,'sound/machines/airlock/airlockopen.ogg', 75, TRUE)
 	user.visible_message(span_hierophant_warning("[user] fades out, leaving [user.p_their()] belongings behind!"))
 	for(var/obj/item/I in user)
 		if(I != src)
@@ -130,7 +130,7 @@
 			span_notice("You start detaching the hierophant beacon..."))
 			if(do_after(user, 5 SECONDS, target = user) && !beacon)
 				var/turf/T = get_turf(user)
-				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
+				playsound(T,'sound/effects/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_mob_action_buttons()
@@ -167,8 +167,8 @@
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
-		playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
-		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
+		playsound(T,'sound/effects/magic/wand_teleport.ogg', 200, TRUE)
+		playsound(source,'sound/machines/airlock/airlockopen.ogg', 200, TRUE)
 		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
@@ -252,7 +252,7 @@
 	for(var/mob/living/carbon/human/target in range(7,user))
 		target.apply_status_effect(/datum/status_effect/mayhem)
 	to_chat(user, span_notice("You shatter the bottle!"))
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
+	playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
 	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!"))
 	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
 	qdel(src)
@@ -374,7 +374,7 @@
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -486,8 +486,7 @@
 				"body_markings" = "Dark Tiger Body",
 				"legs" = DIGITIGRADE_LEGS,
 			)
-			consumer.eye_color_left = "#FEE5A3"
-			consumer.eye_color_right = "#FEE5A3"
+			consumer.set_eye_color("#FEE5A3")
 			consumer.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
@@ -518,7 +517,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	attack_verb_continuous = list("sears", "clubs", "burn")
 	attack_verb_simple = list("sear", "club", "burn")
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/misc/asteroid/basalt
@@ -568,7 +567,7 @@
 			user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(target)]")
 			user.log_message("fired the lava staff at [AREACOORD(target)].", LOG_ATTACK)
-			playsound(target, 'sound/magic/fireball.ogg', vol = 200, vary = TRUE)
+			playsound(target, 'sound/effects/magic/fireball.ogg', vol = 200, vary = TRUE)
 	qdel(lava_visual)
 
 /obj/item/lava_staff/proc/remove_lava(mob/living/user, turf/open/lava/target)
@@ -580,7 +579,7 @@
 			cooldown *= 0.1
 		COOLDOWN_START(src, next_use, cooldown)
 		user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
-		playsound(target, 'sound/magic/fireball.ogg', vol = 200, vary = TRUE)
+		playsound(target, 'sound/effects/magic/fireball.ogg', vol = 200, vary = TRUE)
 
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
@@ -611,7 +610,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	/// List of factions we deal bonus damage to
@@ -743,7 +742,7 @@
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 	if(user)
 		balloon_alert(user, "[active ? "opened" : "closed"] [src]")
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
+	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 //Legion: Staff of Storms
@@ -760,7 +759,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	damtype = BURN
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	wound_bonus = -30
 	bare_wound_bonus = 20
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -802,7 +801,7 @@
 		return
 	user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
 	span_notice("You hold [src] skyward, dispelling the storm!"))
-	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
+	playsound(user, 'sound/effects/magic/staff_change.ogg', 200, FALSE)
 	var/old_color = user.color
 	user.color = list(340/255, 240/255, 0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	var/old_transform = user.transform
@@ -841,7 +840,7 @@
 		if((target_turf.z in weather.impacted_z_levels) && ispath(target_area.type, weather.area_type))
 			power_boosted = TRUE
 			break
-	playsound(src, 'sound/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	targeted_turfs += target_turf
 	balloon_alert(user, "you aim at [target_turf]...")
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
@@ -853,7 +852,7 @@
 
 /obj/item/storm_staff/proc/recharge(mob/user)
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)
-	playsound(src, 'sound/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	playsound(src, 'sound/effects/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted)
 	targeted_turfs -= target
@@ -873,6 +872,6 @@
 
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
-	playsound(target, 'sound/magic/lightningbolt.ogg', 100, TRUE)
+	playsound(target, 'sound/effects/magic/lightningbolt.ogg', 100, TRUE)
 	target.visible_message(span_danger("A thunderbolt strikes [target]!"))
 	explosion(target, light_impact_range = (boosted ? 1 : 0), flame_range = (boosted ? 2 : 1), silent = TRUE)

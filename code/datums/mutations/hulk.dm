@@ -32,7 +32,8 @@
 		return
 	owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.variable_color = "#00aa00"
+		if (part.bodytype & BODYTYPE_ORGANIC)
+			part.add_color_override("#00aa00", LIMB_COLOR_HULK)
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
 	owner.physiology?.cold_mod *= HULK_COLD_DAMAGE_MOD
@@ -40,6 +41,8 @@
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(statchange))
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
+	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
 	owner.add_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
 
 /datum/mutation/hulk/setup()
@@ -137,15 +140,26 @@
 		return
 	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.variable_color = null
+		part.remove_color_override(LIMB_COLOR_HULK)
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")
 	owner.physiology?.cold_mod /= HULK_COLD_DAMAGE_MOD
 	owner.bodytemp_cold_damage_limit -= BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER
 	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
-	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 	owner.remove_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
+
+/// Makes limbs attached while we're hulk green too
+/datum/mutation/hulk/proc/texture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	if (limb.bodytype & BODYTYPE_ORGANIC)
+		limb.add_color_override("#00aa00", LIMB_COLOR_HULK)
+
+/// Clears the hulk color from limbs that get removed
+/datum/mutation/hulk/proc/untexture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	limb.remove_color_override(LIMB_COLOR_HULK)
 
 /// How many steps it takes to throw the mob
 #define HULK_TAILTHROW_STEPS 28
@@ -253,7 +267,7 @@
 			continue
 
 		yeeted_person.adjustBruteLoss(step*0.5)
-		playsound(collateral_mob,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(collateral_mob,'sound/items/weapons/punch1.ogg',50,TRUE)
 		log_combat(the_hulk, collateral_mob, "has smacked with tail swing victim")
 		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
 
