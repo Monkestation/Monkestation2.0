@@ -23,6 +23,7 @@
 	gravity_setup()
 	if(!blood_volume)
 		ADD_TRAIT(src, TRAIT_NOBLOOD, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
 /mob/living/prepare_huds()
 	..()

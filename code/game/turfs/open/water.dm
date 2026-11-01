@@ -20,6 +20,14 @@
 	var/sinking = FALSE
 	///If we have one then what should our player_sink max_sinkage be set to, leave unset for default sinkage
 	var/max_sinkage
+	/**
+	 * Used as the color arg/var for the immerse element. It should be kept more or less in line with
+	 * the hue of the turf, as semi-transparent vis overlays can opacify the semi-transparent bits of an icon,
+	 * and we're kinda trying to offset that issue.
+	 */
+	var/immerse_overlay_color = "#5AAA88"
+	///The transparency of the immerse element's overlay
+	var/immerse_overlay_alpha = 180
 	/// Fishing element for this specific water tile
 	var/datum/fish_source/fishing_datum = /datum/fish_source/river
 
@@ -30,6 +38,9 @@
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	if(sinking)
 		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_add_sinking))
+	else // MONKESTATION EDIT: player_sink already takes care of making you look immersed
+		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	AddElement(/datum/element/watery_tile)
 
 /turf/open/water/AfterChange(flags, oldType)
 	. = ..()
@@ -61,6 +72,7 @@
 	icon_state = "water"
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
+	immerse_overlay_color = "#7799AA"
 	fishing_datum = /datum/fish_source/ocean/beach
 
 /turf/open/water/beach/Initialize(mapload)
@@ -101,6 +113,8 @@
 		the odd fish darting through the water."
 	baseturfs = /turf/open/water/hot_spring
 	planetary_atmos = FALSE
+	immerse_overlay_color = "#A0E2DE"
+	immerse_overlay_alpha = 190
 	fishing_datum = /datum/fish_source/hot_spring
 	/// Holder for the steam particles
 	var/obj/effect/abstract/particle_holder/cached/particle_effect
@@ -142,14 +156,18 @@
 	SIGNAL_HANDLER
 	enter_hot_spring(movable)
 
-///Calls dip_in if the movable is actually in the water (not flying or floating over it). MONKESTATION EDIT: no immerse element
+///Registers the signals from the immerse element and calls dip_in if the movable has the required trait.
 /turf/open/water/hot_spring/proc/enter_hot_spring(atom/movable/movable)
-	if(movable.movement_type & (FLYING|FLOATING))
-		return
-	dip_in(movable)
+	RegisterSignal(movable, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
+	if(isliving(movable)) //so far, exiting a hot spring only has effects on living mobs.
+		RegisterSignal(movable, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(dip_out))
+
+	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
+		dip_in(movable)
 
 ///Handles washing the movable and adding a status effect plus mood event to living mobs.
 /turf/open/water/hot_spring/proc/dip_in(atom/movable/movable)
+	SIGNAL_HANDLER
 	movable.wash(CLEAN_RAD | CLEAN_WASH)
 	if(!isliving(movable))
 		return
@@ -169,6 +187,7 @@
 
 //Unregister the signals and remove the status effect from mobs unless they're moving to another hot spring turf.
 /turf/open/water/hot_spring/proc/exit_hot_spring(atom/movable/movable)
+	UnregisterSignal(movable, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED), SIGNAL_REMOVETRAIT(TRAIT_IMMERSED)))
 	if(!isliving(movable))
 		return
 	var/mob/living/living = movable
@@ -178,6 +197,7 @@
 
 ///Handles removing the status effect from mobs.
 /turf/open/water/hot_spring/proc/dip_out(mob/living/living)
+	SIGNAL_HANDLER
 	living.remove_status_effect(/datum/status_effect/washing_regen/hot_spring)
 	if(!living.is_cat_enough(include_all_anime = TRUE) || HAS_TRAIT(living, TRAIT_WATER_ADAPTATION))
 		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_left)
