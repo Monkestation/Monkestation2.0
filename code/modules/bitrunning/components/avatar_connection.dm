@@ -64,15 +64,15 @@
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS)
 
-/datum/component/avatar_connection/PostTransfer()
+/datum/component/avatar_connection/PostTransfer(datum/new_parent)
 	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
 	if(isnull(pod))
 		return COMPONENT_INCOMPATIBLE
 
-	if(!isliving(parent))
+	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
-	pod.avatar_ref = WEAKREF(parent)
+	pod.avatar_ref = WEAKREF(new_parent)
 
 /datum/component/avatar_connection/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))

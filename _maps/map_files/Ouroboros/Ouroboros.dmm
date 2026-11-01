@@ -57170,7 +57170,7 @@
 /area/station/service/hydroponics/upper)
 "qLZ" = (
 /obj/structure/cable,
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
 "qMo" = (

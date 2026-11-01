@@ -28,6 +28,7 @@
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
 	create_storage(max_slots = 21, max_total_storage = 21)
+	atom_storage.set_holdable(exception_hold_list = /obj/item/fish_tank)
 	AddElement(/datum/element/attack_equip)
 
 /obj/item/storage/backpack/equipped(mob/user, slot, initial)

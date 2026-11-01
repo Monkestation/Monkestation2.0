@@ -26482,7 +26482,7 @@
 	department = "Law Office";
 	name = "Law Office Requests Console"
 	},
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
 /turf/open/floor/carpet/blue,
 /area/station/service/lawoffice)
 "faz" = (

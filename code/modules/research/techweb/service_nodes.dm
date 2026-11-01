@@ -142,6 +142,7 @@
 		"auto_reel",
 		"fish_analyzer",
 		"bluespace_fish_case",
+		"bluespace_fish_tank_kit",
 		"fishing_gloves",
 		"mod_fishing",
 	)

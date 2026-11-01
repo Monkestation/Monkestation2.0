@@ -370,3 +370,8 @@
 #define SLIME_WINDUP_TRAIT "slime_windup"
 /// Pauses a slime's AI while it sits in a vacuum pack
 #define VACUUM_STORED_TRAIT "vacuum_stored"
+/// Trait from an engraving
+#define ENGRAVED_TRAIT "engraved"
+
+/// From the aquarium component
+#define AQUARIUM_TRAIT "aquarium"

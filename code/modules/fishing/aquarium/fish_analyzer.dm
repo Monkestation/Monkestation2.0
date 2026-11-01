@@ -59,18 +59,15 @@
 	. += emissive_appearance(icon, "fish_analyzer_emissive", src)
 
 /obj/item/fish_analyzer/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(!isfish(target) && !isaquarium(target))
+	if(!isfish(target) && !HAS_TRAIT(target, TRAIT_IS_AQUARIUM))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 
-	if(isfish(target) || istype(target, /obj/structure/aquarium))
-		scanned_item = WEAKREF(target)
-		SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
-		ui_interact(user)
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
+	scanned_item = WEAKREF(target)
+	SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish_analyzer/ui_interact(mob/user, datum/tgui/ui)
 	if(isnull(scanned_item?.resolve()))
@@ -92,16 +89,16 @@
 		data["fish_scanned"] = TRUE
 		return extract_fish_info(data, scanned_object)
 
-	var/obj/structure/aquarium/aquarium = scanned_object
+	var/atom/movable/aquarium = scanned_object
 	for(var/obj/item/fish/fishie in aquarium)
-		extract_fish_info(data, fishie, aquarium)
+		extract_fish_info(data, fishie)
 
 	return data
 
-/// Adds the info of the given fish to the ui data
-/obj/item/fish_analyzer/proc/extract_fish_info(list/data, obj/item/fish/fishie, obj/structure/aquarium/aquarium)
+/obj/item/fish_analyzer/proc/extract_fish_info(list/data, obj/item/fish/fishie)
 	var/list/fish_traits = list()
 	var/list/fish_evolutions = list()
+/// Adds the info of the given fish to the ui data
 
 	for(var/evolution_type in fishie.evolution_types)
 		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
@@ -130,12 +127,12 @@
 		"fish_min_temp" = fishie.required_temperature_min,
 		"fish_max_temp" = fishie.required_temperature_max,
 		"fish_hunger" = HAS_TRAIT(fishie, TRAIT_FISH_NO_HUNGER) ? 0 :  1 - fishie.get_hunger(),
-		"fish_fluid_compatible" = aquarium ? compatible_fluid_type(fishie.required_fluid_type, aquarium.fluid_type) : null,
+		"fish_fluid_compatible" = fishie.fish_flags & FISH_FLAG_SAFE_FLUID,
 		"fish_fluid_type" = fishie.required_fluid_type,
 		"fish_breed_timer" = round(max(fishie.breeding_wait - world.time, 0) / 10),
 		"fish_traits" = fish_traits,
 		"fish_evolutions" = fish_evolutions,
-		"fish_suitable_temp" = aquarium ? ISINRANGE(aquarium.fluid_temp, fishie.required_temperature_min, fishie.required_temperature_max) : null
+		"fish_suitable_temp" = fishie.fish_flags & FISH_FLAG_SAFE_TEMPERATURE,
 	))
 
 	return data

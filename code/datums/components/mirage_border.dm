@@ -31,10 +31,10 @@
 /datum/component/mirage_border/PreTransfer()
 	holder.moveToNullspace()
 
-/datum/component/mirage_border/PostTransfer()
-	if(!isturf(parent))
+/datum/component/mirage_border/PostTransfer(datum/new_parent)
+	if(!isturf(new_parent))
 		return COMPONENT_INCOMPATIBLE
-	holder.forceMove(parent)
+	holder.forceMove(new_parent)
 
 INITIALIZE_IMMEDIATE(/obj/effect/abstract/mirage_holder)
 /obj/effect/abstract/mirage_holder

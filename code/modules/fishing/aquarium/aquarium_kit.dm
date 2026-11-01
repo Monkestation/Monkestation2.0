@@ -116,19 +116,19 @@
 
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
-	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
+	desc = "Everything you need to build your own aquarium or fish tank. Raw materials sold separately."
 	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/aquarium_kit/attack_self(mob/user)
 	. = ..()
-	to_chat(user,span_notice("There's instruction and tools necessary to build aquarium inside. All you need is to start crafting."))
+	to_chat(user,span_notice("There's instruction and tools necessary to build an aquarium or a fish tank inside. All you need is to start crafting."))
 
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	icon = 'icons/obj/aquarium/supplies.dmi'
+	icon = 'icons/obj/aquarium/tanks.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
@@ -140,14 +140,20 @@
 	. = ..()
 	//It's important that we register the signals before the component is attached.
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
-	AddComponent(/datum/component/aquarium_content, beauty = beauty)
+	AddComponent(/datum/component/aquarium_content)
 	ADD_TRAIT(src, TRAIT_UNIQUE_AQUARIUM_CONTENT, INNATE_TRAIT)
 
-/obj/item/aquarium_prop/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
+	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
+
+/obj/item/aquarium_prop/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual, atom/movable/aquarium)
 	SIGNAL_HANDLER
-	visual.icon = icon
-	visual.icon_state = icon_state
+	visual.icon = aquarium.icon
+	visual.icon_state = "[icon_state][isitem(aquarium) ? "_fish_tank" : ""]"
 	visual.layer_mode = layer_mode
+
+/obj/item/aquarium_prop/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
+	SIGNAL_HANDLER
+	beauty_holder += beauty
 
 /obj/item/aquarium_prop/rocks
 	name = "decorative rocks"
