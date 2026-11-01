@@ -889,7 +889,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 
 	else
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
-	return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
+	var/caught = hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_IMPACT, hit_atom, throwingdatum, caught)
+	return caught
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -1705,3 +1707,37 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 	var/old_w_class = w_class
 	w_class = clamp(w_class + amt, min_weight, max_weight)
 	return w_class != old_w_class
+
+/// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
+/obj/item/proc/check_bait(obj/item/fish/fish_type)
+	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))
+		return 1
+	var/catch_multiplier = 1
+	var/list/properties = SSfishing.fish_properties[fish_type]
+	//Bait matching likes doubles the chance
+	var/list/fav_bait = properties[FISH_PROPERTIES_FAV_BAIT]
+	for(var/bait_identifer in fav_bait)
+		if(is_matching_bait(src, bait_identifer))
+			catch_multiplier *= 2
+	//Bait matching dislikes
+	var/list/disliked_bait = properties[FISH_PROPERTIES_BAD_BAIT]
+	for(var/bait_identifer in disliked_bait)
+		if(is_matching_bait(src, bait_identifer))
+			catch_multiplier *= 0.5
+	return catch_multiplier
+
+/// Helper proc that checks if a bait matches identifier from fav/disliked bait list
+/proc/is_matching_bait(obj/item/bait, identifier)
+	if(ispath(identifier)) //Just a path
+		return istype(bait, identifier)
+	if(!islist(identifier))
+		return HAS_TRAIT(bait, identifier)
+	var/list/special_identifier = identifier
+	switch(special_identifier[FISH_BAIT_TYPE])
+		if(FISH_BAIT_FOODTYPE)
+			var/obj/item/food/food_bait = bait
+			return istype(food_bait) && food_bait.foodtypes & special_identifier[FISH_BAIT_VALUE]
+		if(FISH_BAIT_REAGENT)
+			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
+		else
+			CRASH("Unknown bait identifier in fish favourite/disliked list")

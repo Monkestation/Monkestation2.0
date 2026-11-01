@@ -908,6 +908,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNCATCHABLE "uncatchable"
 /// Stuff that can go inside fish cases and aquariums
 #define TRAIT_AQUARIUM_CONTENT "aquarium_content"
+/// You won't catch duds while fishing with this rod.
+#define TRAIT_ROD_REMOVE_FISHING_DUD "rod_remove_fishing_dud"
 /// If the item can be used as a bit.
 #define TRAIT_FISHING_BAIT "fishing_bait"
 /// This bait will kill any fish that doesn't have it on its favorite_bait list
@@ -919,7 +921,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Baits with this trait will ignore bait preferences and related fish traits.
 #define TRAIT_OMNI_BAIT "omni_bait"
 /// The bait won't be consumed when used
-#define TRAIT_BAIT_UNCONSUMABLE "bait_unconsumabe"
+#define TRAIT_BAIT_UNCONSUMABLE "bait_unconsumable"
+/// This bait ignores environmental conditions for fishing (like low light for nocturnal fish)
+#define TRAIT_BAIT_IGNORE_ENVIRONMENT "bait_ignore_environment"
+/**
+ * This bait won't apply TRAIT_ROD_REMOVE_FISHING_DUD to the rod it's attached on,
+ * instead, it'll allow the fishing dud to be there unless there's at least one fish that likes the bait
+ */
+#define TRAIT_BAIT_ALLOW_FISHING_DUD "bait_dont_affect_fishing_dud"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
@@ -1136,8 +1145,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_TOXIN_IMMUNE "fish_toxin_immune"
 #define TRAIT_FISH_CROSSBREEDER "fish_crossbreeder"
 #define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
-/// The fish can't ink anyone yet
-#define TRAIT_FISH_INK_ON_COOLDOWN "fish_ink_on_cooldown"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
@@ -1149,6 +1156,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_RECESSIVE "fish_recessive"
 ///This fish comes equipped with a stinger (increased damage and potentially venomous if also toxic)
 #define TRAIT_FISH_STINGER "fish_stinger"
+///This fish is currently on cooldown and cannot splash ink unto people's faces
+#define TRAIT_FISH_INK_ON_COOLDOWN "fish_ink_on_cooldown"
+///This fish requires two hands to carry even if smaller than FISH_SIZE_TWO_HANDS_REQUIRED, as long as it's bulky-sized.
+#define TRAIT_FISH_SHOULD_TWOHANDED "should_twohanded"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"

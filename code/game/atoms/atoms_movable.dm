@@ -1320,7 +1320,9 @@
 		return // in case a signal interceptor broke or deleted the thing before we could process our hit
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
 		return
-	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	var/caught = hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_IMPACT, hit_atom, throwingdatum, caught)
+	return caught
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
