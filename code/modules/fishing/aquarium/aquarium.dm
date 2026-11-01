@@ -312,9 +312,9 @@
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
 	.["allowBreeding"] = allow_breeding
-	.["FishData"] = list()
+	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
-	.["PropData"] = list()
+	.["propData"] = list()
 	for(var/atom/movable/item in contents)
 		if(isfish(item))
 			var/obj/item/fish/fish = item
@@ -340,7 +340,7 @@
 	.["minTemperature"] = min_fluid_temp
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
-	.["heart_icon"] = 'icons/effects/effects.dmi'
+	.["heartIcon"] = 'icons/effects/effects.dmi'
 
 /obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
