@@ -305,7 +305,8 @@
 	real_wall = our_turf.place_on_top(walltype) //Place the real wall where the false wall is
 	real_wall.set_custom_materials(custom_materials)
 
-/obj/structure/falsewall/material/set_custom_materials(list/materials, multiplier)
+/// Keeps the real wall made of the same materials as us
+/obj/structure/falsewall/material/apply_material_effects(list/materials)
 	. = ..()
 	real_wall?.set_custom_materials(custom_materials)
 
