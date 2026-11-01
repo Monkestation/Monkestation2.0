@@ -282,8 +282,9 @@
 			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
 	qdel(src)
 
-/obj/structure/falsewall/material/mat_update_desc(mat)
-	desc = "A huge chunk of [mat] used to separate rooms."
+/obj/structure/falsewall/material/finalize_material_effects(list/materials)
+	. = ..()
+	desc = "A huge chunk of [get_material_english_list(materials)] used to separate rooms."
 
 /obj/structure/falsewall/material/toggle_open()
 	if(!QDELETED(src))

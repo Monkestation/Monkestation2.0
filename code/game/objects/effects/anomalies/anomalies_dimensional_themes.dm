@@ -31,7 +31,7 @@
 /datum/dimension_theme/New()
 	if (material)
 		var/datum/material/using_mat = GET_MATERIAL_REF(material)
-		window_colour = using_mat.greyscale_colors
+		window_colour = using_mat.color
 
 /**
  * Applies themed transformation to the provided turf.

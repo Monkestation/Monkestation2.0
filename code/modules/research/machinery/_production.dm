@@ -177,7 +177,7 @@
 	SHOULD_CALL_PARENT(FALSE)
 
 	//first play the insertion animation
-	flick_overlay_view(lathe_material_insertion_animation(mat_ref.greyscale_colors), 1.5 SECONDS)
+	flick_overlay_view(material_insertion_animation(mat_ref), 1 SECONDS)
 
 	//now play the progress bar animation
 	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
