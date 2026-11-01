@@ -550,6 +550,7 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/bodybag,
+		/obj/item/breathing_bag,
 	))
 
 /obj/item/storage/backpack/deforest_medkit/stocked

@@ -99,6 +99,17 @@
 /obj/item/food/fishmeat/octopus/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_octopus, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
+/obj/item/food/fishmeat/fish_tail
+	name = "fish tail fillet"
+	desc = "A precious fatty filet cut straight from the tail of a very large ...fish? Its rarity has it seen as a delicacy in certain spaces."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/nutriment = 2,
+	)
+	bite_consumption = 5
+	tastes = list("fatty fish" = 1)
+
 /obj/item/food/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."
@@ -140,7 +151,7 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
-	tastes = list("fish" = 1, "pan seared vegtables" = 1)
+	tastes = list("fish" = 1, "pan-seared vegetables" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
@@ -674,7 +685,7 @@
 
 /obj/item/food/sashimi
 	name = "carp sashimi"
-	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself. You sure hope whoever made this is skilled."
+	desc = "Celebrate surviving an attack from hostile alien lifeforms by hospitalising yourself. You sure hope whoever made this is skilled."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "sashimi"
 	food_reagents = list(

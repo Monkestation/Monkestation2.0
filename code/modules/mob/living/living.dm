@@ -1136,7 +1136,10 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 			if(puller_art?.can_use(human_puller))
 				altered_grab_state += puller_art.grab_state_modifier
 				escape_chance += puller_art.grab_escape_chance_modifier
-		var/resist_chance = (escape_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE))
+			altered_grab_state--
+		///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		var/resist_chance = altered_grab_state ? (escape_chance / altered_grab_state) : 100
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
