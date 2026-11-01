@@ -48642,8 +48642,8 @@
 /area/station/science/xenobiology)
 "lIf" = (
 /obj/structure/table/wood,
-/obj/item/fish_feed,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_y = 9
 	},
 /turf/open/floor/carpet/green,

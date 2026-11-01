@@ -117753,8 +117753,8 @@
 "wAB" = (
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/item/fish_feed,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_y = 9
 	},
 /turf/open/floor/wood/parquet,

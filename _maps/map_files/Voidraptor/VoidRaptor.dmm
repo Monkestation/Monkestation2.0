@@ -3640,7 +3640,7 @@
 	dir = 1
 	},
 /obj/structure/aquarium/prefilled,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_x = 1;
 	pixel_y = 19
 	},
@@ -28642,7 +28642,7 @@
 /area/station/engineering/supermatter/room)
 "ikl" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_x = 1;
 	pixel_y = 19
 	},

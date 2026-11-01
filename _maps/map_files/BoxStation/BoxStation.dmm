@@ -19626,7 +19626,7 @@
 "gtA" = (
 /obj/effect/turf_decal/tile/green,
 /obj/structure/table,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_y = 3
 	},
 /obj/item/fishing_hook,
@@ -43952,8 +43952,8 @@
 	pixel_x = 32
 	},
 /obj/structure/table/wood/fancy/green,
-/obj/item/fish_feed,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_y = 9
 	},
 /turf/open/floor/iron/dark,
