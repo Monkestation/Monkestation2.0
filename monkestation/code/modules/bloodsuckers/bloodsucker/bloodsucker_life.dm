@@ -331,7 +331,7 @@
 			span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
 			span_hear("You hear a dry, crackling sound.")
 		)
-		addtimer(CALLBACK(body, TYPE_PROC_REF(/mob/living, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+		addtimer(CALLBACK(body, TYPE_PROC_REF(/atom/movable, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 	else
 		body.visible_message(
 			span_warning("[body]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat."),

@@ -2645,3 +2645,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return TRUE
 
 	return FALSE
+
+/mob/living/proc/painful_scream(force = FALSE)
+	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
+		return
+	INVOKE_ASYNC(src, PROC_REF(emote), "scream")

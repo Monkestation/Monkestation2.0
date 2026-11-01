@@ -33,3 +33,6 @@
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/basic/heretic_summon/fire_shark/wild
+	faction = list(FACTION_HOSTILE)
