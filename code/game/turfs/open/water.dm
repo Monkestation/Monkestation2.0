@@ -42,7 +42,7 @@
 		RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
 	AddElement(/datum/element/watery_tile)
 	if(!isnull(fishing_datum))
-		AddElement(/datum/element/lazy_fishing_spot, fishing_datum)
+		add_lazy_fishing(fishing_datum)
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	if(sinking)
 		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_add_sinking))
