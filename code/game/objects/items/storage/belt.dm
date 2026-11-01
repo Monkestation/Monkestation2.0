@@ -589,6 +589,7 @@
 
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
 	atom_storage.max_slots = 1
 	atom_storage.set_holdable(list(
 		/obj/item/clothing/mask/luchador,

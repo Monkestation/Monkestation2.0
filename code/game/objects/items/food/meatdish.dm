@@ -36,6 +36,34 @@
 	w_class = WEIGHT_CLASS_SMALL
 	food_buffs = STATUS_EFFECT_FOOD_RESISTANCE
 
+/obj/item/food/fishmeat/quality
+	name = "quality fish fillet"
+	desc = "A fillet of some precious fish meat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	bite_consumption = 7
+
+/obj/item/food/fishmeat/quality/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_1)
+
+/obj/item/food/fishmeat/salmon
+	name = "salmon fillet"
+	desc = "a chunky, fatty fillet of salmon meat."
+	icon_state = "salmon"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/cooking_oil = 2,
+	)
+	bite_consumption = 4.5
+
+/obj/item/food/fishmeat/salmon/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_1)
+
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat."
@@ -57,6 +85,13 @@
 	desc = "Almost just like the real thing, kinda."
 	cell_line = null
 
+///carp fillet, but without the toxin. Used by baby carps (fish item), which have a trait that handles the toxin already.
+/obj/item/food/fishmeat/carp/no_tox
+
+/obj/item/food/fishmeat/carp/no_tox/Initialize(mapload)
+	food_reagents -= /datum/reagent/toxin/carpotoxin
+	return ..()
+
 /obj/item/food/fishmeat/moonfish
 	name = "moonfish fillet"
 	desc = "A fillet of moonfish."
@@ -68,13 +103,19 @@
 
 /obj/item/food/fishmeat/gunner_jellyfish
 	name = "filleted gunner jellyfish"
-	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic."
+	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic when raw."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "jellyfish_fillet"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/toxin/mindbreaker = 2,
+		/datum/reagent/consumable/nutriment/protein = 4, //The halluginogen comes from the fish trait.
 	)
+
+///Premade gunner jellyfish fillets from supply orders. Contains the halluginogen that'd be normally from the fish trait.
+/obj/item/food/fishmeat/gunner_jellyfish/supply
+
+/obj/item/food/fishmeat/gunner_jellyfish/supply/Initialize(mapload)
+	food_reagents[/datum/reagent/toxin/mindbreaker/fish] = 2
+	return ..()
 
 /obj/item/food/fishmeat/armorfish
 	name = "cleaned armorfish"
@@ -721,12 +762,21 @@
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
 	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
+	var/meat_source = "\"chicken\""
 
 /obj/item/food/nugget/Initialize(mapload)
 	. = ..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
-	desc = "A \"chicken\" nugget vaguely shaped like a [shape]."
+	desc = "A [meat_source] nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
+
+///subtype harvested from fish caught from, you guess it, the deepfryer
+/obj/item/food/nugget/fish
+	name = "fish nugget"
+	tastes = list("fried fish" = 1)
+	foodtypes = MEAT|SEAFOOD|FRIED
+	venue_value = FOOD_PRICE_NORMAL
+	meat_source = "fish"
 
 /obj/item/food/pigblanket
 	name = "pig in a blanket"

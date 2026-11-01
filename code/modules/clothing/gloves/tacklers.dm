@@ -3,6 +3,7 @@
 	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
 	icon_state = "tackle"
 	inhand_icon_state = null
+	var/fishing_modifier = -5
 
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
@@ -48,6 +49,7 @@
 	desc = "Sleek, aerodynamic gripper gloves that are less effective at actually performing takedowns, but more effective at letting the user sail through the hallways and cause accidents."
 	icon_state = "tackledolphin"
 	inhand_icon_state = null
+	fishing_modifier = -8
 
 	tackle_stam_cost = 10
 	base_knockdown = 0.5 SECONDS
@@ -107,6 +109,7 @@
 	desc = "Ratty looking fingerless gloves wrapped with sticky tape. Beware anyone wearing these, for they clearly have no shame and nothing to lose."
 	icon_state = "fingerless"
 	inhand_icon_state = null
+	fishing_modifier = -3
 
 	tackle_stam_cost = 15
 	base_knockdown = 1.75 SECONDS
@@ -118,3 +121,9 @@
 	desc = "Gloves for football players! Teaches them how to tackle like a pro."
 	icon_state = "tackle_gloves"
 	inhand_icon_state = null
+	fishing_modifier = -3
+
+
+/obj/item/clothing/gloves/tackler/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier) //fishing tackle equipment (ba dum tsh)

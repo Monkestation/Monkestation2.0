@@ -247,7 +247,7 @@
 #define LEFT_LEG_TRAIT "left_leg"
 
 ///coming from a fish trait datum.
-#define FISH_DATUM_TRAIT "FISH_DATUM_TRAIT"
+#define FISH_TRAIT_DATUM "FISH_TRAIT_DATUM"
 ///coming from a fish evolution datum
 #define FISH_EVOLUTION "fish_evolution"
 

@@ -202,3 +202,19 @@
 /proc/cmp_media_track_asc(datum/media_track/A, datum/media_track/B)
 	var/genre_sort = sorttext(B.genre || "Uncategorized", A.genre || "Uncategorized")
 	return genre_sort || sorttext(B.title, A.title)
+/**
+ * Orders fish types following this order (freshwater -> saltwater -> anadromous -> sulphuric water -> any water -> air)
+ * If both share the same required fluid type, they'll be ordered by name instead.
+ */
+/proc/cmp_fish_fluid(obj/item/fish/a, obj/item/fish/b)
+	var/static/list/fluids_priority = list(
+		AQUARIUM_FLUID_FRESHWATER,
+		AQUARIUM_FLUID_SALTWATER,
+		AQUARIUM_FLUID_ANADROMOUS,
+		AQUARIUM_FLUID_SULPHWATEVER,
+		AQUARIUM_FLUID_ANY_WATER,
+		AQUARIUM_FLUID_AIR,
+	)
+	var/position_a = fluids_priority.Find(initial(a.required_fluid_type))
+	var/position_b = fluids_priority.Find(initial(b.required_fluid_type))
+	return cmp_numeric_asc(position_a, position_b) || cmp_text_asc(initial(b.name), initial(a.name))

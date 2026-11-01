@@ -129,3 +129,12 @@
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()
 	allowed += list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/cane)
+
+
+/obj/item/clothing/head/bio_hood/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
+
+/obj/item/clothing/suit/bio_suit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 6)

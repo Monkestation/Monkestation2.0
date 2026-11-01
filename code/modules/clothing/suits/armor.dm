@@ -462,6 +462,7 @@
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 
 	create_storage(storage_type = /datum/storage/pockets/armor)
 
@@ -739,3 +740,8 @@
 /obj/item/clothing/suit/armor/centcom_admiral/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)

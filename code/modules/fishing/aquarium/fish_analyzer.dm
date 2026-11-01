@@ -8,6 +8,7 @@
 	worn_icon_state = "fish_analyzer"
 	desc = "A fish-shaped scanner used to monitor fish's status and evolutionary traits."
 	flags_1 = CONDUCT_1
+	custom_price = PAYCHECK_CREW * 3
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
@@ -40,7 +41,7 @@
 
 	register_item_context()
 	update_appearance()
-
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3, ITEM_SLOT_HANDS)
 
 /obj/item/fish_analyzer/examine(mob/user)
 	. = ..()
@@ -65,6 +66,7 @@
 
 	if(isfish(target) || istype(target, /obj/structure/aquarium))
 		scanned_item = WEAKREF(target)
+		SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 
@@ -118,16 +120,16 @@
 
 	data["fish_list"] += list(list(
 		"fish_name" = fishie.name,
-		"fish_icon" = fishie::icon,
-		"fish_icon_state" = fishie::icon_state,
+		"fish_icon" = fishie.icon,
+		"fish_icon_state" = fishie.base_icon_state,
 		"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.health/initial(fishie.health)),
 		"fish_size" = fishie.size,
 		"fish_weight" = fishie.weight,
-		"fish_food" = fishie.food::name,
+		"fish_food" = fishie.food.name,
 		"fish_food_color" = fishie.food::color,
 		"fish_min_temp" = fishie.required_temperature_min,
 		"fish_max_temp" = fishie.required_temperature_max,
-		"fish_hunger" = HAS_TRAIT(fishie, TRAIT_FISH_NO_HUNGER) ? 0 :  PERCENT(min((world.time - fishie.last_feeding) / fishie.feeding_frequency, 1)),
+		"fish_hunger" = HAS_TRAIT(fishie, TRAIT_FISH_NO_HUNGER) ? 0 :  1 - fishie.get_hunger(),
 		"fish_fluid_compatible" = aquarium ? compatible_fluid_type(fishie.required_fluid_type, aquarium.fluid_type) : null,
 		"fish_fluid_type" = fishie.required_fluid_type,
 		"fish_breed_timer" = round(max(fishie.breeding_wait - world.time, 0) / 10),

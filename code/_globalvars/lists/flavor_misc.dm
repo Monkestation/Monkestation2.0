@@ -377,3 +377,4 @@ GLOBAL_LIST_INIT(body_heights, list(
 	"Taller" = HUMAN_HEIGHT_TALLER,
 	"Tallest" = HUMAN_HEIGHT_TALLEST,
 ))
+GLOBAL_LIST_INIT(fishing_tips, file2list("strings/fishing_tips.txt"))

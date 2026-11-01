@@ -29,7 +29,7 @@
 		/obj/effect/mapping_helpers,
 		/obj/effect/wisp,
 		/obj/effect/ebeam,
-		/obj/effect/fishing_lure,
+		/obj/effect/fishing_float,
 		/obj/effect/constructing_effect,
 	))
 

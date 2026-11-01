@@ -350,3 +350,8 @@
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/xeno
+
+
+/obj/item/clothing/suit/apron/surgical/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2) // FISH DOCTOR?!

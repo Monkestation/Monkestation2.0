@@ -130,3 +130,8 @@
 ///from base of /atom/movable/living/can_track(): (mob/user)
 #define COMSIG_MOVABLE_CAN_TRACK "movable_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+
+///from base of /datum/component/splat/splat: (hit_atom)
+#define COMSIG_MOVABLE_SPLAT "movable_splat"
+///from /atom/movable/proc/throw_impact() after hitby() was called on the hit atom: (atom/hit_atom, datum/thrownthing/throwingdatum, caught)
+#define COMSIG_MOVABLE_POST_IMPACT "movable_post_impact"
