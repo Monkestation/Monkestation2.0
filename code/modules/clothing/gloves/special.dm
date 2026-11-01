@@ -12,6 +12,7 @@
 
 /obj/item/clothing/gloves/cargo_gauntlet/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_glove_equip))
 	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_glove_unequip))
 
@@ -58,6 +59,7 @@
 
 /obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 
 /obj/item/clothing/gloves/radio
@@ -201,37 +203,43 @@
 	name = "athletic fishing gloves"
 	desc = "A pair of gloves to fish without a fishing rod but your raw <b>athletics</b> strength. It doubles as a good workout device. <i><b>WARNING</b>: May cause injuries when catching bigger fish.</i>"
 	icon_state = "fishing_gloves"
+	///The current fishing minigame datum the wearer is engaged in.
+	var/datum/fishing_challenge/challenge
 
 /obj/item/clothing/gloves/fishing/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/athletic(src))
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //on top of the extra that you get from the athletics skill.
 
 /obj/item/clothing/gloves/fishing/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_GLOVES)
-		RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_ACTIVELY_FISHING), PROC_REF(begin_workout))
+		RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING_MINIGAME, PROC_REF(begin_workout))
 
 /obj/item/clothing/gloves/fishing/dropped(mob/user)
-	UnregisterSignal(user, list(SIGNAL_ADDTRAIT(TRAIT_ACTIVELY_FISHING), SIGNAL_REMOVETRAIT(TRAIT_ACTIVELY_FISHING)))
-	STOP_PROCESSING(SSprocessing, src)
+	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING_MINIGAME)
+	if(challenge)
+		stop_workout(user)
 	return ..()
 
-/obj/item/clothing/gloves/fishing/proc/begin_workout(datum/source)
+/// Starts draining stamina while the wearer is in the minigame phase with the gloves
+/obj/item/clothing/gloves/fishing/proc/begin_workout(datum/source, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
-	RegisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_ACTIVELY_FISHING), PROC_REF(stop_workout))
+	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_workout))
 	if(HAS_TRAIT(source, TRAIT_PROFOUND_FISHER)) //Only begin working out if we're fishing with these gloves and not some other fishing rod..
 		START_PROCESSING(SSprocessing, src)
+		src.challenge = challenge
 
+/// Stops the workout once the fishing is over
 /obj/item/clothing/gloves/fishing/proc/stop_workout(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_ACTIVELY_FISHING))
+	UnregisterSignal(source, COMSIG_MOB_COMPLETE_FISHING)
+	challenge = null
 	STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/clothing/gloves/fishing/process(seconds_per_tick)
 	var/mob/living/wearer = loc
-	var/list/trait_source = GET_TRAIT_SOURCES(wearer, TRAIT_ACTIVELY_FISHING)
-	var/datum/fishing_challenge/challenge = trait_source[1]
-	var/stamina_exhaustion = 2.5 + challenge.difficulty * 0.025
+	var/stamina_exhaustion = 2 + challenge.difficulty * 0.02
 	var/is_heavy_gravity = wearer.has_gravity() > STANDARD_GRAVITY
 	// MONKESTATION EDIT: no athletics skill (yet), so no spine implant/strength bonuses or athletics experience
 	if(is_heavy_gravity)
@@ -278,3 +286,20 @@
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage(damage, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
 		playsound(src,'sound/items/weapons/bite.ogg', damage * 2, TRUE)
+
+
+/obj/item/clothing/gloves/race/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
+
+/obj/item/clothing/gloves/captain/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
+/obj/item/clothing/gloves/latex/nitrile/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
+/obj/item/clothing/gloves/atmos/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 6)

@@ -200,3 +200,8 @@
 	icon_state = "hulaskirt"
 	inhand_icon_state = "hulaskirt"
 	body_parts_covered = GROIN|LEGS
+
+
+/obj/item/clothing/under/dress/wedding_dress/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?

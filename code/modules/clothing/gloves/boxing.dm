@@ -18,3 +18,8 @@
 /obj/item/clothing/gloves/boxing/yellow
 	icon_state = "boxingyellow"
 	greyscale_colors = "#d2a800"
+
+
+/obj/item/clothing/gloves/boxing/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 19)

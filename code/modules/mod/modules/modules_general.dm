@@ -777,7 +777,7 @@
 
 /obj/item/mod/module/fishing_glove
 	name = "MOD fishing glove module"
-	desc = "A MOD module that takes in an external fishing rod to enable the user to fish without having to hold one."
+	desc = "A MOD module that takes in an external fishing rod to enable the user to fish without having to hold one, while also making it slightly easier."
 	icon_state = "fishing_glove"
 	complexity = 1
 	overlay_state_inactive = "fishing_glove"
@@ -831,17 +831,20 @@
 		var/obj/item/gloves = mod?.gauntlets
 		if(gloves && !QDELETED(mod))
 			qdel(gloves.GetComponent(/datum/component/profound_fisher))
+	return ..()
 
 /obj/item/mod/module/fishing_glove/on_suit_activation()
-	if(!equipped)
-		return
 	var/obj/item/gloves = mod.gauntlets
-	if(gloves)
+	if(!gloves)
+		return
+	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	if(equipped)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped)
 
 /obj/item/mod/module/fishing_glove/on_suit_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.gauntlets
 	if(gloves && !deleting)
+		qdel(gloves.GetComponent(/datum/component/adjust_fishing_difficulty))
 		qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/shock_absorber

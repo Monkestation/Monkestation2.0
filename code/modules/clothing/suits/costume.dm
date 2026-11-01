@@ -818,3 +818,20 @@
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "thekiller_robe"
 	flags_inv = HIDEJUMPSUIT
+
+
+/obj/item/clothing/suit/hooded/carp_costume/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+
+/obj/item/clothing/head/hooded/carp_hood/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
+
+/obj/item/clothing/suit/costume/hawaiian/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
+
+/obj/item/clothing/suit/apron/overalls/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)

@@ -1078,3 +1078,11 @@
 	greyscale_colors = "#F8F8F8#38B40A"
 	body_parts_covered = null
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/hooded/shark_costume/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+
+/obj/item/clothing/head/hooded/shark_hood/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3)

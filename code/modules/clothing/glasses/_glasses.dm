@@ -691,3 +691,36 @@
 	name = "CS inactive vision augmenter"
 	desc = "A pair of glasses usually designed to identify targets for execution, although this mechanic has been removed for civilian casual use."
 	icon_state = "crueltysquad_glasses"
+
+
+/obj/item/clothing/glasses/sunglasses/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -1)
+
+/obj/item/clothing/glasses/welding/Initialize(mapload)
+	. = ..()
+	if(!up)
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/welding/adjust_visor(mob/living/user)
+	. = ..()
+	if(up)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+	else
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/blindfold/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/thermal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
+/obj/item/clothing/glasses/debug/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -15)
+
+/obj/item/clothing/glasses/nightmare_vision/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 13)
