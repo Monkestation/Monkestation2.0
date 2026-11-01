@@ -24,7 +24,7 @@ type Data = {
   fluidTypes: string[];
   fishData: FishData[];
   propData: PropData[];
-  allowBreeding: BooleanLike;
+  safe_mode: BooleanLike;
   feedingInterval: number;
   heartIcon: string;
   heartIconState: string;
@@ -263,7 +263,7 @@ const Settings = (props) => {
     maxTemperature,
     fluidTypes,
     fluidType,
-    allowBreeding,
+    safe_mode,
     feedingInterval,
   } = data;
 
@@ -312,13 +312,14 @@ const Settings = (props) => {
         <Section fill title="Settings">
           <Box mt={2}>
             <LabeledList>
-              <LabeledList.Item label="Reproduction/Growth">
+              <LabeledList.Item label="Safe Mode">
                 <Button
                   textAlign="center"
                   width="75px"
-                  content={allowBreeding ? 'Online' : 'Offline'}
-                  selected={allowBreeding}
-                  onClick={() => act('allow_breeding')}
+                  tooltip="Prevent fish dying in hostile water and temperatures at the cost of features like growth and reproduction"
+                  content={safe_mode ? 'Online' : 'Offline'}
+                  selected={safe_mode}
+                  onClick={() => act('safe_mode')}
                 />
               </LabeledList.Item>
               <LabeledList.Item label="Feeding Interval">

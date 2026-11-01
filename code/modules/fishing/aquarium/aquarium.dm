@@ -106,6 +106,8 @@
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()
 
+	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT) //start with safe mode on
+
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
@@ -262,6 +264,8 @@
 
 /obj/item/fish_tank/lawyer/Initialize(mapload)
 	. = ..()
+
+	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT) //start with safe mode on
 
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
