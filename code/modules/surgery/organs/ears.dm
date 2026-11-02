@@ -150,6 +150,15 @@
 		ear_owner.dna.species.mutant_bodyparts -= "ears"
 		ear_owner.update_body()
 
+/obj/item/organ/internal/ears/shadekin
+	name = "shadekin ears"
+	desc = "The ears of a shadekin, their large size means they're more sensitive to sound than most other species."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "kitty"
+	visual = TRUE
+	damage_multiplier = 1.5
+
 /obj/item/organ/internal/ears/penguin
 	name = "penguin ears"
 	desc = "The source of a penguin's happy feet."

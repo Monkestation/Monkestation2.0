@@ -417,3 +417,20 @@
 		return FALSE
 
 	return TRUE
+
+// used for shadekin ears
+/obj/item/organ/external/ears
+	name = "ears"
+	desc = "A pair of ears."
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_EXTERNAL_ANIME_HEAD
+	preference = "ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears
+
+
+/datum/bodypart_overlay/mutant/ears
+	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT
+	feature_key = "ears"
+
+/datum/bodypart_overlay/mutant/ears/get_global_feature_list()
+	return GLOB.ears_list
