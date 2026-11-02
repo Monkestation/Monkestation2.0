@@ -99,8 +99,8 @@
 	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
 	pickup_sound = SFX_FISH_PICKUP
 
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	sprite_width = 13
 	sprite_height = 9
 
