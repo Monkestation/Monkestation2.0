@@ -1,4 +1,27 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Control Room"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "tcomms-internal"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
+"aab" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
+"aac" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "aad" = (
 /obj/structure/table,
 /obj/item/soap,
@@ -75466,10 +75489,6 @@
 /obj/structure/ghost_critter_spawn,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/command)
-"ozL" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "ozQ" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table,
@@ -151758,11 +151777,11 @@ nud
 nud
 uPY
 xxh
-gFt
+aaa
 mYY
 mYY
 gFt
-mYY
+aab
 egy
 tzO
 nds
@@ -152525,7 +152544,7 @@ rJm
 ofE
 tDi
 tHn
-ozL
+aac
 sXU
 nds
 gRV

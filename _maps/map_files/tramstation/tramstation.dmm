@@ -2,13 +2,50 @@
 "aaa" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
+"aab" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1;
+	name = "server vent"
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "aac" = (
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
+"aad" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
+"aae" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
+"aaf" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8;
+	name = "server vent"
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "aag" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"aah" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "aai" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/box,
@@ -43,6 +80,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/solars/starboard/fore)
+"aan" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "aao" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -100,12 +142,29 @@
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
+"aay" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron/dark,
+/area/station/tcommsat/computer)
 "aaz" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
+"aaA" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "aaB" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/east,
@@ -248,6 +307,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/escapepodbay)
+"aaW" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/computer/telecomms/monitor{
+	dir = 1;
+	network = "tcommsat"
+	},
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "aaX" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
@@ -294,12 +364,29 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/escapepodbay)
+"abc" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "abd" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/marker_beacon/burgundy,
 /obj/effect/turf_decal/stripes/asteroid/box,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
+"abe" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/sign/warning/secure_area{
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "abf" = (
 /turf/open/floor/iron,
 /area/station/escapepodbay)
@@ -333,6 +420,14 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"abl" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "abm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -349,6 +444,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"abp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "abq" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/stripes/corner{
@@ -357,6 +456,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/escapepodbay)
+"abr" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table,
+/obj/item/book/manual/wiki/tcomms,
+/obj/item/radio/off,
+/turf/open/floor/iron,
+/area/station/tcommsat/computer)
 "abu" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/docking_port/stationary/escape_pod{
@@ -16357,16 +16466,6 @@
 "eaJ" = (
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
-"eaO" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen/blue,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "eaT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19901,17 +20000,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"ffN" = (
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Server Room"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "ffQ" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -23143,15 +23231,6 @@
 /obj/structure/fluff/iced_abductor,
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
-"gga" = (
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Server Room"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "ggt" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
@@ -33272,13 +33351,6 @@
 /obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
-"jmL" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "jne" = (
 /obj/effect/turf_decal/siding/wideplating/corner{
 	dir = 1
@@ -45659,16 +45731,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
-"nfB" = (
-/obj/structure/table,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 6
-	},
-/obj/item/book/manual/wiki/tcomms,
-/obj/item/radio/off,
-/obj/machinery/firealarm/directional/east,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "nfJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -48777,13 +48839,6 @@
 "ocx" = (
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"ocK" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/sign/warning/secure_area{
-	pixel_y = -32
-	},
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "ocU" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -59625,14 +59680,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
-"rpJ" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/corner,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "rpQ" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/spawner/structure/window/reinforced,
@@ -60391,10 +60438,6 @@
 "rBT" = (
 /turf/closed/wall/rock,
 /area/station/engineering)
-"rBW" = (
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/computer)
 "rCb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -81694,14 +81737,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
-"yeX" = (
-/obj/machinery/computer/telecomms/monitor{
-	dir = 1;
-	network = "tcommsat"
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/turf/open/floor/iron,
-/area/station/tcommsat/computer)
 "yfa" = (
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/freezer,
@@ -108878,10 +108913,10 @@ dwR
 ngp
 dwR
 dwR
-ney
-ney
-sMr
-sMr
+aae
+aae
+aad
+aab
 nOa
 cXL
 vNH
@@ -109131,11 +109166,11 @@ jIG
 apP
 lOV
 jXc
-rpJ
-gga
-rBW
-ffN
-sMr
+abc
+aay
+aan
+aah
+aad
 fDN
 osd
 ney
@@ -109388,11 +109423,11 @@ jIG
 uLb
 vAe
 eqi
-ocK
+abe
 ngp
 dwR
 dwR
-sMr
+aaf
 sMr
 sMr
 sMr
@@ -109645,7 +109680,7 @@ jIG
 xQK
 tLs
 nXA
-jmL
+abl
 hZL
 dwR
 cXL
@@ -109902,8 +109937,8 @@ jIG
 jHR
 wnh
 wnh
-wnh
-yeX
+abp
+aaA
 dwR
 ney
 quB
@@ -110157,10 +110192,10 @@ xTF
 vSt
 jIG
 erb
-eaO
+abr
 huz
 yct
-nfB
+aaW
 dwR
 ney
 muK

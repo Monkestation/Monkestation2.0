@@ -202,6 +202,9 @@
 /turf/open/floor/iron/dark/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/iron/dark/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
+
 /turf/open/floor/iron/dark/textured/airless
 	initial_gas_mix = AIRLESS_ATMOS
 /turf/open/floor/iron/dark/smooth_large/airless

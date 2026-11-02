@@ -1,4 +1,35 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aab" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Telecommunications"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
+/obj/effect/landmark/navigate_destination/tcomms,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/turf/open/floor/iron/textured,
+/area/station/tcommsat/computer)
+"aac" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/tcommsat/computer)
 "aag" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/airless,
@@ -2283,18 +2314,6 @@
 	dir = 9
 	},
 /area/station/tcommsat/computer)
-"aOv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
-/turf/open/floor/iron/dark/side{
-	dir = 4
-	},
-/area/station/tcommsat/computer)
 "aOz" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -2807,24 +2826,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
-"aWm" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Telecommunications"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/obj/effect/landmark/navigate_destination/tcomms,
-/turf/open/floor/iron/textured,
-/area/station/tcommsat/computer)
 "aWz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -103570,7 +103571,7 @@ ajT
 itM
 ugZ
 mHm
-aOv
+aac
 eyU
 fxk
 ycL
@@ -103827,7 +103828,7 @@ tlO
 tlO
 tlO
 tlO
-aWm
+aab
 tlO
 enU
 enU
