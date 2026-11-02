@@ -142,110 +142,33 @@
 		return RBMK_ROD_TOOL_REMOVE_TIME_SPECIAL
 	return RBMK_ROD_TOOL_REMOVE_TIME_NORMAL
 
-/** Returns normalized reactor heat used by extraction knockback. */
-/obj/machinery/rbmk/reactor/proc/get_rod_extraction_heat_ratio()
-	if(temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
-		return 0
-	return CLAMP01((temperature - RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP) / 6000)
+/** Returns the current vessel-to-room pressure differential for rod extraction. */
+/obj/machinery/rbmk/reactor/proc/get_rod_extraction_pressure_delta()
+	var/turf/source_turf = get_turf(src)
+	var/datum/gas_mixture/environment = source_turf?.return_air()
+	return (coolant_internal?.return_pressure() || 0) - (environment?.return_pressure() || 0)
 
-/** Applies the heat-scaled blast caused by emergency rod extraction. */
+/** Throws the operator away from the vessel using the pipe pressure-release model. */
 /obj/machinery/rbmk/reactor/proc/apply_rod_tool_knockback(mob/living/user, cascade_extraction = FALSE)
-	if(!cascade_extraction && temperature <= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
+	if(!user || QDELETED(user) || !coolant_internal)
 		return
 	var/turf/source_turf = get_turf(src)
-	if(!source_turf)
+	var/pressure_delta = get_rod_extraction_pressure_delta()
+	if(!source_turf || pressure_delta < 250)
 		return
-	var/heat_ratio = get_rod_extraction_heat_ratio()
-	var/blast_range
-	var/throw_speed
-	var/heavy_impact_range
-	var/light_impact_range
-	var/flash_range
-	var/disorient_time
-	var/stamina_damage
-	if(cascade_extraction)
-		blast_range = clamp(round(RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE + 2 + (heat_ratio * 4)), RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE, 12)
-		throw_speed = clamp(round(4 + (heat_ratio * 4)), 4, 8)
-		heavy_impact_range = clamp(round(1 + heat_ratio), 1, 2)
-		light_impact_range = clamp(round(3 + (heat_ratio * 3)), 3, 6)
-		flash_range = clamp(round(5 + (heat_ratio * 5)), 5, 10)
-		disorient_time = (6 SECONDS) + round(heat_ratio * 8 SECONDS)
-		stamina_damage = -round(25 + (heat_ratio * 35))
-	else
-		blast_range = clamp(round(RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE + (heat_ratio * 4)), RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE, 8)
-		throw_speed = clamp(round(2 + (heat_ratio * 3)), 2, 5)
-		heavy_impact_range = heat_ratio >= 0.85 ? 1 : 0
-		light_impact_range = clamp(round(1 + (heat_ratio * 3)), 1, 4)
-		flash_range = clamp(round(2 + (heat_ratio * 4)), 2, 6)
-		disorient_time = (2 SECONDS) + round(heat_ratio * 4 SECONDS)
-		stamina_damage = -round(8 + (heat_ratio * 22))
-	if(cascade_extraction)
-		visible_message(span_danger("[src] erupts in a violent supermatter pressure discharge as the rod is extracted!"))
-	else
-		visible_message(span_danger("[src] violently vents superheated pressure as the rod is extracted!"))
-	playsound(src, 'sound/effects/explosion/explosion1.ogg', cascade_extraction ? 100 : 80, TRUE)
-	explosion(
-		source_turf,
-		devastation_range = 0,
-		heavy_impact_range = heavy_impact_range,
-		light_impact_range = light_impact_range,
-		flash_range = flash_range,
+	// Match pressurized pipe unwrenching: pressure-resistant footing holds
+	// until the differential would otherwise fling the operator forty tiles.
+	if(HAS_TRAIT(user, TRAIT_PRESSURE_FLING_RESISTANT) && pressure_delta / 250 < 40)
+		return
+	user.visible_message(
+		span_danger("[user] is sent flying by a pressure discharge from [src]!"),
+		span_userdanger("The escaping pressure sends you flying!"),
 	)
-	for(var/mob/living/living_mob in view(blast_range, source_turf))
-		if(QDELETED(living_mob))
-			continue
-		var/distance_from_reactor = max(get_dist(source_turf, living_mob), 1)
-		var/effective_throw_range = max(blast_range - distance_from_reactor + 1, 1)
-		if(living_mob == user)
-			effective_throw_range += cascade_extraction ? 3 : 1
-		blast_throw_living(living_mob, effective_throw_range, throw_speed, stamina_damage, disorient_time)
-	for(var/atom/movable/movable_atom in view(blast_range, source_turf))
-		if(QDELETED(movable_atom))
-			continue
-		if(movable_atom == src)
-			continue
-		if(ismob(movable_atom))
-			continue
-		if(movable_atom.anchored)
-			continue
-		var/distance_from_reactor = max(get_dist(source_turf, movable_atom), 1)
-		var/effective_throw_range = max(blast_range - distance_from_reactor + 1, 1)
-		blast_throw_atom(movable_atom, effective_throw_range, throw_speed)
-
-/** Throws and disorients a living mob caught in an extraction blast. */
-/obj/machinery/rbmk/reactor/proc/blast_throw_living(mob/living/living_mob, throw_range, throw_speed, stamina_damage, disorient_time)
-	if(!living_mob || QDELETED(living_mob))
-		return
-	var/turf/source_turf = get_turf(src)
-	var/turf/mob_turf = get_turf(living_mob)
-	if(!source_turf || !mob_turf)
-		return
-	var/throw_dir = get_dir(source_turf, mob_turf)
-	if(!throw_dir)
-		throw_dir = pick(NORTH, SOUTH, EAST, WEST)
-	var/turf/target_turf = get_edge_target_turf(living_mob, throw_dir)
-	if(!target_turf)
-		return
-	shake_camera(living_mob, 0.2 SECONDS, 5)
-	living_mob.Disorient(disorient_time)
-	living_mob.stamina.adjust(stamina_damage)
-	living_mob.throw_at(target_turf, throw_range, throw_speed, src)
-
-/** Throws a movable non-living atom caught in an extraction blast. */
-/obj/machinery/rbmk/reactor/proc/blast_throw_atom(atom/movable/thrown_atom, throw_range, throw_speed)
-	if(!thrown_atom || QDELETED(thrown_atom))
-		return
-	var/turf/source_turf = get_turf(src)
-	var/turf/atom_turf = get_turf(thrown_atom)
-	if(!source_turf || !atom_turf)
-		return
-	var/throw_dir = get_dir(source_turf, atom_turf)
-	if(!throw_dir)
-		throw_dir = pick(NORTH, SOUTH, EAST, WEST)
-	var/turf/target_turf = get_edge_target_turf(thrown_atom, throw_dir)
-	if(!target_turf)
-		return
-	thrown_atom.throw_at(target_turf, throw_range, throw_speed, src)
+	playsound(src, 'sound/machines/steam_hiss.ogg', 65, TRUE)
+	var/throw_direction = get_dir(source_turf, user) || pick(GLOB.cardinals)
+	var/throw_range = clamp(pressure_delta / 250, 1, cascade_extraction ? 12 : 8)
+	var/throw_speed = clamp(pressure_delta / 1250, 1, cascade_extraction ? 8 : 5)
+	user.throw_at(get_edge_target_turf(user, throw_direction), throw_range, throw_speed, src)
 
 /** Removes a validated rod from its slot and passes it to final placement. */
 /obj/machinery/rbmk/reactor/proc/finish_remove_rod_from_slot(slot_kind, slot_index, obj/item/rbmk/fuel_rod/expected_rod = null, mob/user = null)
@@ -308,8 +231,8 @@
 	)
 	if(cascade_extraction)
 		to_chat(user, span_danger("The supermatter rod fights the extractor. Keep pulling!"))
-	else if(temperature >= RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP)
-		to_chat(user, span_warning("The reactor is dangerously hot. Manual rod extraction may violently vent heat."))
+	else if(get_rod_extraction_pressure_delta() >= 250)
+		to_chat(user, span_warning("The reactor is pressurized. Manual rod extraction may send you flying!"))
 	var/datum/callback/target_check = CALLBACK(src, PROC_REF(rod_tool_target_still_installed), slot_kind, slot_index, fuel_rod)
 	if(!tool.use_tool(src, user, removal_time, volume = 40, extra_checks = target_check))
 		return ITEM_INTERACT_FAILURE

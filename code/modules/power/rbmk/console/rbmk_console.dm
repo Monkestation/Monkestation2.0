@@ -14,8 +14,7 @@
 	bound_width = 96
 	bound_height = 32
 	bound_x = -32
-	pixel_x = -32
-	pixel_y = 0
+	SET_BASE_PIXEL(-32, 0)
 	mouse_opacity = MOUSE_OPACITY_ICON
 	layer = OBJ_LAYER
 	plane = GAME_PLANE

@@ -140,12 +140,6 @@
 #define RBMK_ROD_TOOL_REMOVE_TIME_SPECIAL 6 SECONDS
 /// Extraction time for a supermatter rod during an active cascade.
 #define RBMK_ROD_TOOL_REMOVE_TIME_CASCADE 15 SECONDS
-/// Temperature at which extracting a rod produces a heat knockback.
-#define RBMK_ROD_TOOL_HOT_KNOCKBACK_TEMP 2500
-/// Radius of ordinary hot-rod extraction knockback.
-#define RBMK_ROD_TOOL_HOT_KNOCKBACK_RANGE 4
-/// Radius of supermatter cascade extraction knockback.
-#define RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE 7
 
 // Coolant flow and pressure
 /// Backpressure maintained by the outlet regulator, in kPa.

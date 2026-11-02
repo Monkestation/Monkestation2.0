@@ -50,8 +50,8 @@
 	var/min_working_temperature = 500
 	/// Fraction of the ideal expansion temperature drop achieved by the turbine.
 	var/isentropic_efficiency = 0.85
-	/// Fraction of extracted heat converted into electricity (RBMK-1000 design ratio).
-	var/generator_efficiency = 0.3125
+	/// Fraction of extracted heat converted into electricity.
+	var/generator_efficiency = 0.4
 	/// Nominal electrical output in watts; overload may exceed this rating.
 	var/rated_power_output = 1000000000
 	/// Maximum displayed turbine speed.

@@ -19,7 +19,7 @@
 	var/final_countdown_started_at = 0
 	/// Duration of the terminal countdown.
 	var/final_countdown_duration = 30 SECONDS
-	/// Last countdown second announced, used to suppress duplicates.
+	/// Last countdown milestone announced, used to suppress duplicates.
 	var/last_countdown_announce = null
 	/// Last whole-minute reactor warning announced.
 	var/last_reactor_minute_announce = null
@@ -111,7 +111,8 @@
 	if(final_countdown_started_at)
 		return
 	final_countdown_started_at = world.time
-	last_countdown_announce = null
+	last_countdown_announce = CEILING(final_countdown_duration / (1 SECONDS), 1)
+	blare_reactor_countdown("[last_countdown_announce] SECONDS UNTIL CONTAINMENT FAILURE")
 	message_admins("[reactor] has entered terminal RBMK supermatter cascade countdown. [ADMIN_VERBOSEJMP(reactor)]")
 	reactor.investigate_log("entered terminal RBMK supermatter cascade countdown.", INVESTIGATE_ENGINE)
 	priority_announce(
@@ -132,25 +133,25 @@
 	update_warp(1)
 	send_stationwide_feelings()
 	var/seconds_left = CEILING(time_left / (1 SECONDS), 1)
-	var/should_announce_second = seconds_left <= 10 || (seconds_left <= 30 && seconds_left % 5 == 0)
-	if(should_announce_second && seconds_left != last_countdown_announce)
-		last_countdown_announce = seconds_left
-		blare_reactor_countdown("[seconds_left]")
+	if(seconds_left > 0 && seconds_left <= 10 && last_countdown_announce > 10)
+		last_countdown_announce = 10
+		blare_reactor_countdown("CONTAINMENT FAILURE IMMINENT. EVACUATE THE REACTOR CHAMBER.")
 	reactor.update_reactor_integrity()
 	reactor.update_appearance(UPDATE_ICON)
 	reactor.update_linked_consoles()
 	if(time_left <= 0)
 		trigger_failure()
 
-/** Broadcasts a countdown message from the affected reactor. */
+/** Routes sparse countdown warnings through the integrity-warning annunciator. */
 /datum/supermatter_rod_cascade/proc/blare_reactor_countdown(message)
 	if(!reactor || QDELETED(reactor) || !message)
 		return
-	reactor.visible_message(
-		span_userdanger("[reactor]'s emergency annunciator blares: \"[message]\""),
-		blind_message = span_hear("A reactor emergency annunciator blares: \"[message]\""),
-	)
-	playsound(reactor, 'sound/rbmk/alarm.ogg', 90, FALSE, extrarange = 12)
+	var/obj/machinery/computer/rbmk_console/alert_console = reactor.get_primary_console()
+	if(alert_console)
+		alert_console.emit_local_alert(message, null)
+		reactor.rbmk_engineering_alert(message)
+	else
+		reactor.visible_message(span_warning("[reactor]'s emergency annunciator reports: [message]"))
 
 /** Announces the start of a cascade to the station. */
 /datum/supermatter_rod_cascade/proc/announce_start()
