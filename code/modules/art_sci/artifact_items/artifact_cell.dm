@@ -11,7 +11,7 @@ ARTIFACT_SETUP(/obj/item/stock_parts/power_store/cell/artifact, SSobj, null, /da
 
 /obj/item/stock_parts/power_store/cell/artifact/use(amount, force) //dont use power unless active
 	. = FALSE
-	if(assoc_comp.active)
+	if(ratingdesc)
 		return ..()
 
 /obj/item/stock_parts/power_store/cell/artifact/attack_self(mob/user, modifiers)
