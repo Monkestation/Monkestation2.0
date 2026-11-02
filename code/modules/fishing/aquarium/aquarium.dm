@@ -11,11 +11,11 @@
 	integrity_failure = 0.3
 
 	//This is the area where fish can swim
-	var/aquarium_zone_min_px = 2
-	var/aquarium_zone_max_px = 31
-	var/aquarium_zone_min_py = 10
-	/// The highest pixel y the fish can swim to
-	var/aquarium_zone_max_py = 28
+	var/aquarium_zone_min_pw = 2
+	var/aquarium_zone_max_pw = 31
+	var/aquarium_zone_min_pz = 10
+	/// The highest pixel z the fish can swim to
+	var/aquarium_zone_max_pz = 28
 
 	/// Default beauty of the aquarium, without anything inside it
 	var/default_beauty = 150
@@ -25,7 +25,7 @@
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium, aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py, default_beauty)
+	AddComponent(/datum/component/aquarium, aquarium_zone_min_pw, aquarium_zone_max_pw, aquarium_zone_min_pz, aquarium_zone_max_pz, default_beauty)
 	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
 	update_appearance()
