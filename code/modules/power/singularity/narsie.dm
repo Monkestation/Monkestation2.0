@@ -9,7 +9,7 @@
 /obj/narsie
 	name = "Nar'Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/cult/narsie.dmi'
+	icon = 'icons/obj/antags/cult/narsie.dmi'
 	icon_state = "narsie"
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
@@ -53,11 +53,11 @@
 	))
 
 	send_to_playing_players(span_narsie("NAR'SIE HAS RISEN"))
-	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
+	sound_to_playing_players('sound/music/antag/bloodcult/narsie_rises.ogg')
 
 	var/area/area = get_area(src)
 	if(area)
-		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult/effects.dmi', "ghostalertsie")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult.dmi', "ghostalertsie")
 		notify_ghosts(
 			"Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.",
 			source = src,
@@ -98,7 +98,7 @@
 
 /obj/narsie/Destroy()
 	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
-	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
+	sound_to_playing_players('sound/effects/magic/demon_dies.ogg', 50)
 
 	var/list/all_cults = list()
 
@@ -148,7 +148,7 @@
 			if(next_attack_tick < world.time)
 				next_attack_tick = world.time + rand(50, 100)
 				send_to_playing_players(span_danger("[pick("You hear the scratching of cogs.", "You hear the clanging of pipes.", "You feel your bones start to rust...")]"))
-				sound_to_playing_players('sound/magic/clockwork/narsie_attack.ogg', 100)
+				sound_to_playing_players('sound/effects/magic/clockwork/narsie_attack.ogg', 100)
 				explosion(GLOB.cult_ratvar, 0, 2, 6)
 				SpinAnimation(4, 0)
 
@@ -157,8 +157,8 @@
 					living_player.Knockdown(1 SECONDS)
 
 				if(prob(max(length(get_antag_minds(/datum/antagonist/cult))/2, 15)))
-					sound_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg', 100)
-					sound_to_playing_players('sound/effects/explosionfar.ogg', 100)
+					sound_to_playing_players('sound/effects/magic/clockwork/anima_fragment_death.ogg', 100)
+					sound_to_playing_players('sound/effects/explosion/explosionfar.ogg', 100)
 					qdel(GLOB.cult_ratvar)
 					send_to_playing_players(span_narsie("You really thought you could best me twice?"))
 					for(var/datum/mind/servant_mind in GLOB.main_clock_cult?.members)
@@ -268,21 +268,21 @@
 ///First crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_begin_check()
 	if(QDELETED(GLOB.cult_narsie)) // uno
-		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","[command_name()] Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
 	priority_announce(
 		text = "An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.",
 		title = "[command_name()] Higher Dimensional Affairs",
-		sound = 'sound/misc/airraid.ogg',
+		sound = 'sound/announcer/alarm/airraid.ogg',
 	)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_second_check)), 50 SECONDS)
 
 ///Second crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_second_check()
 	if(QDELETED(GLOB.cult_narsie)) // dos
-		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","[command_name()] Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
@@ -299,14 +299,14 @@
 ///Third crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_apocalypse()
 	if(QDELETED(GLOB.cult_narsie)) // tres
-		priority_announce("Normalization detected! Abort the solution package!","[command_name()] Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		priority_announce("Normalization detected! Abort the solution package!","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
 		SSshuttle.clearHostileEnvironment(GLOB.cult_narsie)
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_last_second_win)), 2 SECONDS)
 		return
 	if(GLOB.cult_narsie.resolved == FALSE)
 		GLOB.cult_narsie.resolved = TRUE
-		sound_to_playing_players('sound/machines/alarm.ogg')
+		sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper)), 12 SECONDS)
 
 ///Called only if the crew managed to destroy narsie at the very last second for [/proc/begin_the_end()]

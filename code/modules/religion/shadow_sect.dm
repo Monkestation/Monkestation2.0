@@ -88,7 +88,7 @@
 /obj/structure/destructible/religion/shadow_obelisk
 	name = "Shadow Obelisk"
 	desc = "Idol to darkness, letting shadows enter the world."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "shadow_obelisk_1"
 	anchored = FALSE
 	density = TRUE
@@ -210,7 +210,7 @@
 	sect.obelisks += obelisk
 	sect.obelisk_number = sect.obelisk_number + 1
 	obelisk.upgrade_obelisk()
-	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
+	playsound(altar_turf, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 	return ..()
 
 /datum/religion_rites/expand_shadows

@@ -20,8 +20,8 @@
 	faction = list(FACTION_JUNGLE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
-	bodytemp_cold_damage_limit = T0C
-	bodytemp_heat_damage_limit = T0C + 450
+	minimum_survivable_temperature = T0C
+	maximum_survivable_temperature = T0C + 450
 	status_flags = NONE
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 20
@@ -29,7 +29,7 @@
 	mob_size = MOB_SIZE_HUGE
 
 	speak_emote = list("chitters")
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/mega_arachnid
 	alpha = 40

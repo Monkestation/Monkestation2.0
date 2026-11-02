@@ -68,7 +68,7 @@
 	smoke.set_up(0, holder = our_cluwne, location = get_turf(our_cluwne))
 	smoke.start()
 
-	our_cluwne.playsound_local(get_turf(our_cluwne), 'sound/voice/cluwne/cluwne_conversion.ogg', 50,0, use_reverb = TRUE)
+	our_cluwne.playsound_local(get_turf(our_cluwne), 'sound/mobs/humanoids/cluwne/cluwne_conversion.ogg', 50,0, use_reverb = TRUE)
 
 	our_cluwne.Stun(3 SECONDS)
 	dress_up()
@@ -126,7 +126,7 @@
 	var/datum/effect_system/fluid_spread/smoke/green/smoke = new
 	smoke.set_up(0, holder = our_cluwne, location = get_turf(our_human))
 	smoke.start()
-	our_human.playsound_local(get_turf(our_human), 'sound/voice/cluwne/cluwne_deconversion.ogg', 50,0, use_reverb = TRUE)
+	our_human.playsound_local(get_turf(our_human), 'sound/mobs/humanoids/cluwne/cluwne_deconversion.ogg', 50,0, use_reverb = TRUE)
 
 	var/list/belongings = our_human.get_all_gear()
 	for(var/obj/item/clothing/clothing_item in belongings)

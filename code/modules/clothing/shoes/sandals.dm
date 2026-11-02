@@ -31,3 +31,12 @@
 	icon_state = "blacksandals"
 	inhand_icon_state = "blacksandals"
 
+/obj/item/clothing/shoes/colorable_sandals
+	name = "sandals"
+	desc = "Rumor has it that wearing these with socks puts you on a no entry list in several sectors."
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	SETUP_MAP_ICONS("sandals", "/obj/item/clothing/shoes/colorable_sandals")
+	greyscale_colors = "#383631"
+	greyscale_config = /datum/greyscale_config/sandals
+	greyscale_config_worn = /datum/greyscale_config/sandals/worn
+	flags_1 = IS_PLAYER_COLORABLE_1

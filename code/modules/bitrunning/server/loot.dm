@@ -24,7 +24,7 @@
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, cache, generated_domain.reward_points)
 
 	points += generated_domain.reward_points
-	playsound(src, 'sound/machines/terminal_success.ogg', 30, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 30, vary = TRUE)
 	radio.talk_into(src, "A prisoner has finished bitrunning, make sure to pick up the ore crate.", RADIO_CHANNEL_SECURITY) //MONKESTATION ADDITION: security forgets about crates so we make sure to remind them each time
 
 	var/bonus = calculate_rewards()

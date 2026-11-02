@@ -210,7 +210,7 @@
 		to_chat(user, span_notice("[src] retracts back into the [our_machine]."))
 		our_machine.retract_mask()
 
-/obj/item/clothing/mask/breath/anesthetic/adjustmask(mob/living/carbon/user)
+/obj/item/clothing/mask/breath/anesthetic/adjust_visor(mob/living/user)
 	. = ..()
 	// Air only goes through the mask, so temporarily pause airflow if mask is getting adjusted.
 	// Since the mask is NODROP, the only possible user is the wearer
@@ -229,5 +229,5 @@
 /obj/item/anesthetic_machine_kit/attack_self(mob/user)
 	new /obj/machinery/anesthetic_machine(user.loc)
 
-	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/items/weapons/circsawhit.ogg', 50, TRUE)
 	qdel(src)

@@ -105,7 +105,7 @@
 		"borg_upgrade_science_apparatus_improvement_robotics",
 		"borg_upgrade_science_apparatus_improvement_ordnance",
 		"borg_upgrade_science_apparatus_improvement_circuits",
-		"borg_upgrade_science_xenobiology"
+		"borg_upgrade_science_xenobiology",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -164,9 +164,7 @@
 	display_name = "Cyborg Upgrades: Bluespace"
 	description = "Enabling compatibility of our bluespace technology for usage within cyborgs."
 	prereq_ids = list(
-		"cyborg_upgrades_engineering",
-		"cyborg_upgrades_medical",
-		"cyborg_upgrades_mining",
+		"adv_robotics",
 		"practical_bluespace"
 	)
 	design_ids = list(

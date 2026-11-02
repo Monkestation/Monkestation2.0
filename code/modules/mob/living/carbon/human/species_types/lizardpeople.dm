@@ -31,14 +31,13 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = BLOOD_TYPE_LIZARD
 	inert_mutation = /datum/mutation/firebreath
-	death_sound = 'sound/voice/lizard/deathsound.ogg'
+	death_sound = 'sound/mobs/humanoids/lizard/deathsound.ogg'
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_FORCED //Monkestation Edit: OPTIONAL > FORCED
 
 	mutanteyes = /obj/item/organ/internal/eyes/lizard
 	// Lizards are coldblooded and can stand a greater temperature range than humans
-	bodytemp_normal = (BODYTEMP_NORMAL - 7.5)
-	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE + 5 KELVIN // This puts lizards 10 above lavaland max heat for ash lizards.
+	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
 	bodypart_overrides = list(
@@ -49,13 +48,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
-
-/datum/species/lizard/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	. = ..()
-	// melbert todo : temp / integrate this into the coldblooded trait
-	// if you spawn on station is is expected you have already acclimated to the room temp (20c) (but give a little bit of leeway)
-	if(is_station_level(C.z))
-		C.bodytemperature = CELCIUS_TO_KELVIN(22.5 CELCIUS)
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -174,20 +166,13 @@ Lizard subspecies: SILVER SCALED
 	examine_limb_id = SPECIES_LIZARD
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor
-	///stored eye color for when we turn back off of a silverscale.
-	var/old_eye_color_left
-	///See above
-	var/old_eye_color_right
 
 /datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/new_silverscale, datum/species/old_species, pref_load)
 	var/mob/living/carbon/human/silverscale = new_silverscale
 	var/datum/color_palette/generic_colors/palette = new_silverscale.dna.color_palettes[/datum/color_palette/generic_colors]
 	old_mutcolor = palette.return_color(MUTANT_COLOR)
-	old_eye_color_left = silverscale.eye_color_left
-	old_eye_color_right = silverscale.eye_color_right
 	palette.mutant_color = "#eeeeee"
-	silverscale.eye_color_left = "#0000a0"
-	silverscale.eye_color_right = "#0000a0"
+	silverscale.add_eye_color("#0000a0", EYE_COLOR_SPECIES_PRIORITY)
 	..()
 	silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
@@ -195,8 +180,7 @@ Lizard subspecies: SILVER SCALED
 	var/mob/living/carbon/human/was_silverscale = old_silverscale
 	var/datum/color_palette/generic_colors/palette = was_silverscale.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = old_mutcolor
-	was_silverscale.eye_color_left = old_eye_color_left
-	was_silverscale.eye_color_right = old_eye_color_right
+	was_silverscale.remove_eye_color(EYE_COLOR_SPECIES_PRIORITY)
 
 	was_silverscale.remove_filter("silver_glint")
 	..()

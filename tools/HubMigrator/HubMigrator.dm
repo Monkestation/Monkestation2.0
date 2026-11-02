@@ -42,8 +42,7 @@
 
 //Migration script generation
 //Replace hub information and fire to generate hub_migration.sql script to use.
-/mob/verb/generate_migration_script()
-	set name = "Generate Hub Migration Script"
+GAME_VERB(/mob, generate_migration_script, "Generate Hub Migration Script", null)
 
 	var/hub_address = "REPLACEME"
 	var/hub_password = "REPLACEME"

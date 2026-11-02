@@ -88,5 +88,5 @@
 			L.apply_status_effect(/datum/status_effect/good_music)
 		if(!(M?.client?.prefs?.channel_volume["[channel_used]"]))
 			continue
-		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, sound_to_use = music_played, mixer_channel = channel_used)
+		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, sound_to_use = music_played, falloff_exponent = exponential_falloff, mixer_channel = channel_used)
 		// Could do environment and echo later but not for now

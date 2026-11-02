@@ -56,8 +56,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
 	var/cutting_tool_behaviour = TOOL_WELDER
-	var/open_sound = 'sound/machines/closet_open.ogg'
-	var/close_sound = 'sound/machines/closet_close.ogg'
+	var/open_sound = 'sound/machines/closet/closet_open.ogg'
+	var/close_sound = 'sound/machines/closet/closet_close.ogg'
 	var/open_sound_volume = 35
 	var/close_sound_volume = 50
 	var/material_drop = /obj/item/stack/sheet/iron
@@ -988,10 +988,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(attack_hand(user))
 		return ITEM_INTERACT_BLOCKING
 
-/obj/structure/closet/verb/verb_toggleopen()
-	set src in view(1)
-	set category = "Object"
-	set name = "Toggle Open"
+GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", "Object")
 
 	if(!usr.can_perform_action(src) || !isturf(loc))
 		return

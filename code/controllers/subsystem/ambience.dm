@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(ambience)
 		var/area/current_area = get_area(client_mob)
 		if(!current_area) //Something's gone horribly wrong
 			stack_trace("[key_name(client_mob)] has somehow ended up in nullspace. WTF did you do")
-			ambience_listening_clients -= client_iterator
+			remove_ambience_client(client_iterator)
 			continue
 
 		if(ambience_listening_clients[client_iterator] > world.time)
@@ -61,7 +61,8 @@ SUBSYSTEM_DEF(ambience)
 	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 
-	return rand(min_ambience_cooldown, max_ambience_cooldown)
+	var/sound_length = SSsounds.get_sound_length(new_sound.file)
+	return sound_length + rand(min_ambience_cooldown, max_ambience_cooldown)
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
 	ambience_listening_clients -= to_remove
@@ -69,21 +70,19 @@ SUBSYSTEM_DEF(ambience)
 	currentrun -= to_remove
 
 /area/station/maintenance
-	min_ambience_cooldown = 20 SECONDS
-	max_ambience_cooldown = 35 SECONDS
 
 	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
 	var/static/list/minecraft_cave_noises = list(
-		'sound/machines/airlock.ogg',
+		'sound/machines/airlock/airlock.ogg',
 		'sound/effects/snap.ogg',
 		'sound/effects/footstep/clownstep1.ogg',
 		'sound/effects/footstep/clownstep2.ogg',
-		'sound/items/welder.ogg',
-		'sound/items/welder2.ogg',
-		'sound/items/crowbar.ogg',
+		'sound/items/tools/welder.ogg',
+		'sound/items/tools/welder2.ogg',
+		'sound/items/tools/crowbar.ogg',
 		'sound/items/deconstruct.ogg',
-		'sound/ambience/source_holehit3.ogg',
-		'sound/ambience/cavesound3.ogg',
+		'sound/ambience/misc/source_holehit3.ogg',
+		'sound/ambience/misc/cavesound3.ogg',
 	)
 
 /area/station/maintenance/play_ambience(mob/M, sound/override_sound, volume)

@@ -9,7 +9,7 @@
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
 	habitable_atmos  = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	health = 125
 	maxHealth = 125
 	melee_damage_lower = 15
@@ -17,7 +17,7 @@
 	obj_damage = 10
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drill"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = 'sound/items/weapons/circsawhit.ogg'
 	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
 	mob_biotypes = MOB_ROBOTIC

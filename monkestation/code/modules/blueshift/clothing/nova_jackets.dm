@@ -7,7 +7,7 @@
 	icon_state = "bomberalt"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
 	body_parts_covered = CHEST|ARMS|GROIN
-
+	cold_protection = CHEST|ARMS|GROIN
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	toggle_noun = "zipper"
@@ -88,6 +88,8 @@
 	desc = "A cozy and warm plaid flannel jacket. Praised by Lumberjacks and Truckers alike."
 	icon_state = "flannel"
 	body_parts_covered = CHEST|ARMS //Being a bit shorter, flannels dont cover quite as much as the rest of the woolen jackets (- GROIN)
+	heat_protection = CHEST|ARMS	//As a plus side, they're more insulating, protecting a bit from the heat as well
+	cold_protection = CHEST|ARMS
 
 
 
@@ -105,7 +107,8 @@
 
 /obj/item/clothing/suit/toggle/jacket/flannel/gags
 	name = "flannel shirt"
-	icon_state = "flannelgags"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("flannelgags", "/obj/item/clothing/suit/toggle/jacket/flannel/gags")
 	greyscale_config = /datum/greyscale_config/flannelgags
 	greyscale_config_worn = /datum/greyscale_config/flannelgags/worn
 	greyscale_colors = "#a61e1f"

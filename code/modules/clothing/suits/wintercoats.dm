@@ -7,7 +7,7 @@
 	worn_icon = 'icons/mob/clothing/suits/wintercoat.dmi'
 	inhand_icon_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
-	// cold_protection = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
@@ -37,7 +37,7 @@
 	icon_state = "hood_winter"
 	worn_icon = 'icons/mob/clothing/head/winterhood.dmi'
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
@@ -590,9 +590,11 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
-	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("coatwinter", "/obj/item/clothing/suit/hooded/wintercoat/custom")
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
+	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
 	flags_1 = IS_PLAYER_COLORABLE_1
 

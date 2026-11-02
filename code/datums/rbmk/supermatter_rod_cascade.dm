@@ -117,7 +117,7 @@
 	priority_announce(
 		"CRITICAL ALERT: RBMK supermatter resonance has reached terminal instability. Final cascade failure is imminent.",
 		"Central Command Emergency Authority",
-		'sound/misc/airraid.ogg',
+		'sound/announcer/alarm/airraid.ogg',
 	)
 
 /** Advances the final countdown and triggers failure when it expires. */
@@ -157,7 +157,7 @@
 	priority_announce(
 		"Attention: abnormal harmonic flux has been detected inside an RBMK reactor aboard [station_name()]. Engineering personnel are advised to investigate immediately.",
 		"Nanotrasen Reactor Monitoring Network",
-		'sound/misc/airraid.ogg',
+		'sound/announcer/alarm/airraid.ogg',
 	)
 
 /** Sends the two-minute evacuation warning once. */
@@ -168,7 +168,7 @@
 	priority_announce(
 		"Central Command warning: the RBMK reactor is undergoing a localized supermatter resonance cascade. Manual intervention is required. Failure to remove the anomalous fuel rod may result in catastrophic reactor failure.",
 		"Central Command Engineering Oversight",
-		'sound/misc/notice1.ogg',
+		'sound/announcer/notice/notice1.ogg',
 	)
 
 /** Sends the final security warning and raises the security level. */
@@ -179,7 +179,7 @@
 	priority_announce(
 		"Central Command emergency directive: supermatter resonance cascade is approaching terminal instability. All crew are ordered to assist engineering or evacuate the reactor sector. Security is authorized to enforce emergency access and evacuation procedures.",
 		"Central Command Emergency Authority",
-		'sound/misc/airraid.ogg',
+		'sound/announcer/alarm/airraid.ogg',
 	)
 	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)

@@ -164,7 +164,10 @@
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * seconds_per_tick)
 	affected_mob.adjustPlasma(20 * REM * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(COLD_DRINK * REM * seconds_per_tick, min_temp = affected_mob.standard_body_temperature)
+	affected_mob.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, affected_mob.get_body_temp_normal())
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/humi = affected_mob
+		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	return ..()
 
 /datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
@@ -996,7 +999,7 @@
 	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(R.type, remove_amt * REM * normalise_creation_purity() * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * remove_amt * REM * normalise_creation_purity() * seconds_per_tick)
 	return ..()
 
 //ACID
@@ -1120,8 +1123,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
-	affected_mob.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
-	return ..()
+	. = ..()
+	INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), "oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.stamina.adjust(-7.5 * REM * seconds_per_tick, 0)
@@ -1257,14 +1260,15 @@
 
 /datum/reagent/toxin/tetrodotoxin
 	name = "Tetrodotoxin"
-	description = "A colorless, oderless, tasteless neurotoxin usually carried by livers of animals of the Tetraodontiformes order."
+	description = "A colorless, odorless, tasteless neurotoxin usually carried by livers of animals of the Tetraodontiformes order."
 	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#EEEEEE"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_mult = 0
-	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE|REAGENT_CAN_BE_SYNTHESIZED
+	purge_multiplier = 0.15
 	var/list/traits_not_applied = list(
 		TRAIT_PARALYSIS_L_ARM = BODY_ZONE_L_ARM,
 		TRAIT_PARALYSIS_R_ARM = BODY_ZONE_R_ARM,
@@ -1273,6 +1277,16 @@
 	)
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(HAS_TRAIT(affected_mob, TRAIT_TETRODOTOXIN_HEALING)) // fish infused livers turn it into a healing chem
+		toxpwr = 0
+		silent_toxin = TRUE
+		remove_paralysis(affected_mob)
+		var/need_mob_update = affected_mob.adjustOxyLoss(-0.7 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += affected_mob.adjustToxLoss(-0.75 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustBruteLoss(-1.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustFireLoss(-1.35 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		. = ..()
+		return need_mob_update ? TRUE : .
 	//be ready for a cocktail of symptoms, including:
 	//numbness, nausea, vomit, breath loss, weakness, paralysis and nerve damage/impairment and eventually a heart attack if enough time passes.
 	switch(current_cycle)
@@ -1282,7 +1296,7 @@
 			if(SPT_PROB(5, seconds_per_tick))
 				var/obj/item/organ/internal/tongue/tongue = affected_mob.get_organ_slot(ORGAN_SLOT_TONGUE)
 				if(tongue)
-					to_chat(affected_mob, span_warning("your [tongue.name] feels numb..."))
+					to_chat(affected_mob, span_warning("Your [tongue.name] feels numb..."))
 				affected_mob.set_slurring_if_lower(5 SECONDS * REM * seconds_per_tick)
 			affected_mob.adjust_disgust(3.5 * REM * seconds_per_tick)
 		if(12 to 20)
@@ -1308,7 +1322,7 @@
 			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
 			affected_mob.set_slurring_if_lower(3 SECONDS * REM * seconds_per_tick)
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("you feel horribly weak."))
+				to_chat(affected_mob, span_danger("You feel horribly weak."))
 			affected_mob.stamina.adjust(-2.5 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(8, seconds_per_tick))
 				paralyze_limb(affected_mob)
@@ -1327,16 +1341,15 @@
 
 	if(current_cycle >= 38 && !length(traits_not_applied) && SPT_PROB(5, seconds_per_tick) && !affected_mob.undergoing_cardiac_arrest())
 		affected_mob.set_heartattack(TRUE)
-		to_chat(affected_mob, span_danger("you feel a burning pain spread throughout your chest, oh no..."))
+		to_chat(affected_mob, span_bolddanger("You feel a burning pain spread throughout your chest!"))
 
 	return ..()
 
 /datum/reagent/toxin/tetrodotoxin/proc/paralyze_limb(mob/living/affected_mob)
 	if(!length(traits_not_applied))
 		return
-	var/added_trait = pick(traits_not_applied)
+	var/added_trait = pick_n_take(traits_not_applied)
 	ADD_TRAIT(affected_mob, added_trait, REF(src))
-	traits_not_applied -= added_trait
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1345,6 +1358,10 @@
 /datum/reagent/toxin/tetrodotoxin/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
+	remove_paralysis(affected_mob)
+
+///Removes all the limb paralysis traits given by this reagent and resets the list of limbs left to paralyze
+/datum/reagent/toxin/tetrodotoxin/proc/remove_paralysis(mob/living/affected_mob)
 	// the initial() proc doesn't work for lists.
 	var/list/initial_list = list(
 		TRAIT_PARALYSIS_L_ARM = BODY_ZONE_L_ARM,
@@ -1357,7 +1374,7 @@
 
 /datum/reagent/toxin/tetrodotoxin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
-	if(current_cycle >= 28)
+	if(current_cycle >= 28 && !HAS_TRAIT(source, TRAIT_TETRODOTOXIN_HEALING))
 		return BREATHE_BLOCK_BREATH
 
 /datum/reagent/toxin/radiomagnetic_disruptor // MONKESTATION ADDITION: NANITE REMOVAL CHEM

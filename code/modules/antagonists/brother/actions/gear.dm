@@ -70,7 +70,7 @@
 	)
 	team.choosing_gear = FALSE
 	if(length(agreed) != length(to_poll))
-		SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
+		SEND_SOUND(owner, sound('sound/machines/compiler/compiler-failure.ogg', volume = 50))
 		to_chat(owner, span_warning("Your team didn't agree on the summoning [chosen_gear.name]!"), type = MESSAGE_TYPE_INFO)
 		team.update_action_icons()
 		return

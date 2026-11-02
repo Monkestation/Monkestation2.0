@@ -150,7 +150,7 @@
 	name = "combat uniform"
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
-	can_adjust = FALSE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
@@ -182,6 +182,7 @@
 /obj/item/clothing/under/plasmaman/syndicate
 	name = "tacticool envirosuit"
 	desc = "A sinister looking envirosuit, for the boniest of operatives."
+	SETUP_MAP_ICONS("plasmaman_suit", "/obj/item/clothing/under/plasmaman/syndicate")
 	greyscale_colors = "#61423f#61423f#b22c20#61423f#61423f#1c070e"
 	has_sensor = NO_SENSORS
 	resistance_flags = FIRE_PROOF

@@ -1,7 +1,7 @@
 /turf/open/misc/beach
 	name = "beach"
 	desc = "Sandy."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND

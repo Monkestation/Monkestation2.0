@@ -24,15 +24,15 @@
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_SPOOKY)
 	speak_emote = list("telepathically cries")
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = T0C
-	bodytemp_heat_damage_limit = T0C + 1500
+	minimum_survivable_temperature = T0C
+	maximum_survivable_temperature = T0C + 1500
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 	lighting_cutoff_red = 40

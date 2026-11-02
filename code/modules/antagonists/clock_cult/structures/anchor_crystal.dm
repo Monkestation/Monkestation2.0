@@ -13,7 +13,7 @@
 	icon = 'icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "obelisk"
 	break_message = span_warning("As the Anchoring Crystal shatters you swear you hear a faint scream.")
-	break_sound = 'sound/machines/clockcult/ark_damage.ogg'
+	break_sound = 'sound/effects/parry.ogg'
 	immune_to_servant_attacks = TRUE
 	clockwork_desc = "This will help anchor reebe to this realm, allowing for greater power."
 	can_rotate = FALSE
@@ -116,7 +116,7 @@
 	charging_for = min(charging_for + (seconds_per_tick * (DELTA_WORLD_TIME_WITHOUT_HIBERNATION(SSthe_ark) SECONDS)), ANCHORING_CRYSTAL_CHARGE_DURATION)
 
 	if(shields < initial(shields) && COOLDOWN_FINISHED(src, recently_hit_cd))
-		playsound(src, 'sound/magic/charge.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/charge.ogg', 50, TRUE)
 		shields++
 		overlay_state = SHIELD_ACTIVE
 		update_icon()

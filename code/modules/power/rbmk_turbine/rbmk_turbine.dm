@@ -63,7 +63,7 @@
 	/// Maximum generator wear applied per second.
 	var/max_generator_damage_per_second = 4
 	/// Base volume of the turbine loop.
-	var/sound_volume = 40
+	var/sound_volume = 20
 	/// Minimum audible range used by turbine sounds.
 	var/sound_min_range = 5
 	/// Maximum audible range used by turbine sounds.
@@ -207,15 +207,12 @@
 		turbine_soundloop = new /datum/looping_sound/rbmk_turbine(src, TRUE)
 	else if(!turbine_soundloop.is_active())
 		turbine_soundloop.start()
-	var/rpm_ratio = CLAMP01(rpm / max(max_rpm, 1))
 	turbine_soundloop.volume = sound_volume
-	turbine_soundloop.extra_range = clamp(
-		sound_min_range + round(rpm_ratio * (sound_max_range - sound_min_range)),
-		sound_min_range,
-		sound_max_range,
-	)
+	turbine_soundloop.extra_range = sound_max_range - SOUND_RANGE
 	turbine_soundloop.falloff_distance = sound_falloff_distance
 	turbine_soundloop.falloff_exponent = sound_falloff_exponent
+	if(turbine_soundloop.loop_started && turbine_soundloop.sound_token_instance)
+		turbine_soundloop.sound_token_instance.set_volume(sound_volume)
 
 /** Applies generator wear for the elapsed processing time. */
 /obj/machinery/power/rbmk_turbine/proc/update_generator_integrity(gas_temperature, seconds_per_tick)
@@ -254,7 +251,7 @@
 		turbine_soundloop.stop()
 		QDEL_NULL(turbine_soundloop)
 	visible_message(span_danger("[src] screams as superheated coolant destroys the turbine assembly!"))
-	playsound(src, 'sound/machines/engine_alert1.ogg', 60, FALSE)
+	playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 60, FALSE)
 	explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 1, light_impact_range = 2)
 	qdel(src)
 

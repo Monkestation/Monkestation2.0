@@ -10,7 +10,7 @@
 	preview_outfit = /datum/outfit/spy
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Rob the station blind."
-	stinger_sound = 'sound/ambience/antag/spy.ogg'
+	stinger_sound = 'sound/music/antag/spy.ogg'
 	/// Whether an uplink has been created (successfully or at all)
 	var/uplink_created = FALSE
 	/// String displayed in the antag panel pointing the spy to where their uplink is.

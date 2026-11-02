@@ -6,9 +6,7 @@
 	COOLDOWN_DECLARE(adminwho_alert_cooldown)
 
 
-/client/verb/who()
-	set name = "Who"
-	set category = "OOC"
+GAME_VERB(/client, who, "Who", "OOC")
 
 	var/msg = ""
 
@@ -74,9 +72,7 @@
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, fieldset_block(span_bold("Current Players"), span_infoplain(msg), "boxed_message"), type = MESSAGE_TYPE_OOC)
 
-/client/verb/adminwho()
-	set category = "Admin"
-	set name = "Adminwho"
+GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 
 	var/list/lines = list()
 	var/payload_string = generate_adminwho_string()

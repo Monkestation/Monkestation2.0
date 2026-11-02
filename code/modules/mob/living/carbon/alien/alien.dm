@@ -13,8 +13,7 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	temperature_insulation = 0.5 // minor heat insulation
-	bodytemp_heat_damage_limit = CELCIUS_TO_KELVIN(85 CELCIUS)
+	heat_protection = 0.5 // minor heat insulation
 
 	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
@@ -23,7 +22,7 @@
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 /mob/living/carbon/alien/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	create_bodyparts() //initialize bodyparts
@@ -46,13 +45,27 @@
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/alien/body_temperature_alerts()
-	if(bodytemperature <= bodytemp_heat_damage_limit)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	// Run base mob body temperature proc before taking damage
+	// this balances body temp to the environment and natural stabilization
+	. = ..()
+	if(bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
 		clear_alert(ALERT_XENO_FIRE)
 		return
 
 	//Body temperature is too hot.
 	throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
+	switch(bodytemperature)
+		if(360 to 400)
+			apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
+		if(400 to 460)
+			apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
+		if(460 to INFINITY)
+			if(on_fire)
+				apply_damage(HEAT_DAMAGE_LEVEL_3 * seconds_per_tick, BURN)
+			else
+				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
+
 
 /mob/living/carbon/alien/get_bloodtype()
 	return get_blood_type(BLOOD_TYPE_XENO)
@@ -103,8 +116,8 @@ Des: Removes all infected images from the alien.
 		span_noticealien("You begin to evolve!"),
 	)
 	new_xeno.setDir(dir)
-	if(numba && unique_name)
-		new_xeno.numba = numba
+	if(identifier && unique_name)
+		new_xeno.identifier = identifier
 		new_xeno.set_name()
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name

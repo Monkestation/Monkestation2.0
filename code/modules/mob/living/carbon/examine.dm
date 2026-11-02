@@ -261,9 +261,9 @@
 						. += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> noises."
 					else
 						. += "[t_He] appear[p_s()] to not be responding to <strong>quiet voices</strong>."
-				if (bodytemperature > bodytemp_heat_damage_limit)
+				if (bodytemperature > get_body_temp_heat_damage_limit())
 					. += "[t_He] [t_is] flushed and wheezing."
-				if (bodytemperature < bodytemp_cold_damage_limit)
+				if (bodytemperature < get_body_temp_cold_damage_limit())
 					. += "[t_He] [t_is] shivering."
 				if(HAS_TRAIT(src, TRAIT_EVIL))
 					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
@@ -427,7 +427,8 @@
 	if(back && !HAS_TRAIT(back, TRAIT_EXAMINE_SKIP))
 		. += "[t_He] [t_has] [back.examine_title(user)] on [t_his] back."
 	//Hands
-	for(var/obj/item/held_thing in held_items)
+	for(var/held_index in get_active_held_indexes())
+		var/obj/item/held_thing = get_item_for_held_index(held_index)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
 		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
@@ -534,7 +535,8 @@
 			else
 				. += "[t_He] [t_is] wearing [wear_id.examine_title(user)]."
 	//Hands
-	for(var/obj/item/held_thing in held_items)
+	for(var/held_index in get_active_held_indexes())
+		var/obj/item/held_thing = get_item_for_held_index(held_index)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
 		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."

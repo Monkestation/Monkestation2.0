@@ -6,7 +6,7 @@
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "I can't move through this.";
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "water";
 	name = "deep ocean water"
 	},
@@ -100,7 +100,7 @@
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "I can't move through this.";
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "water";
 	name = "deep ocean water"
 	},
@@ -113,7 +113,7 @@
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "I can't move through this.";
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "water";
 	name = "deep ocean water"
 	},

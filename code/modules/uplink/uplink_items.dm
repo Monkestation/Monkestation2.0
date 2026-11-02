@@ -83,6 +83,8 @@
 	var/restricted_species = list()
 	/// The minimum amount of progression needed for this item to be added to uplinks.
 	var/progression_minimum = 0
+	/// The minimum number of living players needed for this item to be bought.
+	var/population_minimum = 0
 	/// Whether this purchase is visible in the purchase log.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	/// Whether this purchase is restricted or not (VR/Events related)

@@ -1,7 +1,7 @@
 /obj/structure/trap
 	name = "IT'S A TRAP"
 	desc = "Stepping on me is a guaranteed bad day."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "trap"
 	density = FALSE
 	anchored = TRUE
@@ -203,7 +203,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/victim)
 	to_chat(victim, span_bolddanger("You're frozen solid!"))
 	victim.Paralyze(2 SECONDS)
-	victim.adjust_bodytemperature(-T0C, use_insulation = TRUE)
+	victim.adjust_bodytemperature(-300)
 	victim.apply_status_effect(/datum/status_effect/freon)
 
 

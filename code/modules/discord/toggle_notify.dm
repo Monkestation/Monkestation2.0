@@ -14,10 +14,7 @@
 	return response["result"]
 
 // Verb to toggle restart notifications
-/client/verb/notify_restart()
-	set category = "OOC"
-	set name = "Notify Restart"
-	set desc = "Notifies you on Discord when the server restarts."
+GAME_VERB_DESC(/client, notify_restart, "Notify Restart", "Notifies you on Discord when the server restarts.", "OOC")
 
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))

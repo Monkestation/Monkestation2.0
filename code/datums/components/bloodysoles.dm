@@ -43,7 +43,7 @@
  * Returns true if the parent item is obscured by something else that the wielder is wearing
  */
 /datum/component/bloodysoles/proc/is_obscured()
-	return (wielder.check_obscured_slots(TRUE) & equipped_slot) || is_under_feet_covered()
+	return (wielder.check_covered_slots() & equipped_slot) || is_under_feet_covered()
 
 /**
  * Returns true if the parent item is worn in the ITEM_SLOT_ICLOTHING slot and the
@@ -317,6 +317,7 @@
 		return
 
 	bloody_feet.color = wielder.get_blood_dna_color()
+	wielder.apply_height(bloody_feet, ENTIRE_BODY)
 	wielder.overlays_standing[SHOES_LAYER] = bloody_feet
 	wielder.apply_overlay(SHOES_LAYER)
 

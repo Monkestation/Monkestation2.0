@@ -1,50 +1,39 @@
-// Currently disabled until I can get this working in a less janky way
-/*
 /**
- * Used for following A* defined paths. The proc signature here's a bit long, I'm sorry
+ * Like jps_move(), but follows A* paths, which go up stairs and down open space
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ * Returns TRUE if the loop successfully started, or FALSE if it failed
  *
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * repath_delay - How often we're allowed to recalculate our path
  * max_path_length - The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
- * miminum_distance - Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example
+ * minimum_distance -Minimum distance to the target before path returns
  * access - A list representing what access we have and what doors we can open
- * simulated_only -  Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
- * avoid - If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
- * skip_first -  Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break things
- * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
+ * initial_path - A path to the target we already found, so the loop can start walking without searching again
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/astar_move(moving,
+/datum/move_manager/proc/astar_move(moving,
 	chasing,
 	delay,
 	timeout,
 	repath_delay,
-	max_nodes,
-	max_node_depth,
+	max_path_length,
 	minimum_distance,
 	list/access,
-	turf/avoid,
-	simulated_only,
-	check_z_levels,
-	smooth_diagonals,
-	dist,
-	adjacent,
+	list/initial_path,
 	subsystem,
 	priority,
 	flags,
-	datum/extra_info,
-	initial_path)
+	datum/extra_info)
 	return add_to_loop(moving,
 		subsystem,
-		/datum/move_loop/has_target/astar,
+		/datum/move_loop/has_target/jps/astar,
 		priority,
 		flags,
 		extra_info,
@@ -52,148 +41,88 @@
 		timeout,
 		chasing,
 		repath_delay,
-		max_nodes,
-		max_node_depth,
+		max_path_length,
 		minimum_distance,
 		access,
-		avoid,
-		simulated_only,
-		check_z_levels,
-		smooth_diagonals,
-		dist,
-		adjacent,
 		initial_path)
 
-/datum/move_loop/has_target/astar
-	///How often we're allowed to recalculate our path
-	var/repath_delay
-	/// The maximum number of nodes the returned path can be (0 = infinite)
-	var/max_nodes
-	/// The maximum number of nodes to search (default: 30, 0 = infinite)
-	var/max_node_depth = 30
-	///Minimum distance to the target before path returns
-	var/minimum_distance
-	///A list representing what access we have and what doors we can open.
-	var/list/access
-	///A perticular turf to avoid
-	var/turf/avoid
-	///Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
-	var/simulated_only
-	///A list for the path we're currently following
-	var/list/movement_path
-	/// Should we attempt to path across Z-levels?
-	var/check_z_levels = TRUE
-	/// Should diagonal movements be smoothed?
-	var/smooth_diagonals = TRUE
-	/// Proc used for distance heuristics.
-	var/dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d)
-	/// Proc used for turf adjacency checks.
-	var/adjacent = TYPE_PROC_REF(/turf, reachable_turf_test)
-	///Cooldown for repathing, prevents spam
-	COOLDOWN_DECLARE(repath_cooldown)
-	///Bool used to determine if we're already making a path in A*. this prevents us from re-pathing while we're already busy.
-	var/is_pathing = FALSE
-	///Callbacks to invoke once we make a path
-	var/list/datum/callback/on_finish_callbacks = list()
+/// Reuses all of the JPS loop's path bookkeeping, only the pathfinder and the stepping are different.
+/datum/move_loop/has_target/jps/astar
+	/// Where the target was when we last asked for a path, so we notice when it wanders off
+	var/turf/pathed_to
+	/// Failed steps in a row on the same path node
+	var/blocked_steps = 0
 
-/datum/move_loop/has_target/astar/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
-	. = ..()
-	on_finish_callbacks += CALLBACK(src, PROC_REF(on_finish_pathing))
-
-/datum/move_loop/has_target/astar/setup(delay, timeout, atom/chasing, repath_delay, max_nodes, max_node_depth, minimum_distance, list/access, turf/avoid, simulated_only, check_z_levels, smooth_diagonals, dist, adjacent, list/initial_path)
-	. = ..()
-	if(!.)
+/datum/move_loop/has_target/jps/astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, list/initial_path)
+	. = ..(delay, timeout, chasing, repath_delay, max_path_length, minimum_distance, access)
+	if(!. || !length(initial_path))
 		return
-	src.repath_delay = repath_delay
-	src.max_nodes = max_nodes
-	if(!isnull(max_node_depth))
-		src.max_node_depth = max_node_depth
-	src.minimum_distance = minimum_distance
-	src.access = access
-	src.avoid = avoid
-	src.simulated_only = simulated_only
-	if(!isnull(check_z_levels))
-		src.check_z_levels = check_z_levels
-	if(!isnull(smooth_diagonals))
-		src.smooth_diagonals = smooth_diagonals
-	if(!isnull(dist))
-		src.dist = dist
-	if(!isnull(adjacent))
-		src.adjacent = adjacent
-	movement_path = initial_path?.Copy()
+	on_finish_pathing(initial_path.Copy())
+	if(length(movement_path))
+		pathed_to = get_turf(chasing)
 
-/datum/move_loop/has_target/astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, atom/chasing, repath_delay, max_nodes, max_node_depth, minimum_distance, list/access, turf/avoid, simulated_only, check_z_levels, smooth_diagonals, dist, adjacent, list/initial_path)
-	if(isnull(max_node_depth))
-		max_node_depth = src::max_node_depth
-	if(isnull(check_z_levels))
-		check_z_levels = src::check_z_levels
-	if(isnull(smooth_diagonals))
-		smooth_diagonals = src::smooth_diagonals
-	if(isnull(dist))
-		dist = src::dist
-	if(isnull(adjacent))
-		adjacent = src::adjacent
-	return ..() && \
-		repath_delay == src.repath_delay && \
-		max_nodes == src.max_nodes && \
-		max_node_depth == src.max_node_depth && \
-		minimum_distance == src.minimum_distance && \
-		access ~= src.access && \
-		avoid == src.avoid && \
-		simulated_only == src.simulated_only && \
-		check_z_levels == src.check_z_levels && \
-		smooth_diagonals == src.smooth_diagonals && \
-		dist == src.dist && \
-		adjacent == src.adjacent
-
-/datum/move_loop/has_target/astar/loop_started()
-	. = ..()
-	if(!movement_path)
-		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-
-/datum/move_loop/has_target/astar/loop_stopped()
-	. = ..()
-	movement_path = null
-
-/datum/move_loop/has_target/astar/Destroy()
-	avoid = null
-	on_finish_callbacks.Cut()
+/datum/move_loop/has_target/jps/astar/Destroy()
+	pathed_to = null
 	return ..()
 
-///Tries to calculate a new path for this moveloop.
-/datum/move_loop/has_target/astar/proc/recalculate_path()
-	if(!COOLDOWN_FINISHED(src, repath_cooldown))
+/// Asks for a new path. avoid_turf is left out of it, for getting around whatever's blocking us.
+/datum/move_loop/has_target/jps/astar/recalculate_path(turf/avoid_turf)
+	if(is_pathing || !COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
-	if(SSpathfinder.astar_pathfind(moving, target, dist, max_nodes, max_node_depth, minimum_distance, adjacent, access, avoid, simulated_only, check_z_levels, smooth_diagonals, on_finish = on_finish_callbacks))
+	avoid = avoid_turf
+	if(SSpathfinder.astar_pathfind(moving, target, max_path_length, minimum_distance, access, avoid, on_finish = on_finish_callbacks))
 		is_pathing = TRUE
+		pathed_to = get_turf(target)
 		SEND_SIGNAL(src, COMSIG_MOVELOOP_REPATH)
 
-///Called when a path has finished being created
-/datum/move_loop/has_target/astar/proc/on_finish_pathing(list/path)
-	movement_path = path
-	is_pathing = FALSE
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_FINISHED_PATHING, path)
+/datum/move_loop/has_target/jps/astar/on_finish_pathing(list/path)
+	// the path starts where we asked from, and we kept walking the old one while A* thought about it
+	if(length(path) && moving)
+		var/current_index = path.Find(get_turf(moving))
+		if(!current_index)
+			return ..(null)
+		path.Cut(1, current_index + 1)
+	return ..()
 
-/datum/move_loop/has_target/astar/move()
+/datum/move_loop/has_target/jps/astar/move()
+	if(!is_pathing && get_turf(target) != pathed_to)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+
 	if(!length(movement_path))
 		if(is_pathing)
 			return MOVELOOP_NOT_READY
-		else
-			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-			return MOVELOOP_FAILURE
-
-	var/turf/next_step = movement_path[1]
-	var/atom/old_loc = moving.loc
-	moving.Move(next_step, get_dir(moving, next_step))
-	. = (old_loc != moving?.loc) ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
-
-	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
-	// to the side while moving but could maybe still follow their path without needing a whole new path
-	if(get_turf(moving) == next_step)
-		if(length(movement_path))
-			movement_path.Cut(1,2)
-	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
-*/
+
+	var/turf/next_step = movement_path[1]
+	var/turf/old_turf = get_turf(moving)
+	// stairs only lift you when you walk off the top step, so a step up is a flat step that way
+	var/turf/flat_step = next_step.z == old_turf.z ? next_step : locate(next_step.x, next_step.y, old_turf.z)
+	if(get_dist(old_turf, flat_step) > 1)
+		movement_path = null
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE
+	moving.Move(flat_step, get_dir(moving, flat_step))
+	if(QDELETED(moving))
+		return MOVELOOP_FAILURE
+
+	// don't trust Move()'s return: climbing stairs "fails" the move and lifts you anyway,
+	// and walking onto open space drops you straight onto the node after it
+	var/turf/new_turf = get_turf(moving)
+	var/reached_index = movement_path.Find(new_turf, 1, min(length(movement_path), 2) + 1)
+	if(reached_index)
+		movement_path.Cut(1, reached_index + 1)
+		blocked_steps = 0
+		return MOVELOOP_SUCCESS
+
+	if(new_turf != old_turf)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE
+
+	// whoever's in the way usually moves on their own, so give them a step before pathing around them
+	blocked_steps++
+	if(blocked_steps >= 2)
+		blocked_steps = 0
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path), next_step)
+	return MOVELOOP_FAILURE

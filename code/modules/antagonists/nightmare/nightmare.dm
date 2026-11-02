@@ -68,7 +68,7 @@
 	var/mob/living/carbon/human/nightmare = new (spawn_loc)
 	nightmare.PossessByPlayer(spender_key)
 	nightmare.mind.add_antag_datum(/datum/antagonist/nightmare)
-	playsound(nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	playsound(nightmare, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	if(isobserver(spender))
 		qdel(spender)
 	message_admins("[ADMIN_LOOKUPFLW(nightmare)] has been made into a nightmare by using an antag token.")

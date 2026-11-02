@@ -39,7 +39,7 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
-	/// Used for BODYTYPE_CUSTOM: Needs to follow this syntax: a list() with the x and y coordinates of the pixel you want to get the color from. Colors are filled in as GAGs values for fallback.
+	/// Used for BODYSHAPE_CUSTOM: Needs to follow this syntax: a list() with the x and y coordinates of the pixel you want to get the color from. Colors are filled in as GAGs values for fallback.
 	var/list/species_clothing_color_coords[3]
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -96,18 +96,20 @@
 
 	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_price
-	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
+	///Price of a premium and contraband item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
 	///Whether or not this item is applicable to be discounted via job based discounts
 	var/discountable = TRUE
 
-	/// Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage.
-	/// Keep at null to disable protection.
+	///flags which determine which body parts are protected from heat. [See here][HEAD]
+	var/heat_protection = 0
+	///flags which determine which body parts are protected from cold. [See here][HEAD]
+	var/cold_protection = 0
+	///Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/max_heat_protection_temperature
-	/// Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage.
-	/// Keep at null to disable protection.
+	///Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 	var/min_cold_protection_temperature
 
 	///list of /datum/action's that this item has.
@@ -273,7 +275,7 @@
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
-		add_item_action(path)
+		INVOKE_ASYNC(src, PROC_REF(add_item_action), path)
 	actions_types = null
 
 	if(force_string)
@@ -281,7 +283,7 @@
 
 	if(!hitsound)
 		if(damtype == BURN)
-			hitsound = 'sound/items/welder.ogg'
+			hitsound = 'sound/items/tools/welder.ogg'
 		if(damtype == BRUTE)
 			hitsound = SFX_SWING_HIT
 
@@ -301,6 +303,9 @@
 	for(var/datum/action/action as anything in actions)
 		remove_item_action(action)
 
+	if(viruses)
+		GLOB.infected_items -= src
+	clear_pathogen_image()
 	return ..()
 
 
@@ -430,10 +435,7 @@
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
-/obj/item/verb/move_to_top()
-	set name = "Move To Top"
-	set category = "Object"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
@@ -581,7 +583,8 @@
 		return
 	return attempt_pickup(user)
 
-/obj/item/proc/attempt_pickup(mob/user)
+/// Tries to pick up the item, skip_grav skips the heavy gravity delay
+/obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
 	. = TRUE
 
 	if(resistance_flags & ON_FIRE)
@@ -607,14 +610,14 @@
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
 		return
 
-	//Heavy gravity makes picking up things very slow.
-	var/grav = user.has_gravity()
-	if(grav > STANDARD_GRAVITY)
-		var/grav_power = min(3,grav - STANDARD_GRAVITY)
-		to_chat(user,span_notice("You start picking up [src]..."))
-		if(!do_after(user, 30 * grav_power, src))
-			return
-
+	if(!skip_grav)
+		//Heavy gravity makes picking up things very slow.
+		var/grav = user.has_gravity()
+		if(grav > STANDARD_GRAVITY)
+			var/grav_power = min(3,grav - STANDARD_GRAVITY)
+			to_chat(user,span_notice("You start picking up [src]..."))
+			if(!do_after(user, 30 * grav_power, src))
+				return
 
 	//If the item is in a storage item, take it out
 	var/outside_storage = !loc.atom_storage
@@ -708,7 +711,6 @@
 	if(!silent && drop_sound)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
 	if(user)
-		user.update_cached_insulation()
 		user.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
@@ -719,7 +721,6 @@
 	if(iscarbon(user))
 		SEND_SIGNAL(user, COMSIG_CARBON_ITEM_PICKED_UP, src)
 	item_flags |= IN_INVENTORY
-	user.update_cached_insulation()
 
 /// called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -779,7 +780,6 @@
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE, mixer_channel = equip_mixer_channel) // monkestation: sound mixer
 		else if(slot & ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = pickup_mixer_channel) // monkestation: sound mixer
-	user.update_cached_insulation()
 	user.update_equipment_speed_mods()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
@@ -821,10 +821,7 @@
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped)
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Pick up"
+GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 
 	if(usr.incapacitated() || !Adjacent(usr))
 		return
@@ -885,9 +882,9 @@
 			else if(hitsound)
 				playsound(hit_atom, hitsound, volume, TRUE, -1)
 			else
-				playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+				playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
 		else
-			playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+			playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', 1, volume, -1)
 
 	else
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
@@ -957,7 +954,7 @@
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
-		. = 'sound/weapons/sear.ogg'
+		. = 'sound/items/weapons/sear.ogg'
 	else
 		. = SFX_DESECRATION
 
@@ -967,7 +964,7 @@
 	if(ismob(location))
 		var/mob/pyromanic = location
 		var/success = FALSE
-		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || (src in pyromanic.held_items))
+		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || pyromanic.is_holding(src))
 			success = TRUE
 		if(success)
 			location = get_turf(pyromanic)
@@ -1192,18 +1189,10 @@
 		return ..()
 
 	var/mob/M = loc
-	var/hand_index = M.get_held_index_of_item(src)
-	if(!hand_index)
+	if(!M.is_holding(src))
 		return ..()
 
-	M.held_items[hand_index] = null
-	M.update_held_items()
-	if(M.client)
-		M.client.screen -= src
-	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
-	appearance_flags &= ~NO_CLIENT_COLOR
-	dropped(M, FALSE)
+	M.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	return ..()
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
@@ -1332,7 +1321,7 @@
 
 	if(ismob(loc) && ..())
 		var/mob/mob_loc = loc
-		mob_loc.update_clothing(slot_flags)
+		mob_loc.update_clothing(slot_flags | mob_loc.get_slot_by_item(src))
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, click_parameters)
@@ -1361,6 +1350,8 @@
  * * taker - the person trying to accept the offer
  */
 /obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	if(!HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(src, TRAIT_BORG_GIVE) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS))
+		return TRUE // Both must be able to hold items for this to make sense.
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 

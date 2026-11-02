@@ -34,7 +34,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		if(user.transferItemToLoc(tool, src))
 			to_chat(user, span_notice("You insert [tool] into \the [src]."))
 			intellicard = tool
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
@@ -65,7 +65,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 		qdel(tool)
 		balloon_alert(user, "ai uploaded")
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/surveillance_upgrade))
@@ -75,7 +75,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
 			return ITEM_INTERACT_BLOCKING
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 		var/obj/item/surveillance_upgrade/upgrade = tool
 		return upgrade.interact_with_atom(AI, user)
 
@@ -86,7 +86,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		var/mob/living/silicon/ai/AI = tgui_input_list(user, "Select an AI", "Select an AI", GLOB.ai_list)
 		if(!AI)
 			return ITEM_INTERACT_BLOCKING
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 		var/obj/item/malf_upgrade/upgrade = tool
 		return upgrade.interact_with_atom(AI, user)
 
@@ -105,11 +105,15 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 
 /obj/machinery/computer/ai_control_console/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		if(downloading)
+			stop_download()
 		return
 
 	if(downloading && download_progress >= 50 && !download_warning)
 		var/turf/T = get_turf(src)
-		to_chat(downloading, span_userdanger("Warning! Download is 50% completed! Download location: [get_area(src)] ([T.x], [T.y], [T.z])!"))
+		var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
+		to_chat(message_target, span_userdanger("Warning! Download is 50% completed! Download location: [get_area(src)] ([T.x], [T.y], [T.z])!"))
+		message_target.playsound_local(message_target, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 		download_warning = TRUE
 	if(downloading && download_progress >= 100)
 		finish_download()
@@ -223,14 +227,14 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(!user.put_in_hands(intellicard))
 		intellicard.forceMove(drop_location())
 	intellicard = null
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 30, FALSE)
 	return TRUE
 
 /obj/machinery/computer/ai_control_console/proc/finish_download()
 	if(!(downloading.loc in GLOB.data_cores["[z]"]))
 		return
 	if(intellicard)
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 		downloading.transfer_ai(AI_TRANS_TO_CARD, user_downloading, null, intellicard)
 		intellicard.update_appearance()
 	stop_download(TRUE)
@@ -239,15 +243,17 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(!downloading)
 		return
 	if(!silent)
-		to_chat(downloading, span_userdanger("Download stopped."))
+		var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
+		to_chat(message_target, span_userdanger("Download stopped."))
 	downloading = null
 	user_downloading = null
 	download_progress = 0
 	download_warning = FALSE
 
 /obj/machinery/computer/ai_control_console/proc/upload_ai(silent = FALSE)
-	playsound(src, 'sound/machines/terminal_processing.ogg', 25, FALSE)
-	to_chat(intellicard.AI, span_notice("You are being uploaded. Please stand by..."))
+	if(!silent)
+		playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, FALSE)
+		to_chat(intellicard.AI, span_notice("You are being uploaded. Please stand by..."))
 	intellicard.AI.radio_enabled = TRUE
 	intellicard.AI.control_disabled = FALSE
 	intellicard.AI.relocate(TRUE)
@@ -316,7 +322,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				to_chat(user, span_warning("You need physical access to stop the download!"))
 				return
 			stop_download()
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 
 		if("start_download")
 			if(!intellicard || downloading)
@@ -331,9 +337,11 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			if(!(target.loc in GLOB.data_cores["[z]"]))
 				to_chat(user, span_warning("No connection. Try again later."))
 				return
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 			downloading = target
-			to_chat(downloading, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here to finish download instantly</a>)"))
+			var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
+			to_chat(message_target, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here [downloading.deployed_shell ? "while in your core " : ""]to finish download instantly</a>)"))
+			message_target.playsound_local(message_target, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 			user_downloading = user
 			download_progress = 0
 			. = TRUE

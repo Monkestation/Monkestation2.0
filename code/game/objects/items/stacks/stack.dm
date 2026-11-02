@@ -409,7 +409,7 @@
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
-		var/turf/created_turf = covered_turf.PlaceOnTop(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		var/turf/created_turf = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
 		if(recipe.applies_mats && LAZYLEN(mats_per_unit))
 			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
@@ -667,6 +667,16 @@
 	else
 		. = ..()
 
+/obj/item/stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(!can_merge(tool, inhand = TRUE))
+		return
+	var/obj/item/stack/overtaking_stack = tool
+	if(!merge(overtaking_stack))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Your [overtaking_stack.name] stack now contains [overtaking_stack.get_amount()] [overtaking_stack.singular_name]\s."))
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -693,25 +703,17 @@
 /obj/item/stack/proc/split_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
-	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
-	. = F
-	F.copy_evidences(src)
+	var/obj/item/stack/stack = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
+	. = stack
+	stack.copy_evidences(src)
 	loc.atom_storage?.refresh_views()
 	if(user)
-		if(!user.put_in_hands(F, merge_stacks = FALSE))
-			F.forceMove(user.drop_location())
+		if(!user.put_in_hands(stack, merge_stacks = FALSE))
+			stack.forceMove(user.drop_location())
 		add_fingerprint(user)
-		F.add_fingerprint(user)
+		stack.add_fingerprint(user)
 
 	is_zero_amount(delete_if_zero = TRUE)
-
-/obj/item/stack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(can_merge(attacking_item, inhand = TRUE))
-		var/obj/item/stack/S = attacking_item
-		if(merge(S))
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
-	else
-		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(from))

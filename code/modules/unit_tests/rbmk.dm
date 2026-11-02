@@ -44,9 +44,9 @@
 	TEST_ASSERT_NOTNULL(internal_mix, "The RBMK reactor initialized without an internal coolant mixture.")
 	TEST_ASSERT_NOTNULL(inlet_mix, "The RBMK reactor initialized without an inlet gas mixture.")
 	TEST_ASSERT_NOTNULL(outlet_mix, "The RBMK reactor initialized without an outlet gas mixture.")
-	ASSERT_GAS(/datum/gas/nitrogen, internal_mix)
-	ASSERT_GAS(/datum/gas/nitrogen, inlet_mix)
-	ASSERT_GAS(/datum/gas/nitrogen, outlet_mix)
+	internal_mix.assert_gas(/datum/gas/nitrogen)
+	inlet_mix.assert_gas(/datum/gas/nitrogen)
+	outlet_mix.assert_gas(/datum/gas/nitrogen)
 	var/test_temperature = 5000
 	reactor.temperature = test_temperature
 	reactor.operating_pressure = 0 // Isolate pressure equalization from the backpressure setting.
@@ -55,8 +55,8 @@
 	outlet_mix.temperature = test_temperature
 	var/initial_internal_pressure = 5100
 	var/initial_downstream_pressure = 5000
-	internal_mix.gases[/datum/gas/nitrogen][MOLES] = (initial_internal_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
-	outlet_mix.gases[/datum/gas/nitrogen][MOLES] = (initial_downstream_pressure * outlet_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	internal_mix.moles[/datum/gas/nitrogen] = (initial_internal_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	outlet_mix.moles[/datum/gas/nitrogen] = (initial_downstream_pressure * outlet_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
 	reactor.inlet_open = FALSE
 	reactor.outlet_open = TRUE
 	reactor.outlet_rate = RBMK_OUTLET_RATE_MAX
@@ -70,8 +70,8 @@
 	var/inlet_supply_pressure = 2000
 	var/inlet_target_pressure = inlet_supply_pressure + RBMK_INLET_PUMP_HEAD
 	var/pre_injection_pressure = inlet_target_pressure - 100
-	internal_mix.gases[/datum/gas/nitrogen][MOLES] = (pre_injection_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
-	inlet_mix.gases[/datum/gas/nitrogen][MOLES] = (inlet_supply_pressure * inlet_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	internal_mix.moles[/datum/gas/nitrogen] = (pre_injection_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
+	inlet_mix.moles[/datum/gas/nitrogen] = (inlet_supply_pressure * inlet_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
 	reactor.inlet_open = TRUE
 	reactor.inlet_rate = RBMK_INLET_RATE_MAX
 	reactor.outlet_open = FALSE
@@ -228,8 +228,8 @@
 	core.temperature = 700
 	downstream.temperature = 700
 	core.assert_gases(/datum/gas/water_vapor, /datum/gas/tritium)
-	core.gases[/datum/gas/water_vapor][MOLES] = 2000
-	core.gases[/datum/gas/tritium][MOLES] = 20
+	core.moles[/datum/gas/water_vapor] = 2000
+	core.moles[/datum/gas/tritium] = 20
 	reactor.inlet_open = FALSE
 	reactor.outlet_open = TRUE
 	reactor.operating_pressure = 0
@@ -238,9 +238,9 @@
 	reactor.last_coolant_air_cycle = SSair.times_fired - 1
 	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
 	TEST_ASSERT(abs(core.total_moles() + downstream.total_moles() - total_before) < 0.001, "Offgas extraction created or discarded gas.")
-	var/list/exported_tritium = downstream.gases[/datum/gas/tritium]
-	TEST_ASSERT(exported_tritium && exported_tritium[MOLES] > 0, "The outlet exported no tritium.")
-	TEST_ASSERT(exported_tritium[MOLES] / downstream.total_moles() > 20 / total_before, "The outlet did not prioritize tritium over working coolant.")
+	var/exported_tritium = downstream.moles[/datum/gas/tritium]
+	TEST_ASSERT(exported_tritium && exported_tritium > 0, "The outlet exported no tritium.")
+	TEST_ASSERT(exported_tritium / downstream.total_moles() > 20 / total_before, "The outlet did not prioritize tritium over working coolant.")
 	TEST_ASSERT(reactor.last_outlet_flow_rate <= reactor.outlet_rate + 0.001, "Offgas bypassed the commanded outlet flow limit.")
 	reactor.outlet_open = FALSE
 	var/remaining_before = core.total_moles()
@@ -265,7 +265,7 @@
 	network.add_machine(turbine)
 	var/datum/gas_mixture/gas = allocate(/datum/gas_mixture)
 	gas.assert_gases(/datum/gas/water_vapor)
-	gas.gases[/datum/gas/water_vapor][MOLES] = 100
+	gas.moles[/datum/gas/water_vapor] = 100
 	gas.temperature = 400
 	turbine.last_inlet_pressure = 10000
 	turbine.last_outlet_pressure = 1000
@@ -281,9 +281,10 @@
 	var/datum/looping_sound/rbmk_reactor/reactor_loop = allocate(/datum/looping_sound/rbmk_reactor, run_loc_floor_bottom_left)
 	var/datum/looping_sound/rbmk_turbine/turbine_loop = allocate(/datum/looping_sound/rbmk_turbine, run_loc_floor_bottom_left)
 	var/reactor_channel = reactor_loop.get_live_sound_channel()
-	var/turbine_channel = turbine_loop.get_live_sound_channel()
+	TEST_ASSERT(turbine_loop.can_native_repeat(), "Turbine audio did not use continuous native looping.")
+	turbine_loop.play('sound/rbmk/turbine_mid.ogg', repeat_sound = TRUE)
+	var/turbine_channel = turbine_loop.sound_token_instance.sound_channel
 	TEST_ASSERT(!(reactor_channel in GLOB.used_sound_channels), "Reactor loop reserved a fixed sound channel.")
 	TEST_ASSERT(!(turbine_channel in GLOB.used_sound_channels), "Turbine loop reserved a fixed sound channel.")
 	TEST_ASSERT_NOTEQUAL(reactor_channel, turbine_channel, "Reactor and turbine shared a playback channel.")
-	turbine_loop.stop()
-	TEST_ASSERT_EQUAL(turbine_loop.get_live_sound_channel(), turbine_channel, "Stopping the turbine released its shutdown playback channel too early.")
+	TEST_ASSERT(turbine_channel > 0, "Turbine audio did not reserve a private playback channel.")

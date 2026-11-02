@@ -26,6 +26,11 @@
 	if(sinking)
 		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_add_sinking))
 
+/turf/open/water/AfterChange(flags, oldType)
+	. = ..()
+	if(sinking)
+		UnregisterSignal(src, COMSIG_ATOM_ENTERED)
+
 /turf/open/water/proc/try_add_sinking(turf/open/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(arrived.GetComponent(/datum/component/player_sink))
 		return
@@ -43,7 +48,7 @@
 	planetary_atmos = FALSE
 	gender = PLURAL
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "water"
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach

@@ -2,10 +2,8 @@
 
 GLOBAL_VAR_INIT(looc_allowed, TRUE)
 
-/client/verb/looc(msg as text)
-	set name = "LOOC"
-	set desc = "Local OOC, seen only by those in view."
-	set category = "OOC"
+GAME_VERB_DESC(/client, looc, "LOOC", "Local OOC, seen only by those in view.", "OOC")
+	VERB_ARG(msg, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(GLOB.say_disabled)    //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -77,10 +75,25 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 	msg = emoji_parse(msg)
 	mob.log_talk(raw_msg, LOG_OOC, tag = "LOOC")
 
+	// The AI talks and listens through its eye
+	var/atom/movable/looc_source = mob
+	if(isAI(mob))
+		var/mob/living/silicon/ai/ai_speaker = mob
+		if(ai_speaker.eyeobj)
+			looc_source = ai_speaker.eyeobj
+
 	var/list/hearers = list()
-	for(var/mob/hearer in get_hearers_in_view(9, mob))
+	for(var/mob/hearer in get_hearers_in_view(9, looc_source))
+		if(istype(hearer, /mob/eye/camera/ai))
+			var/mob/eye/camera/ai/ai_eye = hearer
+			if(!ai_eye.ai)
+				continue
+			hearer = ai_eye.ai
 		var/client/hearing_client = hearer.client
 		if(QDELETED(hearing_client) || !CHECK_BITFIELD(hearing_client.prefs.chat_toggles, CHAT_OOC))
+			continue
+		// An AI can hear the same message through its core and its eye
+		if(hearers[hearing_client])
 			continue
 		if(key in hearing_client.prefs.ignoring)
 			continue
@@ -90,14 +103,14 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 			continue
 		to_chat(hearer, span_looc("[span_prefix("LOOC:")] <EM>[span_name("[mob.name]")]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (hearer == mob))
 		if(hearing_client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
-			hearer.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
+			hearer.create_chat_message(looc_source, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
 
 	for(var/client/admin_client in GLOB.admins)
 		if(!CHECK_BITFIELD(admin_client.prefs.chat_toggles, CHAT_OOC) || !is_admin_looc_omnipotent(admin_client))
 			continue
 		var/prefix = "[hearers[admin_client] ? "" : "(R)"]LOOC"
 		if(admin_client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
-			admin_client.mob?.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
+			admin_client.mob?.create_chat_message(looc_source, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
 		to_chat(admin_client, span_looc("[span_prefix("[prefix]:")] <EM>[ADMIN_LOOKUPFLW(mob)]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (admin_client == src))
 
 /// Logging for messages sent in LOOC
@@ -112,7 +125,7 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		GLOB.looc_allowed = !GLOB.looc_allowed
 	to_chat(world, "<span class='oocplain bold'>LOOC channel has been globally [GLOB.looc_allowed ? "enabled" : "disabled"].</span>")
 
-ADMIN_VERB(togglelooc, R_ADMIN, FALSE, "Toggle LOOC", "Shows the range of cameras on the station.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(togglelooc, R_ADMIN, FALSE, "Toggle LOOC", "Toggle LOOC.", ADMIN_CATEGORY_SERVER)
 	toggle_looc()
 	log_admin("[key_name(user)] toggled LOOC.")
 	message_admins("[key_name_admin(user)] toggled LOOC.")

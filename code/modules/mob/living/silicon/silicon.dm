@@ -7,7 +7,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	death_sound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -518,8 +518,3 @@
 	for(var/borg_laws in law_list)
 		. += borg_laws
 
-/mob/living/silicon/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	return
-
-/mob/living/silicon/body_temperature_alerts()
-	return

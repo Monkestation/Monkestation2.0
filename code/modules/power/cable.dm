@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	if(avail())
 		king.apply_damage(10)
-		playsound(king, 'sound/effects/sparks2.ogg', 100, TRUE)
+		playsound(king, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
 	deconstruct()
 
 	return COMPONENT_RAT_INTERACTED
@@ -512,7 +512,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!user)
 		return
 
-	var/image/restraints_icon = image(icon = 'icons/obj/restraints.dmi', icon_state = "cuff")
+	var/image/restraints_icon = image(icon = 'icons/obj/weapons/restraints.dmi', icon_state = "cuff")
 	restraints_icon.maptext = MAPTEXT("<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>")
 	restraints_icon.color = color
 

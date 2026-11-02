@@ -2,7 +2,7 @@
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	custom_price = PAYCHECK_LOWER * 0.7
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
 	slot_flags = ITEM_SLOT_BELT
@@ -41,11 +41,19 @@
 /obj/item/t_scanner/proc/scan()
 	t_ray_scan(loc)
 
-/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3)
+/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3, mob/mobeye = null)
+	var/in_range_of_mob
 	if(!ismob(viewer) || !viewer.client)
 		return
+
+	//for incorporeal beings, ones with a disjointed mob and camera location. (e.g: ai's)
+	if(mobeye)
+		in_range_of_mob = mobeye
+	else
+		in_range_of_mob = viewer
+
 	var/list/t_ray_images = list()
-	for(var/obj/O in orange(distance, viewer) )
+	for(var/obj/O in orange(distance, in_range_of_mob) )
 		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)

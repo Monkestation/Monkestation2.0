@@ -6,6 +6,7 @@
 	available_skins = list(
 		/datum/robot_skin/medical/default,
 		/datum/robot_skin/medical/qualified,
+		/datum/robot_skin/medical/kerfus,
 	)
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,

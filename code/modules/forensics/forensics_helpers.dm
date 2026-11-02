@@ -101,6 +101,11 @@
 /obj/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
 	if (isnull(blood_DNA_to_add))
 		return FALSE
+	if (!islist(blood_DNA_to_add))
+		CRASH("add_blood_DNA on [src] ([type]) has been passed a non-list blood_DNA_to_add ([blood_DNA_to_add])!")
+	for (var/blood_key in blood_DNA_to_add)
+		if (isnull(blood_DNA_to_add[blood_key]))
+			CRASH("add_blood_DNA on [src] ([type]) has been passed bad blood_DNA_to_add ([blood_key] - [blood_DNA_to_add[blood_key]] key-value pair)!")
 	cached_blood_color = null
 	cached_blood_emissive = null
 	if (forensics)
@@ -183,7 +188,7 @@
 
 	var/dirty_hands = !!(target_flags & (ITEM_SLOT_GLOVES|ITEM_SLOT_HANDS))
 	var/dirty_feet = !!(target_flags & ITEM_SLOT_FEET)
-	var/slots_to_bloody = target_flags & ~check_obscured_slots()
+	var/slots_to_bloody = target_flags & ~check_covered_slots()
 	var/list/all_worn = get_equipped_items()
 	for(var/obj/item/thing as anything in all_worn)
 		if(thing.slot_flags & slots_to_bloody)
@@ -194,7 +199,7 @@
 			dirty_feet = FALSE
 
 	if(slots_to_bloody & ITEM_SLOT_HANDS)
-		for(var/obj/item/thing in held_items)
+		for(var/obj/item/thing as anything in get_held_items())
 			thing.add_blood_DNA(blood_DNA_to_add)
 
 	cached_blood_color = null

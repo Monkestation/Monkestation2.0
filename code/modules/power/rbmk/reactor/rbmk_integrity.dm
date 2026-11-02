@@ -52,7 +52,7 @@
 	priority_announce(
 		message,
 		"RBMK Reactor Integrity Alert",
-		'sound/misc/airraid.ogg',
+		'sound/announcer/alarm/airraid.ogg',
 	)
 
 /** Applies thermal stress while the reactor is running or cooling down. */

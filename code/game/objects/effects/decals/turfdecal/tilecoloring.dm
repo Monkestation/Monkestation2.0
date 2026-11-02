@@ -123,7 +123,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/brown)
 
 /obj/effect/turf_decal/tile/neutral
 	name = "neutral tile decal"
-	color = "#D4D4D480"
+	color = "#D4D4D450"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/neutral)
 

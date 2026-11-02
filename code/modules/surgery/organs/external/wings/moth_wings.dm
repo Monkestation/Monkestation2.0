@@ -54,7 +54,7 @@
 /obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 
-	if(!burnt && human.get_skin_temperature() >= CELCIUS_TO_KELVIN(175 CELCIUS) && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
+	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious wings burn to a crisp!"))
 		human.add_mood_event("burnt_wings", /datum/mood_event/burnt_wings)
 
@@ -96,7 +96,10 @@
 /datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()
 	return GLOB.moth_wings_list
 
-/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if(!(human.w_uniform?.flags_inv & HIDEMUTWINGS) && !(human.wear_suit?.flags_inv & HIDEMUTWINGS) && !(human.wear_neck?.flags_inv & HIDEMUTWINGS))
 		return TRUE
 	return FALSE

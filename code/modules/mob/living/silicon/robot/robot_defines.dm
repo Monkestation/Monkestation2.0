@@ -16,6 +16,7 @@
 	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
 	has_limbs = TRUE
 	hud_type = /datum/hud/robot
+	unique_name = TRUE
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 	default_hand_amount = 3
 
@@ -111,8 +112,6 @@
 	var/lockcharge = FALSE
 	///Boolean of whether the borg was locked by its AI or nothing
 	var/ai_lockdown = FALSE
-	///Random serial number generated for each cyborg upon its initialization
-	var/ident = 0
 	var/locked = TRUE
 	req_one_access = list(ACCESS_ROBOTICS)
 
@@ -161,6 +160,9 @@
 
 	/// Can people buckle themselves / be buckled to the cyborg?
 	var/can_be_ridden = TRUE
+
+	/// Has the ghosts been polled to takeover us already?
+	var/unborgable_prompted_ghosts = FALSE
 
 // Defining specific kinds of robots
 ///This is the subtype that gets created by robot suits. It's needed so that those kind of borgs don't have a useless cell in them
@@ -301,3 +303,34 @@
 		Your cyborg chameleon projector allows you to assume the appearance and registered name of a Nanotrasen engineering borg, and undertake covert actions on the station \
 		Be aware that almost any physical contact or incidental damage will break your camouflage \
 		<i>Help the operatives secure the disks at all costs!</i></b>"
+
+/mob/living/silicon/robot/model/ninja
+	model = /obj/item/robot_model/ninja
+	icon_state = "ninja_sec"
+	faction = list(ROLE_NINJA)
+	lawupdate = FALSE
+	scrambledcodes = TRUE
+	ionpulse = TRUE
+	cell = /obj/item/stock_parts/power_store/cell/hyper
+
+/mob/living/silicon/robot/model/ninja/Initialize(mapload)
+	laws = new /datum/ai_laws/ninja_override()
+	laws.associate(src)
+	return ..()
+
+/mob/living/silicon/robot/model/ninja/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/ninja(src)
+		modularInterface.imprint_id(job_name = "Cyborg")
+	return ..()
+
+/mob/living/silicon/robot/model/ninja/reset_model()
+	return // Let them stay on the model forever.
+
+/mob/living/silicon/robot/model/ninja/medical
+	model = /obj/item/robot_model/ninja/medical
+	icon_state = "ninja_medical"
+
+/mob/living/silicon/robot/model/ninja/saboteur
+	model = /obj/item/robot_model/ninja/saboteur
+	icon_state = "ninja_engi"

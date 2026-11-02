@@ -13,7 +13,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION
 	transparent_protection = HIDEGLOVES | HIDESUITSTORAGE | HIDEJUMPSUIT | HIDESHOES | HIDENECK
-	// cold_protection = FULL_BODY
+	cold_protection = FULL_BODY
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
@@ -103,9 +103,9 @@
 	armor_type = /datum/armor/eldritch_armor/ash
 	flags_inv = HIDEBELT
 	body_parts_covered = FULL_BODY
-	// heat_protection = FULL_BODY
+	heat_protection = FULL_BODY
 	max_heat_protection_temperature = 50000
-	// cold_protection = FULL_BODY
+	cold_protection = FULL_BODY
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | LAVA_PROOF | FREEZE_PROOF
 	actions_types = list(/datum/action/item_action/toggle/flames)
@@ -340,7 +340,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic
 	armor_type = /datum/armor/eldritch_armor/cosmic
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
-	// cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	actions_types = list(/datum/action/item_action/toggle/gravity, /datum/action/cooldown/spell/jaunt/space_crawl)
 	/// If our robes are making us weightless
@@ -393,7 +393,7 @@
 	icon_state = "cosmic_armor"
 	armor_type = /datum/armor/eldritch_armor/cosmic
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
-	// cold_protection = HEAD
+	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic/Initialize(mapload)
@@ -565,6 +565,15 @@
 	/// damage modifier to all incoming damage, which is also converted to brain damage
 	var/damage_modifier = 1
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_gained(mob/living/user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	if(heretic_datum?.heretic_path?.route != PATH_MOON)
+		return
+	user.AddComponentFrom(REF(src), /datum/component/moon_blade_channel)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_lost(mob/living/user)
+	user.RemoveComponentSource(REF(src), /datum/component/moon_blade_channel)
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!ishuman(user) || !(slot_flags & slot))
@@ -698,7 +707,7 @@
 	visible_message = replacetext(visible_message, "%ATTACKER", attacker.get_visible_name())
 
 	var/self_message = pick(self_message_list)
-	self_message = replacetext(self_message_list, "%ATTACKER", attacker.get_visible_name())
+	self_message = replacetext(self_message, "%ATTACKER", attacker.get_visible_name())
 
 	var/blind_message = pick(blind_message_list)
 	victim.visible_message(span_danger(visible_message), span_userdanger(self_message), span_danger(blind_message))
@@ -1089,7 +1098,7 @@
 			continue
 		victim.apply_status_effect(/datum/status_effect/void_chill, 1)
 	new /obj/effect/temp_visual/circle_wave/void_armor(get_turf(owner))
-	playsound(owner, 'sound/magic/voidblink.ogg', vol = 20, vary = TRUE, frequency = 2)
+	playsound(owner, 'sound/effects/magic/voidblink.ogg', vol = 20, vary = TRUE, frequency = 2)
 	return TRUE
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
@@ -1239,7 +1248,7 @@
 	if(isliving(wearer))
 		wearer.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
 		// due to how temperature works, we need to make sure they don't freeze the moment they put the hood down after coming inside from a spacewalk
-		if(wearer.bodytemperature <= wearer.bodytemp_cold_damage_limit)
-			wearer.adjust_bodytemperature(INFINITY, max_temp = wearer.standard_body_temperature)
+		if(wearer.bodytemperature <= wearer.get_body_temp_cold_damage_limit())
+			wearer.adjust_bodytemperature(INFINITY, max_temp = wearer.get_body_temp_normal())
 		wearer.balloon_alert(wearer, "cloak revealed")
 		wearer.visible_message(span_notice("A kaleidoscope of colours collapses around [wearer], a cloak appearing suddenly around [wearer.p_their()] person!"))

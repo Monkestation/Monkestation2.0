@@ -2,7 +2,6 @@
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
-	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)
 	var/wash_count = 0

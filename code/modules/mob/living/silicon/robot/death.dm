@@ -33,3 +33,15 @@
 	unbuckle_all_mobs(TRUE)
 
 	SSblackbox.ReportDeath(src)
+
+/mob/living/silicon/set_suicide(suicide_state)
+	return // Since silicons can be ordered to suicide, they shouldn't be unrevivable when they do it.
+
+/mob/living/silicon/final_checkout(obj/item/suicide_tool, apply_damage = FALSE)
+	if(apply_damage)
+		apply_suicide_damage()
+
+	suicide_log(suicide_tool)
+	death(FALSE)
+	ghostize(TRUE) // Same as parent, except we let them re-enter their corpse.
+

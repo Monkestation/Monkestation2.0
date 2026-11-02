@@ -20,7 +20,7 @@
  */
 /datum/action/cooldown/spell/touch
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 	invocation = "High Five!"
 	invocation_type = INVOCATION_SHOUT
 
@@ -166,7 +166,7 @@
 		StartCooldown()
 		return
 
-	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
+	if(!QDELETED(attached_hand) && cast_on.is_holding(attached_hand))
 		remove_hand(cast_on, reset_cooldown_after = TRUE)
 		return
 

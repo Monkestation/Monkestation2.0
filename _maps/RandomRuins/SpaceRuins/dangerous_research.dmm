@@ -74,7 +74,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "aZ" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/structure/table,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
@@ -3735,7 +3735,7 @@
 	},
 /obj/structure/fluff{
 	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},

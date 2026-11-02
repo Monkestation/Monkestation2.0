@@ -31,6 +31,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if(!user.transferItemToLoc(attacking_item, src))
 				return
 			cell = attacking_item
+			if(cell.charge)
+				low_power_mode = FALSE
 			to_chat(user, span_notice("You insert the power cell."))
 		update_icons()
 		diag_hud_set_borgcell()
@@ -123,14 +125,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You must close the cover to swipe an ID card!"))
 		else
 			if(allowed(usr))
-				locked = !locked
-				to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
-				update_icons()
-				if(emagged)
-					to_chat(user, span_notice("The cover interface glitches out for a split second."))
-					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
-				else
-					logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
+				toggle_cover(user)
 			else
 				to_chat(user, span_danger("Access denied."))
 		return
@@ -201,7 +196,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				log_combat(user, src, "pushed")
 				visible_message(span_danger("[user] forces back [src]!"), \
 					span_userdanger("[user] forces back [src]!"), null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()
 	return
@@ -217,7 +212,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		cell.add_fingerprint(user)
 		user.put_in_active_hand(cell)
 		to_chat(user, span_notice("You remove \the [cell]."))
-		update_icons()
 		diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
@@ -438,7 +432,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!lavaland_equipment_pressure_check(get_turf(borg)))
 		balloon_alert(borg, "the shield didn't absorb the damage!")
 		return ..()
-	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)
+	playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
 	balloon_alert(borg, "absorbed!")
 	borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
 	damage *= 0.5

@@ -20,7 +20,7 @@
 		user.balloon_alert(user, "already installed!")
 		return
 	hypo.upgrade_flags |= upgrade_flag
-	playsound(src, 'sound/items/screwdriver.ogg', 50, 1)
+	playsound(src, 'sound/items/tools/screwdriver.ogg', 50, 1)
 	qdel(src)
 	return TRUE
 

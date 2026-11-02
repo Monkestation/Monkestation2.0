@@ -1,7 +1,7 @@
 /obj/item/taperecorder
 	name = "universal recorder"
 	desc = "A device that can record to recording tapes, and play them. It automatically translates the content in playback."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "taperecorder_empty"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "analyzer"
@@ -90,6 +90,9 @@
 		soundloop.start()
 
 /obj/item/taperecorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/music_tape))
+		balloon_alert(user, "won't fit!")
+		return
 	if(!mytape && istype(attacking_item, /obj/item/tape))
 		if(!user.transferItemToLoc(attacking_item,src))
 			return
@@ -130,9 +133,7 @@
 	return FALSE
 
 
-/obj/item/taperecorder/verb/ejectverb()
-	set name = "Eject Tape"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -169,9 +170,7 @@
 	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [speaker.GetVoice()]: [raw_message]"
 
 
-/obj/item/taperecorder/verb/record()
-	set name = "Start Recording"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, record, "Start Recording", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -212,9 +211,7 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
-/obj/item/taperecorder/verb/stop()
-	set name = "Stop"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, stop, "Stop", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -233,9 +230,7 @@
 	update_appearance()
 	update_sound()
 
-/obj/item/taperecorder/verb/play()
-	set name = "Play Tape"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, play, "Play Tape", "Object")
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -306,9 +301,7 @@
 			if("Eject")
 				eject(user)
 
-/obj/item/taperecorder/verb/print_transcript()
-	set name = "Print Transcript"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", "Object")
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))

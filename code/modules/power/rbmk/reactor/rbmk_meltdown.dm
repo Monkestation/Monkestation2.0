@@ -66,14 +66,14 @@
 		priority_announce(
 			"RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector. Radioactive fallout will reach exposed station areas in approximately one minute; seek shielded shelter.",
 			"RBMK Reactor Breach",
-			'sound/misc/airraid.ogg',
+			'sound/announcer/alarm/airraid.ogg',
 		)
 		rbmk_engineering_alert("RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector. Radioactive fallout will reach exposed station areas in approximately one minute; seek shielded shelter.")
 	else
 		priority_announce(
 			"RBMK reactor containment vessel failure confirmed. Radioactive fallout will reach exposed station areas in approximately one minute. Maintenance remains the safest shelter.",
 			"RBMK Reactor Breach",
-			'sound/misc/airraid.ogg',
+			'sound/announcer/alarm/airraid.ogg',
 		)
 		rbmk_engineering_alert("RBMK containment vessel failure confirmed. Fallout will reach exposed station areas in T-1 minute.")
 	if(!meltdown_supermatter_failure)

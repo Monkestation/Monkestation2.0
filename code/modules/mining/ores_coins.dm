@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
-	scan_state = "rock_Titanium"
+	scan_state = "rock_titanium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/titanium
 

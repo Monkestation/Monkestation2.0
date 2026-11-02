@@ -97,7 +97,7 @@
 	var/obj/item/item_parent = parent
 	COOLDOWN_START(src, charge_add_cd, charge_increment_delay)
 	adjust_charge(charge_recovery) // set the number of charges to current + recovery per increment, clamped from zero to max_charges
-	playsound(item_parent, 'sound/magic/charge.ogg', 50, TRUE)
+	playsound(item_parent, 'sound/effects/magic/charge.ogg', 50, TRUE)
 	if(current_charges == max_charges)
 		playsound(item_parent, 'sound/machines/ding.ogg', 50, TRUE)
 
@@ -143,7 +143,7 @@
 		shield_appearance.alpha = (current_charges/max_charges)*255
 	if(ishuman(wearer))
 		var/mob/living/carbon/human/human_wearer = wearer
-		human_wearer.apply_height_filters(shield_appearance)
+		human_wearer.apply_height(shield_appearance, ENTIRE_BODY)
 	overlays += shield_appearance
 
 /**

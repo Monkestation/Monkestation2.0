@@ -73,7 +73,7 @@
 		return
 
 	target_mob.visible_message("<span class='notice'>[user] starts taking a hit from the [src].</span>")
-	playsound(src, 'sound/chemistry/heatdam.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 	if(!do_after(user, 4 SECONDS))
 		return
 

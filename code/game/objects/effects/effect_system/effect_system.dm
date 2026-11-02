@@ -12,14 +12,6 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	pass_flags = PASSTABLE | PASSGRILLE
 	anchored = TRUE
 
-/obj/effect/particle_effect/Initialize(mapload)
-	. = ..()
-	SScameras.update_visibility(src)
-
-/obj/effect/particle_effect/Destroy()
-	SScameras.update_visibility(src)
-	return ..()
-
 // Prevents effects from getting registered for SSspacedrift
 /obj/effect/particle_effect/newtonian_move(direction, instant = FALSE, start_delay = 0)
 	return TRUE
@@ -67,7 +59,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	var/step_amt = pick(1,2,3)
 	var/step_delay = 5
 
-	var/datum/move_loop/loop = SSmove_manager.move(effect, direction, step_delay, timeout = step_delay * step_amt, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/loop = GLOB.move_manager.move(effect, direction, step_delay, timeout = step_delay * step_amt, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(decrement_total_effect))
 
 /datum/effect_system/proc/decrement_total_effect(datum/source)

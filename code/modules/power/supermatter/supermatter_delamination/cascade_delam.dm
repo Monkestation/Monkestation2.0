@@ -90,7 +90,7 @@
 		return FALSE
 	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
 	a subject within [station_name()], a resonance collapse may occur.",
-	"Nanotrasen Star Observation Association", 'sound/misc/airraid.ogg')
+	"Nanotrasen Star Observation Association", 'sound/announcer/alarm/airraid.ogg')
 	return TRUE
 
 /datum/sm_delam/cascade/proc/rbmk_cascade(atom/origin)

@@ -127,7 +127,7 @@
 	if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
 		if(iscarbon(user))
 			var/mob/living/carbon/guy = user
-			guy.adjust_bodytemperature((guy.bodytemp_heat_damage_limit - guy.standard_body_temperature) * 0.6)
+			guy.adjust_bodytemperature((guy.get_body_temp_heat_damage_limit() - guy.get_body_temp_normal()) * 0.6)
 
 	if(!is_ghost)
 		show_final_fluff_message(user, ladder, going_up)

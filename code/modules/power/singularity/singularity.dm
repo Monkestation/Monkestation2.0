@@ -476,5 +476,5 @@
 /obj/singularity/shuttle_event
 	anchored = FALSE
 
-/obj/singularity/immovable/can_move(turf/considered_turf)
-	return FALSE
+/obj/singularity/immovable
+	move_self = FALSE

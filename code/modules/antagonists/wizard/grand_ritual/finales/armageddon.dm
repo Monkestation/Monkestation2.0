@@ -31,7 +31,7 @@
 	)
 
 /datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker, picked_doom)
-	priority_announce(pick(possible_last_words), "ERROR", 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]", color_override = "purple")
+	priority_announce(pick(possible_last_words), "ERROR", 'sound/effects/magic/voidblink.ogg', sender_override = "[invoker.real_name]", color_override = "purple")
 	var/turf/current_location = get_turf(invoker)
 	if(iscarbon(invoker))
 		invoker.gib()
@@ -68,7 +68,7 @@
 				var/obj/item/gun/spawned_gun = new gun_type(get_turf(player))
 				if(istype(spawned_gun))
 					spawned_gun.unlock()
-				playsound(get_turf(player), 'sound/magic/summon_guns.ogg', 50, TRUE)
+				playsound(get_turf(player), 'sound/effects/magic/summon_guns.ogg', 50, TRUE)
 				var/in_hand = player.put_in_hands(spawned_gun)
 				to_chat(player, span_warning("\A [spawned_gun] appears [in_hand ? "in your hand" : "at your feet"]!"))
 

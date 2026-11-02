@@ -207,7 +207,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
  * * fade_time - The time for RCD holograms to fade
  */
 /proc/rcd_scan(atom/source, scan_range = RCD_DESTRUCTIVE_SCAN_RANGE, fade_time = RCD_HOLOGRAM_FADE_TIME)
-	playsound(source, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
+	playsound(source, 'sound/items/tools/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
 
 	var/turf/source_turf = get_turf(source)
 	for(var/turf/open/surrounding_turf in RANGE_TURFS(scan_range, source_turf))
@@ -692,6 +692,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	inhand_icon_state = "ircd"
 	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
+
+/obj/item/construction/rcd/borg/syndicate/ninja
+	name = "ninja RCD"
+	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. "
+	icon_state = "rsf" // Kind of gross to use this, but it is green. Ninja love green things.
 
 /obj/item/construction/rcd/loaded
 	matter = 160

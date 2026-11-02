@@ -338,7 +338,7 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 		data["canReagentSearch"] = !isnull(beaker_apparatus)
 	return data
 
@@ -414,7 +414,7 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 				if(!isnull(beaker_apparatus) && !isnull(beaker_apparatus.stored))
 					beaker_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
@@ -473,6 +473,13 @@
 	recharge_time = 2 SECONDS
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
+
+/// Ninja medical cyborg hypospray.
+/obj/item/reagent_containers/borghypo/syndicate/ninja
+	name = "ninja cyborg hypospray"
+	desc = "An experimental piece of Ninja technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. \
+		Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
+	icon_state = "borghypo_n"
 
 /// Paramedic toolset hypospray.
 /obj/item/reagent_containers/borghypo/paramedic
@@ -546,11 +553,11 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 		if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 			data["canReagentSearch"] = TRUE
 		if(!data["canReagentSearch"])
-			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
+			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 			if(!isnull(internal_beaker))
 				data["canReagentSearch"] = TRUE
 	return data
@@ -564,12 +571,12 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 				if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 					beverage_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
 				if(!.)
-					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (locate() in cyborg.held_items)
+					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 					if(!isnull(internal_beaker))
 						internal_beaker.reagents.ui_interact(cyborg)
 					. = TRUE

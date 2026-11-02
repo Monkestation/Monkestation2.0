@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/sentinel
 	desc = "A super-heavy seige walker, the Sentinel renders defenses to rubble."
 	name = "\improper Sentinel"
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "sentinel"
 	base_icon_state = "sentinel"
 	movedelay = 5
@@ -80,7 +80,7 @@
 	to_chat(owner, "[icon2html(chassis, owner)]<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
 	if(chassis.zoom_mode)
 		owner.client.view_size.setTo(4.5)
-		owner.playsound_local(src, 'sound/mecha/imag_enh.ogg', 50)
+		owner.playsound_local(src, 'sound/vehicles/mecha/imag_enh.ogg', 50)
 	else
 		owner.client.view_size.resetToDefault()
 	build_all_button_icons()

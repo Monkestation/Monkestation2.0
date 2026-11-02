@@ -256,6 +256,19 @@
 	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
+"Ag" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/railing{
+	color = "#8E5450"
+	},
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/lava,
+/area/centcom/tdome/arena/actual)
 "AO" = (
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "drip2"
@@ -279,9 +292,6 @@
 /obj/effect/rune/manifest,
 /obj/structure/stone_tile/slab,
 /mob/living/basic/pet/dog/corgi/narsie,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
 /turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "Gc" = (
@@ -540,7 +550,7 @@ yj
 em
 KC
 EG
-BB
+Ag
 AU
 pP
 ax

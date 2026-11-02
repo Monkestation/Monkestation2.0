@@ -3,7 +3,7 @@
 	desc = "An afront to both chemists and atmospheric technicans."
 
 	icon_state = "reaction_chamber"
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 
 	initialize_directions = EAST
 
@@ -64,7 +64,7 @@
 		return
 
 	if(!processing)
-		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg', 25, TRUE)
 		var/list/seen = viewers(4, get_turf(src))
 		var/iconhtml = icon2html(src, seen)
 		audible_message(span_notice("[iconhtml] The solution bubbles fiercely!"))

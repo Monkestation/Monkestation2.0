@@ -111,8 +111,8 @@
 		// Separate tritium into the outlet stream first, preserving the working
 		// coolant where possible. No gas is hidden, discarded or sent through
 		// a closed valve; the normal outlet flow budget still applies.
-		var/list/tritium_entry = internal_coolant_mix.gases[/datum/gas/tritium]
-		var/tritium_moles = tritium_entry ? tritium_entry[MOLES] : 0
+		var/tritium_entry = internal_coolant_mix.moles[/datum/gas/tritium]
+		var/tritium_moles = tritium_entry ? tritium_entry : 0
 		if(tritium_moles > 0)
 			outgoing_mix = internal_coolant_mix.remove_specific(/datum/gas/tritium, min(tritium_moles, desired_outlet_moles))
 		var/remaining_moles = desired_outlet_moles - (outgoing_mix?.total_moles() || 0)
@@ -224,9 +224,9 @@
 	var/total_coolant_moles = coolant_mix.total_moles()
 	if(total_coolant_moles <= 0)
 		return
-	for(var/gas_path in coolant_mix.gases)
-		var/list/gas_data = coolant_mix.gases[gas_path]
-		var/percent = (gas_data[MOLES] / total_coolant_moles) * 100
+	for(var/gas_path in coolant_mix.moles)
+		var/gas_data = coolant_mix.moles[gas_path]
+		var/percent = (gas_data / total_coolant_moles) * 100
 		var/list/gas_history = coolant_gas_hist[gas_path]
 		if(!gas_history)
 			gas_history = coolant_gas_hist[gas_path] = list()

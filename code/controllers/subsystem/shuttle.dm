@@ -9,7 +9,11 @@
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 1 SECONDS
-	init_order = INIT_ORDER_SHUTTLE
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/air,
+	)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
@@ -17,6 +21,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/mobile_docking_ports = list()
 	/// A list of all the stationary docking ports.
 	var/list/stationary_docking_ports = list()
+	/// A list of all the custom shuttles.
+	var/list/custom_shuttles = list()
 	/// A list of all the beacons that can be docked to.
 	var/list/beacon_list = list()
 	/// A list of all the transit docking ports.
@@ -228,7 +234,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text= "Emergency shuttle uplink services are now back online.",
 			title = "Uplink Restored",
-			sound = 'sound/misc/announce_dig.ogg',
+			sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
 		)
@@ -296,7 +302,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "Emergency shuttle uplink interference detected, shuttle call disabled while the system reinitializes. Estimated restore in [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
 			title = "Uplink Interference",
-			sound = 'sound/misc/announce_dig.ogg',
+			sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
@@ -537,7 +543,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "Departure has been postponed indefinitely pending conflict resolution.",
 			title = "Hostile Environment Detected",
-			sound = 'sound/misc/notice1.ogg',
+			sound = 'sound/announcer/notice/notice1.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
@@ -547,7 +553,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "You have [DisplayTimeText(emergency_dock_time)] to board the emergency shuttle.",
 			title = "Hostile Environment Resolved",
-			sound = 'sound/misc/announce_dig.ogg',
+			sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
 		)

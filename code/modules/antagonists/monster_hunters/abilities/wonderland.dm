@@ -8,7 +8,7 @@
 	///where the user originally was
 	var/turf/original_loc
 
-/datum/action/cooldown/wonderland_drop/New(Target)
+/datum/action/cooldown/wonderland_drop/New(Target, original = TRUE)
 	..()
 	landmark =  GLOB.wonderland_marks["Wonderland landmark"]
 

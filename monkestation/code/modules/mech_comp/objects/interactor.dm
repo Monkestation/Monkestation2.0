@@ -86,7 +86,7 @@
 			. = TRUE
 
 /obj/item/mcobject/interactor/proc/drop_dummy_items()
-	for(var/obj/item/item in dummy_human?.held_items)
+	for(var/obj/item/item as anything in dummy_human?.get_held_items())
 		dummy_human.dropItemToGround(item, force = TRUE, silent = TRUE)
 	held_item = null
 

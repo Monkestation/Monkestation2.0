@@ -55,7 +55,7 @@
 	to_chat(user, span_userdanger("Black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
 	if(!do_after(user, 5 SECONDS, interaction_key = DOAFTER_IMPLANTING_HEART))
 		return ..()
-	playsound(target_mob, 'sound/weapons/slice.ogg', 100, TRUE)
+	playsound(target_mob, 'sound/items/weapons/slice.ogg', 100, TRUE)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 	user.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
@@ -73,7 +73,7 @@
 	lightning_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "lightning")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.apply_height_filters(lightning_overlay)
+		human_owner.apply_height(lightning_overlay, ENTIRE_BODY)
 	owner.add_overlay(lightning_overlay)
 	lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
 

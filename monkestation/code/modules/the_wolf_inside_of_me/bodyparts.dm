@@ -27,8 +27,8 @@
 	unarmed_attack_verb = "bite"
 	//grappled_attack_verb = "maul"
 	unarmed_attack_effect = ATTACK_EFFECT_BITE
-	unarmed_attack_sound = 'sound/weapons/bite.ogg'
-	unarmed_miss_sound = 'sound/weapons/bite.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/bite.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/bite.ogg'
 	unarmed_damage_low = 60
 	unarmed_damage_high = 75
 	//unarmed_effectiveness = 50
@@ -49,7 +49,8 @@ IMPL_UPDATE_SPECIES_COLOR(head)
 	biological_state = BIO_FLESH|BIO_BLOODED
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_PUSHIMMUNE, TRAIT_STUNIMMUNE)
 	wing_types = null
-	acceptable_bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	acceptable_bodytype = BODYTYPE_ORGANIC
+	acceptable_bodyshape = BODYSHAPE_DIGITIGRADE
 
 IMPL_UPDATE_SPECIES_COLOR(chest)
 
@@ -60,8 +61,8 @@ IMPL_UPDATE_SPECIES_COLOR(chest)
 	unarmed_attack_verb = "slash"
 	//grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	unarmed_damage_low = 20
 	unarmed_damage_high = 25
 	//unarmed_effectiveness = 20
@@ -80,8 +81,8 @@ IMPL_UPDATE_SPECIES_COLOR(arm/left)
 	unarmed_attack_verb = "slash"
 	//grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	unarmed_damage_low = 20
 	unarmed_damage_high = 25
 	//unarmed_effectiveness = 20
@@ -97,7 +98,7 @@ IMPL_UPDATE_SPECIES_COLOR(arm/right)
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_DIGITIGRADE
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	speed_modifier = 3
@@ -111,7 +112,7 @@ IMPL_UPDATE_SPECIES_COLOR(leg/left)
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_DIGITIGRADE
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	speed_modifier = 3

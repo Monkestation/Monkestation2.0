@@ -136,7 +136,7 @@
 
 	if(iscyborg(user))
 		var/has_cautery = FALSE
-		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in user.held_items)
+		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool as anything in user.get_held_items_of_type(/obj/item/borg/cyborg_omnitool/medical))
 			if(omnitool.tool_behaviour == TOOL_CAUTERY)
 				has_cautery = TRUE
 		if(!has_cautery)

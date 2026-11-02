@@ -202,7 +202,7 @@
 	user.put_in_hands(inserted_card)
 	inserted_card = null
 	to_chat(user, span_notice("Card ejected!"))
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 70)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 70)
 
 /datum/component/armament/proc/select_armament(mob/user, datum/armament_entry/armament_entry)
 	if(!inserted_card)

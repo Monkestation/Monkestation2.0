@@ -1,7 +1,7 @@
 /obj/item/set_selector
 	name = "Set Selector"
 	desc = "A beacon used to summon various items."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
 	///Our stock list, set by our spawner
 	var/list/stock_list

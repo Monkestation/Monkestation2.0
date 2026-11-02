@@ -1,3 +1,8 @@
+/// Audibility cutoff used only by opt-in live attenuation.
+#define LIVE_LOOP_AUDIBLE_VOLUME_MIN 3
+#define LIVE_LOOP_MAX_AUDIBLE_DISTANCE(volume, max_distance, falloff_distance, falloff_exponent) \
+	floor(((((-(max(max_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / volume) * (LIVE_LOOP_AUDIBLE_VOLUME_MIN - volume)) ** falloff_exponent) + falloff_distance))
+
 /**
  * A datum for sounds that need to loop, with a high amount of configurability.
  */
@@ -53,7 +58,7 @@
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
 	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
-	var/audio_index = 1
+	var/audio_index = 0
 
 	// Args
 	/// Do we skip the starting sounds?
@@ -82,6 +87,18 @@
 	var/live_current_base_volume
 	/// Mobs that are currently receiving this live attenuated loop.
 	var/list/live_listeners
+	///If we want to reserve a random channel when we start playing sounds. Good for when there could be several sources of the same looping sound heard by the same
+	var/reserve_random_channel = FALSE
+	///If we reserve a random sound channel, store the channel number here so we can clean it up later.
+	var/reserved_channel
+	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds like grav-gen)
+	var/use_sound_tokens = FALSE
+	///The sound token instance for this looping sound.
+	var/datum/sound_token/sound_token_instance
+	///Opt-out of native sound repeat even if this loop would otherwise qualify for it. Relevant if you need to know timings about when the loop ends for example.
+	var/never_native_repeat = FALSE
+	///Whether we're currently using native sound.repeat instead of re-firing on the SSsound_loops timer.
+	var/native_repeat_active = FALSE
 
 /datum/looping_sound/New(
 	_parent,
@@ -117,8 +134,12 @@
 /datum/looping_sound/proc/start(on_behalf_of)
 	if(on_behalf_of)
 		set_parent(on_behalf_of)
-	if(timer_id)
+	if(timer_id || loop_started)
 		return
+
+	if(!use_sound_tokens && !sound_channel && reserve_random_channel)
+		sound_channel = SSsounds.reserve_sound_channel()
+		reserved_channel = sound_channel
 	on_start()
 
 /**
@@ -132,22 +153,35 @@
 	stop_current()
 	if(null_parent)
 		set_parent(null)
-	if(!timer_id)
+	if(!timer_id && !loop_started)
 		if(null_parent)
 			release_reserved_sound_channel()
 		return
 	on_stop()
-	deltimer(timer_id, SSsound_loops)
-	timer_id = null
+	if(timer_id)
+		deltimer(timer_id, SSsound_loops)
+		timer_id = null
 	loop_started = FALSE
 	// Opt-in loops retain ownership across stops so their ending sound cannot
 	// be overwritten by a different loop reserving the just-freed channel.
 	if(null_parent)
 		release_reserved_sound_channel()
+	native_repeat_active = FALSE
+
+	if(reserved_channel)
+		sound_channel = null
+		SSsounds.free_sound_channel(reserved_channel)
+		reserved_channel = null
 
 /// The proc that handles starting the actual core sound loop.
 /datum/looping_sound/proc/start_sound_loop()
 	loop_started = TRUE
+	if(can_native_repeat())
+		native_repeat_active = TRUE
+		play(resolve_single_sound(), repeat_sound = TRUE)
+		if(max_loops)
+			timer_id = addtimer(CALLBACK(src, PROC_REF(stop)), mid_length * max_loops, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+		return
 	sound_loop()
 	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
@@ -185,6 +219,8 @@
  */
 /datum/looping_sound/proc/set_mid_length(new_mid)
 	mid_length = new_mid
+	if(native_repeat_active) // Native repeat is driven by the sound file's own length, not mid_length
+		return
 	if(!timer_id)
 		return
 	updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
@@ -195,16 +231,31 @@
  * Arguments:
  * * soundfile - The soundfile we want to play.
  * * volume_override - The volume we want to play the sound at, overriding the `volume` variable.
+ * * repeat_sound - Whether the sound should loop natively via sound.repeat (token path only).
+ * * delete_when_finished - Whether to play the sound on a one-shot token that deletes itself once the sound ends, instead of on our own token (token path only).
  */
-/datum/looping_sound/proc/play(soundfile, volume_override)
+/datum/looping_sound/proc/play(soundfile, volume_override, repeat_sound = FALSE, delete_when_finished = FALSE)
+
+	if(use_sound_tokens)
+		if(!soundfile) // Null end_sound, stopping the token already silenced us
+			return
+		if(delete_when_finished) // Not kept as our token, or we'd keep reusing it after it deletes itself
+			playsoundtoken(parent, soundfile, volume_override || volume, SOUND_RANGE + extra_range, falloff_exponent, falloff_distance, mixer_channel = sound_channel)
+			return
+		if(sound_token_instance)
+			sound_token_instance.set_volume(volume_override || volume, FALSE) // Don't update, we'll do that after
+			sound_token_instance.update_sound(soundfile, TRUE, repeat_sound)
+		else
+			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance, _repeating = repeat_sound, _mixer_channel = sound_channel)
+		return
 	var/sound/sound_to_play = sound(soundfile)
 
 	if(direct)
 		var/mob/mob_parent = parent
 		if(!mob_parent?.client)
 			return
-		sound_to_play.channel = sound_channel || guess_mixer_channel(soundfile) || SSsounds.random_available_channel()
-		sound_to_play.volume = volume_override || calculate_mixed_volume(mob_parent.client, sound_to_play.volume, sound_to_play.channel)
+		sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
+		sound_to_play.volume = calculate_mixed_volume(mob_parent.client, volume_override || volume, sound_channel || guess_mixer_channel(soundfile))
 		SEND_SOUND(mob_parent, sound_to_play)
 	else
 		playsound(
@@ -248,10 +299,10 @@
 	// Hold rejected reservations until a safe channel is acquired; freeing one
 	// immediately would make the allocator hand the same channel back again.
 	var/list/fixed_channel_reservations = list()
-	var/channel = SSsounds.reserve_sound_channel(src)
+	var/channel = SSsounds.reserve_sound_channel_for_datum(src)
 	while(channel in GLOB.used_sound_channels)
 		fixed_channel_reservations += channel
-		channel = SSsounds.reserve_sound_channel(src)
+		channel = SSsounds.reserve_sound_channel_for_datum(src)
 	reserved_sound_channel = channel
 	for(var/fixed_channel in fixed_channel_reservations)
 		SSsounds.free_sound_channel(fixed_channel)
@@ -262,7 +313,10 @@
 	if(!reserved_sound_channel)
 		return
 
-	SSsounds.free_sound_channel(reserved_sound_channel)
+	// Upstream's deletion signal may already have released this reservation
+	// before Destroy() runs. Never free it twice or release a new owner's slot.
+	if(SSsounds.using_channels["[reserved_sound_channel]"] == src)
+		SSsounds.free_sound_channel(reserved_sound_channel)
 	reserved_sound_channel = null
 
 /// Makes sure this datum can safely use live attenuation.
@@ -285,7 +339,7 @@
 		return candidates
 
 	if(!isnull(base_volume))
-		if(base_volume < SOUND_AUDIBLE_VOLUME_MIN)
+		if(base_volume < LIVE_LOOP_AUDIBLE_VOLUME_MIN)
 			return candidates
 
 		if(falloff_exponent)
@@ -293,7 +347,7 @@
 			if(resolved_falloff_distance >= max_distance)
 				CRASH("[type] has falloff_distance >= live_attenuation_max_distance.")
 
-			max_distance = min(max_distance, CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(base_volume, max_distance, resolved_falloff_distance, falloff_exponent))
+			max_distance = min(max_distance, LIVE_LOOP_MAX_AUDIBLE_DISTANCE(base_volume, max_distance, resolved_falloff_distance, falloff_exponent))
 
 	if(ignore_walls)
 		for(var/mob/listener in get_hearers_in_range(max_distance, parent, RECURSIVE_CONTENTS_CLIENT_MOBS))
@@ -352,7 +406,7 @@
 	if(HAS_TRAIT_FROM(listener, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
 		effective_volume *= 0.2
 
-	if(effective_volume < SOUND_AUDIBLE_VOLUME_MIN)
+	if(effective_volume < LIVE_LOOP_AUDIBLE_VOLUME_MIN)
 		return 0
 
 	return max(effective_volume, 0)
@@ -413,7 +467,7 @@
 		return
 
 	var/base_volume = volume_override || volume
-	if(base_volume < SOUND_AUDIBLE_VOLUME_MIN)
+	if(base_volume < LIVE_LOOP_AUDIBLE_VOLUME_MIN)
 		return
 
 	live_current_sound = soundfile
@@ -562,6 +616,24 @@
 /datum/looping_sound/proc/get_end_sound()
 	return islist(end_sound) ? pick_weight_recursive(end_sound) : end_sound
 
+/// Returns the lone soundfile mid_sounds resolves to, or null if it can pick between more than one file.
+/datum/looping_sound/proc/resolve_single_sound()
+	if(isfile(mid_sounds) || istext(mid_sounds))
+		return mid_sounds
+	if(islist(mid_sounds) && length(mid_sounds) == 1)
+		var/only_sound = mid_sounds[1]
+		if(isfile(only_sound) || istext(only_sound))
+			return only_sound
+	return null
+
+/// Whether this loop qualifies for native sound.repeat instead of re-firing on a timer every mid_length.
+/datum/looping_sound/proc/can_native_repeat()
+	if(!use_sound_tokens || never_native_repeat)
+		return FALSE
+	if(chance || mid_length_vary || each_once || in_order)
+		return FALSE
+	return !!resolve_single_sound()
+
 /// A proc that's there to handle delaying the main sounds if there's a start_sound, and simply starting the sound loop in general.
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
@@ -577,6 +649,7 @@
 		stop_live_channels()
 		return
 
+	QDEL_NULL(sound_token_instance)
 	if(!sound_channel || !ismob(parent))
 		return
 	var/mob/mob_parent = parent
@@ -585,7 +658,7 @@
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
 	if(loop_started) //monkestation edit - Allow null end_sound to stop sound
-		play(get_end_sound(), end_volume)
+		play(get_end_sound(), end_volume, delete_when_finished = TRUE)
 
 /// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)
@@ -597,9 +670,12 @@
 
 /// A simple proc that lets us know whether the sounds are currently active or not.
 /datum/looping_sound/proc/is_active()
-	return !!timer_id
+	return loop_started || !!timer_id
 
 /// A simple proc to handle the deletion of the parent, so that it does not force it to hard-delete.
 /datum/looping_sound/proc/handle_parent_del(datum/source)
 	SIGNAL_HANDLER
 	set_parent(null)
+
+#undef LIVE_LOOP_AUDIBLE_VOLUME_MIN
+#undef LIVE_LOOP_MAX_AUDIBLE_DISTANCE

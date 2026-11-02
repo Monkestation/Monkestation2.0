@@ -91,7 +91,7 @@
 
 	if(!jaunter || !gib_from_internal_explosion)
 		return
-	exit_jaunt(jaunter)
+	INVOKE_ASYNC(src, PROC_REF(exit_jaunt), jaunter)
 	jaunter.visible_message(span_danger("[jaunter] suddenly appears as the air around them warps stretching them apart!"),
 			span_userdanger("You feel a sudden cosmic force push from within as your body starts to stretch itself apart. Your last thought is \"Oh, fuck.\""),
 			span_hear("You hear a high-pitched shear as the air around you warps."))

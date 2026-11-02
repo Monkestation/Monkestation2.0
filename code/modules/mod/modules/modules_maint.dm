@@ -101,12 +101,12 @@
 			span_danger("[src] inside [mod.wearer]'s [mod.name] activates!"),
 			span_danger("Your body is quickly caught by your suit.")
 		)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 50, TRUE)
 	else
 		mod.wearer.visible_message(
 			span_danger("[src] inside [mod.wearer]'s [mod.name] fails to actuate."),
 		)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 25, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 25, TRUE)
 
 
 
@@ -165,7 +165,7 @@
 		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
 		if(deleting)
 			return
-		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
+		SEND_SOUND(mod.wearer, sound('sound/machines/terminal/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
@@ -274,7 +274,7 @@
 
 	// Up to a 30% chance to set the sheet on fire, +2% per sheet made
 	if(prob(min(num_sheets_dispensed * 2, 30)))
-		if(crisp_paper in mod.wearer.held_items)
+		if(mod.wearer.is_holding(crisp_paper))
 			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
 		crisp_paper.balloon_alert(mod.wearer, UNLINT("PC LOAD LETTER!"))
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
@@ -329,7 +329,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/effects/curseattack.ogg', 50)
+	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
@@ -344,7 +344,7 @@
 	if(!.)
 		return
 	if(deleting)
-		playsound(src, 'sound/effects/curseattack.ogg', 50)
+		playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_SAY))
 	step_count = 0

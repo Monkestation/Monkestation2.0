@@ -390,7 +390,7 @@ the modular shield components(not generator) are climbable
 
 	name = "Modular Shield Debugger" //Filler name and sprite for testing
 	desc = "This is filler for testing you shouldn`t see this."
-	icon = 'icons/mecha/mech_bay.dmi'
+	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
 	density = TRUE
 

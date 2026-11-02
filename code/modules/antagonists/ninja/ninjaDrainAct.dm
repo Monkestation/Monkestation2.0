@@ -304,13 +304,11 @@
 	spark_system.start()
 	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
-	faction = list(ROLE_NINJA)
-	bubble_icon = "syndibot"
 	UnlinkSelf()
-	ionpulse = TRUE
 	laws = new /datum/ai_laws/ninja_override()
-	apply_model(pick(/obj/item/robot_model/syndicate, /obj/item/robot_model/syndicate/medical, /obj/item/robot_model/syndicate/saboteur))
+	apply_model(pick(/obj/item/robot_model/ninja, /obj/item/robot_model/ninja/medical, /obj/item/robot_model/ninja/saboteur))
 	apply_skin(model.default_skin)
+	ionpulse = TRUE
 
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)

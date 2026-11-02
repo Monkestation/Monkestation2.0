@@ -39,6 +39,8 @@ GLOBAL_PROTECT(href_token)
 	var/datum/plane_master_debug/plane_debug
 	var/datum/pathfind_debug/path_debug
 	var/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/library_manager
+	var/datum/spawn_menu/spawn_menu
+	var/datum/spawnpanel/spawn_panel
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE
@@ -146,7 +148,7 @@ GLOBAL_PROTECT(href_token)
 
 	if (!isnull(client))
 		disassociate()
-		add_verb(client, /client/proc/readmin)
+		ASSIGN_GAME_VERB(client, /client, readmin)
 		client.disable_combo_hud()
 		client.update_special_keybinds()
 
@@ -182,12 +184,12 @@ GLOBAL_PROTECT(href_token)
 	if (deadmined)
 		activate()
 
-	remove_verb(client, /client/proc/admin_2fa_verify)
+	UNASSIGN_GAME_VERB(client, /client, admin_2fa_verify)
 
 	owner = client
 	owner.holder = src
 	owner.add_admin_verbs()
-	remove_verb(owner, /client/proc/readmin)
+	UNASSIGN_GAME_VERB(owner, /client, readmin)
 	owner.init_verbs() //re-initialize the verb list
 	owner.update_special_keybinds()
 	GLOB.admins |= client
@@ -324,7 +326,7 @@ GLOBAL_PROTECT(href_token)
 #define ERROR_2FA_REQUEST_PERMISSIONS "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact an admin with +PERMISSIONS to grant you permission.</b></h1>"
 
 /datum/admins/proc/start_2fa_process(client/client, id)
-	add_verb(client, /client/proc/admin_2fa_verify)
+	ASSIGN_GAME_VERB(client, /client, admin_2fa_verify)
 	client?.init_verbs()
 
 	var/admin_2fa_url = CONFIG_GET(string/admin_2fa_url)

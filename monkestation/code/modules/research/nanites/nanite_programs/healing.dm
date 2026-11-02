@@ -26,23 +26,22 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(host_mob.bodytemperature > host_mob.bodytemp_heat_damage_limit)
+	if(host_mob.bodytemperature > host_mob.get_body_temp_heat_damage_limit())
 		if(HAS_TRAIT(host_mob, TRAIT_RESISTHEAT))
 			return FALSE
-	else if(host_mob.bodytemperature < host_mob.bodytemp_cold_damage_limit)
+	else if(host_mob.bodytemperature < host_mob.get_body_temp_cold_damage_limit())
 		if(HAS_TRAIT(host_mob, TRAIT_RESISTCOLD))
 			return FALSE
 	else
 		return FALSE
 	return ..()
 
-/datum/nanite_program/temperature/enable_passive_effect()
-	. = ..()
-	host_mob.add_homeostasis_level(REF(src), host_mob.standard_body_temperature, 10 KELVIN, TRUE, TRUE)
-
-/datum/nanite_program/temperature/disable_passive_effect()
-	. = ..()
-	host_mob.remove_homeostasis_level(REF(src))
+/datum/nanite_program/temperature/active_effect()
+	var/target_temp = host_mob.get_body_temp_normal(apply_change=FALSE)
+	if(host_mob.bodytemperature > target_temp)
+		host_mob.adjust_bodytemperature(-10 KELVIN, target_temp)
+	else if(host_mob.bodytemperature < (target_temp + 1))
+		host_mob.adjust_bodytemperature(10 KELVIN, 0, target_temp)
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
@@ -218,11 +217,11 @@
 
 /datum/nanite_program/defib/proc/zap()
 	var/mob/living/carbon/C = host_mob
-	playsound(C, 'sound/machines/defib_charge.ogg', 50, FALSE)
+	playsound(C, 'sound/machines/defib/defib_charge.ogg', 50, FALSE)
 	sleep(3 SECONDS)
-	playsound(C, 'sound/machines/defib_zap.ogg', 50, FALSE)
+	playsound(C, 'sound/machines/defib/defib_zap.ogg', 50, FALSE)
 	if(check_revivable())
-		playsound(C, 'sound/machines/defib_success.ogg', 50, FALSE)
+		playsound(C, 'sound/machines/defib/defib_success.ogg', 50, FALSE)
 		C.set_heartattack(FALSE)
 		C.revive()
 		C.emote("gasp")
@@ -230,7 +229,7 @@
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
 		log_game("[key_name(C)] has been successfully defibrillated by nanites.")
 	else
-		playsound(C, 'sound/machines/defib_failed.ogg', 50, FALSE)
+		playsound(C, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 
 
 //heard you like smoking

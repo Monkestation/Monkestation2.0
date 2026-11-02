@@ -123,8 +123,8 @@
 	throwforce = 0
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "silk"
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	mats_per_unit = list(/datum/material/silk = SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/cellulose = 20)
 	tableVariant = /obj/structure/table/silk

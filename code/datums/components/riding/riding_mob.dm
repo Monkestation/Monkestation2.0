@@ -205,7 +205,7 @@
 			span_danger("The weight of [riding_mob] is too much for [human_parent]!"),
 			span_userdanger("The weight of [riding_mob] is too much. You are crushed beneath [riding_mob.p_them()]!"),
 		)
-		playsound(human_parent.loc, 'sound/weapons/punch1.ogg', 35, TRUE, -1)
+		playsound(human_parent.loc, 'sound/items/weapons/punch1.ogg', 35, TRUE, -1)
 		Unbuckle(riding_mob)
 		return
 
@@ -324,14 +324,16 @@
 
 /datum/component/riding/creature/cyborg/handle_vehicle_offsets(dir)
 	var/mob/living/silicon/robot/robot_parent = parent
-
+	if(isnull(robot_parent.skin.ride_offset))
+		return
+	if(!(dir in GLOB.cardinals)) // Dir is NONE if moving between z-levels.
+		return
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
-		if(dir2text(dir) in robot_parent.skin.ride_offset_x)
-			rider.pixel_x = robot_parent.skin.ride_offset_x[dir2text(dir)]
-		if(dir2text(dir) in robot_parent.skin.ride_offset_y)
-			rider.pixel_y = robot_parent.skin.ride_offset_y[dir2text(dir)]
-
+		var/list/offset = robot_parent.skin.ride_offset[dir2text(dir)]
+		if(offset)
+			rider.pixel_x = offset[1]
+			rider.pixel_y = offset[2]
 //now onto every other ridable mob//
 
 /datum/component/riding/creature/mulebot/handle_specials()
@@ -382,7 +384,7 @@
 
 	if(human_user && is_clown_job(human_user.mind?.assigned_role))
 		// there's a new sheriff in town
-		playsound(movable_parent, 'sound/creatures/pony/clown_gallup.ogg', 50)
+		playsound(movable_parent, 'sound/mobs/non-humanoids/pony/clown_gallup.ogg', 50)
 		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
 
 

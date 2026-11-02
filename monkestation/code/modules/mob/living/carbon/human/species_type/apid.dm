@@ -139,13 +139,13 @@
 	toxic_foodtypes = RAW | SEAFOOD
 
 /obj/item/organ/internal/tongue/apid/get_scream_sound()
-	return 'sound/voice/moth/scream_moth.ogg'
+	return 'sound/mobs/humanoids/moth/scream_moth.ogg'
 
 /obj/item/organ/internal/tongue/apid/get_laugh_sound()
 	return pick(
-		'sound/voice/laugh/moth/mothchitter.ogg',
-		'sound/voice/laugh/moth/mothlaugh.ogg',
-		'sound/voice/laugh/moth/mothsqueak.ogg',
+		'sound/mobs/humanoids/moth/mothchitter.ogg',
+		'sound/mobs/humanoids/moth/moth_laugh1.ogg',
+		'sound/mobs/humanoids/moth/mothsqueak.ogg',
 	)
 
 /datum/species/apid/create_pref_unique_perks()

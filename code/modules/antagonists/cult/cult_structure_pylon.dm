@@ -5,7 +5,7 @@
 	icon_state = "pylon"
 	light_outer_range = 1.5
 	light_color = COLOR_SOFT_RED
-	break_sound = 'sound/effects/glassbr2.ogg'
+	break_sound = 'sound/effects/glass/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	/// Length of the cooldown in between tile corruptions. Doubled if no turfs are found.
 	var/corruption_cooldown_duration = 5 SECONDS
@@ -60,7 +60,7 @@
 	if(length(validturfs))
 		var/turf/converted_turf = pick(validturfs)
 		if(isplatingturf(converted_turf))
-			converted_turf.PlaceOnTop(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
+			converted_turf.place_on_top(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
 		else
 			converted_turf.ChangeTurf(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
 

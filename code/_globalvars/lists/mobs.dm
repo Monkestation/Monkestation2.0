@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/carbon/human/consistent,
 	/mob/living/carbon/human/dummy,
 	/mob/living/carbon/human/dummy/consistent,
+	/mob/living/carbon/human/tutorial,
 	/mob/living/carbon/human/species,
 	/mob/living/silicon,
 	/mob/living/simple_animal,

@@ -21,7 +21,7 @@
 	var/final_message = "reaches a catastrophic overload, cracks forming at its surface!"
 	var/sound/active_alarm = 'sound/effects/alert.ogg' // plays every alarm_cooldown_time when active
 	var/alarm_cooldown_time = 3 SECONDS
-	var/sound/final_sound = 'sound/misc/bloblarm.ogg'
+	var/sound/final_sound = 'sound/announcer/alarm/bloblarm.ogg'
 	COOLDOWN_DECLARE(activation_cooldown)
 	COOLDOWN_DECLARE(alarm_cooldown)
 	var/timer_id
@@ -146,10 +146,8 @@
 		our_artifact.artifact_deactivate()
 		return FALSE
 	var/datum/gas_mixture/merger = new
-	merger.assert_gas(payload_gas)
-	merger.assert_gas(/datum/gas/oxygen)
-	merger.gases[payload_gas][MOLES] = rand(150,2000)
-	merger.gases[/datum/gas/oxygen][MOLES] = 350
+	merger.set_gas(payload_gas, rand(150,2000))
+	merger.set_gas(/datum/gas/oxygen, 350)
 	merger.temperature = rand(200,3000)
 	O.assume_air(merger)
 	qdel(our_artifact)

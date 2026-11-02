@@ -1,7 +1,7 @@
 /obj/machinery/plantgenes
 	name = "plant DNA manipulator"
 	desc = "An advanced device designed to manipulate plant genetic makeup."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
@@ -90,11 +90,9 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/plantgenes/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(iscyborg(user))
-		return
 	if(!anchored)
 		return ..()
-
+	attacking_item = attacking_item.get_proxy_attacker_for(src, user)
 	if(istype(attacking_item, /obj/item/seeds))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
@@ -255,9 +253,10 @@
 				for(var/a in trait_genes)
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
-					if(can_extract)
-						dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+					if((G.mutability_flags & PLANT_GENE_REMOVABLE))
+						if(can_extract)
+							dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+						dat += "<a href='byond://?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
@@ -320,52 +319,53 @@
 			operation = href_list["op"]
 
 		else if(operation == href_list["op"] && target == G)
-			switch(href_list["op"])
-				if("remove")
-					if(!istype(G, /datum/plant_gene/core))
-						seed.genes -= G
-						if(istype(G, /datum/plant_gene/reagent))
-							seed.reagents_from_genes()
-					repaint_seed()
-				if("extract")
-					if(disk && !disk.read_only)
-						disk.gene = G
-						seed.genes -= G
-						if(istype(G, /datum/plant_gene/core))
-							var/datum/plant_gene/core/gene = G
-							if(istype(G, /datum/plant_gene/core/potency))
-								gene.value = min(gene.value, max_potency)
-							else if(istype(G, /datum/plant_gene/core/lifespan))
-								gene.value = min(gene.value, max_endurance) //INTENDED
-							else if(istype(G, /datum/plant_gene/core/endurance))
-								gene.value = min(gene.value, max_endurance)
-							else if(istype(G, /datum/plant_gene/core/production))
-								gene.value = max(gene.value, min_production)
-							else if(istype(G, /datum/plant_gene/core/yield))
-								gene.value = min(gene.value, max_yield)
-							else if(istype(G, /datum/plant_gene/core/weed_rate))
-								gene.value = max(gene.value, min_wrate)
-							else if(istype(G, /datum/plant_gene/core/weed_chance))
-								gene.value = max(gene.value, min_wchance)
-						disk.update_disk_name()
-						QDEL_NULL(seed)
-						update_appearance(UPDATE_OVERLAYS)
-				if("replace")
-					if(disk && disk.gene && istype(disk.gene, G.type) && istype(G, /datum/plant_gene/core))
-						seed.genes -= G
-						var/datum/plant_gene/core/C = disk.gene.Copy()
-						var/datum/plant_gene/core/disk_core = disk.gene
-						C.value = disk_core.value
-						seed.genes += C
-						C.apply_stat(seed)
+			if((G.mutability_flags & PLANT_GENE_REMOVABLE))
+				switch(href_list["op"])
+					if("remove")
+						if(!istype(G, /datum/plant_gene/core))
+							seed.genes -= G
+							if(istype(G, /datum/plant_gene/reagent))
+								seed.reagents_from_genes()
 						repaint_seed()
-				if("insert")
-					if(disk && disk.gene && !istype(disk.gene, /datum/plant_gene/core) && disk.gene.can_add(seed))
-						seed.genes += disk.gene.Copy()
-						if(istype(disk.gene, /datum/plant_gene/reagent))
-							seed.reagents_from_genes()
-						disk.gene.apply_vars(seed)
-						repaint_seed()
+					if("extract")
+						if(disk && !disk.read_only)
+							disk.gene = G
+							seed.genes -= G
+							if(istype(G, /datum/plant_gene/core))
+								var/datum/plant_gene/core/gene = G
+								if(istype(G, /datum/plant_gene/core/potency))
+									gene.value = min(gene.value, max_potency)
+								else if(istype(G, /datum/plant_gene/core/lifespan))
+									gene.value = min(gene.value, max_endurance) //INTENDED
+								else if(istype(G, /datum/plant_gene/core/endurance))
+									gene.value = min(gene.value, max_endurance)
+								else if(istype(G, /datum/plant_gene/core/production))
+									gene.value = max(gene.value, min_production)
+								else if(istype(G, /datum/plant_gene/core/yield))
+									gene.value = min(gene.value, max_yield)
+								else if(istype(G, /datum/plant_gene/core/weed_rate))
+									gene.value = max(gene.value, min_wrate)
+								else if(istype(G, /datum/plant_gene/core/weed_chance))
+									gene.value = max(gene.value, min_wchance)
+							disk.update_disk_name()
+							QDEL_NULL(seed)
+							update_appearance(UPDATE_OVERLAYS)
+					if("replace")
+						if(disk && disk.gene && istype(disk.gene, G.type) && istype(G, /datum/plant_gene/core))
+							seed.genes -= G
+							var/datum/plant_gene/core/C = disk.gene.Copy()
+							var/datum/plant_gene/core/disk_core = disk.gene
+							C.value = disk_core.value
+							seed.genes += C
+							C.apply_stat(seed)
+							repaint_seed()
+					if("insert")
+						if(disk && disk.gene && !istype(disk.gene, /datum/plant_gene/core) && disk.gene.can_add(seed))
+							seed.genes += disk.gene.Copy()
+							if(istype(disk.gene, /datum/plant_gene/reagent))
+								seed.reagents_from_genes()
+							disk.gene.apply_vars(seed)
+							repaint_seed()
 
 
 			update_genes()
@@ -436,7 +436,7 @@
 	if(copytext(seed.name, 1, 13) == "experimental")//13 == length("experimental") + 1
 		return // Already modded name and icon
 	seed.name = "experimental " + seed.name
-	seed.icon = 'icons/obj/hydroponics/seeds.dmi'
+	seed.icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	seed.icon_state = "seed-x"
 /*
  *  Plant DNA disk

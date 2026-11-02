@@ -183,7 +183,7 @@
 		visible_message(span_danger("[src] erupts in a violent supermatter pressure discharge as the rod is extracted!"))
 	else
 		visible_message(span_danger("[src] violently vents superheated pressure as the rod is extracted!"))
-	playsound(src, 'sound/effects/explosion1.ogg', cascade_extraction ? 100 : 80, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion1.ogg', cascade_extraction ? 100 : 80, TRUE)
 	explosion(
 		source_turf,
 		devastation_range = 0,

@@ -25,7 +25,7 @@
 	else
 		to_chat(finder, span_notice("It's grown quite large, and writhes slightly as you look at it."))
 		if(prob(10))
-			attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
+			INVOKE_ASYNC(src, PROC_REF(attempt_grow))
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -86,12 +86,12 @@
 				continue
 			if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
 				continue
-			attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
+			INVOKE_ASYNC(src, PROC_REF(attempt_grow))
 			return
-		attempt_grow()
+		INVOKE_ASYNC(src, PROC_REF(attempt_grow))
 
 ///Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
-/obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
+/obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow()
 	if(!owner || bursting)
 		return
 	var/neuter_status
@@ -128,7 +128,7 @@
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc, neutered) //monkestation edit: The value is true if it cant evolve into a drone. False if it can.
 	new_xeno.PossessByPlayer(ghost.key)
-	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
+	SEND_SOUND(new_xeno, sound('sound/mobs/non-humanoids/hiss/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
 	new_xeno.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
 

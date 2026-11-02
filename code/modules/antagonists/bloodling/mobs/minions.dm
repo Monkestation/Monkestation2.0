@@ -21,7 +21,7 @@
 	name = "harvester"
 	desc = "A mass of flesh with two large scything talons."
 
-	attack_sound = "sound/weapons/bladeslice.ogg"
+	attack_sound = "sound/items/weapons/bladeslice.ogg"
 	icon_state = "harvester"
 	icon_living = "harvester"
 	icon_dead = "harvester_dead"

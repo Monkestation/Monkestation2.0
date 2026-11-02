@@ -101,8 +101,8 @@
 			return
 
 		if(!ignore_clothing)
-			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!HAS_TRAIT(I, TRAIT_NODROP))
+			for(var/obj/item/item as anything in C.get_equipped_items(INCLUDE_HELD))
+				if(!HAS_TRAIT(item, TRAIT_NODROP))
 					to_chat(user, span_warning("Subject may not have abiotic items on!"))
 					return
 
@@ -136,10 +136,8 @@
 	else
 		return ..()
 
-/obj/machinery/gibber/verb/eject()
-	set category = "Object"
-	set name = "Empty gibber"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/machinery/gibber, eject, oview(1), "Empty gibber", "Object")
+
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))
@@ -221,6 +219,11 @@
 				newmeat.subjectjob = sourcejob
 		allmeat[i] = newmeat
 
+	// Extra stuff some mobs drop when gibbed, like fillets from fish tails
+	var/list/extra_results = list()
+	SEND_SIGNAL(mob_occupant, COMSIG_LIVING_GIBBER_ACT, user, src, extra_results)
+	allmeat += extra_results
+
 	if(typeofskin)
 		skin = new typeofskin
 
@@ -244,7 +247,7 @@
 	if(skin)
 		skin.forceMove(loc)
 		skin.throw_at(pick(nearby_turfs),meat_produced,3)
-	for (var/i=1 to meat_produced)
+	for (var/i in 1 to length(allmeat))
 		var/obj/item/meatslab = allmeat[i]
 		if(blood_dna_info)
 			meatslab.add_blood_DNA(blood_dna_info)

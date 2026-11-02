@@ -45,10 +45,8 @@
 
 
 /// Prints what type of guardian we are and what we can do.
-/mob/living/basic/guardian/verb/check_type()
-	set name = "Check Guardian Type"
-	set category = "Guardian"
-	set desc = "Check what type you are."
+GAME_VERB_DESC(/mob/living/basic/guardian, check_type, "Check Guardian Type", "Check what type you are.", "Guardian")
+
 	to_chat(src, playstyle_string)
 
 

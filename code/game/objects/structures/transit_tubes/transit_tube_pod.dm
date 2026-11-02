@@ -2,7 +2,7 @@
 #define MOVE_ANIMATION_STAGE_TWO 2
 
 /obj/structure/transit_tube_pod
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon = 'icons/obj/pipes_n_cables/transit_tube.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
@@ -14,9 +14,8 @@
 
 /obj/structure/transit_tube_pod/Initialize(mapload)
 	. = ..()
-	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
+	var/list/new_gases = list(/datum/gas/oxygen = MOLES_O2STANDARD, /datum/gas/nitrogen = MOLES_N2STANDARD)
+	air_contents.adjust_multiple_gases(new_gases)
 	air_contents.temperature = T20C
 
 /obj/structure/transit_tube_pod/Destroy()
@@ -98,7 +97,7 @@
 	moving = TRUE
 	current_tube = tube
 
-	var/datum/move_loop/engine = SSmove_manager.force_move_dir(src, dir, 0, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/engine = GLOB.move_manager.force_move_dir(src, dir, 0, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(engine, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(before_pipe_transfer))
 	RegisterSignal(engine, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_pipe_transfer))
 	RegisterSignal(engine, COMSIG_QDELETING, PROC_REF(engine_finish))

@@ -316,10 +316,10 @@
 		return
 	running = TRUE
 	var/control_ratio = CLAMP01(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX)
-	// Fine authority near full insertion: withdrawing 5% commands 0.25%
+	// Fine authority near full insertion: withdrawing 5% commands about 0.34%
 	// of unmoderated reaction strength, while full withdrawal retains output.
 	var/exposed_fraction = CLAMP01(1 - control_ratio)
-	var/flux_control_multiplier = exposed_fraction ** 2
+	var/flux_control_multiplier = exposed_fraction ** 1.9
 	var/heat_control_multiplier = flux_control_multiplier
 	var/extra_void_coefficient = update_void_coefficient()
 	var/fuel_burn_multiplier = flux_control_multiplier * (1 + extra_void_coefficient) * (1 + rod_flux_multiplier_bonus)
@@ -367,7 +367,7 @@
 		tritium_delta *= seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
 		if(tritium_delta > 0)
 			coolant_internal.assert_gases(/datum/gas/tritium)
-			coolant_internal.gases[/datum/gas/tritium][MOLES] += tritium_delta
+			coolant_internal.moles[/datum/gas/tritium] += tritium_delta
 	rbmk_update_pressure(seconds_per_tick)
 	rbmk_sample_coolant()
 	rbmk_sample_reactor_temperature()

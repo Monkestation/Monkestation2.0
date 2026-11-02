@@ -2,6 +2,7 @@
 	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
 	name = "\improper H.O.N.K"
 	ui_theme = "neutral"
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "honker"
 	base_icon_state = "honker"
 	movedelay = 3

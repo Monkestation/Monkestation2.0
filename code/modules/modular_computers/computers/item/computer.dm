@@ -111,6 +111,9 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
+	/// This is where our overlays reside
+	var/overlays_icon = 'icons/obj/computer.dmi'
+
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20
@@ -278,7 +281,7 @@
 		real_id.forceMove(src)
 
 	computer_id_slot = real_id
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
@@ -305,7 +308,7 @@
 		computer_id_slot.forceMove(drop_location())
 
 	computer_id_slot = null
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	balloon_alert(user, "removed ID")
 	to_chat(user, span_notice("You remove the card from the card slot."))
 
@@ -427,15 +430,11 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-	if(!init_icon)
-		return
-
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_open_overlay) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += mutable_appearance(overlays_icon, "bsod")
+		. += mutable_appearance(overlays_icon, "broken")
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
@@ -526,7 +525,7 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/origin, alerttext, sound = 'sound/machines/twobeep_high.ogg', vision_distance = DEFAULT_MESSAGE_RANGE)
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/origin, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg', vision_distance = DEFAULT_MESSAGE_RANGE)
 	if(QDELETED(loc) || QDELETED(origin) || !origin.alert_able || origin.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
@@ -536,7 +535,7 @@
 	if(!use_energy(check_programs = FALSE))
 		return
 	// Get the messenger app's new sound settings || Monkestation Addition START
-	var/sound_to_play = 'sound/machines/twobeep_high.ogg' //defaults to the original
+	var/sound_to_play = 'sound/machines/beep/twobeep_high.ogg' //defaults to the original
 	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
 	if(messenger?.ringtone_sound)
 		var/selected_sound = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
@@ -544,7 +543,7 @@
 			sound_to_play = selected_sound
 	// Monkestation Addition END
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE, mixer_channel = CHANNEL_RINGTONES)
+		playsound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg'), 50, TRUE, mixer_channel = CHANNEL_RINGTONES)
 	else
 		playsound(src, sound_to_play, 50, TRUE, mixer_channel = CHANNEL_RINGTONES) // Monkestation change
 	ringtone = "*[ringtone]*"
@@ -556,12 +555,12 @@
 	// Monkestation Addition START
 	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
 	if(!messenger)
-		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
 		return
 
 	var/sound_file = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
 	if(!sound_file)
-		sound_file = 'sound/machines/terminal_success.ogg'
+		sound_file = 'sound/machines/terminal/terminal_success.ogg'
 
 	playsound(src, sound_file, 15, TRUE)
 	// Monkestation Addition END

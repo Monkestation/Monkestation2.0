@@ -44,10 +44,7 @@
 		UnregisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
 	update_icon_state()
 
-/obj/item/clothing/shoes/magboots/boomboots/verb/toggle_boomboots()
-	set name = "Toggle Boom Boots"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/shoes/magboots/boomboots, toggle_boomboots, usr, "Toggle Boom Boots", "Object")
 
 	if(!can_use(usr))
 		return

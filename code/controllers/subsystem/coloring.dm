@@ -1,7 +1,9 @@
 
 SUBSYSTEM_DEF(station_coloring)
 	name = "Station Coloring"
-	init_order = INIT_ORDER_ICON_COLORING // before SSicon_smooth
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+	)
 	flags = SS_NO_FIRE
 	///do we bother with wall trims?
 	var/wall_trims = FALSE

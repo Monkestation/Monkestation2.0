@@ -18,7 +18,6 @@
 SUBSYSTEM_DEF(plexora)
 	name = "Plexora"
 	wait = 30 SECONDS
-	init_order = INIT_ORDER_PLEXORA
 	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_PLEXORA
 	runlevels = ALL

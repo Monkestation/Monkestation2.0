@@ -27,7 +27,7 @@
 		if(!carbon.get_bodypart(BODY_ZONE_HEAD))
 			our_artifact.holder.say("My condolences to your missing head.") //they can speak uhh galactic common because alien tech idk
 			our_artifact.holder.visible_message(span_notice("[our_artifact.holder] shakes [user][p_s()] hands with an apparatus."))
-			playsound(get_turf(our_artifact.holder), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(get_turf(our_artifact.holder), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 			our_artifact.artifact_deactivate()
 			return
 		else

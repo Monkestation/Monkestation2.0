@@ -1,7 +1,8 @@
 /obj/item/clothing/head/polycowboyhat
 	name = "Poly Cowboy Hat"
 	desc = "A Cowboy hat, made out of a special polychromatic material allowing it to be colored"
-	icon_state = "cowboyhat_poly"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("cowboyhat_poly", "/obj/item/clothing/head/polycowboyhat")
 	worn_icon_state = "wcowboyhat_poly"
 	greyscale_config = /datum/greyscale_config/polycowhat
 	greyscale_config_worn = /datum/greyscale_config/polycowhat_worn
@@ -33,10 +34,10 @@
 	alternative_screams = list('sound/misc/cheekibreeki.ogg', 'sound/misc/cyka1.ogg')
 
 /obj/item/clothing/head/cardborg
-	alternative_screams = list('sound/voice/screams/silicon/scream_silicon.ogg')
+	alternative_screams = list('sound/mobs/non-humanoids/cyborg/scream/scream_silicon.ogg')
 
 /obj/item/clothing/head/kitty
-	alternative_screams = list('sound/voice/screams/felinid/scream_cat.ogg')
+	alternative_screams = list('sound/mobs/humanoids/felinid/scream_cat.ogg')
 
 /obj/item/clothing/head/foilhat
 	alternative_screams = list(	'sound/misc/jones/jones0.ogg',

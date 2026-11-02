@@ -95,7 +95,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/datum/component/soulcatcher/new_soulcatcher = target_item.AddComponent(/datum/component/soulcatcher/attachable_soulcatcher)
-	playsound(target_item.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
+	playsound(target_item.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
 
 	var/datum/soulcatcher_room/target_room = new_soulcatcher.soulcatcher_rooms[1]
 	var/list/current_souls = linked_soulcatcher.get_current_souls()

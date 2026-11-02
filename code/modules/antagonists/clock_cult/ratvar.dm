@@ -76,6 +76,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	if(GLOB.cult_ratvar == src)
 		GLOB.cult_ratvar = null
 	STOP_PROCESSING(SSobj, src)
+	SSshuttle.clearHostileEnvironment(src)
 	return ..()
 
 /obj/ratvar/process(seconds_per_tick)
@@ -86,7 +87,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 			if(next_attack_tick < world.time)
 				next_attack_tick = world.time + rand(50, 100)
 				send_to_playing_players(span_danger("[pick("Reality shudders around you.","You hear the tearing of flesh.","The sound of bones cracking fills the air.")]"))
-				sound_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg',100)
+				sound_to_playing_players('sound/effects/magic/clockwork/ratvar_attack.ogg',100)
 				explosion(GLOB.cult_narsie, 0, 2, 6)
 				SpinAnimation(4, 0)
 
@@ -95,7 +96,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 					living_player.Knockdown(1 SECONDS)
 
 				if(prob(max(length(GLOB.main_clock_cult?.members)/2, 15)))
-					sound_to_playing_players('sound/magic/demon_dies.ogg', 100)
+					sound_to_playing_players('sound/effects/magic/demon_dies.ogg', 100)
 					qdel(GLOB.cult_narsie)
 					send_to_playing_players(span_ratvar("You were a fool for underestimating me..."))
 					for(var/datum/mind/cultist_mind in get_antag_minds(/datum/antagonist/cult))
@@ -141,12 +142,12 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	priority_announce("Huge gravitational-energy spike detected emminating from a neutron star [text2ratvar("THEY LIE")] near your sector. Event has been determined to be \
 						survivable by 0% of life. ESTIMATED TIME UNTIL ENERGY PULSE REACHES [GLOB.station_name]: 56 SECONDS. Godspeed crew, glory to Nanotrasen. \
 						-Admiral W[text2ratvar("orthless")].", \
-						"Central Command Anomolous Materials Division", 'sound/misc/airraid.ogg')
+						"Central Command Anomolous Materials Division", 'sound/announcer/alarm/airraid.ogg')
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_pre_ending)), 50 SECONDS)
 
 /proc/clockcult_pre_ending()
 	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENGINE")].", \
-					  "Central Command Anomolous Materials Division", 'sound/machines/alarm.ogg')
+					  "Central Command Anomolous Materials Division", 'sound/announcer/alarm/nuke_alarm.ogg')
 	for(var/mob/player_mob in GLOB.player_list)
 		if(player_mob.client)
 			player_mob.client.color = COLOR_WHITE
@@ -159,7 +160,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 		player_mob.client.color = LIGHT_COLOR_CLOCKWORK
 		animate(player_mob.client, color = COLOR_WHITE, time = 5)
 		SEND_SOUND(player_mob, sound(null))
-		SEND_SOUND(player_mob, sound('sound/magic/fireball.ogg'))
+		SEND_SOUND(player_mob, sound('sound/effects/magic/fireball.ogg'))
 
 	for(var/mob/living/lit_mob in GLOB.mob_living_list)
 		if(!IS_CLOCK(lit_mob))

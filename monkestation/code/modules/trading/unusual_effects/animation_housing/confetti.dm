@@ -1,7 +1,7 @@
 /datum/component/particle_spewer/confetti
 	unusual_description = "partytime"
 	duration = 2 SECONDS
-	burst_amount = 5
+	burst_amount = 6
 	particle_blending = BLEND_ADD
 	spawn_interval = 1 SECONDS
 

@@ -26,8 +26,8 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
-	if(check_holidays(HALLOWEEN))
-		return TRUE
+	//if(check_holidays(HALLOWEEN))
+	//return FALSE
 	return ..()
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/human, datum/species/old_species)

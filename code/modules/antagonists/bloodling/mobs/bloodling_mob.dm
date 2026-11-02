@@ -11,7 +11,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	speed = 2.8
@@ -20,7 +20,7 @@
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
 	faction = list(FACTION_BLOODLING)
 	pass_flags = PASSTABLE
-	attack_sound = 'sound/effects/attackblob.ogg'
+	attack_sound = 'sound/effects/blob/attackblob.ogg'
 
 	// This adds a red tinted nightvision
 	lighting_cutoff_red = 40
@@ -87,7 +87,9 @@
 	// All evolutions over 2 (3,4,5) are spess proof
 	if(evolution_level > 2)
 		ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-		src.bodytemp_cold_damage_limit = -1
+		RemoveElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+		minimum_survivable_temperature = 0
+		apply_temperature_requirements()
 		src.pressure_resistance = 200
 		src.habitable_atmos = null
 
@@ -197,8 +199,8 @@
 
 /mob/living/basic/bloodling/proper/proc/evolution_mind_change(mob/living/basic/bloodling/proper/new_bloodling)
 	new_bloodling.setDir(dir)
-	if(numba)
-		new_bloodling.numba = numba
+	if(identifier)
+		new_bloodling.identifier = identifier
 		new_bloodling.set_name()
 	new_bloodling.name = name
 	new_bloodling.real_name = real_name

@@ -11,7 +11,7 @@
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/creepalert.ogg'
+	stinger_sound = 'sound/music/antag/creepalert.ogg'
 	antag_count_points = 3
 	var/datum/brain_trauma/special/obsessed/trauma
 	var/protection = FALSE // used to tell what flavor to text to give.
@@ -56,7 +56,7 @@
 	var/icon/final_icon = finish_preview_icon(obsessed_icon)
 
 	final_icon.Blend(
-		icon('icons/ui_icons/antags/obsessed.dmi', "obsession"),
+		icon('icons/ui/antags/obsessed.dmi', "obsession"),
 		ICON_OVERLAY,
 		ANTAGONIST_PREVIEW_ICON_SIZE - 30,
 		20,

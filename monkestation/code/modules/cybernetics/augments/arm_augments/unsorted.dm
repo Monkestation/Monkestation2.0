@@ -108,7 +108,7 @@
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
 			source.do_attack_animation(target)
-			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+			playsound(living_target.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -121,7 +121,7 @@
 		potential_damage += biotype_bonus_damage
 
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(living_target.loc, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
 	var/armor_block = living_target.run_armor_check(target_zone, MELEE/*, armour_penetration = attacking_bodypart.unarmed_effectiveness*/)
@@ -269,16 +269,10 @@
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#00e1ff"
 
-/obj/item/organ/internal/cyberimp/arm/cooler/on_life()
+/obj/item/organ/internal/cyberimp/arm/cooler/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(owner.bodytemperature > (owner.standard_body_temperature + 2 KELVIN))
-		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
-	else
-		owner.remove_homeostasis_level(REF(src))
-
-/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	organ_owner?.remove_homeostasis_level(REF(src))
+	if(owner.bodytemperature > (owner.get_body_temp_normal() + 2 KELVIN))
+		owner.adjust_bodytemperature(-0.25 KELVIN * seconds_per_tick, owner.get_body_temp_normal())
 
 /obj/item/organ/internal/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
@@ -288,15 +282,9 @@
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#ff9100"
 
-/obj/item/organ/internal/cyberimp/arm/heater/on_life()
+/obj/item/organ/internal/cyberimp/arm/heater/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(owner.bodytemperature < (owner.standard_body_temperature - 2 KELVIN))
-		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
-	else
-		owner.remove_homeostasis_level(REF(src))
-
-/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	organ_owner.remove_homeostasis_level(REF(src))
+	if(owner.bodytemperature < (owner.get_body_temp_normal() - 2 KELVIN))
+		owner.adjust_bodytemperature(0.25 KELVIN * seconds_per_tick, 0, owner.get_body_temp_normal())
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION

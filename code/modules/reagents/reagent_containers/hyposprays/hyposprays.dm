@@ -45,9 +45,9 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 	//	Sound Vars	//
 	/// The sound that plays when you insert a vial into the hypospray
-	var/load_sound = 'sound/weapons/autoguninsert.ogg'
+	var/load_sound = 'sound/items/weapons/autoguninsert.ogg'
 	/// The sound that plays when you eject a vial from the hypospray
-	var/eject_sound = 'sound/weapons/empty.ogg'
+	var/eject_sound = 'sound/items/weapons/empty.ogg'
 	/// The sound that plays when you inject someone with the hypospray
 	var/inject_sound = 'sound/items/hypospray.ogg'
 	/// The sound that plays when you spray someone with the hypospray
@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/cmo
 	name = "advanced hypospray"
 	icon_state = "hypo_cmo"
-	desc = "An advanced hypospray that can use larger size vials, pierce thick clothing, and deliver more reagents per injection."
+	desc = "An advanced hypospray that can pierce thick clothing and inject reagents faster than a standard hypospray."
 	allowed_containers = list(/obj/item/reagent_containers/chemcanister, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	default_vial = /obj/item/reagent_containers/chemcanister/bluespace/omnizine

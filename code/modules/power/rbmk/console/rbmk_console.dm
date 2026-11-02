@@ -122,11 +122,11 @@
 	var/total_moles = gas_mix.total_moles()
 	if(total_moles <= 0)
 		return gas_data
-	for(var/gas_path in gas_mix.gases)
-		var/list/gas_entry = gas_mix.gases[gas_path]
+	for(var/gas_path in gas_mix.moles)
+		var/gas_entry = gas_mix.moles[gas_path]
 		var/gas_percent = 0
-		if(gas_entry && gas_entry[MOLES] > 0)
-			gas_percent = (gas_entry[MOLES] / total_moles) * 100
+		if(gas_entry && gas_entry > 0)
+			gas_percent = (gas_entry / total_moles) * 100
 		gas_data[gas_path] = list(
 			"percent" = RBMK_ROUND2(gas_percent),
 		)

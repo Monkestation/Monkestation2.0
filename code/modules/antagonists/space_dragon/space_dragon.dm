@@ -6,7 +6,7 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
-	stinger_sound = 'sound/magic/demon_attack1.ogg'
+	stinger_sound = 'sound/effects/magic/demon_attack1.ogg'
 	antag_count_points = 15
 	antag_flags = FLAG_ANTAG_CAP_IGNORE_HUMANITY
 	/// All space carps created by this antagonist space dragon
@@ -165,7 +165,7 @@
 	main_objective?.completed = TRUE
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
 		Remaining crew are advised to evacuate as soon as possible.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
-	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
+	sound_to_playing_players('sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg')
 	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.carp_stored = 999999
 		rift.time_charged = rift.max_charge

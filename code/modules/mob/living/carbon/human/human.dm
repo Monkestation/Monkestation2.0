@@ -1,5 +1,5 @@
 /mob/living/carbon/human/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
@@ -104,11 +104,6 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
-		var/slot = text2num(href_list["item"])
-		if(check_obscured_slots(TRUE) & slot)
-			to_chat(usr, span_warning("You can't reach that! Something is covering it."))
-			return
 
 	if(href_list["see_id"])
 		var/mob/viewer = usr
@@ -434,10 +429,7 @@
 /mob/living/carbon/human/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE) && user)
-		if(!target_zone)
-			target_zone = get_bodypart(check_zone(user.zone_selected))
-		var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
-		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
+		balloon_alert(user, "no exposed skin on [target_zone || check_zone(user.zone_selected)]!")
 
 /mob/living/carbon/human/get_footprint_sprite()
 	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
@@ -532,7 +524,7 @@
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_THREE)
-		for(var/obj/item/hand in held_items)
+		for(var/obj/item/hand as anything in get_held_items())
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
@@ -619,8 +611,7 @@
  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
  */
 /mob/living/carbon/human/proc/wash_hands(clean_types)
-	var/obscured = check_obscured_slots()
-	if(obscured & ITEM_SLOT_GLOVES)
+	if(check_covered_slots() & ITEM_SLOT_GLOVES)
 		return FALSE
 
 	if(gloves)
@@ -640,13 +631,10 @@
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
-	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
-		update_worn_glasses()
+	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		. = TRUE
 
-	var/obscured = check_obscured_slots()
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
-		update_worn_mask()
+	if(wear_mask && !(check_covered_slots() & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
 		. = TRUE
 
 /**
@@ -654,28 +642,11 @@
  */
 /mob/living/carbon/human/wash(clean_types)
 	. = ..()
-
-	// Wash equipped stuff that cannot be covered
-	if(wear_suit?.wash(clean_types))
-		update_worn_oversuit()
-		. = TRUE
-
-	if(belt?.wash(clean_types))
-		update_worn_belt()
-		. = TRUE
-
-	// Check and wash stuff that can be covered
-	var/obscured = check_obscured_slots()
-
-	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && w_uniform.wash(clean_types))
-		update_worn_undersuit()
-		. = TRUE
-
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
 	// Wash hands if exposed
-	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(obscured & ITEM_SLOT_GLOVES))
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(check_covered_slots() & ITEM_SLOT_GLOVES))
 		blood_in_hands = 0
 		update_worn_gloves()
 		. = TRUE
@@ -750,6 +721,11 @@
 		for(var/datum/mutation/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE)
 				dna.remove_mutation(existing_mutation.name, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
+
+	if(heal_flags & HEAL_TEMP)
+		set_coretemperature(get_body_temp_normal(apply_change = FALSE))
+		heat_exposure_stacks = 0
+
 	return ..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1, knockdown = FALSE)
@@ -986,6 +962,58 @@
 
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
+
+/// Adds a left eye color override with the given priority, the highest priority override is the one shown
+/mob/living/carbon/human/proc/add_eye_color_left(color, color_priority, update_body = TRUE)
+	LAZYSET(eye_color_left_overrides, "[color_priority]", color)
+	if (update_body)
+		update_body()
+
+/// Adds a right eye color override with the given priority, the highest priority override is the one shown
+/mob/living/carbon/human/proc/add_eye_color_right(color, color_priority, update_body = TRUE)
+	LAZYSET(eye_color_right_overrides, "[color_priority]", color)
+	if (update_body)
+		update_body()
+
+/// Adds an eye color override for both eyes with the given priority
+/mob/living/carbon/human/proc/add_eye_color(color, color_priority, update_body = TRUE)
+	add_eye_color_left(color, color_priority, update_body = FALSE)
+	add_eye_color_right(color, color_priority, update_body = update_body)
+
+/// Removes the eye color overrides of both eyes with the given priority
+/mob/living/carbon/human/proc/remove_eye_color(color_priority, update_body = TRUE)
+	LAZYREMOVE(eye_color_left_overrides, "[color_priority]")
+	LAZYREMOVE(eye_color_right_overrides, "[color_priority]")
+	if (update_body)
+		update_body()
+
+/// Returns the right eye color we should show, the highest priority override or our natural color
+/mob/living/carbon/human/proc/get_right_eye_color()
+	if (!LAZYLEN(eye_color_right_overrides))
+		return eye_color_right
+
+	var/eye_color = eye_color_right
+	var/priority
+	for (var/override_priority in eye_color_right_overrides)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
+			eye_color = eye_color_right_overrides[override_priority]
+	return eye_color
+
+/// Returns the left eye color we should show, the highest priority override or our natural color
+/mob/living/carbon/human/proc/get_left_eye_color()
+	if (!LAZYLEN(eye_color_left_overrides))
+		return eye_color_left
+
+	var/eye_color = eye_color_left
+	var/priority
+	for (var/override_priority in eye_color_left_overrides)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
+			eye_color = eye_color_left_overrides[override_priority]
+	return eye_color
 
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey

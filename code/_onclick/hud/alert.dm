@@ -212,6 +212,11 @@
 	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_N2O
 
+/atom/movable/screen/alert/not_enough_water
+	name = "Choking (No H2O)"
+	desc = "You're not getting enough water. Drench yourself in some water (e.g. showers) or get some water vapor before you pass out!"
+	icon_state = ALERT_NOT_ENOUGH_WATER
+
 //End gas alerts
 
 /atom/movable/screen/alert/gross
@@ -375,6 +380,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/screentip_override_text
 	/// Whether the offered item can be examined by shift-clicking the alert
 	var/examinable = TRUE
+	/// Whether this item should bypass active hand checks.
+	var/bypass_active_hand = FALSE
 
 /atom/movable/screen/alert/give/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -454,11 +461,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
-	if(!taker.take(offerer, receiving, visible_message))
+	if(!taker.take(offerer, receiving, bypass_active_hand, visible_message))
 		return FALSE
 
 	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
 	return TRUE
+
+/// Mostly for borgs to offer items.
+/atom/movable/screen/alert/give/borg
+	bypass_active_hand = TRUE
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
@@ -507,7 +518,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!QDELETED(rube) && !QDELETED(offerer))
 		offerer.visible_message(span_danger("[offerer] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
 		to_chat(rube, span_userdanger("[uppertext("NO! [offerer] PULLS [offerer.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")]"))
-		playsound(offerer, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+		playsound(offerer, 'sound/items/weapons/thudswoosh.ogg', 100, TRUE, 1)
 		rube.Knockdown(1 SECONDS)
 		offerer.add_mood_event("high_five", /datum/mood_event/down_low)
 		rube.add_mood_event("high_five", /datum/mood_event/too_slow)
@@ -593,7 +604,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
-	living_owner.succumb(whispered = length(last_whisper) > 0)
+	INVOKE_GAME_VERB(living_owner, usr, /mob/living, succumb, whisper = length(last_whisper) > 0)
 
 #undef FASTSUCCUMB_NO
 #undef FASTSUCCUMB_WAIT

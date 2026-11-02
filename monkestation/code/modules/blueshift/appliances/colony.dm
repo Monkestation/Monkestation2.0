@@ -183,13 +183,13 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 /// Checks if this reaction can actually be run
 /datum/cracker_reaction/proc/reaction_check(datum/gas_mixture/air_mixture)
 	var/temp = air_mixture.temperature
-	var/list/cached_gases = air_mixture.gases
+	var/list/cached_moles = air_mixture.moles
 	if((requirements["MIN_TEMP"] && temp < requirements["MIN_TEMP"]) || (requirements["MAX_TEMP"] && temp > requirements["MAX_TEMP"]))
 		return FALSE
 	for(var/id in requirements)
 		if(id == "MIN_TEMP" || id == "MAX_TEMP")
 			continue
-		if(!cached_gases[id] || cached_gases[id][MOLES] < requirements[id])
+		if(cached_moles[id] < requirements[id])
 			return FALSE
 	return TRUE
 
@@ -208,10 +208,12 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 
 /datum/cracker_reaction/co2_cracking/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 	var/old_heat_capacity = air_mixture.heat_capacity()
-	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen)
-	var/proportion = min(air_mixture.gases[/datum/gas/carbon_dioxide][MOLES] * INVERSE(2), (2.5 * (working_power ** 2)))
-	air_mixture.gases[/datum/gas/carbon_dioxide][MOLES] -= proportion
-	air_mixture.gases[/datum/gas/oxygen][MOLES] += proportion
+	var/cached_moles = air_mixture.moles
+
+	var/proportion = min(cached_moles[/datum/gas/carbon_dioxide] * INVERSE(2), (2.5 * (working_power ** 2)))
+
+	cached_moles[/datum/gas/carbon_dioxide] -= proportion
+	cached_moles[/datum/gas/oxygen] += proportion
 	var/new_heat_capacity = air_mixture.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)

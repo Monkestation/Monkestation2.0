@@ -6,5 +6,15 @@
 	icon_state = "synd_engi"
 	icon_state_light = "synd_engi"
 	bubble_icon = "syndibot"
-	hat_offset = -4
-	badge_offset = -4
+	hat_offset = list(
+		"north" = list(0, -4),
+		"east" = list(0, -4),
+		"south" = list(0, -4),
+		"west" = list(0, -4),
+	)
+	badge_offset = list(
+		"north" = list(0, -4),
+		"east" = list(0, -4),
+		"south" = list(0, -4),
+		"west" = list(0, -4),
+	)

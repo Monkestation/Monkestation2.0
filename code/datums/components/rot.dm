@@ -42,12 +42,8 @@
 		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(rot_react))
 	if(isliving(parent))
-		var/mob/living/living_parent = parent
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(react_to_revive)) //mobs stop this when they come to life
 		RegisterSignal(parent, COMSIG_LIVING_GET_PULLED, PROC_REF(rot_react_touch))
-
-		RegisterSignal(parent, COMSIG_LIVING_BODY_TEMPERATURE_CHANGE, PROC_REF(check_for_temperature))
-		check_for_temperature(parent, living_parent.bodytemperature, living_parent.bodytemperature)
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
 		RegisterSignals(carbon_parent.reagents, list(
@@ -61,6 +57,10 @@
 			SIGNAL_ADDTRAIT(TRAIT_HUSK),
 			SIGNAL_REMOVETRAIT(TRAIT_HUSK),
 		), PROC_REF(check_husk_trait))
+	if(ishuman(parent))
+		var/mob/living/carbon/human/human_parent = parent
+		RegisterSignal(parent, COMSIG_HUMAN_CORETEMP_CHANGE, PROC_REF(check_for_temperature))
+		check_for_temperature(null, 0, human_parent.coretemperature)
 
 	start_up(NONE) //If nothing's blocking it, start
 

@@ -121,7 +121,7 @@
 		return
 	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
-	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
+	user.playsound_local(parent, 'sound/items/weapons/scope.ogg', 75, TRUE)
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)
 	tracker.assign_to_mob(user, range_modifier)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_zooming))
@@ -148,7 +148,7 @@
 		user.client.mouse_override_icon = null
 		user.update_mouse_pointer()
 	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
-	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
+	user.playsound_local(parent, 'sound/items/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	tracker = null
 	user.clear_fullscreen("scope")
 

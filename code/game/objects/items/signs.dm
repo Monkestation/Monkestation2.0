@@ -21,7 +21,7 @@
 	actions_types = list(/datum/action/item_action/nano_picket_sign)
 
 /obj/item/picket_sign/proc/retext(mob/user, obj/item/writing_instrument)
-	if(!user.can_write(writing_instrument))
+	if(writing_instrument && !user.can_write(writing_instrument))
 		return
 	var/txt = tgui_input_text(user, "What would you like to write on the sign?", "Sign Label", max_length = 40)
 	if(txt && user.can_perform_action(src))

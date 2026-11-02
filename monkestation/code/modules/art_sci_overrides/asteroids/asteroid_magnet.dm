@@ -153,7 +153,7 @@
 	var/magnet_error = check_for_magnet_errors(template)
 	if(magnet_error)
 		status = magnet_error
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 		updateUsrDialog()
 		return
 

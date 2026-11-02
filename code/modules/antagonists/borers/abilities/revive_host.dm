@@ -6,40 +6,44 @@
 	chemical_cost = 200
 	requires_host = TRUE
 	sugar_restricted = TRUE
-	needs_dead_host = TRUE
 	ability_explanation = "\
 	Halfs all the damage, including organ damage that your host has. Then defiblirates their heart\n\
 	You may need to use this ability multiple times depending on how badly your host is damaged\n\
 	"
 
-/datum/action/cooldown/borer/revive_host/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/borer/revive_host/check_conditions()
 	. = ..()
-	if(!.)
-		return FALSE
-	var/mob/living/basic/cortical_borer/cortical_owner = owner
+	if(.)
+		return
 
-	cortical_owner.chemical_storage -= chemical_cost
+	var/mob/living/basic/cortical_borer/user = owner
+	if(user.human_host.stat != DEAD)
+		owner.balloon_alert(owner, "dead host required")
+		return COMPONENT_ACTION_BLOCK_TRIGGER
 
-	if(cortical_owner.human_host.getBruteLoss())
-		cortical_owner.human_host.adjustBruteLoss(-(cortical_owner.human_host.getBruteLoss()*0.5))
-	if(cortical_owner.human_host.getToxLoss())
-		cortical_owner.human_host.adjustToxLoss(-(cortical_owner.human_host.getToxLoss()*0.5))
-	if(cortical_owner.human_host.getFireLoss())
-		cortical_owner.human_host.adjustFireLoss(-(cortical_owner.human_host.getFireLoss()*0.5))
-	if(cortical_owner.human_host.getOxyLoss())
-		cortical_owner.human_host.adjustOxyLoss(-(cortical_owner.human_host.getOxyLoss()*0.5))
+/datum/action/cooldown/borer/revive_host/Activate(mob/living/basic/cortical_borer/user)
+	user.chemical_storage -= chemical_cost
 
-	if(cortical_owner.human_host.blood_volume < BLOOD_VOLUME_BAD)
-		cortical_owner.human_host.blood_volume = BLOOD_VOLUME_BAD
+	if(user.human_host.getBruteLoss())
+		user.human_host.adjustBruteLoss(-user.human_host.getBruteLoss() * 0.5)
+	if(user.human_host.getToxLoss())
+		user.human_host.adjustToxLoss(-user.human_host.getToxLoss() * 0.5)
+	if(user.human_host.getFireLoss())
+		user.human_host.adjustFireLoss(-user.human_host.getFireLoss() * 0.5)
+	if(user.human_host.getOxyLoss())
+		user.human_host.adjustOxyLoss(-user.human_host.getOxyLoss() * 0.5)
 
-	for(var/obj/item/organ/internal/internal_target in cortical_owner.human_host.organs)
+	if(user.human_host.blood_volume < BLOOD_VOLUME_BAD)
+		user.human_host.blood_volume = BLOOD_VOLUME_BAD
+
+	for(var/obj/item/organ/internal/internal_target in user.human_host.organs)
 		internal_target.apply_organ_damage(-internal_target.damage * 0.5)
 
-	cortical_owner.human_host.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
-	to_chat(cortical_owner.human_host, span_boldwarning("Your heart jumpstarts!"))
+	user.human_host.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	to_chat(user.human_host, span_boldwarning("Your heart jumpstarts!"))
 	owner.balloon_alert(owner, "host revived")
-	var/turf/human_turf = get_turf(cortical_owner.human_host)
-	var/logging_text = "[key_name(cortical_owner)] revived [key_name(cortical_owner.human_host)] at [loc_name(human_turf)]"
-	cortical_owner.log_message(logging_text, LOG_GAME)
-	cortical_owner.human_host.log_message(logging_text, LOG_GAME)
-	StartCooldown()
+	var/turf/human_turf = get_turf(user.human_host)
+	var/logging_text = "[key_name(user)] revived [key_name(user.human_host)] at [loc_name(human_turf)]"
+	user.log_message(logging_text, LOG_GAME)
+	user.human_host.log_message(logging_text, LOG_GAME)
+	return ..()

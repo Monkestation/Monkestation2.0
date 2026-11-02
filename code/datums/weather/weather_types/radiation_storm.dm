@@ -11,7 +11,7 @@
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
 	weather_color = "green"
-	weather_sound = 'sound/misc/bloblarm.ogg'
+	weather_sound = 'sound/announcer/alarm/bloblarm.ogg'
 
 	end_duration = 100
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
@@ -42,6 +42,13 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
+	if(isroach(L))
+		if(!prob(2))
+			return
+		var/mob/living/basic/cockroach/affected_roach = L
+		affected_roach.romchifize()
+		return
+
 	if(!prob(40))
 		return
 

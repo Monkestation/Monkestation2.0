@@ -1,0 +1,78 @@
+SUBSYSTEM_DEF(pollution)
+	name = "Pollution"
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait = 0.5 SECONDS
+	priority = FIRE_PRIORITY_POLLUTION
+	flags = SS_BACKGROUND | SS_HIBERNATE
+	/// Currently active pollution
+	var/list/active_pollution = list()
+	/// All pollution in the world
+	var/list/all_polution = list()
+	/// Currently processed batch of pollutants
+	var/list/current_run = list()
+	/// Already processed pollutants in cell process
+	var/list/processed_this_run = list()
+	/// Ticker for dissipation task
+	var/dissapation_ticker = 0
+	/// What's the current task we're doing
+	var/pollution_task = POLLUTION_TASK_PROCESS
+	/// Associative list of types of pollutants to their instanced singletons
+	var/list/singletons = list()
+
+/datum/controller/subsystem/pollution/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, active_pollution),
+		NAMEOF(src, current_run),
+		NAMEOF(src, all_polution),
+	)
+
+/datum/controller/subsystem/pollution/stat_entry(msg)
+	msg += "|AT:[active_pollution.len]|P:[all_polution.len]"
+	return ..()
+
+/datum/controller/subsystem/pollution/Initialize()
+	//Initialize singletons
+	for(var/datum/pollutant/pollutant_cast as anything in subtypesof(/datum/pollutant))
+		if(!length(pollutant_cast::name))
+			continue
+		singletons[pollutant_cast] = new pollutant_cast()
+	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/pollution/Recover()
+	active_pollution = SSpollution.active_pollution.Copy()
+	all_polution = SSpollution.all_polution.Copy()
+	dissapation_ticker = SSpollution.dissapation_ticker
+	singletons = deep_copy_list(SSpollution.singletons)
+
+/datum/controller/subsystem/pollution/fire(resumed = FALSE)
+	var/list/current_run_cache
+	if(pollution_task == POLLUTION_TASK_PROCESS)
+		if(!resumed)
+			current_run = active_pollution.Copy()
+			processed_this_run.Cut()
+		current_run_cache = current_run
+		while(length(current_run_cache))
+			var/datum/pollution/pollution = current_run_cache[length(current_run_cache)]
+			current_run_cache.len--
+			processed_this_run[pollution] = TRUE
+			pollution.process_cell()
+			if(MC_TICK_CHECK)
+				return
+		dissapation_ticker++
+		if(dissapation_ticker >= TICKS_TO_DISSIPATE * 4)
+			pollution_task = POLLUTION_TASK_DISSIPATE
+			dissapation_ticker = 0
+			current_run = all_polution.Copy()
+
+	if(pollution_task == POLLUTION_TASK_DISSIPATE)
+		if(!resumed)
+			current_run = all_polution.Copy()
+		current_run_cache = current_run
+		while(length(current_run_cache))
+			var/datum/pollution/pollution = current_run_cache[length(current_run_cache)]
+			current_run_cache.len--
+			pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR, FALSE, TRUE)
+			if(MC_TICK_CHECK)
+				return
+		pollution_task = POLLUTION_TASK_PROCESS

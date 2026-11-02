@@ -206,7 +206,7 @@
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)
 		next_beep = world.time + (2 SECONDS)
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 	var/mutable_appearance/alarm_display = mutable_appearance(icon, "alarm_light")
 	flick_overlay_view(alarm_display, 2 SECONDS)
 	set_scanline("alarm", 2 SECONDS)

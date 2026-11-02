@@ -9,7 +9,7 @@
 
 /obj/item/healthanalyzer
 	name = "health analyzer"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "health"
 	inhand_icon_state = "healthanalyzer"
 	worn_icon_state = "healthanalyzer"
@@ -376,19 +376,18 @@
 			|| istype(humantarget.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
-	var/skin_temp = target.get_skin_temperature()
-	var/skin_temperature_message = "Skin temperature: [round(KELVIN_TO_CELCIUS(skin_temp), 0.1)] &deg;C ([round(KELVIN_TO_FAHRENHEIT(skin_temp), 0.1)] &deg;F)"
-	if(skin_temp >= target.bodytemp_heat_damage_limit)
-		render_list += "<span class='alert ml-1'>☼ [skin_temperature_message] ☼</span>\n"
-	else if(skin_temp <= target.bodytemp_cold_damage_limit)
-		render_list += "<span class='alert ml-1'>❄ [skin_temperature_message] ❄</span>\n"
-	else
-		render_list += "<span class='info ml-1'>[skin_temperature_message]</span>\n"
+		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"
+		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit())
+			render_list += "<span class='alert ml-1'>☼ [core_temperature_message] ☼</span>\n"
+		else if(humantarget.coretemperature <= humantarget.get_body_temp_cold_damage_limit())
+			render_list += "<span class='alert ml-1'>❄ [core_temperature_message] ❄</span>\n"
+		else
+			render_list += "<span class='info ml-1'>[core_temperature_message]</span>\n"
 
-	var/body_temperature_message = "Body temperature: [round(KELVIN_TO_CELCIUS(target.bodytemperature), 0.1)] &deg;C ([round(KELVIN_TO_FAHRENHEIT(target.bodytemperature), 0.1)] &deg;F)"
-	if(target.bodytemperature >= target.bodytemp_heat_damage_limit)
+	var/body_temperature_message = "Body temperature: [round(target.bodytemperature-T0C, 0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)"
+	if(target.bodytemperature >= target.get_body_temp_heat_damage_limit())
 		render_list += "<span class='alert ml-1'>☼ [body_temperature_message] ☼</span>\n"
-	else if(target.bodytemperature <= target.bodytemp_cold_damage_limit)
+	else if(target.bodytemperature <= target.get_body_temp_cold_damage_limit())
 		render_list += "<span class='alert ml-1'>❄ [body_temperature_message] ❄</span>\n"
 	else
 		render_list += "<span class='info ml-1'>[body_temperature_message]</span>\n"
@@ -645,7 +644,7 @@
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
-			playsound(simple_scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
+			playsound(simple_scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
 
 //Cyborgs can use an integrated health analyzer even if they cant see
 /obj/item/healthanalyzer/cyborg
@@ -737,7 +736,7 @@
 	show_emotion(AID_EMOTION_ANGRY)
 
 /obj/item/healthanalyzer/simple/proc/violence(mob/user)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 	if(isliving(user))
 		var/mob/living/L = user
 		to_chat(L, span_warning("\The [src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
@@ -754,7 +753,7 @@
 	user.visible_message(span_notice("[user] scans [patient] for serious injuries."), span_notice("You scan [patient] for serious injuries."))
 
 	if(!istype(patient))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		to_chat(user, span_warning("\The [src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [patient]."))
 		show_emotion(AI_EMOTION_SAD)
 		return
@@ -805,7 +804,7 @@
 	show_emotion(AID_EMOTION_ANGRY)
 
 /obj/item/healthanalyzer/simple/disease/violence(mob/user)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 	if(isliving(user))
 		var/mob/living/L = user
 		to_chat(L, span_warning("\The [src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
@@ -823,7 +822,7 @@
 	user.visible_message(span_notice("[user] scans [patient] for diseases."), span_notice("You scan [patient] for diseases."))
 
 	if(!istype(patient))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		to_chat(user, span_warning("\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient]."))
 		emotion = AID_EMOTION_SAD
 		update_appearance(UPDATE_OVERLAYS)
@@ -875,7 +874,7 @@
 	else
 		to_chat(user, span_notice(render.Join("")))
 		scanner.emotion = AID_EMOTION_WARN
-		playsound(scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
+		playsound(scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND

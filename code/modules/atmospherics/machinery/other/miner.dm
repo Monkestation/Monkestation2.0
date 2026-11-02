@@ -8,7 +8,7 @@
 /obj/machinery/atmospherics/miner
 	name = "gas miner"
 	desc = "Gasses mined from the gas giant below (above?) flow out through this massive vent."
-	icon = 'icons/obj/atmospherics/components/miners.dmi'
+	icon = 'icons/obj/machines/atmospherics/miners.dmi'
 	icon_state = "miner"
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
@@ -135,7 +135,7 @@
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
-	merger.gases[spawn_id][MOLES] = spawn_mol * seconds_per_tick
+	merger.moles[spawn_id] = spawn_mol * seconds_per_tick
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 

@@ -56,7 +56,7 @@
 
 	owner.balloon_alert(owner, "krx'lna tyhx graha...")
 	to_chat(owner, span_velvet("You begin to channel your psionic powers through [target]'s mind."))
-	playsound(owner, 'sound/magic/darkspawn/devour_will_victim.ogg', 50)
+	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_victim.ogg', 50)
 	if(!do_after(owner, 2 SECONDS, target, hidden = TRUE))
 		return FALSE
 
@@ -79,12 +79,12 @@
 
 		to_chat(target, flavour.Join("<br>"))
 
-	playsound(owner, 'sound/ambience/antag/darkspawn/veil_mind_gasp.ogg', 25)
+	playsound(owner, 'sound/music/antag/darkspawn/veil_mind_gasp.ogg', 25)
 
 	if(!do_after(owner, 2 SECONDS, target, hidden = TRUE))
 		return FALSE
 
-	playsound(owner, 'sound/ambience/antag/darkspawn/veil_mind_scream.ogg', 100)
+	playsound(owner, 'sound/music/antag/darkspawn/veil_mind_scream.ogg', 100)
 	if(IS_THRALL(target))
 		owner.balloon_alert(owner, "...tia")
 		to_chat(owner, span_velvet("You revitalize your thrall [target.real_name]."))
@@ -163,7 +163,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	check_flags =  AB_CHECK_CONSCIOUS
 	spell_requirements = SPELL_CASTABLE_AS_BRAIN
-	sound = 'sound/weapons/resonator_blast.ogg'
+	sound = 'sound/items/weapons/resonator_blast.ogg'
 	ranged_mousepointer = 'icons/effects/mouse_pointers/visor_reticule.dmi'
 
 	///how far the projectile can shoot from a body
@@ -197,7 +197,7 @@
 	fire_projectile(cast_on, shoot_from)
 	owner.balloon_alert(owner, "vyk'thunak")
 	if(shoot_from != owner)
-		playsound(get_turf(shoot_from), 'sound/weapons/resonator_blast.ogg', 50, 1)
+		playsound(get_turf(shoot_from), 'sound/items/weapons/resonator_blast.ogg', 50, 1)
 	shoot_from = null
 
 /datum/action/cooldown/spell/pointed/mindblast/proc/fire_projectile(atom/target, mob/shooter)
@@ -258,7 +258,7 @@
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 50)
 	cooldown_time = 1 MINUTES
 	spell_requirements = SPELL_CASTABLE_AS_BRAIN
-	sound = 'sound/magic/staff_healing.ogg'
+	sound = 'sound/effects/magic/staff_healing.ogg'
 	cast_range = INFINITY
 	/// If the buff also buffs all darkspawns
 	var/darkspawns_too = FALSE
@@ -355,7 +355,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	spell_requirements = SPELL_CASTABLE_AS_BRAIN
 	cooldown_time = 5 MINUTES //it's REALLY strong
-	sound = 'sound/magic/staff_healing.ogg'
+	sound = 'sound/effects/magic/staff_healing.ogg'
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 100)
 	invocation_type = INVOCATION_SHOUT
 	invocation = "CKKREM!"
@@ -376,8 +376,7 @@
 	if(!iscarbon(cast_on))
 		return FALSE
 	var/mob/living/carbon/target = cast_on
-	target.grab_ghost()
-	target.revive(TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	target.revive(HEAL_DAMAGE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	target.SetAllImmobility(0, TRUE)
 	target.resting = FALSE
 	target.apply_status_effect(/datum/status_effect/speed_boost, 15 SECONDS, -0.5, type)
@@ -387,7 +386,7 @@
 	if(target.handcuffed || target.legcuffed)
 		target.clear_cuffs(cuffs, TRUE, TRUE)
 		target.clear_cuffs(legcuffs, TRUE, TRUE)
-	playsound(get_turf(target),'sound/creatures/darkspawn/darkspawn_death.ogg', 80, 1)
+	playsound(get_turf(target),'sound/mobs/non-humanoids/darkspawn/darkspawn_death.ogg', 80, 1)
 	var/datum/antagonist/darkspawn/darkspawn = IS_DARKSPAWN(owner)
 	if(darkspawn)
 		darkspawn.block_psi(1 MINUTES, type)

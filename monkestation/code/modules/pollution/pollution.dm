@@ -22,14 +22,20 @@
 
 /datum/pollution/Destroy()
 	if(managed_overlay)
-		qdel(managed_overlay)
-		managed_overlay = null
+		QDEL_NULL(managed_overlay)
 	SET_UNACTIVE_POLLUTION(src)
 	UNREGISTER_POLLUTION(src)
 	if(my_turf?.pollution == src)
 		my_turf.pollution = null
 	my_turf = null
 	return ..()
+
+/datum/pollution/proc/on_managed_overlay_deleted(datum/source)
+	SIGNAL_HANDLER
+	if(source != managed_overlay)
+		return
+	UnregisterSignal(managed_overlay, COMSIG_QDELETING)
+	managed_overlay = null
 
 /datum/pollution/proc/touch_act(mob/living/carbon/victim)
 	if(!victim.can_inject())
@@ -225,7 +231,8 @@
 		return
 
 	if(!managed_overlay)
-		managed_overlay = new/obj/effect/abstract/pollution(my_turf)
+		managed_overlay = new /obj/effect/abstract/pollution(my_turf)
+		RegisterSignal(managed_overlay, COMSIG_QDELETING, PROC_REF(on_managed_overlay_deleted))
 
 	managed_overlay.alpha = FLOOR(pollutant.alpha * total_thickness * THICKNESS_ALPHA_COEFFICIENT, 1)
 	managed_overlay.color = pollutant.color

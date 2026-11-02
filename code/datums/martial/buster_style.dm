@@ -104,10 +104,7 @@
 	if(mop_action.Trigger())
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/mob/living/carbon/human/proc/buster_style_help()
-	set name = "Buster Style"
-	set desc = "You mentally practice the stunts you can pull with the buster arm."
-	set category = "Buster Style"
+GAME_VERB_PROC_DESC(/mob/living/carbon/human, buster_style_help, "Buster Style", "You mentally practice the stunts you can pull with the buster arm.", "Buster Style")
 	var/list/combined_msg = list()
 	combined_msg +=  "<b><i>You think about what stunts you can pull with the power of a buster arm.</i></b>"
 
@@ -324,7 +321,7 @@
 				living_thrown.buckled.unbuckle_mob(living_thrown)
 			REMOVE_TRAIT(living_thrown, TRAIT_UNDENSE, BUSTER_SOURCE)
 		else
-			SSmove_manager.stop_looping(resolved_atom)
+			GLOB.move_manager.stop_looping(resolved_atom)
 			if(HAS_TRAIT_FROM(resolved_atom, TRAIT_UNDENSE, BUSTER_SOURCE))
 				REMOVE_TRAIT(resolved_atom, TRAIT_UNDENSE, BUSTER_SOURCE)
 				resolved_atom.set_density(TRUE)
@@ -366,7 +363,7 @@
 
 		grabbed_object.visible_message(span_warning("[message]!"))
 		set_atom_to_throw(grabbed_object)
-		SSmove_manager.home_onto(grabbed_object, caster, timeout = GRAPPLE_DRAG_TIME)
+		GLOB.move_manager.home_onto(grabbed_object, caster, timeout = GRAPPLE_DRAG_TIME)
 	else if(isliving(victim))
 		var/mob/living/living_victim = victim
 		if(living_victim.anchored)
@@ -380,7 +377,7 @@
 			span_userdanger("[caster] grapples you and lifts you up into the air! Resist [caster.p_their()] grip!"))
 		set_atom_to_throw(living_victim)
 		grabbing_bed.buckle_mob(living_victim) //makes the victim follow with an invisible bed
-		SSmove_manager.home_onto(grabbing_bed, caster)
+		GLOB.move_manager.home_onto(grabbing_bed, caster)
 	return FALSE
 
 // Don't pass in damage to use crash-related damage values
@@ -411,14 +408,14 @@
 		if(limb_to_hit)
 			if(!(limb_to_hit.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)) && limb_to_hit.get_damage() >= limb_to_hit.max_damage)
 				limb_to_hit.drop_limb()
-				playsound(user,	'sound/misc/desecration-01.ogg', 20, 1)
+				playsound(user,	'sound/effects/desecration/desecration-01.ogg', 20, 1)
 				tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [limb_to_hit], severing it from [tossedliving.p_them()]!"), \
 					span_userdanger("[user] tears [limb_to_hit] off!"))
 				// user.put_in_hands(limb_to_hit)
 			else if(limb_to_hit.body_zone == BODY_ZONE_CHEST && limb_to_hit.get_damage() >= (limb_to_hit.max_damage * 0.8)) //targetting the chest works for tail removal too but who cares
 				var/obj/item/organ/tail = tossedliving.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 				if(tail)
-					playsound(user, 'sound/misc/desecration-02.ogg', 20, 1)
+					playsound(user, 'sound/effects/desecration/desecration-02.ogg', 20, 1)
 					tossedliving.visible_message(span_warning("[user] throws [tossedliving] by [tossedliving.p_their()] tail, severing it from [tossedliving.p_them()]!"), \
 						span_userdanger("[user] tears your tail off!")) //"I'm taking this back."
 					tail.Remove(tossedliving)
@@ -433,7 +430,7 @@
 	user.spin(4, 1)
 
 	cached_thrown.SpinAnimation(0.5 SECONDS, 1)
-	var/datum/move_loop/loop = SSmove_manager.throw_at(cached_thrown, target, maxrange = 7, delay = 0.01 SECONDS)
+	var/datum/move_loop/loop = GLOB.move_manager.throw_at(cached_thrown, target, maxrange = 7, delay = 0.01 SECONDS)
 	RegisterSignal(cached_thrown, COMSIG_MOVABLE_MOVED_FROM_LOOP, PROC_REF(soar_on_moved_from_loop))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
@@ -461,7 +458,7 @@
 			impacted_living.Immobilize(BUSTER_STUN_DURATION, ignore_canstun = TRUE)
 			impacted_living.SpinAnimation(0.5 SECONDS, 1)
 			ADD_TRAIT(impacted_living, TRAIT_UNDENSE, BUSTER_SOURCE)
-			var/datum/move_loop/new_loop = SSmove_manager.throw_at(impacted_living, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
+			var/datum/move_loop/new_loop = GLOB.move_manager.throw_at(impacted_living, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
 			RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
 		else if(non_living_type_check(impacted_atom)) // Scoop up obstacles if theyre not nailed down
@@ -476,12 +473,12 @@
 			impacted_atom.SpinAnimation(0.5 SECONDS, 1)
 			ADD_TRAIT(impacted_atom, TRAIT_UNDENSE, BUSTER_SOURCE) // doesn't do anything but needed for restoring density
 			impacted_atom.set_density(FALSE)
-			var/datum/move_loop/new_loop = SSmove_manager.throw_at(impacted_atom, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
+			var/datum/move_loop/new_loop = GLOB.move_manager.throw_at(impacted_atom, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
 			RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
 
 	if(impacted)
-		playsound(source, 'sound/weapons/punch1.ogg', 50, TRUE)
+		playsound(source, 'sound/items/weapons/punch1.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/touch/buster/grapple/proc/loop_qdeleted(datum/move_loop/source)
 	SIGNAL_HANDLER
@@ -519,7 +516,7 @@
 	inhand_icon_state = "greyscale"
 
 /obj/item/melee/touch_attack/buster_grapple/ignition_effect(atom/A, mob/user)
-	playsound(user,'sound/misc/fingersnap2.ogg', 20, 1)
+	playsound(user,'sound/mobs/humanoids/human/snap/fingersnap2.ogg', 20, 1)
 	playsound(user,'sound/effects/sparks4.ogg', 20, 1)
 	do_sparks(5, TRUE, src)
 	. = span_rose("With a single snap, [user] sets [A] alight with sparks from [user.p_their()] metal fingers.")
@@ -909,7 +906,7 @@
 	if(get_turf(caster) == get_turf(victim))
 		direction = caster.dir
 	var/turf/target = get_ranged_target_turf(victim, direction, flight_distance)
-	var/datum/move_loop/loop = SSmove_manager.throw_at(victim, target, maxrange = flight_distance, delay = 0.01 SECONDS)
+	var/datum/move_loop/loop = GLOB.move_manager.throw_at(victim, target, maxrange = flight_distance, delay = 0.01 SECONDS)
 	RegisterSignal(victim, COMSIG_MOVABLE_MOVED_FROM_LOOP, PROC_REF(soar_on_moved_from_loop))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
@@ -944,7 +941,7 @@
 			impacted_living.Paralyze(BUSTER_STUN_DURATION, ignore_canstun = TRUE)
 			impacted_living.SpinAnimation(0.5 SECONDS, 1)
 			ADD_TRAIT(impacted_living, TRAIT_UNDENSE, BUSTER_SOURCE)
-			var/datum/move_loop/new_loop = SSmove_manager.throw_at(impacted_living, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
+			var/datum/move_loop/new_loop = GLOB.move_manager.throw_at(impacted_living, loop.target, maxrange = loop.maxrange - loop.dist_travelled, delay = 0.01 SECONDS)
 			RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(soar_post_move))
 			RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(loop_qdeleted))
 		else if(non_living_type_check(impacted_atom))

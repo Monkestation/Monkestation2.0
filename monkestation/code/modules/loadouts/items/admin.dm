@@ -93,7 +93,7 @@
 	to_chat(user, "You pull a cigar from the [src].")
 	var/obj/item/new_cigar = new spawn_type
 	user.put_in_hands(new_cigar)
-	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 30, TRUE)
+	playsound(src, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 30, TRUE)
 
 /obj/item/infinite_cigar_box/contraband
 	name = "\improper paradoxical premium Prohibition cigar case"

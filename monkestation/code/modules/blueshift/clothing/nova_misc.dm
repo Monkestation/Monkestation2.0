@@ -90,7 +90,7 @@
 	icon_state = "chi_korea_coat"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/modernwintercoatthing
@@ -101,13 +101,14 @@
 	icon_state = "modern_winter"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/toggle/jacket/cardigan
 	name = "cardigan"
 	desc = "It's like, half a jacket."
-	icon_state = "cardigan"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("cardigan", "/obj/item/clothing/suit/toggle/jacket/cardigan")
 	greyscale_config = /datum/greyscale_config/cardigan
 	greyscale_config_worn = /datum/greyscale_config/cardigan/worn
 	greyscale_colors = "#FFFFFF"
@@ -142,7 +143,7 @@
 	icon_state = "expensivecoat"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/brownbattlecoat
@@ -153,7 +154,7 @@
 	icon_state = "battlecoat"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/brownfurrich
@@ -164,7 +165,7 @@
 	icon_state = "winter_coat"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/suit_brownfurrich
 
@@ -194,7 +195,7 @@
 	icon_state = "fallsparka"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/british_officer
@@ -205,7 +206,7 @@
 	icon_state = "british_officer"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/suit_british_officer
 
@@ -221,7 +222,7 @@
 	icon_state = "modern_winter"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/woolcoat
@@ -242,7 +243,7 @@
 	icon_state = "soldier"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/suit_gautumn
 
@@ -260,7 +261,7 @@
 	icon_state = "autumn"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/suit_autumn
 
@@ -310,12 +311,11 @@
 /obj/item/clothing/suit/apron/chef/colorable_apron
 	name = "apron"
 	desc = "A basic apron."
-	icon = 'monkestation/code/modules/blueshift/gags/icons/suit/suit.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/gags/icons/suit/suit.dmi'
-	icon_state = "apron"
-	greyscale_colors = "#ffffff"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("apron", "/obj/item/clothing/suit/apron/chef/colorable_apron")
 	greyscale_config = /datum/greyscale_config/apron
 	greyscale_config_worn = /datum/greyscale_config/apron/worn
+	greyscale_colors = "#ffffff"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/apron/overalls/Initialize(mapload)
@@ -341,7 +341,8 @@
 /obj/item/clothing/suit/warm_sweater
 	name = "warm sweater"
 	desc = "A comfortable warm-looking sweater."
-	icon_state = "warm_sweater"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("warm_sweater", "/obj/item/clothing/suit/warm_sweater")
 	greyscale_config = /datum/greyscale_config/warm_sweater
 	greyscale_config_worn = /datum/greyscale_config/warm_sweater/worn
 	greyscale_colors = "#867361"
@@ -351,7 +352,8 @@
 /obj/item/clothing/suit/heart_sweater
 	name = "heart sweater"
 	desc = "A comfortable warm-looking sweater. It even has a heart pattern on it, how cute."
-	icon_state = "heart_sweater"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("heart_sweater", "/obj/item/clothing/suit/heart_sweater")
 	greyscale_config = /datum/greyscale_config/heart_sweater
 	greyscale_config_worn = /datum/greyscale_config/heart_sweater/worn
 	greyscale_colors = "#867361#8f3a3a"
