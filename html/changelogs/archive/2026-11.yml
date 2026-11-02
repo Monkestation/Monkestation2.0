@@ -84,3 +84,8 @@
       you the last shell used as a AI'
   - bugfix: Drones have the following traits returned, Unobservant, silicon access,
       and reagent scanner
+2026-11-02:
+  notghosti:
+  - balance: Nuke disk guaranteed nukeop spawn now respects maximum antags. And if
+      fails will try again in 5 minutes.
+  - bugfix: Nuke disk no longer tracks time at half the rate of intended
