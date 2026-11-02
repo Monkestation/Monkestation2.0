@@ -74,7 +74,7 @@
 /obj/item/fish/jumpercable/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] hooks both ends of [src] to their chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE)
-	tesla_zap(source = user, zap_range = 4, power = electrogenesis_power, cutoff = 1e3, zap_flags = ZAP_LOW_POWER_GEN|ZAP_MOB_DAMAGE)
+	tesla_zap(source = user, zap_range = 4, power = electrogenesis_power, zap_flags = ZAP_LOW_POWER_GEN|ZAP_MOB_DAMAGE)
 	playsound(user, 'sound/items/weapons/zapbang.ogg', 75)
 	return OXYLOSS
 
