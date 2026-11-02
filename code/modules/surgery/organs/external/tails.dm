@@ -172,3 +172,18 @@
 /obj/item/organ/external/tail/lizard/fake
 	name = "fabricated lizard tail"
 	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
+
+
+/// end of lizard stuff
+
+/obj/item/organ/external/tail/shadekin
+	name = "shadekin tail"
+	desc = "A fluffy shadekin tail."
+	preference = "feature_shadekin_tail"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/shadekin
+
+/datum/bodypart_overlay/mutant/tail/shadekin
+	feature_key = "tail_shadekin"
+
+/datum/bodypart_overlay/mutant/tail/shadekin/get_global_feature_list()
+	return GLOB.tails_list_shadekin

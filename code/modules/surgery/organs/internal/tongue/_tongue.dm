@@ -606,6 +606,11 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	disliked_foodtypes = GROSS | CLOTH | RAW
 	languages_native = list(/datum/language/nekomimetic)
 
+/obj/item/organ/internal/tongue/shadekin
+	name = "shadekin tongue"
+	desc = "Mar!"
+	say_mod = "mars"
+
 /obj/item/organ/internal/tongue/bananium
 	name = "bananium tongue"
 	desc = "A bananium geode mostly used for honking."
