@@ -819,7 +819,7 @@
 	armor_type = /datum/armor/mask_chameleon
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.

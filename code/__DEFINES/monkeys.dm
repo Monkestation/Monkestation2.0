@@ -25,6 +25,8 @@
 
 /// probability for the monkey to aggro when attacked
 #define MONKEY_RETALIATE_PROB 85
+/// Chance a monkey fights back when a ranched slime hits it. Base monkeys use MONKEY_RETALIATE_PROB.
+#define PENNED_MONKEY_RETALIATE_PROB 40
 
 /// amount of aggro to add to an enemy when they attack user
 #define MONKEY_HATRED_AMOUNT 4

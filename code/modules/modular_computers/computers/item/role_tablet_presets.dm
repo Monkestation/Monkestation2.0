@@ -111,6 +111,7 @@
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/signal_commander,
 		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/slimepedia,
 	)
 
 /obj/item/modular_computer/pda/heads/ntrep
@@ -245,6 +246,7 @@
 		/datum/computer_file/program/signal_commander,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/slimepedia,
 	)
 
 /obj/item/modular_computer/pda/roboticist
@@ -271,6 +273,9 @@
 	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/xenobiologist")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#FF66CC"
+	starting_programs = list(
+		/datum/computer_file/program/slimepedia,
+	)
 
 /**
  * Medical

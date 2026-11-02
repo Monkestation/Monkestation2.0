@@ -57,36 +57,6 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment",
 	clear_human_dummy(dummy_key)
 	qdel(src)
 
-/datum/select_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if (!.)
-		return
-
-	if (action != "applyoutfit")
-		return
-
-	var/mob/living/target_mob_living = user.mob
-
-	for(var/datum/quirk/quirk as anything in target_mob_living.quirks)
-		target_mob_living.remove_quirk(quirk.type)
-
-	switch(params["applyQuirks"])
-		if("All Quirks")
-			SSquirks.AssignQuirks(target_mob_living, user)
-		if("Positive Quirks Only")
-			SSquirks.AssignQuirks(target_mob_living, user, omit_negatives = TRUE)
-		if("Negative Quirks Only")
-			SSquirks.AssignQuirks(target_mob_living, user, omit_positives = TRUE)
-		if("Neutral Quirks Only")
-			SSquirks.AssignQuirks(target_mob_living, user, omit_positives = TRUE, omit_negatives = TRUE)
-
-	// Handle effect state from dropdown
-	switch(params["effectState"])
-		if("Holy")
-			new /obj/effect/holy(target_mob_living.loc)
-		if("Unholy")
-			target_mob_living.mods_bring_them_to_life_fancy(size = 1)
-
 /datum/select_equipment/proc/init_dummy()
 	dummy_key = "selectequipmentUI_[target_mob]"
 	generate_dummy_lookalike(dummy_key, target_mob)
@@ -205,7 +175,29 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment",
 				new_outfit = new new_outfit
 			if(!istype(new_outfit))
 				return
-			user.admin_apply_outfit(target_mob, new_outfit)
+			var/mob/living/carbon/human/dressed = user.admin_apply_outfit(target_mob, new_outfit)
+			if(!dressed)
+				return
+
+			for(var/datum/quirk/quirk as anything in dressed.quirks)
+				dressed.remove_quirk(quirk.type)
+
+			switch(params["applyQuirks"])
+				if("All Quirks")
+					SSquirks.AssignQuirks(dressed, user)
+				if("Positive Quirks Only")
+					SSquirks.AssignQuirks(dressed, user, omit_negatives = TRUE)
+				if("Negative Quirks Only")
+					SSquirks.AssignQuirks(dressed, user, omit_positives = TRUE)
+				if("Neutral Quirks Only")
+					SSquirks.AssignQuirks(dressed, user, omit_positives = TRUE, omit_negatives = TRUE)
+
+			// Handle effect state from dropdown
+			switch(params["effectState"])
+				if("Holy")
+					new /obj/effect/holy(dressed.loc)
+				if("Unholy")
+					dressed.mods_bring_them_to_life_fancy(size = 1)
 
 		if("customoutfit")
 			return SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/outfit_manager)
@@ -256,4 +248,4 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment",
 	log_admin("[key_name(usr)] changed the equipment of [key_name(human_target)] to [dresscode].")
 	message_admins(span_adminnotice("[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(human_target)] to [dresscode]."))
 
-	return dresscode
+	return human_target

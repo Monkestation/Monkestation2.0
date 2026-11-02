@@ -40,8 +40,8 @@
 /datum/ai_behavior/find_and_set/edible/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/food_candidates = list()
-	for(var/held_candidate in living_pawn.held_items)
-		if(!held_candidate || !IsEdible(held_candidate))
+	for(var/held_candidate in living_pawn.get_held_items())
+		if(!IsEdible(held_candidate))
 			continue
 		food_candidates += held_candidate
 
@@ -60,7 +60,7 @@
 
 /datum/ai_behavior/find_and_set/in_hands/search_tactic(datum/ai_controller/controller, locate_path)
 	var/mob/living/living_pawn = controller.pawn
-	return locate(locate_path) in living_pawn.held_items
+	return living_pawn.is_holding_item_of_type(locate_path)
 
 /**
  * Variant of find and set that takes a list of things to find.

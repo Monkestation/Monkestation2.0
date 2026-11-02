@@ -91,7 +91,7 @@
 
 /obj/item/gun/magic/mirror_shield/proc/handle_hit(mob/held_by, list/projectile_args, obj/projectile/hit_by)
 	SIGNAL_HANDLER
-	if(!prob((src in held_by.held_items) ? PROJECTILE_HIT_EFFECT_CHANCE : NORMAL_BLOCK_CHANCE)) //turns out its harder to block with something when your not holding it
+	if(!prob(held_by.is_holding(src) ? PROJECTILE_HIT_EFFECT_CHANCE : NORMAL_BLOCK_CHANCE)) //turns out its harder to block with something when your not holding it
 		return
 
 	hit_by.impacted = list()

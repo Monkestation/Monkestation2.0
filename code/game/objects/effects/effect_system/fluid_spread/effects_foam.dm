@@ -331,7 +331,7 @@
 	if(foam_floor)
 		var/turf/open/location = loc
 		if(isspaceturf(location))
-			location.PlaceOnTop(/turf/open/floor/plating/foam)
+			location.place_on_top(/turf/open/floor/plating/foam)
 
 /obj/structure/foamedmetal/Destroy()
 	air_update_turf(TRUE, FALSE)
@@ -389,7 +389,7 @@
 				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
+			T.place_on_top(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
 		return ITEM_INTERACT_SUCCESS
@@ -421,7 +421,7 @@
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
 	if(isspaceturf(location))
-		location.PlaceOnTop(/turf/open/floor/plating/foam)
+		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)
 		var/turf/cardinal_turf = get_step(location, cardinal)

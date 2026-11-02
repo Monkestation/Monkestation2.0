@@ -81,8 +81,8 @@
 	var/mutable_appearance/aura_e = emissive_appearance('icons/effects/effects.dmi', "wg_aura_e", source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source
-		human_source.apply_height_filters(aura)
-		human_source.apply_height_filters(aura_e)
+		human_source.apply_height(aura, ENTIRE_BODY)
+		human_source.apply_height(aura_e, ENTIRE_BODY)
 	overlays += aura
 	overlays += aura_e
 

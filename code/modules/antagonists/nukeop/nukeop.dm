@@ -257,7 +257,7 @@
 	suit_store = /obj/item/tank/jetpack/oxygen
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/shield/energy/shield = locate() in H.held_items
+	var/obj/item/shield/energy/shield = H.is_holding_item_of_type(__IMPLIED_TYPE__)
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_held_items()
 

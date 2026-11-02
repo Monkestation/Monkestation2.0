@@ -34,6 +34,7 @@
 
 	health = 40
 	maxHealth = 40
+	biomass_value = 0.2
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	environment_smash = ENVIRONMENT_SMASH_NONE

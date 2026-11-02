@@ -79,8 +79,8 @@
 	if(head)
 		if(head.IsReflect(def_zone))
 			return TRUE
-	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone))
+	for(var/obj/item/item as anything in get_held_items())
+		if(item.IsReflect(def_zone))
 			return TRUE
 	return FALSE
 
@@ -93,10 +93,10 @@
 	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
-			if(worn_thing in held_items)
+			if(is_holding(worn_thing))
 				continue
 		// Things that are supposed to be held, being worn = cannot block
-		else if(!(worn_thing in held_items))
+		else if(!is_holding(worn_thing))
 			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
@@ -530,9 +530,9 @@
 		if(belt)
 			inventory_items_to_kill += belt
 
-		inventory_items_to_kill += held_items
+		inventory_items_to_kill += get_held_items()
 
-	for(var/obj/item/inventory_item in inventory_items_to_kill)
+	for(var/obj/item/inventory_item as anything in inventory_items_to_kill)
 		inventory_item.acid_act(acidpwr, acid_volume)
 	return TRUE
 
@@ -756,29 +756,29 @@
 
 /mob/living/carbon/human/proc/burn_clothing(seconds_per_tick, times_fired, stacks)
 	var/list/burning_items = list()
-	var/obscured = check_obscured_slots(TRUE)
+	var/covered = check_covered_slots()
 	//HEAD//
 
-	if(glasses && !(obscured & ITEM_SLOT_EYES))
+	if(glasses && !(covered & ITEM_SLOT_EYES))
 		burning_items += glasses
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
+	if(wear_mask && !(covered & ITEM_SLOT_MASK))
 		burning_items += wear_mask
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
+	if(wear_neck && !(covered & ITEM_SLOT_NECK))
 		burning_items += wear_neck
-	if(ears && !(obscured & ITEM_SLOT_EARS))
+	if(ears && !(covered & ITEM_SLOT_EARS))
 		burning_items += ears
 	if(head)
 		burning_items += head
 
 	//CHEST//
-	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
+	if(w_uniform && !(covered & ITEM_SLOT_ICLOTHING))
 		burning_items += w_uniform
 	if(wear_suit)
 		burning_items += wear_suit
 
 	//ARMS & HANDS//
 	var/obj/item/clothing/arm_clothes = null
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES))
+	if(gloves && !(covered & ITEM_SLOT_GLOVES))
 		arm_clothes = gloves
 	else if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
 		arm_clothes = wear_suit
@@ -789,7 +789,7 @@
 
 	//LEGS & FEET//
 	var/obj/item/clothing/leg_clothes = null
-	if(shoes && !(obscured & ITEM_SLOT_FEET))
+	if(shoes && !(covered & ITEM_SLOT_FEET))
 		leg_clothes = shoes
 	else if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
 		leg_clothes = wear_suit

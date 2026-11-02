@@ -40,9 +40,9 @@
 /// Removes weapon if it exists, returns true if we removed something
 /datum/action/changeling/weapon/proc/unequip_held(mob/user)
 	var/found_weapon = FALSE
-	for(var/obj/item/held in user.held_items)
+	for(var/obj/item/held as anything in user.get_held_items())
 		found_weapon = check_weapon(user, held) || found_weapon
-	return found_weapon
+	return !!found_weapon
 
 /datum/action/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if (unequip_held(user))
@@ -354,22 +354,16 @@
 	if(H.throw_mode)
 		H.throw_mode_off(THROW_MODE_TOGGLE) //Don't annoy the changeling if he doesn't catch the item
 
-/obj/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
-	if(H.Adjacent(C))
-		if(H.get_active_held_item() && !H.get_inactive_held_item())
-			H.swap_hand()
-		if(H.get_active_held_item())
-			return
-		C.grabbedby(H)
-		C.grippedby(H, instant = TRUE) //instant aggro grab
-		for(var/obj/item/I in H.held_items)
-			if(I.get_sharpness())
-				C.visible_message(span_danger("[H] impales [C] with [H.p_their()] [I.name]!"), span_userdanger("[H] impales you with [H.p_their()] [I.name]!"))
-				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST, attacking_item = I)
-				H.do_item_attack_animation(C, used_item = I)
-				H.add_mob_blood(C)
-				playsound(get_turf(H),I.hitsound,75,TRUE)
-				return
+/obj/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/user, mob/living/carbon/victim)
+	if(!user.Adjacent(victim))
+		return
+
+	victim.grabbedby(user)
+	victim.grippedby(user, instant = TRUE) //instant aggro grab
+
+	for(var/obj/item/weapon as anything in user.get_held_items())
+		if(weapon.get_sharpness())
+			weapon.melee_attack_chain(user, victim)
 
 /obj/projectile/tentacle/on_hit(atom/movable/target, blocked = 0, pierce_hit)
 	if(!isliving(firer) || !ismovable(target))

@@ -148,17 +148,29 @@
 	name = "Bedhead 4x"
 	icon_state = "hair_bedheadv4"
 
-/datum/sprite_accessory/hair/bedheadlong
+/datum/sprite_accessory/hair/bedhead_long
 	name = "Long Bedhead"
 	icon_state = "hair_long_bedhead"
 
-/datum/sprite_accessory/hair/bedheadfloorlength
+/datum/sprite_accessory/hair/monke/bedhead_longer
+	name = "Longer Bedhead"
+	icon_state = "hair_longer_bedhead"
+
+/datum/sprite_accessory/hair/bedhead_floorlength
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
 
-/datum/sprite_accessory/hair/badlycut
+/datum/sprite_accessory/hair/monke/bedhead_glorppy
+	name = "Bedhead (Glorppy ver.)"
+	icon_state = "hair_bedhead_glorppy"
+
+/datum/sprite_accessory/hair/monke/bedhead_nestia
+	name = "Bedhead (Nestia ver.)"
+	icon_state = "hair_bedhead_nestia"
+
+/datum/sprite_accessory/hair/shorter_long_bedhead
 	name = "Shorter Long Bedhead"
-	icon_state = "hair_verybadlycut"
+	icon_state = "hair_shorter_long_bedhead"
 
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
@@ -993,10 +1005,6 @@
 /datum/sprite_accessory/hair/monke/pigtails4
 	name = "Pigtails 4"
 	icon_state = "hair_pigtailss"
-
-/datum/sprite_accessory/hair/monke/bedhead_long
-	name = "Longer Bedhead"
-	icon_state = "hair_longer_bedhead"
 
 /datum/sprite_accessory/hair/monke/dave
 	name = "Dave"
@@ -2598,6 +2606,35 @@ MONKESTATION EDIT
 /datum/sprite_accessory/tails/lizard/large
 	name = "Large"
 	icon_state = "large"
+
+///Used for fish-infused tails, which come in different flavors.
+/datum/sprite_accessory/tails/fish
+	icon = 'icons/mob/human/fish_features.dmi'
+	color_src = TRUE
+
+/datum/sprite_accessory/tails/fish/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/tails/fish/crescent
+	name = "Crescent"
+	icon_state = "crescent"
+
+/datum/sprite_accessory/tails/fish/long
+	name = "Long"
+	icon_state = "long"
+	center = TRUE
+	dimension_x = 38
+
+/datum/sprite_accessory/tails/fish/shark
+	name = "Shark"
+	icon_state = "shark"
+
+/datum/sprite_accessory/tails/fish/chonky
+	name = "Chonky"
+	icon_state = "chonky"
+	center = TRUE
+	dimension_x = 36
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"

@@ -364,7 +364,7 @@
 		var/amount2purge = 3
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
-		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(the_reagent2.type, the_reagent2.purge_multiplier * amount2purge * REM * seconds_per_tick)
 	..()
 	return TRUE
 
@@ -401,7 +401,7 @@
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		affected_mob.reagents.remove_reagent(R.type, 0.4 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * 0.4 * REM * seconds_per_tick)
 
 	..()
 	. = TRUE
@@ -430,7 +430,7 @@
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		affected_mob.reagents.remove_reagent(R.type, 0.2 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(R.type, R.purge_multiplier * 0.2 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 

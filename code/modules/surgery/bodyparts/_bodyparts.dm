@@ -36,8 +36,10 @@
 	 * Set to BIO_STANDARD_UNJOINTED because most species have both flesh bone and blood in their limbs.
 	 */
 	var/biological_state = BIO_STANDARD_UNJOINTED
-	///A bitfield of bodytypes for clothing, surgery, and misc information
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	///A bitfield of bodytypes for surgery, and misc information
+	var/bodytype = BODYTYPE_ORGANIC
+	///A bitfield of bodyshapes for clothing and other sprite information
+	var/bodyshape = BODYSHAPE_HUMANOID
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
@@ -1199,23 +1201,37 @@
 			//add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image, image_dir)
 
+	var/has_height = !dropped && !isnull(owner)
+	// Apply height to the overlays we generated so far
+	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
+	if(has_height)
+		for(var/image/generated_overlay in .)
+			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
+			// it's more important to keep it consistent for things like getflaticon
+			owner.apply_height(generated_overlay, ENTIRE_BODY)
+
 	// And finally put bodypart_overlays on if not husked
 	if(!is_husked)
 		//Draw external organs like horns and frills
+		// Height is applied again in here so we can specify where the overlay is set (ie offset_location)
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-			if(!dropped && !overlay.can_draw_on_bodypart(owner)) //if you want different checks for dropped bodyparts, you can insert it here
+			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
 			//Some externals have multiple layers for background, foreground and between
 			for(var/external_layer in overlay.all_layers)
-				if(overlay.layers & external_layer)
-					. += overlay.get_overlay(external_layer, src)
-					if(overlay.get_emissive_overlay(external_layer, src))
-						. += overlay.get_emissive_overlay(external_layer, src)
-					if(overlay.get_secondary_overlay(external_layer, src))
-						. += overlay.get_secondary_overlay(external_layer, src)
-					if(overlay.get_extended_overlay(external_layer, src))
-						for(var/mutable_appearance/item as anything in overlay.get_extended_overlay(external_layer, src))
-							. += item
+				if(!(overlay.layers & external_layer))
+					continue
+				var/list/external_overlays = list(overlay.get_overlay(external_layer, src))
+				external_overlays += overlay.get_emissive_overlay(external_layer, src)
+				external_overlays += overlay.get_secondary_overlay(external_layer, src)
+				for(var/image/external_overlay in external_overlays)
+					if(has_height)
+						owner.apply_height(external_overlay, overlay.offset_location)
+					. += external_overlay
+				for(var/image/extended_overlay in overlay.get_extended_overlay(external_layer, src))
+					if(has_height)
+						owner.apply_height(extended_overlay, ENTIRE_BODY)
+					. += extended_overlay
 			for(var/datum/layer in .)
 				overlay.modify_bodypart_appearance(layer)
 

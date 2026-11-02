@@ -19,6 +19,10 @@
 	///Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
 	var/isGlass = FALSE
 
+/obj/item/reagent_containers/cup/Initialize(mapload, vol)
+	. = ..()
+	AddElement(/datum/element/trash_if_empty/reagent_container/if_prefilled)
+
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
 	if(drink_type)

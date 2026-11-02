@@ -216,7 +216,11 @@
 /obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
 
-	. += get_hair_and_lips_icon(dropped)
+	var/list/hair_and_lips = get_hair_and_lips_icon(dropped)
+	if(!dropped && !isnull(owner))
+		for(var/image/hair_overlay in hair_and_lips)
+			owner.apply_height(hair_overlay, ENTIRE_BODY)
+	. += hair_and_lips
 	// We need to get the eyes if we are dropped (ugh)
 	if(dropped)
 		// eyes
@@ -267,7 +271,7 @@
 	husk_type = "monkey"
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = SPECIES_MONKEY
 	is_dimorphic = FALSE
@@ -285,7 +289,8 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 500
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'

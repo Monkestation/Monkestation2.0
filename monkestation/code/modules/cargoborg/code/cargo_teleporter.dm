@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	marker_children += spawned_marker
 
 /obj/item/cargo_teleporter/item_ctrl_click(mob/user)
-	if(!(src in user.held_items))
+	if(!user.is_holding(src))
 		return NONE
 	if(my_fulton.choose_beacon(user))
 		return CLICK_ACTION_SUCCESS

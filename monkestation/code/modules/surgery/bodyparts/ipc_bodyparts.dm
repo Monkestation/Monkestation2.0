@@ -9,7 +9,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	head_flags = HEAD_HAIR |  HEAD_LIPS | HEAD_EYECOLOR | HEAD_LIPS
 	brute_modifier = 1.2
 	burn_modifier = 1.2
@@ -43,7 +44,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	bodypart_traits = list(TRAIT_LIMBATTACHMENT)
 	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	body_damage_coeff = 1	//IPC Chest at default
@@ -78,7 +80,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
@@ -111,7 +114,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
@@ -144,7 +148,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 
@@ -176,7 +181,8 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	brute_modifier = 1.2
 	burn_modifier = 1.2
 

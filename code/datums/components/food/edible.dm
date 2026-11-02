@@ -602,6 +602,10 @@ Behavior that's still missing from this component that original food items had t
 /// Get food quality adjusted according to eater's preferences
 /datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
 	var/food_quality = get_recipe_complexity()
+	var/list/extra_quality = list()
+	SEND_SIGNAL(eater, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, src, extra_quality)
+	for(var/quality in extra_quality)
+		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		if(!isoozeling(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
@@ -627,7 +631,11 @@ Behavior that's still missing from this component that original food items had t
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		if(HAS_TRAIT(eater, TRAIT_AGEUSIA)) //if you can't taste it, it doesn't taste good
 			return 0
-		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
+		var/disliked_foodtypes = eater.get_disliked_foodtypes()
+		if(HAS_TRAIT(eater, TRAIT_FISH_EATER) && (foodtypes & SEAFOOD)) //fish people don't mind raw fish
+			disliked_foodtypes &= ~(RAW|GORE)
+			food_quality += LIKED_FOOD_QUALITY_CHANGE
+		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, disliked_foodtypes)
 		food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
 
 	return food_quality

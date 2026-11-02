@@ -255,11 +255,7 @@ multiple modular subtrees with behaviors
 		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
 	if(new_turf)
 		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
-		var/new_level_clients = length(SSmobs.clients_by_zlevel[new_turf.z]) // monkestation edit: x.len -> length(x)
-		if(new_level_clients)
-			set_ai_status(AI_STATUS_IDLE)
-		else
-			set_ai_status(AI_STATUS_OFF)
+		set_ai_status(get_expected_ai_status())
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -326,7 +322,7 @@ multiple modular subtrees with behaviors
 				stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
 				current_behavior.finish_action(src, FALSE)
 				return //This can cause issues, so don't let these slide.
-			if(current_behavior.required_distance >= get_dist(pawn, current_movement_target)) ///Are we close enough to engage?
+			if(ai_movement.close_enough(pawn, current_movement_target, current_behavior.required_distance)) ///Are we close enough to engage?
 				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
 					ai_movement.stop_moving_towards(src)
 
@@ -378,7 +374,7 @@ multiple modular subtrees with behaviors
 		if(LAZYACCESS(planned_behaviors, current_behavior))
 			continue
 		var/list/arguments = list(src, FALSE)
-		var/list/stored_arguments = behavior_args[type]
+		var/list/stored_arguments = behavior_args[current_behavior.type]
 		if(stored_arguments)
 			arguments += stored_arguments
 		current_behavior.finish_action(arglist(arguments))
@@ -463,7 +459,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_sentience_lost()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
-	set_ai_status(AI_STATUS_IDLE) //Can't do anything while player is connected
+	set_ai_status(get_expected_ai_status())
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 // Turn the controller off the controller if the pawn has been qdeleted
