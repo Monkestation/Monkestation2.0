@@ -65,15 +65,23 @@
 				L.update_appearance()
 
 	update_appearance()
+	update_minimap_blip()
 
 /obj/structure/ladder/proc/disconnect()
 	if(up && up.down == src)
 		up.down = null
 		up.update_appearance()
+		up.update_minimap_blip()
 	if(down && down.up == src)
 		down.up = null
 		down.update_appearance()
+		down.update_minimap_blip()
 	up = down = null
+
+/obj/structure/ladder/proc/update_minimap_blip()
+	remove_minimap_blip(MINIMAP_LADDER_BLIP, src)
+	if(up || down)
+		add_minimap_blip(src, MINIMAP_LADDER_BLIP, "ladder")
 
 /obj/structure/ladder/update_icon_state()
 	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"

@@ -12,6 +12,7 @@
 	plane = AREA_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
+	tacmap_color = null
 
 	/// List of all turfs currently inside this area as nested lists indexed by zlevel.
 	/// Acts as a filtered version of area.contents For faster lookup
@@ -133,6 +134,9 @@
 
 	/// Whether roundstart lockers should be anchored by default in this area, if eligible.
 	var/anchor_roundstart_lockers = TRUE
+
+	/// If TRUE, then this area will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
 
 /**
  * Called when an area loads

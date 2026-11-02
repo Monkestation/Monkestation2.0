@@ -38,6 +38,7 @@
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
+	skip_minimap_rendering = TRUE
 
 /turf/open/misc/ice/icemoon/no_planet_atmos
 	planetary_atmos = FALSE
