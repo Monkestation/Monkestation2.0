@@ -252,8 +252,17 @@
 /obj/item/fish/tadpole/proc/gestation(mob/living/user)
 	if(QDELETED(user) || QDELETED(src))
 		return
-	new /mob/living/basic/frog(user)
-	user.gib()
+	user.visible_message(span_suicide("A live frog bursts out of [user]!"))
+	new /mob/living/basic/frog(user.drop_location()) // MONKESTATION EDIT: no frog spawner
+
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+
+	if (chest)
+		chest.dismember()
+		user.death()
+	else
+		user.gib()
+
 	qdel(src)
 
 /obj/item/fish/perch
