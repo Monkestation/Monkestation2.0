@@ -563,7 +563,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	//ditto if no restrictions apply
 	var/area/area = get_area(location)
-	ifarea.unlimited_fishing
+	if(area.unlimited_fishing)
 		return
 	//If this fish population isn't recovering from recent losses, we just increase it.
 	if(!LAZYACCESS(currently_on_regen, fish.type))
