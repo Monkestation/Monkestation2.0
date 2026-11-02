@@ -248,7 +248,7 @@
 	portal.activate(fish_source, user)
 	TEST_ASSERT(!portal.active, "[portal] was activated with a fish source from an unlinked fishing spot")
 	portal.multitool_act(user, tool)
-	TEST_ASSERT_EQUAL(tool.buffer, portal, "[portal] wasn't set as buffer for [tool]")
+	TEST_ASSERT_EQUAL(tool.buffer?.resolve(), portal, "[portal] wasn't set as buffer for [tool]") // MONKESTATION EDIT: our multitool buffer is a weakref
 	tool.melee_attack_chain(user, fishing_spot)
 	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "We tried linking [portal] to the fishing spot but didn't succeed.")
 	portal.activate(fish_source, user)

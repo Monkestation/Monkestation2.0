@@ -202,7 +202,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if (isitem(source))
 		return
 
-	source.AddElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
+	source.AddElement(/datum/element/radioactive)
 
 /datum/material/uranium/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -210,7 +210,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if (isitem(source))
 		return
 
-	source.RemoveElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
+	source.RemoveElement(/datum/element/radioactive)
 
 /datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))

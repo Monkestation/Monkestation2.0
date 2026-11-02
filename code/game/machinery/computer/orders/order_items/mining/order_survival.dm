@@ -86,6 +86,12 @@
 	desc = "A surgical medkit for basic field surgery."
 	cost_per_order = 3000
 
+/datum/orderable_item/survival/rescue_fishing_rod
+	name = "Rescue Fishing Rod"
+	item_path = /obj/item/fishing_rod/rescue
+	desc = "For when your fellow miner has inevitably fallen into a chasm, and it's up to you to save them."
+	cost_per_order = 600
+
 /datum/orderable_item/survival/rescue_hook
 	item_path = /obj/item/fishing_hook/rescue
 	desc = "A large hook for fishing people out of chasms. You will need to provide your own rod and string..."
