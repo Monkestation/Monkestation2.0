@@ -104,6 +104,7 @@
 	if(shark_form && mind.get_skill_level(/datum/skill/fishing) < SKILL_LEVEL_APPRENTICE)
 		mind.set_level(/datum/skill/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
 
+/// Turns the space dragon into its shark form
 /mob/living/basic/space_dragon/proc/sharkify()
 	if(shark_form)
 		return
@@ -225,6 +226,7 @@
 	food.forceMove(src)
 	return TRUE
 
+/// Eats the fish, healing the space dragon based on its weight
 /mob/living/basic/space_dragon/proc/eat_fish(obj/item/fish/fish)
 	//a standard fish weights about 500 units on average, rarely exceeds 2000 units, the amount healed is less than a one fiftyth of our total on average.
 	var/health_recovered = fish.weight * 0.014
@@ -244,11 +246,13 @@
 		addtimer(CALLBACK(src, PROC_REF(barf_contents)), 3 SECONDS)
 	qdel(fish)
 
+/// Starts the transformation of the space dragon into its shark form
 /mob/living/basic/space_dragon/proc/begin_sharkify()
 	do_jitter_animation(300)
 	addtimer(CALLBACK(src, PROC_REF(sharkify)), 1.2 SECONDS)
 	visible_message(span_warning("[src] begins mutating!"))
 
+/// Makes the space dragon vomit up everything it ate
 /mob/living/basic/space_dragon/proc/barf_contents()
 	if(stat == DEAD)
 		return

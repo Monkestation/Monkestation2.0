@@ -106,6 +106,7 @@
 	unlink_fishing_spot(spot)
 	balloon_alert(user, "fishing spot unlinked")
 
+/// Adds the screentip to link the fishing portal generator to a fishing spot when using the multitool on it
 /obj/machinery/fishing_portal_generator/proc/multitool_context(obj/item/source, list/context, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(target, TRAIT_FISHING_SPOT) && !HAS_TRAIT(target, TRAIT_UNLINKABLE_FISHING_SPOT))
@@ -113,6 +114,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
+/// Stops listening to the multitool when the generator is removed from its buffer
 /obj/machinery/fishing_portal_generator/proc/multitool_unbuffered(datum/source, datum/buffer)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, list(COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, COMSIG_MULTITOOL_REMOVE_BUFFER))
@@ -140,6 +142,7 @@
 	playsound(spot, 'sound/machines/ping.ogg', 15, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	return ITEM_INTERACT_SUCCESS
 
+/// Unlinks the fishing spot from the generator, turning it off if it was using that spot
 /obj/machinery/fishing_portal_generator/proc/unlink_fishing_spot(atom/spot)
 	SIGNAL_HANDLER
 	var/datum/fish_source/source = linked_fishing_spots[spot]
@@ -183,6 +186,7 @@
 	. = ..()
 	check_fishing_spot_z()
 
+/// Turns off the generator if it's no longer on the same z level as the linked fishing spot it's using
 /obj/machinery/fishing_portal_generator/proc/check_fishing_spot_z()
 	if(!active || long_range_link || istype(active.fish_source, /datum/fish_source/portal))
 		return
@@ -197,6 +201,7 @@
 		if(turf.z != new_turf.z && !(is_station_level(turf.z) && is_station_level(new_turf.z)))
 			deactivate()
 
+/// Turns on the generator with the selected fish source
 /obj/machinery/fishing_portal_generator/proc/activate(datum/fish_source/selected_source, mob/user)
 	if(QDELETED(selected_source))
 		return
@@ -242,6 +247,7 @@
 		update_use_power(IDLE_POWER_USE)
 		update_icon()
 
+/// Turns off the generator if the linked fishing spot it's using moved to another z level
 /obj/machinery/fishing_portal_generator/proc/on_fishing_spot_z_level_changed(atom/spot, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	var/turf/turf = get_turf(src)

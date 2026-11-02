@@ -60,6 +60,7 @@
 		return
 	check_if_detonate(I)
 
+/// Checks if the parent should detonate when it hits something after being thrown
 /datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
 

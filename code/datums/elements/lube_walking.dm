@@ -51,6 +51,7 @@
 		snail.remove_movespeed_modifier(/datum/movespeed_modifier/snail_crawl)
 		UnregisterSignal(snail, COMSIG_MOVABLE_MOVED)
 
+/// Leaves some lube on the turf the snail is standing on
 /datum/element/lube_walking/proc/lubricate(atom/movable/snail)
 	SIGNAL_HANDLER
 

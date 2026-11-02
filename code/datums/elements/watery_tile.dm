@@ -19,6 +19,7 @@
 		out_of_water(source, movable)
 	return ..()
 
+/// Starts listening to the movable that entered the water to know when it gets immersed
 /datum/element/watery_tile/proc/enter_water(atom/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
@@ -28,6 +29,7 @@
 	if(HAS_TRAIT(entered, TRAIT_IMMERSED))
 		dip_in(entered)
 
+/// Puts out fires on the movable that was just immersed, and makes it wet if it's alive
 /datum/element/watery_tile/proc/dip_in(atom/movable/source)
 	SIGNAL_HANDLER
 	source.extinguish()
@@ -37,12 +39,14 @@
 	our_mob.adjust_wet_stacks(3)
 	our_mob.apply_status_effect(/datum/status_effect/watery_tile_wetness)
 
+/// Stops listening to the movable that left the water, drying it off
 /datum/element/watery_tile/proc/out_of_water(atom/source, atom/movable/gone)
 	SIGNAL_HANDLER
 	UnregisterSignal(gone, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED), SIGNAL_REMOVETRAIT(TRAIT_IMMERSED)))
 	if(isliving(gone))
 		dip_out(gone)
 
+/// Stops making the mob wet
 /datum/element/watery_tile/proc/dip_out(mob/living/source)
 	SIGNAL_HANDLER
 	source.remove_status_effect(/datum/status_effect/watery_tile_wetness)

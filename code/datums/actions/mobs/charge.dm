@@ -222,6 +222,7 @@
 	id = "tired_post_charge"
 	duration = 1 SECONDS
 	alert_type = null
+	/// The movespeed modifier applied while tired after charging
 	var/tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge
 
 /datum/status_effect/tired_post_charge/on_apply()

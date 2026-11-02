@@ -79,10 +79,12 @@
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
+/// Sets the spin frequency of the fishing rod when the lure is put in its bait slot
 /obj/item/fishing_lure/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	rod.spin_frequency = spin_frequency
 
+/// Removes the spin frequency of the fishing rod when the lure is taken out of its bait slot
 /obj/item/fishing_lure/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	rod.spin_frequency = null

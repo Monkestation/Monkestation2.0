@@ -58,6 +58,7 @@
 	spawn_hole()
 	return ITEM_INTERACT_SUCCESS
 
+/// Makes a fishing hole on the ice
 /turf/open/misc/ice/proc/spawn_hole()
 	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/ice_fishing])
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)

@@ -222,6 +222,7 @@
 		return
 	qdel(src)
 
+/// Stops the tadpole from growing if it's too hungry or the aquarium has growth disabled
 /obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
@@ -230,6 +231,7 @@
 	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 
+/// Plays the frog sound when the tadpole grows into a frog
 /obj/item/fish/tadpole/proc/on_growth(datum/source, mob/living/basic/frog/result)
 	SIGNAL_HANDLER
 	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
@@ -249,6 +251,7 @@
 	addtimer(CALLBACK(src, PROC_REF(gestation), user), 5 SECONDS)
 	return MANUAL_SUICIDE
 
+/// Makes a frog burst out of the user's chest, for the suicide
 /obj/item/fish/tadpole/proc/gestation(mob/living/user)
 	if(QDELETED(user) || QDELETED(src))
 		return

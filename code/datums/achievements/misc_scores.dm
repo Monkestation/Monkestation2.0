@@ -26,6 +26,7 @@
 	name = "Fish Species Caught"
 	desc = "How many different species of fish you've caught so far. Gotta fish 'em all."
 	database_id = FISH_SCORE
+	/// Entries of clients that loaded their data before the fishing subsystem was initialized, validated later
 	var/list/early_entries_to_validate = list()
 
 /datum/award/score/progress/fish/New()
@@ -35,6 +36,7 @@
 /datum/award/score/progress/fish/get_table()
 	return "fish_progress"
 
+/// Validates the entries of the clients that loaded their data before the fishing subsystem was done initializing
 /datum/award/score/progress/fish/proc/validate_early_joiners(datum/source)
 	for(var/client/client as anything in GLOB.clients)
 		var/datum/achievement_data/holder = client.persistent_client.achievements

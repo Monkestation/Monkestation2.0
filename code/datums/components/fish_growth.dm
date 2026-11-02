@@ -48,6 +48,7 @@
 /datum/component/fish_growth/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_FISH_LIFE, COMSIG_FISH_BEFORE_GROWING))
 
+/// Increases the growth progress every time the fish processes life, finishing it when it reaches 100
 /datum/component/fish_growth/proc/on_fish_life(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD) //It died just now.
@@ -62,6 +63,7 @@
 	if(maturation >= 100)
 		finish_growing(source)
 
+/// Turns the fish into the result type (a mob, an item or an offspring if it's an evolution)
 /datum/component/fish_growth/proc/finish_growing(obj/item/fish/source)
 	var/atom/location = use_drop_loc ? source.drop_location() : source.loc
 	var/is_evo = ispath(result_type, /datum/fish_evolution)

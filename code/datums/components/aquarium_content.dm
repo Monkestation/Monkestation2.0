@@ -1,7 +1,7 @@
 /// Allows movables to be inserted/displayed in aquariums.
 /datum/component/aquarium_content
 
-	//This is visual effect holder that will end up in aquarium's vis_contents
+	/// This is visual effect holder that will end up in aquarium's vis_contents
 	var/obj/effect/aquarium/vc_obj
 
 	/**
@@ -50,6 +50,7 @@
 	if(HAS_TRAIT(movable_parent.loc, TRAIT_IS_AQUARIUM))
 		on_inserted(movable_parent.loc)
 
+/// Called when the parent is put inside an aquarium, registers the signals and adds the visual overlay
 /datum/component/aquarium_content/proc/on_inserted(atom/movable/aquarium)
 	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, PROC_REF(on_removed))
 	RegisterSignal(aquarium, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_fluid_changed))
@@ -69,6 +70,7 @@
 	//Finally add it to to objects vis_contents
 	aquarium.vis_contents |= vc_obj
 
+/// Updates the visual overlay when the fluid type of the aquarium changes
 /datum/component/aquarium_content/proc/on_fluid_changed(datum/source, new_fluid_type)
 	SIGNAL_HANDLER
 	vc_obj.fluid_type = new_fluid_type
@@ -91,6 +93,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_COLOR_UPDATED, PROC_REF(update_vc_color))
 	SEND_SIGNAL(parent, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, vc_obj, aquarium)
 
+/// Updates the color of the visual overlay to match the parent
 /datum/component/aquarium_content/proc/update_vc_color(atom/movable/source)
 	SIGNAL_HANDLER
 	var/color_to_use = source.color
@@ -104,12 +107,14 @@
 	SEND_SIGNAL(movable.loc, COMSIG_AQUARIUM_SET_VISUAL, vc_obj) //set the necessary layer as well as the pixel bounds first
 	SEND_SIGNAL(movable, COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION, movable.loc, vc_obj)
 
+/// Called when something leaves the aquarium, removes the parent from it if it was the one leaving
 /datum/component/aquarium_content/proc/on_removed(atom/movable/aquarium, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(parent != gone)
 		return
 	remove_from_aquarium(aquarium)
 
+/// Unregisters the aquarium signals and removes the visual overlay from it
 /datum/component/aquarium_content/proc/remove_from_aquarium(atom/movable/aquarium)
 	UnregisterSignal(aquarium, list(COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_ATOM_EXITED) + animation_update_signals)
 	SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_REMOVE_VISUAL, vc_obj)

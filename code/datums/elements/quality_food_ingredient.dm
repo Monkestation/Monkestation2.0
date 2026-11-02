@@ -35,37 +35,45 @@
 	REMOVE_TRAIT(source, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
 	return ..()
 
+/// Passes the quality to the food crafted with the parent
 /datum/element/quality_food_ingredient/proc/used_in_craft(datum/source, atom/result)
 	SIGNAL_HANDLER
 	add_quality(result)
 
+/// Passes the quality to the food baked from the parent
 /datum/element/quality_food_ingredient/proc/item_baked(datum/source, atom/baked_result)
 	SIGNAL_HANDLER
 	add_quality(baked_result)
 
+/// Passes the quality to the food microwaved from the parent
 /datum/element/quality_food_ingredient/proc/microwaved_from(datum/source, atom/result)
 	SIGNAL_HANDLER
 	add_quality(result)
 
+/// Passes the quality to the food grilled from the parent
 /datum/element/quality_food_ingredient/proc/item_grilled(datum/source, atom/grill_result)
 	SIGNAL_HANDLER
 	add_quality(grill_result)
 
+/// Adds the extra complexity to the parent itself when it's cooked without changing into something else
 /datum/element/quality_food_ingredient/proc/simply_cooked(datum/source)
 	SIGNAL_HANDLER
 	//The target of the food quality and the source are the same, there's no need to re-add the whole element.
 	RegisterSignal(source, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, PROC_REF(add_complexity), TRUE)
 	ADD_TRAIT(source, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
 
+/// Passes the quality to the food the parent was used as an ingredient in
 /datum/element/quality_food_ingredient/proc/used_as_ingredient(datum/source, atom/container)
 	SIGNAL_HANDLER
 	add_quality(container)
 
+/// Adds the element to the target and makes it give the extra complexity
 /datum/element/quality_food_ingredient/proc/add_quality(atom/target)
 	target.AddElement(/datum/element/quality_food_ingredient, complexity_increase)
 	RegisterSignal(target, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, PROC_REF(add_complexity), TRUE)
 	ADD_TRAIT(target, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
 
+/// Adds our complexity increase to the complexity of the food
 /datum/element/quality_food_ingredient/proc/add_complexity(datum/source, list/extra_complexity)
 	SIGNAL_HANDLER
 	extra_complexity[1] += complexity_increase

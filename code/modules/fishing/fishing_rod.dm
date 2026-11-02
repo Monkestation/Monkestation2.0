@@ -667,6 +667,7 @@
 	if(slot)
 		SEND_SIGNAL(gone, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, src, slot)
 
+/// Returns the frame used by the fishing minigame UI for this rod
 /obj/item/fishing_rod/proc/get_frame(datum/fishing_challenge/challenge)
 	return mutable_appearance('icons/hud/fishing_hud.dmi', frame_state)
 

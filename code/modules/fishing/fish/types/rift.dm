@@ -311,6 +311,7 @@
 		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.4 SECONDS * i)
 		user.death()
 
+/// Replaces the eyes of the user with snail or mushroom eyes, for the suicide
 /obj/item/fish/flumpulus/proc/flump_attack(mob/living/user)
 	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	var/obj/item/organ/internal/eyes/new_eyes = pick(list(/obj/item/organ/internal/eyes/snail, /obj/item/organ/internal/eyes/night_vision/mushroom))
@@ -536,6 +537,7 @@
 	fish_movement_type = /datum/fish_movement/slow
 	fishing_difficulty_modifier = 15
 	favorite_bait = list(/obj/item/organ/internal/ears)
+	/// The mob that got trapped inside the fish with the suicide
 	var/mob/living/moron_inside
 
 // When someone refactors demoralizers to not be omega hardcoded for syndicate this fish should get it
@@ -710,7 +712,9 @@
 	var/datum/bodypart_overlay/simple/babbearfish/babbel_overlay
 	/// The limb our overlay is currently drawn on
 	var/obj/item/bodypart/overlay_limb
+	/// The anti magic component given to the owner of the ears
 	var/bound_component
+	/// Holds the languages of the owner from before the ears were inserted, given back when removed
 	var/datum/language_holder/removal_holder
 
 /**
@@ -834,10 +838,12 @@
 	QDEL_NULL(removal_holder)
 	QDEL_NULL(bound_component)
 
+/// Damages the ears when they block magic
 /obj/item/organ/internal/ears/babbelfish/proc/on_drain_magic(mob/user)
 	to_chat(user, span_noticealien("Your [src] pop as they protect your mind from psychic phenomena!"))
 	adjustEarDamage(0, 20)
 
+/// Breaks the ears once they run out of charges
 /obj/item/organ/internal/ears/babbelfish/proc/on_expire(mob/user)
 	to_chat(user, span_noticealien("Your [src] suddenly burst apart!"))
 	apply_organ_damage(maxHealth, maxHealth)

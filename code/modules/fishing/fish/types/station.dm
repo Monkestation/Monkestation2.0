@@ -209,6 +209,7 @@
 	variant = pick(FISH_FRITTERISH, FISH_BERNARD, FISH_MATTHEW)
 	load_variant(pick(FISH_FRITTERISH, FISH_BERNARD, FISH_MATTHEW))
 
+/// Sets the variant of the fritterish, updating its icon, sprite size and name
 /obj/item/fish/fryish/fritterish/proc/load_variant(new_variant)
 	variant = new_variant
 	switch(variant)

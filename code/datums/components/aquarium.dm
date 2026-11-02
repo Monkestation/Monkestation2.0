@@ -202,6 +202,7 @@
 	var/atom/movable/movable = parent
 	movable.update_appearance()
 
+/// Opens or closes the control and feed panel of the aquarium
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(!user.can_perform_action(src))
@@ -275,12 +276,14 @@
 	last_feeding = world.time
 	feed_fishes(movable)
 
+/// Feeds all the fish in the aquarium with the reagents of the movable
 /datum/component/aquarium/proc/feed_fishes(atom/movable/movable, list/fishes = get_fishes())
 	for(var/obj/item/fish/fish as anything in fishes)
 		fish.feed(movable.reagents)
 	if(current_mode == AQUARIUM_MODE_AUTO && is_fish_population_safe())
 		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 
+/// Lets you empty the feed storage of the aquarium with a plunger if the panel is open
 /datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
@@ -289,6 +292,7 @@
 	INVOKE_ASYNC(src, PROC_REF(do_plunging), source, user)
 	return COMPONENT_NO_AFTERATTACK
 
+/// Empties the feed storage after a short delay, splashing it on the floor
 /datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	user.balloon_alert_to_viewers("plunging...")
 	if(do_after(user, 3 SECONDS, target = source))
@@ -296,6 +300,7 @@
 		source.reagents.expose(get_turf(source), TOUCH) //splash on the floor
 		source.reagents.clear_reagents()
 
+/// Adds the temperature, fluid and panel info to the examine text
 /datum/component/aquarium/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("Its temperature and fluid are currently set to [EXAMINE_HINT("[fluid_temp] K")] and [EXAMINE_HINT(fluid_type)].")
@@ -423,6 +428,7 @@
 	if(current_mode == AQUARIUM_MODE_AUTO)
 		get_optimal_aquarium_settings()
 
+/// Recalculates the beauty of the aquarium from its contents
 /datum/component/aquarium/proc/update_aquarium_beauty(old_beauty)
 	if(QDELETED(parent))
 		return
@@ -455,6 +461,7 @@
 	visual.aquarium_zone_max_pz = aquarium_zone_max_pz
 	visual.fluid_type = fluid_type
 
+/// Returns the layer the content should use, depending on the requested layer mode
 /datum/component/aquarium/proc/request_layer(layer_type)
 	var/atom/movable/movable = parent
 	switch(layer_type)
@@ -471,12 +478,14 @@
 			used_layers += chosen_layer
 			return movable.layer + chosen_layer
 
+/// Returns a list of all the fish inside the aquarium
 /datum/component/aquarium/proc/get_fishes()
 	var/list/fishes = list()
 	for(var/key in tracked_fish_by_type)
 		fishes += tracked_fish_by_type[key]
 	return fishes
 
+/// Returns whether the fish inside are all alive and safe to breed and grow without killing each other
 /datum/component/aquarium/proc/is_fish_population_safe()
 	var/list/fishes = get_fishes()
 	var/alive = 0
@@ -570,6 +579,7 @@
 	else
 		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 
+/// Opens the UI if the panel is open, otherwise admires the aquarium
 /datum/component/aquarium/proc/interact(atom/movable/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -578,6 +588,7 @@
 	else if(!isitem(source))
 		INVOKE_ASYNC(src, PROC_REF(admire), user)
 
+/// Admires the aquarium when right clicking it while it's an item
 /datum/component/aquarium/proc/on_secondary_attack_hand(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(admire), user)
@@ -671,6 +682,7 @@
 				return
 			fish.AddComponent(/datum/component/rename, new_name, fish.desc)
 
+/// Changes the mode of the aquarium, updating the traits that come with it
 /datum/component/aquarium/proc/set_aquarium_mode(new_mode)
 	if(new_mode == current_mode)
 		return
@@ -682,6 +694,7 @@
 		if(AQUARIUM_MODE_AUTO)
 			get_optimal_aquarium_settings()
 
+/// Changes the fluid type of the aquarium and checks if the fish can still live in it
 /datum/component/aquarium/proc/set_fluid_type(new_fluid_type)
 	var/atom/movable/movable = parent
 	fluid_type = new_fluid_type
@@ -689,6 +702,7 @@
 	for(var/obj/item/fish/fish as anything in get_fishes())
 		check_fluid_and_temperature(fish)
 
+/// Admires the aquarium for a few seconds, giving a mood event based on how many fish are alive or dead
 /datum/component/aquarium/proc/admire(atom/movable/source, mob/living/user)
 	source.balloon_alert(user, "admiring aquarium...")
 	if(!do_after(user, 5 SECONDS, target = source))
@@ -710,6 +724,7 @@
 	else if(dead_fish > 0)
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
 
+/// Adds the screentips for the aquarium depending on the held item and the panel state
 /datum/component/aquarium/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	var/open_panel = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)

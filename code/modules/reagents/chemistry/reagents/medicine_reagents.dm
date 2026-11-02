@@ -714,6 +714,7 @@
 	chemical_flags = REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_NO_RANDOM_RECIPE|REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem = /datum/reagent/inverse
 	inverse_chem_val = 0
+	/// The eyes the flumpuline can turn yours into
 	var/static/list/eye_types = list(/obj/item/organ/internal/eyes/snail, /obj/item/organ/internal/eyes/night_vision/mushroom)
 
 /datum/reagent/medicine/oculine/flumpuline/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
@@ -746,6 +747,7 @@
 
 	flump_eyes(affected_mob, eyes)
 
+/// Replaces the eyes of the mob with snail or mushroom eyes
 /datum/reagent/medicine/oculine/flumpuline/proc/flump_eyes(mob/affected_mob, obj/eyes)
 	var/obj/item/organ/internal/eyes/new_eyes = pick(eye_types)
 	new_eyes = new new_eyes(affected_mob)
@@ -905,7 +907,7 @@
 	/// The maximum amount of damage we can revive from, as a ratio of max health
 	var/max_revive_damage_ratio = 2
 
-// To override for subtypes.
+/// To override for subtypes.
 /datum/reagent/medicine/strange_reagent/proc/pre_rez_check(atom/thing_to_rez)
 	return TRUE
 

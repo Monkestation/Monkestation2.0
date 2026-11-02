@@ -136,12 +136,14 @@
 	AddComponent(/datum/component/aquarium_content)
 	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
 
+/// Makes the aquarium visual of the eggs use their aquarium icon state and lie on the bottom
 /obj/item/food/moonfish_eggs/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	visual.icon = icon
 	visual.icon_state = "moonfish_eggs_aquarium"
 	visual.layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
+/// Places the aquarium visual of the eggs in a random spot on the bottom of the aquarium
 /obj/item/food/moonfish_eggs/proc/randomize_aquarium_position(datum/source, obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	var/sprite_width = 5
@@ -153,6 +155,7 @@
 	visual.pixel_w = rand(pw_min, pw_max)
 	visual.pixel_z = pz_min + rand(-1, 1)
 
+/// Adds some beauty to the aquarium the eggs are in
 /obj/item/food/moonfish_eggs/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
 	SIGNAL_HANDLER
 	beauty_holder += 100 //moonfish eggs are kinda eye candy

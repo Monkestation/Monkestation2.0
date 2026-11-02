@@ -26,6 +26,7 @@
 		/obj/item/fish/needlefish,
 		/obj/item/fish/gunner_jellyfish,
 	)
+	/// How long it takes for the moonfish to lay its eggs
 	var/egg_laying_time = 2.75 MINUTES
 
 /obj/item/fish/moonfish/Initialize(mapload, apply_qualities = TRUE)

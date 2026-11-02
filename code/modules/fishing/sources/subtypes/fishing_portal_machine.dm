@@ -150,6 +150,7 @@
 	overlay_state = "portal_randomizer"
 	radial_state = "misaligned_question_mark"
 	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
+	/// A fish table with the fish of all portal sources, shared between all random portals
 	var/static/list/all_portal_fish_sources_at_once
 
 ///Generate the fish table if we don't have one already.
@@ -192,6 +193,7 @@
 			challenge.special_effects |= effect
 	RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_MOVER_INITIALIZED, PROC_REF(randomize_mover_velocity))
 
+/// Randomizes the velocity of the fish for the minigame
 /datum/fish_source/portal/random/proc/randomize_mover_velocity(datum/source, datum/fish_movement/mover)
 	SIGNAL_HANDLER
 	mover.short_jump_velocity_limit += rand(-100, 100)

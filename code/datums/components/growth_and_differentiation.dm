@@ -123,6 +123,7 @@
 		else
 			percent_grown += rand(lower_growth_value, upper_growth_value)
 
+/// Makes the mob more likely to grow up the happier it is
 /datum/component/growth_and_differentiation/proc/on_happiness_change(datum/source, happiness_percentage)
 	SIGNAL_HANDLER
 

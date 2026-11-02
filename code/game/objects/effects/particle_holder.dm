@@ -31,6 +31,7 @@
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	on_move(loc, null, NORTH)
 
+/// Returns the particle effect to use for the given path
 /obj/effect/abstract/particle_holder/proc/get_particle_effect(particle_path)
 	return new particle_path()
 

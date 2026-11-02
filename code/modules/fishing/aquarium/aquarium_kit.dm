@@ -145,12 +145,14 @@
 
 	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
 
+/// Makes the aquarium visual of the prop use its icon state and layer
 /obj/item/aquarium_prop/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual, atom/movable/aquarium)
 	SIGNAL_HANDLER
 	visual.icon = aquarium.icon
 	visual.icon_state = "[icon_state][isitem(aquarium) ? "_fish_tank" : ""]"
 	visual.layer_mode = layer_mode
 
+/// Adds the beauty of the prop to the aquarium it's in
 /obj/item/aquarium_prop/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
 	SIGNAL_HANDLER
 	beauty_holder += beauty

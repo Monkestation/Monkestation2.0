@@ -762,6 +762,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
 	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
+	/// What the nugget is said to be made of in its description
 	var/meat_source = "\"chicken\""
 
 /obj/item/food/nugget/Initialize(mapload)

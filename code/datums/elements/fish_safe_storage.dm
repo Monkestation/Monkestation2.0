@@ -1,6 +1,7 @@
 ///An element that puts in stasis any fish that enters the atom.
 /datum/element/fish_safe_storage
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
+	/// The fish currently inside the storages with this element
 	var/list/tracked_fish = list()
 
 /datum/element/fish_safe_storage/New()
@@ -28,18 +29,21 @@
 	REMOVE_TRAIT(source, TRAIT_STOP_FISH_FLOPPING, REF(src))
 	return ..()
 
+/// Starts tracking a fish that entered the storage and puts it in stasis
 /datum/element/fish_safe_storage/proc/on_enter(datum/source, obj/item/fish/arrived)
 	SIGNAL_HANDLER
 	if(isfish(arrived))
 		tracked_fish |= arrived
 		ADD_TRAIT(arrived, TRAIT_FISH_STASIS, REF(src))
 
+/// Starts tracking a fish that was created inside the storage and puts it in stasis
 /datum/element/fish_safe_storage/proc/on_init_on(datum/source, obj/item/fish/created)
 	SIGNAL_HANDLER
 	if(isfish(created) && !QDELETED(created))
 		tracked_fish |= created
 		ADD_TRAIT(created, TRAIT_FISH_STASIS, REF(src))
 
+/// Stops tracking a fish that left the storage and takes it out of stasis
 /datum/element/fish_safe_storage/proc/on_exit(datum/source, obj/item/fish/gone)
 	SIGNAL_HANDLER
 	if(isfish(gone))

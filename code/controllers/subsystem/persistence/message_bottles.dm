@@ -22,6 +22,7 @@
 	message_bottles_index++
 	message_bottles_database.set_key("message-[GLOB.round_id]-[message_bottles_index]", data)
 
+/// Spawns a message bottle at loc, filled with a random message saved from a previous round if there's any left
 /datum/controller/subsystem/persistence/proc/load_message_bottle(atom/loc)
 	if(isnull(message_bottles_database))
 		message_bottles_database = new("data/message_bottles.json")
@@ -48,6 +49,7 @@
 
 	bottle.update_icon(UPDATE_OVERLAYS)
 
+/// Saves all the message bottles queued during the round to the database
 /datum/controller/subsystem/persistence/proc/save_queued_message_bottles()
 	for(var/item in queued_message_bottles)
 		save_message_bottle(item)

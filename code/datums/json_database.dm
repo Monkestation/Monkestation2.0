@@ -94,6 +94,7 @@
 	cached_data = new_data
 	queue_save()
 
+/// Queues a save of the database for the next tick, if one isn't already queued
 /datum/json_database/proc/queue_save()
 	PRIVATE_PROC(TRUE)
 
@@ -102,6 +103,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(save)), 0)
 
+/// Writes the cached data to the database file, backing up the old file first
 /datum/json_database/proc/save()
 	PRIVATE_PROC(TRUE)
 
@@ -116,6 +118,7 @@
 
 	fdel(backup_filepath)
 
+/// Loads the backup of the database file if the main one is corrupted
 /datum/json_database/proc/load_backup(scenario)
 	PRIVATE_PROC(TRUE)
 

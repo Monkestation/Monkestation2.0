@@ -53,6 +53,7 @@
 	else
 		long_jump_chance *= master.difficulty
 
+/// Resets the jump chances of the fish to their initial values
 /datum/fish_movement/proc/reset_difficulty_values()
 	short_jump_chance = initial(short_jump_chance)
 	long_jump_chance = initial(long_jump_chance)

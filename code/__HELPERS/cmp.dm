@@ -10,9 +10,11 @@
 /proc/cmp_text_dsc(a,b)
 	return sorttext(a,b)
 
+/// Sorts lists from shortest to longest
 /proc/cmp_list_len_asc(list/a, list/b)
 	return length(a) - length(b)
 
+/// Sorts lists from longest to shortest
 /proc/cmp_list_len_dsc(list/a, list/b)
 	return length(b) - length(a)
 
@@ -22,6 +24,7 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
+/// Sorts atoms alphabetically by their initial name
 /proc/cmp_init_name_asc(atom/a, atom/b)
 	return sorttext(initial(b.name), initial(a.name))
 

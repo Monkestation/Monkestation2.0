@@ -298,6 +298,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item/fishing_rod))
 		RegisterSignal(source, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
 
+/// Has a chance to make the fishing rod fish from a random fish source instead of the actual one
 /datum/material/bluespace/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(67))
@@ -357,11 +358,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item/fishing_rod))
 		RegisterSignal(source, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
 
+/// Has a chance to make the fishing rod fish up something funny
 /datum/material/bananium/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(40))
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_funny_fish))
 
+/// Adds some funny fish and mobs to the possible rewards
 /datum/material/bananium/proc/roll_funny_fish(datum/source, obj/item/fishing_rod/rod, mob/fisherman, atom/location, list/rewards)
 	SIGNAL_HANDLER
 	var/static/list/funny_fish = list(
@@ -883,11 +886,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(paper, /obj/item/fishing_rod))
 		RegisterSignal(paper, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
 
+/// Has a chance to make the fishing rod fish up stickmen
 /datum/material/paper/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(40)) //consider the default reward and it's 15%
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_stickman))
 
+/// Adds a random stickman to the possible rewards
 /datum/material/paper/proc/roll_stickman(datum/source, obj/item/fishing_rod/rod, mob/fisherman, atom/location, list/rewards)
 	SIGNAL_HANDLER
 	rewards += pick(/mob/living/basic/stickman, /mob/living/basic/stickman/dog, /mob/living/basic/stickman/ranged)
@@ -969,11 +974,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	else if(istype(source, /obj/item/fish))
 		ADD_TRAIT(source, TRAIT_FISH_MADE_OF_BONE, REF(src))
 
+/// Has a chance to make the fishing rod fish up bones
 /datum/material/bone/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(40))
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_bones))
 
+/// Adds some bony fish and skeletons to the possible rewards
 /datum/material/bone/proc/roll_bones(datum/source, obj/item/fishing_rod/rod, mob/fisherman, atom/location, list/rewards)
 	SIGNAL_HANDLER
 	var/static/list/bones = list(

@@ -194,6 +194,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	/// only used in the suicide for comedic value
 	var/suicide_slap_text = "*SLAP!*"
 
+	/// How long the fish has been on a turf where it can safely be, before it disperses
 	var/time_passed_on_safe_turf = 0
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
@@ -262,6 +263,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but fails to go through with it!"))
 	return SHAME
 
+/// Makes the user slap themselves with the fish over and over until they're dead, for the suicide
 /obj/item/fish/proc/slapperoni(mob/living/user, iteration)
 	stoplag(0.1 SECONDS)
 	user.visible_message(span_bolddanger(suicide_slap_text))
@@ -358,6 +360,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		raw_fish_diseases += disease
 	return raw_fish_diseases
 
+/// Releases the fish into the location, letting it know so it can be repopulated
 /obj/item/fish/proc/released(atom/location, mob/living/user)
 	playsound(location, 'sound/effects/splash.ogg', 50)
 	SEND_SIGNAL(location, COMSIG_FISH_RELEASED_INTO, src, user)
@@ -460,6 +463,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	damage_fish((max_integrity / bites_to_finish) * 3)
 	flinch_on_eat(eater, feeder)
 
+/// Has a chance to make the fish slip out of the feeder's hands when bitten while alive
 /obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
 	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src) && feeder.dropItemToGround(src))
 		to_chat(feeder, span_warning("[src] slips out of your hands in pain!"))
@@ -479,9 +483,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(protein)
 		protein.data = HAS_TRAIT(src, TRAIT_FISH_WELL_COOKED) ? get_fish_taste_cooked() : get_fish_taste()
 
+/// Returns the tastes of the raw fish
 /obj/item/fish/proc/get_fish_taste()
 	return list("raw fish" = 2.5, "scales" = 1)
 
+/// Returns the tastes of the cooked fish
 /obj/item/fish/proc/get_fish_taste_cooked()
 	return list("cooked fish" = 2)
 
@@ -573,6 +579,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(bites_amount)
 		. += span_warning("[p_theyve(TRUE)] been bitten by someone.")
 
+/// Returns the warnings about the health of the fish for the examine text, if the user is skilled enough to notice them
 /obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
 		return
@@ -728,6 +735,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	fish_flags &= ~FISH_FLAG_UPDATING_SIZE_AND_WEIGHT
 
+/// Removes the element that lets the fish be cut into fillets
 /obj/item/fish/proc/remove_fillet_type()
 	if(!fillet_type)
 		return
@@ -735,6 +743,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	var/time = PERFORM_ALL_TESTS(fish_size_weight) ? 0 : 0.5 SECONDS * amount
 	RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, time, screentip_verb = "Cut")
 
+/// Adds the element that lets the fish be cut into fillets, with the amount based on its size
 /obj/item/fish/proc/add_fillet_type()
 	if(!fillet_type)
 		return
@@ -799,6 +808,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	attack_speed += bonus_malus * 0.1
 	force = round(force * (1 + bonus_malus * 0.1), 0.1)
 
+/// Adjusts the force and attack speed of the fish based on its weight class
 /obj/item/fish/proc/get_force_rank()
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
@@ -929,6 +939,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER))
 		return min(., FISH_STARVING_THRESHOLD * 0.2)
 
+/// Returns how much the fish is starving, or 0 if it isn't starving yet
 /obj/item/fish/proc/get_starvation_mult()
 	var/hunger = get_hunger(cap = FISH_STARVING_THRESHOLD * 2)
 	return hunger >= FISH_STARVING_THRESHOLD ? hunger : 0
@@ -995,6 +1006,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(new_size != size || new_weight != weight)
 		update_size_and_weight(new_size, new_weight)
 
+/// Starts or stops the flopping animation depending on whether the fish should be flopping
 /obj/item/fish/proc/check_flopping()
 	if(QDELETED(src)) //we don't care anymore
 		return
@@ -1023,6 +1035,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		visible_message(span_notice("[src] disperses into \the [loc]"), span_notice("You hear a splash."))
 		released(loc)
 
+/// Handles hunger, growth and reproduction of the fish every process tick
 /obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	//safe mode, don't do much except a few things that don't involve growing or reproducing.
 	if(loc && HAS_TRAIT_FROM(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
@@ -1038,6 +1051,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
+/// Sets the status of the fish (alive or dead), updating everything that depends on it
 /obj/item/fish/proc/set_status(new_status, silent = FALSE)
 	if(status == new_status)
 		return
@@ -1132,11 +1146,13 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	injector.expend(src, user)
 	return LAZARUS_INJECTOR_USED
 
+/// Makes the aquarium visual of the fish use its aquarium icon and icon state
 /obj/item/fish/proc/update_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	visual.icon = dedicated_in_aquarium_icon || icon
 	visual.icon_state = dedicated_in_aquarium_icon_state || "[initial(icon_state)]_small"
 
+/// Places the aquarium visual of the fish in a random spot of the aquarium
 /obj/item/fish/proc/randomize_aquarium_position(datum/source, atom/movable/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	var/avg_width = round(sprite_width * 0.5)
@@ -1149,6 +1165,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	visual.pixel_w = visual.base_pixel_w = rand(pw_min,pw_max)
 	visual.pixel_z = visual.base_pixel_z = rand(pz_min,pz_max)
 
+/// Changes the animation of the aquarium visual if the fish should be swimming or dead
 /obj/item/fish/proc/update_aquarium_animation(datum/source, current_animation, obj/effect/visual, fluid_type)
 	SIGNAL_HANDLER
 	var/animation = get_aquarium_animation(fluid_type)
@@ -1160,6 +1177,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		if(AQUARIUM_ANIMATION_FISH_DEAD)
 			dead_animation(visual)
 
+/// Returns which animation the aquarium visual of the fish should use
 /obj/item/fish/proc/get_aquarium_animation(fluid_type)
 	if(fluid_type == AQUARIUM_FLUID_AIR || status == FISH_DEAD)
 		return AQUARIUM_ANIMATION_FISH_DEAD
@@ -1199,6 +1217,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		animate(transform = dir_mx, time = 0, loop = -1)
 		animate(pixel_w = target_w, pixel_z = target_z, time = eyeballed_time, loop = -1)
 
+/// Makes the aquarium visual of the fish sink to the bottom when dead
 /obj/item/fish/proc/dead_animation(obj/effect/aquarium/visual)
 	//Set base_pixel_y to lowest possible value
 	var/avg_height = round(sprite_height / 2)
@@ -1213,6 +1232,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 ///Some fish are already so ugly, they can't get much worse when dead
 #define MIN_DEAD_FISH_BEAUTY -600
 
+/// Adds the beauty of the fish to the aquarium it's in, lower if it's dead
 /obj/item/fish/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
 	SIGNAL_HANDLER
 	var/actual_beauty = beauty
@@ -1295,6 +1315,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	var/bites_to_recover = bites_amount * percent
 	regenerate_bites(bites_to_recover)
 
+/// Restores some bites of the fish, regenerating its reagents
 /obj/item/fish/proc/regenerate_bites(amount)
 	amount = min(amount, bites_amount)
 	if(amount <= 0)
@@ -1554,6 +1575,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 #undef FISH_PRICE_SOFT_CAP_THRESHOLD
 #undef FISH_PRICE_SOFT_CAP_EXPONENT
 
+/// Returns how happy the fish is, used by the aquarium UI
 /obj/item/fish/proc/get_happiness_value()
 	var/happiness_value = 0
 	if(fish_flags & FISH_FLAG_PETTED)
@@ -1577,6 +1599,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	. = ..()
 	try_pet_fish(user)
 
+/// Tries to pet the fish, failing if it's dead or in a bad environment
 /obj/item/fish/proc/try_pet_fish(mob/living/user)
 	var/in_aquarium = loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 	if(status == FISH_DEAD)
@@ -1588,6 +1611,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	return pet_fish(user, in_aquarium)
 
+/// Pets the fish, which may also make it bite you if it's aggressive
 /obj/item/fish/proc/pet_fish(mob/living/user, in_aquarium)
 	if(fish_flags & FISH_FLAG_PETTED)
 		if(in_aquarium)
@@ -1625,6 +1649,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)
 	return TRUE
 
+/// Allows the fish to be petted again
 /obj/item/fish/proc/undo_petted()
 	fish_flags &= ~FISH_FLAG_PETTED
 

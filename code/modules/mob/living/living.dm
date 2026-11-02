@@ -2646,6 +2646,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	return FALSE
 
+/// Makes the mob scream in pain, unless it can't feel pain
 /mob/living/proc/painful_scream(force = FALSE)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return

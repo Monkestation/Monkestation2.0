@@ -3,6 +3,7 @@
 	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
 	icon_state = "tackle"
 	inhand_icon_state = null
+	/// How much wearing these gloves affects fishing difficulty
 	var/fishing_modifier = -7
 
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

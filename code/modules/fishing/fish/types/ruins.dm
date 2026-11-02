@@ -47,6 +47,7 @@
 	addtimer(CALLBACK(src, PROC_REF(skeleton_appears), user), 2 SECONDS)
 	return MANUAL_SUICIDE_NONLETHAL // chance not to die
 
+/// Turns the user into a skeleton, for the suicide
 /obj/item/fish/mastodon/proc/skeleton_appears(mob/living/user)
 	user.visible_message(span_warning("[user]'s skin melts off!"), span_boldwarning("Your skin melts off!"))
 	user.spawn_gibs()
@@ -101,6 +102,7 @@
 		addtimer(CALLBACK(src, PROC_REF(soul_attack), user, i), 0.2 SECONDS * i)
 	return MANUAL_SUICIDE
 
+/// Turns the user into a pure soul that dies shortly after, for the suicide
 /obj/item/fish/soul/proc/good_ending(mob/living/user)
 	var/mob/living/basic/spaceman/soulman = new(get_turf(user))
 	soulman.fully_replace_character_name(user.real_name)
@@ -112,6 +114,7 @@
 	user.gib()
 	qdel(src)
 
+/// Throws an old toolbox out of the user, for the suicide
 /obj/item/fish/soul/proc/soul_attack(mob/user, iteration)
 	var/obj/item/storage/toolbox/mechanical/old/soulbox = pick(/obj/item/storage/toolbox/mechanical/old, /obj/item/storage/toolbox/mechanical/old/cleaner)
 	soulbox = new soulbox(get_turf(user))

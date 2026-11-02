@@ -24,10 +24,15 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	///An association list of movables as key and overlays as assoc.
 	var/list/immersed_movables
 
+	/// The icon used for the immersion overlay
 	var/icon
+	/// The icon state used for the immersion overlay
 	var/icon_state
+	/// The icon used to mask the part of the movable that sticks out of the turf
 	var/mask_icon
+	/// The color of the immersion overlay
 	var/color
+	/// The alpha of the immersion overlay
 	var/alpha
 
 /datum/element/immerse/Attach(turf/target, icon, icon_state, mask_icon, color = "#777777", alpha = 180)
@@ -120,6 +125,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	LAZYADD(attached_turfs_and_movables[source], movable)
 	ADD_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
+/// Removes the movable from the element when it's deleted
 /datum/element/immerse/proc/on_movable_qdel(atom/movable/source)
 	SIGNAL_HANDLER
 	remove_from_element(source.loc, source)
@@ -241,6 +247,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	if(!buckled)
 		UnregisterSignal(movable, list(COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED))
 
+/// Moves the immersion from the old buckled atom to the new one
 /datum/element/immerse/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
 	try_unimmerse(source, source.buckled)

@@ -19,6 +19,7 @@
 	blacklisted_turfs = typecacheof(/turf/closed)
 	banned_areas = typecacheof(/area/shuttle)
 
+/// Returns whether the shelter can be deployed at the location, or the reason why it can't
 /datum/map_template/shelter/proc/check_deploy(turf/deploy_location, obj/item/survivalcapsule/capsule, ignore_flags = NONE)
 	var/affected = get_affected_turfs(deploy_location, centered=TRUE)
 	for(var/turf/turf in affected)

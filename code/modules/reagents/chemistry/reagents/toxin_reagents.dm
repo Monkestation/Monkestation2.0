@@ -349,6 +349,7 @@
 	if(holder?.my_atom)
 		RegisterSignals(holder.my_atom, list(COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(on_atom_cooked))
 
+/// Removes the reagent once the food it's in is cooked
 /datum/reagent/toxin/mindbreaker/fish/proc/on_atom_cooked(datum/source, cooking_time)
 	SIGNAL_HANDLER
 	holder.del_reagent(type)

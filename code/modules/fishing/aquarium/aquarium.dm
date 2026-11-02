@@ -10,9 +10,11 @@
 
 	integrity_failure = 0.3
 
-	//This is the area where fish can swim
+	/// This is the area where fish can swim
 	var/aquarium_zone_min_pw = 2
+	/// The highest pixel w the fish can swim to
 	var/aquarium_zone_max_pw = 31
+	/// The lowest pixel z the fish can swim to
 	var/aquarium_zone_min_pz = 10
 	/// The highest pixel z the fish can swim to
 	var/aquarium_zone_max_pz = 28
@@ -38,6 +40,7 @@
 	///"aquarium_map" is used for mapping, so mappers can tell what it's.
 	icon_state = base_icon_state + "_base"
 
+/// Updates the appearance of the aquarium when its fluid type changes
 /obj/structure/aquarium/proc/on_aquarium_liquid_changed(datum/source, fluid_type)
 	SIGNAL_HANDLER
 	src.fluid_type = fluid_type
@@ -146,6 +149,7 @@
 	///Tracks the sum of the weight of all fish in this tank
 	var/current_summed_weight = 0
 
+	/// Multiplier for the slowdown caused by the weight of the fish inside
 	var/slowdown_coeff = 1
 	/// Whether a speed potion was used on this, removing the slowdown for good. MONKESTATION EDIT: no TRAIT_SPEED_POTIONED
 	var/speed_potioned = FALSE
@@ -186,6 +190,7 @@
 	///"aquarium_map" is used for mapping, so mappers can tell what it's.
 	icon_state = base_icon_state
 
+/// Updates the appearance of the fish tank when its fluid type changes
 /obj/item/fish_tank/proc/on_aquarium_liquid_changed(datum/source, fluid_type)
 	SIGNAL_HANDLER
 	src.fluid_type = fluid_type
@@ -197,6 +202,7 @@
 	. += mutable_appearance(icon, "[base_icon_state]_[fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"]", layer = layer + AQUARIUM_GLASS_LAYER)
 	. += mutable_appearance(icon, "[base_icon_state]_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
+/// Stops fish that are too big for the tank from being put inside
 /obj/item/fish_tank/proc/can_insert(atom/movable/source, obj/item/item, mob/living/user)
 	SIGNAL_HANDLER
 	if(!isfish(item))
@@ -214,6 +220,7 @@
 	. = ..()
 	on_new_fish(src, entered)
 
+/// Adds the size and weight of the fish that was just put inside the tank
 /obj/item/fish_tank/proc/on_new_fish(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
 	if(!isfish(movable))
@@ -222,6 +229,7 @@
 	change_size_weight(fish.size, fish.weight)
 	RegisterSignal(fish, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, PROC_REF(on_fish_size_weight_updated))
 
+/// Updates the total size and weight of the tank when one of the fish inside grows
 /obj/item/fish_tank/proc/on_fish_size_weight_updated(obj/item/fish/source, new_size, new_weight)
 	SIGNAL_HANDLER
 	change_size_weight(new_size - source.size, new_weight - source.weight)
@@ -245,6 +253,7 @@
 		var/mob/mob = loc
 		mob.update_equipment_speed_mods()
 
+/// Updates the total size and weight of the tank, its slowdown and whether the fish can grow and reproduce
 /obj/item/fish_tank/proc/change_size_weight(size_change, weight_change)
 	current_summed_size += size_change
 	current_summed_weight += weight_change

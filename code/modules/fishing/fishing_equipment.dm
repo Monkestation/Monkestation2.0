@@ -34,10 +34,12 @@
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
+/// Makes the rod usable on lava when the line is slotted
 /obj/item/fishing_line/reinforced/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
+/// Makes the rod not usable on lava anymore when the line is removed
 /obj/item/fishing_line/reinforced/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
@@ -74,10 +76,12 @@
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
+/// Makes the rod usable on lava when the line is slotted
 /obj/item/fishing_line/sinew/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
+/// Makes the rod not usable on lava anymore when the line is removed
 /obj/item/fishing_line/sinew/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
@@ -230,10 +234,12 @@
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
+/// Makes the rod remove duds from the possible rewards when the hook is slotted
 /obj/item/fishing_hook/magnet/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
+/// Stops the rod from removing duds from the possible rewards when the hook is removed
 /obj/item/fishing_hook/magnet/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
@@ -256,10 +262,12 @@
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
 	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
+/// Makes the rod attract shiny loving fish when the hook is slotted
 /obj/item/fishing_hook/shiny/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
+/// Stops the rod from attracting shiny loving fish when the hook is removed
 /obj/item/fishing_hook/shiny/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
@@ -293,6 +301,7 @@
 	. += "&bull; A [/obj/item/assembly/signaler/anomaly/vortex::name] reduces the bobber's overall bounciness."
 	. += "&bull; Unmentioned cores likely have no unique effect when applied."
 
+/// Applies the effect of the core inside the hook to the fishing rod it was slotted on
 /obj/item/fishing_hook/anomaly/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 
@@ -314,6 +323,7 @@
 		else
 			rod.balloon_alert_to_viewers("no core effect!", vision_distance = 2)
 
+/// Removes the effect of the core inside the hook from the fishing rod it was removed from
 /obj/item/fishing_hook/anomaly/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 
@@ -325,6 +335,7 @@
 
 	UnregisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
 
+/// Returns the bonus to the probability of the hook effects, from the fishing skill and the quality of the bait
 /obj/item/fishing_hook/anomaly/proc/get_probability_bonuses(obj/item/fishing_rod/rod, mob/living/user)
 	var/skill_modifier = user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
 	var/bait_modifier = 0
@@ -339,6 +350,7 @@
 	// up to a ~25% bonus
 	return skill_modifier + bait_modifier
 
+/// Has a chance to make the caught fish made of the materials of the rod
 /obj/item/fishing_hook/anomaly/proc/dimensional_catch_bonus(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -377,6 +389,7 @@
 
 	caught_fish.set_custom_materials(material_setup)
 
+/// Has a chance to give the caught fish some random traits
 /obj/item/fishing_hook/anomaly/proc/bioscrambler_catch_bonus(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -394,6 +407,7 @@
 	var/datum/fish_trait/random_trait = pick_weight(random_pool)
 	random_trait.apply_to_fish(caught_fish)
 
+/// Has a chance to set the caught fish on fire, cooking it
 /obj/item/fishing_hook/anomaly/proc/pyro_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -408,6 +422,7 @@
 
 	caught.AddElement(/datum/element/fried_item, pick_weight(fry_times))
 
+/// Has a chance to make the caught fish haunted
 /obj/item/fishing_hook/anomaly/proc/ectoplasm_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -421,6 +436,7 @@
 		despawn_message = span_revenwarning("[caught] settles to the floor, looking like a normal fish again..."), \
 	)
 
+/// Has a chance to make the caught fish hallucinogenic
 /obj/item/fishing_hook/anomaly/proc/hallucination_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -862,7 +878,7 @@
 	attack_verb_continuous = list("pricked", "stabbed", "poked")
 	attack_verb_simple = list("prick", "stab", "poke")
 	hitsound = 'sound/items/hypospray.ogg'
-	//This can be an empty syringe or a gene injector
+	/// This can be an empty syringe or a gene injector
 	var/obj/item/loaded_injector
 
 /obj/item/fish_genegun/Initialize(mapload)
@@ -991,6 +1007,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 5
+	/// The fish trait stored in this gene
 	var/datum/fish_trait/trait_type
 
 /obj/item/fish_gene/Initialize(mapload, datum/fish_trait/trait_type)
@@ -1016,6 +1033,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return inject_into_fish(fish, user, src)
 
+/// Injects the trait of this gene into the fish
 /obj/item/fish_gene/proc/inject_into_fish(obj/item/fish/fish, mob/living/user, obj/item/tool = src)
 	var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 	if(!trait.apply_to_fish(fish, initial = FALSE))

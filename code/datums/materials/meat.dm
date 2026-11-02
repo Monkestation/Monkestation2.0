@@ -37,6 +37,7 @@
 	if(IS_EDIBLE(source))
 		make_edible(source, mat_amount, multiplier)
 
+/// Makes the atom made of meat edible, with nutriment and oil based on how much meat it has
 /datum/material/meat/proc/make_edible(atom/source, mat_amount, multiplier)
 	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT)
 	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT)

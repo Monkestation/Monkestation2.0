@@ -11,6 +11,7 @@
 	clothing_flags = SNUG_FIT | CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	/// How much wearing this hat affects fishing difficulty
 	var/fishing_modifier = -6
 
 /datum/armor/head_wizard
@@ -113,6 +114,7 @@
 	equip_delay_other = 50
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	/// How much wearing this robe affects fishing difficulty
 	var/fishing_modifier = -7
 
 /datum/armor/suit_wizrobe

@@ -132,6 +132,7 @@
 		return
 	apply_post_charge(charger)
 
+/// Tires the lobstrosity out after charging
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/proc/apply_post_charge(mob/living/charger)
 	charger.apply_status_effect(/datum/status_effect/tired_post_charge)
 
@@ -216,9 +217,11 @@
 	AddElement(/datum/element/pet_bonus, "chitters pleasantly!")
 	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
 
+/// Returns whether the juvenile lobstrosity can grow up right now
 /mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()
 	return isturf(loc)
 
+/// Turns the juvenile lobstrosity into an adult, keeping its name, friends and whether it was tamed
 /mob/living/basic/mining/lobstrosity/juvenile/proc/grow_up()
 	var/name_to_use = name == initial(name) ? grow_type::name : name
 	var/mob/living/basic/mining/lobstrosity/grown = change_mob_type(grow_type, get_turf(src), name_to_use)

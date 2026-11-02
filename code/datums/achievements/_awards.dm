@@ -24,10 +24,11 @@
 	holder.original_cached_data[type] = holder.data[type] = value
 	return value
 
-//Proc that returns a value upon db connection failure, in case we need different instances too.
+/// Proc that returns a value upon db connection failure, in case we need different instances too.
 /datum/award/proc/default_value()
 	return FALSE
 
+/// Called when the award is unlocked for the user, override it to do something
 /datum/award/proc/unlock(mob/user, datum/achievement_data/holder, value = 1)
 	return
 
@@ -287,6 +288,7 @@
 	var/list/results = parse_value(get_raw_value(holder.owner_ckey))
 	validate_loaded_data(holder, results)
 
+/// Validates the progress entries loaded from the database, removing invalid ones and caching the rest
 /datum/award/score/progress/proc/validate_loaded_data(datum/achievement_data/holder, list/results)
 	holder.original_cached_data[type] = holder.data[type] = results
 	if(!length(results))

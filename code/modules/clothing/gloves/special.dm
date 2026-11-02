@@ -267,6 +267,7 @@
 /obj/item/fishing_rod/mob_fisher/athletic/get_fishing_overlays()
 	return list()
 
+/// Hurts the fisher if they caught a dangerous fish with their bare hands
 /obj/item/fishing_rod/mob_fisher/athletic/proc/noodling_is_dangerous(datum/source, atom/movable/reward, mob/living/user)
 	SIGNAL_HANDLER
 	if(!isfish(reward))

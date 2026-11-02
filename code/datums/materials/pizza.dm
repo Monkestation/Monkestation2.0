@@ -37,6 +37,7 @@
 	if(IS_EDIBLE(source))
 		make_edible(source, mat_amount)
 
+/// Makes the atom made of pizza edible, with nutriment and oil based on how much pizza it has
 /datum/material/pizza/proc/make_edible(atom/source, mat_amount)
 	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT)
 	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT)

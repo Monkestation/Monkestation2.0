@@ -70,6 +70,7 @@
 	challenge.start(user)
 	return COMPONENT_NO_AFTERATTACK
 
+/// Gives the fish source of this spot to NPCs looking for somewhere to fish
 /datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/fish_spot_container)
 	fish_spot_container[NPC_FISHING_SPOT] = fish_source
 
@@ -78,12 +79,14 @@
 	SIGNAL_HANDLER
 	fish_source.spawn_reward_from_explosion(location, severity)
 
+/// Links this fishing spot to the fishing portal generator stored in the multitool buffer
 /datum/component/fishing_spot/proc/link_to_fish_porter(atom/source, mob/user, obj/item/multitool/tool)
 	SIGNAL_HANDLER
 	var/obj/machinery/fishing_portal_generator/portal = tool.buffer?.resolve()
 	if(istype(portal))
 		return portal.link_fishing_spot(fish_source, source, user)
 
+/// Lets the fish source know a fish was released into this spot, so it can be repopulated
 /datum/component/fishing_spot/proc/fish_released(atom/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
 	fish_source.readd_fish(source, fish, releaser)

@@ -176,6 +176,7 @@
 		return
 	enter_hot_spring(arrived)
 
+/// Immerses and heats up the movables initialized on the hot spring
 /turf/open/water/hot_spring/proc/enter_initialized_movable(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
 	if(!immerse_added && !is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
@@ -212,7 +213,7 @@
 	. = ..()
 	exit_hot_spring(gone)
 
-//Unregister the signals and remove the status effect from mobs unless they're moving to another hot spring turf.
+/// Unregister the signals and remove the status effect from mobs unless they're moving to another hot spring turf.
 /turf/open/water/hot_spring/proc/exit_hot_spring(atom/movable/movable)
 	UnregisterSignal(movable, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED), SIGNAL_REMOVETRAIT(TRAIT_IMMERSED)))
 	if(!isliving(movable))

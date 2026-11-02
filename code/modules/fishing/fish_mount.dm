@@ -52,6 +52,7 @@
 	QDEL_NULL(mounted_fish)
 	return ..()
 
+/// Loads the trophy fish from previous rounds, or adds a random one if there's none
 /obj/structure/fish_mount/proc/load_trophy_fish(datum/source)
 	SIGNAL_HANDLER
 	SSpersistence.load_trophy_fish(src)
@@ -69,6 +70,7 @@
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
 
+/// Adds a random fish to the mount, with a fluff name of who caught it
 /obj/structure/fish_mount/proc/add_first_fish()
 	var/list/valid_picks = subtypesof(/obj/item/fish) - typesof(/obj/item/fish/holo) - /obj/item/fish/starfish/chrystarfish // chrystarfish immediately shatters when placed
 	var/obj/item/fish/fish_path = pick(valid_picks)
@@ -105,6 +107,7 @@
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
+/// Mounts the fish on the trophy mount
 /obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, from_persistence = FALSE, catcher)
 	if(QDELETED(src)) // don't ever try to add a fish to one of these that's already been deleted - and get rid of the one that was created
 		qdel(fish)
@@ -136,6 +139,7 @@
 	else if(persistence_id)
 		SSpersistence.save_trophy_fish(src)
 
+/// Returns the beauty of the mount with the fish on it, based on the fish and its material
 /obj/structure/fish_mount/proc/get_fish_beauty()
 	var/beauty = 100 + mounted_fish.beauty * 1.2
 	var/datum/material/main_material = mounted_fish.get_master_material()
@@ -143,6 +147,7 @@
 		beauty += main_material.beauty_modifier * mounted_fish.weight
 	return round(beauty)
 
+/// Starts removing the fish when it's clicked with an empty hand
 /obj/structure/fish_mount/proc/on_fish_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(remove_fish), user)
@@ -156,6 +161,7 @@
 		remove_fish(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/// Removes the fish from the mount after a short delay, rolling for its safe removal if it's from a previous round
 /obj/structure/fish_mount/proc/remove_fish(mob/living/user)
 	balloon_alert(user, "removing fish...")
 	if(!do_after(user, (persistence_loaded_fish ? 6 : 3) SECONDS, src) || !mounted_fish)
@@ -191,6 +197,7 @@
 	mounted_fish = null
 	return ..()
 
+/// Rolls for the safe removal of a fish from a previous round, dusting it on failure
 /obj/structure/fish_mount/proc/roll_for_safe_removal(mob/living/user)
 	if(isnull(mounted_fish))
 		return FALSE

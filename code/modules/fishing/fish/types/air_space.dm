@@ -101,6 +101,7 @@
 	. = ..()
 	. += add_emissive()
 
+/// Returns the emissive overlay of the starfish while it's alive
 /obj/item/fish/starfish/proc/add_emissive()
 	if(status == FISH_ALIVE)
 		return emissive_appearance(icon, "starfish_emissive", src)
@@ -116,6 +117,7 @@
 	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
 	return MANUAL_SUICIDE
 
+/// Turns the user into an astral being that floats away, for the suicide
 /obj/item/fish/starfish/proc/ascension(mob/living/user)
 	user.visible_message(span_suicide("[user] abandons [user.p_their()] corporeal form!"))
 	user.unequip_everything()
@@ -185,6 +187,7 @@
 	animate(user, time = 20 SECONDS, transform = M, easing = SINE_EASING)
 	return MANUAL_SUICIDE
 
+/// Makes a mega carp burst out of the user, for the suicide
 /obj/item/fish/baby_carp/proc/gestation(mob/living/user)
 	if(QDELETED(user) || QDELETED(src))
 		return
@@ -217,6 +220,7 @@
 
 	AddComponent(/datum/component/fish_growth, /mob/living/basic/carp/advanced, growth_rate)
 
+/// Stops the baby carp from growing if it's too hurt or hungry
 /obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
@@ -231,6 +235,7 @@
 	if(length(get_aquarium_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
+/// Colors the space carp the baby carp grew into like the baby carp
 /obj/item/fish/baby_carp/proc/on_growth(datum/source, mob/living/basic/carp/result)
 	SIGNAL_HANDLER
 	//yes, this means that if we use a spraycan on the fish, the resulting space carp will be of spraycan color

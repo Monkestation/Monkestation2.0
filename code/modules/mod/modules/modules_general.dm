@@ -782,6 +782,7 @@
 	complexity = 1
 	overlay_state_inactive = "fishing_glove"
 	incompatible_modules = (/obj/item/mod/module/fishing_glove)
+	/// The fishing rod integrated in the module
 	var/obj/item/fishing_rod/equipped
 
 /obj/item/mod/module/fishing_glove/Initialize(mapload)

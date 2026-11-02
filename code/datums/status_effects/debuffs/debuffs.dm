@@ -863,6 +863,7 @@
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
 	RegisterSignals(new_owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH), PROC_REF(wipe_bozo))
 
+/// Fades out and deletes the owner
 /datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
 	deltimer(deletion_timer)
 	owner.fade_into_nothing()

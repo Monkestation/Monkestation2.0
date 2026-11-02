@@ -119,6 +119,7 @@
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
 
+/// Returns the text describing how many points this experiment rewards
 /datum/experiment/proc/get_points_reward_text()
 	var/list/english_list_keys = list()
 	for(var/points_type in points_reward)

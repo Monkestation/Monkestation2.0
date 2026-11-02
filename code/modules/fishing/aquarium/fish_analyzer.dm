@@ -75,16 +75,19 @@
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
 
+/// Starts tracking the scanned object so the UI can show it
 /obj/item/fish_analyzer/proc/register_scanned(atom/target)
 	scanned_object = target
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
 
+/// Stops tracking the scanned object
 /obj/item/fish_analyzer/proc/unregister_scanned()
 	if(!scanned_object)
 		return
 	UnregisterSignal(scanned_object, COMSIG_QDELETING)
 	scanned_object = null
 
+/// Stops tracking the scanned object when it's deleted
 /obj/item/fish_analyzer/proc/on_target_deleted()
 	SIGNAL_HANDLER
 	unregister_scanned()
@@ -126,10 +129,10 @@
 
 	return data
 
+/// Adds the info of the given fish to the ui data
 /obj/item/fish_analyzer/proc/extract_fish_info(list/data, obj/item/fish/fishie)
 	var/list/fish_traits = list()
 	var/list/fish_evolutions = list()
-/// Adds the info of the given fish to the ui data
 
 	for(var/evolution_type in fishie.evolution_types)
 		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]

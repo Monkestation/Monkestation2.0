@@ -823,6 +823,7 @@
 		UsedforProcessing(user, process_item, chosen_option, created_atoms)
 		return
 
+/// Called when the atom is used to process something into other atoms, deletes it by default
 /atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
 	qdel(src)
 	return

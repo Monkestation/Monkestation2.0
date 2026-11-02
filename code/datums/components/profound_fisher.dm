@@ -29,12 +29,14 @@
 		if(istype(wearer) && wearer.get_item_by_slot(ITEM_SLOT_GLOVES) == gloves)
 			RegisterSignal(wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
+/// Adds the screentip to open the rod UI when held with an empty hand
 /datum/component/profound_fisher/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/living/user)
 	SIGNAL_HANDLER
 	if(isnull(held_item) && user.contains(parent))
 		context[SCREENTIP_CONTEXT_RMB] = "Open rod UI"
 		return CONTEXTUAL_SCREENTIP_SET
 
+/// Tells the examiner how to open the integrated fishing rod interface
 /datum/component/profound_fisher/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_info("When [EXAMINE_HINT("held")] or [EXAMINE_HINT("equipped")], [EXAMINE_HINT("right-click")] with a empty hand to open the integrated fishing rod interface.")
@@ -63,22 +65,26 @@
 	our_rod = null
 	return ..()
 
+/// Lets the wearer fish with their bare hands when the parent is worn as gloves
 /datum/component/profound_fisher/proc/on_equip(obj/item/source, atom/equipper, slot)
 	SIGNAL_HANDLER
 	if(slot != ITEM_SLOT_GLOVES)
 		return
 	RegisterSignal(equipper, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
+/// Opens the UI of the integrated fishing rod
 /datum/component/profound_fisher/proc/open_rod_menu(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(our_rod, TYPE_PROC_REF(/datum, ui_interact), user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/// Stops the dropper from fishing with their bare hands
 /datum/component/profound_fisher/proc/on_drop(datum/source, atom/dropper)
 	SIGNAL_HANDLER
 	UnregisterSignal(dropper, COMSIG_LIVING_UNARMED_ATTACK)
 	REMOVE_TRAIT(dropper, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC) //this will cancel the current minigame if the fishing rod was internal.
 
+/// Fishes on the target when attacking it unarmed, if it's a fishing spot
 /datum/component/profound_fisher/proc/on_unarmed_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
 	if(!should_fish_on(source, attack_target))
@@ -89,6 +95,7 @@
 		INVOKE_ASYNC(src, PROC_REF(pretend_fish), source, attack_target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/// Fishes on the target instead of attacking it, if it's a fishing spot
 /datum/component/profound_fisher/proc/pre_attack(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
@@ -100,6 +107,7 @@
 		INVOKE_ASYNC(src, PROC_REF(pretend_fish), source, target)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
+/// Returns whether the user should start fishing on the target instead of interacting with it
 /datum/component/profound_fisher/proc/should_fish_on(mob/living/user, atom/target)
 	if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT) || GLOB.fishing_challenges_by_user[user])
 		return FALSE
@@ -107,16 +115,19 @@
 		return FALSE
 	return TRUE
 
+/// Starts fishing on the target with the integrated fishing rod
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
 	RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING, PROC_REF(actually_fishing_with_internal_rod))
 	our_rod.melee_attack_chain(user, target)
 	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING)
 
+/// Gives the profound fisher trait to the fisher once the fishing actually begins
 /datum/component/profound_fisher/proc/actually_fishing_with_internal_rod(datum/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, REF(parent))
 	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(remove_profound_fisher))
 
+/// Removes the profound fisher trait once the fishing is over
 /datum/component/profound_fisher/proc/remove_profound_fisher(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)

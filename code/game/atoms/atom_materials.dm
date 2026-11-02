@@ -54,6 +54,7 @@
 	if(!replace_mats)
 		custom_materials = null
 
+/// Returns a list of the material effects that should be applied, with their amount and multiplier
 /atom/proc/get_material_effects_list(list/materials)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PRIVATE_PROC(TRUE)

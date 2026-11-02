@@ -513,6 +513,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", "Object")
 
 	return static_data;
 
+/// Returns the contents of the paper as a list, so it can be saved
 /obj/item/paper/proc/convert_to_data()
 	var/list/data = list()
 
@@ -533,6 +534,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", "Object")
 
 	return data
 
+/// Fills the paper with the contents saved by convert_to_data()
 /obj/item/paper/proc/write_from_data(list/data)
 	for(var/list/input as anything in data[LIST_PAPER_RAW_TEXT_INPUT])
 		add_raw_text(input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], input[LIST_PAPER_ADVANCED_HTML])

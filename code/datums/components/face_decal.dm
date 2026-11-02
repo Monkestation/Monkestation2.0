@@ -69,6 +69,7 @@
 		RegisterSignal(atom_parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_overlays))
 		atom_parent.update_appearance()
 
+/// Returns the overlay to use when the decal isn't on a face, none by default
 /datum/component/face_decal/proc/get_normal_overlay()
 	return
 

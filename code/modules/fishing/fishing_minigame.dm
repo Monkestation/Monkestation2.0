@@ -99,6 +99,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	/// How much completion is gained per second when the bait area is intersecting with the fish's
 	var/completion_gain = 5
 
+	/// The datum that handles how the fish moves during the minigame
 	var/datum/fish_movement/mover
 
 	/// Whether the bait is idle or reeling up or down (left and right click)
@@ -251,6 +252,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	addtimer(CALLBACK(src, PROC_REF(missed_lure)), float.spin_frequency[2], TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_DELETE_ME)
 	float.update_appearance(UPDATE_OVERLAYS)
 
+/// Makes the lure ready to be spun, or spins it automatically if the line has autoreel
 /datum/fishing_challenge/proc/set_lure_ready()
 	if(phase != WAIT_PHASE)
 		return
@@ -260,6 +262,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		addtimer(CALLBACK(src, PROC_REF(auto_spin)), 0.2 SECONDS)
 	playsound(float, 'sound/machines/ping.ogg', 20, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
+/// Spins the lure automatically
 /datum/fishing_challenge/proc/auto_spin()
 	if(phase != WAIT_PHASE || !float.spin_ready)
 		return
@@ -268,6 +271,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	set_lure_timers()
 	send_alert("spun")
 
+/// Restarts the baiting phase with a penalty because the lure wasn't spun in time
 /datum/fishing_challenge/proc/missed_lure()
 	if(phase != WAIT_PHASE)
 		return
@@ -281,6 +285,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
 	interrupt()
 
+/// Interrupts the minigame if the user can't reach the fishing spot anymore
 /datum/fishing_challenge/proc/on_float_or_user_move(datum/source)
 	SIGNAL_HANDLER
 
@@ -288,6 +293,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		user.balloon_alert(user, "too far!")
 		interrupt()
 
+/// Interrupts the minigame if the hands of the user get blocked
 /datum/fishing_challenge/proc/on_hands_blocked(datum/source)
 	SIGNAL_HANDLER
 	if(completed) //the rod was dropped and therefore challenge already completed.
@@ -295,6 +301,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	user.balloon_alert(user, "hands blocked!")
 	interrupt()
 
+/// Interrupts the minigame if the user stopped fishing for some other reason
 /datum/fishing_challenge/proc/no_longer_fishing(datum/source)
 	SIGNAL_HANDLER
 	if(completed) //we already won/lost
@@ -480,6 +487,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	float.spin_ready = TRUE
 	float.update_appearance(UPDATE_OVERLAYS)
 
+/// Starts the minigame automatically if the fish is still biting
 /datum/fishing_challenge/proc/automatically_start_minigame()
 	if(phase == BITING_PHASE)
 		start_minigame_phase(auto_reel = TRUE)
@@ -492,11 +500,13 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	SIGNAL_HANDLER
 	interrupt()
 
+/// Interrupts the minigame if the reward is gone
 /datum/fishing_challenge/proc/on_reward_removed(datum/source)
 	SIGNAL_HANDLER
 	send_alert("reward gone!")
 	interrupt()
 
+/// Wins the minigame right away if the fish dies while we're reeling it in
 /datum/fishing_challenge/proc/on_fish_death(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD)
@@ -515,6 +525,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
 		reward.damage_fish(damage)
 
+/// Recalculates the difficulty of the minigame, skipping straight to the reward if it goes down to zero
 /datum/fishing_challenge/proc/get_difficulty()
 	var/list/difficulty_holder = list(0)
 	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, reward_path, used_rod, user, difficulty_holder)
@@ -526,6 +537,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	difficulty = clamp(round(difficulty), FISHING_MINIMUM_DIFFICULTY, 100)
 	return TRUE
 
+/// Updates the difficulty during the minigame, adjusting the bait and the fish movement if it changed
 /datum/fishing_challenge/proc/update_difficulty()
 	if(phase != MINIGAME_PHASE)
 		return
@@ -538,6 +550,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	mover.reset_difficulty_values()
 	adjust_to_difficulty()
 
+/// Adjusts the bait height, the fish movement and the experience to the current difficulty
 /datum/fishing_challenge/proc/adjust_to_difficulty()
 	mover.adjust_to_difficulty()
 	bait_height -= round(difficulty * BAIT_HEIGHT_DIFFICULTY_MALUS)
@@ -837,6 +850,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	icon = 'icons/hud/fishing_hud.dmi'
 	icon_state = "bait_bottom"
 	vis_flags = VIS_INHERIT_ID
+	/// The current pixel height of the bait
 	var/cur_height = MINIGAME_BAIT_HEIGHT
 
 /atom/movable/screen/hud_bait/Initialize(mapload, datum/hud/hud_owner, datum/fishing_challenge/challenge)
@@ -847,6 +861,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 	adjust_to_difficulty(challenge)
 
+/// Resizes the bait to the height set by the difficulty of the minigame
 /atom/movable/screen/hud_bait/proc/adjust_to_difficulty(datum/fishing_challenge/challenge)
 	cur_height = challenge.bait_pixel_height
 	update_icon()
@@ -880,6 +895,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	. = ..()
 	add_filter("completion_mask", 1, alpha_mask_filter(icon = icon(icon, "completion_overlay")))
 
+/// Animates the completion bar to the current completion
 /atom/movable/screen/hud_completion/proc/update_state(completion, seconds_per_tick)
 	animate(get_filter("completion_mask"), y = -MINIGAME_COMPLETION_BAR_HEIGHT * (1 - completion * 0.01), time = seconds_per_tick SECONDS)
 
@@ -914,6 +930,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(spot.layer > layer) //Ditto. New stuff renders above old stuff if the layer is the same iirc (with some caveats).
 		layer = spot.layer
 
+/// Moves the float along with the movable it's on
 /obj/effect/fishing_float/proc/follow_movable(atom/movable/source)
 	SIGNAL_HANDLER
 

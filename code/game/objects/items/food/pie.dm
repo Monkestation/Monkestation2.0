@@ -54,6 +54,7 @@
 	. = ..()
 	AddComponent(/datum/component/splat, hit_callback = CALLBACK(src, PROC_REF(stun_and_blur)))
 
+/// Knocks down and blurs the eyes of the victim hit by the splatting pie
 /obj/item/food/pie/cream/proc/stun_and_blur(mob/living/victim, can_splat_on)
 	if(stunning)
 		victim.Paralyze(2 SECONDS) //splat!

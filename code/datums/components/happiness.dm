@@ -59,11 +59,13 @@
 	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_ATE))
 	happiness_callback = null
 
+/// Increases the happiness of the parent when it eats
 /datum/component/happiness/proc/on_eat(datum/source)
 	SIGNAL_HANDLER
 
 	increase_happiness_level(on_eat_change)
 
+/// Increases the happiness of the parent when it grooms itself, if the cooldown is over
 /datum/component/happiness/proc/on_clean(mob/living/source)
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, groom_cooldown))
@@ -76,6 +78,7 @@
 	COOLDOWN_START(src, groom_cooldown, GROOM_COOLDOWN)
 	increase_happiness_level(on_groom_change)
 
+/// Increases the happiness of the parent when it's petted with the left mouse button
 /datum/component/happiness/proc/on_petted(datum/source, mob/living/petter, list/modifiers)
 	SIGNAL_HANDLER
 	if(!LAZYACCESS(modifiers, LEFT_CLICK) || (petter.istate & ISTATE_HARM))
@@ -87,6 +90,7 @@
 
 	pet_animal()
 
+/// Increases the happiness of the parent and shows some hearts, if the cooldown is over
 /datum/component/happiness/proc/pet_animal()
 	if(!COOLDOWN_FINISHED(src, pet_cooldown))
 		return
@@ -94,6 +98,7 @@
 	COOLDOWN_START(src, pet_cooldown, PET_COOLDOWN)
 
 
+/// Increases the happiness level of the parent by amount, showing a heart and a little spin unless the happiness is hidden
 /datum/component/happiness/proc/increase_happiness_level(amount)
 	happiness_level = min(happiness_level + amount, maximum_happiness)
 	if(!HAS_TRAIT(parent, TRAIT_MOB_HIDE_HAPPINESS))
@@ -102,6 +107,7 @@
 		living_parent.spin(spintime = 2 SECONDS, speed = 1)
 	START_PROCESSING(SSprocessing, src)
 
+/// Shows the happiness level of the parent to the clicker as a hearts overlay above it
 /datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
 	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !clicker.client || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
 		return

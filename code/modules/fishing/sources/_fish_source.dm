@@ -10,6 +10,7 @@ GLOBAL_LIST_INIT_TYPED(preset_fish_sources, /datum/fish_source, init_subtypes_w_
  */
 GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
+/// Returns a typecache of the icons used for the rewards that aren't fish in the fishing catalog and autowiki
 /proc/generate_specific_fish_icons()
 	var/list/return_list = zebra_typecacheof(list(
 		/datum/data/vending_product = FISH_ICON_COIN,
@@ -89,6 +90,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "background_default"
+	/// Bitflags for the fish source
 	var/fish_source_flags = NONE
 	/// If FISH_SOURCE_FLAG_EXPLOSIVE_MALUS is set, this will track of how much we're "exhausting" the system by bombing it repeatedly.
 	var/explosive_fishing_score = 0
@@ -118,9 +120,9 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		TRAIT_BASIC_QUALITY_BAIT = 0.4,
 	)
 
-	//If set, fish types native to this source won't die if left on these turfs.
+	/// If set, fish types native to this source won't die if left on these turfs.
 	var/list/associated_safe_turfs
-	//list of subtypes of associated safe turfs that are NOT safe
+	/// list of subtypes of associated safe turfs that are NOT safe
 	var/list/safe_turfs_blacklist
 
 /datum/fish_source/New()
@@ -319,6 +321,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
 
+/// Gives back one of the rewards that ran out after its regeneration time
 /datum/fish_source/proc/regen_count(reward_path)
 	if(!LAZYACCESS(currently_on_regen, reward_path))
 		return
@@ -428,6 +431,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			continue
 		table[fish] += round(difference**exponent, 1)
 
+/// Returns the catch weight of the fish modified by its traits
 /datum/fish_source/proc/get_fish_trait_catch_mods(weight, obj/item/fish/fish, obj/item/fishing_rod/rod, mob/user, atom/location)
 	var/is_fish_instance = isfish(fish)
 	if(!ispath(fish, /obj/item/fish) && !is_fish_instance)

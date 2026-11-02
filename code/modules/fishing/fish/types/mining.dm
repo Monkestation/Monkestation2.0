@@ -68,6 +68,7 @@
 	if(.)
 		anger -= min(anger, 6.5)
 
+/// Stops the chrab from growing if it's too hurt or hungry, making it angrier
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
@@ -91,6 +92,7 @@
 	if(fish_count > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
+/// Has a chance to make the lobstrosity hostile depending on how angry the chrab was
 /obj/item/fish/chasm_crab/proc/on_growth(datum/source, mob/living/basic/mining/lobstrosity/juvenile/result)
 	SIGNAL_HANDLER
 	if(/datum/fish_trait/territorial in fish_traits)
@@ -154,6 +156,7 @@
 	addtimer(CALLBACK(src, PROC_REF(skeleton_appears), user), 2 SECONDS)
 	return MANUAL_SUICIDE_NONLETHAL // chance not to die
 
+/// Turns the user into a skeleton, for the suicide
 /obj/item/fish/boned/proc/skeleton_appears(mob/living/user)
 	user.visible_message(span_warning("[user]'s skin melts off!"), span_boldwarning("Your skin melts off!"))
 	user.spawn_gibs()

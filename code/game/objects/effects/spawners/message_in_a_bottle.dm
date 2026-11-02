@@ -3,6 +3,7 @@
 	desc = "Sending out an SOS"
 	icon = 'icons/effects/random_spawners.dmi'
 	icon_state = "message_bottle"
+	/// The chance of the bottle spawning at all
 	var/probability = 100
 
 /obj/effect/spawner/message_in_a_bottle/Initialize(mapload)
@@ -15,6 +16,7 @@
 		SSpersistence.load_message_bottle(loc)
 		return INITIALIZE_HINT_QDEL
 
+/// Spawns a bottle with a message from previous rounds once the persistence subsystem is ready
 /obj/effect/spawner/message_in_a_bottle/proc/on_persistence_init(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(SSpersistence, COMSIG_SUBSYSTEM_POST_INITIALIZE)

@@ -45,6 +45,7 @@
 	fish.catch_date = data[PERSISTENCE_FISH_CATCH_DATE]
 	mount.add_fish(fish, from_persistence = TRUE, catcher = data[PERSISTENCE_FISH_CATCHER])
 
+/// Saves the fish mounted on this trophy mount so it can be loaded again in future rounds
 /datum/controller/subsystem/persistence/proc/save_trophy_fish(obj/structure/fish_mount/mount)
 	var/obj/item/fish/fish = mount.mounted_fish
 	if(!fish || !mount.persistence_id)

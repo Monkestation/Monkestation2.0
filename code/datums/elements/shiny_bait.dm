@@ -23,11 +23,13 @@
 		REMOVE_TRAIT(source, TRAIT_ROD_ATTRACT_SHINY_LOVERS, "[REF(src)]_rod")
 	return ..()
 
+/// Makes the fishing rod attract shiny loving fish when the parent is put in its bait slot
 /datum/element/shiny_bait/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	if(slot == ROD_SLOT_BAIT)
 		ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(source))
 
+/// Stops the fishing rod from attracting shiny loving fish when the parent is removed from its bait slot
 /datum/element/shiny_bait/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	if(slot == ROD_SLOT_BAIT)

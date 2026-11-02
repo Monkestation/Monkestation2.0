@@ -48,17 +48,20 @@
 /datum/component/splat/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_IMPACT, COMSIG_PROJECTILE_SELF_ON_HIT))
 
+/// Splats the projectile on the target if it wasn't fully blocked
 /datum/component/splat/proc/projectile_splat(obj/projectile/source, atom/firer, atom/target, angle, hit_limb_zone, blocked)
 	SIGNAL_HANDLER
 	if(blocked != 100)
 		splat(source, target)
 
+/// Splats the thrown parent on what it hit, unless it was caught
 /datum/component/splat/proc/throw_splat(atom/movable/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
 	if(caught) //someone caught us!
 		return
 	splat(source, hit_atom)
 
+/// Spawns the smudge on the turf of what was hit and splats it on the target if it can
 /datum/component/splat/proc/splat(atom/movable/source, atom/hit_atom)
 	var/turf/hit_turf = get_turf(hit_atom)
 	new smudge_type(hit_turf)

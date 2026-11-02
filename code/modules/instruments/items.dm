@@ -125,6 +125,7 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trumpets", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trumpet", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
 	var/single_use = FALSE
 
 /obj/item/instrument/trumpet/spectral/Initialize(mapload)
@@ -153,6 +154,7 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "saxxes", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "sax", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
 	var/single_use = FALSE
 
 /obj/item/instrument/saxophone/spectral/Initialize(mapload)
@@ -181,6 +183,7 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trombones", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trombone", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
 	var/single_use = FALSE
 
 /obj/item/instrument/trombone/spectral/Initialize(mapload)

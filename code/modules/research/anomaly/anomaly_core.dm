@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	custom_materials = null
+	/// The anomaly this core came from
 	var/obj/effect/anomaly/anomaly_type = /obj/effect/anomaly
 	/// Color of the core's glow
 	var/core_color = COLOR_WHITE

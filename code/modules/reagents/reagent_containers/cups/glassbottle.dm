@@ -117,6 +117,7 @@
 	update_icon(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 
+/// Returns the overlay of the message inside the bottle
 /obj/item/reagent_containers/cup/glass/bottle/proc/add_message_overlay()
 	if(istype(message_in_a_bottle, /obj/item/paper))
 		return "paper_in_bottle"

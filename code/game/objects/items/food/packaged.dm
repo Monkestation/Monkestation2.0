@@ -151,6 +151,7 @@
 	)
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT) //good luck catching the liquid
 
+/// Blinds, confuses and knocks down the victim hit by the splatting ink can
 /obj/item/food/canned/squid_ink/proc/blind_em(mob/living/victim, can_splat_on)
 	if(can_splat_on)
 		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)

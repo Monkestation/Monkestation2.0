@@ -1,4 +1,5 @@
 /datum/storage/carpskin_bag
+	/// Set while we're picking an item from the radial, so remove_single() goes through instead of opening the radial again
 	var/forced_pickup = FALSE
 
 // All hooks, lines and lures are classified as one type

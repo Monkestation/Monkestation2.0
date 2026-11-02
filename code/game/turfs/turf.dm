@@ -862,6 +862,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	ADD_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
 	fish_source = fish_source_path
 
+/// Stops the turf from turning into a fishing spot when interacted with
 /turf/proc/remove_lazy_fishing()
 	SIGNAL_HANDLER
 	UnregisterSignal(src, list(
@@ -874,16 +875,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
 	fish_source = null
 
+/// Turns the turf into an actual fishing spot the first time someone casts on it
 /turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
 	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, fish_source)
 	remove_lazy_fishing()
 	return spot.handle_cast(arglist(args))
 
+/// Gives the fish source of this turf to NPCs looking for somewhere to fish
 /turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
 	SIGNAL_HANDLER
 	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[fish_source]
 
+/// Lets the fish source of this turf know a fish was released into it, so it can be repopulated
 /turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
 	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)

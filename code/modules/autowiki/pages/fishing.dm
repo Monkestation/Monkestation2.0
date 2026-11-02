@@ -68,6 +68,7 @@
 
 	return output
 
+/// Returns the wiki text for the list of baits the fish likes or dislikes
 /datum/autowiki/fish/proc/generate_baits(list/baits, bad = FALSE)
 	var/list/list = list()
 	if(!length(baits))
@@ -88,6 +89,7 @@
 
 	return list
 
+/// Returns the wiki text for the traits of the fish
 /datum/autowiki/fish/proc/generate_traits(list/traits)
 	var/output = ""
 
@@ -298,6 +300,7 @@
 
 	return output
 
+/// Returns the wiki text for the contents of the fish source
 /datum/autowiki/fish_sources/proc/get_contents(datum/fish_source/source)
 	var/output = ""
 	var/list/data = source.generate_wiki_contents(src)
@@ -348,6 +351,7 @@
 
 	return output
 
+/// Returns the wiki text for the fish required by the scanning experiment
 /datum/autowiki/fish_scan/proc/build_requirements(datum/experiment/scanning/fish/scan)
 	var/output = ""
 	for(var/obj/item/type as anything in scan.required_atoms)
@@ -361,6 +365,7 @@
 		))
 	return output
 
+/// Returns the wiki text for the fishing portal setting unlocked by the scanning experiment
 /datum/autowiki/fish_scan/proc/build_rewards(datum/experiment/scanning/fish/scan, list/generated_icons)
 	var/output = ""
 	var/datum/fish_source/portal/reward = GLOB.preset_fish_sources[scan.fish_source_reward]
@@ -403,6 +408,7 @@
 
 	return output
 
+/// Returns the wiki text for the fish that can evolve with this evolution
 /datum/autowiki/fish_evolution/proc/get_fish(evo_type)
 	var/output = ""
 
@@ -436,6 +442,7 @@
 
 	return output
 
+/// Returns the wiki text for the fish that can be caught with this lure
 /datum/autowiki/fish_lure/proc/build_catchables(list/catchables)
 	var/output = ""
 

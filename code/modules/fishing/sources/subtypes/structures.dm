@@ -69,6 +69,7 @@
 /datum/fish_source/holographic/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_area))
 
+/// Interrupts the minigame if the user left the holodeck
 /datum/fish_source/holographic/proc/check_area(mob/user)
 	SIGNAL_HANDLER
 	if(!istype(get_area(user), /area/station/holodeck))
@@ -286,6 +287,7 @@
 
 	return get_vending_table(rod, fisherman, location)
 
+/// Returns the fish table of the vending machine, made of its products based on the value of the bait
 /datum/fish_source/vending/proc/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/location)
 	var/list/table = list()
 	///Create a list of products, ordered by price from highest to lowest. MONKESTATION EDIT: prices come from get_record_price()
@@ -313,6 +315,7 @@
 	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
 	return table
 
+/// Adds the risk of getting nothing or getting crushed by the vending machine to the table
 /datum/fish_source/vending/proc/add_risks(list/table, bait_value, highest_price, malus_multiplier)
 	///Using more than the money needed to buy the most expensive item (why would you do it?!) will remove the dud chance.
 	if(bait_value > highest_price)
@@ -332,6 +335,7 @@
 	var/base_diff = PAYCHECK_LOWER - bait_value
 	return ..() + get_product_difficulty(base_diff, result) * FISHING_PRODUCT_DIFFICULTY_MULT
 
+/// Returns the difficulty of catching the product, cheaper ones are easier
 /datum/fish_source/vending/proc/get_product_difficulty(diff, datum/result)
 	if(istype(result, /datum/data/vending_product))
 		var/datum/data/vending_product/product = result
@@ -365,6 +369,7 @@
 		return null
 	return spawn_vending_reward(reward_path, spawn_location, fishing_spot)
 
+/// Dispenses the fished product from the vending machine
 /datum/fish_source/vending/proc/spawn_vending_reward(reward_path, atom/spawn_location, obj/machinery/vending/fishing_spot)
 	var/datum/data/vending_product/product_record = reward_path
 	if(!istype(product_record) || product_record.amount <= 0)
@@ -378,6 +383,7 @@
 	. = ..()
 	UnregisterSignal(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
 
+/// Consumes the money used as bait once the reward is caught
 /datum/fish_source/vending/proc/on_reward(obj/item/fishing_rod/rod, atom/movable/reward, mob/user)
 	SIGNAL_HANDLER
 	if(reward && !QDELETED(rod.bait) && rod.bait.get_item_credit_value()) //you pay for what you get

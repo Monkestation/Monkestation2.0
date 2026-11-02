@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
  */
 GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
+/// Returns a list of the traits that can spontaneously manifest on each fish type
 /proc/populate_spontaneous_fish_traits()
 	var/list/list = list()
 	for(var/trait_path in GLOB.fish_traits)
@@ -80,6 +81,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	SHOULD_CALL_PARENT(TRUE)
 	RegisterSignal(mob, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_transformed))
 
+/// Removes the trait from the fish, along with the traits and reagents it adds
 /datum/fish_trait/proc/remove_from_fish(obj/item/fish/fish)
 	SHOULD_CALL_PARENT(TRUE)
 	fish.fish_traits -= type
@@ -88,6 +90,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(length(reagents_to_add))
 		UnregisterSignal(fish, COMSIG_GENERATE_REAGENTS_TO_ADD, PROC_REF(add_reagents))
 
+/// Applies the trait to the mob the fish turned into
 /datum/fish_trait/proc/on_transformed(mob/source, mob/desired_mob)
 	SIGNAL_HANDLER
 	apply_to_mob(desired_mob)
@@ -232,6 +235,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 	RegisterSignal(mob, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
 
+/// Heals the mob in the dark and hurts it in the light
 /datum/fish_trait/nocturnal/proc/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick = SSMOBS_DT)
 	SIGNAL_HANDLER
 	var/turf/our_turf = mob.loc
@@ -317,6 +321,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/emulsijack
 	name = "Emulsifier"
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
+	/// Fish with any of these traits are immune to the emulsifying effect
 	var/list/resistance_traits = list(TRAIT_RESIST_EMULSIFY, TRAIT_FISH_TOXIN_IMMUNE)
 	traits_to_add = list(TRAIT_RESIST_EMULSIFY)
 
@@ -347,6 +352,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	RegisterSignal(mob, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
 
+/// Releases a cloud of miasma around the mob
 /datum/fish_trait/emulsijack/proc/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick = SSMOBS_DT)
 	SIGNAL_HANDLER
 	var/turf/open/our_turf = get_turf(mob)
@@ -516,12 +522,14 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	UnregisterSignal(fish, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED, COMSIG_FISH_EATEN_BY_OTHER_FISH))
 	change_venom(fish, reagents_to_add[1], 0.25 * venom_mult, 0.1 * venom_mult, just_remove = TRUE)
 
+/// Adds the venom to the fish with a stinger, based on its weight
 /datum/fish_trait/toxic/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
 		return
 	add_venom(source, reagents_to_add[1], new_weight, mult = (source.status == FISH_DEAD ? 0.1 : 0.25) * venom_mult)
 
+/// Changes the amount of venom of the fish with a stinger when it dies or comes back to life
 /datum/fish_trait/toxic/proc/on_status_change(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
@@ -581,6 +589,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	UnregisterSignal(fish, COMSIG_FISH_LIFE)
 
+/// Has a chance to make the fish attack the other fish in the aquarium when it's crowded
 /datum/fish_trait/territorial/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || !SPT_PROB(1, seconds_per_tick))
@@ -721,6 +730,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	UnregisterSignal(fish, list(COMSIG_FISH_FORCE_UPDATED, COMSIG_ITEM_FRIED, TRAIT_FOOD_BBQ_GRILLED))
 	fish.update_fish_force()
 
+/// Removes or reduces the liquid electricity of the fish when it's cooked
 /datum/fish_trait/electrogenesis/proc/on_fish_cooked(obj/item/fish/fish, cooked_time)
 	SIGNAL_HANDLER
 	if(cooked_time >= FISH_SAFE_COOKING_DURATION)
@@ -738,6 +748,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		if(!HAS_TRAIT(fish, TRAIT_FOOD_FRIED) && !HAS_TRAIT(fish, TRAIT_FOOD_BBQ_GRILLED))
 			reagents[/datum/reagent/consumable/liquidelectricity] -= 1
 
+/// Makes the fish deal more burn damage while it's alive
 /datum/fish_trait/electrogenesis/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
 	SIGNAL_HANDLER
 	if(fish.status == FISH_ALIVE)
@@ -785,6 +796,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	UnregisterSignal(fish, COMSIG_FISH_FORCE_UPDATED)
 	fish.update_fish_force()
 
+/// Makes the fish with a stinger deal more damage
 /datum/fish_trait/stinger/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
 	SIGNAL_HANDLER
 	fish.force += 1 + fish.w_class + bonus_or_malus
@@ -807,6 +819,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	UnregisterSignal(fish, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED))
 	change_venom(fish, /datum/reagent/toxin/venom, 0.7, 0.3, just_remove = TRUE)
 
+/// Adds the venom to the fish with a stinger, or removes the trait if it doesn't have a stinger
 /datum/fish_trait/toxic_barbs/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
@@ -815,6 +828,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	add_venom(source, /datum/reagent/toxin/venom, new_weight, mult = source.status == FISH_DEAD ? 0.3 : 0.7)
 
+/// Changes the amount of venom of the fish with a stinger when it dies or comes back to life
 /datum/fish_trait/toxic_barbs/proc/on_status_change(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
@@ -843,6 +857,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	UnregisterSignal(fish, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED))
 	change_venom(fish, /datum/reagent/toxin/mindbreaker/fish, 0.7, 0.3, just_remove = TRUE)
 
+/// Adds the hallucinogenic venom to the fish with a stinger, or removes the trait if it doesn't have a stinger
 /datum/fish_trait/hallucinogenic/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
@@ -852,6 +867,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	add_venom(source, /datum/reagent/toxin/mindbreaker/fish, new_weight, mult = source.status == FISH_DEAD ? 0.3 : 0.7)
 
+/// Changes the amount of hallucinogenic venom of the fish with a stinger when it dies or comes back to life
 /datum/fish_trait/hallucinogenic/proc/on_status_change(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
@@ -874,6 +890,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	UnregisterSignal(fish, list(COMSIG_ATOM_PROCESSED, COMSIG_ITEM_ATTACK_ZONE))
 
+/// Blinds and confuses the target hit by the fish, with a cooldown
 /datum/fish_trait/ink/proc/attacked_someone(obj/item/fish/source, mob/living/target, mob/living/user, zone)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN) || source.status == FISH_DEAD)
@@ -891,6 +908,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	ADD_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM)
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM), 9 SECONDS)
 
+/// Spawns an ink sac when the fish is cut into fillets
 /datum/fish_trait/ink/proc/on_process(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	SIGNAL_HANDLER
 	new /obj/item/food/ink_sac(source.drop_location())
@@ -915,12 +933,14 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	UnregisterSignal(fish, list(COMSIG_FISH_LIFE, COMSIG_MOVABLE_MOVED, COMSIG_FISH_STATUS_CHANGED))
 	reset_alpha(fish)
 
+/// Makes the fish slowly fade out while it's still and alive
 /datum/fish_trait/camouflage/proc/fade_out(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD || source.last_move + 5 SECONDS >= world.time)
 		return
 	source.alpha = max(source.alpha - 10 * seconds_per_tick, 10)
 
+/// Brings the alpha of the fish back to normal
 /datum/fish_trait/camouflage/proc/reset_alpha(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(QDELETED(source))

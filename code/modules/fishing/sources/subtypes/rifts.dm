@@ -123,6 +123,7 @@
 		challenge.used_rod.throw_at(challenge.location, 7, 1, null, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(check_item_location), challenge.location, challenge.used_rod), 1 SECONDS)
 
+/// Drags the bodyparts and fishing rods near the rift inside it
 /datum/fish_source/dimensional_rift/proc/check_item_location(atom/location, obj/item/used_rod)
 	for(var/obj/item/thingy in get_turf(location))
 		// If it's not in the list and it's not what we know as the used rod, skip.
@@ -132,12 +133,14 @@
 		thingy.forceMove(location)
 		location.visible_message(span_danger("Tendrils lash out from [location] and greedily drag [thingy] inwards. You're probably never seeing [thingy] again."))
 
+/// Spawns a random arm fished from the rift
 /datum/fish_source/dimensional_rift/proc/arm_fished(atom/spawn_location)
 	var/obj/item/bodypart/arm/random_arm = pick(subtypesof(/obj/item/bodypart/arm))
 	random_arm = new random_arm(spawn_location)
 	spawn_location.visible_message(span_notice("A [random_arm] is snatched up from beneath the eldritch depths of [spawn_location]!"))
 	return random_arm
 
+/// Gives the heretic knowledge, or hurts the non heretic, when they fish an influence from the rift
 /datum/fish_source/dimensional_rift/proc/influence_fished(mob/user, datum/fishing_challenge/challenge)
 	if(challenge.reward_path != FISHING_INFLUENCE)
 		return
