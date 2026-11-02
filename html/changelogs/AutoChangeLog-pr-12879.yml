@@ -1,0 +1,5 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - rscdel: "Tundra moths are no longer a separate species. Moths can pick tundra fur in the new Body style option instead, which only changes how they look."
+  - qol: "The moth mutant colors checkbox is now part of the Body style option."
