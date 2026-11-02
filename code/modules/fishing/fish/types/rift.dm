@@ -401,6 +401,7 @@
 		return OXYLOSS
 
 	user.petrify(statue_timer = INFINITY)
+	user.death()
 	visible_message(span_suicide("[user]'s skin turns into quartz upon contact with the oxygen in the air!'"))
 	qdel(src)
 	return MANUAL_SUICIDE
