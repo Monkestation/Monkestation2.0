@@ -2,12 +2,14 @@
 /atom/movable/screen/minimap_element/drawing
 	icon = 'icons/ui_icons/minimap/minimap.dmi'
 
+/// Wipes the drawing, resizing the canvas to the passed map icon
 /atom/movable/screen/minimap_element/drawing/proc/clear_canvas(icon/base_map)
 	var/icon/new_icon = icon('icons/ui_icons/minimap/minimap.dmi')
 	if(base_map)
 		new_icon.Scale(base_map.Width(), base_map.Height())
 	icon = new_icon
 
+/// Draws a box of the passed color, or erases one with padding if the color is null
 /atom/movable/screen/minimap_element/drawing/proc/draw_box(box_color, start_x, start_y, end_x, end_y, erase_pixel_range = 0, erase_padding_multiplier = 0)
 	var/icon/new_icon = icon(src.icon)
 	if(!isnull(box_color) || !erase_padding_multiplier)
@@ -17,6 +19,7 @@
 		new_icon.DrawBox(box_color, start_x - padding, start_y - padding, end_x + padding, end_y + padding)
 	icon = new_icon
 
+/// Draws a line of the passed color between two points, or erases one with padding if the color is null
 // Unapologetically yoinked from /proc/get_line()
 /atom/movable/screen/minimap_element/drawing/proc/draw_line(line_color, x0, y0, x1, y1, erase_pixel_range = 0, erase_padding_multiplier = 0)
 	var/icon/canvas = icon(src.icon)

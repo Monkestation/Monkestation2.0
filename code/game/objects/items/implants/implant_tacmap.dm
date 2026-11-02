@@ -2,11 +2,13 @@
 	name = "tactical map implant"
 	desc = "provides you with a map"
 	actions_types = list(/datum/action/minimap)
+	/// Icon state of the blip the wearer shows as on the minimap
 	var/wearer_icon_state = null
 	/// Optional z-trait that resolves to the first z-level and locks the minimap there.
 	var/minimap_fixed_z_trait
 	/// Whether this implant allows drawing/labeling on the personal minimap HUD.
 	var/can_draw_on_personal_minimap = FALSE
+	/// Signals on the wearer that make us refresh their minimap blip
 	var/static/list/minimap_refresh_signals = list(
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_LIVING_REVIVE,
@@ -29,11 +31,13 @@
 /obj/item/implant/tacmap/proc/remove_minimap(mob/user)
 	remove_minimap_blip(MINIMAP_NUKEOP_BLIP, user)
 
+/// Signal handler that refreshes the blip of whoever has this implant
 /obj/item/implant/tacmap/proc/refresh_minimap_icon()
 	SIGNAL_HANDLER
 	if(imp_in)
 		update_minimap_icon(imp_in)
 
+/// Returns the first z-level with minimap_fixed_z_trait, or null if we are not locked to one
 /obj/item/implant/tacmap/proc/resolve_fixed_minimap_z_level()
 	if(!isnull(minimap_fixed_z_trait))
 		var/list/trait_levels = SSmapping.levels_by_trait(minimap_fixed_z_trait)
@@ -41,6 +45,7 @@
 			return trait_levels[1]
 	return null
 
+/// Passes the fixed z-level and drawing permissions of this implant to its minimap action
 /obj/item/implant/tacmap/proc/configure_minimap_action()
 	var/datum/action/minimap/minimap_action = locate(/datum/action/minimap) in actions
 	if(isnull(minimap_action))
@@ -48,6 +53,7 @@
 	minimap_action.fixed_z_level = resolve_fixed_minimap_z_level()
 	minimap_action.can_draw = can_draw_on_personal_minimap
 
+/// Returns the blip icon state the wearer should show as on the minimap
 /obj/item/implant/tacmap/proc/get_minimap_icon_state(mob/living/wearer)
 	return wearer_icon_state
 
@@ -75,6 +81,7 @@
 	UnregisterSignal(source, COMSIG_MINIMAP_ACTION_TRIGGER)
 	return ..()
 
+/// Stops the implant minimap from opening inside the syndicate base, the holotable is used there instead
 /obj/item/implant/tacmap/nuclear/proc/deny_nukie_base_open(mob/living/user)
 	var/turf/user_turf = get_turf(user)
 	if(user_turf.onSyndieBase())

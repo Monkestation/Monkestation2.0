@@ -6,7 +6,9 @@
 	icon_state = ""
 	layer = MINIMAP_IMAGE_LAYER
 	screen_loc = "1,1"
+	/// Screen pixel coordinates of the bottom left corner of the map
 	var/list/origin_px
+	/// The drawing layer for the z-level we are showing
 	var/atom/movable/screen/minimap_element/drawing/drawing
 	/// Optional group tag. Displays with the same tag share drawings and labels.
 	var/annotation_share_tag
@@ -68,6 +70,7 @@
 	on_z_level_change(hud_owner.mymob)
 	show_tagged_blips()
 
+/// Swaps to the minimap of our fixed z-level, as long as it did not change while it was generating
 /atom/movable/screen/minimap_display/proc/apply_fixed_z_minimap(target_z)
 	if(QDELETED(src) || isnull(target_z) || fixed_z_level != target_z)
 		return
@@ -141,6 +144,7 @@
 	if(active_button && active_button.on_click(icon_x, icon_y, right_click))
 		return
 
+/// Removes the closest label to the passed icon coordinates, if one is in range
 /atom/movable/screen/minimap_display/proc/remove_nearest_label(icon_x, icon_y, mob/user)
 	var/list/labels_for_z = get_or_create_annotation_list(/atom/movable/screen/minimap_element/label, minimap.z)
 	if(!length(labels_for_z))
@@ -180,6 +184,7 @@
 	var/y = mouse_px[2] - origin_px[2] + 1
 	active_button.on_mouse_drag(x, y)
 
+/// Lets the active tool know the mouse button was let go
 /atom/movable/screen/minimap_display/proc/on_client_mouseup(client/source)
 	SIGNAL_HANDLER
 	if(active_button)
@@ -199,6 +204,7 @@
 	screentip.pixel_w = icon_x
 	screentip.pixel_z = icon_y
 
+/// Returns the name of the closest blip to the passed world coordinates, or the area name if there is none
 /atom/movable/screen/minimap_display/proc/get_hover_text(x, y)
 	var/closest_blip_name
 	var/closest_blip_distance
@@ -234,6 +240,7 @@
 	if(active_button)
 		active_button.on_mouse_up()
 
+/// Called when the viewer changes z-level, follows them or updates their locator blip
 /atom/movable/screen/minimap_display/proc/on_z_level_change(mob/source)
 	SIGNAL_HANDLER
 	var/turf/mob_loc = get_turf(source)
@@ -246,6 +253,7 @@
 	add_blip(locator_blip_tag, "locator", mob_loc.x, mob_loc.y, layer = 15)
 
 
+/// Gets (generating it if needed) the minimap for the passed z-level and swaps to it
 /atom/movable/screen/minimap_display/proc/resolve_and_change_z_level(new_z)
 	if(isnull(new_z))
 		return
@@ -254,6 +262,7 @@
 		return
 	change_z_level(new_z, new_minimap)
 
+/// Swaps to the passed minimap, moving the fixed z-level along with it if we have one
 /atom/movable/screen/minimap_display/proc/change_z_level(new_z, datum/minimap/new_minimap)
 	if(isnull(new_minimap))
 		return
@@ -261,11 +270,13 @@
 		fixed_z_level = new_z
 	set_minimap(new_minimap)
 
+/// Sets the z-level this display is locked to, and swaps to it right away if asked
 /atom/movable/screen/minimap_display/proc/set_fixed_z_level(new_fixed_z, apply_immediately = FALSE)
 	fixed_z_level = new_fixed_z
 	if(apply_immediately)
 		INVOKE_ASYNC(src, PROC_REF(resolve_and_change_z_level), new_fixed_z)
 
+/// Shows every global blip with one of our tags that is on the z-level we are showing
 /atom/movable/screen/minimap_display/proc/show_tagged_blips()
 	if(!length(valid_minimap_blip_tags))
 		return
@@ -276,6 +287,7 @@
 		for(var/atom/movable/screen/minimap_element/blip/blip as anything in blip_list)
 			on_tagged_blip_add(null, blip)
 
+/// Shows a newly added global blip if it has one of our tags and is on our z-level
 /atom/movable/screen/minimap_display/proc/on_tagged_blip_add(datum/source, atom/movable/screen/minimap_element/blip/blip)
 	SIGNAL_HANDLER
 	if(isnull(blip) || QDELETED(blip) || isnull(minimap))
@@ -290,12 +302,14 @@
 	blip.start_tracking_target()
 	show_minimap_element(blip)
 
+/// Hides a global blip that was removed
 /atom/movable/screen/minimap_display/proc/on_tagged_blip_remove(datum/source, atom/movable/screen/minimap_element/blip/blip)
 	SIGNAL_HANDLER
 	if(isnull(blip))
 		return
 	hide_minimap_element(blip)
 
+/// Sets the minimap we display, centering it on the screen and rebuilding the blips and annotations on it
 /atom/movable/screen/minimap_display/proc/set_minimap(datum/minimap/minimap)
 	if(isnull(minimap))
 		return
@@ -323,6 +337,7 @@
 	blips[name] = new_blip
 	show_minimap_element(new_blip)
 
+/// Moves one of our local blips to the passed world coordinates
 /atom/movable/screen/minimap_display/proc/update_blip(name, x, y)
 	var/atom/movable/screen/minimap_element/blip/blip = blips[name]
 	if(!blip)
@@ -331,6 +346,7 @@
 	blip.pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_size)
 	blip.pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_size)
 
+/// Removes and deletes one of our local blips
 /atom/movable/screen/minimap_display/proc/remove_blip(name)
 	var/atom/movable/screen/minimap_element/blip/blip = blips[name]
 	if(!blip)
@@ -339,6 +355,7 @@
 	hide_minimap_element(blip)
 	qdel(blip)
 
+/// Removes every local blip and hides every global one
 /atom/movable/screen/minimap_display/proc/remove_all_blips()
 	for(var/blip_name in blips)
 		var/atom/movable/screen/minimap_element/blip/blip = blips[blip_name]
@@ -347,17 +364,20 @@
 	blips.Cut()
 	hide_visible_elements_by_type(/atom/movable/screen/minimap_element/blip)
 
+/// Handles the up/down buttons, moving to the closest connected z-level in that direction
 /atom/movable/screen/minimap_display/proc/z_change_request(mob/hud_owner, new_z_change)
 	SIGNAL_HANDLER
 	var/current_z = get_viewed_z_level()
 	var/new_z = get_clamped_connected_z(current_z + new_z_change, current_z)
 	INVOKE_ASYNC(src, PROC_REF(resolve_and_change_z_level), new_z)
 
+/// Returns the z-level this display is currently showing
 /atom/movable/screen/minimap_display/proc/get_viewed_z_level()
 	if(!isnull(fixed_z_level))
 		return fixed_z_level
 	return minimap?.z
 
+/// Returns the requested z-level if it is connected to the source one, or the closest connected one if it is not
 /atom/movable/screen/minimap_display/proc/get_clamped_connected_z(requested_z, source_z)
 	if(isnull(source_z))
 		return requested_z
@@ -413,6 +433,7 @@
 	// Return the maximum dimension (typically square, but handle non-square views)
 	return max(view_pixels[1], view_pixels[2])
 
+/// Updates every toolbar button so only the active tool looks selected
 /atom/movable/screen/minimap_display/proc/update_toolbar_button_states()
 	if(!hud)
 		return
@@ -421,6 +442,7 @@
 		if(button)
 			button.update_active_state()
 
+/// Lines up the toolbar buttons next to the map
 /atom/movable/screen/minimap_display/proc/reposition_toolbar_buttons()
 	if(!hud || !minimap)
 		return
@@ -438,6 +460,7 @@
 		if(button)
 			button.screen_loc = "1:[btn_x],1:[btn_top_y - ICON_SIZE_Y - button.button_slot * ICON_SIZE_Y]"
 
+/// Clears every drawing on the z-level we are showing
 /atom/movable/screen/minimap_display/proc/clear_canvas(mob/user)
 	if(!can_draw)
 		return
@@ -445,6 +468,7 @@
 	log_minimap_drawing("[key_name(user)] cleared the minimap canvas on z-level [minimap?.z]")
 	to_chat(user, span_warning("Cleared all minimap drawings."))
 
+/// Deletes every annotation of the passed type on the z-level we are showing, for everyone sharing our annotations
 /atom/movable/screen/minimap_display/proc/clear_all_annotations(mob/user, annotation_type = /atom/movable/screen/minimap_element/label, annotation_type_name = "label")
 	var/alist/annotation_store = GLOB.minimap_annotations[annotation_share_tag]
 	var/alist/items_by_z = annotation_store?[annotation_type]
@@ -462,6 +486,7 @@
 	to_chat(user, span_warning("Cleared all [annotation_type_name] annotations on z-level [current_z]."))
 	log_minimap_drawing("[user_name] has cleared all [annotation_type_name] annotations on z-level [current_z]")
 
+/// Asks the user for a label text and places it at the passed icon coordinates, sleeps so call it async
 /atom/movable/screen/minimap_display/proc/async_place_label(mob/user, icon_x, icon_y)
 	var/x = clamp(MINIMAP_ICON_TO_WORLD(icon_x, minimap.min_x), 1, world.maxx)
 	var/y = clamp(MINIMAP_ICON_TO_WORLD(icon_y, minimap.min_y), 1, world.maxy)
@@ -497,6 +522,7 @@
 	sync_visible_objects(minimap?.z)
 	log_minimap_drawing("[key_name(user)] placed label '[label_text]' at [area_name]")
 
+/// Returns the shared list of annotations of the passed type for the passed z-level, creating it if needed
 /atom/movable/screen/minimap_display/proc/get_or_create_annotation_list(annotation_type, z_level)
 	var/alist/annotation_store = GLOB.minimap_annotations[annotation_share_tag]
 	if(isnull(annotation_store))
@@ -512,6 +538,7 @@
 		by_z[z_level] = items
 	return items
 
+/// Shows the drawing and labels for the z-level we are showing, hiding the ones from other z-levels
 /atom/movable/screen/minimap_display/proc/refresh_visible_annotations()
 	if(isnull(minimap))
 		return
@@ -533,6 +560,7 @@
 		show_minimap_elements(labels_for_z)
 	show_minimap_element(screentip)
 
+/// Refreshes the annotations of every display sharing our tag that is showing the passed z-level
 /atom/movable/screen/minimap_display/proc/sync_visible_objects(z_level)
 	if(isnull(z_level))
 		return
@@ -544,6 +572,7 @@
 			continue
 		display.refresh_visible_annotations()
 
+/// Shows a minimap element on top of the map
 /atom/movable/screen/minimap_display/proc/show_minimap_element(atom/movable/screen/minimap_element/element)
 	if(isnull(element))
 		return
@@ -551,20 +580,24 @@
 		visible_minimap_elements += element
 	vis_contents |= element
 
+/// Hides a minimap element from the map
 /atom/movable/screen/minimap_display/proc/hide_minimap_element(atom/movable/screen/minimap_element/element)
 	if(isnull(element))
 		return
 	visible_minimap_elements -= element
 	vis_contents -= element
 
+/// Shows every minimap element in the passed list
 /atom/movable/screen/minimap_display/proc/show_minimap_elements(list/elements)
 	for(var/atom/movable/screen/minimap_element/element as anything in elements)
 		show_minimap_element(element)
 
+/// Hides every minimap element in the passed list
 /atom/movable/screen/minimap_display/proc/hide_minimap_elements(list/elements)
 	for(var/atom/movable/screen/minimap_element/element as anything in elements)
 		hide_minimap_element(element)
 
+/// Hides every visible minimap element of the passed type
 /atom/movable/screen/minimap_display/proc/hide_visible_elements_by_type(element_type)
 	if(isnull(element_type))
 		return
@@ -572,6 +605,7 @@
 		if(istype(element, element_type))
 			hide_minimap_element(element)
 
+/// Hides every visible global (tagged) blip
 /atom/movable/screen/minimap_display/proc/clear_tagged_blips()
 	for(var/atom/movable/screen/minimap_element/blip/blip as anything in visible_minimap_elements.Copy())
 		if(!length(blip.blip_tag))

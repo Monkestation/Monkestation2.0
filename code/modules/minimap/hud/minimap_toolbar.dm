@@ -16,6 +16,7 @@
 	var/tool_key = null
 	/// Coordinates of the last drag position during drawing.
 	var/last_drag_x
+	/// Y coordinate of the last drag position during drawing.
 	var/last_drag_y
 
 /atom/movable/screen/minimap_toolbar_button/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/minimap_display/minimap_display)

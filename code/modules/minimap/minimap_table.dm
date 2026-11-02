@@ -82,6 +82,7 @@
 	play_animation("startup")
 	return TRUE
 
+/// Flicks a hologram animation above the table for everyone
 /obj/machinery/minimap_table/proc/play_animation(icon_state = "startup", duration = animation_duration)
 	var/image/img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir, animation_x, animation_y)
 	var/image/emissive_img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir, animation_x, animation_y)
@@ -91,6 +92,7 @@
 	flick_overlay_global(img, GLOB.clients, duration)
 	flick_overlay_global(emissive_img, GLOB.clients, duration)
 
+/// Finishes starting up, showing the minimap to whoever turned us on if they are still close
 /obj/machinery/minimap_table/proc/activate(mob/activator)
 	if(active || !is_operational)
 		return
@@ -100,6 +102,7 @@
 		show_minimap(activator)
 	update_appearance(UPDATE_OVERLAYS)
 
+/// Turns the hologram off
 /obj/machinery/minimap_table/proc/deactivate()
 	if(!active)
 		return
@@ -107,20 +110,24 @@
 	update_appearance(UPDATE_OVERLAYS)
 	play_animation("closing")
 
+/// Turns the hologram off if nobody is looking at it
 /obj/machinery/minimap_table/proc/deactive_without_viewers()
 	if(!length(viewers))
 		deactivate()
 
+/// Shows the table minimap to the passed user
 /obj/machinery/minimap_table/proc/show_minimap(mob/user)
 	add_table_huds(user.hud_used)
 	viewers |= user
 
+/// Hides the table minimap from the passed user, turning off later if nobody else is looking
 /obj/machinery/minimap_table/proc/hide_minimap(mob/user)
 	remove_table_huds(user.hud_used)
 	viewers -= user
 	if(!length(viewers))
 		addtimer(CALLBACK(src, PROC_REF(deactive_without_viewers)), 10 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE)
 
+/// Creates the table minimap hud elements on the passed hud
 /obj/machinery/minimap_table/proc/add_table_huds(datum/hud/hud)
 	var/target_z = resolve_target_z()
 	var/allow_draw = can_user_draw(hud?.mymob)
@@ -129,13 +136,16 @@
 		var/instanced = new hud_element_type(null, hud, minimap, null, target_z, MINIMAP_ANNOTATION_TAG_NUCLEAR, allow_draw)
 		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
 
+/// Returns TRUE if the passed user can draw on the table minimap
 /obj/machinery/minimap_table/proc/can_user_draw(mob/user)
 	return HAS_TRAIT(user, TRAIT_MINIMAP_TABLE_DRAW)
 
+/// Removes the table minimap hud elements from the passed hud
 /obj/machinery/minimap_table/proc/remove_table_huds(datum/hud/hud)
 	for(var/element in table_huds)
 		hud.remove_screen_object(element)
 
+/// Returns the highest z-level with our target_z_trait
 /obj/machinery/minimap_table/proc/resolve_target_z()
 	if(isnull(target_z_trait))
 		return null
@@ -148,6 +158,7 @@
 		return top_level
 	return null
 
+/// Gets the minimap for our target z-level, generating it if needed
 /obj/machinery/minimap_table/proc/set_minimap()
 	var/target_z = resolve_target_z()
 	minimap = get_minimap_for_z(target_z)

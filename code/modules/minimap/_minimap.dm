@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(minimap_annotation_viewers)
 	LAZYADD(GLOB.minimap_blip_tags[tag], new_blip)
 	SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_ADD(tag), new_blip)
 
+/// Returns the minimap blip with the passed tag that is tracking the passed object, if there is one
 /proc/get_minimap_blip(tag, atom/object)
 	if(!tag || !istype(object))
 		return
@@ -18,6 +19,7 @@ GLOBAL_LIST_EMPTY(minimap_annotation_viewers)
 		if(blip.track_target == object)
 			return blip
 
+/// Removes and deletes the minimap blip with the passed tag that is tracking the passed object
 /proc/remove_minimap_blip(tag, atom/object)
 	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(tag, object)
 	if(isnull(blip))

@@ -525,6 +525,7 @@ GLOBAL_VAR(station_nuke_source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
 	update_appearance()
 
+/// Updates our minimap blip to show if we are armed or not
 /obj/machinery/nuclearbomb/proc/update_minimap_blip()
 	if(!is_on_minimap)
 		return

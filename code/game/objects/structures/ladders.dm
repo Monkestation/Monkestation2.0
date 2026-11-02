@@ -78,6 +78,7 @@
 		down.update_minimap_blip()
 	up = down = null
 
+/// Adds or removes our minimap blip depending on if we are linked to another ladder
 /obj/structure/ladder/proc/update_minimap_blip()
 	remove_minimap_blip(MINIMAP_LADDER_BLIP, src)
 	if(up || down)

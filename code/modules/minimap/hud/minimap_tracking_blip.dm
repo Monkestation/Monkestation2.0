@@ -26,6 +26,7 @@
 	clear_tracking_signals()
 	return ..()
 
+/// Sets the atom this blip follows, the blip deletes itself along with it
 /atom/movable/screen/minimap_element/blip/proc/register_target(atom/target)
 	if(!isnull(track_target))
 		CRASH("[type] attempted to register [target] while already tracking [track_target].")
@@ -35,6 +36,7 @@
 	track_target = target
 	name = target.name
 
+/// Stops following our target and drops every signal on it
 /atom/movable/screen/minimap_element/blip/proc/clear_tracking_signals()
 	tracking = FALSE
 	if(track_target)
@@ -43,6 +45,7 @@
 		track_target = null
 	QDEL_NULL(connect_ref)
 
+/// Starts following our target around, also when it is inside of something else
 /atom/movable/screen/minimap_element/blip/proc/start_tracking_target()
 	if(tracking)
 		return
@@ -59,11 +62,13 @@
 	tracking = TRUE
 	INVOKE_ASYNC(src, PROC_REF(update_minimap))
 
+/// Gets the minimap for the z-level our target is on and moves the blip there, can sleep
 /atom/movable/screen/minimap_element/blip/proc/update_minimap()
 	var/turf/target_turf = get_turf(track_target)
 	minimap = get_minimap_for_z(target_turf.z)
 	update_blip()
 
+/// Called when our target changes z-level, swapping minimap if needed
 /atom/movable/screen/minimap_element/blip/proc/on_target_z_changed(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	if(isnull(track_target))
@@ -74,10 +79,12 @@
 	else
 		update_blip()
 
+/// Called when our target or whatever holds it moves
 /atom/movable/screen/minimap_element/blip/proc/on_tracked_or_container_moved(atom/movable/source, atom/old_loc)
 	SIGNAL_HANDLER
 	update_blip()
 
+/// Moves the blip to where our target is and updates its name
 /atom/movable/screen/minimap_element/blip/proc/update_blip()
 	SIGNAL_HANDLER
 	if(isnull(track_target) || isnull(minimap))

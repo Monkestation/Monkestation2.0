@@ -81,6 +81,7 @@
 			S.update_appearance()
 	update_minimap_blip()
 
+/// Rebuilds the minimap blips for the bottom and top of these stairs
 /obj/structure/stairs/proc/update_minimap_blip()
 	var/bottom_state = isTerminator() ? "stairs_up" : "stairs_down"
 	var/top_state = (bottom_state == "stairs_up") ? "stairs_down" : "stairs_up"
@@ -93,6 +94,7 @@
 	add_minimap_blip_if_valid(current_turf, bottom_state)
 	add_minimap_blip_if_valid(get_step_multiz(current_turf, UP), top_state)
 
+/// Removes every minimap blip these stairs have placed
 /obj/structure/stairs/proc/clear_minimap_blips()
 	if(!islist(minimap_blip_targets))
 		return
@@ -100,6 +102,7 @@
 		remove_minimap_blip(MINIMAP_STAIR_BLIP, target)
 	LAZYCLEARLIST(minimap_blip_targets)
 
+/// Places or updates a stair blip on the target, unless another stair blip is already close to it
 /obj/structure/stairs/proc/add_minimap_blip_if_valid(atom/target, state)
 	if(isnull(target))
 		return
@@ -113,6 +116,7 @@
 		add_minimap_blip(target, MINIMAP_STAIR_BLIP, state)
 	LAZYADD(minimap_blip_targets, target)
 
+/// Returns TRUE if there are no other stair blips within STAIR_BLIP_MIN_DISTANCE of the target
 /obj/structure/stairs/proc/should_place_minimap_blip(atom/target)
 	var/turf/target_turf = get_turf(target)
 	if(isnull(target_turf))

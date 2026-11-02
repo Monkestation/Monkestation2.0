@@ -17,6 +17,7 @@
 	var/used_z = get_displayed_z_level(new_turf)
 	set_floor_text(used_z)
 
+/// Updates the floor text when the up/down buttons ask the minimap to change z-level
 /atom/movable/screen/minimap_z_indicator/proc/on_minimap_change_request(mob/hud_owner, new_z_change)
 	SIGNAL_HANDLER
 	var/atom/movable/screen/minimap_display/current_display = hud?.screen_objects[HUD_TAC_MINIMAP]
@@ -30,12 +31,14 @@
 	var/requested_z = current_display.get_clamped_connected_z(current_z + new_z_change, current_z)
 	set_floor_text(requested_z)
 
+/// Returns the z-level the minimap is showing, the fixed one if it has one or the turf one otherwise
 /atom/movable/screen/minimap_z_indicator/proc/get_displayed_z_level(turf/current_turf)
 	var/atom/movable/screen/minimap_display/current_display = hud?.screen_objects[HUD_TAC_MINIMAP]
 	if(!isnull(current_display?.fixed_z_level))
 		return current_display.minimap?.z
 	return current_turf?.z
 
+/// Shows which floor of the multi-z stack the passed z-level is
 /atom/movable/screen/minimap_z_indicator/proc/set_floor_text(used_z)
 	if(isnull(used_z))
 		return

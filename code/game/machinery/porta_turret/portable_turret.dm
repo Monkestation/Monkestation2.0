@@ -775,6 +775,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "turret", FALSE)
 	add_minimap_blip(src, MINIMAP_SYNDIE_TURRET_BLIP, "sentry_passive")
 
+/// Sets the icon state of this turret's tactical map blip
 /obj/machinery/porta_turret/syndicate/proc/update_turret_minimap_icon(new_icon_state)
 	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(MINIMAP_SYNDIE_TURRET_BLIP, src)
 	if(isnull(blip))

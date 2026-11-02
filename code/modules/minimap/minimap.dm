@@ -14,6 +14,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	/// Minimum world Y coordinate included in the cropped map icon.
 	var/min_y = 1
 
+/// Draws the map icon for the passed z-level, cropped to the parts that are not skipped
 /datum/minimap/proc/load_z(z)
 	. = FALSE
 	if(!isnum(z) || z > length(SSmapping.z_list))

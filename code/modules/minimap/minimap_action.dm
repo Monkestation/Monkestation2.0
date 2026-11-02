@@ -56,23 +56,27 @@
 	set_tracked_owner(null)
 	return ..()
 
+/// Returns TRUE if any of our minimap hud elements are on the passed hud
 /datum/action/minimap/proc/has_minimap_huds(datum/hud/hud)
 	for(var/element in huds)
 		if(hud.screen_objects[element])
 			return TRUE
 	return FALSE
 
+/// Returns the minimap display on the passed hud if it is open
 /datum/action/minimap/proc/get_open_minimap_display(datum/hud/hud)
 	if(isnull(hud) || !has_minimap_huds(hud))
 		return null
 	return hud.screen_objects[HUD_TAC_MINIMAP]
 
+/// Creates our minimap hud elements and adds them to the passed hud
 /datum/action/minimap/proc/add_huds(datum/hud/hud, datum/minimap/minimap, initial_display_z_level)
 	for(var/element in huds)
 		var/hud_element_type = huds[element]
 		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags, initial_display_z_level, annotation_share_tag, can_draw)
 		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
 
+/// Sets the mob we watch for z-level changes
 /datum/action/minimap/proc/set_tracked_owner(mob/new_owner)
 	if(tracked_owner == new_owner)
 		return
@@ -82,25 +86,30 @@
 	if(!isnull(tracked_owner))
 		RegisterSignal(tracked_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_owner_z_changed))
 
+/// Returns our fixed z-level if we have one, or the passed one otherwise
 /datum/action/minimap/proc/get_anchor_z_level(current_z_level)
 	return isnull(fixed_z_level) ? current_z_level : fixed_z_level
 
 
+/// Returns the z-level the minimap should open on, the current one if it is connected to the anchor one
 /datum/action/minimap/proc/get_opening_display_z_level(anchor_z_level, current_z_level)
 	var/list/connected_levels = SSmapping.get_connected_levels(anchor_z_level)
 	if(length(connected_levels) && connected_levels.Find(current_z_level))
 		return current_z_level
 	return (length(connected_levels) ? connected_levels[1] : anchor_z_level)
 
+/// Returns TRUE if the minimap can not be used on the passed z-level
 /datum/action/minimap/proc/is_forbidden_minimap_z(z_level)
 	if(isnull(z_level))
 		return FALSE
 	return is_centcom_level(z_level) || is_reserved_level(z_level)
 
+/// Called when our owner changes z-level
 /datum/action/minimap/proc/on_owner_z_changed(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(handle_owner_z_changed), source, new_turf?.z)
 
+/// Closes the minimap on forbidden z-levels, or moves a fixed minimap to the new z-level if it is connected
 /datum/action/minimap/proc/handle_owner_z_changed(mob/owner_mob, new_z_level)
 	var/datum/hud/owner_hud = owner_mob?.hud_used
 	if(isnull(get_open_minimap_display(owner_hud)))
@@ -136,6 +145,7 @@
 		HUD_TAC_MINIMAP_Z_INDICATOR_DOWN = /atom/movable/screen/minimap_z_down
 	)
 
+/// Removes our minimap hud elements from the passed hud
 /datum/action/minimap/proc/remove_huds(datum/hud/hud)
 	for(var/element in huds)
 		hud.remove_screen_object(element)
