@@ -9,7 +9,9 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/explorer
 	armor_type = /datum/armor/hooded_explorer
@@ -37,9 +39,9 @@
 	icon_state = "explorer"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hooded_explorer
 	resistance_flags = FIRE_PROOF
@@ -115,6 +117,8 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()
@@ -158,6 +162,8 @@
 	desc = "A protective & concealing hood."
 	armor_type = /datum/armor/hooded_goliath
 	body_parts_covered = HEAD
+	cold_protection = HEAD
+	heat_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	clothing_flags = SNUG_FIT
@@ -176,7 +182,9 @@
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/hooded_explorer
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
@@ -209,9 +217,9 @@
 	armor_type = /datum/armor/cloak_drake
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
@@ -239,9 +247,9 @@
 	desc = "The skull of a dragon."
 	armor_type = /datum/armor/cloak_drake
 	clothing_flags = SNUG_FIT
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -252,9 +260,9 @@
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/godslayer
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
@@ -290,9 +298,9 @@
 	desc = "The horns and skull of a wendigo, held together by the remaining icey energy of a demonic miner."
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF

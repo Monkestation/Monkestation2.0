@@ -50,7 +50,7 @@
 		to_chat(user,span_notice("You start trimming \the [src]."))
 		if(do_after(user, 3 SECONDS,target=src))
 			to_chat(user,span_notice("You finish trimming \the [src]."))
-			opacity = FALSE
+			set_opacity(FALSE)
 	else
 		return ..()
 /**

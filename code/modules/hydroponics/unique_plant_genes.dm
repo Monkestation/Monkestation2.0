@@ -288,8 +288,8 @@
 		stop_backfire_effect()
 		return
 
-	our_mob.adjust_bodytemperature(0.5 KELVIN * seconds_per_tick)
-	if(!HAS_TRAIT(our_mob, TRAIT_RESISTHEAT) && SPT_PROB(5, seconds_per_tick))
+	our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
+	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(our_mob, span_warning("Your hand holding [our_plant] burns!"))
 
 /// Bluespace Tomato squashing on the user on backfire

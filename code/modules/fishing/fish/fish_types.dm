@@ -2,7 +2,8 @@
 
 /obj/item/fish/goldfish
 	name = "goldfish"
-	desc = "Despite common belief, goldfish do not have three-second memories. They can actually remember things that happened up to three months ago."
+	desc = "Despite common belief, goldfish do not have three-second memories. \
+		They can actually remember things that happened up to three months ago."
 	icon_state = "goldfish"
 	sprite_width = 8
 	sprite_height = 8
@@ -12,6 +13,14 @@
 	favorite_bait = list(/obj/item/food/bait/worm)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
+
+/obj/item/fish/goldfish/gill
+	name = "McGill"
+	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case."
+	stable_population = 1
+	random_case_rarity = FISH_RARITY_NOPE
+	show_in_catalog = FALSE
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/angelfish
 	name = "angelfish"
@@ -30,7 +39,6 @@
 /obj/item/fish/guppy
 	name = "guppy"
 	desc = "Guppy is also known as rainbow fish because of the brightly colored body and fins."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "guppy"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#91AE64"
@@ -45,7 +53,6 @@
 /obj/item/fish/plasmatetra
 	name = "plasma tetra"
 	desc = "Due to their small size, tetras are prey to many predators in their watery world, including eels, crustaceans, and invertebrates."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "plastetra"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#D30EB0"
@@ -58,7 +65,6 @@
 /obj/item/fish/catfish
 	name = "cory catfish"
 	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "catfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#907420"
@@ -73,13 +79,13 @@
 	)
 	required_temperature_min = MIN_AQUARIUM_TEMP+12
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	beauty = FISH_BEAUTY_GOOD
 
 // Saltwater fish below
 
 /obj/item/fish/clownfish
 	name = "clownfish"
 	desc = "Clownfish catch prey by swimming onto the reef, attracting larger fish, and luring them back to the anemone. The anemone will sting and eat the larger fish, leaving the remains for the clownfish."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "clownfish"
 	dedicated_in_aquarium_icon_state = "clownfish_small"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -104,11 +110,11 @@
 	evolution_types = null
 	compatible_types = list(/obj/item/fish/clownfish)
 	food = /datum/reagent/lube
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/cardinal
 	name = "cardinalfish"
 	desc = "Cardinalfish are often found near sea urchins, where the fish hide when threatened."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "cardinalfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -122,7 +128,6 @@
 /obj/item/fish/greenchromis
 	name = "green chromis"
 	desc = "The Chromis can vary in color from blue to green depending on the lighting and distance from the lights."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "greenchromis"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#00ff00"
@@ -138,7 +143,6 @@
 /obj/item/fish/firefish
 	name = "firefish goby"
 	desc = "To communicate in the wild, the firefish uses its dorsal fin to alert others of potential danger."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "firefish"
 	sprite_width = 6
 	sprite_height = 5
@@ -154,7 +158,6 @@
 /obj/item/fish/pufferfish
 	name = "pufferfish"
 	desc = "They say that one pufferfish contains enough toxins to kill 30 people, although in the last few decades they've been genetically engineered en masse to be less poisonous."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "pufferfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_width = 8
@@ -164,8 +167,9 @@
 	stable_population = 3
 	required_temperature_min = MIN_AQUARIUM_TEMP+23
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
-
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
+	beauty = FISH_BEAUTY_GOOD
+
 
 /obj/item/fish/squid
 	name = "squid"
@@ -177,6 +181,7 @@
 	average_size = 50
 	average_weight = 500 //They're quite lighter than they're long.
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	beauty = FISH_BEAUTY_GOOD
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/ink, /datum/fish_trait/wary)
@@ -184,7 +189,6 @@
 /obj/item/fish/lanternfish
 	name = "lanternfish"
 	desc = "Typically found in areas below 6600 feet below the surface of the ocean, they live in complete darkness."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "lanternfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	random_case_rarity = FISH_RARITY_VERY_RARE
@@ -198,12 +202,12 @@
 	fish_traits = list(/datum/fish_trait/nocturnal)
 	required_temperature_min = MIN_AQUARIUM_TEMP+2 //My source is that the water at a depth 6600 feet is pretty darn cold.
 	required_temperature_max = MIN_AQUARIUM_TEMP+18
+	beauty = FISH_BEAUTY_NULL
 
 //Tiziran Fish
 /obj/item/fish/dwarf_moonfish
 	name = "dwarf moonfish"
 	desc = "Ordinarily in the wild, the Zagoskian moonfish is around the size of a tuna, however through selective breeding a smaller breed suitable for being kept as an aquarium pet has been created."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "dwarf_moonfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 2
@@ -212,23 +216,25 @@
 	average_weight = 2000
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/gunner_jellyfish
 	name = "gunner jellyfish"
 	desc = "So called due to their resemblance to an artillery shell, the gunner jellyfish is native to Tizira, where it is enjoyed as a delicacy. Produces a mild hallucinogen that is destroyed by cooking."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "gunner_jellyfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
 	required_temperature_min = MIN_AQUARIUM_TEMP+24
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/needlefish
 	name = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "needlefish"
+	dedicated_in_aquarium_icon_state = "needlefish_small"
+	sprite_width = 7
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
 	fillet_type = null
@@ -241,8 +247,10 @@
 /obj/item/fish/armorfish
 	name = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "armorfish"
+	dedicated_in_aquarium_icon_state = "armorfish_small"
+	sprite_height = 5
+	sprite_width = 6
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish
@@ -254,13 +262,10 @@
 /obj/item/fish/chasm_crab
 	name = "chasm chrab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "chrab"
 	dedicated_in_aquarium_icon_state = "chrab_small"
 	sprite_height = 9
 	sprite_width = 8
-	source_height = 9
-	source_width = 8
 	stable_population = 4
 	feeding_frequency = 15 MINUTES
 	random_case_rarity = FISH_RARITY_RARE
@@ -279,6 +284,7 @@
 	)
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
@@ -289,18 +295,11 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
-
-/obj/item/storage/box/fish_debug
-	name = "box full of fish"
-
-/obj/item/storage/box/fish_debug/PopulateContents()
-	for(var/fish_type in subtypesof(/obj/item/fish))
-		new fish_type(src)
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
 	desc = "A lab-grown donkfish. Its invention was an accident for the most part, as it was intended to be consumed in donk pockets. Unfortunately, it tastes horrible, so it has now become a pseudo-mascot."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "donkfish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -309,11 +308,11 @@
 	fish_traits = list(/datum/fish_trait/yucky)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
+	beauty = FISH_BEAUTY_EXCELLENT
 
 /obj/item/fish/emulsijack
 	name = "toxic emulsijack"
 	desc = "Ah, the terrifying emulsijack. Created in a laboratory, the only real use of this slimey, scaleless fish is for completely ruining a tank."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "emulsijack"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
@@ -321,11 +320,33 @@
 	fish_traits = list(/datum/fish_trait/emulsijack)
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
+	beauty = FISH_BEAUTY_BAD
+
+/obj/item/fish/jumpercable
+	name = "monocloning jumpercable"
+	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
+		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
+	icon_state = "jumpercable"
+	dedicated_in_aquarium_icon_state = "jumpercable_small"
+	sprite_width = 17
+	sprite_height = 5
+	stable_population = 12
+	average_size = 110
+	average_weight = 10000
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	required_temperature_min = MIN_AQUARIUM_TEMP+10
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	favorite_bait = list(/obj/item/stock_parts/power_store/cell/lead)
+	fish_traits = list(
+		/datum/fish_trait/parthenogenesis,
+		/datum/fish_trait/mixotroph,
+		/datum/fish_trait/electrogenesis,
+	)
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/ratfish
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "ratfish"
 	random_case_rarity = FISH_RARITY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -334,7 +355,6 @@
 	fish_traits = list(/datum/fish_trait/necrophage)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
 	required_temperature_max = MIN_AQUARIUM_TEMP+35
-
 	fish_ai_type = FISH_AI_ZIPPY
 	favorite_bait = list(
 		list(
@@ -342,6 +362,7 @@
 			"Value" = DAIRY
 		)
 	)
+	beauty = FISH_BEAUTY_DISGUSTING
 
 /obj/item/fish/ratfish/Initialize(mapload)
 	. = ..()
@@ -351,7 +372,6 @@
 /obj/item/fish/sludgefish
 	name = "sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "sludgefish"
 	dedicated_in_aquarium_icon_state = "sludgefish_small"
 	sprite_width = 7
@@ -361,11 +381,12 @@
 	average_size = 20
 	average_weight = 400
 	health = 50
-	breeding_timeout = 5 MINUTES
+	breeding_timeout = 2.5 MINUTES
 	fish_traits = list(/datum/fish_trait/parthenogenesis, /datum/fish_trait/no_mating)
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 	evolution_types = list(/datum/fish_evolution/purple_sludgefish)
+	beauty = FISH_BEAUTY_NULL
 
 /obj/item/fish/sludgefish/purple
 	name = "purple sludgefish"
@@ -378,7 +399,6 @@
 /obj/item/fish/slimefish
 	name = "acquatic slime"
 	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
 	dedicated_in_aquarium_icon_state = "slimefish_small"
@@ -404,11 +424,11 @@
 		),
 	)
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/boned
 	name = "unmarine bonemass"
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "bonemass"
 	dedicated_in_aquarium_icon_state = "bonemass_small"
 	sprite_width = 10
@@ -419,7 +439,7 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	health = 150
 	stable_population = 3
-	grind_results = list(/datum/reagent/bone_dust = 20)
+	grind_results = list(/datum/reagent/bone_dust = 10)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	fish_traits = list(/datum/fish_trait/revival, /datum/fish_trait/carnivore)
@@ -427,6 +447,7 @@
 	average_weight = 2000
 	death_text = "%SRC stops moving." //It's dead... or is it?
 	evolution_types = list(/datum/fish_evolution/mastodon)
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
@@ -446,7 +467,7 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	health = 300
 	stable_population = 2 //This means they can only crossbreed.
-	grind_results = list(/datum/reagent/bone_dust = 15, /datum/reagent/consumable/liquidgibs = 5)
+	grind_results = list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	feeding_frequency = 2 MINUTES
@@ -455,6 +476,7 @@
 	average_weight = 5000
 	death_text = "%SRC stops moving."
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	beauty = FISH_BEAUTY_BAD
 
 /obj/item/fish/holo
 	name = "holographic goldfish"
@@ -491,7 +513,6 @@
 /obj/item/fish/holo/crab
 	name = "holographic crab"
 	desc = "A holographic represantion of a soul-crushingly soulless crab, unlike the cuter ones occasionally roaming around. It stares at you, with empty, beady eyes."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "crab"
 	dedicated_in_aquarium_icon_state = "crab_small"
 	average_weight = 1000
@@ -505,6 +526,7 @@
 	sprite_height = 8
 	average_size = 60
 	average_weight = 1000
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/holo/angel
 	name = "holographic angelfish"
@@ -515,7 +537,6 @@
 
 /obj/item/fish/holo/clown
 	name = "holographic clownfish"
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "holo_clownfish"
 	desc = "A holographic representation of a clownfish, or at least how they used to look like five centuries ago."
 	dedicated_in_aquarium_icon_state = "holo_clownfish_small"
@@ -526,25 +547,24 @@
 /obj/item/fish/holo/checkered
 	name = "unrendered holographic fish"
 	desc = "A checkered silhoutte of searing purple and pitch black presents itself before your eyes, like a tear in fabric of reality. It hurts to watch."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "checkered" //it's a meta joke, buddy.
 	dedicated_in_aquarium_icon_state = "checkered_small"
 	sprite_width = 4
+	beauty = FISH_BEAUTY_NULL
 
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"
 	desc = "A holographic representation of... a fish reduced to all bones, except for its head. Isn't it supposed to be dead? Ehr, holo-dead?"
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "half_fish"
 	dedicated_in_aquarium_icon_state = "half_fish_small"
 	sprite_height = 4
 	sprite_width = 10
 	average_size = 50
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/starfish
 	name = "cosmostarfish"
 	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
-	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "starfish"
 	dedicated_in_aquarium_icon_state = "starfish_small"
 	icon_state_dead = "starfish_dead"
@@ -559,9 +579,10 @@
 	safe_air_limits = null
 	min_pressure = 0
 	max_pressure = INFINITY
-	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/consumable/liquidgibs = 5)
+	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/starfish/Initialize(mapload)
 	. = ..()
@@ -575,3 +596,102 @@
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()
 	DO_FLOATING_ANIM(src)
+
+/obj/item/fish/lavaloop
+	name = "lavaloop fish"
+	desc = "Due to its curvature, it can be used as make-shift boomerang."
+	icon_state = "lava_loop"
+	sprite_width = 3
+	sprite_height = 5
+	average_size = 30
+	average_weight = 500
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER //if we can survive hot lava and freezing plasrivers, we can survive anything
+	fish_ai_type = FISH_AI_ZIPPY
+	min_pressure = HAZARD_LOW_PRESSURE
+	required_temperature_min = MIN_AQUARIUM_TEMP+30
+	required_temperature_max = MIN_AQUARIUM_TEMP+35
+	aquarium_vc_color = "#ce7e1d"
+	fish_traits = list(
+		/datum/fish_trait/carnivore,
+		/datum/fish_trait/heavy,
+	)
+	hitsound = null
+	throwforce = 5
+	beauty = FISH_BEAUTY_GOOD
+	///maximum bonus damage when winded up
+	var/maximum_bonus = 25
+
+/obj/item/fish/lavaloop/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BYPASS_RANGED_ARMOR, INNATE_TRAIT)
+	AddComponent(/datum/component/boomerang, throw_range, TRUE)
+	AddComponent(\
+		/datum/component/throwbonus_on_windup,\
+		maximum_bonus = maximum_bonus,\
+		windup_increment_speed = 2,\
+		throw_text = "starts cooking in your hands, it may explode soon!",\
+		pass_maximum_callback = CALLBACK(src, PROC_REF(explode_on_user)),\
+		apply_bonus_callback = CALLBACK(src, PROC_REF(on_fish_land)),\
+		sound_on_success = 'sound/items/weapons/parry.ogg',\
+		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
+	)
+
+/// Blows up in the thrower's hand when overcharged
+/obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	active_arm?.dismember()
+	to_chat(user, span_warning("[src] explodes!"))
+	playsound(src, 'sound/effects/explosion/explosion1.ogg', 40, TRUE)
+	user.flash_act(1, 1)
+	qdel(src)
+
+/// Whether the thrown lavaloop gets the bonus against the target, only big mobs count
+/obj/item/fish/lavaloop/proc/on_fish_land(mob/living/target, bonus_value)
+	if(!istype(target))
+		return FALSE
+	return (target.mob_size >= MOB_SIZE_LARGE)
+
+/obj/item/fish/lavaloop/plasma_river
+	maximum_bonus = 30
+
+/obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)
+	playsound(src, 'sound/effects/explosion/explosion1.ogg', 40, TRUE)
+	user.flash_act(1, 1)
+	user.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
+	qdel(src)
+
+/obj/item/fish/lavaloop/plasma_river/on_fish_land(mob/living/target, bonus_value)
+	if(!istype(target))
+		return FALSE
+	if(target.mob_size < MOB_SIZE_LARGE)
+		return FALSE
+	var/freeze_timer = (bonus_value * 0.1)
+	if(freeze_timer <= 0)
+		return FALSE
+	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_timer SECONDS)
+	return FALSE
+
+/obj/item/fish/zipzap
+	name = "anxious zipzap"
+	desc = "A fish overflowing with crippling anxiety and electric potential. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
+	icon_state = "zipzap"
+	icon_state_dead = "zipzap_dead"
+	sprite_width = 8
+	sprite_height = 8
+	stable_population = 3
+	average_size = 30
+	average_weight = 500
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	favorite_bait = list(/obj/item/stock_parts/power_store/cell/lead)
+	required_temperature_min = MIN_AQUARIUM_TEMP+18
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
+	fish_traits = list(
+		/datum/fish_trait/no_mating,
+		/datum/fish_trait/wary,
+		/datum/fish_trait/anxiety,
+		/datum/fish_trait/electrogenesis,
+	)
+	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
+	electrogenesis_power = 20 MEGA JOULES
+	beauty = FISH_BEAUTY_GOOD
