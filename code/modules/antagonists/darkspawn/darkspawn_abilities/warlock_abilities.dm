@@ -128,8 +128,8 @@
 		if(target.can_block_magic(antimagic_flags, charge_cost = 1))
 			return
 		target.extinguish_mob()
-		if(target.bodytemperature > target.standard_body_temperature)
-			target.bodytemperature = target.standard_body_temperature
+		if(target.bodytemperature > target.get_body_temp_normal())
+			target.bodytemperature = target.get_body_temp_normal()
 	else if(istype(victim, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/glowshroom = victim
 		var/datum/plant_gene/trait/glow/glow_trait = locate() in glowshroom.myseed?.genes
@@ -144,8 +144,8 @@
 	if(isliving(owner))
 		var/mob/living/living_owner = owner
 		living_owner.extinguish_mob()
-		if(living_owner.bodytemperature > living_owner.standard_body_temperature)
-			living_owner.bodytemperature = living_owner.standard_body_temperature
+		if(living_owner.bodytemperature > living_owner.get_body_temp_normal())
+			living_owner.bodytemperature = living_owner.get_body_temp_normal()
 	SEND_SIGNAL(bopper, COMSIG_LIGHT_EATER_EAT, victim, bopper, TRUE)
 
 /obj/item/darkspawn_extinguish

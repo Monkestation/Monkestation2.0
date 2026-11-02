@@ -8,6 +8,7 @@
 	bodypart_traits = list(TRAIT_ANTENNAE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 /obj/item/bodypart/chest/moth
 	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
@@ -19,6 +20,7 @@
 	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 /obj/item/bodypart/arm/left/moth
 	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
@@ -31,6 +33,7 @@
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 /obj/item/bodypart/arm/right/moth
 	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
@@ -43,6 +46,7 @@
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 /obj/item/bodypart/leg/left/moth
 	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
@@ -51,6 +55,7 @@
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 /obj/item/bodypart/leg/right/moth
 	icon_greyscale = 'icons/mob/human/species/moth/bodyparts_greyscale.dmi'
@@ -59,3 +64,4 @@
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')

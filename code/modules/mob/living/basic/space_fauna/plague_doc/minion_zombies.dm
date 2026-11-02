@@ -19,7 +19,7 @@
 	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	istate = ISTATE_HARM|ISTATE_BLOCKING
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	status_flags = CANPUSH
 	ai_controller = /datum/ai_controller/basic_controller/minion_zombies
 	icon_gib = "syndicate_gib"
