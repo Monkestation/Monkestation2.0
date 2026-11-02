@@ -256,7 +256,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	user.set_combat_mode(TRUE)
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	slapperoni(user, iteration = 1)
-	return MANUAL_SUICIDE
+	REMOVE_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
+	if (user.stat == DEAD)
+		return MANUAL_SUICIDE
+	user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but fails to go through with it!"))
+	return SHAME
 
 /obj/item/fish/proc/slapperoni(mob/living/user, iteration)
 	stoplag(0.1 SECONDS)
