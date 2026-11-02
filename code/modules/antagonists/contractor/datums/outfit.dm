@@ -38,7 +38,7 @@
 	l_hand = /obj/item/melee/baton/telescopic/contractor_baton
 
 /datum/outfit/contractor_preview/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/melee/baton/telescopic/contractor_baton/baton = locate() in H.held_items
+	var/obj/item/melee/baton/telescopic/contractor_baton/baton = H.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(baton.flags_1 & INITIALIZED_1)
 		baton.attack_self()
 	else

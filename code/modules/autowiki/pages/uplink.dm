@@ -55,7 +55,6 @@
 
 			if(purchasable_keys)
 				purchasable_by = purchasable_keys.Join(", ")
-			else purchasable_by = "None"
 
 			var/obj/object = entry.item
 			object = new object(loc)
@@ -66,7 +65,7 @@
 				"name" = escape_value(entry.name),
 				"desc" = escape_value(entry.desc),
 				"cost" = entry.cost_override_string ? entry.cost_override_string : "[entry.cost] TC",
-				"purchasable_by" = escape_value(purchasable_by),
+				"purchasable_by" = purchasable_by ? escape_value(purchasable_by) : "None",
 				"notes" = escape_value("[entry.limited_stock != -1 ? "Limited stock of [entry.limited_stock]. " : ""][entry.illegal_tech ? "" : "Not eligible for illegal technology. "][entry.lock_other_purchases ? "Locks all item purchases<br>" : ""]")
 			)) + "|-"
 

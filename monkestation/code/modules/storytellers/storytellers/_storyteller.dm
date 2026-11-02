@@ -126,6 +126,7 @@
 /datum/storyteller/proc/find_and_buy_event_from_track(track)
 	. = FALSE
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
+	var/datum/storyteller_track/track_datum = mode.event_tracks[track]
 	var/datum/round_event_control/picked_event
 	if(mode.forced_next_events[track]) //Forced event by admin
 		/// Dont check any prerequisites, it has been forced by an admin
@@ -139,7 +140,6 @@
 	if(mode.active_players < pop_required)
 		message_admins("Storyteller failed to pick an event for track of [track] due to insufficient population. (required: [pop_required] active pop for [track]. Current: [mode.active_players])")
 		log_storyteller("Storyteller failed to pick an event for track of [track] due to insufficient population. (required: [pop_required] active pop for [track]. Current: [mode.active_players])")
-		var/datum/storyteller_track/track_datum = mode.event_tracks[track]
 		track_datum.points -= track_datum.points - (TRACK_FAIL_POINT_PENALTY_MULTIPLIER * track_datum.points)
 		return
 
@@ -156,10 +156,13 @@
 		if((is_roundstart ? (event.roundstart && SSgamemode.can_run_roundstart) : !event.roundstart) && event.can_spawn_event(players_amt) && calculate_single_weight(event) > 0)
 			valid_events[event] = round(event.calculated_weight * 10) //multiply weight by 10 to get first decimal value
 
+	// can_spawn_event can sleep on a cold ban cache, and we get ticked every second, so a later tick might've already spent these points
+	if(track_datum.points < track_datum.threshold)
+		return
+
 	//If we didn't get any events, remove the points inform admins and dont do anything
 	if(!length(valid_events))
 		message_admins("Storyteller failed to pick an event for track of [track].")
-		var/datum/storyteller_track/track_datum = mode.event_tracks[track]
 		track_datum.points -= track_datum.points - (TRACK_FAIL_POINT_PENALTY_MULTIPLIER * track_datum.points)
 		return
 

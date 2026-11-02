@@ -13,7 +13,7 @@
 
 /obj/item/rabbit_locator/Initialize(mapload, datum/antagonist/monsterhunter/owner)
 	. = ..()
-	sound_channel = SSsounds.reserve_sound_channel(src)
+	sound_channel = SSsounds.reserve_sound_channel()
 	if(!QDELETED(owner))
 		hunter = owner
 		hunter.locator = src

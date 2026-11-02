@@ -239,6 +239,37 @@
 	location.hotspot_expose(700, 25 * seconds_between_ticks, TRUE)
 
 /**
+ * Used to deal damage to humans and count their protection.
+ *
+ * Arguments:
+ * - seconds_per_tick
+ * - times_fired
+ * - no_protection: When set to TRUE, fire will ignore any possible fire protection
+ *
+ */
+
+/datum/status_effect/fire_handler/fire_stacks/proc/harm_human(seconds_per_tick, times_fired, no_protection = FALSE)
+	var/mob/living/carbon/human/victim = owner
+	var/thermal_protection = victim.get_thermal_protection()
+
+	if(!no_protection)
+		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			victim.adjust_bodytemperature(5.5 * seconds_per_tick)
+			return
+
+	var/amount_to_heat = (BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick
+	if(owner.bodytemperature > BODYTEMP_FIRE_TEMP_SOFTCAP)
+		// Apply dimishing returns upon temp beyond the soft cap
+		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / owner.bodytemperature)
+
+	victim.adjust_bodytemperature(amount_to_heat)
+	if (!(HAS_TRAIT(victim, TRAIT_RESISTHEAT)))
+		victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
+		victim.add_mob_memory(/datum/memory/was_burning)
+
+/**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
  *
  * Arguments:
@@ -320,16 +351,45 @@
 	enemy_turf = /turf/open/lava
 	/// particles applied
 	var/particles/applied_particles = /particles/droplets
+	///If the mob has the TRAIT_SLIPPERY_WHEN_WET trait, the mob gets this component while it's wet
+	var/datum/component/slippery/slipperiness
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
 	. = ..()
 	var/obj/effect/abstract/shared_particle_holder/particles = owner.add_shared_particles(applied_particles, get_particle_key())
 	if(particles)
 		adjust_particles(particles)
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_WET_FOR_LONGER), SIGNAL_REMOVETRAIT(TRAIT_WET_FOR_LONGER)), PROC_REF(update_wet_stack_modifier))
+	update_wet_stack_modifier()
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLIPPERY_WHEN_WET), PROC_REF(become_slippery))
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLIPPERY_WHEN_WET), PROC_REF(no_longer_slippery))
+	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
+		become_slippery()
+	ADD_TRAIT(owner, TRAIT_IS_WET, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
 	owner.remove_shared_particles(get_particle_key())
+	REMOVE_TRAIT(owner, TRAIT_IS_WET, TRAIT_STATUS_EFFECT(id))
+	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
+		no_longer_slippery()
+
+///Wetness decays slower for mobs with TRAIT_WET_FOR_LONGER
+/datum/status_effect/fire_handler/wet_stacks/proc/update_wet_stack_modifier()
+	SIGNAL_HANDLER
+	stack_modifier = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? initial(stack_modifier) * 3.5 : initial(stack_modifier)
+
+///Makes the wet mob slippery while lying down, and immune to slipping on water itself
+/datum/status_effect/fire_handler/wet_stacks/proc/become_slippery()
+	SIGNAL_HANDLER
+	slipperiness = owner.AddComponent(/datum/component/slippery, 5 SECONDS, lube_flags = SLIPPERY_WHEN_LYING_DOWN)
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
+
+///Removes the slipperiness given by become_slippery()
+/datum/status_effect/fire_handler/wet_stacks/proc/no_longer_slippery()
+	SIGNAL_HANDLER
+	QDEL_NULL(slipperiness)
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/proc/get_particle_key()
 	return id
@@ -338,7 +398,8 @@
 	if(!check_enemy())
 		return TRUE
 
-	adjust_stacks(-0.5 * seconds_between_ticks)
+	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.035 : -0.5
+	adjust_stacks(decay * seconds_between_ticks)
 
 	if(stacks <= 0)
 		qdel(src)

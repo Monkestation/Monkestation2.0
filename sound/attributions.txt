@@ -143,6 +143,9 @@ nightmare_poof.ogg and nightmare_reappear.ogg are comprised of breath_01.wav by 
 https://freesound.org/people/Qat/sounds/108332/
 https://freesound.org/people/Nightflame/sounds/368615/
 
+reel1.ogg, reel2.ogg, reel3.ogg, reel4.ogg and reel5.ogg adapted from pixabay. Free for use under the Pixabay Content License (https://pixabay.com/service/license-summary/):
+https://pixabay.com/sound-effects/reel-78063/
+
 throw.ogg, throwhard.ogg and throwsoft.ogg (Royalty-Free and Copyright-Free) are adapted from Jam FX, SmartSound FX and Epic Stock Media in :
 https://uppbeat.io/sfx/whoosh-swift-cut/7727/23617
 https://uppbeat.io/sfx/whoosh-air-punch/114/1168
@@ -165,3 +168,18 @@ kero.ogg is taken from Fulpstation
 https://github.com/fulpstation/fulpstation/pull/1109
 
 sound/vehicles/mecha/tank_treads.ogg is made by 77Pacer -- https://freesound.org/s/425271/ -- License: Creative Commons 0
+
+sound/music/boombox/industrial_crush.ogg by ArcaneMusic, License: Creative Commons 0, made in FL studio.
+    SS13 original, accept no substitutes
+
+sound/music/boombox/bainmack-rock.ogg by Bainmack -- https://freesound.org/people/bainmack/sounds/621165/ -- License: Creative Commons 0
+    Slight cleanup by ArcaneMusic
+
+sound/music/boombox/groovepad-hiphop.ogg by Cloud10 -- https://freesound.org/people/Cloud-10/sounds/536250/ -- License: Creative Commons 0
+    Volume adjustment and cleanup for looping by ArcaneMusic
+
+sound/music/boombox/frankyboomer-jazz.ogg by Cloud10 -- https://freesound.org/people/FrankyBoomer/sounds/261100/ -- License: Creative Commons 0
+    Volume adjustment and cleanup for looping by ArcaneMusic
+
+sound/music/boombox/bubblegum-pop.ogg by Seth_makes_sounds -- https://freesound.org/people/Seth_Makes_Sounds/sounds/686610/ -- License: Creative Commons 0
+    Volume tweak and trimming by ArcaneMusic

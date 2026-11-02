@@ -1,0 +1,363 @@
+$bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+.Slimepedia {
+	// only the NTOS app needs this - the scanner window already has the theme
+	&__root {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		height: 100%;
+		padding: 1rem;
+		border-radius: 1.5rem;
+		background: var(--slime-housing);
+		color: var(--slime-ink);
+		// PDA themes swap these out, and the slime look is built around the default
+		font-family: Verdana, Geneva, sans-serif;
+		font-size: 12px;
+		line-height: 1.4;
+		font-variant-numeric: tabular-nums;
+	}
+
+	&__layout {
+		flex: 1;
+		min-height: 0;
+		display: grid;
+		grid-template-columns: minmax(16rem, 2fr) 3fr;
+		grid-template-rows: minmax(0, 1fr);
+		gap: 1rem;
+	}
+
+	&__index,
+	&__detail {
+		min-height: 0;
+	}
+
+	&__index {
+		padding: 0.667rem;
+	}
+
+	&__detail {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		padding: 1.25rem;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+		gap: 0.5rem;
+	}
+
+	&__cell {
+		display: grid;
+		justify-items: center;
+		gap: 0.333rem;
+		padding: 0.333rem 0.25rem 0.5rem;
+		border: 0;
+		border-radius: 1.667rem;
+		background: var(--slime-track);
+		color: inherit;
+		font: inherit;
+		font-weight: bold;
+		line-height: 1.1;
+		text-align: center;
+		cursor: pointer;
+		transition:
+			transform 150ms $bounce,
+			background-color 150ms ease-out;
+
+		&:hover {
+			transform: scale(1.04);
+		}
+
+		&:active {
+			transform: scale(0.96);
+		}
+
+		&[aria-pressed='true'] {
+			background: var(--slime-cyan);
+			box-shadow:
+				inset 0 2px 0 var(--slime-highlight),
+				0 0 0 3px var(--slime-ink);
+		}
+	}
+
+	&__well {
+		display: grid;
+		place-items: center;
+		flex: none;
+		padding: 0.25rem;
+		border-radius: 1.333rem;
+		background: var(--slime-housing);
+		box-shadow: inset 0 3px 0 oklch(0 0 0 / 0.28);
+	}
+
+	&__sprite {
+		display: inline-block;
+		flex: none;
+		image-rendering: pixelated;
+
+		> span {
+			display: block;
+			transform-origin: 0 0;
+		}
+
+		&--x1 {
+			width: 32px;
+			height: 32px;
+		}
+
+		&--x2 {
+			width: 64px;
+			height: 64px;
+
+			> span {
+				transform: scale(2);
+			}
+		}
+
+		&--x3 {
+			width: 96px;
+			height: 96px;
+
+			> span {
+				transform: scale(3);
+			}
+		}
+
+		// matches SLIME_TRANSPARENCY_ALPHA
+		&--transparent {
+			opacity: 0.7;
+		}
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	&__portrait {
+		display: grid;
+		place-items: center;
+		flex: 0 0 auto;
+		width: 112px;
+		height: 112px;
+		border: 4px solid var(--slime-cyan);
+		border-radius: 50%;
+		background: var(--slime-housing);
+		box-shadow: inset 0 3px 4px oklch(0 0 0 / 0.4);
+	}
+
+	&__title {
+		display: grid;
+		justify-items: start;
+		gap: 0.5rem;
+		min-width: 0;
+		text-wrap: pretty;
+	}
+
+	&__section {
+		display: grid;
+		gap: 0.5rem;
+
+		> .SlimeRancher__heading {
+			margin-bottom: 0.167rem;
+			font-size: 0.917rem;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+		}
+	}
+
+	&__muted {
+		color: oklch(0.46 0.03 245);
+		font-weight: bold;
+	}
+
+	&__chips {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.333rem;
+	}
+
+	&__link,
+	&__mutation-heading,
+	&__family,
+	&__name-link {
+		border: 0;
+		color: inherit;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+	}
+
+	&__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 2.5rem;
+		padding: 0.25rem 0.833rem;
+		border-radius: 999px;
+		background: var(--slime-track);
+		font-weight: bold;
+		transition:
+			transform 150ms $bounce,
+			background-color 150ms ease-out;
+
+		&:has(.Slimepedia__sprite) {
+			padding-left: 0.25rem;
+		}
+
+		&:hover {
+			background: oklch(0.91 0.05 205);
+		}
+
+		&:active {
+			transform: scale(0.96);
+		}
+	}
+
+	&__mutation {
+		display: grid;
+		gap: 0.5rem;
+		padding: 0.5rem;
+		border-radius: 1.667rem;
+		background: var(--slime-track);
+		box-shadow: inset 0 2px 3px var(--slime-shadow);
+	}
+
+	&__mutation-heading {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+		padding: 0.25rem 1rem 0.25rem 0.25rem;
+		border-radius: 999px;
+		background: var(--slime-cream);
+		transition:
+			transform 150ms $bounce,
+			background-color 150ms ease-out;
+
+		> .Icon:last-child {
+			margin-left: auto;
+			color: oklch(0.46 0.03 245);
+		}
+
+		&:hover {
+			background: oklch(0.91 0.05 205);
+			transform: translateX(3px);
+		}
+	}
+
+	&__requirements {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+		gap: 0.5rem;
+	}
+
+	&__extract {
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+	}
+
+	&__reaction {
+		display: grid;
+		grid-template-columns: minmax(6rem, auto) minmax(0, 1fr);
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: 1.333rem;
+		background: var(--slime-track);
+		text-wrap: pretty;
+	}
+
+	&__list {
+		display: grid;
+		gap: 0.25rem;
+	}
+
+	&__family {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		width: 100%;
+		padding: 0.25rem 1rem 0.25rem 0.25rem;
+		border-radius: 999px;
+		background: transparent;
+		transition:
+			transform 150ms $bounce,
+			background-color 150ms ease-out;
+
+		> .Slimepedia__well {
+			border-radius: 50%;
+		}
+
+		> span:last-child {
+			display: grid;
+		}
+
+		small {
+			color: oklch(0.46 0.03 245);
+			font-size: 0.917rem;
+			font-weight: bold;
+		}
+
+		&:hover {
+			background: var(--slime-track);
+		}
+
+		&[aria-pressed='true'] {
+			background: var(--slime-cyan);
+			box-shadow:
+				inset 0 2px 0 var(--slime-highlight),
+				0 3px 0 oklch(0.58 0.1 205);
+			transform: scale(1.02);
+
+			small {
+				color: var(--slime-ink);
+			}
+		}
+	}
+
+	&__crossbreed {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.5rem 1rem 0.5rem 0.5rem;
+		border-radius: 1.667rem;
+		background: var(--slime-track);
+
+		p {
+			text-wrap: pretty;
+		}
+	}
+
+	&__name-link {
+		padding: 0;
+		background: none;
+
+		&:hover span {
+			text-decoration: underline;
+		}
+	}
+
+	@media (max-width: 620px) {
+		&__layout {
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-rows: minmax(10rem, 1fr) 2fr;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		&__cell,
+		&__link,
+		&__mutation-heading,
+		&__family {
+			transition: none;
+		}
+	}
+}

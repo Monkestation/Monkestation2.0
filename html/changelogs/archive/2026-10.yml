@@ -325,3 +325,292 @@
 2026-10-25:
   Absolucy:
   - bugfix: Relogging no longer stacks a new combat mode button your hud each time
+2026-10-27:
+  Absolucy:
+  - bugfix: Fixed big manipulators trying to interact with underfloor pipes
+  - rscadd: Added a "Skip Non-Dense" option to big manipulator interactions.
+  Ben10Omintrix, tattle:
+  - bugfix: Basic mobs that couldn't find anything to attack no longer freeze up forever,
+      duct spiders spin webs again.
+  - bugfix: Basic mobs play sounds on their audible emotes, with new sounds for insects,
+      mice, crabs, chickens, chicks and ponies.
+  - bugfix: Chickens and chicks cluck and cheep on their own now.
+  Fikou:
+  - bugfix: The dark matt-eor from emagged meteor satellites actually flies at the
+      station now instead of sitting there and missing.
+  - bugfix: Fixed station level checks giving random results for things in nullspace.
+2026-10-28:
+  AitorLogedo:
+  - rscadd: Rats raised by the rat king now have their own names
+  Iamgoofball, Ben10Omintrix:
+  - bugfix: Carps migrating through the station no longer idle so they don't get stuck
+      after spawning until someone walks by.
+  - bugfix: mobs in the same faction will no longer be at odds against one another
+  - bugfix: mobs will no longer be starting and stopping when chasing targets
+  Melbert:
+  - rscadd: Adds Carptongue language, spoken by space carps.
+  - rscadd: Space dragons can speak Draconic and Carptongue.
+  - rscadd: Ash drakes and ice whelps now speak Draconic.
+  - rscadd: Fire sharks now speak Carptongue.
+  - rscadd: Sleeping carp grants you Carptongue.
+  - qol: Medical stacks (sutures, meshes, ointment...) now have two modes. Left click
+      heals in auto mode, which switches between damaged bodyparts by itself, prioritizing
+      your targeted limb. Right click heals in manual mode, which works like before
+      and is 10% faster.
+  - qol: Suturing cuts and meshing burns is now part of the normal heal, no more separate
+      interaction for the wound.
+  - qol: Bleeding wounds go away the moment they're fully healed.
+  - bugfix: Fixed a runtime when cauterizing a cut with a laser gun closed it.
+  Mothblocks, hry-gh, JohnFulpWillard, FalloutFalcon:
+  - bugfix: Typepath suggestions in the command bar are now filtered on the frontend.
+  - bugfix: In the command bar, exact matches now enter the verb.
+  - bugfix: Quotes aren't required around arguments in the command bar anymore, letting
+      you use quotes yourself in messages.
+  - bugfix: Removes a ton of pick up verbs from the command bar.
+  - qol: Added a setting to disable showing command bar suggestions as you type (unless
+      you press space).
+  - qol: The command bar now starts on Say instead of Command mode.
+  - qol: Pressing backspace while unfocused now clears your command bar.
+  - qol: The command bar's last used mode is now kept between rounds.
+  - admin: Asay is now properly sanitized.
+  - bugfix: When typing in the command bar, thinking/typing indicators will be reflected
+      in game again.
+  - bugfix: The command bar no longer goes into Say on login when you had Command
+      saved.
+  SmArtKar:
+  - rscadd: 'Changed how colorful reagent and crayon powder work: douse your victims
+      to color their clothing, bodyparts and even internal organs!'
+  - rscadd: Showers wash colorful reagent off your skin
+  - bugfix: You can color robotic limbs with left click (again)
+  - bugfix: Losing hulk after becoming a carp no longer turns you black
+  - bugfix: Severed limbs with wounds no longer look like two limbs when they land
+      sideways
+2026-10-29:
+  13spacemen:
+  - refactor: Bodytypes to do with character sprite shape now have their own bodyshape
+      var, all sprite handling is done with bodyshape and not bodytype anymore
+  Absolucy:
+  - bugfix: fixed AI advanced tracking probably lagging the shit out of the server.
+  - bugfix: Hopefully reduced FPS lag when there's a lot of people of varying heights
+      wearing clothes and such.
+  - bugfix: big floods cause way less lag
+  - bugfix: burning liquid no longer spams smoke, and burnt-out fires actually go
+      out
+  - rscadd: Storytellers now support latejoin antags!
+  - bugfix: Fixed the roundstart roleset pick ignoring the storyteller's tag multipliers.
+  - bugfix: Fixed scheduled events eating points if they failed their last-second
+      recheck.
+  - bugfix: Fixed scheduled events possibly firing twice, or track possibly buying
+      two events, if a ban check slept at the wrong time.
+  - bugfix: Antag events that get nobody now refund their points and don't use up
+      an occurrence
+  - bugfix: Xenos/paradox clones with nowhere to spawn get refunded instead of hanging
+      around forever
+  - balance: Antag events that only get some of their antags refund the rest
+  - rscadd: Xenobiology is now literally slime rancher.
+  - rscadd: Slime vacuum packs now have built-in extract storage, upgradable with
+      a matter bin.
+  - rscadd: Vacuum packs hold extracts now. shoot them into the fridge, dump them
+      in a bag, or right-click to grab one.
+  - rscadd: Slime pens now actually look decent and have more space.
+  - rscadd: Crossbreeds are now made with an "extract compressor", which consumes
+      both biomass and slime extracts.
+  - rscadd: Slime scanners are now used to remotely scan a slime and stay up to date
+      on that specific slime's stats and such.
+  - rscadd: Instead of mulching slimes for extracts, slimes now produce extracts when
+      fed enough.
+  - rscadd: Slimes won't split on their own - instead, you need to feed them "breeding
+      pellets" from the biomass recycler, or if you are the slime's friend, order
+      them to do so, and they will split or mutate whenever they can instead. This
+      does not apply to "wild" slimes that haven't been in a pen recently, and player
+      slimes can still manually split whenever.
+  - rscadd: Catslimes now harmlessly boop people nearby :3
+  - rscadd: Cleaner slimes go wander off to look for messes when there's nothing nearby,
+      and sometimes go find a random player
+  - rscadd: Cleaner slimes (and slimes you've sicced on something) can use stairs
+      now
+  - bugfix: Mobs no longer freeze up after changing floors until someone walks up
+      to them
+  - admin: select equipment's quirk and holy/unholy options work again, and now apply
+      to the person being dressed
+  ArcaneMusic, CabinetOnFire, Kapu, grungussuss, Melbert, vinylspiders, EnnyDaiz:
+  - rscadd: Cargo can now buy a Nanomusic boombox! Comes with a demo tape, more tapes
+      can be found as goodies, on the black market, in the game vendor and in the
+      Pizza Party domain.
+  - rscadd: The boombox can also play approved cassettes.
+  - sound: Looping sounds like the supermatter, grav gen and kitchen machines now
+      update as you move, and you can hear long sounds even if you arrive halfway
+      through.
+  - sound: Sound falloff is softer.
+  - sound: The supermatter has start and stop sounds.
+  - sound: Ambience waits for the last sound to finish before playing a new one.
+  - sound: Sounds are stereo again and no longer get a forced echo, so positional
+      audio sounds a lot more 3D.
+  - sound: Most of the station no longer has hangar sized reverb.
+  - bugfix: Looping sounds and boombox tapes follow whoever is carrying them, and
+      cassettes no longer restart when you change z-levels.
+  - bugfix: Cassettes playing on a shuttle no longer cut out for the passengers when
+      it takes off.
+  - bugfix: Looping sounds no longer steal the voice, ringtone, siren, admin sound
+      and shuttle channels.
+  - bugfix: Ear damage makes things quieter instead of making you deaf past one tile.
+  - bugfix: Elevator music and other direct loops respect their volume and your volume
+      sliders.
+  - bugfix: Changing a volume slider updates sounds that follow you right away.
+  - bugfix: The alt siren starts on its start sound.
+  - bugfix: Randomly pitched sounds no longer lean low on 48 kHz files.
+  ? LettuceWarlock, EssentialTomato, Y0SH1_M4S73R, jlsnow301, Kylerace, ArcaneMusic,
+    Paxilmaniac, Notamaniac, timothymtorres, Gboster-0, MrMelbert, SmArtKar, Cruix,
+    Ghommie
+  : - rscadd: Shuttle blueprints, the tool used to construct and modify custom shuttles.
+        Print a set at a science, engineering, or cargo techfab after researching
+        Shuttle Engineering, or craft a crude set from the crafting menu.
+    - rscadd: Shuttle blueprint database upgrade for engineering cyborgs, printable
+        from the Exosuit Fabricator after researching Shuttle Engineering. A version
+        of shuttle blueprints designed for use by cyborgs.
+    - rscadd: Shuttle frame rods, usable to construct custom shuttles. Hand-craft
+        by using 5 rods on 1 titanium sheet, or by printing them at a science, engineering,
+        or cargo techfab after researching Shuttle Engineering.
+    - rscadd: Custom shuttle flight control and navigation boards, printable from
+        a science, engineering, or cargo techfab after researching Shuttle Engineering.
+    - rscadd: Shuttle engine boards can be printed from a science, engineering, or
+        cargo techfab after researching shuttle engineering.
+    - rscadd: The shuttle engine supply pack is no longer locked behind the purchase
+        of the Build Your Own Shuttle kit.
+    - rscadd: Shuttle Construction Starter Kit goodie pack, containing a set of shuttle
+        blueprints, flight control and navigation console boards, and two engine boards,
+        can be purchased from cargo for 1200 credits. Requires aux base access to
+        purchase.
+    - refactor: Shuttles now keep track of what areas are underneath each of their
+        individual turfs, so that the areas left behind on movement are consistent
+        with what they were beforehand.
+    - refactor: Shuttle ceilings now place themselves down as baseturfs, instead of
+        only appearing if the turf above is open space.
+    - rscadd: The station blueprints can be used to toggle whether custom shuttles
+        can be built/expanded/docked within station areas.
+    - qol: Custom areas do not have to be completely contained within shuttle frames,
+        as long as the APC isn't attached to the frame.
+    - rscadd: Custom shuttles with functioning engines will fly off into the sunset
+        when the emergency shuttle leaves.
+    - rscadd: Custom shuttle navigation computers can view space levels adjacent to
+        the one the shuttle is currently docked at.
+    - rscadd: Shuttle navigation computers now show the location of airlocks, turrets,
+        and the shuttle control consoles on the ship outline while placing a custom
+        landing location.
+    - qol: Gigabeacons no longer need to be constructed like standard machines, instead
+        being printed as items that can be deployed quickly inhand without tools.
+    - image: Navigation gigabeacons now have their own unique sprites, inspired by
+        maritime EPIRB devices. If you find a yellow box with an antenna on it, you
+        probably found a nav beacon!
+    - qol: Explorers now start with a gigabeacon in their loadout.
+    - qol: Shuttle engines now tell you how to install them in their screentips and
+        their examine text.
+    - image: Shuttle and heat resistant (aka lavaproof) rods now have unique sprites.
+    - bugfix: Replaced floor tiles on shuttles no longer get left behind when the
+        shuttle moves.
+    - bugfix: Walls and floors made of custom materials keep their material when the
+        shuttle they're on moves.
+    - bugfix: The "Move Up" and "Move Down" verbs properly respect multi-z connectivity
+        when operating a remote camera.
+    - bugfix: Shuttle flight control computers will show you when the linked shuttle
+        cannot move.
+    - bugfix: Holodeck is slightly less likely to explode the server
+    - bugfix: Fix shuttle engines built from a circuit board having it's anchored
+        state not matching the correct engine_state. This would consider the engine
+        to be anchored already when it was not and allow someone to weld it despite
+        it being able to be dragged and moved around.
+    - bugfix: Shuttle engines no longer provide negative power to your shuttles if
+        you unwrench them.
+  Runian:
+  - rscadd: Engineering cyborgs can pick up conveyor belts and switches.
+  - rscadd: Using a screwdriver on an unattached sign will attach to it to a wall
+      you're facing.
+  SmArtKar:
+  - bugfix: Hulk and infusions no longer color or texture robotic limbs.
+  - bugfix: Limbs attached while you have a carp infusion or hulk now match the rest
+      of your body.
+  Tractor-Maam:
+  - spellcheck: Integration Cog installs now say "apc" in their balloon alert instead
+      of "aPC".
+  - bugfix: 'Cyborgs will now link to AIs again.
+
+      fix; AI Uploads now work again.'
+  ashallaryn:
+  - image: added hair_bedhead_glorppy sprites
+  - image: added hair_bedhead_nestia sprites
+  - image: updated hair sprite for hair_floorlength_bedhead "Floorlength Bedhead"
+  - image: updated hair sprite for hair_longer_bedhead "Longer Bedhead"
+  - image: updated hair sprite for hair_long_bedhead "Long Bedhead"
+  - image: updated hair sprite for hair_longstraightponytail "Ponytail (Long)"
+  - image: updated hair sprite for hair_highponytail "Ponytail (High)"
+  tontyGH:
+  - refactor: A lot of code relating to hands was altered for technical reasons
+  - bugfix: Items that could block did not correctly block push/shuffle attempts
+  - bugfix: The swap hands tutorial did not account for 3+ hands
+  - bugfix: High-tenning a mob did not account for more than 2 hands (you can high-twenty
+      now!)
+2026-10-30:
+  Absolucy:
+  - bugfix: Blood splatters from flying drops land on the wall they hit instead of
+      mid-room.
+  - bugfix: Flying blood drops carry diseases to their splatter.
+  - bugfix: Items and blood drops flung in zero gravity stop instead of drifting forever.
+  AitorLogedo:
+  - bugfix: Pushing up a kitsune mask or bandana while wearing it updates your sprite
+      again.
+  - bugfix: Alt-clicking the kitsune mask puts it above your hair like using it in
+      hand does.
+  - bugfix: Recoloring, washing or spraypainting a pushed up mask you're wearing updates
+      your sprite.
+  AitorLogedo, Jacquerel:
+  - balance: The Scroll of the Awakened Dragon can only be bought when there are at
+      least 30 living players.
+  - qol: Uplink items that need more crew show up locked with how many people they
+      need.
+  Fikou, Melbert, SmArtKar:
+  - refactor: Visors, masks and helmets all toggle the same way now, report anything
+      that doesn't change sprite or hide things right when you push it up or down
+  - bugfix: Bandanas no longer turn invisible when you push them up into a hat.
+  - bugfix: You can no longer adjust masks that don't have a pushed up sprite (surgery
+      mask, sec bandana and a few others) to turn them invisible.
+  Gboster-0:
+  - rscadd: Mice can now be used as wirecutters.
+  Ghommie, 00-Steven, SmArtKar, vinylspiders:
+  - rscadd: Fish infusion. Infusing fish in the DNA infuser gives you gills, a fish
+      stomach and a fish tail, plus a fish liver or semi aquatic lungs depending on
+      the fish traits.
+  - rscadd: 'With 3 fish organs you get a bonus: while wet you can''t slip, you''re
+      slippery when lying down, crawl faster, resist grabs and dry out slower, but
+      being dry makes you weaker.'
+  - rscadd: Water adapted fish people get healed a bit by showers and drinking water.
+  - rscadd: Squids, an ink producing fish you can catch in the ocean. Infusing one
+      gives you a tongue that spits ink to blind people.
+  - rscadd: Fish tails can be filleted with a knife, and gibbing someone with a fish
+      tail gives fish tail fillets.
+  - rscadd: Fish livers make tetrodotoxin heal you instead of poisoning you.
+  - qol: The DNA infuser now accepts fish.
+  - balance: Fishing rods hit fish infused people a bit harder.
+  - image: Fish tail sprites and fish organ sprites.
+  - sound: Fish flopping sounds when fish people crawl.
+  - code_imp: Reagents have a purge multiplier for how fast other reagents flush them
+      out.
+  LettuceGuardian:
+  - rscadd: Autopsy scanners spawn inside surgery bags.
+  - rscadd: Deforest satchel can store ambubags.
+  SirNightKnight:
+  - balance: chamaeleon gas masks are pepperproof.
+  SmArtKar:
+  - bugfix: Fixed explorer masks going invisible when you put on a goliath hood
+  - qol: 'Improved the strip menu: items you can see but can''t reach show up semi
+      transparent instead of hidden, and icons are no longer blurry'
+  - rscadd: Fish infusion now gives you scales, and tail color if you get enough fish
+      organs
+  notghosti:
+  - balance: War op declaration is swapped from world time to station time.
+  tontyGH:
+  - qol: Added multiple new keybinds for hand control
+  - qol: Hand-related keybinds were moved to DEXTROUS category
+  - bugfix: Cycling hands would get stuck on offhand items instead of skipping over
+      them
+  - bugfix: Tentacle's aggro grab had weird behaviour that made it ignore a lot of
+      systems

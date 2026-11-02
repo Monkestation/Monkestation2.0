@@ -27,13 +27,13 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	if(ishuman(parent))
 		var/mob/living/carbon/human/H = parent
-		if(H.dna.species.bodytype & BODYTYPE_SNOUTED)
+		if(H.bodyshape & BODYSHAPE_SNOUTED)
 			creamface.icon_state = "creampie_lizard"
-		else if(H.dna.species.bodytype & BODYTYPE_MONKEY)
+		else if(H.bodyshape & BODYSHAPE_MONKEY)
 			creamface.icon_state = "creampie_monkey"
 		else
 			creamface.icon_state = "creampie_human"
-		H.apply_height_filters(creamface)
+		H.apply_height(creamface, ENTIRE_BODY)
 		H.add_mood_event("creampie", /datum/mood_event/creampie)
 	else if(iscorgi(parent))
 		creamface.icon_state = "creampie_corgi"

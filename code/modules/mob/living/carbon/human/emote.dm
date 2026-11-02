@@ -44,7 +44,8 @@
 	if(!ishuman(user))
 		return
 	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "glasses")
-	flick_overlay_global(user.apply_height_offsets(emote_animation, UPPER_BODY), GLOB.clients, 1.6 SECONDS)
+	user.apply_height(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 1.6 SECONDS)
 
 /datum/emote/living/carbon/human/grumble
 	key = "grumble"

@@ -73,7 +73,7 @@ monke end */
 		span_notice("\The [tool] pings as it stops pumping."),
 	)
 
-	if(locate(/obj/item/healthanalyzer) in user.held_items)
+	if(user.is_holding_item_of_type(/obj/item/healthanalyzer))
 		chemscan(user, target)
 
 	return ..()

@@ -56,3 +56,6 @@
 	volume = 100
 	extra_range = 30
 	sound_channel = CHANNEL_WEATHER
+	pressure_affected = FALSE
+	use_sound_tokens = TRUE
+	never_native_repeat = TRUE

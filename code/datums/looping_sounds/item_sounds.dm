@@ -2,17 +2,20 @@
 	mid_sounds = list('sound/effects/clock_tick.ogg' = 1)
 	mid_length = 3.5
 	volume = 25
+	use_sound_tokens = TRUE
 
 
 /datum/looping_sound/reverse_bear_trap_beep
 	mid_sounds = list('sound/machines/beep/beep.ogg' = 1)
 	mid_length = 60
 	volume = 10
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/siren
 	mid_sounds = list('sound/items/weeoo1.ogg' = 1)
 	mid_length = 15
 	volume = 20
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/siren/alt
 	mid_sounds = list('sound/items/weewoo2_start.ogg', 'sound/items/weewoo2_end.ogg')
@@ -38,6 +41,7 @@
 	falloff_exponent = 10
 	falloff_distance = 1
 	volume = 5
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/chainsaw
 	start_sound = list('sound/items/weapons/chainsaw_start.ogg' = 1)
@@ -48,3 +52,4 @@
 	end_volume = 35
 	volume = 40
 	ignore_walls = FALSE
+	use_sound_tokens = TRUE

@@ -7,6 +7,7 @@
 	gender = FEMALE
 
 	maxHealth = 15
+	biomass_value = 0.1
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 
 	icon = 'icons/mob/ranching/chickens.dmi'

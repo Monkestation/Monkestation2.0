@@ -33,7 +33,8 @@
 	// changes, only the Random Golem type can be chosen
 	fixed_mut_color = "#aaaaaa"
 
-	bodytemp_cold_damage_limit = ICEBOX_MIN_TEMPERATURE - 10 KELVIN
+	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
+	bodytemp_cold_damage_limit = BODYTEMP_COLD_ICEBOX_SAFE
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,

@@ -11,6 +11,7 @@
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
 	limb_overlay = /datum/bodypart_overlay/texture/carpskin
+	color_overlay_priority = LIMB_COLOR_CARP_INFUSION
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
@@ -78,6 +79,10 @@
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
 	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
+
+/obj/item/organ/internal/tongue/carp/get_possible_languages()
+	. = ..()
+	. += /datum/language/carptongue
 
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()

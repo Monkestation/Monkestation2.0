@@ -238,6 +238,8 @@
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
+
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_GREY_TIDE, COMSIG_GLOBAL_GREY_TIDE_TRAITOR), PROC_REF(grey_tide))
@@ -1434,7 +1436,6 @@
 	set_opacity(0)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
-	update_freelook_sight()
 	sleep(0.4 SECONDS)
 	set_density(FALSE)
 	if(multi_tile)
@@ -1539,7 +1540,6 @@
 		set_opacity(TRUE)
 		if(multi_tile)
 			filler.set_opacity(TRUE)
-	update_freelook_sight()
 	sleep(0.1 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE

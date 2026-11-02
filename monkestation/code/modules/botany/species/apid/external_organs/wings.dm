@@ -42,7 +42,10 @@
 /datum/bodypart_overlay/mutant/wings/apid/get_global_feature_list()
 	return GLOB.apid_wings_list
 
-/datum/bodypart_overlay/mutant/wings/apid/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/wings/apid/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if(!(human.w_uniform?.flags_inv & HIDEMUTWINGS) && !(human.wear_suit?.flags_inv & HIDEMUTWINGS))
 		return TRUE
 	return FALSE

@@ -131,7 +131,7 @@
 		var/mutable_appearance/shield = mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/human_holder = loc
-			human_holder.apply_height_filters(shield)
+			human_holder.apply_height(shield, ENTIRE_BODY)
 		. += shield
 
 /obj/item/nullrod/staff/blue

@@ -6,21 +6,13 @@
 	husk_type = "monkey"
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 	is_dimorphic = FALSE
 	should_draw_greyscale = TRUE
 	head_flags = HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_EYECOLOR
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
-
-/obj/item/bodypart/head/monkey/Initialize(mapload)
-	worn_head_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_HEAD,
-		offset_y = list("north" = 1, "south" = 1, "east" = 1, "west" = 1)
-	)
-	return ..()
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -33,8 +25,8 @@
 	should_draw_greyscale = TRUE
 	is_dimorphic = FALSE
 	wound_resistance = -10
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_MONKEY
+	bodyshape = BODYSHAPE_MONKEY
+	acceptable_bodyshape = BODYSHAPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
@@ -43,6 +35,11 @@
 	worn_belt_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_BELT,
+		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1)
+	)
+	worn_neck_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_NECK,
 		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1)
 	)
 	return ..()
@@ -56,7 +53,7 @@
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
@@ -75,7 +72,7 @@
 	husk_type = "monkey"
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	should_draw_greyscale = TRUE
 	wound_resistance = -10
 	px_x = 5
@@ -96,7 +93,7 @@
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
@@ -117,7 +114,7 @@
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY

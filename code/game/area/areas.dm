@@ -95,9 +95,9 @@
 	///The volume of the ambient buzz
 	var/ambient_buzz_vol = 65
 	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 30 SECONDS
+	var/min_ambience_cooldown = 4 SECONDS
 	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 60 SECONDS
+	var/max_ambience_cooldown = 10 SECONDS
 
 	flags_1 = CAN_BE_DIRTY_1
 
@@ -123,6 +123,9 @@
 
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
+
+	/// Are shuttles allowed to dock in this area
+	var/allow_shuttle_docking = FALSE
 
 	/// Extra A* weight applied to all turfs in this area.
 	var/astar_weight = 0
@@ -388,6 +391,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//just for sanity sake cause why not
 	if(!isnull(GLOB.areas))
 		GLOB.areas -= src
+	if(!isnull(GLOB.custom_areas))
+		GLOB.custom_areas -= src
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
@@ -640,8 +645,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
 
-/// A hook so areas can modify the incoming args (of what??)
-/area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+/// A hook so areas can modify the incoming args of ChangeTurf
+/area/proc/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	return flags
 
 
