@@ -855,7 +855,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * doing hackier code, because we've hundreds of turfs like lava, water etc every round,
  */
 /turf/proc/add_lazy_fishing(fish_source_path)
-	RegisterSignal(src, COMSIG_PRE_FISHING, PROC_REF(add_fishing_spot_comp))
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
 	RegisterSignal(src, COMSIG_NPC_FISHING, PROC_REF(on_npc_fishing))
 	RegisterSignal(src, COMSIG_FISH_RELEASED_INTO, PROC_REF(on_fish_release_into))
 	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(remove_lazy_fishing))
@@ -865,7 +865,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/remove_lazy_fishing()
 	SIGNAL_HANDLER
 	UnregisterSignal(src, list(
-		COMSIG_PRE_FISHING,
+		COMSIG_FISHING_ROD_CAST,
 		COMSIG_NPC_FISHING,
 		COMSIG_FISH_RELEASED_INTO,
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
@@ -874,10 +874,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
 	fish_source = null
 
-/turf/proc/add_fishing_spot_comp(datum/source)
+/turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
+	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, fish_source)
 	remove_lazy_fishing()
-	source.AddComponent(/datum/component/fishing_spot, fish_source)
+	return spot.handle_cast(arglist(args))
 
 /turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
 	SIGNAL_HANDLER
