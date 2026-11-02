@@ -82,6 +82,8 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	var/last_void_flux_multiplier = 1
 	/// Current internal coolant pressure.
 	var/pressure = 0
+	/// Minimum core pressure maintained by the outlet regulator, in kPa.
+	var/operating_pressure = RBMK_OPERATING_PRESSURE_DEFAULT
 	/// Whether active fuel rods are sustaining a reaction.
 	var/running = FALSE
 	/// Whether the reactor has been emergency shut down.
@@ -89,9 +91,9 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	/// AZ-5 is a destructive, single-use emergency insertion mechanism.
 	var/az5_expended = FALSE
 	/// Operator-requested control-rod insertion percentage.
-	var/control_rod_depth = 0
+	var/control_rod_depth = RBMK_CONTROL_ROD_MAX
 	/// Actual control-rod insertion percentage after travel delay.
-	var/actual_control_rod_depth = 0
+	var/actual_control_rod_depth = RBMK_CONTROL_ROD_MAX
 	/// Normal control rod travel speed, in percentage points per second.
 	var/control_rod_step = 3
 	/// Current vessel integrity.
@@ -124,6 +126,8 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	var/last_tick_rod_count = 0
 	/// Combined thermal-limit bonus from installed moderator rods.
 	var/rod_temperature_limit_bonus = 0
+	/// Pressure tolerance supplied by installed moderator rods, in kPa.
+	var/rod_pressure_limit_bonus = 0
 	/// Combined coolant-exchange bonus from installed moderator rods.
 	var/rod_coolant_exchange_bonus = 0
 	/// Combined flux multiplier bonus from installed moderator rods.
@@ -194,6 +198,7 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 /** Clears the bonuses supplied by moderator rods. */
 /obj/machinery/rbmk/reactor/proc/reset_reactor_modifier_state()
 	rod_temperature_limit_bonus = 0
+	rod_pressure_limit_bonus = 0
 	rod_coolant_exchange_bonus = 0
 	rod_flux_multiplier_bonus = 0
 
@@ -207,8 +212,10 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 		if(!islist(modifier_output))
 			continue
 		rod_temperature_limit_bonus += modifier_output["temperature_limit_bonus"] || 0
+		rod_pressure_limit_bonus += modifier_output["pressure_limit_bonus"] || 0
 		rod_coolant_exchange_bonus += modifier_output["coolant_exchange_bonus"] || 0
 		rod_flux_multiplier_bonus += modifier_output["flux_multiplier_bonus"] || 0
+	rod_pressure_limit_bonus = clamp(rod_pressure_limit_bonus, 0, RBMK_MODIFIER_PLASMA_PRESSURE_BONUS_MAX)
 	rod_temperature_limit_bonus = clamp(rod_temperature_limit_bonus, 0, RBMK_MODIFIER_PLASMA_TEMP_LIMIT_BONUS_MAX)
 	rod_coolant_exchange_bonus = clamp(rod_coolant_exchange_bonus, 0, RBMK_MODIFIER_BLUESPACE_COOLANT_BONUS_MAX)
 	rod_flux_multiplier_bonus = clamp(rod_flux_multiplier_bonus, 0, RBMK_MODIFIER_DIAMOND_FLUX_MULT_BONUS_MAX)
@@ -220,6 +227,16 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 /** Returns the thermal-damage threshold after moderator bonuses. */
 /obj/machinery/rbmk/reactor/proc/get_effective_temp_damage_threshold()
 	return RBMK_TEMP_DAMAGE_RAMP + rod_temperature_limit_bonus
+
+/** Returns the pressure envelope after installed moderator bonuses. */
+/obj/machinery/rbmk/reactor/proc/get_effective_pressure_warning()
+	return RBMK_PRESSURE_WARNING + rod_pressure_limit_bonus
+
+/obj/machinery/rbmk/reactor/proc/get_effective_pressure_critical()
+	return RBMK_PRESSURE_CRITICAL + rod_pressure_limit_bonus
+
+/obj/machinery/rbmk/reactor/proc/get_effective_pressure_extreme()
+	return RBMK_PRESSURE_EXTREME + rod_pressure_limit_bonus
 
 /** Creates and starts the reactor's ambient sound loop. */
 /obj/machinery/rbmk/reactor/proc/start_reactor_sound()

@@ -81,7 +81,7 @@
 	for(var/obj/machinery/power/rbmk_turbine/turbine in range(turbine_scan_range, linked_reactor))
 		if(QDELETED(turbine))
 			continue
-			linked_turbines += turbine
+		linked_turbines += turbine
 
 /obj/machinery/computer/rbmk_console/update_icon_state()
 	. = ..()
@@ -234,6 +234,8 @@
 	data["temp_running"] = RBMK_TEMP_RUNNING
 	data["temp_moderate"] = RBMK_TEMP_MODERATE
 	data["temp_hot"] = RBMK_TEMP_HOT
+	data["temp_stress_threshold"] = reactor.get_effective_temp_stress_threshold()
+	data["temp_damage_threshold"] = reactor.get_effective_temp_damage_threshold()
 	data["temp_max_safe"] = RBMK_TEMP_MAXSAFE
 	data["temp_meltdown"] = RBMK_TEMP_MELTDOWN
 	data["radiation"] = RBMK_ROUND2(reactor.radiation)
@@ -260,10 +262,15 @@
 	data["integrity"] = RBMK_ROUND2(reactor.reactor_integrity)
 	data["max_integrity"] = reactor.max_reactor_integrity
 	data["last_integrity_damage"] = RBMK_ROUND2(reactor.last_integrity_damage)
-	data["pressure_current"] = RBMK_ROUND2(reactor.pressure)
-	data["pressure_warning"] = RBMK_PRESSURE_WARNING
-	data["pressure_critical"] = RBMK_PRESSURE_CRITICAL
-	data["pressure_extreme"] = RBMK_PRESSURE_EXTREME
+	// Read all three pressures from the current mixtures in this UI snapshot.
+	data["pressure_current"] = RBMK_ROUND2(reactor.coolant_internal?.return_pressure() || 0)
+	data["pressure_warning"] = reactor.get_effective_pressure_warning()
+	data["pressure_critical"] = reactor.get_effective_pressure_critical()
+	data["pressure_extreme"] = reactor.get_effective_pressure_extreme()
+	data["operating_pressure"] = reactor.operating_pressure
+	data["operating_pressure_min"] = RBMK_OPERATING_PRESSURE_MIN
+	data["operating_pressure_max"] = reactor.get_effective_pressure_warning()
+	data["rod_pressure_limit_bonus"] = reactor.rod_pressure_limit_bonus
 	data["inlet_open"] = reactor.inlet_open
 	data["outlet_open"] = reactor.outlet_open
 	data["inlet_rate"] = reactor.inlet_rate
@@ -279,8 +286,8 @@
 	data["outlet_pressure"] = outlet_mix ? RBMK_ROUND2(outlet_mix.return_pressure()) : 0
 	data["inlet_flow"] = RBMK_ROUND2(reactor.last_inlet_flow_rate)
 	data["outlet_flow"] = RBMK_ROUND2(reactor.last_outlet_flow_rate)
-	data["inlet_last_pressure"] = RBMK_ROUND2(reactor.last_inlet_pressure)
-	data["outlet_core_pressure"] = RBMK_ROUND2(reactor.last_outlet_pressure)
+	data["inlet_last_pressure"] = data["inlet_pressure"]
+	data["outlet_core_pressure"] = data["pressure_current"]
 	data["coolant_moles"] = coolant_mix ? RBMK_ROUND2(coolant_mix.total_moles()) : 0
 	data["coolant_temperature"] = coolant_mix ? RBMK_ROUND2(coolant_mix.temperature) : 0
 	data["coolant_exchange_ratio"] = RBMK_ROUND2(reactor.last_coolant_exchange_ratio * 100)
@@ -374,6 +381,14 @@
 			return TRUE
 		if("scram")
 			return reactor.force_scram(ui.user)
+		if("set_operating_pressure")
+			var/requested_pressure = text2num("[params["pressure"]]")
+			if(!isnum(requested_pressure))
+				return FALSE
+			reactor.operating_pressure = clamp(requested_pressure, RBMK_OPERATING_PRESSURE_MIN, reactor.get_effective_pressure_warning())
+			reactor.wake_coolant_ports()
+			reactor.update_linked_consoles()
+			return TRUE
 		if("toggle_inlet")
 			reactor.inlet_open = !reactor.inlet_open
 			reactor.wake_coolant_ports()

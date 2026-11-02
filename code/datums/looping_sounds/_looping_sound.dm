@@ -78,7 +78,7 @@
 	var/live_attenuation_timer_id
 	/// The exact mid_sound currently playing.
 	var/live_current_sound
-	/// The base source volume of the currently playing mid_sound segment.
+	/// Optional volume override for the current segment; null follows live volume.
 	var/live_current_base_volume
 	/// Mobs that are currently receiving this live attenuated loop.
 	var/list/live_listeners
@@ -130,15 +130,20 @@
 /datum/looping_sound/proc/stop(null_parent = FALSE)
 	stop_live_attenuation()
 	stop_current()
-	release_reserved_sound_channel()
 	if(null_parent)
 		set_parent(null)
 	if(!timer_id)
+		if(null_parent)
+			release_reserved_sound_channel()
 		return
 	on_stop()
 	deltimer(timer_id, SSsound_loops)
 	timer_id = null
 	loop_started = FALSE
+	// Opt-in loops retain ownership across stops so their ending sound cannot
+	// be overwritten by a different loop reserving the just-freed channel.
+	if(null_parent)
+		release_reserved_sound_channel()
 
 /// The proc that handles starting the actual core sound loop.
 /datum/looping_sound/proc/start_sound_loop()
@@ -227,6 +232,8 @@
 
 /// Returns a stable channel for live attenuation, reserving one when no fixed channel is configured.
 /datum/looping_sound/proc/get_live_sound_channel(reserve_if_needed = TRUE)
+	if(!live_attenuation)
+		return null
 	if(sound_channel)
 		return sound_channel
 
@@ -236,7 +243,18 @@
 	if(!reserve_if_needed)
 		return null
 
-	reserved_sound_channel = SSsounds.reserve_sound_channel(src)
+	// The legacy allocator includes some fixed channels. Keep this exclusion
+	// local to opt-in loops so existing sound allocation retains its behavior.
+	// Hold rejected reservations until a safe channel is acquired; freeing one
+	// immediately would make the allocator hand the same channel back again.
+	var/list/fixed_channel_reservations = list()
+	var/channel = SSsounds.reserve_sound_channel(src)
+	while(channel in GLOB.used_sound_channels)
+		fixed_channel_reservations += channel
+		channel = SSsounds.reserve_sound_channel(src)
+	reserved_sound_channel = channel
+	for(var/fixed_channel in fixed_channel_reservations)
+		SSsounds.free_sound_channel(fixed_channel)
 	return reserved_sound_channel
 
 /// Frees this datum's reserved live attenuation channel, if it has one.
@@ -399,7 +417,7 @@
 		return
 
 	live_current_sound = soundfile
-	live_current_base_volume = base_volume
+	live_current_base_volume = volume_override
 
 	var/mixer_channel = get_live_mixer_channel(soundfile)
 	var/list/current_listeners = list()

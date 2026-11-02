@@ -48,6 +48,8 @@
 	ASSERT_GAS(/datum/gas/nitrogen, inlet_mix)
 	ASSERT_GAS(/datum/gas/nitrogen, outlet_mix)
 	var/test_temperature = 5000
+	reactor.temperature = test_temperature
+	reactor.operating_pressure = 0 // Isolate pressure equalization from the backpressure setting.
 	internal_mix.temperature = test_temperature
 	inlet_mix.temperature = test_temperature
 	outlet_mix.temperature = test_temperature
@@ -190,7 +192,8 @@
 		run_loc_floor_bottom_left,
 	)
 	console.linked_reactor = reactor
-	console.linked_turbines = list(turbine)
+	console.rescan_turbines()
+	TEST_ASSERT(turbine in console.linked_turbines, "The RBMK console did not discover its nearby turbine.")
 	var/list/offline_summary = console.get_turbine_data()
 	var/list/offline_turbine = offline_summary["turbines"][1]
 	TEST_ASSERT_EQUAL(offline_turbine["online"], FALSE, "An idle RBMK turbine did not report offline.")
@@ -202,3 +205,85 @@
 	var/list/online_turbine = online_summary["turbines"][1]
 	TEST_ASSERT_EQUAL(online_turbine["online"], TRUE, "A generating RBMK turbine did not report online.")
 	TEST_ASSERT_EQUAL(online_summary["online_turbine_count"], 1, "The RBMK console did not count a generating turbine as online.")
+
+/datum/unit_test/rbmk_safe_start_and_fine_control/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(/obj/machinery/rbmk/reactor)
+	TEST_ASSERT_EQUAL(reactor.control_rod_depth, RBMK_CONTROL_ROD_MAX, "Requested rods did not start fully inserted.")
+	TEST_ASSERT_EQUAL(reactor.actual_control_rod_depth, RBMK_CONTROL_ROD_MAX, "Actual rods did not start fully inserted.")
+	TEST_ASSERT_EQUAL(reactor.coolant_internal.total_moles(), 0, "Reactor created coolant instead of relying on the mapped supply.")
+	var/obj/item/rbmk/fuel_rod/uranium/rod = allocate(/obj/item/rbmk/fuel_rod/uranium)
+	rod.forceMove(reactor)
+	reactor.normal_slots += rod
+	reactor.control_rod_depth = 95
+	reactor.actual_control_rod_depth = 95
+	reactor.process(1)
+	var/full_flux = rod.reactivity * rod.flux_multiplier * RBMK_FLUX_GAIN
+	TEST_ASSERT(reactor.flux > 0 && reactor.flux < full_flux * 0.01, "Five-percent withdrawal did not provide fine low-power control.")
+
+/datum/unit_test/rbmk_offgas_conservation/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(/obj/machinery/rbmk/reactor)
+	var/datum/gas_mixture/core = reactor.coolant_internal
+	var/datum/gas_mixture/downstream = reactor.get_outlet_mix()
+	reactor.temperature = 700
+	core.temperature = 700
+	downstream.temperature = 700
+	core.assert_gases(/datum/gas/water_vapor, /datum/gas/tritium)
+	core.gases[/datum/gas/water_vapor][MOLES] = 2000
+	core.gases[/datum/gas/tritium][MOLES] = 20
+	reactor.inlet_open = FALSE
+	reactor.outlet_open = TRUE
+	reactor.operating_pressure = 0
+	reactor.outlet_rate = RBMK_OUTLET_RATE_MAX
+	var/total_before = core.total_moles() + downstream.total_moles()
+	reactor.last_coolant_air_cycle = SSair.times_fired - 1
+	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+	TEST_ASSERT(abs(core.total_moles() + downstream.total_moles() - total_before) < 0.001, "Offgas extraction created or discarded gas.")
+	var/list/exported_tritium = downstream.gases[/datum/gas/tritium]
+	TEST_ASSERT(exported_tritium && exported_tritium[MOLES] > 0, "The outlet exported no tritium.")
+	TEST_ASSERT(exported_tritium[MOLES] / downstream.total_moles() > 20 / total_before, "The outlet did not prioritize tritium over working coolant.")
+	TEST_ASSERT(reactor.last_outlet_flow_rate <= reactor.outlet_rate + 0.001, "Offgas bypassed the commanded outlet flow limit.")
+	reactor.outlet_open = FALSE
+	var/remaining_before = core.total_moles()
+	reactor.last_coolant_air_cycle = SSair.times_fired - 1
+	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+	TEST_ASSERT_EQUAL(core.total_moles(), remaining_before, "Gas escaped through the closed outlet.")
+
+/datum/unit_test/rbmk_pending_meltdown_overlay/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(/obj/machinery/rbmk/reactor)
+	reactor.current_damage_stage = 3
+	reactor.meltdown_in_progress = TRUE
+	reactor.reactor_integrity = 0
+	reactor.update_appearance(UPDATE_ICON)
+	TEST_ASSERT_EQUAL(reactor.current_damage_stage, 3, "Pending explosion changed the existing damage overlay.")
+	reactor.meltdown_exploded = TRUE
+	reactor.update_appearance(UPDATE_ICON)
+	TEST_ASSERT_EQUAL(reactor.current_damage_stage, 4, "Breached core did not switch to its final damage stage.")
+
+/datum/unit_test/rbmk_turbine_temperature_and_energy/Run()
+	var/obj/machinery/power/rbmk_turbine/turbine = allocate(/obj/machinery/power/rbmk_turbine)
+	var/datum/powernet/network = allocate(/datum/powernet)
+	network.add_machine(turbine)
+	var/datum/gas_mixture/gas = allocate(/datum/gas_mixture)
+	gas.assert_gases(/datum/gas/water_vapor)
+	gas.gases[/datum/gas/water_vapor][MOLES] = 100
+	gas.temperature = 400
+	turbine.last_inlet_pressure = 10000
+	turbine.last_outlet_pressure = 1000
+	turbine.update_pressure_delta()
+	turbine.process_working_gas(gas, 0.5, 293)
+	TEST_ASSERT_EQUAL(network.newavail, 0, "Cold compressed gas generated electricity below the operating threshold.")
+	gas.temperature = 1000
+	turbine.process_working_gas(gas, 0.5, 293)
+	TEST_ASSERT(network.newavail > 0, "Hot working gas generated no electricity across a positive pressure and temperature drop.")
+	TEST_ASSERT(abs(network.newavail - turbine.last_heat_extracted * turbine.generator_efficiency) < 0.01, "Turbine did not account for electrical output in joules.")
+
+/datum/unit_test/rbmk_private_audio_channels/Run()
+	var/datum/looping_sound/rbmk_reactor/reactor_loop = allocate(/datum/looping_sound/rbmk_reactor, run_loc_floor_bottom_left)
+	var/datum/looping_sound/rbmk_turbine/turbine_loop = allocate(/datum/looping_sound/rbmk_turbine, run_loc_floor_bottom_left)
+	var/reactor_channel = reactor_loop.get_live_sound_channel()
+	var/turbine_channel = turbine_loop.get_live_sound_channel()
+	TEST_ASSERT(!(reactor_channel in GLOB.used_sound_channels), "Reactor loop reserved a fixed sound channel.")
+	TEST_ASSERT(!(turbine_channel in GLOB.used_sound_channels), "Turbine loop reserved a fixed sound channel.")
+	TEST_ASSERT_NOTEQUAL(reactor_channel, turbine_channel, "Reactor and turbine shared a playback channel.")
+	turbine_loop.stop()
+	TEST_ASSERT_EQUAL(turbine_loop.get_live_sound_channel(), turbine_channel, "Stopping the turbine released its shutdown playback channel too early.")

@@ -57,11 +57,17 @@
     margin: 0 auto;
   }
 
+  .RBMKConsole__AlarmStrip {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
   .RBMKConsole__Instrument {
     position: relative;
-    min-width: 128px;
-    min-height: 72px;
-    padding: 0.55rem 0.65rem;
+    min-width: 170px;
+    min-height: 104px;
+    padding: 0.8rem 0.9rem;
     overflow: hidden;
     font-family: monospace;
     background: linear-gradient(180deg, #151c1e, #0c1112);
@@ -70,33 +76,35 @@
   }
 
   .RBMKConsole__InstrumentLabel {
-    color: #7f9096;
-    font-size: 9px;
-    letter-spacing: 0.7px;
+    color: #b7c7cd;
+    font-size: 12px;
+    padding-right: 12px;
+    letter-spacing: 0.4px;
     text-transform: uppercase;
   }
 
   .RBMKConsole__InstrumentValue {
     margin-top: 0.35rem;
     color: #d9e9ea;
-    font-size: 20px;
+    font-size: 32px;
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.15;
     text-shadow: 0 0 8px rgba(154, 210, 211, 0.18);
   }
 
   .RBMKConsole__InstrumentReference {
     margin-top: 0.45rem;
-    color: #68787e;
-    font-size: 7px;
-    letter-spacing: 0.35px;
-    white-space: nowrap;
+    color: #b0c0c6;
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.15px;
+    white-space: normal;
   }
 
   .RBMKConsole__InstrumentUnit {
     margin-left: 0.35rem;
-    color: #819196;
-    font-size: 9px;
+    color: #b7c7cd;
+    font-size: 13px;
     font-weight: 400;
   }
 
@@ -218,8 +226,9 @@
   }
 
   .RBMKConsole__CoreBoard {
-    width: 500px;
-    height: 500px;
+    width: min(580px, 100%);
+    aspect-ratio: 1;
+    box-sizing: border-box;
     margin: 0.6rem auto;
     padding: 19px;
   }

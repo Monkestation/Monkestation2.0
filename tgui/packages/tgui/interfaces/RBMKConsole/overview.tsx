@@ -17,7 +17,7 @@ const Instrument = (props: {
   reference: string;
   state: 'nominal' | 'warning' | 'danger';
 }) => (
-  <Flex.Item basis="31%" grow>
+  <Flex.Item basis="45%" grow>
     <Box
       className={`RBMKConsole__Instrument RBMKConsole__Instrument--${props.state}`}
     >
@@ -55,20 +55,21 @@ export const RBMKOverview = () => {
   const voidFluxBonus = Number(data?.void_flux_bonus ?? 0);
 
   const voidCoefficient = Number(data?.void_coefficient ?? 0);
-  const maxVoidCoefficient = Math.max(Number(data?.max_void_coefficient ?? 0.5), 0.5);
+  const maxVoidCoefficient = Math.max(Number(data?.max_void_coefficient ?? 3), 1);
   const voidFluxMultiplier = Number(data?.void_flux_multiplier ?? 1);
   const voidTemperatureComponent = Number(
     data?.void_temperature_component ?? 0,
   );
   const voidPressureComponent = Number(data?.void_pressure_component ?? 0);
   const voidCoolantComponent = Number(data?.void_coolant_component ?? 0);
-  const tempModerate = Number(data?.temp_moderate ?? 1500);
-  const tempMaxSafe = Number(data?.temp_max_safe ?? 6000);
+  const tempStress = Number(data?.temp_stress_threshold ?? 8000);
+  const tempDamage = Number(data?.temp_damage_threshold ?? 9500);
   const fluxWarning = Number(data?.flux_warning ?? 350);
   const fluxHigh = Number(data?.flux_high ?? 700);
   const rodTemperatureLimitBonus = Number(
     data?.rod_temperature_limit_bonus ?? 0,
   );
+  const rodPressureLimitBonus = Number(data?.rod_pressure_limit_bonus ?? 0);
   const coolantExchangeMultiplier = Number(
     data?.coolant_exchange_multiplier ?? 1,
   );
@@ -77,8 +78,8 @@ export const RBMKOverview = () => {
   );
 
   const pressure = Number(data?.pressure_current ?? 0);
-  const pressureWarning = Number(data?.pressure_warning ?? 8000);
-  const pressureCritical = Number(data?.pressure_critical ?? 10000);
+  const pressureWarning = Number(data?.pressure_warning ?? 15000);
+  const pressureCritical = Number(data?.pressure_critical ?? 18000);
   const integrity = Number(data?.integrity ?? 0);
   const maxIntegrity = Math.max(1, Number(data?.max_integrity ?? 100));
   const integrityPercent = Math.max(
@@ -95,8 +96,8 @@ export const RBMKOverview = () => {
             label="Core Temperature"
             value={temperature}
             unit="K"
-            reference={`WARN ${tempModerate.toFixed(0)} · LIMIT ${tempMaxSafe.toFixed(0)}`}
-            state={temperature >= tempMaxSafe ? 'danger' : temperature >= tempModerate ? 'warning' : 'nominal'}
+            reference={`WARN ${tempStress.toFixed(0)} K / DAMAGE ${tempDamage.toFixed(0)} K`}
+            state={temperature >= tempDamage ? 'danger' : temperature >= tempStress ? 'warning' : 'nominal'}
           />
           <Instrument
             label="Primary Pressure"
@@ -115,7 +116,7 @@ export const RBMKOverview = () => {
             label="Radiation"
             value={radiation}
             digits={1}
-            reference="LIVE FIELD INTENSITY"
+            reference={`FIELD RANGE 0 to ${maxRadiation.toFixed(0)}`}
             state={radiation >= maxRadiation * 0.5 ? 'danger' : radiation >= maxRadiation * 0.2 ? 'warning' : 'nominal'}
           />
           <Instrument
@@ -192,6 +193,9 @@ export const RBMKOverview = () => {
           </LabeledList.Item>
           <LabeledList.Item label="Temperature Limit Bonus">
             +{rodTemperatureLimitBonus.toFixed(0)} K
+          </LabeledList.Item>
+          <LabeledList.Item label="Pressure Limit Bonus">
+            +{rodPressureLimitBonus.toFixed(0)} kPa
           </LabeledList.Item>
         </LabeledList>
       </Collapsible>

@@ -9,9 +9,9 @@
 #define RBMK_TEMP_DISPLAY_MAX 20000
 
 // Temperature limits
-/// Temperature where ordinary thermal integrity stress begins.
+/// Temperature where the advisory thermal warning begins; causes no damage.
 #define RBMK_TEMP_STRESS_THRESHOLD 8000
-/// Temperature where severe thermal integrity damage begins.
+/// Temperature above which thermal integrity damage begins.
 #define RBMK_TEMP_DAMAGE_RAMP 9500
 /// Passive vessel-to-room thermal loss per normal machinery cycle. This is
 /// deliberately weak compared with forced coolant exchange.
@@ -55,7 +55,7 @@
 /// Maximum coolant-starvation contribution to the void coefficient.
 #define RBMK_VC_COOLANT_COMPONENT_MAX 0.8
 /// Coolant inventory at which the starvation contribution reaches zero.
-#define RBMK_VC_COOLANT_MOLES_TARGET 450
+#define RBMK_VC_COOLANT_MOLES_TARGET (RBMK_COOLANT_VOLUME_MAX * 0.225)
 /// Absolute upper bound for the reactor's void coefficient.
 #define RBMK_VC_MAX 3.0
 
@@ -148,8 +148,16 @@
 #define RBMK_ROD_TOOL_CASCADE_KNOCKBACK_RANGE 7
 
 // Coolant flow and pressure
+/// Backpressure maintained by the outlet regulator, in kPa.
+#define RBMK_OPERATING_PRESSURE_DEFAULT 9000
+/// Minimum configurable outlet backpressure, in kPa (zero permits venting).
+#define RBMK_OPERATING_PRESSURE_MIN 0
+/// Additional safe pressure per plasma moderator rod, in kPa.
+#define RBMK_MODIFIER_PLASMA_PRESSURE_BONUS 1500
+/// Maximum pressure-limit bonus from plasma moderator rods, in kPa.
+#define RBMK_MODIFIER_PLASMA_PRESSURE_BONUS_MAX 6000
 /// Internal coolant capacity in liters.
-#define RBMK_COOLANT_VOLUME_MAX 2000
+#define RBMK_COOLANT_VOLUME_MAX 8000
 /// Minimum inlet flow setting in moles per second.
 #define RBMK_INLET_RATE_MIN 0
 /// Default inlet flow setting in moles per second.
@@ -167,11 +175,11 @@
 /// Prevents a single atmos update from evacuating the hot core and causing a pressure rebound on the next inlet update.
 #define RBMK_OUTLET_MAX_INVENTORY_FRACTION 0.5
 /// Pressure at which the operator UI shows a warning.
-#define RBMK_PRESSURE_WARNING 8000
+#define RBMK_PRESSURE_WARNING 15000
 /// Pressure at which critical pressure damage begins.
-#define RBMK_PRESSURE_CRITICAL 10000
+#define RBMK_PRESSURE_CRITICAL 18000
 /// Pressure at which the extreme pressure damage bonus applies.
-#define RBMK_PRESSURE_EXTREME 12000
+#define RBMK_PRESSURE_EXTREME 21000
 /// Divisor used to scale ordinary overpressure integrity damage.
 #define RBMK_PRESSURE_DAMAGE_DIVISOR 1200
 /// Divisor used to scale critical overpressure integrity damage.
@@ -183,7 +191,7 @@
 /// Effective heat capacity of the reactor vessel.
 #define RBMK_CORE_HEAT_CAPACITY 450000
 /// Coolant inventory that provides full heat-exchange effectiveness.
-#define RBMK_COOLANT_EFFECTIVE_MOLES_TARGET 900
+#define RBMK_COOLANT_EFFECTIVE_MOLES_TARGET (RBMK_COOLANT_VOLUME_MAX * 0.45)
 /// Flow ratio below which coolant is considered stagnant.
 #define RBMK_COOLANT_STAGNANT_FLOW_RATIO 0.05
 /// Heat-exchange multiplier when only one coolant port is available.
@@ -209,11 +217,11 @@
 /// Devastation radius of the physical meltdown explosion.
 #define RBMK_MELTDOWN_DEV_RANGE 0
 /// Heavy-impact radius of the physical meltdown explosion.
-#define RBMK_MELTDOWN_HEAVY_RANGE 5
+#define RBMK_MELTDOWN_HEAVY_RANGE 6
 /// Light-impact radius of the physical meltdown explosion.
-#define RBMK_MELTDOWN_LIGHT_RANGE 15
+#define RBMK_MELTDOWN_LIGHT_RANGE 18
 /// Flash radius of the physical meltdown explosion.
-#define RBMK_MELTDOWN_FLASH_RANGE 18
+#define RBMK_MELTDOWN_FLASH_RANGE 21
 /// Delay between the meltdown warning and destructive effects.
 #define RBMK_MELTDOWN_WARNING_DELAY 8 SECONDS
 /// Delay used to sequence consecutive meltdown effects.
@@ -238,6 +246,10 @@
 #define RBMK_MAX_FLUX 1200
 
 // Flux anomalies
+/// Distortions spawned together for each successful low/high/extreme flux event.
+#define RBMK_FLUX_ANOMALY_COUNT_LOW 1
+#define RBMK_FLUX_ANOMALY_COUNT_HIGH 2
+#define RBMK_FLUX_ANOMALY_COUNT_EXTREME 3
 /// Flux at which low-tier anomaly spawning begins.
 #define RBMK_FLUX_ANOMALY_THRESHOLD 350
 /// Flux at which high-tier anomaly timing begins.

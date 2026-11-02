@@ -122,13 +122,13 @@ export const RBMKRods = () => {
       monitorTitle = shortRodName(selection.rod);
       monitorValue =
         selection.rod.slot_kind === 'special'
-          ? 'MODIFIER ROD'
+          ? 'MODERATOR ROD'
           : selection.rod.depleted
             ? 'DEPLETED'
             : fuelDisplay(selection.rod);
     } else {
       monitorTitle = 'EMPTY';
-      monitorValue = `${selection.rod.slot_kind.toUpperCase()} SLOT`;
+      monitorValue = selection.rod.slot_kind === 'special' ? 'MODERATOR SLOT' : 'FUEL SLOT';
     }
   }
 
@@ -188,7 +188,7 @@ export const RBMKRods = () => {
                   aria-label={
                     occupied
                       ? `Eject ${rodName(rod)}`
-                      : `Empty ${rod.slot_kind} slot`
+                      : `Empty ${rod.slot_kind === 'special' ? 'moderator' : 'fuel'} slot`
                   }
                   className={`RBMKConsole__FuelChannel RBMKConsole__FuelChannel--${rodState}`}
                   style={

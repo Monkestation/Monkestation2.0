@@ -184,7 +184,7 @@
 /datum/looping_sound/rbmk_reactor
 	mid_sounds = list('sound/rbmk/reactor_hum_low.ogg')
 	mid_length = 20 SECONDS
-	volume = 50
+	volume = 60
 
 	extra_range = 15
 
@@ -208,18 +208,18 @@
 
 	switch(sound_state)
 		if(RBMK_SOUND_MAX)
-			volume = 60
+			volume = 70
 			live_attenuation_max_distance = 20
 			falloff_distance = 5
 			return
 
 		if(RBMK_SOUND_HIGH)
-			volume = 55
+			volume = 65
 			live_attenuation_max_distance = 20
 			falloff_distance = 5
 			return
 
-	volume = 50
+	volume = 60
 	live_attenuation_max_distance = 20
 	falloff_distance = 5
 
@@ -252,15 +252,15 @@
 
 /datum/looping_sound/rbmk_turbine
 	start_sound = 'sound/rbmk/turbine_start.ogg'
-	start_length = 16 SECONDS
-	start_volume = 6
+	start_length = 16.2 SECONDS
+	start_volume = 30
 
 	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
-	mid_length = 12 SECONDS
-	volume = 18
+	mid_length = 4.05 SECONDS
+	volume = 40
 
 	end_sound = 'sound/rbmk/turbine_end.ogg'
-	end_volume = 6
+	end_volume = 25
 	// Legacy fallback if dynamic attenuation is disabled.
 	extra_range = 8
 
@@ -274,6 +274,16 @@
 	falloff_exponent = 3
 	ignore_walls = FALSE
 	pressure_affected = FALSE
+
+/// Keep startup, running and shutdown audio on this turbine's private channel.
+/datum/looping_sound/rbmk_turbine/play(soundfile, volume_override)
+	if(!soundfile)
+		return
+	play_live_attenuated(soundfile, volume_override)
+
+/datum/looping_sound/rbmk_turbine/on_start()
+	. = ..()
+	start_live_attenuation()
 
 /datum/looping_sound/charger
 	start_sound = 'sound/machines/charger/charger_start.ogg'

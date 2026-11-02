@@ -148,13 +148,13 @@
 /obj/machinery/rbmk/reactor/proc/apply_pressure_damage(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		return
-	if(pressure < RBMK_PRESSURE_WARNING)
+	if(pressure < get_effective_pressure_warning())
 		return
 	var/process_scale = seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
-	var/pressure_damage = (pressure - RBMK_PRESSURE_WARNING) / RBMK_PRESSURE_DAMAGE_DIVISOR
-	if(pressure >= RBMK_PRESSURE_CRITICAL)
-		pressure_damage += (pressure - RBMK_PRESSURE_CRITICAL) / RBMK_PRESSURE_CRITICAL_DAMAGE_DIVISOR
-	if(pressure >= RBMK_PRESSURE_EXTREME)
+	var/pressure_damage = (pressure - get_effective_pressure_warning()) / RBMK_PRESSURE_DAMAGE_DIVISOR
+	if(pressure >= get_effective_pressure_critical())
+		pressure_damage += (pressure - get_effective_pressure_critical()) / RBMK_PRESSURE_CRITICAL_DAMAGE_DIVISOR
+	if(pressure >= get_effective_pressure_extreme())
 		pressure_damage += RBMK_PRESSURE_EXTREME_DAMAGE_BONUS
 	// Overpressure should be urgent, but never an instant random rupture.
 	// Let it chew through integrity on a visible, repairable timer so engineers can SCRAM, vent, or weld.
@@ -216,10 +216,13 @@
 		return
 	var/flux_anomaly_ratio = CLAMP01((flux - RBMK_FLUX_ANOMALY_THRESHOLD) / max(RBMK_MAX_FLUX - RBMK_FLUX_ANOMALY_THRESHOLD, 1))
 	var/current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_LOW
+	var/anomaly_count = RBMK_FLUX_ANOMALY_COUNT_LOW
 	if(flux >= RBMK_FLUX_ANOMALY_EXTREME)
 		current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_EXTREME
+		anomaly_count = RBMK_FLUX_ANOMALY_COUNT_EXTREME
 	else if(flux >= RBMK_FLUX_ANOMALY_HIGH)
 		current_cooldown = RBMK_FLUX_ANOMALY_COOLDOWN_HIGH
+		anomaly_count = RBMK_FLUX_ANOMALY_COUNT_HIGH
 	if(!COOLDOWN_FINISHED(src, flux_anomaly_spawn_cooldown))
 		return
 	var/spawn_chance = round(8 + (flux_anomaly_ratio * 27))
@@ -238,10 +241,12 @@
 		valid_turfs += open_turf
 	if(!length(valid_turfs))
 		return
-	var/turf/spawn_turf = pick(valid_turfs)
 	COOLDOWN_START(src, flux_anomaly_spawn_cooldown, current_cooldown)
-	new /obj/effect/anomaly/flux(spawn_turf, rand(25 SECONDS, 35 SECONDS), FALSE, FLUX_NO_EMP)
-	visible_message(span_warning("A harmonic flux distortion forms near [src]!"))
+	anomaly_count = min(anomaly_count, length(valid_turfs))
+	for(var/index in 1 to anomaly_count)
+		var/turf/spawn_turf = pick_n_take(valid_turfs)
+		new /obj/effect/anomaly/flux(spawn_turf, rand(25 SECONDS, 35 SECONDS), FALSE, FLUX_NO_EMP)
+	visible_message(span_warning("[anomaly_count] harmonic flux distortion[anomaly_count == 1 ? " forms" : "s form"] near [src]!"))
 
 /** Starts a meltdown when the vessel reaches a hard failure condition. */
 /obj/machinery/rbmk/reactor/proc/check_hard_meltdown_conditions()
@@ -273,7 +278,6 @@
 	if(!has_fuel_rods())
 		reset_reaction_state()
 		startup_sequence_played = FALSE
-		rbmk_coolant_exchange(seconds_per_tick)
 		rbmk_update_pressure(seconds_per_tick)
 		update_reactor_integrity(seconds_per_tick)
 		rbmk_sample_coolant()
@@ -295,7 +299,6 @@
 	if(active_rods <= 0 || scrammed || actual_control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		running = FALSE
 		rbmk_decay_process(seconds_per_tick)
-		rbmk_coolant_exchange(seconds_per_tick)
 		rbmk_update_pressure(seconds_per_tick)
 		maintain_residual_radiation(all_fuel_rods)
 		update_void_coefficient()
@@ -311,22 +314,28 @@
 			startup_sequence_played = FALSE
 		previous_control_rod_depth = control_rod_depth
 		return
+	running = TRUE
+	var/control_ratio = CLAMP01(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX)
+	// Fine authority near full insertion: withdrawing 5% commands 0.25%
+	// of unmoderated reaction strength, while full withdrawal retains output.
+	var/exposed_fraction = CLAMP01(1 - control_ratio)
+	var/flux_control_multiplier = exposed_fraction ** 2
+	var/heat_control_multiplier = flux_control_multiplier
+	var/extra_void_coefficient = update_void_coefficient()
+	var/fuel_burn_multiplier = flux_control_multiplier * (1 + extra_void_coefficient) * (1 + rod_flux_multiplier_bonus)
 	var/total_flux = 0
 	var/total_radiation = 0
 	var/total_heat = 0
 	for(var/obj/item/rbmk/fuel_rod/fuel_rod in all_fuel_rods)
 		if(!fuel_rod || fuel_rod.is_depleted())
 			continue
-		var/list/rod_output = fuel_rod.process_rod(seconds_per_tick)
+		var/list/rod_output = fuel_rod.process_rod(seconds_per_tick, fuel_burn_multiplier)
 		if(!islist(rod_output))
 			continue
 		total_flux += rod_output["flux"] || 0
 		total_radiation += rod_output["radiation"] || 0
 		total_heat += rod_output["heat"] || 0
-	running = TRUE
-	var/control_ratio = CLAMP01(actual_control_rod_depth / RBMK_CONTROL_ROD_MAX)
-	var/flux_control_multiplier = CLAMP01(1 - control_ratio)
-	var/heat_control_multiplier = CLAMP01(1 - (control_ratio ** 1.35))
+
 	var/radiation_control_multiplier = max(
 		RBMK_RESIDUAL_RADIATION_MULTIPLIER,
 		CLAMP01(1 - (control_ratio ** 1.15)),
@@ -337,7 +346,6 @@
 	total_heat *= heat_control_multiplier
 	total_radiation *= radiation_control_multiplier
 	var/base_flux = clamp(total_flux * RBMK_FLUX_GAIN, 0, RBMK_MAX_FLUX)
-	var/extra_void_coefficient = update_void_coefficient()
 	flux = clamp(base_flux * (1 + extra_void_coefficient), 0, RBMK_MAX_FLUX)
 	last_tick_base_flux = base_flux
 	last_tick_void_flux_bonus = max(flux - base_flux, 0)
@@ -354,7 +362,6 @@
 		RBMK_MAX_RADIATION,
 	)
 	emit_real_radiation()
-	rbmk_coolant_exchange(seconds_per_tick)
 	if(coolant_internal)
 		var/tritium_delta = flux * RBMK_TRITIUM_PRODUCTION_RATE
 		tritium_delta *= seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS

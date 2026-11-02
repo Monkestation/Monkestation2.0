@@ -149,12 +149,12 @@
 	return reactivity * radiation_multiplier
 
 /** Burns fuel for one reactor tick and returns its flux, radiation, and heat. */
-/obj/item/rbmk/fuel_rod/proc/process_rod(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
+/obj/item/rbmk/fuel_rod/proc/process_rod(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS, reaction_strength = 1)
 	if(is_depleted())
 		deplete_rod()
 		return get_zero_output()
 	activate_in_reactor()
-	fuel_amount = max(0, fuel_amount - (fuel_consumption * seconds_per_tick))
+	fuel_amount = max(0, fuel_amount - (fuel_consumption * seconds_per_tick * max(reaction_strength, 0)))
 	// Let the last unit of fuel still produce output this tick,
 	// then mark the rod spent afterward.
 	var/should_deplete_after_output = (fuel_amount <= 0)

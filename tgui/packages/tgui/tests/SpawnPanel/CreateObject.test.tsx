@@ -33,8 +33,8 @@ mock.module('tgui-core/fuzzysearch', () => ({
     query: 'supermatter', setQuery: () => {}, results: searchArray,
   }),
 }));
-mock.module('./CreateObjectSettings', () => ({ CreateObjectSettings: () => null }));
-const { CreateObject } = await import('./CreateObject');
+mock.module('../../interfaces/SpawnPanel/CreateObjectSettings', () => ({ CreateObjectSettings: () => null }));
+const { CreateObject } = await import('../../interfaces/SpawnPanel/CreateObject');
 let root: Root | undefined;
 let host: HTMLDivElement;
 const props = {

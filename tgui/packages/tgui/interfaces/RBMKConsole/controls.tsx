@@ -34,8 +34,11 @@ export const RBMKControls = () => {
   const outletCorePressure = Number(data?.outlet_core_pressure ?? 0);
   const outletFlow = Number(data?.outlet_flow ?? 0);
   const pressureCurrent = Number(data?.pressure_current ?? outletCorePressure);
-  const pressureWarning = Number(data?.pressure_warning ?? 8000);
-  const pressureCritical = Number(data?.pressure_critical ?? 10000);
+  const operatingPressure = Number(data?.operating_pressure ?? 9000);
+  const operatingPressureMin = Number(data?.operating_pressure_min ?? 0);
+  const operatingPressureMax = Number(data?.operating_pressure_max ?? 15000);
+  const pressureWarning = Number(data?.pressure_warning ?? 15000);
+  const pressureCritical = Number(data?.pressure_critical ?? 18000);
   const coolantMoles = Number(data?.coolant_moles ?? 0);
   const coolantTemperature = Number(data?.coolant_temperature ?? 0);
   const coolantExchangeRatio = Number(data?.coolant_exchange_ratio ?? 0);
@@ -147,7 +150,6 @@ export const RBMKControls = () => {
         <Flex justify="center">
           <Button
             fluid
-            icon="radiation"
             color={az5Expended ? 'label' : 'bad'}
             bold
             disabled={az5Expended}
@@ -179,7 +181,7 @@ export const RBMKControls = () => {
                 />
               </LabeledList.Item>
 
-              <LabeledList.Item label="Input Rate">
+              <LabeledList.Item label="Maximum Input Rate">
                 <NumberInput
                   value={inletRate}
                   unit="mol/s"
@@ -191,11 +193,11 @@ export const RBMKControls = () => {
                 />
               </LabeledList.Item>
 
-              <LabeledList.Item label="Inlet Pressure">
+              <LabeledList.Item label="Supply Pipe Pressure">
                 <Box>{inletPressure.toFixed(2)} kPa</Box>
               </LabeledList.Item>
 
-              <LabeledList.Item label="Inlet Flow">
+              <LabeledList.Item label="Actual Inlet Flow">
                 <Box>{inletFlow.toFixed(1)} mol/s</Box>
               </LabeledList.Item>
             </LabeledList>
@@ -210,6 +212,9 @@ export const RBMKControls = () => {
           </Section>
 
           <Section title="Outlet Regulator" className="RBMKConsole__ValvePanel">
+            <Box color="label" mb={1}>
+              Maintains core pressure. Set to zero to vent.
+            </Box>
             <LabeledList>
               <LabeledList.Item label="Regulator">
                 <Button
@@ -220,7 +225,22 @@ export const RBMKControls = () => {
                 />
               </LabeledList.Item>
 
-              <LabeledList.Item label="Output Rate">
+              <LabeledList.Item label="Hold Core Pressure">
+                <NumberInput
+                  value={operatingPressure}
+                  unit="kPa"
+                  width="110px"
+                  minValue={operatingPressureMin}
+                  maxValue={operatingPressureMax}
+                  step={100}
+                  onChange={(value) => {
+                    if (Number.isFinite(value)) {
+                      act('set_operating_pressure', { pressure: Math.round(value) });
+                    }
+                  }}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Maximum Output Rate">
                 <NumberInput
                   value={outletRate}
                   unit="mol/s"
@@ -232,7 +252,7 @@ export const RBMKControls = () => {
                 />
               </LabeledList.Item>
 
-              <LabeledList.Item label="Outlet Pressure">
+              <LabeledList.Item label="Downstream Pipe Pressure">
                 <Box>{outletPressure.toFixed(2)} kPa</Box>
               </LabeledList.Item>
 
@@ -240,7 +260,7 @@ export const RBMKControls = () => {
                 <Box>{outletCorePressure.toFixed(2)} kPa</Box>
               </LabeledList.Item>
 
-              <LabeledList.Item label="Outlet Flow">
+              <LabeledList.Item label="Actual Outlet Flow">
                 <Box>{outletFlow.toFixed(1)} mol/s</Box>
               </LabeledList.Item>
             </LabeledList>
@@ -254,7 +274,7 @@ export const RBMKControls = () => {
             />
           </Section>
 
-          <Section title="Circuit Telemetry" className="RBMKConsole__CircuitPanel">
+          <Section title="Circuit Readings" className="RBMKConsole__CircuitPanel">
             <LabeledList>
               <LabeledList.Item label="Core Pressure">
                 <ProgressBar

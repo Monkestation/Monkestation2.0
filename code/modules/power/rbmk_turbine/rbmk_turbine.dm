@@ -46,16 +46,14 @@
 	var/internal_volume = 1000
 	/// Maximum gas flow accepted per second.
 	var/max_flow_rate = 1000
-	/// Minimum gas temperature required for power generation.
+	/// Minimum inlet temperature required before the turbine can generate.
 	var/min_working_temperature = 500
-	/// Fraction of available temperature difference extracted from working gas.
-	var/heat_extraction_ratio = 0.22
-	/// Fraction of extracted heat converted into electrical power.
-	var/generator_efficiency = 0.35
-	/// Maximum temperature removed from gas in one processing step.
-	var/max_temperature_drop = 900
-	/// Maximum electrical output in watts.
-	var/max_power_output = 5000000
+	/// Fraction of the ideal expansion temperature drop achieved by the turbine.
+	var/isentropic_efficiency = 0.85
+	/// Fraction of extracted heat converted into electricity (RBMK-1000 design ratio).
+	var/generator_efficiency = 0.3125
+	/// Nominal electrical output in watts; overload may exceed this rating.
+	var/rated_power_output = 1000000000
 	/// Maximum displayed turbine speed.
 	var/max_rpm = 120000
 	/// Temperature where sustained overdrive begins wearing down the generator.
@@ -64,10 +62,8 @@
 	var/generator_damage_per_thousand_kelvin_per_second = 0.5
 	/// Maximum generator wear applied per second.
 	var/max_generator_damage_per_second = 4
-	/// Generator integrity restored per second at safe temperatures.
-	var/generator_integrity_recovery_per_second = 2
 	/// Base volume of the turbine loop.
-	var/sound_volume = 24
+	var/sound_volume = 40
 	/// Minimum audible range used by turbine sounds.
 	var/sound_min_range = 5
 	/// Maximum audible range used by turbine sounds.
@@ -106,6 +102,8 @@
 	var/last_temperature_drop = 0
 	/// World time at which power was most recently generated.
 	var/last_generation_time = 0
+	/// Last forward gas flow that drove the rotor, independent of grid connection.
+	var/last_rotation_time = 0
 	/// Remaining generator integrity.
 	var/generator_integrity = 100
 	/// Maximum generator integrity.
@@ -195,19 +193,20 @@
 /obj/machinery/power/rbmk_turbine/proc/should_play_turbine_sound()
 	if(machine_stat & BROKEN)
 		return FALSE
-	if(!last_generation_time)
+	if(!last_rotation_time)
 		return FALSE
-	return world.time <= last_generation_time + RBMK_TURBINE_SOUND_HOLD_TIME
+	return world.time <= last_rotation_time + RBMK_TURBINE_SOUND_HOLD_TIME
 
 /** Starts, updates, or stops audio to match recent rotor activity. */
 /obj/machinery/power/rbmk_turbine/proc/update_turbine_sound()
 	if(!should_play_turbine_sound())
-		if(turbine_soundloop)
+		if(turbine_soundloop?.is_active())
 			turbine_soundloop.stop()
-			QDEL_NULL(turbine_soundloop)
 		return
 	if(!turbine_soundloop)
 		turbine_soundloop = new /datum/looping_sound/rbmk_turbine(src, TRUE)
+	else if(!turbine_soundloop.is_active())
+		turbine_soundloop.start()
 	var/rpm_ratio = CLAMP01(rpm / max(max_rpm, 1))
 	turbine_soundloop.volume = sound_volume
 	turbine_soundloop.extra_range = clamp(
@@ -218,14 +217,13 @@
 	turbine_soundloop.falloff_distance = sound_falloff_distance
 	turbine_soundloop.falloff_exponent = sound_falloff_exponent
 
-/** Applies generator wear or recovery for the elapsed processing time. */
+/** Applies generator wear for the elapsed processing time. */
 /obj/machinery/power/rbmk_turbine/proc/update_generator_integrity(gas_temperature, seconds_per_tick)
 	last_generator_damage = 0
 	last_overtemp = max(gas_temperature - generator_damage_temperature, 0)
 	if(machine_stat & BROKEN)
 		return
 	if(gas_temperature <= generator_damage_temperature)
-		generator_integrity = min(generator_integrity + (generator_integrity_recovery_per_second * seconds_per_tick), max_generator_integrity)
 		return
 	var/temperature_over_limit = gas_temperature - generator_damage_temperature
 	var/damage_amount = (temperature_over_limit / 1000) * generator_damage_per_thousand_kelvin_per_second * seconds_per_tick
@@ -288,14 +286,15 @@
 		SSair.start_processing_machine(outlet)
 
 /** Extracts usable heat from a parcel of working gas and adds power to the grid. */
-/obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix, seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
-	last_generator_damage = 0
-	last_overtemp = 0
+/obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix, seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS, cold_side_temperature = RBMK_AMBIENT_TEMP)
+	reset_generation_telemetry()
 	if(!working_mix || working_mix.total_moles() <= 0)
 		last_outlet_temperature = working_mix?.temperature || 0
 		update_appearance(UPDATE_ICON)
 		update_turbine_sound()
 		return
+	if(last_pressure_delta > 0)
+		last_rotation_time = world.time
 	last_flow_moles = working_mix.total_moles()
 	last_inlet_temperature = working_mix.temperature
 	last_heat_capacity = working_mix.heat_capacity()
@@ -312,22 +311,40 @@
 		update_appearance(UPDATE_ICON)
 		update_turbine_sound()
 		return
-	var/useful_temperature_delta = max(working_mix.temperature - min_working_temperature, 0)
-	if(useful_temperature_delta <= 0)
+	// Cold compressed gas is not a substitute for a heated working loop.
+	if(working_mix.temperature < min_working_temperature)
 		last_outlet_temperature = working_mix.temperature
 		update_appearance(UPDATE_ICON)
 		update_turbine_sound()
 		return
-	var/pressure_efficiency = CLAMP01(last_pressure_delta / RBMK_TURBINE_DESIGN_PRESSURE_DELTA)
-	if(pressure_efficiency <= 0)
+	// Gas composition determines heat capacity. Pressure ratio bounds the
+	// ideal expansion; the cold-side temperature bounds the usable delta T.
+	// This is a simplified ideal-gas model, not a steam-table calculation.
+	var/cold_temperature = max(cold_side_temperature, TCMB)
+	var/available_temperature_drop = max(working_mix.temperature - cold_temperature, 0)
+	var/pressure_ratio = CLAMP01(max(last_outlet_pressure, 0.01) / max(last_inlet_pressure, 0.01))
+	var/molar_heat_capacity = last_heat_capacity / working_mix.total_moles()
+	var/expansion_exponent = R_IDEAL_GAS_EQUATION / (molar_heat_capacity + R_IDEAL_GAS_EQUATION)
+	var/ideal_expansion_drop = working_mix.temperature * (1 - (pressure_ratio ** expansion_exponent))
+	var/possible_temperature_drop = min(available_temperature_drop, ideal_expansion_drop * CLAMP01(isentropic_efficiency))
+	if(possible_temperature_drop <= 0)
 		last_outlet_temperature = working_mix.temperature
 		update_appearance(UPDATE_ICON)
 		update_turbine_sound()
 		return
-	var/possible_temperature_drop = clamp(useful_temperature_delta * heat_extraction_ratio * pressure_efficiency, 0, max_temperature_drop)
 	var/possible_heat_extracted = last_heat_capacity * possible_temperature_drop
 	var/possible_power_output = (possible_heat_extracted * generator_efficiency) / max(seconds_per_tick, 0.1)
-	last_power_output = clamp(possible_power_output, 0, max_power_output)
+	last_power_output = max(possible_power_output, 0)
+	// Output above the design rating remains usable but wears the generator.
+	var/overload_ratio = max((last_power_output / rated_power_output) - 1, 0)
+	if(overload_ratio > 0)
+		var/overload_damage = min(overload_ratio, max_generator_damage_per_second) * seconds_per_tick
+		last_generator_damage += overload_damage
+		generator_integrity = max(generator_integrity - overload_damage, 0)
+		check_generator_failure_conditions()
+		if(machine_stat & BROKEN)
+			reset_generation_telemetry()
+			return
 	if(last_power_output <= 0)
 		last_outlet_temperature = working_mix.temperature
 		update_appearance(UPDATE_ICON)
@@ -335,12 +352,13 @@
 		return
 	last_heat_extracted = (last_power_output * max(seconds_per_tick, 0.1)) / max(generator_efficiency, 0.01)
 	last_temperature_drop = clamp(last_heat_extracted / last_heat_capacity, 0, possible_temperature_drop)
-	working_mix.temperature = max(working_mix.temperature - last_temperature_drop, RBMK_AMBIENT_TEMP)
+	working_mix.temperature = max(working_mix.temperature - last_temperature_drop, cold_temperature)
 	last_outlet_temperature = working_mix.temperature
-	var/power_ratio = CLAMP01(last_power_output / max(max_power_output, 1))
+	var/power_ratio = max(last_power_output / max(rated_power_output, 1), 0)
 	rpm = round(sqrt(power_ratio) * max_rpm)
 	last_generation_time = world.time
-	add_avail(last_power_output)
+	// Powernets accumulate joules; telemetry remains in watts.
+	add_avail(last_power_output * max(seconds_per_tick, 0.1))
 	update_appearance(UPDATE_ICON)
 	update_turbine_sound()
 
@@ -448,16 +466,36 @@
 	var/pressure_flow_ratio = CLAMP01((internal_pressure - downstream_pressure) / RBMK_TURBINE_DESIGN_PRESSURE_DELTA)
 	if(pressure_flow_ratio <= 0)
 		return
+	// Work is available across the parcel's current expansion, not an old
+	// supply-pressure reading left behind by an earlier inlet transfer.
+	parent_turbine.last_inlet_pressure = internal_pressure
 	parent_turbine.last_outlet_pressure = downstream_pressure
 	parent_turbine.update_pressure_delta()
 	var/desired_moles = clamp(parent_turbine.flow_rate, 0, parent_turbine.max_flow_rate)
 	desired_moles *= pressure_flow_ratio * seconds_per_tick
 	if(desired_moles <= 0)
 		return
+	// A positive pressure difference permits forward flow, not pumping past
+	// equilibrium. Limit both the receiving pressure and the source inventory.
+	if(length(airs))
+		var/datum/gas_mixture/destination_mix = airs[1]
+		var/equalization_pressure = (internal_pressure + downstream_pressure) / 2
+		var/pressure_limited_moles = internal_turbine_mix.gas_pressure_calculate(
+			destination_mix,
+			equalization_pressure,
+			abs(internal_turbine_mix.temperature - destination_mix.temperature) <= 5,
+		)
+		var/source_limited_moles = internal_turbine_mix.total_moles() * (1 - (equalization_pressure / internal_pressure))
+		desired_moles = min(desired_moles, pressure_limited_moles, source_limited_moles)
+	if(desired_moles <= 0)
+		return
 	var/datum/gas_mixture/released_mix = internal_turbine_mix.remove(desired_moles)
 	if(!released_mix || released_mix.total_moles() <= 0)
 		return
-	parent_turbine.process_working_gas(released_mix, seconds_per_tick)
+	var/turf/exhaust_turf = get_turf(src)
+	var/datum/gas_mixture/exhaust_mix = length(airs) ? airs[1] : exhaust_turf?.return_air()
+	var/cold_side_temperature = exhaust_mix?.temperature
+	parent_turbine.process_working_gas(released_mix, seconds_per_tick, isnum(cold_side_temperature) ? cold_side_temperature : RBMK_AMBIENT_TEMP)
 	if(length(airs))
 		airs[1].merge(released_mix)
 		parent_turbine.last_outlet_pressure = airs[1].return_pressure()

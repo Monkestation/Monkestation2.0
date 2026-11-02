@@ -1,6 +1,6 @@
 // Processor tuning
 /// Material sheets recovered by an extraction recipe.
-#define RBMK_PROCESSOR_RECOVERED_SHEETS 5
+#define RBMK_PROCESSOR_RECOVERED_SHEETS 35
 /// Base duration of one processing job.
 #define RBMK_PROCESSOR_PROCESS_TIME (5 SECONDS)
 /// Additional processing time for each item after the first.

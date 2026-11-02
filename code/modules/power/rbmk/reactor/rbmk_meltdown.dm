@@ -5,8 +5,10 @@
 	if(!COOLDOWN_FINISHED(src, decay_meltdown_check_cooldown))
 		return
 	COOLDOWN_START(src, decay_meltdown_check_cooldown, decay_check_interval)
-	if(temperature >= get_effective_temp_damage_threshold())
-		trigger_meltdown("Post-SCRAM decay heat runaway")
+	// Residual heat continues to damage the casing; failure remains recoverable
+	// until integrity is exhausted. A hot shutdown alone is not a breach.
+	if(reactor_integrity <= 0)
+		trigger_meltdown("Post-SCRAM containment failure")
 
 /** Starts a normal RBMK meltdown. */
 /obj/machinery/rbmk/reactor/proc/trigger_meltdown(reason)
@@ -36,8 +38,7 @@
 	// Keep the pre-explosion warning local only.
 	// The stationwide air raid is reserved for the confirmed vessel breach and fallout countdown.
 	meltdown_area_alarms()
-	cut_overlays()
-	current_damage_stage = 4
+	// Keep the existing casing damage through the warning sequence.
 	update_appearance(UPDATE_ICON)
 	update_linked_consoles()
 	addtimer(CALLBACK(src, PROC_REF(complete_meltdown_sequence), alert_reason), RBMK_MELTDOWN_WARNING_DELAY, TIMER_UNIQUE)
@@ -63,11 +64,11 @@
 	launch_reactor_lid()
 	if(meltdown_supermatter_failure)
 		priority_announce(
-			"RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector.",
+			"RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector. Radioactive fallout will reach exposed station areas in approximately one minute; seek shielded shelter.",
 			"RBMK Reactor Breach",
 			'sound/misc/airraid.ogg',
 		)
-		rbmk_engineering_alert("RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector.")
+		rbmk_engineering_alert("RBMK supermatter containment vessel failure confirmed. Spatial cascade effects are developing around the reactor sector. Radioactive fallout will reach exposed station areas in approximately one minute; seek shielded shelter.")
 	else
 		priority_announce(
 			"RBMK reactor containment vessel failure confirmed. Radioactive fallout will reach exposed station areas in approximately one minute. Maintenance remains the safest shelter.",
@@ -80,8 +81,7 @@
 	addtimer(CALLBACK(src, PROC_REF(meltdown_atmos_release)), RBMK_MELTDOWN_EFFECT_STAGGER * 2)
 	addtimer(CALLBACK(src, PROC_REF(meltdown_explosions)), RBMK_MELTDOWN_EFFECT_STAGGER * 3)
 	addtimer(CALLBACK(src, PROC_REF(meltdown_floor_damage)), RBMK_MELTDOWN_EFFECT_STAGGER * 4)
-	if(!meltdown_supermatter_failure)
-		addtimer(CALLBACK(src, PROC_REF(begin_delayed_meltdown_fallout)), RBMK_MELTDOWN_FALLOUT_DELAY, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(begin_delayed_meltdown_fallout)), RBMK_MELTDOWN_FALLOUT_DELAY, TIMER_UNIQUE)
 	update_linked_consoles()
 	log_game("[src] MELTDOWN explosion triggered: [reason]")
 
@@ -198,11 +198,16 @@
 
 /// Reinforced reactor lid launched as a destructive supply-pod payload during meltdown.
 /obj/structure/closet/supplypod/rbmk_reactor_lid
-	name = "RBMK Reactor Lid"
-	desc = "An impossibly heavy reactor containment lid. It should not be here."
+	name = "immovable lid"
+	desc = "An impossibly heavy reactor containment lid, embedded in the ground. An unstoppable reaction met an immovable lid. The lid lost."
 	icon = 'icons/obj/machines/rbmk_lid.dmi'
 	icon_state = "oh shit"
 	anchored = TRUE
+	anchorable = FALSE
+	move_resist = INFINITY
+	can_weld_shut = FALSE
+	can_install_electronics = FALSE
+	paint_jobs = null
 	density = TRUE
 	opened = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -228,6 +233,28 @@
 	decal = null
 	door = null
 	fin_mask = null
+
+/// This is solid reactor debris, not a usable or dismantlable closet.
+/obj/structure/closet/supplypod/rbmk_reactor_lid/tool_interact(obj/item/tool, mob/user)
+	return TRUE
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/wrench_act_secondary(mob/living/user, obj/item/tool)
+	balloon_alert(user, "embedded in the floor!")
+	return TRUE
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/deconstruct(disassembled = TRUE)
+	return
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/mouse_drop_receive(atom/movable/dropped, mob/living/user, params)
+	return
+
+/// Hide inherited closet hints for interactions the lid does not support.
+/obj/structure/closet/supplypod/rbmk_reactor_lid/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	return NONE
+
+/obj/structure/closet/supplypod/rbmk_reactor_lid/examine(mob/user)
+	. = ..()
+	. -= span_notice("Its [EXAMINE_HINT("bolted")] to the ground.")
 
 /obj/structure/closet/supplypod/rbmk_reactor_lid/Initialize(mapload, customStyle = FALSE)
 	. = ..()

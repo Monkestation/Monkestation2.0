@@ -57,11 +57,11 @@
 	var/list/target_slots = get_target_slot_list(fuel_rod)
 	if(target_slots == special_slots)
 		if(length(special_slots) >= max_special_slots)
-			to_chat(user, span_warning("All special rod slots are occupied!"))
+			to_chat(user, span_warning("All moderator rod slots are occupied!"))
 			return ITEM_INTERACT_FAILURE
 	else
 		if(length(normal_slots) >= max_normal_slots)
-			to_chat(user, span_warning("All normal rod slots are occupied!"))
+			to_chat(user, span_warning("All fuel rod slots are occupied!"))
 			return ITEM_INTERACT_FAILURE
 	if(!user.transferItemToLoc(fuel_rod, src))
 		return ITEM_INTERACT_FAILURE
@@ -71,7 +71,7 @@
 	update_appearance(UPDATE_ICON)
 	update_linked_consoles()
 	to_chat(user, span_notice("You insert [fuel_rod.name] into the reactor."))
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/compressed_air/tank_insert_clunky.ogg', 65, TRUE)
 	if(!had_active_fuel && !fuel_rod.is_depleted() && fuel_rod.contributes_to_reaction && actual_control_rod_depth < RBMK_CONTROL_ROD_MAX)
 		var/rounded_rod_depth = round(actual_control_rod_depth, 1)
 		var/obj/machinery/computer/rbmk_console/alert_console = get_primary_console()

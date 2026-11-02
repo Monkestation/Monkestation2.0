@@ -51,7 +51,11 @@
 
 /** Returns the damage-overlay stage for the current vessel integrity. */
 /obj/machinery/rbmk/reactor/proc/get_reactor_damage_stage()
-	if(meltdown_exploded || meltdown_in_progress || reactor_integrity <= 0)
+	if(meltdown_exploded)
+		return 4
+	if(meltdown_in_progress)
+		return current_damage_stage
+	if(reactor_integrity <= 0)
 		return 4
 	var/integrity_percent = (reactor_integrity / max(max_reactor_integrity, 1)) * 100
 	if(integrity_percent < RBMK_DAMAGE_OVERLAY_4)

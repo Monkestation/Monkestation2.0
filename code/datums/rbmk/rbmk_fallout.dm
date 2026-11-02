@@ -10,8 +10,8 @@
 	telegraph_message = null
 	weather_message = "<span class='userdanger'><i>Radioactive ash fills the air! Find shielded shelter!</i></span>"
 	weather_overlay = "light_ash"
-	weather_duration_lower = 1 MINUTES
-	weather_duration_upper = 2.5 MINUTES
+	weather_duration_lower = 5 MINUTES
+	weather_duration_upper = 8 MINUTES
 	weather_color = COLOR_GREEN
 	weather_sound = 'sound/rbmk/falloutwind.ogg'
 	end_duration = 10 SECONDS

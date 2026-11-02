@@ -187,10 +187,10 @@ const RBMKAlarmStrip = () => {
   const voidCoefficient = Number(data?.void_coefficient ?? 0);
   const coolantMoles = Number(data?.coolant_moles ?? 0);
 
-  if (temperature >= Number(data?.temp_max_safe ?? 6000)) {
+  if (temperature >= Number(data?.temp_stress_threshold ?? 8000)) {
     alarms.push('CORE OVER TEMPERATURE');
   }
-  if (pressure >= Number(data?.pressure_critical ?? 10000)) {
+  if (pressure >= Number(data?.pressure_critical ?? 18000)) {
     alarms.push('PRIMARY PRESSURE CRITICAL');
   }
   if ((integrity / maxIntegrity) * 100 <= 50) {
@@ -208,9 +208,11 @@ const RBMKAlarmStrip = () => {
   }
 
   return (
-    <NoticeBox danger className="RBMKConsole__AlarmStrip">
-      <Icon name="triangle-exclamation" /> {alarms.join('  /  ')}
-    </NoticeBox>
+    <Flex.Item>
+      <NoticeBox danger className="RBMKConsole__AlarmStrip">
+        <Icon name="triangle-exclamation" /> {alarms.join('  /  ')}
+      </NoticeBox>
+    </Flex.Item>
   );
 };
 

@@ -204,46 +204,46 @@
 	if(!warp)
 		return
 	var/clamped_progress = clamp(progress, 0, 1)
-	// Five-minute cascade: increase distortion once per minute.
-	// Stage 0 = 5 minutes left.
-	// Stage 1 = 4 minutes left.
-	// Stage 2 = 3 minutes left.
-	// Stage 3 = 2 minutes left.
-	// Stage 4 = 1 minute left.
-	// Stage 5 = terminal intensity.
-	var/warp_stage = clamp(FLOOR(clamped_progress * 5, 1), 0, 5)
+	// Retune the native looping animation in twenty small steps across the
+	// cascade, rather than jumping in strength only once per minute.
+	var/warp_stage = clamp(FLOOR(clamped_progress * 20, 1), 0, 20)
 	if(warp_stage == last_warp_stage)
 		return
 	last_warp_stage = warp_stage
 	apply_warp_strength(warp_stage)
 
-/** Applies a discrete intensity stage to the owned warp appearances. */
+/** Pulses the distortion faster and harder as the cascade advances. */
 /datum/supermatter_rod_cascade/proc/apply_warp_strength(warp_stage)
 	if(!warp || !reactor)
 		return
-	var/stage_progress = clamp(warp_stage / 5, 0, 1)
+	var/stage_progress = clamp(warp_stage / 20, 0, 1)
 	// Keep the large warp icon centered over the reactor every update.
 	warp.loc = reactor
 	warp.pixel_x = RBMK_CASCADE_WARP_PIXEL_OFFSET
 	warp.pixel_y = RBMK_CASCADE_WARP_PIXEL_OFFSET
 	warp.transform = matrix()
 	warp.alpha = 255
-	// Stronger distortion each minute.
-	// This affects the pinch strength without growing the warp sprite.
+	// Only the filter pulses; the sprite retains its center, radius and size.
 	var/ripple_strength = 3 + (stage_progress * 22)
 	var/ripple_repeat = max(24 - round(stage_progress * 12), 8)
 	var/ripple_radius = 96
+	var/minimum_strength = ripple_strength * 0.65
+	var/maximum_strength = ripple_strength * 1.35
+	var/pulse_half_period = ((4 - (3.4 * (stage_progress ** 1.5))) / 2) SECONDS
 	warp.filters = list(
 		filter(
 			type = "ripple",
 			x = 0,
 			y = 0,
-			size = ripple_strength,
+			size = minimum_strength,
 			repeat = ripple_repeat,
 			radius = ripple_radius,
 			falloff = 0,
 		),
 	)
+	// BYOND performs interpolation client-side; no per-frame server timer.
+	animate(warp.filters[1], size = maximum_strength, time = pulse_half_period, easing = SINE_EASING, loop = -1)
+	animate(size = minimum_strength, time = pulse_half_period, easing = SINE_EASING)
 
 /** Removes the visual distortion owned by this cascade. */
 /datum/supermatter_rod_cascade/proc/cleanup_warp()

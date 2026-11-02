@@ -57,11 +57,11 @@ export const RBMKGraphs = () => {
   const temperatureData = temperatureHistory.map((value, index) => [index, value]);
   const pressureData = pressureHistory.map((value, index) => [index, value]);
   const maxTemperature = scaleMaximum(
-    Math.max(Number(data?.temp_max_safe ?? 6000), ...temperatureHistory, 1),
+    Math.max(Number(data?.temp_damage_threshold ?? 9500), ...temperatureHistory, 1),
     1000,
   );
   const maxPressure = scaleMaximum(
-    Math.max(Number(data?.pressure_critical ?? 10000), ...pressureHistory, 1),
+    Math.max(Number(data?.pressure_critical ?? 18000), ...pressureHistory, 1),
     1000,
   );
 

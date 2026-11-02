@@ -59,30 +59,13 @@
 /obj/machinery/rbmk/reactor/proc/update_reactor_integrity(seconds_per_tick = RBMK_MACHINERY_PROCESS_SECONDS)
 	if(meltdown_in_progress || reactor_integrity <= 0)
 		return
-	var/temp_stress_threshold = get_effective_temp_stress_threshold()
 	var/high_temp_damage_threshold = get_effective_temp_damage_threshold()
 	var/process_scale = seconds_per_tick / RBMK_MACHINERY_PROCESS_SECONDS
-	var/temperature_excess
-	var/total_damage = 0
-	// A hot core can still keep chewing itself up after shutdown.
-	if(!running)
-		if(temperature > RBMK_AMBIENT_TEMP + 20)
-			var/cooldown_damage = 0.003
-			if(temperature > temp_stress_threshold)
-				cooldown_damage += (temperature - temp_stress_threshold) / 50000
-			apply_integrity_damage(
-				cooldown_damage * process_scale,
-				"Core failure during cooldown",
-				seconds_per_tick,
-				RBMK_INTEGRITY_COOLDOWN_DAMAGE_CAP_PER_SECOND,
-			)
-		return
-	temperature_excess = max(0, temperature - temp_stress_threshold)
-	if(temperature_excess > 0)
-		total_damage += temperature_excess / 850
-		// Damage ramps up hard once the core gets deep into the red.
-		if(temperature > high_temp_damage_threshold)
-			total_damage += (temperature - high_temp_damage_threshold) / 300
+	// The warning band is advisory. Only heat above the damage threshold
+	// wears the vessel, including residual heat after shutdown.
+	var/temperature_excess = max(0, temperature - high_temp_damage_threshold)
+	var/total_damage = (temperature_excess / 850) + (temperature_excess / 300)
 	if(total_damage <= 0)
 		return
-	apply_integrity_damage(total_damage * process_scale, "Core breach: Thermal overload!", seconds_per_tick)
+	var/damage_cap = running ? RBMK_INTEGRITY_DAMAGE_CAP_PER_SECOND : RBMK_INTEGRITY_COOLDOWN_DAMAGE_CAP_PER_SECOND
+	apply_integrity_damage(total_damage * process_scale, "Core breach: Thermal overload!", seconds_per_tick, damage_cap)
