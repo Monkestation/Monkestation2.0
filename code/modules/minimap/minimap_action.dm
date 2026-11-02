@@ -22,8 +22,9 @@
 		HUD_TAC_MINIMAP_Z_INDICATOR_DOWN = /atom/movable/screen/minimap_z_down
 	)
 
-/datum/action/minimap/Trigger(mob/clicker, trigger_flags)
+/datum/action/minimap/Trigger(trigger_flags)
 	. = ..()
+	var/mob/clicker = owner
 	var/datum/hud/hud = clicker.hud_used
 	// Toggle off if already visible.
 	if(has_minimap_huds(hud))
