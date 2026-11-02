@@ -19,8 +19,8 @@
 		new_icon.DrawBox(box_color, start_x - padding, start_y - padding, end_x + padding, end_y + padding)
 	icon = new_icon
 
-/// Draws a line of the passed color between two points, or erases one with padding if the color is null
 // Unapologetically yoinked from /proc/get_line()
+/// Draws a line of the passed color between two points, or erases one with padding if the color is null
 /atom/movable/screen/minimap_element/drawing/proc/draw_line(line_color, x0, y0, x1, y1, erase_pixel_range = 0, erase_padding_multiplier = 0)
 	var/icon/canvas = icon(src.icon)
 	var/current_x = x0
