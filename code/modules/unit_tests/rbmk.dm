@@ -17,19 +17,11 @@
 	operator.forceMove(run_loc_floor_bottom_left)
 	operator.put_in_hands(fuel_rod)
 	ADD_TRAIT(fuel_rod, TRAIT_NODROP, TRAIT_SOURCE_UNIT_TESTS)
-	TEST_ASSERT_EQUAL(
-		reactor.item_interaction(operator, fuel_rod, list()),
-		ITEM_INTERACT_FAILURE,
-		"No-drop rod was accepted.",
-	)
+	TEST_ASSERT_EQUAL( reactor.item_interaction(operator, fuel_rod, list()), ITEM_INTERACT_FAILURE, "No-drop rod was accepted." )
 	TEST_ASSERT_EQUAL(fuel_rod.loc, operator, "No-drop rod left the operator's inventory.")
 	TEST_ASSERT(!length(reactor.normal_slots), "No-drop rod was added to a reactor slot.")
 	REMOVE_TRAIT(fuel_rod, TRAIT_NODROP, TRAIT_SOURCE_UNIT_TESTS)
-	TEST_ASSERT_EQUAL(
-		reactor.item_interaction(operator, fuel_rod, list()),
-		ITEM_INTERACT_SUCCESS,
-		"Rod remained rejected after its no-drop trait was removed.",
-	)
+	TEST_ASSERT_EQUAL( reactor.item_interaction(operator, fuel_rod, list()), ITEM_INTERACT_SUCCESS, "Rod remained rejected after its no-drop trait was removed." )
 	TEST_ASSERT_EQUAL(fuel_rod.loc, reactor, "Inserted rod was not moved into the reactor.")
 	TEST_ASSERT(fuel_rod in reactor.normal_slots, "Inserted uranium rod was not added to a normal slot.")
 
@@ -63,10 +55,7 @@
 	reactor.last_coolant_air_cycle = SSair.times_fired - 1
 	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
 	TEST_ASSERT(reactor.last_outlet_moles_moved > 0, "The RBMK outlet moved no coolant across a positive pressure differential.")
-	TEST_ASSERT(
-		internal_mix.return_pressure() + ATMOS_PRESSURE_ERROR_TOLERANCE >= outlet_mix.return_pressure(),
-		"The RBMK outlet overshot downstream pressure at maximum flow.",
-	)
+	TEST_ASSERT( internal_mix.return_pressure() + ATMOS_PRESSURE_ERROR_TOLERANCE >= outlet_mix.return_pressure(), "The RBMK outlet overshot downstream pressure at maximum flow." )
 	var/inlet_supply_pressure = 2000
 	var/inlet_target_pressure = inlet_supply_pressure + RBMK_INLET_PUMP_HEAD
 	var/pre_injection_pressure = inlet_target_pressure - 100
@@ -78,10 +67,7 @@
 	reactor.last_coolant_air_cycle = SSair.times_fired - 1
 	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
 	TEST_ASSERT(reactor.last_inlet_moles_moved > 0, "The RBMK inlet moved no coolant below its pump-head limit.")
-	TEST_ASSERT(
-		internal_mix.return_pressure() <= inlet_target_pressure + ATMOS_PRESSURE_ERROR_TOLERANCE,
-		"The RBMK inlet overshot its pump-head pressure limit at maximum flow.",
-	)
+	TEST_ASSERT( internal_mix.return_pressure() <= inlet_target_pressure + ATMOS_PRESSURE_ERROR_TOLERANCE, "The RBMK inlet overshot its pump-head pressure limit at maximum flow." )
 
 /datum/unit_test/rbmk_fallout_weather/Run()
 	var/datum/weather/rbmk_fallout/fallout = allocate(
@@ -172,11 +158,7 @@
 	split_tick_turbine.update_generator_integrity(test_temperature, 0.25)
 	split_tick_turbine.update_generator_integrity(test_temperature, 0.25)
 	split_tick_turbine.update_generator_integrity(test_temperature, 0.25)
-	TEST_ASSERT_EQUAL(
-		single_tick_turbine.generator_integrity,
-		split_tick_turbine.generator_integrity,
-		"RBMK turbine generator damage changed with the number of process ticks.",
-	)
+	TEST_ASSERT_EQUAL( single_tick_turbine.generator_integrity, split_tick_turbine.generator_integrity, "RBMK turbine generator damage changed with the number of process ticks." )
 
 /datum/unit_test/rbmk_turbine_online_status/Run()
 	var/obj/machinery/rbmk/reactor/reactor = allocate(
