@@ -360,8 +360,8 @@
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
 	hitsound = SFX_DEFAULT_FISH_SLAP
-	pickup_sound = 'sound/items/handling/drinkglass_pickup.ogg'
-	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 	sprite_width = 7
 	sprite_height = 5
 

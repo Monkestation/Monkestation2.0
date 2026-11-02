@@ -7,11 +7,11 @@
 	sprite_height = 9
 	sprite_width = 8
 	stable_population = 4
-	feeding_frequency = 15 MINUTES
+	feeding_frequency = 10 MINUTES
 	random_case_rarity = FISH_RARITY_RARE
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
-	required_temperature_max = 400
+	required_temperature_max = LAVALAND_MAX_TEMPERATURE+50
 	min_pressure = HAZARD_LOW_PRESSURE
 	safe_air_limits = list(
 		/datum/gas/oxygen = list(2, 100),
@@ -61,7 +61,7 @@
 		multiplier -= 0.1 * round((average_weight - weight) / 200)
 	else if(weight >= (average_weight + 500))
 		multiplier += min(0.1 * round((weight - average_weight) / 500), 2)
-	AddComponent(/datum/component/fish_growth, lob_type, 12 MINUTES * multiplier)
+	AddComponent(/datum/component/fish_growth, lob_type, 10 MINUTES * multiplier)
 
 /obj/item/fish/chasm_crab/pet_fish(mob/living/user)
 	. = ..()
