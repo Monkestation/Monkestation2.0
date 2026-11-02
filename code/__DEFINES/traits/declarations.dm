@@ -1425,6 +1425,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given to atoms currently affected by projectile dampeners
 #define TRAIT_GOT_DAMPENED "got_dampened"
+/// Trait that is added to fishes that someone already caught, be it in-game or just theoretically, such as when they're bought
+/// Prevents fishing achievement from being granted by catching one of these
+#define TRAIT_NO_FISHING_ACHIEVEMENT "no_fishing_achievement"
+
 
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
