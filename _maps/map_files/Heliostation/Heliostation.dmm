@@ -9948,7 +9948,6 @@
 "aYY" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
-/area/space,
 /area/station/maintenance/department/science)
 "aYZ" = (
 /obj/machinery/iv_drip,
@@ -26026,11 +26025,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"cXj" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation,
-/area/space/nearstation)
 "cXm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -34480,7 +34474,6 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron/dark,
-/area/station/science/ordnance/testlab,
 /area/station/science/ordnance/testlab)
 "goM" = (
 /obj/effect/turf_decal/stripes/line{
@@ -137042,7 +137035,7 @@ aak
 aak
 aaa
 aak
-cXj
+aak
 aaa
 aaa
 aaa
