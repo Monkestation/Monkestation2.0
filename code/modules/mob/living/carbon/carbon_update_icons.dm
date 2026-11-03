@@ -592,6 +592,8 @@
 		. += "[limb_gender]-"
 	. += "[limb_id]"
 	. += "-[body_zone]"
+	if(!should_draw_greyscale && icon_static != initial(icon_static)) // limb styles swap the icon but keep the limb_id
+		. += "-[icon_static]"
 	if(should_draw_greyscale && draw_color)
 		. += "-[draw_color]"
 	if(is_invisible)

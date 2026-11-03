@@ -239,6 +239,37 @@
 	location.hotspot_expose(700, 25 * seconds_between_ticks, TRUE)
 
 /**
+ * Used to deal damage to humans and count their protection.
+ *
+ * Arguments:
+ * - seconds_per_tick
+ * - times_fired
+ * - no_protection: When set to TRUE, fire will ignore any possible fire protection
+ *
+ */
+
+/datum/status_effect/fire_handler/fire_stacks/proc/harm_human(seconds_per_tick, times_fired, no_protection = FALSE)
+	var/mob/living/carbon/human/victim = owner
+	var/thermal_protection = victim.get_thermal_protection()
+
+	if(!no_protection)
+		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			victim.adjust_bodytemperature(5.5 * seconds_per_tick)
+			return
+
+	var/amount_to_heat = (BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick
+	if(owner.bodytemperature > BODYTEMP_FIRE_TEMP_SOFTCAP)
+		// Apply dimishing returns upon temp beyond the soft cap
+		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / owner.bodytemperature)
+
+	victim.adjust_bodytemperature(amount_to_heat)
+	if (!(HAS_TRAIT(victim, TRAIT_RESISTHEAT)))
+		victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
+		victim.add_mob_memory(/datum/memory/was_burning)
+
+/**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
  *
  * Arguments:
@@ -407,5 +438,20 @@
 	return "[id][owner.tag]"
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/get_examine_text()
-	if(stacks >= HYDROPHOBIA_WETNESS_STACKS)
-		return span_purple("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
+	var/ratio = round((stacks / stack_limit) * 100)
+	var/msg = "Thin streaks of hydrophobic slime cling to [owner.p_their()] body."
+
+	switch(ratio)
+		if(76 to 100)
+			msg = "[owner.p_They()] [owner.p_are()] fully enveloped in thick hydrophobic slime."
+		if(51 to 75)
+			msg = "[owner.p_They()] [owner.p_are()] covered in a dense layer of hydrophobic slime."
+		if(26 to 50)
+			msg = "A noticeable layer of hydrophobic slime coats [owner.p_their()] body."
+
+	var/phobic_msg
+	if(stacks >= HYDROPHOBIA_WETNESS_STACKS + HYDROPHOBIA_WATER_EXPOSURE_COST)
+		phobic_msg = span_bold(" Water rolls right off [owner.p_their()] protective coating.")
+	else if(stacks > HYDROPHOBIA_WETNESS_STACKS)
+		phobic_msg = span_bold(" Small amounts of water bead against [owner.p_their()] coating, but larger splashes may penetrate it.")
+	return span_purple("[msg][phobic_msg]")
