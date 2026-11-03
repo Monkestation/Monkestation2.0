@@ -62,11 +62,19 @@
 	var/datum/weakref/account_ref
 	var/contract_value = 0
 	var/next_step = 0
+	/// Time spent visibly gliding across one tile, rather than waiting then hopping.
+	var/move_interval = 3 SECONDS
 	var/pursuing = FALSE
+	var/route_pending = FALSE
+	var/next_route_refresh = 0
 	var/list/route = list()
 	var/turf/route_destination
 	var/original_dead = FALSE
 	var/curse_fulfilled = FALSE
+	var/datum/weakref/chemical_target
+	var/chemical_started = 0
+	var/next_chemical_dose = 0
+	var/chemical_escalated = FALSE
 
 /mob/living/basic/immortal_snail/Initialize(mapload)
 	. = ..()
@@ -75,7 +83,7 @@
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
 	AddElement(/datum/element/connect_loc, connections)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(prevent_premature_deletion))
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/basic/immortal_snail/proc/prevent_premature_deletion(datum/source, force)
 	SIGNAL_HANDLER
@@ -84,7 +92,7 @@
 /mob/living/basic/immortal_snail/Destroy(force)
 	if(contract_value && !curse_fulfilled && !force)
 		return QDEL_HINT_LETMELIVE
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSfastprocess, src)
 	QDEL_NULL(GLOB.snail_debt)
 	target_ref = null
 	target_mind_ref = null
@@ -121,10 +129,18 @@
 	return target_ref?.resolve()
 
 /mob/living/basic/immortal_snail/process(seconds_per_tick)
-	if(pursuing || world.time < next_step)
+	if(pursuing)
+		return
+	var/mob/living/target = original_target()
+	var/atom/navigation_target = target
+	if(original_dead || !target || target.stat == DEAD)
+		var/datum/next_claim = GLOB.snail_debt?.next_claim()
+		navigation_target = GLOB.snail_debt?.location_of(next_claim)
+	// Refresh paths during the current glide, not after it has finished.
+	prefetch_route(navigation_target)
+	if(world.time < next_step)
 		return
 	GLOB.snail_debt?.refresh_carriers()
-	var/mob/living/target = original_target()
 	if(!target || target.stat == DEAD)
 		original_dead = TRUE
 	if(original_dead)
@@ -140,13 +156,42 @@
 				contact(carrier)
 			GLOB.snail_debt.collect(claim)
 			return
-		next_step = world.time + 3 SECONDS
+		next_step = world.time + move_interval
 		pursuing = TRUE
 		INVOKE_ASYNC(src, PROC_REF(pursue), money_location)
 		return
-	next_step = world.time + 3 SECONDS
+	next_step = world.time + move_interval
 	pursuing = TRUE
 	INVOKE_ASYNC(src, PROC_REF(pursue), target)
+
+/mob/living/basic/immortal_snail/proc/prefetch_route(atom/target)
+	var/turf/destination = get_turf(target)
+	if(route_pending || world.time < next_route_refresh || !destination || destination.z != z || destination == get_turf(src))
+		return
+	if(length(route) && route_destination == destination)
+		return
+	route_pending = TRUE
+	next_route_refresh = world.time + 1 SECONDS
+	INVOKE_ASYNC(src, PROC_REF(refresh_route), target, destination)
+
+/mob/living/basic/immortal_snail/proc/refresh_route(atom/target, turf/destination)
+	var/turf/start = get_turf(src)
+	var/list/new_route = get_path_to(src, destination, max_distance = world.maxx * world.maxy, access = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), simulated_only = FALSE)
+	if(QDELETED(src))
+		return
+	route_pending = FALSE
+	// A moving target does not invalidate the route to its last known position.
+	// Keep advancing while the next refresh catches up instead of stopping.
+	var/turf/current_target_turf = get_turf(target)
+	if(QDELETED(target) || !current_target_turf || current_target_turf.z != destination.z || z != destination.z)
+		return
+	if(get_turf(src) != start)
+		var/current_index = new_route.Find(get_turf(src))
+		if(!current_index)
+			return
+		new_route.Cut(1, current_index + 1)
+	route = new_route
+	route_destination = destination
 
 /mob/living/basic/immortal_snail/proc/pursue(atom/target)
 	var/turf/destination = get_turf(target)
@@ -169,13 +214,14 @@
 			contact(target)
 		pursuing = FALSE
 		return
-	if(!length(route) || route_destination != destination)
+	if(!length(route))
 		// JPS's scan loops still compare against the limit when zero is supplied.
-		route = get_path_to(src, destination, max_distance = world.maxx * world.maxy, simulated_only = FALSE)
+		route = get_path_to(src, destination, max_distance = world.maxx * world.maxy, access = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), simulated_only = FALSE)
 		route_destination = destination
 	if(QDELETED(src))
 		return
-	if(QDELETED(target) || get_turf(target) != destination)
+	var/turf/current_target_turf = get_turf(target)
+	if(QDELETED(target) || !current_target_turf || current_target_turf.z != z)
 		route.Cut()
 		pursuing = FALSE
 		return
@@ -185,28 +231,76 @@
 	if(ISDIAGONALDIR(fallback_direction))
 		fallback_direction &= EAST|WEST
 	var/turf/next = length(route) ? route[1] : get_step(src, fallback_direction)
-	if(istype(next, /turf/closed/wall))
+	if(isclosedturf(next))
 		var/step_direction = get_dir(src, next)
-		var/turf/closed/wall/wall = next
-		wall.dismantle_wall(devastated = TRUE)
+		if(!chemically_breach(next))
+			pursuing = FALSE
+			return
 		next = get_step(src, step_direction)
-	else if(isclosedturf(next))
-		// Even reinforced mineral or indestructible map turfs cannot imprison it.
-		next = next.ChangeTurf(/turf/open/floor/plating)
 	if(next)
 		for(var/obj/obstacle in next)
 			if(!obstacle.density)
 				continue
-			obstacle.take_damage(1000, BRUTE, MELEE, sound_effect = TRUE)
-			if(!QDELETED(obstacle) && obstacle.density)
-				qdel(obstacle)
+			if(!chemically_breach(obstacle))
+				pursuing = FALSE
+				return
 		if(!next.density)
-			step_towards(src, next)
+			// The standard delay helper clamps to at least one pixel per tick,
+			// which finishes a three-second glide early. Preserve the fractional rate.
+			Move(next, get_dir(src, next), MOVEMENT_ADJUSTED_GLIDE_SIZE(move_interval, 1))
 		if(get_turf(src) == next && length(route))
 			route.Cut(1, 2)
 		else
 			route.Cut()
+		next_step = world.time + move_interval
 	pursuing = FALSE
+
+/// Actual reagent effects do the work first; the curse only overrides chemical
+/// immunity after giving the normal reactions time to finish.
+/mob/living/basic/immortal_snail/proc/chemically_breach(atom/obstacle)
+	if(QDELETED(obstacle) || !obstacle.density)
+		return TRUE
+	if(chemical_target?.resolve() != obstacle)
+		chemical_target = WEAKREF(obstacle)
+		chemical_started = world.time
+		next_chemical_dose = 0
+		chemical_escalated = FALSE
+	if(world.time >= chemical_started + 25 SECONDS)
+		obstacle.visible_message(span_danger("[src]'s curse tears through the chemically scarred [obstacle]!"))
+		if(isturf(obstacle))
+			var/turf/blocked_turf = obstacle
+			blocked_turf.ChangeTurf(/turf/open/floor/plating)
+		else
+			qdel(obstacle)
+		return TRUE
+	if(isturf(obstacle))
+		var/turf/blocked_turf = obstacle
+		var/datum/component/thermite/coating = blocked_turf.GetComponent(/datum/component/thermite)
+		if(!coating)
+			var/datum/reagent/thermite/thermite = GLOB.chemical_reagents_list[/datum/reagent/thermite]
+			thermite.expose_turf(blocked_turf, istype(blocked_turf, /turf/closed/wall/r_wall) ? 50 : 30)
+			coating = blocked_turf.GetComponent(/datum/component/thermite)
+			blocked_turf.visible_message(span_warning("[src] coats [blocked_turf] in thermite!"))
+		if(coating && !coating.burn_timer && coating.burn_require > 0 && coating.amount >= coating.burn_require)
+			var/datum/reagent/clf3/igniter = GLOB.chemical_reagents_list[/datum/reagent/clf3]
+			igniter.expose_turf(blocked_turf, 5)
+			blocked_turf.fire_act(2500, 5)
+			blocked_turf.visible_message(span_danger("[src] ignites the thermite with chlorine trifluoride!"))
+	else if(isobj(obstacle))
+		var/obj/blocked_object = obstacle
+		if(world.time >= next_chemical_dose)
+			var/datum/reagent/toxin/acid/fluacid/acid = GLOB.chemical_reagents_list[/datum/reagent/toxin/acid/fluacid]
+			if(blocked_object.uses_integrity)
+				acid.expose_obj(blocked_object, 300)
+			next_chemical_dose = world.time + 6 SECONDS
+			blocked_object.visible_message(span_warning("[src] drenches [blocked_object] in sizzling fluorosulfuric acid!"))
+		if(!chemical_escalated && world.time >= chemical_started + 6 SECONDS)
+			chemical_escalated = TRUE
+			var/datum/reagent/clf3/incendiary = GLOB.chemical_reagents_list[/datum/reagent/clf3]
+			incendiary.expose_turf(get_turf(blocked_object), 10)
+			blocked_object.fire_act(2500, 10)
+			blocked_object.visible_message(span_danger("[src] follows the acid with a burst of chlorine trifluoride!"))
+	return QDELETED(obstacle) || !obstacle.density
 
 /mob/living/basic/immortal_snail/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
