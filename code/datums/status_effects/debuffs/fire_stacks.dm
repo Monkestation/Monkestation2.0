@@ -438,5 +438,20 @@
 	return "[id][owner.tag]"
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/get_examine_text()
-	if(stacks >= HYDROPHOBIA_WETNESS_STACKS)
-		return span_purple("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
+	var/ratio = round((stacks / stack_limit) * 100)
+	var/msg = "Thin streaks of hydrophobic slime cling to [owner.p_their()] body."
+
+	switch(ratio)
+		if(76 to 100)
+			msg = "[owner.p_They()] [owner.p_are()] fully enveloped in thick hydrophobic slime."
+		if(51 to 75)
+			msg = "[owner.p_They()] [owner.p_are()] covered in a dense layer of hydrophobic slime."
+		if(26 to 50)
+			msg = "A noticeable layer of hydrophobic slime coats [owner.p_their()] body."
+
+	var/phobic_msg
+	if(stacks >= HYDROPHOBIA_WETNESS_STACKS + HYDROPHOBIA_WATER_EXPOSURE_COST)
+		phobic_msg = span_bold(" Water rolls right off [owner.p_their()] protective coating.")
+	else if(stacks > HYDROPHOBIA_WETNESS_STACKS)
+		phobic_msg = span_bold(" Small amounts of water bead against [owner.p_their()] coating, but larger splashes may penetrate it.")
+	return span_purple("[msg][phobic_msg]")
