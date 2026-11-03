@@ -95,7 +95,9 @@
 	var/contract_value = 0
 	var/next_step = 0
 	/// Time spent visibly gliding across one tile, rather than waiting then hopping.
-	var/move_interval = 3 SECONDS
+	var/move_interval = 2.5 SECONDS
+	/// Only the three most recently vacated tiles retain cursed slime.
+	var/list/slime_trail = list()
 	var/pursuing = FALSE
 	var/route_pending = FALSE
 	var/next_route_refresh = 0
@@ -112,7 +114,6 @@
 /mob/living/basic/immortal_snail/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_GODMODE, TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_PUSHIMMUNE, TRAIT_NO_SLIP_ALL, TRAIT_SPACEWALK), INNATE_TRAIT)
-	AddElement(/datum/element/snailcrawl)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
 	AddElement(/datum/element/connect_loc, connections)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(prevent_premature_deletion))
@@ -128,6 +129,7 @@
 	if(contract_value && !curse_fulfilled && !force)
 		return QDEL_HINT_LETMELIVE
 	QDEL_NULL(pursuit_driver)
+	QDEL_LIST(slime_trail)
 	QDEL_NULL(GLOB.snail_debt)
 	target_ref = null
 	target_mind_ref = null
@@ -307,7 +309,7 @@
 				return
 		if(!next.density)
 			// The standard delay helper clamps to at least one pixel per tick,
-			// which finishes a three-second glide early. Preserve the fractional rate.
+			// which finishes a slow glide early. Preserve the fractional rate.
 			Move(next, get_dir(src, next), MOVEMENT_ADJUSTED_GLIDE_SIZE(move_interval, 1))
 		if(get_turf(src) == next && length(route))
 			route.Cut(1, 2)
@@ -326,7 +328,7 @@
 		chemical_started = world.time
 		next_chemical_dose = 0
 		chemical_escalated = FALSE
-	if(world.time >= chemical_started + 25 SECONDS)
+	if(world.time >= chemical_started + 17.5 SECONDS)
 		obstacle.visible_message(span_danger("[src]'s curse tears through the chemically scarred [obstacle]!"))
 		if(isturf(obstacle))
 			var/turf/blocked_turf = obstacle
@@ -347,15 +349,20 @@
 			igniter.expose_turf(blocked_turf, 5)
 			blocked_turf.fire_act(2500, 5)
 			blocked_turf.visible_message(span_danger("[src] ignites the thermite with chlorine trifluoride!"))
+		if(coating?.burn_timer && !chemical_escalated)
+			// Accelerate this coating's native melt callback without changing other thermite.
+			chemical_escalated = TRUE
+			deltimer(coating.burn_timer)
+			coating.burn_timer = addtimer(coating.burn_callback, min(coating.amount * 0.245 SECONDS, 14 SECONDS), TIMER_STOPPABLE)
 	else if(isobj(obstacle))
 		var/obj/blocked_object = obstacle
 		if(world.time >= next_chemical_dose)
 			var/datum/reagent/toxin/acid/fluacid/acid = GLOB.chemical_reagents_list[/datum/reagent/toxin/acid/fluacid]
 			if(blocked_object.uses_integrity)
 				acid.expose_obj(blocked_object, 300)
-			next_chemical_dose = world.time + 6 SECONDS
+			next_chemical_dose = world.time + 4.2 SECONDS
 			blocked_object.visible_message(span_warning("[src] drenches [blocked_object] in sizzling fluorosulfuric acid!"))
-		if(!chemical_escalated && world.time >= chemical_started + 6 SECONDS)
+		if(!chemical_escalated && world.time >= chemical_started + 4.2 SECONDS)
 			chemical_escalated = TRUE
 			var/datum/reagent/clf3/incendiary = GLOB.chemical_reagents_list[/datum/reagent/clf3]
 			incendiary.expose_turf(get_turf(blocked_object), 10)
@@ -365,9 +372,38 @@
 
 /mob/living/basic/immortal_snail/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
+	var/turf/previous = isturf(old_loc) ? old_loc : null
+	var/turf/current = get_turf(src)
+	// Teleports do not paint a trail across levels or leave old patches behind.
+	if(!previous || !current || previous.z != current.z || get_dist(previous, current) != 1)
+		QDEL_LIST(slime_trail)
+		slime_trail = list()
+	else
+		for(var/obj/effect/decal/cleanable/immortal_snail_slime/patch as anything in slime_trail.Copy())
+			if(QDELETED(patch) || patch.loc == previous || patch.loc == current)
+				slime_trail -= patch
+				qdel(patch)
+		if(isfloorturf(previous))
+			slime_trail += new /obj/effect/decal/cleanable/immortal_snail_slime(previous)
+		while(length(slime_trail) > 3)
+			var/obj/effect/decal/cleanable/immortal_snail_slime/oldest = slime_trail[1]
+			slime_trail.Cut(1, 2)
+			qdel(oldest)
 	for(var/mob/living/victim in loc)
 		if(victim != src)
 			contact(victim)
+
+/obj/effect/decal/cleanable/immortal_snail_slime
+	name = "snail slime"
+	desc = "A glistening, dangerously slippery trail of slime."
+	icon = 'icons/effects/water.dmi'
+	icon_state = "wet_floor_static"
+	color = "#9ebf74"
+	mergeable_decal = FALSE
+
+/obj/effect/decal/cleanable/immortal_snail_slime/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slippery, 80, SLIPPERY_TURF | SLIDE | GALOSHES_DONT_HELP)
 
 /mob/living/basic/immortal_snail/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER

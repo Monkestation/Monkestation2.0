@@ -184,7 +184,7 @@
 	original_type = blocked.type
 	blocked = blocked.ChangeTurf(/turf/closed/indestructible)
 	snail.chemically_breach(blocked)
-	snail.chemical_started = world.time - 25 SECONDS
+	snail.chemical_started = world.time - 17.5 SECONDS
 	snail.chemically_breach(blocked)
 	TEST_ASSERT(!isclosedturf(blocked), "Indestructible map walls must not trap the snail")
 	blocked.ChangeTurf(original_type)
@@ -192,10 +192,10 @@
 	barrier.resistance_flags |= INDESTRUCTIBLE
 	snail.chemically_breach(barrier)
 	TEST_ASSERT(barrier.GetComponent(/datum/component/acid), "Even resistant obstacles must receive chemical attacks first")
-	snail.chemical_started = world.time - 6 SECONDS
+	snail.chemical_started = world.time - 4.2 SECONDS
 	snail.chemically_breach(barrier)
 	TEST_ASSERT(snail.chemical_escalated, "Resistant objects must trigger chlorine trifluoride escalation")
-	snail.chemical_started = world.time - 25 SECONDS
+	snail.chemical_started = world.time - 17.5 SECONDS
 	snail.chemically_breach(barrier)
 	TEST_ASSERT(QDELETED(barrier), "Indestructible dense objects must not trap the snail")
 	var/list/sealed_surroundings = list()
@@ -214,6 +214,32 @@
 	snail.pursue(person)
 	TEST_ASSERT_EQUAL(snail.z, person.z, "The snail must follow between z levels")
 	TEST_ASSERT(get_dist(snail, person) >= 10, "Z travel must reappear at a distance, not on the victim")
+
+/datum/unit_test/immortal_snail_trail/Run()
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	QDEL_NULL(snail.pursuit_driver)
+	var/turf/starting = get_turf(snail)
+	snail.forceMove(get_step(starting, EAST))
+	var/obj/effect/decal/cleanable/immortal_snail_slime/first_patch = locate() in starting
+	TEST_ASSERT(first_patch, "Slime must appear on the tile the snail leaves")
+	TEST_ASSERT(first_patch.GetComponent(/datum/component/slippery), "The slime must be slippery")
+	TEST_ASSERT(!(locate(/obj/effect/decal/cleanable/immortal_snail_slime) in snail.loc), "Slime must trail behind the snail")
+	for(var/step in 1 to 3)
+		snail.forceMove(get_step(snail, EAST))
+	TEST_ASSERT_EQUAL(length(snail.slime_trail), 3, "Only the last three vacated tiles should retain slime")
+	TEST_ASSERT(QDELETED(first_patch), "The fourth-oldest patch must disappear")
+	// Doubling back must remove slime from under the snail, too.
+	snail.forceMove(get_step(snail, WEST))
+	TEST_ASSERT(!(locate(/obj/effect/decal/cleanable/immortal_snail_slime) in snail.loc), "Turning back must still leave slime behind")
+	var/list/old_trail = snail.slime_trail.Copy()
+	snail.forceMove(starting)
+	TEST_ASSERT(!length(snail.slime_trail), "Teleporting must clear the old trail")
+	for(var/obj/effect/decal/cleanable/immortal_snail_slime/patch as anything in old_trail)
+		TEST_ASSERT(QDELETED(patch), "Teleporting must remove old slime objects")
+	snail.forceMove(get_step(starting, EAST))
+	first_patch = snail.slime_trail[1]
+	qdel(snail, TRUE)
+	TEST_ASSERT(QDELETED(first_patch), "Fulfilling or removing the curse must clean up its slime")
 
 /datum/unit_test/immortal_snail_scheduled_pursuit
 	var/mob/living/basic/immortal_snail/test_snail
