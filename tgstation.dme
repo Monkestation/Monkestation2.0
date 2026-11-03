@@ -2233,6 +2233,8 @@
 #include "code\game\machinery\shipbreaker.dm"
 #include "code\game\machinery\sleepers.dm"
 #include "code\game\machinery\slotmachine.dm"
+#include "code\game\machinery\immortal_snail.dm"
+#include "code\modules\economy\snail_debt.dm"
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\stasis.dm"
 #include "code\game\machinery\status_display.dm"

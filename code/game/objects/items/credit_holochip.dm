@@ -77,14 +77,16 @@
 	holochip_overlay.color = overlay_color
 	. += holochip_overlay
 
-/obj/item/holochip/proc/spend(amount, pay_anyway = FALSE)
+/obj/item/holochip/proc/spend(amount, pay_anyway = FALSE, datum/snail_recipient)
 	if(credits >= amount)
+		GLOB.snail_debt?.transfer(src, snail_recipient, amount)
 		credits -= amount
 		if(credits == 0)
 			qdel(src)
 		update_appearance()
 		return amount
 	else if(pay_anyway)
+		GLOB.snail_debt?.transfer(src, snail_recipient, credits)
 		qdel(src)
 		return credits
 	else
@@ -94,6 +96,9 @@
 	..()
 	if(istype(attacking_item, /obj/item/holochip))
 		var/obj/item/holochip/H = attacking_item
+		if(H == src)
+			return
+		GLOB.snail_debt?.transfer(H, src, H.credits)
 		credits += H.credits
 		to_chat(user, span_notice("You insert the credits into [src]."))
 		update_appearance()
@@ -106,8 +111,9 @@
 	var/split_amount = tgui_input_number(user, "How many credits do you want to extract from the holochip? (Max: [credits] cr)", "Holochip", max_value = credits)
 	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH) || loc != user)
 		return CLICK_ACTION_BLOCKING
-	var/new_credits = spend(split_amount, TRUE)
-	var/obj/item/holochip/chip = new(user ? user : drop_location(), new_credits)
+	split_amount = min(round(split_amount), credits)
+	var/obj/item/holochip/chip = new(user ? user : drop_location(), split_amount)
+	spend(split_amount, TRUE, chip)
 	if(user)
 		if(!user.put_in_hands(chip))
 			chip.forceMove(user.drop_location())

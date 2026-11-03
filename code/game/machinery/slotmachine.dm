@@ -67,6 +67,25 @@
 			var/obj/item/coin/C = new cointype
 			coinvalues["[cointype]"] = C.get_item_credit_value()
 			qdel(C) //Sigh
+	if(mapload && type == /obj/machinery/computer/slot_machine)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/slot_machine/LateInitialize()
+	// All mapped machines exist by now; choose once, rather than biasing toward map order.
+	var/static/chosen = FALSE
+	if(chosen)
+		return
+	chosen = TRUE
+	var/list/candidates = list()
+	for(var/obj/machinery/computer/slot_machine/machine in SSmachines.get_machines_by_type(/obj/machinery/computer/slot_machine))
+		if(machine.type == /obj/machinery/computer/slot_machine && is_station_level(machine.z))
+			candidates += machine
+	if(!length(candidates))
+		return
+	var/obj/machinery/computer/slot_machine/chosen_machine = pick(candidates)
+	var/obj/machinery/computer/slot_machine/replacement = new /obj/machinery/computer/slot_machine/immortal_snail(get_turf(chosen_machine))
+	replacement.setDir(chosen_machine.dir)
+	qdel(chosen_machine)
 
 /obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
 	if(balance)
@@ -153,6 +172,8 @@
 
 /obj/machinery/computer/slot_machine/ui_interact(mob/living/user, datum/tgui/ui)
 	. = ..()
+	if(istype(src, /obj/machinery/computer/slot_machine/immortal_snail))
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SlotMachine", name)

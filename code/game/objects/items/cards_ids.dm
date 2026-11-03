@@ -651,6 +651,7 @@
 		to_chat(user, span_warning("[money] doesn't seem to be worth anything!"))
 		return FALSE
 	registered_account.adjust_money(cash_money, "System: Deposit")
+	GLOB.snail_debt?.transfer(money, registered_account, cash_money)
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
 	if(physical_currency)
@@ -684,6 +685,8 @@
 		CHECK_TICK
 
 	registered_account.adjust_money(total, "System: Deposit")
+	for(var/obj/item/physical_money in money)
+		GLOB.snail_debt?.transfer(physical_money, registered_account, physical_money.get_item_credit_value())
 	SSblackbox.record_feedback("amount", "credits_inserted", total)
 	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
 	QDEL_LIST(money)
@@ -757,11 +760,12 @@
 		return CLICK_ACTION_BLOCKING
 	if(!alt_click_can_use_id(user))
 		return CLICK_ACTION_BLOCKING
-	if(!registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
+	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
+	if(!registered_account.adjust_money(-amount_to_remove, "System: Withdrawal", snail_recipient = holochip))
+		qdel(holochip)
 		var/difference = amount_to_remove - registered_account.account_balance
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
 		return CLICK_ACTION_BLOCKING
-	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	user.put_in_hands(holochip)
 	to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
 	SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)

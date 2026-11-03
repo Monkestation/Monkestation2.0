@@ -108,8 +108,10 @@
  * * amount - the quantity of credits that will be written off if the value is negative, or added if it is positive.
  * * reason - the reason for the appearance or loss of money
  */
-/datum/bank_account/proc/adjust_money(amount, reason)
+/datum/bank_account/proc/adjust_money(amount, reason, datum/snail_recipient)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
+		if(amount < 0)
+			GLOB.snail_debt?.transfer(src, snail_recipient, -amount)
 		var/debt_collected = 0
 		if(account_debt > 0 && amount > 0)
 			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
@@ -155,7 +157,7 @@
 			reason_from = transfer_reason
 
 		adjust_money(amount, reason_to)
-		from.adjust_money(-amount, reason_from)
+		from.adjust_money(-amount, reason_from, src)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
 		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
 		return TRUE
