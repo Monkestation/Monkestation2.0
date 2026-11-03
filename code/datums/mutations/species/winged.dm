@@ -5,7 +5,7 @@
 	quality = POSITIVE
 	difficulty = 12
 	text_gain_indication = span_notice("You feel your wing muscles expand!")
-	species_allowed = list(SPECIES_MOTH, SPECIES_TUNDRA, SPECIES_APID, SPECIES_ORNITHID)
+	species_allowed = list(SPECIES_MOTH, SPECIES_APID, SPECIES_ORNITHID)
 	instability = 15
 
 /datum/mutation/wings/on_acquiring(mob/living/carbon/human/owner)

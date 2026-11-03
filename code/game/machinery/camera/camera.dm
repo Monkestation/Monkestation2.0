@@ -439,35 +439,39 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 		return FALSE
 	return TRUE
 
+/// Returns an alist of turfs in this camera's view. This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Format is "alist[turf] = null", if you need to check individual objects use "length(can_see & list(turf))". Only "&" and "in" work for checking contents, but "in" is much slower.
+/// Always have the return value of can_see as the left-hand operand, otherwise it uses list checks instead of alist checks and your CPU time gets thrown in a blender.
 /obj/machinery/camera/proc/can_see()
-	var/list/see = null
+	var/alist/see = alist()
 	var/turf/pos = get_turf(src)
 	var/turf/directly_above = GET_TURF_ABOVE(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
 	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
-		see = range(view_range, pos)
+		see += RANGE_TURFS(view_range, pos)
 	else
-		see = get_hear(view_range, pos)
+		var/lum = pos.luminosity
+		pos.luminosity = view_range + 2
+		for(var/turf/turf in view(view_range, pos))
+			see += turf
+		pos.luminosity = lum
+
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
-		for(var/turf/seen in see)
+		for(var/turf/seen as anything in see)
 			if(check_lower)
-				var/turf/visible = seen
-				while(visible && istransparentturf(visible))
-					var/turf/below = GET_TURF_BELOW(visible)
-					for(var/turf/adjacent in range(1, below))
-						see += adjacent
-						see += adjacent.contents
-					visible = below
+				var/turf/below = seen
+				while(below && istransparentturf(below))
+					below = GET_TURF_BELOW(below)
+					see += RANGE_TURFS(1, below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
-					for(var/turf/adjacent in range(1, above))
-						see += adjacent
-						see += adjacent.contents
+					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
+
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)

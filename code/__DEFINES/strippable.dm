@@ -31,3 +31,6 @@
 
 /// This slot can't be seen, but can be accessed.
 #define STRIPPABLE_OBSCURING_HIDDEN 2
+
+/// This slot can be seen, but cannot be accessed
+#define STRIPPABLE_OBSCURING_INACCESSIBLE 3

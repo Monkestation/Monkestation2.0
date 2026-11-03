@@ -146,7 +146,7 @@
 		qdel(src)
 		return
 
-	if((limb_id == SPECIES_OOZELING) && !special)
+	if((limb_id in list(SPECIES_OOZELING, SPECIES_SLIMEPERSON, SPECIES_LUMINESCENT)) && !special)
 		if(deprecise_zone(src.body_zone) in list(BODY_ZONE_HEAD, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG ))
 			var/list/limborgans = src.contents
 			if(limborgans) //Handle implants dropping when limb is dismembered

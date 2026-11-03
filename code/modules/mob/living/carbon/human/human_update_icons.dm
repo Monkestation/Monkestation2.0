@@ -52,7 +52,7 @@ There are several things that need to be remembered:
 		!HAS_TRAIT(item, TRAIT_ALWAYS_RENDER) && \
 		( \
 			HAS_TRAIT(item, TRAIT_NO_WORN_ICON) \
-			|| (check_obscured_slots(transparent_protection = TRUE) & slot) \
+			|| (check_obscured_slots() & slot) \
 		) \
 	) { \
 		return; \

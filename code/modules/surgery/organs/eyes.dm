@@ -159,7 +159,7 @@
 			eye_right.color = parent.get_right_eye_color() || eye_color_right
 			eye_left.color = parent.get_left_eye_color() || eye_color_left
 
-		var/obscured = parent.check_obscured_slots(TRUE)
+		var/obscured = parent.check_obscured_slots()
 		if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 			overlays += emissive_appearance_copy(eye_left, src, NONE)
 			overlays += emissive_appearance_copy(eye_right, src, NONE)
@@ -698,6 +698,14 @@
 	icon_state = "eyeballs-moth"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	overlay_ignore_lighting = TRUE
+
+/obj/item/organ/internal/eyes/moth/generate_body_overlay(mob/living/carbon/human/parent)
+	// tundra fur comes with its own eyes
+	if(HAS_TRAIT(parent, TRAIT_GREYSCALE_TOGGLE) && parent.limb_style == LIMB_STYLE_TUNDRA)
+		eye_icon_state = "tundramotheyes"
+	else
+		eye_icon_state = initial(eye_icon_state)
+	return ..()
 
 /obj/item/organ/internal/eyes/lizard
 	name = "lizard eyes"

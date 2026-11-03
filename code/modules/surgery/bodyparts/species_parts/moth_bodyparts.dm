@@ -13,6 +13,7 @@
 	bodypart_traits = list(TRAIT_ANTENNAE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 	brute_modifier = BRUTE_MOD
 	burn_modifier = BURN_MOD
@@ -28,6 +29,7 @@
 	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 	brute_modifier = BRUTE_MOD
 	burn_modifier = BURN_MOD
@@ -99,6 +101,7 @@
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 	brute_modifier = BRUTE_MOD
 	burn_modifier = BURN_MOD
@@ -115,6 +118,7 @@
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 	brute_modifier = BRUTE_MOD
 	burn_modifier = BURN_MOD
@@ -127,6 +131,7 @@
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 	brute_modifier = BRUTE_MOD
 	burn_modifier = BURN_MOD
@@ -139,6 +144,7 @@
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+	style_icons = list(LIMB_STYLE_TUNDRA = 'icons/mob/human/species/tundramoths/bodyparts.dmi')
 
 	brute_modifier = BRUTE_MOD
 	burn_modifier = BURN_MOD

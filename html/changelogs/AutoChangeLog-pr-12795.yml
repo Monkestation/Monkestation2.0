@@ -1,6 +1,0 @@
-author: "Fikou, Melbert, SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Visors, masks and helmets all toggle the same way now, report anything that doesn't change sprite or hide things right when you push it up or down"
-  - bugfix: "Bandanas no longer turn invisible when you push them up into a hat."
-  - bugfix: "You can no longer adjust masks that don't have a pushed up sprite (surgery mask, sec bandana and a few others) to turn them invisible."

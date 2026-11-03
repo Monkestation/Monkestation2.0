@@ -68,9 +68,12 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
+/obj/item/clothing/mask/kitsune/visor_toggling(mob/living/user)
+	. = ..()
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
+
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
 	adjust_visor(user)
-	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 
 /obj/item/clothing/mask/kitsune/click_alt(mob/living/user)
 	adjust_visor(user)
