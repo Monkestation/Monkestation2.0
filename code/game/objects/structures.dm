@@ -25,10 +25,8 @@
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		if(smoothing_flags & SMOOTH_CORNERS)
 			icon_state = ""
-	SScameras.update_visibility(src)
 
 /obj/structure/Destroy()
-	SScameras.update_visibility(src)
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()

@@ -112,6 +112,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/jacket_det_suit
+	heat_protection = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 
 
 
@@ -310,6 +312,8 @@
 		/obj/item/tank/internals,
 	)
 	armor_type = /datum/armor/jacket_curator
+	heat_protection = CHEST|ARMS
+	cold_protection = CHEST|ARMS
 
 
 

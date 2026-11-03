@@ -158,7 +158,7 @@
 	name = "combat uniform"
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
-	can_adjust = FALSE
+	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/rus_army

@@ -32,8 +32,6 @@
 	can_be_shoved_into = TRUE
 	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
 
-	bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
-	bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
 
 	//Hair colour and style
 	var/hair_color = "#000000"
@@ -105,6 +103,12 @@
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0
 
+	/// The core temperature of the human compaired to the skin temp of the body
+	var/coretemperature = BODYTEMP_NORMAL
+
+	///Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.
+	var/heat_exposure_stacks = 0
+
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
 
@@ -123,8 +127,8 @@
 	var/list/alternative_laughs
 	///stored list of alternate deathgasps
 	var/list/alternative_deathgasps
-	///if we should greyscale limbs or set a preset color to them
-	var/greyscale_limbs = FALSE
+	///Which look our limbs use if our species has TRAIT_GREYSCALE_TOGGLE, see the LIMB_STYLE defines
+	var/limb_style = LIMB_STYLE_CLASSIC
 
 	///Boolean on whether symptoms for the mob has been created.
 	var/created_symptoms = FALSE

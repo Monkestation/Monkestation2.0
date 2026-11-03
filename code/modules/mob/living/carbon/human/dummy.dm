@@ -28,12 +28,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	harvest_organs()
 	return ..()
 
-/mob/living/carbon/human/dummy/update_cached_insulation()
-	return
-
-/mob/living/carbon/human/dummy/get_insulation(temperature)
-	return temperature_insulation
-
 /mob/living/carbon/human/dummy/med_hud_set_health()
 	return
 
