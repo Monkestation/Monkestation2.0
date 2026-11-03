@@ -173,7 +173,6 @@
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_TUNDRA "tundra"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
@@ -226,6 +225,14 @@
 
 ///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
+
+//See: mob/living/carbon/human/var/limb_style, only used by species with TRAIT_GREYSCALE_TOGGLE
+///The limbs use their normal colors
+#define LIMB_STYLE_CLASSIC "Classic"
+///The limbs are greyscaled and colored by the mutant color
+#define LIMB_STYLE_MUTANT_COLORS "Mutant colors"
+///The limbs use their tundra fur sprites
+#define LIMB_STYLE_TUNDRA "Tundra fur"
 
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
