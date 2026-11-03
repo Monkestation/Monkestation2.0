@@ -73,6 +73,19 @@
 	return NONE
 
 /// A pursuer, not a combat AI: attacks never distract it from its contract.
+/datum/antagonist/immortal_snail
+	name = "Immortal Snail"
+	antagpanel_category = ANTAG_GROUP_HORRORS
+	show_in_antagpanel = FALSE
+	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
+	show_in_roundend = FALSE
+	count_against_dynamic_roll_chance = FALSE
+	prevent_roundtype_conversion = FALSE
+	replace_banned = FALSE
+	silent = TRUE
+	antag_flags = FLAG_ANTAG_CAP_IGNORE_HUMANITY
+
 /mob/living/basic/immortal_snail
 	name = "immortal snail"
 	desc = "A small snail leaving a glistening trail of slime. Do not touch it."
@@ -125,6 +138,15 @@
 	// Living mobs already use DF_ISPROCESSING for their life subsystem.
 	// A separate datum owns the fast movement registration.
 	pursuit_driver = new(src)
+	mind_initialize()
+	mind.add_antag_datum(/datum/antagonist/immortal_snail)
+	if(!mapload)
+		notify_ghosts(
+			"An immortal snail has appeared. A cursed bargain has been struck.",
+			source = src,
+			action = NOTIFY_ORBIT,
+			header = "Immortal Snail",
+		)
 
 /mob/living/basic/immortal_snail/proc/prevent_premature_deletion(datum/source, force)
 	SIGNAL_HANDLER
@@ -332,6 +354,16 @@
 /mob/living/basic/immortal_snail/proc/chemically_breach(atom/obstacle)
 	if(QDELETED(obstacle) || !obstacle.density)
 		return TRUE
+	if(istype(obstacle, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/airlock = obstacle
+		// Use the normal access check before resorting to chemistry.
+		if(airlock.operating)
+			return FALSE
+		airlock.bumpopen(src)
+		if(QDELETED(airlock) || !airlock.density)
+			return TRUE
+		if(airlock.operating)
+			return FALSE
 	if(chemical_target?.resolve() != obstacle)
 		chemical_target = WEAKREF(obstacle)
 		chemical_started = world.time

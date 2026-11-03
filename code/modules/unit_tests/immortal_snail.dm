@@ -120,6 +120,34 @@
 	snail.process(1)
 	TEST_ASSERT(QDELETED(snail), "The snail must disappear once the curse is fulfilled")
 
+/datum/unit_test/immortal_snail_ghost_spectating
+	var/mob/dead/observer/test_ghost
+
+/datum/unit_test/immortal_snail_ghost_spectating/Run()
+	test_ghost = allocate(/mob/dead/observer)
+	GLOB.player_list |= test_ghost
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	QDEL_NULL(snail.pursuit_driver)
+	var/datum/antagonist/immortal_snail/antag = snail.mind?.has_antag_datum(/datum/antagonist/immortal_snail)
+	TEST_ASSERT(antag && antag.show_to_ghosts, "The autonomous snail must have a ghost-visible antagonist datum")
+	var/atom/movable/screen/alert/notify_action/toast = test_ghost.alerts["[REF(snail)]_notify_action"]
+	TEST_ASSERT(toast, "Spawning must give ghosts the same notification button as a singularity")
+	TEST_ASSERT_EQUAL(toast.target, snail, "The notification must target the spawned snail")
+	TEST_ASSERT_EQUAL(toast.action, NOTIFY_ORBIT, "The notification must let ghosts orbit the snail")
+	var/list/orbit_data = GLOB.orbit_menu.ui_static_data(test_ghost)
+	var/list/antagonists = orbit_data["antagonists"]
+	var/found_snail = FALSE
+	for(var/list/entry as anything in antagonists)
+		if(entry["ref"] == REF(snail))
+			found_snail = TRUE
+			break
+	TEST_ASSERT(found_snail, "The snail must appear in the ghost orbit menu's antagonist section")
+	GLOB.player_list -= test_ghost
+
+/datum/unit_test/immortal_snail_ghost_spectating/Destroy()
+	GLOB.player_list -= test_ghost
+	return ..()
+
 /datum/unit_test/immortal_snail_pda_recovery/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
 	QDEL_NULL(snail.pursuit_driver)
@@ -149,6 +177,13 @@
 /datum/unit_test/immortal_snail_pursuit/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
 	QDEL_NULL(snail.pursuit_driver)
+	var/obj/machinery/door/airlock/public_door = allocate(/obj/machinery/door/airlock, get_step(snail, NORTH))
+	public_door.machine_stat &= ~NOPOWER
+	TEST_ASSERT(public_door.hasPower(), "The public-airlock test requires a powered door")
+	snail.chemically_breach(public_door)
+	TEST_ASSERT(!public_door.density || public_door.operating, "An accessible airlock must open normally")
+	TEST_ASSERT(!public_door.GetComponent(/datum/component/acid), "An accessible airlock must not be dissolved")
+	qdel(public_door)
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
 	var/turf/starting = get_turf(snail)
 	var/turf/door_turf = get_step(starting, EAST)
