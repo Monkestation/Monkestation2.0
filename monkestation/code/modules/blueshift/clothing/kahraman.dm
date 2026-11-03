@@ -137,7 +137,7 @@
 		/obj/item/analyzer,
 		/obj/item/storage/medkit,
 	)
-	skins = list(
+	variants = list(
 		"colonist" = list(
 			MOD_ICON_OVERRIDE = 'monkestation/code/modules/blueshift/icons/modsuits/mod.dmi',
 			MOD_WORN_ICON_OVERRIDE = 'monkestation/code/modules/blueshift/icons/modsuits/mod_worn.dmi',
@@ -153,15 +153,19 @@
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
