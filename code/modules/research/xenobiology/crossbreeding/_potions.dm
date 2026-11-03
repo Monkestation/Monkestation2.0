@@ -130,9 +130,8 @@ Slimecrossing Potions
 	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	clothing.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	clothing.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	//clothing.cold_protection = clothing.body_parts_covered
+	clothing.cold_protection = clothing.body_parts_covered
 	clothing.clothing_flags |= STOPSPRESSUREDAMAGE
-	user.update_cached_insulation()
 	uses--
 	if(uses <= 0)
 		qdel(src)
