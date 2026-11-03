@@ -318,14 +318,19 @@
 	owner.visible_message(span_danger("[owner] assumes a defensive posture."), "<b><i>Your body is ready for an attack. You will counter if struck.</i></b>")
 	active = TRUE
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(move_cancel))
+	RegisterSignal(owner, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(grab_attempted))
 
 /datum/action/jigotai/proc/deactivate(mob/deactivate_from)
 	var/mob/deactivater = deactivate_from
 	if(!istype(deactivate_from))
 		deactivater = owner
 
+	if(active)
+		deactivate_from.visible_message(span_danger("[deactivate_from] drops their defensive stance."), "<b><i>You lose your defensive stance.</i></b>")
+
 	active = FALSE
-	UnregisterSignal(deactivater, COMSIG_LIVING_CHECK_BLOCK)
+	UnregisterSignal(deactivater, list(COMSIG_LIVING_CHECK_BLOCK, COMSIG_MOVABLE_PRE_MOVE, COMSIG_ATOM_CAN_BE_PULLED))
 
 /datum/action/jigotai/proc/check_block(mob/living/carbon/human/source,
 	atom/movable/hitby,
@@ -343,14 +348,38 @@
 		deactivate(source)
 		return FAILED_BLOCK
 
+	if(!active)
+		return FAILED_BLOCK
+
 	var/mob/living/carbon/human/attacker = GET_ASSAILANT(hitby)
 	if(!ishuman(attacker) || !source.Adjacent(attacker))
 		return FAILED_BLOCK
 
 	deactivate(source)
-	attacker.apply_damage(15+damage, STAMINA)
+	//attacker.apply_damage(15+damage, STAMINA)
 	INVOKE_ASYNC(src, PROC_REF(counter_throw), source, attacker)
 	return SUCCESSFUL_BLOCK
+
+/datum/action/jigotai/proc/move_cancel(atom/movable/mover, turf/target)
+	SIGNAL_HANDLER
+
+	deactivate(mover)
+
+/datum/action/jigotai/proc/grab_attempted(mob/living/judo_user, mob/living/puller)
+	SIGNAL_HANDLER
+
+	if(!ishuman(puller))
+		return
+	if(!IsAvailable())
+		deactivate(judo_user)
+		return
+	if(!active)
+		return
+	if(!judo_user.Adjacent(puller))
+		return
+	deactivate(judo_user)
+	INVOKE_ASYNC(src, PROC_REF(counter_throw), judo_user, puller)
+	return COMSIG_ATOM_CANT_PULL
 
 /datum/action/jigotai/proc/counter_throw(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
 	if(!defender.Adjacent(attacker))
