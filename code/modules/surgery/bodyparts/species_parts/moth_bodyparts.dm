@@ -205,9 +205,14 @@
 	icon_state = "m_moth_arms_generic_FRONT"
 	/// Icon state used when the chest is greyscaled (mutant colors), so the arms get the same color as the body
 	var/greyscale_icon_state = "m_moth_arms_greyscale_FRONT"
+	/// Icon states used for each limb style, so the arms match the rest of the body
+	var/static/list/style_icon_states = list(LIMB_STYLE_TUNDRA = "m_moth_arms_tundra_FRONT")
 
 /datum/bodypart_overlay/simple/moth_arms/get_image(layer, obj/item/bodypart/limb)
-	return image(icon, limb?.should_draw_greyscale ? greyscale_icon_state : icon_state, layer = layer)
+	if(limb?.should_draw_greyscale)
+		return image(icon, greyscale_icon_state, layer = layer)
+	var/style = limb?.get_drawn_limb_style()
+	return image(icon, (style && style_icon_states[style]) || icon_state, layer = layer)
 
 /datum/bodypart_overlay/simple/moth_arms/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	overlay.color = limb?.should_draw_greyscale ? limb.draw_color : null

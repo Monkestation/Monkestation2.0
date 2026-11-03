@@ -1017,12 +1017,9 @@
 		var/style_icon = style_icons?[human_owner.limb_style]
 		if(style_icon)
 			icon_static = style_icon
-		else
+		else if(get_drawn_limb_style())
 			// back to normal from another style
-			for(var/style in style_icons)
-				if(icon_static == style_icons[style])
-					icon_static = initial(icon_static)
-					break
+			icon_static = initial(icon_static)
 	if(HAS_TRAIT(human_owner, TRAIT_USES_SKINTONES))
 		skin_tone = human_owner.skin_tone
 	else if(HAS_TRAIT(human_owner, TRAIT_MUTANT_COLORS))
@@ -1047,6 +1044,13 @@
 
 	recolor_external_organs()
 	return TRUE
+
+/// Returns the limb style from style_icons this limb is drawn with right now, or null if it uses its normal icon
+/obj/item/bodypart/proc/get_drawn_limb_style()
+	for(var/style in style_icons)
+		if(icon_static == style_icons[style])
+			return style
+	return null
 
 /// Updates draw_color from the highest priority color override, or our species/skin tone color
 /obj/item/bodypart/proc/update_draw_color()
