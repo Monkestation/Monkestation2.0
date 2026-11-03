@@ -7,6 +7,7 @@
 	mutanteyes = /obj/item/organ/internal/eyes/shadekin
 	mutantears = /obj/item/organ/internal/ears/shadekin
 	mutanttongue = /obj/item/organ/internal/tongue/shadekin
+	species_language_holder = /datum/language_holder/shadekin
 
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,

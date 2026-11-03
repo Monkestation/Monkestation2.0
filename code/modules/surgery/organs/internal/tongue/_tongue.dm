@@ -610,6 +610,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "shadekin tongue"
 	desc = "Mar!"
 	say_mod = "mars"
+	languages_native = list(/datum/language/marish)
 
 /obj/item/organ/internal/tongue/bananium
 	name = "bananium tongue"

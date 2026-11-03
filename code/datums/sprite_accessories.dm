@@ -2784,6 +2784,10 @@ MONKESTATION EDIT
 	name = "Shadekin Saggy"
 	icon_state = "shadekinsaggy"
 
+/datum/sprite_accessory/ears/shadekin/none
+	name = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
+
 /datum/sprite_accessory/wings/none
 	name = "None"
 	icon_state = SPRITE_ACCESSORY_NONE
