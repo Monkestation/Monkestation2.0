@@ -1,0 +1,9 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "oozeling jelly regen, limb self-cannibalizing, membrane regen and the wetness hud now come from the core instead of the slime heart. swapping out an oozeling's heart doesn't take those away anymore, and they go wherever the core goes"
+  - bugfix: "regrowing only some of your limbs as an oozeling no longer spawns extra pairs of eyes"
+  - bugfix: "oozeling regenerate limbs button now greys out when you don't have enough blood to use it"
+  - bugfix: "oozeling retract limb button now greys out when you've got nothing left to retract"
+  - qol: "the \"too wet, dry off!\" alert on oozelings doesn't spam every tick anymore"
+  - spellcheck: "fixed \"it's\" typo in the oozeling core signal messages"
