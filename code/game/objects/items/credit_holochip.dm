@@ -77,16 +77,16 @@
 	holochip_overlay.color = overlay_color
 	. += holochip_overlay
 
-/obj/item/holochip/proc/spend(amount, pay_anyway = FALSE, datum/snail_recipient)
+/obj/item/holochip/proc/spend(amount, pay_anyway = FALSE, datum/recipient)
 	if(credits >= amount)
-		GLOB.snail_debt?.transfer(src, snail_recipient, amount)
+		SEND_SIGNAL(src, COMSIG_CREDITS_TRANSFERRED, recipient, amount)
 		credits -= amount
 		if(credits == 0)
 			qdel(src)
 		update_appearance()
 		return amount
 	else if(pay_anyway)
-		GLOB.snail_debt?.transfer(src, snail_recipient, credits)
+		SEND_SIGNAL(src, COMSIG_CREDITS_TRANSFERRED, recipient, credits)
 		qdel(src)
 		return credits
 	else
@@ -98,7 +98,7 @@
 		var/obj/item/holochip/H = attacking_item
 		if(H == src)
 			return
-		GLOB.snail_debt?.transfer(H, src, H.credits)
+		SEND_SIGNAL(H, COMSIG_CREDITS_TRANSFERRED, src, H.credits)
 		credits += H.credits
 		to_chat(user, span_notice("You insert the credits into [src]."))
 		update_appearance()

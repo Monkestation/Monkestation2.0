@@ -82,6 +82,9 @@
 			candidates += machine
 	if(!length(candidates))
 		return
+	// One station-wide roll, rather than multiplying the odds by the number of slots.
+	if(!prob(25))
+		return
 	var/obj/machinery/computer/slot_machine/chosen_machine = pick(candidates)
 	var/obj/machinery/computer/slot_machine/replacement = new /obj/machinery/computer/slot_machine/immortal_snail(get_turf(chosen_machine))
 	replacement.setDir(chosen_machine.dir)

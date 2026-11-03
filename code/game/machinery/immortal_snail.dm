@@ -24,20 +24,22 @@
 	claim_offer(user)
 
 /obj/machinery/computer/slot_machine/immortal_snail/proc/claim_offer(mob/living/user)
-	if(claimed || QDELETED(user) || !ishuman(user) || user.stat != CONSCIOUS || !user.can_interact_with(src))
+	if(claimed || GLOB.snail_debt || QDELETED(user) || !ishuman(user) || user.stat != CONSCIOUS || !user.can_interact_with(src))
 		return FALSE
 	var/turf/spawn_turf = find_snail_spawn(user)
 	if(!spawn_turf)
 		balloon_alert(user, "the offer is unavailable")
 		return FALSE
 	claimed = TRUE
+	GLOB.snail_debt = new(get_turf(src))
 	var/mob/living/basic/immortal_snail/snail = new(spawn_turf)
 	snail.bind_target(user, offer)
 	var/obj/item/holochip/prize = new(drop_location(), offer)
-	GLOB.snail_debt = new(get_turf(src))
 	GLOB.snail_debt.mark(prize, offer)
+	new /datum/immortal_snail_curse(snail)
 	user.put_in_hands(prize)
 	log_game("[key_name(user)] accepted [offer] credits from the immortal snail slot machine at [AREACOORD(src)]. Snail spawned at [AREACOORD(snail)], [get_dist(snail, user)] tiles from its target.")
+	log_admin("[key_name(user)] accepted the immortal snail curse for [offer] credits at [AREACOORD(src)]. Pursuer: [AREACOORD(snail)].")
 	to_chat(user, span_userdanger("The deal is sealed. Somewhere far away, something starts moving toward you."))
 	new /obj/effect/temp_visual/small_smoke(get_turf(src))
 	var/obj/machinery/computer/slot_machine/replacement = new(get_turf(src))
@@ -127,6 +129,8 @@
 	var/next_chemical_dose = 0
 	var/chemical_escalated = FALSE
 	var/datum/immortal_snail_pursuit/pursuit_driver
+	var/datum/snail_debt/debt
+	var/datum/immortal_snail_curse/curse
 
 /mob/living/basic/immortal_snail/Initialize(mapload)
 	. = ..()
@@ -157,13 +161,106 @@
 		return QDEL_HINT_LETMELIVE
 	if(curse_fulfilled)
 		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
+	if(curse)
+		curse.capture_state(src)
+		if(!curse_fulfilled)
+			curse.report_loss(src, "body deleted; force=[force]; usr context=[key_name(usr)]")
+		else
+			log_admin("Immortal snail curse fulfilled at [AREACOORD(src)]; reclaimed [debt?.recovered] credits.")
+			qdel(curse)
+		debt = null // The independent curse keeps the ledger through body replacement.
+		curse = null
 	QDEL_NULL(pursuit_driver)
 	QDEL_LIST(slime_trail)
-	QDEL_NULL(GLOB.snail_debt)
+	QDEL_NULL(debt)
 	target_ref = null
 	target_mind_ref = null
 	account_ref = null
 	return ..()
+
+/// Independent of the body and its movement driver, so deleting either cannot end the curse.
+/datum/immortal_snail_curse
+	var/datum/weakref/snail_ref
+	var/datum/snail_debt/debt
+	var/datum/weakref/target_ref
+	var/datum/weakref/target_mind_ref
+	var/datum/weakref/account_ref
+	var/contract_value
+	var/original_dead = FALSE
+	var/turf/last_turf
+	var/recoveries = 0
+
+/datum/immortal_snail_curse/New(mob/living/basic/immortal_snail/snail)
+	. = ..()
+	debt = snail.debt
+	snail.curse = src
+	snail_ref = WEAKREF(snail)
+	capture_state(snail)
+	START_PROCESSING(SSobj, src)
+
+/datum/immortal_snail_curse/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	var/mob/living/basic/immortal_snail/snail = snail_ref?.resolve()
+	if(!QDELETED(snail))
+		snail.curse = null
+		snail.debt = null
+		snail.curse_fulfilled = TRUE
+		qdel(snail)
+	snail_ref = null
+	QDEL_NULL(debt)
+	target_ref = null
+	target_mind_ref = null
+	account_ref = null
+	last_turf = null
+	return ..()
+
+/datum/immortal_snail_curse/proc/capture_state(mob/living/basic/immortal_snail/snail)
+	target_ref = snail.target_ref
+	target_mind_ref = snail.target_mind_ref
+	account_ref = snail.account_ref
+	contract_value = snail.contract_value
+	original_dead = snail.original_dead
+	if(get_turf(snail))
+		last_turf = get_turf(snail)
+
+/datum/immortal_snail_curse/proc/report_loss(mob/living/basic/immortal_snail/snail, reason)
+	var/message = "Immortal snail recovery: [reason]. Location: [AREACOORD(snail)]. Target: [key_name(snail.original_target())]. Health: [snail.health]; stat: [snail.stat]; last attacker: [snail.lastattacker] ([snail.lastattackerckey]). Outstanding claims: [length(debt?.claims)]."
+	log_admin(message)
+	log_game(message)
+	message_admins(message)
+
+/datum/immortal_snail_curse/process(seconds_per_tick)
+	var/mob/living/basic/immortal_snail/snail = snail_ref?.resolve()
+	if(!QDELETED(snail))
+		if(snail.curse_fulfilled)
+			qdel(src)
+			return PROCESS_KILL
+		capture_state(snail)
+		if(snail.stat != DEAD && get_turf(snail))
+			return
+		report_loss(snail, "watchdog found a dead or missing body")
+		snail.curse = null
+		snail.debt = null
+		qdel(snail, TRUE)
+	var/turf/spawn_turf = last_turf || debt?.origin
+	if(!spawn_turf)
+		return // Retain the contract and retry; never interpret a missing spawn as fulfillment.
+	snail = new(spawn_turf)
+	snail.target_ref = target_ref
+	snail.target_mind_ref = target_mind_ref
+	snail.account_ref = account_ref
+	snail.contract_value = contract_value
+	snail.original_dead = original_dead
+	snail.debt = debt
+	snail.curse = src
+	if(debt)
+		debt.collector_ref = WEAKREF(snail)
+	snail_ref = WEAKREF(snail)
+	recoveries++
+	var/message = "Immortal snail restored at [AREACOORD(snail)] (recovery [recoveries]). The original curse and credit claims remain active."
+	log_admin(message)
+	log_game(message)
+	message_admins(message)
 
 /mob/living/basic/immortal_snail/death(gibbed)
 	return FALSE
@@ -198,6 +295,7 @@
 	return snail.process(seconds_per_tick)
 
 /mob/living/basic/immortal_snail/proc/bind_target(mob/living/target, amount)
+	attach_ledger()
 	target_ref = WEAKREF(target)
 	if(target.mind)
 		target_mind_ref = WEAKREF(target.mind)
@@ -208,6 +306,11 @@
 	// The distant spawn provides the head start; pursuit begins immediately.
 	next_step = world.time
 
+/mob/living/basic/immortal_snail/proc/attach_ledger()
+	if(!debt && GLOB.snail_debt && !GLOB.snail_debt.collector_ref)
+		debt = GLOB.snail_debt
+		debt.collector_ref = WEAKREF(src)
+
 /mob/living/basic/immortal_snail/proc/original_target()
 	var/datum/mind/target_mind = target_mind_ref?.resolve()
 	if(isliving(target_mind?.current))
@@ -215,32 +318,33 @@
 	return target_ref?.resolve()
 
 /mob/living/basic/immortal_snail/process(seconds_per_tick)
-	if(pursuing)
+	if(pursuing || !contract_value)
 		return
+	attach_ledger()
 	var/mob/living/target = original_target()
 	var/atom/navigation_target = target
 	if(original_dead || !target || target.stat == DEAD)
-		var/datum/next_claim = GLOB.snail_debt?.next_claim()
-		navigation_target = GLOB.snail_debt?.location_of(next_claim)
+		var/datum/next_claim = debt?.next_claim()
+		navigation_target = debt?.location_of(next_claim)
 	// Refresh paths during the current glide, not after it has finished.
 	prefetch_route(navigation_target)
 	if(world.time < next_step)
 		return
-	GLOB.snail_debt?.refresh_carriers()
+	debt?.refresh_carriers()
 	if(!target || target.stat == DEAD)
 		original_dead = TRUE
 	if(original_dead)
-		var/datum/claim = GLOB.snail_debt?.next_claim()
+		var/datum/claim = debt?.next_claim()
 		if(!claim)
 			curse_fulfilled = TRUE
 			qdel(src)
 			return PROCESS_KILL
-		var/atom/money_location = GLOB.snail_debt.location_of(claim)
+		var/atom/money_location = debt.location_of(claim)
 		if(get_turf(money_location) == get_turf(src))
-			var/mob/living/carrier = GLOB.snail_debt.carrier_of(claim)
+			var/mob/living/carrier = debt.carrier_of(claim)
 			if(carrier)
 				contact(carrier)
-			GLOB.snail_debt.collect(claim)
+			debt.collect(claim)
 			return
 		next_step = world.time + move_interval
 		pursuing = TRUE

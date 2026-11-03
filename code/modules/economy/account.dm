@@ -108,10 +108,10 @@
  * * amount - the quantity of credits that will be written off if the value is negative, or added if it is positive.
  * * reason - the reason for the appearance or loss of money
  */
-/datum/bank_account/proc/adjust_money(amount, reason, datum/snail_recipient)
+/datum/bank_account/proc/adjust_money(amount, reason, datum/recipient)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
 		if(amount < 0)
-			GLOB.snail_debt?.transfer(src, snail_recipient, -amount)
+			SEND_SIGNAL(src, COMSIG_CREDITS_TRANSFERRED, recipient, -amount)
 		var/debt_collected = 0
 		if(account_debt > 0 && amount > 0)
 			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
@@ -119,6 +119,7 @@
 		if(reason)
 			add_log_to_history(amount, reason)
 		if(debt_collected)
+			SEND_SIGNAL(src, COMSIG_CREDITS_TRANSFERRED, null, debt_collected)
 			pay_debt(debt_collected, FALSE)
 		return TRUE
 	return FALSE
@@ -144,6 +145,10 @@
  * * transfer_reason - override for adjust_money reason. Use if no default reason(Transfer to/from Name Surname).
  */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount, transfer_reason)
+	if(!from || !isnum(amount) || amount <= 0)
+		return FALSE
+	if(from == src)
+		return from.has_money(amount)
 	if(from.has_money(amount))
 		var/reason_to = "Transfer: From [from.account_holder]"
 		var/reason_from = "Transfer: To [account_holder]"
@@ -156,8 +161,8 @@
 			reason_to = IS_DEPARTMENTAL_ACCOUNT(src) ? "" : transfer_reason
 			reason_from = transfer_reason
 
-		adjust_money(amount, reason_to)
 		from.adjust_money(-amount, reason_from, src)
+		adjust_money(amount, reason_to)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
 		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
 		return TRUE

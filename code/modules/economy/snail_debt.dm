@@ -6,6 +6,8 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 	var/list/last_carriers = list()
 	var/turf/origin
 	var/recovered = 0
+	/// The pursuer owns this ledger; other snails must not delete or consume it.
+	var/datum/weakref/collector_ref
 
 /datum/snail_debt/New(turf/origin)
 	src.origin = origin
@@ -13,7 +15,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 
 /datum/snail_debt/Destroy()
 	for(var/datum/holder as anything in claims)
-		UnregisterSignal(holder, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
+		UnregisterSignal(holder, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_CREDITS_TRANSFERRED))
 	claims.Cut()
 	last_carriers.Cut()
 	if(GLOB.snail_debt == src)
@@ -25,6 +27,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 		return
 	if(!claims[holder])
 		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_deleted))
+		RegisterSignal(holder, COMSIG_CREDITS_TRANSFERRED, PROC_REF(on_credits_transferred))
 		if(isliving(holder))
 			RegisterSignal(holder, COMSIG_LIVING_DEATH, PROC_REF(on_debtor_death))
 		else if(ismovable(holder))
@@ -40,10 +43,19 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 /datum/snail_debt/proc/on_money_moved(datum/source)
 	SIGNAL_HANDLER
 	remember_carrier(source)
+	if(!get_turf(location_of(source)))
+		transfer(source, null, claims[source])
+
+/datum/snail_debt/proc/on_credits_transferred(datum/source, datum/recipient, amount)
+	SIGNAL_HANDLER
+	transfer(source, recipient, amount)
 
 /datum/snail_debt/proc/refresh_carriers()
-	for(var/datum/holder as anything in claims)
+	for(var/datum/holder as anything in claims.Copy())
 		remember_carrier(holder)
+		// Moving an enclosing container can strand money without moving the money itself.
+		if(!isliving(holder) && !get_turf(location_of(holder)))
+			transfer(holder, null, claims[holder])
 
 /// Cursed credits leave first, making splitting and laundering deterministic.
 /datum/snail_debt/proc/transfer(datum/from, datum/recipient, amount)
@@ -75,14 +87,14 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 	if(!claims[from])
 		claims -= from
 		last_carriers -= from
-		UnregisterSignal(from, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
+		UnregisterSignal(from, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_CREDITS_TRANSFERRED))
 
 /datum/snail_debt/proc/on_debtor_death(mob/living/source)
 	SIGNAL_HANDLER
 	recovered += claims[source]
 	claims -= source
 	last_carriers -= source
-	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_CREDITS_TRANSFERRED))
 
 /datum/snail_debt/proc/on_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -118,17 +130,30 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 		container = container.loc
 
 /datum/snail_debt/proc/next_claim()
+	var/datum/unreachable
 	for(var/datum/holder as anything in claims)
 		if(get_turf(location_of(holder)))
 			return holder
+		unreachable = holder
+	// No reachable claim is different from no outstanding debt.
+	return unreachable
 
 /datum/snail_debt/proc/collect(datum/holder)
 	var/amount = claims[holder]
 	if(!amount)
 		return
+	if(istype(holder, /datum/bank_account))
+		var/datum/bank_account/account = holder
+		var/shortfall = amount - max(0, account.account_balance)
+		if(shortfall > 0)
+			// Uninstrumented balance changes cannot erase currency that went missing.
+			transfer(holder, null, shortfall)
+			amount = claims[holder]
+			if(!amount)
+				return
 	claims -= holder
 	last_carriers -= holder
-	UnregisterSignal(holder, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(holder, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_CREDITS_TRANSFERRED))
 	recovered += amount
 	if(isliving(holder))
 		var/mob/living/debtor = holder

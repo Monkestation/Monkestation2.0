@@ -44,6 +44,131 @@
 	GLOB.snail_debt = previous_ledger
 	return ..()
 
+/datum/unit_test/immortal_snail_nullspace
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_nullspace/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/storage/backpack/bag = allocate(/obj/item/storage/backpack, person)
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, bag, 100)
+	ledger.mark(chip, 100)
+	bag.moveToNullspace()
+	ledger.refresh_carriers()
+	TEST_ASSERT_EQUAL(ledger.claims[person], 100, "Losing a container outside the world must preserve its carrier's death debt")
+	TEST_ASSERT(!ledger.claims[chip], "Unrecoverable cash must no longer be treated as recoverable")
+	person.moveToNullspace()
+	TEST_ASSERT_EQUAL(ledger.next_claim(), person, "An unreachable debtor must not be mistaken for a fulfilled curse")
+	person.forceMove(run_loc_floor_bottom_left)
+	ledger.collect(person)
+	TEST_ASSERT_EQUAL(ledger.recovered, 100, "The debt must settle exactly once")
+	TEST_ASSERT(!length(ledger.claims), "No claims may remain after the death debt is settled")
+
+/datum/unit_test/immortal_snail_bank_debt
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_bank_debt/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/card/id/card = allocate(/obj/item/card/id, person)
+	var/datum/bank_account/account = card.registered_account
+	account.account_balance = 500
+	account.account_debt = 75
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, person, 100)
+	ledger.mark(chip, 100)
+	TEST_ASSERT(card.insert_money(chip, person), "Deposit into an indebted account must succeed")
+	TEST_ASSERT_EQUAL(account.account_balance, 525, "The bank must still withhold its normal repayment")
+	TEST_ASSERT_EQUAL(ledger.claims[account], 25, "Only retained cursed credits may remain in the bank claim")
+	TEST_ASSERT_EQUAL(ledger.claims[person], 75, "Cursed credits spent on bank debt must create a death debt")
+	ledger.collect(account)
+	TEST_ASSERT_EQUAL(account.account_balance, 500, "Recovery must preserve unrelated bank funds")
+	TEST_ASSERT_EQUAL(ledger.recovered, 25, "Unrecovered spending debt must not count as reclaimed money")
+	ledger.collect(person)
+	TEST_ASSERT_EQUAL(ledger.recovered, 100, "Bank recovery plus the spender's death must settle the full payout")
+	TEST_ASSERT(!length(ledger.claims), "All claims must be settled")
+
+/datum/unit_test/immortal_snail_bank_shortfall
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_bank_shortfall/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/card/id/card = allocate(/obj/item/card/id, person)
+	var/datum/bank_account/account = card.registered_account
+	account.account_balance = 100
+	ledger.mark(account, 100)
+	account.account_balance = 10 // Simulate a balance change outside the normal transfer API.
+	ledger.collect(account)
+	TEST_ASSERT_EQUAL(ledger.recovered, 10, "Missing bank funds must never be falsely counted as recovered")
+	TEST_ASSERT_EQUAL(ledger.claims[person], 90, "The missing balance must remain a death debt")
+	TEST_ASSERT_EQUAL(account.account_balance, 0, "Available cursed funds must still be reclaimed")
+	ledger.collect(person)
+	TEST_ASSERT_EQUAL(ledger.recovered, 100, "The shortfall must be settled exactly once")
+
+/datum/unit_test/immortal_snail_ledger_ownership
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_ledger_ownership/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/basic/immortal_snail/owner = allocate(/mob/living/basic/immortal_snail)
+	owner.bind_target(person, 100)
+	var/mob/living/basic/immortal_snail/unrelated = allocate(/mob/living/basic/immortal_snail)
+	qdel(unrelated, TRUE)
+	TEST_ASSERT_EQUAL(GLOB.snail_debt, ledger, "Deleting an unrelated snail must not delete the active curse")
+	var/obj/machinery/computer/slot_machine/immortal_snail/machine = allocate(/obj/machinery/computer/slot_machine/immortal_snail)
+	TEST_ASSERT(!machine.claim_offer(person), "A second machine must not overwrite the active ledger")
+	TEST_ASSERT_EQUAL(GLOB.snail_debt, ledger, "The original ledger must survive a second offer")
+	qdel(owner, TRUE)
+	TEST_ASSERT(QDELETED(ledger), "Removing the owning snail must clean up its ledger")
+
+/datum/unit_test/immortal_snail_watchdog
+	parent_type = /datum/unit_test/immortal_snail_money
+	var/datum/immortal_snail_curse/test_curse
+
+/datum/unit_test/immortal_snail_watchdog/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, person, 100)
+	ledger.mark(chip, 100)
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	snail.bind_target(person, 100)
+	test_curse = new(snail)
+	qdel(snail, TRUE)
+	TEST_ASSERT(!QDELETED(ledger), "Deleting the body must not destroy its ledger")
+	test_curse.process(1)
+	var/mob/living/basic/immortal_snail/replacement = test_curse.snail_ref.resolve()
+	TEST_ASSERT(replacement && replacement != snail, "A deleted body must be replaced")
+	TEST_ASSERT_EQUAL(replacement.original_target(), person, "Respawning must preserve the original target")
+	TEST_ASSERT_EQUAL(ledger.claims[chip], 100, "Respawning must preserve all credit claims")
+	replacement.stat = DEAD // Bypass the death override to exercise the independent fallback.
+	test_curse.process(1)
+	snail = test_curse.snail_ref.resolve()
+	TEST_ASSERT(snail && snail != replacement && snail.stat != DEAD, "A killed body must be replaced with a living snail")
+	TEST_ASSERT_EQUAL(test_curse.recoveries, 2, "Both deletion and death must trigger recovery")
+	var/turf/resting_place = get_turf(snail)
+	person.death()
+	chip.forceMove(resting_place)
+	snail.next_step = 0
+	snail.process(1)
+	snail.process(1)
+	TEST_ASSERT(QDELETED(snail) && QDELETED(test_curse), "Fulfillment must remove the snail and stop its watchdog")
+	TEST_ASSERT(!GLOB.snail_debt, "Fulfillment must clean up the active ledger")
+
+/datum/unit_test/immortal_snail_watchdog/Destroy()
+	QDEL_NULL(test_curse)
+	return ..()
+
 /datum/unit_test/immortal_snail_contact/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_top_right)
 	QDEL_NULL(snail.pursuit_driver)
@@ -376,6 +501,7 @@
 /datum/unit_test/immortal_snail_remote_spawn/Destroy()
 	QDEL_NULL(normal_machine)
 	if(spawned_snail)
+		qdel(spawned_snail.curse)
 		qdel(spawned_snail, TRUE)
 	if(far_floor && original_far_type)
 		far_floor.ChangeTurf(original_far_type)
