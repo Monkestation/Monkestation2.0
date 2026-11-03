@@ -165,7 +165,7 @@
 						"<span class='userdanger'>[attacker] judo throws you to the ground!</span>")
 	playsound(get_turf(attacker), 'sound/items/weapons/slam.ogg', 40, TRUE, -1)
 	defender.apply_damage(25, STAMINA)
-	defender.Knockdown(7 SECONDS)
+	defender.Knockdown(7 SECONDS, prevent_drop = TRUE)
 	log_combat(attacker, defender, "Melee attacked with martial-art [src] : Judo Throw")
 	return MARTIAL_ATTACK_SUCCESS
 
