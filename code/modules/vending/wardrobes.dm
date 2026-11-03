@@ -45,6 +45,8 @@
 				/obj/item/clothing/under/rank/security/officer/grey = 3,
 				/obj/item/clothing/under/rank/security/officer/tactical = 3,
 				/obj/item/clothing/under/rank/security/officer/tactical/blue = 3,
+				/obj/item/clothing/under/rank/security/officer/tactical/red = 3,
+				/obj/item/clothing/under/rank/security/officer/tactical/white = 3,
 				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
 				/obj/item/clothing/under/rank/security/officer/formal = 3,
 				/obj/item/clothing/under/rank/security/utility = 3,

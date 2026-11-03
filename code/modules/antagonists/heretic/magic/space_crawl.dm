@@ -126,8 +126,8 @@
 		for(var/obj/item/space_crawl/space_hand as anything in unjaunter.get_held_items_of_type(/obj/item/space_crawl))
 			unjaunter.temporarilyRemoveItemFromInventory(space_hand, force = TRUE)
 			qdel(space_hand)
-	if(unjaunter.bodytemperature <= unjaunter.bodytemp_cold_damage_limit) // workaround for RESISTCOLD jank
-		unjaunter.adjust_bodytemperature(INFINITY, max_temp = unjaunter.standard_body_temperature)
+	if(unjaunter.bodytemperature <= unjaunter.get_body_temp_cold_damage_limit()) // workaround for RESISTCOLD jank
+		unjaunter.adjust_bodytemperature(INFINITY, max_temp = unjaunter.get_body_temp_normal())
 	return ..()
 
 

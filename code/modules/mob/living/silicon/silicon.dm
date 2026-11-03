@@ -518,8 +518,3 @@
 	for(var/borg_laws in law_list)
 		. += borg_laws
 
-/mob/living/silicon/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	return
-
-/mob/living/silicon/body_temperature_alerts()
-	return
