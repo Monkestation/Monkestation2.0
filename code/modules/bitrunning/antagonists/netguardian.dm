@@ -24,7 +24,7 @@
 
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drills"
-	attack_sound = 'sound/weapons/drill.ogg'
+	attack_sound = 'sound/items/weapons/drill.ogg'
 	attack_vis_effect = ATTACK_EFFECT_MECHFIRE
 	verb_say = "states"
 	verb_ask = "queries"
@@ -51,13 +51,13 @@
 	lighting_cutoff_blue = 20
 
 	habitable_atmos = null
-	bodytemp_cold_damage_limit = TCMB
+	minimum_survivable_temperature = TCMB
 	ai_controller = /datum/ai_controller/basic_controller/netguardian
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
-	bodytemp_heat_damage_limit = INFINITY
-	bodytemp_cold_damage_limit = -1
+	maximum_survivable_temperature = INFINITY
+	minimum_survivable_temperature = 0
 
 /mob/living/basic/netguardian/Initialize(mapload)
 	. = ..()
@@ -65,7 +65,7 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	AddComponent(/datum/component/ranged_attacks, \
 		casing_type = /obj/item/ammo_casing/c46x30mm, \
-		projectile_sound = 'sound/weapons/gun/smg/shot.ogg', \
+		projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg', \
 		burst_shots = 6 \
 	)
 
@@ -78,7 +78,7 @@
 
 /mob/living/basic/netguardian/death(gibbed)
 	do_sparks(number = 3, cardinal_only = TRUE, source = src)
-	playsound(src, 'sound/mecha/weapdestr.ogg', 100)
+	playsound(src, 'sound/vehicles/mecha/weapdestr.ogg', 100)
 	return ..()
 
 /mob/living/basic/netguardian/update_overlays()
@@ -98,7 +98,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/Activate(atom/target_atom)
 	var/mob/living/player = owner
-	playsound(player, 'sound/mecha/skyfall_power_up.ogg', 120)
+	playsound(player, 'sound/vehicles/mecha/skyfall_power_up.ogg', 120)
 	player.say("target acquired.", "machine")
 
 	var/overlay_icon = 'icons/mob/nonhuman-player/netguardian.dmi'

@@ -2,7 +2,7 @@
 	unusual_description = "snowstorm"
 	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "cross"
-	burst_amount = 8
+	burst_amount = 9
 	duration = 2 SECONDS
 	random_bursts = TRUE
 	spawn_interval = 0.3 SECONDS

@@ -6,6 +6,9 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'monkestation/code/modules/trading/icons/particles.dmi'
 	icon_state = "none"
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+	// these get reused, and one that turns up a tile over from its last spot would slide there
+	animate_movement = NO_STEPS
 	underlays = null
 	overlays = null
 
@@ -17,10 +20,10 @@
 	var/duration = 0
 	///the spawn intervals in game ticks
 	var/spawn_interval = 1
-	///particles still in the process of animating
-	var/list/living_particles = list()
-	///list of particles that finished (added only as a failsafe)
-	var/list/dead_particles = list()
+	///every particle object we've made, out on a tile or not
+	var/list/obj/effect/abstract/particle/owned_particles = list()
+	///the ones parked in nullspace until the next burst wants them
+	var/list/obj/effect/abstract/particle/spare_particles = list()
 	///x offset for source_object
 	var/offset_x = 0
 	///y offset for source_object
@@ -98,8 +101,8 @@
 		COMSIG_MOVABLE_MOVED,
 	))
 	STOP_PROCESSING(SSparticle_spewers, src)
-	QDEL_LIST(living_particles)
-	QDEL_LIST(dead_particles)
+	spare_particles.Cut()
+	QDEL_LIST(owned_particles)
 	source_object = null
 	QDEL_NULL(animate_holder)
 	return ..()
@@ -121,42 +124,66 @@
 	else
 		START_PROCESSING(SSparticle_spewers, src)
 
-/datum/component/particle_spewer/proc/spawn_particles(atom/movable/mover, turf/target)
+/datum/component/particle_spewer/proc/spawn_particles()
 	if(paused)
 		return
-	var/burstees = burst_amount
-	if(random_bursts)
-		burstees = rand(1, burst_amount)
-
 	var/turf/spawn_loc = get_turf(source_object)
-	for(var/i = 0 to burstees)
-		//create and assign particle its stuff
-		var/obj/effect/abstract/particle/spawned = new(spawn_loc)
-		if(offsets)
-			spawned.pixel_x = offset_x
-			spawned.pixel_y = offset_y
-		spawned.icon = icon_file
-		spawned.icon_state = particle_state
-		spawned.blend_mode = particle_blending
+	var/burstees = random_bursts ? rand(1, burst_amount) : burst_amount
+	var/mutable_appearance/fresh_look = fresh_particle_look(spawn_loc)
+	var/list/obj/effect/abstract/particle/burst = list()
+	for(var/burst_index in 1 to burstees)
+		var/obj/effect/abstract/particle/spawned
+		var/spares = length(spare_particles)
+		if(spares)
+			spawned = spare_particles[spares]
+			spare_particles.len--
+		else
+			spawned = new
+			owned_particles += spawned
+		spawned.appearance = fresh_look
+		// plain loc write on purpose, nothing on the tile should ever notice one of these turning up
+		spawned.loc = spawn_loc
+		burst += spawned
+		animate_particle(spawned, burst_index)
+	addtimer(CALLBACK(src, PROC_REF(retire_particles), burst), duration)
 
-		living_particles |= spawned
+///the look a particle has the moment it appears, before animate_particle gets its hands on it
+/datum/component/particle_spewer/proc/fresh_particle_look(turf/spawn_loc)
+	// copied off a real one so we match everything byond tucks into an appearance, animate_movement included
+	var/static/mutable_appearance/untouched_look
+	if(!untouched_look)
+		var/obj/effect/abstract/particle/model = new
+		untouched_look = new(model)
+		qdel(model)
+	var/mutable_appearance/look = new(untouched_look)
+	SET_PLANE(look, look.plane, spawn_loc)
+	look.icon = icon_file
+	look.icon_state = particle_state
+	look.blend_mode = particle_blending
+	if(offsets)
+		look.pixel_x = offset_x
+		look.pixel_y = offset_y
+	return look
 
-		RegisterSignal(spawned, COMSIG_QDELETING, PROC_REF(particle_qdeleting))
-		animate_particle(spawned)
+///takes a burst that's lived out its duration off the map and parks it for the next one
+/datum/component/particle_spewer/proc/retire_particles(list/obj/effect/abstract/particle/burst)
+	for(var/obj/effect/abstract/particle/retired as anything in burst)
+		if(QDELETED(retired))
+			owned_particles -= retired
+			continue
+		retired.loc = null
+		// plenty of these get cut off mid animation, and the next animate() would pick up from wherever that one froze
+		animate(retired)
+		spare_particles += retired
 
 ///this is the proc that gets overridden when we create new particle spewers that control its movements
-//example is animating upwards over duration and deleting
-/datum/component/particle_spewer/proc/animate_particle(obj/effect/abstract/particle/spawned)
+//example is animating upwards over duration
+/datum/component/particle_spewer/proc/animate_particle(obj/effect/abstract/particle/spawned, burst_index)
 	animate_holder?.animate_object(spawned)
-	QDEL_IN(spawned, duration)
 
 /datum/component/particle_spewer/proc/adjust_animate_steps()
 	animate_holder.add_animation_step(list(alpha = 75, time = duration))
 	animate_holder.add_animation_step(list(pixel_y = offset_y + 64, time = duration))
-
-/datum/component/particle_spewer/proc/particle_qdeleting(obj/effect/abstract/particle/spawned)
-	living_particles -= spawned
-	UnregisterSignal(spawned, COMSIG_QDELETING)
 
 /datum/component/particle_spewer/proc/handle_equip_offsets(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER

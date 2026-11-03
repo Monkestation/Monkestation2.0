@@ -8,7 +8,7 @@
 	inhand_icon_state = "comically_large_spoon"
 	base_icon_state = "comically_large_spoon"
 	icon_state = "comically_large_spoon"
-	hitsound = 'sound/items/trayhit1.ogg'
+	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK
@@ -68,7 +68,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/comically_large_spoon/proc/on_wield(atom/source, mob/living/user)
-	hitsound = 'sound/weapons/bat_hit.ogg'
+	hitsound = 'sound/items/weapons/bat_hit.ogg'
 	block_chance = block_chance_wielded
 	demolition_mod = demolition_mod_wielded
 

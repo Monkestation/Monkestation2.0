@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/projectile/ion
 	select_name = "ion"
-	fire_sound = 'sound/weapons/ionrifle.ogg'
+	fire_sound = 'sound/items/weapons/ionrifle.ogg'
 
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak
@@ -10,7 +10,7 @@
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/projectile/energy/declone
 	select_name = "declone"
-	fire_sound = 'sound/weapons/pulse3.ogg'
+	fire_sound = 'sound/items/weapons/pulse3.ogg'
 
 /obj/item/ammo_casing/energy/declone/weak
 	projectile_type = /obj/projectile/energy/declone/weak
@@ -36,7 +36,7 @@
 	projectile_type = /obj/projectile/temp
 	select_name = "chill"
 	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE * 10)
-	fire_sound = 'sound/weapons/pulse3.ogg'
+	fire_sound = 'sound/items/weapons/pulse3.ogg'
 
 /obj/item/ammo_casing/energy/temp/hot
 	projectile_type = /obj/projectile/temp/hot
@@ -65,7 +65,7 @@
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/tesla_cannon
-	fire_sound = 'sound/magic/lightningshock.ogg'
+	fire_sound = 'sound/effects/magic/lightningshock.ogg'
 	e_cost = LASER_SHOTS(33, STANDARD_CELL_CHARGE)
 	select_name = "shock"
 	projectile_type = /obj/projectile/energy/tesla_cannon
@@ -79,10 +79,10 @@
 	projectile_type = /obj/projectile/bullet/marksman
 	select_name = "marksman nanoshot"
 	e_cost = 0 // Can't use the macro
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 
 /obj/item/ammo_casing/energy/fisher
 	projectile_type = /obj/projectile/energy/fisher
 	select_name = "light-buster"
 	e_cost = LASER_SHOTS(2, STANDARD_CELL_CHARGE * 0.5)
-	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip
+	fire_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip

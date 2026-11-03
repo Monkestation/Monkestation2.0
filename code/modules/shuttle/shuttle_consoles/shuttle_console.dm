@@ -33,6 +33,7 @@
 
 /obj/machinery/computer/shuttle/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "computer", FALSE)
 	connect_to_shuttle(mapload, SSshuttle.get_containing_shuttle(src))
 
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
@@ -98,6 +99,9 @@
 	if(!length(data["locations"]))
 		data["locked"] = TRUE
 		data["status"] = "Locked"
+	if(!mobile_docking_port.canMove())
+		data["locked"] = TRUE
+		data["status"] = "Immobile"
 	return data
 
 /**
@@ -238,6 +242,7 @@
 		possible_destinations = replacetext(replacetextEx(possible_destinations, "[shuttleId]_custom", ""), ";;", ";")
 	shuttleId = port.shuttle_id
 	possible_destinations += ";[port.shuttle_id]_custom"
+	return TRUE
 
 #undef SHUTTLE_CONSOLE_ACCESSDENIED
 #undef SHUTTLE_CONSOLE_ENDGAME

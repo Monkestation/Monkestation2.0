@@ -272,7 +272,7 @@
 	results = list(/datum/reagent/consumable/salt = 2)
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 2, /datum/reagent/consumable/grounding_solution = 1)  //Monkestation edit: no enriched
 	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
-	mix_sound = 'sound/weapons/taser.ogg'
+	mix_sound = 'sound/items/weapons/taser.ogg'
 	//reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/martian_batter

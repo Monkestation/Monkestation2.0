@@ -30,7 +30,7 @@
 	if((limb_id == SPECIES_OOZELING))
 		to_chat(limb_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
 		if(sound)
-			playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
+			playsound(limb_owner, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
 // MONKESTATION ADDITION START
@@ -146,7 +146,7 @@
 		qdel(src)
 		return
 
-	if((limb_id == SPECIES_OOZELING) && !special)
+	if((limb_id in list(SPECIES_OOZELING, SPECIES_SLIMEPERSON, SPECIES_LUMINESCENT)) && !special)
 		if(deprecise_zone(src.body_zone) in list(BODY_ZONE_HEAD, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG ))
 			var/list/limborgans = src.contents
 			if(limborgans) //Handle implants dropping when limb is dismembered
@@ -348,7 +348,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !(mob_chest.acceptable_bodyshape & bodyshape) && !special)
 		return FALSE
 	return TRUE
 

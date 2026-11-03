@@ -96,7 +96,7 @@
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
 	/// The name of the special role given to the recruit
@@ -180,7 +180,7 @@
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
@@ -259,7 +259,7 @@
 		spawn_antag(chosen_one.client, get_turf(src), initial(demon_type.name), user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
-		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
+		playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
 		qdel(src)
 	else
 		to_chat(user, span_warning("The bottle's contents usually pop and boil constantly, but right now they're eerily still and calm. Perhaps you should try again later."))
@@ -287,7 +287,7 @@
 /obj/item/antag_spawner/loadout
 	name = "generic beacon"
 	desc = "A single-use beacon designed to quickly launch bad code into the field."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	/// The mob type to spawn.
 	var/mob/living/spawn_type = /mob/living/carbon/human
@@ -372,7 +372,7 @@
 /obj/item/antag_spawner/loadout/monkey_man
 	name = "monkey agent beacon"
 	desc = "A single-use beacon designed to launch a specially-trained simian agent to the field for emergency support."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	species_type = /datum/species/monkey/trained
 	outfit = /datum/outfit/syndicate_monkey
@@ -449,6 +449,7 @@
 /obj/item/antag_spawner/loadout/monkey_crash
 	name = "monkey strike beacon"
 	desc = "A single-use beacon designed to launch an elite monkey strike team to terrorize the station."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	species_type = /datum/species/monkey/trained
 	outfit = /datum/outfit/syndicate_monkey/elite

@@ -535,11 +535,7 @@
 			temperature_setting = clamp(value + T0C, min_temp, max_temp)
 
 /obj/item/mod/module/thermal_regulator/on_active_process(seconds_per_tick)
-	var/mob/living/user = mod.wearer
-	if(user.bodytemperature < temperature_setting)
-		user.adjust_bodytemperature((temperature_setting - user.bodytemperature) * 0.08 * seconds_per_tick, max_temp = temperature_setting)
-	else if(user.bodytemperature > temperature_setting)
-		user.adjust_bodytemperature((temperature_setting - user.bodytemperature) * 0.08 * seconds_per_tick, min_temp = temperature_setting)
+	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * seconds_per_tick))
 
 ///DNA Lock - Prevents people without the set DNA from activating the suit.
 /obj/item/mod/module/dna_lock

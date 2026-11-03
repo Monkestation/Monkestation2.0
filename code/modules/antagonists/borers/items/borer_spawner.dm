@@ -32,7 +32,7 @@
 		return
 	user.visible_message("[user] opens [src].", "You have opened the [src], awaiting for the borer to come out.", "You hear a metallic thunk.")
 	opened = TRUE
-	playsound(src, 'sound/machines/boltsup.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/airlock/boltsup.ogg', 30, TRUE)
 	if(delayed)
 		sleep(delayed)
 	INVOKE_ASYNC(src, PROC_REF(do_wriggler_messages)) // give them something to look at whilst we poll the ghosts
@@ -47,7 +47,7 @@
 	if(!length(candidates))
 		opened = FALSE
 		to_chat(user, "Yet the borer after looking at you quickly retreats back into their cage, visibly scared. Perhaps try later?")
-		playsound(src, 'sound/machines/boltsup.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/airlock/boltsup.ogg', 30, TRUE)
 		return
 
 	var/mob/dead/observer/picked_candidate = pick(candidates)

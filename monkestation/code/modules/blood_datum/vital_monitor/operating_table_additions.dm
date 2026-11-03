@@ -9,7 +9,7 @@
 
 	obj_flags |= EMAGGED
 	balloon_alert(user, "safeties overridden")
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/operating/ui_data(mob/user)

@@ -1,7 +1,7 @@
 /obj/item/taperecorder
 	name = "universal recorder"
 	desc = "A device that can record to recording tapes, and play them. It automatically translates the content in playback."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "taperecorder_empty"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "analyzer"
@@ -90,6 +90,9 @@
 		soundloop.start()
 
 /obj/item/taperecorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/music_tape))
+		balloon_alert(user, "won't fit!")
+		return
 	if(!mytape && istype(attacking_item, /obj/item/tape))
 		if(!user.transferItemToLoc(attacking_item,src))
 			return

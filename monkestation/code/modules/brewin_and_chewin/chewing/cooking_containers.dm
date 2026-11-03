@@ -310,7 +310,7 @@ GAME_VERB_SRC_DESC(/obj/item/reagent_containers/cooking_container, empty, view(1
 
 	icon_state = "pan" //Default state is the base icon so it looks nice in the map builder
 	lip = "pan_lip"
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	appliancetype = PAN
 
 /obj/item/reagent_containers/cooking_container/pot
@@ -321,7 +321,7 @@ GAME_VERB_SRC_DESC(/obj/item/reagent_containers/cooking_container, empty, view(1
 	icon_state = "pot"
 	lip = "pot_lip"
 
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	removal_penalty = 5
 	appliancetype = POT
 	w_class = WEIGHT_CLASS_BULKY

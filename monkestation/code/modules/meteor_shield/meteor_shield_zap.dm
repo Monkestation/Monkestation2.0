@@ -53,8 +53,8 @@
 		quake_factor = 0,
 		echo_factor = 0,
 		creaking = FALSE,
-		near_sound = sound('sound/weapons/lasercannonfire.ogg'),
-		far_sound = sound('sound/weapons/marauder.ogg'),
+		near_sound = sound('sound/items/weapons/lasercannonfire.ogg'),
+		far_sound = sound('sound/items/weapons/marauder.ogg'),
 		pressure_affected = FALSE,
 		disable_shaking = TRUE,
 		sound_mul = 0.2

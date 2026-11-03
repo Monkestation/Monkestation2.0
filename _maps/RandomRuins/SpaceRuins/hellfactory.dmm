@@ -404,7 +404,7 @@
 /obj/machinery/conveyor/auto,
 /obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/basic/mimic/crate{
-	icon = 'icons/obj/puzzle_small.dmi';
+	icon = 'icons/obj/fluff/puzzle_small.dmi';
 	icon_living = "laserbox";
 	icon_state = "laserbox";
 	name = "holobox";
@@ -905,7 +905,7 @@
 "uj" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/mimic/crate{
-	icon = 'icons/obj/puzzle_small.dmi';
+	icon = 'icons/obj/fluff/puzzle_small.dmi';
 	icon_living = "laserbox";
 	icon_state = "laserbox";
 	name = "holobox";
@@ -989,7 +989,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "PB" = (
 /mob/living/basic/mimic/crate{
-	icon = 'icons/obj/puzzle_small.dmi';
+	icon = 'icons/obj/fluff/puzzle_small.dmi';
 	icon_living = "laserbox";
 	icon_state = "laserbox";
 	name = "holobox";

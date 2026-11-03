@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			get_voice().start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering, src)
 		else if (!is_speaker_whispering)
-			var/sound/sound = sound(pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg'))
+			var/sound/sound = sound(pick('sound/mobs/humanoids/human/snap/fingersnap1.ogg', 'sound/mobs/humanoids/human/snap/fingersnap2.ogg'))
 			get_voice().short_bark(listening, message_range + 1, 100, 0, src, sound_override=sound)
 
 	if(client) //client is so that ghosts don't have to listen to mice

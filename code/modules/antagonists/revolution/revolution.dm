@@ -14,7 +14,7 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
-	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
+	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
 	antag_count_points = 1 //its revs, you get nothing
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why

@@ -74,7 +74,7 @@
 				pronoun_appropriate_demonym = "CLOCK-BROTHER"
 			else if(affected_mob.gender == FEMALE)
 				pronoun_appropriate_demonym = "CLOCK-SISTER"
-			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')
+			SEND_SOUND(affected_mob, 'sound/effects/magic/clockwork/scripture_tier_up.ogg')
 			to_chat(affected_mob, span_bigbrass("\"[text2ratvar("YOUR SERVITUDE IS NOT FINISHED, [uppertext(affected_mob.real_name)]. RISE, [pronoun_appropriate_demonym], AND BE RENEWED.")]\""))
 			affected_mob.visible_message(span_warning("[affected_mob] draws in a huge breath, a bright light shining from [affected_mob.p_their()] eyes."), \
 									   span_bigbrass("You awaken suddenly from the void. You're alive!"))
@@ -89,9 +89,9 @@
 		visible_message(span_clockred("[src] fails to siphon [affected_mob]'s spirit!"))
 		return
 
-	playsound(loc, 'sound/magic/clockwork/ratvar_attack.ogg', 40)
+	playsound(loc, 'sound/effects/magic/clockwork/ratvar_attack.ogg', 40)
 	if((affected_mob.stat == DEAD) || affected_mob.getMaxHealth() <= 0)
-		playsound(loc, 'sound/magic/exit_blood.ogg', 60)
+		playsound(loc, 'sound/effects/magic/exit_blood.ogg', 60)
 		to_chat(affected_mob, span_clockred("The last of your life is drained away..."))
 		check_special_role(affected_mob)
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 40, MAX_CLOCK_VITALITY) // 100 (for clients) total in the ideal situation, since it'll take 6 pulses to go from full to crit

@@ -52,7 +52,7 @@
 	if(!do_after(user, break_time, attacked_turf))
 		return FALSE
 
-	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 80, channel = CHANNEL_SOUND_EFFECTS, mixer_channel = CHANNEL_SOUND_EFFECTS)
+	playsound(src, 'sound/items/weapons/sonic_jackhammer.ogg', 80, channel = CHANNEL_SOUND_EFFECTS, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	if(iswallturf(attacked_turf))
 		var/turf/closed/wall/wall_turf = attacked_turf
 		wall_turf.dismantle_wall(devastate)
@@ -116,7 +116,7 @@
 
 /obj/effect/temp_visual/turf_demolisher_resonance/proc/collapse()
 	new /obj/effect/temp_visual/resonance_crush(holder_turf)
-	playsound(holder_turf, 'sound/weapons/resonator_blast.ogg', 50, TRUE)
+	playsound(holder_turf, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
 	if(iswallturf(holder_turf))
 		var/turf/closed/wall/wall_turf = holder_turf
 		wall_turf.dismantle_wall()

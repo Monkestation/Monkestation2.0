@@ -13,7 +13,7 @@
 	bare_wound_bonus = 35
 	demolition_mod = 1.5 //ripping through doors and windows should be a little easier with a claw shouldnt it?
 	sharpness = SHARP_EDGED
-	hitsound = 'sound/weapons/fwoosh.ogg'
+	hitsound = 'sound/items/weapons/fwoosh.ogg'
 	damtype = BRUTE //why can i not make things do wounds i want
 	attack_verb_continuous = list("rips", "claws", "gashes", "tears", "lacerates", "dices", "cuts", "attacks")
 	attack_verb_simple = list("rip", "claw", "gash", "tear", "lacerate", "dice", "cut", "attack" )
@@ -29,6 +29,6 @@
 	. = ..()
 	balloon_alert(user, active ? "extended" : "collapsed")
 	if(active)
-		playsound(src, 'sound/weapons/fwoosh.ogg', vol = 50)
+		playsound(src, 'sound/items/weapons/fwoosh.ogg', vol = 50)
 	wound_bonus = enabled ? 45 : initial(wound_bonus)
 	return COMPONENT_NO_DEFAULT_MESSAGE

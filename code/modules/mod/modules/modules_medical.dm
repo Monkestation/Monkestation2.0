@@ -151,7 +151,7 @@
 		organ_list += organ
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
-		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_energy_cost)
 		return
 	if(!length(organ_list))
@@ -160,15 +160,15 @@
 	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
 	projectile.aim_projectile(target, mod.wearer)
 	projectile.firer = mod.wearer
-	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+	playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
 /obj/projectile/organ
 	name = "organ"
 	damage = 0
-	hitsound = 'sound/effects/attackblob.ogg'
-	hitsound_wall = 'sound/effects/attackblob.ogg'
+	hitsound = 'sound/effects/blob/attackblob.ogg'
+	hitsound_wall = 'sound/effects/blob/attackblob.ogg'
 	/// A reference to the organ we "are".
 	var/obj/item/organ/organ
 
@@ -323,12 +323,12 @@
 		balloon_alert(mod.wearer, "already ripped!")
 		return
 	balloon_alert(mod.wearer, "ripping clothing...")
-	playsound(src, 'sound/items/zip.ogg', 25, TRUE, frequency = -1)
+	playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE, frequency = -1)
 	if(!do_after(mod.wearer, 1.5 SECONDS, target = carbon_target))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
 	var/target_zones = body_zone2cover_flags(mod.wearer.zone_selected)
-	for(var/obj/item/clothing as anything in carbon_target.get_all_worn_items())
+	for(var/obj/item/clothing as anything in carbon_target.get_equipped_items())
 		if(!clothing)
 			continue
 		var/shared_flags = target_zones & clothing.body_parts_covered
@@ -354,7 +354,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 		ripped_clothing -= clothing
 	if(zipped)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 		balloon_alert(mod.wearer, "clothing mended")
 
 /obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting)
@@ -367,7 +367,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 	ripped_clothing = list()
 	if(!deleting)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 
 ///Surgical Processor - Lets you do advanced surgeries portably.
 /obj/item/mod/module/surgical_processor

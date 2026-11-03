@@ -12,8 +12,8 @@
 	speak_emote = list("blorbles")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_type = /datum/hud/ooze
-	bodytemp_cold_damage_limit = 250
-	bodytemp_heat_damage_limit = INFINITY
+	minbodytemp = 250
+	maxbodytemp = INFINITY
 	faction = list(FACTION_SLIME)
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -21,7 +21,7 @@
 	maxHealth = 200
 	attack_verb_continuous = "slimes"
 	attack_verb_simple = "slime"
-	attack_sound = 'sound/effects/blobattack.ogg'
+	attack_sound = 'sound/effects/blob/blobattack.ogg'
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	mob_size = MOB_SIZE_LARGE
@@ -177,7 +177,7 @@
 ///Heat up the mob a little
 /datum/action/cooldown/metabolicboost/proc/HeatUp()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	ooze.adjust_bodytemperature(3.33 KELVIN)
+	ooze.adjust_bodytemperature(50)
 
 ///Remove the speed modifier and delete the timer for heating up
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
@@ -381,7 +381,7 @@
 /obj/item/mending_globule
 	name = "mending globule"
 	desc = "It somehow heals those who touch it."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "globule"
 	var/heals_left = 35
 
@@ -447,7 +447,7 @@
 /obj/structure/gel_cocoon
 	name = "gel cocoon"
 	desc = "It looks gross, but helpful."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "gel_cocoon"
 	max_integrity = 50
 	var/mob/living/carbon/inhabitant

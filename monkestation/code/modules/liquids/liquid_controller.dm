@@ -1,13 +1,17 @@
 SUBSYSTEM_DEF(liquids)
 	name = "Liquid Turfs"
 	wait = 0.5 SECONDS
-	flags = SS_KEEP_TIMING | SS_NO_INIT
+	flags = SS_NO_INIT | SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	priority = FIRE_PRIORITY_LIQUID_TURFS
 	var/list/active_groups = list()
 
 	var/list/evaporation_queue = list()
 	var/evaporation_counter = 0 //Only process evaporation on intervals
+	///groups left to disperse in the current evaporation run
+	var/list/currentrun_disperse_groups = list()
+	///turfs left to evaporate in the current evaporation run
+	var/list/currentrun_evaporation = list()
 
 	var/list/temperature_queue = list()
 
@@ -24,6 +28,10 @@ SUBSYSTEM_DEF(liquids)
 
 	var/list/burning_turfs = list()
 	var/fire_counter = 0
+	///burning turfs left to spread fire from in the current fire run
+	var/list/currentrun_fire_spread = list()
+	///groups left to burn in the current fire run
+	var/list/currentrun_fire_groups = list()
 
 	var/member_counter = 0
 
@@ -38,6 +46,23 @@ SUBSYSTEM_DEF(liquids)
 	///list of cached exposures we are working with
 	var/list/cached_exposures = list()
 
+
+/datum/controller/subsystem/liquids/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, active_groups),
+		NAMEOF(src, evaporation_queue),
+		NAMEOF(src, burning_turfs),
+		NAMEOF(src, active_ocean_turfs),
+		NAMEOF(src, unvalidated_oceans),
+		NAMEOF(src, arrayed_groups),
+		NAMEOF(src, cached_exposures),
+		NAMEOF(src, currentrun_disperse_groups),
+		NAMEOF(src, currentrun_evaporation),
+		NAMEOF(src, currentrun_fire_spread),
+		NAMEOF(src, currentrun_fire_groups),
+		NAMEOF(src, currentrun_active_ocean_turfs),
+	)
 
 /datum/controller/subsystem/liquids/stat_entry(msg)
 	msg += "AG:[length(active_groups)]|BT:[length(burning_turfs)]|EQ:[length(evaporation_queue)]|AO:[length(active_ocean_turfs)]|UO:[length(unvalidated_oceans)]"
@@ -61,9 +86,14 @@ SUBSYSTEM_DEF(liquids)
 			if(QDELETED(liquid_group))
 				arrayed_groups -= liquid_group
 				continue
-			while(!MC_TICK_CHECK && length(liquid_group?.splitting_array)) // three at a time until we either finish or over-run, this should be done before anything else
+			while(length(liquid_group.splitting_array)) // three at a time until we either finish or over-run, this should be done before anything else
 				liquid_group.work_on_split_queue()
-				liquid_group.cleanse_members()
+				if(!QDELETED(liquid_group))
+					liquid_group.cleanse_members()
+				if(MC_TICK_CHECK)
+					return
+				if(QDELETED(liquid_group))
+					break
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_GROUPS)
 		if(!length(group_process_work_queue))
@@ -89,67 +119,75 @@ SUBSYSTEM_DEF(liquids)
 
 		run_type = SSLIQUIDS_RUN_TYPE_EVAPORATION
 
-	if(run_type == SSLIQUIDS_RUN_TYPE_EVAPORATION && !debug_evaporation)
-		list_clear_nulls(evaporation_queue)
-		evaporation_counter++
-		if(evaporation_counter >= REQUIRED_EVAPORATION_PROCESSES)
-			evaporation_counter = 0
-			for(var/datum/liquid_group/liquid_group as anything in active_groups)
-				if(MC_TICK_CHECK)
-					return
-				if(QDELETED(liquid_group))
-					active_groups -= liquid_group
-					continue
-				liquid_group.check_dead()
-				if(!length(liquid_group?.splitting_array))
-					liquid_group.process_turf_disperse()
-			for(var/turf/liquid_turf as anything in evaporation_queue)
-				if(MC_TICK_CHECK)
-					return
-				if(!prob(EVAPORATION_CHANCE) || !liquid_turf || isoceanturf(liquid_turf))
-					evaporation_queue -= liquid_turf
-					continue
-				liquid_turf?.liquids?.process_evaporation()
+	// these phases only set up a new run when the last one finished, so a pause picks up where it left off
+	if(run_type == SSLIQUIDS_RUN_TYPE_EVAPORATION)
+		if(!debug_evaporation && !length(currentrun_disperse_groups) && !length(currentrun_evaporation))
+			evaporation_counter++
+			if(evaporation_counter >= REQUIRED_EVAPORATION_PROCESSES)
+				evaporation_counter = 0
+				currentrun_disperse_groups = active_groups.Copy()
+				currentrun_evaporation = evaporation_queue.Copy()
+		while(length(currentrun_disperse_groups))
+			var/datum/liquid_group/liquid_group = currentrun_disperse_groups[length(currentrun_disperse_groups)]
+			currentrun_disperse_groups.len--
+			if(QDELETED(liquid_group))
+				continue
+			liquid_group.check_dead()
+			if(!QDELETED(liquid_group) && !length(liquid_group.splitting_array))
+				liquid_group.process_turf_disperse()
+			if(MC_TICK_CHECK)
+				return
+		while(length(currentrun_evaporation))
+			var/turf/liquid_turf = currentrun_evaporation[length(currentrun_evaporation)]
+			currentrun_evaporation.len--
+			if(!prob(EVAPORATION_CHANCE) || !liquid_turf || isoceanturf(liquid_turf))
+				evaporation_queue -= liquid_turf
+			else
+				liquid_turf.liquids?.process_evaporation()
+			if(MC_TICK_CHECK)
+				return
 		run_type = SSLIQUIDS_RUN_TYPE_FIRE
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_FIRE)
-		fire_counter++
-		for(var/datum/liquid_group/liquid_group as anything in active_groups)
+		if(!length(currentrun_fire_spread) && !length(currentrun_fire_groups))
+			fire_counter++
+			for(var/datum/liquid_group/liquid_group as anything in active_groups)
+				if(length(liquid_group?.burning_members))
+					currentrun_fire_spread += liquid_group.burning_members
+			if(fire_counter > REQUIRED_FIRE_PROCESSES)
+				fire_counter = 0
+				currentrun_fire_groups = active_groups.Copy()
+		while(length(currentrun_fire_spread))
+			var/turf/burning_turf = currentrun_fire_spread[length(currentrun_fire_spread)]
+			currentrun_fire_spread.len--
+			var/datum/liquid_group/liquid_group = burning_turf?.liquids?.liquid_group
+			if(!QDELETED(liquid_group))
+				liquid_group.process_spread(burning_turf)
 			if(MC_TICK_CHECK)
 				return
-			if(length(liquid_group?.burning_members))
-				for(var/turf/burning_turf as anything in liquid_group.burning_members)
-					if(MC_TICK_CHECK)
-						return
-					if(!istype(burning_turf))
-						liquid_group.burning_members -= burning_turf
-						continue
-					liquid_group.process_spread(burning_turf)
-
-		if(fire_counter > REQUIRED_FIRE_PROCESSES)
-			for(var/datum/liquid_group/liquid_group as anything in active_groups)
-				if(MC_TICK_CHECK)
-					return
-				if(QDELETED(liquid_group))
-					active_groups -= liquid_group
-					continue
-				if(length(liquid_group.burning_members))
-					liquid_group.process_fire()
-			fire_counter = 0
+		while(length(currentrun_fire_groups))
+			var/datum/liquid_group/liquid_group = currentrun_fire_groups[length(currentrun_fire_groups)]
+			currentrun_fire_groups.len--
+			if(QDELETED(liquid_group) || !length(liquid_group.burning_members))
+				continue
+			liquid_group.process_fire()
+			if(MC_TICK_CHECK)
+				return
 		run_type = SSLIQUIDS_RUN_TYPE_OCEAN
 
-	if(!length(currentrun_active_ocean_turfs))
-		currentrun_active_ocean_turfs = active_ocean_turfs
-
 	if(run_type == SSLIQUIDS_RUN_TYPE_OCEAN)
-		list_clear_nulls(currentrun_active_ocean_turfs)
-		ocean_counter++
-		if(ocean_counter >= REQUIRED_OCEAN_PROCESSES)
-			for(var/turf/open/floor/plating/ocean/active_ocean in currentrun_active_ocean_turfs)
-				if(MC_TICK_CHECK)
-					return
+		if(!length(currentrun_active_ocean_turfs))
+			ocean_counter++
+			if(ocean_counter >= REQUIRED_OCEAN_PROCESSES)
+				ocean_counter = 0
+				currentrun_active_ocean_turfs = active_ocean_turfs.Copy()
+		while(length(currentrun_active_ocean_turfs))
+			var/turf/open/floor/plating/ocean/active_ocean = currentrun_active_ocean_turfs[length(currentrun_active_ocean_turfs)]
+			currentrun_active_ocean_turfs.len--
+			if(isoceanturf(active_ocean))
 				active_ocean.process_turf()
-			ocean_counter = 0
+			if(MC_TICK_CHECK)
+				return
 		run_type = SSLIQUIDS_RUN_TYPE_TURFS
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_TURFS)
@@ -208,8 +246,10 @@ SUBSYSTEM_DEF(liquids)
 					continue
 
 				liquid_group.build_turf_reagent()
-				if(liquid_group.reagents_per_turf > LIQUID_HEIGHT_DIVISOR)
-					liquid_group.process_cached_edges()
+				// a big flood can have more edges than one tick can spread, so it stays queued and carries on next fire
+				if(liquid_group.reagents_per_turf > LIQUID_HEIGHT_DIVISOR && liquid_group.process_cached_edges())
+					pause()
+					return
 				cached_edge_work_queue -= liquid_group
 
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS

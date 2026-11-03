@@ -23,7 +23,7 @@
 		return
 
 	user.temporarilyRemoveItemFromInventory(src)
-	user.playsound_local(user, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	user.playsound_local(user, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 
 	var/obj/item/card/id/advanced/original_id = user.get_idcard(hand_first = FALSE)
 	if (original_id)

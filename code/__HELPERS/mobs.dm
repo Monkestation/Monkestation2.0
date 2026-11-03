@@ -444,6 +444,20 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
 
+/**
+ * Used to get the amount of change between two body temperatures
+ *
+ * When passed the difference between two temperatures returns the amount of change to temperature to apply.
+ * The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
+ * vars:
+ * * temp_diff (required) The difference between two temperatures
+ * * change_rate (optional)(Default: 0.06) The rate of range multiplier
+ */
+/proc/get_temp_change_amount(temp_diff, change_rate = BODYTEMP_STANDARD_CHANGE_RATE)
+	if(temp_diff < 0)
+		return -(BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 - (temp_diff * change_rate))
+	return (BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 + (temp_diff * change_rate))
+
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
@@ -527,18 +541,20 @@ GLOBAL_LIST_EMPTY(species_list)
 		. += borg
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=FALSE, z = null)
+/proc/active_ais(check_mind = FALSE, z = null)
 	. = list()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
 			continue
 		if(ai.control_disabled)
 			continue
-		if(check_mind)
-			if(!ai.mind)
-				continue
-		if(z && !(z == ai.z) && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+		if(check_mind && !ai.mind)
 			continue
+		if(!isnull(z))
+			var/turf/ai_turf = get_turf(ai)
+			var/ai_z = ai_turf.z
+			if(z != ai_z && (!is_station_level(z) || !is_station_level(ai_z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+				continue
 		. += ai
 
 //Find an active ai with the least borgs. VERBOSE PROCNAME HUH!

@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/steam_helios
 	name = "Steam Helios"
 	desc = "A huge creation of bronze gears and steam, you have no idea how it stays together."
-	icon = 'icons/mecha/coop_mech.dmi'
+	icon = 'icons/mob/rideables/coop_mech.dmi'
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	color = rgb(190, 135, 0)
@@ -193,7 +193,7 @@
 
 /obj/structure/mecha_wreckage/steam_helios
 	name = "\improper Steam Helios wreckage"
-	icon = 'icons/mecha/coop_mech.dmi'
+	icon = 'icons/mob/rideables/coop_mech.dmi'
 	icon_state = "savannah_ivanov-broken"
 	color = rgb(190, 135, 0)
 	welder_salvage = list(/obj/item/stack/sheet/bronze)

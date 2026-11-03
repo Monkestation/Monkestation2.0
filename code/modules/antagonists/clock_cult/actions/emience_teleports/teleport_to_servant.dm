@@ -17,5 +17,5 @@
 
 	var/mob/living/input_servant = tgui_input_list(usr, "Choosen a servant", "Servants", given_list)
 	do_teleport(usr, get_turf(input_servant), 0, no_effects = TRUE, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
-	usr.playsound_local(get_turf(usr), 'sound/magic/magic_missile.ogg', 50, TRUE, pressure_affected = FALSE)
+	usr.playsound_local(get_turf(usr), 'sound/effects/magic/magic_missile.ogg', 50, TRUE, pressure_affected = FALSE)
 	to_chat(usr, "You warp to [input_servant].")

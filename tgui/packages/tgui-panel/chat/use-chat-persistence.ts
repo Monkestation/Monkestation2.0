@@ -1,9 +1,10 @@
-import { storage, type StorageDiagnostic } from 'common/storage';
+import { storage } from 'common/storage';
 import DOMPurify from 'dompurify';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
+import { store } from '../events/store';
 import { settingsLoadedAtom } from '../settings/atoms';
-import { chatLoadedAtom, versionAtom } from './atom';
+import { chatLoadedAtom, currentPageAtom, versionAtom } from './atom';
 import { MESSAGE_SAVE_INTERVAL } from './constants';
 import { saveChatToStorage } from './helpers';
 import { startChatStateMigration } from './migration';
@@ -12,6 +13,29 @@ import { chatRenderer } from './renderer';
 
 // List of blacklisted tags
 const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
+
+function showStorageProblem(message: string): void {
+  const title = document.createElement('span');
+  title.className = 'alertwarning';
+  title.textContent = 'Chat storage problem';
+
+  const box = document.createElement('div');
+  box.className = 'boxed_message red_box';
+  box.append(title, document.createElement('br'), message);
+
+  chatRenderer.processBatch([
+    createMessage({
+      type: 'internal/storage',
+      html: box.outerHTML,
+    }),
+  ]);
+}
+
+storage.subscribe((diagnostic) => {
+  if (diagnostic.level !== 'info') {
+    showStorageProblem(diagnostic.message);
+  }
+});
 
 /**
  * Custom hook that initializes chat from local storage and periodically saves
@@ -29,7 +53,19 @@ export function useChatPersistence() {
       // eslint-disable-next-line no-inner-declarations
       async function fetchChat(): Promise<void> {
         console.log('Initializing chat');
-        await loadChatFromStorage();
+        try {
+          await loadChatFromStorage();
+        } catch (error) {
+          console.error('Failed to load chat from storage:', error);
+          showStorageProblem(
+            "Your saved chat couldn't be loaded, so chat is starting fresh.",
+          );
+        }
+
+        // nothing got restored, do this so like, the chat doesn't get stuck blank
+        if (!chatRenderer.page) {
+          chatRenderer.changePage(store.get(currentPageAtom));
+        }
 
         setLoaded(true);
         chatRenderer.onStateLoaded();
@@ -56,8 +92,6 @@ export function useChatPersistence() {
       storage.get('chat-messages'),
     ]);
 
-    surfaceStorageDiagnostics(storage.diagnostics);
-
     if (messages) {
       handleMessages(messages);
     }
@@ -71,24 +105,6 @@ export function useChatPersistence() {
     } else {
       // Discard incompatible versions
       console.log('Discarded incompatible chat state from storage:', state);
-    }
-  }
-
-  function surfaceStorageDiagnostics(diagnostics: StorageDiagnostic[]) {
-    const hasIssues = diagnostics.some((d) => d.level !== 'info');
-    if (!hasIssues) return;
-
-    const batch = diagnostics
-      .filter((d) => d.level !== 'info')
-      .map((d) =>
-        createMessage({
-          type: 'internal/storage',
-          text: `[Storage] ${d.message}`,
-        }),
-      );
-
-    if (batch.length) {
-      chatRenderer.processBatch(batch, { prepend: true });
     }
   }
 

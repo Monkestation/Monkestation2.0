@@ -2,7 +2,7 @@
 	unusual_description = "galactic"
 	duration = 5 SECONDS
 	spawn_interval = 0.5 SECONDS
-	burst_amount = 6
+	burst_amount = 7
 	particle_state = "snow_small"
 
 
@@ -25,4 +25,3 @@
 	animate(spawned, alpha = 0, time = duration)
 	if(prob(33) && can_be_shooting)
 		animate(spawned, pixel_y = spawned.pixel_y + rand(-6, 6), pixel_x = spawned.pixel_x + rand(-16, 16), time = 1 SECONDS)
-	QDEL_IN(spawned, duration)

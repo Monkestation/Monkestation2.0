@@ -31,13 +31,13 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "smashes into the side of"
 	attack_verb_simple = "smash into the side of"
-	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	throw_message = "merely dinks off of the"
 	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
 	mob_biotypes = MOB_ROBOTIC|MOB_MINING
-	death_sound = 'sound/magic/repulse.ogg'
+	death_sound = 'sound/effects/magic/repulse.ogg'
 	death_message = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
 
@@ -136,7 +136,7 @@
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(turf_target, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
+	playsound(source,'sound/machines/airlock/airlockopen.ogg', 200, 1)
 	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_2), turf_target, source), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_2(turf/T, turf/source)
@@ -181,7 +181,7 @@
 /obj/item/clothing/accessory/pandora_hope
 	name = "Hope"
 	desc = "Found at the bottom of Pandora. After all the evil was released, this was the only thing left inside."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "hope"
 	resistance_flags = FIRE_PROOF
 

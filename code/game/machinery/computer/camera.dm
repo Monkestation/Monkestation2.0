@@ -59,7 +59,7 @@
 			concurrent_users += user_ref
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
-			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 			use_energy(active_power_usage)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
@@ -182,7 +182,7 @@
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
 		last_camera_turf = null
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /atom/movable/screen/map_view/camera
 	/// All the plane masters that need to be applied.

@@ -22,7 +22,7 @@
 	throw_speed = 4
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*1.15, /datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT*2.075)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("smashes", "crushes", "cleaves", "chops", "pulps")
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
@@ -197,7 +197,7 @@
 	if((user.dir & backstab_dir) && (target.dir & backstab_dir) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
-		playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+		playsound(user, 'sound/items/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
@@ -229,7 +229,7 @@
 	destabilizer.aim_projectile(target, user, modifiers)
 	destabilizer.firer = user
 	destabilizer.fired_from = src
-	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
@@ -251,17 +251,17 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
+		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 
 /obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
 	set_light_on(FALSE)
-	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()

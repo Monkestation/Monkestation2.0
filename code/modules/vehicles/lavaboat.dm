@@ -4,9 +4,9 @@
 /obj/vehicle/ridden/lavaboat
 	name = "lava boat"
 	desc = "A boat used for traversing lava."
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	icon = 'icons/obj/mining_zones/dragonboat.dmi'
 	icon_state = "goliath_boat"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "boat"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
@@ -46,7 +46,7 @@
 /obj/vehicle/ridden/lavaboat/plasma
 	name = "plasma boat"
 	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	icon = 'icons/obj/mining_zones/dragonboat.dmi'
 	icon_state = "goliath_boat"
 	resistance_flags = FREEZE_PROOF
 	can_buckle = TRUE
@@ -67,7 +67,7 @@
 
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
 	to_chat(user, span_notice("You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."))
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
+	playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
 	new /obj/vehicle/ridden/lavaboat/dragon(get_turf(src))
 	qdel(src)
 

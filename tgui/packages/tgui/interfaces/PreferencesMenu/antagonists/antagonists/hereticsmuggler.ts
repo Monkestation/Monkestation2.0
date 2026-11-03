@@ -1,5 +1,4 @@
-/*
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 import { HERETIC_MECHANICAL_DESCRIPTION } from './heretic';
 
 const HereticSmuggler: Antagonist = {
@@ -13,4 +12,3 @@ const HereticSmuggler: Antagonist = {
 };
 
 export default HereticSmuggler;
-*/

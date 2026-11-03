@@ -232,7 +232,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(100;COLOR_SPACE_BLUE, 75;COLOR_BLUE, 25;CO
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 		if(RCD_CATWALK)
 			to_chat(user, span_notice("You build a catwalk."))
@@ -342,5 +342,5 @@ GLOBAL_VAR_INIT(starlight_color, pick(100;COLOR_SPACE_BLUE, 75;COLOR_BLUE, 25;CO
 		ChangeTurf(new_floor_path, flags = flags)
 		return
 	// Create plating under tiled floor we try to create directly onto space
-	PlaceOnTop(/turf/open/floor/plating, flags = flags)
-	PlaceOnTop(new_floor_path, flags = flags)
+	place_on_top(/turf/open/floor/plating, flags = flags)
+	place_on_top(new_floor_path, flags = flags)

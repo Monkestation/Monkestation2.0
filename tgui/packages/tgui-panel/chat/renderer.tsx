@@ -6,11 +6,13 @@
 
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { Tooltip } from 'tgui/components';
-import { store } from 'tgui/events/store';
 import { createLogger } from 'tgui/logging';
-import { settingsAtom } from 'tgui-panel/settings/atoms';
+import { defaultSettings, settingsAtom } from 'tgui-panel/settings/atoms';
+import { store } from '../events/store';
+import { scrollTrackingAtom } from './atom';
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
@@ -66,6 +68,12 @@ const createReconnectedNode = () => {
   return node;
 };
 
+// Removes job formatting
+const stripColoredNames = (inputHtml) => {
+  const spanRegex = /(<span[\w| |\t|=]*['|"][\w| ]*)(?:job__[a-z]+)(['|"]>)/gi;
+  return inputHtml.replace(spanRegex, '$1$2');
+};
+
 const handleImageError = (e) => {
   setTimeout(() => {
     /** @type {HTMLImageElement} */
@@ -117,9 +125,10 @@ class ChatRenderer {
   scrollNode: HTMLElement | null;
   scrollTracking: boolean;
   lastScrollHeight: number;
+  lastOffsetHeight: number;
+  resizeObserver: ResizeObserver;
   highlightParsers: Array<any> | null;
-  handleScroll: (type: any) => void;
-  ensureScrollTracking: () => void;
+  handleScroll: () => void;
   coloredNames: boolean;
 
   constructor() {
@@ -132,10 +141,27 @@ class ChatRenderer {
     this.events = new EventEmitter();
     this.scrollNode = null;
     this.scrollTracking = true;
+    this.coloredNames = defaultSettings.coloredNames;
     this.lastScrollHeight = 0;
-    this.handleScroll = (type) => {
+    this.lastOffsetHeight = 0;
+    this.resizeObserver = new ResizeObserver(() => {
       const node = this.scrollNode;
       if (!node) {
+        return;
+      }
+      this.lastOffsetHeight = node.offsetHeight;
+      if (this.scrollTracking) {
+        this.scrollToBottom();
+      }
+    });
+    this.handleScroll = () => {
+      const node = this.scrollNode;
+      if (!node) {
+        return;
+      }
+      // pane got resized (music player popping in, etc) and the observer hasn't re-pinned us yet,
+      // so we're "far from the bottom" for no reason and would turn tracking off
+      if (node.offsetHeight !== this.lastOffsetHeight) {
         return;
       }
       const height = node.scrollHeight;
@@ -146,13 +172,8 @@ class ChatRenderer {
         this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
-        this.events.emit('scrollTrackingChanged', scrollTracking);
+        store.set(scrollTrackingAtom, scrollTracking);
         logger.debug('tracking', this.scrollTracking);
-      }
-    };
-    this.ensureScrollTracking = () => {
-      if (this.scrollTracking) {
-        this.scrollToBottom();
       }
     };
     // Periodic message pruning
@@ -175,6 +196,11 @@ class ChatRenderer {
     // Find scrollable parent
     this.scrollNode = document.getElementById('chat-pane');
     this.scrollNode?.addEventListener('scroll', this.handleScroll);
+    if (this.scrollNode) {
+      this.resizeObserver.observe(this.scrollNode);
+    }
+    // messages grow after landing (icons loading, xN badges)
+    this.resizeObserver.observe(this.rootNode!);
     setTimeout(() => {
       this.scrollToBottom();
     });
@@ -213,25 +239,12 @@ class ChatRenderer {
       const matchWord = setting.matchWord;
       const matchCase = setting.matchCase;
       const enabled = setting.enabled;
-      const allowedRegex = /^[a-zа-яё0-9_\-$/^[\s\]\\]+$/gi;
-      const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
+      const regexEscapeCharacters = /[.*+?^${}()|[\]\\/]/g;
       const lines = String(text)
         .split(',')
         .map((str) => str.trim())
-        .filter((str) => {
-          // Must be longer than one character
-          if (!str || str.length <= 1) return false;
-
-          // Must be alphanumeric (with some punctuation)
-          const isValidFormat =
-            allowedRegex.test(str) ||
-            (str.charAt(0) === '/' && str.charAt(str.length - 1) === '/');
-
-          // Reset lastIndex so it does not mess up the next word
-          allowedRegex.lastIndex = 0;
-
-          return isValidFormat;
-        });
+        // Must be longer than one character
+        .filter((str) => str.length > 1);
       let highlightWords;
       let highlightRegex;
       // Nothing to match, reset highlighting
@@ -269,10 +282,13 @@ class ChatRenderer {
         if (regexStr) {
           highlightRegex = new RegExp(`(${regexStr})`, flags);
         } else {
-          const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
-            '|',
-          )})${matchWord ? '\\b' : ''}`;
-          highlightRegex = new RegExp(pattern, flags);
+          const words = `(${highlightWords.join('|')})`;
+          // not \b, it only knows ascii letters - "José" or a term ending in "?" would never count as a whole word
+          const wordCharacter = '[\\p{L}\\p{N}_]';
+          const pattern = matchWord
+            ? `(?<!${wordCharacter})${words}(?!${wordCharacter})`
+            : words;
+          highlightRegex = new RegExp(pattern, `${flags}u`);
         }
       } catch {
         // We just reset it if it's invalid.
@@ -328,8 +344,10 @@ class ChatRenderer {
     }
     if (node) {
       this.rootNode!.appendChild(fragment);
-      node.scrollIntoView();
     }
+    // empty pages fire no scroll event
+    this.scrollToBottom();
+    this.handleScroll();
   }
 
   getCombinableMessage(predicate) {
@@ -403,7 +421,9 @@ class ChatRenderer {
         }
         // Payload is HTML
         else if (message.html) {
-          node.innerHTML = message.html;
+          node.innerHTML = this.coloredNames
+            ? message.html
+            : stripColoredNames(message.html);
         } else {
           logger.error('Error: message is missing text payload', message);
         }
@@ -424,7 +444,7 @@ class ChatRenderer {
               working_value = true;
             } else if (working_value === '$false') {
               working_value = false;
-            } else if (!Number.isNaN(working_value)) {
+            } else if (!Number.isNaN(Number(working_value))) {
               const parsed_float = parseFloat(working_value);
               if (!Number.isNaN(parsed_float)) {
                 working_value = parsed_float;
@@ -452,13 +472,17 @@ class ChatRenderer {
           }
 
           const reactRoot = createRoot(childNode);
-          /* eslint-disable react/no-danger */
-          reactRoot.render(
-            <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-          );
-          /* eslint-enable react/no-danger */
+          // `flushSync()` because of a chat scroll issue where whether or not
+          // the line wraps was being decided before the name loaded
+          flushSync(() => {
+            /* eslint-disable react/no-danger */
+            reactRoot.render(
+              <Element {...outputProps}>
+                <span dangerouslySetInnerHTML={oldHtml} />
+              </Element>,
+            );
+            /* eslint-enable react/no-danger */
+          });
         }
 
         // Highlight text
@@ -524,7 +548,8 @@ class ChatRenderer {
         this.rootNode!.appendChild(fragment);
       }
       if (this.scrollTracking) {
-        setTimeout(() => this.scrollToBottom());
+        // has to happen RIGHT NOW, don't use a timeout or it fucks up with big messages
+        this.scrollToBottom();
       }
     }
     // Notify listeners that we have processed the batch
@@ -620,6 +645,8 @@ class ChatRenderer {
     this.messages = this.messages.filter(
       (message) => message.node !== 'pruned',
     );
+    // no scroll event if we were already at the top
+    this.handleScroll();
     logger.log(`Cleared chat`);
   }
 

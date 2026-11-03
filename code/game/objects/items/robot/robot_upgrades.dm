@@ -470,12 +470,12 @@
 	QDEL_NULL(database_scanner)
 
 /obj/item/borg/upgrade/surgical_database/ui_action_click(mob/user, actiontype)
-	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, TRUE)
 	user.balloon_alert(user, "downloading surgery data...")
 	if(!do_after(user, 1 SECONDS, user))
 		user.balloon_alert(user, "surgery download interrupted!")
 		return
-	playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 25, TRUE)
 	var/list/surgeries_to_add = list()
 	for(var/obj/nearby_object in range(1, user))
 		if(istype(nearby_object, /obj/machinery/computer/operating))
@@ -530,7 +530,7 @@
 
 /datum/action/item_action/cyborg_surgical_database
 	name = "Update Surgeries"
-	button_icon = 'icons/obj/device.dmi'
+	button_icon = 'icons/obj/devices/scanner.dmi'
 	button_icon_state = "surgical_processor"
 
 /obj/item/borg/upgrade/ai
@@ -574,7 +574,7 @@
 	do_smoke(1, borg, borg.loc)
 	sleep(0.2 SECONDS)
 	for(var/i in 1 to 4)
-		playsound(borg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		playsound(borg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg'), 80, TRUE, -1)
 		sleep(1.2 SECONDS)
 	if(!prev_lockcharge)
 		borg.SetLockdown(FALSE)
@@ -837,6 +837,15 @@
 	model_flags = BORG_MODEL_SERVICE
 	items_to_add = list(/obj/item/reagent_containers/borghypo/condiment_synthesizer)
 
+/obj/item/borg/upgrade/shuttle_blueprints
+	name = "Engineering Cyborg Shuttle Blueprint Database"
+	desc = "An upgrade to the engineering model cyborg allowing for the construction and expansion of shuttles."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/syndicate/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+	items_to_add = list(/obj/item/shuttle_blueprints/borg)
+
 /// This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 // A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board
@@ -861,7 +870,7 @@
 
 	if(borg.mind)
 		borg.mind.grab_ghost()
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+		playsound(loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 	else
 		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
 
@@ -1214,7 +1223,7 @@
 	model_type = list(/obj/item/robot_model/science)
 	model_flags = BORG_MODEL_SCIENCE
 	items_to_add = list(
-		/obj/item/vacuum_pack,
+		/obj/item/vacuum_nozzle/cyborg,
 		/obj/item/storage/bag/xeno,
 		/obj/item/construction/plumbing/research
 	)

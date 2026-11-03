@@ -14,8 +14,8 @@
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
 	habitable_atmos = list("min_oxy" = 2, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = 450
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 450
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
@@ -30,7 +30,7 @@
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25
 	mob_size = MOB_SIZE_LARGE
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/seedling
 	///the state of combat we are in
@@ -352,7 +352,7 @@
 		living_target.ignite_mob()
 		living_target.adjustFireLoss(30)
 
-	playsound(target_turf, 'sound/magic/lightningbolt.ogg', 50, TRUE)
+	playsound(target_turf, 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
 	if(!is_seedling)
 		return
 	var/mob/living/basic/seedling/seed_firer = firer

@@ -12,9 +12,9 @@
 	force = 3
 	throwforce = 5
 	hitsound = SFX_SWING_HIT
-	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
-	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
-	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
+	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
+	drop_sound = 'sound/items/handling/tools/weldingtool_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/weldingtool_pickup.ogg'
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 2
 	light_power = 0.75
@@ -45,9 +45,9 @@
 	/// Whether or not we add an overlay icon based on the ratio of fuel remaining.
 	var/change_icons = TRUE
 	/// The sound when the welder is turned on.
-	var/activation_sound = 'sound/items/welderactivate.ogg'
+	var/activation_sound = 'sound/items/tools/welderactivate.ogg'
 	/// The sound when the welder is turned off.
-	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
+	var/deactivation_sound = 'sound/items/tools/welderdeactivate.ogg'
 	/// Should it automatically refuel every process?
 	var/automatic_refueling = FALSE
 	/// Should it process even when off?
@@ -293,7 +293,7 @@
 	playsound(src, activation_sound, 50, TRUE)
 	force = 15
 	damtype = BURN
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	update_appearance()
 	if(!always_processing)
 		START_PROCESSING(SSobj, src)
@@ -362,7 +362,7 @@
 /obj/item/weldingtool/abductor
 	name = "alien welding tool"
 	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "welder"
 	light_system = NO_LIGHT_SUPPORT
 	light_outer_range = 0
@@ -466,7 +466,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(tool, src))
 			to_chat(user, span_warning("[tool] is stuck to your hand!"))
 			return ITEM_INTERACT_BLOCKING
-		playsound(src, 'sound/weapons/magout.ogg', 40, TRUE)
+		playsound(src, 'sound/items/weapons/magout.ogg', 40, TRUE)
 		stored_cell = tool
 		return ITEM_INTERACT_SUCCESS
 	return ..()
@@ -518,7 +518,7 @@
 		to_chat(user, span_notice("[src]'s cell slot needs to be unsecured first!"))
 		return
 	to_chat(user, span_notice("You remove [stored_cell] from [src]!"))
-	playsound(src, 'sound/weapons/magout.ogg', 40, TRUE)
+	playsound(src, 'sound/items/weapons/magout.ogg', 40, TRUE)
 	user.put_in_hands(stored_cell)
 	stored_cell = null
 	if(welding)

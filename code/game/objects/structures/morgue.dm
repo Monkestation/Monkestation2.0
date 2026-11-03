@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		if(mob_occupant.client && !(HAS_TRAIT(mob_occupant, TRAIT_SUICIDED)))
 			icon_state = "morgue4" // Revivable
 			if(mob_occupant.stat == DEAD && beeper && COOLDOWN_FINISHED(src, next_beep))
-				playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
+				playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
 				COOLDOWN_START(src, next_beep, beep_cooldown)
 			return ..()
 

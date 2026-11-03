@@ -187,7 +187,7 @@
 	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
 	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
 	user.stamina.adjust(-iteration + 5)
-	playsound(get_turf(user), pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg'), 50)
+	playsound(get_turf(user), pick('sound/effects/rustle/rustle1.ogg','sound/effects/rustle/rustle2.ogg','sound/effects/rustle/rustle3.ogg','sound/effects/rustle/rustle4.ogg','sound/effects/rustle/rustle5.ogg'), 50)
 
 	if(prob(33))
 		user.visible_message(span_danger("[user] continues noogie'ing [target]!"), span_warning("You continue giving [target] a noogie!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
@@ -241,7 +241,7 @@
 		)
 		to_chat(slapped, span_userdanger("You see [user] scoff and pull back [user.p_their()] arm, then suddenly you're on the ground with an ungodly ringing in your ears!"))
 		slap_volume = 120
-		SEND_SOUND(slapped, sound('sound/weapons/flash_ring.ogg'))
+		SEND_SOUND(slapped, sound('sound/items/weapons/flash_ring.ogg'))
 		shake_camera(slapped, 2, 2)
 		slapped.Paralyze(2.5 SECONDS)
 		slapped.adjust_confusion(7 SECONDS)
@@ -283,7 +283,7 @@
 			span_hear("You hear a [no_harm?"light ":""]slap."),
 			//MONKESTATION EDIT END
 		)
-	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
+	playsound(slapped, 'sound/items/weapons/slap.ogg', slap_volume, TRUE, -1)
 	//MONKESTATION EDIT START
 	if (feeble && !no_harm)
 		var/damage = 5
@@ -560,8 +560,8 @@
 	name = "kiss"
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
-	hitsound = 'sound/effects/kiss.ogg'
-	hitsound_wall = 'sound/effects/kiss.ogg'
+	hitsound = 'sound/effects/emotes/kiss.ogg'
+	hitsound_wall = 'sound/effects/emotes/kiss.ogg'
 	mixer_channel = CHANNEL_MOB_EMOTES
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
