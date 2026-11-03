@@ -240,3 +240,43 @@
 	if(test_snail)
 		test_snail.curse_fulfilled = TRUE
 	return ..()
+
+/datum/unit_test/immortal_snail_remote_spawn
+	var/mob/living/basic/immortal_snail/spawned_snail
+	var/datum/snail_debt/previous_ledger
+	var/turf/far_floor
+	var/original_far_type
+
+/datum/unit_test/immortal_snail_remote_spawn/Run()
+	previous_ledger = GLOB.snail_debt
+	var/obj/machinery/computer/slot_machine/immortal_snail/machine = allocate(/obj/machinery/computer/slot_machine/immortal_snail)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
+	machine.minimum_spawn_distance = world.maxx + world.maxy
+	TEST_ASSERT(!machine.claim_offer(person), "An unavailable distant spawn must not accept the offer")
+	TEST_ASSERT(!machine.claimed, "A failed spawn must leave the offer unclaimed")
+	TEST_ASSERT_EQUAL(GLOB.snail_debt, previous_ledger, "A failed spawn must not create a debt")
+	machine.minimum_spawn_distance = 20
+	far_floor = locate(machine.x + 25, machine.y, machine.z)
+	original_far_type = far_floor.type
+	far_floor = far_floor.ChangeTurf(/turf/open/floor/plating)
+	var/accepted = machine.claim_offer(person)
+	for(var/mob/living/basic/immortal_snail/snail in GLOB.mob_living_list)
+		if(snail.original_target() == person)
+			spawned_snail = snail
+			break
+	TEST_ASSERT(accepted && spawned_snail, "Accepting must create the distant pursuer")
+	TEST_ASSERT_EQUAL(spawned_snail.z, person.z, "The initial pursuer must spawn on the same level")
+	TEST_ASSERT(get_dist(spawned_snail, machine) >= 20, "The snail must not spawn at or near the machine")
+	TEST_ASSERT(get_dist(spawned_snail, person) >= 20, "The snail must start away from its target")
+	TEST_ASSERT(get_dist(spawned_snail, machine) <= 35, "The initial spawn must respect the search radius")
+	TEST_ASSERT(isfloorturf(get_turf(spawned_snail)), "The initial spawn must be on a floor")
+	TEST_ASSERT(spawned_snail.next_step <= world.time, "A distant pursuer must start immediately")
+	TEST_ASSERT_EQUAL(spawned_snail.available_credits(person), machine.offer, "The offer must still pay the full amount")
+
+/datum/unit_test/immortal_snail_remote_spawn/Destroy()
+	if(spawned_snail)
+		qdel(spawned_snail, TRUE)
+	if(far_floor && original_far_type)
+		far_floor.ChangeTurf(original_far_type)
+	. = ..()
+	GLOB.snail_debt = previous_ledger

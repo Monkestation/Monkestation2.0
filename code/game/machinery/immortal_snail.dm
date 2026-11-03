@@ -7,6 +7,8 @@
 	circuit = null
 	var/offer = 100000
 	var/claimed = FALSE
+	var/minimum_spawn_distance = 20
+	var/maximum_spawn_distance = 35
 
 /obj/machinery/computer/slot_machine/immortal_snail/update_icon_state()
 	. = ..()
@@ -19,15 +21,45 @@
 	var/answer = tgui_alert(user, "Take [offer] credits? An immortal snail will pursue you until you die, even if you drop the money. Touching it is fatal. If it catches you with at least [offer] credits in cash and your bank account, you will die and be husked. Otherwise, your body and organs will be destroyed. After your death, it reclaims every cursed credit: anyone carrying them will die unless they drop them first. Spending cursed credits or sending them somewhere unrecoverable marks the spender for death.", "An offer you can refuse", list("Leave", "Accept"))
 	if(answer != "Accept" || QDELETED(src) || claimed || QDELETED(user) || user.stat != CONSCIOUS || !user.can_interact_with(src))
 		return
+	claim_offer(user)
+
+/obj/machinery/computer/slot_machine/immortal_snail/proc/claim_offer(mob/living/user)
+	if(claimed || QDELETED(user) || !ishuman(user) || user.stat != CONSCIOUS || !user.can_interact_with(src))
+		return FALSE
+	var/turf/spawn_turf = find_snail_spawn(user)
+	if(!spawn_turf)
+		balloon_alert(user, "the offer is unavailable")
+		return FALSE
 	claimed = TRUE
-	var/mob/living/basic/immortal_snail/snail = new(get_turf(src))
+	var/mob/living/basic/immortal_snail/snail = new(spawn_turf)
 	snail.bind_target(user, offer)
 	var/obj/item/holochip/prize = new(drop_location(), offer)
 	GLOB.snail_debt = new(get_turf(src))
 	GLOB.snail_debt.mark(prize, offer)
 	user.put_in_hands(prize)
-	log_game("[key_name(user)] accepted [offer] credits from the immortal snail slot machine at [AREACOORD(src)].")
-	to_chat(user, span_userdanger("The deal is sealed. It knows where you are."))
+	log_game("[key_name(user)] accepted [offer] credits from the immortal snail slot machine at [AREACOORD(src)]. Snail spawned at [AREACOORD(snail)], [get_dist(snail, user)] tiles from its target.")
+	to_chat(user, span_userdanger("The deal is sealed. Somewhere far away, something starts moving toward you."))
+	return TRUE
+
+/obj/machinery/computer/slot_machine/immortal_snail/proc/find_snail_spawn(mob/living/target)
+	var/turf/machine_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target)
+	if(!machine_turf || !target_turf || machine_turf.z != target_turf.z)
+		return null
+	var/list/candidates = list()
+	for(var/turf/open/floor/candidate in orange(maximum_spawn_distance, machine_turf))
+		if(candidate.density || get_dist(candidate, machine_turf) < minimum_spawn_distance || get_dist(candidate, target_turf) < minimum_spawn_distance)
+			continue
+		if(locate(/mob/living) in candidate)
+			continue
+		var/blocked = FALSE
+		for(var/obj/obstacle in candidate)
+			if(obstacle.density)
+				blocked = TRUE
+				break
+		if(!blocked)
+			candidates += candidate
+	return length(candidates) ? pick(candidates) : null
 
 /obj/machinery/computer/slot_machine/immortal_snail/attackby(obj/item/inserted, mob/living/user, params)
 	balloon_alert(user, "no deposits accepted")
@@ -142,8 +174,8 @@
 	if(account)
 		account_ref = WEAKREF(account)
 	contract_value = amount
-	// Give the victim time to leave the machine before the first step.
-	next_step = world.time + 10 SECONDS
+	// The distant spawn provides the head start; pursuit begins immediately.
+	next_step = world.time
 
 /mob/living/basic/immortal_snail/proc/original_target()
 	var/datum/mind/target_mind = target_mind_ref?.resolve()
