@@ -636,7 +636,7 @@
 			continue
 
 		if(play_alert)
-			playsound(terminal, 'sound/machines/terminal_alert.ogg', 30, TRUE)
+			playsound(terminal, 'sound/machines/terminal/terminal_alert.ogg', 30, TRUE)
 
 		terminal.say(message)
 
@@ -776,7 +776,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	GLOB.ccpost_logistics_network.mark_shipment_delivered(freight_crate.shipment_code)
 
-	playsound(src, 'sound/machines/terminal_alert.ogg', vol = 25, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 25, vary = TRUE)
 
 // OUTBOUND LOAD POINT
 
@@ -866,7 +866,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 		return
 
-	playsound(src, 'sound/machines/terminal_alert.ogg', vol = 20, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 20, vary = TRUE)
 
 	freight_crate.visible_message(
 		span_notice("[freight_crate] is accepted for return to Sector Logistics.")
@@ -937,7 +937,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 	if(credited_amount)
-		playsound(src, 'sound/machines/terminal_alert.ogg', vol = 30, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 30, vary = TRUE)
 
 		network.refresh_registered_terminals()
 

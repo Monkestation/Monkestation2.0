@@ -4270,7 +4270,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	submitted_paperwork = paperwork
 
-	playsound(src, 'sound/machines/terminal_alert.ogg', vol = 20, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 20, vary = TRUE)
 	balloon_alert(user, "document inserted")
 	SStgui.update_uis(src)
 
@@ -4715,7 +4715,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 			qdel(transmitted_document)
 
-			playsound(src, 'sound/machines/terminal_alert.ogg', vol = 30, vary = TRUE)
+			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 30, vary = TRUE)
 			balloon_alert(user, "document transmitted")
 			say("Administrative document [transmit_request.paperwork_code] transmitted. Awaiting receiving-installation confirmation.")
 
@@ -4895,7 +4895,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			continue
 
 		if(sound_volume > 0)
-			playsound(display, 'sound/machines/terminal_alert.ogg', vol = sound_volume, vary = !urgent)
+			playsound(display, 'sound/machines/terminal/terminal_alert.ogg', vol = sound_volume, vary = !urgent)
 
 		if(physical_message)
 			if(urgent)
@@ -5834,7 +5834,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 		playsound(
 			terminal,
-			'sound/machines/terminal_alert.ogg',
+			'sound/machines/terminal/terminal_alert.ogg',
 			vol = urgent ? 45 : 30,
 			vary = !urgent
 		)

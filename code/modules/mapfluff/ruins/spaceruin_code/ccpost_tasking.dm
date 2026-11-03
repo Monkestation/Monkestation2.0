@@ -377,7 +377,7 @@
 
 	playsound(
 		src,
-		'sound/machines/terminal_alert.ogg',
+		'sound/machines/terminal/terminal_alert.ogg',
 		vol = 20,
 		vary = TRUE
 	)
@@ -675,7 +675,7 @@
 
 	// Do not issue another task while an existing one remains unresolved.
 	if(tasking_board.current_order && tasking_board.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
-		playsound(src, 'sound/machines/terminal_alert.ogg', vol = 35, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 35, vary = TRUE)
 		visible_message(
 			span_notice("[src] emits a brief reminder tone. An active Central Command tasking order remains unresolved.")
 		)
@@ -715,7 +715,7 @@
 
 	qdel(chosen_template)
 
-	playsound(src, 'sound/machines/terminal_alert.ogg', vol = 45, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 45, vary = TRUE)
 	visible_message(
 		span_notice("[src] chimes. A new Central Command tasking order has been received.")
 	)
@@ -817,7 +817,7 @@
 			tasking_board.current_order.acknowledged_by = user.name
 			tasking_board.current_order.acknowledged_at = station_time_timestamp()
 
-			playsound(src, 'sound/machines/terminal_alert.ogg', vol = 25, vary = FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 25, vary = FALSE)
 
 			balloon_alert(
 				user,
@@ -845,7 +845,7 @@
 
 			playsound(
 				src,
-				'sound/machines/terminal_alert.ogg',
+				'sound/machines/terminal/terminal_alert.ogg',
 				vol = 15,
 				vary = TRUE
 			)
@@ -923,7 +923,7 @@
 
 			playsound(
 				src,
-				'sound/machines/terminal_alert.ogg',
+				'sound/machines/terminal/terminal_alert.ogg',
 				vol = 30,
 				vary = TRUE
 			)
