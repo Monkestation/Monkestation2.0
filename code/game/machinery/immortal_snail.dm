@@ -3,7 +3,7 @@
 	desc = "A slot machine with a single, unblinking eye on its screen. Something about it feels terribly wrong."
 	icon = 'icons/obj/immortal_snail_slot_machine.dmi'
 	icon_state = "cursed_slots"
-	icon_screen = null
+	icon_screen = "slots_screen"
 	circuit = null
 	var/offer = 100000
 	var/claimed = FALSE
@@ -11,12 +11,6 @@
 /obj/machinery/computer/slot_machine/immortal_snail/update_icon_state()
 	. = ..()
 	icon_state = "cursed_slots"
-
-/obj/machinery/computer/slot_machine/immortal_snail/update_overlays()
-	. = ..()
-	// The supplied sprite includes the complete machine, including its screen.
-	icon_screen = null
-	return list()
 
 /obj/machinery/computer/slot_machine/immortal_snail/ui_interact(mob/living/user, datum/tgui/ui)
 	. = ..()
