@@ -137,6 +137,7 @@
 	if(create_bank_on_init)
 		var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
 		registered_account = blank_bank_account
+		blank_bank_account.bank_cards += src
 		blank_bank_account.account_job = new /datum/job/unassigned
 		registered_account.replaceable = TRUE
 
@@ -650,6 +651,8 @@
 	if(!cash_money)
 		to_chat(user, span_warning("[money] doesn't seem to be worth anything!"))
 		return FALSE
+	// Also repair older or externally assigned links before tracking a deposit.
+	registered_account.bank_cards |= src
 	registered_account.adjust_money(cash_money, "System: Deposit")
 	GLOB.snail_debt?.transfer(money, registered_account, cash_money)
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)

@@ -97,7 +97,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 		var/datum/bank_account/account = holder
 		var/obj/item/card/id/fallback
 		for(var/obj/item/card/id/card as anything in account.bank_cards)
-			if(!get_turf(card))
+			if(QDELETED(card) || card.registered_account != account || !get_turf(card))
 				continue
 			fallback = card
 			var/atom/container = card.loc
@@ -143,6 +143,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 	else if(istype(holder, /datum/bank_account))
 		var/datum/bank_account/account = holder
 		account.adjust_money(-min(amount, account.account_balance), "Other: Immortal snail reclaimed cursed credits")
+		account.bank_card_talk(span_warning("An impossible transfer reclaims [amount] cursed credits. The debt is settled."), TRUE)
 	else if(istype(holder, /obj/effect/snail_credit_trace))
 		qdel(holder)
 

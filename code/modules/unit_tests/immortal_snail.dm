@@ -120,6 +120,32 @@
 	snail.process(1)
 	TEST_ASSERT(QDELETED(snail), "The snail must disappear once the curse is fulfilled")
 
+/datum/unit_test/immortal_snail_pda_recovery/Run()
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	QDEL_NULL(snail.pursuit_driver)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, get_turf(snail))
+	var/obj/item/modular_computer/pda/pda = allocate(/obj/item/modular_computer/pda, person)
+	var/obj/item/card/id/card = allocate(/obj/item/card/id)
+	var/datum/bank_account/account = card.registered_account
+	TEST_ASSERT(account && (card in account.bank_cards), "A fresh ID must register itself with its bank account")
+	TEST_ASSERT(pda.insert_id(card), "The ID must fit into the PDA")
+	account.adjust_money(500, "Uncursed test balance")
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_top_right)
+	GLOB.snail_debt = ledger
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, person, 100000)
+	ledger.mark(chip, 100000)
+	TEST_ASSERT(card.insert_money(chip, person), "Depositing the cursed payout must succeed")
+	TEST_ASSERT_EQUAL(ledger.location_of(account), card, "Recovery must find the nested ID rather than the machine")
+	TEST_ASSERT_EQUAL(ledger.carrier_of(account), person, "The PDA's carrier must remain liable")
+	snail.bind_target(person, 100000)
+	person.death()
+	snail.next_step = 0
+	snail.process(1)
+	TEST_ASSERT_EQUAL(account.account_balance, 500, "Recovery through a PDA must remove only cursed credits")
+	TEST_ASSERT_EQUAL(ledger.recovered, 100000, "The complete bank claim must be reclaimed")
+	snail.process(1)
+	TEST_ASSERT(QDELETED(snail), "The snail must disappear once the PDA's bank credits are reclaimed")
+
 /datum/unit_test/immortal_snail_pursuit/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
 	QDEL_NULL(snail.pursuit_driver)
@@ -192,9 +218,13 @@
 	barrier.resistance_flags |= INDESTRUCTIBLE
 	snail.chemically_breach(barrier)
 	TEST_ASSERT(barrier.GetComponent(/datum/component/acid), "Even resistant obstacles must receive chemical attacks first")
+	var/turf/barrier_floor = get_turf(barrier)
+	var/barrier_floor_type = barrier_floor.type
 	snail.chemical_started = world.time - 4.2 SECONDS
 	snail.chemically_breach(barrier)
 	TEST_ASSERT(snail.chemical_escalated, "Resistant objects must trigger chlorine trifluoride escalation")
+	TEST_ASSERT_EQUAL(barrier_floor.type, barrier_floor_type, "Burning a locker must preserve its floor tile")
+	TEST_ASSERT(!(locate(/obj/effect/hotspot) in barrier_floor), "Breaching a locker must not ignite a floor fire")
 	snail.chemical_started = world.time - 17.5 SECONDS
 	snail.chemically_breach(barrier)
 	TEST_ASSERT(QDELETED(barrier), "Indestructible dense objects must not trap the snail")
@@ -269,6 +299,7 @@
 
 /datum/unit_test/immortal_snail_remote_spawn
 	var/mob/living/basic/immortal_snail/spawned_snail
+	var/obj/machinery/computer/slot_machine/normal_machine
 	var/datum/snail_debt/previous_ledger
 	var/turf/far_floor
 	var/original_far_type
@@ -285,21 +316,30 @@
 	far_floor = locate(machine.x + 25, machine.y, machine.z)
 	original_far_type = far_floor.type
 	far_floor = far_floor.ChangeTurf(/turf/open/floor/plating)
+	var/turf/machine_turf = get_turf(machine)
+	var/offer = machine.offer
 	var/accepted = machine.claim_offer(person)
+	for(var/obj/machinery/computer/slot_machine/replacement in machine_turf)
+		if(replacement.type == /obj/machinery/computer/slot_machine)
+			normal_machine = replacement
+			break
+	TEST_ASSERT(QDELETED(machine) && normal_machine, "Accepting must replace the cursed machine with a normal slot machine")
+	TEST_ASSERT(locate(/obj/effect/temp_visual/small_smoke) in machine_turf, "Smoke must hide the machine's transformation")
 	for(var/mob/living/basic/immortal_snail/snail in GLOB.mob_living_list)
 		if(snail.original_target() == person)
 			spawned_snail = snail
 			break
 	TEST_ASSERT(accepted && spawned_snail, "Accepting must create the distant pursuer")
 	TEST_ASSERT_EQUAL(spawned_snail.z, person.z, "The initial pursuer must spawn on the same level")
-	TEST_ASSERT(get_dist(spawned_snail, machine) >= 20, "The snail must not spawn at or near the machine")
+	TEST_ASSERT(get_dist(spawned_snail, machine_turf) >= 20, "The snail must not spawn at or near the machine")
 	TEST_ASSERT(get_dist(spawned_snail, person) >= 20, "The snail must start away from its target")
-	TEST_ASSERT(get_dist(spawned_snail, machine) <= 35, "The initial spawn must respect the search radius")
+	TEST_ASSERT(get_dist(spawned_snail, machine_turf) <= 35, "The initial spawn must respect the search radius")
 	TEST_ASSERT(isfloorturf(get_turf(spawned_snail)), "The initial spawn must be on a floor")
 	TEST_ASSERT(spawned_snail.next_step <= world.time, "A distant pursuer must start immediately")
-	TEST_ASSERT_EQUAL(spawned_snail.available_credits(person), machine.offer, "The offer must still pay the full amount")
+	TEST_ASSERT_EQUAL(spawned_snail.available_credits(person), offer, "The offer must still pay the full amount")
 
 /datum/unit_test/immortal_snail_remote_spawn/Destroy()
+	QDEL_NULL(normal_machine)
 	if(spawned_snail)
 		qdel(spawned_snail, TRUE)
 	if(far_floor && original_far_type)

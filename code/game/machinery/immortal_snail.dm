@@ -39,6 +39,10 @@
 	user.put_in_hands(prize)
 	log_game("[key_name(user)] accepted [offer] credits from the immortal snail slot machine at [AREACOORD(src)]. Snail spawned at [AREACOORD(snail)], [get_dist(snail, user)] tiles from its target.")
 	to_chat(user, span_userdanger("The deal is sealed. Somewhere far away, something starts moving toward you."))
+	new /obj/effect/temp_visual/small_smoke(get_turf(src))
+	var/obj/machinery/computer/slot_machine/replacement = new(get_turf(src))
+	replacement.setDir(dir)
+	qdel(src)
 	return TRUE
 
 /obj/machinery/computer/slot_machine/immortal_snail/proc/find_snail_spawn(mob/living/target)
@@ -95,7 +99,7 @@
 	var/contract_value = 0
 	var/next_step = 0
 	/// Time spent visibly gliding across one tile, rather than waiting then hopping.
-	var/move_interval = 2.5 SECONDS
+	var/move_interval = 2.2 SECONDS
 	/// Only the three most recently vacated tiles retain cursed slime.
 	var/list/slime_trail = list()
 	var/pursuing = FALSE
@@ -113,6 +117,7 @@
 
 /mob/living/basic/immortal_snail/Initialize(mapload)
 	. = ..()
+	new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 	add_traits(list(TRAIT_GODMODE, TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_PUSHIMMUNE, TRAIT_NO_SLIP_ALL, TRAIT_SPACEWALK), INNATE_TRAIT)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
 	AddElement(/datum/element/connect_loc, connections)
@@ -128,6 +133,8 @@
 /mob/living/basic/immortal_snail/Destroy(force)
 	if(contract_value && !curse_fulfilled && !force)
 		return QDEL_HINT_LETMELIVE
+	if(curse_fulfilled)
+		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 	QDEL_NULL(pursuit_driver)
 	QDEL_LIST(slime_trail)
 	QDEL_NULL(GLOB.snail_debt)
@@ -262,7 +269,9 @@
 			if(!possible.density && get_dist(possible, destination) >= 10)
 				arrivals += possible
 		if(length(arrivals))
+			new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 			forceMove(pick(arrivals))
+			new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 			route.Cut()
 		pursuing = FALSE
 		return
@@ -365,7 +374,8 @@
 		if(!chemical_escalated && world.time >= chemical_started + 4.2 SECONDS)
 			chemical_escalated = TRUE
 			var/datum/reagent/clf3/incendiary = GLOB.chemical_reagents_list[/datum/reagent/clf3]
-			incendiary.expose_turf(get_turf(blocked_object), 10)
+			// Concentrate the chemical attack on the obstruction, not its floor.
+			incendiary.expose_obj(blocked_object, 10)
 			blocked_object.fire_act(2500, 10)
 			blocked_object.visible_message(span_danger("[src] follows the acid with a burst of chlorine trifluoride!"))
 	return QDELETED(obstacle) || !obstacle.density
