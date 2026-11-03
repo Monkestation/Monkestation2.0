@@ -41,8 +41,7 @@
 /**
  * Moves coolant through both ports once per air tick.
  *
- * Both transfers use the same starting state so the reactor never exposes a
- * half-finished coolant update.
+ * Export happens before replacement injection, with both completed in one call.
  */
 /obj/machinery/rbmk/reactor/proc/process_coolant_transfer(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
 	if(last_coolant_air_cycle == SSair.times_fired)
@@ -65,22 +64,6 @@
 	last_outlet_pressure = outlet_pipe_mix?.return_pressure() || 0
 	var/desired_inlet_moles = 0
 	var/core_pressure_target = clamp(operating_pressure, RBMK_OPERATING_PRESSURE_MIN, get_effective_pressure_warning())
-	// The injector and outlet share a pressure target. Keep a narrow band for
-	// circulation, but do not keep injecting against an overpressurized core.
-	// A zero target vents the vessel without the injector fighting the outlet.
-	if(inlet_open && core_pressure_target > 0 && inlet_pipe_mix?.total_moles() > 0)
-		var/inlet_pressure_ceiling = min(core_pressure_target + RBMK_PRESSURE_CONTROL_BAND, get_effective_pressure_warning())
-		var/inlet_target_pressure = min(last_inlet_pressure + RBMK_INLET_PUMP_HEAD, inlet_pressure_ceiling)
-		var/inlet_temperature_delta = abs(inlet_pipe_mix.temperature - internal_coolant_mix.temperature)
-		var/inlet_pressure_limited_moles = inlet_pipe_mix.gas_pressure_calculate(
-			internal_coolant_mix,
-			inlet_target_pressure,
-			inlet_temperature_delta <= 5,
-		)
-		desired_inlet_moles = min(
-			clamp(inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * seconds_per_tick,
-			inlet_pressure_limited_moles,
-		)
 	var/desired_outlet_moles = 0
 	var/turf/outlet_turf = get_turf(outlet)
 	var/datum/gas_mixture/outlet_destination_mix = outlet_pipe_mix
@@ -106,10 +89,8 @@
 			outlet_pressure_limited_moles,
 			outlet_source_limited_moles,
 		)
-	// Remove both quantities from the same snapshot before either destination is
-	// merged. Equal commands therefore exchange coolant instead of alternately
-	// overfilling and evacuating the chamber.
-	var/datum/gas_mixture/incoming_mix = inlet ? inlet_pipe_mix?.remove(desired_inlet_moles) : null
+	// Export the hot parcel first. Injection then uses the remaining inventory,
+	// so an outlet transfer can make room for cold replacement in this cycle.
 	var/datum/gas_mixture/outgoing_mix
 	if(outlet && desired_outlet_moles > 0)
 		// Separate tritium into the outlet stream first, preserving the working
@@ -137,6 +118,23 @@
 			var/excess_moles = max(outgoing_mix.total_moles() - allowed_moles, 0)
 			if(excess_moles > 0)
 				internal_coolant_mix.merge(outgoing_mix.remove(excess_moles))
+	// The injector and outlet share a pressure target. Keep a narrow band for
+	// circulation, but do not keep injecting against an overpressurized core.
+	// A zero target vents the vessel without the injector fighting the outlet.
+	if(inlet_open && core_pressure_target > 0 && inlet_pipe_mix?.total_moles() > 0)
+		var/inlet_pressure_ceiling = min(core_pressure_target + RBMK_PRESSURE_CONTROL_BAND, get_effective_pressure_warning())
+		var/inlet_target_pressure = min(last_inlet_pressure + RBMK_INLET_PUMP_HEAD, inlet_pressure_ceiling)
+		var/inlet_temperature_delta = abs(inlet_pipe_mix.temperature - internal_coolant_mix.temperature)
+		var/inlet_pressure_limited_moles = inlet_pipe_mix.gas_pressure_calculate(
+			internal_coolant_mix,
+			inlet_target_pressure,
+			inlet_temperature_delta <= 5,
+		)
+		desired_inlet_moles = min(
+			clamp(inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX) * seconds_per_tick,
+			inlet_pressure_limited_moles,
+		)
+	var/datum/gas_mixture/incoming_mix = inlet ? inlet_pipe_mix?.remove(desired_inlet_moles) : null
 	if(incoming_mix?.total_moles() > 0)
 		last_inlet_moles_moved = incoming_mix.total_moles()
 		last_inlet_flow_rate = last_inlet_moles_moved / max(seconds_per_tick, 0.1)

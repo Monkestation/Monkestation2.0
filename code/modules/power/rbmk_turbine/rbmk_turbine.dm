@@ -112,6 +112,8 @@
 	var/last_generator_damage = 0
 	/// Temperature excess above the wear threshold during the latest step.
 	var/last_overtemp = 0
+	/// Both ports share one ordered transfer per atmos cycle.
+	var/last_turbine_air_cycle = -1
 
 /obj/machinery/power/rbmk_turbine/Initialize(mapload)
 	. = ..()
@@ -282,6 +284,14 @@
 	if(outlet)
 		SSair.start_processing_machine(outlet)
 
+/** Processes both ports in a consistent order regardless of SSair's machine order. */
+/obj/machinery/power/rbmk_turbine/proc/process_turbine_transfer(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
+	if(last_turbine_air_cycle == SSair.times_fired || machine_stat & BROKEN)
+		return
+	last_turbine_air_cycle = SSair.times_fired
+	inlet?.transfer_gas(seconds_per_tick)
+	outlet?.transfer_gas(seconds_per_tick)
+
 /** Extracts usable heat from a parcel of working gas and adds power to the grid. */
 /obj/machinery/power/rbmk_turbine/proc/process_working_gas(datum/gas_mixture/working_mix, seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS, cold_side_temperature = RBMK_AMBIENT_TEMP)
 	reset_generation_telemetry()
@@ -417,6 +427,9 @@
 	dir = EAST
 
 /obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
+	parent_turbine?.process_turbine_transfer(seconds_per_tick)
+
+/obj/machinery/atmospherics/components/unary/rbmk/turbine/inlet/proc/transfer_gas(seconds_per_tick)
 	if(!parent_turbine?.inlet_open)
 		return
 	if(length(airs) < 1)
@@ -435,6 +448,15 @@
 	desired_moles *= pressure_flow_ratio * seconds_per_tick
 	if(desired_moles <= 0)
 		return
+	// Bound both sides of the transfer. Merely scaling by pressure difference
+	// can still overfill this small buffer and reverse the gradient next tick.
+	var/equalization_pressure = (inlet_pressure + internal_pressure) / 2
+	var/datum/gas_mixture/buffer = parent_turbine.turbine_internal
+	var/pressure_limited_moles = inlet_pipe_mix.gas_pressure_calculate(buffer, equalization_pressure, abs(inlet_pipe_mix.temperature - buffer.temperature) <= 5)
+	var/source_limited_moles = inlet_pipe_mix.total_moles() * (1 - equalization_pressure / inlet_pressure)
+	desired_moles = min(desired_moles, pressure_limited_moles, source_limited_moles)
+	if(desired_moles <= 0)
+		return
 	parent_turbine.last_inlet_pressure = inlet_pipe_mix.return_pressure()
 	parent_turbine.last_inlet_temperature = inlet_pipe_mix.temperature
 	parent_turbine.update_pressure_delta()
@@ -451,6 +473,9 @@
 	dir = WEST
 
 /obj/machinery/atmospherics/components/unary/rbmk/turbine/outlet/process_atmos(seconds_per_tick = RBMK_ATMOS_PROCESS_SECONDS)
+	parent_turbine?.process_turbine_transfer(seconds_per_tick)
+
+/obj/machinery/atmospherics/components/unary/rbmk/turbine/outlet/proc/transfer_gas(seconds_per_tick)
 	if(!parent_turbine?.outlet_open)
 		return
 	var/datum/gas_mixture/internal_turbine_mix = parent_turbine.turbine_internal

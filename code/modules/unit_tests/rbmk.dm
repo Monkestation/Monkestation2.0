@@ -58,7 +58,7 @@
 	TEST_ASSERT( internal_mix.return_pressure() + ATMOS_PRESSURE_ERROR_TOLERANCE >= outlet_mix.return_pressure(), "The RBMK outlet overshot downstream pressure at maximum flow." )
 	var/inlet_supply_pressure = 2000
 	reactor.operating_pressure = RBMK_OPERATING_PRESSURE_DEFAULT
-	var/inlet_target_pressure = inlet_supply_pressure + RBMK_INLET_PUMP_HEAD
+	var/inlet_target_pressure = min(inlet_supply_pressure + RBMK_INLET_PUMP_HEAD, reactor.operating_pressure + RBMK_PRESSURE_CONTROL_BAND)
 	var/pre_injection_pressure = inlet_target_pressure - 100
 	internal_mix.moles[/datum/gas/nitrogen] = (pre_injection_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
 	inlet_mix.moles[/datum/gas/nitrogen] = (inlet_supply_pressure * inlet_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
@@ -307,6 +307,66 @@
 	turbine.process_working_gas(steam, RBMK_ATMOS_PROCESS_SECONDS, RBMK_AMBIENT_TEMP)
 	TEST_ASSERT(turbine.last_power_output >= 500000 && turbine.last_power_output <= 700000, "Default-rate steam output missed the 500-700 kW operating target at 1000 K and 9:1 expansion.")
 	TEST_ASSERT(abs(network.newavail - turbine.last_heat_extracted * turbine.generator_efficiency) < 0.01, "Steam output did not match the converted heat energy.")
+
+/datum/unit_test/rbmk_shutdown_circulation/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(/obj/machinery/rbmk/reactor)
+	var/datum/gas_mixture/core = reactor.coolant_internal
+	var/datum/gas_mixture/supply = reactor.get_inlet_mix()
+	var/datum/gas_mixture/exhaust = reactor.get_outlet_mix()
+	reactor.temperature = 6000
+	core.temperature = 6000
+	core.assert_gas(/datum/gas/water_vapor)
+	core.moles[/datum/gas/water_vapor] = RBMK_OPERATING_PRESSURE_DEFAULT * core.volume / (R_IDEAL_GAS_EQUATION * core.temperature)
+	// Constant-temperature supply and a large receiving reservoir model an
+	// externally cooled loop; production code creates no coolant or heat sink.
+	supply.volume = 1000000
+	supply.temperature = 300
+	supply.assert_gas(/datum/gas/water_vapor)
+	supply.moles[/datum/gas/water_vapor] = 100 * supply.volume / (R_IDEAL_GAS_EQUATION * supply.temperature)
+	exhaust.volume = 1000000
+	exhaust.temperature = 300
+	reactor.inlet_open = TRUE
+	reactor.outlet_open = TRUE
+	var/total_inlet = 0
+	var/total_outlet = 0
+	var/initial_moles = core.total_moles() + supply.total_moles() + exhaust.total_moles()
+	for(var/cycle in 1 to 120)
+		reactor.last_coolant_air_cycle = SSair.times_fired - 1
+		reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+		total_inlet += reactor.last_inlet_moles_moved
+		total_outlet += reactor.last_outlet_moles_moved
+	TEST_ASSERT(total_inlet > 0 && total_outlet > 0, "A hot shutdown vessel could not circulate low-pressure cold return gas.")
+	TEST_ASSERT(reactor.temperature < 5500, "One minute of shutdown circulation did not remove 500 K of core heat; remaining temperature: [reactor.temperature] K.")
+	TEST_ASSERT(abs(core.total_moles() + supply.total_moles() + exhaust.total_moles() - initial_moles) < 2, "Shutdown circulation created or destroyed coolant.")
+
+/datum/unit_test/rbmk_turbine_sustained_flow/Run()
+	var/obj/machinery/power/rbmk_turbine/turbine = allocate(/obj/machinery/power/rbmk_turbine)
+	var/datum/powernet/network = allocate(/datum/powernet)
+	network.add_machine(turbine)
+	var/datum/gas_mixture/supply = turbine.inlet.airs[1]
+	var/datum/gas_mixture/exhaust = turbine.outlet.airs[1]
+	supply.volume = 1000000
+	supply.temperature = 1000
+	supply.assert_gas(/datum/gas/water_vapor)
+	supply.moles[/datum/gas/water_vapor] = 9000 * supply.volume / (R_IDEAL_GAS_EQUATION * supply.temperature)
+	exhaust.volume = 1000000
+	exhaust.temperature = 300
+	exhaust.assert_gas(/datum/gas/water_vapor)
+	exhaust.moles[/datum/gas/water_vapor] = 1000 * exhaust.volume / (R_IDEAL_GAS_EQUATION * exhaust.temperature)
+	var/initial_moles = supply.total_moles() + exhaust.total_moles() + turbine.turbine_internal.total_moles()
+	for(var/cycle in 1 to 120)
+		var/exhaust_before = exhaust.total_moles()
+		turbine.last_turbine_air_cycle = SSair.times_fired - 1
+		// The outlet may be encountered first by SSair; it must still advance
+		// the assembly once and must not repeat when the inlet is encountered.
+		turbine.outlet.process_atmos(RBMK_ATMOS_PROCESS_SECONDS)
+		TEST_ASSERT(exhaust.total_moles() > exhaust_before, "Turbine forward flow stalled on cycle [cycle].")
+		TEST_ASSERT(turbine.last_power_output > 0, "Hot turbine produced no power on cycle [cycle].")
+		TEST_ASSERT(turbine.turbine_internal.return_pressure() <= supply.return_pressure() + ATMOS_PRESSURE_ERROR_TOLERANCE, "Turbine buffer overshot its supply pressure.")
+		var/energy_after = network.newavail
+		turbine.inlet.process_atmos(RBMK_ATMOS_PROCESS_SECONDS)
+		TEST_ASSERT_EQUAL(network.newavail, energy_after, "Both turbine ports generated power during the same atmos cycle.")
+	TEST_ASSERT(abs(supply.total_moles() + exhaust.total_moles() + turbine.turbine_internal.total_moles() - initial_moles) < 2, "Sustained turbine circulation created or destroyed gas.")
 
 /datum/unit_test/rbmk_private_audio_channels/Run()
 	var/datum/looping_sound/rbmk_reactor/reactor_loop = allocate(/datum/looping_sound/rbmk_reactor, run_loc_floor_bottom_left)

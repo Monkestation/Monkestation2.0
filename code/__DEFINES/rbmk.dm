@@ -161,7 +161,7 @@
 /// Maximum inlet flow setting in moles per second.
 #define RBMK_INLET_RATE_MAX 250
 /// Maximum pressure rise the reactor coolant injector can overcome above its supply pressure.
-#define RBMK_INLET_PUMP_HEAD 6500
+#define RBMK_INLET_PUMP_HEAD (RBMK_PRESSURE_WARNING + RBMK_MODIFIER_PLASMA_PRESSURE_BONUS_MAX)
 /// Minimum outlet flow setting in moles per second.
 #define RBMK_OUTLET_RATE_MIN 0
 /// Default outlet flow setting in moles per second.
