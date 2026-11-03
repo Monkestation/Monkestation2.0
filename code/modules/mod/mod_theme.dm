@@ -177,7 +177,7 @@
 		part_datum.sealed_layer = category[SEALED_LAYER]
 		part_datum.unsealed_message = category[UNSEALED_MESSAGE] || "No unseal message set! Tell a coder!"
 		part_datum.sealed_message = category[SEALED_MESSAGE] || "No seal message set! Tell a coder!"
-		part_datum.can_overslot = category[CAN_OVERSLOT] || FALSE
+		part_datum.can_overslot = TRUE // monkestation edit: every part can overslot, was category[CAN_OVERSLOT] || FALSE
 		part.clothing_flags = category[UNSEALED_CLOTHING] || NONE
 		part.visor_flags = category[SEALED_CLOTHING] || NONE
 		part.flags_inv = category[UNSEALED_INVISIBILITY] || NONE
