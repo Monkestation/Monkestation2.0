@@ -104,7 +104,7 @@
 	cooldown_time = 1.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
 
-/obj/item/mod/module/tether/on_use()
+/obj/item/mod/module/tether/used()
 	if(HAS_TRAIT_FROM(mod.wearer, TRAIT_TETHER_ATTACHED, REF(src)))
 		balloon_alert(mod.wearer, "already tethered!")
 		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
@@ -381,6 +381,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/stomper)
 	cooldown_time = 1 SECONDS
+	required_slots = list(ITEM_SLOT_FEET)
 
 /obj/item/mod/module/stomper/on_use()
 	var/mob/living/user = mod.wearer

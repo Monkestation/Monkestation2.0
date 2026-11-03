@@ -101,7 +101,7 @@
 	removable = FALSE
 	module_type = MODULE_TOGGLE
 	incompatible_modules = list(/obj/item/mod/module/night, /obj/item/mod/module/visor/night)
-	/* required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK) */
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
 /obj/item/mod/module/night/on_activation()
 	. = ..()
