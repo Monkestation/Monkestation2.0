@@ -4,6 +4,7 @@
 	icon = FA_ICON_MAP_PIN
 	value = 2
 	mob_trait = TRAIT_CLOWN_ENJOYER
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
 	gain_text = span_notice("You are a big enjoyer of clowns.")
 	lose_text = span_danger("The clown doesn't seem so great.")
 	medical_record_text = "Patient reports being a big enjoyer of clowns."

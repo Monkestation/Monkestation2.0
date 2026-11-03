@@ -16,8 +16,8 @@
 	stat_attack = DEAD
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 	vision_range = 4
 	aggro_vision_range = 18
 	// Pale purple, should be red enough to see stuff on lavaland

@@ -106,9 +106,9 @@
 	desc = "Despite seeming like it's made of metal, it's actually a very cheap plastic.."
 	armor_type = /datum/armor/imperial_ce
 	clothing_flags = STOPSPRESSUREDAMAGE
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	icon_state = "impce"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -167,7 +167,7 @@
 	greyscale_colors = "#4e4a43#F1F1F1"
 
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_1 = IS_PLAYER_COLORABLE_1

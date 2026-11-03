@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(cameras)
 	while(current_run.len)
 		var/datum/camerachunk/chunk = current_run[current_run.len]
 		if(chunk.yield_update())
-			current_run.len--
+			current_run -= chunk
 		if(MC_TICK_CHECK)
 			break
 
