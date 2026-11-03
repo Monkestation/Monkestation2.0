@@ -18,7 +18,7 @@
 	. = ..()
 	if(claimed || !ishuman(user) || user.stat != CONSCIOUS)
 		return
-	var/answer = tgui_alert(user, "Take [offer] credits? An immortal snail will pursue you until you die, even if you drop the money. Touching it is fatal. If it catches you with at least [offer] credits in cash and your bank account, you will die and be husked. Otherwise, your body and organs will be destroyed. After your death, it reclaims every cursed credit: anyone carrying them will die unless they drop them first. Spending cursed credits or sending them somewhere unrecoverable marks the spender for death.", "An offer you can refuse", list("Leave", "Accept"))
+	var/answer = tgui_alert(user, "The screen flickers: [offer] credits. A warning glows beneath it: THESE CREDITS ARE CURSED. Take them?", "An offer you can refuse", list("Leave", "Accept"))
 	if(answer != "Accept" || QDELETED(src) || claimed || QDELETED(user) || user.stat != CONSCIOUS || !user.can_interact_with(src))
 		return
 	claim_offer(user)
