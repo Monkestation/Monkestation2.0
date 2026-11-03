@@ -328,6 +328,8 @@
 	return fire_gun(target, user, user.Adjacent(target), params)
 
 #define AKIMBO_PENALTY_SCALING 0.75
+/// Highest bonus spread akimbo can give, the same as two guns with the default dual_wield_spread, so more than two guns don't spray all around you
+#define AKIMBO_MAX_BONUS_SPREAD 84
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
@@ -396,6 +398,7 @@
 		if(gun_count)
 			if(!(HAS_TRAIT(H, TRAIT_AKIMBO)))
 				bonus_spread += src.dual_wield_spread // no scaling since it's technically the first shot
+				bonus_spread = min(bonus_spread, AKIMBO_MAX_BONUS_SPREAD)
 			for(var/i in 1 to gun_count)
 				var/obj/item/gun/gun = valid_guns[i]
 				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), i)
@@ -403,6 +406,7 @@
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
 #undef AKIMBO_PENALTY_SCALING
+#undef AKIMBO_MAX_BONUS_SPREAD
 
 /obj/item/gun/proc/check_botched(mob/living/user, atom/target)
 	if(clumsy_check)
