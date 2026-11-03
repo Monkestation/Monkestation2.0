@@ -39,3 +39,14 @@
 	difficulty = 3
 	total_notes = 55
 	output = /obj/item/smithed_part/weapon_part/axe_blade
+
+/datum/anvil_recipe/crush_hammer
+	name = "Crush-Hammer Head"
+	difficulty = 1
+	total_notes = 45
+	output = /obj/item/smithed_part/weapon_part/crush_hammer
+/datum/anvil_recipe/tanto
+	name = "Tanto Blade"
+	difficulty = 3
+	total_notes = 60
+	output = /obj/item/smithed_part/weapon_part/tanto

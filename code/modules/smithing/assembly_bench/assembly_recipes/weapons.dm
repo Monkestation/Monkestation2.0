@@ -42,3 +42,13 @@
 	item_to_start = /obj/item/smithed_part/weapon_part/shield/pavise
 	needed_items = list(/obj/item/stack/sheet/mineral/wood = 2)
 	craft_time = 7.5 SECONDS
+
+/datum/assembly_recipe/smithed_weapon/crush_hammer
+	item_to_start = /obj/item/smithed_part/weapon_part/crush_hammer
+	needed_items = list(/obj/item/stack/sheet/mineral/wood = 2)
+	craft_time = 3 SECONDS
+
+/datum/assembly_recipe/smithed_weapon/tanto
+	item_to_start = /obj/item/smithed_part/weapon_part/tanto
+	needed_items = list(/obj/item/stack/sheet/mineral/wood = 1)
+	craft_time = 3 SECONDS
