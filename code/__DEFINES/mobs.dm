@@ -175,7 +175,6 @@
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_TUNDRA "tundra"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
@@ -229,6 +228,14 @@
 ///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
+//See: mob/living/carbon/human/var/limb_style, only used by species with TRAIT_GREYSCALE_TOGGLE
+///The limbs use their normal colors
+#define LIMB_STYLE_CLASSIC "Classic"
+///The limbs are greyscaled and colored by the mutant color
+#define LIMB_STYLE_MUTANT_COLORS "Mutant colors"
+///The limbs use their tundra fur sprites
+#define LIMB_STYLE_TUNDRA "Tundra fur"
+
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
 
@@ -243,13 +250,14 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
 
-/// Damage recieved when past heat damage threshold.
-/// Gets multiplied by 2x, 4x, 8x depending on how far past the threshold you are.
-#define HEAT_DAMAGE 1
+/// Lung temperature defines
+#define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
-/// Damage recieved when past cold damage threshold.
-/// Gets multiplied by 2x, 4x, 8x depending on how far past the threshold you are.
-#define COLD_DAMAGE 0.25
+#define COLD_DAMAGE_LEVEL_1 0.25 //Amount of damage applied when your body temperature just passes the 260.15k safety point
+#define COLD_DAMAGE_LEVEL_2 0.75 //Amount of damage applied when your body temperature passes the 200K point
+#define COLD_DAMAGE_LEVEL_3 1.5 //Amount of damage applied when your body temperature passes the 120K point
 
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
@@ -547,9 +555,7 @@
 /// Factor at which mob nutrition decreases
 #define HUNGER_FACTOR 0.1
 
-// These add up to 1 to roughly (VERY roughly) represent the proportion of hunger used by each system
-/// What % of hunger is used by homeostasis
-#define HOMEOSTASIS_HUNGER_MULTIPLIER 0.1
+// These add up to roughly represent the proportion of hunger used by each system
 /// What % of hunger is used by passive hunger
 #define PASSIVE_HUNGER_MULTIPLIER 0.4
 /// What % of hunger is used by movement
@@ -1054,14 +1060,10 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define HEALING_TOUCH_NOT_SELF "healing_touch_not_self"
 #define HEALING_TOUCH_SELF_ONLY "healing_touch_self_only"
 
-//MONKESTATION REMOVAL - These constants were moved as part of a temperature overhaul by Borbop, in
-// #3301. They now reside in `code\__DEFINES\atmospherics\atmos_mob_interaction.dm`.
-/*
 /// Default minimum body temperature mobs can exist in before taking damage
 #define NPC_DEFAULT_MIN_TEMP 250
 /// Default maximum body temperature mobs can exist in before taking damage
 #define NPC_DEFAULT_MAX_TEMP 350
-*/
 
 // Flags for mobs which can't do certain things while someone is looking at them
 /// Flag which stops you from moving while observed

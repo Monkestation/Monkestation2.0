@@ -111,9 +111,9 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	armor_type = /datum/armor/shoes_winterboots
-
+	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-
+	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	lace_time = 8 SECONDS
 
