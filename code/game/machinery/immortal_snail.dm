@@ -18,7 +18,7 @@
 	. = ..()
 	if(claimed || !ishuman(user) || user.stat != CONSCIOUS)
 		return
-	var/answer = tgui_alert(user, "The screen flickers: [offer] credits. A warning glows beneath it: THESE CREDITS ARE CURSED. Take them?", "An offer you can refuse", list("Leave", "Accept"))
+	var/answer = tgui_alert(user, "The screen flickers: [offer] cursed credits. Take them, and an immortal snail will hunt you until you die. Its touch is death. Accept the curse?", "An offer you can refuse", list("Leave", "Accept"))
 	if(answer != "Accept" || QDELETED(src) || claimed || QDELETED(user) || user.stat != CONSCIOUS || !user.can_interact_with(src))
 		return
 	claim_offer(user)
