@@ -349,6 +349,7 @@
 
 	. += module_icon
 
+/// Returns the overlay state the module should use right now.
 /obj/item/mod/module/proc/get_current_overlay_state()
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
 		return overlay_state_use
@@ -358,6 +359,7 @@
 		return overlay_state_inactive
 	return null
 
+/// Returns (and caches) the module overlay masked by the sealed parts of the suit.
 /obj/item/mod/module/proc/get_module_icon_cache(used_overlay)
 	var/covered_slots = mod.get_sealed_slots(mod.get_parts(all = TRUE))
 	if (GLOB.mod_module_overlays[mod.skin])

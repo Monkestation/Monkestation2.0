@@ -60,6 +60,7 @@
 	item_flags = IGNORE_DIGITIGRADE
 	can_be_tied = FALSE
 
+/// Glasses part of a MODsuit.
 /obj/item/clothing/glasses/mod
 	name = "MOD glasses"
 	desc = "A pair of glasses for a MODsuit."
@@ -73,6 +74,7 @@
 	pickup_sound = null
 	drop_sound = null
 
+/// Tie part of a MODsuit.
 /obj/item/clothing/neck/mod
 	name = "MOD tie"
 	desc = "An tie for a MODsuit."

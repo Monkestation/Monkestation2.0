@@ -46,6 +46,7 @@
 		/obj/item/mod/module/flashlight,
 	)
 
+/// Portable suit sold in the LawDrobe.
 /obj/item/mod/control/pre_equipped/portable_suit
 	theme = /datum/mod_theme/portable_suit
 	applied_modules = list(

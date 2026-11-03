@@ -415,6 +415,7 @@
 	icon_state = "[skin]-[base_icon_state][active ? "-sealed" : ""]"
 	return ..()
 
+/// Returns a list of all the part items of the suit, including the control unit if all is TRUE.
 /obj/item/mod/control/proc/get_parts(all = FALSE)
 	. = list()
 	for(var/key in mod_parts)
@@ -423,6 +424,7 @@
 			continue
 		. += part.part_item
 
+/// Returns a list of all the part datums of the suit, including the control unit if all is TRUE.
 /obj/item/mod/control/proc/get_part_datums(all = FALSE)
 	. = list()
 	for(var/key in mod_parts)
@@ -431,6 +433,7 @@
 			continue
 		. += part
 
+/// Returns the part datum of the given part item.
 /obj/item/mod/control/proc/get_part_datum(obj/item/part)
 	RETURN_TYPE(/datum/mod_part)
 	var/datum/mod_part/potential_part = mod_parts["[part.slot_flags]"]
@@ -441,10 +444,12 @@
 			return mod_part
 	CRASH("get_part_datum called with incorrect item [part] passed.")
 
+/// Returns the part item that goes in the given slot, if any.
 /obj/item/mod/control/proc/get_part_from_slot(slot)
 	var/datum/mod_part/part = mod_parts["[slot]"]
 	return part?.part_item
 
+/// Returns the part datum of the part that goes in the given slot, if any.
 /obj/item/mod/control/proc/get_part_datum_from_slot(slot)
 	return mod_parts["[slot]"]
 
@@ -470,6 +475,7 @@
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
 
+/// Returns the slot flags of all sealed parts, removing the unsealed ones from the given list.
 /obj/item/mod/control/proc/get_sealed_slots(list/parts)
 	var/covered_slots = NONE
 	for(var/obj/item/part as anything in parts)
@@ -479,6 +485,7 @@
 		covered_slots |= part.slot_flags
 	return covered_slots
 
+/// Returns (and caches) a mask icon of the sealed parts of the suit, used to clip module overlays.
 /obj/item/mod/control/proc/generate_suit_mask()
 	var/list/parts = get_parts(all = TRUE)
 	var/covered_slots = get_sealed_slots(parts)
@@ -642,9 +649,11 @@
 /obj/item/mod/control/proc/check_charge(amount)
 	return core?.check_charge(amount) || FALSE
 
+/// Returns the color the UI should use for the charge bar.
 /obj/item/mod/control/proc/get_chargebar_color()
 	return core?.get_chargebar_color() || "transparent"
 
+/// Returns the text the UI should use for the charge bar.
 /obj/item/mod/control/proc/get_chargebar_string()
 	return core?.get_chargebar_string() || "No Core Detected"
 
@@ -706,6 +715,7 @@
 		return
 	atom_destruction(damage_flag)
 
+/// Called when an item we are overslotting leaves the part, so we forget about it.
 /obj/item/mod/control/proc/on_overslot_exit(obj/item/part, atom/movable/overslot, direction)
 	SIGNAL_HANDLER
 

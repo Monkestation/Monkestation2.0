@@ -10,6 +10,7 @@
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
+	/// Whether the springlock has already been triggered and is about to snap shut.
 	var/set_off = FALSE
 	/// Multiplier applied to the suit's activation step time while installed.
 	var/step_change = 0.5
@@ -244,8 +245,11 @@
 	incompatible_modules = list(/obj/item/mod/module/balloon)
 	cooldown_time = 15 SECONDS
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
+	/// The balloon we blow up.
 	var/balloon_path = /obj/item/toy/balloon
+	/// How long it takes to blow up a balloon.
 	var/blowing_time = 10 SECONDS
+	/// How much oxygen damage blowing up a balloon deals to the wearer.
 	var/oxygen_damage = 20
 
 /obj/item/mod/module/balloon/on_use()

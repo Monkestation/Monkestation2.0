@@ -231,6 +231,7 @@
 	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
 
+/// Seals or unseals a part after a do_after, returns TRUE if it went through.
 /obj/item/mod/control/proc/delayed_seal_part(obj/item/clothing/part)
 	. = FALSE
 	var/datum/mod_part/part_datum = get_part_datum(part)
@@ -240,6 +241,7 @@
 		seal_part(part, is_sealed = !part_datum.sealed)
 		return TRUE
 
+/// Turns the control unit on or off after a do_after, returns TRUE if it went through.
 /obj/item/mod/control/proc/delayed_activation()
 	. = FALSE
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))

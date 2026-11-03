@@ -44,6 +44,7 @@
 	if(istype(suit))
 		UnregisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP)
 
+/// Stores the suit storage item inside the module when the chestplate is taken off.
 /obj/item/mod/module/storage/proc/on_suit_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
@@ -743,6 +744,7 @@
 		helmet.visor_flags_cover = former_visor_flags
 	mod.wearer.update_clothing(mod.slot_flags)
 
+/// Hat stabilizer for syndicate suits.
 /obj/item/mod/module/hat_stabilizer/syndicate
 	name = "MOD elite hat stabilizer module"
 	desc = "A simple set of deployable stands, directly atop one's head; \

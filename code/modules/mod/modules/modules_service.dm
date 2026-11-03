@@ -101,6 +101,7 @@
 	if(refill_add > 0)
 		reagents.add_reagent(/datum/reagent/space_cleaner, refill_add)
 
+/// Perfumer - Cleans the wearer up.
 /obj/item/mod/module/selfcleaner
 	name = "MOD perfumer module"
 	desc = "A small spray to clean oneself up. Has a pleasant scent."

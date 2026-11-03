@@ -64,6 +64,7 @@
 	desc = "[desc] [used_theme.desc]"
 	icon_state = "[used_theme.default_skin]-plating"
 
+/// Plating for the portable suit.
 /obj/item/mod/construction/plating/portable_suit
 	theme = /datum/mod_theme/portable_suit
 

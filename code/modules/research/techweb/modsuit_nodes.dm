@@ -39,6 +39,7 @@
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SUPPLY)
 	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
 
+/// Node with civilian MODsuits.
 /datum/techweb_node/mod_service
 	id = "mod_service"
 	display_name = "Civilian Modular Suits"

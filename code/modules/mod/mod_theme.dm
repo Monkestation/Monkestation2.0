@@ -166,6 +166,7 @@
 		part.siemens_coefficient = siemens_coefficient
 	set_skin(mod, skin || default_skin)
 
+/// Applies the given skin to the suit and updates the flags of all of its parts.
 /datum/mod_theme/proc/set_skin(obj/item/mod/control/mod, skin)
 	mod.skin = skin
 	var/list/used_skin = variants[skin]
@@ -210,6 +211,7 @@
 	acid = 25
 	wound = 5
 
+/// Portable suit, a fancy business suit that folds into a tie.
 /datum/mod_theme/portable_suit
 	name = "portable suit"
 	desc = "A one-piece three-piece suit designed for maximum negotiating power. Provides no meaningful protection."
@@ -244,6 +246,7 @@
 		),
 	)
 
+/// Armor of the portable suit, basically none.
 /datum/armor/mod_theme_portable_suit
 	bio = 50
 

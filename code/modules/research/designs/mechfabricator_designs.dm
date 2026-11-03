@@ -1859,6 +1859,7 @@
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	desc = "External plating for a MODsuit. [theme.desc]"
 
+/// Design for the portable suit plating.
 /datum/design/mod_plating/portable_suit
 	name = "MOD Portable Suit Plating"
 	id = "mod_plating_portable_suit"
