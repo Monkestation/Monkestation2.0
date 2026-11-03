@@ -75,6 +75,7 @@
 	var/chemical_started = 0
 	var/next_chemical_dose = 0
 	var/chemical_escalated = FALSE
+	var/datum/immortal_snail_pursuit/pursuit_driver
 
 /mob/living/basic/immortal_snail/Initialize(mapload)
 	. = ..()
@@ -83,7 +84,9 @@
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
 	AddElement(/datum/element/connect_loc, connections)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(prevent_premature_deletion))
-	START_PROCESSING(SSfastprocess, src)
+	// Living mobs already use DF_ISPROCESSING for their life subsystem.
+	// A separate datum owns the fast movement registration.
+	pursuit_driver = new(src)
 
 /mob/living/basic/immortal_snail/proc/prevent_premature_deletion(datum/source, force)
 	SIGNAL_HANDLER
@@ -92,7 +95,7 @@
 /mob/living/basic/immortal_snail/Destroy(force)
 	if(contract_value && !curse_fulfilled && !force)
 		return QDEL_HINT_LETMELIVE
-	STOP_PROCESSING(SSfastprocess, src)
+	QDEL_NULL(pursuit_driver)
 	QDEL_NULL(GLOB.snail_debt)
 	target_ref = null
 	target_mind_ref = null
@@ -110,6 +113,26 @@
 
 /mob/living/basic/immortal_snail/ex_act(severity, target, origin)
 	return
+
+/datum/immortal_snail_pursuit
+	var/datum/weakref/snail_ref
+
+/datum/immortal_snail_pursuit/New(mob/living/basic/immortal_snail/snail)
+	. = ..()
+	snail_ref = WEAKREF(snail)
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/immortal_snail_pursuit/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	snail_ref = null
+	return ..()
+
+/datum/immortal_snail_pursuit/process(seconds_per_tick)
+	var/mob/living/basic/immortal_snail/snail = snail_ref?.resolve()
+	if(QDELETED(snail))
+		qdel(src)
+		return PROCESS_KILL
+	return snail.process(seconds_per_tick)
 
 /mob/living/basic/immortal_snail/proc/bind_target(mob/living/target, amount)
 	target_ref = WEAKREF(target)

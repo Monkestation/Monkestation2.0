@@ -46,7 +46,7 @@
 
 /datum/unit_test/immortal_snail_contact/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_top_right)
-	STOP_PROCESSING(SSfastprocess, snail)
+	QDEL_NULL(snail.pursuit_driver)
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/holochip/cash = allocate(/obj/item/holochip, victim, 100000)
 	snail.bind_target(victim, 100000)
@@ -62,7 +62,7 @@
 
 /datum/unit_test/immortal_snail_indestructible/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_top_right)
-	STOP_PROCESSING(SSfastprocess, snail)
+	QDEL_NULL(snail.pursuit_driver)
 	snail.adjustBruteLoss(10000)
 	snail.adjustFireLoss(10000)
 	snail.ex_act(EXPLODE_DEVASTATE)
@@ -103,7 +103,7 @@
 
 /datum/unit_test/immortal_snail_fulfillment/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_top_right)
-	STOP_PROCESSING(SSfastprocess, snail)
+	QDEL_NULL(snail.pursuit_driver)
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
 	snail.bind_target(person, 100)
 	qdel(snail)
@@ -122,7 +122,7 @@
 
 /datum/unit_test/immortal_snail_pursuit/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
-	STOP_PROCESSING(SSfastprocess, snail)
+	QDEL_NULL(snail.pursuit_driver)
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
 	var/turf/starting = get_turf(snail)
 	var/turf/door_turf = get_step(starting, EAST)
@@ -214,3 +214,29 @@
 	snail.pursue(person)
 	TEST_ASSERT_EQUAL(snail.z, person.z, "The snail must follow between z levels")
 	TEST_ASSERT(get_dist(snail, person) >= 10, "Z travel must reappear at a distance, not on the victim")
+
+/datum/unit_test/immortal_snail_scheduled_pursuit
+	var/mob/living/basic/immortal_snail/test_snail
+
+/datum/unit_test/immortal_snail_scheduled_pursuit/Run()
+	test_snail = allocate(/mob/living/basic/immortal_snail)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
+	test_snail.bind_target(person, 100000)
+	test_snail.next_step = world.time
+	var/datum/immortal_snail_pursuit/driver = test_snail.pursuit_driver
+	TEST_ASSERT(driver in SSfastprocess.processing, "Movement must actually be registered with the fast processor")
+	var/datum/controller/subsystem/mobs/life_processor = locate(test_snail.life_subsystem_type) in Master.subsystems
+	TEST_ASSERT(test_snail in life_processor.processing, "Movement registration must preserve its configured mob life processing")
+	var/turf/starting = get_turf(test_snail)
+	var/deadline = world.time + 7 SECONDS
+	// Do not call process() or pursue(): let the real scheduler make two moves.
+	UNTIL(get_dist(starting, test_snail) >= 2 || world.time >= deadline)
+	TEST_ASSERT(get_dist(starting, test_snail) >= 2, "The scheduler must autonomously move the snail more than once")
+	qdel(test_snail, TRUE)
+	TEST_ASSERT(QDELETED(driver), "Deleting the snail must delete its movement driver")
+	TEST_ASSERT(!(driver in SSfastprocess.processing), "Deleted movement drivers must leave the processor")
+
+/datum/unit_test/immortal_snail_scheduled_pursuit/Destroy()
+	if(test_snail)
+		test_snail.curse_fulfilled = TRUE
+	return ..()
