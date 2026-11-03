@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 			return "alcohol poisoning"
 
 		if("thermia")
-			if(bodytemperature < standard_body_temperature)
+			if(bodytemperature < get_body_temp_normal())
 				return "hypothermia"
 			return "hyperthermia"
 

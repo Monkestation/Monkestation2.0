@@ -186,6 +186,7 @@
 	uses_stamina = TRUE
 
 /mob/living/carbon/alien
+	heat_protection = 0.5 // minor heat insulation
 	uses_stamina = FALSE
 
 /mob/living/basic

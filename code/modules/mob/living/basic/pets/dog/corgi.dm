@@ -575,8 +575,8 @@
 	can_be_shaved = FALSE
 	held_state = "void_puppy"
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = TCMB
-	bodytemp_heat_damage_limit = T0C + 40
+	minimum_survivable_temperature = TCMB
+	maximum_survivable_temperature = T0C + 40
 
 /mob/living/basic/pet/dog/corgi/puppy/void/Initialize(mapload)
 	. = ..()
