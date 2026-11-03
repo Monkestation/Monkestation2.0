@@ -131,7 +131,7 @@
 	. = ..()
 	if(!bonus_active || !HAS_TRAIT(owner, TRAIT_IS_WET))
 		return
-	owner.adjust_bodytemperature(-2 * seconds_between_ticks, min_temp = owner.standard_body_temperature)
+	owner.adjust_bodytemperature(-2 * seconds_between_ticks, min_temp = owner.get_body_temp_normal())
 	owner.stamina?.adjust(1.5 * seconds_between_ticks)
 
 ///Called when the mob gets wet or dries off, swaps between the wet buffs and the dry debuffs
