@@ -4506,7 +4506,6 @@
 #include "code\modules\client\preferences\species_features\satyr.dm"
 #include "code\modules\client\preferences\species_features\secondary_mut_color.dm"
 #include "code\modules\client\preferences\species_features\shadekin.dm"
-#include "code\modules\client\preferences\species_features\toggle_greyscale.dm"
 #include "code\modules\client\preferences\species_features\vampire.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
