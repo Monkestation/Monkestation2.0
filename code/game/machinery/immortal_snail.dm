@@ -214,9 +214,15 @@
 			contact(target)
 		pursuing = FALSE
 		return
-	if(!length(route))
+	var/list/path_access = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL))
+	var/datum/can_pass_info/pass_info = new(src, path_access)
+	var/turf/current_turf = get_turf(src)
+	var/turf/cached_next = length(route) ? route[1] : null
+	// A new wall or closed container can invalidate a cached route. Search for
+	// another corridor/door before treating that obstacle as a chemical target.
+	if(!cached_next || !CAN_STEP(current_turf, cached_next, FALSE, pass_info, null))
 		// JPS's scan loops still compare against the limit when zero is supplied.
-		route = get_path_to(src, destination, max_distance = world.maxx * world.maxy, access = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), simulated_only = FALSE)
+		route = get_path_to(src, destination, max_distance = world.maxx * world.maxy, access = path_access, simulated_only = FALSE)
 		route_destination = destination
 	if(QDELETED(src))
 		return

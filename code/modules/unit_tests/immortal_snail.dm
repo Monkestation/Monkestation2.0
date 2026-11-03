@@ -169,6 +169,9 @@
 	var/original_type = blocked.type
 	blocked = blocked.ChangeTurf(/turf/closed/wall/r_wall)
 	snail.pursue(person)
+	TEST_ASSERT(!blocked.GetComponent(/datum/component/thermite), "A wall on a stale route must be bypassed when another path exists")
+	TEST_ASSERT(get_turf(snail) != blocked, "The snail must use the detour")
+	snail.chemically_breach(blocked)
 	var/datum/component/thermite/wall_thermite = blocked.GetComponent(/datum/component/thermite)
 	TEST_ASSERT(wall_thermite, "Reinforced walls must receive actual thermite")
 	TEST_ASSERT_EQUAL(wall_thermite.amount, 50, "Reinforced walls need the stronger thermite dose")
@@ -176,26 +179,35 @@
 	deltimer(wall_thermite.burn_timer)
 	wall_thermite.burn_parent(snail)
 	TEST_ASSERT(!iswallturf(blocked), "Thermite must melt the reinforced wall through its native reaction")
-	snail.pursue(person)
 	blocked.ChangeTurf(original_type)
 	blocked = snail.route[1]
 	original_type = blocked.type
 	blocked = blocked.ChangeTurf(/turf/closed/indestructible)
-	snail.pursue(person)
+	snail.chemically_breach(blocked)
 	snail.chemical_started = world.time - 25 SECONDS
-	snail.pursue(person)
+	snail.chemically_breach(blocked)
 	TEST_ASSERT(!isclosedturf(blocked), "Indestructible map walls must not trap the snail")
 	blocked.ChangeTurf(original_type)
 	var/obj/structure/closet/barrier = allocate(/obj/structure/closet, snail.route[1])
 	barrier.resistance_flags |= INDESTRUCTIBLE
-	snail.pursue(person)
+	snail.chemically_breach(barrier)
 	TEST_ASSERT(barrier.GetComponent(/datum/component/acid), "Even resistant obstacles must receive chemical attacks first")
 	snail.chemical_started = world.time - 6 SECONDS
-	snail.pursue(person)
+	snail.chemically_breach(barrier)
 	TEST_ASSERT(snail.chemical_escalated, "Resistant objects must trigger chlorine trifluoride escalation")
 	snail.chemical_started = world.time - 25 SECONDS
-	snail.pursue(person)
+	snail.chemically_breach(barrier)
 	TEST_ASSERT(QDELETED(barrier), "Indestructible dense objects must not trap the snail")
+	var/list/sealed_surroundings = list()
+	for(var/turf/neighbor in orange(1, snail))
+		sealed_surroundings[neighbor] = neighbor.type
+		neighbor.ChangeTurf(/turf/closed/wall/r_wall)
+	snail.route.Cut()
+	snail.pursue(person)
+	var/turf/breach_target = snail.chemical_target?.resolve()
+	TEST_ASSERT(breach_target && breach_target.GetComponent(/datum/component/thermite), "With no usable path or door, the snail must chemically breach a wall")
+	for(var/turf/neighbor as anything in sealed_surroundings)
+		neighbor.ChangeTurf(sealed_surroundings[neighbor])
 	var/turf/other_level = locate(1, 1, snail.z == 1 ? 2 : 1)
 	TEST_ASSERT(other_level, "A second z level is required for the pursuit test")
 	person.forceMove(other_level)
