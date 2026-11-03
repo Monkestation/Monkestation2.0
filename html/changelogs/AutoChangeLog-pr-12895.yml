@@ -1,6 +1,0 @@
-author: "V2LenKagamine"
-delete-after: True
-changes:
-  - map: "Slightly nudges down asteroid magnet on Helio to avoid killing shuttles [Hopefully]"
-  - map: "Add tiny fans to all [or at least most] of Helio airlocks"
-  - map: "Slightly nudges ordinance launcher to accomidate asteroid magnet"
