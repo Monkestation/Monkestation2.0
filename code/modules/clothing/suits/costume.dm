@@ -29,6 +29,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum, /obj/item/gun/energy/laser/musket, /obj/item/gun/energy/disabler/smoothbore)
 	species_exception = list(/datum/species/golem)
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/costume/pirate/armored
 	armor_type = /datum/armor/pirate_armored
@@ -158,6 +159,7 @@
 	inhand_icon_state = null
 	toggle_noun = "wings"
 	body_parts_covered = ARMS|CHEST
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/toggle/owlwings/Initialize(mapload)
 	. = ..()
@@ -168,6 +170,7 @@
 	desc = "A plush white cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive your captives mad."
 	icon_state = "griffin_wings"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/costume/cardborg
 	name = "cardborg suit"
@@ -423,6 +426,7 @@
 	desc = "A labcoat imbued with the power of features and freezes."
 	icon_state = "drfreeze_coat"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/costume/gothcoat
 	name = "gothic coat"
@@ -432,6 +436,7 @@
 	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/costume/xenos
 	name = "xenos suit"
@@ -513,6 +518,7 @@
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = null
 	armor_type = /datum/armor/suit_coordinator
+	bodyshapes_with_variations = NONE
 
 /datum/armor/suit_coordinator
 	melee = 25

@@ -71,6 +71,10 @@
 	name = "Flying Dutchman"
 	requires_power = FALSE
 
+/area/shuttle/pirate/siren
+	has_gravity = FALSE
+	area_flags = NO_GRAVITY
+
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
 /area/shuttle/hunter

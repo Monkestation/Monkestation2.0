@@ -26,6 +26,10 @@
 	resistance_flags = NONE
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/space/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
+
 /datum/armor/helmet_space
 	bio = 100
 	fire = 80
@@ -72,6 +76,7 @@
 	var/thermal_on = FALSE
 	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
+	cerulean_flipper_palette = FLIPPERS
 
 /datum/armor/suit_space
 	bio = 100
@@ -82,6 +87,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /// Start Processing on the space suit when it is worn to heat the wearer
 /obj/item/clothing/suit/space/equipped(mob/living/user, slot)

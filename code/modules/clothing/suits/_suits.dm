@@ -19,12 +19,15 @@
 	var/suittoggled = FALSE // sec duster toggling and more
 	/// tackling bonus
 	var/tackle_mod = 0
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
+	/// what color will be given to the flippers of fem physique ceruleans? FLIPPERS autogenerates
+	var/cerulean_flipper_palette = NO_FLIPPERS
 
 /obj/item/clothing/suit/Initialize(mapload)
 	. = ..()
 	setup_shielding()
 
-/obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -56,7 +59,7 @@
 
 /obj/item/clothing/suit/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "oversuit_worn")
-	return replace_icon_legs(base_icon, legs)
+	return apply_icon_mask(base_icon, LEGS_MASK, legs)
 
 /**
  * Wrapper proc to apply shielding through AddComponent().

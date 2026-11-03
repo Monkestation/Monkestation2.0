@@ -508,3 +508,8 @@
 	description = "What... what was that ominous feeling?"
 	mood_change = -10
 	timeout = 5 MINUTES
+
+/datum/mood_event/normal_hangover
+	description = "Ugh, what a night."
+	mood_change = 0
+	timeout = 10 MINUTES

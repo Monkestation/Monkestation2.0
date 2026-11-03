@@ -20,6 +20,7 @@
 		"crystallizer",
 		"electrolyzer",
 		"emergency_oxygen_engi",
+		"cerulean_vaporizer",
 		"emergency_oxygen",
 		"nitrogen_tank",
 		//"emergency_nitrogen_engi", //incase you wanna add a nitrogen breathing species uncomment these

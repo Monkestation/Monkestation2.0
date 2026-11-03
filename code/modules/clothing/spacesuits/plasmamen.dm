@@ -11,6 +11,7 @@
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
+	bodyshapes_with_variations = NONE
 
 
 /datum/armor/eva_plasmaman
@@ -191,7 +192,7 @@
 		update_appearance(UPDATE_ICON)
 
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return

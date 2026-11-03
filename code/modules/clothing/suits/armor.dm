@@ -86,7 +86,7 @@
 	desc = "A blue armor vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
 	icon_state = "armor_press"
 
-/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
@@ -195,6 +195,7 @@
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat
 	name = "pink armored trenchcoat"
@@ -213,6 +214,7 @@
 	icon_state = "hosformal"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
@@ -226,6 +228,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
@@ -269,6 +272,7 @@
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
@@ -276,6 +280,7 @@
 	icon_state = "capformal"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
 	. = ..()
@@ -294,6 +299,12 @@
 	strip_delay = 80
 	equip_delay_other = 60
 	tackle_mod = 2
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/space
+
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -491,6 +502,12 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/armor_heavy
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/black
+
+/obj/item/clothing/suit/armor/heavy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /datum/armor/armor_heavy
 	melee = 80
@@ -564,6 +581,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -683,6 +701,7 @@
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_centcom_formal
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /datum/armor/armor_centcom_formal
 	melee = 35
@@ -705,6 +724,7 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"

@@ -12,6 +12,7 @@
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 	// hood_down_overlay_suffix = "_hood"
+	bodyshapes_with_variations = NONE
 
 /datum/armor/hooded_wintercoat
 	bio = 10
@@ -473,7 +474,7 @@
 /datum/armor/wintercoat_engineering
 	fire = 20
 
-/obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
@@ -486,7 +487,7 @@
 /datum/armor/winterhood_engineering
 	fire = 20
 
-/obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)

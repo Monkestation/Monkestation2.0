@@ -78,9 +78,10 @@
 #define DNA_AVIAN_TAIL_BLOCK 19 // NON-MODULE CHANGE
 #define DNA_FEATHER_COLOR_BLOCK 20 // NON-MODULE CHANGE
 #define DNA_FISH_TAIL_BLOCK 21
+#define DNA_FISH_TAIL_COLOR_BLOCK 22
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 21
+#define DNA_FEATURE_BLOCKS 22
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8

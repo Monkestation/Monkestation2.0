@@ -702,13 +702,20 @@ GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", "IC", /atom)
 		return
 
 	// check to see if their face is blocked or, if not, a signal blocks it
-	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
+	if(examined_mob.can_eye_contact() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 0.3 SECONDS) // so the examine signal has time to fire and this will print after
 
-	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
+	if(!imagined_eye_contact && can_eye_contact() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 3)
+
+/// Checks if we can make eye contact or someone can make eye contact with us
+/mob/living/proc/can_eye_contact()
+	return TRUE
+
+/mob/living/carbon/can_eye_contact()
+	return !(obscured_slots & HIDEFACE)
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -1538,7 +1545,7 @@ GAME_VERB(/mob, open_language_menu_verb, "Open Language Menu", "IC")
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
-///Apply a proper movespeed modifier based on items we have equipped
+/// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = 0
 	var/immutable_speedies = 0

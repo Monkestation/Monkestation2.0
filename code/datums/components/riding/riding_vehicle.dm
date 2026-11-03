@@ -357,6 +357,7 @@
 	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 2), TEXT_SOUTH = list(0, 2), TEXT_EAST = list(0, 2), TEXT_WEST = list(0, 2)))
 
 // special messaging for those without arms
 /datum/component/riding/vehicle/wheelchair/hand/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)

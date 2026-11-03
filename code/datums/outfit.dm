@@ -244,6 +244,7 @@
 					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BACKPACK)
 
 	post_equip(H, visualsOnly)
+	H.dna?.species?.post_equip_species_outfit(H, visualsOnly)
 
 	if(!visualsOnly)
 		apply_fingerprints(H)

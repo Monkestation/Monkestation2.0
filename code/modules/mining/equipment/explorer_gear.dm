@@ -17,6 +17,8 @@
 	armor_type = /datum/armor/hooded_explorer
 	resistance_flags = FIRE_PROOF
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
+	cerulean_flipper_palette = "#423934"
 
 /obj/item/clothing/suit/hooded/explorer/get_general_color(icon/base_icon)
 	return "#796755"
@@ -119,6 +121,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()
@@ -192,6 +195,7 @@
 	. = ..()
 	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -238,6 +242,7 @@
 /obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
@@ -252,6 +257,10 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/hooded/cloakhood/drake/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer
 	name = "godslayer armour"

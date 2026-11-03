@@ -230,6 +230,9 @@
 ##path/corner{\
 	icon_state = "siding_plain_corner";\
 }\
+##path/inner_corner{\
+	icon_state = "siding_plain_corner_inner";\
+}\
 ##path/end{\
 	icon_state = "siding_plain_end";\
 }
