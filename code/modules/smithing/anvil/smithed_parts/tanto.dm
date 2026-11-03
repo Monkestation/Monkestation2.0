@@ -3,7 +3,7 @@
 	base_name = "tanto blade"
 	weapon_name = "katana"
 
-	finished_desc = "A forged tanto, similar to a katana, but shorter for one-handed use.."
+	finished_desc = "A forged tanto, similar to a katana, but shorter for one-handed use."
 
 	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
 	hilt_icon_state = "katana-hilt"

@@ -132,7 +132,7 @@
 	else
 		if((REALTIMEOFDAY > lower_range) && (REALTIMEOFDAY < upper_range))
 			anvil_presses -= anvil_presses[choice]
-			user.balloon_alert(user, "Great Hit!")
+			user.balloon_alert(user, "great Hit!")
 			playsound(host_anvil, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 
 		else
