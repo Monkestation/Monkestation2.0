@@ -82,7 +82,7 @@ GLOBAL_DATUM(main_rbmk_engine, /obj/machinery/rbmk/reactor)
 	var/last_void_flux_multiplier = 1
 	/// Current internal coolant pressure.
 	var/pressure = 0
-	/// Minimum core pressure maintained by the outlet regulator, in kPa.
+	/// Core pressure target shared by the injector and outlet regulator, in kPa.
 	var/operating_pressure = RBMK_OPERATING_PRESSURE_DEFAULT
 	/// Whether active fuel rods are sustaining a reaction.
 	var/running = FALSE

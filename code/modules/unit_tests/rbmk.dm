@@ -57,6 +57,7 @@
 	TEST_ASSERT(reactor.last_outlet_moles_moved > 0, "The RBMK outlet moved no coolant across a positive pressure differential.")
 	TEST_ASSERT( internal_mix.return_pressure() + ATMOS_PRESSURE_ERROR_TOLERANCE >= outlet_mix.return_pressure(), "The RBMK outlet overshot downstream pressure at maximum flow." )
 	var/inlet_supply_pressure = 2000
+	reactor.operating_pressure = RBMK_OPERATING_PRESSURE_DEFAULT
 	var/inlet_target_pressure = inlet_supply_pressure + RBMK_INLET_PUMP_HEAD
 	var/pre_injection_pressure = inlet_target_pressure - 100
 	internal_mix.moles[/datum/gas/nitrogen] = (pre_injection_pressure * internal_mix.volume) / (R_IDEAL_GAS_EQUATION * test_temperature)
@@ -258,6 +259,54 @@
 	turbine.process_working_gas(gas, 0.5, 293)
 	TEST_ASSERT(network.newavail > 0, "Hot working gas generated no electricity across a positive pressure and temperature drop.")
 	TEST_ASSERT(abs(network.newavail - turbine.last_heat_extracted * turbine.generator_efficiency) < 0.01, "Turbine did not account for electrical output in joules.")
+
+/datum/unit_test/rbmk_pressure_target_controls_injection/Run()
+	var/obj/machinery/rbmk/reactor/reactor = allocate(/obj/machinery/rbmk/reactor)
+	var/datum/gas_mixture/core = reactor.coolant_internal
+	var/datum/gas_mixture/supply = reactor.get_inlet_mix()
+	core.assert_gas(/datum/gas/water_vapor)
+	supply.assert_gas(/datum/gas/water_vapor)
+	reactor.temperature = 1000
+	core.temperature = 1000
+	supply.temperature = 1000
+	reactor.operating_pressure = RBMK_OPERATING_PRESSURE_DEFAULT
+	reactor.inlet_open = TRUE
+	reactor.outlet_open = FALSE
+	reactor.inlet_rate = RBMK_INLET_RATE_MAX
+	var/pressure_ceiling = reactor.operating_pressure + RBMK_PRESSURE_CONTROL_BAND
+	core.moles[/datum/gas/water_vapor] = (pressure_ceiling + 250) * core.volume / (R_IDEAL_GAS_EQUATION * core.temperature)
+	supply.moles[/datum/gas/water_vapor] = 20000 * supply.volume / (R_IDEAL_GAS_EQUATION * supply.temperature)
+	reactor.last_coolant_air_cycle = SSair.times_fired - 1
+	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+	TEST_ASSERT_EQUAL(reactor.last_inlet_moles_moved, 0, "Injector kept filling above the core pressure target despite the outlet being closed.")
+	core.moles[/datum/gas/water_vapor] = (pressure_ceiling - 50) * core.volume / (R_IDEAL_GAS_EQUATION * core.temperature)
+	reactor.last_coolant_air_cycle = SSair.times_fired - 1
+	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+	TEST_ASSERT(reactor.last_inlet_moles_moved > 0, "Injector did not resume below its pressure ceiling.")
+	TEST_ASSERT(core.return_pressure() <= pressure_ceiling + ATMOS_PRESSURE_ERROR_TOLERANCE, "Injector overshot the pressure control band.")
+	reactor.operating_pressure = 0
+	reactor.outlet_open = TRUE
+	reactor.last_coolant_air_cycle = SSair.times_fired - 1
+	reactor.process_coolant_transfer(RBMK_ATMOS_PROCESS_SECONDS)
+	TEST_ASSERT_EQUAL(reactor.last_inlet_moles_moved, 0, "Injector fought the operator's vent command.")
+	TEST_ASSERT(reactor.last_outlet_moles_moved > 0, "Zero pressure target failed to vent available coolant.")
+
+/// A sustained default-rate steam parcel should supply station-scale power
+/// with a useful expansion ratio, without inventing electrical energy.
+/datum/unit_test/rbmk_steam_station_output/Run()
+	var/obj/machinery/power/rbmk_turbine/turbine = allocate(/obj/machinery/power/rbmk_turbine)
+	var/datum/powernet/network = allocate(/datum/powernet)
+	network.add_machine(turbine)
+	var/datum/gas_mixture/steam = allocate(/datum/gas_mixture)
+	steam.assert_gas(/datum/gas/water_vapor)
+	steam.moles[/datum/gas/water_vapor] = RBMK_OUTLET_RATE_DEFAULT * RBMK_ATMOS_PROCESS_SECONDS
+	steam.temperature = 1000
+	turbine.last_inlet_pressure = RBMK_OPERATING_PRESSURE_DEFAULT
+	turbine.last_outlet_pressure = 1000
+	turbine.update_pressure_delta()
+	turbine.process_working_gas(steam, RBMK_ATMOS_PROCESS_SECONDS, RBMK_AMBIENT_TEMP)
+	TEST_ASSERT(turbine.last_power_output >= 500000 && turbine.last_power_output <= 700000, "Default-rate steam output missed the 500-700 kW operating target at 1000 K and 9:1 expansion.")
+	TEST_ASSERT(abs(network.newavail - turbine.last_heat_extracted * turbine.generator_efficiency) < 0.01, "Steam output did not match the converted heat energy.")
 
 /datum/unit_test/rbmk_private_audio_channels/Run()
 	var/datum/looping_sound/rbmk_reactor/reactor_loop = allocate(/datum/looping_sound/rbmk_reactor, run_loc_floor_bottom_left)

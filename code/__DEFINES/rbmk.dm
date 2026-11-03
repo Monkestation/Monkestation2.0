@@ -146,6 +146,8 @@
 #define RBMK_OPERATING_PRESSURE_DEFAULT 9000
 /// Minimum configurable outlet backpressure, in kPa (zero permits venting).
 #define RBMK_OPERATING_PRESSURE_MIN 0
+/// Small circulation band above the core target; injection stops at its upper edge.
+#define RBMK_PRESSURE_CONTROL_BAND 250
 /// Additional safe pressure per plasma moderator rod, in kPa.
 #define RBMK_MODIFIER_PLASMA_PRESSURE_BONUS 1500
 /// Maximum pressure-limit bonus from plasma moderator rods, in kPa.
@@ -155,7 +157,7 @@
 /// Minimum inlet flow setting in moles per second.
 #define RBMK_INLET_RATE_MIN 0
 /// Default inlet flow setting in moles per second.
-#define RBMK_INLET_RATE_DEFAULT 75
+#define RBMK_INLET_RATE_DEFAULT 150
 /// Maximum inlet flow setting in moles per second.
 #define RBMK_INLET_RATE_MAX 250
 /// Maximum pressure rise the reactor coolant injector can overcome above its supply pressure.
@@ -163,7 +165,7 @@
 /// Minimum outlet flow setting in moles per second.
 #define RBMK_OUTLET_RATE_MIN 0
 /// Default outlet flow setting in moles per second.
-#define RBMK_OUTLET_RATE_DEFAULT 75
+#define RBMK_OUTLET_RATE_DEFAULT 150
 /// Maximum outlet flow setting in moles per second.
 #define RBMK_OUTLET_RATE_MAX 750
 /// Prevents a single atmos update from evacuating the hot core and causing a pressure rebound on the next inlet update.

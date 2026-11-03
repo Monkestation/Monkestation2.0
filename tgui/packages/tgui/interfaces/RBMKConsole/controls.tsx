@@ -20,14 +20,14 @@ export const RBMKControls = () => {
   const maxRodDepth = Number(data?.max_control_rod ?? 100);
 
   const inletOpen = Boolean(data?.inlet_open ?? false);
-  const inletRate = Number(data?.inlet_rate ?? 75);
+  const inletRate = Number(data?.inlet_rate ?? 150);
   const inletMin = Number(data?.inlet_min ?? 0);
   const inletMax = Number(data?.inlet_max ?? 250);
   const inletPressure = Number(data?.inlet_pressure ?? 0);
   const inletFlow = Number(data?.inlet_flow ?? 0);
 
   const outletOpen = Boolean(data?.outlet_open ?? false);
-  const outletRate = Number(data?.outlet_rate ?? 75);
+  const outletRate = Number(data?.outlet_rate ?? 150);
   const outletRateMin = Number(data?.outlet_rate_min ?? 0);
   const outletRateMax = Number(data?.outlet_rate_max ?? 750);
   const outletPressure = Number(data?.outlet_pressure ?? 0);
@@ -213,7 +213,7 @@ export const RBMKControls = () => {
 
           <Section title="Outlet Regulator" className="RBMKConsole__ValvePanel">
             <Box color="label" mb={1}>
-              Maintains core pressure. Set to zero to vent.
+              Regulates core pressure. Zero vents and pauses injection.
             </Box>
             <LabeledList>
               <LabeledList.Item label="Regulator">
@@ -225,7 +225,7 @@ export const RBMKControls = () => {
                 />
               </LabeledList.Item>
 
-              <LabeledList.Item label="Hold Core Pressure">
+              <LabeledList.Item label="Core Pressure Target">
                 <NumberInput
                   value={operatingPressure}
                   unit="kPa"

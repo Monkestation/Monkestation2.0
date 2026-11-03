@@ -64,8 +64,13 @@
 	last_inlet_pressure = inlet_pipe_mix?.return_pressure() || 0
 	last_outlet_pressure = outlet_pipe_mix?.return_pressure() || 0
 	var/desired_inlet_moles = 0
-	if(inlet_open && inlet_pipe_mix?.total_moles() > 0)
-		var/inlet_target_pressure = last_inlet_pressure + RBMK_INLET_PUMP_HEAD
+	var/core_pressure_target = clamp(operating_pressure, RBMK_OPERATING_PRESSURE_MIN, get_effective_pressure_warning())
+	// The injector and outlet share a pressure target. Keep a narrow band for
+	// circulation, but do not keep injecting against an overpressurized core.
+	// A zero target vents the vessel without the injector fighting the outlet.
+	if(inlet_open && core_pressure_target > 0 && inlet_pipe_mix?.total_moles() > 0)
+		var/inlet_pressure_ceiling = min(core_pressure_target + RBMK_PRESSURE_CONTROL_BAND, get_effective_pressure_warning())
+		var/inlet_target_pressure = min(last_inlet_pressure + RBMK_INLET_PUMP_HEAD, inlet_pressure_ceiling)
 		var/inlet_temperature_delta = abs(inlet_pipe_mix.temperature - internal_coolant_mix.temperature)
 		var/inlet_pressure_limited_moles = inlet_pipe_mix.gas_pressure_calculate(
 			internal_coolant_mix,
@@ -93,8 +98,7 @@
 		)
 		// Keep the circuit pressurized. The rate command is a maximum flow,
 		// while backpressure determines when the regulator may actually open.
-		var/held_pressure = clamp(operating_pressure, RBMK_OPERATING_PRESSURE_MIN, get_effective_pressure_warning())
-		var/minimum_source_pressure = max(outlet_target_pressure, held_pressure)
+		var/minimum_source_pressure = max(outlet_target_pressure, core_pressure_target)
 		var/outlet_source_limited_moles = internal_moles * max(1 - (minimum_source_pressure / internal_pressure), 0)
 		desired_outlet_moles = min(
 			clamp(outlet_rate, RBMK_OUTLET_RATE_MIN, RBMK_OUTLET_RATE_MAX) * seconds_per_tick,
