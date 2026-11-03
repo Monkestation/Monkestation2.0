@@ -22,6 +22,7 @@
 	greyscale_config = /datum/greyscale_config/jeanshorts
 	greyscale_config_worn = /datum/greyscale_config/jeanshorts_worn
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	greyscale_colors = "#787878#723E0E#4D7EAC"
 
 /obj/item/clothing/under/shorts/red

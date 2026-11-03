@@ -597,13 +597,13 @@ BLIND     // can't see anything
 	if(user.is_holding(src))
 		user.update_held_items()
 		return TRUE
-	if(up)
-		user.update_obscured_slots(visor_flags_inv)
 	// masks pushed up into hats change their slot_flags, so also redraw the slot we're actually worn in
 	user.update_clothing(slot_flags | user.get_slot_by_item(src))
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
+	if(visor_flags_inv)
+		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
 	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
@@ -678,7 +678,7 @@ BLIND     // can't see anything
 	return ..()
 
 /// Returns a list of overlays with our blood, if we're bloodied
-/obj/item/clothing/proc/get_blood_overlay(blood_state)
+/obj/item/clothing/proc/get_blood_overlay(blood_state, bodyshape = NONE)
 	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 

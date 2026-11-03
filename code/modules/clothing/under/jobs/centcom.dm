@@ -55,6 +55,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/centcom/officer/skirt/replica
 	name = "\improper CentCom turtleneck suitskirt replica"
