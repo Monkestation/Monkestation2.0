@@ -41283,7 +41283,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "mKl" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "mKz" = (
@@ -45592,7 +45592,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "qkS" = (

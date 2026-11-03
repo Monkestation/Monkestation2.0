@@ -32838,7 +32838,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "pNA" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/prison)
 "pNH" = (

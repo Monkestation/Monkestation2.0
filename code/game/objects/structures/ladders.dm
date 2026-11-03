@@ -105,15 +105,29 @@
 
 /obj/structure/ladder/proc/start_travelling(mob/user, going_up)
 	show_initial_fluff_message(user, going_up)
-	if(do_after(user, travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
-		travel(user, going_up)
+
+	// Our climbers athletics ability
+	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics)
+
+	// Misc bonuses to the climb speed.
+	var/misc_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		misc_multiplier *= potential_spine.athletics_boost_multiplier
+
+	var/final_travel_time = (travel_time - fitness_level) * misc_multiplier
+
+	if(do_after(user, final_travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
+		travel(user, going_up, grant_exp = TRUE)
 
 /// The message shown when the player starts climbing the ladder
 /obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
 	var/up_down = going_up ? "up" : "down"
 	user.balloon_alert_to_viewers("climbing [up_down]...")
 
-/obj/structure/ladder/proc/travel(mob/user, going_up = TRUE, is_ghost = FALSE)
+/// Moves the user to the ladder above or below us, grant_exp gives some athletics experience for the climb
+/obj/structure/ladder/proc/travel(mob/user, going_up = TRUE, is_ghost = FALSE, grant_exp = FALSE)
 	var/obj/structure/ladder/ladder = going_up ? up : down
 	if(!ladder)
 		balloon_alert(user, "there's nothing that way!")
@@ -124,6 +138,11 @@
 
 	var/turf/target = get_turf(ladder)
 	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
+
+	if(grant_exp)
+		var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics)
+		user.mind?.adjust_experience(/datum/skill/athletics, round(ATHLETICS_SKILL_MISC_EXP/(fitness_level || 1), 1)) //get a little experience for our trouble
+
 	if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
 		if(iscarbon(user))
 			var/mob/living/carbon/guy = user
