@@ -90,11 +90,7 @@
 	var/mob/living/carbon/human/human = bodypart_owner.owner
 	if(!istype(human))
 		return TRUE
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return FALSE
-	if(human.w_uniform?.flags_inv & HIDETAIL)
-		return FALSE
-	return TRUE
+	return !(human.obscured_slots & (HIDEJUMPSUIT|HIDETAIL))
 
 /obj/item/organ/external/tail/cat
 	name = "tail"
