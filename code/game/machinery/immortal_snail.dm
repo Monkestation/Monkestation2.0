@@ -96,6 +96,7 @@
 	icon_living = "snail"
 	density = FALSE
 	movement_type = FLYING
+	pass_flags = PASSDOORS
 	maxHealth = INFINITY
 	health = INFINITY
 	status_flags = NONE
@@ -115,6 +116,7 @@
 	var/next_step = 0
 	/// Time spent visibly gliding across one tile, rather than waiting then hopping.
 	var/move_interval = 2.2 SECONDS
+	var/zero_gravity_move_interval = 1.8 SECONDS
 	/// Only the three most recently vacated tiles retain cursed slime.
 	var/list/slime_trail = list()
 	var/pursuing = FALSE
@@ -345,6 +347,9 @@
 		return target_mind.current
 	return target_ref?.resolve()
 
+/mob/living/basic/immortal_snail/proc/movement_interval(turf/destination)
+	return has_gravity(destination) ? move_interval : zero_gravity_move_interval
+
 /mob/living/basic/immortal_snail/process(seconds_per_tick)
 	if(pursuing || !contract_value)
 		return
@@ -373,7 +378,7 @@
 			else if(get_turf(corpse) == get_turf(src))
 				settle_original(corpse)
 			else
-				next_step = world.time + move_interval
+				next_step = world.time + movement_interval()
 				pursuing = TRUE
 				INVOKE_ASYNC(src, PROC_REF(pursue), corpse)
 				return
@@ -389,11 +394,11 @@
 				contact(carrier)
 			debt.collect(claim)
 			return
-		next_step = world.time + move_interval
+		next_step = world.time + movement_interval()
 		pursuing = TRUE
 		INVOKE_ASYNC(src, PROC_REF(pursue), money_location)
 		return
-	next_step = world.time + move_interval
+	next_step = world.time + movement_interval()
 	pursuing = TRUE
 	INVOKE_ASYNC(src, PROC_REF(pursue), target)
 
@@ -505,18 +510,20 @@
 		for(var/obj/obstacle in next)
 			if(!obstacle.density)
 				continue
+			if(pass_flags & obstacle.pass_flags_self)
+				continue
 			if(!chemically_breach(obstacle))
 				pursuing = FALSE
 				return
 		if(!next.density)
 			// The standard delay helper clamps to at least one pixel per tick,
 			// which finishes a slow glide early. Preserve the fractional rate.
-			Move(next, get_dir(src, next), MOVEMENT_ADJUSTED_GLIDE_SIZE(move_interval, 1))
+			Move(next, get_dir(src, next), MOVEMENT_ADJUSTED_GLIDE_SIZE(movement_interval(next), 1))
 		if(get_turf(src) == next && length(route))
 			route.Cut(1, 2)
 		else
 			route.Cut()
-		next_step = world.time + move_interval
+		next_step = world.time + movement_interval()
 	pursuing = FALSE
 
 /// Actual reagent effects do the work first; the curse only overrides chemical
@@ -524,16 +531,8 @@
 /mob/living/basic/immortal_snail/proc/chemically_breach(atom/obstacle)
 	if(QDELETED(obstacle) || !obstacle.density)
 		return TRUE
-	if(istype(obstacle, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/airlock = obstacle
-		// Use the normal access check before resorting to chemistry.
-		if(airlock.operating)
-			return FALSE
-		airlock.bumpopen(src)
-		if(QDELETED(airlock) || !airlock.density)
-			return TRUE
-		if(airlock.operating)
-			return FALSE
+	if(pass_flags & obstacle.pass_flags_self)
+		return TRUE
 	if(chemical_target?.resolve() != obstacle)
 		chemical_target = WEAKREF(obstacle)
 		chemical_started = world.time
@@ -603,7 +602,7 @@
 			qdel(oldest)
 	for(var/mob/living/victim in loc)
 		if(victim != src)
-			contact(victim)
+			collision_contact(victim)
 
 /obj/effect/decal/cleanable/immortal_snail_slime
 	name = "snail slime"
@@ -620,7 +619,21 @@
 /mob/living/basic/immortal_snail/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
 	if(isliving(entered) && entered != src)
-		INVOKE_ASYNC(src, PROC_REF(contact), entered)
+		INVOKE_ASYNC(src, PROC_REF(collision_contact), entered)
+
+/// Incidental overlap only kills the cursed target and debtors, not ordinary passersby.
+/mob/living/basic/immortal_snail/proc/collision_contact(mob/living/victim)
+	if(QDELETED(src) || QDELETED(victim))
+		return
+	if(victim == original_target() || victim == corpse_ref?.resolve() || (debt && debt.claims[victim]))
+		contact(victim)
+		return
+	if(!debt)
+		return
+	for(var/datum/holder as anything in debt.claims)
+		if(debt.carrier_of(holder) == victim)
+			contact(victim)
+			return
 
 /mob/living/basic/immortal_snail/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	contact(user)

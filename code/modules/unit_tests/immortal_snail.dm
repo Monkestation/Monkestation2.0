@@ -44,6 +44,53 @@
 	GLOB.snail_debt = previous_ledger
 	return ..()
 
+/datum/unit_test/immortal_snail_collection
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_collection/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, run_loc_floor_bottom_left, 150)
+	ledger.mark(chip, 100)
+	ledger.collect(chip)
+	TEST_ASSERT_EQUAL(chip.credits, 50, "Collection must destroy cursed credits while preserving unrelated cash")
+	ledger.collect(chip)
+	TEST_ASSERT_EQUAL(chip.credits, 50, "Collecting twice must not remove unrelated credits")
+	TEST_ASSERT_EQUAL(ledger.recovered, 100, "Credits must only be recovered once")
+
+/datum/unit_test/immortal_snail_collision
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_collision/Run()
+	previous_ledger = GLOB.snail_debt
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_bottom_left)
+	QDEL_NULL(snail.pursuit_driver)
+	var/mob/living/carbon/human/bystander = allocate(/mob/living/carbon/human/consistent, get_step(snail, NORTH))
+	snail.forceMove(get_turf(bystander))
+	TEST_ASSERT(bystander.stat != DEAD, "Slithering into an ordinary bystander must be harmless")
+	bystander.forceMove(get_step(snail, SOUTH))
+	bystander.forceMove(get_turf(snail))
+	sleep(1)
+	TEST_ASSERT(bystander.stat != DEAD, "Walking or sliding onto the snail must be harmless to bystanders")
+	snail.attack_hand(bystander)
+	TEST_ASSERT_EQUAL(bystander.stat, DEAD, "Deliberate hand contact must remain lethal")
+	var/mob/living/carbon/human/carrier = allocate(/mob/living/carbon/human/consistent, get_step(snail, NORTH))
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	snail.debt = ledger
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, carrier, 100)
+	ledger.mark(chip, 100)
+	snail.forceMove(get_turf(carrier))
+	TEST_ASSERT_EQUAL(carrier.stat, DEAD, "Carrying cursed money must still make collision lethal")
+
+/datum/unit_test/immortal_snail_zero_gravity/Run()
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_bottom_left)
+	QDEL_NULL(snail.pursuit_driver)
+	snail.AddElement(/datum/element/forced_gravity, 0)
+	TEST_ASSERT_EQUAL(snail.movement_interval(), snail.zero_gravity_move_interval, "Zero gravity must select the faster movement interval")
+	TEST_ASSERT(snail.movement_interval() < snail.move_interval, "Zero gravity movement must be faster than station movement")
+
 /datum/unit_test/immortal_snail_nullspace
 	parent_type = /datum/unit_test/immortal_snail_money
 
@@ -428,9 +475,8 @@
 	QDEL_NULL(snail.pursuit_driver)
 	var/obj/machinery/door/airlock/public_door = allocate(/obj/machinery/door/airlock, get_step(snail, NORTH))
 	public_door.machine_stat &= ~NOPOWER
-	TEST_ASSERT(public_door.hasPower(), "The public-airlock test requires a powered door")
 	snail.chemically_breach(public_door)
-	TEST_ASSERT(!public_door.density || public_door.operating, "An accessible airlock must open normally")
+	TEST_ASSERT(public_door.density && !public_door.operating, "The snail must leave public airlocks closed while slipping under")
 	TEST_ASSERT(!public_door.GetComponent(/datum/component/acid), "An accessible airlock must not be dissolved")
 	qdel(public_door)
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
@@ -444,6 +490,9 @@
 		neighbor.ChangeTurf(/turf/closed/wall)
 	var/obj/machinery/door/airlock/locked_door = allocate(/obj/machinery/door/airlock, door_turf)
 	locked_door.req_access = list(ACCESS_CAPTAIN)
+	locked_door.locked = TRUE
+	locked_door.welded = TRUE
+	locked_door.machine_stat |= NOPOWER
 	var/turf/target_snapshot = get_turf(person)
 	snail.prefetch_route(person)
 	person.forceMove(get_step(person, SOUTH))
@@ -453,27 +502,13 @@
 	TEST_ASSERT_EQUAL(snail.route[1], door_turf, "Locked doors must be considered before demolishing surrounding walls")
 	TEST_ASSERT_EQUAL(snail.route_destination, target_snapshot, "A moving target must not discard a usable prepared route")
 	snail.pursue(person)
-	TEST_ASSERT_EQUAL(get_turf(snail), starting, "The snail must let its chemistry breach a closed door first")
-	var/datum/component/acid/door_acid = locked_door.GetComponent(/datum/component/acid)
-	TEST_ASSERT(door_acid, "The snail must use real acid on the locked door")
-	door_acid.process_movable(locked_door, 60)
-	TEST_ASSERT(QDELETED(locked_door), "The acid must destroy the door through normal integrity damage")
-	// Native door destruction can leave a dense assembly; dissolve that too.
-	for(var/attempt in 1 to 4)
-		snail.pursue(person)
-		if(get_turf(snail) != starting)
-			break
-		for(var/obj/debris in door_turf)
-			if(!debris.density)
-				continue
-			var/datum/component/acid/debris_acid = debris.GetComponent(/datum/component/acid)
-			TEST_ASSERT(debris_acid, "Dense door remains must also receive acid")
-			debris_acid.process_movable(debris, 60)
-	TEST_ASSERT(get_turf(snail) != starting, "The snail must continue moving once the door is dissolved")
+	TEST_ASSERT_EQUAL(get_turf(snail), door_turf, "The snail must slide under a welded, bolted, unpowered airlock")
+	TEST_ASSERT(!QDELETED(locked_door) && locked_door.density && locked_door.locked && locked_door.welded, "Passing under must leave the airlock intact and shut")
+	TEST_ASSERT(!locked_door.GetComponent(/datum/component/acid), "The snail must not chemically attack airlocks")
 	for(var/turf/neighbor as anything in surrounding_types)
 		neighbor.ChangeTurf(surrounding_types[neighbor])
-	TEST_ASSERT_EQUAL(snail.glide_size, MOVEMENT_ADJUSTED_GLIDE_SIZE(snail.move_interval, 1), "Gliding must last the entire movement interval")
-	TEST_ASSERT_EQUAL(snail.next_step, world.time + snail.move_interval, "The next tile must follow the completed glide")
+	TEST_ASSERT_EQUAL(snail.glide_size, MOVEMENT_ADJUSTED_GLIDE_SIZE(snail.movement_interval(), 1), "Gliding must last the entire movement interval")
+	TEST_ASSERT_EQUAL(snail.next_step, world.time + snail.movement_interval(), "The next tile must follow the completed glide")
 	TEST_ASSERT(length(snail.route), "The pathfinder should have returned a route")
 	var/turf/blocked = snail.route[1]
 	var/original_type = blocked.type
