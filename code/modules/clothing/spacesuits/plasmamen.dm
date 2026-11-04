@@ -118,8 +118,9 @@
 /obj/item/clothing/head/helmet/space/plasmaman/examine_more(mob/user)
 	. = ..()
 	if(style == STYLE_BULKY)
-		return span_notice(span_italics("You notice the helmet can be pried loose of some pieces without any function loss."))
-	return span_notice(span_italics("You notice the helmet has some open slots for some metal that can be filled in."))
+		. += span_notice(span_italics("You notice the helmet can be pried loose of some pieces without any function loss."))
+	else
+		. += span_notice(span_italics("You notice the helmet has some open slots for some metal that can be filled in."))
 
 /*
  * Proc that actually handles which sprite to use. -> suit for bulky (old) | skirt for sleek (new)
