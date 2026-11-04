@@ -1,3 +1,4 @@
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -10,12 +11,18 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
+type SupplyPackageContent = {
+  name: string;
+  quantity: number;
+};
+
 type SupplyPackage = {
   id: string;
   name: string;
   description: string;
   category: string;
   cost: number;
+  contents: SupplyPackageContent[];
   can_order: boolean;
   recall_locked: boolean;
   requisition_failure?: string;
@@ -288,7 +295,6 @@ export const CCPostLogistics = () => {
               <LedgerTab ledger={ledger} />
             )}
           </Stack.Item>
-
         </Stack>
       </Window.Content>
     </Window>
@@ -323,6 +329,7 @@ const RequisitionsTab = (props: {
   restrictedProcurementSeconds: number;
 }) => {
   const { act } = useBackend<Data>();
+
   const {
     catalog,
     availableAllocation,
@@ -336,6 +343,11 @@ const RequisitionsTab = (props: {
   const [selectedCategory, setSelectedCategory] = useLocalState(
     'requisitionCategory',
     'Administration',
+  );
+
+  const [expandedPackageId, setExpandedPackageId] = useLocalState(
+    'expandedPackageId',
+    '',
   );
 
   if (!catalog.length) {
@@ -389,14 +401,18 @@ const RequisitionsTab = (props: {
   const activeCategory = categories.includes(selectedCategory)
     ? selectedCategory
     : categories[0];
+
   const activeCategoryPackages = catalog.filter(
     (pack) => pack.category === activeCategory,
   );
+
   const activeCategoryRecallLocked =
     activeCategory === 'Medical' && Boolean(medicalRecallActive);
+
   const activeCategoryComplianceLocked =
     activeCategory === 'Restricted' &&
     Boolean(restrictedProcurementSuspended);
+
   const restrictedHoldMinutes = Math.max(
     1,
     Math.ceil(restrictedProcurementSeconds / 60),
@@ -436,11 +452,14 @@ const RequisitionsTab = (props: {
             {categories.map((category) => {
               const categoryRecallLocked =
                 category === 'Medical' && Boolean(medicalRecallActive);
+
               const categoryComplianceLocked =
                 category === 'Restricted' &&
                 Boolean(restrictedProcurementSuspended);
+
               const categoryLocked =
                 categoryRecallLocked || categoryComplianceLocked;
+
               let categoryLabel = category;
 
               if (categoryRecallLocked) {
@@ -481,35 +500,60 @@ const RequisitionsTab = (props: {
             <Stack vertical>
               {activeCategoryPackages.map((pack) => {
                 const recallLocked = Boolean(pack.recall_locked);
+
                 const complianceLocked =
                   pack.category === 'Restricted' &&
                   Boolean(restrictedProcurementSuspended);
-                const packageLocked = recallLocked || complianceLocked;
+
+                const packageLocked =
+                  recallLocked || complianceLocked;
+
                 const requisitionFailure = pack.can_order
                   ? undefined
                   : formatRequisitionFailure(pack.requisition_failure);
+
+                const isExpanded = expandedPackageId === pack.id;
 
                 return (
                   <Stack.Item key={pack.id}>
                     <Section
                       title={`${pack.name} - ${pack.cost} CU`}
                       buttons={
-                        <Button
-                          icon={packageLocked ? 'lock' : 'cart-plus'}
-                          disabled={!pack.can_order}
-                          tooltip={requisitionFailure}
-                          onClick={() =>
-                            act('order_package', {
-                              package_id: pack.id,
-                            })
-                          }
-                        >
-                          {recallLocked
-                            ? 'Recall Locked'
-                            : complianceLocked
-                              ? 'Compliance Hold'
-                              : 'Requisition'}
-                        </Button>
+                        <>
+                          <Button
+                            icon={
+                              isExpanded ? 'chevron-up' : 'list-ul'
+                            }
+                            onClick={() =>
+                              setExpandedPackageId(
+                                isExpanded ? '' : pack.id,
+                              )
+                            }
+                          >
+                            {isExpanded
+                              ? 'Hide Contents'
+                              : 'View Contents'}
+                          </Button>
+
+                          <Button
+                            icon={
+                              packageLocked ? 'lock' : 'cart-plus'
+                            }
+                            disabled={!pack.can_order}
+                            tooltip={requisitionFailure}
+                            onClick={() =>
+                              act('order_package', {
+                                package_id: pack.id,
+                              })
+                            }
+                          >
+                            {recallLocked
+                              ? 'Recall Locked'
+                              : complianceLocked
+                                ? 'Compliance Hold'
+                                : 'Requisition'}
+                          </Button>
+                        </>
                       }
                     >
                       <LabeledList>
@@ -522,7 +566,9 @@ const RequisitionsTab = (props: {
                             inline
                             bold
                             color={
-                              pack.cost <= availableAllocation ? 'good' : 'bad'
+                              pack.cost <= availableAllocation
+                                ? 'good'
+                                : 'bad'
                             }
                           >
                             {pack.cost} CU
@@ -534,12 +580,14 @@ const RequisitionsTab = (props: {
                             inline
                             bold
                             color={
-                              Boolean(pack.has_package_specific_routing)
+                              pack.has_package_specific_routing
                                 ? 'average'
                                 : undefined
                             }
                           >
-                            {formatFreightDuration(pack.estimated_total_delay)}
+                            {formatFreightDuration(
+                              pack.estimated_total_delay,
+                            )}
                           </Box>
                         </LabeledList.Item>
 
@@ -550,13 +598,60 @@ const RequisitionsTab = (props: {
                                 status={pack.routing_status}
                               />
                             </LabeledList.Item>
+
                             <LabeledList.Item label="Routing Breakdown">
-                              Authorization {pack.authorization_delay}s // Dispatch{' '}
-                              {pack.dispatch_delay}s // Transit {pack.transit_delay}s
+                              Authorization {pack.authorization_delay}s
+                              {' | '}
+                              Dispatch {pack.dispatch_delay}s
+                              {' | '}
+                              Transit {pack.transit_delay}s
                             </LabeledList.Item>
                           </>
                         )}
                       </LabeledList>
+
+                      {isExpanded && (
+                        <Section
+                          title="Declared Package Contents"
+                          buttons={
+                            <Button
+                              icon="print"
+                              onClick={() =>
+                                act('print_package_manifest', {
+                                  package_id: pack.id,
+                                })
+                              }
+                            >
+                              Print Manifest
+                            </Button>
+                          }
+                        >
+                          {!!pack.contents?.length ? (
+                            pack.contents.map((item, index) => (
+                              <Box
+                                key={`${pack.id}-content-${index}`}
+                                mb={0.5}
+                              >
+                                <Box inline bold color="label">
+                                  {item.quantity}x
+                                </Box>
+                                {' '}{item.name}
+                              </Box>
+                            ))
+                          ) : (
+                            <Box color="label">
+                              No contents have been declared for this
+                              package.
+                            </Box>
+                          )}
+
+                          <Box mt={1} color="label">
+                            Contents reflect the declared supply
+                            manifest. Items inside sealed boxes and
+                            containers may not be listed individually.
+                          </Box>
+                        </Section>
+                      )}
 
                       {Boolean(pack.has_package_specific_routing) && (
                         <Box
@@ -567,16 +662,22 @@ const RequisitionsTab = (props: {
                           <Box bold color="average" mb={0.5}>
                             Package-Specific Sector Conditions
                           </Box>
+
                           {pack.package_specific_reasons.length ? (
-                            pack.package_specific_reasons.map((reason, index) => (
-                              <Box key={`${pack.id}-routing-${index}`}>
-                                • {reason}
-                              </Box>
-                            ))
+                            pack.package_specific_reasons.map(
+                              (reason, index) => (
+                                <Box
+                                  key={`${pack.id}-routing-${index}`}
+                                >
+                                  • {reason}
+                                </Box>
+                              ),
+                            )
                           ) : (
                             <Box color="label">
-                              This package currently follows a different freight
-                              profile from the sector-wide estimate.
+                              This package currently follows a
+                              different freight profile from the
+                              sector-wide estimate.
                             </Box>
                           )}
                         </Box>
@@ -607,13 +708,18 @@ const ShipmentsTab = (props: { shipments: Shipment[] }) => {
     <Section
       title="Shipment Tracking"
       buttons={
-        <Button icon="print" onClick={() => act('print_shipment_log')}>
+        <Button
+          icon="print"
+          onClick={() => act('print_shipment_log')}
+        >
           Print Shipment Log
         </Button>
       }
     >
       {!shipments.length ? (
-        <NoticeBox>No requisitions have been submitted.</NoticeBox>
+        <NoticeBox>
+          No requisitions have been submitted.
+        </NoticeBox>
       ) : (
         <Stack vertical>
           {shipments.map((shipment) => (
@@ -665,14 +771,18 @@ const ShipmentsTab = (props: { shipments: Shipment[] }) => {
                   </LabeledList.Item>
 
                   <LabeledList.Item label="Processing Times">
-                    Auth {shipment.authorization_delay}s | Dispatch{' '}
-                    {shipment.dispatch_delay}s | Transit{' '}
-                    {shipment.transit_delay}s
+                    Auth {shipment.authorization_delay}s
+                    {' | '}
+                    Dispatch {shipment.dispatch_delay}s
+                    {' | '}
+                    Transit {shipment.transit_delay}s
                   </LabeledList.Item>
 
                   {!!shipment.failure_reason && (
                     <LabeledList.Item label="Failure">
-                      <Box color="bad">{shipment.failure_reason}</Box>
+                      <Box color="bad">
+                        {shipment.failure_reason}
+                      </Box>
                     </LabeledList.Item>
                   )}
                 </LabeledList>
@@ -682,9 +792,12 @@ const ShipmentsTab = (props: { shipments: Shipment[] }) => {
                     <Box bold mb={0.5}>
                       Applied Sector Factors
                     </Box>
+
                     {shipment.freight_condition_reasons.map(
                       (reason, index) => (
-                        <Box key={index}>• {reason}</Box>
+                        <Box key={index}>
+                          • {reason}
+                        </Box>
                       ),
                     )}
                   </Box>
@@ -732,7 +845,10 @@ const LedgerTab = (props: { ledger: LedgerEntry[] }) => {
     <Section
       title="Operational Allocation Ledger"
       buttons={
-        <Button icon="print" onClick={() => act('print_ledger')}>
+        <Button
+          icon="print"
+          onClick={() => act('print_ledger')}
+        >
           Print Ledger
         </Button>
       }
@@ -753,7 +869,9 @@ const LedgerTab = (props: { ledger: LedgerEntry[] }) => {
                 <LabeledList>
                   <LabeledList.Item label="Transaction">
                     <Box
-                      color={entry.amount > 0 ? 'good' : 'bad'}
+                      color={
+                        entry.amount > 0 ? 'good' : 'bad'
+                      }
                       bold
                     >
                       {entry.amount > 0 ? '+' : ''}

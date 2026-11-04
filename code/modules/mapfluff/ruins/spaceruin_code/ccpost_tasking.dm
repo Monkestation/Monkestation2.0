@@ -251,13 +251,13 @@
 /datum/ccpost_tasking_order/proc/get_allocation_reward()
 	switch(priority)
 		if(CCPOST_TASK_PRIORITY_ROUTINE)
-			return 5
+			return 8
 
 		if(CCPOST_TASK_PRIORITY_ELEVATED)
-			return 7
+			return 10
 
 		if(CCPOST_TASK_PRIORITY_PRIORITY)
-			return 10
+			return 12
 
 		if(CCPOST_TASK_PRIORITY_CRITICAL)
 			return 15
@@ -393,8 +393,8 @@
 /obj/machinery/computer/ccpost_tasking/Initialize(mapload)
 	. = ..()
 
-	// Allow the round to establish itself before the first assignment is issued.
-	schedule_next_assignment()
+	// Issue the first assignment shortly after initialization.
+	schedule_next_assignment(2 MINUTES, 4 MINUTES)
 
 /obj/machinery/computer/ccpost_tasking/Destroy()
 	if(assignment_timer)
@@ -652,8 +652,8 @@
 // ASSIGNMENT SCHEDULING
 
 /obj/machinery/computer/ccpost_tasking/proc/schedule_next_assignment(
-	minimum_delay = 8 MINUTES,
-	maximum_delay = 20 MINUTES
+	minimum_delay = 6 MINUTES,
+	maximum_delay = 12 MINUTES
 )
 	if(assignment_timer)
 		deltimer(assignment_timer)

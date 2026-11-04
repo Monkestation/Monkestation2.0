@@ -2702,19 +2702,19 @@
 	build_template_catalogs()
 
 /datum/ccpost_sector_network/proc/build_template_catalogs()
-	for(var/notice_type as anything in subtypesof(/datum/ccpost_sector_notice_template))
+	for(var/notice_type in subtypesof(/datum/ccpost_sector_notice_template))
 		sector_notice_templates += new notice_type
 
-	for(var/installation_type as anything in subtypesof(/datum/ccpost_sector_installation_template))
+	for(var/installation_type in subtypesof(/datum/ccpost_sector_installation_template))
 		sector_installation_templates += new installation_type
 
-	for(var/paperwork_type as anything in subtypesof(/datum/ccpost_sector_paperwork_template))
+	for(var/paperwork_type in subtypesof(/datum/ccpost_sector_paperwork_template))
 		sector_paperwork_templates += new paperwork_type
 
-	for(var/message_template_type as anything in subtypesof(/datum/ccpost_sector_message_template))
+	for(var/message_template_type in subtypesof(/datum/ccpost_sector_message_template))
 		sector_message_templates += new message_template_type
 
-	for(var/incident_type as anything in subtypesof(/datum/ccpost_critical_incident))
+	for(var/incident_type in subtypesof(/datum/ccpost_critical_incident))
 		var/datum/ccpost_critical_incident/incident = new incident_type
 
 		if(!incident.description)
@@ -4200,12 +4200,12 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /obj/machinery/computer/ccpost_sector_comms/Destroy()
 	if(submitted_paperwork)
-		eject_sector_paperwork()
+		submitted_paperwork.forceMove(drop_location())
+		submitted_paperwork = null
 
 	GLOB.ccpost_sector_network.unregister_comms_terminal(src)
 
 	return ..()
-
 
 
 // ADMINISTRATIVE PAPERWORK SLOT
@@ -4703,7 +4703,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 				return TRUE
 
 			if(!paperwork_has_centcom_stamp(submitted_paperwork))
-				balloon_alert(user, "CentCom stamp required")
+				balloon_alert(user, "centcom stamp required")
 				return TRUE
 
 			var/obj/item/paper/ccpost_sector_paperwork/transmitted_document = submitted_paperwork

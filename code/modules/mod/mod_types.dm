@@ -549,6 +549,21 @@
 		/obj/item/mod/module/emp_shield/advanced,
 	)
 
+/// Corporate MODsuit issued to Central Command Outpost Security
+/obj/item/mod/control/pre_equipped/corporate/ccpost_security
+	theme = /datum/mod_theme/corporate/ccpost_security
+	applied_core = /obj/item/mod/core/standard
+	applied_cell = /obj/item/stock_parts/power_store/cell/super
+	req_access = list(ACCESS_NT_REPRESENTATVE)
+	applied_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/hat_stabilizer,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/megaphone,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/visor/sechud,
+	)
+
 /obj/item/mod/control/pre_equipped/chrono
 	theme = /datum/mod_theme/chrono
 	starting_frequency = null

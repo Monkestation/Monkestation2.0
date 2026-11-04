@@ -340,15 +340,29 @@
 	name = "free miner navigation (Computer Board)"
 	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/freeminer
 
-/// Central Command Liaison Outpost Ghostrole
-/obj/effect/mob_spawn/ghost_role/human/ccpost/centcom_liaison
-	name = "CentCom Liaison"
+/// Central Command Liaison Outpost Ghostroles
+
+/// Long-range PDA for Central Command outpost personnel.
+/obj/item/modular_computer/pda/heads/ccpost
+	name = "Central Command outpost PDA"
+	long_ranged = TRUE
+
+// Shared parent for all outpost ghost roles.
+/obj/effect/mob_spawn/ghost_role/human/ccpost
+	name = "Central Command Outpost Personnel"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+	prompt_name = "a Central Command outpost employee"
+	you_are_text = "You are an employee assigned to a remote Central Command outpost."
+	flavour_text = "Perform your assigned duties and maintain the outpost's operations."
+
+// CentCom Liaison ghost role
+/obj/effect/mob_spawn/ghost_role/human/ccpost/centcom_liaison
+	name = "CentCom Liaison"
 	prompt_name = "a Central Command Liaison"
 	you_are_text = "You are a low-ranking Central Command official assigned to a remote bureaucratic outpost."
 	flavour_text = "Your duty is to observe station operations, maintain communications with station command, investigate noteworthy incidents, and provide Central Command with accurate reports. You are stationed here as an observer and liaison, not as the station's commanding authority."
-	important_text = "DO NOT abandon the outpost without good reason. You may monitor and communicate with the station, request information, and provide recommendations, but you do not directly command station personnel. Do not use your position to interfere with normal station operations or manufacture conflict."
+	important_text = "You are responsible for the administrative oversight of this Central Command installation. The outpost operates independently of station Command, whose authority does not automatically extend to its personnel or facilities. You may direct outpost operations, but the assigned Security Officer is responsible for installation security, including visitor access and security incidents. Coordinate with the officer on security matters. Your position does not grant command authority over the station, and you must not manufacture conflicts or interfere with normal station operations."
 	outfit = /datum/outfit/centcom/centcom_liaison
 
 /datum/outfit/centcom/centcom_liaison
@@ -362,7 +376,7 @@
 		/obj/item/clipboard,
 		/obj/item/stamp/centcom,
 	)
-	belt = /obj/item/modular_computer/pda/heads
+	belt = /obj/item/modular_computer/pda/heads/ccpost
 	ears = /obj/item/radio/headset/headset_cent/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest
@@ -385,3 +399,53 @@
 		id_card.update_icon()
 
 	return ..()
+
+/// Central Command Outpost Security Officer
+/obj/effect/mob_spawn/ghost_role/human/ccpost/security_officer
+	name = "CentCom Security Officer"
+	prompt_name = "a Central Command Security Officer"
+	you_are_text = "You are a Central Command Security Officer assigned to protect a remote Central Command Liaison Outpost."
+	flavour_text = "You are responsible for maintaining security aboard the Liaison Outpost, protecting its personnel, safeguarding corporate assets, controlling access to restricted areas, and investigating security incidents. Your authority over installation security extends to all visitors, including station personnel and members of Station Command."
+	important_text = "The Liaison Outpost is Central Command property and operates independently of the station's chain of command. Station Command personnel have no automatic authority over the outpost or its security procedures. You may enforce reasonable security regulations, restrict access, and respond to misconduct aboard the installation. The Liaison oversees administrative operations, while you are responsible for security matters. Your jurisdiction does not extend to commanding station Security or interfering with normal station operations. Do not manufacture conflicts or abuse your authority."
+	outfit = /datum/outfit/centcom/ccpost_security
+
+/datum/outfit/centcom/ccpost_security
+	name = "CentCom Security Officer"
+
+	uniform = /obj/item/clothing/under/rank/centcom/officer
+	head = /obj/item/clothing/head/beret/centcom_formal
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	gloves = /obj/item/clothing/gloves/color/black/security/blu
+	ears = /obj/item/radio/headset/headset_cent/alt
+	shoes = /obj/item/clothing/shoes/combat/swat/admiral
+	mask = /obj/item/clothing/mask/gas/sechailer
+
+	back = /obj/item/mod/control/pre_equipped/corporate/ccpost_security
+	backpack_contents = list(
+		/obj/item/storage/box/survival,
+		/obj/item/stamp/centcom,
+		/obj/item/tank/internals/oxygen,
+	)
+	belt = /obj/item/storage/belt/security/full
+	r_pocket = /obj/item/modular_computer/pda/heads/ccpost
+	l_pocket = /obj/item/pen/fountain
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+	l_hand = /obj/item/gun/energy/e_gun/stun
+
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/job/centcom_liaison/security_officer
+
+/datum/outfit/centcom/ccpost_security/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/id_card = equipped_human.wear_id
+
+	if(id_card)
+		id_card.registered_name = equipped_human.real_name
+		id_card.update_label()
+		id_card.update_icon()
+
+	return ..()
+

@@ -5,55 +5,74 @@
 
 // Central Command Assignment for Liaison, also explains what's expected of them in more detail
 
+
+/// General assignment directive for Central Command Outpost personnel.
 /obj/item/paper/fluff/ruins/ccpost/transmission/assignment
-	name = "liaison outpost assignment"
+	name = "Central Command outpost assignment directive"
 	default_raw_text = {"<center><table border="0" cellspacing="0" cellpadding="4" bgcolor="#0a1e2b" style="border: 4px solid white; border-radius: 10px; font-family: Bahnschrift, sans-serif;"><tr><td><font color="#f0f0f0" size="6"><b>&#9701;</b></font></td><td><font color="#f0f0f0" size="7"><b>N</b></font></td><td><font color="#f0f0f0" size="6"><b>&#9699;</b></font></td></tr></table></center>
-	<br><center><small><i>This paper has been transmitted by Central Command</i></small></center><hr><hr><small>
-	<br>
-	<br>Name: Nina C. Trayson
-	<br>Rank: CentCom Official
-	<br>Position: Liaison Manager
-	<br>
+	<br><center><small><i>Official transmission from Central Command</i></small></center><hr><hr><small>
+	<br>Issued by: Nina C. Trayson
+	<br>Position: Central Command Liaison Manager
 	<br>Posting: Central Command Liaison Outpost
-	<br>Assigned Personnel: CentCom Liaisons
-	<br>Priority: High
+	<br>Recipients: All Assigned Outpost Personnel
+	<br>Classification: Internal Administrative Directive
 	<br>Status: Active
 	<br>
-	<br>Subject: OFFICIAL DUTY ASSIGNMENT
+	<br><b>SUBJECT: INSTALLATION DUTIES, AUTHORITY AND JURISDICTION</b>
 	<br>
-	<br>You have been assigned to this installation on behalf of Central Command for the purpose of monitoring nearby Nanotrasen operations and maintaining an accurate record of station activity.
+	<br>Effective immediately, all personnel assigned to this installation are reminded of their responsibilities as representatives of Central Command.
 	<br>
-	<br>Your primary responsibility is to act as Central Command's local eyes and ears within the sector.
+	<br><b>1. INSTALLATION STATUS</b>
 	<br>
-	<br>During your assignment, you are expected to:
+	<br>This outpost is operated under the direct administration of Central Command. It is a separate corporate installation and does not fall under the operational chain of command of the nearby Nanotrasen station.
 	<br>
-	<br>- Monitor station operations through available camera, telemetry, and communications systems.
-	<br>- Maintain professional contact with the station's Command staff.
-	<br>- Investigate significant irregularities, infrastructure failures, and other matters worthy of Central Command attention.
-	<br>- Request clarification or departmental reports when available information is incomplete or contradictory.
-	<br>- Record noteworthy events and preserve relevant communications for later review.
-	<br>- Review and complete assignments coming in from the Central Command Tasking Terminal within your office.
-	<br>- Maintain the outpost, its communications equipment, records, and monitoring systems in operational condition.
-	<br>- Submit accurate reports to Central Command when requested, or when circumstances warrant escalation.
+	<br>Station-issued rank does not automatically confer command authority, unrestricted access or security jurisdiction within this facility. This applies equally to visiting members of Station Command and Security.
 	<br>
-	<br>You are reminded that this posting grants you oversight authority, not operational command of the station.
+	<br><b>2. LIAISON RESPONSIBILITIES</b>
 	<br>
-	<br>The Captain remains responsible for station operations. You may provide recommendations, request information, and relay legitimate Central Command directives, but you are not authorized to assume command of station departments or interfere unnecessarily with routine operations.
+	<br>Central Command Liaisons are responsible for administrative oversight, sector communications, operational reporting, tasking assignments and management of the outpost's logistical allocation.
 	<br>
-	<br>Remain professional. Remain objective. Verify information before reporting it as fact.
+	<br>Liaisons are expected to monitor relevant station activity, maintain professional contact with station Command, review incoming sector requests, verify information and submit accurate findings.
 	<br>
-	<br>Under ordinary circumstances, personnel assigned to this outpost are expected to remain aboard the installation. Direct intervention in station affairs is outside the scope of this assignment unless specifically authorized by Central Command.
+	<br>This posting grants oversight responsibilities. It does not authorize Liaisons to assume operational command of station departments or interfere unnecessarily with station affairs.
 	<br>
-	<br>Information obtained through Central Command systems is to be treated as privileged corporate material and handled accordingly.
+	<br><b>3. SECURITY RESPONSIBILITIES</b>
 	<br>
-	<br>At the conclusion of the operational period, personnel should be prepared to provide an assessment of the station's condition, significant incidents, Command response, and any matters requiring further Central review.
+	<br>The assigned Central Command Security Officer is responsible for maintaining the security of this installation, its personnel, restricted facilities and corporate property.
 	<br>
-	<br>Failure to maintain adequate oversight may result in reassignment to a position involving substantially fewer windows.
+	<br>The officer is authorized to establish reasonable access controls, screen visitors, inspect suspicious freight, investigate incidents and respond to threats occurring aboard the outpost.
+	<br>
+	<br>These responsibilities extend to all visitors, including station personnel and members of Station Command. Visitors must comply with legitimate installation security instructions regardless of their station rank.
+	<br>
+	<br>Where necessary, the officer may deny entry, remove unauthorized visitors or temporarily restrain individuals presenting a genuine security threat. Such actions must remain proportionate, documented and consistent with applicable regulations.
+	<br>
+	<br>The officer's jurisdiction is limited to legitimate matters concerning the outpost. This assignment does not grant command authority over station Security or permission to conduct unauthorized enforcement operations aboard the station.
+	<br>
+	<br><b>4. INTERNAL COORDINATION</b>
+	<br>
+	<br>The Liaison oversees the outpost's administrative operations and coordinates its official activities. The Security Officer exercises operational responsibility for installation security.
+	<br>
+	<br>Both positions are expected to cooperate, communicate significant incidents and respect their respective responsibilities. Disagreements requiring higher authorization are to be referred to Central Command.
+	<br>
+	<br><b>5. VISITORS AND CORPORATE PROPERTY</b>
+	<br>
+	<br>Visitors are guests of Central Command and remain subject to applicable access restrictions and security procedures. No station appointment, including Captain or Head of Security, independently grants authority to override these procedures.
+	<br>
+	<br>Legitimate directives from appropriately authorized Central Command personnel remain binding. All staff must comply with applicable corporate regulations.
+	<br>
+	<br><b>6. GENERAL CONDUCT</b>
+	<br>
+	<br>Remain aboard the installation unless official duties or an emergency reasonably require otherwise. Protect confidential information, preserve relevant records and avoid unnecessary interference with station operations.
+	<br>
+	<br>Professionalism, impartiality and proper documentation are expected at all times.
+	<br>
+	<br>Central Command has invested considerable resources in this installation. Please refrain from creating additional reasons for an expenditure review.
 	<br>
 	<br></small><hr><hr><small><i>Signed, Nina C. Trayson</i></small>
 	<br>CENTRAL COMMAND
 	<br>SECTOR OVERSIGHT DEPARTMENT
 	"}
+
 
 /obj/structure/closet/secure_closet/centcom_liaison
 	name = "CentCom Liaison's locker"
@@ -68,6 +87,24 @@
 	new /obj/item/clothing/under/rank/centcom/official(src)
 	new /obj/item/clothing/under/rank/centcom/official/skirt(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/binoculars(src)
+
+/obj/structure/closet/secure_closet/centcom_security
+	name = "CentCom Security Officer's locker"
+	req_access = list(ACCESS_NT_REPRESENTATVE)
+	icon_state = "cc"
+
+/obj/structure/closet/secure_closet/centcom_security/PopulateContents()
+	..()
+	new /obj/item/storage/box/handcuffs(src)
+	new /obj/item/storage/box/flashbangs(src)
+	new /obj/item/storage/box/teargas(src)
+	new /obj/item/storage/lockbox/loyalty(src)
+	new /obj/item/implanter/mindshield(src)
+	new /obj/item/clothing/mask/gas/sechailer/swat(src)
+	new /obj/item/clothing/under/rank/centcom/official(src)
+	new /obj/item/clothing/under/rank/centcom/official/skirt(src)
+	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/binoculars(src)
 
 

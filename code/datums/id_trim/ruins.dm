@@ -396,3 +396,7 @@
 		ACCESS_ATMOSPHERICS,
 		ACCESS_ENGINE_EQUIP
 		)
+
+/// Central Command Liaison Outpost Security
+/datum/id_trim/job/centcom_liaison/security_officer
+	assignment = "CentCom Security Officer"
