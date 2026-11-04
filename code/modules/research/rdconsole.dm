@@ -124,30 +124,8 @@ Nothing else in the console has ID requirements.
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
-		if(stored_research.research_node_id(id, research_source = src))
+		if(stored_research.research_node_id(id, FALSE, TRUE, TRUE, TRUE, user, src))
 			say("Successfully researched [TN.display_name].")
-			var/logname = "Unknown"
-			if(isAI(user))
-				logname = "AI [user.name]"
-			if(iscyborg(user))
-				logname = "CYBORG [user.name]"
-			if(iscarbon(user))
-				var/obj/item/card/id/idcard = user.get_active_held_item()
-				if(istype(idcard))
-					logname = "[idcard.registered_name]"
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				var/obj/item/I = H.wear_id
-				if(istype(I))
-					var/obj/item/card/id/ID = I.GetID()
-					if(istype(ID))
-						logname = "[ID.registered_name]"
-			stored_research.research_logs += list(list(
-				"node_name" = TN.display_name,
-				"node_cost" = price["General Research"],
-				"node_researcher" = logname,
-				"node_research_location" = "[get_area(src)] ([src.x],[src.y],[src.z])",
-			))
 			return TRUE
 		else
 			say("Failed to research node: Internal database error!")
