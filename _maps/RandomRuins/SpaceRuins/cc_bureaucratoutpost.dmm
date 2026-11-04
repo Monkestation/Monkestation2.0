@@ -624,7 +624,7 @@
 	},
 /obj/item/crowbar,
 /obj/structure/closet/secure_closet/centcom_liaison{
-	anchored = TRUE
+	anchored = 1
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
@@ -1003,7 +1003,7 @@
 	name = "Central Command detainee property locker";
 	desc = "A secure locker for temporarily storing the personal belongings of individuals detained aboard the Liaison Outpost.";
 	req_access = list("nt_rep");
-	anchored = TRUE;
+	anchored = 1;
 	req_one_access = list("nt_rep")
 	},
 /obj/machinery/status_display/door_timer{
@@ -2098,7 +2098,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/secure_closet/centcom_security{
-	anchored = TRUE
+	anchored = 1
 	},
 /obj/item/crowbar,
 /turf/open/floor/wood/tile,
@@ -3529,10 +3529,10 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/closet/secure_closet/centcom_liaison{
-	anchored = TRUE
-	},
 /obj/item/crowbar,
+/obj/structure/closet/secure_closet/centcom_liaison{
+	anchored = 1
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
 "Ie" = (
