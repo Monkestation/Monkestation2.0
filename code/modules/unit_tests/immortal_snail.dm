@@ -253,7 +253,7 @@
 	TEST_ASSERT(!length(snail.route) && !snail.route_destination && !snail.chemical_target, "Cached navigation and chemical references must be cleared")
 	TEST_ASSERT(!length(snail.pending_paths), "No path searches may remain owned by the deleted body")
 	TEST_ASSERT(QDELETED(driver) && !(driver in SSfastprocess.processing), "The movement driver must stop processing")
-	TEST_ASSERT(QDELETED(npc_mind) && !(npc_mind in SSticker.minds), "The deleted NPC mind must leave the round mind list")
+	TEST_ASSERT(!QDELETED(npc_mind) && !npc_mind.current, "Deleting a snail body must preserve its mind without retaining the deleted body")
 	TEST_ASSERT(toast && !toast.target && !test_ghost.alerts[alert_key], "Ghost notifications must release deleted snail bodies immediately")
 	TEST_ASSERT(QDELETED(ledger) && !ledger.origin && !ledger.collector_ref && !length(ledger.claims) && !length(ledger.last_carriers), "The ledger must release its claims and references")
 	TEST_ASSERT(QDELETED(trace), "Cancelling the ledger must clean up its abstract currency traces")

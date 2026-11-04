@@ -125,10 +125,7 @@
 	QDEL_NULL(antag_hud)
 	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
-	// Antagonist Destroy() removes itself and may null antag_datums on the last entry.
-	var/list/owned_antagonists = antag_datums?.Copy()
-	QDEL_LIST(owned_antagonists)
-	antag_datums = null
+	QDEL_LIST(antag_datums)
 	crewfile = null
 	lockfile = null
 	set_current(null)

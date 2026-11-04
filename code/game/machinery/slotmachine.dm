@@ -71,6 +71,7 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/slot_machine/LateInitialize()
+	. = ..()
 	// All mapped machines exist by now; choose once, rather than biasing toward map order.
 	var/static/chosen = FALSE
 	if(chosen)
@@ -176,8 +177,10 @@
 
 /obj/machinery/computer/slot_machine/ui_interact(mob/living/user, datum/tgui/ui)
 	. = ..()
-	if(istype(src, /obj/machinery/computer/slot_machine/immortal_snail))
-		return
+	open_slot_ui(user, ui)
+
+/// Subtypes can replace the slot interface while retaining computer interaction setup.
+/obj/machinery/computer/slot_machine/proc/open_slot_ui(mob/living/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SlotMachine", name)

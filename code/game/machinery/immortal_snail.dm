@@ -14,8 +14,7 @@
 	. = ..()
 	icon_state = "cursed_slots"
 
-/obj/machinery/computer/slot_machine/immortal_snail/ui_interact(mob/living/user, datum/tgui/ui)
-	. = ..()
+/obj/machinery/computer/slot_machine/immortal_snail/open_slot_ui(mob/living/user, datum/tgui/ui)
 	if(claimed || !ishuman(user) || user.stat != CONSCIOUS)
 		return
 	var/answer = tgui_alert(user, "The screen flickers: [offer] cursed credits. Take them, and an immortal snail will hunt you until you die. Its touch is death. Accept the curse?", "An offer you can refuse", list("Leave", "Accept"))
@@ -165,7 +164,6 @@
 /mob/living/basic/immortal_snail/Destroy(force)
 	if(contract_value && !curse_fulfilled && !force)
 		return QDEL_HINT_LETMELIVE
-	var/datum/mind/npc_mind = mind
 	QDEL_LIST(pending_paths)
 	route.Cut()
 	route_destination = null
@@ -195,11 +193,7 @@
 	target_mind_ref = null
 	account_ref = null
 	corpse_ref = null
-	. = ..()
-	// NPC minds are not player round-history records; replacements must not accumulate them.
-	if(!QDELETED(npc_mind) && !npc_mind.key && !npc_mind.current)
-		qdel(npc_mind)
-	return .
+	return ..()
 
 /// Independent of the body and its movement driver, so deleting either cannot end the curse.
 /datum/immortal_snail_curse
