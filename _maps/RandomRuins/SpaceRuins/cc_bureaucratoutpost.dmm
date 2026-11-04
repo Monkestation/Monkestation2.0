@@ -2337,7 +2337,7 @@
 /obj/machinery/telecomms/relay/preset/ruskie{
 	name = "CentCom Liaison Relay";
 	id = "CentCom Liaison Relay";
-	toggled = TRUE
+	toggled = 1
 	},
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
