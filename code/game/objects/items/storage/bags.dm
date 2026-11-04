@@ -213,7 +213,7 @@
 	if(!listeningTo)
 		return
 	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	qdel(connector)
+	QDEL_NULL(connector)
 	listeningTo = null
 
 /// Begins listening to the user. Will stop automatically picking up ores.
