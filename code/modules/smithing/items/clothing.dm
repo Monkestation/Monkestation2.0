@@ -46,7 +46,7 @@
 			desc += " It's utterly flawless! Quality:[smithed_quality]"
 
 	if(damage_state)
-		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('code/modules/smithing/icons/forge_items.dmi', damage_state), flags = MASK_INVERSE))
+		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('icons/modules/smithing/forge_items.dmi', damage_state), flags = MASK_INVERSE))
 
 	if(material_stats.thermal <= 50)
 		resistance_flags |= FIRE_PROOF
@@ -155,8 +155,8 @@
 /obj/item/clothing/smithed_clothes/shoes
 	name = "generic smithed shoes"
 	desc = "Some smithed shoes."
-	icon = 'code/modules/smithing/icons/boots.dmi'
-	worn_icon = 'code/modules/smithing/icons/boots.dmi'
+	icon = 'icons/modules/smithing/boots.dmi'
+	worn_icon = 'icons/modules/smithing/boots.dmi'
 	icon_state = "smithed_boots_inhand"
 	worn_icon_state = "smithed_boots"
 	inhand_icon_state = "jackboots"

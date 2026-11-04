@@ -6,7 +6,7 @@
 	finished_desc = "A forged axe, weighted for chops or throwing."
 
 	weapon_inhand_icon_state = "axe"
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "axe-hilt"
 
 /obj/item/smithed_part/weapon_part/axe_blade/finish_weapon()

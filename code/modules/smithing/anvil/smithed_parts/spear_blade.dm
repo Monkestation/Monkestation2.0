@@ -6,9 +6,9 @@
 	finished_desc = "A forged spear, good reach when wielded. Likely to embed if thrown."
 
 	weapon_inhand_icon_state = "spear"
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "spear-hilt"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	worn_icon_state = "spear_back"
 
 

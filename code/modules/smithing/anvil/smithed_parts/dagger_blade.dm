@@ -6,7 +6,7 @@
 	finished_desc = "A forged dagger, made for throwing. Not great in the hand."
 
 	weapon_inhand_icon_state = "dagger"
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "dagger-hilt"
 
 /obj/item/smithed_part/weapon_part/dagger_blade/finish_weapon()

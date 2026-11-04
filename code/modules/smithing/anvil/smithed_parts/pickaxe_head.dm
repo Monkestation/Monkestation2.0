@@ -1,12 +1,12 @@
 /obj/item/smithed_part/weapon_part/pickaxe_head
 	icon_state = "pickaxehead"
 	base_name = "pickaxe head"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	weapon_name = "pickaxe"
 	weapon_inhand_icon_state = "pickaxe"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "pickaxe-hilt"
 
 	finished_desc = "A forged pickaxe. Diggin' time."

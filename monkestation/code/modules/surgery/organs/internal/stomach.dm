@@ -29,7 +29,7 @@
 ///IPCS NO LONGER ARE PURE ELECTRICAL BEINGS, any attempts to change this outside of Borbop will be denied. Thanks.
 /obj/item/organ/internal/stomach/synth
 	name = "synthetic bio-reactor"
-	icon = 'code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/modules/smithing/ipc_organ.dmi'
 	icon_state = "stomach-ipc"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = BODY_ZONE_CHEST

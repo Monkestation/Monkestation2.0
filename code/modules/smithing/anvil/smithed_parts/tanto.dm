@@ -5,9 +5,9 @@
 
 	finished_desc = "A forged tanto, similar to a katana, but shorter for one-handed use."
 
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "katana-hilt"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	worn_icon_state = "katana_back"
 
 /obj/item/smithed_part/weapon_part/tanto/finish_weapon()

@@ -5,7 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 
-	icon = 'code/modules/smithing/icons/forge_structures.dmi'
+	icon = 'icons/modules/smithing/forge_structures.dmi'
 	icon_state = "anvil_empty"
 
 	var/datum/anvil_recipe/chosen_recipe

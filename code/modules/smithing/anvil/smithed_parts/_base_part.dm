@@ -4,7 +4,7 @@
 	name = "generic smithed item"
 	desc = "A forged item."
 
-	icon = 'code/modules/smithing/icons/forge_items.dmi'
+	icon = 'icons/modules/smithing/forge_items.dmi'
 	base_icon_state = "chain"
 	icon_state = "chain"
 
@@ -75,7 +75,7 @@
 		resistance_flags |= LAVA_PROOF
 
 	if(damage_state)
-		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('code/modules/smithing/icons/forge_items.dmi', damage_state), flags = MASK_INVERSE))
+		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('icons/modules/smithing/forge_items.dmi', damage_state), flags = MASK_INVERSE))
 
 
 /obj/item/smithed_part/update_name(updates)
@@ -88,8 +88,8 @@
 /obj/item/smithed_part/weapon_part
 	var/complete = FALSE
 	var/hilt_icon_state
-	var/left_weapon_inhand = 'code/modules/smithing/icons/forge_weapon_l.dmi'
-	var/right_weapon_inhand = 'code/modules/smithing/icons/forge_weapon_r.dmi'
+	var/left_weapon_inhand = 'icons/modules/smithing/forge_weapon_l.dmi'
+	var/right_weapon_inhand = 'icons/modules/smithing/forge_weapon_r.dmi'
 	var/weapon_inhand_icon_state
 	var/hilt_icon
 	var/weapon_name

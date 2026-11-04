@@ -5,7 +5,7 @@
 
 	finished_desc = "A forged rapier, great at piercing armor, but poor damage."
 
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "rapier-hilt"
 
 /obj/item/smithed_part/weapon_part/rapier_blade/finish_weapon()

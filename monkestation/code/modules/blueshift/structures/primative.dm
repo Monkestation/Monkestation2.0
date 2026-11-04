@@ -2579,8 +2579,8 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	name = "legendary smith's cloak"
 	desc = "Those who wear this cloak have the knowledge and understanding to create weapons and tools rivaling that of a god. \
 	Often heros' songs are sung about their deeds, but only the wise know the heros' deeds were only possible thanks to a blacksmith."
-	icon = 'code/modules/smithing/icons/cloaks.dmi'
-	worn_icon = 'code/modules/smithing/icons/neck.dmi'
+	icon = 'icons/modules/smithing/cloaks.dmi'
+	worn_icon = 'icons/modules/smithing/neck.dmi'
 	icon_state = "smithingcloak"
 	associated_skill_path = /datum/skill/smithing
 

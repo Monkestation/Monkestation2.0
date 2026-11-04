@@ -1,7 +1,7 @@
 /obj/machinery/arc_forge
 	name = "arc forge"
 	desc = "A bulky machine that can smelt practically any material in existence."
-	icon = 'code/modules/smithing/icons/3x3.dmi'
+	icon = 'icons/modules/smithing/3x3.dmi'
 	icon_state = "arc_forge"
 	bound_width = 96
 	bound_height = 96

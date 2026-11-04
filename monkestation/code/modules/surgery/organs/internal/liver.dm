@@ -64,7 +64,7 @@
 /obj/item/organ/internal/liver/synth
 	name = "reagent processing unit"
 	desc = "An electronic device that processes the beneficial chemicals for the synthetic user."
-	icon = 'code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/modules/smithing/ipc_organ.dmi'
 	icon_state = "liver-ipc"
 	filterToxins = FALSE //We dont filter them, we're immune to them
 	zone = BODY_ZONE_CHEST

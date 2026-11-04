@@ -6,9 +6,9 @@
 	finished_desc = "A forged two handed hammer. Bulky, but hits very hard."
 
 	weapon_inhand_icon_state = "crush_hammer"
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "hammer-hilt"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	worn_icon_state = "hammer_back"
 
 /obj/item/smithed_part/weapon_part/crush_hammer/finish_weapon()

@@ -6,9 +6,9 @@
 	desc = "A simple round shield."
 
 	weapon_inhand_icon_state = "buckler"
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "buckler"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	worn_icon_state = "buckler_back"
 
 /obj/item/smithed_part/weapon_part/shield/buckler/finish_weapon()
@@ -45,9 +45,9 @@
 	desc = "A tall, robust shield."
 
 	weapon_inhand_icon_state = "pavise"
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "pavise"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	worn_icon_state = "pavise_back"
 
 /obj/item/smithed_part/weapon_part/shield/pavise/finish_weapon()

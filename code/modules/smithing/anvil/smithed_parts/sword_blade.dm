@@ -6,9 +6,9 @@
 	finished_desc = "A forged two handed sword. Bulky, but hits hard."
 
 	weapon_inhand_icon_state = "sword"
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "blade-hilt"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	worn_icon_state = "sword_back"
 
 /obj/item/smithed_part/weapon_part/sword_blade/finish_weapon()

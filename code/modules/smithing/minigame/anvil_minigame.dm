@@ -169,15 +169,15 @@
 				generate_anvil_beats()
 
 /datum/anvil_challenge/proc/end_minigame()
-	//Success == quality, takes highest of Smithing level * 5 || 100 minus a number based on how 'accurate' you were plus (smithlevel *7.5)-30.
-	//So missing nothing, a level 3 smith will make a qual 100 item.
+	//Success == quality, takes highest of Smithing level * 5 || 100 minus a number based on how 'accurate' you were plus (smithlevel *10)-35.
+	//So missing nothing, a level 3 smith will make a qual 95 item.
 	var/smithlevel = user.mind.get_skill_level(/datum/skill/smithing)
 	if(host_anvil.always_perfect)
 		failed_notes = 0
 		off_time = 0
 		success = 100
 	else
-		success = max(smithlevel * 5, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2)) +((smithlevel * 7.5) - 30)))
+		success = max(smithlevel * 5, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2)) +((smithlevel * 10) - 35)))
 	UnregisterSignal(user.client, COMSIG_CLIENT_CLICK_DIRTY)
 	STOP_PROCESSING(SSfishing, src)
 	anvil_presses = null
@@ -197,7 +197,7 @@
 
 ///The screen object which bait, fish, and completion bar are visually attached to.
 /atom/movable/screen/anvil_hud
-	icon = 'code/modules/smithing/icons/anvil_hud.dmi'
+	icon = 'icons/modules/smithing/anvil_hud.dmi'
 	screen_loc = "CENTER:8,CENTER+2:2"
 	name = "anvil minigame"
 	appearance_flags = APPEARANCE_UI|KEEP_TOGETHER
@@ -232,7 +232,7 @@
 	qdel(note)
 
 /atom/movable/screen/hud_note
-	icon = 'code/modules/smithing/icons/anvil_hud.dmi'
+	icon = 'icons/modules/smithing/anvil_hud.dmi'
 	icon_state = "note"
 	vis_flags = VIS_INHERIT_ID
 	var/list/click_requirements = list()

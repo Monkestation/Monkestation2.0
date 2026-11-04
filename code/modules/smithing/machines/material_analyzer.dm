@@ -1,7 +1,7 @@
 /atom/proc/scan_animation(passed_color, time = 2 SECONDS, alpha = "96") // alpha needs to be in hex formant and color in non hex format
 	var/fading_time = time * 0.5 /// we spend half the time fading
 
-	add_filter("scanning", 1, layering_filter(blend_mode = BLEND_INSET_OVERLAY, icon = icon('code/modules/smithing/icons/effects.dmi', "scanline"), color = "[passed_color]00")) // we add 00 to turn it into a alpha hex color
+	add_filter("scanning", 1, layering_filter(blend_mode = BLEND_INSET_OVERLAY, icon = icon('icons/modules/smithing/effects.dmi', "scanline"), color = "[passed_color]00")) // we add 00 to turn it into a alpha hex color
 	if(!get_filter("scanning")) // filter check for things that don't support filters or have them cleared quickly
 		return
 	var/filter = get_filter("scanning")

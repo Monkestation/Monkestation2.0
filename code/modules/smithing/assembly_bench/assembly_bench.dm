@@ -5,7 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 
-	icon = 'code/modules/smithing/icons/forge_structures.dmi'
+	icon = 'icons/modules/smithing/forge_structures.dmi'
 	icon_state = "crafting_bench_empty"
 
 	var/list/recipes = list()

@@ -49,7 +49,7 @@
 /obj/item/organ/internal/tongue/synth
 	name = "synthetic voicebox"
 	desc = "A fully-functional synthetic tongue, encased in soft silicone. Features include high-resolution vocals and taste receptors."
-	icon = 'code/modules/smithing/icons/ipc_organ.dmi'
+	icon = 'icons/modules/smithing/ipc_organ.dmi'
 	icon_state = "cybertongue"
 	say_mod = "beeps"
 	attack_verb_continuous = list("beeps", "boops")
@@ -266,7 +266,7 @@
 /datum/action/innate/select_tongue/Activate()
 	//All possible tongues that can be emulated.
 	var/static/list/possible_tongues = list(
-		"Synth" = image(icon = 'code/modules/smithing/icons/ipc_organ.dmi', icon_state = "cybertongue"),
+		"Synth" = image(icon = 'icons/modules/smithing/ipc_organ.dmi', icon_state = "cybertongue"),
 		"Arachnid" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "tongue"),
 		"Jelly" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "tongue"),
 		"Ethereal" = image(icon = 'icons/obj/medical/organs/organs.dmi', icon_state = "electrotongue"),

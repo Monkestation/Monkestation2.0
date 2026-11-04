@@ -1,7 +1,7 @@
 /obj/machinery/material_alloyer
 	name = "metal alloyer"
 	desc = "A small machine that can create an alloy of basically any two materials;blending their stats."
-	icon = 'code/modules/smithing/icons/forge_structures.dmi'
+	icon = 'icons/modules/smithing/forge_structures.dmi'
 	icon_state = "material_alloyer"
 	bound_width = 32
 	bound_height = 32

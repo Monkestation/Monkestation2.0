@@ -5,9 +5,9 @@
 
 	finished_desc = "A smithed staff. Only deals stamina damage, but capable of blocking hits."
 
-	hilt_icon = 'code/modules/smithing/icons/forge_items.dmi'
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "staff-hilt"
-	worn_icon = 'code/modules/smithing/icons/forge_weapon_worn.dmi'
+	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
 	worn_icon_state = "staff_back"
 
 /obj/item/smithed_part/weapon_part/staff_head/finish_weapon()
