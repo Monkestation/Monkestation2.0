@@ -1,0 +1,15 @@
+author: "tontyGH, vinylspiders"
+delete-after: True
+changes:
+  - rscadd: "Mothpeople now have 2 extra arms in their chest, giving them 4 total arms"
+  - balance: "Mothpeople are now generally a bit more fragile"
+  - bugfix: "Akimbo used the wrong gun when determining spread penalty"
+  - bugfix: "Akimbo penalty did not include the gun that was firing"
+  - balance: "Akimbo penalty now has multiplicative scaling (double PKA was adjusted to consider this)"
+  - balance: "Akimbo spread can't go past what two guns give, so 3 or 4 guns don't shoot all around you"
+  - balance: "Blocking now only works if the blocking item is in your active set of hands"
+  - rscdel: "The deathmatch 4 hands modifier had to be removed for technical reasons. Sorry."
+  - qol: "Wield is unbound by default now, Shift+X swaps between your pairs of hands instead"
+  - bugfix: "losing a moth's chest arms no longer drops what's in your right hand, and your active hand moves to a hand you still have"
+  - bugfix: "moth chest-arms are named what you'd expect now instead of just \"moth\""
+  - bugfix: "arm implants always come out of the arm they're in, instead of any free hand on that side"
