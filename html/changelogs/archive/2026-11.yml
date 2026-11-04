@@ -160,3 +160,39 @@
   - map: Slightly nudges down asteroid magnet on Helio to avoid killing shuttles [Hopefully]
   - map: Add tiny fans to all [or at least most] of Helio airlocks
   - map: Slightly nudges ordinance launcher to accomidate asteroid magnet
+2026-11-04:
+  Absolucy:
+  - bugfix: Trying to fix more goddamn laggy bullshit.
+  JohnFulpWillard, 00-Steven, timothymtorres, vinylspiders, PapaMichae1, TealSeer, LemonInTheDark, MrMelbert, Ghommie:
+  - bugfix: Advanced cameras show static right away.
+  - bugfix: Holding a PDA note up to a camera gives the AI a working link.
+  - balance: Camera upgrades use power, disabled cameras don't use any.
+  - bugfix: Camera tracking checks the person tracking instead of the program.
+  - qol: The AI's last camera hotkey takes you back to where you were before tracking
+      someone.
+  - qol: You can examine things through advanced camera consoles and holocalls.
+  - bugfix: Cameras looking through glass on the bottom z level don't break.
+  - image: Camera lights glow in the dark.
+  - bugfix: Body cameras and broadcast cameras update the AI's view when they move.
+  - admin: Toggling camera updates is logged.
+  - balance: Cyborgs and drones get a notification when someone is watching them through
+      a camera console.
+  - rscadd: Station drones have an internal camera that shows up on camera consoles.
+  - bugfix: Cutting a cyborg's camera wire disables it, and mending it enables it
+      again.
+  - refactor: Camera construction uses item interaction now.
+  Melbert:
+  - rscdel: Spacesuits no longer fully conceal lizard tails
+  - rscadd: Species features like wings and tails will appear "meshed over" when wearing
+      certain equipment like spacesuits or biosuits.
+  - rscadd: Biosuit and beekeeper suit sprites now alter when worn by digitigrade
+      mobs.
+  - rscadd: Apron sprites now alter when worn by digitigrade mobs.
+  - spellcheck: All heretic armor hoods are consistently known by their name, rather
+      than "ominous hood"
+  - refactor: Bodypart textures were refactored a tiny bit, report any oddities.
+  - bugfix: Fix riot armor using brown mesh (now black, matching the armor)
+  V2LenKagamine:
+  - bugfix: Deconstructing a slot machine doubles what you put in
+  notghosti:
+  - bugfix: Queueing research now creates a research history entry.
