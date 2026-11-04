@@ -29,7 +29,7 @@
 		return
 	style.teach(new_arm_owner, TRUE, arm_index = 1)
 
-/obj/item/bodypart/arm/left/robot/buster/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/arm/left/robot/buster/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	style.remove(owner)
 	return ..()
 
@@ -90,7 +90,7 @@
 		return
 	style.teach(new_arm_owner, TRUE, arm_index = 2)
 
-/obj/item/bodypart/arm/right/robot/buster/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/arm/right/robot/buster/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	style.remove(owner)
 	return ..()
 

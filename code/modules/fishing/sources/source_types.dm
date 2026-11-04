@@ -7,6 +7,7 @@
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
 		/obj/item/fish/lanternfish = 5,
+		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/clownfish/lube = 3,
 		/obj/item/fish/squid = 8,
 	)
@@ -14,6 +15,7 @@
 		/obj/item/fish/clownfish/lube = 2,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	explosive_malus = TRUE
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
@@ -44,6 +46,7 @@
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
 	radial_state = "palm_beach"
+	overlay_state = "portal_beach"
 
 /datum/fish_source/portal/chasm
 	background = "background_lavaland"
@@ -68,6 +71,7 @@
 		/obj/item/fish/gunner_jellyfish = 5,
 		/obj/item/fish/needlefish = 5,
 		/obj/item/fish/armorfish = 5,
+		/obj/item/fish/zipzap = 5,
 	)
 	catalog_description = "Ocean dimension (Fishing portal generator)"
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
@@ -98,6 +102,7 @@
 		FISHING_DUD = 5,
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
+		/obj/item/fish/jumpercable = 5,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
@@ -157,7 +162,7 @@
 			challenge.special_effects |= effect
 
 ///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
-/datum/fish_source/portal/random/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
+/datum/fish_source/portal/random/spawn_reward(reward_path, atom/movable/spawn_location, turf/fishing_spot)
 	if(!ispath(reward_path, /obj/item/fish))
 		return ..()
 
@@ -168,7 +173,7 @@
 			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
-	var/obj/item/fish/caught_fish = new reward_path(get_turf(fisherman), FALSE)
+	var/obj/item/fish/caught_fish = new reward_path(spawn_location, FALSE)
 	var/list/fixed_traits = list()
 	for(var/trait_type in caught_fish.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
@@ -209,7 +214,8 @@
 
 	return rod.hook.chasm_detritus_type
 
-/datum/fish_source/chasm
+/datum/fish_source/chasm/spawn_reward_from_explosion(atom/location, severity)
+	return //Spawned content would immediately fall back into the chasm, so it wouldn't matter.
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
@@ -217,6 +223,7 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,
+		/obj/item/fish/lavaloop = 15,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
 		/obj/effect/mob_spawn/corpse/human/charredskeleton = 1
 	)
@@ -225,8 +232,9 @@
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	explosive_malus = TRUE
 
-/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	var/turf/approx = get_turf(fisherman) //todo pass the parent
 	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))
@@ -239,6 +247,7 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab/ice = 120,
+		/obj/item/fish/lavaloop/plasma_river = 120,
 		/obj/item/coin/plasma = 24,
 		/obj/item/stack/ore/plasma = 24,
 		/mob/living/basic/mining/lobstrosity = 8,
@@ -272,7 +281,7 @@
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5 //For beginners
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
@@ -285,9 +294,9 @@
 		/obj/item/fish/holo/checkered = 5,
 		/obj/item/fish/holo/halffish = 5,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY
 
-/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	if(!istype(get_area(fisherman), /area/station/holodeck))
 		return "You need to be inside the Holodeck to catch holographic fish."
@@ -320,3 +329,76 @@
 		/obj/item/fish/mastodon = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+
+#define RANDOM_SEED "Random seed"
+
+/datum/fish_source/hydro_tray
+	catalog_description = "Hydroponics trays"
+	fish_table = list(
+		FISHING_DUD = 25,
+		/obj/item/food/grown/grass = 25,
+		RANDOM_SEED = 16,
+		/obj/item/seeds/grass = 6,
+		/obj/item/seeds/random = 1,
+		/mob/living/basic/frog = 1,
+		/mob/living/basic/axolotl = 1,
+	)
+	fish_counts = list(
+		/obj/item/food/grown/grass = 10,
+		/obj/item/seeds/grass = 4,
+		RANDOM_SEED = 4,
+		/obj/item/seeds/random = 1,
+		/mob/living/basic/frog = 1,
+		/mob/living/basic/axolotl = 1,
+	)
+	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+
+/datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	var/datum/component/plant_growing/growing = parent?.GetComponent(/datum/component/plant_growing)
+	if(!growing)
+		return ..()
+	if(growing.water_precent <= 0)
+		return "There's no water in [parent] to fish in."
+	if(tray_has_plants(growing))
+		return "There's a plant growing in [parent]."
+	return ..()
+
+/datum/fish_source/hydro_tray/spawn_reward_from_explosion(atom/location, severity)
+	var/datum/component/plant_growing/growing = location.GetComponent(/datum/component/plant_growing)
+	if(!growing)
+		return ..()
+	if(growing.water_precent <= 0 || tray_has_plants(growing))
+		return
+	return ..()
+
+/// Whether any seed is planted in the tray
+/datum/fish_source/hydro_tray/proc/tray_has_plants(datum/component/plant_growing/growing)
+	for(var/slot in growing.managed_seeds)
+		if(growing.managed_seeds[slot])
+			return TRUE
+	return FALSE
+
+/datum/fish_source/hydro_tray/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
+	if(reward_path != RANDOM_SEED)
+		var/mob/living/created_reward = ..()
+		if(istype(created_reward))
+			created_reward.name = "small [created_reward.name]"
+			created_reward.update_transform(0.75)
+		return created_reward
+
+	var/static/list/seeds_to_draw_from
+	if(isnull(seeds_to_draw_from))
+		seeds_to_draw_from = subtypesof(/obj/item/seeds)
+		// These two are already covered innately
+		seeds_to_draw_from -= /obj/item/seeds/random
+		seeds_to_draw_from -= /obj/item/seeds/grass
+		// -1 yield are unharvestable plants so we don't care
+		// 20 rarity is where most of the wacky plants are so let's ignore them
+		for(var/obj/item/seeds/seed_path as anything in seeds_to_draw_from)
+			if(initial(seed_path.yield) == -1 || initial(seed_path.rarity) >= 20)
+				seeds_to_draw_from -= seed_path
+
+	var/picked_path = pick(seeds_to_draw_from)
+	return new picked_path(spawn_location)
+
+#undef RANDOM_SEED

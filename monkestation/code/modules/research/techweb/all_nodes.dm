@@ -166,7 +166,6 @@
 	design_ids = list(
 		"mindcontrol_nanites",
 		"mitosis_nanites",
-		"spreading_nanites",
 		"sleep_nanites",
 		"fakedeath_nanites",
 		"shock_nanites",

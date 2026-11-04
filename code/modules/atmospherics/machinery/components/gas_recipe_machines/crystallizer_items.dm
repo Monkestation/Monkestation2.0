@@ -31,8 +31,8 @@
 		worn_item.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		worn_item.add_atom_colour(color_transition_filter("#00fff7", SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 		worn_item.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+		worn_item.cold_protection = worn_item.body_parts_covered
 		worn_item.clothing_flags |= STOPSPRESSUREDAMAGE
-		user.update_cached_insulation()
 
 	uses--
 	if(uses <= 0)

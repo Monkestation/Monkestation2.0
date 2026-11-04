@@ -72,6 +72,8 @@
 	var/obj/item/default_storage = /obj/item/storage/drone_tools
 	/// Default [/mob/living/basic/drone/var/head] item
 	var/obj/item/default_headwear
+	///The camera built into the drone which allows it to be seen through cameras.
+	var/obj/machinery/camera/silicon/built_in_camera
 	/**
 	  * icon_state of drone from icons/mobs/drone.dmi
 	  *
@@ -183,6 +185,13 @@
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
 	AddComponent(/datum/component/personal_crafting) //MONKESTATION ADDITION
 
+	//only shy drones (so all the station ones) gets a camera.
+	if(shy)
+		built_in_camera = new(src)
+		built_in_camera.c_tag = real_name
+		built_in_camera.network = list(CAMERANET_NETWORK_SS13)
+		built_in_camera.follow_holder()
+
 	if(default_storage)
 		var/obj/item/storage = new default_storage(src)
 		equip_to_slot_or_del(storage, ITEM_SLOT_DEX_STORAGE)
@@ -204,7 +213,7 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
 	diag_hud.add_atom_to_hud(src)
 
-	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES, TRAIT_ADVANCEDTOOLUSER, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES, TRAIT_ADVANCEDTOOLUSER, TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 
 	check_yellow_alert()
 
@@ -234,6 +243,7 @@
 /mob/living/basic/drone/Destroy()
 	GLOB.drones_list -= src
 	QDEL_NULL(listener)
+	QDEL_NULL(built_in_camera)
 	return ..()
 
 /mob/living/basic/drone/Login()
@@ -387,3 +397,8 @@
 
 /mob/living/basic/drone/electrocute_act(shock_damage, source, siemens_coeff, flags = NONE)
 	return FALSE //So they don't die trying to fix wiring
+
+/mob/living/basic/drone/can_track(mob/living/user)
+	if(built_in_camera?.can_use())
+		return TRUE
+	return ..()
