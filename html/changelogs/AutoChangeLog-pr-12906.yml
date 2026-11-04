@@ -1,4 +1,0 @@
-author: "big-boss-crate"
-delete-after: True
-changes:
-  - bugfix: "borg limbs now show up on the correct side of endoskeletons when attached"

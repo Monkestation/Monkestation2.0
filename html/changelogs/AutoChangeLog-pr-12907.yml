@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "Taking stuff out of machines with your active hand full now puts it in the other hand of the same pair instead of your first left hand (moths with 4 arms)"
