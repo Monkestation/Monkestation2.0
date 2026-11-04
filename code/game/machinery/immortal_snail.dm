@@ -121,6 +121,8 @@
 	var/route_pending = FALSE
 	var/next_route_refresh = 0
 	var/list/route = list()
+	/// Owned searches are cancelled on deletion, waking any waiting pursuit procs.
+	var/list/pending_paths = list()
 	var/turf/route_destination
 	var/original_dead = FALSE
 	var/curse_fulfilled = FALSE
@@ -159,6 +161,18 @@
 /mob/living/basic/immortal_snail/Destroy(force)
 	if(contract_value && !curse_fulfilled && !force)
 		return QDEL_HINT_LETMELIVE
+	var/datum/mind/npc_mind = mind
+	QDEL_LIST(pending_paths)
+	route.Cut()
+	route_destination = null
+	chemical_target = null
+	route_pending = FALSE
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list)
+		var/alert_key = "[REF(src)]_notify_action"
+		var/atom/movable/screen/alert/notify_action/toast = ghost.alerts[alert_key]
+		if(istype(toast))
+			toast.target = null
+		ghost.clear_alert(alert_key)
 	if(curse_fulfilled)
 		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 	if(curse)
@@ -176,7 +190,11 @@
 	target_ref = null
 	target_mind_ref = null
 	account_ref = null
-	return ..()
+	. = ..()
+	// NPC minds are not player round-history records; replacements must not accumulate them.
+	if(!QDELETED(npc_mind) && !npc_mind.key && !npc_mind.current)
+		qdel(npc_mind)
+	return .
 
 /// Independent of the body and its movement driver, so deleting either cannot end the curse.
 /datum/immortal_snail_curse
@@ -362,16 +380,17 @@
 		return
 	route_pending = TRUE
 	next_route_refresh = world.time + 1 SECONDS
-	INVOKE_ASYNC(src, PROC_REF(refresh_route), target, destination)
+	INVOKE_ASYNC(src, PROC_REF(refresh_route), WEAKREF(target), destination)
 
-/mob/living/basic/immortal_snail/proc/refresh_route(atom/target, turf/destination)
+/mob/living/basic/immortal_snail/proc/refresh_route(datum/weakref/navigation_ref, turf/destination)
 	var/turf/start = get_turf(src)
-	var/list/new_route = get_path_to(src, destination, max_distance = world.maxx * world.maxy, access = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), simulated_only = FALSE)
+	var/list/new_route = find_route(destination)
 	if(QDELETED(src))
 		return
 	route_pending = FALSE
 	// A moving target does not invalidate the route to its last known position.
 	// Keep advancing while the next refresh catches up instead of stopping.
+	var/atom/target = navigation_ref.resolve()
 	var/turf/current_target_turf = get_turf(target)
 	if(QDELETED(target) || !current_target_turf || current_target_turf.z != destination.z || z != destination.z)
 		return
@@ -382,6 +401,22 @@
 		new_route.Cut(1, current_index + 1)
 	route = new_route
 	route_destination = destination
+
+/// The usual JPS search, owned by this mob so Destroy can cancel it immediately.
+/mob/living/basic/immortal_snail/proc/find_route(turf/destination)
+	var/list/result = list()
+	var/datum/pathfind/jps/search = new
+	search.setup(src, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), world.maxx * world.maxy, FALSE, null, list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), result)), destination, null, TRUE, DIAGONAL_REMOVE_CLUNKY)
+	if(!search.start())
+		qdel(search)
+		return list()
+	pending_paths += search
+	SSpathfinder.run_pathfind(search)
+	UNTIL(length(result) || QDELETED(src))
+	pending_paths -= search
+	if(QDELETED(src) || !length(result) || !islist(result[1]))
+		return list()
+	return result[1]
 
 /mob/living/basic/immortal_snail/proc/pursue(atom/target)
 	var/turf/destination = get_turf(target)
@@ -414,7 +449,13 @@
 	// another corridor/door before treating that obstacle as a chemical target.
 	if(!cached_next || !CAN_STEP(current_turf, cached_next, FALSE, pass_info, null))
 		// JPS's scan loops still compare against the limit when zero is supplied.
-		route = get_path_to(src, destination, max_distance = world.maxx * world.maxy, access = path_access, simulated_only = FALSE)
+		var/datum/weakref/navigation_ref = WEAKREF(target)
+		target = null // Do not keep the victim alive while the search yields.
+		var/list/new_route = find_route(destination)
+		if(QDELETED(src))
+			return
+		target = navigation_ref.resolve()
+		route = new_route
 		route_destination = destination
 	if(QDELETED(src))
 		return

@@ -16,8 +16,12 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 /datum/snail_debt/Destroy()
 	for(var/datum/holder as anything in claims)
 		UnregisterSignal(holder, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_CREDITS_TRANSFERRED))
+		if(istype(holder, /obj/effect/snail_credit_trace))
+			qdel(holder)
 	claims.Cut()
 	last_carriers.Cut()
+	origin = null
+	collector_ref = null
 	if(GLOB.snail_debt == src)
 		GLOB.snail_debt = null
 	return ..()

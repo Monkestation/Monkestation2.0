@@ -169,6 +169,55 @@
 	QDEL_NULL(test_curse)
 	return ..()
 
+/datum/unit_test/immortal_snail_cleanup
+	parent_type = /datum/unit_test/immortal_snail_money
+	var/pathfinder_was_enabled
+	var/mob/dead/observer/test_ghost
+
+/datum/unit_test/immortal_snail_cleanup/Run()
+	previous_ledger = GLOB.snail_debt
+	pathfinder_was_enabled = SSpathfinder.can_fire
+	SSpathfinder.can_fire = FALSE
+	test_ghost = allocate(/mob/dead/observer)
+	GLOB.player_list |= test_ghost
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	var/datum/mind/npc_mind = snail.mind
+	var/datum/immortal_snail_pursuit/driver = snail.pursuit_driver
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, person, 100)
+	ledger.mark(chip, 100)
+	var/obj/effect/snail_credit_trace/trace = allocate(/obj/effect/snail_credit_trace, run_loc_floor_bottom_left)
+	ledger.mark(trace, 1)
+	snail.bind_target(person, 100)
+	var/alert_key = "[REF(snail)]_notify_action"
+	var/atom/movable/screen/alert/notify_action/toast = test_ghost.alerts[alert_key]
+	snail.prefetch_route(person)
+	TEST_ASSERT(length(snail.pending_paths), "The test must delete the snail with a suspended path search")
+	var/datum/pathfind/jps/search = snail.pending_paths[1]
+	snail.route_destination = get_turf(person)
+	snail.route += get_turf(person)
+	snail.chemical_target = WEAKREF(chip)
+	qdel(snail, TRUE)
+	TEST_ASSERT(QDELETED(search) && !search.requester && !search.on_finish, "Deleting the body must cancel its search and clear callbacks")
+	TEST_ASSERT(!(search in SSpathfinder.active_pathing) && !(search in SSpathfinder.currentrun), "Cancelled searches must leave both pathfinder queues")
+	TEST_ASSERT(!length(snail.route) && !snail.route_destination && !snail.chemical_target, "Cached navigation and chemical references must be cleared")
+	TEST_ASSERT(!length(snail.pending_paths), "No path searches may remain owned by the deleted body")
+	TEST_ASSERT(QDELETED(driver) && !(driver in SSfastprocess.processing), "The movement driver must stop processing")
+	TEST_ASSERT(QDELETED(npc_mind) && !(npc_mind in SSticker.minds), "The deleted NPC mind must leave the round mind list")
+	TEST_ASSERT(toast && !toast.target && !test_ghost.alerts[alert_key], "Ghost notifications must release deleted snail bodies immediately")
+	TEST_ASSERT(QDELETED(ledger) && !ledger.origin && !ledger.collector_ref && !length(ledger.claims) && !length(ledger.last_carriers), "The ledger must release its claims and references")
+	TEST_ASSERT(QDELETED(trace), "Cancelling the ledger must clean up its abstract currency traces")
+	// A cancelled search must also let the waiting proc return without restoring cached refs.
+	sleep(1 SECONDS)
+	TEST_ASSERT(!length(snail.route) && !snail.route_destination, "An awakened path callback must not write into a deleted body")
+
+/datum/unit_test/immortal_snail_cleanup/Destroy()
+	SSpathfinder.can_fire = pathfinder_was_enabled
+	GLOB.player_list -= test_ghost
+	return ..()
+
 /datum/unit_test/immortal_snail_contact/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_top_right)
 	QDEL_NULL(snail.pursuit_driver)
