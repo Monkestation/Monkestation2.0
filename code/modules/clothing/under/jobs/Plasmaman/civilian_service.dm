@@ -1,4 +1,5 @@
 #define STYLE_BULKY "Jumpsuit"
+#define STYLE_NEITHER "Neither"
 #define STYLE_SLEEK "Jumpskirt"
 
 //Basically the assistant suit
@@ -40,10 +41,11 @@
 
 /obj/item/clothing/under/plasmaman/examine_more(mob/user)
 	. = ..()
-	if(style == STYLE_BULKY)
-		. += span_notice(span_italics("You notice the suit can be pried loose of some pieces without any function loss."))
-	else
-		. += span_notice(span_italics("You notice the suit has some open slots for some metal that can be filled in."))
+	if(style != STYLE_NEITHER)
+		if(style == STYLE_BULKY)
+			. += span_notice(span_italics("You notice the suit can be pried loose of some pieces without any function loss."))
+		else
+			. += span_notice(span_italics("You notice the suit has some open slots for some metal that can be filled in."))
 
 /*
  * Proc that actually handles which sprite to use. -> PREF_JUMPSUIT ("Jumpsuit") for Bulky (old) | PREF_JUMPSKIRT ("Jumpskirt") for Sleek (new)
@@ -51,16 +53,7 @@
  * for consistency's sake we keep bulky vars as the default ones to fall back on using initial().
  */
 /obj/item/clothing/under/plasmaman/proc/handle_style_change(new_style)
-	if(new_style == STYLE_BULKY)
-		icon_state = initial(icon_state)
-		worn_icon_state = initial(worn_icon_state)
-		inhand_icon_state = initial(inhand_icon_state)
-		greyscale_config = initial(greyscale_config)
-		greyscale_config_worn = initial(greyscale_config_worn)
-		greyscale_config_inhand_left = initial(greyscale_config_inhand_left)
-		greyscale_config_inhand_right = initial(greyscale_config_inhand_right)
-		greyscale_colors = initial(greyscale_colors)
-	else
+	if(new_style == STYLE_SLEEK)
 		icon_state = "plasmaman_suit_s"
 		worn_icon_state = "plasmaman_suit_s_w"
 		inhand_icon_state = "plasmaman_suit_s"
@@ -69,6 +62,15 @@
 		greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/sleek
 		greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/sleek
 		greyscale_colors = sleek_greyscale_colors
+	else
+		icon_state = initial(icon_state)
+		worn_icon_state = initial(worn_icon_state)
+		inhand_icon_state = initial(inhand_icon_state)
+		greyscale_config = initial(greyscale_config)
+		greyscale_config_worn = initial(greyscale_config_worn)
+		greyscale_config_inhand_left = initial(greyscale_config_inhand_left)
+		greyscale_config_inhand_right = initial(greyscale_config_inhand_right)
+		greyscale_colors = initial(greyscale_colors)
 	style = new_style
 	update_greyscale()
 	update_appearance(UPDATE_ICON)
@@ -202,6 +204,7 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
+	style = STYLE_NEITHER
 
 /obj/item/clothing/under/plasmaman/curator/handle_style_change(new_style)
 	return FALSE
@@ -233,6 +236,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/mime
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/mime
 	greyscale_colors = "#eeeeee#39393f#eeeeee#eeeeee#eeeeee#747182"
+	style = STYLE_NEITHER
 
 /obj/item/clothing/under/plasmaman/mime/handle_style_change(new_style)
 	return FALSE
@@ -246,6 +250,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/clown
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/clown
 	greyscale_colors = "#ffc0ff#ffc0ff"
+	style = STYLE_NEITHER
 
 /obj/item/clothing/under/plasmaman/clown/handle_style_change(new_style)
 	return FALSE
@@ -318,9 +323,11 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
+	style = STYLE_NEITHER
 
 /obj/item/clothing/under/plasmaman/plasma_bun/handle_style_change(new_style)
 	return FALSE
 
 #undef STYLE_SLEEK
+#undef STYLE_NEITHER
 #undef STYLE_BULKY

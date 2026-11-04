@@ -1,4 +1,5 @@
 #define STYLE_BULKY "Jumpsuit"
+#define STYLE_NEITHER "Neither"
 #define STYLE_SLEEK "Jumpskirt"
 
 //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
@@ -117,10 +118,11 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine_more(mob/user)
 	. = ..()
-	if(style == STYLE_BULKY)
-		. += span_notice(span_italics("You notice the helmet can be pried loose of some pieces without any function loss."))
-	else
-		. += span_notice(span_italics("You notice the helmet has some open slots for some metal that can be filled in."))
+	if(style != STYLE_NEITHER)
+		if(style == STYLE_BULKY)
+			. += span_notice(span_italics("You notice the helmet can be pried loose of some pieces without any function loss."))
+		else
+			. += span_notice(span_italics("You notice the helmet has some open slots for some metal that can be filled in."))
 
 /*
  * Proc that actually handles which sprite to use. -> suit for bulky (old) | skirt for sleek (new)
@@ -128,18 +130,18 @@
  * for consistency's sake we keep bulky vars as the default ones to fall back on using initial().
  */
 /obj/item/clothing/head/helmet/space/plasmaman/proc/handle_style_change(new_style)
-	if(new_style == STYLE_BULKY)
-		greyscale_config = initial(greyscale_config)
-		greyscale_config_worn = initial(greyscale_config_worn)
-		greyscale_config_inhand_left = initial(greyscale_config_inhand_left)
-		greyscale_config_inhand_right = initial(greyscale_config_inhand_right)
-		greyscale_colors = initial(greyscale_colors)
-	else
+	if(new_style == STYLE_SLEEK)
 		greyscale_config = /datum/greyscale_config/plasmaman_helmet/sleek
 		greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/sleek
 		greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/sleek
 		greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right/sleek
 		greyscale_colors = sleek_greyscale_colors
+	else
+		greyscale_config = initial(greyscale_config)
+		greyscale_config_worn = initial(greyscale_config_worn)
+		greyscale_config_inhand_left = initial(greyscale_config_inhand_left)
+		greyscale_config_inhand_right = initial(greyscale_config_inhand_right)
+		greyscale_colors = initial(greyscale_colors)
 	style = new_style
 	update_greyscale()
 	update_appearance(UPDATE_ICON)
@@ -169,14 +171,14 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
 	. = ..()
-	if(style == STYLE_BULKY)
-		icon_state = initial(icon_state)
-		worn_icon_state = initial(worn_icon_state)
-		inhand_icon_state = initial(inhand_icon_state)
-	else
+	if(style == STYLE_SLEEK)
 		icon_state = "plasmaman_helmet_s"
 		worn_icon_state = "plasmaman_helmet_s_w"
 		inhand_icon_state = "plasmaman_helmet_s"
+	else
+		icon_state = initial(icon_state)
+		worn_icon_state = initial(worn_icon_state)
+		inhand_icon_state = initial(inhand_icon_state)
 	if(helmet_on)
 		icon_state = "[icon_state]_light"
 		worn_icon_state = "[worn_icon_state]_light"
@@ -304,10 +306,11 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/handle_style_change(new_style)
 	. = ..()
-	if(new_style == STYLE_BULKY)
+	if(new_style == STYLE_SLEEK)
+		cowl = TRUE
+	else
 		cowl = FALSE
-		return TRUE
-	cowl = TRUE
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/secmed
@@ -499,6 +502,7 @@
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
 	actions_types = list(/datum/action/item_action/toggle_welding_screen)
+	style = STYLE_NEITHER
 
 /obj/item/clothing/head/helmet/space/plasmaman/curator/handle_style_change(new_style)
 	return FALSE
@@ -537,6 +541,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/mime
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right/mime
 	greyscale_colors = "#eeeeee#a52f29"
+	style = STYLE_NEITHER
 
 /obj/item/clothing/head/helmet/space/plasmaman/mime/handle_style_change(new_style)
 	return FALSE
@@ -551,6 +556,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right/clown
 	smile_state = "clown_smile"
 	greyscale_colors = "#ffc0ff#e91111"
+	style = STYLE_NEITHER
 
 /obj/item/clothing/head/helmet/space/plasmaman/clown/handle_style_change(new_style)
 	return FALSE
@@ -626,9 +632,11 @@
 	icon_state = "bunny_envirohelm"
 	inhand_icon_state = "plasmaman-helm"
 	worn_icon_state = "bunny_envirohelm"
+	style = STYLE_NEITHER
 
 /obj/item/clothing/head/helmet/space/plasmaman/bunny_ears/handle_style_change(new_style)
 	return FALSE
 
 #undef STYLE_SLEEK
+#undef STYLE_NEITHER
 #undef STYLE_BULKY
