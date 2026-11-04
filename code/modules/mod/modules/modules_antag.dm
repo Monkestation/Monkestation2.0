@@ -124,7 +124,7 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/insignia)
 	overlay_state_inactive = "module_insignia"
-	mask_worn_overlay = TRUE
+	/* mask_worn_overlay = TRUE */ // monkestation edit: our overlay sprites are not made for masking yet
 
 /obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
