@@ -29,6 +29,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 	) //narnar doesnt need power
 
 	valid_type_paths = list(/obj/machinery/power/generator_artifact)
+	examine_discovered = "Looks like it generates power, somehow."
 	research_value = TECHWEB_TIER_4_POINTS //Holy moly lucky you!
 	activation_message = "begins emitting a faint, droning hum."
 	deactivation_message = "shortcircuits!"

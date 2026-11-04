@@ -11,6 +11,7 @@
 	anchored = TRUE
 	pixel_x = -16
 	resistance_flags = FIRE_PROOF
+	light_angle = 170
 	/// is the fireplace lit?
 	var/lit = FALSE
 	/// the amount of fuel for the fire
@@ -23,6 +24,19 @@
 /obj/structure/fireplace/Initialize(mapload)
 	. = ..()
 	burning_loop = new(src)
+	set_light(l_dir = dir)
+
+/obj/structure/fireplace/setDir(newdir)
+	. = ..()
+	set_light(l_dir = dir)
+
+/// We're offset back into the wall, account for that
+/obj/structure/fireplace/get_light_offset()
+	var/list/hand_back = ..()
+	var/list/dir_offset = dir2offset(turn(dir, 180))
+	hand_back[1] += dir_offset[1] * 0.5
+	hand_back[2] += dir_offset[2] * 0.5
+	return hand_back
 
 /obj/structure/fireplace/Destroy()
 	STOP_PROCESSING(SSobj, src)
