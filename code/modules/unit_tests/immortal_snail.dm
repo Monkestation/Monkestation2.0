@@ -158,6 +158,7 @@
 	TEST_ASSERT_EQUAL(test_curse.recoveries, 2, "Both deletion and death must trigger recovery")
 	var/turf/resting_place = get_turf(snail)
 	person.death()
+	person.forceMove(resting_place)
 	chip.forceMove(resting_place)
 	snail.next_step = 0
 	snail.process(1)
@@ -217,6 +218,79 @@
 	SSpathfinder.can_fire = pathfinder_was_enabled
 	GLOB.player_list -= test_ghost
 	return ..()
+
+/datum/unit_test/immortal_snail_corpse_husk
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_corpse_husk/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	QDEL_NULL(snail.pursuit_driver)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, get_turf(snail))
+	var/obj/item/card/id/card = allocate(/obj/item/card/id, person)
+	var/datum/bank_account/account = card.registered_account
+	account.account_balance = 150
+	ledger.mark(account, 100)
+	snail.bind_target(person, 100)
+	snail.account_ref = WEAKREF(account)
+	person.death()
+	snail.process(1)
+	TEST_ASSERT(!QDELETED(person) && HAS_TRAIT(person, TRAIT_HUSK), "A corpse with the full bank value must be husked")
+	TEST_ASSERT(snail.original_settled, "The corpse must only be settled once")
+	TEST_ASSERT_EQUAL(account.account_balance, 50, "Corpse settlement must reclaim cursed bank funds and preserve unrelated money")
+	snail.process(1)
+	TEST_ASSERT(QDELETED(snail), "Once the corpse and all claims are settled, the snail must disappear")
+
+/datum/unit_test/immortal_snail_corpse_gib
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_corpse_gib/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	QDEL_NULL(snail.pursuit_driver)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, get_turf(snail))
+	var/obj/item/holochip/cash = allocate(/obj/item/holochip, run_loc_floor_top_right, 100)
+	ledger.mark(cash, 100)
+	snail.bind_target(person, 100)
+	person.death()
+	snail.process(1)
+	TEST_ASSERT(QDELETED(person), "An already dead target without the full amount must be gibbed")
+	TEST_ASSERT(snail.original_settled && !QDELETED(snail), "Gibbing the corpse must not forgive credits left elsewhere")
+	TEST_ASSERT_EQUAL(ledger.claims[cash], 100, "The remaining money must still be hunted")
+	UNTIL(!snail.pursuing)
+	cash.forceMove(get_turf(snail))
+	snail.next_step = 0
+	snail.process(1)
+	snail.process(1)
+	TEST_ASSERT(QDELETED(snail), "The snail must disappear after collecting the remaining money")
+
+/datum/unit_test/immortal_snail_gibbed_funds
+	parent_type = /datum/unit_test/immortal_snail_money
+
+/datum/unit_test/immortal_snail_gibbed_funds/Run()
+	previous_ledger = GLOB.snail_debt
+	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
+	GLOB.snail_debt = ledger
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	QDEL_NULL(snail.pursuit_driver)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/holochip/lost_cash = allocate(/obj/item/holochip, person, 50)
+	var/obj/item/holochip/remaining_cash = allocate(/obj/item/holochip, run_loc_floor_top_right, 50)
+	ledger.mark(lost_cash, 50)
+	ledger.mark(remaining_cash, 50)
+	snail.bind_target(person, 100)
+	person.gib(no_brain = TRUE, no_organs = TRUE, no_bodyparts = TRUE)
+	qdel(lost_cash)
+	TEST_ASSERT_EQUAL(ledger.recovered, 50, "Money destroyed with the already dead original victim must be settled")
+	TEST_ASSERT_EQUAL(ledger.claims[remaining_cash], 50, "Surviving cursed money must remain outstanding")
+	remaining_cash.forceMove(get_turf(snail))
+	snail.process(1)
+	snail.process(1)
+	TEST_ASSERT(QDELETED(snail), "An already gibbed victim must not prevent the snail completing recovery")
 
 /datum/unit_test/immortal_snail_contact/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_top_right)
@@ -286,6 +360,7 @@
 	var/obj/item/holochip/chip = allocate(/obj/item/holochip, person, 100)
 	GLOB.snail_debt.mark(chip, 100)
 	person.death()
+	person.forceMove(get_turf(snail))
 	chip.forceMove(get_turf(snail))
 	snail.next_step = 0
 	snail.process(1)

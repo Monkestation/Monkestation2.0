@@ -125,6 +125,8 @@
 	var/list/pending_paths = list()
 	var/turf/route_destination
 	var/original_dead = FALSE
+	var/original_settled = FALSE
+	var/datum/weakref/corpse_ref
 	var/curse_fulfilled = FALSE
 	var/datum/weakref/chemical_target
 	var/chemical_started = 0
@@ -190,6 +192,7 @@
 	target_ref = null
 	target_mind_ref = null
 	account_ref = null
+	corpse_ref = null
 	. = ..()
 	// NPC minds are not player round-history records; replacements must not accumulate them.
 	if(!QDELETED(npc_mind) && !npc_mind.key && !npc_mind.current)
@@ -205,6 +208,8 @@
 	var/datum/weakref/account_ref
 	var/contract_value
 	var/original_dead = FALSE
+	var/original_settled = FALSE
+	var/datum/weakref/corpse_ref
 	var/turf/last_turf
 	var/recoveries = 0
 
@@ -229,6 +234,7 @@
 	target_ref = null
 	target_mind_ref = null
 	account_ref = null
+	corpse_ref = null
 	last_turf = null
 	return ..()
 
@@ -238,6 +244,8 @@
 	account_ref = snail.account_ref
 	contract_value = snail.contract_value
 	original_dead = snail.original_dead
+	original_settled = snail.original_settled
+	corpse_ref = snail.corpse_ref
 	if(get_turf(snail))
 		last_turf = get_turf(snail)
 
@@ -269,6 +277,8 @@
 	snail.account_ref = account_ref
 	snail.contract_value = contract_value
 	snail.original_dead = original_dead
+	snail.original_settled = original_settled
+	snail.corpse_ref = corpse_ref
 	snail.debt = debt
 	snail.curse = src
 	if(debt)
@@ -340,8 +350,15 @@
 		return
 	attach_ledger()
 	var/mob/living/target = original_target()
+	if(!original_dead && (!target || target.stat == DEAD))
+		original_dead = TRUE
+		if(target)
+			corpse_ref = WEAKREF(target)
 	var/atom/navigation_target = target
-	if(original_dead || !target || target.stat == DEAD)
+	var/mob/living/corpse = corpse_ref?.resolve()
+	if(original_dead && !original_settled && corpse)
+		navigation_target = corpse
+	else if(original_dead)
 		var/datum/next_claim = debt?.next_claim()
 		navigation_target = debt?.location_of(next_claim)
 	// Refresh paths during the current glide, not after it has finished.
@@ -349,9 +366,17 @@
 	if(world.time < next_step)
 		return
 	debt?.refresh_carriers()
-	if(!target || target.stat == DEAD)
-		original_dead = TRUE
 	if(original_dead)
+		if(!original_settled)
+			if(!corpse)
+				original_settled = TRUE // An already gibbed/destroyed body cannot be punished again.
+			else if(get_turf(corpse) == get_turf(src))
+				settle_original(corpse)
+			else
+				next_step = world.time + move_interval
+				pursuing = TRUE
+				INVOKE_ASYNC(src, PROC_REF(pursue), corpse)
+				return
 		var/datum/claim = debt?.next_claim()
 		if(!claim)
 			curse_fulfilled = TRUE
@@ -614,17 +639,31 @@
 	return total
 
 /mob/living/basic/immortal_snail/proc/contact(mob/living/victim)
-	if(QDELETED(victim) || victim == src || victim.stat == DEAD)
+	if(QDELETED(victim) || victim == src)
+		return
+	var/is_target = victim == original_target() || victim == corpse_ref?.resolve()
+	if(is_target && !original_settled)
+		log_combat(src, victim, victim.stat == DEAD ? "settled the curse on their corpse" : "killed by contact")
+		settle_original(victim)
+		return
+	if(victim.stat == DEAD)
 		return
 	log_combat(src, victim, "killed by contact")
-	var/is_target = victim == original_target()
-	if(is_target && available_credits(victim) < contract_value)
+	victim.death()
+
+/mob/living/basic/immortal_snail/proc/settle_original(mob/living/victim)
+	if(original_settled || QDELETED(victim))
+		return
+	original_dead = TRUE
+	original_settled = TRUE
+	corpse_ref = WEAKREF(victim)
+	if(available_credits(victim) < contract_value)
 		ADD_TRAIT(victim, TRAIT_NO_SPECIAL_REVIVAL, REF(src))
 		victim.gib(no_brain = TRUE, no_organs = TRUE, no_bodyparts = TRUE)
 	else
-		victim.death()
-		if(is_target && iscarbon(victim))
+		if(victim.stat != DEAD)
+			victim.death()
+		if(iscarbon(victim))
 			var/mob/living/carbon/carbon_victim = victim
 			carbon_victim.become_husk(REF(src))
-	if(is_target)
-		original_dead = TRUE
+	corpse_ref = null

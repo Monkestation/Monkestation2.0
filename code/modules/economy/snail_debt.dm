@@ -68,6 +68,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 		return
 	var/atom/source_location = location_of(from)
 	var/mob/living/spender
+	var/datum/weakref/last_carrier = last_carriers[from]
 	var/atom/container = source_location
 	while(container && !isturf(container))
 		if(isliving(container))
@@ -75,18 +76,27 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 			break
 		container = container.loc
 	if(!spender)
-		var/datum/weakref/last_carrier = last_carriers[from]
 		spender = last_carrier?.resolve()
 	// Station budgets, CC and economic sinks cannot return physical credits.
 	// The spender inherits a death debt instead; dropping other cash cannot clear it.
+	var/settled_by_death = FALSE
 	if(!recipient || IS_DEPARTMENTAL_ACCOUNT(recipient) || istype(recipient, /datum/bank_account/remote))
 		if(spender && spender.stat != DEAD)
 			recipient = spender
-	if(!recipient)
+		else if(spender?.stat == DEAD)
+			settled_by_death = TRUE
+		else if(last_carrier)
+			var/mob/living/basic/immortal_snail/collector = collector_ref?.resolve()
+			if(collector && (collector.original_dead || !collector.original_target()) && (last_carrier == collector.target_ref || last_carrier == collector.corpse_ref))
+				settled_by_death = TRUE
+	if(settled_by_death)
+		recovered += moving
+	else if(!recipient)
 		recipient = new /obj/effect/snail_credit_trace(get_turf(source_location) || origin)
-	mark(recipient, moving)
-	if(spender && !last_carriers[recipient])
-		last_carriers[recipient] = WEAKREF(spender)
+	if(!settled_by_death)
+		mark(recipient, moving)
+		if(spender && !last_carriers[recipient])
+			last_carriers[recipient] = WEAKREF(spender)
 	claims[from] -= moving
 	if(!claims[from])
 		claims -= from
