@@ -163,6 +163,12 @@
 2026-11-04:
   Absolucy:
   - bugfix: Trying to fix more goddamn laggy bullshit.
+  Absolucy, Melbert:
+  - bugfix: Cleaning a mob cleans all of their equipment again
+  AitorLogedo:
+  - bugfix: Taking stuff out of machines with your active hand full now puts it in
+      the other hand of the same pair instead of your first left hand (moths with
+      4 arms)
   JohnFulpWillard, 00-Steven, timothymtorres, vinylspiders, PapaMichae1, TealSeer, LemonInTheDark, MrMelbert, Ghommie:
   - bugfix: Advanced cameras show static right away.
   - bugfix: Holding a PDA note up to a camera gives the AI a working link.
@@ -194,6 +200,8 @@
   - bugfix: Fix riot armor using brown mesh (now black, matching the armor)
   V2LenKagamine:
   - bugfix: Deconstructing a slot machine doubles what you put in
+  big-boss-crate:
+  - bugfix: borg limbs now show up on the correct side of endoskeletons when attached
   notghosti:
   - bugfix: Queueing research now creates a research history entry.
   tontyGH, vinylspiders:

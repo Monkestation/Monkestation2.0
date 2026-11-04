@@ -308,6 +308,12 @@
 	if(put_in_active_hand(I, forced, ignore_animation))
 		return TRUE
 
+	// Try the other hand of the active pair before any other hand, so mobs with more than 2 hands
+	// don't get it shoved into their first left hand
+	var/offhand = get_inactive_hand_index()
+	if(offhand && !get_item_for_held_index(offhand) && put_in_hand(I, offhand, forced, ignore_animation))
+		return TRUE
+
 	var/hand = get_empty_held_index_for_side(LEFT_HANDS)
 	if(!hand)
 		hand = get_empty_held_index_for_side(RIGHT_HANDS)
