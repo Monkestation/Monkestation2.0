@@ -4,6 +4,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	icon_state = "mantle"
+	body_parts_covered = NECK|CHEST|ARMS
 
 /obj/item/clothing/neck/mantle/regal
 	name = "regal mantle"
@@ -137,6 +138,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	icon_state = "bishopcloak"
+	body_parts_covered = NECK|CHEST|ARMS
 
 /obj/item/clothing/neck/chaplain/black
 	name = "black bishop's cloak"
@@ -149,7 +151,7 @@
 /obj/item/clothing/neck/cowboylea
 	name = "green cowboy poncho"
 	desc = "A sand covered cloak, there seems to be a small deer head with antlers embroidered inside."
-	body_parts_covered = NECK
+	body_parts_covered = NECK|CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_NECK
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'

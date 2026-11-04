@@ -143,7 +143,7 @@
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 	icon_state = "janimaid"
 	inhand_icon_state = "janimaid"
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 

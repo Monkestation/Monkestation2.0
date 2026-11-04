@@ -81,7 +81,7 @@
 	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
 	inhand_icon_state = "kilt"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
@@ -133,7 +133,7 @@
 	name = "black yukata"
 	desc = "A comfortable black cotton yukata inspired by traditional designs, perfect for a non-formal setting."
 	icon_state = "yukata1"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -152,7 +152,7 @@
 	desc = "A luxurious black silk kimono with traditional flair, ideal for elegant festive occasions."
 	icon_state = "kimono1"
 	inhand_icon_state = "yukata1"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
