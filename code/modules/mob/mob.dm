@@ -893,7 +893,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
  * - cycle_dir: A cardinal (NORTH, SOUTH, EAST, WEST) direction. Defaults to WEST, which is forwards.
  * - climb: If TRUE, wrapping will also shift rows/columns.
  * - silent: If applicable and TRUE, will output messages to the mob.
- * - intial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
+ * - initial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
  */
 /mob/proc/cycle_hand(cycle_dir = WEST, climb = TRUE, silent = FALSE, initial_index = active_hand_index)
 	if(!(cycle_dir in GLOB.cardinals))
@@ -973,13 +973,10 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots["[previous_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
-		held_location = hud_used.hand_slots["[held_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
+		// update the previous handset and the current handset
+		for(var/hand_index in list(previous_index, get_offhand_index(previous_index), held_index, get_offhand_index(held_index)))
+			var/atom/movable/screen/inventory/hand/held_location = hud_used.hand_slots["[hand_index]"]
+			held_location?.update_appearance()
 	return TRUE
 
 /mob/proc/activate_hand(selected_hand)
