@@ -300,7 +300,7 @@
 
 /// Subtype quirk that has some bonus logic to give the player some sort of cybernetics
 /datum/quirk/cybernetics_quirk
-	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_DONT_CLONE
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_DONT_CLONE | QUIRK_OOZELING_SKIP
 	abstract_parent_type = /datum/quirk/cybernetics_quirk
 	/// The typepath of the organ to implant.
 	var/obj/item/organ/internal/cybernetic_type
