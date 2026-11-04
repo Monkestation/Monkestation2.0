@@ -92,7 +92,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.set_greyscale(greyscale_colors, config_path)
 
 	if(alpha < 255)
-		source.opacity = FALSE
+		source.set_opacity(FALSE)
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = "[name] [source.name]"
 
