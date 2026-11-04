@@ -1,0 +1,17 @@
+author: "JohnFulpWillard, 00-Steven, timothymtorres, vinylspiders, PapaMichae1, TealSeer, LemonInTheDark, MrMelbert, Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Advanced cameras show static right away."
+  - bugfix: "Holding a PDA note up to a camera gives the AI a working link."
+  - balance: "Camera upgrades use power, disabled cameras don't use any."
+  - bugfix: "Camera tracking checks the person tracking instead of the program."
+  - qol: "The AI's last camera hotkey takes you back to where you were before tracking someone."
+  - qol: "You can examine things through advanced camera consoles and holocalls."
+  - bugfix: "Cameras looking through glass on the bottom z level don't break."
+  - image: "Camera lights glow in the dark."
+  - bugfix: "Body cameras and broadcast cameras update the AI's view when they move."
+  - admin: "Toggling camera updates is logged."
+  - balance: "Cyborgs and drones get a notification when someone is watching them through a camera console."
+  - rscadd: "Station drones have an internal camera that shows up on camera consoles."
+  - bugfix: "Cutting a cyborg's camera wire disables it, and mending it enables it again."
+  - refactor: "Camera construction uses item interaction now."
