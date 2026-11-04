@@ -310,3 +310,9 @@
 #define COMSIG_SOULCATCHER_CHECK_SOUL "soulcatcher_check_soul"
 /// Whenever we need to get the soul of the mob inside of the soulcatcher.
 #define COMSIG_SOULCATCHER_SCAN_BODY "soulcatcher_scan_body"
+
+///sent to TTS sounds when the volume preference is changed and applied
+#define COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED "tts_volume_preference_applied"
+
+///sent to radio TTS sounds when the volume preference is changed and applied
+#define COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED "tts_radio_volume_preference_applied"

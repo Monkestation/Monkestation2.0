@@ -186,8 +186,28 @@
 		if(!QDELETED(called_radio))
 			called_radio.on_recieve_message(data)
 
-	// From the list of radios, find all mobs who can hear those.
-	var/list/receive = get_hearers_in_radio_ranges(radios)
+	var/list/message_mods = data["mods"]
+
+	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER)
+	// Flat list of mobs who can hear the message
+	var/list/receive
+	// Assoc list of weakref to a radio to list of weakrefs to mobs who can hear the message
+	var/list/receive_radios
+
+	if(tts_radio_id) // only do this if we have a TTS identifier to save on perf
+		receive = list()
+		receive_radios = list()
+		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
+			receive |= radio_hearers
+			var/datum/weakref/radio_ref = WEAKREF(radio)
+			for(var/mob/possible_hearer in radio_hearers)
+				if(!isnull(possible_hearer.client) && can_hear_radio_tts(possible_hearer, frequency))
+					receive_radios[radio_ref] ||= list()
+					receive_radios[radio_ref] += WEAKREF(possible_hearer)
+
+	else
+		// From the list of radios, find all mobs who can hear those.
+		receive = get_hearers_in_radio_ranges(radios)
 
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
@@ -197,11 +217,17 @@
 
 		if(ghost.client?.prefs.chat_toggles & CHAT_GHOSTRADIO)
 			receive |= ghost
+			if(tts_radio_id && can_hear_radio_tts(ghost, frequency))
+				receive_radios[TTS_GHOST_RADIO] ||= list()
+				receive_radios[TTS_GHOST_RADIO] += WEAKREF(ghost)
+
+	if(tts_radio_id && length(receive_radios))
+		SStts.queued_radio_messages[tts_radio_id] = receive_radios
+		SStts.queued_radio_messages_compression[tts_radio_id] = compression
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
-	var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 
 	for(var/atom/movable/hearer as anything in receive)

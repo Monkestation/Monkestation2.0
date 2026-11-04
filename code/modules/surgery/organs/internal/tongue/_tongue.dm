@@ -146,6 +146,7 @@
 		return
 	if(modifies_speech)
 		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	tongue_owner.voice_filter = voice_filter
 	if(!(organ_flags & ORGAN_FAILING))
 		ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	/* This could be slightly simpler, by making the removal of the
@@ -165,6 +166,7 @@
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	tongue_owner.voice_filter = initial(tongue_owner.voice_filter)
 
 
 /obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
@@ -200,6 +202,7 @@
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 	var/static/list/speech_replacements = list(new /regex("s+", "g") = "sss", new /regex("S+", "g") = "SSS", new /regex(@"(\w)x", "g") = "$1kss", new /regex(@"(\w)X", "g") = "$1KSSS", new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1", new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1")
+	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
 
 	//MONKESTATION EDIT START
 
@@ -454,6 +457,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	modifies_speech = TRUE // not really, they just hiss
+	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.8,aresample=%SAMPLE_RATE%,atempo=1/0.8,aformat=channel_layouts=mono [p0]; [out2] asetrate=%SAMPLE_RATE%*1.2,aresample=%SAMPLE_RATE%,atempo=1/1.2,aformat=channel_layouts=mono[p2]; [p0][0][p2] amix=inputs=3"}
 
 // Aliens can only speak alien and a few other languages.
 /obj/item/organ/internal/tongue/alien/get_possible_languages()
@@ -538,6 +542,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
 	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 /obj/item/organ/internal/tongue/robot/get_scream_sound()
 	return 'sound/mobs/non-humanoids/cyborg/scream/scream_silicon.ogg'
@@ -560,6 +565,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	modifies_speech = TRUE
+	voice_filter = "atempo=0.5" // makes them talk really slow
 
 /obj/item/organ/internal/tongue/snail/modify_speech(datum/source, list/speech_args)
 	var/new_message
@@ -583,6 +589,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
 	languages_native = list(/datum/language/voltaic)
+	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.99,aresample=%SAMPLE_RATE%,volume=0.3 [p0]; [p0][out2] amix=inputs=2"}
 
 /obj/item/organ/internal/tongue/ethereal/get_scream_sound()
 	return pick(

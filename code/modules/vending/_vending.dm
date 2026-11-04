@@ -69,6 +69,7 @@
 	light_power = 0.7
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
 	clicksound = 'sound/machines/pda_button/pda_button1.ogg'
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -215,6 +216,11 @@
 		build_inv = TRUE
 	. = ..()
 	set_wires(new /datum/wires/vending(src))
+
+	if(SStts.tts_enabled)
+		var/static/list/vendor_voice_by_type = list()
+		vendor_voice_by_type[type] ||= SStts.random_tts_voice()
+		voice = vendor_voice_by_type[type]
 
 	if(build_inv) //non-constructable vending machine
 		///Non-constructible vending machines do not have a refill canister to populate its products list from,

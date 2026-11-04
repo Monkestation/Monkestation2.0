@@ -152,6 +152,7 @@
 #define LOG_CATEGORY_DEBUG_QDEL "debug-qdel"
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"
 #define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
+#define LOG_CATEGORY_DEBUG_TTS "debug-tts"
 
 // Compatibility categories, for when stuff is changed and you need existing functionality to work
 #define LOG_CATEGORY_COMPAT_GAME "game-compat"

@@ -593,6 +593,9 @@
 		new_profile.worn_icon_state_list[slot] = clothing_item.worn_icon_state
 		new_profile.exists_list[slot] = 1
 
+	new_profile.voice = target.voice
+	new_profile.voice_filter = target.voice_filter
+
 	return new_profile
 
 /*
@@ -781,6 +784,8 @@
 	user.socks_color =chosen_profile.socks_color  //MONKESTATION EDIT
 	user.age = chosen_profile.age
 	user.physique = chosen_profile.physique
+	user.voice = chosen_profile.voice
+	user.voice_filter = chosen_profile.voice_filter
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
@@ -948,6 +953,10 @@
 	var/physique
 	/// The quirks of the profile source.
 	var/list/quirks = list()
+	/// The TTS voice of the profile source
+	var/voice
+	/// The TTS filter of the profile filter
+	var/voice_filter = ""
 	/// The hair and facial hair gradient styles of the profile source.
 	var/list/grad_style = list("None", "None")
 	/// The hair and facial hair gradient colours of the profile source.
@@ -989,6 +998,8 @@
 	new_profile.age = age
 	new_profile.physique = physique
 	new_profile.quirks = quirks.Copy()
+	new_profile.voice = voice
+	new_profile.voice_filter = voice_filter
 	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 

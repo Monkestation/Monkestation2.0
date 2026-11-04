@@ -64,6 +64,7 @@ const RecordInfo = (props) => {
     note,
     rank,
     species,
+    voice,
     wanted_status,
   } = foundRecord;
 
@@ -182,6 +183,9 @@ const RecordInfo = (props) => {
                 target_ref={crew_ref}
                 text={fingerprint}
               />
+            </LabeledList.Item>
+            <LabeledList.Item label="Voice">
+              <EditableText field="voice" target_ref={crew_ref} text={voice} />
             </LabeledList.Item>
             <LabeledList.Item label="Note">
               <EditableText

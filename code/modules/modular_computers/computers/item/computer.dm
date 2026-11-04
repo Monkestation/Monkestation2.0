@@ -12,6 +12,7 @@
 	armor_type = /datum/armor/item_modular_computer
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -139,6 +140,8 @@
 	install_default_programs()
 	register_context()
 	update_appearance()
+	if(SStts.tts_enabled)
+		voice = SStts.computer_voice
 
 /obj/item/modular_computer/proc/install_default_programs()
 	SHOULD_CALL_PARENT(FALSE)

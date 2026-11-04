@@ -61,6 +61,8 @@
 #define MODE_CUSTOM_SAY_EMOTE "custom_say"
 
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
+/// Message has a TTS identifier attached to it
+#define MODE_TTS_IDENTIFIER "tts_identifier"
 
 #define MODE_BLOODLING "bloodling"
 

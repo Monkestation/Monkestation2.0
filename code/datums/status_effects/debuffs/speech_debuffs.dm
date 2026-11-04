@@ -2,6 +2,10 @@
 	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	remove_on_fullheal = TRUE
+	/// If TRUE, TTS will say the original message rather than what we changed it to
+	var/make_tts_message_original = FALSE
+	/// If set, this will be appended to the TTS filter of the message
+	var/tts_filter = ""
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -23,7 +27,7 @@
 /datum/status_effect/speech/proc/handle_message(datum/source, list/message_args)
 	SIGNAL_HANDLER
 
-	var/phrase = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
+	var/phrase = html_decode(message_args[TREAT_MESSAGE_ARG])
 	if(!length(phrase))
 		return
 
@@ -35,7 +39,15 @@
 
 		final_phrase += apply_speech(original_char, original_char)
 
-	message_args[TREAT_MESSAGE_MESSAGE] = sanitize(final_phrase)
+	if(final_phrase == phrase)
+		return // No change was done, whatever
+
+	if(length(tts_filter) > 0)
+		message_args[TREAT_TTS_FILTER_ARG] += tts_filter
+	if(make_tts_message_original)
+		message_args[TREAT_TTS_MESSAGE_ARG] = message_args[TREAT_MESSAGE_ARG]
+
+	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase)
 
 /**
  * Applies the speech effects on the past character, changing
@@ -49,6 +61,8 @@
 
 /datum/status_effect/speech/stutter
 	id = "stutter"
+	make_tts_message_original = TRUE
+	tts_filter = "tremolo=f=10:d=0.8,rubberband=tempo=0.5"
 	/// The probability of adding a stutter to any character
 	var/stutter_prob = 80
 	/// Regex of characters we won't apply a stutter to
@@ -83,7 +97,7 @@
 
 /datum/status_effect/speech/stutter/derpspeech/handle_message(datum/source, list/message_args)
 
-	var/message = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
+	var/message = html_decode(message_args[TREAT_MESSAGE_ARG])
 
 	message = replacetext(message, " am ", " ")
 	message = replacetext(message, " is ", " ")
@@ -228,6 +242,8 @@
 	replacement_prob = 33
 	doubletext_prob = 0
 	text_modification_file = "slurring_cult_text.json"
+
+	tts_filter = "rubberband=pitch=0.5,vibrato=5"
 
 /datum/status_effect/speech/slurring/heretic
 	id = "heretic_slurring"

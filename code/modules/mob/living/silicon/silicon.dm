@@ -13,6 +13,7 @@
 	examine_cursor_icon = null
 	forced_interaction_mode = /datum/interaction_mode/combat_mode/cyborg
 	fire_stack_decay_rate = -0.55
+	tts_silicon_voice_effect = TRUE
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -56,6 +57,7 @@
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
+	voice = SStts.random_tts_voice()
 	GLOB.silicon_mobs += src
 	faction += FACTION_SILICON
 	if(ispath(radio))

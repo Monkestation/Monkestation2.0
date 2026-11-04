@@ -126,6 +126,7 @@
 			note = target.security_note,
 			rank = target.rank,
 			species = target.species,
+			voice = target.voice,
 			wanted_status = target.wanted_status,
 		))
 

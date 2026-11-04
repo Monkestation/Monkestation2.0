@@ -24,6 +24,8 @@
 	var/species
 	/// The character's ID trim
 	var/trim
+	/// The character's voice, if they have one.
+	var/voice
 	/// Reference to the [/datum/mind] that this record was originally created for.
 	var/datum/weakref/mind_ref
 
@@ -39,7 +41,8 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
-	datum/mind/mind_ref
+	datum/mind/mind_ref,
+	voice = "?????",
 )
 	src.age = age
 	src.blood_type = blood_type
@@ -52,6 +55,7 @@
 	src.rank = rank
 	src.species = species
 	src.trim = trim
+	src.voice = voice
 	if(istype(mind_ref, /datum/mind))
 		src.mind_ref = WEAKREF(mind_ref)
 	else if(istype(mind_ref, /datum/weakref))

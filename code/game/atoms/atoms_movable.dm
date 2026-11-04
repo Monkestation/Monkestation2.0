@@ -99,6 +99,24 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	/// The voice that this movable makes when speaking
+	var/voice
+
+	/// The pitch adjustment that this movable uses when speaking.
+	var/pitch = 0
+
+	/// The base set of blips to use for blip calculation.
+	var/blip_base = "male"
+
+	/// The blip variant to use for blip calculation.
+	var/blip_number = "1"
+
+	/// The filter to apply to the voice when processing the TTS audio message.
+	var/voice_filter = ""
+
+	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
+	var/tts_silicon_voice_effect = ""
+
 	/// Whether a user will face atoms on entering them with a mouse. Despite being a mob variable, it is here for performance reasons
 	var/face_mouse = FALSE
 
@@ -1713,6 +1731,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_DISPLACEMENT_LARGE, "Edit Large Displacement")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+	if(SStts.tts_enabled)
+		VV_DROPDOWN_OPTION(VV_HK_SET_TTS_VOICE, "Modify TTS Voice")
 
 /atom/movable/vv_do_topic(list/href_list)
 	. = ..()
@@ -1758,6 +1778,14 @@
 		to_chat(usr, span_notice("Deadchat now control [src]."))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
+
+	if(href_list[VV_HK_SET_TTS_VOICE])
+		var/chosen_voice = tgui_input_list(usr, "Choose a voice to use.", "Choose a voice.", SStts.available_speakers)
+		if(!chosen_voice)
+			return
+		voice = chosen_voice
+		log_admin("[key_name(usr)] has set [src]'s voice as [chosen_voice].")
+		message_admins(span_notice("[key_name(usr)] has set [src]'s voice as [chosen_voice]."))
 
 /**
 * A wrapper for setDir that should only be able to fail by living mobs.
