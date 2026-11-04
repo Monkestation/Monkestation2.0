@@ -1,0 +1,4 @@
+author: "V2LenKagamine"
+delete-after: True
+changes:
+  - bugfix: "Deconstructing a slot machine doubles what you put in"
