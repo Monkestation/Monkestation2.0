@@ -67,3 +67,31 @@
 	item_flags = IMMUTABLE_SLOW
 	item_flags = IGNORE_DIGITIGRADE
 	can_be_tied = FALSE
+
+/// Glasses part of a MODsuit.
+/obj/item/clothing/glasses/mod
+	name = "MOD glasses"
+	desc = "A pair of glasses for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-glasses"
+	base_icon_state = "glasses"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
+
+/// Tie part of a MODsuit.
+/obj/item/clothing/neck/mod
+	name = "MOD tie"
+	desc = "An tie for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-tie"
+	base_icon_state = "tie"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
