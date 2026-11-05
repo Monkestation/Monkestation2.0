@@ -51,7 +51,7 @@
 		return
 
 	glow_stuff = partially_block_emissives(src, alpha_to_leave)
-	set_light(l_outer_range = 2, l_power = 0.75, l_color = starlight_color)
+	set_light(l_outer_range = 2, l_power = 1, l_color = starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
 
 /turf/open/floor/glass/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
