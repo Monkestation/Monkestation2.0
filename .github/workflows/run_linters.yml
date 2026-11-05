@@ -11,6 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Get OS version
+        id: os_version
+        run: echo "version=$ImageOS" >> "$GITHUB_OUTPUT"
+
       # Grab pre-requisites
       - parallel:
         - name: Restore SpacemanDMM cache
@@ -28,9 +32,9 @@ jobs:
           uses: actions/cache@v6
           with:
             path: tools/bootstrap/.cache
-            key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
+            key: ${{ runner.os }}-${{ steps.os_version.outputs.version }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
             restore-keys: |
-              ${{ runner.os }}-bootstrap-
+              ${{ runner.os }}-${{ steps.os_version.outputs.version }}-bootstrap-
 
         - name: Restore Rust cache
           uses: actions/cache@v6
