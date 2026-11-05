@@ -1,0 +1,4 @@
+author: "chumtoadmonke"
+delete-after: True
+changes:
+  - rscadd: "Added setting to disable tab autocomplete on command bar"
