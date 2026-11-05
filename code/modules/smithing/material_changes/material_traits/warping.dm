@@ -3,6 +3,7 @@
 	desc = "Randomly teleports around, if you are holding it you also teleport."
 	trait_flags = MT_PROCESSES | MT_NO_STACK_PROCESS
 	reforges = 2
+	examine_text = span_warning("Looks like... did it move?")
 
 /datum/material_trait/warping/on_process(atom/movable/parent, datum/material_stats/host)
 	. = ..()

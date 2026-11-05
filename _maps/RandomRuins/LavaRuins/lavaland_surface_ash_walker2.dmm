@@ -2865,7 +2865,7 @@
 /area/ruin/unpowered/ash_walkers)
 "Yb" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
-/obj/structure/reagent_forge,
+/obj/structure/alloy_forge,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "Yr" = (

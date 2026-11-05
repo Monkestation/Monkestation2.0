@@ -20,7 +20,13 @@
 	register_context()
 
 /obj/structure/machine/assembly_bench/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!current_recipe && held_item)
+	if(!current_recipe && held_item?.tool_behaviour == TOOL_WRENCH)
+		if(anchored)
+			context[SCREENTIP_CONTEXT_LMB] = "Unanchor"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Anchor"
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+	else if(!current_recipe && held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Add to select recipe"
 	else
 		context[SCREENTIP_CONTEXT_LMB] = "Add to progress recipe"
@@ -48,7 +54,6 @@
 /obj/structure/machine/assembly_bench/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH && !current_recipe)
 		default_unfasten_wrench(user,attacking_item,40)
-		return
 	if(!anchored)
 		return ..()
 	if(!current_recipe)
@@ -85,6 +90,11 @@
 					try_complete_recipe(user)
 				return
 	return ..()
+/obj/structure/machine/assembly_bench/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	if(weapon.tool_behaviour == TOOL_WRENCH && !current_recipe)
+		deconstruct(TRUE)
+	. = ..()
+
 
 /obj/structure/machine/assembly_bench/proc/try_complete_recipe(mob/living/user)
 	if(!current_recipe)
@@ -105,3 +115,9 @@
 	QDEL_NULL(current_recipe)
 	QDEL_LIST(stored_items)
 	stored_items = list()
+
+/obj/structure/machine/assembly_bench/deconstruct(disassembled)
+	var/obj/item/stack/sheet/mineral/wood/woody = new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+	woody.amount = 15
+	woody.update_appearance()
+	. = ..()

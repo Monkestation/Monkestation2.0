@@ -15,7 +15,7 @@
 	density = 20
 	refractiveness = 70
 	conductivity = 1
-	material_traits = list(/datum/material_trait/shiny,/datum/material_trait/weak_weapon)
+	material_traits = list(/datum/material_trait/shiny,/datum/material_trait/weak_weapon,/datum/material_trait/serrated)
 
 /datum/material/plasma //this will combust like crazy so its hard to use but worth it if you can
 	flammability = 100
@@ -51,6 +51,7 @@
 	density = 10
 	refractiveness = 80
 	conductivity = 1
+	material_traits = list(/datum/material_trait/serrated)
 
 /datum/material/silver
 	hardness = 30
@@ -62,7 +63,7 @@
 	density = 80
 	hardness = 20
 	conductivity = 90
-	material_traits = list(/datum/material_trait/warping)
+	material_traits = list(/datum/material_trait/warping,/datum/material_trait/serrated)
 
 /datum/material/titanium
 	density = 80
@@ -75,6 +76,7 @@
 	density = 120
 	hardness = 120
 	thermal = 60
+	material_traits = list(/datum/material_trait/serrated)
 
 /datum/material/plastic
 	thermal = 20
@@ -136,6 +138,7 @@
 	density = 90
 	hardness = 125
 	liquid_flow = 90
+	material_traits = list(/datum/material_trait/serrated)
 
 /datum/material/bronze
 	thermal = 60

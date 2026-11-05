@@ -3,6 +3,7 @@
 	desc = "Multiplies the attack delay by 1.5."
 	reforges = 6
 	value_bonus = -25
+	examine_text = "Looks VERY hard to move."
 
 /datum/material_trait/slow_attacks/post_parent_init(atom/movable/parent)
 	if(isitem(parent))

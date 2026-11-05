@@ -2,6 +2,7 @@
 	name = "Radioactive"
 	desc = "Makes this item shoot radiation out (scales based on radiation)"
 	trait_flags = MT_PROCESSES | MT_NO_STACK_PROCESS
+	examine_text = span_danger("It's emitting a faint green glow...")
 
 /datum/material_trait/radioactive/on_process(atom/movable/parent, datum/material_stats/host)
 	radiation_pulse(get_turf(parent), max_range = 2 * host.radioactivity * 0.01, threshold = 0.05)

@@ -2,6 +2,7 @@
 	name = "Weak Weapon"
 	desc = "Multiplies the weapons force by 0.5 times."
 	value_bonus = -25
+	examine_text = "Looks squishy."
 
 /datum/material_trait/weak_weapon/post_parent_init(atom/movable/parent)
 	if(isobj(parent))

@@ -23,7 +23,7 @@
 	var/unwield_force = 0
 
 	///what its made of
-	var/made_of
+	var/datum/material_stats/made_of
 	///Quality, autoset from minigame.
 	var/smithed_quality = 100
 	///What is base desc when finished and assembled?
@@ -35,9 +35,8 @@
 	smithed_quality = max(quality, 5)
 
 	if(!created_from)
-		created_from = new /obj/item/stack/sheet/mineral/gold
+		created_from = new /obj/item/stack/sheet/mineral/gold(src)
 
-	made_of = created_from.type
 
 	if(isstack(created_from) && !created_from.material_stats)
 		var/obj/item/stack/stack = created_from
@@ -46,7 +45,7 @@
 		create_stats_from_material_stats(created_from.material_stats)
 
 	name = "[material_stats.material_name] [base_name]"
-
+	made_of = material_stats
 	var/damage_state
 	desc = finished_desc
 	switch(smithed_quality)
@@ -126,12 +125,12 @@
 	cost = 1
 
 /datum/export/smithed_part/get_cost(obj/item/smithed_part/O, apply_elastic)
-	var/obj/item/dummy
-	if(ispath(O.made_of))
-		dummy = new O.made_of
-	var/datum/export_report/export = export_item_and_contents(dummy || O.made_of, dry_run = TRUE)
-	var/price = 0
-	for(var/x in export.total_amount)
-		price += export.total_value[x]
-	QDEL_NULL(dummy)
-	return round((((CARGO_CRATE_VALUE*0.5) + price) * 2) * (O.smithed_quality/100))
+	var/total_val = round(CARGO_CRATE_VALUE * (O.smithed_quality / 100))
+	if(istype(O,/obj/item/smithed_part/weapon_part))
+		var/obj/item/smithed_part/weapon_part/weap = O
+		if(weap.complete)
+			total_val += round(CARGO_CRATE_VALUE * 0.75)
+	if(O.made_of)
+		for(var/datum/material_trait/trait in O.made_of.material_traits)
+			total_val += trait.value_bonus
+	return round(((O.made_of.density + O.made_of.hardness)/5) + total_val)

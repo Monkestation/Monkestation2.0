@@ -4,6 +4,8 @@
 	var/trait_flags = NONE
 	var/reforges = 4
 	var/value_bonus = 0
+	///If set, shows up on merged_materials when examined.
+	var/examine_text
 ///Called when added to an object
 /datum/material_trait/proc/on_trait_add(atom/movable/parent)
 	return
