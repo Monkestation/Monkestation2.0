@@ -119,6 +119,8 @@
  * * lifespan - The lifespan of the message in deciseconds
  */
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
+	usr = null // do not hold a ref to usr here please,,,,
+
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
 
