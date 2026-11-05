@@ -12,9 +12,10 @@
 
 /datum/material/diamond
 	hardness = 80
-	density = 80
+	density = 20
 	refractiveness = 70
 	conductivity = 1
+	material_traits = list(/datum/material_trait/shiny,/datum/material_trait/weak_weapon)
 
 /datum/material/plasma //this will combust like crazy so its hard to use but worth it if you can
 	flammability = 100
@@ -41,7 +42,6 @@
 /datum/material/mythril
 	liquid_flow = 80
 	thermal = 85
-	refractiveness = -25
 	hardness = 100
 	density = 100
 	material_traits = list(/datum/material_trait/magical, /datum/material_trait/weak_weapon)

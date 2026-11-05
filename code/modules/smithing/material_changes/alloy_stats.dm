@@ -13,6 +13,7 @@
 	conductivity = 80
 	hardness = 80
 	thermal = 95
+	material_traits = list(/datum/material_trait/slow_attacks)
 
 /datum/material/alloy/plasmaglass
 	refractiveness = 75
