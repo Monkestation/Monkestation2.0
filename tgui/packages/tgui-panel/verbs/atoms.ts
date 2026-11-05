@@ -23,3 +23,4 @@ export const focusCommandBarAtom = atom<number>(0);
 export const clearCommandBarAtom = atom<number>(0);
 export const initializeCommandBarAtom = atom<number>(0);
 export const hotkeysAtom = atom<boolean>(true);
+export const tabAutocompleteAtom = atom<boolean>(true);
