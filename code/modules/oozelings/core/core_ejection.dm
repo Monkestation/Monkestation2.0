@@ -100,7 +100,7 @@
 	// instantly retract any modsuits, to avoid jank
 	if(istype(victim.back, /obj/item/mod/control))
 		var/obj/item/mod/control/mod_control = victim.back
-		for(var/obj/item/part as anything in mod_control.mod_parts)
+		for(var/obj/item/part as anything in mod_control.get_parts())
 			mod_control.retract(null, part)
 	// also retract any deployables
 	if(victim.wear_suit)

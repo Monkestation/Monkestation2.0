@@ -1,0 +1,13 @@
+author: "Fikou, FlufflesTheDog, Jackraxxus, mc-oofert, SmArtKar, necromanceranne, lelandkemble"
+delete-after: True
+changes:
+  - refactor: "MODsuit parts got refactored, report any bugs."
+  - balance: "You no longer need all parts deployed to activate a MODsuit, you can use them with missing limbs."
+  - rscadd: "Added the portable suit, a deployable one-piece three-piece suit. Buy it from the LawDrobe or print the plating after researching Civilian Modular Suits."
+  - bugfix: "MODules don't work or show overlays when the part they need isn't sealed."
+  - bugfix: "Rad protection, ash accretion, sphere and stealth MODules need the full suit out."
+  - bugfix: "Springlock only activates when at least one part is sealed and no longer damages body parts the suit doesn't cover."
+  - bugfix: "MODsuit deactivation disables modules properly and deleted MODsuits delete their parts."
+  - bugfix: "An AI needs the boots out to move someone in a MODsuit."
+  - bugfix: "Partially deployed MODsuits can be retracted with the deploy action."
+  - qol: "You can extend or retract MODsuit parts from the UI, and cores have color coded charge bars."

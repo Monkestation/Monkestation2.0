@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "ghosts/observers have new unique speak emotes."

@@ -160,3 +160,67 @@
   - map: Slightly nudges down asteroid magnet on Helio to avoid killing shuttles [Hopefully]
   - map: Add tiny fans to all [or at least most] of Helio airlocks
   - map: Slightly nudges ordinance launcher to accomidate asteroid magnet
+2026-11-04:
+  Absolucy:
+  - bugfix: Trying to fix more goddamn laggy bullshit.
+  Absolucy, Melbert:
+  - bugfix: Cleaning a mob cleans all of their equipment again
+  AitorLogedo:
+  - bugfix: Taking stuff out of machines with your active hand full now puts it in
+      the other hand of the same pair instead of your first left hand (moths with
+      4 arms)
+  JohnFulpWillard, 00-Steven, timothymtorres, vinylspiders, PapaMichae1, TealSeer, LemonInTheDark, MrMelbert, Ghommie:
+  - bugfix: Advanced cameras show static right away.
+  - bugfix: Holding a PDA note up to a camera gives the AI a working link.
+  - balance: Camera upgrades use power, disabled cameras don't use any.
+  - bugfix: Camera tracking checks the person tracking instead of the program.
+  - qol: The AI's last camera hotkey takes you back to where you were before tracking
+      someone.
+  - qol: You can examine things through advanced camera consoles and holocalls.
+  - bugfix: Cameras looking through glass on the bottom z level don't break.
+  - image: Camera lights glow in the dark.
+  - bugfix: Body cameras and broadcast cameras update the AI's view when they move.
+  - admin: Toggling camera updates is logged.
+  - balance: Cyborgs and drones get a notification when someone is watching them through
+      a camera console.
+  - rscadd: Station drones have an internal camera that shows up on camera consoles.
+  - bugfix: Cutting a cyborg's camera wire disables it, and mending it enables it
+      again.
+  - refactor: Camera construction uses item interaction now.
+  Melbert:
+  - rscdel: Spacesuits no longer fully conceal lizard tails
+  - rscadd: Species features like wings and tails will appear "meshed over" when wearing
+      certain equipment like spacesuits or biosuits.
+  - rscadd: Biosuit and beekeeper suit sprites now alter when worn by digitigrade
+      mobs.
+  - rscadd: Apron sprites now alter when worn by digitigrade mobs.
+  - spellcheck: All heretic armor hoods are consistently known by their name, rather
+      than "ominous hood"
+  - refactor: Bodypart textures were refactored a tiny bit, report any oddities.
+  - bugfix: Fix riot armor using brown mesh (now black, matching the armor)
+  V2LenKagamine:
+  - bugfix: Deconstructing a slot machine doubles what you put in
+  big-boss-crate:
+  - bugfix: borg limbs now show up on the correct side of endoskeletons when attached
+  notghosti:
+  - bugfix: Queueing research now creates a research history entry.
+  tontyGH, vinylspiders:
+  - rscadd: Mothpeople now have 2 extra arms in their chest, giving them 4 total arms
+  - balance: Mothpeople are now generally a bit more fragile
+  - bugfix: Akimbo used the wrong gun when determining spread penalty
+  - bugfix: Akimbo penalty did not include the gun that was firing
+  - balance: Akimbo penalty now has multiplicative scaling (double PKA was adjusted
+      to consider this)
+  - balance: Akimbo spread can't go past what two guns give, so 3 or 4 guns don't
+      shoot all around you
+  - balance: Blocking now only works if the blocking item is in your active set of
+      hands
+  - rscdel: The deathmatch 4 hands modifier had to be removed for technical reasons.
+      Sorry.
+  - qol: Wield is unbound by default now, Shift+X swaps between your pairs of hands
+      instead
+  - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
+      and your active hand moves to a hand you still have
+  - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
+  - bugfix: arm implants always come out of the arm they're in, instead of any free
+      hand on that side
