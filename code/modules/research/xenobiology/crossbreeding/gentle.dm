@@ -3,7 +3,7 @@
 	desc = "It pulses slowly, as if breathing."
 	effect = "gentle"
 	effect_desc = "Use to activate minor effect, alt-click to activate major effect."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "gentle"
 	/// Type of extract this crossbreed makes. Defaults to grey so a missing override is obvious to players.
 	var/extract_type = /obj/item/slime_extract/grey

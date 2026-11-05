@@ -48,7 +48,7 @@ GLOBAL_LIST(warped_rooms)
 	window = new(exit_door)
 	window.show(exit_turf)
 	window.show(exit_door)
-	window.add_filter("rune_shape", 1, alpha_mask_filter(icon = icon('icons/obj/xenobiology/slime_rancher/warped_portal.dmi', "window_mask")))
+	window.add_filter("rune_shape", 1, alpha_mask_filter(icon = icon('icons/effects/warped_portal.dmi', "window_mask")))
 	for(var/obj/effect/warped_rune/rainbowspace/rune as anything in runes)
 		rune.open_window()
 
@@ -59,7 +59,7 @@ GLOBAL_LIST(warped_rooms)
 		var/obj/effect/abstract/visual_effect/texture = textures[strength]
 		if(!texture)
 			texture = new effect_type
-			texture.icon = 'icons/obj/xenobiology/slime_rancher/warped_walls.dmi'
+			texture.icon = 'icons/effects/warped_walls.dmi'
 			texture.alpha *= strength
 			textures[strength] = texture
 		ADD_KEEP_TOGETHER(target, REF(src))
@@ -79,7 +79,7 @@ GLOBAL_LIST(warped_rooms)
 	target.add_atom_colour(tint, FIXED_COLOUR_PRIORITY)
 
 /datum/warped_room/proc/swirl()
-	var/mutable_appearance/swirl = mutable_appearance('icons/obj/xenobiology/slime_rancher/warped_portal.dmi', key_type::visual_effect ? "swirl_[key_type::color]" : "swirl")
+	var/mutable_appearance/swirl = mutable_appearance('icons/effects/warped_portal.dmi', key_type::visual_effect ? "swirl_[key_type::color]" : "swirl")
 	if(!key_type::visual_effect)
 		swirl.color = key_type::rgb_code
 	swirl.pixel_w = -8
@@ -161,7 +161,7 @@ GLOBAL_LIST(warped_rooms)
 // here be slime-dragons: nightmare rendering code below, solely bc i wanted cool masking
 /obj/effect/warped_room_exit
 	name = "warped rune"
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "rune_rainbow"
 	desc = "Walk onto this rune if you want to leave this place. You will have to leave eventually."
 	move_resist = INFINITY

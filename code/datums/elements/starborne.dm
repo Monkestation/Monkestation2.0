@@ -21,7 +21,7 @@
 		return ELEMENT_INCOMPATIBLE
 	var/obj/item/weapon = target
 	weapon.name = "starborne [weapon.name]"
-	var/mutable_appearance/stars = mutable_appearance('icons/obj/xenobiology/slime_rancher/visual_effects.dmi', "spacey")
+	var/mutable_appearance/stars = mutable_appearance('icons/effects/slime_visual_effects.dmi', "spacey")
 	stars.blend_mode = BLEND_INSET_OVERLAY
 	ADD_KEEP_TOGETHER(weapon, ELEMENT_TRAIT(type))
 	weapon.add_overlay(stars)
@@ -44,12 +44,12 @@
 	var/sprite_height = isinhands ? source.inhand_y_dimension : source.worn_y_dimension
 	var/mutable_appearance/stars
 	if(sprite_width == ICON_SIZE_X && sprite_height == ICON_SIZE_Y)
-		stars = mutable_appearance('icons/obj/xenobiology/slime_rancher/visual_effects.dmi', "spacey")
+		stars = mutable_appearance('icons/effects/slime_visual_effects.dmi', "spacey")
 	else
 		var/static/alist/tiled_stars = alist()
 		var/icon/stars_icon = tiled_stars["[sprite_width]-[sprite_height]"]
 		if(isnull(stars_icon))
-			var/icon/tile = icon('icons/obj/xenobiology/slime_rancher/visual_effects.dmi', "spacey")
+			var/icon/tile = icon('icons/effects/slime_visual_effects.dmi', "spacey")
 			stars_icon = icon(tile)
 			stars_icon.Crop(1, 1, sprite_width, sprite_height)
 			for(var/column in 0 to ceil(sprite_width / ICON_SIZE_X) - 1)

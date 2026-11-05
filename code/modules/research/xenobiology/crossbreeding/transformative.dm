@@ -56,7 +56,7 @@
 	name = "transformative extract"
 	desc = "It seems to stick to any slime it comes in contact with."
 	effect = "transformative"
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "transformative"
 	effect_desc = "Use on a slime to permanently change it."
 	/// The transformation this extract sticks onto a slime.
@@ -79,7 +79,7 @@
 		target.balloon_alert(user, "can't take any more!")
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] presses [src] into [target], and it sinks right in."), span_notice("You press [src] into [target], and it sinks right in."))
-	playsound(target, 'sound/effects/attackblob.ogg', 50, TRUE)
+	playsound(target, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -287,7 +287,7 @@
 	name = "Luminescent Evolution"
 	desc = "Permanently become a luminescent, with one of your own extracts already inside you."
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon = 'icons/obj/xenobiology/slime_rancher/slimed.dmi'
+	button_icon = 'icons/effects/slimed.dmi'
 	button_icon_state = "slimed"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"

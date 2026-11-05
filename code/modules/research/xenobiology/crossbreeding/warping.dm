@@ -1,7 +1,7 @@
 /obj/item/slimecross/warping
 	name = "warped extract"
 	desc = "It just won't stay in place."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "warping"
 	effect = "warping"
 	///what runes will be drawn depending on the crossbreed color
@@ -47,7 +47,7 @@
 /obj/effect/warped_rune
 	name = "warped rune"
 	desc = "An unstable rune born of the depths of bluespace"
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "rune_grey"
 	move_resist = INFINITY //here to avoid the rune being moved since it only sets it's turf once when it's drawn. doesn't include admin fuckery.
 	anchored = TRUE
@@ -642,7 +642,7 @@
 /obj/effect/warped_rune/pinkspace/on_entered(datum/source, mob/living/carbon/human/arrived, atom/old_loc)
 	if(istype(arrived))
 		arrived.add_mood_event("jolly", /datum/mood_event/jolly)
-		playsound(rune_turf, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+		playsound(rune_turf, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE)
 		to_chat(arrived, span_notice("You feel happier."))
 		activated_on_step = TRUE
 	return ..()

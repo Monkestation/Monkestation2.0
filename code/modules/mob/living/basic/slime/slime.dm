@@ -351,7 +351,7 @@
 	if(stat == DEAD)
 		return
 	if(transformation_color)
-		var/mutable_appearance/warping_core = mutable_appearance('icons/obj/xenobiology/slimecrossing.dmi', "warping", MOB_BELOW_PIGGYBACK_LAYER)
+		var/mutable_appearance/warping_core = mutable_appearance('icons/obj/science/slimecrossing.dmi', "warping", MOB_BELOW_PIGGYBACK_LAYER)
 		warping_core.color = transformation_color
 		. += warping_core
 	if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)

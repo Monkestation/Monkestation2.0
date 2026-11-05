@@ -18,7 +18,7 @@
 	name = "crystalline extract"
 	desc = "It's crystalline."
 	effect = "crystalline"
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "crystalline"
 	effect_desc = "Use to place a pylon."
 	///The pylon this extract places.
@@ -58,7 +58,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = ABOVE_MOB_LAYER
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "slime_pylon"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	///Assoc list of affected mobs, the key is the mob while the value of the map is the number of seconds spent inside of the zone.
@@ -508,7 +508,7 @@ GLOBAL_LIST(bluespace_slime_pylons)
 	desc = "Translucent and irregular, it can duplicate matter on a whim"
 	anchored = TRUE
 	density = FALSE
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "cerulean_crystal"
 	max_integrity = 5
 	/// Current growth stage.
@@ -562,7 +562,7 @@ GLOBAL_LIST(bluespace_slime_pylons)
 /obj/item/cerulean_slime_crystal
 	name = "cerulean slime poly-crystal"
 	desc = "Translucent and irregular, it can duplicate matter on a whim"
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "cerulean_item_crystal"
 	/// Items added to the stack.
 	var/amount = 1
@@ -615,7 +615,7 @@ GLOBAL_LIST(bluespace_slime_pylons)
 
 /// Base of the floor lights a pyrite pylon draws around itself.
 /obj/effect/abstract/pyrite_rainbow
-	icon = 'icons/obj/xenobiology/slime_rancher/pyrite_rainbow.dmi'
+	icon = 'icons/effects/pyrite_rainbow.dmi'
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
