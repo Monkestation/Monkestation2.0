@@ -261,5 +261,7 @@
   - rscadd: ghosts/observers have new unique speak emotes.
   V2LenKagamine:
   - bugfix: missing discover text on powergen type artifacts
+  chumtoadmonke:
+  - rscadd: Added setting to disable tab autocomplete on command bar
   notghosti:
   - qol: Max CPU speed set to twice the original speed. Instead of 10.
