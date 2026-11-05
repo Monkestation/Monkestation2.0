@@ -29,12 +29,16 @@
 }; \
 /client/proc/__avd_##verb_path_name() \
 { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = FALSE; /* this is explicitly needed as the proc begins with an underscore */ \
-	set popup_menu = ##show_in_context_menu; \
-	set category = ##verb_category; \
-	SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name); \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, FALSE); /* this is explicitly needed as the proc begins with an underscore */ \
+	VERBLIKE_SET(popup_menu, ##show_in_context_menu); \
+	VERBLIKE_SET(category, ##verb_category); \
+	var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
+	ASYNC { \
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name); \
+	}\
+	VERB_TRACKER_FINISH(__store_cost); \
 }; \
 /datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, list/structured_args)
 
@@ -50,12 +54,16 @@
 }; \
 /client/proc/__avd_##verb_path_name(var##context_type/__context_target in world) \
 { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = FALSE; \
-	set popup_menu = TRUE; \
-	set category = ##verb_category; \
-	SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name, list(VERB_ARG_CONTEXT_TARGET_KEY = __context_target)); \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, FALSE); \
+	VERBLIKE_SET(popup_menu, TRUE); \
+	VERBLIKE_SET(category, ##verb_category); \
+	var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
+	ASYNC { \
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name, list(VERB_ARG_CONTEXT_TARGET_KEY = __context_target)); \
+	}\
+	VERB_TRACKER_FINISH(__store_cost); \
 }; \
 /datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, list/structured_args)
 

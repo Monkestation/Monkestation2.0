@@ -59,7 +59,7 @@
 
 	log_silicon("[key_name(user)] carded [key_name(AI)]", list(src))
 	update_appearance()
-	AI.cancel_camera()
+	AI.actually_cancel_camera()
 	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))
 	return TRUE
 
@@ -72,7 +72,7 @@
 
 	log_combat(user, old_ai, "uploaded", src, "to [to_what].")
 	update_appearance()
-	old_ai.cancel_camera()
+	old_ai.actually_cancel_camera()
 	UnregisterSignal(old_ai, COMSIG_MOB_STATCHANGE)
 	return TRUE
 

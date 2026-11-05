@@ -34,6 +34,10 @@ SUBSYSTEM_DEF(verbs)
 	call(target, meta.body_path)(arglist(invoke_args))
 
 /datum/controller/subsystem/verbs/proc/invoke_verb(target, verb_path, list/positional_args, invoker)
+	if(isdatum(target))
+		var/datum/target_datum = target
+		if(QDELETED(target_datum))
+			return
 	if(!initialized)
 		initialize_verb_types()
 

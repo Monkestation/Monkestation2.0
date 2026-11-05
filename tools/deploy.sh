@@ -47,4 +47,6 @@ cp -r monkestation/code/* $1/monkestation/code/
 #dlls on windows
 if [ "$(uname -o)" = "Msys" ]; then
   cp ./*.dll $1/
+else
+  cp ./libauxcpu_byondapi.so $1/
 fi

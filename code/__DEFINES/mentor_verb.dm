@@ -14,14 +14,18 @@
 }; \
 /client/proc/__avd_##verb_path_name(##verb_args) \
 { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = FALSE; /* this is explicitly needed as the proc begins with an underscore */ \
-	set popup_menu = ##show_in_context_menu; \
-	set category = ##verb_category; \
-	var/list/_verb_args = list(usr, /datum/mentor_verb/##verb_path_name); \
-	_verb_args += args; \
-	SSadmin_verbs.dynamic_invoke_mentor_verb(arglist(_verb_args)); \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, FALSE); /* this is explicitly needed as the proc begins with an underscore */ \
+	VERBLIKE_SET(popup_menu, ##show_in_context_menu); \
+	VERBLIKE_SET(category, ##verb_category); \
+	var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
+	ASYNC { \
+		var/list/_verb_args = list(usr, /datum/mentor_verb/##verb_path_name); \
+		_verb_args += args; \
+		SSadmin_verbs.dynamic_invoke_mentor_verb(arglist(_verb_args)); \
+	}\
+	VERB_TRACKER_FINISH(__store_cost); \
 }; \
 /datum/mentor_verb/##verb_path_name/__avd_do_verb(client/user, ##verb_args)
 

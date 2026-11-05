@@ -8,20 +8,31 @@ GAME_VERB(/mob, say_verb, "Say", "IC")
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
-	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
-	if(message)
+	if(!message)
+		return
+
+	// If we're being called off something else, we should be allowed to requeue if we're gonna lag to shit
+	if(VERB_JUST_FIRED())
+		say(message)
+	else
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
 GAME_VERB(/mob, whisper_verb, "Whisper", "IC")
 	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
+	do_whisper_verb(message, VERB_JUST_FIRED())
 
+/mob/proc/do_whisper_verb(message, queue_checked)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	if(message)
+	if(!message)
+		return
+
+	if(queue_checked)
+		whisper(message)
+	else
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, whisper), message), SSspeech_controller)
 
 /**
@@ -37,14 +48,18 @@ GAME_VERB(/mob, whisper_verb, "Whisper", "IC")
 ///The me emote verb
 GAME_VERB(/mob, me_verb, "Me", "IC")
 	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
+	do_me_verb(message, VERB_JUST_FIRED())
 
+/mob/proc/do_me_verb(message, queue_checked)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", 1, message, TRUE), SSspeech_controller)
+	if(queue_checked)
+		emote("me", 1, message, TRUE)
+	else
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", 1, message, TRUE), SSspeech_controller)
 
 /mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	SHOULD_CALL_PARENT(TRUE)

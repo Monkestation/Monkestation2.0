@@ -120,6 +120,8 @@ Things you **CAN'T** do:
 - [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
 - [UI Development](../tgui/README.md)
 - [Visual Effects and Systems](./guides/VISUALS.md)
+- [Tick Order](./guides/TICK_ORDER.md)
+- [Smooth Visuals](./guides/SMOOTHNESS.md)
 
 ## Pull Request Process
 

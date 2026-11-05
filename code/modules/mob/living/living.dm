@@ -506,13 +506,9 @@ GAME_VERB(/mob/living, stop_pulling1, "Stop Pulling", "IC")
 	stop_pulling()
 
 //same as above
-/mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
+/mob/living/do_pointed(atom/pointing_at)
 	if(incapacitated())
 		return FALSE
-
-	return ..()
-
-/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 

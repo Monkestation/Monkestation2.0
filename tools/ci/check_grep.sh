@@ -154,6 +154,13 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' "${code_files[@]}"; then
 	st=1
 fi;
 
+part "manual verblike definition"
+if $grep '\tset\s*(name|desc|category|hidden|popup_menu|instant|invisibility)\s*=\s*(.*)\s' "${code_files[@]}"; then
+	echo
+	echo -e "${RED}ERROR: Found a manual verblike attribute set. Verbs are shimmed, use GAME_VERB() or ADMIN_VERB() instead, or if this absolutely has to be manually defined, use VERBLIKE_SET().${NC}"
+	st=1
+fi;
+
 part "can_perform_action argument check"
 if $grep 'can_perform_action\(\s*\)' "${code_files[@]}"; then
 	echo

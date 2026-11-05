@@ -208,7 +208,7 @@
 /obj/item/soulstone/proc/release_shades(mob/user, silent = FALSE)
 	for(var/mob/living/basic/shade/captured_shade in src)
 		captured_shade.forceMove(get_turf(user))
-		captured_shade.cancel_camera()
+		captured_shade.actually_cancel_camera()
 		update_appearance()
 		if(!silent)
 			if(IS_CULTIST(user))
@@ -396,7 +396,7 @@
 		if(IS_CULTIST(user))
 			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
 
-	soulstone_spirit.cancel_camera()
+	soulstone_spirit.actually_cancel_camera()
 	update_appearance()
 	if(user)
 		if(IS_CULTIST(user))
@@ -511,7 +511,7 @@
 	sense_alert = newstruct.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(sense_alert)
 		sense_alert.construct_owner = newstruct
-	newstruct.cancel_camera()
+	newstruct.actually_cancel_camera()
 
 /obj/item/soulstone/anybody
 	required_role = null

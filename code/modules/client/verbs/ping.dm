@@ -1,4 +1,4 @@
-GAME_VERB_NATIVE_INSTANT(/client, update_ping, ".update_ping", null, time as num)
+GAME_VERB_NATIVE_INSTANT_NO_QUEUE(/client, update_ping,".update_ping", null, time as num)
 	var/ping = pingfromtime(time)
 	lastping = ping
 	if (!avgping)
@@ -9,7 +9,7 @@ GAME_VERB_NATIVE_INSTANT(/client, update_ping, ".update_ping", null, time as num
 /client/proc/pingfromtime(time)
 	return ((world.time+world.tick_lag*TICK_USAGE_REAL/100)-time)*100
 
-GAME_VERB_NATIVE_INSTANT(/client, display_ping, ".display_ping", null, time as num)
+GAME_VERB_NATIVE_INSTANT_NO_QUEUE(/client, display_ping,".display_ping", null, time as num)
 	to_chat(src, span_notice("Round trip ping took [round(pingfromtime(time),1)]ms"))
 
 GAME_VERB(/client, ping, "Ping", "OOC")
