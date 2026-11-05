@@ -75,6 +75,7 @@
 	combo_timer = 3.5  SECONDS
 
 	var/datum/action/jigotai/jigotai = new()
+	var/datum/action/cooldown/golden_bolt/bolt = new()
 
 	help_verb = /mob/living/carbon/human/proc/judo_help
 
@@ -93,11 +94,13 @@
 		to_chat(owner, span_userdanger("You suddenly feel like you could negotiate with gravity itself... well at least your Boss."))
 		owner.apply_status_effect(/datum/status_effect/weapon_lock)
 		jigotai.Grant(owner)
+		//bolt.Grant(owner)
 
 /datum/martial_art/corpjudo/remove(mob/living/owner)
 	. = ..()
 	owner.remove_status_effect(/datum/status_effect/weapon_lock)
 	jigotai.Remove(owner)
+	//bolt.Remove(owner)
 	if(.)
 		to_chat(owner, span_userdanger("As the belt leaves your waist, the secrets of Judo vanish like quarterly profits."))
 
@@ -313,7 +316,9 @@
 	. = ..()
 	if(!.)
 		return .
-	if(!do_after(owner, 1 SECONDS, extra_checks = CALLBACK(src, PROC_REF(IsAvailable))))
+	if(DOING_INTERACTION(owner, "doafter_jigotai"))
+		return FALSE
+	if(!do_after(owner, 1 SECONDS, interaction_key = "doafter_jigotai", extra_checks = CALLBACK(src, PROC_REF(IsAvailable))))
 		return FALSE
 	owner.visible_message(span_danger("[owner] assumes a defensive posture."), "<b><i>Your body is ready for an attack. You will counter if struck.</i></b>")
 	active = TRUE
@@ -396,3 +401,124 @@
 ///datum/action/jigotai/proc/on_attackby(mob/living/carbon/human/carp_user, obj/item/melee/touch_attack/touch_weapon, mob/attacker, params)
 //	SIGNAL_HANDLER //Used if we want to counter touch_attack weapons and even cause them to be applied to attacker. Hold for now
 //	to_chat(owner, "hit")
+
+/datum/action/cooldown/golden_bolt
+	name = "Golden Bolt"
+	desc = "Use the belts Nanites to summon an electric bolt. Those struck feel their muscles tense up slowing them down."
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS|AB_CHECK_LYING
+
+	var/fired_cooldown = 15 SECONDS
+	var/obj/item/hand_item/golden_bolt/hand_bolt
+
+//COMSIG_PROJECTILE_FIRER_BEFORE_FIRE
+/datum/action/cooldown/golden_bolt/Grant(mob/grant_to)
+	. = ..()
+	if(!isnull(owner))
+		RegisterSignal(owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(activate_cooldown))
+
+/datum/action/cooldown/golden_bolt/Remove(mob/remove_from)
+	. = ..()
+	UnregisterSignal(remove_from, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
+	QDEL_NULL(hand_bolt)
+
+/datum/action/cooldown/golden_bolt/Activate(atom/target)
+	if(QDELETED(hand_bolt))
+		hand_bolt = null
+	if(istype(hand_bolt))
+		QDEL_NULL(hand_bolt)
+		return
+	hand_bolt = new /obj/item/hand_item/golden_bolt(owner)
+	if(owner.put_in_active_hand(hand_bolt))
+		owner.visible_message("[owner] summons a ball of energy into [owner.p_Their()] hand.",
+		"Your hand now crackles with the belt's energy."
+		)
+	else
+		QDEL_NULL(hand_bolt)
+	return .
+
+/datum/action/cooldown/golden_bolt/proc/activate_cooldown(datum/source, obj/projectile/bullet, atom/firer, atom/original_target)
+	SIGNAL_HANDLER
+	if((firer == owner) && istype(bullet, /obj/projectile/golden_bolt))
+		StartCooldown(fired_cooldown)
+
+/obj/item/hand_item/golden_bolt
+	name = "\improper golden bolt"
+	desc = "Take all the energy you collected and fire it at your opponent."
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "duffelcurse"
+	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
+
+	var/bolt_projectile = /obj/projectile/golden_bolt
+
+/obj/item/hand_item/golden_bolt/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_item/golden_bolt/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	var/obj/projectile/fired_bolt = new /obj/projectile/golden_bolt(get_turf(user))
+
+	//Shooting Code:
+	fired_bolt.original = target
+	fired_bolt.fired_from = user
+	fired_bolt.firer = user // don't hit ourself that would be really annoying
+	fired_bolt.impacted = list(WEAKREF(user) = TRUE) // just to make sure we don't hit the wearer
+	fired_bolt.aim_projectile(target, user)
+	fired_bolt.fire()
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/projectile/golden_bolt
+	name = "Golden Bolt"
+	icon_state = "fireball"
+	hitsound = 'sound/items/weapons/taser3.ogg'
+	hitsound_wall = 'sound/items/weapons/taser3.ogg'
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	speed = 1.6
+	damage_type = BRUTE
+	damage = 0 // Meant to slow does no damage
+	armour_penetration = 100 // Do I need this?
+	color =  COLOR_YELLOW
+
+/obj/projectile/golden_bolt/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
+/obj/projectile/golden_bolt/fire(angle, atom/direct_target)
+	if(firer && ishuman(firer))
+		var/mob/living/carbon/human/ryu = firer
+		if(prob(10))
+			ryu.say("Hadouken!!!")
+		else
+			ryu.say("Golden Bolt!!!")
+	return ..()
+
+/obj/projectile/golden_bolt/impact(atom/A)
+	def_zone = BODY_ZONE_CHEST
+
+	if(damage > 0 || !ishuman(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+		return ..()
+
+	harmless_on_hit(A)
+	qdel(src)
+	return FALSE
+
+/obj/projectile/golden_bolt/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+
+	if(. == BULLET_ACT_BLOCK)
+		return .
+
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		try_slow(human_target)
+
+/obj/projectile/golden_bolt/proc/harmless_on_hit(mob/living/carbon/human/living_target)
+	playsound(get_turf(living_target), hitsound, 100, TRUE)
+	try_slow(living_target)
+
+/obj/projectile/golden_bolt/proc/try_slow(mob/living/carbon/human/living_target)
+	living_target.apply_status_effect(/datum/status_effect/judo_slow)
+	playsound(living_target, 'sound/items/weapons/taserhit.ogg', clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1,  mixer_channel = mixer_channel)
+	living_target.visible_message("<b>[living_target] looks like they are struggling to move.",
+	span_userdanger("Your muscles are extremely tense making moving more difficult.")
+	)

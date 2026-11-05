@@ -1048,6 +1048,22 @@
 /datum/movespeed_modifier/freezing_blast
 	multiplicative_slowdown = 1
 
+/datum/status_effect/judo_slow
+	id = "judo_slow"
+	alert_type = null
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/judo_slow/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/judo_slow, update = TRUE)
+	return ..()
+
+/datum/status_effect/judo_slow/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/judo_slow, update = TRUE)
+
+/datum/movespeed_modifier/judo_slow
+	multiplicative_slowdown = 3.2
+
 /datum/status_effect/discoordinated
 	id = "discoordinated"
 	status_type = STATUS_EFFECT_UNIQUE
