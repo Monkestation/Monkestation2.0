@@ -440,9 +440,9 @@ GLOBAL_LIST_EMPTY(species_list)
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
 
-			to_chat(M, rendered_message, avoid_highlighting = speaker_key == M.key)
+			to_chat(M, rendered_message, avoid_highlighting = speaker_key == M.key, confidential = admin_only)
 		else
-			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
+			to_chat(M, message, avoid_highlighting = speaker_key == M.key, confidential = admin_only)
 
 /**
  * Used to get the amount of change between two body temperatures

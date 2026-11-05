@@ -266,6 +266,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
+	replay_record_client("login", ckey)
 
 	var/reconnecting = FALSE
 	if(GLOB.persistent_clients_by_ckey[ckey])
@@ -644,6 +645,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
+	replay_record_client("logout", ckey)
 	persistent_client?.set_client(null)
 
 	log_access("Logout: [key_name(src)]")

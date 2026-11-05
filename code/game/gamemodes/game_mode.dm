@@ -197,7 +197,7 @@
 
 	var/concatenated_message = msg.Join()
 	log_admin(concatenated_message)
-	to_chat(GLOB.admins, concatenated_message)
+	to_chat(GLOB.admins, concatenated_message, confidential = TRUE)
 
 /datum/game_mode/proc/generate_station_goals(greenshift)
 	var/goal_budget = greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget)

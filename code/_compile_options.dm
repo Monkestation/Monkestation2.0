@@ -76,9 +76,9 @@
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 // #define UNIT_TESTS
 
-// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
+// If this is uncommented, will attempt to load and initialize byond_tracy.dll/libbyond_tracy.so by default.
 // Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
-// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
+// byond-re's crates/replay-recorder/build_production.ps1 builds it and copies it here.
 // #define USE_BYOND_TRACY
 
 // If defined, we will compile with FULL timer debug info, rather then a limited scope

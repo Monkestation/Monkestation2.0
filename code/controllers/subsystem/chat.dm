@@ -61,22 +61,33 @@ SUBSYSTEM_DEF(chat)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/chat/proc/queue(queue_target, list/message_data)
+/datum/controller/subsystem/chat/proc/queue(queue_target, list/message_data, confidential = FALSE)
 	var/list/targets = islist(queue_target) ? queue_target : list(queue_target)
+	var/list/replay_ckeys = (GLOB.replay_recorder_running && !confidential) ? list() : null
 
 	for(var/target in targets)
 		var/client/client = CLIENT_FROM_VAR(target)
 		if(isnull(client))
 			continue
 		LAZYADDASSOCLIST(client_to_payloads, client.ckey, generate_payload(client, message_data))
+		replay_ckeys?.Add(client.ckey)
 
-/datum/controller/subsystem/chat/proc/send_immediate(send_target, list/message_data)
+	// to_chat(world) already swapped world for GLOB.clients, so this means "everyone"
+	if(length(replay_ckeys))
+		replay_recorder_chat(replay_ckeys, message_data["type"], message_data["text"], message_data["html"], queue_target == GLOB.clients)
+
+/datum/controller/subsystem/chat/proc/send_immediate(send_target, list/message_data, confidential = FALSE)
 	var/list/targets = islist(send_target) ? send_target : list(send_target)
+	var/list/replay_ckeys = (GLOB.replay_recorder_running && !confidential) ? list() : null
 	for(var/target in targets)
 		var/client/client = CLIENT_FROM_VAR(target)
 		if(isnull(client))
 			continue
 		send_payload_to_client(client, generate_payload(client, message_data))
+		replay_ckeys?.Add(client.ckey)
+
+	if(length(replay_ckeys))
+		replay_recorder_chat(replay_ckeys, message_data["type"], message_data["text"], message_data["html"], send_target == GLOB.clients)
 
 /datum/controller/subsystem/chat/proc/handle_resend(client/client, sequence)
 	var/list/client_history = client_to_reliability_history[client.ckey]
