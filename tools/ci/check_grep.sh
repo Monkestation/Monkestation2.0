@@ -210,13 +210,13 @@ if $grep -ni "oozling" "${code_files[@]}"; then
     st=1
 fi;
 part "map json naming"
-if ls _maps/*.json | $grep "[A-Z]"; then
+if ls _maps/map_jsons/*.json | $grep "[A-Z]"; then
 	echo
     echo -e "${RED}ERROR: Uppercase in a map .JSON file detected, these must be all lowercase.${NC}"
     st=1
 fi;
 part "map json sanity"
-for json in _maps/*.json; do
+for json in _maps/map_jsons/*.json; do
 	map_path=$(jq -r '.map_path' "$json")
 	while read map_file; do
 		filename="_maps/$map_path/$map_file"
