@@ -1,7 +1,7 @@
 /obj/item/smithed_part/weapon_part/tanto
 	icon_state = "katanablade"
 	base_name = "tanto blade"
-	weapon_name = "katana"
+	weapon_name = "tanto"
 
 	finished_desc = "A forged tanto, similar to a katana, but shorter for one-handed use."
 
