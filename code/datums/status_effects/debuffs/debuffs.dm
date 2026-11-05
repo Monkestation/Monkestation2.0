@@ -1051,7 +1051,7 @@
 /datum/status_effect/judo_slow
 	id = "judo_slow"
 	alert_type = null
-	duration = 5 SECONDS
+	duration = 3 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 
 /datum/status_effect/judo_slow/on_apply()
@@ -1062,7 +1062,7 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/judo_slow, update = TRUE)
 
 /datum/movespeed_modifier/judo_slow
-	multiplicative_slowdown = 3.2
+	multiplicative_slowdown = 2.5
 
 /datum/status_effect/discoordinated
 	id = "discoordinated"

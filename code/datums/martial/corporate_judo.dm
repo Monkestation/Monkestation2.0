@@ -94,13 +94,13 @@
 		to_chat(owner, span_userdanger("You suddenly feel like you could negotiate with gravity itself... well at least your Boss."))
 		owner.apply_status_effect(/datum/status_effect/weapon_lock)
 		jigotai.Grant(owner)
-		//bolt.Grant(owner)
+		bolt.Grant(owner)
 
 /datum/martial_art/corpjudo/remove(mob/living/owner)
 	. = ..()
 	owner.remove_status_effect(/datum/status_effect/weapon_lock)
 	jigotai.Remove(owner)
-	//bolt.Remove(owner)
+	bolt.Remove(owner)
 	if(.)
 		to_chat(owner, span_userdanger("As the belt leaves your waist, the secrets of Judo vanish like quarterly profits."))
 
@@ -300,6 +300,9 @@
 /datum/action/jigotai
 	name = "Jigotai"
 	desc = "Enter a defensive stance, readying yourself for an opponent's strike. If struck, use their own force against them to throw them to the ground."
+	button_icon = 'icons/hud/stances.dmi'
+	button_icon_state = "jigotai"
+
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS|AB_CHECK_LYING
 
 	var/active = FALSE
@@ -407,7 +410,7 @@
 	desc = "Use the belts Nanites to summon an electric bolt. Those struck feel their muscles tense up slowing them down."
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS|AB_CHECK_LYING
 
-	var/fired_cooldown = 15 SECONDS
+	var/fired_cooldown = 30 SECONDS
 	var/obj/item/hand_item/golden_bolt/hand_bolt
 
 //COMSIG_PROJECTILE_FIRER_BEFORE_FIRE
@@ -445,9 +448,10 @@
 	name = "\improper golden bolt"
 	desc = "Take all the energy you collected and fire it at your opponent."
 	icon = 'icons/obj/weapons/hand.dmi'
-	icon_state = "duffelcurse"
+	icon_state = "Golden_Bolt"
 	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
+	inhand_icon_state = "duffelcurse"
 
 	var/bolt_projectile = /obj/projectile/golden_bolt
 
@@ -469,7 +473,7 @@
 
 /obj/projectile/golden_bolt
 	name = "Golden Bolt"
-	icon_state = "fireball"
+	icon_state = "Golden_Bolt"
 	hitsound = 'sound/items/weapons/taser3.ogg'
 	hitsound_wall = 'sound/items/weapons/taser3.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -477,7 +481,6 @@
 	damage_type = BRUTE
 	damage = 0 // Meant to slow does no damage
 	armour_penetration = 100 // Do I need this?
-	color =  COLOR_YELLOW
 
 /obj/projectile/golden_bolt/Initialize(mapload)
 	. = ..()
@@ -487,6 +490,7 @@
 	if(firer && ishuman(firer))
 		var/mob/living/carbon/human/ryu = firer
 		if(prob(10))
+			icon_state = "hadouken"
 			ryu.say("Hadouken!!!")
 		else
 			ryu.say("Golden Bolt!!!")
