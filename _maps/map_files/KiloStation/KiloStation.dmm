@@ -2,11 +2,22 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/holopad,
+/turf/open/floor/engine,
+/area/station/tcommsat/computer)
 "aac" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/super/full,
 /turf/open/floor/circuit/green/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
+"aad" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/holopad,
+/turf/open/floor/engine/telecomms,
+/area/station/tcommsat/server)
 "aah" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -71340,9 +71351,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/central/fore)
-"wjG" = (
-/turf/open/floor/engine,
-/area/station/tcommsat/computer)
 "wjI" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -107795,7 +107803,7 @@ vbi
 sLU
 jBi
 nYp
-beN
+aad
 gIz
 nFf
 rWg
@@ -108316,7 +108324,7 @@ lun
 lED
 orT
 pkE
-wjG
+aab
 ulv
 vqw
 hwL
