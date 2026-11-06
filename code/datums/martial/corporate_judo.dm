@@ -351,6 +351,11 @@
 	SIGNAL_HANDLER
 
 	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK)
+		if(attack_type == THROWN_PROJECTILE_ATTACK)
+			if(hitby.throwforce > 7)
+				deactivate(source)
+		else if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+			deactivate(source)
 		return FAILED_BLOCK
 	if(!IsAvailable())
 		deactivate(source)
