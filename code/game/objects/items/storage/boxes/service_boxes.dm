@@ -204,3 +204,31 @@
 /obj/item/storage/box/stickers/googly/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/sticker/googly(src)
+
+/// A box containing a skub, for easier carry because skub is a bulky item.
+/obj/item/storage/box/stickers/skub
+	name = "skub box"
+	desc = "A box to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
+	icon_state = "hugbox"
+	illustration = "skub"
+
+/obj/item/storage/box/stickers/skub/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
+
+/obj/item/storage/box/stickers/skub/PopulateContents()
+	new /obj/item/skub(src)
+	new /obj/item/sticker/skub(src)
+	new /obj/item/sticker/skub(src)
+
+/obj/item/storage/box/stickers/anti_skub
+	name = "anti-skub stickers box"
+	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
+
+/obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/clothing/suit/costume/wellworn_shirt/skub))
+
+/obj/item/storage/box/stickers/anti_skub/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/sticker/anti_skub(src)

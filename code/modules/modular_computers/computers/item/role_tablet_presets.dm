@@ -433,6 +433,15 @@
 	greyscale_colors = "#333333#C7C7C7"
 	inserted_item = /obj/item/pen/fountain
 
+/obj/item/modular_computer/pda/pun_pun
+	name = "monkey PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/pun_pun")
+	greyscale_colors = "#ffcc66#914800"
+	starting_programs = list(
+		/datum/computer_file/program/bounty_board,
+		/datum/computer_file/program/emojipedia,
+	)
+
 /obj/item/modular_computer/pda/clown
 	name = "clown PDA"
 	icon = 'icons/obj/devices/modular_pda.dmi'
