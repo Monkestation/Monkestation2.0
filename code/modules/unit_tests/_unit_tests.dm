@@ -173,7 +173,7 @@
 #include "lootpanel.dm"
 #include "lungs.dm"
 #include "machine_disassembly.dm"
-// #include "map_landmarks.dm" // fails on 8 maps missing start landmarks, turn back on once they're mapped in
+#include "map_landmarks.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mecha_damage.dm"
