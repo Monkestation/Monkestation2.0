@@ -52,6 +52,7 @@
  * Captalism in the year 2525, everything in a vending machine, even love
  */
 /obj/machinery/vending
+	abstract_type = /obj/machinery/vending
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'

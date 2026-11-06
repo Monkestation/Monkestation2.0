@@ -2,6 +2,7 @@
 #define AUGGED_LIMB_EMP_BURN_DAMAGE 2
 
 /obj/item/bodypart
+	abstract_type = /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
 	force = 3
