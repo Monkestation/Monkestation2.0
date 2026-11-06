@@ -118,17 +118,17 @@
 				outmsg = span_warning("You fail to blind [C] by shining [src] at [C.p_their()] eyes!")
 				log_combat(user, C, "attempted to blind with a laser pointer",src)
 
-	//robots
+	// Cyborgs.
 	else if(iscyborg(target))
-		var/mob/living/silicon/S = target
-		log_combat(user, S, "shone in the sensors", src)
-		//chance to actually hit the eyes depends on internal component
-		if(prob(effectchance * diode.rating) && S.flash_act(affect_silicon = TRUE))
-			S.Paralyze(rand(100,200))
-			to_chat(S, span_danger("Your sensors were overloaded by a laser!"))
-			outmsg = span_notice("You overload [S] by shining [src] at [S.p_their()] sensors.")
+		var/mob/living/silicon/robot/target_cyborg = target
+		log_combat(user, target_cyborg, "shone in the sensors", src)
+		// Chance to actually hit the eyes depends on internal component.
+		if(prob(effectchance * diode.rating) && target_cyborg.flash_act(affect_silicon = TRUE))
+			target_cyborg.set_temp_blindness_if_lower(5 SECONDS)
+			to_chat(target_cyborg, span_danger("Your sensors were overloaded by a laser!"))
+			outmsg = span_notice("You overload [target_cyborg] by shining [src] at [target_cyborg.p_their()] sensors.")
 		else
-			outmsg = span_warning("You fail to overload [S] by shining [src] at [S.p_their()] sensors!")
+			outmsg = span_warning("You fail to overload [target_cyborg] by shining [src] at [target_cyborg.p_their()] sensors!")
 
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
