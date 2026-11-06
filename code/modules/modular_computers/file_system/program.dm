@@ -152,6 +152,9 @@
 		if(singular_access in found_access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
 			return TRUE
 
+	if(downloading && (ACCESS_NETWORK in found_access))
+		return TRUE //Network access allows downloading anything, as long as it's not a syndinet program.
+
 	if(loud && user)
 		to_chat(user, span_danger("\The [computer_access] flashes an \"Access Denied\" warning."))
 	return FALSE
