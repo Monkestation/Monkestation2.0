@@ -1675,7 +1675,7 @@
 			balloon_alert(user, "insufficient funds")
 			return TRUE
 		/// Make the transaction
-		payee.adjust_money(-dispensed_item.custom_price, , "Vending: [dispensed_item]")
+		payee.adjust_money(-dispensed_item.custom_price, "Vending: [dispensed_item]")
 		linked_account.adjust_money(dispensed_item.custom_price, "Vending: [dispensed_item] Bought")
 		linked_account.bank_card_talk("[payee.account_holder] made a [dispensed_item.custom_price] \
 		cr purchase at your custom vendor.")
