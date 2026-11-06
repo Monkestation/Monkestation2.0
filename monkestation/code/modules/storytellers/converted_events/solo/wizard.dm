@@ -14,7 +14,6 @@
 	maximum_antags = 1
 	enemy_roles = list(
 		JOB_AI,
-		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
