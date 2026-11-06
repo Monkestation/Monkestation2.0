@@ -7,11 +7,11 @@
 "ab" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/vending/tool,
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/space/has_grav/ccpost/engineering)
 "ac" = (
@@ -168,11 +168,9 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "aq" = (
-/obj/machinery/vending/cigarette{
-	extended_inventory = 1
-	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/light/directional/west,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "ar" = (
@@ -258,6 +256,7 @@
 	},
 /obj/machinery/light_switch/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/status_display/ccpost_beacon_status/directional/south,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "az" = (
@@ -350,7 +349,6 @@
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "aI" = (
-/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -439,21 +437,30 @@
 	pixel_y = 7;
 	pixel_x = 6
 	},
+/obj/item/paper/pamphlet/ccpost_visitor{
+	pixel_y = -1;
+	pixel_x = -4
+	},
+/obj/item/paper/pamphlet/ccpost_visitor{
+	pixel_y = -5;
+	pixel_x = -2
+	},
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/lobby)
 "aQ" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
-	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/obj/machinery/vending/cola/red,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "aW" = (
-/obj/structure/hedge,
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
+/obj/effect/turf_decal/siding/dark,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "aY" = (
@@ -471,10 +478,11 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/medbay)
 "bp" = (
-/obj/structure/chair/sofa/corp{
-	dir = 8
-	},
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/obj/machinery/status_display/ccpost_beacon_status/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "bv" = (
@@ -516,7 +524,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "bH" = (
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "bS" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
@@ -528,8 +536,16 @@
 	pixel_y = 11;
 	pixel_x = 2
 	},
-/obj/item/hand_labeler,
 /obj/machinery/light/directional/east,
+/obj/item/restraints/handcuffs{
+	pixel_y = 7
+	},
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/obj/item/restraints/handcuffs{
+	pixel_y = -1
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/office)
 "bX" = (
@@ -559,12 +575,12 @@
 /area/ruin/space/has_grav/ccpost/commsroom)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/apc/full_charge,
 /obj/structure/closet/crate/bin,
 /obj/item/storage/bag/trash,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "cg" = (
@@ -628,6 +644,15 @@
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
+"cC" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/lime,
+/turf/template_noop,
+/area/template_noop)
 "cG" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
 /obj/structure/sign/poster/official/report_crimes/directional/south,
@@ -665,7 +690,7 @@
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 8
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "da" = (
 /obj/item/toy/plush/lizard_plushie/green{
@@ -878,12 +903,10 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/ccpost/medbay)
 "fV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
 	},
-/obj/structure/sign/warning/doors/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "fW" = (
 /obj/effect/turf_decal/siding/wood{
@@ -926,6 +949,10 @@
 	pixel_y = 31;
 	pixel_x = 6
 	},
+/obj/machinery/button/ccpost_beacon_control/directional/north{
+	pixel_y = 31;
+	pixel_x = -6
+	},
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/lobby)
 "gd" = (
@@ -955,7 +982,7 @@
 "gg" = (
 /obj/structure/billboard/nanotrasen,
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "gl" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -1012,6 +1039,9 @@
 	req_access = list("nt_rep");
 	pixel_y = 32;
 	req_one_access = list("nt_rep")
+	},
+/obj/machinery/turretid/ccpost/perimeter{
+	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/office)
@@ -1078,12 +1108,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "gW" = (
-/obj/effect/turf_decal/siding/dark/corner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "he" = (
@@ -1119,9 +1150,6 @@
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_y = 3
 	},
-/obj/item/restraints/handcuffs{
-	pixel_y = 3
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "hj" = (
@@ -1155,9 +1183,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/preopen{
-	id = "ccpost_lockdown"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -1385,8 +1410,9 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
 "jy" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
@@ -1534,20 +1560,14 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "kK" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"kM" = (
+/obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
-"kM" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/lime,
-/turf/template_noop,
-/area/ruin/space/has_grav/ccpost/asteroid)
 "kP" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -1779,6 +1799,13 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/ccpost/medbay)
+"nc" = (
+/obj/structure/chair/sofa/corp/right,
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
 "nf" = (
 /obj/structure/chair/office/tactical,
 /obj/machinery/button/door{
@@ -1803,7 +1830,6 @@
 	},
 /obj/effect/turf_decal/siding/dark/corner,
 /obj/machinery/camera/autoname/directional/west{
-	network = list("ss13","ccpost");
 	c_tag = "CC Liaison Outpost - Comms Chamber"
 	},
 /obj/machinery/firealarm/directional/west,
@@ -1908,13 +1934,13 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "oL" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "oQ" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1938,7 +1964,7 @@
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "pa" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "ps" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -2137,15 +2163,11 @@
 	pixel_y = -13
 	},
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "rD" = (
-/obj/structure/chair/sofa/corp/right,
-/obj/structure/sign/poster/official/safety_internals/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west{
-	pixel_x = -4
-	},
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/lobby)
 "rV" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -2222,6 +2244,7 @@
 	c_tag = "Exterior: Northwest";
 	network = list("ccpost")
 	},
+/obj/machinery/porta_turret/ccpost/perimeter,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "sm" = (
@@ -2294,6 +2317,9 @@
 "tb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "ti" = (
@@ -2304,6 +2330,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/cafeteria)
+"tj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
 "tl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2380,6 +2416,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/centralhallway)
+"uA" = (
+/obj/structure/chair/sofa/corp/corner,
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
 "uL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2571,6 +2614,12 @@
 /obj/machinery/duct,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/centralhallway)
+"wY" = (
+/obj/item/beacon/ccpost_lobby,
+/obj/effect/turf_decal/delivery/blue,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
 "wZ" = (
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/vending/autodrobe/all_access,
@@ -2632,6 +2681,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Cargo Bay"
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -2736,6 +2789,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/porta_turret/ccpost/perimeter,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "zo" = (
@@ -2751,6 +2805,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/ccpost/medbay)
+"zw" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
 "zy" = (
 /obj/structure/sign/flag/nanotrasen/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -2772,10 +2836,9 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/space/has_grav/ccpost/commsroom)
 "zG" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/ruin/space/has_grav/ccpost/asteroid)
+/obj/effect/turf_decal/stripes/asteroid/corner,
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
 "zR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -2791,6 +2854,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/lobby)
 "zT" = (
@@ -2813,6 +2877,13 @@
 /obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/space/has_grav/ccpost/engineering)
+"Ao" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/item/kirbyplants/organic/plant2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/ccpost/lobby)
 "Ar" = (
 /obj/structure/sink/kitchen/directional/south,
 /obj/structure/cable,
@@ -2832,7 +2903,7 @@
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "AC" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
@@ -2857,7 +2928,6 @@
 	pixel_y = 6;
 	layer = 4
 	},
-/obj/machinery/airalarm/directional/east,
 /obj/machinery/status_display/ccpost_remote_status/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
@@ -2987,12 +3057,18 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/office)
 "CO" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
-/obj/structure/closet/emcloset,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/ccpost/lobby)
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/cerulean,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("ccpost");
+	c_tag = "Exterior: Airlock Access"
+	},
+/turf/template_noop,
+/area/template_noop)
 "Dj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -3006,11 +3082,7 @@
 	},
 /area/ruin/space/has_grav/ccpost/boardroom)
 "Do" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/item/beacon{
-	name = "Central Command Liaison Outpost Lobby"
-	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "Dz" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3062,7 +3134,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "DY" = (
 /obj/machinery/airalarm/directional/south,
@@ -3094,10 +3166,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "Ev" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/caution,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
+/obj/structure/chair/sofa/corp,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "Ew" = (
 /obj/structure/closet/crate,
@@ -3159,7 +3232,7 @@
 /area/ruin/space/has_grav/ccpost/office)
 "Fb" = (
 /obj/machinery/nuclearbomb/beer,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "Ff" = (
 /obj/structure/window/reinforced/spawner/directional/west{
@@ -3236,6 +3309,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 2
 	},
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "FL" = (
@@ -3466,7 +3540,7 @@
 /area/ruin/space/has_grav/ccpost/office)
 "HE" = (
 /obj/effect/turf_decal/stripes/asteroid/corner,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "HF" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3488,6 +3562,7 @@
 	c_tag = "Exterior: Southwest";
 	network = list("ccpost")
 	},
+/obj/machinery/porta_turret/ccpost/perimeter,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "HH" = (
@@ -3576,7 +3651,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "IL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3594,18 +3669,9 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/space/has_grav/ccpost/engineering)
 "IW" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/cerulean,
-/obj/machinery/camera/autoname/directional/south{
-	network = list("ccpost");
-	c_tag = "Exterior: Airlock Access"
-	},
-/turf/template_noop,
-/area/ruin/space/has_grav/ccpost/asteroid)
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/ccpost/cargo)
 "IZ" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/siding/dark{
@@ -3645,9 +3711,6 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/preopen{
-	id = "ccpost_lockdown"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/wood/large,
@@ -3727,7 +3790,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "Lb" = (
@@ -3836,7 +3899,7 @@
 /obj/machinery/light/floor/has_bulb{
 	pixel_y = -13
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "LU" = (
 /turf/closed/wall/rock,
@@ -3886,10 +3949,10 @@
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "Mr" = (
-/obj/structure/chair/sofa/corp/left{
-	dir = 8
-	},
 /obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "Mt" = (
@@ -3938,6 +4001,7 @@
 	network = list("ccpost");
 	c_tag = "Exterior: North"
 	},
+/obj/machinery/porta_turret/ccpost/perimeter,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "ML" = (
@@ -3953,6 +4017,7 @@
 	network = list("ccpost");
 	c_tag = "Exterior: Northeast"
 	},
+/obj/machinery/porta_turret/ccpost/perimeter,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "MO" = (
@@ -4103,9 +4168,7 @@
 /area/ruin/space/has_grav/ccpost/boardroom)
 "OK" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/vending/coffee{
-	extended_inventory = 1
-	},
+/obj/machinery/vending/coffee,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/lobby)
 "ON" = (
@@ -4164,6 +4227,10 @@
 /obj/item/folder/red{
 	pixel_x = -7;
 	pixel_y = 6
+	},
+/obj/item/paper/pamphlet/ccpost_visitor{
+	pixel_y = 3;
+	pixel_x = -1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/boardroom)
@@ -4260,6 +4327,7 @@
 	network = list("ccpost");
 	c_tag = "Exterior: Southeast"
 	},
+/obj/machinery/porta_turret/ccpost/perimeter,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "QG" = (
@@ -4380,7 +4448,7 @@
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 1
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "Ry" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -4407,8 +4475,13 @@
 	},
 /area/ruin/space/has_grav/ccpost/boardroom)
 "RD" = (
-/obj/structure/chair/sofa/corp/corner,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/sign/warning/doors/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset/anchored,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/lobby)
 "RO" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -4428,6 +4501,10 @@
 "St" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
+	},
+/obj/machinery/camera/autoname/directional/west{
+	network = list("ccpost");
+	c_tag = "CC Liaison Outpost - Security Office"
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/office)
@@ -4453,7 +4530,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/full_charge,
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/office)
 "SD" = (
@@ -4501,11 +4577,9 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/quarters)
 "Tc" = (
-/obj/machinery/vending/coffee{
-	extended_inventory = 1
-	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/cola,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "Td" = (
@@ -4659,7 +4733,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "Up" = (
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
@@ -4667,6 +4741,7 @@
 	},
 /obj/machinery/recharge_station,
 /obj/machinery/light/directional/south,
+/obj/machinery/status_display/ccpost_beacon_status/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/office)
 "UN" = (
@@ -4680,6 +4755,7 @@
 	network = list("ccpost")
 	},
 /obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/status_display/ccpost_remote_status/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "UP" = (
@@ -4875,11 +4951,10 @@
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "WW" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 10
-	},
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/ccpost/asteroid)
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ccpost/lobby)
 "Xa" = (
 /obj/effect/turf_decal/siding/dark/end{
 	dir = 1
@@ -4923,6 +4998,9 @@
 /obj/structure/hedge,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
@@ -4992,6 +5070,9 @@
 /area/ruin/space/has_grav/ccpost/maintenance)
 "XJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/lobby)
 "XW" = (
@@ -5011,6 +5092,11 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/ccpost/boardroom)
+"Yo" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/template_noop)
 "Yv" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/door/window/left/directional/south{
@@ -5073,15 +5159,13 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/machinery/vending/cigarette{
-	extended_inventory = 1
-	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/lobby)
 "Zt" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/west,
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "ZF" = (
@@ -6136,7 +6220,7 @@ yn
 "}
 (24,1,1) = {"
 yn
-yn
+kK
 bH
 bH
 pa
@@ -6180,10 +6264,10 @@ yn
 "}
 (25,1,1) = {"
 yn
-yn
+kK
 bH
-HE
-DT
+bH
+pa
 GN
 fa
 GU
@@ -6224,10 +6308,10 @@ yn
 "}
 (26,1,1) = {"
 yn
-yn
-HE
-sy
-Dj
+zG
+oK
+oK
+DT
 et
 aO
 EW
@@ -6268,10 +6352,10 @@ yn
 "}
 (27,1,1) = {"
 yn
-HE
-DT
-Dj
-aW
+sy
+Oe
+Oe
+Oe
 et
 et
 Mk
@@ -6311,11 +6395,11 @@ yn
 yn
 "}
 (28,1,1) = {"
-kM
-sy
+yn
 Oe
-sy
-Fr
+nc
+kM
+Ao
 aQ
 et
 et
@@ -6355,12 +6439,12 @@ yn
 yn
 "}
 (29,1,1) = {"
-zG
-tr
+yn
+Oe
 Ev
-jg
+wY
 Do
-jy
+aW
 yM
 EV
 Cp
@@ -6399,10 +6483,10 @@ yn
 yn
 "}
 (30,1,1) = {"
-IW
-sy
+yn
 Oe
-sy
+uA
+zw
 fV
 jy
 vn
@@ -6443,11 +6527,11 @@ yn
 yn
 "}
 (31,1,1) = {"
-yn
-cR
-WW
-Dj
-CO
+cC
+sy
+Oe
+sy
+Fr
 gW
 aP
 Ne
@@ -6487,12 +6571,12 @@ yn
 yn
 "}
 (32,1,1) = {"
-yn
-yn
-cR
-kK
+Yo
+tr
+WW
+jg
 rD
-XJ
+tj
 XJ
 tb
 ka
@@ -6531,10 +6615,10 @@ yn
 yn
 "}
 (33,1,1) = {"
-yn
-yn
-bH
-Dj
+CO
+sy
+Oe
+sy
 RD
 bp
 Mr
@@ -6577,7 +6661,7 @@ yn
 (34,1,1) = {"
 yn
 bH
-Iz
+bH
 sy
 sy
 sy
@@ -6620,7 +6704,7 @@ yn
 "}
 (35,1,1) = {"
 yn
-Iz
+bH
 wz
 wz
 BF
@@ -6664,7 +6748,7 @@ yn
 "}
 (36,1,1) = {"
 yn
-Iz
+bH
 wz
 qg
 tF
@@ -6751,7 +6835,7 @@ yn
 yn
 "}
 (38,1,1) = {"
-yn
+Iz
 Iz
 wz
 nO
@@ -6761,7 +6845,7 @@ Lu
 BN
 oU
 oU
-BN
+IW
 La
 wz
 Cn

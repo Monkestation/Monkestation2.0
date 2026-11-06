@@ -383,11 +383,11 @@
 	var/loss_effect_type = /datum/ccpost_installation_loss_effect
 
 /datum/ccpost_sector_contact/rel_a17/contact_1
-	contact_name = "Addust Johnson"
+	contact_name = "Rebecca 'Gold' Trail"
 	contact_role = "Communications Supervisor"
 
 /datum/ccpost_sector_contact/rel_a17/contact_2
-	contact_name = "Chip Shafer"
+	contact_name = "Isaac Clarke"
 	contact_role = "Senior Relay Technician"
 
 /datum/ccpost_sector_contact/rel_a17/contact_3
@@ -2625,6 +2625,11 @@
 	/// Sequential identifier for sector communications.
 	var/next_sector_message_number = 1
 
+	/// Shared cooldown for all Liaison Outpost station-wide broadcasts.
+	COOLDOWN_DECLARE(station_broadcast_cooldown)
+	var/station_broadcast_cost = 25
+	var/station_broadcast_cooldown_duration = 5 MINUTES
+
 	/// Maximum communications retained.
 	var/max_sector_messages = 100
 
@@ -4174,6 +4179,16 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	build_path = /obj/machinery/computer/ccpost_sector_comms
 
 
+// Shared authentication for Central Command outpost administrative consoles.
+/proc/ccpost_has_centcom_id(mob/user)
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return FALSE
+
+	var/obj/item/card/id/identification = human_user.wear_id?.GetID()
+	return istype(identification, /obj/item/card/id/advanced/centcom)
+
+
 // CENTRAL COMMAND SECTOR COMMUNICATIONS TERMINAL
 
 /obj/machinery/computer/ccpost_sector_comms
@@ -4212,6 +4227,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /obj/machinery/computer/ccpost_sector_comms/examine(mob/user)
 	. = ..()
+	if(!ccpost_has_centcom_id(user))
+		return
 
 	var/datum/ccpost_sector_network/network = GLOB.ccpost_sector_network
 
@@ -4239,6 +4256,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 )
 	if(!istype(tool, /obj/item/paper/ccpost_sector_paperwork))
 		return NONE
+	if(!ccpost_has_centcom_id(user))
+		balloon_alert(user, "Central Command ID required")
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/paper/ccpost_sector_paperwork/paperwork = tool
 
@@ -4314,23 +4334,23 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(!request)
 		return ""
 
-	var/print_text = "<center><b>[request.installation_name]</b></center><br>"
-	print_text += "<center><small><i>Authenticated Sector Administrative Document</i></small></center><hr><hr><small>"
-	print_text += "<b>Reference:</b> [request.paperwork_code]<br>"
-	print_text += "<b>Installation:</b> [request.installation_name] ([request.installation_code])<br>"
-	print_text += "<b>Sender:</b> [request.sender_role] [request.sender_name]<br>"
-	print_text += "<b>Type:</b> ADMINISTRATIVE DOCUMENT<br>"
-	print_text += "<b>Priority:</b> [request.priority]<br>"
-	print_text += "<b>Issued:</b> [request.issued_at]<br>"
-	print_text += "<hr><br>"
-	print_text += "<b>[request.title]</b><br><br>"
-	print_text += "[request.body]<br><br>"
-	print_text += "<hr>"
-	print_text += "<b>Required Action:</b> Review this document, apply an official Central Command authorization stamp, and return it through the Sector Communications Terminal.<br><br>"
-	print_text += "<i>Machine reference: [request.paperwork_code]</i></small>"
-
+	var/print_text = ccpost_paper_header()
+	print_text += ccpost_paper_document_heading("Sector Administrative Document", request.paperwork_code, "Incoming Authorization")
+	print_text += ccpost_paper_value_field("Classification", "Internal")
+	print_text += ccpost_paper_value_field("Priority", request.priority)
+	print_text += ccpost_paper_value_field("Category", "Sector Administration")
+	print_text += ccpost_paper_value_field("Subject", request.title)
+	print_text += ccpost_paper_value_field("Issued", request.issued_at)
+	print_text += ccpost_paper_section("Issuing Installation")
+	print_text += ccpost_paper_value_field("Installation", "[request.installation_name] ([request.installation_code])")
+	print_text += ccpost_paper_value_field("Sender", "[request.sender_role] [request.sender_name]")
+	print_text += ccpost_paper_section("Administrative Directive")
+	print_text += "[ccpost_paper_paragraph(request.body)]<br>"
+	print_text += ccpost_paper_section("Required Authorization")
+	print_text += "Review this request, apply an official Central Command authorization stamp, and return the original paperwork through the Sector Communications Terminal.<br>"
+	print_text += ccpost_paper_note("Machine reference: [request.paperwork_code]. This paper is a returnable administrative document, not an ordinary archived transcript.")
+	print_text += ccpost_paper_stamp_area()
 	return print_text
-
 
 /obj/machinery/computer/ccpost_sector_comms/proc/print_sector_paperwork(datum/ccpost_sector_paperwork_request/request)
 	if(!request || request.status != CCPOST_PAPERWORK_AWAITING_REVIEW)
@@ -4391,10 +4411,18 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	)
 
 
+/obj/machinery/computer/ccpost_sector_comms/ui_status(mob/user)
+	if(!ccpost_has_centcom_id(user))
+		return UI_CLOSE
+	return ..()
+
 /obj/machinery/computer/ccpost_sector_comms/ui_interact(
 	mob/user,
 	datum/tgui/ui
 )
+	if(!ccpost_has_centcom_id(user))
+		balloon_alert(user, "Central Command ID required")
+		return
 	. = ..()
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -4411,54 +4439,47 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /// Builds a printable Central Command record for a single communication.
-/obj/machinery/computer/ccpost_sector_comms/proc/build_sector_message_print_text(datum/ccpost_sector_message/message)
+/obj/machinery/computer/ccpost_sector_comms/proc/build_sector_message_print_text(datum/ccpost_sector_message/message, include_document_header = TRUE)
 	if(!message)
 		return ""
 
-	var/response_text = "No recorded response."
-	var/responded_by = "N/A"
-	var/responded_at = "N/A"
+	var/response_text = message.response || "No recorded response."
+	var/responded_by = message.responded_by || "N/A"
+	var/responded_at = message.responded_at || "N/A"
+	var/print_text = ""
 
-	if(message.response)
-		response_text = message.response
+	if(include_document_header)
+		print_text += ccpost_paper_header()
+		print_text += ccpost_paper_document_heading("Sector Communications Transcript", message.message_code, "Resolved Correspondence")
+		print_text += ccpost_paper_value_field("Classification", "Internal")
+		print_text += ccpost_paper_value_field("Category", "Sector Correspondence")
+	else
+		print_text += ccpost_paper_section("Transmission [message.message_code]")
 
-	if(message.responded_by)
-		responded_by = message.responded_by
-
-	if(message.responded_at)
-		responded_at = message.responded_at
-
-	var/print_text = "<center><b>Central Command Sector Communications Record</b></center><br>"
-	print_text += "<hr>"
-	print_text += "<b>Reference:</b> [message.message_code]<br>"
-	print_text += "<b>Installation:</b> [message.installation_name] ([message.installation_code])<br>"
-	print_text += "<b>Sender:</b> [message.sender_role] [message.sender_name]<br>"
-	print_text += "<b>Type:</b> [message.message_type]<br>"
-	print_text += "<b>Priority:</b> [message.priority]<br>"
-	print_text += "<b>Issued:</b> [message.issued_at]<br>"
-	print_text += "<b>Resolution:</b> [message.resolution_status]<br>"
-	print_text += "<b>Responded By:</b> [responded_by]<br>"
-	print_text += "<b>Responded At:</b> [responded_at]<br>"
+	print_text += ccpost_paper_value_field("Priority", message.priority)
+	print_text += ccpost_paper_value_field("Subject", message.title)
+	print_text += ccpost_paper_value_field("Issued", message.issued_at)
+	print_text += ccpost_paper_value_field("Installation", "[message.installation_name] ([message.installation_code])")
+	print_text += ccpost_paper_value_field("Sender", "[message.sender_role] [message.sender_name]")
+	print_text += ccpost_paper_value_field("Type", message.message_type)
+	print_text += ccpost_paper_value_field("Resolution", message.resolution_status)
+	print_text += ccpost_paper_value_field("Responded By", responded_by)
+	print_text += ccpost_paper_value_field("Responded At", responded_at)
 
 	if(message.allocation_cost > 0)
-		print_text += "<b>Requested Allocation:</b> [message.allocation_cost] CU<br>"
-
+		print_text += ccpost_paper_value_field("Requested Allocation", "[message.allocation_cost] CU")
 	if(message.allocation_reward > 0)
-		print_text += "<b>Offered Transfer:</b> [message.allocation_reward] CU<br>"
-
+		print_text += ccpost_paper_value_field("Offered Transfer", "[message.allocation_reward] CU")
 	if(message.allocation_change)
-		print_text += "<b>Recorded Liaison Allocation Change:</b> [message.allocation_change] CU<br>"
+		print_text += ccpost_paper_value_field("Recorded Allocation Change", "[message.allocation_change] CU")
 
-	print_text += "<hr>"
-	print_text += "<b>[message.title]</b><br><br>"
-	print_text += "[message.body]<br><br>"
-	print_text += "<hr>"
-	print_text += "<b>Recorded Response:</b> [response_text]<br>"
-	print_text += "<hr>"
-	print_text += "<small><i>Central Command Sector Liaison Communications Archive</i></small>"
-
+	print_text += ccpost_paper_section("Transmitted Message")
+	print_text += "[ccpost_paper_paragraph(message.body)]<br>"
+	print_text += ccpost_paper_section("Recorded Response")
+	print_text += "[ccpost_paper_paragraph(response_text)]<br>"
+	if(include_document_header)
+		print_text += ccpost_paper_note("Archived sector correspondence. This is a transcript, not a new authorization request.")
 	return print_text
-
 
 /obj/machinery/computer/ccpost_sector_comms/proc/print_sector_message_record(datum/ccpost_sector_message/message)
 	if(!message || message.resolution_status == CCPOST_MESSAGE_PENDING)
@@ -4478,11 +4499,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 /// Prints the entire resolved communications archive in manageable batches.
 /obj/machinery/computer/ccpost_sector_comms/proc/print_sector_archive()
 	var/list/archive_messages = list()
-
 	for(var/datum/ccpost_sector_message/message as anything in GLOB.ccpost_sector_network.sector_messages)
 		if(QDELETED(message) || message.resolution_status == CCPOST_MESSAGE_PENDING)
 			continue
-
 		archive_messages += message
 
 	if(!length(archive_messages))
@@ -4491,11 +4510,19 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	var/messages_per_page = 10
 	var/page_number = 1
 	var/page_message_count = 0
-	var/page_text = "<center><b>Central Command Sector Communications Archive</b></center><br><hr>"
 	var/printed_pages = 0
+	var/page_text = ccpost_paper_header()
+	page_text += ccpost_paper_document_heading("Sector Communications Archive", "PAGE [page_number]", "Resolved Transmissions")
+	page_text += ccpost_paper_value_field("Classification", "Internal")
+	page_text += ccpost_paper_value_field("Priority", "Archive")
+	page_text += ccpost_paper_value_field("Category", "Communication Records")
+	page_text += ccpost_paper_value_field("Subject", "Resolved Sector Messages")
+	page_text += ccpost_paper_value_field("Issued", station_time_timestamp())
+	page_text += ccpost_paper_section("Retained Transmissions")
 
 	for(var/datum/ccpost_sector_message/message as anything in archive_messages)
 		if(page_message_count >= messages_per_page)
+			page_text += ccpost_paper_note("End of archive page [page_number]. These records are informational and do not require stamping.")
 			var/obj/item/paper/archive_page = new /obj/item/paper(get_turf(src))
 			archive_page.name = "sector communications archive page [page_number]"
 			archive_page.add_raw_text(page_text)
@@ -4504,13 +4531,20 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			printed_pages++
 			page_number++
 			page_message_count = 0
-			page_text = "<center><b>Central Command Sector Communications Archive</b></center><br><hr>"
+			page_text = ccpost_paper_header()
+			page_text += ccpost_paper_document_heading("Sector Communications Archive", "PAGE [page_number]", "Resolved Transmissions")
+			page_text += ccpost_paper_value_field("Classification", "Internal")
+			page_text += ccpost_paper_value_field("Priority", "Archive")
+			page_text += ccpost_paper_value_field("Category", "Communication Records")
+			page_text += ccpost_paper_value_field("Subject", "Resolved Sector Messages")
+			page_text += ccpost_paper_value_field("Issued", station_time_timestamp())
+			page_text += ccpost_paper_section("Retained Transmissions")
 
-		page_text += build_sector_message_print_text(message)
-		page_text += "<br><br>"
+		page_text += build_sector_message_print_text(message, FALSE)
 		page_message_count++
 
 	if(page_message_count > 0)
+		page_text += ccpost_paper_note("End of archive page [page_number]. These records are informational and do not require stamping.")
 		var/obj/item/paper/final_archive_page = new /obj/item/paper(get_turf(src))
 		final_archive_page.name = "sector communications archive page [page_number]"
 		final_archive_page.add_raw_text(page_text)
@@ -4520,9 +4554,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(printed_pages > 0)
 		playsound(src, 'sound/machines/printer.ogg', vol = 50, vary = FALSE)
 		visible_message(span_notice("[src] prints a Central Command sector communications archive."))
-
 	return printed_pages
-
 
 /obj/machinery/computer/ccpost_sector_comms/proc/message_to_ui_data(
 	datum/ccpost_sector_message/message
@@ -4570,6 +4602,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /obj/machinery/computer/ccpost_sector_comms/ui_data(mob/user)
+	if(!ccpost_has_centcom_id(user))
+		return list()
 	GLOB.ccpost_sector_network.ensure_started()
 
 	var/list/data = list()
@@ -4612,6 +4646,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	data["pending_count"] = pending_count
 	data["paperwork_pending"] = paperwork_pending
 	data["unresolved_work_count"] = pending_count + (paperwork_pending ? 1 : 0)
+	data["broadcast_cost"] = GLOB.ccpost_sector_network.station_broadcast_cost
+	data["broadcast_cooldown_seconds"] = round(COOLDOWN_TIMELEFT(GLOB.ccpost_sector_network, station_broadcast_cooldown) / (1 SECONDS))
 
 	return data
 
@@ -4622,6 +4658,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	datum/tgui/ui,
 	datum/ui_state/state
 )
+	if(!ccpost_has_centcom_id(ui?.user))
+		return TRUE
 	. = ..()
 
 	if(.)
@@ -4631,6 +4669,48 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	// Archive-wide controls do not target an individual transmission.
 	switch(action)
+		if("broadcast_announcement")
+			var/mob/living/living_user = user
+			if(!istype(living_user))
+				return TRUE
+			var/obj/item/card/id/user_id = living_user.get_idcard(TRUE)
+			var/list/user_access = user_id?.GetAccess()
+			if(!(ACCESS_NT_REPRESENTATVE in user_access))
+				balloon_alert(user, "liaison authorization required")
+				return TRUE
+			var/datum/ccpost_sector_network/network = GLOB.ccpost_sector_network
+			if(!COOLDOWN_FINISHED(network, station_broadcast_cooldown))
+				balloon_alert(user, "broadcast channel cooling down")
+				return TRUE
+			var/datum/ccpost_logistics_network/logistics_network = GLOB.ccpost_logistics_network
+			if(!logistics_network || logistics_network.get_available_allocation() < network.station_broadcast_cost)
+				balloon_alert(user, "insufficient allocation")
+				return TRUE
+			var/announcement_text = tgui_input_text(user, "Compose an outpost-attributed, station-wide announcement. Costs [network.station_broadcast_cost] CU. Maximum 250 characters.", "Liaison Outpost Station Broadcast", max_length = 250, multiline = TRUE, encode = FALSE)
+			if(!announcement_text)
+				return TRUE
+			announcement_text = trim(announcement_text)
+			if(!length(announcement_text) || length_char(announcement_text) > 250)
+				balloon_alert(user, "invalid broadcast length")
+				return TRUE
+			if(!user.can_perform_action(src) || (machine_stat & (NOPOWER | BROKEN)))
+				return TRUE
+			user_id = living_user.get_idcard(TRUE)
+			user_access = user_id?.GetAccess()
+			if(!(ACCESS_NT_REPRESENTATVE in user_access) || !COOLDOWN_FINISHED(network, station_broadcast_cooldown))
+				balloon_alert(user, "broadcast no longer authorized")
+				return TRUE
+			if(!logistics_network.spend_allocation(network.station_broadcast_cost, "Liaison Outpost station-wide announcement", user.name))
+				balloon_alert(user, "insufficient allocation")
+				return TRUE
+			COOLDOWN_START(network, station_broadcast_cooldown, network.station_broadcast_cooldown_duration)
+			addtimer(CALLBACK(network, TYPE_PROC_REF(/datum/ccpost_sector_network, refresh_comms_terminals)), network.station_broadcast_cooldown_duration)
+			priority_announce(announcement_text, "Liaison Outpost Broadcast", sender_override = "CENTRAL COMMAND LIAISON OUTPOST")
+			logistics_network.refresh_logistics_outputs()
+			GLOB.ccpost_sector_network.refresh_comms_terminals()
+			balloon_alert(user, "station broadcast transmitted")
+			return TRUE
+
 		if("print_archive")
 			var/printed_pages = print_sector_archive()
 			if(printed_pages <= 0)
@@ -5847,6 +5927,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /obj/machinery/status_display/ccpost_remote_status
 	name = "Central Command remote status display"
+	// Interactive details require an equipped Central Command ID.
+	// No req_access flag: enforce the precise ID subtype in the UI paths below.
 	desc = "A secure Central Command display receiving read-only operational telemetry from nearby Nanotrasen installations. A label beneath the screen reads: 'INFORMATION IS NOT A SUBSTITUTE FOR VERIFICATION.'"
 
 	current_mode = SD_MESSAGE
@@ -5991,58 +6073,59 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(!installation)
 		return ""
 
-	var/contact_name = sanitize(installation.contact_name)
-	var/contact_role = sanitize(installation.contact_role)
 	var/relationship = GLOB.ccpost_sector_network.get_installation_trust_label(installation)
 	var/followup_state = GLOB.ccpost_sector_network.get_installation_followup_status_text(installation)
 	var/followup_text = followup_state
-
 	if(installation.active_followup_origin_code)
 		followup_text = "[installation.active_followup_origin_title] - [followup_state]"
 
-	var/print_text = "<center><b>Central Command Installation Administrative Record</b></center><br>"
-	print_text += "<hr>"
-	print_text += "<b>Installation:</b> [installation.installation_name] ([installation.installation_code])<br>"
-	print_text += "<b>Function:</b> [installation.installation_function]<br>"
-	print_text += "<b>Regional Dependency:</b> [installation.regional_dependency]<br>"
-	print_text += "<b>Named Contact:</b> [contact_role] [contact_name]<br>"
-	print_text += "<b>Relationship Assessment:</b> [relationship]<br>"
-	print_text += "<b>Operational Status:</b> [installation.status]<br>"
-	print_text += "<b>Condition:</b> [installation.condition]<br>"
-	print_text += "<b>Telemetry:</b> [installation.telemetry]<br>"
-	print_text += "<b>Last Authenticated Contact:</b> [installation.last_authenticated_contact]<br>"
-	print_text += "<b>Last Status Change:</b> [installation.status_since]<br>"
-	print_text += "<b>Central Response:</b> [installation.response_status]<br>"
-	print_text += "<b>Active Follow-Up:</b> [followup_text]<br>"
-	print_text += "<hr>"
-	print_text += "<b>Incident:</b> [installation.incident_summary]<br>"
-	print_text += "<b>Remarks:</b> [installation.condition_details]<br>"
-
+	var/print_text = ccpost_paper_header()
+	print_text += ccpost_paper_document_heading("Installation Status Record", installation.installation_code, "Remote Oversight Network")
+	print_text += ccpost_paper_value_field("Classification", "Internal")
+	print_text += ccpost_paper_value_field("Priority", "Routine")
+	print_text += ccpost_paper_value_field("Category", "Installation Oversight")
+	print_text += ccpost_paper_value_field("Subject", installation.installation_name)
+	print_text += ccpost_paper_value_field("Issued", station_time_timestamp())
+	print_text += ccpost_paper_section("Installation Identification")
+	print_text += ccpost_paper_value_field("Installation", "[installation.installation_name] ([installation.installation_code])")
+	print_text += ccpost_paper_value_field("Function", installation.installation_function)
+	print_text += ccpost_paper_value_field("Regional Dependency", installation.regional_dependency)
+	print_text += ccpost_paper_value_field("Named Contact", "[installation.contact_role] [installation.contact_name]")
+	print_text += ccpost_paper_value_field("Relationship Assessment", relationship)
+	print_text += ccpost_paper_section("Current Operating Condition")
+	print_text += ccpost_paper_value_field("Operational Status", installation.status)
+	print_text += ccpost_paper_value_field("Condition", installation.condition)
+	print_text += ccpost_paper_value_field("Telemetry", installation.telemetry)
+	print_text += ccpost_paper_value_field("Last Authenticated Contact", installation.last_authenticated_contact)
+	print_text += ccpost_paper_value_field("Last Status Change", installation.status_since)
+	print_text += ccpost_paper_value_field("Central Response", installation.response_status)
+	print_text += ccpost_paper_value_field("Active Follow-Up", followup_text)
+	print_text += ccpost_paper_section("Incident Assessment")
+	print_text += ccpost_paper_value_field("Incident", installation.incident_summary)
+	print_text += ccpost_paper_value_field("Remarks", installation.condition_details)
 	if(installation.destroyed && installation.loss_effect?.summary)
-		print_text += "<b>Permanent Sector Consequence:</b> [installation.loss_effect.summary]<br>"
+		print_text += ccpost_paper_value_field("Permanent Sector Consequence", installation.loss_effect.summary)
 
-	print_text += "<hr>"
-	print_text += "<b>Retained Administrative History</b><br><br>"
-
+	print_text += ccpost_paper_section("Retained Administrative History")
 	if(!length(installation.history))
 		print_text += "No notable history is currently retained for this installation.<br>"
 	else
 		for(var/datum/ccpost_installation_history_entry/entry as anything in installation.history)
 			if(QDELETED(entry))
 				continue
-			print_text += "<b>[entry.timestamp] - [entry.category]: [entry.title]</b><br>"
-			print_text += "[entry.details]<br><br>"
+			print_text += "<b>[ccpost_paper_paragraph(entry.timestamp)] - [ccpost_paper_paragraph(entry.category)]: [ccpost_paper_paragraph(entry.title)]</b><br>"
+			print_text += "[ccpost_paper_paragraph(entry.details)]<br><br>"
 
-	print_text += "<hr><small><i>Central Command Remote Oversight Network - Shift administrative record</i></small>"
-
+	print_text += ccpost_paper_note("Remote Oversight Network status snapshot. Where required by a tasking order, validate the original with an official Central Command stamp.")
+	print_text += ccpost_paper_stamp_area()
 	return print_text
-
 
 /obj/machinery/status_display/ccpost_remote_status/proc/print_installation_record(datum/ccpost_sector_installation/installation)
 	if(!installation)
 		return FALSE
 
-	var/obj/item/paper/record = new /obj/item/paper(drop_location())
+	var/obj/item/paper/ccpost_installation_record/record = new(drop_location())
+	record.installation_code = installation.installation_code
 	record.name = "Central Command Installation Record - [installation.installation_code]"
 	record.add_raw_text(build_installation_record_print_text(installation))
 	record.update_appearance()
@@ -6055,7 +6138,19 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 //TGUI
 
+// The shared outpost credential check accepts all CentCom ID subtypes.
+// Close an already-open UI if the user removes or changes their credentials.
+/obj/machinery/status_display/ccpost_remote_status/ui_status(mob/user)
+	if(!ccpost_has_centcom_id(user))
+		return UI_CLOSE
+	return ..()
+
+
 /obj/machinery/status_display/ccpost_remote_status/ui_interact(mob/user, datum/tgui/ui)
+	if(!ccpost_has_centcom_id(user))
+		balloon_alert(user, "Central Command ID required")
+		return
+
 	. = ..()
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -6071,6 +6166,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	datum/tgui/ui,
 	datum/ui_state/state
 )
+	// Enforce authorization server-side, including on stale/open TGUI sessions.
+	if(!ccpost_has_centcom_id(ui?.user))
+		return TRUE
+
 	. = ..()
 
 	if(.)
@@ -6113,6 +6212,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /obj/machinery/status_display/ccpost_remote_status/ui_data(mob/user)
+	// Do not send station and sector network details to unauthorized clients.
+	if(!ccpost_has_centcom_id(user))
+		return list()
+
 	GLOB.ccpost_sector_network.ensure_started()
 
 	var/list/data = list()

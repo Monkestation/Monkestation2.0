@@ -65,6 +65,8 @@ type Data = {
   paperwork_pending: boolean;
   unresolved_work_count: number;
   paperwork?: SectorPaperwork | null;
+  broadcast_cost: number;
+  broadcast_cooldown_seconds: number;
 };
 
 const statusColor = (status: string) => {
@@ -116,8 +118,9 @@ const resolutionColor = (status: string) => {
 };
 
 export const CCPostSectorComms = (props) => {
-  const { data } = useBackend<Data>();
+  const { data, act } = useBackend<Data>();
   const [tab, setTab] = useLocalState('tab', 'inbox');
+  const [helpOpen, setHelpOpen] = useLocalState('ccpostCommsHelp', false);
   const {
     allocation = 0,
     available_allocation = 0,
@@ -129,11 +132,81 @@ export const CCPostSectorComms = (props) => {
     paperwork_pending = false,
     unresolved_work_count = 0,
     paperwork = null,
+    broadcast_cost = 25,
+    broadcast_cooldown_seconds = 0,
   } = data;
 
   return (
     <Window width={720} height={760} theme="ntos">
       <Window.Content scrollable>
+        <Section
+          title="Regional Sector Communications"
+          buttons={
+            <Button icon="question-circle" onClick={() => setHelpOpen(!helpOpen)}>
+              {helpOpen ? 'Close Manual' : 'Operating Manual'}
+            </Button>
+          }
+        >
+          <Box>
+            Installation conditions, incidents, telemetry, and administrative
+            records can be reviewed on the Remote Oversight Network displays
+            throughout the outpost. Consult these before approving assistance.
+          </Box>
+          {helpOpen && (
+            <Box mt={1}>
+              <Box bold>SECTOR CORRESPONDENCE OPERATING MANUAL</Box>
+              <Box mt={1}>
+                This encrypted exchange carries official requests and status
+                correspondence from registered NanoTrasen sector facilities.
+                Review each incoming message and the associated Remote Oversight
+                records before issuing an authorization or denial. Such
+                decisions may affect local continuity and future cooperation.
+              </Box>
+              <Box mt={1}>
+                The Archive retains processed transmissions and issued responses.
+                Where an authenticated document is requested, print the supplied
+                paperwork, apply the physical Central Command stamp, return it
+                to this terminal, and transmit the completed record. Allocation
+                credit is released only after confirmed receipt.
+              </Box>
+              <Box mt={1}>
+                Station-wide priority announcements are controlled broadcasts
+                subject to Operational Allocation charges and transmission
+                cooldowns. The Logistics Terminal manages allocation; the
+                Tasking Terminal records official assignments.
+              </Box>
+              <Box mt={1} color="label">
+                CORRESPONDENCE IS RESTRICTED TO AUTHORIZED PERSONNEL. Do not
+                disclose sector traffic or authentication material externally.
+              </Box>
+            </Box>
+          )}
+        </Section>
+        <Section
+          title="Station-Wide Announcements"
+          buttons={
+            <Button.Confirm
+              icon="bullhorn"
+              color="average"
+              disabled={available_allocation < broadcast_cost || broadcast_cooldown_seconds > 0}
+              confirmContent={`Spend ${broadcast_cost} CU on a station-wide announcement?`}
+              onClick={() => act('broadcast_announcement')}
+            >
+              Compose Announcement
+            </Button.Confirm>
+          }
+        >
+          <Box>
+            Authorized Liaisons can broadcast an outpost-attributed priority
+            announcement to the station for {broadcast_cost} CU, with a shared
+            five-minute cooldown and a 250-character message limit.
+          </Box>
+          {broadcast_cooldown_seconds > 0 && (
+            <Box color="average" mt={1}>
+              Broadcast cooling down ({broadcast_cooldown_seconds}s at last refresh).
+            </Box>
+          )}
+        </Section>
         <Section title="Operational Allocation">
           <Stack>
             <Stack.Item grow>

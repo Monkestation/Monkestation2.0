@@ -282,6 +282,7 @@ const getResponseColor = (response: string) => {
 export const CCPostRemoteStatus = () => {
   const { act, data } = useBackend<Data>();
   const [tab, setTab] = useSharedState('tab', 'station');
+  const [helpOpen, setHelpOpen] = useLocalState('ccpostNetworkHelp', false);
 
   const {
     station_name,
@@ -411,6 +412,56 @@ export const CCPostRemoteStatus = () => {
       height={700}
     >
       <Window.Content scrollable>
+        <Section
+          title="Remote Oversight Network"
+          buttons={
+            <Button icon="question-circle" onClick={() => setHelpOpen(!helpOpen)}>
+              {helpOpen ? 'Close Manual' : 'Operating Manual'}
+            </Button>
+          }
+        >
+          <Box>
+            Authorized regional operational telemetry, installation records,
+            and Sector Notices are available for Central Command review.
+          </Box>
+          {helpOpen && (
+            <Box mt={1}>
+              <Box bold>CENTRAL COMMAND REMOTE OVERSIGHT NETWORK</Box>
+              <Box mt={1}>
+                The NanoTrasen Regional Oversight Network consolidates
+                operational telemetry, incident notifications, and administrative
+                records from registered installations across the sector.
+              </Box>
+              <Box bold mt={1}>Network Operating Procedures</Box>
+              <Box mt={1}>
+                Sector Notices contain received reports of maintenance,
+                infrastructure failures, communications disruptions and other
+                incidents. Sector Installations provides the latest reported
+                condition, available telemetry, designated contacts and
+                inter-installation coordination data.
+              </Box>
+              <Box mt={1}>
+                Installation Records maintains historical status changes and
+                administrative correspondence. Relevant records may be printed
+                for formal review, authentication, or Central Command tasking.
+              </Box>
+              <Box bold mt={1}>Administrative Directives</Box>
+              <Box mt={1}>
+                This terminal authorizes monitoring and documentation only;
+                direct operational control of regional installations is not
+                delegated to Liaison personnel. Use Sector Communications for
+                correspondence and return of stamped documents. Review the
+                relevant installation record before authorizing Operational
+                Allocations. Consult the Tasking Terminal for outstanding orders.
+              </Box>
+              <Box mt={1} color="label">
+                RESTRICTED CORPORATE TELEMETRY. Records may be delayed or
+                incomplete during communications disruption. Verify material
+                facts before official submission.
+              </Box>
+            </Box>
+          )}
+        </Section>
         <Tabs>
           <Tabs.Tab
             icon="satellite-dish"

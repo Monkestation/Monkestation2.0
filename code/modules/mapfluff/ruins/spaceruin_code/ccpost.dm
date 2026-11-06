@@ -3,9 +3,6 @@
 /obj/item/paper/fluff/ruins/ccpost/transmission
 	default_raw_text = "Nothing of interest"
 
-// Central Command Assignment for Liaison, also explains what's expected of them in more detail
-
-
 /// General assignment directive for Central Command Outpost personnel.
 /obj/item/paper/fluff/ruins/ccpost/transmission/assignment
 	name = "Central Command outpost assignment directive"
@@ -73,6 +70,107 @@
 	<br>SECTOR OVERSIGHT DEPARTMENT
 	"}
 
+// Visitor pamphlet
+/obj/item/paper/pamphlet/ccpost_visitor
+	name = "pamphlet - 'Central Command Liaison Outpost Visitor Guide'"
+	desc = "A neatly folded NanoTrasen pamphlet for visitors to the Sector Liaison Outpost."
+	default_raw_text = @{"
+<center><b><font size="4">NANOTRASEN CENTRAL COMMAND</font></b></center>
+<center><b>SECTOR LIAISON OUTPOST</b></center>
+<center><i>Visitor Information and Facility Guidance</i></center>
+<br>
+<b>WELCOME</b><br>
+This installation serves as a regional Central Command liaison, communications, administrative oversight and logistics coordination facility. Our personnel can receive official correspondence, arrange meetings and request reports concerning station operations.<br><br>
+<b>VISITING THE OUTPOST</b><br>
+1. Arrange your visit with the Liaison or Outpost Security before approaching the installation.<br>
+2. Report to reception and explain the purpose of your visit.<br>
+3. Remain in public and escorted areas unless expressly authorized to enter elsewhere.<br>
+4. Declare weapons or dangerous equipment to Outpost Security before entry. Follow local security instructions while on the premises.<br><br>
+<b>IMPORTANT: AUTOMATED DEFENSES</b><br>
+Exterior perimeter turrets may engage unidentified lifeforms and personnel without mindshield protection. Do not approach the perimeter without prior clearance. Visitors should request that Outpost Security disable defenses or arrange safe passage before arrival.<br><br>
+<b>ABOUT LIAISON AUTHORITY</b><br>
+Liaisons conduct administrative oversight and report findings to Central Command. They do not command station personnel, station security, or station leadership. Outpost Security authority applies to this installation and its immediate premises only.<br><br>
+<b>IN AN EMERGENCY</b><br>
+Follow Outpost Security instructions and keep clear of restricted compartments and exterior defenses. Contact the Liaison or Security Office for assistance.<br><br>
+<center><i>NanoTrasen appreciates your cooperation. Unauthorized visits may be rescheduled indefinitely.</i></center>
+"}
+
+/obj/item/card/id/advanced/centcom/ccpost_liaison
+	name = "Central Command Liaison ID"
+
+/obj/item/card/id/advanced/centcom/ccpost_security
+	name = "Central Command Outpost Security ID"
+
+// ============================================================
+// CentCom-funded personal payroll for the two outpost ghost IDs.
+// Bank accounts are registered so card payments/ATMs can use them.
+// ============================================================
+/datum/bank_account/ccpost_personnel
+	// Employee account. Keep registered for normal payment devices.
+
+/datum/bank_account/ccpost_personnel/payday(amount_of_paychecks, free = FALSE, skippable = FALSE, event = "Payday")
+	if(!account_job || amount_of_paychecks <= 0)
+		return FALSE
+	if(skippable && !free)
+		while(paydays_to_skip > 0 && amount_of_paychecks > 0)
+			paydays_to_skip--
+			amount_of_paychecks--
+	if(amount_of_paychecks <= 0)
+		return FALSE
+	var/credits = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
+	if(credits <= 0)
+		return FALSE
+	if(!adjust_money(credits, "Central Command: [event]"))
+		return FALSE
+	if(!free)
+		bank_card_talk("Central Command payroll processed: +[credits] credits. Balance: [account_balance] credits.")
+	return TRUE
+
+// Called once when an outpost ghost-role ID first enters its owner's ID slot.
+/proc/ccpost_initialize_personal_payroll(obj/item/card/id/employee_id, mob/user)
+	var/mob/living/carbon/human/employee = user
+	if(!istype(employee) || !istype(employee_id))
+		return
+
+	// Prevent repeated payday grants when an ID is unequipped and worn again.
+	if(employee_id.registered_account && !employee_id.registered_account.replaceable)
+		return
+
+	var/datum/bank_account/account
+	if(employee.account_id)
+		account = SSeconomy.bank_accounts_by_id["[employee.account_id]"]
+
+	// Most ghost roles have no real bank account on spawn.
+	if(!account)
+		var/datum/job/payroll_job = new /datum/job/ghost_role
+		payroll_job.paycheck = PAYCHECK_CREW
+		var/payday_modifier = employee.dna?.species?.payday_modifier
+		if(isnull(payday_modifier) || payday_modifier <= 0)
+			payday_modifier = 1
+		var/datum/bank_account/ccpost_personnel/new_account = new(employee.real_name, payroll_job, payday_modifier, TRUE)
+		new_account.replaceable = FALSE
+		new_account.payday(STARTING_PAYCHECKS, free = TRUE, event = "Appointment Allowance")
+		account = new_account
+		employee.account_id = account.account_id
+		employee.add_mob_memory(/datum/memory/key/account, remembered_id = account.account_id)
+
+	if(employee_id.registered_account)
+		employee_id.registered_account.bank_cards -= employee_id
+	employee_id.registered_account = account
+	account.bank_cards |= employee_id
+	employee_id.registered_name = employee.real_name
+	employee_id.update_label()
+
+/obj/item/card/id/advanced/centcom/ccpost_liaison/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_ID)
+		ccpost_initialize_personal_payroll(src, user)
+
+/obj/item/card/id/advanced/centcom/ccpost_security/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_ID)
+		ccpost_initialize_personal_payroll(src, user)
+
 
 /obj/structure/closet/secure_closet/centcom_liaison
 	name = "CentCom Liaison's locker"
@@ -82,7 +180,6 @@
 /obj/structure/closet/secure_closet/centcom_liaison/PopulateContents()
 	..()
 	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative/bathrobe(src)
-	new /obj/item/clothing/suit/armor/centcom_formal(src)
 	new /obj/item/clothing/suit/toggle/centcom_jacket(src)
 	new /obj/item/clothing/under/rank/centcom/official(src)
 	new /obj/item/clothing/under/rank/centcom/official/skirt(src)
@@ -108,6 +205,101 @@
 	new /obj/item/binoculars(src)
 
 
+// LIAISON OUTPOST TELEPORT ACCESS
+// Restrict the arrival point to a fixed lobby location, independently of station teleporters.
+
+GLOBAL_VAR_INIT(ccpost_lobby_beacon, null)
+GLOBAL_LIST_EMPTY(ccpost_beacon_status_displays)
+
+/obj/item/beacon/ccpost_lobby
+	name = "Central Command Liaison Outpost Lobby"
+	desc = "A fixed arrival beacon controlled from the outpost communications room."
+	anchored = TRUE
+	enabled = FALSE
+
+/obj/item/beacon/ccpost_lobby/Initialize(mapload)
+	. = ..()
+	GLOB.ccpost_lobby_beacon = src
+	for(var/obj/machinery/status_display/ccpost_beacon_status/display as anything in GLOB.ccpost_beacon_status_displays)
+		display.refresh_beacon_state()
+
+/obj/item/beacon/ccpost_lobby/Destroy()
+	if(GLOB.ccpost_lobby_beacon == src)
+		GLOB.ccpost_lobby_beacon = null
+	for(var/obj/machinery/status_display/ccpost_beacon_status/display as anything in GLOB.ccpost_beacon_status_displays)
+		if(!QDELETED(display))
+			display.refresh_beacon_state()
+	return ..()
+
+/obj/item/beacon/ccpost_lobby/attack_hand(mob/user, list/modifiers)
+	to_chat(user, span_notice("The fixed arrival beacon is operated by the outpost teleport access switch."))
+	return
+
+/obj/item/beacon/ccpost_lobby/attack_self(mob/user)
+	to_chat(user, span_warning("Local controls are locked. Use the outpost teleport access switch."))
+	return
+
+/obj/item/beacon/ccpost_lobby/proc/set_beacon_state(new_enabled)
+	if(enabled == new_enabled)
+		return FALSE
+	enabled = new_enabled
+	icon_state = enabled ? "beacon" : "beacon-off"
+	if(enabled)
+		GLOB.teleportbeacons |= src
+	else
+		GLOB.teleportbeacons -= src
+	for(var/obj/machinery/status_display/ccpost_beacon_status/display as anything in GLOB.ccpost_beacon_status_displays)
+		if(!QDELETED(display))
+			display.refresh_beacon_state()
+	return TRUE
+
+/obj/machinery/button/ccpost_beacon_control
+	name = "outpost teleport access control"
+	desc = "An access-restricted switch controlling the lobby tracking beacon."
+	skin = "-blue"
+	can_alter_skin = FALSE
+	req_access = list(ACCESS_NT_REPRESENTATVE)
+	silicon_access_disabled = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/ccpost_beacon_control, 24)
+
+/obj/machinery/button/ccpost_beacon_control/attack_hand(mob/user, list/modifiers)
+	if(panel_open || (machine_stat & (NOPOWER | BROKEN)))
+		return ..()
+	if(!allowed(user))
+		balloon_alert(user, "access denied")
+		playsound(src, SFX_BUTTON_FAIL, vol = 45, vary = FALSE)
+		return
+	var/obj/item/beacon/ccpost_lobby/beacon = GLOB.ccpost_lobby_beacon
+	if(!beacon || QDELETED(beacon))
+		balloon_alert(user, "arrival beacon unavailable")
+		return
+	beacon.set_beacon_state(!beacon.enabled)
+	playsound(src, SFX_BUTTON_CLICK, vol = 45, vary = FALSE)
+	balloon_alert(user, beacon.enabled ? "teleport access enabled" : "teleport access disabled")
+	visible_message(span_notice("[src] switches the outpost arrival beacon [beacon.enabled ? "online" : "offline"]."))
+	return TRUE
+
+/obj/machinery/status_display/ccpost_beacon_status
+	name = "outpost teleport access display"
+	desc = "Shows whether the outpost lobby is available as a teleporter destination."
+	current_mode = SD_MESSAGE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 32)
+
+/obj/machinery/status_display/ccpost_beacon_status/Initialize(mapload)
+	. = ..()
+	GLOB.ccpost_beacon_status_displays |= src
+	refresh_beacon_state()
+
+/obj/machinery/status_display/ccpost_beacon_status/Destroy()
+	GLOB.ccpost_beacon_status_displays -= src
+	return ..()
+
+/obj/machinery/status_display/ccpost_beacon_status/proc/refresh_beacon_state()
+	var/obj/item/beacon/ccpost_lobby/beacon = GLOB.ccpost_lobby_beacon
+	set_messages("TELEPORT LINK", beacon?.enabled ? "ACTIVE" : "OFFLINE")
+
 // Central Command Advisor Hologram code
 
 // Central Command Advisor Holopad
@@ -115,6 +307,8 @@
 /obj/machinery/holopad/tutorial/ccpost_advisor
 	play_once = FALSE
 	proximity_range = 2
+	COOLDOWN_DECLARE(advisor_playback_cooldown)
+	var/advisor_playback_cooldown_duration = 3 MINUTES
 
 
 // Central Command Advisor Holodisk
@@ -191,10 +385,18 @@
 	)
 
 /obj/machinery/holopad/tutorial/ccpost_advisor/replay_start()
+	if(replay_mode || !COOLDOWN_FINISHED(src, advisor_playback_cooldown))
+		return
+	if(!disk?.record || !is_operational)
+		return
+	COOLDOWN_START(src, advisor_playback_cooldown, advisor_playback_cooldown_duration)
 	var/obj/item/disk/holodisk/ruin/space/ccpost/advisor/advisor_disk = disk
 	advisor_disk?.select_random_tip()
-
 	return ..()
+
+/obj/machinery/holopad/tutorial/ccpost_advisor/examine(mob/user)
+	. = ..()
+	. += span_notice("Advisory playback is limited to once every three minutes.")
 
 
 // Advisor Hologram Preset
@@ -302,4 +504,110 @@
 	say(response)
 
 	playsound(src, SFX_BUTTON_CLICK, vol = 35, vary = TRUE)
+
+#define CCPOST_TURRET_SHOOT_ANOMALOUS (1<<4)
+#define CCPOST_TURRET_SHOOT_UNSHIELDED (1<<5)
+
+/obj/machinery/porta_turret/ccpost/perimeter
+	name = "Central Command perimeter turret"
+	desc = "A nonlethal-ready perimeter defense turret, controlled by Central Command Security."
+	installation = null
+	uses_stored = FALSE
+	use_power = NO_POWER_USE
+	has_cover = FALSE
+	always_up = TRUE
+	max_integrity = 200
+	scan_range = 7
+	req_access = list(ACCESS_NT_REPRESENTATVE)
+	turret_flags = CCPOST_TURRET_SHOOT_UNSHIELDED | CCPOST_TURRET_SHOOT_ANOMALOUS
+	faction = list(FACTION_TURRET, FACTION_TAMED, FACTION_SILICON)
+	stun_projectile = /obj/projectile/energy/electrode
+	stun_projectile_sound = 'sound/items/weapons/taser.ogg'
+	lethal_projectile = /obj/projectile/beam/laser
+	lethal_projectile_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
+	mode = 0 // Stun; controller can switch to lethal.
+	system_id = "ccpost_perimeter"
+
+/obj/machinery/porta_turret/ccpost/perimeter/setup()
+	return
+
+/obj/machinery/porta_turret/ccpost/perimeter/assess_perp(mob/living/carbon/human/perp)
+	// Command must NEVER be targeted by this outpost's native threat checks.
+	var/datum/job/real_job = perp.mind?.assigned_role
+	var/datum/job/apparent_job = SSjob.GetJob(perp.get_assignment())
+	if((real_job?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) || (apparent_job?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+		return 0
+	// Preserve access for this outpost's own Liaisons and Security personnel.
+	var/obj/item/card/id/identification = perp.wear_id?.GetID()
+	if(istype(identification, /obj/item/card/id/advanced/centcom/ccpost_liaison) || istype(identification, /obj/item/card/id/advanced/centcom/ccpost_security))
+		return 0
+	return ..()
+
+/obj/machinery/turretid/ccpost/perimeter
+	name = "Central Command perimeter defense controller"
+	desc = "Controls the external automated defense turrets of this Central Command outpost."
+	req_access = list(ACCESS_NT_REPRESENTATVE)
+	system_id = "ccpost_perimeter"
+	enabled = TRUE
+	lethal = FALSE
+	// Prevent station AI from bypassing the outpost ID requirement.
+	ailock = TRUE
+
+/obj/machinery/turretid/ccpost/perimeter/proc/ccpost_authorized_id(obj/item/card/id/identification)
+	return istype(identification, /obj/item/card/id/advanced/centcom/ccpost_liaison) || istype(identification, /obj/item/card/id/advanced/centcom/ccpost_security)
+
+/obj/machinery/turretid/ccpost/perimeter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(machine_stat & BROKEN)
+		return
+
+	var/obj/item/card/id/identification = attacking_item.GetID()
+	if(!identification)
+		return ..()
+
+	// This controller uses its own restricted ID check, rather than the
+	// parent controller's ACCESS_NT_REPRESENTATVE check.
+	if(!ccpost_authorized_id(identification))
+		to_chat(user, span_warning("Access denied: authorized outpost identification required."))
+		return
+
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning("The turret control is unresponsive!"))
+		return
+
+	locked = !locked
+	to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the panel."))
+	SStgui.update_uis(src)
+
+/obj/machinery/turretid/ccpost/perimeter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	// Unlocking is done by swiping an authorized outpost ID, never by UI action.
+	if(action == "lock")
+		return TRUE
+
+	// Never trust the UI's disabled state as authorization.
+	if(action in list("power", "mode", "shoot_silicons"))
+		var/mob/living/carbon/human/human_user = ui?.user
+		if(!istype(human_user) || locked || !ccpost_authorized_id(human_user.wear_id?.GetID()))
+			return TRUE
+
+	return ..()
+
+/obj/machinery/turretid/ccpost/perimeter/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	// The system_id connects approved perimeter turrets automatically.
+	// Do not permit the parent multitool handler to add unrelated turrets.
+	balloon_alert(user, "automatic linking only")
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/turretid/ccpost/perimeter/post_machine_initialize()
+	. = ..()
+	// The vanilla controller also tries area-based linking during Initialize.
+	// Restrict this subtype's final links to our matching perimeter turrets.
+	var/list/valid_turrets = list()
+	for(var/datum/weakref/turret_ref as anything in turrets)
+		var/obj/machinery/porta_turret/turret = turret_ref.resolve()
+		if(istype(turret, /obj/machinery/porta_turret/ccpost/perimeter) && turret.system_id == system_id)
+			valid_turrets |= turret_ref
+	turrets = valid_turrets
+
+#undef CCPOST_TURRET_SHOOT_ANOMALOUS
+#undef CCPOST_TURRET_SHOOT_UNSHIELDED
 

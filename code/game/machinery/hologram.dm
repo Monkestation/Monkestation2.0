@@ -302,12 +302,29 @@ Possible to do for anyone motivated enough:
 		ui = new(user, src, "Holopad", name)
 		ui.open()
 
+/// Returns TRUE if the user can establish priority holopad connections.
+/// Preserves existing keycard authorization and includes all CentCom ID subtypes.
+/obj/machinery/holopad/proc/can_use_priority_holocall(mob/user)
+	if(!user)
+		return FALSE
+
+	// Existing Captain / keycard authentication permissions.
+	if(allowed(user))
+		return TRUE
+
+	// Central Command personnel receive priority access through their ID.
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return FALSE
+
+	return istype(human_user.wear_id?.GetID(), /obj/item/card/id/advanced/centcom)
+
 /obj/machinery/holopad/ui_data(mob/user)
 	var/list/data = list()
 	data["calling"] = calling
 	data["on_network"] = on_network
 	data["on_cooldown"] = last_request + 200 < world.time ? FALSE : TRUE
-	data["allowed"] = allowed(user)
+	data["allowed"] = can_use_priority_holocall(user)
 	data["disk"] = disk ? TRUE : FALSE
 	data["disk_record"] = disk?.record ? TRUE : FALSE
 	data["replay_mode"] = replay_mode
@@ -365,11 +382,12 @@ Possible to do for anyone motivated enough:
 				if(QDELETED(usr) || outgoing_call)
 					return
 				if(usr.loc == loc)
-					var/input = text2num(params["headcall"])
-					var/headcall = input == 1 ? TRUE : FALSE
-					new /datum/holocall(usr, src, callnames[result], headcall)
+					var/priority_call_requested = text2num(params["headcall"]) == 1
+					var/priority_call = priority_call_requested && can_use_priority_holocall(usr)
+					new /datum/holocall(usr, src, callnames[result], priority_call)
 					calling = TRUE
 					return TRUE
+
 			else
 				to_chat(usr, span_warning("You must stand on the holopad to make a call!"))
 		if("connectcall")

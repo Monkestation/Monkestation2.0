@@ -360,9 +360,10 @@
 /obj/effect/mob_spawn/ghost_role/human/ccpost/centcom_liaison
 	name = "CentCom Liaison"
 	prompt_name = "a Central Command Liaison"
-	you_are_text = "You are a low-ranking Central Command official assigned to a remote bureaucratic outpost."
-	flavour_text = "Your duty is to observe station operations, maintain communications with station command, investigate noteworthy incidents, and provide Central Command with accurate reports. You are stationed here as an observer and liaison, not as the station's commanding authority."
-	important_text = "You are responsible for the administrative oversight of this Central Command installation. The outpost operates independently of station Command, whose authority does not automatically extend to its personnel or facilities. You may direct outpost operations, but the assigned Security Officer is responsible for installation security, including visitor access and security incidents. Coordinate with the officer on security matters. Your position does not grant command authority over the station, and you must not manufacture conflicts or interfere with normal station operations."
+	you_are_text = "You are a low-ranking Central Command Liaison assigned to a remote administrative outpost."
+	flavour_text = "Your duties are to monitor station activity, communicate with station Command, review regional incidents, and submit reports to Central Command. You are an observer and administrator, not a station commander."
+
+	important_text = "Your authority is limited to the Liaison Outpost. You may NOT command station personnel, overrule station Command, or interfere with station operations. You are NOT an administrator-backed official."
 	outfit = /datum/outfit/centcom/centcom_liaison
 
 /datum/outfit/centcom/centcom_liaison
@@ -384,7 +385,7 @@
 	r_pocket = /obj/item/melee/baton/telescopic
 	l_pocket = /obj/item/pen/fountain
 	r_hand = /obj/item/storage/briefcase/empty
-	id = /obj/item/card/id/advanced/centcom
+	id = /obj/item/card/id/advanced/centcom/ccpost_liaison
 	id_trim = /datum/id_trim/job/centcom_liaison
 
 /// code to fix the centcom id not spawning with the ghostrole player's name, equipped human -> wear id -> id card -> registered name -> John Smith CentCom Liaison
@@ -404,9 +405,10 @@
 /obj/effect/mob_spawn/ghost_role/human/ccpost/security_officer
 	name = "CentCom Security Officer"
 	prompt_name = "a Central Command Security Officer"
-	you_are_text = "You are a Central Command Security Officer assigned to protect a remote Central Command Liaison Outpost."
-	flavour_text = "You are responsible for maintaining security aboard the Liaison Outpost, protecting its personnel, safeguarding corporate assets, controlling access to restricted areas, and investigating security incidents. Your authority over installation security extends to all visitors, including station personnel and members of Station Command."
-	important_text = "The Liaison Outpost is Central Command property and operates independently of the station's chain of command. Station Command personnel have no automatic authority over the outpost or its security procedures. You may enforce reasonable security regulations, restrict access, and respond to misconduct aboard the installation. The Liaison oversees administrative operations, while you are responsible for security matters. Your jurisdiction does not extend to commanding station Security or interfering with normal station operations. Do not manufacture conflicts or abuse your authority."
+	you_are_text = "You are a Central Command Security Officer assigned to protect a remote liaison outpost."
+	flavour_text = "Your duties are to protect the outpost, its personnel, and corporate property. Manage visitor access, respond to security incidents, and coordinate with the Liaison on matters involving installation security."
+
+	important_text = "Your jurisdiction is limited to the Liaison Outpost. You may NOT command station Security, enforce station law outside the outpost, or interfere with station operations. You are NOT an administrator-backed official."
 	outfit = /datum/outfit/centcom/ccpost_security
 
 /datum/outfit/centcom/ccpost_security
@@ -433,7 +435,7 @@
 
 	l_hand = /obj/item/gun/energy/e_gun/stun
 
-	id = /obj/item/card/id/advanced/centcom
+	id = /obj/item/card/id/advanced/centcom/ccpost_security
 	id_trim = /datum/id_trim/job/centcom_liaison/security_officer
 
 /datum/outfit/centcom/ccpost_security/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)

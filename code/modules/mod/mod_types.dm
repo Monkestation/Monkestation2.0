@@ -558,10 +558,17 @@
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/hat_stabilizer,
+		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/megaphone,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/visor/sechud,
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/jetpack/advanced,
+	)
+	default_pins = list(
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/jetpack/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/chrono

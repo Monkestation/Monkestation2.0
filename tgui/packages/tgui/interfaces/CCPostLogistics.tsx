@@ -147,6 +147,8 @@ export const CCPostLogistics = () => {
     LogisticsTab.Requisitions,
   );
 
+  const [manualOpen, setManualOpen] = useLocalState('ccpostLogisticsManual', false);
+
   return (
     <Window
       title="Central Command Logistics"
@@ -156,6 +158,43 @@ export const CCPostLogistics = () => {
     >
       <Window.Content scrollable>
         <Stack vertical>
+          <Stack.Item>
+            <Section
+              title="Regional Logistics | Operating Manual"
+              buttons={
+                <Button icon="question-circle" onClick={() => setManualOpen(!manualOpen)}>
+                  {manualOpen ? 'Close Manual' : 'Operating Manual'}
+                </Button>
+              }
+            >
+              <Box>
+                Central Command allocation, sector requisition routing,
+                and freight records are administered through this terminal.
+              </Box>
+              {manualOpen && (
+                <Box mt={1}>
+                  <Box bold>REQUISITIONS & ALLOCATION PROCEDURE</Box>
+                  <Box mt={1}>
+                    Confirm available Operational Allocation and review the
+                    declared contents and routing status of each supply package
+                    before approving a requisition. Reserved allocation is
+                    committed to outstanding freight until its disposition is
+                    recorded in the shipment ledger.
+                  </Box>
+                  <Box mt={1}>
+                    Supply recalls, restricted procurement holds and sector
+                    freight disruptions may limit what can be dispatched.
+                    Consult Sector Communications and the Remote Oversight
+                    Network before making significant allocations.
+                  </Box>
+                  <Box mt={1} color="label">
+                    ALL REQUISITIONS AND ALLOCATION ADJUSTMENTS ARE RECORDED
+                    FOR CENTRAL COMMAND AUDIT.
+                  </Box>
+                </Box>
+              )}
+            </Section>
+          </Stack.Item>
           <Stack.Item>
             <Section title="Operational Allocation">
               <LabeledList>
@@ -633,9 +672,9 @@ const RequisitionsTab = (props: {
                                 mb={0.5}
                               >
                                 <Box inline bold color="label">
-                                  {item.quantity}x
+                                  {item.quantity}x{' '}
                                 </Box>
-                                {' '}{item.name}
+                                {item.name}
                               </Box>
                             ))
                           ) : (
