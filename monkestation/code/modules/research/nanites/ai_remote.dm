@@ -9,14 +9,24 @@
 	desc = "Configures your nanite remote"
 	button_icon = 'icons/obj/device.dmi'
 	button_icon_state = "nanite_remote"
+	///Special action button we use to send signals off through the UI.
 	var/datum/action/innate/ai/ranged/internal_nanite_remote/remote_settings
 
-/datum/action/innate/internal_nanite_menu/New(nanite_menu)
+/datum/action/innate/internal_nanite_menu/New()
 	. = ..()
-	if(istype(nanite_menu, /datum/action/innate/ai/ranged/internal_nanite_remote))
-		remote_settings = nanite_menu
-	else
-		CRASH("nanite_remote_settings action created with non nanite remote")
+	remote_settings = new()
+
+/datum/action/innate/internal_nanite_menu/Grant(mob/grant_to)
+	. = ..()
+	remote_settings.Grant(grant_to)
+
+/datum/action/innate/internal_nanite_menu/Remove(mob/removed_from)
+	remote_settings.Remove(removed_from)
+	return ..()
+
+/datum/action/innate/internal_nanite_menu/Destroy()
+	QDEL_NULL(remote_settings)
+	return ..()
 
 /datum/action/innate/internal_nanite_menu/Activate()
 	if(astype(owner, /mob/living/silicon/ai)?.control_disabled)
@@ -24,6 +34,7 @@
 		return
 	remote_settings.ui_interact(owner)
 
+///The ranged nanite remote button itself, not actually visible as its own button but through the one above.
 /datum/action/innate/ai/ranged/internal_nanite_remote
 	name = "Nanite Remote"
 	desc = "Remotely trigger nanite signals in nanite hosting crew."
