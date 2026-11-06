@@ -198,3 +198,94 @@
 	falloff_distance = 3
 	falloff_exponent = 5
 	extra_range = 4
+
+/datum/looping_sound/rbmk_reactor
+	mid_sounds = list('sound/rbmk/reactor_hum_low.ogg')
+	mid_length = 20 SECONDS
+	volume = 60
+
+	extra_range = 15
+
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 20
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
+
+	falloff_distance = 5
+	falloff_exponent = 3
+	ignore_walls = FALSE
+	pressure_affected = FALSE
+
+	var/sound_state = RBMK_SOUND_LOW
+
+/datum/looping_sound/rbmk_reactor/proc/set_sound_state(new_state)
+	if(sound_state == new_state)
+		return
+
+	sound_state = new_state
+
+	switch(sound_state)
+		if(RBMK_SOUND_MAX)
+			volume = 70
+			live_attenuation_max_distance = 20
+			falloff_distance = 5
+			return
+
+		if(RBMK_SOUND_HIGH)
+			volume = 65
+			live_attenuation_max_distance = 20
+			falloff_distance = 5
+			return
+
+	volume = 60
+	live_attenuation_max_distance = 20
+	falloff_distance = 5
+
+/datum/looping_sound/rbmk_reactor/get_sound(_mid_sounds)
+	switch(sound_state)
+		if(RBMK_SOUND_MAX)
+			return 'sound/rbmk/reactor_hum_max.ogg'
+
+		if(RBMK_SOUND_HIGH)
+			return 'sound/rbmk/reactor_hum_high.ogg'
+
+	return 'sound/rbmk/reactor_hum_low.ogg'
+
+/datum/looping_sound/rbmk_cascade
+	mid_sounds = list('sound/rbmk/cascade_loop.ogg')
+	mid_length = 64 SECONDS
+	volume = 35
+
+	extra_range = 15
+
+	live_attenuation = TRUE
+	live_attenuation_interval = 0.5 SECONDS
+	live_attenuation_max_distance = 20
+	live_attenuation_mixer_channel = CHANNEL_MACHINERY
+
+	falloff_distance = 5
+	falloff_exponent = 2
+	ignore_walls = FALSE
+	pressure_affected = FALSE
+
+/datum/looping_sound/rbmk_turbine
+	start_sound = 'sound/rbmk/turbine_start.ogg'
+	start_length = 16.2 SECONDS
+	start_volume = 8
+
+	mid_sounds = list('sound/rbmk/turbine_mid.ogg')
+	mid_length = 3.85 SECONDS
+	volume = 20
+
+	end_sound = 'sound/rbmk/turbine_end.ogg'
+	end_volume = 6
+	// Native repeat keeps the rotor continuous. Each token owns its channel
+	// and updates nearby listeners without restarting the running clip.
+	use_sound_tokens = TRUE
+	sound_channel = CHANNEL_MACHINERY
+	extra_range = -5
+
+	falloff_distance = 4
+	falloff_exponent = 3
+	ignore_walls = FALSE
+	pressure_affected = FALSE

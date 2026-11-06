@@ -27,6 +27,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
 	var/list/categories = list()
+	/// Whether this material should only be exposed by machine UIs when the station's main engine is an RBMK.
+	var/requires_main_rbmk = FALSE
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
 	var/sheet_type
 	/// What type of ore is this material associated with? Used for mining, and not every material has one.
