@@ -8,15 +8,19 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"area",
 	"atmos_adjacent_turfs",
 	"bodyparts",
+	"buckled_mobs",
 	"ckey",
 	"client_mobs_in_contents",
 	"_listen_lookup",
 	"computer_id",
 	"contents",
 	"cooldowns",
+	"currently_z_moving",
 	"_datum_components",
 	"external_organs",
 	"external_organs_slot",
+	"force_moving",
+	"grab_state",
 	"group",
 	"hand_bodyparts",
 	"held_items",
@@ -31,18 +35,29 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"locs",
 	"managed_overlays",
 	"managed_vis_overlays",
+	"moving_diagonally",
+	"moving_from_pull",
+	"move_packet",
 	"overlays",
 	"overlays_standing",
+	"orbit_target",
+	"orbiters",
+	"orbiting",
 	"parent",
 	"parent_type",
+	"pixloc",
 	"power_supply",
+	"pulledby",
+	"pulling",
 	"quirks",
 	"reagents",
+	"spatial_grid_key",
 	"_signal_procs",
 	"stat",
 	"status_effects",
 	"_status_traits",
 	"tag",
+	"thrownby",
 	"tgui_shared_states",
 	"type",
 	"update_on_z",
@@ -55,17 +70,17 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 /**
  * # duplicate_object
  *
- * Makes a copy of an item and transfers most vars over, barring GLOB.duplicate_forbidden_vars
+ * Makes a copy of a movable atom and transfers most vars over, barring GLOB.duplicate_forbidden_vars
  * Args:
- * original - Atom being duplicated
+ * original - Movable atom being duplicated
  * spawning_location - Turf where the duplicated atom will be spawned at.
  */
-/proc/duplicate_object(atom/original, turf/spawning_location)
+/proc/duplicate_object(atom/movable/original, turf/spawning_location)
 	RETURN_TYPE(original.type)
-	if(!original)
+	if(!original || !istype(original))
 		return
 
-	var/atom/made_copy = new original.type(spawning_location)
+	var/atom/movable/made_copy = new original.type(spawning_location)
 
 	for(var/atom_vars in original.vars - GLOB.duplicate_forbidden_vars)
 		if(islist(original.vars[atom_vars]))
@@ -94,4 +109,5 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
 			copied_living.add_quirk(original_quirks.type)
 
+	made_copy.forceMove(spawning_location)
 	return made_copy

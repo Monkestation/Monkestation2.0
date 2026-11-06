@@ -60,7 +60,7 @@
 
 /*
  * A list of "tags" displayed after atom's description in examine.
- * This should return an assoc list of tags -> tooltips for them. If item if null, then no tooltip is assigned.
+ * This should return an assoc list of tags -> tooltips for them. If item is null, then no tooltip is assigned.
  * For example:
  * list("small" = "This is a small size class item.", "fireproof" = "This item is impervious to fire.")
  * will result in
