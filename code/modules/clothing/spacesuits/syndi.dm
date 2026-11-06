@@ -65,9 +65,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 		/obj/item/gun,
 		/obj/item/tank/jetpack/oxygen,
 		/obj/item/tank/jetpack/harness,
-		/obj/item/storage/belt/holster/detective,
-		/obj/item/storage/belt/holster/nukie,
-		/obj/item/storage/belt/holster/energy,
+		/obj/item/storage/belt/holster,
 	) //monkestation edit: updated list
 	armor_type = /datum/armor/space_syndicate
 	cell = /obj/item/stock_parts/power_store/cell/hyper
