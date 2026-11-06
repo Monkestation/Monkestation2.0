@@ -1,4 +1,5 @@
 /mob/living/silicon
+	abstract_type = /mob/living/silicon
 	gender = NEUTER
 	verb_say = "states"
 	verb_ask = "queries"
@@ -7,7 +8,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	death_sound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -43,8 +44,8 @@
 	var/crew_hud = DATA_HUD_CREW //MONKE, lets silicons tell who is crew.
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/bodycamera/builtInCamera = null
-	var/updating = FALSE //portable camera camerachunk update
+	///The camera built into us, lets us be seen through camera consoles
+	var/obj/machinery/camera/silicon/builtInCamera
 	///Whether we have been emagged
 	var/emagged = FALSE
 	var/centcom = FALSE
@@ -518,8 +519,3 @@
 	for(var/borg_laws in law_list)
 		. += borg_laws
 
-/mob/living/silicon/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	return
-
-/mob/living/silicon/body_temperature_alerts()
-	return

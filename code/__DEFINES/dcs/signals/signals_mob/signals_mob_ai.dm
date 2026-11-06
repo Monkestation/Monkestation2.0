@@ -6,3 +6,6 @@
 
 ///Signal sent when a bot is reset
 #define COMSIG_BOT_RESET "bot_reset"
+
+///Called when an AI changes their screen icon ai/proc/set_core_display_icon
+#define COMSIG_AI_ICON_CHANGE "ai_icon_change"

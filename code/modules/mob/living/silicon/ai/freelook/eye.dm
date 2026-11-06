@@ -139,17 +139,15 @@
 ///Called when the AI shiftclicks on something to examinate it.
 /mob/eye/camera/ai/proc/examinate_check(mob/user, atom/source)
 	SIGNAL_HANDLER
-	if(user.client.eye == src)
-		if(ishuman(source) && !ai.canExamineHumans)
-			return
-		return COMPONENT_ALLOW_EXAMINATE
+	if(user.client.eye == src && ishuman(source) && !ai.canExamineHumans)
+		return COMSIG_MOB_CANCEL_CLICKON
 
 /atom/proc/move_camera_by_click()
 	if(!isAI(usr))
 		return
 	var/mob/living/silicon/ai/AI = usr
 	if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
-		if (isvalidAIloc(loc))
+		if (isvalidAIloc(loc) || isvalidAIloc(src))
 			AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
@@ -221,18 +219,9 @@
 	else
 		eyeobj.RemoveInvisibility(type)
 
-/mob/living/silicon/ai/verb/toggle_acceleration()
-	set category = "AI Commands"
-	set name = "Toggle Camera Acceleration"
-
-	if(incapacitated())
-		return
-	acceleration = !acceleration
-	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
-
 /mob/eye/camera/ai/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && GLOB.cameranet.checkCameraVis(speaker))
+	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && SScameras.is_visible_by_cameras(speaker))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 /obj/effect/overlay/ai_detect_hud

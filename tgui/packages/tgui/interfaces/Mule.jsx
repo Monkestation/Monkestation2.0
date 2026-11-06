@@ -15,6 +15,7 @@ export const Mule = (props) => {
   const { act, data } = useBackend();
   const {
     on,
+    emagged,
     cell,
     cellPercent,
     load,
@@ -28,9 +29,17 @@ export const Mule = (props) => {
     id,
     allow_possession,
     possession_enabled,
+    speed,
     destinations = [],
   } = data;
   const locked = data.locked && !data.siliconUser;
+  const gearStates = {
+    0 : { label: 'Halted', color: 'label', icon: 'fa-thermometer-empty' },
+    1 : { label: '!MAXIMUM!', color: 'red', icon: 'fa-thermometer-full' },
+    2 : { label: 'FAST', color: 'orange', icon: 'fa-thermometer-half' },
+    3 : { label: 'Normal', color: 'green', icon: 'fa-thermometer-quarter' },
+  };
+  const gearState = speed !== undefined ? gearStates[speed] : null;
   return (
     <Window width={350} height={445}>
       <Window.Content>
@@ -44,6 +53,18 @@ export const Mule = (props) => {
                 icon="fa-poll-h"
                 content="Rename"
                 onClick={() => act('rename')}
+              />
+              <Button
+                color="danger"
+                content={emagged ? 'Malfunctional' : 'Safety Lock'}
+                selected={!emagged}
+                icon={emagged ? 'bug' : 'lock'}
+                onClick={() => act('hack')}
+                tooltip={
+                  !emagged
+                    ? 'Unlocks the safety protocols.'
+                    : 'Resets the bot operating system.'
+                }
               />
               {!locked && (
                 <Button
@@ -114,6 +135,15 @@ export const Mule = (props) => {
                   onClick={() => act('stop')}
                 />
                 <Button icon="play" content="Go" onClick={() => act('go')} />
+                {gearState && (
+                  <Button
+                    content={gearState.label}
+                    color={gearState.color}
+                    icon={gearState.icon}
+                    tooltip={speed ? 'Overrides current speed.' : 'Bot is unable to move.'}
+                    onClick={() => act('gear')}
+                  />
+                )}
               </LabeledList.Item>
               <LabeledList.Item label="Home">
                 <Dropdown

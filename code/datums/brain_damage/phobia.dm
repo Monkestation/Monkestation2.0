@@ -17,6 +17,41 @@
 	var/list/trigger_turfs
 	var/list/trigger_species
 
+	/// Whether this phobia is "inactive" or not.
+	var/suppressed = FALSE
+	/// Whether this phobia is automatically suppressed by the presence of certain antags.
+	var/static/list/suppressed_antags = list(
+		"heresy" = list(
+			"antags" = list(
+				/datum/antagonist/heretic,
+				/datum/antagonist/heretic_monster,
+				/datum/antagonist/lunatic
+			),
+			"suppression_message" = "Due to your connection to The Mansus, you are able to overcome and ignore your mind's fear of it.",
+			"unsuppression_message" = "You feel the fear of heresy return to your mind as you lose your connection to The Mansus."
+		),
+		"supernatural" = list(
+			"antags" = list(
+				/datum/antagonist/bloodsucker,
+				/datum/antagonist/clock_cultist,
+				/datum/antagonist/cult,
+				/datum/antagonist/heretic,
+				/datum/antagonist/heretic_monster,
+				/datum/antagonist/monsterhunter,
+				/datum/antagonist/vassal,
+				/datum/antagonist/wizard,
+				/datum/antagonist/wizard_minion
+			),
+			"suppression_message" = "Due to your connection to the supernatural, you are able to overcome and ignore your mind's fear of it.",
+			"unsuppression_message" = "You feel the fear of the supernatural return to your mind as you lose your connection to it."
+		),
+		"blood" = list(
+			"antags" = list(/datum/antagonist/cult, /datum/antagonist/bloodsucker, /datum/antagonist/vassal),
+			"suppression_message" = "Due to your existence's reliance on blood, you are able to overcome and ignore your mind's fear of it.",
+			"unsuppression_message" = "You feel the fear of blood return to your mind as you lose your reliance on it."
+		)
+	)
+
 /datum/brain_trauma/mild/phobia/New(new_phobia_type)
 	if(new_phobia_type)
 		phobia_type = new_phobia_type
@@ -32,16 +67,50 @@
 	trigger_objs = GLOB.phobia_objs[phobia_type]
 	trigger_turfs = GLOB.phobia_turfs[phobia_type]
 	trigger_species = GLOB.phobia_species[phobia_type]
-	..()
+	return ..()
+
+/datum/brain_trauma/mild/phobia/on_gain()
+	. = ..()
+	if(!QDELETED(owner?.mind))
+		update_suppression()
+		RegisterSignals(owner.mind, list(COMSIG_ANTAGONIST_GAINED, COMSIG_ANTAGONIST_REMOVED), PROC_REF(update_suppression))
+
+/datum/brain_trauma/mild/phobia/on_lose(silent)
+	. = ..()
+	if(!QDELETED(owner?.mind))
+		update_suppression()
+		UnregisterSignal(owner.mind, list(COMSIG_ANTAGONIST_GAINED, COMSIG_ANTAGONIST_REMOVED))
+
+/datum/brain_trauma/mild/phobia/proc/update_suppression()
+	SIGNAL_HANDLER
+	var/list/suppression_info = src.suppressed_antags[phobia_type]
+	if(!suppression_info || QDELETED(owner?.mind))
+		return
+
+	var/previous_suppressed = suppressed
+	suppressed = FALSE
+	for(var/antag_type in suppression_info["antags"])
+		if(owner.mind.has_antag_datum(antag_type))
+			suppressed = TRUE
+			break
+
+	if(suppressed && !previous_suppressed)
+		to_chat(owner, span_boldnotice("[suppression_info["suppression_message"]]"))
+	else if(!suppressed && previous_suppressed)
+		to_chat(owner, span_bolddanger("[suppression_info["unsuppression_message"]]"))
+
 
 /datum/brain_trauma/mild/phobia/on_clone()
 	if(trauma_flags & TRAUMA_CLONEABLE)
 		return new type(phobia_type)
 
 /datum/brain_trauma/mild/phobia/on_life(seconds_per_tick, times_fired)
-	..()
+	if(suppressed)
+		return
+
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
+
 	if(owner.is_blind())
 		return
 
@@ -82,13 +151,18 @@
 
 /// Returns true if this item should be scary to us
 /datum/brain_trauma/mild/phobia/proc/is_scary_item(obj/checked)
-	if (QDELETED(checked) || !is_type_in_typecache(checked, trigger_objs))
+	if(suppressed)
 		return FALSE
-	if (!isitem(checked))
+	if(QDELETED(checked) || !is_type_in_typecache(checked, trigger_objs))
+		return FALSE
+	if(!isitem(checked))
 		return TRUE
 	return !HAS_TRAIT(checked, TRAIT_EXAMINE_SKIP)
 
 /datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
+	if(suppressed)
+		return
+
 	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE])) 	//words can't trigger you if you can't hear them *taps head*
 		return
 
@@ -100,8 +174,12 @@
 		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
+	if(suppressed)
+		return
+
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
+
 	if(trigger_regex.Find(speech_args[SPEECH_MESSAGE]) != 0)
 		//MONKESTATION EDIT START - Phobias should not prevent forced speech (such as through tourettes)
 		if(speech_args[SPEECH_FORCED])
@@ -113,9 +191,13 @@
 		speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word, said_not_heard = FALSE)
+	if(suppressed)
+		return
+
 	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
 	if(owner.stat == DEAD)
 		return
+
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
 		to_chat(owner, span_userdanger("Seeing [reason] [message]!"))
@@ -126,6 +208,7 @@
 			to_chat(owner, span_userdanger("Hearing \"[trigger_word]\" [message]!"))
 	else
 		to_chat(owner, span_userdanger("Something [message]!"))
+
 	var/reaction = rand(1,4)
 	switch(reaction)
 		if(1)
@@ -250,3 +333,11 @@
 	if (GET_ATOM_BLOOD_DNA_LENGTH(checked))
 		return TRUE
 	return ..()
+
+/datum/brain_trauma/mild/phobia/christian_minecraft
+	phobia_type = "christian minecraft"
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
+
+/datum/brain_trauma/mild/phobia/swearing
+	phobia_type = "swearing"
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM

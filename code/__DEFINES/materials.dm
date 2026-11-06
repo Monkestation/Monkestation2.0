@@ -8,3 +8,9 @@
 #define GET_MATERIAL_REF(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
 
 #define MATERIAL_SOURCE(mat) "[mat.name]_material"
+
+#define MATERIAL_STACK (1 << 0)
+
+#define MT_PROCESSES (1 << 0)
+#define MT_NO_STACK_PROCESS (1 << 1)
+#define MT_NO_STACK_ADD (1 << 2)

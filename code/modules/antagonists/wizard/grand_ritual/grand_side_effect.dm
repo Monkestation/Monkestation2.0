@@ -38,7 +38,7 @@
 	abstract = FALSE
 
 /datum/grand_side_effect/scramble_turfs/trigger(potency, turf/ritual_location, mob/invoker)
-	playsound(ritual_location, 'sound/magic/timeparadox2.ogg', 60, TRUE)
+	playsound(ritual_location, 'sound/effects/magic/timeparadox2.ogg', 60, TRUE)
 	var/datum/action/cooldown/spell/spell = new /datum/action/cooldown/spell/spacetime_dist()
 	spell.cast(ritual_location)
 
@@ -202,7 +202,7 @@
 #define CREWMATE_SUMMON_TELEPORT_DELAY 9 SECONDS
 
 /datum/grand_side_effect/summon_crewmate/trigger(potency, turf/ritual_location, mob/invoker)
-	playsound(ritual_location, 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
+	playsound(ritual_location, 'sound/effects/magic/lightning_chargeup.ogg', 65, TRUE)
 	var/list/potential_victims = list()
 	var/area/our_area = get_area(ritual_location)
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
@@ -220,7 +220,7 @@
 	new /obj/effect/temp_visual/teleport_abductor(landing_pos)
 
 	var/mob/living/carbon/human/victim = pick(potential_victims)
-	playsound(get_turf(victim),'sound/magic/repulse.ogg', 60, TRUE)
+	playsound(get_turf(victim),'sound/effects/magic/repulse.ogg', 60, TRUE)
 	victim.Immobilize(CREWMATE_SUMMON_TELEPORT_DELAY)
 	victim.AddElement(/datum/element/forced_gravity, 0)
 	victim.add_filter("teleport_glow", 2, list("type" = "outline", "color" = "#de3aff48", "size" = 2))
@@ -246,7 +246,7 @@
 	abstract = FALSE
 
 /datum/grand_side_effect/smoke/trigger(potency, turf/ritual_location, mob/invoker)
-	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/smoke.ogg', 50, TRUE)
 	var/range = LERP(2, 4, potency/GRAND_RITUAL_FINALE_COUNT)
 	var/datum/effect_system/fluid_spread/smoke/colourful/smoke = new
 	smoke.set_up(range, holder = ritual_location, location = ritual_location)
@@ -334,18 +334,19 @@
 		to_create--
 		addtimer(CALLBACK(src, PROC_REF(drop_food), pick_n_take(valid_turfs)), rand(0, (1 SECONDS) * seconds_per_tick))
 
-/* monkestation edit: reimplemented in [monkestation/code/modules/antagonists/wizard/grand_ritual/grand_side_effect.dm]
 /obj/effect/abstract/local_food_rain/proc/drop_food(turf/landing_zone)
+	var/food_type = get_random_food()
+	var/obj/item/food/summoned_food = new food_type
+	summoned_food.preserved_food = TRUE // it's magical food
 	podspawn(list(
 			"target" = landing_zone,
 			"style" = STYLE_SEETHROUGH,
-			"spawn" = get_random_food(),
+			"spawn" = summoned_food,
 			"delays" = list(POD_TRANSIT = 0, POD_FALLING = (3 SECONDS), POD_OPENING = 0, POD_LEAVING = 0),
 			"effectStealth" = TRUE,
 			"effectQuiet" = TRUE,
 		)
 	)
-monkestation end */
 
 /obj/effect/abstract/local_food_rain/proc/end_rain()
 	qdel(src)
@@ -387,7 +388,7 @@ monkestation end */
 		return
 	if (!mob_path)
 		return
-	playsound(get_turf(src),'sound/magic/teleport_app.ogg', 60, TRUE)
+	playsound(get_turf(src),'sound/effects/magic/teleport_app.ogg', 60, TRUE)
 	do_sparks(5, FALSE, loc)
 	new mob_path(loc)
 

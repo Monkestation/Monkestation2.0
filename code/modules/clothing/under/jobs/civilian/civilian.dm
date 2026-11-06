@@ -1,6 +1,7 @@
 //Alphabetical order of civilian jobs.
 
 /obj/item/clothing/under/rank/civilian
+	abstract_type = /obj/item/clothing/under/rank/civilian
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
@@ -116,6 +117,8 @@
 /obj/item/clothing/under/rank/civilian/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'icons/mob/clothing/uniform.dmi'
 	icon_state = "janitor"
 	inhand_icon_state = "janitor"
 	armor_type = /datum/armor/civilian_janitor
@@ -126,6 +129,8 @@
 /obj/item/clothing/under/rank/civilian/janitor/skirt
 	name = "janitor's jumpskirt"
 	desc = "It's the official skirt of the station's janitor. It has minor protection from biohazards."
+	icon = 'icons/obj/clothing/under/civilian.dmi'
+	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 	icon_state = "janitor_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
@@ -135,6 +140,8 @@
 /obj/item/clothing/under/rank/civilian/janitor/maid
 	name = "maid uniform"
 	desc = "A simple maid uniform for housekeeping."
+	icon = 'icons/mob/clothing/under/civilian.dmi'
+	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 	icon_state = "janimaid"
 	inhand_icon_state = "janimaid"
 	body_parts_covered = CHEST|GROIN
@@ -142,6 +149,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/lawyer
+	abstract_type = /obj/item/clothing/under/rank/civilian/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	can_adjust = FALSE

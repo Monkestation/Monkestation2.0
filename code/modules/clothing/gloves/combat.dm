@@ -5,9 +5,9 @@
 	greyscale_colors = "#2f2e31"
 	siemens_coefficient = 0
 	strip_delay = 80
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor_type = /datum/armor/gloves_combat
@@ -22,5 +22,20 @@
 	name = "enchanted gloves"
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
 	icon_state = "wizard"
+	greyscale_colors = null
+	inhand_icon_state = null
+
+/obj/item/clothing/gloves/combat/maid
+	name = "combat maid sleeves"
+	desc = "These 'tactical' gloves and sleeves are fireproof and electrically insulated. Warm to boot."
+	icon_state = "syndimaid_arms"
+
+/obj/item/clothing/gloves/combat/floortile
+	name = "floor-tile camouflage gloves"
+	desc = "Is it just me, or is there a pair of gloves on the floor?"
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = null
+	icon_state = "ftc_gloves"
+	worn_icon_state = "ftc_gloves"
 	greyscale_colors = null
 	inhand_icon_state = null

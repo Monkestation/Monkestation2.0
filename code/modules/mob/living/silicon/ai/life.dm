@@ -25,7 +25,7 @@
 			core.set_light(l_outer_range = 7, l_power = 3, l_color = current_color)
 
 	// Handle power damage (oxy)
-	if(aiRestorePowerRoutine && !available_ai_cores())
+	if(aiRestorePowerRoutine && !find_valid_ai_core())
 		// Lost power
 		if (!battery)
 			to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
@@ -39,9 +39,11 @@
 			battery++
 
 	if(lacks_power())
-		if(!aiRestorePowerRoutine)
-			ai_lose_power()
-		return
+		var/obj/machinery/ai/data_core/ai_location = loc
+		if(!ai_location.integrated_battery?.use(ai_location.active_power_usage))
+			if(!aiRestorePowerRoutine)
+				ai_lose_power()
+			return
 
 	var/area/home = get_area(src)
 	if(!home.apc)
@@ -56,14 +58,6 @@
 
 	if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 		ai_restore_power()
-
-	if(cameraMemoryTarget)
-		if(cameraMemoryTickCount >= AI_CAMERA_MEMORY_TICKS)
-			cameraMemoryTickCount = 0
-			if(ai_tracking_tool.set_tracked_target(cameraMemoryTarget))
-				to_chat(src, span_notice("Tracked target [cameraMemoryTarget] found visible on cameras. Tracking disabled."))
-				cameraMemoryTarget = 0
-		cameraMemoryTickCount++
 
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
@@ -199,7 +193,7 @@
 /mob/living/silicon/ai/proc/ai_deactivate_power()
 	disconnect_shell()
 	view_core()
-	ai_tracking_tool.set_tracked_target(src) //track the data core we're in
+	ai_tracking_tool.set_tracked_target(src, src) //track the data core we're in
 	technically_unpowered = TRUE
 	to_chat(src, span_alert("You've lost access to an APC!"))
 

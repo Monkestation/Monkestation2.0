@@ -147,7 +147,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 
@@ -171,8 +171,8 @@
 		ChangeTurf(new_floor_path, flags = flags)
 		return
 	// Create plating under tiled floor we try to create directly onto the air
-	PlaceOnTop(/turf/open/floor/plating, flags = flags)
-	PlaceOnTop(new_floor_path, flags = flags)
+	place_on_top(/turf/open/floor/plating, flags = flags)
+	place_on_top(new_floor_path, flags = flags)
 
 /turf/open/openspace/can_cross_safely(atom/movable/crossing)
 	if(HAS_TRAIT(crossing, TRAIT_MOVE_FLYING) || (locate(/obj/structure/lattice) in src))
@@ -195,6 +195,7 @@
 	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
 	/// If true mineral turfs below this openspace turf will be mined automatically
 	var/drill_below = TRUE
+	var/protect_station = TRUE
 
 /turf/open/openspace/icemoon/Initialize(mapload)
 	. = ..()
@@ -202,20 +203,25 @@
 	//I wonder if I should error here
 	if(!T)
 		return
-	// MONKESTATION ADDITION START: Don't fucking bust open the station from the ceiling lmao.
+
 	if(istype(T.loc, /area/station) && protect_station)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return
-	// MONKESTATION ADDITION END
+
 	if(T.turf_flags & NO_RUINS && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return
+
 	if(!ismineralturf(T) || !drill_below)
 		return
+
 	var/turf/closed/mineral/M = T
 	M.mineralAmt = 0
 	M.gets_drilled()
 	baseturfs = /turf/open/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
+
+/turf/open/openspace/icemoon/station
+	protect_station = FALSE
 
 /turf/open/openspace/icemoon/keep_below
 	drill_below = FALSE

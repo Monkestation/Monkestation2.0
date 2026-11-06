@@ -27,8 +27,7 @@ SUBSYSTEM_DEF(garbage)
 	wait = 2 SECONDS
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	init_order = INIT_ORDER_GARBAGE
-	init_stage = INITSTAGE_EARLY
+	init_stage = INITSTAGE_FIRST
 
 	var/list/collection_timeout = list(GC_FILTER_QUEUE, GC_CHECK_QUEUE, GC_DEL_QUEUE) // deciseconds to wait before moving something up in the queue to the next level
 
@@ -48,13 +47,13 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
-	#ifdef REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
-	#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 	//Should we save found refs. Used for unit testing
 	var/should_save_refs = FALSE
-	#endif
-	#endif
+#endif
+#endif
 
 	// monkestation start: disabling hard deletes
 #if !defined(UNIT_TESTS) && !defined(REFERENCE_TRACKING)

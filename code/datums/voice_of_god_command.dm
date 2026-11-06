@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	if(!user.say(message, spans = span_list, sanitize = FALSE))
 		return
 
-	message = lowertext(message)
+	message = LOWER_TEXT(message)
 
 	var/list/mob/living/listeners = list()
 	//used to check if the speaker specified a name or a job to focus on
@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/hot/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		target.adjust_bodytemperature(5 KELVIN * power_multiplier)
+		target.adjust_bodytemperature(50 * power_multiplier)
 
 /// This command cools the listeners down like freezing water.
 /datum/voice_of_god_command/cold
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/cold/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		target.adjust_bodytemperature(-7.5 KELVIN * power_multiplier)
+		target.adjust_bodytemperature(-50 * power_multiplier)
 
 /// This command throws the listeners away from the user.
 /datum/voice_of_god_command/repulse

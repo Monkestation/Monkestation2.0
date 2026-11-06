@@ -12,7 +12,7 @@
 	maxHealth = 16
 	melee_damage_lower = 8
 	melee_damage_upper = 8
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	attack_verb_continuous = "bites"
@@ -22,6 +22,7 @@
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
+	initial_language_holder = /datum/language_holder/carp
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()

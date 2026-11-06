@@ -105,7 +105,7 @@
 /datum/game_mode/proc/generate_report_footnote()
 	var/footnote_pile = ""
 
-	for(var/datum/command_footnote/footnote in SScommunications.command_report_footnotes)
+	for(var/datum/command_footnote/footnote in GLOB.communications_controller.command_report_footnotes)
 		footnote_pile += "[footnote.message]<BR>"
 		footnote_pile += "<i>[footnote.signature]</i><BR>"
 		footnote_pile += "<BR>"

@@ -79,8 +79,8 @@
 	name = "\improper Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list(
-		'sound/ambience/ambidet1.ogg',
-		'sound/ambience/ambidet2.ogg',
+		'sound/ambience/security/ambidet1.ogg',
+		'sound/ambience/security/ambidet2.ogg',
 		)
 
 /area/station/security/detectives_office/private_investigators_office
@@ -223,3 +223,8 @@
 /area/station/security/prison/garden
 	name = "\improper Prison Garden"
 	icon_state = "prison_garden"
+
+/area/station/security/bitden
+	name = "Bitrunning Den"
+	desc = "Office of bitrunners, houses their equipment."
+	icon_state = "bit_den"

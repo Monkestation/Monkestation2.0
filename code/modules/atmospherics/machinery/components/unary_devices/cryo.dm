@@ -111,7 +111,6 @@
 	var/patient_dead = FALSE
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
-	var/adjusted_occupant = FALSE
 
 	/// Reference to the datum connector we're using to interface with the pipe network
 	var/datum/gas_machine_connector/internal_connector
@@ -148,17 +147,9 @@
 /obj/machinery/cryo_cell/set_occupant(atom/movable/new_occupant)
 	if(occupant && isnull(new_occupant))
 		REMOVE_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
-		if(isliving(occupant) && adjusted_occupant)
-			adjusted_occupant = FALSE
-			var/mob/living/living = occupant
-			living.bodytemp_cold_damage_limit += 270 KELVIN
 	. = ..()
 	if(occupant && on)
 		ADD_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
-		if(isliving(occupant) && !adjusted_occupant)
-			adjusted_occupant = TRUE
-			var/mob/living/living = occupant
-			living.bodytemp_cold_damage_limit -= 270 KELVIN
 	update_appearance(UPDATE_ICON)
 
 /obj/machinery/cryo_cell/on_construction(mob/user)
@@ -269,16 +260,8 @@
 		return
 	if(on)
 		ADD_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
-		if(isliving(occupant) && !adjusted_occupant)
-			adjusted_occupant = TRUE
-			var/mob/living/living = occupant
-			living.bodytemp_cold_damage_limit -= 270 KELVIN
 	else
 		REMOVE_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
-		if(isliving(occupant) && adjusted_occupant)
-			adjusted_occupant = FALSE
-			var/mob/living/living = occupant
-			living.bodytemp_cold_damage_limit += 270 KELVIN
 
 /obj/machinery/cryo_cell/on_set_is_operational(old_value)
 	if(old_value) //Turned off
@@ -373,7 +356,7 @@
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
-	if(!internal_connector.gas_connector.nodes[1] || !internal_connector.gas_connector.airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.moles.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
@@ -386,7 +369,7 @@
 
 		if(ishuman(mob_occupant))
 			var/mob/living/carbon/human/H = mob_occupant
-			cold_protection = H.get_insulation(air1.temperature)
+			cold_protection = H.get_cold_protection(air1.temperature)
 
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
@@ -395,6 +378,11 @@
 
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
+
+			//lets have the core temp match the body temp in humans
+			if(ishuman(mob_occupant))
+				var/mob/living/carbon/human/humi = mob_occupant
+				humi.adjust_coretemperature(humi.bodytemperature - humi.coretemperature)
 
 
 		air1.garbage_collect()
@@ -606,7 +594,7 @@
 	data["beakerContents"] = beakerContents
 	return data
 
-/obj/machinery/cryo_cell/ui_act(action, params)
+/obj/machinery/cryo_cell/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

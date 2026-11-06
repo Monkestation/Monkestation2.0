@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	actions_types = list(/datum/action/item_action/adjust)
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
-	alternate_worn_layer = UNDER_SUIT_LAYER
+	alternate_worn_layer = LOW_FACEMASK_LAYER
 	var/list/balaclava_designs = list()
 
 /obj/item/clothing/mask/balaclava/Initialize(mapload)
@@ -43,7 +43,8 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		var/list/options = GLOB.balaclava_options
-		icon_state = options[choice]
+		base_icon_state = options[choice]
+		icon_state = base_icon_state
 		update_item_action_buttons()
 		var/handling_text = "adjust"
 		switch(choice)
@@ -70,6 +71,37 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 			carbon_user.update_body_parts()
 		return TRUE
 
+/obj/item/clothing/mask/floortilebalaclava
+	name = "floor-tile balaclava"
+	desc = "The newest floor-tile camouflage balaclava used for hallway warfare. The best breathability, flexibility, and comfort. Designed by Camo-J's."
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	icon_state = "floortile_balaclava"
+	inhand_icon_state = "balaclava"
+	flags_inv = HIDE_ALL_HEAD
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	alternate_worn_layer = UNDER_SUIT_LAYER
+	w_class = WEIGHT_CLASS_SMALL
+	actions_types = list(/datum/action/item_action/adjust)
+
+/obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/floortilebalaclava/ui_action_click(mob/user, datum/action/action)
+	adjust_visor(user)
+	return TRUE
+
+/obj/item/clothing/mask/floortilebalaclava/visor_toggling(mob/living/user)
+	. = ..()
+	if(up)
+		ADD_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
+	else
+		REMOVE_TRAIT(src, TRAIT_NO_WORN_ICON, "floortile_balaclava_adjusted")
+
+// Pulled down it just stops showing on the mob, the item sprite stays the same
+/obj/item/clothing/mask/floortilebalaclava/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state)
+
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
@@ -77,8 +109,9 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
+	alternate_worn_layer = LOW_FACEMASK_LAYER
 
-/obj/item/clothing/head/frenchberet/Initialize(mapload)
+/obj/item/clothing/mask/luchador/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("luchador_replacement.json", "luchador"), end_string = " OLE!", end_string_chance = 25, uppercase = TRUE, slots = ITEM_SLOT_MASK)
 
@@ -103,5 +136,6 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
-	alternate_worn_layer = UNDER_SUIT_LAYER
+	alternate_worn_layer = LOW_FACEMASK_LAYER
+	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT

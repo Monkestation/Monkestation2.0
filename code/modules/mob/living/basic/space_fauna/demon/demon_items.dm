@@ -18,7 +18,7 @@
 		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
 		span_danger("An unnatural hunger consumes you. You raise [src] your mouth and devour it!"),
 	)
-	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 	if(locate(/datum/action/cooldown/spell/jaunt/bloodcrawl) in user.actions)
 		to_chat(user, span_warning("...and you don't feel any different."))
@@ -56,7 +56,3 @@
 	random_icon_states = null
 	base_name = ""
 	can_dry = FALSE
-
-/obj/effect/decal/cleanable/blood/innards/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	add_blood_DNA(list("DEMON BLOOD" = /datum/blood_type/animal))

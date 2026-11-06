@@ -63,6 +63,8 @@
 #define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
+/// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
+#define COMSIG_BODYPART_POST_REMOVED "bodypart_post_removed"
 
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
@@ -131,6 +133,8 @@
 #define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
+///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
+#define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
 ///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
 #define COMSIG_HUMAN_BURNING "human_burning"
 	/// Return to do no burn damage
@@ -144,6 +148,17 @@
 
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
+
+/// From /mob/living/carbon/human/get_visible_name(): (list/identity)
+#define COMSIG_HUMAN_GET_VISIBLE_NAME "human_get_visible_name"
+	/// Index for the visible face name.
+	#define VISIBLE_NAME_FACE 1
+	/// Index for the visible ID name.
+	#define VISIBLE_NAME_ID 2
+	/// Index for the priority of a forced name override.
+	#define VISIBLE_NAME_FORCED 3
+/// From /mob/living/carbon/human/get_id_name(); sent only while the mob has TRAIT_UNKNOWN: (list/identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
@@ -172,3 +187,14 @@
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
 /// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
 #define COMSIG_HUMAN_PUNCHED "human_punched"
+
+#define COMSIG_CARBON_EQUIP_EARS "carbon_ears_equip"
+#define COMSIG_CARBON_UNEQUIP_EARS "carbon_ears_unequip"
+
+///Sent to carbon when they pickup something (/obj/item)
+#define COMSIG_CARBON_ITEM_PICKED_UP "carbon_item_picked_up"
+#define COMSIG_HUMAN_BEGIN_DUEL "human_begin_duel"
+#define COMSIG_HUMAN_END_DUEL "human_end_duel"
+
+/// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"

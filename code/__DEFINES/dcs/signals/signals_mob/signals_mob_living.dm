@@ -97,6 +97,8 @@
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
+#define COMSIG_LIVING_FAKE_DEATH "fake_death"
+
 ///from base of mob/living/gib(): (no_brain, no_organs, no_bodyparts)
 ///Note that it is fired regardless of whether the mob was dead beforehand or not.
 #define COMSIG_LIVING_GIBBED "living_gibbed"
@@ -242,14 +244,6 @@
 	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
 	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
 
-#define COMSIG_LIVING_BODY_TEMPERATURE_CHANGE "living_body_temperature_change"
-
-#define COMSIG_LIVING_HOMEOSTASIS "living_homeostasis"
-	/// Return to do no homeostasis at all
-	#define HOMEOSTASIS_HANDLED (1<<0)
-	/// Return to not reduce hunger at all
-	#define HOMEOSTASIS_NO_HUNGER (1<<1)
-
 /// Sent to the mob when their mind is slaved
 #define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
 /// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
@@ -264,3 +258,12 @@
 
 /// Sent when the [/datum/status_effect/silver_bullet] status effect is applied or refresh.
 #define COMSIG_LIVING_BLOODSILVER_HIT "living_bloodsilver_hit"
+
+///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
+#define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
+
+/// From /datum/component/edible/get_perceived_food_quality(): (datum/component/edible/edible, list/extra_quality)
+#define COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY "get_perceived_food_quality"
+
+/// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
+#define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"

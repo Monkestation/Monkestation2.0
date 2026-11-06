@@ -87,7 +87,7 @@ ADMIN_VERB(cmd_soundquery_debug, R_SERVER|R_DEBUG, FALSE, "Sound Mixer Debug", "
 		"results" = results,
 	)
 
-/datum/soundquery_debug/ui_act(action, params)
+/datum/soundquery_debug/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())
 		return TRUE
 	if(action == "select_client")

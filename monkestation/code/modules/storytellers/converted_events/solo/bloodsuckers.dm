@@ -57,6 +57,15 @@
 	prompted_picking = TRUE
 	max_occurrences = 1
 
+/datum/round_event_control/antagonist/bloodsucker/latejoin
+	typepath = /datum/round_event/antagonist/bloodsucker
+	antag_flag = ROLE_BLOODSUCKERBREAKOUT
+	name = "Bloodsucker Breakout"
+	track = EVENT_TRACK_LATEJOIN
+	earliest_start = BASE_LATEJOIN_SPAWN_TIME
+	maximum_antags = 1
+	max_occurrences = 1
+
 /datum/round_event/antagonist/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = antag_mind.make_bloodsucker()
 	bloodsuckerdatum.bloodsucker_level_unspent = rand(2,3)

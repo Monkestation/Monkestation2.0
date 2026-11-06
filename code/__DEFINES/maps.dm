@@ -64,7 +64,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
 
 /// List of directories we can load map .json files from
-#define MAP_DIRECTORY_MAPS "_maps"
+#define MAP_DIRECTORY_MAPS "_maps/map_jsons"
 #define MAP_DIRECTORY_DATA "data"
 #define MAP_DIRECTORY_WHITELIST list(MAP_DIRECTORY_MAPS,MAP_DIRECTORY_DATA)
 
@@ -235,7 +235,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 /// Checks the job changes in the map config for the passed change key.
 #define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
 
-//monkestation start
 #define ZTRAIT_OSHAN "OshanTrait"
 
 #define ZTRAIT_OSHAN_MINING "Oshan Mining"
@@ -258,4 +257,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PARTICLEWEATHER_SNOW "weather_snow"
 #define PARTICLEWEATHER_DUST "weather_dust"
 #define PARTICLEWEATHER_RADS "weather_rads"
-//monkestation end
+
+/// Marks a level as being "safe", even if it is a station z level.
+/// Nukes will not kill players on such levels.
+#define ZTRAIT_FORCED_SAFETY "Forced Safety"
+
+#define is_safe_level(z) SSmapping.level_trait(z, ZTRAIT_FORCED_SAFETY)

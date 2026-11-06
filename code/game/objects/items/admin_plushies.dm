@@ -214,6 +214,7 @@
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
+
 /datum/store_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -222,7 +223,7 @@
 /obj/item/toy/plush/admin/gabbie/examine(mob/user)
 	. = ..()
 	if (user?.ckey == "glyphee")
-		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("I look good!")]")
+		. += span_purple("<hr>[EXAMINE_HINT("I look good!")]")
 
 /obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food/deadmouse))
@@ -400,7 +401,7 @@
 	name = "jay kouri"
 	desc = "Doesn't seem to get a break. From making sure his underlings in the war dont die, to making sure the station's crew doesn't kill each other. Has beautiful blue eyes though, too bad he doesn't take off his sunglasses."
 	icon_state = "jay"
-	squeak_override = list('sound/weapons/gun/rifle/shot.ogg'=1)
+	squeak_override = list('sound/items/weapons/gun/rifle/shot.ogg'=1)
 /datum/loadout_item/plushies/jay
 	name = "Jay Kouri Plush"
 	item_path = /obj/item/toy/plush/admin/jay
@@ -521,7 +522,7 @@
 	. = ..()
 	var/holder_is_lucy = user?.ckey == plushckey
 	if (holder_is_lucy)
-		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("IT'S MEE!!!!")]")
+		. += span_purple("<hr>[EXAMINE_HINT("IT'S MEE!!!!")]")
 	if (shaved)
 		. += span_warning("OH GOD [holder_is_lucy ? "I'M" : "SHE'S"] BALD!")
 		if (brushed > 2)
@@ -577,7 +578,7 @@
 	name = "Robert McPlushie"
 	desc = "Holy fuck, he McStole a plushie tank."
 	icon_state = "mcsteal"
-	squeak_override = list('sound/weapons/gun/general/lighttankgun.ogg'=1)
+	squeak_override = list('sound/items/weapons/gun/general/lighttankgun.ogg'=1)
 /datum/loadout_item/plushies/mcsteal
 	name = "McSteal Plush"
 	item_path = /obj/item/toy/plush/admin/mcsteal
@@ -591,7 +592,7 @@
 	desc = "It's Birdion! You feel the urge to beat the shit out of her."
 	icon_state = "birdion"
 	pet_message = "You beat the shit out of birdion. You feel better."
-	squeak_override = list('sound/weapons/punch1.ogg'=1)
+	squeak_override = list('sound/items/weapons/punch1.ogg'=1)
 	gender = FEMALE
 
 /obj/item/toy/plush/admin/birdion/click_alt(mob/user)

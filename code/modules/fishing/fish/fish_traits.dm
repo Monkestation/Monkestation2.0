@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/list/guaranteed_inheritance_types
 	/// Depending on the value, fish with trait will be reported as more or less difficult in the catalog.
 	var/added_difficulty = 0
+	/// If set, the fish may return this infusion entry when get_infusion_entry is called instead of /datum/infuser_entry/fish
+	var/infusion_entry
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -40,6 +42,12 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	predator.loc.visible_message(span_warning(message))
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
+
+/// Proc that inserts a reagent to the grind_results list of the fish. You'll still have to set the processed comsig proc yourself.
+/datum/fish_trait/proc/add_to_reagents(obj/item/fish/fish, reagent_type, amount)
+	LAZYINITLIST(fish.grind_results)
+	fish.grind_results.Insert(1, reagent_type)
+	fish.grind_results[reagent_type] = amount
 
 /datum/fish_trait/wary
 	name = "Wary"
@@ -145,7 +153,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
-	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -186,7 +194,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 25
 
 /datum/fish_trait/parthenogenesis/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_SELF_REPRODUCE, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_SELF_REPRODUCE, FISH_DATUM_TRAIT)
 
 /**
  * Useful for those species with the parthenogenesis trait if you don't want them to mate with each other,
@@ -199,7 +207,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/crossbreeder)
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/revival
 	diff_traits_inheritability = 15
@@ -213,9 +221,11 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/revival/proc/check_status(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD)
-		addtimer(CALLBACK(src, PROC_REF(revive), source), rand(1 MINUTES, 2 MINUTES))
+		addtimer(CALLBACK(src, PROC_REF(revive), WEAKREF(source)), rand(1 MINUTES, 2 MINUTES))
 
-/datum/fish_trait/revival/proc/revive(obj/item/fish/source)
+/// Brings the fish back to life if it's still dead
+/datum/fish_trait/revival/proc/revive(datum/weakref/fish_ref)
+	var/obj/item/fish/source = fish_ref.resolve()
 	if(QDELETED(source) || source.status != FISH_DEAD)
 		return
 	source.set_status(FISH_ALIVE)
@@ -252,8 +262,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/yucky/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_yuck))
-	ADD_TRAIT(fish, TRAIT_YUCKY_FISH, FISH_TRAIT_DATUM)
-	LAZYSET(fish.grind_results, /datum/reagent/yuck, 3)
+	ADD_TRAIT(fish, TRAIT_YUCKY_FISH, FISH_DATUM_TRAIT)
+	add_to_reagents(fish, /datum/reagent/yuck, 3)
 
 /datum/fish_trait/yucky/proc/add_yuck(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	var/amount = source.grind_results[/datum/reagent/yuck] / length(results)
@@ -264,16 +274,17 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Toxic"
 	catalog_description = "This fish contains toxins in its liver. Feeding it to predatory fishes or people is not reccomended."
 	diff_traits_inheritability = 25
+	infusion_entry = /datum/infuser_entry/ttx_healing
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_toxin))
 	RegisterSignal(fish, COMSIG_FISH_EATEN_BY_OTHER_FISH, PROC_REF(on_eaten))
-	LAZYSET(fish.grind_results, /datum/reagent/toxin/tetrodotoxin, 0.5)
+	add_to_reagents(fish, /datum/reagent/toxin/tetrodotoxin, 2.5)
 
 /datum/fish_trait/toxic/proc/add_toxin(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	var/amount = source.grind_results[ /datum/reagent/toxin/tetrodotoxin] / length(results)
 	for(var/atom/result as anything in results)
-		result.reagents?.add_reagent( /datum/reagent/toxin/tetrodotoxin, amount)
+		result.reagents?.add_reagent(/datum/reagent/toxin/tetrodotoxin, amount)
 
 /datum/fish_trait/toxic/proc/on_eaten(obj/item/fish/source, obj/item/fish/predator)
 	if(HAS_TRAIT(predator, TRAIT_FISH_TOXIN_IMMUNE))
@@ -296,7 +307,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 40
 
 /datum/fish_trait/toxin_immunity/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/crossbreeder
 	name = "Crossbreeder"
@@ -306,13 +317,13 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/no_mating)
 
 /datum/fish_trait/crossbreeder/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/aggressive
 	name = "Aggressive"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is agressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
 
 /datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
@@ -350,9 +361,10 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	inheritability = 80
 	diff_traits_inheritability = 40
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
+	infusion_entry = /datum/infuser_entry/amphibious
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_DATUM_TRAIT)
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 
@@ -363,8 +375,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
 
-/datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
+/datum/fish_trait/mixotroph/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_DATUM_TRAIT)
 
 /datum/fish_trait/antigrav
 	name = "Anti-Gravity"
@@ -378,3 +390,77 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+
+/datum/fish_trait/ink
+	name = "Ink Production"
+	catalog_description = "This fish possess a sac that produces ink."
+	diff_traits_inheritability = 70
+	infusion_entry = /datum/infuser_entry/squid
+
+/datum/fish_trait/ink/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(attacked_someone))
+
+///Hitting someone with an alive fish that has this trait inks them, blinding and confusing them for a bit
+/datum/fish_trait/ink/proc/attacked_someone(obj/item/fish/source, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(source.status == FISH_DEAD || HAS_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN))
+		return
+	if(!iscarbon(target) || target.get_bodypart(BODY_ZONE_HEAD))
+		target.adjust_temp_blindness_up_to(4 SECONDS, 8 SECONDS)
+		target.adjust_confusion_up_to(1.5 SECONDS, 4 SECONDS)
+	target.visible_message(span_warning("[target] is inked by [source]!"), span_userdanger("You've been inked by [source]!"))
+	playsound(target, SFX_DESECRATION, 50, TRUE)
+	ADD_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_DATUM_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_DATUM_TRAIT), 9 SECONDS)
+
+///Anxiety means the fish will die if in a location with more than 3 fish (including itself)
+///This is just barely enough to crossbreed out of anxiety, but it severely limits the potential of
+/datum/fish_trait/anxiety
+	name = "Anxiety"
+	inheritability = 100
+	diff_traits_inheritability = 70
+	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
+
+/datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
+	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))
+
+///signal sent when the anxiety fish is fed, killing it if sharing contents with too many fish.
+/datum/fish_trait/anxiety/proc/on_fish_life(obj/item/fish/fish, seconds_per_tick)
+	SIGNAL_HANDLER
+	var/fish_tolerance = 3
+	if(!fish.loc || fish.status == FISH_DEAD)
+		return
+	for(var/obj/item/fish/other_fish in fish.loc.contents)
+		if(fish_tolerance <= 0)
+			fish.loc.visible_message(span_warning("[fish] seems to freak out for a moment, then it stops moving..."))
+			fish.set_status(FISH_DEAD)
+			return
+		fish_tolerance -= 1
+
+/datum/fish_trait/electrogenesis
+	name = "Electrogenesis"
+	inheritability = 60
+	diff_traits_inheritability = 30
+	catalog_description = "This fish is electroreceptive, and will generate electric fields. Can be harnessed inside a bioelectric generator."
+
+/datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS, FISH_DATUM_TRAIT)
+	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+
+/// Makes alive fish with electrogenesis hit harder and shock whoever they hit
+/datum/fish_trait/electrogenesis/proc/on_item_attack(obj/item/fish/fish, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(fish.status == FISH_ALIVE)
+		fish.force = 16
+		fish.damtype = BURN
+		fish.attack_verb_continuous = list("shocks", "zaps")
+		fish.attack_verb_simple = list("shock", "zap")
+		fish.hitsound = 'sound/effects/sparks4.ogg'
+	else
+		fish.force = fish::force
+		fish.damtype = fish::damtype
+		fish.attack_verb_continuous = fish::attack_verb_continuous
+		fish.attack_verb_simple = fish::attack_verb_simple
+		fish.hitsound = fish::hitsound

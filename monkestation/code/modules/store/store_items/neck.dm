@@ -195,6 +195,14 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Colorable Bowtie Collar"
 	item_path = /obj/item/clothing/neck/tie/bunnytie/tied
 
+/datum/store_item/neck/tie/bunnytie/captain
+	name = "Captain's Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/captain
+
+/datum/store_item/neck/tie/bunnytie/security
+	name = "Head of Security's Bowtie Collar"
+	item_path = /obj/item/clothing/neck/tie/bunnytie/security
+
 /datum/store_item/neck/straw_coat
 	name = "Straw Coat"
 	item_path = /obj/item/clothing/neck/straw_coat

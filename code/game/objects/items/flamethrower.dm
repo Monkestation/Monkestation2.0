@@ -32,8 +32,8 @@
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/assembly/igniter
-	var/acti_sound = 'sound/items/welderactivate.ogg'
-	var/deac_sound = 'sound/items/welderdeactivate.ogg'
+	var/acti_sound = 'sound/items/tools/welderactivate.ogg'
+	var/deac_sound = 'sound/items/tools/welderdeactivate.ogg'
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
@@ -223,7 +223,7 @@
 	..()
 	weldtool = locate(/obj/item/weldingtool) in contents
 	igniter = locate(/obj/item/assembly/igniter) in contents
-	weldtool.status = FALSE
+	weldtool.secured = FALSE
 	igniter.secured = FALSE
 	status = TRUE
 	update_appearance()
@@ -264,8 +264,9 @@
 	var/datum/gas_mixture/tank_mix = ptank.return_air()
 	var/datum/gas_mixture/air_transfer = tank_mix.remove_ratio(release_amount)
 
-	if(air_transfer.gases[/datum/gas/plasma])
-		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5 //Suffering
+	if(air_transfer.moles[/datum/gas/plasma])
+		var/moles = air_transfer.moles[/datum/gas/plasma] * 5 //Suffering
+		air_transfer.set_gas(/datum/gas/plasma, moles)
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
@@ -292,7 +293,7 @@
 	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
 
 /obj/item/flamethrower/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
-	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/our_loop = GLOB.move_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	reagent_puff.user = user
 	reagent_puff.sprayer = src
 	reagent_puff.lifetime = puff_reagent_left
@@ -304,7 +305,7 @@
 	if(create_full)
 		if(!weldtool)
 			weldtool = new /obj/item/weldingtool(src)
-		weldtool.status = FALSE
+		weldtool.secured = FALSE
 		if(!igniter)
 			igniter = new igniter_type(src)
 		igniter.secured = FALSE
@@ -341,8 +342,7 @@
 	SIGNAL_HANDLER
 	if(ptank)
 		var/datum/gas_mixture/tank_mix = ptank.return_air()
-		tank_mix.assert_gas(/datum/gas/plasma)
-		tank_mix.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)
+		tank_mix.set_gas(/datum/gas/plasma, (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C))
 	else
 		ptank = new /obj/item/tank/internals/plasma/full(src)
 	update_appearance()

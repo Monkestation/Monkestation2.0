@@ -171,7 +171,7 @@
 	var/check_above = direction.get_value()
 	var/damage_amt = 0
 
-	switch(lowertext(type.get_value()))
+	switch(LOWER_TEXT(type.get_value()))
 		if(BRUTE)
 			damage_amt = host_mob.getBruteLoss()
 		if(BURN)
@@ -285,18 +285,18 @@
 		return
 	if(match.get_value())
 		if(findtext(hearing_args[HEARING_RAW_MESSAGE], sentence.get_value()))
-			send_code()
+			send_code_any(NES_SENT_CODE_SIGNAL)
 		else
-			send_code_inverted()
+			send_code_any(NES_SENT_CODE_SIGNAL_INVERTED)
 	else
-		if(lowertext(hearing_args[HEARING_RAW_MESSAGE]) == lowertext(sentence.get_value()))
-			send_code()
+		if(LOWER_TEXT(hearing_args[HEARING_RAW_MESSAGE]) == LOWER_TEXT(sentence.get_value()))
+			send_code_any(NES_SENT_CODE_SIGNAL)
 		else
-			send_code_inverted()
+			send_code_any(NES_SENT_CODE_SIGNAL_INVERTED)
 
 /datum/nanite_program/sensor/species
 	name = "Species Sensor"
-	desc = "The nanites receive a singal when they detect that the host is/isn't the target species."
+	desc = "The nanites receive a signal when they detect that the host is/isn't the target species."
 	can_rule = TRUE
 
 	var/static/list/species_list = list(

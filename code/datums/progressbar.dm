@@ -323,7 +323,7 @@
 	appearance_flags = RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/proc/machine_do_after_visable(atom/source, delay, progress = TRUE, border_look = "border", border_look_accessory, bar_look = "prog_bar", active_color = "#6699FF", finish_color = "#FFEE8C", fail_color = "#FF0033", old_format = FALSE, image/add_image, has_outline = TRUE, y_multiplier = 1)
+/proc/machine_do_after_visable(atom/source, delay, progress = TRUE, border_look = "border", border_look_accessory, bar_look = "prog_bar", active_color = "#6699FF", finish_color = "#FFEE8C", fail_color = "#FF0033", old_format = FALSE, image/add_image, has_outline = TRUE, y_multiplier = 1, datum/callback/extra_checks)
 	var/atom/target_loc = source
 
 	var/datum/progressbar/progbar
@@ -338,6 +338,10 @@
 		stoplag(1)
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
+
+		if(QDELETED(source) || (extra_checks && !extra_checks.Invoke()))
+			. = FALSE
+			break
 
 	if(!QDELETED(progbar))
 		progbar.end_progress()

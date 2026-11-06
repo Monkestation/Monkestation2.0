@@ -33,6 +33,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
+"hi" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
 "ih" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/grass,
@@ -210,12 +219,6 @@
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
-/area/centcom/tdome/arena/actual)
-"Mb" = (
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/floor/carpet,
 /area/centcom/tdome/arena/actual)
 "Mk" = (
 /turf/open/floor/carpet,
@@ -406,8 +409,8 @@ SA
 lO
 WB
 VZ
-Mb
 Mk
+hi
 Mk
 TW
 Mk

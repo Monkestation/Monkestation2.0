@@ -1,4 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - qol: "advanced autoinjectors now list how many uses they have left in description"

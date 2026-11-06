@@ -67,6 +67,9 @@
 
 	if(!istype(dongle))
 		return FALSE
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & BINARY_JAMMING)
+		return FALSE
 	return dongle.translate_binary
 	// monkestation edit end PR #5133
 

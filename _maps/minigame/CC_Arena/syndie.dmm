@@ -30,11 +30,14 @@
 "cT" = (
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
-"ds" = (
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
+"cZ" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
 	},
-/turf/open/floor/plating/elevatorshaft,
+/turf/closed/indestructible/opsglass,
 /area/centcom/tdome/arena/actual)
 "ez" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw{
@@ -499,8 +502,8 @@ eP
 fE
 VF
 hL
-ds
-VF
+hL
+cZ
 QQ
 eP
 hA

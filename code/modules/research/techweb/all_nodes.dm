@@ -56,16 +56,19 @@
 		"extinguisher",
 		"pocketfireextinguisher",
 		"fax",
+		"fish_case",
 		"fishing_rod",
 		"fishing_line",
 		"fishing_hook",
 		"fishing_portal_generator",
 		"flashlight",
+		"flatpacker",
 		"fluid_ducts",
 		"foam_dart",
 		"fork",
 		"fur_dyer", //monkestation edit
 		"gas_filter",
+		"gbp_machine",
 		"hairbrush", //monkestation edit
 		"handcuffs_s",
 		"handlabel",
@@ -84,6 +87,7 @@
 		"mechfab",
 		"micro_mani",
 		"miniature_power_cell",
+		"modlink_scryer",// monkestation addition
 		"newscaster_frame",
 		"oven_tray",
 		"packagewrap",
@@ -99,6 +103,7 @@
 		"plastitanium",
 		"plastitaniumglass",
 		"plate",
+		"polarizer",
 		"prox_sensor",
 		"radio_headset",
 		"rdconsole",
@@ -151,8 +156,6 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
-		"modlink_scryer",// monkestation addition
-		"flatpacker",
 	)
 
 /datum/techweb_node/basic_tools
@@ -262,7 +265,7 @@
 		"synth_heart",
 		"cybernetic_spleen",
 		"vitals_monitor",
-		"vial",
-		"large_vial",
+		"chemcanister",
+		"chemcanister_large",
 		"medical_crutch"
 	)

@@ -717,7 +717,7 @@
 /turf/open/floor/carpet,
 /area/virtual_domain/powered)
 "UL" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},

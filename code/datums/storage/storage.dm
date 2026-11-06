@@ -1061,9 +1061,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	is_using |= to_show
 
 	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
-	to_show.client.screen |= real_location.contents
+	to_show.client.screen |= get_contents_to_show()
 
 	return TRUE
+
+/// Gets the contents to add to the screen.
+/datum/storage/proc/get_contents_to_show()
+	return real_location.contents
+
 /**
  * Hide our storage from a mob.
  *
@@ -1180,3 +1185,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(new_locked > STORAGE_NOT_LOCKED)
 		close_all_recursive()
 	parent.update_appearance()
+
+/datum/storage/proc/attempt_compression(atom/source, mob/user, obj/item/compression_kit/kit)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_BYPASS_COMPRESS_CHECK))
+		to_chat(user, span_warning("You can't make [source] any smaller without compromising its storage functions!"))
+		return (COMPONENT_STOP_COMPRESSION | COMPONENT_HANDLED_MESSAGE)

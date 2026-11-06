@@ -116,14 +116,14 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, params)
 	if (istype(weapon, /obj/item/disk/nuclear))
 		if(auth) //god forbid there be more than one nuclear disk
-			playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
 			return TRUE
 		if(!disk_check(weapon))
 			return TRUE
 		if(!user.transferItemToLoc(weapon, src))
 			return TRUE
 		update_ui_mode()
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		add_fingerprint(user)
 		return TRUE
 
@@ -369,7 +369,7 @@ GLOBAL_VAR(station_nuke_source)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				auth.forceMove(get_turf(src))
 				auth = null
@@ -377,7 +377,7 @@ GLOBAL_VAR(station_nuke_source)
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 					. = TRUE
 			update_ui_mode()
@@ -556,7 +556,7 @@ GLOBAL_VAR(station_nuke_source)
 	yes_code = FALSE
 	safety = TRUE
 	update_appearance()
-	sound_to_playing_players('sound/machines/alarm.ogg')
+	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg')
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
 

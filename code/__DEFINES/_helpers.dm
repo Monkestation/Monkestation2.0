@@ -52,3 +52,20 @@
 
 /// Abstraction over using mob.client to just check if there's a connected player.
 #define HAS_CONNECTED_PLAYER(mob) (mob.client)
+
+/// Basically, this is UNTIL(Condition),
+/// but it also checks to see if Src has been qdeleted, and returns if so.
+#define UNTIL_WHILE_EXISTS(Src, Condition) \
+	while(!(Condition)) { \
+		if(QDELETED(Src)) return; \
+		sleep(world.tick_lag); \
+	} \
+	if(QDELETED(Src)) return;
+
+/// Until a condition is true, sleep, or until a certain amount of time has passed.
+/// Basically, UNTIL() but with a timeout.
+#define UNTIL_OR_TIMEOUT(Condition, Timeout) \
+	do { \
+		var/__end_time = REALTIMEOFDAY + (Timeout); \
+		UNTIL((Condition) || (REALTIMEOFDAY > __end_time)); \
+	} while(0)

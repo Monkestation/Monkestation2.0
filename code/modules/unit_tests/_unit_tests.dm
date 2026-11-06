@@ -39,7 +39,11 @@
 /// *Only* run the test provided within the parentheses
 /// This is useful for debugging when you want to reduce noise, but should never be pushed
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
-#define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
+#define TEST_FOCUS(test_path) ##test_path { test_flags = UNIT_TEST_FOCUS; }
+
+/// Run the test provided within the parentheses run_count times
+/// Useful for debugging flaky tests that only fail sometimes
+#define TEST_REPEAT(test_path, run_count) ##test_path { times_to_run = ##run_count; }
 
 /// Logs a noticable message on GitHub, but will not mark as an error.
 /// Use this when something shouldn't happen and is of note, but shouldn't block CI.
@@ -57,6 +61,16 @@
 #define TEST_LONGER 10
 /// This must be the last test to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
 #define TEST_CREATE_AND_DESTROY INFINITY
+
+// Unit test bitflags
+
+/// If any unit test has this bitflag, only unit tests with UNIT_TEST_FOCUS will run.
+#define UNIT_TEST_FOCUS (1<<0)
+/// This unit test only runs on specially designated unit test maps (Should only ever be one).
+#define UNIT_TEST_DEBUG_MAP_ONLY (1<<1)
+
+#define UNIT_TEST_BASIC (UNIT_TEST_DEBUG_MAP_ONLY)
+#define UNIT_TEST_MAP_TEST (NONE)
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
@@ -92,6 +106,7 @@
 #include "area_contents.dm"
 #include "armor_verification.dm"
 #include "autowiki.dm"
+#include "awakened_dragon_population.dm"
 #include "barsigns.dm"
 #include "baseturfs.dm"
 #include "bespoke_id.dm"
@@ -127,6 +142,7 @@
 #include "focus_only_tests.dm"
 #include "food_edibility_check.dm"
 #include "full_heal.dm"
+#include "gags_map_icon.dm"
 #include "gas_transfer.dm"
 #include "get_turf_pixel.dm"
 #include "geyser.dm"
@@ -136,6 +152,7 @@
 #include "heretic_rituals.dm"
 #include "high_five.dm"
 #include "holidays.dm"
+#include "hood_overslot.dm"
 #include "human_through_recycler.dm"
 #include "hunger_curse.dm"
 #include "hydroponics_extractor_storage.dm"
@@ -151,7 +168,6 @@
 #include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
-#include "linked_xenobio_pens.dm"
 #include "load_map_security.dm"
 #include "loadout_duplicates.dm"
 #include "lootpanel.dm"
@@ -191,6 +207,7 @@
 #include "quirks.dm"
 #include "range_return.dm"
 #include "rcd.dm"
+#include "reagent_container_defaults.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mob_expose.dm"
 #include "reagent_mod_procs.dm"
@@ -212,6 +229,7 @@
 #include "serving_tray.dm"
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
+#include "slime_ranching.dm"
 #include "slips.dm"
 #include "smes_connections.dm"
 #include "spawn_humans.dm"

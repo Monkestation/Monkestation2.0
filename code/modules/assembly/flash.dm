@@ -26,6 +26,15 @@
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
+/obj/item/assembly/flash/examine(mob/user)
+	. = ..()
+	var/datum/antagonist/brother/blood_bond = user?.mind?.has_antag_datum(/datum/antagonist/brother)
+	if(!QDELETED(blood_bond))
+		var/datum/component/can_flash_from_behind/flash_handler = user.GetComponent(/datum/component/can_flash_from_behind)
+		if(REF(blood_bond) in flash_handler?.sources)
+			. += span_boldnotice("In order to convert someone into your blood brother, you must <i>directly flash them</i>, not AoE flash!")
+			. += span_warning("Conversion will fail if the target is either dead, unconscious, SSD, mindshielded, someone else's brother or if they are targeted by your objectives.")
+
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
 		user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but it's burnt out!"))
@@ -108,7 +117,7 @@
 	if(burnt_out || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	set_light_on(TRUE)
 	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
@@ -386,7 +395,7 @@
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	update_icon(ALL, TRUE)
 	return TRUE
 

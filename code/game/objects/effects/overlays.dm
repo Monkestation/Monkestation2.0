@@ -19,7 +19,7 @@
 
 /obj/effect/overlay/palmtree_r
 	name = "palm tree"
-	icon = 'icons/misc/beach2.dmi'
+	icon = 'icons/obj/fluff/beach2.dmi'
 	icon_state = "palm1"
 	density = TRUE
 	layer = WALL_OBJ_LAYER
@@ -28,7 +28,7 @@
 
 /obj/effect/overlay/palmtree_l
 	name = "palm tree"
-	icon = 'icons/misc/beach2.dmi'
+	icon = 'icons/obj/fluff/beach2.dmi'
 	icon_state = "palm2"
 	density = TRUE
 	layer = WALL_OBJ_LAYER
@@ -38,7 +38,7 @@
 /obj/effect/overlay/coconut
 	gender = PLURAL
 	name = "coconuts"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "coconuts"
 
 /obj/effect/overlay/sparkles
@@ -46,6 +46,7 @@
 	name = "sparkles"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
 /obj/effect/overlay/vis

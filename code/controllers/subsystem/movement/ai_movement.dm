@@ -4,7 +4,6 @@ MOVEMENT_SUBSYSTEM_DEF(ai_movement)
 	flags = SS_TICKER /* | SS_HIBERNATE */
 	priority = FIRE_PRIORITY_NPC_MOVEMENT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	init_order = INIT_ORDER_AI_MOVEMENT
 
 	///an assoc list of all ai_movement types. Assoc type to instance
 	var/list/movement_types

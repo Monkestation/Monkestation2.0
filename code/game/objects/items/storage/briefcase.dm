@@ -115,3 +115,15 @@
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/bodybag(src)
 	new /obj/item/soap/nanotrasen(src)
+
+/obj/item/storage/briefcase/evilbundle
+	desc = "It has a small golden engraving reading \"Syndicate\", but suspiciously has no other tags or branding. Smells like rusted metal."
+	force = 10
+
+/obj/item/storage/briefcase/evilbundle/PopulateContents()
+	new /obj/item/clothing/head/hats/tophat/syndicate(src)
+	new /obj/item/clothing/neck/cloak/syndicate(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/clothing/under/syndicate/sniper(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/mask/fakemoustache(src)

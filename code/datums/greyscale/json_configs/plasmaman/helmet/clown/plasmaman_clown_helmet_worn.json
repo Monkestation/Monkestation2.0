@@ -1,0 +1,51 @@
+{
+	"plasmaman_helmet_w": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_helmet/worn/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "clown_screen_w",
+			"blend_mode": "overlay"
+		}
+	],
+	"plasmaman_helmet_w_light": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_helmet/worn/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "clown_screen_w",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "clown_screen_light_w",
+			"blend_mode": "overlay"
+		}
+	],
+	"plasmaman_helmet_w_welding": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_helmet/worn/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "clown_screen_w",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "clown_screen_welding_w",
+			"blend_mode": "overlay"
+		}
+	]
+}

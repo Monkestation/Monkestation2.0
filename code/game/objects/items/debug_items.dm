@@ -1,5 +1,8 @@
 /* This file contains standalone items for debug purposes. */
 
+/obj/item/debug
+	abstract_type = /obj/item/debug
+
 /obj/item/debug/human_spawner
 	name = "human spawner"
 	desc = "Spawn a human by aiming at a turf and clicking. Use in hand to change type."
@@ -164,7 +167,7 @@
 			return
 		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
 			to_chat(user, span_reallybig("You shouldn't have done that..."))
-			playsound(src, 'sound/voice/borg_deathsound.ogg')
+			playsound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_user.gib()

@@ -71,10 +71,10 @@
 	var/last_find_references = 0
 	/// How many references we're trying to find when searching
 	var/references_to_clear = 0
-	#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 	///Stores info about where refs are found, used for sanity checks and testing
 	var/list/found_refs
-	#endif
+#endif
 #endif
 
 	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
@@ -84,6 +84,21 @@
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
 #endif
+
+	///The layout pref we take from the player looking at this datum's UI to know what layout to give.
+	var/datum/preference/choiced/layout_prefs_used = /datum/preference/choiced/tgui_layout
+
+	/**
+	 * Parent types.
+	 *
+	 * Abstract-ness is a meta-property of a class that is used to indicate
+	 * that the class is intended to be used as a base class for others, and
+	 * should not (or cannot) be instantiated.
+	 * We have no such language concept in DM, and so we provide a datum member
+	 * that can be used to hint at abstractness for circumstances where we would
+	 * like that to be the case, such as base behavior providers.
+	 */
+	var/abstract_type = /datum
 
 /**
  * Called when a href for this datum is clicked
@@ -125,11 +140,11 @@
 				continue
 			qdel(timer)
 
-	#ifdef REFERENCE_TRACKING
-	#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING_DEBUG
 	found_refs = null
-	#endif
-	#endif
+#endif
+#endif
 
 	//BEGIN: ECS SHIT
 	var/list/dc = _datum_components

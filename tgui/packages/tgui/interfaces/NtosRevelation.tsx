@@ -5,20 +5,22 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 type Data = {
+  filedesc: string;
   armed: BooleanLike;
 };
 
-export const NtosRevelation = (props) => {
+export const NtosRevelation = () => {
   const { act, data } = useBackend<Data>();
-  const { armed } = data;
+  const { filedesc, armed } = data;
 
   return (
-    <NtosWindow width={400} height={250}>
+    <NtosWindow width={400} height={180}>
       <NtosWindow.Content>
         <Section>
           <Button.Input
             fluid
-            buttonText="Obfuscate Name..."
+            value={filedesc}
+            buttonText="Set Program Name..."
             onCommit={(value) =>
               act('PRG_obfuscate', {
                 new_name: value,
@@ -31,22 +33,24 @@ export const NtosRevelation = (props) => {
               label="Payload Status"
               buttons={
                 <Button
-                  content={armed ? 'ARMED' : 'DISARMED'}
                   color={armed ? 'bad' : 'average'}
                   onClick={() => act('PRG_arm')}
-                />
+                >{armed ? 'ARMED' : 'DISARMED'}</Button>
               }
             />
           </LabeledList>
-          <Button
+          <Button.Confirm
             fluid
+            my={1}
             bold
-            content="ACTIVATE"
+            tooltip="This will set off the bomb without needing to re-open the app"
             textAlign="center"
             color="bad"
             disabled={!armed}
-            onClick={() => act('PRG_activate')}
-          />
+            confirmColor="good"
+            onClick={() => act('PRG_activate')}>
+              ACTIVATE
+          </Button.Confirm>
         </Section>
       </NtosWindow.Content>
     </NtosWindow>

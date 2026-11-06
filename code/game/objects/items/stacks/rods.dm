@@ -32,11 +32,11 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	max_amount = 50
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
-	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	hitsound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	embed_type = /datum/embedding/rods
 	novariants = TRUE
 	matter_amount = 2
-	cost = 250
+	cost = HALF_SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/iron
 	merge_type = /obj/item/stack/rods
 
@@ -70,9 +70,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	var/amount = get_amount()
 	if(amount <= 5)
-		icon_state = "rods-[amount]"
+		icon_state = "[initial(icon_state)]-[amount]"
 	else
-		icon_state = "rods"
+		icon_state = initial(icon_state)
 
 /obj/item/stack/rods/welder_act(mob/living/user, obj/item/tool)
 	if(get_amount() < 2)
@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	name = "heat resistant rod"
 	desc = "Treated, specialized iron rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
-	icon_state = "rods"
+	icon_state = "lavarods"
 	inhand_icon_state = "rods"
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
@@ -141,3 +141,23 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava/thirty
 	amount = 30
+
+/obj/item/stack/rods/shuttle
+	name = "shuttle frame rods"
+	desc = "Treated, specialized iron rods suitable for the construction of shuttle frames or the expansion of existing shuttles."
+	singular_name = "shuttle frame rod"
+	icon_state = "shuttlerods"
+	mats_per_unit = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,  /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/rods/shuttle
+
+/obj/item/stack/rods/shuttle/five
+	amount = 5
+
+/obj/item/stack/rods/shuttle/ten
+	amount = 10
+
+/obj/item/stack/rods/shuttle/twentyfive
+	amount = 25
+
+/obj/item/stack/rods/shuttle/fifty
+	amount = 50

@@ -11,6 +11,12 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/biosuit
+
+/obj/item/clothing/head/bio_hood/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, texture_type)
 
 // MONKESTATION REMOVAL
 //obj/item/clothing/head/bio_hood/Initialize(mapload)
@@ -40,6 +46,13 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = ACID_PROOF
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/biosuit
+
+/obj/item/clothing/suit/bio_suit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 //Standard biosuit, orange stripe
 /datum/armor/suit_bio_suit
@@ -62,32 +75,23 @@
 
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
-	armor_type = /datum/armor/bio_hood_security
+	armor_type = /datum/armor/bio_security
 	icon_state = "bio_security"
-
-/datum/armor/bio_hood_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
 
 /obj/item/clothing/suit/bio_suit/security
-	armor_type = /datum/armor/bio_suit_security
+	armor_type = /datum/armor/bio_security
 	icon_state = "bio_security"
 
-/datum/armor/bio_suit_security
-	melee = 25
-	bullet = 15
+/datum/armor/bio_security
+	melee = 30
+	bullet = 25
 	laser = 25
 	energy = 35
 	bomb = 25
 	bio = 100
-	fire = 30
+	fire = 50 // that one sympton that lights you on fire is common in plagues
 	acid = 100
+	wound = 10
 
 /obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
 	. = ..()
@@ -96,9 +100,11 @@
 //Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 
 /obj/item/clothing/suit/bio_suit/janitor/Initialize(mapload)
 	. = ..()
@@ -134,6 +140,7 @@
 	inhand_icon_state = "bio_suit"
 	strip_delay = 40
 	equip_delay_other = 20
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()

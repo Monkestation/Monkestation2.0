@@ -7,7 +7,7 @@
 	var/requires_emag = FALSE
 
 /datum/holotool_mode/proc/on_set(obj/item/holotool/holotool)
-	holotool.usesound = sound ? sound : 'sound/items/pshoom.ogg'
+	holotool.usesound = sound ? sound : 'sound/items/pshoom/pshoom.ogg'
 	holotool.toolspeed = speed ? speed : 1
 	holotool.tool_behaviour = behavior ? behavior : null
 	holotool.sharpness = sharpness ? sharpness : NONE
@@ -53,7 +53,7 @@
 
 /datum/holotool_mode/welder
 	name = "holo-welder"
-	sound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')//so it actually gives the expected feedback from welding
+	sound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')//so it actually gives the expected feedback from welding
 	behavior = TOOL_WELDER
 
 /datum/holotool_mode/welder/on_set(obj/item/holotool/holotool)
@@ -68,7 +68,7 @@
 
 /datum/holotool_mode/knife
 	name = "holo-knife"
-	sound = 'sound/weapons/blade1.ogg'
+	sound = 'sound/items/weapons/blade1.ogg'
 	sharpness = SHARP_EDGED
 	requires_emag = TRUE
 
@@ -78,7 +78,7 @@
 	holotool.attack_verb_continuous = list("sliced", "torn", "cut")
 	holotool.armour_penetration = 45
 	holotool.embed_type = /datum/embedding/holotool_knife
-	holotool.hitsound = 'sound/weapons/blade1.ogg'
+	holotool.hitsound = 'sound/items/weapons/blade1.ogg'
 
 /datum/embedding/holotool_knife
 	embed_chance = 40

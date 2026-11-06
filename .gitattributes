@@ -39,6 +39,9 @@
 *.dmm text eol=lf merge=dmm
 *.dmi binary merge=dmi
 
+# Avoids DME conflicts :3
+tgstation.dme merge=union
+
 ## Force tab indents on dm files
 *.dm whitespace=indent-with-non-tab
 

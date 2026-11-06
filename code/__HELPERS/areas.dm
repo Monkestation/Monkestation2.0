@@ -1,4 +1,6 @@
 #define BP_MAX_ROOM_SIZE 300
+#define EXTRA_ROOM_CHECK_SKIP 1
+#define EXTRA_ROOM_CHECK_FAIL 2
 
 GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	/area/station/engineering/main,
@@ -7,12 +9,12 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	/area/station/ai_monitored/turret_protected/ai,
 )))
 
-// Gets an atmos isolated contained space
-// Returns an associative list of turf|dirs pairs
-// The dirs are connected turfs in the same space
-// break_if_found is a typecache of turf/area types to return false if found
-// Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
-/proc/detect_room(turf/origin, list/break_if_found = list(), max_size=INFINITY)
+/// Gets an atmos isolated contained space
+/// Returns an associative list of turf|dirs pairs
+/// The dirs are connected turfs in the same space
+/// break_if_found is a typecache of turf/area types to return false if found
+/// Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
+/proc/detect_room(turf/origin, list/break_if_found = list(), max_size=INFINITY, datum/callback/extra_check)
 	if(origin.blocks_air)
 		return list(origin)
 
@@ -33,6 +35,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 				continue
 			checked_turfs[sourceT] |= dir
 			checked_turfs[checkT] |= turn(dir, 180)
+			switch(extra_check?.Invoke(checkT))
+				if(EXTRA_ROOM_CHECK_SKIP)
+					continue
+				if(EXTRA_ROOM_CHECK_FAIL)
+					return FALSE
 			.[sourceT] |= dir
 			.[checkT] |= turn(dir, 180)
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
@@ -78,6 +85,29 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		if(loops >= 7)//if the loop has gone 7 consecutive times with no new turfs added, return the result. Number is arbitrary, subject to change
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
+
+/// Moves every turf in the list to new_area, filling affected_areas with the areas they came from (keyed by name)
+/proc/set_turfs_to_area(list/turf/turfs, area/new_area, list/area/affected_areas = list())
+	for(var/turf/the_turf as anything in turfs)
+		var/area/old_area = the_turf.loc
+
+		//keep rack of all areas affected by turf changes
+		affected_areas[old_area.name] = old_area
+
+		//move the turf to its new area and unregister it from the old one
+		the_turf.change_area(old_area, new_area)
+
+		//inform atoms on the turf that their area has changed
+		for(var/atom/stuff as anything in the_turf)
+			//unregister the stuff from its old area
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
+
+			//register the stuff to its new area. special exception for apc as its not registered to this signal
+			if(istype(stuff, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/area_apc = stuff
+				area_apc.assign_to_area()
+			else
+				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
 
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
@@ -133,8 +163,10 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		if(!str)
 			return
 		newA = new area_choice
+		newA.AddComponent(/datum/component/custom_area)
 		newA.setup(str)
 		newA.has_gravity = oldA.has_gravity
+		GLOB.custom_areas[newA] = TRUE
 		require_area_resort() //new area registered. resort the names
 	else
 		newA = area_choice
@@ -149,26 +181,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
 	 */
 	var/list/area/affected_areas = list()
-	for(var/turf/the_turf as anything in turfs)
-		var/area/old_area = the_turf.loc
-
-		//keep rack of all areas affected by turf changes
-		affected_areas[old_area.name] = old_area
-
-		//move the turf to its new area and unregister it from the old one
-		the_turf.change_area(old_area, newA)
-
-		//inform atoms on the turf that their area has changed
-		for(var/atom/stuff as anything in the_turf)
-			//unregister the stuff from its old area
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
-
-			//register the stuff to its new area. special exception for apc as its not registered to this signal
-			if(istype(stuff, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/area_apc = stuff
-				area_apc.assign_to_area()
-			else
-				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, newA)
+	set_turfs_to_area(turfs, newA, affected_areas)
 
 	newA.reg_in_areas_in_z()
 
@@ -196,10 +209,9 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		if(!merged_area.has_contained_turfs())
 			qdel(merged_area)
 
-	//MONKESTATION ADDITION - force lighting update to fix lighting bugs in custom areas, this is a REALLY shitty solution please replace it at the earliest convenience
+	//force lighting update to fix lighting bugs in custom areas, this is a REALLY shitty solution please replace it at the earliest convenience
 	for(var/turf/unlit_turf as anything in turfs)
 		unlit_turf.ChangeTurf(unlit_turf.type)
-	//END OF ADDITION
 
 	return TRUE
 
@@ -363,4 +375,49 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 
 	area = get_area(area)
 	return istype(area, /area/centcom) && !is_type_in_typecache(area, blacklist_typecache)
+
+/proc/is_station_area_or_adjacent(area/area)
+	var/static/list/blacklisted_areas = typecacheof(list(
+		/area/centcom,
+		/area/forestplanet,
+		/area/icemoon,
+		/area/lavaland,
+		/area/misc,
+		/area/ocean,
+		/area/ruin,
+		/area/space/shipbreak,
+		/area/shuttle,
+		/area/space,
+		/area/station/asteroid,
+	))
+
+	var/static/list/outdoor_areas = typecacheof(list(
+		/area/forestplanet,
+		/area/icemoon,
+		/area/ocean,
+	))
+
+	if(!isarea(area))
+		if(ispath(area, /area))
+			area = GLOB.areas_by_type[area]
+		else if(isatom(area))
+			area = get_area(get_turf(area))
+		else
+			return FALSE
+
+	if(isnull(area) || is_type_in_typecache(area, blacklisted_areas))
+		return FALSE
+
+	if(GLOB.the_station_areas.Find(area.type))
+		return TRUE
+
+	var/list/edge_areas = list()
+	for(var/adjacent_areas_list in get_area_edge_turfs(area, return_adjacent_areas = TRUE)) // returns a list of lists for some reason
+		edge_areas |= adjacent_areas_list
+
+	for(var/area/adjacent_area as anything in edge_areas)
+		if(GLOB.the_station_areas.Find(adjacent_area.type) || is_type_in_typecache(adjacent_area, outdoor_areas)) // yeah sure you can make a neat little base in an icebox cabin
+			return TRUE
+
+	return FALSE
 

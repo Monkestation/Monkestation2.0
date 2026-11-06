@@ -16,3 +16,7 @@
 0f435d5dff0a7957e8cba60a41a7fc10439064c3
 # Remove one errant disposals pipe
 cc78227c693a3246e8d4d2930ee97242f6546246
+# Losslessly compresses all sound files using optivorbis
+bc4d817908c861840a337bb879d249d9aa4bf337
+# port tg's icon and sound reorganization
+607bcdae1addbdba2a6cdf4058f2ee608f453c9d

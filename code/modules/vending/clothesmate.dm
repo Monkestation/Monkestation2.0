@@ -155,6 +155,7 @@
 				/obj/item/clothing/under/costume/kimono/purple = 2,
 				/obj/item/clothing/shoes/sandal/alt = 4,
 				/obj/item/clothing/mask/kitsune = 3,
+				/obj/item/clothing/mask/rebellion = 6,
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/suit/hooded/dinojammies = 3,
 				/obj/item/clothing/suit/costume/irs = 20,

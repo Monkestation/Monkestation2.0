@@ -1,7 +1,7 @@
 /obj/item/chicken_scanner
 	name = "Chicken Scanner"
 	desc = "Scans chickens to give you information about possible mutations that chicken can have"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "health"
 	inhand_icon_state = "healthanalyzer"
 	worn_icon_state = "healthanalyzer"

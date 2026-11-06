@@ -5,9 +5,9 @@
 	worn_icon = 'icons/mob/clothing/plasmaman_gloves.dmi'
 	icon_state = "plasmaman"
 	greyscale_colors = "#913b00"
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = FIRE_PROOF
@@ -28,7 +28,7 @@
 	desc = "Pricy nitrile gloves made for plasmamen."
 	icon_state = "nitrile"
 	greyscale_colors = "#913b00"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED, TRAIT_STERILE)
 
 /obj/item/clothing/gloves/color/plasmaman/white
 	name = "white envirogloves"
@@ -132,4 +132,4 @@
 	desc = "A new pattern plasmaman nitril glove set to match that drippy security grey suit."
 	icon_state = "secmedplasma"
 	greyscale_colors = "#918F8C"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED, TRAIT_STERILE)

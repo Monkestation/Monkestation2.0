@@ -203,9 +203,11 @@
 				var/obj/item/bodypart/head_part = target_user.get_bodypart(BODY_ZONE_HEAD)
 				if(head_part)
 					head_part.generic_bleedstacks += 5
+				target_user.add_blood_DNA_to_items(target_user.get_blood_dna_list(), ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 			feed_target.add_splatter_floor(get_turf(feed_target))
-			user.add_mob_blood(feed_target) // Put target's blood on us. The donor goes in the ( )
-			feed_target.add_mob_blood(feed_target)
+			if(ishuman(user))
+				var/mob/living/carbon/human/human_user = user
+				human_user.add_blood_DNA_to_items(feed_target.get_blood_dna_list(), ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 			feed_target.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 			INVOKE_ASYNC(feed_target, TYPE_PROC_REF(/mob, emote), "scream")
 		DeactivatePower()

@@ -2,7 +2,7 @@
 	name = "\improper Command Outfitting Station"
 	desc = "A vending machine for specialised clothing for members of Command."
 	product_ads = "File paperwork in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "commdrobe"
 	light_mask = "wardrobe-light-mask"
 	vend_reply = "Thank you for using the CommDrobe!"
@@ -21,6 +21,16 @@
 		/obj/item/clothing/under/rank/captain/nova/imperial/generic/grey = 5,
 		/obj/item/clothing/under/rank/captain/nova/imperial/generic/pants = 5,
 		/obj/item/clothing/under/rank/captain/nova/imperial/generic/red = 5,
+	)
+	contraband = list(
+		/obj/item/clothing/head/hats/caphat/bunnyears_captain = 1,
+		/obj/item/clothing/under/rank/captain/bunnysuit = 1,
+		/obj/item/clothing/suit/armor/vest/capcarapace/tailcoat_captain = 1,
+		/obj/item/clothing/neck/tie/bunnytie/captain = 1,
+		/obj/item/clothing/head/playbunnyears/hos = 1,
+		/obj/item/clothing/under/rank/security/head_of_security/bunnysuit = 1,
+		/obj/item/clothing/suit/armor/hos_tailcoat = 1,
+		/obj/item/clothing/neck/tie/bunnytie/security = 1,
 	)
 
 /obj/item/vending_refill/wardrobe/comm_wardrobe

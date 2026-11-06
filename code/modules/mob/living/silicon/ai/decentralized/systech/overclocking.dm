@@ -60,7 +60,7 @@
 		balloon_alert(user, "cpu already inserted!")
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/ai_cpu/CPU = tool
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	inserted_cpu = CPU
 	CPU.forceMove(src)
 	return ITEM_INTERACT_SUCCESS
@@ -88,9 +88,13 @@
 		data["overclock_progress"] = overclocking ? time_left_percent : FALSE
 		data["last_values"] = inserted_cpu.last_overclocking_values
 
-
 	return data
 
+/obj/machinery/computer/ai_overclocking/ui_static_data(mob/user)
+	var/list/data = list()
+	data["MINIMUM_CPU_SPEED"] = MINIMUM_CPU_SPEED
+	data["MINIMUM_CPU_POWER"] = MINIMUM_CPU_POWER
+	return data
 
 /obj/machinery/computer/ai_overclocking/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -101,7 +105,7 @@
 		if("eject_cpu")
 			if(!inserted_cpu)
 				return
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 			inserted_cpu.speed = initial(inserted_cpu.speed)
 			inserted_cpu.power_multiplier = initial(inserted_cpu.power_multiplier)
 			inserted_cpu.forceMove(drop_location())
@@ -111,7 +115,8 @@
 			if(!inserted_cpu)
 				return
 			var/new_speed = params["new_speed"]
-			if(!isnum(new_speed))
+			if(!isnum(new_speed) || new_speed < MINIMUM_CPU_SPEED)
+				inserted_cpu.speed = MINIMUM_CPU_SPEED
 				return
 			if(new_speed > inserted_cpu.max_speed)
 				inserted_cpu.speed = inserted_cpu.max_speed
@@ -122,7 +127,8 @@
 			if(!inserted_cpu)
 				return
 			var/new_power = params["new_power"]
-			if(!isnum(new_power))
+			if(!isnum(new_power) || new_power < MINIMUM_CPU_POWER)
+				inserted_cpu.power_multiplier = MINIMUM_CPU_POWER
 				return
 			if(new_power > inserted_cpu.max_power_multiplier)
 				inserted_cpu.power_multiplier = inserted_cpu.max_power_multiplier

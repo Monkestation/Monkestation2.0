@@ -3,7 +3,7 @@
 	desc = "Capable of making all organs and bodyparts needed for practitioners to fix up bodies."
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	icon = 'icons/obj/money_machine.dmi'
+	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 	/// Associative list of categories to a list of valid organs for that category.
 	var/static/list/organ_choices

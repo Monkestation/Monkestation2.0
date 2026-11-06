@@ -217,7 +217,7 @@
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
 		carbon_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, chest, WOUND_SEVERITY_SEVERE, wound_source = "human force to the chest")
 
-	playsound(owner, 'sound/creatures/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
+	playsound(owner, 'sound/mobs/humanoids/human/gag_vomit/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 
 /datum/status_effect/choke/proc/mirror_dir(atom/source, old_dir, new_dir)
@@ -228,8 +228,8 @@
 	if(iscarbon(aggressor))
 		var/free_hands = 0
 		// Listen bud, you need at least 2 free hands for this
-		for(var/hand_i in 1 to length(aggressor.held_items))
-			if(!aggressor.has_hand_for_held_index(hand_i) || aggressor.held_items[hand_i])
+		for(var/hand_index in aggressor.get_empty_held_indexes())
+			if(!aggressor.has_hand_for_held_index(hand_index))
 				continue
 			free_hands += 1
 		if(free_hands < 2)

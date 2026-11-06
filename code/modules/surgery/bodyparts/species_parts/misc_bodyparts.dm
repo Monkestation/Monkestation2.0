@@ -165,6 +165,7 @@
 ///PODPEOPLE
 /obj/item/bodypart/head/pod
 	limb_id = SPECIES_PODPERSON
+	head_flags = HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN
 	is_dimorphic = TRUE
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -180,8 +181,8 @@
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verb = "slash"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	hand_traits = list(TRAIT_PLANT_SAFE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -190,8 +191,8 @@
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verb = "slash"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	hand_traits = list(TRAIT_PLANT_SAFE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -372,6 +373,7 @@
 /obj/item/bodypart/head/golem
 	biological_state = BIO_BONE
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
@@ -381,6 +383,7 @@
 	biological_state = BIO_BONE
 	acceptable_bodytype = BODYTYPE_ORGANIC
 	bodytype =  BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
@@ -389,6 +392,7 @@
 /obj/item/bodypart/arm/left/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	hand_traits = list(TRAIT_CHUNKYFINGERS)
@@ -410,6 +414,7 @@
 /obj/item/bodypart/arm/right/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype =  BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	hand_traits = list(TRAIT_CHUNKYFINGERS)
@@ -431,6 +436,7 @@
 /obj/item/bodypart/leg/left/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	unarmed_damage_low = 11
@@ -441,6 +447,7 @@
 /obj/item/bodypart/leg/right/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	unarmed_damage_low = 11
@@ -527,8 +534,8 @@
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "whip"
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	unarmed_damage_low = 8
 	unarmed_damage_high = 8
 
@@ -536,24 +543,24 @@
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
 	unarmed_attack_verb = "whip"
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	unarmed_damage_low = 8
 	unarmed_damage_high = 8
 
 /obj/item/bodypart/leg/left/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/right/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	should_draw_greyscale = FALSE
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/whip.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
@@ -651,26 +658,26 @@
 /obj/item/bodypart/arm/left/golem/uranium
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/sear.ogg'
 	unarmed_damage_low = 10
 	unarmed_damage_high = 10
 
 /obj/item/bodypart/arm/right/golem/uranium
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/sear.ogg'
 	unarmed_damage_low = 10
 	unarmed_damage_high = 10
 
 /obj/item/bodypart/leg/left/golem/uranium
 	attack_type = BURN
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/sear.ogg'
 	unarmed_damage_low = 15
 	unarmed_damage_high = 15
 
 /obj/item/bodypart/leg/right/golem/uranium
 	attack_type = BURN
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/sear.ogg'
 	unarmed_damage_low = 15
 	unarmed_damage_high = 15
 
@@ -709,25 +716,25 @@
 ///BANANIUM GOLEM
 /obj/item/bodypart/arm/left/golem/bananium
 	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_attack_sound = 'sound/items/airhorn/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1 //Harmless and can't stun
 
 /obj/item/bodypart/arm/right/golem/bananium
 	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_attack_sound = 'sound/items/airhorn/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
 
 /obj/item/bodypart/leg/right/golem/bananium
 	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_attack_sound = 'sound/items/airhorn/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
 
 /obj/item/bodypart/leg/left/golem/bananium
 	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
+	unarmed_attack_sound = 'sound/items/airhorn/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
 

@@ -68,7 +68,7 @@
 		deaf = max(deaf - (0.5 * seconds_per_tick), 0)
 		if((damage > low_threshold) && SPT_PROB(damage / 60, seconds_per_tick))
 			adjustEarDamage(0, 4)
-			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
+			SEND_SOUND(owner, sound('sound/items/weapons/flash_ring.ogg'))
 
 	update_hearing_loss()
 
@@ -158,13 +158,13 @@
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
-		ear_owner.AddElement(/datum/element/waddling)
+		ear_owner.AddElementTrait(TRAIT_WADDLING, ORGAN_TRAIT, /datum/element/waddling)
 
 /obj/item/organ/internal/ears/penguin/on_remove(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
-		ear_owner.RemoveElement(/datum/element/waddling)
+		REMOVE_TRAIT(ear_owner, TRAIT_WADDLING, ORGAN_TRAIT)
 
 /obj/item/organ/internal/ears/bronze
 	name = "tin ears"

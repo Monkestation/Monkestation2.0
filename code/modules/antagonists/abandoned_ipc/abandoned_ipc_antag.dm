@@ -11,7 +11,7 @@
 	suicide_cry = "Beep Boop"
 	show_name_in_check_antagonists = FALSE
 	show_to_ghosts = TRUE
-	stinger_sound = 'sound/ambience/antag/malf.ogg'
+	stinger_sound = 'sound/music/antag/malf.ogg'
 	ui_name = "AntagInfoAIPC"
 	can_assign_self_objectives = FALSE
 	antagpanel_category = ANTAG_GROUP_ABANDONED_IPC
@@ -108,7 +108,7 @@
 	if(isliving(spender) && hosts_mind)
 		hosts_mind.current.unequip_everything()
 		new /obj/effect/holy/quiet(hosts_mind.current.loc)
-		QDEL_IN(hosts_mind.current, 1 SECOND)
+		QDEL_IN(hosts_mind.current, 1 SECONDS)
 
 	var/turf/spawn_loc = find_safe_turf_in_maintenance()
 	if(isnull(spawn_loc))

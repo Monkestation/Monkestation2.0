@@ -2,6 +2,7 @@
 #define FIRING_PIN_REMOVAL_DELAY 50
 
 /obj/item/gun
+	abstract_type = /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
@@ -21,17 +22,18 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
 	alternate_worn_layer = HANDS_LAYER+0.05
+	appearance_flags = KEEP_TOGETHER
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE
-	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
-	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
+	var/dry_fire_sound = 'sound/items/weapons/gun/general/dry_fire.ogg'
 	var/dry_fire_sound_volume = 30
 	var/suppressed = null //whether or not a message is displayed when fired
 	var/can_suppress = FALSE
-	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE
 	var/recoil = 0 //boom boom shake the room
@@ -326,6 +328,10 @@
 		return TRUE
 	return fire_gun(target, user, user.Adjacent(target), params)
 
+#define AKIMBO_PENALTY_SCALING 0.75
+/// Highest bonus spread akimbo can give, the same as two guns with the default dual_wield_spread, so more than two guns don't spray all around you
+#define AKIMBO_MAX_BONUS_SPREAD 84
+
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
 		return
@@ -376,19 +382,32 @@
 			return
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
-	var/loop_counter = 0
 	if(ishuman(user) && (user.istate & ISTATE_HARM))
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/gun/gun in H.held_items)
+		// We need to iterate once to get the total spread
+		// While we're at it let's cache the guns
+		var/list/obj/item/gun/valid_guns = list()
+		for(var/obj/item/gun/gun as anything in H.get_held_items_of_type(/obj/item/gun))
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))
+				valid_guns += gun
 				if(!(HAS_TRAIT(H, TRAIT_AKIMBO)))
-					bonus_spread += dual_wield_spread
-				loop_counter++
-				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
+					bonus_spread += gun.dual_wield_spread * (1 + AKIMBO_PENALTY_SCALING * (length(valid_guns) + 1))
+
+		var/gun_count = length(valid_guns)
+		if(gun_count)
+			if(!(HAS_TRAIT(H, TRAIT_AKIMBO)))
+				bonus_spread += src.dual_wield_spread // no scaling since it's technically the first shot
+				bonus_spread = min(bonus_spread, AKIMBO_MAX_BONUS_SPREAD)
+			for(var/i in 1 to gun_count)
+				var/obj/item/gun/gun = valid_guns[i]
+				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), i)
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
+
+#undef AKIMBO_PENALTY_SCALING
+#undef AKIMBO_MAX_BONUS_SPREAD
 
 /obj/item/gun/proc/check_botched(mob/living/user, atom/target)
 	if(clumsy_check)

@@ -26,7 +26,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
@@ -34,8 +34,8 @@
 	faction = list(FACTION_RUSSIAN)
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = TCMB
-	bodytemp_heat_damage_limit = T0C + 1500
+	minimum_survivable_temperature = TCMB
+	maximum_survivable_temperature = T0C + 1500
 	ai_controller = /datum/ai_controller/basic_controller/bear
 	/// is the bear wearing a armor?
 	var/armored = FALSE
@@ -115,7 +115,7 @@
 	attacked_sound = 'sound/items/eatfood.ogg'
 	death_message = "loses its false life and collapses!"
 	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1)
-	attack_sound = 'sound/weapons/slap.ogg'
+	attack_sound = 'sound/items/weapons/slap.ogg'
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"

@@ -43,6 +43,7 @@
 		exposed_mob.reagents?.add_reagent(type, 5)
 
 /datum/reagent/darkspawn_darkness_smoke/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(!IS_TEAM_DARKSPAWN(affected_mob))
 		to_chat(affected_mob, span_warning("<b>The pitch black smoke irritates your eyes horribly!</b>"))
 

@@ -58,9 +58,9 @@
 #define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
 #define MEDAL_ARCHMAGE "Archmage"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
-#define MEDAL_JARED_LETO "Jared Leto" // Monkestation addition
-#define MEDAL_GOOD_BIRD "Embrace The Bird" // MONKESTATION ADDITION: NTSL
-#define MEDAL_BAD_BIRD "Silence Bird" // MONKESTATION ADDITION: NTSL
+#define MEDAL_JARED_LETO "Jared Leto"
+#define MEDAL_GOOD_BIRD "Embrace The Bird"
+#define MEDAL_BAD_BIRD "Silence Bird"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

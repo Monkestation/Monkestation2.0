@@ -17,7 +17,7 @@
 	/// If the cord is pulled and we are active
 	var/pulled = FALSE
 	/// how long does this burn for?
-	var/fuel = 1 MINUTE
+	var/fuel = 1 MINUTES
 	/// Amount of oxygen per second
 	var/oxygen_amount = 5
 	/// Damage after ignition, note damtype is BURN
@@ -47,7 +47,7 @@
 	name = "lit [initial(name)]"
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	force = on_damage
 	damtype = BURN
 

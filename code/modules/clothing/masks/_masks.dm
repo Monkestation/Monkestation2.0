@@ -1,4 +1,5 @@
 /obj/item/clothing/mask
+	abstract_type = /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
@@ -8,7 +9,7 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	blood_overlay_type = "mask"
-	var/mask_adjusted = FALSE
+	visor_vars_to_toggle = NONE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
@@ -27,9 +28,10 @@
 	if(body_parts_covered & HEAD)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-
-/obj/item/clothing/mask/appears_bloody()
-	return ..() && (body_parts_covered & HEAD)
+		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "maskblood")
+			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+			. += blood_overlay
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -38,33 +40,21 @@
 		M.update_worn_mask()
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
-/obj/item/clothing/mask/proc/adjustmask(mob/living/carbon/user)
-	if(user?.incapacitated())
-		return
-	mask_adjusted = !mask_adjusted
-	if(!mask_adjusted)
-		icon_state = initial(icon_state)
-		clothing_flags |= visor_flags
-		flags_inv |= visor_flags_inv
-		flags_cover |= visor_flags_cover
-		to_chat(user, span_notice("You push \the [src] back into place."))
-		slot_flags = initial(slot_flags)
-	else
-		icon_state += "_up"
-		to_chat(user, span_notice("You push \the [src] out of the way."))
-		clothing_flags &= ~visor_flags
-		flags_inv &= ~visor_flags_inv
-		flags_cover &= ~visor_flags_cover
+/obj/item/clothing/mask/visor_toggling(mob/living/user)
+	. = ..()
+	if(up)
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
-	if(!istype(user))
+	else
+		slot_flags = initial(slot_flags)
+
+/obj/item/clothing/mask/update_icon_state()
+	. = ..()
+	var/base_state = base_icon_state || initial(icon_state)
+	// something else picked our sprite (reskins, vape screws, dead facehuggers), so leave it alone
+	if(icon_state != base_state && icon_state != "[base_state]_up")
 		return
-	// Update the mob if it's wearing the mask.
-	if(user.wear_mask == src)
-		user.wear_mask_update(src, toggle_off = mask_adjusted)
-	if(loc == user)
-		// Update action button icon for adjusted mask, if someone is holding it.
-		user.update_mob_action_buttons()
+	icon_state = "[base_state][up ? "_up" : ""]"
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

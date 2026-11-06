@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/cup/maunamug
 	name = "mauna mug"
 	desc = "A drink served in a classy mug. Now with built-in heating!"
-	icon = 'icons/obj/mauna_mug.dmi'
+	icon = 'icons/obj/devices/mauna_mug.dmi'
 	icon_state = "maunamug"
 	base_icon_state = "maunamug"
 	spillable = TRUE
@@ -126,7 +126,7 @@
 	item_flags = NOBLUDGEON
 	reagent_flags = OPENCONTAINER
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 	volume = 5
 	spillable = FALSE
 
@@ -145,7 +145,7 @@
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
 	if((user.istate & ISTATE_HARM) && !carbon_target.is_mouth_covered())
-		reagents.trans_to(carbon_target, reagents.total_volume, transfered_by = user, methods = INGEST)
+		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
 		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
 		log_combat(user, carbon_target, "smothered", src, log_object)
 	else
@@ -166,7 +166,7 @@
 /obj/item/reagent_containers/cup/fuelcanister
 	name = "fuel canister"
 	desc = "A canister full of industrial welding fuel. Do not puncture."
-	icon = 'icons/obj/atmospherics/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	desc_controls = "Alt-Click to close or open the fuel nozzle cap."
@@ -177,7 +177,7 @@
 	reagent_flags = SEALED_CONTAINER
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	flags_1 = CONDUCT_1
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	resistance_flags = FIRE_PROOF
 	force = 5
@@ -208,7 +208,7 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] = cap_on ? "Open" : "Close"
 		screentip_change = TRUE
 
-	if(istype(held_item, /obj/item/weldingtool) && reagents.total_volume)
+	if(istype(held_item, /obj/item/weldingtool) && held_item.reagents && reagents.total_volume)
 		context[SCREENTIP_CONTEXT_LMB] = "Refuel"
 		screentip_change = TRUE
 
@@ -254,7 +254,7 @@
 			cap_lost = TRUE
 		else
 			to_chat(user, span_notice("You remove the cap from [src]."))
-			playsound(src, 'sound/effects/can_open1.ogg', 50, TRUE)
+			playsound(src, 'sound/items/can/can_open1.ogg', 50, TRUE)
 	else
 		cap_on = TRUE
 		icon_state = "[base_icon_state]"
@@ -268,7 +268,7 @@
 /obj/item/reagent_containers/cup/fuelcanister/proc/boom()
 	var/datum/reagent/fuel/volatiles = reagents.has_reagent(/datum/reagent/fuel)
 	var/fuel_amt = 0
-	if(volatiles.volume <= 25)
+	if(!volatiles || volatiles.volume <= 25)
 		return
 	if(istype(volatiles))
 		fuel_amt = volatiles.volume
@@ -348,10 +348,13 @@
 		if(!cap_on)
 			to_chat(user, span_warning("\The [src] is uncapped!"))
 			return
+		if(!welder.reagents)
+			to_chat(user, span_warning("Your [welder.name] doesn't use fuel!"))
+			return
 		if(welder.reagents.total_volume >= welder.reagents.maximum_volume)
 			to_chat(user, span_warning("Your [welder.name] is already full!"))
 			return ITEM_INTERACT_BLOCKING
-		reagents.trans_to(welder, welder.max_fuel, transfered_by = user)
+		reagents.trans_to(welder, welder.max_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [welder.name]."), span_notice("You refill [welder]."))
 		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 		welder.update_appearance()
@@ -365,7 +368,7 @@
 	. = ..()
 	if(!(user.istate & ISTATE_HARM))
 		return NONE
-		
+
 	if(cap_on)
 		to_chat(user, span_warning("\The [src] is capped!"))
 		return NONE
@@ -374,7 +377,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/amount_to_spill = rand(10, 25)
-	playsound(src, 'sound/effects/can_shake.ogg', 50, TRUE, 3)
+	playsound(src, 'sound/items/can/can_shake.ogg', 50, TRUE, 3)
 	spill(interacting_with, amount_to_spill, user)
 	user.visible_message(span_warning("[user] shakes the contents of \the [src] onto \the [interacting_with]!"), span_notice("You shake the contents of \the [src] onto \the [interacting_with]!"))
 	if(ismob(interacting_with))

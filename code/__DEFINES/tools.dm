@@ -21,6 +21,10 @@
 #define TOOL_ROLLINGPIN "rolling pin"
 /// Can be used to scrape rust off an any atom; which will result in the Rust Component being qdel'd
 #define TOOL_RUSTSCRAPER "rustscraper"
+#define TOOL_BILLOW "billow"
+#define TOOL_TONG "tong"
+#define TOOL_HAMMER "hammer"
+#define TOOL_BLOWROD "blowrod"
 
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
@@ -41,7 +45,7 @@
 #define ITEM_INTERACT_ANY_BLOCKER (ITEM_INTERACT_SUCCESS | ITEM_INTERACT_BLOCKING)
 
 /// How many seconds between each fuel depletion tick ("use" proc)
-#define TOOL_FUEL_BURN_INTERVAL 1 SECOND
+#define TOOL_FUEL_BURN_INTERVAL 1 SECONDS
 
 ///This is a number I got by quickly searching up the temperature to melt iron/glass, though not really realistic.
 ///This is used for places where lighters should not be hot enough to be used as a welding tool on.

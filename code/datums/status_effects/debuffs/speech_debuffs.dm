@@ -151,7 +151,7 @@
 
 /datum/status_effect/speech/slurring/apply_speech(original_char, modified_char)
 
-	var/lower_char = lowertext(modified_char)
+	var/lower_char = LOWER_TEXT(modified_char)
 	if(prob(common_prob) && (lower_char in common_replacements))
 		var/to_replace = common_replacements[lower_char]
 		if(islist(to_replace))
@@ -236,3 +236,11 @@
 	replacement_prob = 30
 	doubletext_prob = 5
 	text_modification_file = "slurring_heretic_text.json"
+
+/datum/status_effect/speech/slurring/clock
+	id = "clock_slurring"
+	common_prob = 50
+	uncommon_prob = 25
+	replacement_prob = 33
+	doubletext_prob = 0
+	text_modification_file = "slurring_clock_text.json"

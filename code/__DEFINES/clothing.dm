@@ -30,3 +30,13 @@
 #define ADD_CLOTHING_TRAIT(mob, trait) ADD_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 /// Wrapper for removing clothing based traits
 #define REMOVE_CLOTHING_TRAIT(mob, trait) REMOVE_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
+
+#define ARMOR_LEVEL_TINY 10
+#define ARMOR_LEVEL_WEAK 30
+#define ARMOR_LEVEL_MID 50
+#define ARMOR_LEVEL_INSANE 90
+
+#define WOUND_ARMOR_WEAK 10
+#define WOUND_ARMOR_STANDARD 20
+#define WOUND_ARMOR_HIGH 30
+

@@ -1,0 +1,15 @@
+["/datum/map_template/ruin/space/oldstation"]
+always_place = true
+
+# the following ruins are disabled due to being potential sources of atmos lag due to active turfs ~Lucy
+# ["/datum/map_template/ruin/space/thederelict"]
+# unpickable = true
+
+["/datum/map_template/ruin/lavaland/elephant_graveyard"]
+unpickable = true
+
+["/datum/map_template/ruin/icemoon/underground/oldstation"]
+unpickable = true
+
+["/datum/map_template/shuttle/ruin/caravan_victim"]
+unpickable = true

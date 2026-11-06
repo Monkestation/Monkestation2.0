@@ -177,13 +177,13 @@
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
-	playsound(target, 'sound/effects/blobattack.ogg', 30, TRUE)
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_fake), target, blade), 600)
 	return TRUE
 
 /datum/action/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
-	playsound(target, 'sound/effects/blobattack.ogg', 30, TRUE)
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
 	[target] reforms [target.p_their()] [blade.name] into an arm!</span>",
 	span_warning("[blade] reforms back to normal."),
@@ -278,4 +278,17 @@
 	log_combat(user, target, "stung", "cryo sting")
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/bloodchill/changeling)
+	return TRUE
+
+/datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
+	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		user.balloon_alert(user, "no eyes!")
+		return FALSE
+
+	log_combat(user, target, "stung", "blind sting")
+	to_chat(target, span_danger("Your eyes burn horrifically!"))
+	eyes.apply_organ_damage(eyes.maxHealth * 0.8, maximum = eyes.maxHealth * 0.8)
+	target.set_temp_blindness_if_lower(40 SECONDS)
+	target.set_eye_blur_if_lower(80 SECONDS)
 	return TRUE

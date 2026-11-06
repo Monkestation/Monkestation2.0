@@ -6,7 +6,7 @@
 /obj/structure/mecha_wreckage
 	name = "exosuit wreckage"
 	desc = "Remains of some unfortunate mecha. Completely irreparable, but perhaps something can be salvaged."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/rideables/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
 	opacity = FALSE
@@ -152,6 +152,7 @@
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"
+	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "ripley-broken"
 	welder_salvage = list(/obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(
@@ -220,7 +221,7 @@
 
 /obj/structure/mecha_wreckage/savannah_ivanov
 	name = "\improper Savannah-Ivanov wreckage"
-	icon = 'icons/mecha/coop_mech.dmi'
+	icon = 'icons/mob/rideables/coop_mech.dmi'
 	icon_state = "savannah_ivanov-broken"
 	welder_salvage = list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(
@@ -244,25 +245,25 @@
 
 /obj/structure/mecha_wreckage/devitt
 	name = "\improper Devitt Mk3 Wreckage"
-	icon = 'icons/mecha/tanks.dmi'
+	icon = 'icons/mob/rideables/tanks.dmi'
 	icon_state = "devitt-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 
 /obj/structure/mecha_wreckage/vendozer
 	name = "\improper Vendozer Wreckage"
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "vendozer-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/sentinel
 	name = "\improper Sentinel Wreckage"
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "sentinel-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/syntinel
 	name = "\improper Sentinel Wreckage"
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "syntinel-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)

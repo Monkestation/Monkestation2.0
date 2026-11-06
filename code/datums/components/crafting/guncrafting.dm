@@ -1,6 +1,8 @@
 //Gun crafting parts til they can be moved elsewhere
 
 // PARTS //
+/obj/item/weaponcrafting
+	abstract_type = /obj/item/weaponcrafting
 
 /obj/item/weaponcrafting/receiver
 	name = "modular receiver"
@@ -59,6 +61,10 @@
 /obj/item/weaponcrafting/gunkit/decloner
 	name = "decloner part kit (lethal)"
 	desc = "An uttery baffling array of gun parts and technology that somehow turns a laser gun into a decloner. Haircut not included."
+
+/obj/item/weaponcrafting/gunkit/lasercannon
+	name = "laser cannon part kit (lethal)"
+	desc = "A suitcase containing the necessary gun parts to transform a standard laser gun into a laser cannon. Aim it carefully to avoid complaints from the crew."
 
 /obj/item/weaponcrafting/gunkit/ebow
 	name = "energy crossbow part kit (less lethal)"

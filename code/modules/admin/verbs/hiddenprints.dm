@@ -1,4 +1,5 @@
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_show_hiddenprints, R_ADMIN, FALSE, "Show Hiddenprints", atom/victim)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_show_hiddenprints, R_ADMIN, FALSE, "Show Hiddenprints", /atom)
+	VERB_ARG_TYPED(victim, VERB_ARG_TYPE_ATOM, VERB_ARG_SOURCE_WORLD, /atom)
 	var/interface = "A log of every player who has touched [victim], sorted by last touch.<br><br><ol>"
 	var/victim_hiddenprints = GET_ATOM_HIDDENPRINTS(victim)
 

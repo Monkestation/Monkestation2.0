@@ -9,7 +9,7 @@
 	state_open = TRUE
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/sleeper
-	clicksound = 'sound/machines/pda_button1.ogg'
+	clicksound = 'sound/machines/pda_button/pda_button1.ogg'
 
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5

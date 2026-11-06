@@ -30,7 +30,7 @@
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
 
-/datum/round_event_control/antagonist/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
+/datum/round_event_control/antagonist/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE, list/candidate_pool) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .
@@ -49,8 +49,10 @@
 	var/datum/round_event_control/antagonist/cast_control = control
 	antag_count = cast_control.get_antag_amount()
 
+	// bonus larva rides outside antag_count so missing it doesn't count as a shortfall refund
+	var/larva_count = antag_count
 	if(prob(50))
-		antag_count++
+		larva_count++
 
 	antag_flag = cast_control.antag_flag
 	antag_datum = cast_control.antag_datum
@@ -73,7 +75,7 @@
 			poll_time = 20 SECONDS,
 			group = candidates,
 			alert_pic = /mob/living/carbon/alien/larva,
-			role_name_text = lowertext(cast_control.name),
+			role_name_text = LOWER_TEXT(cast_control.name),
 			chat_text_border_icon = /mob/living/carbon/alien/larva
 		)
 
@@ -97,7 +99,7 @@
 		return MAP_ERROR
 
 	var/selected_count = 0
-	while(length(weighted_candidates) && selected_count < antag_count)
+	while(length(weighted_candidates) && selected_count < larva_count)
 		var/client/candidate_ckey = pick_n_take_weighted(weighted_candidates)
 		var/client/candidate_client = GLOB.directory[candidate_ckey]
 		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
@@ -111,12 +113,16 @@
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 		new_xeno.PossessByPlayer(candidate_ckey)
 		new_xeno.move_into_vent(vent)
+		setup_minds += new_xeno.mind
 		selected_count++
 
 		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")
 		new_xeno.log_message("was spawned as an alien by an event.", LOG_GAME)
 
 	setup = TRUE //MONKESTATION ADDITION
+
+/datum/round_event/antagonist/ghost/alien_infestation/start()
+	return
 
 /datum/round_event/antagonist/ghost/alien_infestation/announce(fake)
 	var/living_aliens = FALSE

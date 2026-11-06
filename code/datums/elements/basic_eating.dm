@@ -49,13 +49,14 @@
 /datum/element/basic_eating/proc/try_eating(mob/living/eater, atom/target)
 	if(!is_type_in_list(target, food_types))
 		return FALSE
+
 	var/eat_verb
 	if(drinking)
 		eat_verb = pick("slurp","sip","guzzle","drink","quaff","suck")
 	else
 		eat_verb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 
-	if (heal_amt > 0)
+	if(heal_amt > 0)
 		var/healed = heal_amt && eater.health < eater.maxHealth
 		if(heal_amt)
 			eater.heal_overall_damage(heal_amt)
@@ -63,7 +64,7 @@
 		finish_eating(eater, target)
 		return
 
-	if (damage_amount > 0 && damage_type)
+	if(damage_amount > 0 && damage_type)
 		eater.apply_damage(damage_amount, damage_type)
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target], and seems to hurt itself."), span_notice("You [eat_verb] [target], hurting yourself in the process."))
 		finish_eating(eater, target)
@@ -78,10 +79,19 @@
 		playsound(eater.loc,get_drink_sound(eater), rand(10,50), TRUE) // monkestation edit: synthesized drink sounds
 	else
 		playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+
 	SEND_SIGNAL(eater, COMSIG_LIVING_ATE, target)
 	SEND_SIGNAL(eater, COMSIG_EMOTION_STORE, null, EMOTION_HAPPY, "I ate [target], I really like [target].")
-	if (isstack(target))
+
+	if(isstack(target))
 		var/obj/item/stack/stack = target
 		stack.use(1)
 		return
+
 	qdel(target)
+
+/proc/get_drink_sound(mob/living/drinker, force_enhanced = FALSE)
+	. = 'sound/items/drink.ogg'
+	if(force_enhanced || (isipc(drinker) || issilicon(drinker)) && (roll(15) >= 15))
+		to_chat(drinker, span_notice("Your circuits are rushed with enhanced flavor!"))
+		. = 'sound/items/drink_sparkle.ogg'

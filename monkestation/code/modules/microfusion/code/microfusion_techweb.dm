@@ -7,6 +7,7 @@
 	design_ids = list(
 		"basic_microfusion_cell",
 	)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 //Enhanced microfusion
 /datum/techweb_node/enhanced_microfusion
@@ -28,6 +29,7 @@
 		"microfusion_gun_attachment_rgb",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 //Advanced microfusion
 /datum/techweb_node/advanced_microfusion
@@ -54,7 +56,7 @@
 		"microfusion_gun_attachment_scope",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 // Bluespace microfusion
 /datum/techweb_node/bluespace_microfusion
@@ -74,6 +76,7 @@
 		"bluespace_microfusion_phase_emitter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 // Quantum microfusion
 /datum/techweb_node/quantum_microfusion
@@ -88,6 +91,7 @@
 		"microfusion_gun_attachment_xray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_6_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 // Warcrime microfusion
 /datum/techweb_node/illegal_microfusion
@@ -106,6 +110,7 @@
 		"microfusion_gun_attachment_suppressor",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 // clown microfusion. | This exists to not make this non modular
 /datum/techweb_node/clown_microfusion
@@ -121,3 +126,4 @@
 		"microfusion_gun_attachment_honk_camo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4) //Its normally supposed to be in clown tech so
+	announce_channels = list(RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_SERVICE)

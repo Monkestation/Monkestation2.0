@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/conjure/pie
 	name = "Summon Pie"
 	desc = "This spell conjures many a pie, sliced and otherwise."
-	sound = 'sound/magic/summonitems_generic.ogg'
+	sound = 'sound/effects/magic/summonitems_generic.ogg'
 	button_icon_state = "pie"
 
 	school = SCHOOL_CONJURATION

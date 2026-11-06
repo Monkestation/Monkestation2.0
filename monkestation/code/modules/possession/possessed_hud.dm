@@ -135,11 +135,11 @@
 		return
 	var/mob/living/H = mymob
 	if(hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in H.held_items)
+		for(var/obj/item/I as anything in H.get_held_items())
 			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))
 			H.client.screen += I
 	else
-		for(var/obj/item/I in H.held_items)
+		for(var/obj/item/I as anything in H.get_held_items())
 			I.screen_loc = null
 			H.client.screen -= I
 

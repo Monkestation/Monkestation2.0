@@ -17,7 +17,7 @@
 			dat += "<a href='byond://?src=[REF(src)];panel=main;action=reload_config_vars'>Reload Config Vars</a> <font color='#888888'><i>Configs located in game_options.txt.</i></font>"
 			dat += "<BR><b>Point Gains Multipliers (only over time):</b>"
 			dat += "<BR><font color='#888888'><i>This affects points gained over time towards scheduling new events of the tracks.</i></font>"
-			for(var/track in event_tracks)
+			for(var/track in point_gain_multipliers)
 				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=pts_multiplier;track=[track]'>[point_gain_multipliers[track]]</a>"
 			dat += "<HR>"
 
@@ -75,6 +75,11 @@
 				dat += "</tr>"
 			dat += "</table>"
 
+			if(current_storyteller)
+				var/datum/round_event_control/forced_latejoin = forced_next_events[EVENT_TRACK_LATEJOIN]
+				var/forced_latejoin_text = forced_latejoin ? "[forced_latejoin.name] <a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=remove_forced;track=[EVENT_TRACK_LATEJOIN]'>X</a>" : "None"
+				dat += "<BR>Latejoin antags: [get_latejoin_antag_chance()]% chance per latejoiner, cooldown [DisplayTimeText(COOLDOWN_TIMELEFT(src, latejoin_antag_cooldown))], forced next: [forced_latejoin_text]"
+
 			dat += "<h2>Scheduled Events:</h2>"
 			dat += "<table align='center'; width='100%'; height='100%'; style='background-color:#13171C'>"
 			dat += "<tr style='vertical-align:top'>"
@@ -130,8 +135,8 @@
 	dat += "<BR><a href='byond://?src=[REF(src)];panel=stats;action=set_roundstart'[roundstart_event_view ? "class='linkOn'" : ""]>Roundstart Events</a> Forced Roundstart events will use rolled points, and are guaranteed to trigger (even if the used points are not enough)"
 	dat += "<BR>Avg. event intervals: "
 	for(var/track, track_d in event_tracks)
-		if(last_point_gains[track]) //DOUBLE CHECK THIS CALCULATION IS CORRECT
-			var/est_time = round(astype(track_d, /datum/storyteller_track).threshold / last_point_gains[track] / 40 / 6) / 10
+		if(last_point_gains[track])
+			var/est_time = round(astype(track_d, /datum/storyteller_track).threshold / last_point_gains[track] * wait / (1 MINUTES), 0.1)
 			dat += "[track]: ~[est_time] m. | "
 	dat += "<HR>"
 	for(var/track in EVENT_PANEL_TRACKS)

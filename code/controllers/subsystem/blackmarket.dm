@@ -1,14 +1,13 @@
 SUBSYSTEM_DEF(blackmarket)
 	name = "Blackmarket"
 	flags = SS_BACKGROUND
-	init_order = INIT_ORDER_DEFAULT
 
 	/// Descriptions for each shipping methods.
-	var/shipping_method_descriptions = list(
-		SHIPPING_METHOD_LAUNCH="Launches the item at the station from space, cheap but you might not receive your item at all.",
-		SHIPPING_METHOD_LTSRBT="Long-To-Short-Range-Bluespace-Transceiver, a machine that receives items outside the station and then teleports them to the location of the uplink.",
-		SHIPPING_METHOD_TELEPORT="Teleports the item in a random area in the station, you get 60 seconds to get there first though.",
-		SHIPPING_METHOD_AT_FEET="Teleports the item to your feet."
+	var/list/shipping_method_descriptions = list(
+		SHIPPING_METHOD_LAUNCH = "Launches the item at the station from space, cheap but you might not receive your item at all.",
+		SHIPPING_METHOD_LTSRBT = "Long-To-Short-Range-Bluespace-Transceiver, a machine that receives items outside the station and then teleports them to the location of the uplink.",
+		SHIPPING_METHOD_TELEPORT = "Teleports the item in a random area in the station, you get 60 seconds to get there first though.",
+		SHIPPING_METHOD_AT_FEET = "Teleports the item to your feet.",
 	)
 
 	/// List of all existing markets.

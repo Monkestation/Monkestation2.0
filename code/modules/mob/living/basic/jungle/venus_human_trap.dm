@@ -139,13 +139,13 @@
 	obj_damage = 60
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	bodytemp_cold_damage_limit = 100
+	minimum_survivable_temperature = 100
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	basic_mob_flags = DEL_ON_DEATH
 	death_message = "collapses into bits of plant matter."
-	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
-	death_sound = 'sound/creatures/venus_trap_death.ogg'
-	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
+	attacked_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hurt.ogg'
+	death_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_death.ogg'
+	attack_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 // heat damage is different from cold damage since coldmos is significantly more common than plasmafires
 	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

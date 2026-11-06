@@ -14,6 +14,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 3,
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 4,
+		/obj/item/lighter/greyscale/pickle = 2,
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	contraband = list(
@@ -22,6 +23,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 4,
 		/obj/item/storage/fancy/cigarettes/flash_powder = 2,
 		/obj/item/storage/fancy/cigarettes/cigpack_greytide = 2,
+		/obj/item/storage/fancy/cigarettes/cigars/intern/contraband = 1,
 	)
 	premium = list(
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3,
@@ -30,6 +32,7 @@
 		/obj/item/storage/fancy/cigarettes/cigars = 1,
 		/obj/item/storage/fancy/cigarettes/cigars/cohiba = 1,
 		/obj/item/storage/fancy/cigarettes/cigars/havana = 1,
+		/obj/item/storage/fancy/cigarettes/cigars/intern = 1,
 	)
 
 	refill_canister = /obj/item/vending_refill/cigarette
@@ -48,6 +51,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 4,
+		/obj/item/lighter/greyscale/pickle = 2,
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	initial_language_holder = /datum/language_holder/syndicate
@@ -66,6 +70,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_cannabis = 5,
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 4,
+		/obj/item/lighter/greyscale/pickle = 2,
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	premium = list(

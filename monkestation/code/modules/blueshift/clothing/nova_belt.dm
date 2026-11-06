@@ -20,7 +20,7 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/cup/vial,
+		/obj/item/reagent_containers/chemcanister,
 		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
@@ -37,6 +37,7 @@
 	icon_state = "russian_green_belt"
 	inhand_icon_state = "security"
 	worn_icon_state = "russian_green_belt"
+	unique_reskin = null
 
 /obj/item/storage/belt/military/nri/captain
 	name = "black tactical belt"

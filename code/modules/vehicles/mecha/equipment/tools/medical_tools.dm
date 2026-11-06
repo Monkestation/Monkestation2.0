@@ -158,11 +158,12 @@
 			t1 = "*dead*"
 		else
 			t1 = "Unknown"
-	var/skin_temp = patient.get_skin_temperature()
-	var/body_temp = patient.bodytemperature
+	var/core_temp = ""
+	if(ishuman(patient))
+		var/mob/living/carbon/human/humi = patient
+		core_temp = {"<font color="[humi.coretemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [humi.bodytemperature-T0C]&deg;C ([humi.bodytemperature*1.8-459.67]&deg;F)</font><br />"}
 	return {"<font color="[patient.health > 50 ? "#3d5bc3" : "#c51e1e"]"><b>Health:</b> [patient.stat > 1 ? "[t1]" : "[patient.health]% ([t1])"]</font><br />
-				<font color="[skin_temp > patient.bodytemp_heat_damage_limit ? "#3d5bc3" : "#c51e1e"]"><b>Skin Temperature:</b> [KELVIN_TO_CELCIUS(skin_temp)]&deg;C ([KELVIN_TO_FAHRENHEIT(skin_temp)]&deg;F)</font><br />
-				<font color="[body_temp > patient.bodytemp_heat_damage_limit ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [KELVIN_TO_CELCIUS(body_temp)]&deg;C ([KELVIN_TO_FAHRENHEIT(body_temp)]&deg;F)</font><br />
+				[core_temp]
 				<font color="[patient.bodytemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [patient.bodytemperature-T0C]&deg;C ([patient.bodytemperature*1.8-459.67]&deg;F)</font><br />
 				<font color="[patient.getBruteLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Brute Damage:</b> [patient.getBruteLoss()]%</font><br />
 				<font color="[patient.getOxyLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Respiratory Damage:</b> [patient.getOxyLoss()]%</font><br />
@@ -429,7 +430,7 @@
 	if(!chassis.Adjacent(S))
 		to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
 		return FALSE
-	S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = user)
+	S.reagents.trans_to(src, S.reagents.total_volume, transferred_by = user)
 	S.forceMove(src)
 	LAZYADD(syringes,S)
 	to_chat(user, "[icon2html(src, user)][span_notice("Syringe loaded.")]")
@@ -520,7 +521,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
 	name = "mounted stretcher"
-	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_mounted_stretcher"
 	desc = "A mangled bunched of medical equipment connecting to a strecher, It can transport and stabilize patients fine. just don't expect anything more"
 	inject_amount = 0

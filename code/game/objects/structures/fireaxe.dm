@@ -43,6 +43,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(isdrone(user) && attacking_item.tool_behaviour == TOOL_MULTITOOL)
+		to_chat(src, span_warning("Using [src] could break your laws."))
+		return
+
 	if(iscyborg(user) || attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
 	else if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && !broken)
@@ -94,9 +98,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			if(broken)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir)
 	if(open)
@@ -110,7 +114,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		update_appearance()
 		broken = TRUE
-		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 
@@ -130,11 +134,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	. = ..()
 	if(.)
 		return
+
+	if(isdrone(user))
+		to_chat(src, span_warning("Using [src] could break your laws."))
+		return
+
 	if((open || broken) && held_item)
 		user.put_in_hands(held_item)
 		add_fingerprint(user)
 		update_appearance()
 		return
+
 	toggle_open(user)
 
 /obj/structure/fireaxecabinet/attack_hand_secondary(mob/user, list/modifiers)

@@ -86,8 +86,30 @@
 				sbed.op_computer = src
 				break
 
-/obj/machinery/computer/operating/ui_state(mob/user)
-	return GLOB.not_incapacitated_state
+/obj/machinery/computer/operating/ui_status(mob/user, datum/ui_state/state)
+	. = ..()
+	if(isliving(user) && !issilicon(user))
+		. = min(., ui_check(user))
+
+/// Checks for special ui state conditions.
+/obj/machinery/computer/operating/proc/ui_check(mob/living/user)
+	// Lower states should be checked first.
+
+	// Normally machines revert to "disabled" when non-operational,
+	// but here we outright close it so people can't gleam extra info.
+	if(!is_operational)
+		return UI_CLOSE
+	// If you're knocked out, ie anesthetic... definitely a no-go.
+	if(HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
+		return UI_CLOSE
+	// The patient itself should be blocked from viewing the computer.
+	if(user.body_position == LYING_DOWN)
+		return (user.loc == table?.loc) ? UI_CLOSE : UI_DISABLED
+	// We have a tight range check so people can't spy on surgeries from across the room.
+	// Likewise, it'd be pretty lame if you could see what was going on while incapacitated.
+	if(get_dist(user, src) > 2 || user.incapacitated())
+		return UI_DISABLED
+	return UI_INTERACTIVE
 
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -139,7 +161,7 @@
 	data["patient"]["health"] = patient.health
 
 	// check here to see if the patient has standard blood reagent, or special blood (like how ethereals bleed liquid electricity) to show the proper name in the computer
-	data["patient"]["blood_type"] = "[patient.get_blood_type() || "None"]"
+	data["patient"]["blood_type"] = patient.dna?.blood_type.name
 
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = patient.dead_threshold

@@ -85,6 +85,9 @@
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
 		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
+		ROLE_SYNDICATE_INFILTRATOR = /datum/antagonist/traitor/infiltrator,
+		ROLE_HERETIC_SMUGGLER = /datum/antagonist/heretic,
+		ROLE_BLOODSUCKERBREAKOUT = VAMPIRE_ANTAG_DATUM,
 		// monkestation end
 	)
 
@@ -154,6 +157,9 @@
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
 		ROLE_DARKSPAWN = /datum/antagonist/darkspawn,
 		ROLE_ABANDONED_IPC = /datum/antagonist/abandoned_ipc,
+		ROLE_SYNDICATE_INFILTRATOR = /datum/antagonist/traitor/infiltrator,
+		ROLE_HERETIC_SMUGGLER = /datum/antagonist/heretic,
+		ROLE_BLOODSUCKERBREAKOUT = VAMPIRE_ANTAG_DATUM,
 		// monkestation end
 	)
 
@@ -193,4 +199,4 @@
 /// Serializes an antag name to be used for preferences UI
 /proc/serialize_antag_name(antag_name)
 	// These are sent through CSS, so they need to be safe to use as class names.
-	return lowertext(sanitize_css_class_name(antag_name))
+	return LOWER_TEXT(sanitize_css_class_name(antag_name))

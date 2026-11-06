@@ -1,4 +1,5 @@
 /mob/living/carbon
+	abstract_type = /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	pressure_resistance = 15
@@ -75,6 +76,8 @@
 		/obj/item/bodypart/leg/right,
 		/obj/item/bodypart/leg/left,
 	)
+	/// Alist of (non-stump) bodyparts by their bodyzone for quick get_bodypart access
+	var/alist/real_bodypart_cache = alist()
 
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()
@@ -88,6 +91,11 @@
 	/// (For example, setting damageoverlaytemp = 20 will add 20 "damage" to the overlay the next time it updates.)
 	/// This number is also reset to 0 every tick of carbon Life(). Pain.
 	var/damageoverlaytemp = 0
+
+	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
+	var/heat_protection = 0 // No heat protection
+	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
+	var/cold_protection = 0 // No cold protection
 
 	/// Timer id of any transformation
 	var/transformation_timer
@@ -113,7 +121,10 @@
 	var/last_top_offset
 
 	/// A bitfield of "bodytypes", updated by /mob/living/carbon/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	var/bodytype = BODYTYPE_ORGANIC
+
+	/// A bitfield of "bodyshapes", updated by /mob/living/carbon/proc/synchronize_bodyshapes()
+	var/bodyshape = BODYSHAPE_HUMANOID
 
 	var/is_leaning = FALSE
 

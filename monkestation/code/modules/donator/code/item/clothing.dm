@@ -41,7 +41,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
-
+	cold_protection = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/shark_hood
 
@@ -52,7 +52,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "blahaj_hood"
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	inhand_icon_state = null
 
@@ -60,16 +60,17 @@
 	name = "\improper lava cat robe"
 	desc = "This robe is said to be inspired by attire worn in some distant magical land to brave volcanic fire and ash, \
 	assuming such a place ever existed. This one, offers no such protection."
-	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
-	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	icon_state = "lava_cat_robe"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	inhand_icon_state = "lava_cat_robe"
-	greyscale_colors = "#2B0F0F#7A1E1E#FF6A00"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	SETUP_MAP_ICONS("lava_cat_robe", "/obj/item/clothing/suit/hooded/lava_cat_robe")
 	greyscale_config = /datum/greyscale_config/lava_cat_robe
 	greyscale_config_worn = /datum/greyscale_config/lava_cat_robe/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/lava_cat_robe/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/lava_cat_robe/inhand_right
+	greyscale_colors = "#2B0F0F#7A1E1E#FF6A00"
+
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	inhand_icon_state = "lava_cat_robe"
+
 	respect_suit_greyscale = TRUE
 	flags_1 = IS_PLAYER_COLORABLE_1
 	allowed = list(
@@ -85,13 +86,12 @@
 /obj/item/clothing/head/hooded/lava_cat_hood
 	name = "\improper lava cat hood"
 	desc = "A hood attached to a lava cat robe. It comes with a pair of cat ears and a mask."
-	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
-	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	icon_state = "lava_cat_hood"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	SETUP_MAP_ICONS("lava_cat_hood", "/obj/item/clothing/head/hooded/lava_cat_hood")
 	inhand_icon_state = null
-	greyscale_colors = "#2B0F0F#7A1E1E#FF6A00"
 	greyscale_config = /datum/greyscale_config/lava_cat_hood
 	greyscale_config_worn = /datum/greyscale_config/lava_cat_hood/worn
+	greyscale_colors = "#2B0F0F#7A1E1E#FF6A00"
 	body_parts_covered = HEAD
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS|HIDEMASK|HIDEEARS|HIDEFACIALHAIR|HIDESNOUT
 
@@ -206,7 +206,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "aotcloak"
 	body_parts_covered = CHEST|ARMS
-
+	cold_protection = CHEST|ARMS
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 	hoodtype = /obj/item/clothing/head/hooded/aotcloak
@@ -244,7 +244,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "aotcloak_hood"
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
 
@@ -289,7 +289,7 @@
 	icon_state = "coat_quilark"
 	toggle_noun = "zipper"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/toggle/quilark/Initialize(mapload)
@@ -321,7 +321,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "lambcloak"
 	body_parts_covered = CHEST|ARMS
-
+	cold_protection = CHEST|ARMS
 	layer = NECK_LAYER
 
 /obj/item/clothing/suit/hooded/org_thirteen
@@ -332,7 +332,7 @@
 	icon_state = "org_thirteen"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
-
+	cold_protection = CHEST|ARMS
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 	hoodtype = /obj/item/clothing/head/hooded/org_thirteen
@@ -359,7 +359,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "org_thirteen_hood"
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
 
@@ -453,6 +453,8 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "poob_mask"
 	inhand_icon_state = null
+	actions_types = null
+	adjustable = FALSE
 	flags_inv = HIDEFACE
 
 /obj/item/clothing/suit/toggle/menacing_jacket
@@ -462,7 +464,7 @@
 	name = "menacing jacket"
 	desc = "There can only be one dragon."
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/mask/gas/bluedragon66_trenchbiomask
@@ -523,7 +525,7 @@
 	name = "rainbow coat"
 	desc = "Woah, it's a RAINBOW coat. How's it doing that?"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/hooded_wintercoat
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 /obj/item/clothing/suit/toggle/ophaq_rainbowcoat/Initialize(mapload)
@@ -576,6 +578,7 @@
 	name = "centcom jacket"
 	desc = "A varsity jacket in design of centcom! It seems well made."
 	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/head/costume/purple_gold_tophat_kid
@@ -603,6 +606,7 @@
 	name = "trax's jacket"
 	desc = "A comfortable jacket with a yellow scorpion on the back! It seems well made."
 	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/neck/mist_cloak
@@ -646,6 +650,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "dreamers"
 	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	inhand_icon_state = null
 
@@ -656,32 +661,34 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "lesbian"
 	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	inhand_icon_state = null
 
-/obj/item/clothing/under/costume/donatorgrayscaleturtleneck
+/obj/item/clothing/under/costume/donatorgrayscaleturtleneck // wtf
 	name = "turtleneck with pants"
 	desc = "A turtleneck with a pair of pants, this one is easily dyeable."
-	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
-	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	icon_state = "donatorgrayscaleturtleneck"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	SETUP_MAP_ICONS("donatorgrayscaleturtleneck", "/obj/item/clothing/under/costume/donatorgrayscaleturtleneck")
+	greyscale_config = /datum/greyscale_config/donatorgrayscaleturtleneck
+	greyscale_config_worn = /datum/greyscale_config/donatorgrayscaleturtleneck/worn
+	greyscale_colors = "#8cd4a2#404577"
 	can_adjust = FALSE
 	inhand_icon_state = null
-	greyscale_colors = "#8cd4a2#404577"
-	greyscale_config = /datum/greyscale_config/donatorgrayscaleturtleneck
-	greyscale_config_worn = /datum/greyscale_config/donatorgrayscaleturtleneckworn
 	flags_1 = IS_PLAYER_COLORABLE_1
+
 /datum/greyscale_config/donatorgrayscaleturtleneck
 	name = "turtleneck with pants"
 	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
 	expected_colors = 2
-/datum/greyscale_config/donatorgrayscaleturtleneckworn
-	name = "turtleneck with pants"
+
+/datum/greyscale_config/donatorgrayscaleturtleneck/worn
+	name = "turtleneck with pants (Worn)"
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
-	expected_colors = 2
+
 /obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/neck/donatorwhitefurshawl
 	name = "white fur shawl"
@@ -798,18 +805,19 @@
 /obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
 	name = "scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards."
-	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
-	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	icon_state = "greyscale_scrubs"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	SETUP_MAP_ICONS("greyscale_scrubs", "/obj/item/clothing/under/rank/medical/scrubs/donator_greyscale")
 	inhand_icon_state = null
-	greyscale_colors = "#7f8a7c"
 	greyscale_config = /datum/greyscale_config/donator_greyscale_scrubs
 	greyscale_config_worn = /datum/greyscale_config/donator_greyscale_scrubs_worn
+	greyscale_colors = "#7f8a7c"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
 /datum/greyscale_config/donator_greyscale_scrubs
 	name = "scrubs"
 	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs.json'
+
 /datum/greyscale_config/donator_greyscale_scrubs_worn
 	name = "scrubs"
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
@@ -884,7 +892,11 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/owl_mask/hunter_owl/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/gas/owl_mask/hunter_owl/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/owl_mask/hunter_owl/up
 
@@ -908,7 +920,11 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/gaster/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/gas/gaster/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/gaster/up
 
@@ -1052,3 +1068,17 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	flags_inv = HIDEMUTWINGS | HIDESUITSTORAGE
+
+/obj/item/clothing/gloves/peculiar_watch
+	name = "peculiar watch"
+	desc = "It's Hero Time!"
+	icon = 'icons/map_icons/clothing/gloves.dmi'
+	SETUP_MAP_ICONS("peculiar_watch", "/obj/item/clothing/gloves/peculiar_watch")
+	inhand_icon_state = null
+	greyscale_config = /datum/greyscale_config/peculiar_watch
+	greyscale_config_worn = /datum/greyscale_config/peculiar_watch_worn
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = "#F8F8F8#38B40A"
+	body_parts_covered = null
+	flags_1 = IS_PLAYER_COLORABLE_1

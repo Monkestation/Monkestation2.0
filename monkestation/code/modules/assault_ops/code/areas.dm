@@ -48,9 +48,6 @@
 	color = COLOR_BLUE
 	ambientsounds = AMBIENCE_CREEPY
 
-/obj/machinery/door/poddoor/shutters
-	//smoothing_groups = SMOOTH_GROUP_SHUTTERS
-
 /turf/closed/wall/r_wall/syndicate/cruiser
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
 

@@ -30,7 +30,7 @@
 
 	// MONKESTATION EDIT START - lobby notices
 	if (SSticker.current_state != GAME_STATE_STARTUP && length(config.lobby_notices))
-		config.ShowLobbyNotices(src)
+		config.show_lobby_notices(src)
 	// MONKESTATION END
 	if(GLOB.admin_notice)
 		to_chat(src, span_notice("<b>Admin Notice:</b>\n \t [GLOB.admin_notice]"))

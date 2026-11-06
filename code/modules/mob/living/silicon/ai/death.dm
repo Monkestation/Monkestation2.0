@@ -30,8 +30,6 @@
 
 	ShutOffDoomsdayDevice()
 
-	GLOB.ai_os.remove_ai(src)
-
 	if(explosive)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), loc, 3, 6, 12, null, 15), 1 SECONDS)
 

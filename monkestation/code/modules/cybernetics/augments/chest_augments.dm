@@ -1,4 +1,5 @@
 /obj/item/organ/internal/cyberimp/chest
+	abstract_type = /obj/item/organ/internal/cyberimp/chest
 	name = "chest-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_CHEST
@@ -332,7 +333,7 @@
 
 	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
 	playsound(owner, SFX_BODYFALL, 50, TRUE)
-	playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+	playsound(owner, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 	owner.revive()
 	owner.emote("gasp")
 	owner.set_jitter_if_lower(200 SECONDS)

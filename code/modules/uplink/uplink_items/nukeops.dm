@@ -545,7 +545,7 @@
 //Support and Mechs
 /datum/uplink_category/support
 	name = "Support and Exosuits"
-	weight = 5
+	weight = 10
 
 /datum/uplink_item/support
 	category = /datum/uplink_category/support
@@ -768,15 +768,6 @@
 	item = /obj/item/storage/box/syndie_kit/anti_stun
 	cost = 12
 	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/implants/microbomb
-	name = "Microbomb Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
-			The more implants inside of you, the higher the explosive power. \
-			This will permanently destroy your body, however."
-	item = /obj/item/storage/box/syndie_kit/imp_microbomb
-	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/implants/macrobomb

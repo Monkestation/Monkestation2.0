@@ -74,7 +74,7 @@
 		var/obj/item/gbp_punchcard/punchcard = attacking_item
 		var/amount_to_reward = punchcard.punches * GBP_PUNCH_REWARD
 		if(!punchcard.punches)
-			playsound(src, 'sound/machines/scanbuzz.ogg', vol = 25, extrarange = SILENCED_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', vol = 25, extrarange = SILENCED_SOUND_EXTRARANGE)
 			balloon_alert(user, "cannot redeem unpunched card!")
 			return
 
@@ -84,7 +84,7 @@
 			card_used = living_user.get_idcard(TRUE)
 
 		if(!istype(card_used?.registered_account?.account_job, /datum/job/assistant))
-			playsound(src, 'sound/machines/scanbuzz.ogg', vol = 25, extrarange = SILENCED_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', vol = 25, extrarange = SILENCED_SOUND_EXTRARANGE)
 			balloon_alert(user, "cannot redeem without valid assistant bank account!")
 			return
 
@@ -184,13 +184,5 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
-
-//Base Nodes
-/datum/techweb_node/base/New()
-	design_ids += list(
-		"polarizer",
-		"gbp_machine",
-	)
-	return ..()
 
 #undef GBP_PUNCH_REWARD

@@ -55,7 +55,7 @@
 /datum/nanite_program/research
 	name = "Research Network Integration"
 	desc = "The nanites contribute processing power to the research network, generating useful data and heat. Higher usage rates will consume more nanites. Requires a live host."
-	rogue_types = list(/datum/nanite_program/spreading, /datum/nanite_program/mitosis) // it researches itself into oblivion
+	rogue_types = list(/datum/nanite_program/mitosis) // it researches itself into oblivion
 	use_rate = 0.5
 
 	var/research_speed
@@ -109,7 +109,7 @@
 
 	update_research_speed()
 
-	host_mob.add_homeostasis_level(NANITE_RESEARCH_CHANGE, host_mob.standard_body_temperature + research_speed * 15, 0.25 KELVIN)
+	host_mob.add_body_temperature_change(NANITE_RESEARCH_CHANGE, research_speed * 15)
 	use_rate = (initial(use_rate) * research_speed) / 50
 	current_research_bonus = use_rate
 	SSresearch.science_tech.nanite_bonus += current_research_bonus
@@ -121,7 +121,7 @@
 /datum/nanite_program/research/disable_passive_effect()
 	. = ..()
 	SSresearch.science_tech.nanite_bonus -= current_research_bonus
-	host_mob.remove_homeostasis_level(NANITE_RESEARCH_CHANGE)
+	host_mob.remove_body_temperature_change(NANITE_RESEARCH_CHANGE)
 
 /datum/nanite_program/research/set_extra_setting(setting, value)
 	. = ..()
@@ -270,35 +270,6 @@
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
 /datum/nanite_program/access/on_trigger(comm_message)
 	access = host_mob.get_access()
-
-/datum/nanite_program/spreading
-	name = "Infective Exo-Locomotion"
-	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
-			resulting in an extremely infective strain of nanites."
-	use_rate = 1.50
-	rogue_types = list(/datum/nanite_program/aggressive_replication, /datum/nanite_program/necrotic)
-	var/spread_cooldown = 0
-
-/datum/nanite_program/spreading/active_effect()
-	if(world.time < spread_cooldown)
-		return
-	spread_cooldown = world.time + 50
-	var/list/mob/living/target_hosts = list()
-	for(var/mob/living/L in oview(5, host_mob))
-		if(!prob(25))
-			continue
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(L))
-			continue
-		target_hosts += L
-	if(!target_hosts.len)
-		return
-	var/mob/living/infectee = pick(target_hosts)
-	if(prob(100 - (infectee.getarmor(null, BIO))))
-		//this will potentially take over existing nanites!
-		infectee.AddComponent(/datum/component/nanites, 10)
-		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
-		infectee.investigate_log("was infected by spreading nanites with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
 	name = "Nanite Sting"
@@ -486,9 +457,9 @@
 
 /obj/item/nanite_injection_tentacle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!isliving(interacting_with))
+	if(!iscarbon(interacting_with))
 		return NONE
-	var/mob/living/guy_we_are_stabbing = interacting_with
+	var/mob/living/carbon/guy_we_are_stabbing = interacting_with
 	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(guy_we_are_stabbing))
 		guy_we_are_stabbing.balloon_alert(user, "incompatible")
 		return ITEM_INTERACT_BLOCKING
@@ -510,7 +481,7 @@
 			return
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
-		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.spray_blood(guy_we_are_stabbing.dir)
 		guy_we_are_stabbing.visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
@@ -519,7 +490,7 @@
 			return
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
-		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.spray_blood(guy_we_are_stabbing.dir)
 		guy_we_are_stabbing.visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))

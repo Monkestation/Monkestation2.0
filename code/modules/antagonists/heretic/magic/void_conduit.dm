@@ -93,8 +93,6 @@
 
 			if(isliving(thing_to_affect))
 				var/mob/living/affected_mob = thing_to_affect
-				if(affected_mob.can_block_magic(MAGIC_RESISTANCE))
-					continue
 				if(IS_HERETIC_OR_MONSTER(affected_mob) || HAS_TRAIT(affected_mob, TRAIT_MANSUS_TOUCHED))
 					affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
 				else
@@ -105,7 +103,7 @@
 				affected_structure.take_damage(rand(15, 30))
 
 /datum/looping_sound/void_conduit
-	mid_sounds = 'sound/ambience/ambiatm1.ogg'
+	mid_sounds = 'sound/ambience/misc/ambiatm1.ogg'
 	mid_length = 1 SECONDS
 	extra_range = 10
 	volume = 40

@@ -197,7 +197,7 @@
 	to_chat(injectee, span_warning("You feel a tiny prick!"))
 	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent_typepath ? selected_reagent_typepath.name : selected_recipe_id])."))
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s injected")
-	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transfered_by = user, methods = INJECT)
+	reagent_injector.trans_to(injectee, reagent_injector.total_volume, transferred_by = user, methods = INJECT)
 	log_combat(user, injectee, "injected", src, "(CHEMICALS: [reagent_injector])")
 	if(injection_sound)
 		playsound(injectee, injection_sound, 20, TRUE)
@@ -338,7 +338,7 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 		data["canReagentSearch"] = !isnull(beaker_apparatus)
 	return data
 
@@ -414,7 +414,7 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/beaker_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 				if(!isnull(beaker_apparatus) && !isnull(beaker_apparatus.stored))
 					beaker_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
@@ -474,6 +474,13 @@
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
 
+/// Ninja medical cyborg hypospray.
+/obj/item/reagent_containers/borghypo/syndicate/ninja
+	name = "ninja cyborg hypospray"
+	desc = "An experimental piece of Ninja technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. \
+		Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
+	icon_state = "borghypo_n"
+
 /// Paramedic toolset hypospray.
 /obj/item/reagent_containers/borghypo/paramedic
 	name = "emergency paramedic hypospray"
@@ -507,7 +514,7 @@
 		return ITEM_INTERACT_BLOCKING
 	var/datum/reagents/reagent_injector = create_reagent_injector()
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
-	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
+	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transferred_by = user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/borgshaker/ui_interact(mob/user, datum/tgui/ui)
@@ -546,11 +553,11 @@
 	data["recordingRecipe"] = recording_recipe
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 		if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 			data["canReagentSearch"] = TRUE
 		if(!data["canReagentSearch"])
-			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+			var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 			if(!isnull(internal_beaker))
 				data["canReagentSearch"] = TRUE
 	return data
@@ -564,12 +571,12 @@
 		if("reaction_lookup")
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/cyborg = user
-				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 				if(!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 					beverage_apparatus.stored.reagents.ui_interact(cyborg)
 					. = TRUE
 				if(!.)
-					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+					var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in cyborg.model.usable_modules) || (cyborg.is_holding_item_of_type(__IMPLIED_TYPE__))
 					if(!isnull(internal_beaker))
 						internal_beaker.reagents.ui_interact(cyborg)
 					. = TRUE
@@ -585,7 +592,7 @@
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom
 	amount_per_transfer_from_this = 50
-	recharge_time = 1 SECOND
+	recharge_time = 1 SECONDS
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)
 	default_reagent_types += BASE_CENTCOM_REAGENTS
@@ -615,7 +622,7 @@
 		return ITEM_INTERACT_BLOCKING
 	var/datum/reagents/reagent_injector = create_reagent_injector()
 	balloon_alert(user, "[reagent_injector.total_volume] unit\s poured")
-	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transfered_by = user)
+	reagent_injector.trans_to(interacting_with, reagent_injector.total_volume, transferred_by = user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)

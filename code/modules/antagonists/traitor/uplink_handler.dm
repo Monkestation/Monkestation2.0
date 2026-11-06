@@ -51,6 +51,15 @@
 	/// Callback which performs that operation
 	var/datum/callback/replace_objectives
 
+	/// Extra stuff that cannot be purchased by an uplink, regardless of flag.
+	var/list/locked_entries = list()
+	///how much contractor rep we have
+	var/contractor_rep = 0
+	///list of our contractor market items
+	var/list/contractor_market_items = list()
+	///list of purchased contractor items
+	var/list/purchased_contractor_items = list()
+
 /datum/uplink_handler/New()
 	. = ..()
 	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
@@ -64,6 +73,10 @@
 /datum/uplink_handler/proc/on_update()
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return
+
+/// Checks if there are enough living players to purchase an item
+/datum/uplink_handler/proc/not_enough_population(datum/uplink_item/to_purchase)
+	return length(GLOB.alive_player_list) < to_purchase.population_minimum
 
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
@@ -101,6 +114,9 @@
 			return FALSE
 
 	if(!check_if_restricted(to_purchase))
+		return FALSE
+
+	if(not_enough_population(to_purchase))
 		return FALSE
 
 	var/current_stock = item_stock[to_purchase.stock_key]
@@ -264,7 +280,7 @@
 	if(!(to_take in potential_objectives))
 		return
 
-	user.playsound_local(get_turf(user), 'sound/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+	user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	to_take.on_objective_taken(user)
 	to_take.objective_state = OBJECTIVE_STATE_ACTIVE
 	potential_objectives -= to_take
@@ -289,3 +305,22 @@
 	maximum_potential_objectives = 0
 	SStraitor.uplink_handlers -= src
 	on_update()
+
+///Add items to our locked_entries
+/datum/uplink_handler/proc/add_locked_entries(list/items_to_add)
+	for(var/datum/uplink_item/item as anything in items_to_add)
+		locked_entries |= item
+
+///Clear a handler's potential_objectives
+/**
+ * fail_active - should we also call fail_objective() their active_objectives
+ * regenerate_objectives - should we let their objectives regenerate or not
+ */
+/datum/uplink_handler/proc/clear_secondaries(fail_active = FALSE, regenerate_objectives = FALSE)
+	var/original_max = maximum_potential_objectives
+	if(!regenerate_objectives)
+		maximum_potential_objectives = 0 //janky, but it needs the least new code and should work with what this proc does
+
+	for(var/datum/traitor_objective/possible_objective in potential_objectives + (fail_active ? active_objectives : list()))
+		possible_objective.fail_objective()
+	maximum_potential_objectives = original_max

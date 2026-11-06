@@ -99,7 +99,7 @@
 	damage = 15
 
 /obj/projectile/bullet/a40mm/stun/payload(atom/target)
-	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	playsound(src, 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 
 	explosion(target, flash_range = 3, adminlog = FALSE, explosion_cause = src)
 	do_sparks(rand(5, 9), FALSE, src)

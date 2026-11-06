@@ -118,7 +118,7 @@
 	var/turf/T = get_turf(target)
 	if(!T)
 		return FALSE
-	if(through_camera_console && GLOB.cameranet.checkTurfVis(T))
+	if(through_camera_console && SScameras.turf_visible_by_cameras(T))
 		return TRUE
 	if(istype(user))
 		if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
@@ -202,7 +202,7 @@
 	var/list/viewlist = user?.client ? getviewsize(user.client.view) : getviewsize(world.view)
 	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
 	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
-	var/list/seen = get_hear(view_range, viewer)
+	var/list/seen = get_hear_turfs(view_range, viewer)
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
@@ -216,7 +216,7 @@
 			if(!placeholder)
 				break
 
-		if(placeholder && ((through_camera_console && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+		if(placeholder && ((through_camera_console && SScameras.turf_visible_by_cameras(placeholder)) || (placeholder in seen)))
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M

@@ -158,11 +158,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, TRUE)
+				playsound(src.loc, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
@@ -240,7 +240,7 @@
 			update_integrity(min(atom_integrity + health_regen, max_integrity))
 			COOLDOWN_START(src, heal_timestamp, 2 SECONDS)
 		update_appearance()
-		COOLDOWN_START(src, pulse_timestamp, 1 SECOND)
+		COOLDOWN_START(src, pulse_timestamp, 1 SECONDS)
 		return TRUE //we did it, we were pulsed!
 	return FALSE //oh no we failed
 

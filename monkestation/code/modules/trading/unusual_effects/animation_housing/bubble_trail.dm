@@ -1,7 +1,7 @@
 /datum/component/particle_spewer/movement/bubble
 	unusual_description = "bubble trail"
 	duration = 5 SECONDS
-	burst_amount = 1
+	burst_amount = 2
 	icon_file = 'goon/icons/effects/particles.dmi'
 	particle_state = "bubble"
 
@@ -21,4 +21,3 @@
 	animate(spawned, transform = first, time = 0.4 SECONDS, pixel_y = rand(-12, 1) + spawned.pixel_y, pixel_x = rand(-32, 32) + spawned.pixel_x, easing = ELASTIC_EASING)
 	animate(transform = second, time = 1 SECONDS, pixel_y = spawned.pixel_y + 32)
 	animate(spawned, alpha = 0, time = duration)
-	QDEL_IN(spawned, duration)

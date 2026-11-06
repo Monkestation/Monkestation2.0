@@ -23,6 +23,7 @@
 			return
 		pawn.visible_message(span_notice("[pawn] calms down.")) // We can blackboard key this if anyone else actually wants to customise it
 		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		finish_action(controller, FALSE, ignore_faction)
 		controller.CancelActions() // Otherwise they will try and get one last kick in
 		return

@@ -33,9 +33,6 @@
 	UnregisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/mod/module/circuit/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(!shell.attached_circuit)
 		return
 	var/list/action_components = shell.attached_circuit.get_all_contents_type(/obj/item/circuit_component/equipment_action/mod)
@@ -53,7 +50,7 @@
 		if(repeat_name_counts[action_name] > 1)
 			action_name += " ([repeat_name_counts[action_name]])"
 		display_names[action_name] = REF(action_component)
-		var/option_icon_state = "nanite_[replacetextEx(lowertext(action_component.icon_options.value), " ", "_")]"
+		var/option_icon_state = "nanite_[replacetextEx(LOWER_TEXT(action_component.icon_options.value), " ", "_")]"
 		radial_options += list("[action_name]" = image('icons/mob/actions/actions_items.dmi', option_icon_state))
 	radial_options += list("Access Circuit" = image(shell.attached_circuit))
 	var/selected_option = show_radial_menu(mod.wearer, src, radial_options, custom_check = FALSE, require_near = TRUE)
@@ -209,19 +206,23 @@
 	SIGNAL_HANDLER
 	var/string_list = list()
 	var/is_deployed = TRUE
-	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+	for(var/obj/item/part as anything in attached_module.mod.get_parts())
 		if(part.loc == attached_module.mod)
 			is_deployed = FALSE
 		else
 			var/part_name = "Undefined"
 			if(istype(part, /obj/item/clothing/head/mod))
 				part_name = "Helmet"
-			if(istype(part, /obj/item/clothing/suit/mod))
+			else if(istype(part, /obj/item/clothing/suit/mod))
 				part_name = "Chestplate"
-			if(istype(part, /obj/item/clothing/gloves/mod))
+			else if(istype(part, /obj/item/clothing/gloves/mod))
 				part_name = "Gloves"
-			if(istype(part, /obj/item/clothing/shoes/mod))
+			else if(istype(part, /obj/item/clothing/shoes/mod))
 				part_name = "Boots"
+			else if(istype(part, /obj/item/clothing/glasses/mod))
+				part_name = "Glasses"
+			else if(istype(part, /obj/item/clothing/neck/mod))
+				part_name = "Tie"
 			string_list += part_name
 	deployed_parts.set_output(string_list)
 	deployed.set_output(is_deployed)

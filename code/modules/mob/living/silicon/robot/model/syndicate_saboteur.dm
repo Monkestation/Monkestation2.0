@@ -1,0 +1,89 @@
+/obj/item/robot_model/syndicate/saboteur
+	name = "Syndicate Saboteur"
+	hud_icon_state = "malf"
+	default_skin = /datum/robot_skin/syndicate_saboteur/default
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/construction/rcd/borg/syndicate,
+		/obj/item/pipe_dispenser,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/extinguisher,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/storage/part_replacer/cyborg,
+		/obj/item/borg/apparatus/circuit,
+		/obj/item/analyzer,
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/sheet/glass,
+		/obj/item/borg/apparatus/sheet_manipulator,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/iron/base/cyborg,
+		/obj/item/dest_tagger/borg,
+		/obj/item/stack/cable_coil,
+		/obj/item/pinpointer/syndicate_cyborg,
+		/obj/item/borg_chameleon,
+		/obj/item/card/emag,
+		/obj/item/borg/charger,
+	)
+	traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES, TRAIT_CAN_CLIMB_DISPOSALS)
+
+/obj/item/robot_model/syndicate/saboteur/Initialize(mapload)
+	. = ..()
+	if(!cyborg_owner)
+		return
+	var/datum/action/cooldown/borg_sight_vision/thermal/sight_vision_thermal = new(cyborg_owner)
+	sight_vision_thermal.Grant(cyborg_owner)
+	sight_vision_ref = WEAKREF(sight_vision_thermal)
+
+/obj/item/robot_model/syndicate/saboteur/operative
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/construction/rcd/borg/syndicate,
+		/obj/item/pipe_dispenser,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/extinguisher,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/borg/cyborg_omnitool/engineering/syndie,
+		/obj/item/analyzer,
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/sheet/glass,
+		/obj/item/assembly/signaler/cyborg,
+		/obj/item/borg/apparatus/sheet_manipulator,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/iron/base/cyborg,
+		/obj/item/holosign_creator/atmos,
+		/obj/item/dest_tagger/borg,
+		/obj/item/stack/cable_coil,
+		/obj/item/pinpointer/operative_cyborg,
+		/obj/item/borg_chameleon,
+		/obj/item/card/emag,
+		/obj/item/borg/stun,
+	)
+
+/obj/item/pinpointer/operative_cyborg
+	name = "cyborg syndicate pinpointer"
+	desc = "An integrated tracking device, jury-rigged to search for living assault operatives."
+	flags_1 = NONE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/pinpointer/operative_cyborg/cyborg_unequip(mob/user)
+	if(!active)
+		return
+	toggle_on()
+
+/obj/item/pinpointer/operative_cyborg/scan_for_target()
+	target = null
+	var/list/possible_targets = list()
+	var/turf/here = get_turf(src)
+	for(var/datum/mind/antag_mind as anything in get_antag_minds(/datum/antagonist/assault_operative))
+		if(antag_mind.current.stat == DEAD)
+			continue
+		if(!ishuman(antag_mind.current))
+			continue
+		possible_targets |= antag_mind.current
+	var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
+	if(closest_operative)
+		target = closest_operative
+	..()
+

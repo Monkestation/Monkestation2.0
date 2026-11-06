@@ -325,5 +325,5 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 
 /datum/action/innate/path_debug/astar/run_the_path(atom/movable/middle_man)
 	middle_man.forceMove(source_turf)
-	display_turfs = get_astar_path_to(middle_man, target_turf, maxnodes = max_distance, mintargetdist = min_distance, access = list(), exclude = blacklisted_turf)
+	display_turfs = get_astar_path_to(middle_man, target_turf, max_distance = max_distance, mintargetdist = min_distance, access = list(), exclude = blacklisted_turf)
 	update_visuals()

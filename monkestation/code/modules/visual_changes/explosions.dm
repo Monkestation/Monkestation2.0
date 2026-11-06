@@ -230,6 +230,7 @@
 	icon_state = "explosion"
 	light_system = COMPLEX_LIGHT
 	duration = 25
+	SET_BASE_PIXEL(0, -32)
 	///smoke wave particle holder
 	var/obj/effect/abstract/particle_holder/smoke_wave
 	///explosion smoke particle holder
@@ -249,7 +250,7 @@
 
 /obj/effect/temp_visual/explosion/Initialize(mapload, radius, color, small = FALSE, large = FALSE)
 	. = ..()
-	set_light(radius, radius, color)
+	set_light(l_outer_range = radius, l_color = color)
 	generate_particles(radius, small, large)
 	if(iswater(get_turf(src)))
 		icon_state = null

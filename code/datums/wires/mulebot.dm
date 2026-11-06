@@ -14,7 +14,7 @@
 		WIRE_MOTOR1, WIRE_MOTOR2,
 		WIRE_RX, WIRE_TX, WIRE_BEACON
 	)
-	..()
+	return ..()
 
 /datum/wires/mulebot/interactable(mob/user)
 	if(!..())
@@ -22,6 +22,12 @@
 	var/mob/living/simple_animal/bot/mulebot/mule = holder
 	if(mule.bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		return TRUE
+
+/datum/wires/mulebot/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		return TRUE
+
+	return ..()
 
 /datum/wires/mulebot/on_cut(wire, mend, source)
 	var/mob/living/simple_animal/bot/mulebot/mule = holder

@@ -47,13 +47,13 @@
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, TRUE)
+		playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			myhead.dismember()
 	else
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/weapons/genhit1.ogg', 100, TRUE)
+		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack_self(mob/user)
@@ -66,7 +66,7 @@
 	butchering.butchering_enabled = on
 
 	if(on)
-		hitsound = 'sound/weapons/chainsawhit.ogg'
+		hitsound = 'sound/items/weapons/chainsawhit.ogg'
 		chainsaw_loop.start()
 	else
 		hitsound = SFX_SWING_HIT
@@ -88,7 +88,7 @@
 		speed = 3 SECONDS, \
 		effectiveness = 100, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/chainsawhit.ogg', \
+		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
 		disabled = TRUE, \
 	)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
@@ -98,37 +98,44 @@
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
 	force_on = 30
+	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
+	var/nemesis_damage_multiplier = 5 // Makes it deal 30 * 5 (150) damage to fauna.
 
-/* MONKESTATION REMOVAL START
+
+/obj/item/chainsaw/doomslayer/attack_self(mob/user)
+	if(on && user.has_status_effect(/datum/status_effect/mayhem))
+		to_chat(user, span_warning("There is no escape. RIP. AND. TEAR."))
+		return
+	return ..()
+
 /obj/item/chainsaw/doomslayer/attack(mob/living/target_mob, mob/living/user, params)
-	if (target_mob.stat != DEAD)
-		return ..()
+	if(target_mob == user) // Prevents you from hitting yourself with it. (as well as getting lifesteal from doing so)
+		return
 
-	if (user.zone_selected != BODY_ZONE_HEAD)
-		return ..()
+	var/bonus_applied = FALSE
+	for(var/faction in target_mob.faction)
+		if(faction in nemesis_factions)
+			bonus_applied = TRUE
+			force *= nemesis_damage_multiplier
+			break
 
-	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
-	if (isnull(head))
-		return ..()
+	. = ..()
 
-	playsound(user, 'sound/weapons/slice.ogg', vol = 80, vary = TRUE)
+	if(bonus_applied)
+		force /= nemesis_damage_multiplier
 
-	target_mob.balloon_alert(user, "cutting off head...")
-	if (!do_after(user, 2 SECONDS, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
-		return TRUE
+	var/healing_amount = force / initial(force) * 3 // 3 healing per hit on people and 15 on fauna.
+	user.heal_overall_damage(healing_amount, healing_amount)
 
-	head.dismember(silent = FALSE)
-	user.put_in_hands(head)
+/obj/item/chainsaw/doomslayer/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot != ITEM_SLOT_HANDS)
+		return
+	ADD_TRAIT(user, TRAIT_CANT_STRIP, REF(src)) // Pairs well with returning early when you try to attack yourself. LET THE SHUFFLEFEST COMMENCE!!
 
-	return TRUE
-
-/obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-		return TRUE
-	return FALSE
-MONKESTATION REMOVAL END */
+/obj/item/chainsaw/doomslayer/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CANT_STRIP, REF(src))
 
 /obj/item/chainsaw/doomslayer/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
 	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
@@ -164,7 +171,7 @@ MONKESTATION REMOVAL END */
 		speed = 3 SECONDS, \
 		effectiveness = 100, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/chainsawhit.ogg', \
+		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
 		disabled = TRUE, \
 	)
 

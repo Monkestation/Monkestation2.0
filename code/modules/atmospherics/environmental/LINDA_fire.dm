@@ -44,41 +44,37 @@
  */
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	//If the air doesn't exist we just return false
-	var/list/air_gases = air?.gases
-	if(!air_gases)
+	var/cached_moles = air?.moles
+	if(!cached_moles)
 		return
 
 	if(liquids && liquids.liquid_group && !liquids.fire_state)
 		liquids.liquid_group.ignite_turf(src)
 
-	. = air_gases[/datum/gas/oxygen]
-	var/oxy = . ? .[MOLES] : 0
-	if (oxy < 0.5)
+	if (cached_moles[/datum/gas/oxygen] < 0.5)
 		return
-	. = air_gases[/datum/gas/plasma]
-	var/plas = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/tritium]
-	var/trit = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/hydrogen]
-	var/h2 = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/freon]
-	var/freon = . ? .[MOLES] : 0
+
+	var/plas_trit_h2_threshold = (\
+		   cached_moles[/datum/gas/plasma] > 0.5\
+		|| cached_moles[/datum/gas/tritium] > 0.5\
+		|| cached_moles[/datum/gas/hydrogen] > 0.5)
+	var/freon_threshold = (cached_moles[/datum/gas/freon] > 0.5)
 	if(active_hotspot)
 		if(soh)
-			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
+			if(plas_trit_h2_threshold)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-			else if(freon > 0.5)
+			else if(freon_threshold)
 				if(active_hotspot.temperature > exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
-		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
+	if (((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && plas_trit_h2_threshold) || \
+		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && freon_threshold))
 
 		set_active_hotspot(new /obj/effect/hotspot(src, exposed_volume * 25, exposed_temperature))
 		if(COOLDOWN_FINISHED(src, fire_puff_cooldown))
@@ -147,13 +143,18 @@
 	var/turf/open/our_turf = loc
 	//on creation we check adjacent turfs for hot spot to start grouping, if surrounding do not have hot spots we create our own
 	for(var/turf/open/to_check as anything in our_turf.atmos_adjacent_turfs)
-		if(to_check.active_hotspot)
-			var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
-			if(!our_hot_group)
-				enemy_spot.our_hot_group.add_to_group(src)
-			else if(our_hot_group != enemy_spot.our_hot_group && enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
-				our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
-	if(!our_hot_group)//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
+		if(!to_check.active_hotspot)
+			continue
+		var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
+		// Safeguard to prevent infectious init runtimes for hotspots if we somehow end up with a hotspot without a group
+		if(!enemy_spot.our_hot_group)
+			continue
+		if(!our_hot_group)
+			enemy_spot.our_hot_group.add_to_group(src)
+		else if(our_hot_group != enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
+			our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
+
+	if(QDELETED(our_hot_group))//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
 		our_hot_group = new
 		our_hot_group.add_to_group(src)
 
@@ -280,7 +281,7 @@
 	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
 	alpha = heat_a
 
-#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
+#define INSUFFICIENT(path) (!location.air.moles[path] || location.air.moles[path] < 0.5)
 
 /**
  * Regular process proc for hotspots governed by the controller.

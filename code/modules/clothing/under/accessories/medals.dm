@@ -204,3 +204,9 @@
 	name = "atmospheric mastery award"
 	desc = "Often referred to as the \"elder atmosian\" award, this medal is awarded to the exemplary scientists and technicians who push the boundaries and demonstrate mastery of atmospherics."
 	icon_state = "elderatmosian"
+
+/obj/item/clothing/accessory/medal/plasma
+	armor_type = /datum/armor/medal_plasma
+
+/datum/armor/medal_plasma
+	fire = -10

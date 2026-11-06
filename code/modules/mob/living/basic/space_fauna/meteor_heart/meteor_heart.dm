@@ -21,8 +21,8 @@
 	faction = list()
 	ai_controller = /datum/ai_controller/basic_controller/meteor_heart
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = 1500
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 1500
 	istate = ISTATE_HARM | ISTATE_BLOCKING
 	move_resist = INFINITY // This mob IS the floor
 	/// Action which sends a line of spikes chasing a player
@@ -58,6 +58,8 @@
 	soundloop.mid_length = HEARTBEAT_NORMAL
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
+
+	AddComponent(/datum/component/bloody_spreader)
 
 /// Called when we get mad at something, either for attacking us or attacking the nearby area
 /mob/living/basic/meteor_heart/proc/aggro()
@@ -100,7 +102,7 @@
 
 /obj/effect/temp_visual/meteor_heart_death/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/magic/demon_dies.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	Shake(2, 0, 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(gib)), duration - 1, TIMER_DELETE_ME)
 	soundloop = new(src, start_immediately = FALSE)
@@ -114,7 +116,7 @@
 
 /// Make this place a mess
 /obj/effect/temp_visual/meteor_heart_death/proc/gib()
-	playsound(loc, 'sound/effects/attackblob.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	playsound(loc, 'sound/effects/blob/attackblob.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/human(my_turf)
 	for (var/obj/structure/eyeball as anything in GLOB.meteor_eyeballs)

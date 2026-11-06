@@ -17,12 +17,16 @@
 	moving_controllers -= controller
 	// We got deleted as we finished an action
 	if(!QDELETED(controller.pawn))
-		SSmove_manager.stop_looping(controller.pawn, SSai_movement)
+		GLOB.move_manager.stop_looping(controller.pawn, SSai_movement)
 
 /datum/ai_movement/proc/increment_pathing_failures(datum/ai_controller/controller)
 	controller.consecutive_pathing_attempts++
 	if(controller.consecutive_pathing_attempts >= max_pathing_attempts)
 		controller.CancelActions()
+
+/// Whether target is close enough that we can stop walking and act on it
+/datum/ai_movement/proc/close_enough(atom/pawn, atom/target, distance)
+	return get_dist(pawn, target) <= distance
 
 /datum/ai_movement/proc/reset_pathing_failures(datum/ai_controller/controller)
 	controller.consecutive_pathing_attempts = 0

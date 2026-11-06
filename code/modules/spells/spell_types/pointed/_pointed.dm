@@ -19,7 +19,7 @@
 	/// Variable dictating if the spell will use turf based aim assist
 	var/aim_assist = TRUE
 
-/datum/action/cooldown/spell/pointed/New(Target)
+/datum/action/cooldown/spell/pointed/New(Target, original = TRUE)
 	. = ..()
 	if(!active_msg)
 		active_msg = "You prepare to use [src] on a target..."
@@ -110,7 +110,7 @@
 	/// Unwise to change without overriding or extending ready_projectile.
 	var/projectiles_per_fire = 1
 
-/datum/action/cooldown/spell/pointed/projectile/New(Target)
+/datum/action/cooldown/spell/pointed/projectile/New(Target, original = TRUE)
 	. = ..()
 	if(projectile_amount > 1)
 		unset_after_click = FALSE

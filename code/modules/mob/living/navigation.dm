@@ -10,9 +10,7 @@
 	/// Images of the path created by navigate().
 	var/list/navigation_images = list()
 
-/mob/living/verb/navigate()
-	set name = "Navigate"
-	set category = "IC"
+GAME_VERB(/mob/living, navigate, "Navigate", "IC")
 
 	if(incapacitated())
 		return
@@ -55,7 +53,7 @@
 
 	navigating = TRUE
 	var/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation), navigate_target))
-	if(!SSpathfinder.astar_pathfind(src, navigate_target, maxnodes = MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), smooth_diagonals = FALSE, on_finish = await)) // diagonals look kind of weird when visualized for now
+	if(!SSpathfinder.astar_pathfind(src, navigate_target, max_distance = MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), smooth_diagonals = FALSE, on_finish = await)) // diagonals look kind of weird when visualized for now
 		navigating = FALSE
 		balloon_alert(src, "failed to begin navigation!")
 

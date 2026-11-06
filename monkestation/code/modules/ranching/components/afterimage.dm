@@ -5,14 +5,16 @@
 
 	//cycles colors
 	var/color_cycle = FALSE
+	var/image_color
 
-/datum/component/after_image/Initialize(count = 4, rest_time = 1, color_cycle = FALSE)
+/datum/component/after_image/Initialize(count = 4, rest_time = 1, color_cycle = FALSE, image_color)
 	..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.rest_time = rest_time
 	src.after_images = list()
 	src.color_cycle = color_cycle
+	src.image_color = image_color
 	if(count > 1)
 		for(var/number = 1 to count)
 			var/obj/effect/after_image/added_image = new /obj/effect/after_image(null)
@@ -71,6 +73,8 @@
 	if(color_cycle)
 		var/list/rgb_colors = RotateHue(rgb(255, 0, 0), world.time - rest_time * 15)
 		targeted_image.color = rgb_colors
+	else if(image_color)
+		targeted_image.add_atom_colour(image_color)
 
 	if(!isnull(dir_override))
 		targeted_image.setDir(dir_override)

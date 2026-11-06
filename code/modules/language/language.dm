@@ -69,7 +69,7 @@
 	var/default_priority = 0
 	/// Icon displayed in the chat window when speaking this language.
 	/// if you are seeing someone speak popcorn language, then something is wrong.
-	var/icon = 'icons/misc/language.dmi'
+	var/icon = 'icons/ui/chat/language.dmi'
 	/// Icon state displayed in the chat window when speaking this language.
 	var/icon_state = "unknown"
 
@@ -125,7 +125,7 @@
 		var/Y = rand(FLOOR(syllable_count/syllable_divisor, 1), syllable_count)
 		for(var/x in Y to 0)
 			new_name += pick_weight_recursive(syllables)
-		full_name += " [capitalize(lowertext(new_name))]"
+		full_name += " [capitalize(LOWER_TEXT(new_name))]"
 
 	return "[trim(full_name)]"
 

@@ -18,7 +18,7 @@
 		TOOL_CROWBAR = 65,
 		/obj/item/kitchen/fork = 35)
 	time = 64
-	success_sound = 'sound/surgery/hemostat1.ogg'
+	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
 	repeatable = TRUE
 
@@ -65,7 +65,7 @@
 		implant.removed(target)
 
 		var/obj/item/implantcase/case
-		for(var/obj/item/implantcase/implant_case in user.held_items)
+		for(var/obj/item/implantcase/implant_case as anything in user.get_held_items_of_type(/obj/item/implantcase))
 			case = implant_case
 			break
 		if(!case)

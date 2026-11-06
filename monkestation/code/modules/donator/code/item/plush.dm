@@ -9,7 +9,7 @@
 	name = "tiny witch plush"
 	desc = "Some sort of mini magical girl? ~Handcrafted lovingly for bidlink."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
-	squeak_override = list('sound/magic/wand_teleport.ogg'=1)
+	squeak_override = list('sound/effects/magic/wand_teleport.ogg'=1)
 	icon_state = "mage"
 
 /obj/item/toy/plush/chefomancer
@@ -204,3 +204,10 @@
 	desc = "A strangely terrifying creature."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "kumoko_san"
+
+/obj/item/toy/plush/vanilla
+	name = "Vanilla Plush"
+	desc = "Adorable plushie of Vanilla!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "vanilla"
+	gender = FEMALE

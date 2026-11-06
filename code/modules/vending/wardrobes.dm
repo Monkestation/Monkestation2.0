@@ -45,6 +45,8 @@
 				/obj/item/clothing/under/rank/security/officer/grey = 3,
 				/obj/item/clothing/under/rank/security/officer/tactical = 3,
 				/obj/item/clothing/under/rank/security/officer/tactical/blue = 3,
+				/obj/item/clothing/under/rank/security/officer/tactical/red = 3,
+				/obj/item/clothing/under/rank/security/officer/tactical/white = 3,
 				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
 				/obj/item/clothing/under/rank/security/officer/formal = 3,
 				/obj/item/clothing/under/rank/security/utility = 3,
@@ -453,6 +455,7 @@
 	icon_state = "lawdrobe"
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
 	vend_reply = "Thank you for using the LawDrobe!"
+	extra_price = PAYCHECK_COMMAND * 3
 	products = list(
 		/obj/item/clothing/under/rank/civilian/lawyer/bluesuit = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt = 1,
@@ -478,6 +481,10 @@
 		/obj/item/clothing/shoes/heels = 2, //MONKESTATION ADDITION
 		/obj/item/clothing/accessory/badge/lawyer = 2,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/fish_feed = 1,
+	)
+	premium = list(
+		/obj/item/mod/control/pre_equipped/portable_suit = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV

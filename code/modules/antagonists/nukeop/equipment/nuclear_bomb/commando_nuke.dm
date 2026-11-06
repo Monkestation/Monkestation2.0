@@ -69,14 +69,14 @@
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	if(world.time >= next_announce)
 		var/area/our_area = get_area(src)
-		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()].", "Nuclear Operations Command", sound_override = 'sound/misc/notice1.ogg', should_play_sound = TRUE, color_override = "red")
+		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()].", "Nuclear Operations Command", sound_override = 'sound/announcer/notice/notice1.ogg', should_play_sound = TRUE, color_override = "red")
 		next_announce += NUKE_ANNOUNCE_INTERVAL
 	if(world.time >= grant_announce && !grant_given)
 		priority_announce(
 				text = "10,000 research points have been refunded.",
 				title = "Emergency Research Grant",
 				sender_override = "Nanotasen Science Directorate",
-				sound = 'sound/misc/notice2.ogg',
+				sound = 'sound/announcer/notice/notice2.ogg',
 				has_important_message = TRUE,
 				color_override = "pink",
 			)
@@ -156,7 +156,7 @@
 
 /obj/machinery/nuclearbomb/commando/atom_destruction(damage_flag)
 	new /obj/effect/gibspawner/nuke(drop_location())
-	new /obj/effect/decal/cleanable/oil/streak(drop_location())
+	new /obj/effect/decal/cleanable/blood/splatter/oil(drop_location())
 	new /obj/effect/decal/cleanable/nuke_debris/main(drop_location())
 	do_sparks(5, FALSE, src)
 	if(core)
@@ -166,7 +166,7 @@
 	if(timing || exploding)
 		priority_announce(
 				text = "The nuclear device has been deactivated. For the safety of our staff, we are expediting an emergency shuttle for the remaining members of the crew.",
-				sound = 'sound/misc/notice2.ogg',
+				sound = 'sound/announcer/notice/notice2.ogg',
 				has_important_message = TRUE,
 				color_override = "blue",
 		)
@@ -210,7 +210,7 @@
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				auth.forceMove(get_turf(src))
 				auth = null
@@ -218,7 +218,7 @@
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 					auth = I
 					calculate_timer()
@@ -305,9 +305,9 @@
 /obj/machinery/nuclearbomb/commando/set_anchor(mob/anchorer)
 	set_anchored(!anchored)
 	if(anchored)
-		playsound(src, 'sound/machines/boltsdown.ogg', 45)
+		playsound(src, 'sound/machines/airlock/boltsdown.ogg', 45)
 	else
-		playsound(src, 'sound/machines/boltsup.ogg', 45)
+		playsound(src, 'sound/machines/airlock/boltsup.ogg', 45)
 
 /obj/machinery/nuclearbomb/commando/ui_data(mob/user)
 	var/list/data = list()
@@ -384,7 +384,7 @@
 		priority_announce(
 			text = "An unauthorized nuclear device is currently being decrypted for detonation in the [our_area.get_original_area_name()]. Crew are advised to halt the decryption through immediate rapid deconstruction of the device.",
 			title = "Priority Alert",
-			sound = 'sound/misc/notice2.ogg',
+			sound = 'sound/announcer/notice/notice2.ogg',
 			has_important_message = TRUE,
 			color_override = "red",
 		)

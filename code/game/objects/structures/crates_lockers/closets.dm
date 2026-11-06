@@ -56,8 +56,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
 	var/cutting_tool_behaviour = TOOL_WELDER
-	var/open_sound = 'sound/machines/closet_open.ogg'
-	var/close_sound = 'sound/machines/closet_close.ogg'
+	var/open_sound = 'sound/machines/closet/closet_open.ogg'
+	var/close_sound = 'sound/machines/closet/closet_close.ogg'
 	var/open_sound_volume = 35
 	var/close_sound_volume = 50
 	var/material_drop = /obj/item/stack/sheet/iron
@@ -82,6 +82,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/card_reader_installed = FALSE
 	/// access types for card reader
 	var/list/access_choices = TRUE
+	/// If TRUE, the closet will anchored by default, if it spawns on the station's z-level.
+	var/roundstart_anchor = TRUE
 
 /datum/armor/structure_closet
 	melee = 20
@@ -175,12 +177,24 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		opened = FALSE //nessassary because open() proc will early return if its true
 		if(open(special_effects = FALSE)) //closets which are meant to be open by default dont need to be animated open
 			return
+
+	if(mapload && can_roundstart_anchor())
+		set_anchored(TRUE)
+
 	update_appearance()
 
 /obj/structure/closet/LateInitialize(mapload_arg)
 	. = ..()
 	if(!opened)
 		take_contents()
+
+/obj/structure/closet/proc/can_roundstart_anchor()
+	if(!roundstart_anchor || !anchorable || !is_station_level(loc?.z))
+		return FALSE
+	var/area/current_area = get_area(src)
+	if(!current_area?.anchor_roundstart_lockers)
+		return FALSE
+	return TRUE
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -974,10 +988,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(attack_hand(user))
 		return ITEM_INTERACT_BLOCKING
 
-/obj/structure/closet/verb/verb_toggleopen()
-	set src in view(1)
-	set category = "Object"
-	set name = "Toggle Open"
+GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", "Object")
 
 	if(!usr.can_perform_action(src) || !isturf(loc))
 		return

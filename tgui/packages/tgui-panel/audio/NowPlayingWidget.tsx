@@ -20,12 +20,12 @@ export function NowPlayingWidget(props) {
     duration,
     link,
     title,
-    upload_date = 'Unknown Data',
+    upload_date = 'Unknown Date',
   } = meta || {};
 
   const playing = useAtomValue(playingAtom);
 
-  const date = !Number.isNaN(upload_date)
+  const date = !Number.isNaN(Number(upload_date))
     ? upload_date?.substring(0, 4) +
       '-' +
       upload_date?.substring(4, 6) +

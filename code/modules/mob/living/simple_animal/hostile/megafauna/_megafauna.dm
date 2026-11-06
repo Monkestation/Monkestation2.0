@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile/megafauna
+	abstract_type = /mob/living/simple_animal/hostile/megafauna
 	name = "boss of this gym"
 	desc = "Attack the weak point for massive damage."
 	health = 1000
@@ -16,8 +17,8 @@
 	stat_attack = DEAD
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 	vision_range = 4
 	aggro_vision_range = 18
 	// Pale purple, should be red enough to see stuff on lavaland
@@ -33,6 +34,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	life_subsystem_type = /datum/controller/subsystem/mobs/megafauna
+	turns_per_move = 10
 	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
@@ -64,7 +66,7 @@
 	var/obj/item/gem/hardmode_reward = null
 	/// The list of players we have warned [mob.tag = world.time]
 	var/alist/warned_players = list()
-	var/rawr_sound = 'sound/creatures/space_dragon_roar.ogg'
+	var/rawr_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	/// The cooldown of our roar
 	COOLDOWN_DECLARE(rawr_cooldown)
 	// MONKESTATION EDIT ADDITION END
@@ -202,7 +204,12 @@
 // MONKESTATION EDIT ADDITION START
 // This on purpose does not call parent, do not make it call parent, we literally use NOTHING from our parents, we're fine.
 /mob/living/simple_animal/hostile/megafauna/Life(seconds_per_tick, times_fired)
-	if(AIStatus != AI_IDLE || !COOLDOWN_FINISHED(src, rawr_cooldown))
+	if(AIStatus != AI_IDLE)
+		return
+
+	handle_automated_movement()
+
+	if(!COOLDOWN_FINISHED(src, rawr_cooldown))
 		return
 
 	var/list/targets = ListTargets()

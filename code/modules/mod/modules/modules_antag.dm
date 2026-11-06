@@ -12,6 +12,7 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
+	required_slots = list(ITEM_SLOT_BACK)
 	/// Max charges of the shield.
 	var/max_charges = 3
 	/// The time it takes for the first charge to recover.
@@ -35,12 +36,20 @@
 	. = ..()
 	charges = max_charges
 
-/obj/item/mod/module/energy_shield/on_suit_activation()
-	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
+/obj/item/mod/module/energy_shield/on_part_activation()
+	mod.AddComponent(\
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		starting_charges = charges, \
+		shield_icon_file = shield_icon_file, \
+		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
-/obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/energy_shield/on_part_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
@@ -68,6 +77,7 @@
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
 	lose_multiple_charges = TRUE
+	required_slots = list()
 
 ///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic
@@ -80,12 +90,13 @@
 	icon_state = "magic_nullifier"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/anti_magic)
+	required_slots = list(ITEM_SLOT_BACK)
 
-/obj/item/mod/module/anti_magic/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
+/obj/item/mod/module/anti_magic/on_part_activation()
+	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), REF(src))
 
-/obj/item/mod/module/anti_magic/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
+/obj/item/mod/module/anti_magic/on_part_deactivation(deleting = FALSE)
+	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), REF(src))
 
 /obj/item/mod/module/anti_magic/wizard
 	name = "MOD magic neutralizer module"
@@ -94,12 +105,13 @@
 		The field will neutralize all magic that comes into contact with the user. \
 		It will not protect the caster from social ridicule."
 	icon_state = "magic_neutralizer"
+	required_slots = list()
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
+/obj/item/mod/module/anti_magic/wizard/on_part_activation()
+	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), REF(src))
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
+/obj/item/mod/module/anti_magic/wizard/on_part_deactivation(deleting = FALSE)
+	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), REF(src))
 
 ///Insignia - Gives you a skin specific stripe.
 /obj/item/mod/module/insignia
@@ -112,6 +124,7 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/insignia)
 	overlay_state_inactive = "module_insignia"
+	/* mask_worn_overlay = TRUE */ // monkestation edit: our overlay sprites are not made for masking yet
 
 /obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
@@ -155,32 +168,24 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/noslip)
+	required_slots = list(ITEM_SLOT_FEET)
 
-/obj/item/mod/module/noslip/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
+/obj/item/mod/module/noslip/on_part_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, REF(src))
 
-/obj/item/mod/module/noslip/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
+/obj/item/mod/module/noslip/on_part_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, REF(src))
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
 /obj/item/mod/module/springlock/bite_of_87
+	name = /obj/item/mod/module/dna_lock::name
+	desc = /obj/item/mod/module/dna_lock::desc
+	icon_state = /obj/item/mod/module/dna_lock::icon_state
+	complexity = /obj/item/mod/module/dna_lock::complexity
+	use_energy_cost = /obj/item/mod/module/dna_lock::use_energy_cost
+	step_change = 0.1
 
-/obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
-	. = ..()
-	var/obj/item/mod/module/dna_lock/the_dna_lock_behind_the_slaughter = /obj/item/mod/module/dna_lock
-	name = initial(the_dna_lock_behind_the_slaughter.name)
-	desc = initial(the_dna_lock_behind_the_slaughter.desc)
-	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
-	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
-	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
-
-/obj/item/mod/module/springlock/bite_of_87/on_install()
-	mod.activation_step_time *= 0.1
-
-/obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 10
-
-/obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
+/obj/item/mod/module/springlock/bite_of_87/on_part_activation()
 	..()
 	if(check_holidays(APRIL_FOOLS) || prob(1))
 		mod.set_mod_color("#b17f00")
@@ -199,6 +204,7 @@
 	cooldown_time = 2.5 SECONDS
 	overlay_state_inactive = "module_flamethrower"
 	overlay_state_active = "module_flamethrower_on"
+	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 
 /obj/item/mod/module/flamethrower/on_select_use(atom/target)
 	. = ..()
@@ -221,6 +227,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
+	required_slots = list(ITEM_SLOT_FEET)
 	/// Damage on kick.
 	var/damage = 20
 	/// The wound bonus of the kick.
@@ -271,7 +278,6 @@
 		return
 	mod.wearer.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 
-/* monkestation removal: overwritten in [monkestation\code\modules\mod\modules\modules_antag.dm], to fix bugs
 ///Chameleon - lets the suit disguise as any item that would fit on that slot.
 /obj/item/mod/module/chameleon
 	name = "MOD chameleon module"
@@ -286,35 +292,89 @@
 	var/list/possible_disguises = list()
 	/// The path of the item we're disguised as.
 	var/obj/item/current_disguise
+	/// The last (valid) slot the suit was equipped to, so we don't lose it if we just temporarily put it in our hands or something
+	var/last_equipped_slot = NONE
+	/// Cached possible disguises for individual slots
+	var/static/list/cached_disguises = list()
 
 /obj/item/mod/module/chameleon/on_install()
-	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
-	for(var/clothing_path in all_disguises)
-		var/obj/item/clothing = clothing_path
-		if(!initial(clothing.icon_state))
-			continue
-		var/chameleon_item_name = "[initial(clothing.name)] ([initial(clothing.icon_state)])"
-		possible_disguises[chameleon_item_name] = clothing_path
+	undo_disguise()
+	current_disguise = null
+	RegisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	UnregisterSignal(mod, COMSIG_ATOM_UPDATE_ICON_STATE)
+	if(deleting)
+		return
+	undo_disguise()
 	if(current_disguise)
-		return_look()
-	possible_disguises = null
+		current_disguise = null
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguise cleared")
+
+/obj/item/mod/module/chameleon/proc/on_update_icon_state()
+	SIGNAL_HANDLER
+	if(mod.active)
+		return
+	if(!current_disguise)
+		return
+	disguise(FALSE)
 
 /obj/item/mod/module/chameleon/on_use()
-	. = ..()
-	if(!.)
-		return
 	if(current_disguise)
-		return_look()
+		undo_disguise()
+		current_disguise = null
+		mod.wearer.balloon_alert(mod.wearer, "mod disguise cleared")
 		return
 	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
-	if(!possible_disguises[picked_name] || mod.active || mod.activating)
+	if(!possible_disguises[picked_name])
+		return
+	if(mod.active || mod.activating)
+		mod.wearer.balloon_alert(mod.wearer, "can't disguise MOD while active!")
 		return
 	current_disguise = possible_disguises[picked_name]
-	update_look()
+	mod.wearer?.balloon_alert(mod.wearer, "mod disguise set")
+	disguise()
 
-/obj/item/mod/module/chameleon/proc/update_look()
+/obj/item/mod/module/chameleon/on_equip()
+	if(QDELETED(mod) || QDELETED(mod.wearer))
+		return
+	var/mob/living/carbon/human/wearer = mod.wearer
+	var/current_slot = wearer.get_slot_by_item(mod)
+	if(mod.slot_flags & current_slot)
+		last_equipped_slot = current_slot
+	else
+		// if we're holding it or something, just use either the last equipped slot or the default one
+		current_slot = last_equipped_slot || mod.slot_flags
+	possible_disguises = get_slot_disguises(current_slot)
+	if(current_disguise && !(current_disguise::slot_flags & current_slot))
+		undo_disguise()
+		current_disguise = null
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
+
+/obj/item/mod/module/chameleon/on_unequip()
+	if(QDELETED(mod) || QDELETED(mod.wearer))
+		return
+	var/mob/living/carbon/human/wearer = mod.wearer
+	var/current_slot = wearer.get_slot_by_item(mod)
+	if(mod.slot_flags & current_slot)
+		current_slot = last_equipped_slot || mod.slot_flags
+
+/obj/item/mod/module/chameleon/on_part_activation()
+	undo_disguise()
+	if(current_disguise)
+		mod.wearer?.balloon_alert(mod.wearer, "mod undisguised")
+
+/obj/item/mod/module/chameleon/on_part_deactivation(deleting = FALSE)
+	if(deleting)
+		return
+	disguise()
+	if(current_disguise)
+		mod.wearer?.balloon_alert(mod.wearer, "mod disguised")
+
+/obj/item/mod/module/chameleon/proc/disguise(updating = TRUE)
+	if(!current_disguise)
+		undo_disguise(updating)
+		return
 	mod.name = initial(current_disguise.name)
 	mod.desc = initial(current_disguise.desc)
 	mod.icon_state = initial(current_disguise.icon_state)
@@ -325,25 +385,36 @@
 	mod.righthand_file = initial(current_disguise.righthand_file)
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
-	mod.wearer.update_clothing(mod.slot_flags)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(return_look))
+	if(updating)
+		mod.wearer?.update_clothing(mod.slot_flags)
 
-/obj/item/mod/module/chameleon/proc/return_look()
+/obj/item/mod/module/chameleon/proc/undo_disguise(updating = TRUE)
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
 	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
 	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
-	var/list/mod_skin = mod.theme.skins[mod.skin]
+	var/list/mod_skin = mod.theme.variants[mod.skin]
 	mod.icon = mod_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mod.worn_icon = mod_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	mod.alternate_worn_layer = mod_skin[CONTROL_LAYER]
 	mod.lefthand_file = initial(mod.lefthand_file)
 	mod.righthand_file = initial(mod.righthand_file)
-	mod.worn_icon_state = null
-	mod.inhand_icon_state = null
-	mod.wearer.update_clothing(mod.slot_flags)
-	current_disguise = null
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-monkestation end */
+	mod.worn_icon_state = initial(mod.worn_icon_state)
+	mod.inhand_icon_state = initial(mod.inhand_icon_state)
+	if(updating)
+		mod.update_icon_state()
+		mod.wearer?.update_clothing(mod.slot_flags)
+
+/obj/item/mod/module/chameleon/proc/get_slot_disguises(slot) as /list
+	if(cached_disguises["[slot]"]) // let's avoid repeated sorts on a list that'll always be the same for the same input
+		return cached_disguises["[slot]"]
+	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(slot)), GLOBAL_PROC_REF(cmp_typepaths_asc))
+	var/list/disguises = list()
+	for(var/obj/item/clothing as anything in all_disguises)
+		if(!clothing::icon_state)
+			continue
+		var/chameleon_item_name = "[clothing::name] ([clothing::icon_state])"
+		disguises[chameleon_item_name] = clothing
+	cached_disguises["[slot]"] = disguises
+	return disguises
 
 ///Plate Compression - Compresses the suit to normal size
 /obj/item/mod/module/plate_compression
@@ -381,13 +452,14 @@ monkestation end */
 	complexity = 0
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	removable = FALSE
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	var/datum/proximity_monitor/advanced/demoraliser/demoralizer
 
-/obj/item/mod/module/demoralizer/on_suit_activation()
+/obj/item/mod/module/demoralizer/on_part_activation()
 	var/datum/demoralise_moods/module/mood_category = new()
 	demoralizer = new(mod.wearer, 7, TRUE, mood_category)
 
-/obj/item/mod/module/demoralizer/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/demoralizer/on_part_deactivation(deleting = FALSE)
 	QDEL_NULL(demoralizer)
 
 /obj/item/mod/module/infiltrator
@@ -399,6 +471,7 @@ monkestation end */
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/welding)
+	required_slots = list(ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/infiltrator/on_install()
 	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
@@ -406,21 +479,25 @@ monkestation end */
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
 	REMOVE_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
-/obj/item/mod/module/infiltrator/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
+/obj/item/mod/module/infiltrator/on_part_activation()
+	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
 	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
 	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = "states"
-	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(istype(head_cover))
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
+/obj/item/mod/module/infiltrator/on_part_deactivation(deleting = FALSE)
+	mod.wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
 	UnregisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH)
 	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = initial(user_tongue.temp_say_mod)
 	if(deleting)
 		return
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(istype(head_cover))
+		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/infiltrator/proc/on_speech_modification(datum/source)
 	SIGNAL_HANDLER
@@ -462,14 +539,14 @@ monkestation end */
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
-/obj/item/mod/module/stealth/wraith/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/stealth/wraith/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 
-/obj/item/mod/module/stealth/wraith/on_suit_activation()
+/obj/item/mod/module/stealth/wraith/on_part_activation()
 	start_stealth()
 
-/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
+/obj/item/mod/module/stealth/wraith/on_part_deactivation(deleting)
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
 	stealth_active = FALSE

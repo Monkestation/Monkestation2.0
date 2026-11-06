@@ -136,7 +136,7 @@
 
 	if(iscyborg(user))
 		var/has_cautery = FALSE
-		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in user.held_items)
+		for(var/obj/item/borg/cyborg_omnitool/medical/omnitool as anything in user.get_held_items_of_type(/obj/item/borg/cyborg_omnitool/medical))
 			if(omnitool.tool_behaviour == TOOL_CAUTERY)
 				has_cautery = TRUE
 		if(!has_cautery)
@@ -325,7 +325,7 @@
 
 	var/datum/surgery/procedure = new surgery.type(target, selected_zone, affecting_limb)
 
-	target.balloon_alert(user, "starting \"[lowertext(procedure.name)]\"")
+	target.balloon_alert(user, "starting \"[LOWER_TEXT(procedure.name)]\"")
 	// add some signal here maybe to alert serverlink users the starting tool
 	user.visible_message(
 		span_notice("[user] drapes [parent] over [target]'s [parse_zone(selected_zone)] to prepare for surgery."),

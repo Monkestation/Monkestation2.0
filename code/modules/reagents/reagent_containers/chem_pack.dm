@@ -10,7 +10,7 @@
 	resistance_flags = ACID_PROOF
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	interaction_flags_click = NEED_DEXTERITY
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 	/// Whether this has been sealed shut
 	var/sealed = FALSE
 

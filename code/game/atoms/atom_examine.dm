@@ -4,12 +4,6 @@
 	/// Text that appears preceding the name in examine()
 	var/examine_thats = "That's"
 
-/mob/living/carbon/human
-	examine_thats = "This is"
-
-/mob/living/silicon/robot
-	examine_thats = "This is"
-
 /**
  * Called when a mob examines (shift click or verb) this atom
  *
@@ -75,6 +69,8 @@
  */
 /atom/proc/examine_tags(mob/user)
 	. = list()
+	if(abstract_type == type)
+		.[span_hypnophrase("abstract")] = "This is an abstract concept, you should report this to a strange entity called GITHUB!"
 
 	// Check for mimic disguise component
 	var/datum/component/mimic_disguise/fake_item = GetComponent(/datum/component/mimic_disguise)
@@ -147,10 +143,7 @@
 
 /// Icon displayed in examine
 /atom/proc/get_examine_icon(mob/user)
-	if(length(overlays) > 2 || (greyscale_colors && greyscale_config))
-		return ma2html(src, user)
-	else
-		return iconstate2html(icon, icon_state, "")
+	return icon2html(src, user)
 
 /**
  * Formats the atom's name into a string for use in examine (as the "title" of the atom)

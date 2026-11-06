@@ -84,6 +84,12 @@
  */
 /datum/element/plant_backfire/proc/backfire(obj/item/plant, mob/user)
 	if(plant_safety_check(plant, user))
+		// If a plant has too much potency, up to 60% chance of backfire regardless of safety check.
+		if(plant.force > 25)
+			if(prob(clamp(3*(plant.force - 25), 0, 60)))
+				to_chat(user, span_warning("[plant] is too potent, and cuts right through your precautions!"))
+				SEND_SIGNAL(plant, COMSIG_PLANT_ON_BACKFIRE, user)
+				return TRUE
 		return FALSE
 
 	SEND_SIGNAL(plant, COMSIG_PLANT_ON_BACKFIRE, user)

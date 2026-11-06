@@ -11,6 +11,7 @@
 
 /datum/element/light_eater/Attach(datum/target)
 	if(isatom(target))
+		RegisterSignal(target, COMSIG_LIGHT_EATER_EAT, PROC_REF(on_eat_signal))
 		if(ismovable(target))
 			if(ismachinery(target) || isstructure(target))
 				RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))
@@ -104,6 +105,11 @@
 // SIGNAL HANDLERS //
 /////////////////////
 
+/datum/element/light_eater/proc/on_eat_signal(datum/source, food, eater, silent)
+	SIGNAL_HANDLER
+
+	eat_lights(food, eater, silent)
+
 /**
  * Called when a movable source is thrown and strikes a target
  *
@@ -114,6 +120,7 @@
  */
 /datum/element/light_eater/proc/on_throw_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
 	SIGNAL_HANDLER
+
 	eat_lights(hit_atom, source)
 	return NONE
 
@@ -127,6 +134,7 @@
  */
 /datum/element/light_eater/proc/on_interacting_with(obj/item/source, mob/living/user, atom/target)
 	SIGNAL_HANDLER
+
 	eat_lights(target, source)
 
 /**
@@ -142,6 +150,7 @@
  */
 /datum/element/light_eater/proc/on_hit_reaction(obj/item/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	SIGNAL_HANDLER
+
 	if(prob(final_block_chance))
 		eat_lights(hitby, source)
 	return NONE
@@ -157,6 +166,7 @@
  */
 /datum/element/light_eater/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle)
 	SIGNAL_HANDLER
+
 	eat_lights(target, source)
 	return NONE
 
@@ -172,6 +182,7 @@
  */
 /datum/element/light_eater/proc/on_projectile_self_hit(obj/projectile/source, atom/movable/firer, atom/target, angle, hit_limb)
 	SIGNAL_HANDLER
+
 	eat_lights(target, source)
 	return NONE
 
@@ -185,5 +196,6 @@
  */
 /datum/element/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume)
 	SIGNAL_HANDLER
+
 	eat_lights(target, source)
 	return NONE

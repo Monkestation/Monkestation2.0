@@ -45,9 +45,6 @@ excluded_files = [
     "code/_globalvars/*.dm",
     # TGS files come from another repository so lets not worry about them.
     "code/modules/tgs/**/*.dm",
-    "monkestation/code/__DEFINES/*.dm",
-    "monkestation/code/__HELPERS/*.dm",
-    "monkestation/code/_globalvars/*.dm",
 ]
 
 define_regex = re.compile(r"^(\s+)?#define\s?([A-Z0-9_]+)\(?(.+)\)?")

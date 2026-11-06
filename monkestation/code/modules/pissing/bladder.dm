@@ -88,8 +88,8 @@
 		ignored_mobs |= anything
 
 	var/obj/item/reagent_containers/held_container
-	if(owner.held_items[owner.active_hand_index] != null)
-		var/obj/item/listed_item = owner.held_items[owner.active_hand_index]
+	if(owner.get_active_held_item())
+		var/obj/item/listed_item = owner.get_active_held_item()
 		if(istype(listed_item, /obj/item/reagent_containers))
 			held_container = listed_item
 

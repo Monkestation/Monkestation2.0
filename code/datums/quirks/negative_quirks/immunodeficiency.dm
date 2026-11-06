@@ -11,6 +11,8 @@
 		/obj/item/reagent_containers/syringe/antiviral,
 		/obj/item/healthanalyzer/simple/disease,
 	)
+	species_blacklist = list(SPECIES_IPC)
+
 
 /datum/quirk/item_quirk/immunodeficiency/add(client/client_source)
 	. = ..()

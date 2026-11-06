@@ -3,6 +3,12 @@
 	desc = "Subject is more compatibile with biotechnology such as skillchips."
 	quality = POSITIVE
 	instability = 5
+	power_coeff = 1
+
+/datum/mutation/biotechcompat/setup()
+	. = ..()
+	if(owner && GET_MUTATION_POWER(src) > 1)
+		owner.adjust_skillchip_complexity_modifier(floor(GET_MUTATION_POWER(src)))
 
 /datum/mutation/biotechcompat/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
@@ -11,8 +17,12 @@
 	owner.adjust_skillchip_complexity_modifier(1)
 
 /datum/mutation/biotechcompat/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
 	owner.adjust_skillchip_complexity_modifier(-1)
-	return ..()
+	if(GET_MUTATION_POWER(src) > 1)
+		owner.adjust_skillchip_complexity_modifier(-floor(GET_MUTATION_POWER(src)))
 
 /datum/mutation/clever
 	name = "Clever"
@@ -21,14 +31,28 @@
 	instability = 20
 	text_gain_indication = "<span class='danger'>You feel a little bit smarter.</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels a little bit foggy.</span>"
+	power_coeff = 1
+
+/datum/mutation/clever/setup()
+	. = ..()
+	if(owner && GET_MUTATION_POWER(src) > 1)
+		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/clever)
 
 /datum/mutation/clever/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
+
 	owner.add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
 
 /datum/mutation/clever/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	owner.remove_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
+	if(GET_MUTATION_POWER(src) > 1)
+		owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/clever)
+
+/datum/actionspeed_modifier/clever
+	multiplicative_slowdown = -0.1

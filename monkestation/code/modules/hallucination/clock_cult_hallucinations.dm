@@ -44,12 +44,12 @@
 	return ..()
 
 /datum/hallucination/fake_sound/weird/clockcult_kindle
-	sound_type = 'sound/magic/staff_animation.ogg'
+	sound_type = 'sound/effects/magic/staff_animation.ogg'
 
 /datum/hallucination/fake_sound/weird/clockcult_kindle/play_fake_sound(turf/source, sound_to_play)
 	. = ..()
 	if(prob(50))
-		queue_fake_sound(source, 'sound/weapons/handcuffs.ogg', delay = 4 SECONDS)
+		queue_fake_sound(source, 'sound/items/weapons/handcuffs.ogg', delay = 4 SECONDS)
 
 /datum/hallucination/fake_sound/weird/clockcult_warp
-	sound_type = 'sound/magic/magic_missile.ogg'
+	sound_type = 'sound/effects/magic/magic_missile.ogg'

@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	point_value = 2
 	tableVariant = /obj/structure/table/glass
 	matter_amount = 4
-	cost = 500
+	cost = SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/glass
 
 /datum/armor/sheet_glass
@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("stabs", "slashes", "slices", "cuts")
 	attack_verb_simple = list("stab", "slash", "slice", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/item_shard
 	max_integrity = 40

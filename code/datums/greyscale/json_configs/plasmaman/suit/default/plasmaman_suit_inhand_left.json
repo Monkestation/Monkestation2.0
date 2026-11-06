@@ -1,0 +1,22 @@
+{
+	"plasmaman_suit": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/plasmaman_suit/inhand_left/base",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2, 3, 6]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt",
+			"blend_mode": "overlay",
+			"color_ids": [4]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seal",
+			"blend_mode": "overlay",
+			"color_ids": [5]
+		}
+	]
+}

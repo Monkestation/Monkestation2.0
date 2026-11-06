@@ -6,7 +6,6 @@
 // - Quirk datums are stored and hold different effects, as well as being a vector for applying trait string
 PROCESSING_SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
-	init_order = INIT_ORDER_QUIRKS
 	flags = SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 	wait = 1 SECONDS
@@ -36,8 +35,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
-		list("Common Second Language", "Foreigner"), //monkestation edit 2, re-added but replaced bilingual with csl
-		//MONKESTATION ADDITION START
+		list("Common Second Language", "Foreigner"),
 		list("Listener", "Uncommon"),
 		list("Outsider", "Uncommon"),
 		list("Listener", "Mute"),
@@ -57,7 +55,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Prosthetic Limb", "Monoplegic"),
 		list("Cyborg Pre-screened dogtag", "Unborgable"),
 		list("Revival Blacklist", "Uncloneable Neurons"),
-		//MONKESTATION ADDITION END
+		list("Mute", "Fluffy Tongue")
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()

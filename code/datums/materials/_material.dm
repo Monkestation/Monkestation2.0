@@ -72,7 +72,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		id = type
 
 	if(texture_layer_icon_state)
-		cached_texture_filter_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
+		cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
 
 	return TRUE
 
@@ -92,7 +92,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.set_greyscale(greyscale_colors, config_path)
 
 	if(alpha < 255)
-		source.opacity = FALSE
+		source.set_opacity(FALSE)
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = "[name] [source.name]"
 
@@ -162,7 +162,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
-	on.set_light(2, 0.75, starlight_color)
+	on.set_light(l_outer_range = 2, l_power = 1, l_color = starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
 	if(!config_path)

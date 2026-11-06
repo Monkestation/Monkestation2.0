@@ -5,82 +5,82 @@
 "e" = (
 /obj/structure/barricade/security/ctf,
 /turf/open/floor/mineral/plastitanium/red,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "l" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "n" = (
 /turf/open/floor/pod/light,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "o" = (
 /obj/machinery/recharger,
 /turf/open/floor/pod/light,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "t" = (
 /obj/structure/barricade/security/ctf,
 /turf/open/floor/pod/light,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "u" = (
 /turf/open/floor/pod,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "G" = (
 /obj/structure/barricade/security/ctf,
 /turf/open/floor/pod/dark,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "H" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/pod,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "I" = (
 /turf/closed/indestructible/reinforced,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "M" = (
 /obj/machinery/light,
 /turf/open/floor/pod,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "N" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/pod,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "O" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "R" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/pod,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "S" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "T" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/red,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "W" = (
 /turf/open/floor/pod/dark,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "X" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Y" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/mineral/plastitanium/red,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 
 (1,1,1) = {"
 a

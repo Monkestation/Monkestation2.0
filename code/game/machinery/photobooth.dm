@@ -133,7 +133,7 @@
 	if(obj_flags & EMAGGED)
 		var/mob/living/carbon/carbon_occupant = occupant
 		for(var/i in 1 to 5) //play a ton of sounds to mimic it blinding you
-			playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE)
+			playsound(src, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 75, TRUE)
 			if(carbon_occupant)
 				carbon_occupant.flash_act(5)
 			sleep(0.2 SECONDS)
@@ -144,12 +144,12 @@
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM)) //gives them time to put their hand items away.
 		taking_pictures = FALSE
 		return
-	playsound(src, 'sound/items/polaroid1.ogg', 75, TRUE)
+	playsound(src, 'sound/items/polaroid/polaroid1.ogg', 75, TRUE)
 	flash()
 	if(!do_after(occupant, 3 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE
 		return
-	playsound(src, 'sound/items/polaroid2.ogg', 75, TRUE)
+	playsound(src, 'sound/items/polaroid/polaroid2.ogg', 75, TRUE)
 	flash()
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE
@@ -185,7 +185,7 @@
 
 		var/datum/record/crew/new_record = new (
 			age = human_occupant.age,
-			blood_type = "[human_occupant.get_blood_type() || "None"]",
+			blood_type = human_occupant.get_bloodtype()?.name || "UNKNOWN",
 			character_appearance = char_appearance,
 			dna_string = human_occupant.dna.unique_enzymes,
 			fingerprint = md5(human_occupant.dna.unique_identity),

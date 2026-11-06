@@ -118,3 +118,6 @@
 
 /datum/action/item_action/stomp
 	name = "Stomp"
+
+/datum/action/item_action/toggle_virus_view
+	name = "Toggle Viral Analyzer"

@@ -35,6 +35,15 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/misc/grass/jungle,
 /area/centcom/tdome/arena/actual)
+"y" = (
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
+/turf/open/water/arena,
+/area/centcom/tdome/arena/actual)
 "A" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/machinery/light/floor/has_bulb,
@@ -59,13 +68,6 @@
 /area/centcom/tdome/arena/actual)
 "K" = (
 /turf/open/misc/grass/jungle,
-/area/centcom/tdome/arena/actual)
-"N" = (
-/obj/structure/punji_sticks,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
-/turf/open/water/arena,
 /area/centcom/tdome/arena/actual)
 "O" = (
 /obj/structure/flora/tree/jungle/small/style_6,
@@ -190,8 +192,8 @@ a
 a
 a
 a
-N
-a
+T
+y
 a
 a
 k

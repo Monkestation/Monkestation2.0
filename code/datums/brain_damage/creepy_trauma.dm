@@ -1,7 +1,10 @@
+/// After this amount of time is spent near the target, the obsession trauma will reveal its true nature to health analyzers.
+#define OBSESSION_REVEAL_TIME	7.5 MINUTES
+
 /datum/brain_trauma/special/obsessed
 	name = "Psychotic Schizophrenia"
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
-	scan_desc = "psychotic schizophrenic delusions"
+	scan_desc = "monophobia"
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
 	lose_text = span_warning("The voices in your head fall silent.")
 	can_gain = TRUE
@@ -16,8 +19,10 @@
 	var/time_spent_away = 0
 	var/obsession_hug_count = 0
 
-/datum/brain_trauma/special/obsessed/on_gain()
+	var/revealed = FALSE
+	var/static/true_scan_desc = "psychotic schizophrenic delusions"
 
+/datum/brain_trauma/special/obsessed/on_gain()
 	//setup, linking, etc//
 	if(!obsession)//admins didn't set one
 		obsession = find_obsession()
@@ -25,6 +30,7 @@
 			lose_text = ""
 			qdel(src)
 			return
+
 	gain_text = span_warning("You hear a sickening, raspy voice in your head. It wants one small task of you...")
 	owner.mind.add_antag_datum(/datum/antagonist/obsessed)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/obsessed)
@@ -51,11 +57,18 @@
 	if(viewing)
 		owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
 		total_time_creeping += seconds_per_tick SECONDS
+		if(!revealed && (total_time_creeping >= OBSESSION_REVEAL_TIME))
+			reveal()
 		time_spent_away = 0
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
 			attachedobsessedobj.timer -= seconds_per_tick SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
+
+/datum/brain_trauma/special/obsessed/proc/reveal()
+	revealed = TRUE
+	scan_desc = true_scan_desc
+	to_chat(owner, span_hypnophrase("The deep, overwhelming concern for <span class='name'>[obsession.name]</span> within you continues to blossom, making you suddenly feel as if your obsessive behavior is somewhat more obvious..."))
 
 /datum/brain_trauma/special/obsessed/proc/out_of_view()
 	time_spent_away += 20
@@ -158,3 +171,5 @@
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
 	return chosen_victim
+
+#undef OBSESSION_REVEAL_TIME

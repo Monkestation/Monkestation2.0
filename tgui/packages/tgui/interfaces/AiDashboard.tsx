@@ -34,7 +34,6 @@ export const AiDashboard = (props) => {
   const {
     current_cpu,
     used_cpu,
-    max_cpu,
     integrity,
     location_name,
     location_coords,
@@ -411,53 +410,48 @@ const AbilityCharging = (props) => {
 
   return (
     <Section title="Ability Charging">
-      {chargeable_abilities
-        .filter((ability) => {
-          return ability.uses < ability.max_uses;
-        })
-        .map((ability, index) => (
-          <Section
-            key={index}
-            title={
-              <Box inline>
-                {ability.name} | Uses Remaining: {ability.uses}/
-                {ability.max_uses}
+      {chargeable_abilities.map((ability, index) => (
+        <Section
+          key={index}
+          title={
+            <Box inline>
+              {ability.name} | Uses Remaining: {ability.uses}/{ability.max_uses}
+            </Box>
+          }
+          buttons={
+            <Fragment>
+              <Box inline bold>
+                Assigned CPU:&nbsp;
               </Box>
-            }
-            buttons={
-              <Fragment>
-                <Box inline bold>
-                  Assigned CPU:&nbsp;
-                </Box>
-                <NumberInput
-                  unit="%"
-                  value={ability.assigned_cpu * 100}
-                  minValue={0}
-                  maxValue={remaining_cpu + ability.assigned_cpu * 100}
-                  onChange={(value) =>
-                    act('allocate_recharge_cpu', {
-                      project_name: ability.project_name,
-                      amount: Math.round((value / 100) * 100) / 100,
-                    })
-                  }
-                />
-              </Fragment>
-            }
-          >
-            <ProgressBar value={ability.progress / ability.cost}>
-              {Math.round((ability.progress / ability.cost) * 100 * 100) / 100}%
-              ({Math.round(ability.progress * 100) / 100}/{ability.cost} THz)
-            </ProgressBar>
-          </Section>
-        ))}
+              <NumberInput
+                unit="%"
+                value={ability.assigned_cpu * 100}
+                minValue={0}
+                maxValue={remaining_cpu + ability.assigned_cpu * 100}
+                onChange={(value) =>
+                  act('allocate_recharge_cpu', {
+                    project_name: ability.project_name,
+                    amount: Math.round((value / 100) * 100) / 100,
+                  })
+                }
+              />
+            </Fragment>
+          }
+        >
+          <ProgressBar value={ability.progress / ability.cost}>
+            {Math.round((ability.progress / ability.cost) * 100 * 100) / 100}% (
+            {Math.round(ability.progress * 100) / 100}/{ability.cost} THz)
+          </ProgressBar>
+        </Section>
+      ))}
     </Section>
   );
 };
 
-const NetworkingResources = (props) => {
+const NetworkingResources = () => {
   const { act, data } = useBackend<Data>();
 
-  const { current_cpu, current_ram, max_ram, human_only } = data;
+  const { current_cpu, max_cpu, current_ram, max_ram, human_only } = data;
 
   const tooltipDisabled = human_only
     ? 'Locked by organics. Please request their assistance.'
@@ -480,7 +474,7 @@ const NetworkingResources = (props) => {
       >
         CPU Capacity:
         <Stack>
-          <ProgressBar minValue={0} value={current_cpu} maxValue={1}>
+          <ProgressBar minValue={0} value={current_cpu} maxValue={max_cpu}>
             {current_cpu} THz
           </ProgressBar>
         </Stack>

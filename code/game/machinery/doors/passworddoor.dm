@@ -1,7 +1,7 @@
 /obj/machinery/door/password
 	name = "door"
 	desc = "This door only opens when provided a password."
-	icon = 'icons/obj/doors/blastdoor.dmi'
+	icon = 'icons/obj/doors/blast_door.dmi'
 	icon_state = "closed"
 	explosion_block = 3
 	heat_proof = TRUE
@@ -66,7 +66,7 @@
 			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
 		if("deny")
 			//Deny animation would be nice to have.
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
 	var/guess = tgui_input_text(user, "Enter the password", "Password")

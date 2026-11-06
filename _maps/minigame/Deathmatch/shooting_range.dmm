@@ -2,60 +2,60 @@
 "a" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "b" = (
 /obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "c" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/effect/spawner/structure/window,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "d" = (
 /obj/item/ammo_box/magazine/m9mm/ap,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "e" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "f" = (
 /obj/machinery/light/directional/west,
 /obj/structure/barricade/sandbags,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "g" = (
 /turf/closed/indestructible/iron,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "h" = (
 /obj/structure/barricade/wooden,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "i" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "j" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "k" = (
 /obj/structure/table/reinforced,
 /obj/item/ammo_box/magazine/m9mm/fire,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "l" = (
 /obj/structure/table/reinforced,
 /obj/item/ammo_box/magazine/m9mm,
@@ -70,17 +70,17 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "m" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "n" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "o" = (
 /obj/item/ammo_box/magazine/m9mm/ap,
 /obj/structure/closet/crate/secure/weapon{
@@ -90,47 +90,47 @@
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "p" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "q" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "r" = (
 /obj/item/flashlight/flare,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "s" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "t" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "u" = (
 /obj/structure/barricade/sandbags,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "v" = (
 /obj/item/reagent_containers/medipen,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "x" = (
 /obj/item/ammo_box/magazine/m9mm/fire,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "y" = (
 /obj/item/ammo_box/magazine/m9mm/fire,
 /obj/structure/closet/crate/secure/weapon{
@@ -140,56 +140,56 @@
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "z" = (
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "A" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "B" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "C" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "D" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "E" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "F" = (
 /obj/structure/barricade/wooden,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "I" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "K" = (
 /turf/closed/wall,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "M" = (
 /obj/structure/barricade/sandbags,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "O" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Q" = (
 /obj/item/ammo_box/magazine/m9mm/hp,
 /obj/structure/closet/crate/secure/weapon{
@@ -199,26 +199,26 @@
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "T" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "U" = (
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "W" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "X" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 "Y" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
-/area/deathmatch/fullbright)
+/area/deathmatch)
 
 (1,1,1) = {"
 g

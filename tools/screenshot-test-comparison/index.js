@@ -47,7 +47,7 @@ const fail = (screenshotName, newScreenshot, oldScreenshot, diff) => {
 };
 
 for (const filename of fs.readdirSync(artifactsDirectory)) {
-  if (!filename.startsWith("test_artifacts")) {
+  if (!filename.startsWith("test-artifact-")) {
     continue;
   }
 

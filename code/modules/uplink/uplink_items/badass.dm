@@ -1,6 +1,6 @@
 /datum/uplink_category/badassery
 	name = "Badassery" // Being a badass is not pointless
-	weight = 0
+	weight = 1
 
 /datum/uplink_item/badass
 	category = /datum/uplink_category/badassery

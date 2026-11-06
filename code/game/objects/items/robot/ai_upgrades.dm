@@ -8,6 +8,8 @@
 	var/datum/ai_module/to_gift = /datum/ai_module
 
 /obj/item/aiupgrade/pre_attack(atom/target, mob/living/user, proximity)
+	if(isaicore(target))
+		target = locate(/mob/living/silicon/ai) in target
 	if(!proximity || !isAI(target))
 		return ..()
 	var/mob/living/silicon/ai/AI = target
@@ -39,6 +41,12 @@
 	qdel(src)
 	return TRUE
 
+//Lipreading
+/obj/item/aiupgrade/surveillance_upgrade
+	name = "surveillance software upgrade"
+	desc = "An illegal software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading and hidden microphones."
+	to_gift = /datum/ai_module/malf/upgrade/eavesdrop
+
 //Malf Picker
 /obj/item/malf_upgrade
 	name = "combat software upgrade"
@@ -47,8 +55,9 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
 
-
 /obj/item/malf_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isaicore(interacting_with))
+		interacting_with = locate(/mob/living/silicon/ai) in interacting_with
 	if(!isAI(interacting_with))
 		return
 	var/mob/living/silicon/ai/AI = interacting_with
@@ -76,6 +85,8 @@
 	icon_state = "datadisk3"
 
 /obj/item/surveillance_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isaicore(interacting_with))
+		interacting_with = locate(/mob/living/silicon/ai) in interacting_with
 	if(!isAI(interacting_with))
 		return
 	var/mob/living/silicon/ai/AI = interacting_with
@@ -89,13 +100,31 @@
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-//Lipreading
-/obj/item/aiupgrade/surveillance_upgrade
-	name = "surveillance software upgrade"
-	desc = "An illegal software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading and hidden microphones."
-	to_gift = /datum/ai_module/malf/upgrade/eavesdrop
-
-/obj/item/aiupgrade/power_transfer
+/obj/item/power_transfer_upgrade
 	name = "power transfer upgrade"
 	desc = "A legal upgrade that allows an artificial intelligence to directly provide power to APCs from a distance"
-	to_gift = /datum/ai_module/power_apc
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+
+/obj/item/power_transfer_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isaicore(interacting_with))
+		interacting_with = locate(/mob/living/silicon/ai) in interacting_with
+	if(!isAI(interacting_with))
+		return NONE
+	var/mob/living/silicon/ai/AI = interacting_with
+	var/researched_something = FALSE
+
+	if(!AI.dashboard.has_completed_project(/datum/ai_project/induction_basic))
+		AI.dashboard.finish_project(locate(/datum/ai_project/induction_basic) in AI.dashboard.available_projects)
+		researched_something = TRUE
+	if(!AI.dashboard.has_completed_project(/datum/ai_project/induction_apc))
+		AI.dashboard.finish_project(locate(/datum/ai_project/induction_apc) in AI.dashboard.available_projects)
+		researched_something = TRUE
+
+	if(researched_something)
+		to_chat(AI, span_userdanger("Remote APC power systems online."))
+		to_chat(user, span_notice("You upgrade [AI]. [src] is consumed in the process."))
+		user.log_message("has upgraded [key_name(AI)] with a [src].", LOG_GAME)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING

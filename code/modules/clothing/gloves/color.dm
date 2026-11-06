@@ -3,9 +3,9 @@
 	name = "black gloves"
 	icon_state = "black"
 	greyscale_colors = "#2f2e31"
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
@@ -19,6 +19,59 @@
 /obj/item/clothing/gloves/color/black/security/blu
 	icon_state = "sec_blu"
 
+/obj/item/clothing/gloves/color/black/dimensional
+	desc = "These gloves function as a dimensional weapon storage using bluespace compression technology. They are as silent as a prayer for loving sorrow."
+
+/obj/item/clothing/gloves/color/black/dimensional/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/dimensional_gloves)
+
+/datum/storage/dimensional_gloves
+	max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	max_total_storage = WEIGHT_CLASS_GIGANTIC * 6
+	max_slots = 6
+	silent = TRUE
+	rustle_sound = FALSE
+	emp_shielded = TRUE
+
+/datum/storage/dimensional_gloves/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
+	. = ..()
+	set_holdable(
+		can_hold_list = list(
+			/obj/item/ammo_box,
+			/obj/item/ammo_casing,
+			/obj/item/gun,
+			/obj/item/knife,
+			/obj/item/melee,
+			/obj/item/nullrod,
+			/obj/item/energy_katana,
+			/obj/item/throwing_star,
+			/obj/item/shield,
+			/obj/item/spear,
+			/obj/item/dualsaber,
+			/obj/item/fireaxe,
+			/obj/item/flamethrower,
+			/obj/item/chainsaw,
+			/obj/item/pitchfork,
+			/obj/item/pneumatic_cannon,
+			/obj/item/soulscythe,
+			/obj/item/claymore,
+			/obj/item/katana,
+			/obj/item/switchblade,
+			/obj/item/cane,
+			/obj/item/highfrequencyblade,
+			/obj/item/kinetic_crusher,
+			/obj/item/resonator,
+			/obj/item/pickaxe,
+			/obj/item/shovel,
+			/obj/item/trench_tool,
+			/obj/item/smithed_part/weapon_part,
+		),
+		cant_hold_list = list(
+			/obj/item/gun/magic, // no magic
+		)
+	)
+
 /obj/item/clothing/gloves/fingerless
 	name = "fingerless gloves"
 	desc = "Plain black gloves without fingertips for the hard working."
@@ -26,7 +79,7 @@
 	greyscale_colors = "#2f2e31"
 	strip_delay = 40
 	equip_delay_other = 20
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	custom_price = PAYCHECK_CREW * 1.5
 	undyeable = TRUE
@@ -91,7 +144,7 @@
 	name = "\proper Endotherm gloves"
 	desc = "A pair of thick grey gloves, lined to protect the wearer from freezing cold."
 	w_class = WEIGHT_CLASS_NORMAL
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	clothing_flags = THICKMATERIAL

@@ -43,20 +43,22 @@
 	slowdown = 0
 	},
 /area/centcom/tdome/arena/actual)
-"l" = (
+"p" = (
+/obj/structure/atlantis/column/broken_2,
 /obj/effect/overlay/water,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
-	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/misc/ashplanet/wateryrock{
 	slowdown = 0
 	},
 /area/centcom/tdome/arena/actual)
-"p" = (
-/obj/structure/atlantis/column/broken_2,
+"q" = (
 /obj/effect/overlay/water,
-/obj/machinery/light/floor/has_bulb,
+/obj/structure/grille/indestructible{
+	density = 0;
+	alpha = 0;
+	mouse_opacity = 0;
+	name = "magical camera grille (DO NOT DELETE)"
+	},
 /turf/open/misc/ashplanet/wateryrock{
 	slowdown = 0
 	},
@@ -307,8 +309,8 @@ z
 D
 z
 z
-l
-z
+D
+q
 z
 D
 z

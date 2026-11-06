@@ -2,7 +2,8 @@
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
-	icon_state = "waistcoat"
+	icon = 'icons/map_icons/clothing/accessory.dmi'
+	SETUP_MAP_ICONS("waistcoat", "/obj/item/clothing/accessory/waistcoat")
 	inhand_icon_state = "wcoat"
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
@@ -42,3 +43,8 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = NONE
+
+/obj/item/clothing/accessory/maidapron/syndicate
+	name = "syndicate maid apron"
+	desc = "Practical? No. Tactical? Also no. Cute? Most definitely yes."
+	icon_state = "maidapronsynd"

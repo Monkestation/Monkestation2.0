@@ -67,7 +67,7 @@
 
 /obj/item/lighter/examine_more(mob/user)
 	. = ..()
-	. += span_notice("A stamp at the bottom indicates it takes [lowertext(fuel_type::name)] as fuel.")
+	. += span_notice("A stamp at the bottom indicates it takes [LOWER_TEXT(fuel_type::name)] as fuel.")
 
 /obj/item/lighter/proc/get_volume_description()
 	var/volume_percentage = (reagents.total_volume/maximum_fuel) * 100
@@ -91,7 +91,7 @@
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
 	playsound(victim, SFX_RICOCHET, 100, TRUE)
-	new /obj/effect/decal/cleanable/oil(get_turf(src))
+	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	qdel(src)
@@ -104,7 +104,7 @@
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if(lit)
 		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		return FIRELOSS
 	else
 		user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -137,7 +137,7 @@
 		use(fuel_usage_rate)
 		force = 5
 		damtype = BURN
-		hitsound = 'sound/items/welder.ogg'
+		hitsound = 'sound/items/tools/welder.ogg'
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
@@ -428,3 +428,9 @@
 		/obj/item/lighter/mime,
 		/obj/item/lighter/bright,
 	)
+
+/obj/item/lighter/greyscale/pickle
+	name = "pickle lighter"
+	desc = "The very idea of a lighter adorned with a pickle drives you to the brink of madness."
+	overlay_state = "pickle"
+	lighter_color = COLOR_ASSEMBLY_WHITE

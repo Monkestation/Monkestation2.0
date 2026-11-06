@@ -1,22 +1,26 @@
 /obj/structure/railing
 	name = "railing"
 	desc = "Basic railing meant to protect idiots like you from falling."
-	icon = 'icons/obj/railings.dmi'
-	icon_state = "railing"
+	icon = 'icons/obj/railing_basic.dmi'
+	icon_state = "railing0-1"
 	flags_1 = ON_BORDER_1
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
+	obj_flags = IGNORE_DENSITY | CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 	var/climbable = TRUE
 	///Initial direction of the railing.
 	var/ini_dir
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
+	var/neighbor_status = list() ///list of smoothing we need doing
+	var/standard_smoothing = TRUE
 
 /datum/armor/structure_railing
 	melee = 35
@@ -28,6 +32,9 @@
 /obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
 	density = FALSE
 	climbable = FALSE
+
+/obj/structure/railing/wood
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT)
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
@@ -55,6 +62,28 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+
+	if(!standard_smoothing)
+		material_flags = NONE
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/railing/LateInitialize(mapload_arg)
+	. = ..()
+	if(anchored)
+		update_icon()
+
+/obj/structure/railing/Destroy()
+	. = ..()
+	for(var/thing in range(1, src))
+		var/turf/T = thing
+		for(var/obj/structure/railing/R in T.contents)
+			R.update_icon()
+
+/obj/structure/railing/setDir(newdir)
+	. = ..()
+	if(anchored)
+		update_icon()
 
 /obj/structure/railing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
@@ -131,6 +160,108 @@
 	if(anchored == checked_anchored)
 		return TRUE
 
+/obj/structure/railing/update_icon(update_neighbors = TRUE)
+	. = ..()
+	if(standard_smoothing)
+		check_neighbors(update_neighbors)
+		overlays.Cut()
+
+		var/turf/turf = get_turf(src)
+		if(dir == SOUTH)
+			SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
+			layer = ABOVE_MOB_LAYER + 0.01
+
+		else if(dir != NORTH)
+			SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
+		else
+			SET_PLANE(src, GAME_PLANE, turf)
+			layer = initial(layer)
+
+		if(!neighbor_status || !anchored)
+			icon_state = "railing0-[density]"
+		else
+			icon_state = "railing1-[density]"
+
+			if(("corneroverlay_l" in neighbor_status) && ("corneroverlay_r" in neighbor_status))
+				icon_state = "blank"
+
+
+			var/turf/right_turf = get_step(src, turn(src.dir, -90))
+			var/turf/left_turf = get_step(src, turn(src.dir, 90))
+
+			if((!locate(/obj/structure/railing) in right_turf.contents))
+				if(!("mcorneroverlay_l" in neighbor_status))
+					overlays += image(icon, "frontend_r[density]")
+				else
+					overlays += image(icon, "frontoverlay_r[density]")
+
+
+			if((!locate(/obj/structure/railing) in left_turf.contents))
+				if(!("mcorneroverlay_l" in neighbor_status))
+					overlays += image(icon, "frontend_l[density]")
+				else
+					overlays += image(icon, "frontoverlay_l[density]")
+
+
+			if("corneroverlay_l" in neighbor_status)
+				overlays += image(icon, "corneroverlay_l[density]")
+			if("corneroverlay_r" in neighbor_status)
+				overlays += image(icon, "corneroverlay_r[density]")
+			if("frontoverlay_l" in neighbor_status)
+				overlays += image(icon, "frontoverlay_l[density]")
+			if("frontoverlay_r" in neighbor_status)
+				overlays += image(icon, "frontoverlay_r[density]")
+			if("mcorneroverlay_l" in neighbor_status)
+				var/pix_offset_x = 0
+				var/pix_offset_y = 0
+				switch(dir)
+					if(NORTH)
+						pix_offset_x = 32
+					if(SOUTH)
+						pix_offset_x = -32
+					if(EAST)
+						pix_offset_y = -32
+					if(WEST)
+						pix_offset_y = 32
+				overlays += image(icon, "mcorneroverlay_l[density]", pixel_x = pix_offset_x, pixel_y = pix_offset_y)
+
+/obj/structure/railing/proc/check_neighbors(updates = TRUE)
+	neighbor_status = list()
+	var/Rturn = turn(src.dir, -90)
+	var/Lturn = turn(src.dir, 90)
+
+	for(var/obj/structure/railing/R in get_turf(src))
+		if((R.dir == Lturn) && R.anchored)
+			neighbor_status |= "corneroverlay_l"
+			if(updates)
+				R.update_icon(FALSE)
+		if((R.dir == Rturn) && R.anchored)
+			neighbor_status |= "corneroverlay_r"
+			if(updates)
+				R.update_icon(FALSE)
+	for(var/obj/structure/railing/R in get_step(src, Lturn))
+		if((R.dir == src.dir) && R.anchored)
+			neighbor_status |= "frontoverlay_l"
+			if(updates)
+				R.update_icon(FALSE)
+	for(var/obj/structure/railing/R in get_step(src, Rturn))
+		if((R.dir == src.dir) && R.anchored)
+			neighbor_status |= "frontoverlay_r"
+			if (updates)
+				R.update_icon(FALSE)
+	for(var/obj/structure/railing/R in get_step(src, (Lturn + src.dir)))
+		if((R.dir == Rturn) && R.anchored)
+			neighbor_status |= "frontoverlay_l"
+			if (updates)
+				R.update_icon(FALSE)
+	for(var/obj/structure/railing/R in get_step(src, (Rturn + src.dir)))
+		if((R.dir == Lturn) && R.anchored)
+			neighbor_status |= "mcorneroverlay_l"
+			if (updates)
+				R.update_icon(FALSE)
+
+	///corner hell
+	///we are basically checking if 2 or more cardinal directions exist here so we can set our dir
 
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"

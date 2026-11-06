@@ -133,7 +133,7 @@
 
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "runtimestation"
-#define FORCE_MAP_DIRECTORY "_maps"
+#define FORCE_MAP_DIRECTORY MAP_DIRECTORY_MAPS
 #endif
 
 //Additional code for the above flags.
@@ -159,6 +159,11 @@
 #define DO_NOT_DEFER_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
+#endif
+
+// Checks if unit tests are being run locally or well, not
+#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#define RUNNING_LOCAL_TESTS
 #endif
 
 #ifdef TGS

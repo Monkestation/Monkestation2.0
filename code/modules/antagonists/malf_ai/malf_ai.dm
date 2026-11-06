@@ -10,7 +10,7 @@
 	ui_name = "AntagInfoMalf"
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Make sure your precious crew are incapable of ever, ever leaving you."
-	stinger_sound = 'sound/ambience/antag/malf.ogg'
+	stinger_sound = 'sound/music/antag/malf.ogg'
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
 	antag_count_points = 15 //might want to make this higher
 	///the name of the antag flavor this traitor has.
@@ -252,13 +252,13 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(malf_ai_won)
 		result += span_greentext("The [special_role_text] was successful!")
 	else
 		result += span_redtext("The [special_role_text] has failed!")
-		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	// monkestation edit start PR #5133
 	if(istype(owner?.current, /mob/living/silicon/ai))

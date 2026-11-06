@@ -618,3 +618,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/microwave, 32)
 	. += "\t[span_info("Rated M for mature. A Pangalactic Studios Picture.")]"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/blood_geometer, 32)
+
+/obj/structure/sign/poster/contraband/wantedmurderer
+	name = "Have YOU Seen This Man"
+	desc = "An old poster of a mass murderer with the words \"Have YOU Seen This Man\" on the bottom. I wonder if they caught the guy..."
+	icon =  'icons/obj/poster.dmi'
+	icon_state = "wantedmurderer"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/wantedmurderer, 32)

@@ -109,6 +109,11 @@
 	/// If this mind has set DNR or not.
 	var/dnr = FALSE
 
+	/// The crew manifest entry for this crew member, if any.
+	var/datum/record/crew/crewfile
+	/// The locked manifest entry for this crew member, if any.
+	var/datum/record/locked/lockfile
+
 /datum/mind/New(_key)
 	key = _key
 	martial_art = default_martial_art
@@ -121,6 +126,8 @@
 	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
+	crewfile = null
+	lockfile = null
 	set_current(null)
 	return ..()
 
@@ -590,6 +597,21 @@
 	// monkestation edit end
 	if(incoming_client && intro_message)
 		to_chat(incoming_client, intro_message)
+
+/datum/mind/proc/add_to_manifest(crew = TRUE, locked = FALSE)
+	if(crew && !QDELETED(crewfile))
+		GLOB.manifest.general |= crewfile
+	if(locked && !QDELETED(lockfile))
+		GLOB.manifest.locked |= lockfile
+
+/datum/mind/proc/remove_from_manifest(crew = TRUE, locked = FALSE)
+	if(crew && !QDELETED(crewfile))
+		GLOB.manifest.general -= crewfile
+	if(locked && !QDELETED(lockfile))
+		GLOB.manifest.locked -= lockfile
+
+/datum/mind/proc/operator""()
+	return trimtext(name || current?.real_name || current?.name)
 
 /mob/proc/sync_mind()
 	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)
