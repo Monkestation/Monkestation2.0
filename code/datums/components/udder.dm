@@ -194,6 +194,8 @@
 	. = ..()
 	if(!.)
 		return
+	if(locate(/obj/item/stack/ore/iron) in src)
+		reagents.add_reagent(/datum/reagent/copper, rand(2,5))
 	if(locate(/obj/item/stack/ore/gold) in src)
 		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5), added_purity = 1)
 	if(locate(/obj/item/stack/ore/bluespace_crystal) in src)

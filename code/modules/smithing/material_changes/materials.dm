@@ -145,6 +145,7 @@
 	hardness = 60
 	density = 45
 	conductivity = 80
+	material_traits = list(/datum/material_trait/firestorm_bane)
 
 /datum/material/paper
 	density = 1

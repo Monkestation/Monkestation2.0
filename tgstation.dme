@@ -6766,6 +6766,7 @@
 #include "code\modules\smithing\material_changes\new_materials.dm"
 #include "code\modules\smithing\material_changes\material_traits\_base_trait.dm"
 #include "code\modules\smithing\material_changes\material_traits\chemical_injector.dm"
+#include "code\modules\smithing\material_changes\material_traits\firestorm_bane.dm"
 #include "code\modules\smithing\material_changes\material_traits\holy.dm"
 #include "code\modules\smithing\material_changes\material_traits\honk.dm"
 #include "code\modules\smithing\material_changes\material_traits\magical.dm"
