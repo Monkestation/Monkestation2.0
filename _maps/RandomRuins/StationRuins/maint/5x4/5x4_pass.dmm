@@ -1,0 +1,68 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"s" = (
+/turf/baseturf_bottom,
+/area/template_noop)
+"w" = (
+/obj/structure/chair,
+/turf/open/floor/plating,
+/area/template_noop)
+"x" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/template_noop)
+"M" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"R" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/template_noop)
+"T" = (
+/obj/structure/chair,
+/obj/item/storage/fancy/cigarettes/cigpack_uplift,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+x
+f
+R
+s
+"}
+(2,1,1) = {"
+e
+M
+R
+R
+"}
+(3,1,1) = {"
+f
+f
+f
+i
+"}
+(4,1,1) = {"
+f
+w
+R
+R
+"}
+(5,1,1) = {"
+f
+T
+R
+s
+"}

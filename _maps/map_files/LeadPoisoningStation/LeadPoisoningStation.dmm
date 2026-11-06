@@ -1432,6 +1432,11 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"aJM" = (
+/obj/effect/spawner/backrooms_portal,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "aJY" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
@@ -68349,7 +68354,7 @@ wYg
 axm
 pHB
 wbo
-dwS
+aJM
 dAl
 cvH
 pUB

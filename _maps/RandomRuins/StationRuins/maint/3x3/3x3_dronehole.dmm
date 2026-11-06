@@ -1,0 +1,54 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/item/screwdriver,
+/turf/open/floor/plating,
+/area/template_noop)
+"l" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/structure/sign/poster/contraband/free_drone/directional/north,
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking drone bed.";
+	name = "drone bed"
+	},
+/obj/effect/mob_spawn/ghost_role/drone,
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/obj/effect/mob_spawn/ghost_role/drone,
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking drone bed.";
+	name = "drone bed"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"D" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/plating,
+/area/template_noop)
+"U" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+n
+D
+l
+"}
+(2,1,1) = {"
+U
+l
+a
+"}
+(3,1,1) = {"
+r
+k
+l
+"}

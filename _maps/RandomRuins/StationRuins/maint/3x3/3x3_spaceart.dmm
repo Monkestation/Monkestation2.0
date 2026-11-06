@@ -1,0 +1,41 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"f" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/fakespace,
+/area/template_noop)
+"q" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"x" = (
+/obj/item/toy/crayon/spraycan,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"Q" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/fakespace,
+/area/template_noop)
+"W" = (
+/turf/open/floor/fakespace,
+/area/template_noop)
+
+(1,1,1) = {"
+n
+W
+W
+"}
+(2,1,1) = {"
+W
+x
+q
+"}
+(3,1,1) = {"
+Q
+W
+f
+"}
