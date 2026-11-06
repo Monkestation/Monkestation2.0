@@ -324,7 +324,7 @@
 			SPECIES_PERK_DESC = "[plural_form] are able to consume and regrow their limbs at will, if they have enough blood to do so.",
 		),
 		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "coins",
 			SPECIES_PERK_NAME = "Coin Absorption",
 			SPECIES_PERK_DESC = "[plural_form] can absorb coins for nourishment. The more a coin is worth, the more filling it is.",
