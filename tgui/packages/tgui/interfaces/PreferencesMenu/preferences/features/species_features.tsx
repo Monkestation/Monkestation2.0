@@ -271,6 +271,18 @@ export const feature_mcolor_secondary: Feature<string> = {
   component: FeatureColorInput,
 };
 
+export const wing_color: Feature<string> = {
+  name: 'Wing Color',
+  small_supplemental: true,
+  component: FeatureColorInput,
+};
+
+export const antennae_color: Feature<string> = {
+  name: 'Antennae Color',
+  small_supplemental: true,
+  component: FeatureColorInput,
+};
+
 export const underwear_color: Feature<string> = {
   name: 'Underwear color',
   component: FeatureColorInput,
