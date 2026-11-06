@@ -2,6 +2,9 @@
 #define STAIR_TERMINATOR_NO 1
 #define STAIR_TERMINATOR_YES 2
 
+/// Minimum tile spacing between stair minimap blips
+#define STAIR_BLIP_MIN_DISTANCE 2
+
 // dir determines the direction of travel to go upwards
 // stairs require /turf/open/openspace as the tile above them to work, unless your stairs have 'force_open_above' set to TRUE
 // multiple stair objects can be chained together; the Z level transition will happen on the final stair object in the chain
@@ -16,6 +19,8 @@
 	var/force_open_above = FALSE // replaces the turf above this stair obj with /turf/open/openspace
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
 	var/turf/listeningTo
+	/// Current atoms used as this stair's minimap blip targets.
+	var/list/minimap_blip_targets
 
 /obj/structure/stairs/north
 	dir = NORTH
@@ -45,6 +50,7 @@
 		force_open_above()
 		build_signal_listener()
 	update_surrounding()
+	update_minimap_blip()
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
@@ -55,6 +61,7 @@
 	return ..()
 
 /obj/structure/stairs/Destroy()
+	clear_minimap_blips()
 	listeningTo = null
 	GLOB.stairs -= src
 	return ..()
@@ -72,6 +79,51 @@
 		var/obj/structure/stairs/S = locate() in T
 		if(S)
 			S.update_appearance()
+	update_minimap_blip()
+
+/// Rebuilds the minimap blips for the bottom and top of these stairs
+/obj/structure/stairs/proc/update_minimap_blip()
+	var/bottom_state = isTerminator() ? "stairs_up" : "stairs_down"
+	var/top_state = (bottom_state == "stairs_up") ? "stairs_down" : "stairs_up"
+	var/turf/current_turf = get_turf(src)
+
+	clear_minimap_blips()
+	if(isnull(current_turf))
+		return
+
+	add_minimap_blip_if_valid(current_turf, bottom_state)
+	add_minimap_blip_if_valid(get_step_multiz(current_turf, UP), top_state)
+
+/// Removes every minimap blip these stairs have placed
+/obj/structure/stairs/proc/clear_minimap_blips()
+	if(!islist(minimap_blip_targets))
+		return
+	for(var/atom/target as anything in minimap_blip_targets)
+		remove_minimap_blip(MINIMAP_STAIR_BLIP, target)
+	LAZYCLEARLIST(minimap_blip_targets)
+
+/// Places or updates a stair blip on the target, unless another stair blip is already close to it
+/obj/structure/stairs/proc/add_minimap_blip_if_valid(atom/target, state)
+	if(isnull(target))
+		return
+	if(!should_place_minimap_blip(target))
+		return
+
+	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(MINIMAP_STAIR_BLIP, target)
+	if(!isnull(blip))
+		blip.icon_state = state
+	else
+		add_minimap_blip(target, MINIMAP_STAIR_BLIP, state)
+	LAZYADD(minimap_blip_targets, target)
+
+/// Returns TRUE if there are no other stair blips within STAIR_BLIP_MIN_DISTANCE of the target
+/obj/structure/stairs/proc/should_place_minimap_blip(atom/target)
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		return FALSE
+	if(length(get_minimap_blips_in_area(MINIMAP_STAIR_BLIP, target_turf, STAIR_BLIP_MIN_DISTANCE)))
+		return FALSE
+	return TRUE
 
 /obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
@@ -257,3 +309,4 @@
 #undef STAIR_TERMINATOR_AUTOMATIC
 #undef STAIR_TERMINATOR_NO
 #undef STAIR_TERMINATOR_YES
+#undef STAIR_BLIP_MIN_DISTANCE

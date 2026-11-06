@@ -19,6 +19,7 @@
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
 	allow_shuttle_docking = TRUE
+	skip_minimap_rendering = TRUE
 
 
 /area/space/Initialize(mapload)

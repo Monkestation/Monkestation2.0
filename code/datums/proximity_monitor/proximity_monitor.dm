@@ -74,9 +74,11 @@
 	//Update the ignore_if_not_on_turf
 	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, ignore_if_not_on_turf)
 
-/datum/proximity_monitor/proc/on_uncrossed()
+/// Called when something leaves a turf in range, tells the receiver through OnProximityExit()
+/datum/proximity_monitor/proc/on_uncrossed(atom/source, atom/movable/gone, direction) //Used by the advanced subtype for effect fields.
 	SIGNAL_HANDLER
-	return //Used by the advanced subtype for effect fields.
+	if(source != host)
+		hasprox_receiver?.OnProximityExit(gone)
 
 /datum/proximity_monitor/proc/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
 	SIGNAL_HANDLER
