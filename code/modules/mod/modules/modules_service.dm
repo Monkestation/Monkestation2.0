@@ -13,9 +13,6 @@
 	cooldown_time = 1 SECONDS
 
 /obj/item/mod/module/bikehorn/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
 	drain_power(use_energy_cost)
 
@@ -31,6 +28,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/microwave_beam/on_select_use(atom/target)
 	. = ..()
@@ -39,7 +37,7 @@
 	if(!isitem(target))
 		return
 	if(!isturf(target.loc))
-		balloon_alert(mod.wearer, "must be on the floor!")
+		balloon_alert(mod.wearer, "not in storage!")
 		return
 	var/obj/item/microwave_target = target
 	var/datum/effect_system/spark_spread/spark_effect = new()
@@ -59,7 +57,7 @@
 /obj/item/mod/module/waddle
 	name = "MOD waddle module"
 	desc = "Some of the most primitive technology in use by Honk Co. This module works off an automatic intention system, \
-		utilizing its' sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
+		utilizing its sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
 		affecting the boots they're installed in. Employing a twin-linked gravitonic drive to create \
 		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \
 		to waddle around, bouncing to and fro with a pep in their step."
@@ -67,17 +65,21 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/waddle)
+	required_slots = list(ITEM_SLOT_FEET)
 
-/obj/item/mod/module/waddle/on_suit_activation()
-	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
-	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
+/obj/item/mod/module/waddle/on_part_activation()
+	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
+	if(shoes)
+		shoes.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+	mod.wearer.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
-/obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
-	if(!deleting)
-		qdel(mod.boots.GetComponent(/datum/component/squeak))
-	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
+/obj/item/mod/module/waddle/on_part_deactivation(deleting = FALSE)
+	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
+	if(shoes && !deleting)
+		qdel(shoes.GetComponent(/datum/component/squeak))
+	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, REF(src))
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")
 
@@ -98,3 +100,19 @@
 	var/refill_add = min(volume - reagents.total_volume, 2 * seconds_per_tick)
 	if(refill_add > 0)
 		reagents.add_reagent(/datum/reagent/space_cleaner, refill_add)
+
+/// Perfumer - Cleans the wearer up.
+/obj/item/mod/module/selfcleaner
+	name = "MOD perfumer module"
+	desc = "A small spray to clean oneself up. Has a pleasant scent."
+	icon_state = "cleaner"
+	module_type = MODULE_USABLE
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/selfcleaner)
+	cooldown_time = 10 SECONDS
+
+/obj/item/mod/module/selfcleaner/on_use(mob/activator)
+	activator.wash(CLEAN_WASH)
+	drain_power(use_energy_cost)
+	playsound(activator, 'sound/effects/spray.ogg', 50, FALSE)
