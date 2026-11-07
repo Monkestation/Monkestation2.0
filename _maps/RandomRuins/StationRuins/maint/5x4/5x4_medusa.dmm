@@ -27,7 +27,7 @@
 	},
 /obj/item/bedsheet/captain{
 	dir = 1;
-	icon = 'icons/mob/neck.dmi'
+	icon = 'icons/mob/clothing/neck.dmi'
 	},
 /turf/open/floor/plating,
 /area/template_noop)

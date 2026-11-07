@@ -51,8 +51,8 @@
 			weighted_feature_spawn_list += /mob/living/basic/carp/passive
 		if(3 to 4)
 			//TWO DOLPHS
-			for(var/x in 1 to 3)
-			weighted_feature_spawn_list += pick(/mob/living/basic/carp/passive, /mob/living/basic/carp/passive)
+			for(var/x in 1 to 2)
+				weighted_feature_spawn_list += pick(/mob/living/basic/carp/passive, /mob/living/basic/carp/passive)
 		if(5 to 6)
 			//a dolphino
 			weighted_feature_spawn_list += pick(/mob/living/basic/carp/passive, /mob/living/basic/carp/passive)
