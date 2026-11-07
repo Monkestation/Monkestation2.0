@@ -527,3 +527,10 @@
 	suffix = "shrimp.dmm"
 	name = "Shrimp Restaurant"
 	description = "An exquisite shrimp fried rice restaurant that mysteriously shut down a few days ago. Something about 'new ownership'."
+
+/datum/map_template/ruin/space/ccpost
+	id = "centcom_outpost"
+	suffix = "cc_bureaucratoutpost.dmm"
+	name = "Central Command Liaison Outpost"
+	description = "A small Central Command monitoring and administrative installation positioned within the sector."
+	placement_weight = 3

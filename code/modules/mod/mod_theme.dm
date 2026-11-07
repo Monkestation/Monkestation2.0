@@ -2181,6 +2181,33 @@
 	acid = 100
 	wound = 15
 
+
+/// Corporate appearance with protection appropriate for outpost Security.
+/datum/mod_theme/corporate/ccpost_security
+	name = "corporate security"
+	desc = "A reinforced corporate security suit issued to Central Command installation protection personnel."
+	extended_desc = "A security-configured Corporate MODsuit intended to protect Central Command staff, facilities, and sensitive freight. Its reinforced plating provides greater protection than routine station Security equipment, but lacks the near-immunity, top-tier actuators, and unlimited endurance of executive Corporate MODsuits."
+	default_skin = "corporate"
+	armor_type = /datum/armor/mod_theme_corporate_security
+	resistance_flags = FIRE_PROOF
+	atom_flags = NONE
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	siemens_coefficient = 0.5
+	slowdown_inactive = 0.75
+	slowdown_active = 0.25
+
+/// Intermediate protection between station Security and executive Corporate.
+/datum/armor/mod_theme_corporate_security
+	melee = 40
+	bullet = 25
+	laser = 35
+	energy = 40
+	bomb = 35
+	bio = 100
+	fire = 100
+	acid = 75
+	wound = 20
+
 /datum/mod_theme/chrono
 	name = "chrono"
 	desc = "A suit beyond our time, beyond time itself. Used to traverse timelines and \"correct their course\"."

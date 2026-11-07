@@ -339,3 +339,115 @@
 /obj/item/circuitboard/computer/freeminer_nav
 	name = "free miner navigation (Computer Board)"
 	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/freeminer
+
+/// Central Command Liaison Outpost Ghostroles
+
+/// Long-range PDA for Central Command outpost personnel.
+/obj/item/modular_computer/pda/heads/ccpost
+	name = "Central Command outpost PDA"
+	long_ranged = TRUE
+
+// Shared parent for all outpost ghost roles.
+/obj/effect/mob_spawn/ghost_role/human/ccpost
+	name = "Central Command Outpost Personnel"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	prompt_name = "a Central Command outpost employee"
+	you_are_text = "You are an employee assigned to a remote Central Command outpost."
+	flavour_text = "Perform your assigned duties and maintain the outpost's operations."
+
+// CentCom Liaison ghost role
+/obj/effect/mob_spawn/ghost_role/human/ccpost/centcom_liaison
+	name = "CentCom Liaison"
+	prompt_name = "a Central Command Liaison"
+	you_are_text = "You are a low-ranking Central Command Liaison assigned to a remote administrative outpost."
+	flavour_text = "Your duties are to monitor station activity, communicate with station Command, review regional incidents, and submit reports to Central Command. You are an observer and administrator, not a station commander."
+
+	important_text = "Your authority is limited to the Liaison Outpost. You may NOT command station personnel, overrule station Command, or interfere with station operations. You are NOT an administrator-backed official."
+	outfit = /datum/outfit/centcom/centcom_liaison
+
+/datum/outfit/centcom/centcom_liaison
+	name = "CentCom Liaison"
+	uniform = /obj/item/clothing/under/rank/centcom/official
+	head = /obj/item/clothing/head/beret/centcom_formal
+	glasses = /obj/item/clothing/glasses/sunglasses
+	back = /obj/item/storage/backpack/satchel/leather
+	backpack_contents = list(
+		/obj/item/storage/box/survival,
+		/obj/item/clipboard,
+		/obj/item/stamp/centcom,
+	)
+	belt = /obj/item/modular_computer/pda/heads/ccpost
+	ears = /obj/item/radio/headset/headset_cent/alt
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest
+	suit_store = /obj/item/gun/energy/e_gun
+	r_pocket = /obj/item/melee/baton/telescopic
+	l_pocket = /obj/item/pen/fountain
+	r_hand = /obj/item/storage/briefcase/empty
+	id = /obj/item/card/id/advanced/centcom/ccpost_liaison
+	id_trim = /datum/id_trim/job/centcom_liaison
+
+/// code to fix the centcom id not spawning with the ghostrole player's name, equipped human -> wear id -> id card -> registered name -> John Smith CentCom Liaison
+/datum/outfit/centcom/centcom_liaison/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/id_card = equipped_human.wear_id
+	if(id_card)
+		id_card.registered_name = equipped_human.real_name
+		id_card.update_label()
+		id_card.update_icon()
+
+	return ..()
+
+/// Central Command Outpost Security Officer
+/obj/effect/mob_spawn/ghost_role/human/ccpost/security_officer
+	name = "CentCom Security Officer"
+	prompt_name = "a Central Command Security Officer"
+	you_are_text = "You are a Central Command Security Officer assigned to protect a remote liaison outpost."
+	flavour_text = "Your duties are to protect the outpost, its personnel, and corporate property. Manage visitor access, respond to security incidents, and coordinate with the Liaison on matters involving installation security."
+
+	important_text = "Your jurisdiction is limited to the Liaison Outpost. You may NOT command station Security, enforce station law outside the outpost, or interfere with station operations. You are NOT an administrator-backed official."
+	outfit = /datum/outfit/centcom/ccpost_security
+
+/datum/outfit/centcom/ccpost_security
+	name = "CentCom Security Officer"
+
+	uniform = /obj/item/clothing/under/rank/centcom/officer
+	head = /obj/item/clothing/head/beret/centcom_formal
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	gloves = /obj/item/clothing/gloves/color/black/security/blu
+	ears = /obj/item/radio/headset/headset_cent/alt
+	shoes = /obj/item/clothing/shoes/combat/swat/admiral
+	mask = /obj/item/clothing/mask/gas/sechailer
+
+	back = /obj/item/mod/control/pre_equipped/corporate/ccpost_security
+	backpack_contents = list(
+		/obj/item/storage/box/survival,
+		/obj/item/stamp/centcom,
+		/obj/item/tank/internals/oxygen,
+	)
+	belt = /obj/item/storage/belt/security/full
+	r_pocket = /obj/item/modular_computer/pda/heads/ccpost
+	l_pocket = /obj/item/pen/fountain
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+	l_hand = /obj/item/gun/energy/e_gun/stun
+
+	id = /obj/item/card/id/advanced/centcom/ccpost_security
+	id_trim = /datum/id_trim/job/centcom_liaison/security_officer
+
+/datum/outfit/centcom/ccpost_security/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/id_card = equipped_human.wear_id
+
+	if(id_card)
+		id_card.registered_name = equipped_human.real_name
+		id_card.update_label()
+		id_card.update_icon()
+
+	return ..()
+
