@@ -1,4 +1,5 @@
 /obj/item/abductor
+	abstract_type = /obj/item/abductor
 	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'

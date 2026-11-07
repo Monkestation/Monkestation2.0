@@ -1,0 +1,9 @@
+author: "ma44, MrMelbert, AnturK, leaKsi, TiviPlus, StrangeWeirdKitten, SmArtKar, afonamo, jlsnow301, FalloutFalcon"
+delete-after: True
+changes:
+  - bugfix: "Fixed a bunch of places where players could send unsanitized HTML to other players or admins."
+  - bugfix: "Cassette song titles are properly encoded in chat and admin messages."
+  - bugfix: "Safes, the message monitor, netpods, limbgrowers, launch pads and a few other machines validate their inputs properly."
+  - bugfix: "Number inputs reject NaN."
+  - admin: "View variables topic calls require R_VAREDIT."
+  - server: "World topics require the comms key unless they're meant to be public."
