@@ -67,6 +67,7 @@
 	cost = 4
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+	population_minimum = 20
 
 
 /datum/uplink_item/ammo/lighttankammo
@@ -75,6 +76,7 @@
 	item = /obj/item/mecha_ammo/makeshift/lighttankammo
 	cost = 4
 	purchasable_from = ~UPLINK_SPY
+	population_minimum = 30
 
 /datum/uplink_item/ammo/lighttankmgammo
 	name = "12.7x70mm tank mg ammo"
@@ -82,6 +84,7 @@
 	item = /obj/item/mecha_ammo/makeshift/lighttankmg
 	cost = 2
 	purchasable_from = ~UPLINK_SPY
+	population_minimum = 30
 
 /datum/uplink_item/ammo/autoshotgun_buckshot_case
 	name = "Syndicate Auto Shotgun Buckshot Magazine Case"
@@ -89,6 +92,7 @@
 	cost = 3
 	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	population_minimum = 30
 
 /datum/uplink_item/ammo/autoshotgun_slugs_case
 	name = "Syndicate Auto Shotgun Slugs Magazine Case"
@@ -96,6 +100,7 @@
 	cost = 3
 	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/slug
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	population_minimum = 30
 
 /datum/uplink_item/ammo/autoshotgun_rubbershot_case
 	name = "Syndicate Auto Shotgun Rubbershot Magazine Case"
@@ -103,6 +108,7 @@
 	cost = 2
 	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/rubbershot
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	population_minimum = 30
 
 /datum/uplink_item/ammo/autoshotgun_beanbags_case
 	name = "Syndicate Auto Shotgun Beanbags Magazine Case"
@@ -110,6 +116,7 @@
 	cost = 2
 	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/beanbag
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	population_minimum = 30
 
 /datum/uplink_item/ammo/autoshotgun_trickshot_case
 	name = "Syndicate Auto Shotgun Trickshot Magazine Case"
@@ -117,6 +124,7 @@
 	cost = 3
 	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/trickshot
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	population_minimum = 30
 
 /datum/uplink_item/ammo/autoshotgun_uraniumpen_case
 	name = "Syndicate Auto Shotgun Uranium Magazine Case"
@@ -124,6 +132,7 @@
 	cost = 3
 	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/autoshotgun/uraniumpen
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	population_minimum = 30
 
 /datum/uplink_item/ammo/beeshot
 	name = "Beeshot Auto Shotgun Magazine"
@@ -131,3 +140,4 @@
 	cost = 3
 	item = /obj/item/ammo_box/magazine/autoshotgun/syndicate/beeshot
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	population_minimum = 30
