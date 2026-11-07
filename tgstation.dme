@@ -3783,6 +3783,7 @@
 #include "code\modules\antagonists\monster_hunters\monsters\monster_powers\killer_rabbit_powers.dm"
 #include "code\modules\antagonists\monster_hunters\tools\blood_vial.dm"
 #include "code\modules\antagonists\monster_hunters\tools\bnuuy_mask.dm"
+#include "code\modules\antagonists\monster_hunters\tools\hunter_armor.dm"
 #include "code\modules\antagonists\monster_hunters\tools\jack_bomb.dm"
 #include "code\modules\antagonists\monster_hunters\tools\rabbit_eye.dm"
 #include "code\modules\antagonists\monster_hunters\tools\rabbit_locator.dm"
