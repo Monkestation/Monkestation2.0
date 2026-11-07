@@ -1,4 +1,5 @@
 /turf/open
+	abstract_type = /turf/open
 	plane = FLOOR_PLANE
 	///negative for faster, positive for slower
 	var/slowdown = 0
@@ -307,7 +308,7 @@
 			iced.AddElement(/datum/element/frozen)
 
 	for(var/mob/living/freezer in src)
-		if(freezer.bodytemperature <= CELCIUS_TO_KELVIN(25 CELCIUS))
+		if(freezer.bodytemperature <= 50)
 			freezer.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return TRUE

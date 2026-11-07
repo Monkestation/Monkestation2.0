@@ -306,7 +306,9 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = TRUE)
+		carbon_user.update_tint()
+		carbon_user.update_sight()
+		carbon_user.update_clothing(slot_flags)
 
 /// "enable" the spectacles, flipping them down and applying their effects, calling on_toggle_eyes() if someone is wearing them
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/enable()
@@ -425,7 +427,9 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = TRUE)
+		carbon_user.update_tint()
+		carbon_user.update_sight()
+		carbon_user.update_clothing(slot_flags)
 
 /// Turn on the visor, calling apply_to_wearer() and changing the icon state
 /obj/item/clothing/glasses/clockwork/judicial_visor/proc/enable()
@@ -522,8 +526,9 @@
 	icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0
 	strip_delay = 8 SECONDS
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 
 	resistance_flags = FIRE_PROOF | ACID_PROOF

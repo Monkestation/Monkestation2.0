@@ -7,10 +7,14 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = HEAD
-
-
+	heat_protection = HEAD
+	cold_protection = HEAD
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
+
+/obj/item/clothing/head/mod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
@@ -27,10 +31,14 @@
 	)
 	armor_type = /datum/armor/none
 	body_parts_covered = CHEST|GROIN
-
-
+	heat_protection = CHEST|GROIN
+	cold_protection = CHEST|GROIN
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
+
+/obj/item/clothing/suit/mod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
@@ -41,6 +49,8 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = HANDS|ARMS
+	cold_protection = HANDS|ARMS
+	heat_protection = HANDS|ARMS
 	item_flags = IMMUTABLE_SLOW
 
 /obj/item/clothing/shoes/mod
@@ -52,8 +62,36 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = FEET|LEGS
-
-
+	heat_protection = FEET|LEGS
+	cold_protection = FEET|LEGS
 	item_flags = IMMUTABLE_SLOW
 	item_flags = IGNORE_DIGITIGRADE
 	can_be_tied = FALSE
+
+/// Glasses part of a MODsuit.
+/obj/item/clothing/glasses/mod
+	name = "MOD glasses"
+	desc = "A pair of glasses for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-glasses"
+	base_icon_state = "glasses"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
+
+/// Tie part of a MODsuit.
+/obj/item/clothing/neck/mod
+	name = "MOD tie"
+	desc = "An tie for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-tie"
+	base_icon_state = "tie"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null

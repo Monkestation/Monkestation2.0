@@ -257,6 +257,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		var/mob/living/living_target = target
 		check_heat(living_target)
 		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+		if(HAS_TRAIT(living_target, TRAIT_WATER_ADAPTATION)) //very mild healing for those with the water adaptation trait (fish infusion)
+			var/need_mob_update = living_target.adjustOxyLoss(-1 * SSMACHINES_DT, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			need_mob_update += living_target.adjustFireLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			need_mob_update += living_target.adjustToxLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			need_mob_update += living_target.adjustBruteLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			if(need_mob_update)
+				living_target.updatehealth()
 
 /**
  * Toggle whether shower is actually on and outputting water.
@@ -330,18 +337,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		new /obj/item/stock_parts/water_recycler(drop_location())
 	qdel(src)
 
-/obj/machinery/shower/proc/check_heat(mob/living/L)
+/// Freezes or burns whoever is under the shower if the water is too cold or too hot
+/obj/machinery/shower/proc/check_heat(mob/living/living)
 	if(current_temperature == SHOWER_FREEZING)
-		if(L.bodytemperature >= L.standard_body_temperature - 1 KELVIN)
-			to_chat(L, span_warning("[src] is freezing!"))
-
-		L.adjust_bodytemperature(-0.5 KELVIN, min_temp = CELCIUS_TO_KELVIN(30))
-
+		living.adjust_bodytemperature(-80, 80)
+		to_chat(living, span_warning("[src] is freezing!"))
 	else if(current_temperature == SHOWER_BOILING)
-		if(L.bodytemperature <= L.standard_body_temperature + 1 KELVIN)
-			to_chat(L, span_warning("[src] is [pick("scalding", "searing")]!"))
-		L.adjust_bodytemperature(0.5 KELVIN, max_temp = CELCIUS_TO_KELVIN(40))
-		L.apply_damage(6, BURN, spread_damage = TRUE)
+		living.adjust_bodytemperature(35, 0, 500)
+		living.adjustFireLoss(5)
+		to_chat(living, span_danger("[src] is searing!"))
 
 
 /obj/structure/showerframe

@@ -90,7 +90,7 @@
 		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
+	for(var/obj/item/worn_thing as anything in get_equipped_items() | get_active_handset_items())
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
 			if(is_holding(worn_thing))
@@ -756,29 +756,28 @@
 
 /mob/living/carbon/human/proc/burn_clothing(seconds_per_tick, times_fired, stacks)
 	var/list/burning_items = list()
-	var/obscured = check_obscured_slots(TRUE)
+	var/covered = check_covered_slots()
 	//HEAD//
 
-	if(glasses && !(obscured & ITEM_SLOT_EYES))
+	if(glasses && !(covered & ITEM_SLOT_EYES))
 		burning_items += glasses
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
-		burning_items += wear_mask
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
+	// monkestation edit: masks don't burn while you're on fire
+	if(wear_neck && !(covered & ITEM_SLOT_NECK))
 		burning_items += wear_neck
-	if(ears && !(obscured & ITEM_SLOT_EARS))
+	if(ears && !(covered & ITEM_SLOT_EARS))
 		burning_items += ears
 	if(head)
 		burning_items += head
 
 	//CHEST//
-	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
+	if(w_uniform && !(covered & ITEM_SLOT_ICLOTHING))
 		burning_items += w_uniform
 	if(wear_suit)
 		burning_items += wear_suit
 
 	//ARMS & HANDS//
 	var/obj/item/clothing/arm_clothes = null
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES))
+	if(gloves && !(covered & ITEM_SLOT_GLOVES))
 		arm_clothes = gloves
 	else if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
 		arm_clothes = wear_suit
@@ -789,7 +788,7 @@
 
 	//LEGS & FEET//
 	var/obj/item/clothing/leg_clothes = null
-	if(shoes && !(obscured & ITEM_SLOT_FEET))
+	if(shoes && !(covered & ITEM_SLOT_FEET))
 		leg_clothes = shoes
 	else if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
 		leg_clothes = wear_suit
@@ -804,34 +803,9 @@
 /mob/living/carbon/human/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
 	if(sigreturn & BURNING_HANDLED)
-		return 0
-
-	burn_clothing(seconds_per_tick, fire_handler.stacks)
-	if(HAS_TRAIT(src, TRAIT_RESISTHEAT))
 		return
-
-	if(!(sigreturn & BURNING_SKIP_PROTECTION))
-		if(get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
-			return 0
-		if(get_insulation(FIRE_SUIT_MAX_TEMP_PROTECT) >= 0.9)
-			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * 0.25 * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
-
-		adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
-
-		var/fire_armor = (100 - src.getarmor(null, FIRE)) * 0.01
-
-		switch(times_fired)
-			if(0 to 3)
-				apply_damage((0.20 * fire_handler.stacks * fire_armor), BURN)
-			if(4 to 6)
-				apply_damage((0.30 * fire_handler.stacks * fire_armor), BURN)
-			if(7 to 9)
-				apply_damage((0.40 * fire_handler.stacks * fire_armor), BURN)
-			if(10 to INFINITY)
-				apply_damage((0.50 * fire_handler.stacks * fire_armor), BURN)
-
-	. = ..()
-	if(.)
-		add_mood_event("on_fire", /datum/mood_event/on_fire)
-		add_mob_memory(/datum/memory/was_burning)
-	return .
+	burn_clothing(seconds_per_tick, times_fired, fire_handler.stacks)
+	var/no_protection = FALSE
+	if(sigreturn & BURNING_SKIP_PROTECTION)
+		no_protection = TRUE
+	fire_handler.harm_human(seconds_per_tick, times_fired, no_protection)

@@ -22,19 +22,19 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
+	adjust_visor(user)
+
+/obj/item/clothing/mask/bandana/adjust_visor(mob/living/user)
 	if(slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
-		return
-	adjustmask(user)
+		return FALSE
+	return ..()
 
-/obj/item/clothing/mask/bandana/adjustmask(mob/living/user)
+/obj/item/clothing/mask/bandana/visor_toggling()
 	. = ..()
-	if(mask_adjusted)
-		worn_icon_state += "_up"
+	if(up)
 		undyeable = TRUE
 	else
-		inhand_icon_state = initial(inhand_icon_state)
-		worn_icon_state = initial(worn_icon_state)
 		undyeable = initial(undyeable)
 
 /obj/item/clothing/mask/bandana/click_alt(mob/living/user)

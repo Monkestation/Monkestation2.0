@@ -9,7 +9,7 @@ import { Window } from '../layouts';
 const ROWS = 5;
 const COLUMNS = 6;
 
-const BUTTON_DIMENSIONS = '50px';
+const BUTTON_DIMENSIONS = '64px';
 
 type GridSpotKey = string;
 
@@ -79,65 +79,64 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
   },
 };
 
-const SLOTS: Record<
-  string,
-  {
-    displayName: string;
-    gridSpot: GridSpotKey;
-    image?: string;
-    additionalComponent?: React.JSX.Element;
-  }
-> = {
+type StripSlot = {
+  displayName: string;
+  gridSpot: GridSpotKey;
+  image?: string;
+  additionalComponent?: React.JSX.Element;
+};
+
+const SLOTS: Record<string, StripSlot> = {
   eyes: {
     displayName: 'eyewear',
-    gridSpot: getGridSpotKey([0, 1]),
+    gridSpot: getGridSpotKey([0, 0]),
     image: 'inventory-glasses.png',
   },
 
   head: {
     displayName: 'headwear',
-    gridSpot: getGridSpotKey([0, 2]),
+    gridSpot: getGridSpotKey([0, 1]),
     image: 'inventory-head.png',
   },
 
   neck: {
     displayName: 'neckwear',
-    gridSpot: getGridSpotKey([1, 1]),
+    gridSpot: getGridSpotKey([1, 0]),
     image: 'inventory-neck.png',
   },
 
   mask: {
     displayName: 'mask',
-    gridSpot: getGridSpotKey([1, 2]),
+    gridSpot: getGridSpotKey([1, 1]),
     image: 'inventory-mask.png',
   },
 
   pet_collar: {
     displayName: 'collar',
-    gridSpot: getGridSpotKey([1, 2]),
+    gridSpot: getGridSpotKey([1, 0]),
     image: 'inventory-collar.png',
   },
 
   ears: {
     displayName: 'earwear',
-    gridSpot: getGridSpotKey([1, 3]),
+    gridSpot: getGridSpotKey([0, 2]),
     image: 'inventory-ears.png',
   },
 
   parrot_headset: {
     displayName: 'headset',
-    gridSpot: getGridSpotKey([1, 3]),
+    gridSpot: getGridSpotKey([0, 2]),
     image: 'inventory-ears.png',
   },
 
   handcuffs: {
     displayName: 'handcuffs',
-    gridSpot: getGridSpotKey([1, 4]),
+    gridSpot: getGridSpotKey([3, 5]),
   },
 
   legcuffs: {
     displayName: 'legcuffs',
-    gridSpot: getGridSpotKey([1, 5]),
+    gridSpot: getGridSpotKey([4, 2]),
   },
 
   jumpsuit: {
@@ -154,7 +153,7 @@ const SLOTS: Record<
 
   gloves: {
     displayName: 'gloves',
-    gridSpot: getGridSpotKey([2, 3]),
+    gridSpot: getGridSpotKey([3, 4]),
     image: 'inventory-gloves.png',
   },
 
@@ -172,45 +171,59 @@ const SLOTS: Record<
     additionalComponent: <CornerText align="right">L</CornerText>,
   },
 
+  upper_right_hand: {
+    displayName: 'upper right hand',
+    gridSpot: getGridSpotKey([1, 4]),
+    image: 'inventory-hand_r.png',
+    additionalComponent: <CornerText align="left">(U) R</CornerText>,
+  },
+
+  upper_left_hand: {
+    displayName: 'upper left hand',
+    gridSpot: getGridSpotKey([1, 5]),
+    image: 'inventory-hand_l.png',
+    additionalComponent: <CornerText align="right">L (U)</CornerText>,
+  },
+
   shoes: {
     displayName: 'shoes',
-    gridSpot: getGridSpotKey([3, 2]),
+    gridSpot: getGridSpotKey([4, 1]),
     image: 'inventory-shoes.png',
   },
 
   suit_storage: {
     displayName: 'suit storage item',
-    gridSpot: getGridSpotKey([4, 0]),
+    gridSpot: getGridSpotKey([2, 0]),
     image: 'inventory-suit_storage.png',
   },
 
   id: {
     displayName: 'ID',
-    gridSpot: getGridSpotKey([4, 1]),
+    gridSpot: getGridSpotKey([4, 0]),
     image: 'inventory-id.png',
   },
 
   belt: {
     displayName: 'belt',
-    gridSpot: getGridSpotKey([4, 2]),
+    gridSpot: getGridSpotKey([3, 1]),
     image: 'inventory-belt.png',
   },
 
   back: {
     displayName: 'backpack',
-    gridSpot: getGridSpotKey([4, 3]),
+    gridSpot: getGridSpotKey([1, 2]),
     image: 'inventory-back.png',
   },
 
   left_pocket: {
     displayName: 'left pocket',
-    gridSpot: getGridSpotKey([4, 4]),
+    gridSpot: getGridSpotKey([3, 0]),
     image: 'inventory-pocket.png',
   },
 
   right_pocket: {
     displayName: 'right pocket',
-    gridSpot: getGridSpotKey([4, 5]),
+    gridSpot: getGridSpotKey([3, 2]),
     image: 'inventory-pocket.png',
   },
 };
@@ -218,6 +231,7 @@ const SLOTS: Record<
 enum ObscuringLevel {
   Completely = 1,
   Hidden = 2,
+  Inaccessible = 3,
 }
 
 type Interactable = {
@@ -242,6 +256,7 @@ type StripMenuItem =
           icon: string;
           name: string;
           alternate?: string[];
+          obscured: ObscuringLevel;
         }
       | {
           obscured: ObscuringLevel;
@@ -263,7 +278,9 @@ export const StripMenu = (props) => {
   }
 
   return (
-    <Window title={`Stripping ${data.name}`} width={400} height={400}>
+    // (64 + 6) * 6 + 6 = 426
+    // (64 + 6) * 5 + 6 + 31 (from title) =
+    <Window title={`Stripping ${data.name}`} width={426} height={387}>
       <Window.Content>
         <Stack fill vertical>
           {range(0, ROWS).map((row) => (
@@ -298,8 +315,8 @@ export const StripMenu = (props) => {
                     content = (
                       <Image
                         src={`data:image/jpeg;base64,${item.icon}`}
-                        height="100%"
-                        width="100%"
+                        width="64px"
+                        height="64px"
                         style={{
                           verticalAlign: 'middle',
                         }}
@@ -317,12 +334,15 @@ export const StripMenu = (props) => {
                             background: 'rgba(0, 0, 0, 0.6)',
                             position: 'absolute',
                             overflow: 'hidden',
-                            margin: '0px',
-                            maxWidth: '22px', // yes I know its not 20 or 25; they look bad. 22px is perfect
+                            margin: '0',
+                            width: '20px',
+                            height: '20px',
                             zIndex: '2',
                             left: `${idx === 0 ? '0' : undefined}`,
                             right: `${idx === 1 ? '0' : undefined}`,
                             bottom: '0',
+                            padding: '0',
+                            textAlign: 'center',
                           };
                           return (
                             <Button
@@ -335,6 +355,14 @@ export const StripMenu = (props) => {
                               }}
                               tooltip={alternateAction.text}
                               style={alternateActionStyle}
+                              disabled={
+                                item.obscured === ObscuringLevel.Inaccessible
+                              }
+                              opacity={
+                                item.obscured === ObscuringLevel.Inaccessible
+                                  ? 0.7
+                                  : 1
+                              }
                             >
                               <Icon name={alternateAction.icon} />
                             </Button>
@@ -342,7 +370,11 @@ export const StripMenu = (props) => {
                         },
                       );
                     }
-                  } else if ('obscured' in item) {
+                  } else if (
+                    'obscured' in item &&
+                    (item.obscured === ObscuringLevel.Hidden ||
+                      item.obscured === ObscuringLevel.Completely)
+                  ) {
                     content = (
                       <Icon
                         name={
@@ -352,9 +384,10 @@ export const StripMenu = (props) => {
                         }
                         size={3}
                         ml={0}
-                        mt={1.3}
+                        mt={2.5}
                         style={{
                           textAlign: 'center',
+                          verticalAlign: 'middle',
                           height: '100%',
                           width: '100%',
                         }}
@@ -397,11 +430,13 @@ export const StripMenu = (props) => {
                             padding: '0',
                           }}
                         >
-                          {slot.image && (
+                          {slot.image && !(item && 'name' in item) && (
                             <Image
                               className="centered-image"
                               src={resolveAsset(slot.image)}
                               opacity={0.7}
+                              width="64px"
+                              height="64px"
                             />
                           )}
 

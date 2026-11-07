@@ -49,6 +49,8 @@
 	SIGNAL_HANDLER
 
 	for(var/datum/disease/acute/disease in diseases)
+		if(HAS_TRAIT(eater, TRAIT_STRONG_STOMACH))
+			break
 		if(!disease.has_required_infectious_organ(eater, ORGAN_SLOT_STOMACH))
 			continue
 
@@ -64,6 +66,8 @@
 	try_infect(feeder, appendage_zone)
 
 	for(var/datum/disease/acute/disease in diseases)
+		if(HAS_TRAIT(drinker, TRAIT_STRONG_STOMACH))
+			break
 		if(!disease.has_required_infectious_organ(drinker, ORGAN_SLOT_STOMACH))
 			continue
 

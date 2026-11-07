@@ -9,7 +9,9 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/explorer
 	armor_type = /datum/armor/hooded_explorer
@@ -37,9 +39,9 @@
 	icon_state = "explorer"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hooded_explorer
 	resistance_flags = FIRE_PROOF
@@ -80,20 +82,20 @@
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
-/obj/item/clothing/mask/gas/explorer/adjustmask(mob/user)
+/obj/item/clothing/mask/gas/explorer/visor_toggling()
 	. = ..()
 	// adjusted = out of the way = smaller = can fit in boxes
-	w_class = mask_adjusted ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL
-	inhand_icon_state = mask_adjusted ? "[initial(inhand_icon_state)]_up" : initial(inhand_icon_state)
-	if(user)
-		user.update_held_items()
+	update_weight_class(up ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL)
 
+/obj/item/clothing/mask/gas/explorer/update_icon_state()
+	. = ..()
+	inhand_icon_state = "[initial(inhand_icon_state)][up ? "_up" : ""]"
 
 /obj/item/clothing/mask/gas/explorer/examine(mob/user)
 	. = ..()
-	if(mask_adjusted || w_class == WEIGHT_CLASS_SMALL)
+	if(up || w_class == WEIGHT_CLASS_SMALL)
 		return
 	. += span_notice("You could fit this into a box if you adjusted it.")
 
@@ -102,7 +104,7 @@
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
-	adjustmask()
+	visor_toggling()
 
 /obj/item/clothing/suit/hooded/cloak
 	icon = 'icons/obj/clothing/suits/armor.dmi'
@@ -115,6 +117,8 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()
@@ -158,6 +162,8 @@
 	desc = "A protective & concealing hood."
 	armor_type = /datum/armor/hooded_goliath
 	body_parts_covered = HEAD
+	cold_protection = HEAD
+	heat_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	clothing_flags = SNUG_FIT
@@ -176,7 +182,9 @@
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/hooded_explorer
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
@@ -184,6 +192,7 @@
 	. = ..()
 	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -209,9 +218,9 @@
 	armor_type = /datum/armor/cloak_drake
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
@@ -230,6 +239,7 @@
 /obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
@@ -239,11 +249,15 @@
 	desc = "The skull of a dragon."
 	armor_type = /datum/armor/cloak_drake
 	clothing_flags = SNUG_FIT
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/hooded/cloakhood/drake/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer
 	name = "godslayer armour"
@@ -252,9 +266,9 @@
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/godslayer
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
@@ -290,9 +304,9 @@
 	desc = "The horns and skull of a wendigo, held together by the remaining icey energy of a demonic miner."
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF

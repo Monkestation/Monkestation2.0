@@ -227,7 +227,6 @@
 	sleep(1 SECONDS)
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		operating = FALSE
@@ -270,7 +269,6 @@
 
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 	sleep(1 SECONDS)
 
 	operating = FALSE

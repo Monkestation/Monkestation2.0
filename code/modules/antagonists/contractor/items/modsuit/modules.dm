@@ -13,6 +13,7 @@
 	incompatible_modules = list(/obj/item/mod/module/baton_holster)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
+	required_slots = list(ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/baton_holster/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -57,10 +58,10 @@
 	This is a module that uses magnets to speed up the deployment and retraction time of your MODsuit."
 	complexity = 0 //we have fast deploy already, we dont need this to cost anything
 
-/obj/item/mod/module/springlock/contractor/on_suit_activation() // This module is actually *not* a death trap
+/obj/item/mod/module/springlock/contractor/on_part_activation() // This module is actually *not* a death trap
 	return
 
-/obj/item/mod/module/springlock/contractor/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/springlock/contractor/on_part_deactivation(deleting = FALSE)
 	return
 
 /// SCORPION - hook a target into baton range quickly and non-lethally
@@ -79,3 +80,4 @@
 	device = /obj/item/gun/magic/hook/contractor
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
+	required_slots = list(ITEM_SLOT_GLOVES)
