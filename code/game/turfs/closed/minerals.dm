@@ -271,7 +271,8 @@
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite = 4,
-		/turf/closed/mineral/artifact = 1,
+		/turf/closed/mineral/artifact = 4,
+		/turf/closed/mineral/mineral_sample = 4,
 	)
 
 /turf/closed/mineral/random/Initialize(mapload)

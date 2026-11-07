@@ -130,7 +130,7 @@
 /datum/species/ipc/proc/start_blending(mob/living/carbon/carbon)
 	blending = TRUE
 	carbon.Shake(2, 2, 10 SECONDS)
-	playsound(carbon, 'monkestation/code/modules/smithing/sounds/blend.ogg', 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
+	playsound(carbon, 'code/modules/smithing/sounds/blend.ogg', 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
 	addtimer(CALLBACK(src, PROC_REF(finish_blending), carbon), 10 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /datum/species/ipc/proc/finish_blending(mob/living/carbon/human/carbon)
