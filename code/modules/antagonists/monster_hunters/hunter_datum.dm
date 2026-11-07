@@ -279,7 +279,7 @@
 	name = "Monster Hunter (Preview Only)"
 
 	head = /obj/item/clothing/head/hats/queens_huntsman
-	mask = /obj/item/clothing/mask/monster_preview_mask
+	mask = /obj/item/clothing/mask/cursed_rabbit
 	suit = /obj/item/clothing/suit/armor/queens_huntsman
 	uniform = /obj/item/clothing/under/costume/queens_huntsman
 	gloves = /obj/item/clothing/gloves/queens_huntsman
