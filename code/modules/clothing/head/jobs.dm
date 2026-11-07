@@ -301,6 +301,7 @@
 
 //Security
 /obj/item/clothing/head/hats/hos
+	abstract_type = /obj/item/clothing/head/hats/hos
 	name = "generic head of security hat"
 	desc = "Please contact the Nanotrasen Costuming Department if found."
 	armor_type = /datum/armor/hats_hos

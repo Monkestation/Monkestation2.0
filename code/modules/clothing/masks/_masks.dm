@@ -1,4 +1,5 @@
 /obj/item/clothing/mask
+	abstract_type = /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
@@ -49,7 +50,11 @@
 
 /obj/item/clothing/mask/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][up ? "_up" : ""]"
+	var/base_state = base_icon_state || initial(icon_state)
+	// something else picked our sprite (reskins, vape screws, dead facehuggers), so leave it alone
+	if(icon_state != base_state && icon_state != "[base_state]_up")
+		return
+	icon_state = "[base_state][up ? "_up" : ""]"
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

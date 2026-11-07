@@ -623,9 +623,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/preloadTemplates() //see master controller setup
 	if(IsAdminAdvancedProcCall())
 		return
-	var/list/filelist = flist("[MAP_DIRECTORY_MAPS]/templates/")
+	var/list/filelist = flist("_maps/templates/")
 	for(var/map in filelist)
-		var/datum/map_template/T = new(path = "[MAP_DIRECTORY_MAPS]/templates/[map]", rename = "[map]")
+		var/datum/map_template/T = new(path = "_maps/templates/[map]", rename = "[map]")
 		map_templates[T.name] = T
 
 	preloadRuinTemplates()

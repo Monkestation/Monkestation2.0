@@ -2,6 +2,7 @@
 	name = "maintenance loot spawner"
 	desc = "Come on Lady Luck, spawn me a pair of sunglasses."
 	icon_state = "loot"
+	remove_if_cant_spawn = FALSE //don't remove stuff from the global maint list, which other can use.
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
 /obj/effect/spawner/random/maintenance/examine(mob/user)
