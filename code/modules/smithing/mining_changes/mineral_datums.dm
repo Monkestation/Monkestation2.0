@@ -3,7 +3,7 @@
 	var/name = "???"
 	var/list/base_traits = list()
 	var/weight = 10
-	var/icon_state = "mauxite"
+	var/icon_state = "miracle"
 
 /datum/mineral_sample_datum/miraclium
 	name = "miraclium"

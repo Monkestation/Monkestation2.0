@@ -3,7 +3,7 @@
 	desc = "Excavated from stone, it seems to have some unusal properties."
 
 	icon = 'goon/icons/materials.dmi'
-	icon_state = "mauxite"
+	icon_state = "miracle"
 
 	var/randomized_name = "???"
 
