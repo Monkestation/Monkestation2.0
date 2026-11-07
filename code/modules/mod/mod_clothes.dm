@@ -12,6 +12,10 @@
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
+/obj/item/clothing/head/mod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
+
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
@@ -31,6 +35,10 @@
 	cold_protection = CHEST|GROIN
 	item_flags = IMMUTABLE_SLOW
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
+
+/obj/item/clothing/suit/mod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
@@ -59,3 +67,31 @@
 	item_flags = IMMUTABLE_SLOW
 	item_flags = IGNORE_DIGITIGRADE
 	can_be_tied = FALSE
+
+/// Glasses part of a MODsuit.
+/obj/item/clothing/glasses/mod
+	name = "MOD glasses"
+	desc = "A pair of glasses for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-glasses"
+	base_icon_state = "glasses"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
+
+/// Tie part of a MODsuit.
+/obj/item/clothing/neck/mod
+	name = "MOD tie"
+	desc = "An tie for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-tie"
+	base_icon_state = "tie"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null

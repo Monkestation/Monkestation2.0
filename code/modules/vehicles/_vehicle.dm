@@ -1,4 +1,5 @@
 /obj/vehicle
+	abstract_type = /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
 	icon = 'icons/obj/vehicles.dmi'

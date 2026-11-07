@@ -1,4 +1,5 @@
 /obj/item/circuitboard/computer
+	abstract_type = /obj/item/circuitboard/computer
 	name = "Generic"
 	name_extension = "(Computer Board)"
 
