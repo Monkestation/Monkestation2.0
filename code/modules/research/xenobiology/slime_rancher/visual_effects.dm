@@ -1,5 +1,6 @@
 /// Overlay that only shows up where its owner's sprite is
 /obj/effect/abstract/visual_effect
+	abstract_type = /obj/effect/abstract/visual_effect
 	name = ""
 	alpha = 210
 	anchored = TRUE

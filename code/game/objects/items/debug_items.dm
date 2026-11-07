@@ -1,5 +1,8 @@
 /* This file contains standalone items for debug purposes. */
 
+/obj/item/debug
+	abstract_type = /obj/item/debug
+
 /obj/item/debug/human_spawner
 	name = "human spawner"
 	desc = "Spawn a human by aiming at a turf and clicking. Use in hand to change type."

@@ -1,4 +1,5 @@
 /obj/item/organ/internal/cyberimp/chest
+	abstract_type = /obj/item/organ/internal/cyberimp/chest
 	name = "chest-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_CHEST
