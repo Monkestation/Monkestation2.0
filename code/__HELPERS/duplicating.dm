@@ -70,17 +70,17 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 /**
  * # duplicate_object
  *
- * Makes a copy of a movable atom and transfers most vars over, barring GLOB.duplicate_forbidden_vars
+ * Makes a copy of an Atom and transfers most vars over, barring GLOB.duplicate_forbidden_vars
  * Args:
- * original - Movable atom being duplicated
+ * original - Atom being duplicated
  * spawning_location - Turf where the duplicated atom will be spawned at.
  */
-/proc/duplicate_object(atom/movable/original, turf/spawning_location)
+/proc/duplicate_object(atom/original, turf/spawning_location)
 	RETURN_TYPE(original.type)
-	if(!original || !istype(original))
+	if(!istype(original))
 		return
 
-	var/atom/movable/made_copy = new original.type(spawning_location)
+	var/atom/made_copy = new original.type(spawning_location)
 
 	for(var/atom_vars in original.vars - GLOB.duplicate_forbidden_vars)
 		if(islist(original.vars[atom_vars]))
@@ -109,5 +109,4 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
 			copied_living.add_quirk(original_quirks.type)
 
-	made_copy.forceMove(spawning_location)
 	return made_copy
