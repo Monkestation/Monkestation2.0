@@ -699,6 +699,14 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	overlay_ignore_lighting = TRUE
 
+/obj/item/organ/internal/eyes/moth/generate_body_overlay(mob/living/carbon/human/parent)
+	// tundra fur comes with its own eyes
+	if(HAS_TRAIT(parent, TRAIT_GREYSCALE_TOGGLE) && parent.limb_style == LIMB_STYLE_TUNDRA)
+		eye_icon_state = "tundramotheyes"
+	else
+		eye_icon_state = initial(eye_icon_state)
+	return ..()
+
 /obj/item/organ/internal/eyes/lizard
 	name = "lizard eyes"
 	desc = "These eyes seem to glow."
