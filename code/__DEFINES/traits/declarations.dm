@@ -836,6 +836,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ALWAYS_RENDER	"always_render"
 /// Prevents mechcomp interaction components from interacting with this object.
 #define TRAIT_MECHCOMP_INTERACTION_BANNED "mechcomp_interaction_banned"
+/// Weapon carries the starborne enchantment, just used to track "hey this thing is already enchanted", bc starborne uses an element
+#define TRAIT_STARBORNE "starborne"
 
 // /atom/movable
 /// Things with this trait can pass through wooden barricades.
@@ -1456,5 +1458,3 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
 #define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
-
-
