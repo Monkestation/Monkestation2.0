@@ -140,6 +140,7 @@
 	desc = "A battered box holding a full set of a monster hunter's attire."
 	icon = 'icons/obj/items/monster_hunter.dmi'
 	icon_state = "armorbox"
+	illustration = null
 
 /obj/item/storage/box/queens_huntsman/PopulateContents()
 	new /obj/item/clothing/head/hats/queens_huntsman(src)
