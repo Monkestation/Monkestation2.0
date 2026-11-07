@@ -106,7 +106,7 @@ volume = 0.3
 
 [dont_starve]
 name = "Don't Starve"
-path = "sound/mobs/humanoids/voice/barks/dont_starve"
+path = "sound/mobs/humanoids/barks/dont_starve"
 
 [dont_starve.wilson]
 name = "Wilson"
