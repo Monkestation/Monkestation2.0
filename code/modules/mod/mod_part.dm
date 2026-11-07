@@ -25,11 +25,12 @@
 	overslotting = null
 	return ..()
 
+/// Sets the item this part datum tracks and hooks into its worn overlays
 /datum/mod_part/proc/set_item(obj/item/new_part)
 	part_item = new_part
 	RegisterSignal(part_item, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, PROC_REF(get_separate_worn_overlays))
 
-// If we're overslotting an item, add its visual as an underlay
+/// If we're overslotting an item, add its visual as an underlay
 /datum/mod_part/proc/get_separate_worn_overlays(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	SIGNAL_HANDLER
 

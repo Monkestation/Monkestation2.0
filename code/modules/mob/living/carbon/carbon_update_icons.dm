@@ -716,6 +716,7 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	. += new_leg_appearance_lower
 	return .
 
+/// Returns the default worn icon file for the given item slot
 /proc/get_default_icon_by_slot(slot_flag)
 	switch(slot_flag)
 		if(ITEM_SLOT_HEAD)
@@ -743,6 +744,7 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 		if(ITEM_SLOT_FEET)
 			return DEFAULT_SHOES_FILE
 
+/// Returns the default worn layer for the given item slot
 /proc/get_default_layer_by_slot(slot_flag)
 	switch(text2num(slot_flag))
 		if(ITEM_SLOT_HEAD)
