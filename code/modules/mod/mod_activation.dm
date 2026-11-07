@@ -127,7 +127,9 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MOD_PART_RETRACTING, user, part_datum) & MOD_CANCEL_RETRACTION)
 		return FALSE
+	var/unsealing = FALSE
 	if(active && part_datum.sealed)
+		unsealing = TRUE
 		if(instant)
 			seal_part(part, is_sealed = FALSE)
 		else if(!delayed_seal_part(part))
@@ -146,7 +148,8 @@
 	wearer.visible_message(span_notice("[wearer]'s [part.name] retract[part.p_s()] back into [src] with a mechanical hiss."),
 		span_notice("[part] retract[part.p_s()] back into [src] with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if (!unsealing)
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /// Starts the activation sequence, where parts of the suit activate one by one until the whole suit is on.
