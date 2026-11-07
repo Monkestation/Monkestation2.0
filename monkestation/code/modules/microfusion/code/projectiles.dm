@@ -45,7 +45,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living = target
-		// Each stack is about 10 seconds of burning, so this adds up fast on repeated hits
+		// Each stack is about 20 seconds of burning, so this adds up fast on repeated hits
 		living.adjust_fire_stacks(0.5)
 		living.ignite_mob()
 
