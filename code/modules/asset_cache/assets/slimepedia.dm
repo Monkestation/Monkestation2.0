@@ -6,7 +6,7 @@
 	var/alist/reactions_by_extract = reactions_by_extract()
 	var/alist/colors = alist()
 	var/alist/source_by_effect = alist()
-	for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
+	for(var/datum/slime_type/slime_type as anything in valid_subtypesof(/datum/slime_type))
 		var/id = slime_icon_prefix(slime_type)
 		var/obj/item/slime_extract/extract = slime_type::core_type
 		colors[id] = list(

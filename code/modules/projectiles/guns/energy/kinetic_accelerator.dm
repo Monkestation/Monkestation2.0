@@ -9,6 +9,7 @@
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
 	gun_flags = NOT_A_REAL_GUN
+	dual_wield_spread = 13 // Double PKA is a valid strat
 	///List of all mobs that projectiles fired from this gun will ignore.
 	var/list/ignored_mob_types
 	///List of all modkits currently in the kinetic accelerator.

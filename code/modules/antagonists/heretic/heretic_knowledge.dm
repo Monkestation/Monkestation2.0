@@ -10,7 +10,7 @@
  */
 /datum/heretic_knowledge
 	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
-	var/abstract_type = /datum/heretic_knowledge
+	abstract_type = /datum/heretic_knowledge
 	/// Name of the knowledge, shown to the heretic.
 	var/name = "Basic knowledge"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
