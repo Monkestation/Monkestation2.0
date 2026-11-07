@@ -19,8 +19,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish
 	name = "fish"
 	desc = "very bland"
-	/// The base type of fish, which is skipped by some unit test checks. MONKESTATION EDIT: we don't have a datum-level abstract_type
-	var/abstract_type = /obj/item/fish
+	abstract_type = /obj/item/fish
 	icon = 'icons/obj/aquarium/fish.dmi'
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
