@@ -9,6 +9,7 @@
 #define MARTIALART_PSYCHOBRAWL "psychotic brawling"
 #define MARTIALART_SLEEPINGCARP "sleeping carp"
 #define MARTIALART_WRESTLING "wrestling"
+#define MARTIALART_JUDO "corporate judo"
 #define MARTIALART_AWAKENEDDRAGON "awakened dragon"
 #define MARTIALART_SLASHER_GRAB "slasher grab"
 #define MARTIALART_BUSTERSTYLE "buster style"

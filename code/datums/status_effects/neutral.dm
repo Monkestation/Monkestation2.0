@@ -577,6 +577,51 @@
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
 
+/datum/status_effect/weapon_lock //prevents certain items from being used in interactions or gun attacks
+	id = "weapon_lock"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	//Don't know how a human would get a borg/stun but the cyberimp item sets worried me. So just in case.
+	var/list/bannedtypes = list(/obj/item/melee/baton, /obj/item/borg/stun)
+
+/datum/status_effect/weapon_lock/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	if(!.)
+		return
+	RegisterSignals(new_owner, list(COMSIG_USER_ITEM_INTERACTION, COMSIG_USER_ITEM_INTERACTION_SECONDARY), PROC_REF(block_interaction))
+	RegisterSignal(new_owner, COMSIG_MOB_TRYING_TO_FIRE_GUN, PROC_REF(block_ranged_fire))
+
+/datum/status_effect/weapon_lock/on_remove()
+	UnregisterSignal(owner, list(COMSIG_USER_ITEM_INTERACTION, COMSIG_USER_ITEM_INTERACTION_SECONDARY, COMSIG_MOB_TRYING_TO_FIRE_GUN))
+	return ..()
+
+/datum/status_effect/weapon_lock/proc/block_interaction(mob/living/source, atom/target, obj/item/weapon, click_parameters)
+	SIGNAL_HANDLER
+	if(!istype(source) || !isliving(target))
+		return
+	if(locked_check(source, target, weapon))
+		return ITEM_INTERACT_FAILURE
+
+/datum/status_effect/weapon_lock/proc/block_ranged_fire(mob/living/source, obj/item/weapon, atom/target, flag, params)
+	SIGNAL_HANDLER
+	if(!istype(source))
+		return
+	if(locked_check(source, target, weapon))
+		return COMPONENT_CANCEL_GUN_FIRE
+
+/datum/status_effect/weapon_lock/proc/locked_check(mob/living/attacker, atom/defender,  obj/item/weapon)
+	for(var/type in bannedtypes)
+		if(istype(weapon, type))
+			if(attacker == defender)
+				to_chat(attacker, span_warning("Remember, the path of Corporate Judo is strength through balance and increased market share—not the folly of striking yourself with crude implements."))
+			else
+				attacker.visible_message(span_userdanger("[attacker] freezes before striking, [attacker.p_their()] face giving off a pained expression!"), \
+					span_warning("You remember your Sensei's words: &quot;There is a time and place for everything...&quot; WAIT, YOU DON'T HAVE A SENSEI!"))
+			return TRUE
+	return FALSE
+
 // Stops knockback when someone is thrown against something. (See: [/atom/proc/hitby_react])
 /datum/status_effect/no_throw_back
 	id = "no_throw_back"

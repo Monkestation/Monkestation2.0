@@ -79,6 +79,7 @@
 	new /obj/item/storage/photo_album/hos(src)
 	new /obj/item/gps/security(src)
 	new /obj/item/bodycam_upgrade(src)
+	new /obj/item/storage/belt/security/blueshield/corpjudo(src)
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()

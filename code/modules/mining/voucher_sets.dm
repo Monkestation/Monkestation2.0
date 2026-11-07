@@ -238,6 +238,15 @@
 		/obj/item/shield/riot/flash,
 		)
 
+/datum/voucher_set/security/primary/judo // Paradise port
+	name = "Judo Belt"
+	description = "A belt that uses nanomachines to allow you to perform Judo while worn. Fight crime with your fists."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "judobelt"
+	set_items = list(
+		/obj/item/storage/belt/security/blueshield/corpjudo,
+	)
+
 /datum/voucher_set/security/utility/nv_hud
 	name = "Night Vision Security HUD"
 	description = "An advanced heads-up display that provides ID data and vision in complete darkness."
