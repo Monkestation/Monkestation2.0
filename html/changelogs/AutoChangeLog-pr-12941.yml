@@ -1,0 +1,5 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - bugfix: "Kinetic Hellhound now correctly states its mag size"
+  - bugfix: "Quartermaster's office is now spelled correctly on Deltastation"
