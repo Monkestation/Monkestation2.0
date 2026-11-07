@@ -293,15 +293,22 @@
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
-			heating = 0.1 KELVIN
+			heating = 5
+			if(isslime(affected_mob))
+				heating = rand(5, 20)
 		if(15 to 25)
-			heating = 0.33 KELVIN
+			heating = 10
+			if(isslime(affected_mob))
+				heating = rand(10, 20)
 		if(25 to 35)
-			heating = 0.66 KELVIN
+			heating = 15
+			if(isslime(affected_mob))
+				heating = rand(15, 20)
 		if(35 to INFINITY)
-			heating = 1.2 KELVIN
-
-	affected_mob.adjust_bodytemperature(heating * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(39 CELCIUS))
+			heating = 20
+			if(isslime(affected_mob))
+				heating = rand(20, 25)
+	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/consumable/frostoil
@@ -342,7 +349,7 @@
 			if(prob(5))
 				affected_mob.emote("shiver")
 
-	affected_mob.adjust_bodytemperature(cooling * REM * seconds_per_tick, min_temp = affected_mob.bodytemp_cold_damage_limit - 15 KELVIN)
+	affected_mob.adjust_bodytemperature(cooling * REM * seconds_per_tick, 50)
 	return ..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
@@ -593,7 +600,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	M.adjust_bodytemperature(0.2 KELVIN * REM * seconds_per_tick, 0, M.standard_body_temperature)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 0, M.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -605,7 +612,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, seconds_per_tick, times_fired)
-	target_mob.adjust_bodytemperature(WARM_DRINK KELVIN * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(45 CELCIUS))
+	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/flour

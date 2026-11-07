@@ -107,7 +107,7 @@
 	owner.current.adjustCloneLoss(-1 * (actual_regen * 4) * mult)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * mult) //adjustBrainLoss(-1 * (actual_regen * 4) * mult, 0)
 	if(in_coffin && in_torpor) // if we're in a coffin, in torpor, stabilize our body temperature.
-		owner.current.update_homeostasis_level(type, owner.current.standard_body_temperature, 10 KELVIN)
+		owner.current.adjust_bodytemperature(clamp(owner.current.get_body_temp_normal() - owner.current.bodytemperature, -10 KELVIN, 10 KELVIN))
 	if(!iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		return
 	var/mob/living/carbon/user = owner.current

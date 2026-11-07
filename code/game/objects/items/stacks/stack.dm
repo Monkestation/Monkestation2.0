@@ -10,6 +10,7 @@
  */
 
 /obj/item/stack
+	abstract_type = /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
@@ -75,6 +76,9 @@
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(new_amount != null && isnum(new_amount))
 		amount = new_amount
+	if(isnan(amount))
+		stack_trace("[sanitize(name)] generated with NaN sheets!")
+		return INITIALIZE_HINT_QDEL
 	while(amount > max_amount)
 		amount -= max_amount
 		new type(loc, max_amount, FALSE, mat_override, mat_amt)

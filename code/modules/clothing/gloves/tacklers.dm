@@ -3,9 +3,9 @@
 	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
 	icon_state = "tackle"
 	inhand_icon_state = null
+	cold_protection = HANDS
 	/// How much wearing these gloves affects fishing difficulty
 	var/fishing_modifier = -7
-
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	custom_premium_price = PAYCHECK_COMMAND * 3.5
@@ -71,9 +71,9 @@
 	tackle_range = 5
 	skill_mod = 3 // monkestation edit: 2 to 3, to compensate for the gripper buff
 
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 

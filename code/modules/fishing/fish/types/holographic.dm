@@ -118,7 +118,7 @@
 
 	visible_message(span_suicide("[user] slaps the [name] to their skin, causing it to slide under and meld in! It looks like [user.p_theyre()] trying to 0xF800F8 0x000000 [user.p_themselves()]!"))
 	for(var/obj/item/bodypart/limb in user.bodyparts)
-		limb.add_bodypart_overlay(new /datum/bodypart_overlay/texture/checkered)
+		limb.add_bodypart_texture(/datum/bodypart_texture/checkered, update = FALSE)
 
 	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!isnull(head))

@@ -117,7 +117,7 @@
 		alpha *= (total_alpha / length(materials))/255
 
 		if(alpha < previous_alpha * 0.9)
-			opacity = FALSE
+			set_opacity(FALSE)
 
 		if(material_flags & MATERIAL_GREYSCALE)
 			var/config_path = get_material_greyscale_config(main_material.type, greyscale_config)
@@ -250,7 +250,7 @@
 		else
 			set_greyscale(initial(greyscale_colors), initial(greyscale_config))
 		alpha = initial(alpha)
-		opacity = initial(opacity)
+		set_opacity(initial(opacity))
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		name = initial(name)

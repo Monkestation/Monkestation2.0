@@ -123,7 +123,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
-	on.set_light(2, 0.75, starlight_color)
+	on.set_light(l_outer_range = 2, l_power = 1, l_color = starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
 
 ///This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, amount, material_flags)

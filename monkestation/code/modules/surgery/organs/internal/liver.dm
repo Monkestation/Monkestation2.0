@@ -30,11 +30,11 @@
 	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
 		if(!organ_owner.getBruteLoss() && !organ_owner.getFireLoss())
 			return
-		if(organ_owner.get_skin_temperature() < organ_owner.bodytemp_cold_damage_limit)
+		if(organ_owner.bodytemperature < organ_owner.get_body_temp_cold_damage_limit())
 			to_chat(organ_owner, span_purple("Your membrane is too viscous to mend its wounds..."))
 			return
 		var/list/to_heal = rand(2) ? list(BRUTE, BURN) : list(BURN, BRUTE) // Randomize what is healed first
-		organ_owner.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, to_heal)
+		organ_owner.heal_ordered_damage(2.5 * REM * seconds_per_tick, to_heal)
 
 		if(organ_owner.blood_volume > BLOOD_VOLUME_SLIME_SPLIT)
 			organ_owner.adjustOrganLoss(
