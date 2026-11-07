@@ -89,7 +89,7 @@
 			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
-		wearer.update_clothing(slot_flags)
+		wearer.update_clothing(slot_flags|part.slot_flags)
 		SEND_SIGNAL(src, COMSIG_MOD_PART_DEPLOYED, user, part_datum)
 		if(user)
 			wearer.visible_message(span_notice("[wearer]'s [part.name] deploy[part.p_s()] with a mechanical hiss."),
@@ -142,7 +142,7 @@
 		var/obj/item/overslot = part_datum.overslotting
 		if(!QDELING(wearer) && !wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 			wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
-	wearer.update_clothing(slot_flags)
+	wearer.update_clothing(slot_flags|part.slot_flags)
 	if(!user)
 		return TRUE
 	wearer.visible_message(span_notice("[wearer]'s [part.name] retract[part.p_s()] back into [src] with a mechanical hiss."),
@@ -271,7 +271,6 @@
 		part.heat_protection = NONE
 		part.cold_protection = NONE
 		part.alternate_worn_layer = part_datum.unsealed_layer
-	generate_suit_mask()
 	wearer.update_clothing(part.slot_flags | slot_flags)
 	wearer.update_obscured_slots(part.visor_flags_inv)
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
@@ -318,7 +317,6 @@
 	update_speed()
 	if(!(locate(/obj/item/mod/module/chameleon) in modules)) // monkestation edit: janky bugfix for chameleon modules
 		update_icon_state()
-	generate_suit_mask()
 	var/updated_slots = slot_flags
 	for (var/slot_key in mod_parts)
 		updated_slots |= text2num(slot_key)
