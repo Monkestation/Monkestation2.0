@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Borg hyposprays can no longer inject more than 10u of knockout chems into a person at a time."
-  - balance: "Piercing borg hyposprays now have a 2-second delay if their target is wearing thick material, unless it's like, a nukie-borg injecting a nukie or such."
