@@ -1,5 +1,6 @@
 //Added by Jack Rost
 /obj/item/trash
+	abstract_type = /obj/item/trash
 	icon = 'icons/obj/service/janitor.dmi'
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'

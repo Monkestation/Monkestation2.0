@@ -10,11 +10,12 @@ permissions:
 jobs:
   stale:
     permissions:
+      issues: write # for actions/stale to close stale issues
       pull-requests: write # for actions/stale to close stale PRs
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/stale@v10
+      - uses: actions/stale@v11
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-message: "This issue has been inactive for long enough to be automatically marked as stale. This means it is at risk of being auto closed in ~ 7 days."

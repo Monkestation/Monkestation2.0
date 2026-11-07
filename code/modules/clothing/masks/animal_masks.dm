@@ -179,6 +179,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	cursed = TRUE
 
 /obj/item/clothing/mask/animal/small
+	abstract_type = /obj/item/clothing/mask/animal/small
 	name = "A small animal mask"
 	desc = "If you're seeing this, yell at a coder."
 	flags_inv = HIDEFACE|HIDESNOUT

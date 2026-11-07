@@ -298,6 +298,7 @@
 
 //Prophet helmet
 /obj/item/clothing/head/helmet/plate/crusader/prophet
+	abstract_type = /obj/item/clothing/head/helmet/plate/crusader/prophet
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	icon_state = null
