@@ -40,6 +40,14 @@
 	item = /obj/vehicle/ridden/monkey_ball
 	restricted_species = list(SPECIES_MONKEY, SPECIES_SIMIAN)
 
+/datum/uplink_item/species_restricted/jungle_arts_scroll
+	name = "Banana-Stained Scroll"
+	desc = "A scroll passed down by the most feral of simians. It teaches the user Jungle Arts, a primal martial art of biting \
+	and tail strikes that only comes out while in combat mode."
+	cost = 8
+	item = /obj/item/book/granter/martial/jungle_arts
+	restricted_species = list(SPECIES_SIMIAN)
+
 /datum/uplink_item/species_restricted/tribal_claw_scroll
 	name = "Silver-Scale Scroll"
 	desc = "A scroll with ancient heritage. It can teach the user the secrets of Tribal Claw, an offensive martial art reliant on one's claws and tail."
