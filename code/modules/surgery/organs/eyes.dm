@@ -713,7 +713,7 @@
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	eye_icon_state = "shadekin_eyes"
 	icon_state = "eyeballs-shadekin"
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	overlay_ignore_lighting = TRUE
 
