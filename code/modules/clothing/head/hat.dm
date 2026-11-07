@@ -1,4 +1,5 @@
 /obj/item/clothing/head/hats
+	abstract_type = /obj/item/clothing/head/hats
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 
@@ -305,6 +306,9 @@
 		inhand_icon_state = downsprite
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
+
+/obj/item/clothing/head/costume/nightcap
+	abstract_type = /obj/item/clothing/head/costume/nightcap
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"

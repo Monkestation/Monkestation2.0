@@ -1,0 +1,6 @@
+author: "V2LenKagamine"
+delete-after: True
+changes:
+  - rscadd: "'Ass Pic' smite. Spawns an ass pick, puts in targets hand if possible."
+  - rscadd: "Status affect 'Feeling funny';rotates client move by +-90/180 every 15 seconds."
+  - qol: "'Select Equipment' now requires 'R_SPAWN' permissions from 'R_FUN'"
