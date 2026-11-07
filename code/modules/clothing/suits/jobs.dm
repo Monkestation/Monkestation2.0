@@ -29,6 +29,11 @@
 	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+
+/obj/item/clothing/suit/apron/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
+	return replace_icon_legs(base_icon, legs)
 
 /datum/armor/suit_apron
 	bio = 50
@@ -106,6 +111,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/jacket_det_suit
+	heat_protection = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 
 
 
@@ -302,6 +309,8 @@
 		/obj/item/tank/internals,
 	)
 	armor_type = /datum/armor/jacket_curator
+	heat_protection = CHEST|ARMS
+	cold_protection = CHEST|ARMS
 
 
 

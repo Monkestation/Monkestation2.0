@@ -22,3 +22,6 @@
 
 /datum/movespeed_modifier/belt_satchel
 	variable = TRUE
+
+/datum/movespeed_modifier/hook_jawed
+	multiplicative_slowdown = 4

@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/jacket
+	abstract_type = /obj/item/clothing/suit/jacket
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	allowed = list(
@@ -12,9 +13,12 @@
 		/obj/item/storage/belt/holster,
 		)
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/toggle/jacket
+	abstract_type = /obj/item/clothing/suit/toggle/jacket
 
 /obj/item/clothing/suit/toggle/jacket/sweater
 	name = "sweater jacket"
@@ -43,7 +47,7 @@
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("fancy_coat", "/obj/item/clothing/suit/jacket/fancy")
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	greyscale_config = /datum/greyscale_config/fancy_coat
@@ -89,7 +93,7 @@
 	icon_state = "puffervest"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN
-
+	cold_protection = CHEST|GROIN
 	armor_type = /datum/armor/puffer_vest
 
 /datum/armor/puffer_vest

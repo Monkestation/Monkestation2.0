@@ -1,6 +1,7 @@
 #define DONUT_SPRINKLE_CHANCE 30
 
 /obj/item/food/donut
+	abstract_type = /obj/item/food/donut
 	name = "donut"
 	desc = "Goes great with robust coffee."
 	icon = 'icons/obj/food/donuts.dmi'
@@ -347,6 +348,7 @@
 //////////////////////////SLIME DONUTS/////////////////////////
 
 /obj/item/food/donut/jelly/slimejelly
+	abstract_type = /obj/item/food/donut/jelly/slimejelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	extra_reagent = /datum/reagent/toxin/slimejelly

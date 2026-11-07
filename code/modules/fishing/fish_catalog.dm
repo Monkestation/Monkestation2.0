@@ -1,17 +1,17 @@
 ///Book detailing where to get the fish and their properties.
-/obj/item/book/fish_catalog
+/obj/item/book/manual/fish_catalog
 	name = "Fish Encyclopedia"
 	desc = "Indexes all fish known to mankind (and related species)."
 	icon_state = "fishbook"
 	starting_content = "Lot of fish stuff" //book wrappers could use cleaning so this is not necessary
 
-/obj/item/book/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/book/manual/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "FishCatalog", name)
 		ui.open()
 
-/obj/item/book/fish_catalog/ui_static_data(mob/user)
+/obj/item/book/manual/fish_catalog/ui_static_data(mob/user)
 	. = ..()
 	var/static/fish_info
 	if(!fish_info)
@@ -37,13 +37,33 @@
 			else
 				fish_data["feed"] = "[AQUARIUM_COMPANY] Fish Feed"
 			fish_data["fishing_tips"] = build_fishing_tips(fish)
+			var/beauty_score = initial(fish.beauty)
+			switch(beauty_score)
+				if(-INFINITY to FISH_BEAUTY_DISGUSTING)
+					beauty_score = "OH HELL NAW!"
+				if(FISH_BEAUTY_DISGUSTING to FISH_BEAUTY_UGLY)
+					beauty_score = "☆☆☆☆☆"
+				if(FISH_BEAUTY_UGLY to FISH_BEAUTY_BAD)
+					beauty_score = "★☆☆☆☆"
+				if(FISH_BEAUTY_BAD to FISH_BEAUTY_NULL)
+					beauty_score = "★★☆☆☆"
+				if(FISH_BEAUTY_NULL to FISH_BEAUTY_GENERIC)
+					beauty_score = "★★★☆☆"
+				if(FISH_BEAUTY_GENERIC to FISH_BEAUTY_GOOD)
+					beauty_score = "★★★★☆"
+				if(FISH_BEAUTY_GOOD to FISH_BEAUTY_GREAT)
+					beauty_score = "★★★★★"
+				if(FISH_BEAUTY_GREAT to INFINITY)
+					beauty_score = "★★★★★★"
+			fish_data["beauty"] = beauty_score
 			fish_info += list(fish_data)
 		// TODO: Custom entries for unusual stuff
 
 	.["fish_info"] = fish_info
 	.["sponsored_by"] = AQUARIUM_COMPANY
 
-/obj/item/book/proc/bait_description(bait)
+/// Returns the name of the bait (or bait type) a fish likes
+/obj/item/book/manual/fish_catalog/proc/bait_description(bait)
 	if(ispath(bait))
 		var/obj/bait_item = bait
 		return initial(bait_item.name)
@@ -52,6 +72,9 @@
 		switch(special_identifier["Type"])
 			if("Foodtype")
 				return jointext(bitfield_to_list(special_identifier["Value"], FOOD_FLAGS_IC),",")
+			if("Reagent")
+				var/datum/reagent/prototype = special_identifier["Value"]
+				return "[initial(prototype.name)] (at least [special_identifier["Amount"]]u)"
 			else
 				stack_trace("Unknown bait identifier in fish favourite/disliked list")
 				return "SOMETHING VERY WEIRD"
@@ -59,7 +82,8 @@
 		//Here we handle descriptions of traits fish use as qualifiers
 		return "something special"
 
-/obj/item/book/fish_catalog/proc/build_fishing_tips(fish_type)
+/// Builds the list of tips on how and where to catch the given fish type
+/obj/item/book/manual/fish_catalog/proc/build_fishing_tips(fish_type)
 	var/obj/item/fish/fishy = fish_type
 	. = list()
 	//// Where can it be found - iterate fish sources, how should this handle key
@@ -101,7 +125,7 @@
 			.["difficulty"] = "Hard"
 	return .
 
-/obj/item/book/fish_catalog/ui_assets(mob/user)
+/obj/item/book/manual/fish_catalog/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet_batched/fish)
 	)

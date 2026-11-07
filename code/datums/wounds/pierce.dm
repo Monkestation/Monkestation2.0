@@ -100,7 +100,7 @@
 		return
 
 	if(limb.can_bleed())
-		if(!HAS_TRAIT(victim, TRAIT_RESISTCOLD) && victim.get_skin_temperature() < victim.bodytemp_cold_damage_limit)
+		if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
 			adjust_blood_flow(-0.1 * seconds_per_tick)
 			if(QDELETED(src))
 				return

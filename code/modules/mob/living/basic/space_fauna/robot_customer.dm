@@ -15,8 +15,8 @@
 	sentience_type = SENTIENCE_ARTIFICIAL
 
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = TCMB
-	bodytemp_heat_damage_limit = T0C + 1000
+	minimum_survivable_temperature = TCMB
+	maximum_survivable_temperature = T0C + 1000
 
 	ai_controller = /datum/ai_controller/robot_customer
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"

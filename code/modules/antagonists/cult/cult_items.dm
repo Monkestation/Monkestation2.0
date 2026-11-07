@@ -545,9 +545,9 @@ Striking a noncultist, however, will tear their flesh."}
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
 	armor_type = /datum/armor/hooded_cult_hoodie
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-
+	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
 /datum/armor/hooded_cult_hoodie
@@ -571,9 +571,9 @@ Striking a noncultist, however, will tear their flesh."}
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	armor_type = /datum/armor/hooded_cultrobes
 	flags_inv = HIDEJUMPSUIT
-	// cold_protection = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	// heat_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 	/// Whether the hood is flipped up
@@ -604,12 +604,20 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_hoodalt"
 	inhand_icon_state = null
 
+/obj/item/clothing/head/hooded/cult_hoodie/alt/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/cult)
+
 /obj/item/clothing/suit/hooded/cultrobes/alt
 	name = "cultist robes"
 	desc = "An armored set of robes worn by the followers of Nar'Sie."
 	icon_state = "cultrobesalt"
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/alt
+
+/obj/item/clothing/suit/hooded/cultrobes/alt/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/cult)
 
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost
 	item_flags = DROPDEL
@@ -674,6 +682,10 @@ Striking a noncultist, however, will tear their flesh."}
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 
+/obj/item/clothing/suit/hooded/cultrobes/hardened/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/cult)
+
 /datum/armor/cultrobes_hardened
 	melee = 50
 	bullet = 40
@@ -697,6 +709,10 @@ Striking a noncultist, however, will tear their flesh."}
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+
+/obj/item/clothing/head/hooded/cult_hoodie/hardened/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/cult)
 
 /datum/armor/cult_hoodie_hardened
 	melee = 50

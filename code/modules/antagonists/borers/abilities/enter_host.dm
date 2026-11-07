@@ -96,8 +96,7 @@
 	var/obj/item/organ/internal/borer_body/borer_organ = new(target)
 	borer_organ.borer = owner
 	borer_organ.Follow_Insert(target, ORGAN_SLOT_BRAIN) // The worm follows the brain
-	user.bodytemp_heat_damage_limit = target.bodytemp_heat_damage_limit
-	user.bodytemp_cold_damage_limit = target.bodytemp_cold_damage_limit
+	user.set_survivable_temperatures(target.get_body_temp_cold_damage_limit(), target.get_body_temp_heat_damage_limit())
 
 	var/turf/human_turftwo = get_turf(target)
 	var/logging_text = "[key_name(user)] went into [key_name(target)] at [loc_name(human_turftwo)]"

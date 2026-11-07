@@ -18,8 +18,10 @@
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
+	/// Set to true to prevent it from being carved out of a block
+	var/uncarveable = FALSE
 	/// Abstract root type
-	var/abstract_type = /obj/structure/statue
+	abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()
@@ -247,7 +249,7 @@
 	custom_materials = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
 	impressiveness = 100
-	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
+	uncarveable = TRUE
 
 ///////////Goliath//////////////////////////////////////////////////
 /obj/structure/statue/goliath
@@ -265,7 +267,7 @@
 	icon_state = "shrimp"
 	max_integrity = 542149 // vaguely leet for SHRIMP. vaguely. barely.
 	impressiveness = 100
-	abstract_type = /obj/structure/statue/shrimp //This one is uncarvable
+	uncarveable = TRUE
 
 ///////////Other Stuff//////////////////////////////////////////////
 /obj/item/chisel
@@ -544,7 +546,7 @@ Moving interrupts
 	. = list()
 	for(var/statue_type in subtypesof(/obj/structure/statue) - /obj/structure/statue/custom)
 		var/obj/structure/statue/S = new statue_type()
-		if(!S.icon_state || S.abstract_type == S.type || !S.custom_materials)
+		if(!S.icon_state || S.abstract_type == S.type || S.uncarveable || !S.custom_materials)
 			continue
 		.[S.type] = S.custom_materials
 		qdel(S)

@@ -85,6 +85,7 @@
  * Compiled by Aygar
  */
 /obj/machinery
+	abstract_type = /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 	desc = "Some kind of machine."
