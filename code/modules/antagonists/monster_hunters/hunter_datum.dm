@@ -278,12 +278,14 @@
 /datum/outfit/monsterhunter
 	name = "Monster Hunter (Preview Only)"
 
-	l_hand = /obj/item/knife/butcher
-	mask = /obj/item/clothing/mask/monster_preview_mask
-	uniform = /obj/item/clothing/under/suit/black
-	suit =  /obj/item/clothing/suit/hooded/techpriest
-	head = /obj/item/clothing/head/hooded/techpriest
-	gloves = /obj/item/clothing/gloves/color/white
+	head = /obj/item/clothing/head/hats/queens_huntsman
+	mask = /obj/item/clothing/mask/cursed_rabbit
+	suit = /obj/item/clothing/suit/armor/queens_huntsman
+	uniform = /obj/item/clothing/under/costume/queens_huntsman
+	gloves = /obj/item/clothing/gloves/queens_huntsman
+	shoes = /obj/item/clothing/shoes/queens_huntsman
+	l_hand = /obj/item/melee/trick_weapon/beast_claw
+	r_hand = /obj/item/gun/ballistic/revolver/hunter_revolver
 
 /// Called when using admin tools to give antag status
 /datum/antagonist/monsterhunter/admin_add(datum/mind/new_owner, mob/admin)

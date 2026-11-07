@@ -93,6 +93,9 @@
 		else if(hunter_antag.rabbits_spotted == 1) //our second bnnuy!
 			give_gun(user)
 			extra_logs += "the hunter's revolver"
+		else if(hunter_antag.rabbits_spotted == 2)
+			user.put_in_hands(new /obj/item/storage/box/queens_huntsman(drop_location()))
+			extra_logs += "the huntsman kit"
 	user.put_in_hands(new /obj/item/rabbit_eye(drop_location()))
 	hunter_antag?.rabbits -= src
 	var/msg = "claimed a white rabbit at [AREACOORD(src)]"
