@@ -4,6 +4,7 @@
  * Bike Horns
  * Air Horns
  * Canned Laughter
+ * Noisemaker
  */
 
 /*
@@ -242,3 +243,78 @@
 	icon_state = "laughter"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/laughter = 50)
+/*
+ * Noisemaker - Clown Soundboard
+ */
+/obj/item/noisemaker
+	name = "\improper noisemaker"
+	desc = "A revolutionary technology imported directly from Clown Plant."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "noisemaker"
+	inhand_icon_state = "noisemaker"
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_POCKETS
+	w_class = WEIGHT_CLASS_SMALL
+	throw_speed = 3
+	throw_range = 7
+	attack_verb_continuous = list("POWS")
+	attack_verb_simple = list("POW")
+	COOLDOWN_DECLARE(noisemaker_cooldown)
+	var/sound_effects = list(
+							'sound/items/bikehorn.ogg',
+							'sound/items/airhorn2.ogg',
+							'sound/hallucinations/behind_you1.ogg',
+							'sound/voice/beepsky/iamthelaw.ogg',
+							'sound/voice/beepsky/justice.ogg',
+							'sound/voice/cluwne/laugh/cluwne_laugh1.ogg',
+							'sound/voice/cluwne/laugh/cluwne_laugh2.ogg',
+							'sound/voice/cluwne/scream/cluwne_scream1.ogg',
+							'sound/voice/cluwne/scream/cluwne_scream2.ogg',
+							'sound/misc/scary_horn.ogg',
+							'sound/voice/terror.ogg',
+							'sound/voice/weh.ogg',
+							'sound/weapons/flash.ogg',
+							'sound/weapons/laser.ogg',
+							'sound/weapons/smash.ogg',
+							'sound/misc/anime.ogg',
+							'sound/misc/bang.ogg',
+							'sound/misc/guitarreverb.ogg',
+							'sound/misc/monkeystorm.ogg',
+							'sound/misc/emergency_meeting.ogg',
+							'sound/misc/spinal_laugh.ogg',
+							'sound/effects/adminhelp.ogg',
+							'sound/effects/supermatter.ogg',
+
+							)
+	var/current_sound = 'sound/items/bikehorn.ogg'
+	var/cooldown_time = 5 SECONDS //Subject to change
+	var/extra_sound_range = 0
+	var/sound_volume = 30
+
+/obj/item/noisemaker/attack_self(mob/user)
+	make_noise()
+	..()
+
+/obj/item/noisemaker/attack()
+	make_noise()
+	..()
+
+/obj/item/noisemaker/proc/make_noise()
+	if(!COOLDOWN_FINISHED(src, noisemaker_cooldown))
+		return
+	COOLDOWN_START(src, noisemaker_cooldown, cooldown_time)
+	playsound(src, current_sound, sound_volume, FALSE, extra_sound_range)
+
+/obj/item/noisemaker/attack_self_secondary(mob/user) //Selecting the sound to play
+	current_sound = tgui_input_list(user, "Select a sound", "Noisemaker", sort_list(sound_effects))
+
+/obj/item/noisemaker/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] sticks [src] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, current_sound, sound_volume * 2, FALSE, 10) //Play the selected sfx at double volume and add 10 to the range
+	return BRUTELOSS
+
+/obj/item/noisemaker/emag_act(mob/living/user)
+	user.visible_message(span_warning("The [src] flashes wildly!"))
+	cooldown_time = 0.5 SECONDS //Lower the cooldown to half a second
+	extra_sound_range = 5 //Adds 5 tiles to the sound's range
+	sound_volume = 60 //Sets the double to triple the normal
+

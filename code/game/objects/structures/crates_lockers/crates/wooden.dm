@@ -18,6 +18,7 @@
 
 /obj/structure/closet/crate/wooden/toy/PopulateContents()
 	. = ..()
+	new /obj/item/noisemaker/(src)
 	new /obj/item/megaphone/clown(src)
 	new /obj/item/reagent_containers/cup/soda_cans/canned_laughter(src)
 	new /obj/item/pneumatic_cannon/pie(src)
