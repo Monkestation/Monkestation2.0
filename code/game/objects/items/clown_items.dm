@@ -260,30 +260,29 @@
 	attack_verb_simple = list("POW")
 	COOLDOWN_DECLARE(noisemaker_cooldown)
 	var/sound_effects = list(
-							'sound/items/bikehorn.ogg',
-							'sound/items/airhorn2.ogg',
-							'sound/hallucinations/behind_you1.ogg',
-							'sound/voice/beepsky/iamthelaw.ogg',
-							'sound/voice/beepsky/justice.ogg',
-							'sound/voice/cluwne/laugh/cluwne_laugh1.ogg',
-							'sound/voice/cluwne/laugh/cluwne_laugh2.ogg',
-							'sound/voice/cluwne/scream/cluwne_scream1.ogg',
-							'sound/voice/cluwne/scream/cluwne_scream2.ogg',
-							'sound/misc/scary_horn.ogg',
-							'sound/voice/terror.ogg',
-							'sound/voice/weh.ogg',
-							'sound/weapons/flash.ogg',
-							'sound/weapons/laser.ogg',
-							'sound/weapons/smash.ogg',
-							'sound/misc/anime.ogg',
-							'sound/misc/bang.ogg',
-							'sound/misc/guitarreverb.ogg',
-							'sound/misc/monkeystorm.ogg',
-							'sound/misc/emergency_meeting.ogg',
-							'sound/misc/spinal_laugh.ogg',
-							'sound/effects/adminhelp.ogg',
-							'sound/effects/supermatter.ogg',
-
+							"Bikehorn" = 'sound/items/bikehorn.ogg',
+							"Airhorn" = 'sound/items/airhorn2.ogg',
+							"Behind You" = 'sound/hallucinations/behind_you1.ogg',
+							"I am the Law" = 'sound/voice/beepsky/iamthelaw.ogg',
+							"Prepare for Justice" = 'sound/voice/beepsky/justice.ogg',
+							"Cluwne Laugh 1" = 'sound/voice/cluwne/laugh/cluwne_laugh1.ogg',
+							"Cluwne Laugh 2" = 'sound/voice/cluwne/laugh/cluwne_laugh2.ogg',
+							"Cluwne Scream 1" = 'sound/voice/cluwne/scream/cluwne_scream1.ogg',
+							"Cluwne Scream 2" = 'sound/voice/cluwne/scream/cluwne_scream2.ogg',
+							"Scary Horn" = 'sound/misc/scary_horn.ogg',
+							"Terror" = 'sound/voice/terror.ogg',
+							"Weh" = 'sound/voice/weh.ogg',
+							"Flash" = 'sound/weapons/flash.ogg',
+							"Laser" = 'sound/weapons/laser.ogg',
+							"Smash" = 'sound/weapons/smash.ogg',
+							"Anime" = 'sound/misc/anime.ogg',
+							"Bang" = 'sound/misc/bang.ogg',
+							"Guitar Reverb" = 'sound/misc/guitarreverb.ogg',
+							"Monkeystorm" = 'sound/misc/monkeystorm.ogg',
+							"Emergency Meeting" = 'sound/misc/emergency_meeting.ogg',
+							"Skeletal Laugh" = 'sound/misc/spinal_laugh.ogg',
+							"Bwoink" = 'sound/effects/adminhelp.ogg',
+							"Supermatter" = 'sound/effects/supermatter.ogg',
 							)
 	var/current_sound = 'sound/items/bikehorn.ogg'
 	var/cooldown_time = 5 SECONDS //Subject to change
@@ -305,7 +304,7 @@
 	playsound(src, current_sound, sound_volume, FALSE, extra_sound_range)
 
 /obj/item/noisemaker/attack_self_secondary(mob/user) //Selecting the sound to play
-	current_sound = tgui_input_list(user, "Select a sound", "Noisemaker", sort_list(sound_effects))
+	current_sound = sound_effects[tgui_input_list(user, "Select a sound", "Noisemaker", sort_list(sound_effects))]
 
 /obj/item/noisemaker/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] sticks [src] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
