@@ -2,6 +2,7 @@
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
+	examine_thats = "This is"
 	icon = 'icons/mob/human/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE

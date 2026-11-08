@@ -30,6 +30,7 @@ type Data = {
   notice_message: string;
   requests: Request[];
   messages: Message[];
+  is_on_station: BooleanLike;
 };
 
 type Request = {
@@ -166,7 +167,7 @@ const HackedScreen = (props) => {
 
 const MainScreenAuth = (props) => {
   const { act, data } = useBackend<Data>();
-  const { status, is_malf, password } = data;
+  const { status, is_malf, password, is_on_station } = data;
   const [auth_password, setPassword] = useLocalState(
     'input_password',
     password,
@@ -244,12 +245,17 @@ const MainScreenAuth = (props) => {
           </Table.Cell>
           <Table.Cell>Clears request console logs</Table.Cell>
         </Table.Row>
-        <Table.Row>
-          <Table.Cell>
-            <Button content={'Set Custom Key'} onClick={() => act('set_key')} />
-          </Table.Cell>
-          <Table.Cell>Changes decryption key</Table.Cell>
-        </Table.Row>
+        {!!is_on_station && (
+          <Table.Row>
+            <Table.Cell>
+              <Button
+                content={'Set Custom Key'}
+                onClick={() => act('set_key')}
+              />
+            </Table.Cell>
+            <Table.Cell>Changes decryption key</Table.Cell>
+          </Table.Row>
+        )}
         <Table.Row>
           <Table.Cell>
             <Button
