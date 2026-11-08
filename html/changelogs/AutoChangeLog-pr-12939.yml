@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - qol: "Trying to hack the R&D console as a space ninja now pushes you to hack the server instead."
