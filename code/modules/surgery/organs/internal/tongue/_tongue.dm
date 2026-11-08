@@ -607,6 +607,12 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	languages_native = list(/datum/language/nekomimetic)
 	organ_traits = list(TRAIT_FISH_EATER)
 
+/obj/item/organ/internal/tongue/shadekin
+	name = "shadekin tongue"
+	desc = "Mar!"
+	say_mod = "mars"
+	languages_native = list(/datum/language/marish)
+
 /obj/item/organ/internal/tongue/bananium
 	name = "bananium tongue"
 	desc = "A bananium geode mostly used for honking."

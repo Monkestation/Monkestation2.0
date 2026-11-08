@@ -207,6 +207,7 @@
 #define SPECIES_DRACONIC_SKELETON "draconic_skeleton"
 #define SPECIES_WEREWOLF "werewolf"
 #define SPECIES_ORNITHID "ornithid"
+#define SPECIES_SHADEKIN "shadekin"
 
 
 // Like species IDs, but not specifically attached a species.
