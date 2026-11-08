@@ -1,6 +1,0 @@
-author: "tattax"
-delete-after: True
-changes:
-  - rscadd: "you can now switch between plasmaman suit styles using metal and crowbars"
-  - bugfix: "winter hoods now don't set you ablaze anymore when you toggle them as plasmaman"
-  - image: "changed bulky plasmaman helmet icon slightly (and all variants with it)"
