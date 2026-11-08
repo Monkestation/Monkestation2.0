@@ -72,20 +72,25 @@
 	if(abstract_type == type)
 		.[span_hypnophrase("abstract")] = "This is an abstract concept, you should report this to a strange entity called GITHUB!"
 
-	if(resistance_flags & INDESTRUCTIBLE)
+	var/signal_flags = SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, user)
+	var/examine_resistance_flags = resistance_flags
+	if(signal_flags & EXAMINE_RESISTANCE_OVERRIDE)
+		examine_resistance_flags = signal_flags
+
+	if(examine_resistance_flags & INDESTRUCTIBLE)
 		.["indestructible"] = "It is extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		if(resistance_flags & LAVA_PROOF)
+		if(examine_resistance_flags & LAVA_PROOF)
 			.["lava-proof"] = "It is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
-		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+		if(examine_resistance_flags & (ACID_PROOF | UNACIDABLE))
 			.["acid-proof"] = "It looks pretty robust! It'd probably be able to withstand acid!"
-		if(resistance_flags & FREEZE_PROOF)
+		if(examine_resistance_flags & FREEZE_PROOF)
 			.["freeze-proof"] = "It is made of cold-resistant materials."
-		if(resistance_flags & FIRE_PROOF)
+		if(examine_resistance_flags & FIRE_PROOF)
 			.["fire-proof"] = "It is made of fire-retardant materials."
-		if(resistance_flags & SHUTTLE_CRUSH_PROOF)
+		if(examine_resistance_flags & SHUTTLE_CRUSH_PROOF)
 			.["crush-proof"] = "It is extremely solid. It should be able to withstand being run over by a shuttle!"
-		if(resistance_flags & FLAMMABLE)
+		if(examine_resistance_flags & FLAMMABLE)
 			.["flammable"] = "It looks like it could easily catch on fire."
 
 	if(flags_1 & HOLOGRAM_1)

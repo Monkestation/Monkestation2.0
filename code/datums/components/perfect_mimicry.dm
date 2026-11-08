@@ -52,6 +52,9 @@
 	mimic_ability.update_mimic_mode(FALSE)
 	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
 
+/datum/component/perfect_mimicry/proc/override_examine_flags(datum/source, mob/user)
+	return spoofed_flags | EXAMINE_RESISTANCE_OVERRIDE
+
 /datum/component/perfect_mimicry/proc/is_allowed_object(atom/mimic_target)
 	if(!isitem(mimic_target))
 		return FALSE
@@ -123,6 +126,7 @@
 	spoofed_flags = new_object.resistance_flags
 	new_object.resistance_flags &= ~MIMIC_SPOOF_RESIST_MASK
 	new_object.obj_flags |= CAN_BE_HIT
+	RegisterSignal(new_object, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, PROC_REF(override_examine_flags))
 
 	return new_object
 
@@ -141,7 +145,7 @@
 /datum/component/perfect_mimicry/proc/stop_mimicry()
 	if(!mimicked_object)
 		return FALSE
-	UnregisterSignal(mimicked_object, COMSIG_QDELETING)
+	UnregisterSignal(mimicked_object, list(COMSIG_QDELETING, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
 	if(mimicked_object.atom_storage)
