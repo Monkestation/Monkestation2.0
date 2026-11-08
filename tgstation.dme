@@ -4595,6 +4595,7 @@
 #include "code\modules\clothing\outfits\gnome.dm"
 #include "code\modules\clothing\outfits\henchman.dm"
 #include "code\modules\clothing\outfits\hosbunny.dm"
+#include "code\modules\clothing\outfits\mysteriousstranger.dm"
 #include "code\modules\clothing\outfits\plasmaman.dm"
 #include "code\modules\clothing\outfits\special.dm"
 #include "code\modules\clothing\outfits\standard.dm"

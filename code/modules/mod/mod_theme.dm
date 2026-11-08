@@ -2378,6 +2378,70 @@
 	acid = 100
 	wound = 100
 
+/datum/mod_theme/myststranger
+	name = "Mysterious Sranger"
+	desc = "They came, they lent their aid, and vanished just like that."
+	extended_desc = "A lone stranger. Who are they? Where did they come from? Why did they lend aid? \
+	Where did they go? We may never know the answer to these questions."
+	default_skin = "myststranger"
+	armor_type = /datum/armor/mod_theme_myststranger
+	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	complexity_max = 1000
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0
+	siemens_coefficient = 0
+	slowdown_inactive = 0
+	slowdown_active = 0
+	activation_step_time = 0.1 SECONDS
+	inbuilt_modules = list(
+		/obj/item/mod/module/quick_cuff
+	)
+	allowed_suit_storage = list(
+		/obj/item/gun,
+	)
+	variants = list(
+		"myststranger" = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE,
+				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/suit/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCKS_SHOVE_KNOCKDOWN,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/gloves/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/shoes/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
+			),
+		),
+	)
+
+/datum/armor/mod_theme_myststranger
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+	wound = 100
+
 /datum/mod_theme/blueshield
 	name = "praetorian"
 	desc = "A prototype of the Magnate-class suit issued to station Blueshields, still boasting exceptional protection worthy of an honor guard."
