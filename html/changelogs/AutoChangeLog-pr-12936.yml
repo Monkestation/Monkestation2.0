@@ -1,0 +1,7 @@
+author: "AitorLogedo, Deadgebert"
+delete-after: True
+changes:
+  - balance: "Capsaicin can't heat you up enough to burn you anymore, spicy donk pockets are safe to eat again."
+  - balance: "Superheated microfusion lasers give 0.5 fire stacks per hit instead of 2."
+  - balance: "Unhusking with synthflesh needs 60u instead of 100u."
+  - bugfix: "Dead bodies cool down after burning instead of staying hot and husking if they wear insulating clothes."
