@@ -132,6 +132,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//Monkestation Edit Begin
 	if(mentor_friend(href_list))
 		return
+	if(mentor_client_procs(href_list))
+		return
 	//Monkestation Edit End
 
 	switch(href_list["_src_"])

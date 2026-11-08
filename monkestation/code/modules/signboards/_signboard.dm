@@ -29,7 +29,7 @@
 	vis_contents += text_holder
 	if(sign_text)
 		set_text(sign_text, force = TRUE)
-		investigate_log("had its text set on load to \"[sign_text]\"", INVESTIGATE_SIGNBOARD)
+		investigate_log("had its text set on load to \"[html_encode(sign_text)]\"", INVESTIGATE_SIGNBOARD)
 	update_appearance()
 	register_context()
 
@@ -120,7 +120,7 @@
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" when writing to the sign at [loc_name(src)], they may be using a disallowed term. Sign text: \"[new_text]\"")
 	if(set_text(new_text))
 		balloon_alert(user, "set text")
-		investigate_log("([key_name(user)]) set text to \"[sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
+		investigate_log("([key_name(user)]) set text to \"[html_encode(sign_text || "(none)")]\"", INVESTIGATE_SIGNBOARD)
 		return TRUE
 
 /obj/structure/signboard/click_alt_secondary(mob/user)

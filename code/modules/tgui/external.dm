@@ -91,6 +91,12 @@
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return TRUE
+	// The line above only implements half of what this comment describes: ui.status
+	// is refreshed from the UI *owner's* state, so it always passes for them. A
+	// forged tgui act message is dispatched with the owner's rights, so actually
+	// require the caller to be the UI's user.
+	if(usr && ui.user && usr != ui.user)
+		return TRUE
 	if(action == "change_ui_state")
 		//write_preferences will make sure it's valid for href exploits.
 		ui.user.client?.prefs?.write_preference(GLOB.preference_entries[layout_prefs_used], params["new_state"])

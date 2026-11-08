@@ -39,12 +39,9 @@ MENTOR_VERB(dementor, R_NONE, FALSE, "Dementor", "Shed your mentor powers.", MEN
 	message_admins("[key_name_mentor(user)] dementored themselves.")
 	BLACKBOX_LOG_MENTOR_VERB("Dementor")
 
-// Overwrites /client/Topic to return for mentor client procs
-/client/Topic(href, href_list, hsrc)
-	if(mentor_client_procs(href_list))
-		return
-	return ..()
-
+// Called from /client/Topic after the usr check, the topic rate limiter and
+// log_href. This used to be a /client/Topic override, which ran before all three
+// and let mentor topics bypass rate limiting and href logging entirely.
 /client/proc/mentor_client_procs(href_list)
 	if(href_list["mentor_msg"])
 		cmd_mentor_pm(href_list["mentor_msg"],null)

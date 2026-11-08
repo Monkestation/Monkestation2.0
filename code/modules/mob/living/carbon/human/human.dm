@@ -300,6 +300,11 @@
 				return
 			if(human_user.stat || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				return   //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
+			// The ref is only handed out by examining within ID_EXAMINE_DISTANCE, and
+			// examine_time comes from the href so it cannot gate re-use. Re-check range
+			// here so a ref held from earlier cannot be used from across the station.
+			if(!isobserver(human_user) && get_dist(human_user, src) > ID_EXAMINE_DISTANCE + 1)
+				return
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 			var/allowed_access = null
 			var/obj/item/clothing/glasses/hud/security/user_glasses = human_user.glasses
