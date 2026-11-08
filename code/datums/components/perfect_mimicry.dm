@@ -27,6 +27,25 @@
 	var/datum/action/cooldown/mimic_object/mimic_ability
 	var/spoofed_flags = 0
 
+	// What is allowed to be mimicked. Allowing everything is extremely dangerous.
+	var/static/list/allowed_objects = typecacheof(list(
+		/obj/item/storage/backpack,
+		/obj/item/trash
+	))
+	// What is blocked. Used when using the whitelist allows a problematic subtype
+	var/static/list/blocked_objects = typecacheof(list(
+		/obj/item/trash/bee
+	))
+	// Traits applied to mob during disguise.
+	var/list/applied_mob_traits = list(
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_UI_BLOCKED,
+		TRAIT_PULL_BLOCKED,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE
+		)
+
 /datum/component/perfect_mimicry/Initialize()
 	. = ..()
 	if(!isliving(parent))
@@ -99,6 +118,17 @@
 /datum/component/perfect_mimicry/proc/is_allowed_object(atom/mimic_target)
 	if(!isitem(mimic_target))
 		return FALSE
+	if(!mimic_target.uses_integrity)
+		return FALSE
+	if(mimic_target.flags_1 & HOLOGRAM_1)
+		return FALSE
+	var/obj/item/item_to_mimic = mimic_target
+	if(item_to_mimic.item_flags & ABSTRACT)
+		return FALSE
+	if(is_type_in_list(item_to_mimic, blocked_objects))
+		return FALSE
+	if(!is_type_in_typecache(item_to_mimic, allowed_objects))
+		return FALSE
 	return TRUE
 
 /datum/component/perfect_mimicry/proc/can_start_mimicry(atom/mimic_target)
@@ -120,7 +150,6 @@
 	if(mimic.movement_type & VENTCRAWLING)
 		to_chat(mimic, span_notice("You cannot mimic objects while ventcrawling."))
 		return FALSE
-
 	return TRUE
 
 /// Proc to duplicate setup and handle edge cases for the mimic's disguise.
@@ -193,6 +222,8 @@
 	RegisterSignal(mimicked_object, COMSIG_QDELETING, PROC_REF(on_object_qdel))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object)
+	if(length(applied_mob_traits))
+		mimic.add_traits(applied_mob_traits, REF(src))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
 	return TRUE
 
@@ -202,6 +233,8 @@
 	UnregisterSignal(mimicked_object, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, COMSIG_ATOM_RELAYMOVE, COMSIG_ATOM_ITEM_INTERACTION))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
+	if(length(applied_mob_traits))
+		mimic.remove_traits(applied_mob_traits, REF(src))
 	if(mimicked_object.atom_storage)
 		mimicked_object.atom_storage.remove_all(mimicked_object.drop_location())
 	if(fake_storage)
