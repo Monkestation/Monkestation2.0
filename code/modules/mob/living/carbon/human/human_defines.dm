@@ -2,6 +2,7 @@
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
+	examine_thats = "This is"
 	icon = 'icons/mob/human/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
@@ -127,8 +128,8 @@
 	var/list/alternative_laughs
 	///stored list of alternate deathgasps
 	var/list/alternative_deathgasps
-	///if we should greyscale limbs or set a preset color to them
-	var/greyscale_limbs = FALSE
+	///Which look our limbs use if our species has TRAIT_GREYSCALE_TOGGLE, see the LIMB_STYLE defines
+	var/limb_style = LIMB_STYLE_CLASSIC
 
 	///Boolean on whether symptoms for the mob has been created.
 	var/created_symptoms = FALSE

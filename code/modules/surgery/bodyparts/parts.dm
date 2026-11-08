@@ -171,6 +171,7 @@
 
 /// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
+	abstract_type = /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
@@ -207,7 +208,6 @@
 	plaintext_zone = "left leg"
 	px_x = -2
 	px_y = 12
-	can_be_disabled = TRUE
 	bodypart_trait_source = LEFT_LEG_TRAIT
 
 /obj/item/bodypart/leg/left/set_owner(new_owner)

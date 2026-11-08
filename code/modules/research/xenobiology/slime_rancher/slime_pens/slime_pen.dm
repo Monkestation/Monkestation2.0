@@ -211,7 +211,7 @@ GLOBAL_LIST_EMPTY(slime_pens)
 
 /datum/slime_pen/ui_static_data(mob/user)
 	var/list/mutation_types = list()
-	for(var/datum/slime_mutation/mutation_type as anything in subtypesof(/datum/slime_mutation))
+	for(var/datum/slime_mutation/mutation_type as anything in valid_subtypesof(/datum/slime_mutation))
 		var/datum/slime_type/mutates_into = mutation_type::mutates_into
 		mutation_types["[mutation_type]"] = list(
 			"color" = "[mutates_into::color]",

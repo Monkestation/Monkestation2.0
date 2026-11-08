@@ -776,12 +776,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || (source.head && (source.head.flags_inv & HIDEHAIR)) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || IS_ROBOTIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
 
-// MONKESTATION ADDITION START
-	if(mutant_bodyparts["ipc_screen"])
-		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || !source.is_face_visible() || !noggin)
-			bodyparts_to_add -= "ipc_screen"
-// MONKESTATION ADDITION END
-
 	if(!bodyparts_to_add)
 		return
 
@@ -801,8 +795,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
-				if("ipc_screen") // Monkestation Addition
-					accessory = GLOB.ipc_screens_list[source.dna.features["ipc_screen"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue
@@ -1629,6 +1621,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED) && !thermal_stasis)
 		body_temperature_core(humi, seconds_per_tick, times_fired)
 
+	// Dead bodies cool down to the room no matter what they wear, like other carbons do.
+	// Without this the core of an insulated corpse never loses heat, the skin just gets it back from the core every tick.
+	else if(humi.stat == DEAD && !humi.on_fire && !thermal_stasis)
+		var/area_temp = humi.get_temperature(humi.loc?.return_air())
+		if(area_temp < humi.bodytemperature)
+			humi.adjust_bodytemperature(area_temp - humi.bodytemperature, use_insulation = FALSE, use_steps = TRUE)
+		if(area_temp < humi.coretemperature)
+			humi.adjust_coretemperature(max((area_temp - humi.coretemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX), area_temp)
+
 	// These do run in statis
 	if(!thermal_stasis)
 		body_temperature_skin(humi, seconds_per_tick, times_fired)
@@ -2067,6 +2068,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
+			continue
+		if(old_part.bodypart_flags & BODYPART_ABSTRACT) // handled by the bodypart that owns it
 			continue
 
 		var/path = new_species.bodypart_overrides?[old_part.body_zone]

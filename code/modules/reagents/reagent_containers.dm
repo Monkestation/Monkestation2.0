@@ -1,4 +1,5 @@
 /obj/item/reagent_containers
+	abstract_type = /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
 	icon = 'icons/obj/medical/chemical.dmi'
