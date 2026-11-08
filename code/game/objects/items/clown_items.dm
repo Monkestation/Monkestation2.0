@@ -248,7 +248,7 @@
  */
 /obj/item/noisemaker
 	name = "\improper noisemaker"
-	desc = "A revolutionary technology imported directly from Clown Plant."
+	desc = "A revolutionary technology imported directly from Clown Plant. The label says \"Right click on this to change the selected sound effect.\""
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "noisemaker"
 	inhand_icon_state = "noisemaker"
