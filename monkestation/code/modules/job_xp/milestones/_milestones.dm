@@ -19,24 +19,15 @@
 	if(milestone_type)
 		var/list/claimed = user.prefs.job_rewards_claimed[key_id]
 		var/already_claimed = islist(claimed) && (milestone_type in claimed)
+		var/given = TRUE
 		//handles adding loadout items
 		if(ispath(milestone_type, /datum/loadout_item) && (force || !already_claimed))
 			var/datum/loadout_item/listed_loadout = milestone_type
-			var/item_path = initial(listed_loadout.item_path)
-			if(!(item_path in user.prefs.inventory))
-				var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-					INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
-					list("ckey" = user.ckey, "item_id" = item_path, "amount" = 1))
-				if(!query_add_gear_purchase.Execute())
-					to_chat(user, "Failed to add level up reward to the database, contact coders.")
-					qdel(query_add_gear_purchase)
-					return FALSE
-				qdel(query_add_gear_purchase)
-				user.prefs.inventory += item_path
-
-		if(!islist(user.prefs.job_rewards_claimed[key_id]))
-			user.prefs.job_rewards_claimed[key_id] = list()
-		user.prefs.job_rewards_claimed[key_id] |= milestone_type
+			given = give_loadout_reward(initial(listed_loadout.item_path), user)
+		if(given)
+			if(!islist(user.prefs.job_rewards_claimed[key_id]))
+				user.prefs.job_rewards_claimed[key_id] = list()
+			user.prefs.job_rewards_claimed[key_id] |= milestone_type
 
 	if(round_reward)
 		if(!islist(user.prefs.job_rewards_per_round[key_id]))
@@ -44,6 +35,21 @@
 		user.prefs.job_rewards_per_round[key_id] |= "[round_reward]" //Path2String
 
 	user.prefs.save_preferences()
+
+/// Adds the item to the metacoin inventory of the user, returns FALSE if the database didn't take it
+/datum/job_milestone/proc/give_loadout_reward(item_path, client/user)
+	if(item_path in user.prefs.inventory)
+		return TRUE
+	var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
+		INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
+		list("ckey" = user.ckey, "item_id" = item_path, "amount" = 1))
+	if(!query_add_gear_purchase.Execute())
+		to_chat(user, span_warning("Failed to add level up reward to the database, contact coders. Use Reload Job Rewards to try again."))
+		qdel(query_add_gear_purchase)
+		return FALSE
+	qdel(query_add_gear_purchase)
+	user.prefs.inventory += item_path
+	return TRUE
 
 /datum/preferences
 	/// Per round rewards already claimed this round. Lives on the prefs and not the client so reconnecting doesn't let you claim them again.
