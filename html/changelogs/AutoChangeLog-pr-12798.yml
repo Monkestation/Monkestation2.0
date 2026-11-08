@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored clothing obscurity entirely. Items should be a lot more consistent about what covers what, and update snappier. Report any oddities, like disappearing clothes, hair or species parts"
+  - refactor: "Refactored handcuffs and legcuffs a bit, report anything odd like getting stuck restrained"
