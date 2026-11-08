@@ -20,7 +20,7 @@
 	shoes = /obj/item/clothing/shoes/magboots/advance
 	mask = /obj/item/clothing/mask/chameleon
 
-	r_pocket = /obj/item/reagent_containers/medipen/blood_loss
+	r_pocket = /obj/item/reagent_containers/medipen/advanced/blood_loss
 	l_pocket = /obj/item/reagent_containers/medipen/ekit
 
 	internals_slot = ITEM_SLOT_SUITSTORE
