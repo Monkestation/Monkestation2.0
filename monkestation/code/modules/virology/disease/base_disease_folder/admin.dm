@@ -276,10 +276,6 @@ ADMIN_VERB(diseases_panel, R_ADMIN, FALSE, "Disease Panel", "See diseases and di
 
 /datum/admins/Topic(href, href_list)
 	. = ..()
-	// The base returns early on a failed CheckAdminHref, but that return does not
-	// abort this override, so re-check the rights we actually need here.
-	if(!check_rights(R_ADMIN))
-		return
 	if(href_list["diseasepanel_examine"])
 		viewingID = href_list["diseasepanel_examine"]
 		diseases_panel()
