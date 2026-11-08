@@ -51,7 +51,6 @@
 
 /obj/structure/centcom_teleporter/arena
 	name = "arena teleporter"
-	needed_rights = R_ADMIN
 
 /obj/structure/centcom_teleporter/cargo
 	name = "centcom cargo teleporter"
