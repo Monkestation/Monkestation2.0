@@ -20,7 +20,6 @@
 	item = /obj/item/melee/energy/sword/saber
 	cost = 8
 	purchasable_from = ~UPLINK_CLOWN_OPS
-	population_minimum = 15
 
 /datum/uplink_item/melees/powerfist
 	name = "Power Fist"

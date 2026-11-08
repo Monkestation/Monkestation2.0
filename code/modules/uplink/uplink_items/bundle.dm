@@ -187,7 +187,6 @@
 	item = /obj/item/storage/box/syndie_kit/contract_kit
 	cost = 25
 	purchasable_from = UPLINK_TRAITORS
-	population_minimum = 20
 
 /datum/uplink_item/bundles_tc/contract_kit/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	if(length(handler.active_objectives) || !handler.can_take_objectives || !handler.has_objectives)

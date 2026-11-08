@@ -67,7 +67,6 @@
 	cost = 4
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
-	population_minimum = 20
 
 
 /datum/uplink_item/ammo/lighttankammo

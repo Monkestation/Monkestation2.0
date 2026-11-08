@@ -20,7 +20,6 @@
 	item = /obj/item/mod/control/pre_equipped/infiltrator
 	cost = 5
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	population_minimum = 15
 
 /datum/uplink_item/utility_clothing/space_suit
 	name = "Syndicate Space Suit"
@@ -37,7 +36,6 @@
 	item = /obj/item/mod/control/pre_equipped/traitor
 	cost = 8
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
-	population_minimum = 15
 
 /datum/uplink_item/utility_clothing/modsuit/elite_traitor
 	name = "Elite Syndicate MODsuit"
@@ -50,7 +48,6 @@
 	progression_minimum = 90 MINUTES
 	cost = 12
 	cant_discount = TRUE
-	population_minimum = 25
 
 //---- MODULES
 
