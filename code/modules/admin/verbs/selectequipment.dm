@@ -1,4 +1,4 @@
-ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_SPAWN, FALSE, "Select Equipment", /mob)
+ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_ADMIN, FALSE, "Select Equipment", /mob)
 	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/select_equipment/tgui = new(user, target)
 	tgui.ui_interact(user.mob)
@@ -46,7 +46,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_SPAWN, FALSE, "Select Equipment
 		ui.set_autoupdate(FALSE)
 
 /datum/select_equipment/ui_state(mob/user)
-	return ADMIN_STATE(R_SPAWN)
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/select_equipment/ui_status(mob/user, datum/ui_state/state)
 	if(QDELETED(target_mob))
