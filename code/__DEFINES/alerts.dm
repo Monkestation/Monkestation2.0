@@ -73,4 +73,5 @@
 
 #define ALERT_BRAINWASHED "brainwashed"
 
+#define ALERT_EMAGGED_SPIDERBOT "emagged_spiderbot"
 #define ALERT_SILICON_RECORDING "silicon_recording"
