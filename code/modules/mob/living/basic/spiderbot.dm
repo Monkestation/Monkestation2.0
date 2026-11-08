@@ -66,7 +66,7 @@
 	QDEL_NULL(mmi)
 	explosion(
 		get_turf(src),
-		devastation_range = 1,
+		devastation_range = 0,
 		heavy_impact_range = 2,
 		light_impact_range = 3,
 		flash_range = 5,
