@@ -273,3 +273,66 @@
   - balance: Piercing borg hyposprays now have a 2-second delay if their target is
       wearing thick material, unless it's like, a nukie-borg injecting a nukie or
       such.
+2026-11-08:
+  AitorLogedo, Deadgebert:
+  - balance: Capsaicin can't heat you up enough to burn you anymore, spicy donk pockets
+      are safe to eat again.
+  - balance: Superheated microfusion lasers give 0.5 fire stacks per hit instead of
+      2.
+  - balance: Unhusking with synthflesh needs 60u instead of 100u.
+  - bugfix: Dead bodies cool down after burning instead of staying hot and husking
+      if they wear insulating clothes.
+  EatsTheGrapes:
+  - rscadd: Robotics can build IPC shells after unlocking the required research by
+      assembling an IPC core, synthetic organs, a wired and secured head, limbs, and
+      a wired and secured screen, then finalizing the chassis with a multitool.
+  - rscadd: Built IPC shells start without a brain or charging cord. MMIs and positronic
+      brains, including brains recovered from roundstart IPCs, can be installed through
+      cybernetic brain surgery. Charging cords can be installed separately through
+      augmentation surgery.
+  - rscadd: Positronic brains can be imprinted to a master before their first activation.
+      Imprinted positronics and Syndicate MMIs can create IRCs bound to their master
+      or directive.
+  - rscadd: Robotics can build spiderbots by attaching a manipulator to a robotic
+      head. Spiderbots hold an MMI or positronic brain, can ventcrawl, and have no
+      hands. IDs with robotics access can eject their brain.
+  - rscadd: Emagging a spiderbot binds it to the emagger, strengthens it, and blocks
+      ID-based brain removal. Emagged spiderbots explode and gib on death, destroying
+      their installed brain.
+  - qol: IPC screens are now printable organs that can be removed and replaced.
+  - code_imp: IPC food processing is now handled by the synthetic stomach rather than
+      the species.
+  - qol: Surgically removing an IPC's brain returns its MMI or positronic brain with
+      the original name and personality, allowing it to be installed into another
+      shell.
+  - balance: Traumatic IPC brain removal causes a 30-second reboot in the recovered
+      MMI or positronic brain. When the reboot finishes, the occupant's ghost is brought
+      back using the same return mechanism as defibrillation.
+  - qol: Robotic limbs can be replaced with other robotic limb types through mechanical
+      augmentation surgery.
+  - qol: The MOD paint kit is now the robotics paint kit. It can restyle robotic limbs
+      and IPC chassis, still paints MODsuits, and no longer requires plastic to print.
+  - bugfix: Restyling robotic limbs with the robotics paint kit preserves their existing
+      limb type and upgrades.
+  Mantlecrawler:
+  - bugfix: Kinetic Hellhound now correctly states its mag size
+  - bugfix: Quartermaster's office is now spelled correctly on Deltastation
+  ThePooba:
+  - bugfix: dont starve and animal voices work again
+  Tractor-Maam:
+  - qol: Trying to hack the R&D console as a space ninja now pushes you to hack the
+      server instead.
+  V2LenKagamine:
+  - rscadd: '''Ass Pic'' smite. Spawns an ass pick, puts in targets hand if possible.'
+  - rscadd: Status affect 'Feeling funny';rotates client move by +-90/180 every 15
+      seconds.
+  - qol: '''Select Equipment'' now requires ''R_SPAWN'' permissions from ''R_FUN'''
+  ma44, MrMelbert, AnturK, leaKsi, TiviPlus, StrangeWeirdKitten, SmArtKar, afonamo, jlsnow301, FalloutFalcon:
+  - bugfix: Fixed a bunch of places where players could send unsanitized HTML to other
+      players or admins.
+  - bugfix: Cassette song titles are properly encoded in chat and admin messages.
+  - bugfix: Safes, the message monitor, netpods, limbgrowers, launch pads and a few
+      other machines validate their inputs properly.
+  - bugfix: Number inputs reject NaN.
+  - admin: View variables topic calls require R_VAREDIT.
+  - server: World topics require the comms key unless they're meant to be public.
