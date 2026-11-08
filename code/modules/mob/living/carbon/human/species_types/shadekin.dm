@@ -7,6 +7,7 @@
 	mutanteyes = /obj/item/organ/internal/eyes/shadekin
 	mutantears = /obj/item/organ/internal/ears/shadekin
 	mutanttongue = /obj/item/organ/internal/tongue/shadekin
+	mutantlungs = null
 	species_language_holder = /datum/language_holder/shadekin
 
 	inherent_traits = list(
@@ -32,8 +33,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/shadekin,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/shadekin,
 	)
-
-	eyes_icon = 'icons/mob/species/shadekin/shadekin_eyes.dmi'
 
 
 /datum/species/shadekin/create_pref_unique_perks()
