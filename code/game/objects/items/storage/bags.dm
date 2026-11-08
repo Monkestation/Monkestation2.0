@@ -19,6 +19,7 @@
 
 //  Generic non-item
 /obj/item/storage/bag
+	abstract_type = /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	storage_type = /datum/storage/bag
@@ -213,7 +214,7 @@
 	if(!listeningTo)
 		return
 	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	qdel(connector)
+	QDEL_NULL(connector)
 	listeningTo = null
 
 /// Begins listening to the user. Will stop automatically picking up ores.

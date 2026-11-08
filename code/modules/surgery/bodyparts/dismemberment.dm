@@ -33,11 +33,8 @@
 			playsound(limb_owner, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
-// MONKESTATION ADDITION START
 	if(isipc(owner))
-		owner.dna.features["ipc_screen"] = "Blank"
 		playsound(get_turf(owner), 'sound/announcer/vox_fem/swhitenoise.ogg', 60, TRUE)
-// MONKESTATION ADDITION END
 
 	if (can_bleed())
 		limb_owner.bleed(rand(20, 40))
@@ -296,15 +293,17 @@
 
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
-	if(owner && !special)
-		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
-			owner.legcuffed.dropped(owner)
-			owner.legcuffed = null
-			owner.update_worn_legcuffs()
-		if(owner.shoes)
-			owner.dropItemToGround(owner.shoes, TRUE, violent = violent)
-	return ..()
+	var/mob/living/carbon/leg_owner = owner
+	. = ..()
+	if(special || !leg_owner)
+		return
+	if(leg_owner.legcuffed)
+		leg_owner.legcuffed.forceMove(leg_owner.drop_location())
+		leg_owner.legcuffed.dropped(leg_owner)
+		leg_owner.legcuffed = null
+		leg_owner.update_worn_legcuffs()
+	if(leg_owner.shoes)
+		leg_owner.dropItemToGround(leg_owner.shoes, TRUE, violent = violent)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(!special)

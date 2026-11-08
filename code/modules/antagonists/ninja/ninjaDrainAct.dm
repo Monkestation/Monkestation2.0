@@ -147,6 +147,11 @@
 	if(objective)
 		objective.completed = TRUE
 
+/obj/machinery/computer/rdconsole/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	balloon_alert(ninja, "not the target!")
+	to_chat(ninja, span_warning("This is a console! Not a server! The Spider Clan needs you to access the server in the server room directly to hack it."))
+	return NONE
+
 //SECURITY CONSOLE//
 /obj/machinery/computer/records/security/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)

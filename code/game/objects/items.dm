@@ -1,5 +1,6 @@
 /// Anything you can pick up and hold.
 /obj/item
+	abstract_type = /obj/item
 	name = "item"
 	icon = 'icons/obj/objects.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
