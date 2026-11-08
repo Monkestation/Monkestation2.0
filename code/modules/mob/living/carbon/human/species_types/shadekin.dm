@@ -83,11 +83,12 @@
 	if(!isturf(owner_turf))
 		return
 
-	if(GET_SIMPLE_LUMCOUNT(owner_turf) < SHADOW_SPECIES_DIM_LIGHT)
+	var/lumcount = GET_SIMPLE_LUMCOUNT(owner_turf)
+	if(lumcount < SHADOW_SPECIES_DIM_LIGHT)
 		owner.apply_status_effect(/datum/status_effect/shadekin_regeneration)
 		owner.clear_mood_event("shadekin_light")
 
-	else if(GET_SIMPLE_LUMCOUNT(owner_turf) > SHADOW_SPECIES_DIM_LIGHT)
+	else if(lumcount > SHADOW_SPECIES_DIM_LIGHT)
 		owner.remove_status_effect(/datum/status_effect/shadekin_regeneration)
 		owner.add_mood_event("shadekin_light", /datum/mood_event/shadekin_light)
 
