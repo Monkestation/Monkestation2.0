@@ -22,6 +22,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 	var/obj/mimicked_object
+	var/obj/fake_storage
 	var/datum/action/cooldown/mimic_object/mimic_ability
 	var/spoofed_flags = 0
 
@@ -38,6 +39,18 @@
 
 /datum/component/perfect_mimicry/RegisterWithParent()
 	mimic_ability.Grant(parent)
+
+/// Called when the current disguise is deleted externally.
+/datum/component/perfect_mimicry/proc/on_object_qdel(datum/source, force)
+	SIGNAL_HANDLER
+	if(source != mimicked_object)
+		return
+	if(!stop_mimicry())
+		return
+	if(QDELETED(mimic_ability))
+		return
+	mimic_ability.update_mimic_mode(FALSE)
+	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
 
 /datum/component/perfect_mimicry/proc/is_allowed_object(atom/mimic_target)
 	if(!isitem(mimic_target))
@@ -92,13 +105,15 @@
 
 		if(istype(new_item, /obj/item/storage)) // For storage specific items like clearing out preloading iventories.
 			var/obj/item/storage/box_item = new_item
-			if(box_item.preload && box_item.storage_type)
-				var/list/contents = box_item.storage_type.return_inv()
-				box_item.storage_type.remove_all(update_storage = FALSE)
+			if(box_item.atom_storage)
+				var/list/contents = box_item.atom_storage.return_inv()
+				box_item.atom_storage.remove_all(update_storage = FALSE)
 				for(var/obj/item/contained_item in contents)
 					qdel(contained_item, TRUE)
-				box_item.storage_type.refresh_views()
-
+		if(new_item.atom_storage)
+			fake_storage = new(src)
+			fake_storage.clone_storage(new_item.atom_storage)
+			new_item.atom_storage.set_real_location(fake_storage)
 		if(new_item.uses_integrity) // Mimicked items can break easier.
 			var/weight_multiplier = max(1, new_item.w_class)
 			var/adjusted_integrity = 5 + (weight_multiplier * INTEGRITY_PER_WCLASS)
@@ -118,20 +133,25 @@
 	if(QDELETED(new_object))
 		return FALSE
 	mimicked_object = new_object
+	RegisterSignal(mimicked_object, COMSIG_QDELETING, PROC_REF(on_object_qdel))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object)
 	return TRUE
 
 /datum/component/perfect_mimicry/proc/stop_mimicry()
-	if(QDELETED(mimicked_object))
-		mimicked_object = null
-		spoofed_flags = 0
+	if(!mimicked_object)
 		return FALSE
-
+	UnregisterSignal(mimicked_object, COMSIG_QDELETING)
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
-
-	QDEL_NULL(mimicked_object)
+	if(mimicked_object.atom_storage)
+		mimicked_object.atom_storage.remove_all(mimicked_object.drop_location())
+	if(fake_storage)
+		QDEL_NULL(fake_storage)
+	if(QDELETED(mimicked_object))
+		mimicked_object = null
+	else
+		QDEL_NULL(mimicked_object)
 	spoofed_flags = 0
 	return TRUE
 
