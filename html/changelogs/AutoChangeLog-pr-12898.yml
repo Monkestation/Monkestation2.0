@@ -1,0 +1,6 @@
+author: "chumtoadmonke"
+delete-after: True
+changes:
+  - rscadd: "shadekin, a new roundstart species that doesnt need to breathe and heals and sees better in the dark in exchange for taking more damage and being vulnerable to flashing"
+  - rscadd: "2 tail options, 4 ears, (credits to bubberstation for the sprites), mutant color picker for their skintone and eyes, their own unique language"
+  - sound: "added mar emote"
