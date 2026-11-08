@@ -93,12 +93,13 @@
 	var/mob/living/carbon/human/human = bodypart_owner.owner
 	if(!istype(human))
 		return TRUE
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		if(!mesh_in_suits)
-			return FALSE
-		if(!(locate(/datum/bodypart_texture/mesh) in bodypart_owner.bodypart_textures))
-			return FALSE
-	if(human.w_uniform?.flags_inv & HIDETAIL)
+	if(human.obscured_slots & HIDETAIL)
+		return FALSE
+	if(!(human.obscured_slots & HIDEJUMPSUIT))
+		return TRUE
+	if(!mesh_in_suits)
+		return FALSE
+	if(!(locate(/datum/bodypart_texture/mesh) in bodypart_owner.bodypart_textures))
 		return FALSE
 	return TRUE
 
