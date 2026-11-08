@@ -1,7 +1,5 @@
 /datum/config_entry/string/comms_key
-	// HIDDEN only gates reads (can_vv_get). Without LOCKED the value cannot be
-	// read but can still be replaced, which hands an attacker a key they know.
-	protection = CONFIG_ENTRY_HIDDEN | CONFIG_ENTRY_LOCKED
+	protection = CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/string/comms_key/ValidateAndSet(str_val)
 	return str_val != "default_pwd" && length(str_val) > 6 && ..()

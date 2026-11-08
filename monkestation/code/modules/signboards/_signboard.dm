@@ -29,7 +29,7 @@
 	vis_contents += text_holder
 	if(sign_text)
 		set_text(sign_text, force = TRUE)
-		investigate_log("had its text set on load to \"[html_encode(sign_text)]\"", INVESTIGATE_SIGNBOARD)
+		investigate_log("had its text set on load to \"[sign_text]\"", INVESTIGATE_SIGNBOARD)
 	update_appearance()
 	register_context()
 
@@ -60,7 +60,7 @@
 		. += span_info("It is unsecured, you could use a <i>wrench</i> to secure it in place.")
 	if(sign_text)
 		. += span_boldnotice("\nIt currently displays the following:")
-		. += span_info(html_encode(sign_text))
+		. += span_info(sign_text)
 	else
 		. += span_info("\nIt is blank!")
 
@@ -101,7 +101,7 @@
 		user,
 		message = "What would you like to set this sign's text to?",
 		title = full_capitalize(name),
-		default = sign_text,
+		default = html_decode(sign_text),
 		max_length = max_length,
 		multiline = TRUE,
 		encode = FALSE
@@ -117,10 +117,10 @@
 		if(tgui_alert(user, "Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" when writing to the sign at [ADMIN_VERBOSEJMP(src)], they may be using a disallowed term. Sign text: \"[html_encode(new_text)]\"")
-		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" when writing to the sign at [loc_name(src)], they may be using a disallowed term. Sign text: \"[new_text]\"")
+		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" when writing to the sign at [loc_name(src)], they may be using a disallowed term. Sign text: \"[html_encode(new_text)]\"")
 	if(set_text(new_text))
 		balloon_alert(user, "set text")
-		investigate_log("([key_name(user)]) set text to \"[html_encode(sign_text || "(none)")]\"", INVESTIGATE_SIGNBOARD)
+		investigate_log("([key_name(user)]) set text to \"[sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
 		return TRUE
 
 /obj/structure/signboard/click_alt_secondary(mob/user)
@@ -175,7 +175,7 @@
 		return
 	var/bwidth = src.bound_width || world.icon_size
 	var/bheight = src.bound_height || world.icon_size
-	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center; line-height: 1'>[html_encode(sign_text)]</span>")
+	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center; line-height: 1'>[sign_text]</span>")
 	SET_PLANE_EXPLICIT(text_holder, GAME_PLANE_UPPER_FOV_HIDDEN, src)
 	text_holder.layer = ABOVE_ALL_MOB_LAYER
 	text_holder.alpha = 192
@@ -192,6 +192,12 @@
 	if(!istext(new_text) && !isnull(new_text))
 		CRASH("Attempted to set invalid signtext: [new_text]")
 	. = TRUE
+	// Store the text html encoded so every consumer of sign_text is safe by
+	// default: examine, maptext, both investigate_log calls, the circuit USB log
+	// and anything added later. Callers pass raw text; display sites must not
+	// encode again.
+	if(istext(new_text))
+		new_text = html_encode(new_text)
 	sign_text = trim(new_text, max_length)
 	update_text()
 	update_appearance()
