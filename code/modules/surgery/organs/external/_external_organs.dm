@@ -448,7 +448,10 @@
 
 
 /datum/bodypart_overlay/mutant/ears
-	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+	)
 	feature_key = "ears"
 
 /datum/bodypart_overlay/mutant/ears/get_global_feature_list()
