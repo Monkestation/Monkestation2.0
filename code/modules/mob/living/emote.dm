@@ -186,6 +186,20 @@
 	hands_use_check = TRUE
 	wing_time = 10
 
+/datum/emote/living/mar
+	key = "mar"
+	key_third_person = "mars"
+	message = "lets out a mar!"
+	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+
+/datum/emote/living/mar/can_run_emote(mob/user, status_check, intentional)
+	return ..() && isshadekin(user)
+
+/datum/emote/living/mar/get_sound(mob/living/user)
+	return 'sound/creatures/mar.ogg'
+
 /datum/emote/living/frown
 	key = "frown"
 	key_third_person = "frowns"
