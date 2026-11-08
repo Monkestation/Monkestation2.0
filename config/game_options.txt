@@ -368,6 +368,7 @@ ROUNDSTART_RACES floran
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
 #ROUNDSTART_RACES synth
+ROUNDSTART_RACES shadekin
 
 ## Including all the various golem subtypes that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES iron_golem

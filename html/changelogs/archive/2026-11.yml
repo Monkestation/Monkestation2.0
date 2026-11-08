@@ -327,6 +327,13 @@
   - rscadd: Status affect 'Feeling funny';rotates client move by +-90/180 every 15
       seconds.
   - qol: '''Select Equipment'' now requires ''R_SPAWN'' permissions from ''R_FUN'''
+  chumtoadmonke:
+  - rscadd: shadekin, a new roundstart species that doesnt need to breathe and heals
+      and sees better in the dark in exchange for taking more damage and being vulnerable
+      to flashing
+  - rscadd: 2 tail options, 4 ears, (credits to bubberstation for the sprites), mutant
+      color picker for their skintone and eyes, their own unique language
+  - sound: added mar emote
   ma44, MrMelbert, AnturK, leaKsi, TiviPlus, StrangeWeirdKitten, SmArtKar, afonamo, jlsnow301, FalloutFalcon:
   - bugfix: Fixed a bunch of places where players could send unsanitized HTML to other
       players or admins.
@@ -336,3 +343,8 @@
   - bugfix: Number inputs reject NaN.
   - admin: View variables topic calls require R_VAREDIT.
   - server: World topics require the comms key unless they're meant to be public.
+  tattax:
+  - rscadd: you can now switch between plasmaman suit styles using metal and crowbars
+  - bugfix: winter hoods now don't set you ablaze anymore when you toggle them as
+      plasmaman
+  - image: changed bulky plasmaman helmet icon slightly (and all variants with it)
