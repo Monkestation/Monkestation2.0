@@ -633,14 +633,13 @@
 		/obj/item/mod/module/shove_blocker,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/holster,
-		/obj/item/mod/module/quick_carry
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/myststranger,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/holster,
-		/obj/item/mod/module/quick_carry
+		/obj/item/mod/module/quick_carry/advanced
 	)
 
 /obj/item/mod/control/pre_equipped/blueshield
