@@ -21,6 +21,7 @@
 /datum/component/perfect_mimicry
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+	COOLDOWN_DECLARE(move_cooldown)
 	var/obj/mimicked_object
 	var/obj/fake_storage
 	var/datum/action/cooldown/mimic_object/mimic_ability
@@ -52,8 +53,48 @@
 	mimic_ability.update_mimic_mode(FALSE)
 	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
 
+/datum/component/perfect_mimicry/proc/on_dropped(obj/item/source, mob/dropper)
+	SIGNAL_HANDLER
+	if(source != mimicked_object)
+		return
+
+	var/mob/living/mimic = parent
+	mimic.reset_perspective()
+
 /datum/component/perfect_mimicry/proc/override_examine_flags(datum/source, mob/user)
+	SIGNAL_HANDLER
 	return spoofed_flags | EXAMINE_RESISTANCE_OVERRIDE
+
+/// Mimic can move their disguise slowly.
+/datum/component/perfect_mimicry/proc/on_user_move(obj/moved_source, mob/user_moving, direction)
+	SIGNAL_HANDLER
+
+	if(!COOLDOWN_FINISHED(src, move_cooldown))
+		return COMSIG_BLOCK_RELAYMOVE
+	var/turf/next = get_step(moved_source, direction)
+	var/turf/current = get_turf(moved_source)
+	if(!istype(next) || !istype(current))
+		return COMSIG_BLOCK_RELAYMOVE
+	if(next.density)
+		return COMSIG_BLOCK_RELAYMOVE
+	if(!isturf(moved_source.loc))
+		return COMSIG_BLOCK_RELAYMOVE
+
+	step(moved_source, direction)
+	var/last_move_diagonal = ((direction & (direction - 1)) && (moved_source.loc == next))
+	COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 1 : 0.5)) SECONDS)
+
+	if(QDELETED(src))
+		return COMSIG_BLOCK_RELAYMOVE
+	return TRUE
+
+/// Can attack mimic disguises when in harm state
+/datum/component/perfect_mimicry/proc/on_item_interaction(obj/attacked_source, mob/living/user, obj/item/tool, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(user?.istate & (ISTATE_HARM))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	return NONE
 
 /datum/component/perfect_mimicry/proc/is_allowed_object(atom/mimic_target)
 	if(!isitem(mimic_target))
@@ -106,6 +147,16 @@
 		new_object.remove_filter(HOVER_OUTLINE_FILTER)
 		new_item.item_flags &= ~(IN_INVENTORY | IN_STORAGE) // Remove inherited inventory flags. Prevents selection borders from mimicking inventory items.
 
+		// Set item plane to undo possible inventory fullbrightness in the world plane.
+		new_item.layer = initial(new_item.layer)
+		SET_PLANE_EXPLICIT(new_item, initial(new_item.plane), new_item.loc)
+		new_item.appearance_flags &= ~NO_CLIENT_COLOR
+
+		// Give the disguise a small random offset from its normal position.
+		if(!(new_item.item_flags & NO_PIXEL_RANDOM_DROP))
+			new_item.pixel_x = new_item.base_pixel_x + rand(-5, 5)
+			new_item.pixel_y = new_item.base_pixel_y + rand(-5, 5)
+
 		if(istype(new_item, /obj/item/storage)) // For storage specific items like clearing out preloading iventories.
 			var/obj/item/storage/box_item = new_item
 			if(box_item.atom_storage)
@@ -127,6 +178,8 @@
 	new_object.resistance_flags &= ~MIMIC_SPOOF_RESIST_MASK
 	new_object.obj_flags |= CAN_BE_HIT
 	RegisterSignal(new_object, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, PROC_REF(override_examine_flags))
+	RegisterSignal(new_object, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
+	RegisterSignal(new_object, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 	return new_object
 
@@ -140,12 +193,13 @@
 	RegisterSignal(mimicked_object, COMSIG_QDELETING, PROC_REF(on_object_qdel))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object)
+	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
 	return TRUE
 
 /datum/component/perfect_mimicry/proc/stop_mimicry()
 	if(!mimicked_object)
 		return FALSE
-	UnregisterSignal(mimicked_object, list(COMSIG_QDELETING, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS))
+	UnregisterSignal(mimicked_object, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, COMSIG_ATOM_RELAYMOVE, COMSIG_ATOM_ITEM_INTERACTION))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
 	if(mimicked_object.atom_storage)
