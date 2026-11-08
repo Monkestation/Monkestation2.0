@@ -621,8 +621,8 @@
 	worn_icon_state = "emissionhelm"
 	inhand_icon_state = null
 
-/obj/item/clothing/head/helmet/space/plasmaman/candlejax/handle_style_change(style)
-	return
+/obj/item/clothing/head/helmet/space/plasmaman/candlejax/handle_style_change(new_style)
+	return FALSE
 
 // Donation reward for CandleJax
 /obj/item/clothing/under/plasmaman/candlejax
@@ -641,8 +641,8 @@
 	worn_icon_state = "emissionsuit"
 	inhand_icon_state = null
 
-/obj/item/clothing/under/plasmaman/candlejax/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/candlejax/handle_style_change(new_style)
+	return FALSE
 
 // Donation reward for CandleJax
 /obj/item/clothing/head/bio_hood/jax
@@ -668,8 +668,8 @@
 	worn_icon_state = "plasmaman_jax"
 	inhand_icon_state = null
 
-/obj/item/clothing/under/plasmaman/jax2/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/jax2/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/suit/toggle/labcoat/skyrat/rd/jax
 	name = "xuracorp enameled labcoat"
