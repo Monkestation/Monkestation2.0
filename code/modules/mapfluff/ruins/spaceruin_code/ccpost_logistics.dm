@@ -972,7 +972,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /obj/machinery/computer/ccpost_logistics/multitool_act(mob/living/user, obj/item/tool)
 	if(!ccpost_has_centcom_id(user))
-		balloon_alert(user, "Central Command ID required")
+		balloon_alert(user, "central command ID required")
 		return TRUE
 	if(contraband_unlocked)
 		balloon_alert(user, "routing override already active")
@@ -1001,7 +1001,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /obj/machinery/computer/ccpost_logistics/ui_interact(mob/user, datum/tgui/ui)
 	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "Central Command ID required")
+		balloon_alert(user, "central command ID required")
 		return
 	. = ..()
 

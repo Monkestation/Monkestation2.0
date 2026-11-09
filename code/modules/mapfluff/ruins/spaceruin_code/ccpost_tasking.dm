@@ -1124,7 +1124,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	return inbox
 
 /datum/ccpost_tasking_network/proc/archive_order(datum/ccpost_tasking_order/order)
-	if(!order || order in shared_history)
+	if(!order || (order in shared_history))
 		return
 	shared_history.Insert(1, order)
 	while(length(shared_history) > max_history)
@@ -1917,7 +1917,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	return 1
 
 /obj/machinery/computer/ccpost_tasking/proc/insert_event_task_by_priority(obj/item/circuitboard/computer/ccpost_tasking/board, template_type)
-	if(!board || !template_type || template_type in board.event_task_queue)
+	if(!board || !template_type || (template_type in board.event_task_queue))
 		return
 	var/datum/ccpost_task_template/new_template = new template_type
 	var/new_rank = ccpost_incident_priority_rank(new_template.priority)
@@ -2098,7 +2098,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			register_telecomms_hub(hub)
 
 /obj/machinery/computer/ccpost_tasking/proc/register_telecomms_hub(obj/machinery/telecomms/hub/hub)
-	if(!hub || QDELETED(hub) || hub in monitored_telecomms_hubs || !is_station_level(hub.z))
+	if(!hub || QDELETED(hub) || (hub in monitored_telecomms_hubs) || !is_station_level(hub.z))
 		return
 	monitored_telecomms_hubs += hub
 	RegisterSignal(hub, COMSIG_MACHINERY_BROKEN, PROC_REF(on_telecomms_hub_failure))
@@ -2114,7 +2114,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 /obj/machinery/computer/ccpost_tasking/proc/on_telecomms_hub_failure(datum/source)
 	SIGNAL_HANDLER
 	var/obj/machinery/telecomms/hub/hub = source
-	if(!hub || !is_station_level(hub.z) || hub in failed_telecomms_hubs)
+	if(!hub || !is_station_level(hub.z) || (hub in failed_telecomms_hubs))
 		return
 	var/outage_already_reported = length(failed_telecomms_hubs) > 0
 	failed_telecomms_hubs += hub
@@ -2412,7 +2412,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 					var/list/filtered_families = list()
 					for(var/candidate_type in available_priorities[priority_name])
 						var/family = families_by_type["[candidate_type]"]
-						if(family_pass == 1 && family in recent_families)
+						if(family_pass == 1 && (family in recent_families))
 							continue
 						if(family_pass == 2 && family == last_family)
 							continue
@@ -2799,7 +2799,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 /obj/machinery/computer/ccpost_tasking/ui_interact(mob/user, datum/tgui/ui)
 	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "Central Command ID required")
+		balloon_alert(user, "central command ID required")
 		return
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)

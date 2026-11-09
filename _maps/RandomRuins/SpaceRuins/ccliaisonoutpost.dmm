@@ -39,9 +39,7 @@
 /obj/structure/chair/sofa/left/maroon{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "as" = (
@@ -699,15 +697,13 @@
 	dir = 9
 	},
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/storage/medkit/toxin{
 	pixel_y = 12
 	},
 /obj/item/storage/medkit/fire{
 	pixel_y = 5
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/ccpost/medbay)
 "dK" = (
@@ -909,6 +905,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "eL" = (
@@ -1625,6 +1622,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "ik" = (
@@ -1824,9 +1822,6 @@
 /obj/structure/statue/sandstone/venus{
 	name = "Justice"
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "ja" = (
@@ -1863,9 +1858,7 @@
 	dir = 10
 	},
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "jk" = (
@@ -1915,12 +1908,10 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 9
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/autolathe/hacked,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light_switch/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/engineering)
 "jz" = (
@@ -2026,14 +2017,12 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "jU" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/table/wood/fancy/blue,
 /obj/item/toy/mecha/marauder{
 	pixel_y = 9
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/lobby)
 "jV" = (
@@ -2055,10 +2044,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ccpost/asteroid)
 "kc" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/showcase/perfect_employee,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/lobby)
 "kh" = (
@@ -2251,7 +2238,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "lH" = (
-/obj/structure/window/reinforced,
 /obj/structure/cargo_shelf,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
@@ -2818,15 +2804,13 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/reagent_dispensers/water_cooler{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "oM" = (
@@ -2859,10 +2843,6 @@
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "oP" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/figure/cargotech{
-	pixel_y = 6;
-	pixel_x = -9
-	},
 /obj/item/clipboard{
 	pixel_y = 3;
 	pixel_x = 4
@@ -2871,6 +2851,7 @@
 	pixel_y = 2;
 	pixel_x = 4
 	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "oT" = (
@@ -2903,6 +2884,7 @@
 "oZ" = (
 /obj/structure/showcase/machinery/cloning_pod,
 /obj/machinery/light/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "pe" = (
@@ -2933,6 +2915,7 @@
 	dir = 6;
 	network = list("ccpost")
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "ph" = (
@@ -3079,9 +3062,6 @@
 /area/ruin/space/has_grav/ccpost/quarters)
 "pQ" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
@@ -3100,6 +3080,8 @@
 	pixel_x = -1;
 	pixel_y = -1
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/ccpost/medbay)
 "pS" = (
@@ -3295,9 +3277,6 @@
 /area/ruin/space/has_grav/ccpost/engineering)
 "qP" = (
 /obj/structure/chair/sofa/corp,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -3313,9 +3292,6 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "qT" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4
 	},
@@ -3685,14 +3661,12 @@
 /turf/open/floor/carpet/green,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "to" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/table/wood/fancy/blue,
 /obj/item/toy/mecha/seraph{
 	pixel_y = 9
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/lobby)
 "tp" = (
@@ -3710,18 +3684,13 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/kirbyplants/random,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "tu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
@@ -4316,6 +4285,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "wZ" = (
@@ -4332,9 +4302,7 @@
 	dir = 9
 	},
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "xe" = (
@@ -4381,9 +4349,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "xu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -4393,6 +4358,7 @@
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ccpost_logistics/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "xv" = (
@@ -5152,18 +5118,23 @@
 	},
 /turf/open/floor/carpet/green,
 /area/ruin/space/has_grav/ccpost/boardroom)
+"Bx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
 "BF" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /obj/machinery/photocopier,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/camera/autoname{
 	dir = 9;
 	network = list("ccpost")
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/lobby)
 "BJ" = (
@@ -5276,11 +5247,15 @@
 "Cs" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/spray/cleaner{
-	pixel_y = 18;
+	pixel_y = 22;
 	pixel_x = -6
 	},
 /obj/machinery/light/directional/south,
 /obj/machinery/light_switch/directional/west,
+/obj/item/toy/figure/cargotech{
+	pixel_y = 6;
+	pixel_x = -9
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
 "Cx" = (
@@ -5700,9 +5675,6 @@
 /obj/structure/chair/sofa/corp/corner{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
@@ -5858,9 +5830,7 @@
 /area/ruin/space/has_grav/ccpost/boardroom)
 "EZ" = (
 /obj/machinery/vending/dinnerware,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding/white{
 	dir = 2
 	},
@@ -6040,9 +6010,6 @@
 	dir = 1;
 	name = "Honor"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/ccpost/boardroom)
 "FZ" = (
@@ -6149,9 +6116,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/secoffice)
 "GE" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/showcase/fakeid{
 	dir = 8
 	},
@@ -6159,6 +6123,7 @@
 	dir = 6;
 	network = list("ccpost")
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/lobby)
 "GF" = (
@@ -6492,9 +6457,6 @@
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "IN" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/item/clipboard{
 	pixel_y = 5;
@@ -6507,6 +6469,7 @@
 /obj/effect/turf_decal/siding/white/end{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/offices)
 "IO" = (
@@ -6533,12 +6496,10 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/engineering)
 "IR" = (
@@ -6744,6 +6705,7 @@
 "Kp" = (
 /obj/structure/showcase/perfect_employee,
 /obj/machinery/light/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "Kv" = (
@@ -6807,9 +6769,6 @@
 "KT" = (
 /obj/effect/turf_decal/siding/dark/end{
 	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
@@ -7149,6 +7108,13 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/ccpost/medbay)
+"MD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/wood/large,
+/area/ruin/space/has_grav/ccpost/boardroom)
 "MG" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/end{
@@ -7274,9 +7240,6 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/space/has_grav/ccpost/commsroom)
 "NE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
@@ -7670,15 +7633,13 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/chair/sofa/middle/maroon{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "Qo" = (
@@ -7702,9 +7663,6 @@
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "Qv" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
@@ -7884,6 +7842,7 @@
 /obj/structure/showcase/machinery/tv{
 	pixel_y = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "Rq" = (
@@ -7965,12 +7924,10 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/ccpost/medbay)
 "RK" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/showcase/machinery/implanter{
 	icon_state = "implantchair_occupied"
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/lobby)
 "RM" = (
@@ -8219,10 +8176,8 @@
 	pixel_y = 0;
 	pixel_x = 0
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "SO" = (
@@ -8365,6 +8320,7 @@
 "TI" = (
 /obj/structure/showcase/fakesec,
 /obj/machinery/light/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "TL" = (
@@ -8974,14 +8930,12 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "Wy" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/showcase/machinery/signal_decrypter,
 /obj/machinery/camera/autoname{
 	dir = 10;
 	network = list("ccpost")
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/ccpost/lobby)
 "Wz" = (
@@ -9076,10 +9030,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/filingcabinet/chestdrawer/wheeled,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/lobby)
 "WZ" = (
@@ -9201,9 +9153,6 @@
 /area/ruin/space/has_grav/ccpost/quarters)
 "XJ" = (
 /obj/structure/chair/sofa/corp/corner,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
@@ -9237,13 +9186,11 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "XT" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/dark,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/centralhallway)
 "XV" = (
@@ -9270,9 +9217,6 @@
 /obj/effect/turf_decal/siding/dark/end{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/ccpost/boardroom)
@@ -9284,9 +9228,6 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/turretid/ccpost/perimeter{
 	pixel_y = 32
 	},
@@ -9294,6 +9235,7 @@
 	pixel_y = 10
 	},
 /obj/item/hand_labeler,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/ccpost/secoffice)
 "Yl" = (
@@ -9321,12 +9263,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/chair/sofa/corner/maroon{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/ccpost/executive_suite)
 "Yp" = (
@@ -9517,12 +9457,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/vending/games,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/ccpost/breakroom)
 "ZK" = (
@@ -9553,7 +9491,6 @@
 /turf/open/floor/iron/checker,
 /area/ruin/space/has_grav/ccpost/cafeteria)
 "ZT" = (
-/obj/structure/window/reinforced,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen{
 	pixel_y = 9;
@@ -9572,6 +9509,7 @@
 	pixel_x = -3
 	},
 /obj/effect/turf_decal/siding/white/end,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/offices)
 "ZU" = (
@@ -10314,7 +10252,7 @@ ny
 Ls
 KB
 mp
-mp
+Km
 Km
 Km
 mp
@@ -10479,7 +10417,7 @@ KB
 mp
 Km
 Km
-JV
+Km
 JV
 JV
 IG
@@ -10554,8 +10492,8 @@ mp
 mp
 mp
 mp
+mp
 Km
-JV
 JV
 pW
 JV
@@ -10628,9 +10566,9 @@ um
 um
 um
 um
+um
 mp
-Km
-Km
+mp
 mp
 XP
 XP
@@ -10702,8 +10640,8 @@ dI
 dI
 dI
 dI
+dI
 um
-mp
 mp
 mp
 mp
@@ -11882,7 +11820,7 @@ vl
 rR
 eT
 eG
-ss
+Bx
 QK
 AB
 FQ
@@ -12031,7 +11969,7 @@ Lm
 Dn
 BW
 eT
-Sg
+MD
 if
 QK
 LD

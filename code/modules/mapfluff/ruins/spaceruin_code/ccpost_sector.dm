@@ -4244,7 +4244,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(!istype(tool, /obj/item/paper/ccpost_sector_paperwork))
 		return NONE
 	if(!ccpost_has_centcom_id(user))
-		balloon_alert(user, "Central Command ID required")
+		balloon_alert(user, "central command ID required")
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/paper/ccpost_sector_paperwork/paperwork = tool
@@ -4410,7 +4410,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	datum/tgui/ui
 )
 	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "Central Command ID required")
+		balloon_alert(user, "central command ID required")
 		return
 	. = ..()
 
@@ -6126,7 +6126,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /obj/machinery/status_display/ccpost_remote_status/ui_interact(mob/user, datum/tgui/ui)
 	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "Central Command ID required")
+		balloon_alert(user, "central command ID required")
 		return
 
 	. = ..()

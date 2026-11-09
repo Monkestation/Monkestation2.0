@@ -321,7 +321,7 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 		else
 			return
 	var/obj/structure/closet/supplypod/centcompod/pod = new(null)
-	for(var/path as anything in contents)
+	for(var/path in contents)
 		new path(pod)
 	new /obj/effect/pod_landingzone(landing, pod)
 	next_pod_dispatch = world.time + 5 SECONDS
@@ -1014,7 +1014,7 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 		return TRUE
 	if(action == "hr_print_intake")
 		if(!hr_ready() || world.time < hr_next_delivery || !GLOB.ccpost_hr_service?.employee_for(usr))
-			balloon_alert(usr, "HR identification or power unavailable")
+			balloon_alert(usr, "human resources ID or power unavailable")
 			return TRUE
 		if(world.time < next_intake_print)
 			balloon_alert(usr, "printer cooling down")

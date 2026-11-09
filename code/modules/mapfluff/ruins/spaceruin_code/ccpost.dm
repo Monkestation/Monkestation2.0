@@ -944,7 +944,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 
 
 /obj/machinery/computer/ccpost_visitor_transport/ui_interact(mob/user, datum/tgui/ui)
 	if(!isobserver(user) && !ccpost_visitor_transport_authorized(user))
-		balloon_alert(user, "Outpost personnel ID required")
+		balloon_alert(user, "outpost personnel ID required")
 		return
 	. = ..()
 	link_visitor_pad()
@@ -1263,6 +1263,7 @@ GLOBAL_VAR_INIT(ccpost_visitor_retrieval_next_allowed, 0)
 /obj/machinery/computer/camera_advanced/ccpost_visitor_retrieval/ui_interact(mob/user, datum/tgui/ui)
 	if(!isobserver(user) && !ccpost_visitor_transport_authorized(user))
 		return
+	. = ..()
 	link_retrieval_pad()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
