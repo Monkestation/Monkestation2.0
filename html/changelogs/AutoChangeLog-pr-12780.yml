@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Species part rendering got refactored a bit, report any oddities with wings, snouts, tails and the like"
