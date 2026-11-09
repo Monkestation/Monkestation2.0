@@ -413,6 +413,8 @@
 /datum/action/cooldown/golden_bolt
 	name = "Golden Bolt"
 	desc = "Use the belts Nanites to summon an electric bolt. Those struck feel their muscles tense up slowing them down."
+	button_icon = 'icons/hud/stances.dmi'
+	button_icon_state = "golden_bolt"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS|AB_CHECK_LYING
 
 	var/fired_cooldown = 30 SECONDS
