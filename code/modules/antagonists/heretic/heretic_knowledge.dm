@@ -685,6 +685,7 @@
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.rust_strength = RUST_RESISTANCE_ORGANIC // Ascended heretics can rust whatever they want (below RUST_RESISTANCE_ABSOLUTE)
 	// user.apply_status_effect(/datum/status_effect/desensitized, type, DESENSITIZED_THRESHOLD * 0.4)
+	ADD_TRAIT(user, TRAIT_DESENSITIZED, type)
 
 	user.update_appearance(UPDATE_OVERLAYS)
 	return TRUE
