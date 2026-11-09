@@ -48636,9 +48636,7 @@
 "nJx" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/computer/extract_requests{
-	dir = 1
-	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},

@@ -68607,9 +68607,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/light/directional/south,
 /obj/machinery/atm/directional/south,
-/obj/machinery/computer/extract_requests{
-	dir = 1
-	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "tea" = (

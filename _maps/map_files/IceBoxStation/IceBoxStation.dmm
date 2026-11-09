@@ -7552,9 +7552,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "clB" = (
-/obj/machinery/computer/extract_requests{
-	dir = 1
-	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "clE" = (

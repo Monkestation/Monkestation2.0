@@ -58543,9 +58543,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/computer/extract_requests{
-	dir = 8
-	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "wNU" = (

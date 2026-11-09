@@ -2,8 +2,9 @@
 /obj/machinery/computer/extract_requests
 	name = "extract request console"
 	desc = "Orders slime extracts and crossbreeds from xenobiology. Hold your ID to place an order or collect one."
-	icon_screen = "request"
-	icon_keyboard = "generic_key"
+	icon_state = "market"
+	icon_screen = "market_screen"
+	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/extract_requests
 
 /obj/machinery/computer/extract_requests/ui_interact(mob/user, datum/tgui/ui)

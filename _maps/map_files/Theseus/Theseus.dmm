@@ -30697,9 +30697,7 @@
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/extract_requests{
-	dir = 4
-	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron,
 /area/station/science/research)
 "jbJ" = (
