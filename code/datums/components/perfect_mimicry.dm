@@ -161,7 +161,7 @@
 	var/obj/item/item_to_mimic = mimic_target
 	if(item_to_mimic.item_flags & ABSTRACT)
 		return FALSE
-	if(is_type_in_list(item_to_mimic, blocked_objects))
+	if(is_type_in_typecache(item_to_mimic, blocked_objects))
 		return FALSE
 	if(!is_type_in_typecache(item_to_mimic, allowed_objects))
 		return FALSE
