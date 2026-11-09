@@ -159,6 +159,7 @@
 	department = "Xenobiology";
 	name = "Xenobiology Requests Console"
 	},
+/obj/effect/mapping_helpers/requests_console/ore_update,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "aas" = (
@@ -35989,7 +35990,6 @@
 /area/station/hallway/primary/central/fore)
 "ilD" = (
 /obj/machinery/smartfridge/extract/preloaded,
-/obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/machinery/computer/extract_orders/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
