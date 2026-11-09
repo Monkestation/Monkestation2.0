@@ -18,10 +18,11 @@
 /datum/supply_pack/misc/anvilcrate
 	name = "Deluxe Smithing Kit"
 	desc = "A kit containing everything you need for smithing, even using custom materials!"
-	cost = CARGO_CRATE_VALUE * 40
+	cost = CARGO_CRATE_VALUE * 7.5
 	contains = list(
 		/obj/structure/anvil,
 		/obj/structure/machine/assembly_bench,
+		/obj/item/forging_hammer,
 		/obj/item/circuitboard/machine/material_alloyer,
 		/obj/item/circuitboard/machine/electroplater,
 		/obj/item/circuitboard/machine/material_analyzer
@@ -32,10 +33,11 @@
 /datum/supply_pack/misc/anvilcratesmol
 	name = "Starter Smithing Kit"
 	desc = "A kit containing the basic structures for hobby smithing! Materials not included."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
 		/obj/structure/anvil,
-		/obj/structure/machine/assembly_bench
+		/obj/structure/machine/assembly_bench,
+		/obj/item/forging_hammer
 	)
 	crate_name = "Basic Smithing Crate"
 	crate_type = /obj/structure/closet/crate/large

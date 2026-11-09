@@ -13043,6 +13043,7 @@
 /area/station/maintenance/department/medical/central)
 "eJo" = (
 /obj/structure/anvil,
+/obj/item/forging_hammer,
 /turf/open/floor/wood,
 /area/station/smithing)
 "eJp" = (
@@ -48721,6 +48722,7 @@
 	dir = 4
 	},
 /obj/structure/anvil,
+/obj/item/forging_hammer,
 /turf/open/floor/wood,
 /area/station/smithing)
 "qLR" = (
@@ -54693,7 +54695,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "sOF" = (
-/obj/structure/light_construct/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/stone,
 /area/station/smithing)
 "sOP" = (

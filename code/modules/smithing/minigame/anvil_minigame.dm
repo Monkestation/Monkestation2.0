@@ -191,7 +191,6 @@
 	anvil_hud.end_minigame()
 	user.client?.screen -= anvil_hud
 	QDEL_NULL(anvil_hud)
-	host_anvil.smithing = FALSE
 	host_anvil.generate_item(success)
 	host_anvil = null
 

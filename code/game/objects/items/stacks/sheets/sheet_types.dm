@@ -155,7 +155,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("remote chemical grinder", /obj/structure/chemical_input/grinder, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote chemical fermenter", /obj/structure/chemical_input/fermenter, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote geyser pump", /obj/structure/chemical_input/liquid_pump, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("anvil",/obj/structure/anvil, 25, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, check_density = TRUE, category = CAT_FURNITURE)
+	new/datum/stack_recipe("anvil",/obj/structure/anvil, 25, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("forge hammer",/obj/item/forging_hammer, 2, time = 2.5 SECONDS, category = CAT_EQUIPMENT)
 ))
 
 /obj/item/stack/sheet/iron

@@ -26056,6 +26056,7 @@
 "hZR" = (
 /obj/machinery/light/directional/south,
 /obj/structure/anvil,
+/obj/item/forging_hammer,
 /turf/open/floor/wood,
 /area/station/smithing)
 "iag" = (
@@ -28334,6 +28335,7 @@
 /area/station/engineering/storage/tech)
 "iJl" = (
 /obj/structure/anvil,
+/obj/item/forging_hammer,
 /turf/open/floor/wood,
 /area/station/smithing)
 "iJt" = (

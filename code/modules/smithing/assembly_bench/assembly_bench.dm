@@ -22,16 +22,16 @@
 /obj/structure/machine/assembly_bench/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(!current_recipe && held_item?.tool_behaviour == TOOL_WRENCH)
 		if(anchored)
-			context[SCREENTIP_CONTEXT_LMB] = "Unanchor"
+			context[SCREENTIP_CONTEXT_LMB] = "Unanchor."
 		else
-			context[SCREENTIP_CONTEXT_LMB] = "Anchor"
-		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+			context[SCREENTIP_CONTEXT_LMB] = "Anchor."
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct."
 	else if(!current_recipe && held_item)
-		context[SCREENTIP_CONTEXT_LMB] = "Add to select recipe"
+		context[SCREENTIP_CONTEXT_LMB] = "Add to select recipe."
 	else
-		context[SCREENTIP_CONTEXT_LMB] = "Add to progress recipe"
+		context[SCREENTIP_CONTEXT_LMB] = "Add to progress recipe."
 	if(current_recipe)
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Clear Recipe."
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Dump all items."
 	return CONTEXTUAL_SCREENTIP_SET
 
 

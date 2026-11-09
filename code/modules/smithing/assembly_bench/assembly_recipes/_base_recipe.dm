@@ -25,3 +25,10 @@
 	parent.stored_items -= parent.held_starting_item
 	parent.clear_recipe()
 
+
+/datum/assembly_recipe/smithed_clothes/complete_recipe()
+	var/obj/item/clothing/smithed_clothes/parent_holder_item = parent.held_starting_item
+	parent_holder_item.finish_armor()
+	parent_holder_item.forceMove(get_turf(parent))
+	parent.stored_items -= parent.held_starting_item
+	parent.clear_recipe()

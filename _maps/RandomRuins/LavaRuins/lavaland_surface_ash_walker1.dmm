@@ -29,6 +29,7 @@
 "bx" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/anvil,
+/obj/item/forging_hammer,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bH" = (

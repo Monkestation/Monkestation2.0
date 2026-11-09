@@ -1,27 +1,66 @@
 /obj/item/clothing/smithed_clothes
-	name = "generic smithed clothes"
-	desc = "generic smithed clothes"
-	var/smithed_quality = 100
-	var/obj/made_of = null
+	name = "unfinished smithed clothes"
+	desc = "unfinished smithed clothes"
+	var/smithed_quality = 0
+	var/datum/material_stats/made_of
+	var/complete = FALSE
 	var/base_name = "generic smithed clothes"
+
+	///While smithing, we want to get this to 0, then heat
+	var/hit_counter = 0
+	///Just how many hits until we have worked enough
+	var/hits_left = 100
 
 	armor_type = /datum/armor/smithed_dummy //This isnt actually used, its just a dummy
 
 /datum/armor/smithed_dummy
 
-/obj/item/clothing/smithed_clothes/Initialize(mapload,obj/item/created_from,quality)
+
+/obj/item/clothing/smithed_clothes/examine(mob/user)
 	. = ..()
-	smithed_quality = max(quality, 5)
+	if(!complete)
+		. += "It's not finished yet; this won't protect me at all!"
 
-	if(!created_from)
-		created_from = new /obj/item/stack/sheet/mineral/gold
-	made_of = new created_from.type
+/obj/item/clothing/smithed_clothes/proc/forge_text()
+	. = null
+	if(complete)
+		return
+	switch(hit_counter)
+		if(30 to INFINITY)
+			. = "Looks like it's freshly heated, ready for hammering."
+		if(25 to 29)
+			. = "Still hot, plenty of work able to be done."
+		if(15 to 24)
+			. = "Rather hot, but it's starting to cool down."
+		if(5 to 14)
+			. = "Its almost cooled too much, it will need heated soon."
+		if(4)
+			. = "Just a few more hits till its perfect..."
+		if(3)
+			. = "Almost perfect, just a liiiitle more..."
+		if(2)
+			. = "Just a two more..."
+		if(1)
+			. = "One more hit for good measure."
+		if(0)
+			if(hits_left >= 1)
+				. = "Perfect, ready to be re-heated"
+			else
+				. = "Perfect, ready to be finished in an Assembly Bench."
+		if(-INFINITY to -1)
+			if(hits_left >= 1)
+				. = "Oh, its cold, I should probably stop hitting it and re-heat it..."
+			else
+				. = "Oh, its cold, I think I should stop hitting it and finish it..."
 
-	if(isstack(created_from) && !created_from.material_stats)
-		var/obj/item/stack/stack = created_from
-		create_stats_from_material(stack.material_type)
-	else
-		create_stats_from_material_stats(created_from.material_stats)
+///Finishes the armor and makes it, ya know, armor.
+/obj/item/clothing/smithed_clothes/proc/finish_armor()
+
+	smithed_quality = max(smithed_quality, 0)
+	complete = TRUE
+
+	hit_counter = 0
+	hits_left = 0
 
 	name = "[material_stats.material_name] [base_name]"
 	var/damage_state
@@ -48,10 +87,6 @@
 	if(damage_state)
 		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('icons/modules/smithing/forge_items.dmi', damage_state), flags = MASK_INVERSE))
 
-	if(material_stats.thermal <= 50)
-		resistance_flags |= FIRE_PROOF
-	if(material_stats.thermal <= 20)
-		resistance_flags |= LAVA_PROOF
 	max_integrity = round(200 * (smithed_quality/100))
 	repairable_by = made_of.type //This cant go wrong right
 	if(material_stats.conductivity <= 10)
@@ -69,6 +104,33 @@
 		WOUND = clamp(round((material_stats.density/1.6) * (smithed_quality/100)),10,100)
 	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
+
+	if(material_stats)
+		for(var/datum/material_trait/trait as anything in material_stats.material_traits)
+			var/datum/material_trait/newtrait = new trait.type
+			//Why are we calling this here? Because we modify force and other stats that are normally in init
+			newtrait.post_parent_init(src)
+	complete = TRUE
+
+/obj/item/clothing/smithed_clothes/Initialize(mapload,obj/item/created_from,quality)
+	. = ..()
+
+	smithed_quality = quality
+
+	if(!created_from)
+		created_from = new /obj/item/stack/sheet/mineral/gold
+	made_of = new created_from.type
+
+	if(isstack(created_from) && !created_from.material_stats)
+		var/obj/item/stack/stack = created_from
+		create_stats_from_material(stack.material_type)
+	else
+		create_stats_from_material_stats(created_from.material_stats)
+
+	if(material_stats.thermal <= 50)
+		resistance_flags |= FIRE_PROOF
+	if(material_stats.thermal <= 20)
+		resistance_flags |= LAVA_PROOF
 
 
 /obj/item/clothing/smithed_clothes/update_name(updates)
