@@ -8,8 +8,9 @@ export function SlimeName(props: {
   color: string;
   hex: string;
   suffix?: string;
+  label?: string;
 }) {
-  const { color, hex, suffix } = props;
+  const { color, hex, suffix, label } = props;
 
   return (
     <Box className="SlimeRancher__name">
@@ -18,9 +19,28 @@ export function SlimeName(props: {
         style={{ '--slime-color': hex } as CSSProperties}
       />
       <span>
-        {capitalizeAll(color)}
+        {capitalizeAll(label ?? color)}
         {suffix && ` ${suffix}`}
       </span>
+    </Box>
+  );
+}
+
+/** A status or count pill. No tone is the plain cyan one. */
+export function SlimeChip(props: {
+  tone?: 'good' | 'caution' | 'danger' | 'ink' | 'muted' | 'raspberry';
+  icon?: string;
+  children: ReactNode;
+}) {
+  const { tone, icon, children } = props;
+
+  return (
+    <Box
+      as="span"
+      className={`SlimeRancher__chip${tone ? ` SlimeRancher__chip--${tone}` : ''}`}
+    >
+      {!!icon && <Icon name={icon} />}
+      {children}
     </Box>
   );
 }
