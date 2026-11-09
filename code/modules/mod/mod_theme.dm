@@ -2416,7 +2416,7 @@
 	wound = 100
 
 /datum/mod_theme/myststranger
-	name = "Mysterious Sranger"
+	name = "Mysterious Stranger"
 	desc = "They came, they lent their aid, and vanished just like that."
 	extended_desc = "A lone stranger. Who are they? Where did they come from? Why did they lend aid? \
 	Where did they go? We may never know the answer to these questions."
