@@ -3,14 +3,13 @@
 	name = "extract order console"
 	desc = "Lists what the crew has asked xenobiology for. Load extracts or crossbreeds into it to fill an order."
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "req_comp_off"
-	icon_screen = "req_comp0"
+	icon_state = "xenobio_order_off"
+	icon_screen = "xenobio_order_on"
 	icon_keyboard = null
 	density = FALSE
 	circuit = null
 	req_access = list(ACCESS_XENOBIOLOGY)
 	light_color = LIGHT_COLOR_PURPLE
-	color = list(0, 0.25, 0, 0.75, 0, 1, 0, 0.25, 0) // ourple
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/extract_orders, 30)
 
@@ -200,13 +199,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/extract_orders, 30)
 	name = "extract order console frame"
 	desc = "An unmounted extract order console. Attach it to a wall to use."
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "req_comp_off"
+	icon_state = "xenobio_order_off"
 	result_path = /obj/machinery/computer/extract_orders
 	pixel_shift = 30
-
-/obj/item/wallframe/extract_orders/Initialize(mapload)
-	. = ..()
-	color = /obj/machinery/computer/extract_orders::color // need to do this here else research spritesheets shit themselves
 
 /obj/item/wallframe/extract_orders/after_attach(obj/attached_to)
 	. = ..()
