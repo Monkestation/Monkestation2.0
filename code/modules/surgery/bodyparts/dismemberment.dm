@@ -33,11 +33,8 @@
 			playsound(limb_owner, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
-// MONKESTATION ADDITION START
 	if(isipc(owner))
-		owner.dna.features["ipc_screen"] = "Blank"
 		playsound(get_turf(owner), 'sound/announcer/vox_fem/swhitenoise.ogg', 60, TRUE)
-// MONKESTATION ADDITION END
 
 	if (can_bleed())
 		limb_owner.bleed(rand(20, 40))
@@ -82,7 +79,7 @@
 
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE)
+/obj/item/bodypart/proc/drop_limb(special, dismembered, violent = FALSE, move_to_floor = TRUE)
 	if(!owner)
 		return
 	var/atom/drop_loc = owner.drop_location()
@@ -137,7 +134,7 @@
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
 
-	if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!drop_loc && move_to_floor) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
@@ -146,7 +143,7 @@
 		qdel(src)
 		return
 
-	if((limb_id == SPECIES_OOZELING) && !special)
+	if((limb_id in list(SPECIES_OOZELING, SPECIES_SLIMEPERSON, SPECIES_LUMINESCENT)) && !special)
 		if(deprecise_zone(src.body_zone) in list(BODY_ZONE_HEAD, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG ))
 			var/list/limborgans = src.contents
 			if(limborgans) //Handle implants dropping when limb is dismembered
@@ -165,7 +162,10 @@
 		qdel(src)
 		return
 
-	forceMove(drop_loc)
+	if(move_to_floor)
+		forceMove(drop_loc)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_POST_REMOVED, phantom_owner, special, dismembered)
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
 
 /**
@@ -253,13 +253,13 @@
 	head.tongue = src
 	..()
 
-/obj/item/bodypart/chest/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/chest/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(special)
 		return ..()
 	//if this is not a special drop, this is a mistake
 	return FALSE
 
-/obj/item/bodypart/arm/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/arm/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 
@@ -272,10 +272,9 @@
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1, violent = violent)
 		arm_owner.hand_bodyparts[held_index] = null
 	if(arm_owner.handcuffed)
-		arm_owner.handcuffed.forceMove(drop_location())
-		arm_owner.handcuffed.dropped(arm_owner)
+		var/obj/item/lost_cuffs = arm_owner.handcuffed
 		arm_owner.set_handcuffed(null)
-		arm_owner.update_handcuffed()
+		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
@@ -292,18 +291,15 @@
 	new_arm_owner.update_worn_gloves()
 
 
-/obj/item/bodypart/leg/drop_limb(special, dismembered, violent)
-	if(owner && !special)
-		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
-			owner.legcuffed.dropped(owner)
-			owner.legcuffed = null
-			owner.update_worn_legcuffs()
-		if(owner.shoes)
-			owner.dropItemToGround(owner.shoes, TRUE, violent = violent)
-	return ..()
+/obj/item/bodypart/leg/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
+	var/mob/living/carbon/leg_owner = owner
+	. = ..()
+	if(special || !leg_owner)
+		return
+	leg_owner.dropItemToGround(leg_owner.legcuffed, force = TRUE)
+	leg_owner.dropItemToGround(leg_owner.shoes, TRUE, violent = violent)
 
-/obj/item/bodypart/head/drop_limb(special, dismembered, violent)
+/obj/item/bodypart/head/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))

@@ -67,7 +67,7 @@
 		mobs_to_track = list()
 		return
 
-	var/trackable_list = ai.ai_tracking_tool.find_trackable_mobs()
+	var/trackable_list = ai.ai_tracking_tool.find_trackable_mobs(ai)
 	var/target_name = tgui_input_list(ai, "Select a target", "Tracking", trackable_list)
 	if(!target_name || isnull(target_name))
 		return

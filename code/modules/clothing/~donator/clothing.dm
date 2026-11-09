@@ -126,6 +126,7 @@
 	inhand_icon_state = "hostrench"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 
 
 // Donation reward for Thedragmeme
@@ -302,7 +303,7 @@
 	icon_state = "avipilotup"
 	inhand_icon_state = "rus_ushanka"
 	flags_inv = HIDEEARS|HIDEHAIR
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT //about as warm as an ushanka
 	actions_types = list(/datum/action/item_action/adjust)
 	var/goggles = FALSE
@@ -620,8 +621,8 @@
 	worn_icon_state = "emissionhelm"
 	inhand_icon_state = null
 
-/obj/item/clothing/head/helmet/space/plasmaman/candlejax/handle_style_change(style)
-	return
+/obj/item/clothing/head/helmet/space/plasmaman/candlejax/handle_style_change(new_style)
+	return FALSE
 
 // Donation reward for CandleJax
 /obj/item/clothing/under/plasmaman/candlejax
@@ -640,8 +641,8 @@
 	worn_icon_state = "emissionsuit"
 	inhand_icon_state = null
 
-/obj/item/clothing/under/plasmaman/candlejax/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/candlejax/handle_style_change(new_style)
+	return FALSE
 
 // Donation reward for CandleJax
 /obj/item/clothing/head/bio_hood/jax
@@ -667,8 +668,8 @@
 	worn_icon_state = "plasmaman_jax"
 	inhand_icon_state = null
 
-/obj/item/clothing/under/plasmaman/jax2/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/jax2/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/suit/toggle/labcoat/skyrat/rd/jax
 	name = "xuracorp enameled labcoat"
@@ -710,7 +711,7 @@
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "greycoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for Cherno_00
@@ -721,7 +722,7 @@
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "chernocoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for GoldenAlpharex

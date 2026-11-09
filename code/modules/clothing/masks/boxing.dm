@@ -43,7 +43,8 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		var/list/options = GLOB.balaclava_options
-		icon_state = options[choice]
+		base_icon_state = options[choice]
+		icon_state = base_icon_state
 		update_item_action_buttons()
 		var/handling_text = "adjust"
 		switch(choice)
@@ -67,6 +68,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 		user.update_worn_mask()
 		if(iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
+			carbon_user.refresh_obscured()
 			carbon_user.update_body_parts()
 		return TRUE
 
@@ -136,4 +138,5 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	alternate_worn_layer = LOW_FACEMASK_LAYER
+	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT

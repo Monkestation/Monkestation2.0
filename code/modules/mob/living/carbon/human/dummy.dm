@@ -28,12 +28,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	harvest_organs()
 	return ..()
 
-/mob/living/carbon/human/dummy/update_cached_insulation()
-	return
-
-/mob/living/carbon/human/dummy/get_insulation(temperature)
-	return temperature_insulation
-
 /mob/living/carbon/human/dummy/med_hud_set_health()
 	return
 
@@ -92,9 +86,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		qdel(delete)
 
 /mob/living/carbon/human/dummy/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(FALSE) // assuming direct control
 	item.item_flags |= IN_INVENTORY
-	. = item.visual_equipped(src, slot, initial)
-	update_obscured_slots(item.flags_inv)
+	if(!item.visual_equipped(src, slot, initial))
+		return FALSE
+
+	add_item_coverage(item)
+	return TRUE
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
@@ -128,6 +126,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["spines"] = get_consistent_feature_entry(GLOB.spines_list)
 	target.dna.features["tail_cat"] = get_consistent_feature_entry(GLOB.tails_list_human) // it's a lie
 	target.dna.features["tail_lizard"] = get_consistent_feature_entry(GLOB.tails_list_lizard)
+	target.dna.features["tail_shadekin"] = get_consistent_feature_entry(GLOB.tails_list_shadekin)
+	target.dna.features["ears_shadekin"] = get_consistent_feature_entry(GLOB.ears_list_shadekin)
 	target.dna.features["tail_monkey"] = get_consistent_feature_entry(GLOB.tails_list_monkey)
 	target.dna.features["fish_tail"] = get_consistent_feature_entry(GLOB.tails_list_fish)
 	target.dna.features["pod_hair"] = get_consistent_feature_entry(GLOB.pod_hair_list)

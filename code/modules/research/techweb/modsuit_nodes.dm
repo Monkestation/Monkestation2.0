@@ -8,7 +8,7 @@
 		"mod_chestplate",
 		"mod_gauntlets",
 		"mod_helmet",
-		"mod_paint_kit",
+		"paint_kit",
 		"mod_shell",
 		"mod_plating_standard",
 		"mod_storage",
@@ -38,6 +38,18 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SUPPLY)
 	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
+
+/// Node with civilian MODsuits.
+/datum/techweb_node/mod_service
+	id = "mod_service"
+	display_name = "Civilian Modular Suits"
+	description = "Civilian MODsuits for dignified living."
+	prereq_ids = list("mod")
+	design_ids = list(
+		"mod_plating_portable_suit",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/mod_entertainment
 	id = "mod_entertainment"

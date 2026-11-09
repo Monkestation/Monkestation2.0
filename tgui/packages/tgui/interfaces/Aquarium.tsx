@@ -1,6 +1,13 @@
 import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, Flex, Knob, LabeledControls, Section } from '../components';
+import {
+  Button,
+  Flex,
+  Knob,
+  LabeledControls,
+  NumberInput,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -11,6 +18,7 @@ type Data = {
   fluidTypes: string[];
   contents: { ref: string; name: string }[];
   allow_breeding: BooleanLike;
+  feeding_interval: number;
 };
 
 export const Aquarium = (props) => {
@@ -23,10 +31,11 @@ export const Aquarium = (props) => {
     fluidTypes,
     contents,
     allow_breeding,
+    feeding_interval,
   } = data;
 
   return (
-    <Window width={500} height={400}>
+    <Window width={520} height={400}>
       <Window.Content>
         <Section title="Aquarium Controls">
           <LabeledControls>
@@ -64,13 +73,27 @@ export const Aquarium = (props) => {
                 ))}
               </Flex>
             </LabeledControls.Item>
-            <LabeledControls.Item label="Reproduction Prevention System">
+            <LabeledControls.Item label="Reproduction Prevention">
               <Button
                 selected={!allow_breeding}
                 onClick={() => act('allow_breeding')}
               >
                 {allow_breeding ? 'Offline' : 'Online'}
               </Button>
+            </LabeledControls.Item>
+            <LabeledControls.Item label="Feeding Interval">
+              <NumberInput
+                fluid
+                value={feeding_interval}
+                minValue={1}
+                maxValue={7}
+                unit="minutes"
+                onChange={(value) =>
+                  act('feeding_interval', {
+                    feeding_interval: value,
+                  })
+                }
+              />
             </LabeledControls.Item>
           </LabeledControls>
         </Section>

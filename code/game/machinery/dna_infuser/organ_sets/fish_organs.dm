@@ -2,6 +2,9 @@
 #define FISH_SCLERA_COLOR COLOR_WHITE
 #define FISH_PUPIL_COLOR COLOR_BLUE
 #define FISH_COLORS FISH_ORGAN_COLOR + FISH_SCLERA_COLOR + FISH_PUPIL_COLOR
+/// How many fishy organs can you have at once, requirement to get the tail color
+/// Currently liver, stomach, lungs and tail plus tongue
+#define FISH_INFUSION_ALL_ORGANS 4
 
 ///bonus of the observing gondola: you can ignore environmental hazards
 /datum/status_effect/organ_set_bonus/fish
@@ -19,6 +22,9 @@
 		TRAIT_EXPANDED_FOV, //fish vision
 		TRAIT_WATER_ADAPTATION,
 		)
+	limb_texture = /datum/bodypart_texture/fishscale
+	/// Are we at all five organs?
+	var/color_active = FALSE
 
 /datum/status_effect/organ_set_bonus/fish/enable_bonus()
 	. = ..()
@@ -62,6 +68,55 @@
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
 
+/datum/status_effect/organ_set_bonus/fish/set_organs(new_value)
+	. = ..()
+	if (!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/tail_color = get_tail_color(carbon_owner)
+	// We need to snowflake the tongue because it doesn't count towards the set bonus
+	if (carbon_owner.get_organ_by_type(/obj/item/organ/internal/tongue/inky))
+		new_value += 1
+
+	if (new_value >= FISH_INFUSION_ALL_ORGANS && tail_color)
+		if (!color_active)
+			for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+				if (limb.bodytype & BODYTYPE_ORGANIC)
+					limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+			color_active = TRUE
+		return
+
+	if (!color_active)
+		return
+
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		limb.remove_color_override(LIMB_COLOR_FISH_INFUSION)
+	color_active = FALSE
+
+/// Returns the color of our fish tail, if we have one
+/datum/status_effect/organ_set_bonus/fish/proc/get_tail_color(mob/living/carbon/carbon_owner)
+	var/obj/item/organ/external/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/external/tail/fish)
+	if (!tail)
+		return null
+	// The tail only picks its color when it's first drawn, which can happen after it's counted for the set
+	if (!tail.bodypart_overlay.draw_color)
+		tail.bodypart_overlay.inherit_color(carbon_owner.get_bodypart(deprecise_zone(tail.zone)))
+	return tail.bodypart_overlay.draw_color
+
+/datum/status_effect/organ_set_bonus/fish/texture_limb(atom/source, obj/item/bodypart/limb)
+	. = ..()
+	if (!color_active || !iscarbon(owner) || !(limb.bodytype & BODYTYPE_ORGANIC))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/tail_color = get_tail_color(carbon_owner)
+	if (tail_color)
+		limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+
+/datum/status_effect/organ_set_bonus/fish/untexture_limb(atom/source, obj/item/bodypart/limb)
+	. = ..()
+	if (color_active)
+		limb.remove_color_override(LIMB_COLOR_FISH_INFUSION)
+
 ///Fish people like eating good fishing bait, the better the bait the tastier it is
 /datum/status_effect/organ_set_bonus/fish/proc/get_perceived_food_quality(datum/source, datum/component/edible/edible, list/extra_quality)
 	SIGNAL_HANDLER
@@ -76,7 +131,7 @@
 	. = ..()
 	if(!bonus_active || !HAS_TRAIT(owner, TRAIT_IS_WET))
 		return
-	owner.adjust_bodytemperature(-2 * seconds_between_ticks, min_temp = owner.standard_body_temperature)
+	owner.adjust_bodytemperature(-2 * seconds_between_ticks, min_temp = owner.get_body_temp_normal())
 	owner.stamina?.adjust(1.5 * seconds_between_ticks)
 
 ///Called when the mob gets wet or dries off, swaps between the wet buffs and the dry debuffs
@@ -126,6 +181,10 @@
 ///Called when an organ is added or removed, gives or takes the crawling speed buff depending on having a fish tail
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER
+	// We need to snowflake the tongue because it doesn't count towards the set bonus
+	if (istype(organ, /obj/item/organ/internal/tongue/inky))
+		set_organs(organs)
+		return
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET) || !istype(organ, /obj/item/organ/external/tail/fish))
 		return
 	var/obj/item/organ/tail = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -233,6 +292,7 @@
 /datum/bodypart_overlay/mutant/tail/fish
 	feature_key = "fish_tail"
 	color_source = ORGAN_COLOR_OVERRIDE
+	mesh_in_suits = TRUE
 
 /datum/bodypart_overlay/mutant/tail/fish/override_color(obj/item/bodypart/bodypart_owner)
 	//If the owner uses mutant colors, inherit the color of the bodypart
@@ -322,13 +382,13 @@
 /datum/bodypart_overlay/simple/gills
 	icon = 'icons/mob/human/fish_features.dmi'
 	icon_state = "gills"
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 
-/datum/bodypart_overlay/simple/gills/get_image(image_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/simple/gills/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	return image(
 		icon = icon,
-		icon_state = "[icon_state]_[mutant_bodyparts_layertext(image_layer)]",
-		layer = image_layer,
+		icon_state = "[icon_state]_[layer_index]",
+		layer = layer_real,
 	)
 
 /// Subtype of gills that allow the mob to optionally breathe water.
@@ -441,3 +501,4 @@
 #undef FISH_SCLERA_COLOR
 #undef FISH_PUPIL_COLOR
 #undef FISH_COLORS
+#undef FISH_INFUSION_ALL_ORGANS

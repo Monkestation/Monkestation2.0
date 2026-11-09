@@ -1,6 +1,7 @@
 #define MOTH_EATING_CLOTHING_DAMAGE 15
 
 /obj/item/clothing
+	abstract_type = /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
@@ -306,7 +307,7 @@
 	if(!istype(wearer))
 		return
 
-	wearer.update_clothing(slot_flags)
+	wearer.update_clothing(slot_flags | wearer.get_slot_by_item(src))
 
 
 /**
@@ -597,12 +598,13 @@ BLIND     // can't see anything
 	if(user.is_holding(src))
 		user.update_held_items()
 		return TRUE
-	if(up)
-		user.update_obscured_slots(visor_flags_inv)
-	user.update_clothing(slot_flags)
+	// masks pushed up into hats change their slot_flags, so also redraw the slot we're actually worn in
+	user.update_clothing(slot_flags | user.get_slot_by_item(src))
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
+	if(visor_flags_inv)
+		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
 	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())

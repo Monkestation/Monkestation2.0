@@ -340,7 +340,11 @@
 /mob/living/basic/cortical_borer/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/loc_temp
 	if(human_host)
-		loc_temp = human_host.bodytemperature // set the local temp to that of the host's core temp
+		if(ishuman(human_host))
+			var/mob/living/carbon/human/host = human_host
+			loc_temp = host.coretemperature // set the local temp to that of the host's core temp
+		else
+			loc_temp = human_host.bodytemperature
 	else
 		loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
@@ -351,9 +355,16 @@
 
 	if(temp_delta < 0) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
-			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HOMEOSTASIS_COOLING_MAX) * seconds_per_tick, temp_delta))
+			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * seconds_per_tick, temp_delta))
 	else // this is a hot place
-		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HOMEOSTASIS_HEATING_MAX) * seconds_per_tick, temp_delta))
+		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * seconds_per_tick, temp_delta))
+
+/// Changes the body temperatures we can survive in, updating our temperature sensitivity to match
+/mob/living/basic/cortical_borer/proc/set_survivable_temperatures(min_temp, max_temp)
+	RemoveElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+	minimum_survivable_temperature = min_temp
+	maximum_survivable_temperature = max_temp
+	apply_temperature_requirements()
 
 //leave the host, forced or not
 /mob/living/basic/cortical_borer/proc/leave_host()
@@ -365,8 +376,7 @@
 		borer_organ.Remove(human_host)
 
 	REMOVE_TRAIT(src, TRAIT_WEATHER_IMMUNE, "borer_in_host")
-	bodytemp_heat_damage_limit = initial(bodytemp_heat_damage_limit) //reset body tempature
-	bodytemp_cold_damage_limit = initial(bodytemp_cold_damage_limit)
+	set_survivable_temperatures(initial(minimum_survivable_temperature), initial(maximum_survivable_temperature)) //reset body tempature
 	human_host = null
 	SEND_SIGNAL(src, COMSIG_HOST_CHANGED)
 

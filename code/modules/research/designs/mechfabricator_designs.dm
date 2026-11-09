@@ -1859,6 +1859,19 @@
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	desc = "External plating for a MODsuit. [theme.desc]"
 
+/// Design for the portable suit plating.
+/datum/design/mod_plating/portable_suit
+	name = "MOD Portable Suit Plating"
+	id = "mod_plating_portable_suit"
+	build_path = /obj/item/mod/construction/plating/portable_suit
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
+	)
+	research_icon_state = "psuit-plating"
+
 /datum/design/mod_plating/engineering
 	name = "MOD Engineering Plating"
 	id = "mod_plating_engineering"
@@ -1891,12 +1904,14 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	research_icon_state = "cosmohonk-plating"
 
-/datum/design/mod_paint_kit
-	name = "MOD Paint Kit"
-	desc = "A paint kit for Modular Suits."
-	id = "mod_paint_kit"
+/datum/design/paint_kit
+	name = "Robotics Paint Kit"
+	desc = "A paint kit for IPCs, robotic limbs, and MODsuits."
+	id = "paint_kit"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
 	category = list(
