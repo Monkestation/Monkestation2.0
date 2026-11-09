@@ -20,7 +20,7 @@
 
 /mob/living/carbon/human/proc/get_examine_headshot(mob/user)
 	var/headshot_url = dna?.features?["headshot"]
-	if(!headshot_url || !length(headshot_url))
+	if(!length(headshot_url))
 		return ""
 
 	var/encoded_url = html_encode(headshot_url)
