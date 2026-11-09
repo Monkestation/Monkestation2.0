@@ -75,7 +75,55 @@
 }
 
 .ChatMessage {
+  position: relative;
   word-wrap: break-word;
+}
+
+.ChatMessage .examine-headshot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+}
+
+.ChatMessage .examine-headshot__image {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 56px;
+  height: 56px;
+}
+
+.ChatMessage .examine-headshot__image img {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: var(--color-base);
+  transition:
+    width 150ms ease,
+    height 150ms ease;
+}
+
+.ChatMessage .examine-headshot__image:hover {
+  z-index: 2;
+}
+
+.ChatMessage .examine-headshot__image:hover img {
+  width: 240px;
+  height: 240px;
+}
+
+.ChatMessage .examine-headshot:hover {
+  z-index: 2;
 }
 
 .ChatMessage--highlighted {

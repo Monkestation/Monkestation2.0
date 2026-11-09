@@ -18,6 +18,16 @@
 /mob/living/carbon/human/get_examine_icon(mob/user)
 	return null
 
+/mob/living/carbon/human/proc/get_examine_headshot(mob/user)
+	var/headshot_url = dna?.features?["headshot"]
+	if(!headshot_url || !length(headshot_url))
+		return ""
+
+	var/encoded_url = html_encode(headshot_url)
+	var/headshot_name = html_encode(name)
+
+	return "<div class='examine-headshot'><a class='examine-headshot__image' href='[encoded_url]' target='_blank'><img src='[encoded_url]' alt='[headshot_name] headshot'/></a></div>"
+
 /mob/living/carbon/examine(mob/user)
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return list(span_warning("You're struggling to make out any details..."))
@@ -33,6 +43,12 @@
 	. += get_clothing_examine_info(user)
 	// give us some space between clothing examine and the rest
 	ADD_NEWLINE_IF_NECESSARY(.)
+	if(ishuman(src))
+		var/mob/living/carbon/human/human_target = src
+		var/headshot_html = human_target.get_examine_headshot(user)
+		if(length(headshot_html))
+			. += headshot_html
+			ADD_NEWLINE_IF_NECESSARY(.)
 
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
