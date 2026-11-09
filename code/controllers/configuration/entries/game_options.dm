@@ -466,6 +466,10 @@
 /datum/config_entry/string/metacurrency_name
 	config_entry_value = "Monkecoins"
 
+/// Max personalities you can have at once
+/datum/config_entry/number/max_personalities
+	default = 5
+
 //Custom Shuttles
 //Shuttle size limiter
 /datum/config_entry/number/max_shuttle_count

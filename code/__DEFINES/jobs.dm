@@ -274,3 +274,8 @@
 #define JOB_EXPLORER "Explorer"
 
 #define JOB_XENOBIOLOGIST "Xenobiologist"
+
+/// Mind traits that medical jobs get
+#define MEDICAL_MIND_TRAITS TRAIT_DESENSITIZED
+/// Mind traits that security jobs get
+#define SECURITY_MIND_TRAITS TRAIT_DESENSITIZED

@@ -12,6 +12,8 @@
 #define FLAMMABLE_MOB (1<<3)
 /// Mob never takes damage from unarmed attacks
 #define IMMUNE_TO_FISTS (1<<4)
+/// People would be sad to see this mob die
+#define SENDS_DEATH_MOODLETS (1<<5)
 
 /// Temporary trait applied when an attack forecast animation has completed
 #define TRAIT_BASIC_ATTACK_FORECAST "trait_basic_attack_forecast"
