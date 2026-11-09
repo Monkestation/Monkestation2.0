@@ -272,7 +272,7 @@
 		part.cold_protection = NONE
 		part.alternate_worn_layer = part_datum.unsealed_layer
 	wearer.update_clothing(part.slot_flags | slot_flags)
-	wearer.update_obscured_slots(part.visor_flags_inv)
+	wearer.refresh_obscured()
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
 		wearer.cutoff_internals()
 	SEND_SIGNAL(src, COMSIG_MOD_PART_SEALED, part_datum)
