@@ -52,7 +52,7 @@
 /datum/bodypart_overlay/simple/sandy
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "sandy_overlay"
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 
 
 /obj/item/organ/internal/cyberimp/chest/sandevistan/refurbished
@@ -541,7 +541,7 @@
 /datum/bodypart_overlay/simple/dualwield
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "ccms_overlay"
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 
 /obj/item/organ/internal/cyberimp/chest/dualwield
 	name = "C.C.M.S implant"
