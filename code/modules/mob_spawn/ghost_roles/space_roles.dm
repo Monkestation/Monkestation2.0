@@ -378,7 +378,7 @@
 		/obj/item/stamp/centcom,
 	)
 	belt = /obj/item/modular_computer/pda/heads/ccpost
-	ears = /obj/item/radio/headset/headset_cent/alt
+	ears = /obj/item/radio/headset/headset_cent/alt/ccpost/liaison
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/energy/e_gun
@@ -418,7 +418,7 @@
 	head = /obj/item/clothing/head/beret/centcom_formal
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security/blu
-	ears = /obj/item/radio/headset/headset_cent/alt
+	ears = /obj/item/radio/headset/headset_cent/alt/ccpost/security
 	shoes = /obj/item/clothing/shoes/combat/swat/admiral
 	mask = /obj/item/clothing/mask/gas/sechailer
 

@@ -1,14 +1,12 @@
-// CENTRAL COMMAND OUTPOST LOGISTICS
 
 #define CCPOST_FREIGHT_INBOUND_ID "ccpost_freight_in"
 #define CCPOST_FREIGHT_OUTBOUND_ID "ccpost_freight_out"
 
-#define CCPOST_STARTING_ALLOCATION 25
-#define CCPOST_MAX_ALLOCATION 80
-#define CCPOST_FREIGHT_RETURN_VALUE 1
+#define CCPOST_STARTING_ALLOCATION 30
+#define CCPOST_MAX_ALLOCATION 100
+#define CCPOST_FREIGHT_RETURN_VALUE 2
 
 
-// LOGISTICS NETWORK
 
 #define CCPOST_SHIPMENT_QUEUED "QUEUED"
 #define CCPOST_SHIPMENT_AUTHORIZED "AUTHORIZED"
@@ -175,10 +173,7 @@
 	sector_network.ensure_started()
 	apply_installation_loss_freight_effects(conditions, package)
 
-	// --------------------------------------------------------
-	// RELAY STATION A-17
 	// Communications reliability affects authorization.
-	// --------------------------------------------------------
 
 	var/datum/ccpost_sector_installation/relay = sector_network.get_installation_by_code(CCPOST_INSTALLATION_CODE_REL_A17)
 
@@ -197,10 +192,7 @@
 				conditions.add_reason("Relay Station A-17 is experiencing a critical operational incident.")
 
 
-	// --------------------------------------------------------
-	// ADMINISTRATIVE ANNEX 6
 	// Administrative processing affects authorization.
-	// --------------------------------------------------------
 
 	var/datum/ccpost_sector_installation/administrative_annex = sector_network.get_installation_by_code(CCPOST_INSTALLATION_CODE_ADM_06)
 
@@ -223,10 +215,7 @@
 				conditions.add_reason("Administrative Annex 6 is experiencing a critical operational incident.")
 
 
-	// --------------------------------------------------------
-	// LOGISTICS STATION H-9
 	// This is the installation most directly involved in freight.
-	// --------------------------------------------------------
 
 	var/datum/ccpost_sector_installation/logistics_station = sector_network.get_installation_by_code(CCPOST_INSTALLATION_CODE_LOG_H09)
 
@@ -258,9 +247,6 @@
 				conditions.add_reason("Logistics Station H-9 is experiencing a critical operational incident.")
 
 
-	// --------------------------------------------------------
-	// ACTIVE SECTOR NOTICES
-	// --------------------------------------------------------
 
 	for(var/datum/ccpost_sector_notice/notice as anything in sector_network.sector_notices)
 		if(!notice.has_active_logistics_effect())
@@ -655,7 +641,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 
 
-// CONVEYOR CONTROL
 
 /// Changes the operating state of every conveyor belt sharing a given ID.
 ///
@@ -677,7 +662,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	return TRUE
 
 
-// CENTRAL COMMAND FREIGHT CONTAINER
 
 /obj/structure/closet/crate/ccpost_freight
 	name = "Central Command freight container"
@@ -703,7 +687,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		. += span_notice("The container is marked as reusable Central Command freight property.")
 
 
-// FREIGHT MAP POINTS
 
 /obj/effect/ccpost_freight_point
 	name = "CCPOST freight point"
@@ -717,7 +700,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
-// INBOUND FREIGHT SPAWN
 
 /// Place this on the furthest hidden inbound conveyor tile.
 ///
@@ -738,7 +720,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	return ..()
 
-// INBOUND UNLOAD SENSOR
 
 /// Place this on the final inbound conveyor tile inside the usable cargo bay.
 ///
@@ -778,7 +759,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 25, vary = TRUE)
 
-// OUTBOUND LOAD POINT
 
 /// Place this on the first outbound conveyor tile inside the usable cargo bay.
 ///
@@ -873,7 +853,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// OUTBOUND RETURN RECEIVER
 
 /// Place this on the furthest hidden outbound conveyor tile.
 ///
@@ -943,14 +922,12 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	qdel(freight_crate)
 
-// CENTRAL COMMAND LOGISTICS TERMINAL CIRCUIT BOARD
 
 /obj/item/circuitboard/computer/ccpost_logistics
 	name = "Central Command Logistics Terminal"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/ccpost_logistics
 
-// CENTRAL COMMAND LOGISTICS TERMINAL
 
 /obj/machinery/computer/ccpost_logistics
 	name = "Central Command logistics terminal"
@@ -1016,12 +993,14 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 // TGUI
 
 /obj/machinery/computer/ccpost_logistics/ui_status(mob/user)
-	if(!ccpost_has_centcom_id(user))
+	if(isobserver(user))
+		return UI_INTERACTIVE
+	if(!ccpost_can_view_terminal(user))
 		return UI_CLOSE
 	return ..()
 
 /obj/machinery/computer/ccpost_logistics/ui_interact(mob/user, datum/tgui/ui)
-	if(!ccpost_has_centcom_id(user))
+	if(!ccpost_can_view_terminal(user))
 		balloon_alert(user, "Central Command ID required")
 		return
 	. = ..()
@@ -1034,9 +1013,10 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 
 /obj/machinery/computer/ccpost_logistics/ui_data(mob/user)
-	if(!ccpost_has_centcom_id(user))
+	if(!ccpost_can_view_terminal(user))
 		return list()
 	var/list/data = list()
+	data["read_only"] = isobserver(user)
 
 	var/datum/ccpost_logistics_network/network = GLOB.ccpost_logistics_network
 
@@ -1173,7 +1153,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	return data
 
-// LOGISTICS TERMINAL ACTIONS
 
 /obj/machinery/computer/ccpost_logistics/proc/begin_audit_print(mob/user, visible_text)
 	if(!COOLDOWN_FINISHED(src, audit_print_cooldown))
@@ -1309,9 +1288,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	return FALSE
 
-// ////////////////////////////////////
-// Logistics Package System
-// ////////////////////////////////////
 
 /// Creates one physical audit paper at the logistics terminal.
 /obj/machinery/computer/ccpost_logistics/proc/print_audit_page(
@@ -1617,11 +1593,8 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		for(var/i in 1 to amount)
 			new item_type(freight_crate)
 
-// ////////////////////////////////////
 // Logistics CATALOG START
-// ////////////////////////////////////
 
-// ADMINISTRATION
 
 /datum/ccpost_supply_package/administrative
 	id = "administrative"
@@ -1642,7 +1615,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "records_filing"
 	name = "Records & Filing Package"
 	desc = "Expanded records-management supplies for installations experiencing dangerous levels of unfiled paperwork."
-	cost = 6
+	cost = 5
 
 	contains = list(
 		/obj/structure/filingcabinet/chestdrawer/wheeled = 1,
@@ -1658,7 +1631,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// SUSTENANCE
 
 /datum/ccpost_supply_package/sustenance
 	id = "sustenance"
@@ -1691,7 +1663,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "coffee_refreshments"
 	name = "Coffee & Refreshments Package"
 	desc = "A complete coffee-service restock for maintaining alertness, morale, and the appearance of productivity."
-	cost = 6
+	cost = 4
 
 	contains = list(
 		/obj/item/storage/box/coffeepack/robusta = 1,
@@ -1709,7 +1681,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "sustenance_hospitality"
 	name = "Visitor Refreshments Package"
 	desc = "Non-alcoholic beverages, snacks, and serving equipment intended for visiting station officials, corporate representatives, and authorized guests."
-	cost = 6
+	cost = 5
 
 	contains = list(
 		/obj/item/storage/cans/sixsoda = 2,
@@ -1723,7 +1695,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "luxury_goods"
 	name = "Luxury Goods Crate"
 	desc = "A curated assortment of premium consumables intended for executive hospitality, visiting officials, and approved morale expenditure."
-	cost = 11
+	cost = 9
 
 	contains = list(
 		/obj/item/food/moonfish_caviar = 2,
@@ -1733,14 +1705,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// MEDICAL
 
 /datum/ccpost_supply_package/medical
 	id = "medical"
 	name = "Medical Resupply Package"
 	desc = "General medical provisions including emergency treatment kits, diagnostic equipment, and wound-care supplies for outpost personnel."
 	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
-	cost = 9
+	cost = 7
 
 	contains = list(
 		/obj/item/storage/medkit/regular = 1,
@@ -1755,7 +1726,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "medical_trauma"
 	name = "Trauma Treatment Package"
 	desc = "Rapid-response medication and wound-care supplies for stabilizing serious injuries before evacuation or surgery."
-	cost = 7
+	cost = 6
 
 	contains = list(
 		/obj/item/reagent_containers/medipen = 2,
@@ -1768,7 +1739,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "medical_blood_fluids"
 	name = "Blood & Fluid Resupply"
 	desc = "A compact blood and saline reserve for treating blood loss and supporting emergency transfusion procedures."
-	cost = 7
+	cost = 6
 
 	contains = list(
 		/obj/item/reagent_containers/blood/o_minus = 3,
@@ -1781,7 +1752,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "medical_defibrillators"
 	name = "Defibrillator Package"
 	desc = "Two loaded defibrillators for installations expecting cardiac emergencies, major trauma, or questionable workplace decisions."
-	cost = 9
+	cost = 8
 
 	contains = list(
 		/obj/item/defibrillator/loaded = 2
@@ -1791,7 +1762,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "medical_surgical"
 	name = "Surgical Support Package"
 	desc = "A compact set of surgical supplies for emergency procedures when routine medical support is unavailable."
-	cost = 10
+	cost = 9
 
 	contains = list(
 		/obj/item/storage/backpack/duffelbag/med/surgery = 1,
@@ -1803,7 +1774,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "medical_triage"
 	name = "Mobile Triage Station"
 	desc = "Portable diagnostic and stabilization equipment for assessing casualties and providing emergency treatment before transfer to a fully equipped medical facility."
-	cost = 10
+	cost = 9
 
 	contains = list(
 		/obj/item/healthanalyzer = 2,
@@ -1815,14 +1786,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/emergency_bed = 1
 	)
 
-// ENGINEERING
 
 /datum/ccpost_supply_package/engineering
 	id = "engineering"
 	name = "Engineering Maintenance Package"
 	desc = "A comprehensive supply of tools, construction materials, replacement lighting, and electrical protection for routine installation maintenance."
 	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
-	cost = 11
+	cost = 9
 
 	contains = list(
 		/obj/item/stack/sheet/mineral/plasma/twenty = 1,
@@ -1838,7 +1808,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "engineering_toolboxes"
 	name = "Toolbox Package"
 	desc = "A reserve of electrical and mechanical toolboxes for repairs, maintenance, and emergency improvisation."
-	cost = 7
+	cost = 6
 
 	contains = list(
 		/obj/item/storage/toolbox/electrical = 2,
@@ -1849,7 +1819,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "engineering_electrical"
 	name = "Electrical Repair Package"
 	desc = "Insulated gloves, replacement power cells, and cable for restoring damaged electrical systems."
-	cost = 9
+	cost = 7
 
 	contains = list(
 		/obj/item/clothing/gloves/color/yellow = 2,
@@ -1861,7 +1831,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "engineering_atmos"
 	name = "Atmospheric Recovery Package"
 	desc = "Portable atmospheric equipment for recovering air, clearing contaminants, and repairing avoidable ventilation mistakes."
-	cost = 12
+	cost = 9
 
 	contains = list(
 		/obj/machinery/portable_atmospherics/pump = 1,
@@ -1872,7 +1842,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "engineering_breach"
 	name = "Hull Breach Response Package"
 	desc = "Anti-breach shield projectors and metal-foam supplies for rapid containment of structural damage."
-	cost = 14
+	cost = 11
 
 	contains = list(
 		/obj/machinery/shieldgen = 2,
@@ -1883,7 +1853,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "engineering_power"
 	name = "Portable Power Package"
 	desc = "Portable power-induction equipment and high-capacity cells for keeping essential systems running away from fixed chargers."
-	cost = 10
+	cost = 8
 
 	contains = list(
 		/obj/item/inducer/orderable = 2,
@@ -1894,7 +1864,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "engineering_auxiliary_generator"
 	name = "Auxiliary Generator Package"
 	desc = "A portable plasma-powered generator and supporting electrical equipment for restoring power during major installation failures."
-	cost = 14
+	cost = 12
 
 	contains = list(
 		/obj/machinery/power/port_gen/pacman = 1,
@@ -1905,14 +1875,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// MATERIALS
 
 /datum/ccpost_supply_package/materials/refurbishment
 	id = "materials_refurbishment"
 	name = "Interior Refurbishment Materials"
 	desc = "A selection of carpeting and timber for approved office renovations, replacement furnishings, and decorative improvements."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
-	cost = 9
+	cost = 7
 
 	contains = list(
 		/obj/item/stack/tile/carpet/fifty = 1,
@@ -1926,7 +1895,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Safety Flooring & Reinforcement Package"
 	desc = "Industrial anti-slip flooring, structural rods, and emergency sealing supplies for improving the safety of installation corridors and work areas."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
-	cost = 8
+	cost = 7
 
 	contains = list(
 		/obj/item/stack/tile/noslip/thirty = 2,
@@ -1939,7 +1908,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Construction Materials Package"
 	desc = "Bulk iron, glass, and plastic stock for routine construction, repairs, and approved installation improvements."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
-	cost = 10
+	cost = 8
 
 	contains = list(
 		/obj/item/stack/sheet/iron/fifty = 1,
@@ -1952,7 +1921,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Emergency Repair Materials"
 	desc = "Reinforced construction stock and breach-control supplies intended for significant structural damage."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
-	cost = 12
+	cost = 10
 
 	contains = list(
 		/obj/item/stack/sheet/plasteel/twenty = 1,
@@ -1962,14 +1931,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// TECHNICAL
 
 /datum/ccpost_supply_package/technical/advanced_parts
 	id = "technical_parts"
 	name = "Advanced Parts Package"
 	desc = "Contains a rapid part exchanger and supporting equipment for maintaining damaged machinery."
 	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
-	cost = 12
+	cost = 14
 
 	contains = list(
 		/obj/item/storage/part_replacer = 1,
@@ -1985,7 +1953,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Robotics Utility Package"
 	desc = "Basic bot assemblies, sensors, and robotic components for constructing simple support machines."
 	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
-	cost = 15
+	cost = 13
 
 	contains = list(
 		/obj/item/assembly/prox_sensor = 4,
@@ -2003,7 +1971,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "MODsuit Maintenance Package"
 	desc = "Replacement MODsuit power components and maintenance equipment for servicing authorized corporate protective systems."
 	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
-	cost = 12
+	cost = 10
 
 	contains = list(
 		/obj/item/mod/core/standard = 1,
@@ -2012,14 +1980,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/multitool = 1
 	)
 
-// EMERGENCY
 
 /datum/ccpost_supply_package/emergency/radiation
 	id = "emergency_radiation"
 	name = "Radiation Protection Package"
 	desc = "Two complete radiation protection sets and portable radiation detection equipment for incidents involving contaminated cargo or hazardous environments."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
-	cost = 10
+	cost = 8
 
 	contains = list(
 		/obj/item/clothing/head/utility/radiation = 2,
@@ -2032,7 +1999,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Explosive Hazard Response Package"
 	desc = "Protective clothing and inspection tools intended for personnel responding to suspected explosive devices and other dangerous equipment."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
-	cost = 10
+	cost = 9
 
 	contains = list(
 		/obj/item/clothing/head/utility/bomb_hood = 1,
@@ -2049,7 +2016,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Emergency EVA Package"
 	desc = "Two complete sets of emergency EVA equipment for evacuation, exterior repairs, and rescue operations in depressurized environments."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
-	cost = 15
+	cost = 13
 
 	contains = list(
 		/obj/item/clothing/suit/space = 2,
@@ -2063,7 +2030,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Firefighting Package"
 	desc = "Protective equipment and extinguishing gear for responding to major fires and heat hazards."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
-	cost = 10
+	cost = 8
 
 	contains = list(
 		/obj/item/clothing/suit/utility/fire/firefighter = 2,
@@ -2080,7 +2047,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Emergency Internals Package"
 	desc = "Breathing masks and portable oxygen supplies for atmospheric emergencies and evacuation."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
-	cost = 7
+	cost = 6
 
 	contains = list(
 		/obj/item/clothing/mask/gas = 3,
@@ -2094,7 +2061,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Mass Casualty Package"
 	desc = "A broad medical reserve intended for incidents producing more casualties than the outpost's routine stock can comfortably support."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
-	cost = 15
+	cost = 13
 
 	contains = list(
 		/obj/item/storage/medkit/regular = 2,
@@ -2108,14 +2075,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// SECURITY
 
 /datum/ccpost_supply_package/security
 	id = "security"
 	name = "Security Support Package"
 	desc = "Limited defensive equipment intended for protection of Central Command personnel and property."
 	category = CCPOST_SUPPLY_CATEGORY_SECURITY
-	cost = 18
+	cost = 15
 
 	contains = list(
 		/obj/item/clothing/suit/armor/vest/alt/sec/private = 2,
@@ -2124,11 +2090,43 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/clothing/gloves/combat = 2
 	)
 
+/datum/ccpost_supply_package/security/base_defense
+	id = "security_base_defense"
+	name = "Base Defense Supplies Crate"
+	desc = "Deployable fortifications for Central Command perimeter and corridor defense: filled sandbags, barrier grenades, pneumatic airlock seals, and a security holobarrier projector."
+	cost = 12
+
+	contains = list(
+		/obj/item/stack/sheet/mineral/sandbags = 8,
+		/obj/item/grenade/ccpost_barrier = 5,
+		/obj/item/door_seal = 2,
+		/obj/item/holosign_creator/security = 1
+	)
+
+/datum/ccpost_supply_package/security/wt550_ammo
+	id = "security_wt550_ammo"
+	name = "WT-550 Ammunition Resupply"
+	desc = "Three replacement WT-550 magazines for the outpost armory."
+	cost = 5
+	contains = list(
+		/obj/item/ammo_box/magazine/wt550m9 = 3
+	)
+
+/datum/ccpost_supply_package/security/wt550_replacement
+	id = "security_wt550_replacement"
+	name = "WT-550 Replacement Weapon"
+	desc = "A replacement WT-550 autorifle and one spare magazine for an authorized outpost officer."
+	cost = 19
+	contains = list(
+		/obj/item/gun/ballistic/automatic/wt550 = 1,
+		/obj/item/ammo_box/magazine/wt550m9 = 1
+	)
+
 /datum/ccpost_supply_package/security/forensics
 	id = "security_forensics"
 	name = "Forensic Investigation Package"
 	desc = "Investigation and evidence-processing equipment intended for examining security incidents, suspicious deliveries, and possible theft of corporate property."
-	cost = 8
+	cost = 7
 
 	contains = list(
 		/obj/item/detective_scanner = 1,
@@ -2143,7 +2141,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "security_nonlethal"
 	name = "Non-Lethal Response Package"
 	desc = "An expanded set of incapacitation, restraint, and temporary containment equipment for installation security personnel."
-	cost = 13
+	cost = 11
 
 	contains = list(
 		/obj/item/gun/energy/disabler = 2,
@@ -2157,7 +2155,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "security_protective"
 	name = "Protective Equipment Package"
 	desc = "Three complete sets of standard security armor and protective accessories for reinforcing installation personnel."
-	cost = 13
+	cost = 11
 
 	contains = list(
 		/obj/item/clothing/suit/armor/vest = 3,
@@ -2169,20 +2167,20 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "security_riot_control"
 	name = "Riot Control Equipment Package"
 	desc = "Two complete riot protection sets, including reinforced armor, helmets, shields, and deployable barriers for defending installation access points."
-	cost = 20
+	cost = 16
 
 	contains = list(
 		/obj/item/clothing/suit/armor/riot = 2,
 		/obj/item/clothing/head/helmet/toggleable/riot = 2,
 		/obj/item/shield/riot = 2,
-		/obj/item/grenade/barrier = 2
+		/obj/item/grenade/ccpost_barrier = 4
 	)
 
 /datum/ccpost_supply_package/security/containment
 	id = "security_containment"
 	name = "Biological Containment Package"
 	desc = "Protective suits, pathology equipment, and portable barriers for isolating suspected biological hazards."
-	cost = 14
+	cost = 12
 
 	contains = list(
 		/obj/item/clothing/head/bio_hood/security = 2,
@@ -2196,21 +2194,21 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/armory_energy
 	id = "security_armory_energy"
 	name = "Armory Energy Weapons Package"
-	desc = "A collection of standard Nanotrasen armory weapons for defensive deployment during serious security emergencies. Includes energy, laser, ion, and non-lethal weaponry."
-	cost = 26
+	desc = "A compact emergency armory containing energy, laser, ion and disabler weapons for serious threats."
+	cost = 24
 
 	contains = list(
-		/obj/item/gun/energy/e_gun = 2,
-		/obj/item/gun/energy/laser = 2,
+		/obj/item/gun/energy/e_gun = 1,
+		/obj/item/gun/energy/laser = 1,
 		/obj/item/gun/energy/ionrifle = 1,
-		/obj/item/gun/energy/disabler = 2
+		/obj/item/gun/energy/disabler = 1
 	)
 
 /datum/ccpost_supply_package/security/armory_ballistic
 	id = "security_armory_ballistic"
 	name = "Armory Ballistic Weapons Package"
 	desc = "Two standard riot shotguns with bandoliers and non-lethal ammunition for situations requiring armed defensive intervention."
-	cost = 23
+	cost = 22
 
 	contains = list(
 		/obj/item/gun/ballistic/shotgun/riot = 2,
@@ -2223,7 +2221,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "security_armory_ammunition"
 	name = "Armory Ammunition Resupply"
 	desc = "A reserve of standard shotgun ammunition, including rubber shot, beanbag rounds, and lethal shells. Intended for replenishing authorized defensive weapons."
-	cost = 9
+	cost = 7
 
 	contains = list(
 		/obj/item/storage/box/rubbershot = 2,
@@ -2234,14 +2232,15 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/crowd_control
 	id = "security_crowd_control"
 	name = "Crowd Control Supplies Package"
-	desc = "Flashbangs, tear gas, temporary barriers, and portable security barricade equipment for managing disturbances and protecting restricted facilities."
-	cost = 15
+	desc = "Flashbangs, tear gas, temporary barriers, portable barricades, and one Krav Maga close-quarters training implant for authorized outpost defensive duties."
+	cost = 16
 
 	contains = list(
 		/obj/item/storage/box/flashbangs = 1,
 		/obj/item/storage/box/teargas = 1,
-		/obj/item/grenade/barrier = 2,
-		/obj/item/holosign_creator/security = 1
+		/obj/item/grenade/ccpost_barrier = 2,
+		/obj/item/holosign_creator/security = 1,
+		/obj/item/implanter/krav_maga = 1
 	)
 
 /datum/ccpost_supply_package/security/corporate_modsuit
@@ -2254,14 +2253,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/mod/control/pre_equipped/corporate/ccpost_security = 1
 	)
 
-// ENTERTAINMENT
 
 /datum/ccpost_supply_package/entertainment/bunny
 	id = "entertainment_centcom_bunny"
 	name = "CentCom Bunny Attire Package"
 	desc = "A complete set of approved Central Command hospitality attire for formal receptions, morale initiatives, and other duties which Human Resources has declined to explain."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 8
+	cost = 6
 
 	contains = list(
 		/obj/item/clothing/under/costume/playbunny/centcom = 1,
@@ -2291,7 +2289,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Laser Tag Recreation Package"
 	desc = "Two complete opposing laser-tag teams for structured recreational conflict that is considerably cheaper than actual security incidents."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 7
+	cost = 6
 
 	contains = list(
 		/obj/item/gun/energy/laser/redtag = 2,
@@ -2319,12 +2317,25 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/flashlight/glowstick/cyan = 1
 	)
 
+/datum/ccpost_supply_package/entertainment/morale_implants
+	id = "entertainment_morale_implants"
+	name = "Corporate Morale Implant Kit"
+	desc = "Three voluntary employee-augmentation implants: sponsorship, concealed storage, and an automated sad trombone. Corporate morale, now permanently installed."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	cost = 12
+
+	contains = list(
+		/obj/item/implanter/sponsorship = 1,
+		/obj/item/implanter/storage = 1,
+		/obj/item/implanter/sad_trombone = 1
+	)
+
 /datum/ccpost_supply_package/entertainment/music
 	id = "entertainment_music"
 	name = "Music & Leisure Package"
 	desc = "A selection of portable musical instruments for sanctioned recreation and unsanctioned hallway concerts."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 8
+	cost = 6
 
 	contains = list(
 		/obj/item/instrument/violin = 1,
@@ -2340,7 +2351,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Formal Social Package"
 	desc = "A small wardrobe of formal clothing suitable for receptions, ceremonies, and meetings where appearing expensive is operationally useful."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 8
+	cost = 7
 
 	contains = list(
 		/obj/item/clothing/under/suit/black_really = 2,
@@ -2393,7 +2404,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Central Command Plushie Collection"
 	desc = "A complete collection of commemorative plushies depicting distinguished NanoTrasen administrative personnel. Approved for morale improvement, decorative purposes, and questionable collecting habits."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 12
+	cost = 9
 
 /datum/ccpost_supply_package/entertainment/admin_plushies/New()
 	. = ..()
@@ -2409,7 +2420,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	name = "Corporate Reception Supplies"
 	desc = "Decorations, serving equipment, and approved recreational materials for welcoming visiting dignitaries and hosting official receptions."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 7
+	cost = 6
 
 	contains = list(
 		/obj/item/storage/box/balloons = 1,
@@ -2421,7 +2432,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// CONTRABAND
 
 /datum/ccpost_supply_package/contraband
 	category = CCPOST_SUPPLY_CATEGORY_RESTRICTED
@@ -2494,14 +2504,16 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/contraband/implant_stock
 	id = "restricted_implant_stock"
-	name = "Off-Ledger Implant Stock"
-	desc = "A collection of experimental personnel augmentation implants recovered from an undisclosed corporate research program. Includes specialized internal storage and close-quarters combat training. Distribution has not been approved by Central Command Medical or Internal Security."
-	cost = 45
-	audit_risk = 6
+	name = "Off-Ledger Tactical Implant Stock"
+	desc = "Unapproved tactical augmentations for restraint escape, covert concealment, electronic disruption, and smoke deployment. Intended for personnel whose expense approvals have already been denied."
+	cost = 50
+	audit_risk = 7
 
 	contains = list(
-		/obj/item/implanter/storage = 1,
-		/obj/item/implanter/krav_maga = 1
+		/obj/item/implanter/freedom = 1,
+		/obj/item/implanter/stealth = 1,
+		/obj/item/implanter/emp = 1,
+		/obj/item/implanter/smoke = 1
 	)
 
 /datum/ccpost_supply_package/contraband/restricted_decor
@@ -2565,9 +2577,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 
-// ////////////////////////////////////
 // Logistics CATALOG END
-// ////////////////////////////////////
 
 /datum/ccpost_shipment
 	var/shipment_code
@@ -2651,7 +2661,6 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	return selected_shipment
 
-// CENTRAL COMMAND LOGISTICS STATUS DISPLAY
 
 /obj/machinery/status_display/ccpost_logistics
 	name = "Central Command freight display"

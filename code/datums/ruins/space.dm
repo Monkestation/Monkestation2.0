@@ -530,7 +530,7 @@
 
 /datum/map_template/ruin/space/ccpost
 	id = "centcom_outpost"
-	suffix = "cc_bureaucratoutpost.dmm"
+	suffix = "ccliaisonoutpost.dmm"
 	name = "Central Command Liaison Outpost"
 	description = "A small Central Command monitoring and administrative installation positioned within the sector."
 	placement_weight = 3

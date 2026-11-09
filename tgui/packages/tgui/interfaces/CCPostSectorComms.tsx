@@ -55,6 +55,7 @@ type SectorPaperwork = {
 };
 
 type Data = {
+  read_only?: boolean;
   allocation: number;
   available_allocation: number;
   max_allocation: number;
@@ -122,6 +123,7 @@ export const CCPostSectorComms = (props) => {
   const [tab, setTab] = useLocalState('tab', 'inbox');
   const [helpOpen, setHelpOpen] = useLocalState('ccpostCommsHelp', false);
   const {
+    read_only = false,
     allocation = 0,
     available_allocation = 0,
     max_allocation = 0,
@@ -139,6 +141,7 @@ export const CCPostSectorComms = (props) => {
   return (
     <Window width={720} height={760} theme="ntos">
       <Window.Content scrollable>
+        {Boolean(read_only) && (<NoticeBox>OBSERVER MODE: Read-only. All terminal actions are restricted to authorized Central Command personnel.</NoticeBox>)}
         <Section
           title="Regional Sector Communications"
           buttons={

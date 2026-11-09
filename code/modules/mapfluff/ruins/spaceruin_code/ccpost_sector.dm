@@ -37,7 +37,6 @@
 
 #define CCPOST_NOTICE_TEMPLATE_MEDICAL_BATCH_RECALL "medical_batch_recall"
 
-// Sector notice template definitions
 
 /datum/ccpost_sector_notice_template
 	var/template_id
@@ -247,7 +246,6 @@
 	body = "In light of recent Wizard Federation activity, remote installations are reminded that unidentified creatures or objects appearing without a conventional arrival record are to be treated as potential hostile anomalies. Isolate the area where practical, avoid unnecessary physical contact, and request Security assessment before attempting containment or disposal."
 
 
-// Sector installation template definitions
 
 /datum/ccpost_sector_contact
 	var/contact_name = "Unknown Personnel"
@@ -610,7 +608,6 @@
 	)
 
 
-// Sector paperwork template definitions
 
 /datum/ccpost_sector_paperwork_template
 	var/template_id
@@ -764,7 +761,6 @@
 	body = "S-8 has completed a scheduled reconciliation of controlled weapons, ammunition, and restricted security equipment. Physical inventory and authorization records are within acceptable tolerance. Central Liaison acknowledgment is requested before the certification is entered into the permanent security record."
 
 
-// Sector message template definitions
 
 /datum/ccpost_sector_message_template
 	var/template_id
@@ -2153,7 +2149,6 @@
 	aid_details = "Secure processing, authentication, and continuity resources have been committed to establish isolated patrol coordination and rebuild trusted access-control channels."
 
 
-// CENTRAL COMMAND REMOTE OVERSIGHT NETWORK
 
 // Sector Notice
 
@@ -2397,7 +2392,6 @@
 	return ..()
 
 
-// SECTOR INSTALLATION COMMUNICATIONS
 
 /datum/ccpost_sector_message
 	var/message_code
@@ -2475,7 +2469,6 @@
 	issued_at = station_time_timestamp()
 
 
-// SECTOR ADMINISTRATIVE PAPERWORK
 
 /// One active administrative document sent from a remote installation to the
 /// Liaison Outpost for physical review, CentCom stamping, and return.
@@ -2740,7 +2733,6 @@
 
 GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
-// NETWORK REGISTRATION
 
 /datum/ccpost_sector_network/proc/register_display(obj/machinery/status_display/ccpost_remote_status/display)
 	if(!display)
@@ -2858,7 +2850,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		schedule_next_sector_paperwork()
 
 
-// SECTOR INSTALLATION MESSAGE GENERATION
 
 /datum/ccpost_sector_network/proc/schedule_next_sector_message(
 	minimum_delay = 3 MINUTES,
@@ -2874,7 +2865,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 
-// SECTOR ADMINISTRATIVE PAPERWORK GENERATION
 
 /datum/ccpost_sector_network/proc/schedule_next_sector_paperwork(
 	minimum_delay = 8 MINUTES,
@@ -3230,7 +3220,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	return eligible_templates
 
 
-// INSTALLATION HISTORY / RELATIONSHIP / FOLLOW-UP CHAINS
 
 /datum/ccpost_sector_network/proc/get_installation_trust_label(datum/ccpost_sector_installation/installation)
 	if(!installation)
@@ -3554,7 +3543,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	addtimer(CALLBACK(src, PROC_REF(issue_installation_followup), installation.installation_code, origin_message_code, 2), rand(3 MINUTES, 5 MINUTES), TIMER_STOPPABLE)
 
 
-// AID DENIAL CONSEQUENCES
 
 /// Returns the escalation-risk penalty created by denying an installation's
 /// Operational Allocation request. Green requests carry only a small future
@@ -4143,7 +4131,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	return TRUE
 
-// SECTOR COMMUNICATIONS ARCHIVE MANAGEMENT
 
 /// Removes resolved communications while preserving every unresolved inbox
 /// transmission. Returns the number of archived records cleared.
@@ -4171,7 +4158,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	return cleared_count
 
 
-// CENTRAL COMMAND SECTOR COMMUNICATIONS TERMINAL CIRCUIT BOARD
 
 /obj/item/circuitboard/computer/ccpost_sector_comms
 	name = "Central Command Sector Communications Terminal"
@@ -4180,6 +4166,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 // Shared authentication for Central Command outpost administrative consoles.
+/proc/ccpost_can_view_terminal(mob/user)
+	return isobserver(user) || ccpost_has_centcom_id(user)
+
 /proc/ccpost_has_centcom_id(mob/user)
 	var/mob/living/carbon/human/human_user = user
 	if(!istype(human_user))
@@ -4189,7 +4178,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	return istype(identification, /obj/item/card/id/advanced/centcom)
 
 
-// CENTRAL COMMAND SECTOR COMMUNICATIONS TERMINAL
 
 /obj/machinery/computer/ccpost_sector_comms
 	name = "Central Command sector communications terminal"
@@ -4223,7 +4211,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	return ..()
 
 
-// ADMINISTRATIVE PAPERWORK SLOT
 
 /obj/machinery/computer/ccpost_sector_comms/examine(mob/user)
 	. = ..()
@@ -4412,7 +4399,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /obj/machinery/computer/ccpost_sector_comms/ui_status(mob/user)
-	if(!ccpost_has_centcom_id(user))
+	if(isobserver(user))
+		return UI_INTERACTIVE
+	if(!ccpost_can_view_terminal(user))
 		return UI_CLOSE
 	return ..()
 
@@ -4420,7 +4409,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	mob/user,
 	datum/tgui/ui
 )
-	if(!ccpost_has_centcom_id(user))
+	if(!ccpost_can_view_terminal(user))
 		balloon_alert(user, "Central Command ID required")
 		return
 	. = ..()
@@ -4602,11 +4591,12 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /obj/machinery/computer/ccpost_sector_comms/ui_data(mob/user)
-	if(!ccpost_has_centcom_id(user))
+	if(!ccpost_can_view_terminal(user))
 		return list()
 	GLOB.ccpost_sector_network.ensure_started()
 
 	var/list/data = list()
+	data["read_only"] = isobserver(user)
 
 	var/datum/ccpost_logistics_network/logistics_network = GLOB.ccpost_logistics_network
 
@@ -4705,7 +4695,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 				return TRUE
 			COOLDOWN_START(network, station_broadcast_cooldown, network.station_broadcast_cooldown_duration)
 			addtimer(CALLBACK(network, TYPE_PROC_REF(/datum/ccpost_sector_network, refresh_comms_terminals)), network.station_broadcast_cooldown_duration)
-			priority_announce(announcement_text, "Liaison Outpost Broadcast", sender_override = "CENTRAL COMMAND LIAISON OUTPOST")
+			priority_announce(announcement_text, "Liaison Outpost Broadcast", sender_override = "Central Command")
 			logistics_network.refresh_logistics_outputs()
 			GLOB.ccpost_sector_network.refresh_comms_terminals()
 			balloon_alert(user, "station broadcast transmitted")
@@ -4962,7 +4952,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	return FALSE
 
-// DISPLAY NOTIFICATIONS
 
 /datum/ccpost_sector_network/proc/notify_registered_displays(spoken_message = null, urgent = FALSE, sound_volume = 0, physical_message = null)
 	for(var/obj/machinery/status_display/ccpost_remote_status/display as anything in registered_displays)
@@ -4986,7 +4975,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		if(spoken_message)
 			display.say(spoken_message)
 
-// SECTOR NOTICE HANDLING
 
 /datum/ccpost_sector_network/proc/is_medical_supply_recall_active()
 	for(var/datum/ccpost_sector_notice/notice as anything in sector_notices)
@@ -5154,7 +5142,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	schedule_next_sector_notice()
 
-// INSTALLATION INITIALIZATION
 
 /datum/ccpost_sector_network/proc/initialize_sector_installations()
 	if(length(sector_installations))
@@ -5179,7 +5166,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	return null
 
-// NORMAL INSTALLATION STATUS
 
 /datum/ccpost_sector_network/proc/apply_installation_status_metadata(datum/ccpost_sector_installation/installation)
 	if(!installation || installation.destroyed)
@@ -5270,7 +5256,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	return min(95, base_chance + installation.aid_denial_risk + get_sector_loss_critical_chance_modifier())
 
-// NO CONTACT / OFFLINE NOTICES
 
 /datum/ccpost_sector_network/proc/create_installation_status_notice(datum/ccpost_sector_installation/installation)
 	var/spoken_update
@@ -5309,7 +5294,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		"emits a notification tone. A sector installation advisory has been received."
 	)
 
-// CRITICAL INSTALLATION STATE
 
 /datum/ccpost_sector_network/proc/get_critical_incident_for_installation(datum/ccpost_sector_installation/installation)
 	if(installation)
@@ -5461,7 +5445,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	)
 
 
-// CRITICAL INCIDENT RESOLUTION
 
 /datum/ccpost_sector_network/proc/resolve_critical_installation(datum/ccpost_sector_installation/installation)
 	if(!installation || installation.destroyed || installation.status != CCPOST_INSTALLATION_CRITICAL)
@@ -5604,7 +5587,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	)
 
 
-// INSTALLATION DESTRUCTION
 
 /datum/ccpost_sector_network/proc/destroy_sector_installation(datum/ccpost_sector_installation/installation)
 	if(!installation || installation.destroyed)
@@ -5715,7 +5697,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	)
 
 
-// INSTALLATION UPDATE TIMER
 
 /datum/ccpost_sector_network/proc/schedule_next_sector_installation_update(minimum_delay = 7 MINUTES, maximum_delay = 12 MINUTES)
 	if(sector_installation_timer)
@@ -5865,7 +5846,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	schedule_next_sector_installation_update()
 
-// SECTOR COMMUNICATIONS TERMINAL REGISTRATION
 
 /datum/ccpost_sector_network/proc/register_comms_terminal(
 	obj/machinery/computer/ccpost_sector_comms/terminal
@@ -5923,7 +5903,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			"Incoming authenticated transmission from [message.installation_name]. Sender: [message.sender_role] [message.sender_name]."
 		)
 
-// CENTRAL COMMAND REMOTE STATUS DISPLAY
 
 /obj/machinery/status_display/ccpost_remote_status
 	name = "Central Command remote status display"
@@ -5989,7 +5968,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	SStgui.update_uis(src)
 
-// STATION COMMAND ROSTER
 
 /obj/machinery/status_display/ccpost_remote_status/proc/get_command_roster()
 	var/static/list/command_positions = list(
@@ -6024,7 +6002,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	return command_roster
 
-// EMERGENCY SHUTTLE INFORMATION
 
 /obj/machinery/status_display/ccpost_remote_status/proc/get_emergency_shuttle_data()
 	var/list/shuttle_data = list(
@@ -6067,7 +6044,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	return shuttle_data
 
-// INSTALLATION RECORD PRINTING
 
 /obj/machinery/status_display/ccpost_remote_status/proc/build_installation_record_print_text(datum/ccpost_sector_installation/installation)
 	if(!installation)
@@ -6141,13 +6117,15 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 // The shared outpost credential check accepts all CentCom ID subtypes.
 // Close an already-open UI if the user removes or changes their credentials.
 /obj/machinery/status_display/ccpost_remote_status/ui_status(mob/user)
-	if(!ccpost_has_centcom_id(user))
+	if(isobserver(user))
+		return UI_INTERACTIVE
+	if(!ccpost_can_view_terminal(user))
 		return UI_CLOSE
 	return ..()
 
 
 /obj/machinery/status_display/ccpost_remote_status/ui_interact(mob/user, datum/tgui/ui)
-	if(!ccpost_has_centcom_id(user))
+	if(!ccpost_can_view_terminal(user))
 		balloon_alert(user, "Central Command ID required")
 		return
 
@@ -6213,12 +6191,13 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /obj/machinery/status_display/ccpost_remote_status/ui_data(mob/user)
 	// Do not send station and sector network details to unauthorized clients.
-	if(!ccpost_has_centcom_id(user))
+	if(!ccpost_can_view_terminal(user))
 		return list()
 
 	GLOB.ccpost_sector_network.ensure_started()
 
 	var/list/data = list()
+	data["read_only"] = isobserver(user)
 
 	data["station_name"] = station_name()
 	data["alert_level"] = SSsecurity_level.get_current_level_as_text()

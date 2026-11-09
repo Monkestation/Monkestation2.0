@@ -60,6 +60,7 @@ type LedgerEntry = {
 };
 
 type Data = {
+  read_only?: boolean;
   allocation: number;
   reserved_allocation: number;
   available_allocation: number;
@@ -123,6 +124,7 @@ export const CCPostLogistics = () => {
   const { data } = useBackend<Data>();
 
   const {
+    read_only = false,
     allocation,
     reserved_allocation,
     available_allocation,
@@ -157,10 +159,11 @@ export const CCPostLogistics = () => {
       theme="ntos"
     >
       <Window.Content scrollable>
+        {Boolean(read_only) && (<NoticeBox>OBSERVER MODE: Read-only. Requisitions and printing remain restricted to Central Command personnel.</NoticeBox>)}
         <Stack vertical>
           <Stack.Item>
             <Section
-              title="Regional Logistics | Operating Manual"
+              title="Regional Logistics"
               buttons={
                 <Button icon="question-circle" onClick={() => setManualOpen(!manualOpen)}>
                   {manualOpen ? 'Close Manual' : 'Operating Manual'}

@@ -837,8 +837,8 @@
 	name = "Central Command Liaison Outpost Quarters"
 	ambience_index = AMBIENCE_GENERIC
 
-/area/ruin/space/has_grav/ccpost/office
-	name = "Central Command Liaison Outpost Office"
+/area/ruin/space/has_grav/ccpost/offices
+	name = "Central Command Liaison Outpost Offices"
 	ambience_index = AMBIENCE_GENERIC
 
 /area/ruin/space/has_grav/ccpost/medbay
@@ -865,8 +865,18 @@
 	name = "Central Command Liaison Outpost Maintenance"
 	ambience_index = AMBIENCE_MAINT
 
-/area/ruin/space/solars/ccpost/solars
-	name = "Central Command Liaison Outpost Solars"
+/area/ruin/space/has_grav/ccpost/secoffice
+	name = "Central Command Liaison Outpost Security Office"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/solars/ccpost/solars/starboard
+	name = "Central Command Liaison Outpost Starboard Solars"
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	sound_environment = SOUND_AREA_SPACE
+
+/area/ruin/space/solars/ccpost/solars/aft
+	name = "Central Command Liaison Outpost Aft Solars"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
@@ -875,3 +885,7 @@
 	name = "Central Command Liaison Outpost Exterior"
 	sound_environment = SOUND_AREA_SPACE
 	area_flags = AREA_USES_STARLIGHT
+
+/area/ruin/space/has_grav/ccpost/executive_suite
+	name = "Central Command Executive Guest Suite"
+	ambience_index = AMBIENCE_GENERIC

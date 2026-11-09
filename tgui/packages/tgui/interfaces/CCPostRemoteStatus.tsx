@@ -68,6 +68,7 @@ type SectorInstallation = {
 };
 
 type Data = {
+  read_only?: boolean | number;
   station_name: string;
   alert_level: string;
   registered_crew: number;
@@ -285,6 +286,7 @@ export const CCPostRemoteStatus = () => {
   const [helpOpen, setHelpOpen] = useLocalState('ccpostNetworkHelp', false);
 
   const {
+    read_only = false,
     station_name,
     alert_level,
     registered_crew,
@@ -412,6 +414,12 @@ export const CCPostRemoteStatus = () => {
       height={700}
     >
       <Window.Content scrollable>
+        {Boolean(read_only) && (
+          <NoticeBox>
+            OBSERVER MODE: Read-only. Network controls and administrative actions
+            remain restricted to authorized Central Command personnel.
+          </NoticeBox>
+        )}
         <Section
           title="Remote Oversight Network"
           buttons={
@@ -924,6 +932,7 @@ export const CCPostRemoteStatus = () => {
                         <>
                           <Button
                             icon="print"
+                            disabled={Boolean(read_only)}
                             onClick={() =>
                               act('print_installation_record', {
                                 installation_code: activeRecordInstallation.code,
@@ -935,7 +944,7 @@ export const CCPostRemoteStatus = () => {
                           <Button.Confirm
                             icon="trash"
                             color="danger"
-                            disabled={!activeRecordInstallation.history.length}
+                            disabled={Boolean(read_only) || !activeRecordInstallation.history.length}
                             confirmContent="Clear retained history?"
                             onClick={() =>
                               act('clear_installation_history', {

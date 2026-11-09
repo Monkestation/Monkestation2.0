@@ -5300,6 +5300,8 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\bigderelict1.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\caravanambush.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\ccpost.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\ccpost_hr.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\ccpost_hr_dialogue.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\ccpost_logistics.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\ccpost_sector.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\ccpost_tasking.dm"
