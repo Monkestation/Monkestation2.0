@@ -348,3 +348,16 @@
   - bugfix: winter hoods now don't set you ablaze anymore when you toggle them as
       plasmaman
   - image: changed bulky plasmaman helmet icon slightly (and all variants with it)
+2026-11-09:
+  Mantlecrawler:
+  - rscadd: Command announcements now allow newlines
+  Melbert:
+  - refactor: Refactored clothing obscurity entirely. Items should be a lot more consistent
+      about what covers what, and update snappier. Report any oddities, like disappearing
+      clothes, hair or species parts
+  - refactor: Refactored handcuffs and legcuffs a bit, report anything odd like getting
+      stuck restrained
+  ThePooba:
+  - balance: this didnt need to be buffed in the first place GRAPES. *slap
+  V2LenKagamine:
+  - bugfix: Single typo
