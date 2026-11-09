@@ -19,8 +19,11 @@
 	return null
 
 /mob/living/carbon/human/proc/get_examine_headshot(mob/user)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(user, TRAIT_PROSOPAGNOSIA) || !is_face_visible())
+		return ""
+
 	var/headshot_url = dna?.features?["headshot"]
-	if(!headshot_url || !length(headshot_url))
+	if(!length(headshot_url))
 		return ""
 
 	var/encoded_url = html_encode(headshot_url)

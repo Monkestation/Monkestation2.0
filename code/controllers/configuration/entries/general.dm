@@ -368,6 +368,10 @@
 /datum/config_entry/string/request_internet_allowed
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/string/headshot_link_regex
+	default = @"^https://(?:i\.gyazo\.com|i\.l3n\.co|(?:images|thumbs)[24]\.imgbox\.com|files\.catbox\.moe)/[^?#]+\.(?:jpg|jpeg|png|webp)(?:\?[^#]*)?(?:#.*)?$"
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/show_irc_name
 
 /datum/config_entry/flag/no_default_techweb_link
