@@ -988,6 +988,8 @@
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
+
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
@@ -1238,21 +1240,10 @@
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
-			//Some externals have multiple layers for background, foreground and between
-			for(var/external_layer in overlay.all_layers)
-				if(!(overlay.layers & external_layer))
-					continue
-				var/list/external_overlays = list(overlay.get_overlay(external_layer, src))
-				external_overlays += overlay.get_emissive_overlay(external_layer, src)
-				external_overlays += overlay.get_secondary_overlay(external_layer, src)
-				for(var/image/external_overlay in external_overlays)
-					if(has_height)
-						owner.apply_height(external_overlay, overlay.offset_location)
-					. += external_overlay
-				for(var/image/extended_overlay in overlay.get_extended_overlay(external_layer, src))
-					if(has_height)
-						owner.apply_height(extended_overlay, ENTIRE_BODY)
-					. += extended_overlay
+			for(var/image/actual_overlay as anything in overlay.get_all_overlays(src))
+				if(has_height)
+					owner.apply_height(actual_overlay, overlay.offset_location)
+				. += actual_overlay
 
 		// Then texture everything at once, including bodypart overlays
 		for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
@@ -1572,6 +1563,22 @@
 
 /obj/item/bodypart/head/get_soon_dismember_message()
 	return ", threatening to split it open" // we don't sever, we cranial fissure when "dismembered" // we also don't dismember i think
+
+/// Add a bodyshape to the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/add_bodyshape(new_shape)
+	if(bodyshape & new_shape)
+		return
+
+	bodyshape |= new_shape
+	owner?.synchronize_bodyshapes()
+
+/// Remove a bodyshape from the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/remove_bodyshape(old_shape)
+	if(!(bodyshape & old_shape))
+		return
+
+	bodyshape &= ~old_shape
+	owner?.synchronize_bodyshapes()
 
 /obj/item/bodypart/proc/return_compoostion_precent(mob/living/carbon/checker)
 	var/matching_ids = 0

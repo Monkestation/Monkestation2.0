@@ -37,7 +37,10 @@
 ///Moth wing bodypart overlay, including burn functionality!
 /datum/bodypart_overlay/mutant/wings/apid
 	feature_key = "apid_wings"
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 
 /datum/bodypart_overlay/mutant/wings/apid/get_global_feature_list()
 	return GLOB.apid_wings_list
