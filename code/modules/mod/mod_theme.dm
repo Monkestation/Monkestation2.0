@@ -200,6 +200,7 @@
 		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 		part.icon_state = "[skin]-[part.base_icon_state][mod.get_part_datum(part).sealed ? "-sealed" : ""]"
 		mod.wearer?.update_clothing(part.slot_flags)
+	mod.wearer?.refresh_obscured()
 
 /datum/armor/mod_theme
 	melee = 10
@@ -2379,7 +2380,7 @@
 	wound = 100
 
 /datum/mod_theme/myststranger
-	name = "Mysterious Sranger"
+	name = "Mysterious Stranger"
 	desc = "They came, they lent their aid, and vanished just like that."
 	extended_desc = "A lone stranger. Who are they? Where did they come from? Why did they lend aid? \
 	Where did they go? We may never know the answer to these questions."
