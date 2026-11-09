@@ -1238,21 +1238,10 @@
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
-			//Some externals have multiple layers for background, foreground and between
-			for(var/external_layer in overlay.all_layers)
-				if(!(overlay.layers & external_layer))
-					continue
-				var/list/external_overlays = list(overlay.get_overlay(external_layer, src))
-				external_overlays += overlay.get_emissive_overlay(external_layer, src)
-				external_overlays += overlay.get_secondary_overlay(external_layer, src)
-				for(var/image/external_overlay in external_overlays)
-					if(has_height)
-						owner.apply_height(external_overlay, overlay.offset_location)
-					. += external_overlay
-				for(var/image/extended_overlay in overlay.get_extended_overlay(external_layer, src))
-					if(has_height)
-						owner.apply_height(extended_overlay, ENTIRE_BODY)
-					. += extended_overlay
+			for(var/image/actual_overlay as anything in overlay.get_all_overlays(src))
+				if(has_height)
+					owner.apply_height(actual_overlay, overlay.offset_location)
+				. += actual_overlay
 
 		// Then texture everything at once, including bodypart overlays
 		for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
