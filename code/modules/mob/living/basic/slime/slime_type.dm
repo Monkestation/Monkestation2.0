@@ -6,6 +6,7 @@ GLOBAL_LIST(unlocked_xenofauna)
 GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type
+	abstract_type = /datum/slime_type
 	/// Our slime's color as text. Used by both description, and icon.
 	/// Spaces become dashes in icon states, so if you touch these names,
 	/// remember to update icons/mob/simple/slimes.dmi!
@@ -255,6 +256,6 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 /// Maps each slime extract type to its /datum/slime_type.
 /proc/init_slime_types_by_extract() as /alist
 	. = alist()
-	for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
+	for(var/datum/slime_type/slime_type as anything in valid_subtypesof(/datum/slime_type))
 		if(slime_type::core_type)
 			.[slime_type::core_type] = slime_type

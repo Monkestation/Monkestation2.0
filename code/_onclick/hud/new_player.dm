@@ -9,9 +9,9 @@
 	if (owner.client.interviewee)
 		return
 
-	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
+	var/list/buttons = valid_subtypesof(/atom/movable/screen/lobby)
 	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
-		if(button_type::abstract_type == button_type || button_type::always_create != TRUE)
+		if(button_type::always_create != TRUE)
 			continue
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
 		lobbyscreen.SlowInit()
@@ -33,7 +33,7 @@
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
 	/// Do not instantiate if type matches this.
-	var/abstract_type = /atom/movable/screen/lobby
+	abstract_type = /atom/movable/screen/lobby
 	var/here
 	/// If true we will create this button every time the HUD is generated
 	var/always_create = TRUE
