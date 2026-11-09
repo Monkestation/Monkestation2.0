@@ -115,6 +115,42 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	return NONE
 
+/datum/component/perfect_mimicry/proc/transder_damage(datum/source, damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	SIGNAL_HANDLER
+	if(!damage_amount)
+		return
+	if(isliving(parent))
+		var/mob/living/living_owner = parent
+		living_owner.apply_damage(damage_amount, damage_type, null, 0, FALSE, TRUE, 0, 0, NONE, attack_dir)
+
+/datum/component/perfect_mimicry/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	if(QDELETED(mimicked_object)) // Return early and prevent speech. Object cleanup should be happening.
+		speech_args[SPEECH_MESSAGE] = ""
+		return
+
+	mimicked_object.say(speech_args[SPEECH_MESSAGE], speech_args[SPEECH_BUBBLE_TYPE], \
+	speech_args[SPEECH_SPANS], speech_args[SPEECH_SANITIZE], speech_args[SPEECH_LANGUAGE], \
+	speech_args[SPEECH_IGNORE_SPAM], speech_args[SPEECH_FORCED], speech_args[SPEECH_FILTERPROOF], \
+	speech_args[SPEECH_RANGE], speech_args[SPEECH_SAYMODE])
+
+	speech_args[SPEECH_MESSAGE] = ""
+
+/datum/component/perfect_mimicry/proc/on_stat_change(mob/living/victim, new_stat)
+	SIGNAL_HANDLER
+
+	if(victim != parent)
+		return
+	if(new_stat < SOFT_CRIT)
+		return
+	if(!stop_mimicry())
+		return
+	if(QDELETED(mimic_ability))
+		return
+	mimic_ability.update_mimic_mode(FALSE)
+	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
+
 /datum/component/perfect_mimicry/proc/is_allowed_object(atom/mimic_target)
 	if(!isitem(mimic_target))
 		return FALSE
@@ -207,6 +243,7 @@
 	new_object.resistance_flags &= ~MIMIC_SPOOF_RESIST_MASK
 	new_object.obj_flags |= CAN_BE_HIT
 	RegisterSignal(new_object, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, PROC_REF(override_examine_flags))
+	RegisterSignal(new_object, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(transder_damage))
 	RegisterSignal(new_object, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	RegisterSignal(new_object, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
@@ -224,15 +261,25 @@
 	mimic.forceMove(mimicked_object)
 	if(length(applied_mob_traits))
 		mimic.add_traits(applied_mob_traits, REF(src))
+	RegisterSignal(mimic, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(mimic, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
 	return TRUE
 
 /datum/component/perfect_mimicry/proc/stop_mimicry()
 	if(!mimicked_object)
 		return FALSE
-	UnregisterSignal(mimicked_object, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, COMSIG_ATOM_RELAYMOVE, COMSIG_ATOM_ITEM_INTERACTION))
+	UnregisterSignal(mimicked_object, list(
+		COMSIG_QDELETING,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS,
+		COMSIG_ATOM_RELAYMOVE,
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_TAKE_DAMAGE
+		))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
+	UnregisterSignal(mimic, list(COMSIG_MOB_SAY, COMSIG_MOB_STATCHANGE))
 	if(length(applied_mob_traits))
 		mimic.remove_traits(applied_mob_traits, REF(src))
 	if(mimicked_object.atom_storage)
