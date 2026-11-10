@@ -59,7 +59,6 @@
 			user,
 			icon_state = "tape_v_0",
 			icon = 'icons/obj/structures/barriertape.dmi',
-			layer = BELOW_MOB_LAYER,
 			maxdistance = place_distance,
 			beam_color = color
 		)
