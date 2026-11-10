@@ -46,7 +46,7 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "wornshirt"
 	inhand_icon_state = "labcoat"
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/dutchjacketsr
@@ -55,6 +55,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "dutchjacket"
+	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 
@@ -64,6 +65,7 @@
 	name = "track jacket"
 	desc = "A black jacket with blue stripes for the athletic. It is also popular among russian delinquents."
 	icon_state = "trackjacket"
+	body_parts_covered = CHEST|GROIN|ARMS
 	toggle_noun = "zipper"
 
 /obj/item/clothing/suit/frenchtrench
@@ -71,6 +73,7 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	name = "blue trenchcoat"
 	icon_state = "frenchtrench"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	desc = "There's a certain timeless feeling to this coat, like it was once worn by a romantic, broken through his travels, from a schemer who hunted injustice to a traveller, however it arrived in your hands? Who knows?"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -80,6 +83,7 @@
 	name = "caretaker tailcoat"
 	desc = "You've ALWAYS been the Caretaker. I ought to know, I've ALWAYS been here."
 	icon_state = "victorian_tailcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/koreacoat
@@ -125,6 +129,7 @@
 	name = "disco ass blazer"
 	desc = "Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve."
 	icon_state = "jamrock_blazer"
+	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/kimjacket
@@ -133,6 +138,7 @@
 	name = "aerostatic bomber jacket"
 	desc = "A jacket once worn by the Air Force during the Antecentennial Revolution, there are quite a few pockets on the inside, mostly for storing notebooks and compasses."
 	icon_state = "aerostatic_bomber_jacket"
+	body_parts_covered = CHEST|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/blackfurrich
@@ -242,7 +248,7 @@
 	desc = "In stark contrast to the undersuit, this large and armored coat is as white as snow, perfect for the bloodstains."
 	icon_state = "soldier"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/suit_gautumn
@@ -284,6 +290,7 @@
 	name = "ukrainian coat"
 	desc = "Hop on your horse, dawn your really fluffy hat, and strap this coat to your back."
 	icon_state = "kuban_cossak"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/corgisuit/en
@@ -291,6 +298,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "ensuit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/trenchbrown
 	name = "brown trenchcoat"
@@ -343,6 +351,7 @@
 	desc = "A comfortable warm-looking sweater."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("warm_sweater", "/obj/item/clothing/suit/warm_sweater")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/warm_sweater
 	greyscale_config_worn = /datum/greyscale_config/warm_sweater/worn
 	greyscale_colors = "#867361"
@@ -354,6 +363,7 @@
 	desc = "A comfortable warm-looking sweater. It even has a heart pattern on it, how cute."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("heart_sweater", "/obj/item/clothing/suit/heart_sweater")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/heart_sweater
 	greyscale_config_worn = /datum/greyscale_config/heart_sweater/worn
 	greyscale_colors = "#867361#8f3a3a"

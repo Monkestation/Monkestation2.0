@@ -1014,6 +1014,16 @@
 			eye_color = eye_color_left_overrides[override_priority]
 	return eye_color
 
+///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
+/mob/living/carbon/human/proc/crewlike_monkify()
+	if(!ismonkey(src))
+		set_species(/datum/species/monkey)
+	// Can't make them human or nonclever. At least not with the easy and boring way out.
+	dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_CREW_MONKEY)
+	dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_CREW_MONKEY)
+
+	ADD_TRAIT(src, TRAIT_BADDNA, SPECIES_TRAIT)
+
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey
 
