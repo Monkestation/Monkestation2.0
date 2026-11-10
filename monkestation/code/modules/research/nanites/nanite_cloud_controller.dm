@@ -69,6 +69,9 @@
 			return backup
 
 /obj/machinery/computer/nanite_cloud_controller/proc/generate_backup(cloud_id, mob/user)
+	if(get_warped_room(get_turf(src)))
+		to_chat(user, span_warning("The cloud can't reach this place."))
+		return
 	if(SSnanites.get_cloud_backup(cloud_id, TRUE))
 		to_chat(user, span_warning("Cloud ID already registered."))
 		return
