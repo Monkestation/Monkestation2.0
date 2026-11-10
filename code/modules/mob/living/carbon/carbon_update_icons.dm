@@ -506,6 +506,13 @@
 		. += emissive_blocker(standing.icon, standing.icon_state, src)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
+/// worn_overlays to use when you'd want to use KEEP_APART. Don't use KEEP_APART neither there nor here, as it would break floating overlays
+/obj/item/proc/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, ., standing, draw_target, isinhands, icon_file)
+
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 ///Returns an integer representing the number of limbs that were updated.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
@@ -691,3 +698,59 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	new_leg_appearance_lower.dir = image_dir
 	. += new_leg_appearance_lower
 	return .
+
+/// Returns the default worn icon file for the given item slot
+/proc/get_default_icon_by_slot(slot_flag)
+	switch(slot_flag)
+		if(ITEM_SLOT_HEAD)
+			return 'icons/mob/clothing/head/default.dmi'
+		if(ITEM_SLOT_EYES)
+			return 'icons/mob/clothing/eyes.dmi'
+		if(ITEM_SLOT_EARS)
+			return 'icons/mob/clothing/ears.dmi'
+		if(ITEM_SLOT_MASK)
+			return 'icons/mob/clothing/mask.dmi'
+		if(ITEM_SLOT_NECK)
+			return 'icons/mob/clothing/neck.dmi'
+		if(ITEM_SLOT_BACK)
+			return 'icons/mob/clothing/back.dmi'
+		if(ITEM_SLOT_BELT)
+			return 'icons/mob/clothing/belt.dmi'
+		if(ITEM_SLOT_ID)
+			return 'icons/mob/clothing/id.dmi'
+		if(ITEM_SLOT_ICLOTHING)
+			return DEFAULT_UNIFORM_FILE
+		if(ITEM_SLOT_OCLOTHING)
+			return DEFAULT_SUIT_FILE
+		if(ITEM_SLOT_GLOVES)
+			return 'icons/mob/clothing/hands.dmi'
+		if(ITEM_SLOT_FEET)
+			return DEFAULT_SHOES_FILE
+
+/// Returns the default worn layer for the given item slot
+/proc/get_default_layer_by_slot(slot_flag)
+	switch(text2num(slot_flag))
+		if(ITEM_SLOT_HEAD)
+			return HEAD_LAYER
+		if(ITEM_SLOT_EYES)
+			return GLASSES_LAYER
+		if(ITEM_SLOT_EARS)
+			return EARS_LAYER
+		if(ITEM_SLOT_MASK)
+			return FACEMASK_LAYER
+		if(ITEM_SLOT_NECK)
+			return NECK_LAYER
+		if(ITEM_SLOT_BACK)
+			return BACK_LAYER
+		if(ITEM_SLOT_BELT)
+			return BELT_LAYER
+		if(ITEM_SLOT_ID)
+			return ID_LAYER
+		if(ITEM_SLOT_ICLOTHING)
+			return UNIFORM_LAYER
+		if(ITEM_SLOT_OCLOTHING)
+			return SUIT_LAYER
+		if(ITEM_SLOT_GLOVES)
+			return GLOVES_LAYER
+		if(ITEM_SLOT_FEET)
+			return SHOES_LAYER
