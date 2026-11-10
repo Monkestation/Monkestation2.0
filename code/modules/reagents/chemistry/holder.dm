@@ -1418,9 +1418,11 @@
 	if(_temperature == chem_temp)
 		return
 
-	. = chem_temp
+	var/old_chem_temp = chem_temp
 	chem_temp = clamp(_temperature, 0, CHEMICAL_MAXIMUM_TEMPERATURE)
-	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, _temperature, .)
+	for(var/datum/reagent/reagent in reagent_list)
+		reagent.on_holder_temperature_update(chem_temp, old_chem_temp)
+	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, _temperature, old_chem_temp)
 
 /*
 * Adjusts the base pH of all of the reagents in a beaker

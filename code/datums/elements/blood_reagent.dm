@@ -5,9 +5,7 @@
 	argument_hash_start_idx = 3
 	/// Blood type associated with this element
 	var/datum/blood_type/blood_type
-	var/mob/living/blood_source
-	var/datum/reagent/attached_reagent
-	var/datum/reagents/attached_reagent_holder
+
 /*
  * Arguments:
  * * blood_source - mob this blood came from, can be null
@@ -18,17 +16,13 @@
 	if (!istype(target) || !istype(blood_type))
 		return ELEMENT_INCOMPATIBLE
 
-	src.attached_reagent = target
 	src.blood_type = blood_type
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_MOB, PROC_REF(on_mob_expose))
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_TURF, PROC_REF(on_turf_expose))
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_OBJ, PROC_REF(on_obj_expose))
 	RegisterSignal(target, COMSIG_REAGENT_ON_MERGE, PROC_REF(on_merge))
 	RegisterSignal(target, COMSIG_REAGENT_ON_TRANSFER, PROC_REF(on_transfer))
-
-	if(target?.holder)
-		RegisterSignal(target.holder, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(on_temp_change), override = TRUE)
-		attached_reagent_holder = target.holder
+	RegisterSignal(target, COMSIG_REAGENT_TEMP_CHANGE, PROC_REF(on_temp_change))
 
 	if (!target.data)
 		target.data = list()
@@ -38,10 +32,13 @@
 		target.description = blood_type.desc
 	target.color = blood_type.get_color()
 
-	if (!blood_source)
+	if(!blood_source)
 		return
 
-	src.blood_source = blood_source
+	if(!target.data["blood_source"])
+		target.data |= list("blood_source" = blood_source)
+	else
+		target.data["blood_source"] = blood_source
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -72,15 +69,8 @@
 		COMSIG_REAGENT_EXPOSE_OBJ,
 		COMSIG_REAGENT_ON_MERGE,
 		COMSIG_REAGENT_ON_TRANSFER,
+		COMSIG_REAGENT_TEMP_CHANGE,
 	))
-
-	if(attached_reagent_holder)
-		UnregisterSignal(attached_reagent_holder, COMSIG_REAGENTS_TEMP_CHANGE)
-
-	blood_type = null
-	blood_source = null
-	attached_reagent = null
-	attached_reagent_holder = null
 
 /// Cover the mob in blood and transfer our viruses and resistances to them
 /datum/element/blood_reagent/proc/on_mob_expose(
@@ -240,20 +230,21 @@
 	SIGNAL_HANDLER
 	new_reagent.AddElement(/datum/element/blood_reagent, null, blood_type)
 
-/datum/element/blood_reagent/proc/on_temp_change(datum/reagents/_holder, old_temp)
+/datum/element/blood_reagent/proc/on_temp_change(datum/reagent/source, new_holder_temperature, old_holder_temperature)
 	SIGNAL_HANDLER
-	if(!_holder)
+	if(!source.holder)
 		return
-	if(!blood_source)
+	if(!source.data["blood_source"])
 		return
-	if(!blood_source?.mind?.has_antag_datum(/datum/antagonist/changeling))
+	var/mob/living/potential_ling = source.data["blood_source"]
+	if(!potential_ling?.mind?.has_antag_datum(/datum/antagonist/changeling))
 		return
-	if(_holder.chem_temp < 395)
+	if(new_holder_temperature < 395)
 		return
-	if(!_holder.my_atom)
+	if(!source.holder.my_atom)
 		return
-	var/atom/screamer = _holder.my_atom
+	var/atom/screamer = source.holder.my_atom
 	screamer.audible_message(span_warning("\The [screamer] hisses and boils over violently!"))
 	playsound(screamer, 'sound/effects/chemistry/changeling_blood_scream.ogg', 75, TRUE) // scream cuz it hurts
-	on_turf_expose(attached_reagent, get_turf(screamer), attached_reagent.volume) // splatter the floor because it jumped out
-	_holder.del_reagent(attached_reagent.type)
+	on_turf_expose(source, get_turf(screamer), source.volume) // splatter the floor because it jumped out
+	source.holder.del_reagent(source.type)
