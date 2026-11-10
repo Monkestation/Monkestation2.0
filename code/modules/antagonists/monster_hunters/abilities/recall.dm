@@ -1,4 +1,6 @@
 /datum/action/cooldown/spell/summonitem/wonderland
+	name = "Summon Trick Weapon"
+	desc = "Beckon forth to your trick weapon, having it fall into your hands."
 
 /datum/action/cooldown/spell/summonitem/wonderland/try_recall_item(mob/living/caster)
 	var/obj/recalled = marked_item
