@@ -1,0 +1,82 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/stack/sheet/mineral/plasma,
+/obj/structure/sign/warning/no_smoking/circle{
+	pixel_y = -26
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/item/lighter/greyscale,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/item/tank/internals/plasma/empty,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"w" = (
+/obj/item/wallframe/firealarm{
+	pixel_y = 26
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"B" = (
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"F" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"R" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"T" = (
+/obj/effect/decal/cleanable/ash,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"Z" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+Z
+m
+F
+a
+"}
+(2,1,1) = {"
+m
+m
+g
+m
+"}
+(3,1,1) = {"
+m
+m
+B
+m
+"}
+(4,1,1) = {"
+m
+R
+d
+T
+"}
+(5,1,1) = {"
+w
+m
+m
+m
+"}

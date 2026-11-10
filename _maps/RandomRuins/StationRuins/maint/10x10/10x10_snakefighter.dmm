@@ -1,0 +1,340 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/template_noop)
+"ac" = (
+/obj/structure/cable,
+/obj/structure/sign/warning/directional/south,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/turf/open/floor/plating,
+/area/template_noop)
+"ad" = (
+/obj/structure/cable,
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/template_noop)
+"ae" = (
+/turf/open/floor/wood,
+/area/template_noop)
+"af" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"ag" = (
+/obj/machinery/light/small/directional/north,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/template_noop)
+"ah" = (
+/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/sign/departments/science/directional/north,
+/obj/item/knife/kitchen,
+/turf/open/floor/plating,
+/area/template_noop)
+"ai" = (
+/obj/structure/closet,
+/obj/item/food/meat/slab/monkey,
+/turf/open/floor/plating,
+/area/template_noop)
+"aj" = (
+/obj/structure/cable,
+/obj/structure/sign/departments/science/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"al" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"am" = (
+/obj/structure/chair,
+/turf/open/floor/wood,
+/area/template_noop)
+"an" = (
+/obj/structure/chair,
+/turf/open/floor/plating,
+/area/template_noop)
+"ao" = (
+/obj/item/chair,
+/turf/open/floor/plating,
+/area/template_noop)
+"ap" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/plating,
+/area/template_noop)
+"aq" = (
+/obj/item/spear,
+/turf/open/floor/plating,
+/area/template_noop)
+"ar" = (
+/obj/structure/table_frame/wood,
+/turf/open/floor/wood,
+/area/template_noop)
+"as" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+"at" = (
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/plating,
+/area/template_noop)
+"av" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"aw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"ax" = (
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"ay" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"az" = (
+/obj/item/clothing/suit/toggle/labcoat/science,
+/turf/open/floor/plating,
+/area/template_noop)
+"aA" = (
+/obj/structure/cable,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/template_noop)
+"aD" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/template_noop)
+"aG" = (
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/template_noop)
+"aH" = (
+/turf/closed/wall/r_wall,
+/area/template_noop)
+"aI" = (
+/obj/effect/decal/remains/human,
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"aJ" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"aK" = (
+/mob/living/basic/snake,
+/turf/open/floor/plating,
+/area/template_noop)
+"aL" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/food/meat/slab/monkey,
+/turf/open/floor/plating,
+/area/template_noop)
+"aM" = (
+/obj/item/food/meat/slab/monkey,
+/turf/open/floor/plating,
+/area/template_noop)
+"aN" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/floor/plating,
+/area/template_noop)
+"aO" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/template_noop)
+"aP" = (
+/obj/structure/sign/warning/directional/south,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/turf/open/floor/plating,
+/area/template_noop)
+"aQ" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"aR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/template_noop)
+"aU" = (
+/obj/machinery/door/airlock/research/glass{
+	name = "Research Pit"
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"aV" = (
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
+/turf/open/floor/wood,
+/area/template_noop)
+"aW" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/template_noop)
+"aY" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plating,
+/area/template_noop)
+"UC" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/research/glass{
+	name = "Research Pit"
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+ad
+aQ
+af
+at
+aW
+af
+aH
+aH
+aH
+ai
+"}
+(2,1,1) = {"
+aj
+aO
+aD
+aA
+ac
+aH
+aH
+af
+aH
+af
+"}
+(3,1,1) = {"
+ag
+al
+ae
+av
+aa
+aH
+aK
+af
+aH
+af
+"}
+(4,1,1) = {"
+aV
+am
+ar
+aw
+aR
+aI
+af
+aM
+aH
+aP
+"}
+(5,1,1) = {"
+ae
+an
+ar
+ae
+UC
+af
+aY
+af
+aU
+af
+"}
+(6,1,1) = {"
+ae
+an
+ar
+ae
+UC
+af
+aK
+af
+aU
+af
+"}
+(7,1,1) = {"
+af
+ao
+ar
+ax
+aR
+aJ
+aL
+af
+aH
+aP
+"}
+(8,1,1) = {"
+ag
+ap
+af
+ay
+aa
+aH
+af
+aK
+aH
+af
+"}
+(9,1,1) = {"
+ah
+aq
+af
+aW
+ac
+aH
+aH
+aN
+aH
+af
+"}
+(10,1,1) = {"
+ai
+af
+as
+az
+aG
+af
+aH
+aH
+aH
+af
+"}

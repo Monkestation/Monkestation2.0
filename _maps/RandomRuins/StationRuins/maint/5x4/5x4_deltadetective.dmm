@@ -1,0 +1,160 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/chair/office,
+/turf/open/floor/wood,
+/area/template_noop)
+"c" = (
+/obj/structure/chair/office,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"d" = (
+/mob/living/basic/cockroach,
+/turf/open/floor/wood,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/obj/item/kirbyplants/random,
+/obj/structure/sign/poster/official/do_not_question/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"f" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/carpet/red,
+/area/template_noop)
+"i" = (
+/turf/open/floor/wood,
+/area/template_noop)
+"m" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/storage/fancy/cigarettes/cigpack_carp,
+/obj/item/storage/fancy/cigarettes,
+/turf/open/floor/carpet/red,
+/area/template_noop)
+"n" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/template_noop)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/red,
+/area/template_noop)
+"r" = (
+/turf/open/floor/carpet/red,
+/area/template_noop)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"t" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/det_suit/dark,
+/obj/item/clothing/suit/jacket/det_suit,
+/obj/item/clothing/head/fedora,
+/obj/item/clothing/head/fedora/brown,
+/turf/open/floor/plating,
+/area/template_noop)
+"x" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/maintenance,
+/obj/item/folder/red,
+/obj/item/folder/white{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/red,
+/area/template_noop)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/template_noop)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/obj/machinery/status_display/evac{
+	pixel_x = -32
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/carpet/red,
+/area/template_noop)
+"T" = (
+/obj/item/clothing/gloves/color/black,
+/obj/item/storage/box/evidence,
+/obj/item/taperecorder,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table_frame/wood,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"X" = (
+/obj/item/storage/briefcase{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/briefcase/secure,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/rack_parts,
+/turf/open/floor/plating,
+/area/template_noop)
+"Y" = (
+/obj/item/lighter,
+/turf/open/floor/carpet/red,
+/area/template_noop)
+
+(1,1,1) = {"
+n
+r
+f
+H
+"}
+(2,1,1) = {"
+b
+q
+x
+D
+"}
+(3,1,1) = {"
+c
+q
+m
+Y
+"}
+(4,1,1) = {"
+d
+i
+n
+s
+"}
+(5,1,1) = {"
+e
+T
+X
+t
+"}

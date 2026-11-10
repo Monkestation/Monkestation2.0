@@ -350,6 +350,11 @@
 	desc = "This will make you big and strong, but give you a bad skin condition."
 	add_mutations = list(/datum/mutation/hulk)
 
+/obj/item/dnainjector/strongmut
+	name = "\improper DNA injector (Strength)"
+	desc = "Makes you a little stronger."
+	add_mutations = list(/datum/mutation/strong)
+
 /obj/item/dnainjector/antihulk
 	name = "\improper DNA injector (Anti-Hulk)"
 	desc = "Cures green skin."

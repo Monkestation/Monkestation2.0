@@ -96,6 +96,25 @@
 #define rustg_acreplace_with_replacements(key, text, replacements) RUSTG_CALL(RUST_G, "acreplace_with_replacements")(key, text, json_encode(replacements))
 
 /**
+ * Splits an area into rooms with binary space partitioning: the area is cut in half (with a little randomness),
+ * then each half again, until a cut would leave a piece smaller than the minimum size. One room of random size
+ * and position is then placed inside every piece. Rooms never overlap and cover the area evenly.
+ *
+ * Return:
+ * * a json list of rooms, each one with id, x, y, x2, y2, width, height and center (with x and y)
+ *
+ * Arguments:
+ * * width: width of the area
+ * * height: height of the area
+ * * hash: seed for the random generator, the same seed gives the same rooms
+ * * map_subsection_min_size: smallest size a piece can be cut to. It is raised above the minimum room size if needed
+ * * map_subsection_min_room_width: smallest width a room can have
+ * * map_subsection_min_room_height: smallest height a room can have
+ */
+#define rustg_bsp_generate(width, height, hash, map_subsection_min_size, map_subsection_min_room_width, map_subsection_min_room_height) \
+	RUSTG_CALL(RUST_G, "bsp_generate")(width, height, hash, map_subsection_min_size, map_subsection_min_room_width, map_subsection_min_room_height)
+
+/**
  * This proc generates a cellular automata noise grid which can be used in procedural generation methods.
  *
  * Returns a single string that goes row by row, with values of 1 representing an alive cell, and a value of 0 representing a dead cell.
@@ -442,6 +461,24 @@
  * Remove every link to the node with unique_id. Replace that node by null
  */
 #define rustg_remove_node_astar(unique_id) RUSTG_CALL(RUST_G, "remove_node_astar")("[unique_id]")
+
+/**
+ * Places rooms of random size at random spots of an area, skipping any that would overlap one already placed.
+ * Simpler than binary space partitioning and with worse coverage, but good for scattering rooms over it.
+ * Room sizes are those of maint ruins (3x3, 3x5, 5x3, 5x4, 10x5 and 10x10, plus one tile of wall on each side),
+ * so pre-made ruins can be dropped into them.
+ *
+ * Return:
+ * * a json list of rooms, each one with id, x, y, x2, y2, width, height and center (with x and y)
+ *
+ * Arguments:
+ * * width: width of the area
+ * * height: height of the area
+ * * desired_room_count: how many rooms to try to place
+ * * hash: seed for the random generator, the same seed gives the same rooms
+ */
+#define rustg_random_room_generate(width, height, desired_room_count, hash) \
+	RUSTG_CALL(RUST_G, "random_room_generate")(width, height, desired_room_count, hash)
 
 /**
  * Compute the shortest path between start_node and goal_node using A*. Heuristic used is simple geometric distance

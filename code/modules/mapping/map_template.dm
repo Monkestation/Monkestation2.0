@@ -127,11 +127,14 @@
 		affected_turf.air_update_turf(TRUE, TRUE)
 		affected_turf.levelupdate()
 
-/datum/map_template/proc/load_new_z(secret = FALSE)
+/// Loads the template on a new z-level, with the given z-level traits or the away mission ones if there are none
+/datum/map_template/proc/load_new_z(secret = FALSE, list/z_traits)
 	var/x = round((world.maxx - width) * 0.5) + 1
 	var/y = round((world.maxy - height) * 0.5) + 1
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY, contain_turfs = FALSE)
+	if(!z_traits)
+		z_traits = secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, z_traits, contain_turfs = FALSE)
 	var/datum/parsed_map/parsed = load_map(
 		file(mappath),
 		x,

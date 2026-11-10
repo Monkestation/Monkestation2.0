@@ -1,0 +1,80 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/structure/sink/kitchen/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/structure/table,
+/obj/item/knife/kitchen,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 2
+	},
+/obj/item/food/mint{
+	pixel_y = 9
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/machinery/processor,
+/turf/open/floor/plating,
+/area/template_noop)
+"H" = (
+/obj/structure/table,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/reagent_containers/condiment/sugar,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"O" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/two,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+H
+d
+e
+h
+j
+"}
+(2,1,1) = {"
+e
+e
+e
+g
+e
+"}
+(3,1,1) = {"
+c
+f
+g
+i
+O
+"}

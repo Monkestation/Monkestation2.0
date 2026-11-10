@@ -66029,6 +66029,15 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
+"toi" = (
+/obj/effect/spawner/backrooms_portal,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "too" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/plastic{
@@ -195945,7 +195954,7 @@ udQ
 hCZ
 tft
 hMU
-qyg
+toi
 utY
 cbs
 qar

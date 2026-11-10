@@ -34364,6 +34364,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
+"gKR" = (
+/obj/effect/spawner/backrooms_portal,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "gLd" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -98935,7 +98939,7 @@ aOP
 xbx
 aSd
 bbO
-aTv
+gKR
 bfC
 oMH
 bcV
