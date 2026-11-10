@@ -62,7 +62,6 @@
 	hit_counter = 0
 	hits_left = 0
 
-	name = "[material_stats.material_name] [base_name]"
 	var/damage_state
 	switch(smithed_quality)
 		if(0 to 24)
@@ -111,6 +110,7 @@
 			//Why are we calling this here? Because we modify force and other stats that are normally in init
 			newtrait.post_parent_init(src)
 	complete = TRUE
+	update_name()
 
 /obj/item/clothing/smithed_clothes/Initialize(mapload,obj/item/created_from,quality)
 	. = ..()
@@ -132,6 +132,7 @@
 	if(material_stats.thermal <= 20)
 		resistance_flags |= LAVA_PROOF
 
+	name = "unfinished [material_stats.material_name] [base_name]"
 
 /obj/item/clothing/smithed_clothes/update_name(updates)
 	. = ..()

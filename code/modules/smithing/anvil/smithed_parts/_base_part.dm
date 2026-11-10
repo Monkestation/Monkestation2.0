@@ -51,6 +51,8 @@
 	if(material_stats.thermal <= 20)
 		resistance_flags |= LAVA_PROOF
 
+	name = "unfinished [material_stats.material_name] [base_name]"
+
 /obj/item/smithed_part/update_name(updates)
 	. = ..()
 	if(smithed_quality < 100)
@@ -163,6 +165,7 @@
 			var/datum/material_trait/newtrait = new trait.type
 			//Why are we calling this here? Because we modify force and other stats that are normally in init
 			newtrait.post_parent_init(src)
+	update_name()
 
 /datum/export/smithed_part
 	unit_name = "smithed good"

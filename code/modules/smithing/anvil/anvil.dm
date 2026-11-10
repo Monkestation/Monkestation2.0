@@ -1,6 +1,6 @@
 /obj/structure/anvil
 	name = "anvil"
-	desc = "Great for forging."
+	desc = "Great for forging. Has helpful context for when I examine or am about to interact with it. I should check it often."
 
 	density = TRUE
 	anchored = TRUE
@@ -36,11 +36,10 @@
 	else if(held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Try put on anvil."
 	if(working_material && chosen_recipe && !held_item)
-		context[SCREENTIP_CONTEXT_LMB] = "Start Forging or Select Recipe"
+		context[SCREENTIP_CONTEXT_LMB] = "Start Forging"
+		context[SCREENTIP_CONTEXT_RMB] = "Clear Recipe"
 	if(!chosen_recipe && !held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Select a part to forge."
-	if(chosen_recipe && !held_item)
-		context[SCREENTIP_CONTEXT_RMB] = "Clear Recipe"
 	if(!chosen_recipe && working_material && !held_item)
 		context[SCREENTIP_CONTEXT_RMB] = "Empty Anvil"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -48,14 +47,16 @@
 
 /obj/structure/anvil/examine(mob/user)
 	. = ..()
+	if(!working_part() && working_material)
+		. += "[src] contains [working_material]. I could plan the recipe with a LEFT EMPTY HAND interact."
 	if(working_part())
 		if(istype(working_material,/obj/item/smithed_part/weapon_part))
 			var/obj/item/smithed_part/weapon_part/part = working_material
-			. += "The [src] contains [working_material]; [part.forge_text()]"
+			. += "[src] contains [working_material]; [part.forge_text()]"
 
 		if(istype(working_material,/obj/item/clothing/smithed_clothes))
 			var/obj/item/clothing/smithed_clothes/part = working_material
-			. += "The [src] contains [working_material]; [part.forge_text()]"
+			. += "[src] contains [working_material]; [part.forge_text()]"
 
 ///Yes I am that lazy to make this a proc.
 /obj/structure/anvil/proc/working_part()
@@ -83,15 +84,13 @@
 			var/qual_mod = (user.mind?.get_skill_level(/datum/skill/smithing) * 10) - 35
 			if(always_perfect)
 				generate_item(100)
+				user.balloon_alert(user,"part shaped!")
 			else
 				generate_item(qual_mod)
+				user.balloon_alert(user,"part shaped!")
 			return
 
 /obj/structure/anvil/attack_hand_secondary(mob/user, list/modifiers)
-	if(chosen_recipe)
-		chosen_recipe = null
-		visible_message("[user] changes their mind on what to make.")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(chosen_recipe && working_part())
 		user.put_in_active_hand(working_material)
 		visible_message("[user] takes the [working_material] off the anvil.")
@@ -101,6 +100,10 @@
 		user.put_in_active_hand(working_material)
 		visible_message("[user] takes the [working_material] off the anvil.")
 		working_material = null
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(chosen_recipe)
+		chosen_recipe = null
+		visible_message("[user] changes their mind on what to make.")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	. = ..()
 
@@ -113,7 +116,7 @@
 		var/randhits = min(rand(20,40),boi.hits_left)
 		boi.hit_counter = randhits
 		boi.hits_left -= randhits
-		visible_message("The [working_material] is shaped into a crude [boi]!")
+		visible_message("[working_material] is shaped into a crude [boi]!")
 		QDEL_NULL(working_material)
 		working_material = boi
 	else if(istype(output,/obj/item/clothing/smithed_clothes))
@@ -123,13 +126,13 @@
 		var/randhits = min(rand(20,40),boi.hits_left)
 		boi.hit_counter = randhits
 		boi.hits_left -= randhits
-		visible_message("The [working_material] is shaped into a crude [boi]!")
+		visible_message("[working_material] is shaped into a crude [boi]!")
 		QDEL_NULL(working_material)
 		working_material = boi
 	QDEL_NULL(output) //Thanks, bye
 
 /obj/structure/anvil/attackby(obj/item/attacking_item, mob/living/user, params)
-	if((isstack(attacking_item) || istype(attacking_item, /obj/item/merged_material) || istype(attacking_item,/obj/item/smithed_part)) && !working_material)
+	if((isstack(attacking_item)  || istype(attacking_item, /obj/item/merged_material) || istype(attacking_item,/obj/item/smithed_part) || istype(attacking_item,/obj/item/clothing/smithed_clothes)) && !working_material)
 		if(try_place_item(attacking_item, user))
 			return
 	if(attacking_item.tool_behaviour == TOOL_WRENCH && !working_material)
@@ -138,8 +141,10 @@
 	if(attacking_item.tool_behaviour == TOOL_HAMMER)
 		if(chosen_recipe && working_part() && params[RIGHT_CLICK])
 			smith(user,TRUE)
+			return
 		if(chosen_recipe && working_part())
 			smith(user)
+			return
 		return
 	return ..()
 
@@ -159,12 +164,15 @@
 			var/randhits = min(rand(20,40),in_anv.hits_left)
 			in_anv.hit_counter = randhits
 			in_anv.hits_left -= randhits
-			visible_message("The [in_anv] is re-heated,ready for hammering.")
+			user.balloon_alert(user,"[in_anv] is re-heated,ready for hammering.")
+			return
+		if(heat && in_anv.hits_left <= 0)
+			user.balloon_alert(user,"finished smithing!")
 			return
 		if(in_anv.hit_counter > 0)
 			in_anv.smithed_quality++
 		in_anv.hit_counter--
-		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, 50-(in_anv.hit_counter), mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.mind.adjust_experience(/datum/skill/smithing,1.5)
 		return
 	if(istype(working_material,/obj/item/clothing/smithed_clothes))
@@ -182,12 +190,15 @@
 			var/randhits = min(rand(20,40),in_anv.hits_left)
 			in_anv.hit_counter = randhits
 			in_anv.hits_left -= randhits
-			visible_message("The [in_anv] is re-heated,ready for hammering.")
+			user.balloon_alert(user,"[in_anv] is re-heated,ready for hammering.")
+			return
+		if(heat && in_anv.hits_left <= 0)
+			user.balloon_alert(user,"finished smithing!")
 			return
 		if(in_anv.hit_counter > 0)
 			in_anv.smithed_quality++
 		in_anv.hit_counter--
-		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, 50-(in_anv.hit_counter), mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.mind.adjust_experience(/datum/skill/smithing,1.5)
 		return
 
@@ -195,6 +206,7 @@
 	if(working_material && !working_part())
 		working_material.forceMove(get_turf(src))
 		working_material = null
+		user.balloon_alert(user,"ingot replaced!")
 		visible_message("[user] replaces the ingot on the anvil.")
 	if(isstack(item) && !working_material)
 		var/obj/item/stack/stack = item
@@ -208,7 +220,7 @@
 			var/obj/item/stack/new_stack = stack.split_stack(user, 1)
 			new_stack.forceMove(src)
 			working_material = new_stack
-	else if(istype(item, /obj/item/merged_material) && !working_material)
+	else if((istype(item, /obj/item/merged_material) || istype(item, /obj/item/smithed_part) || istype(item, /obj/item/clothing/smithed_clothes)) && !working_material)
 		item.forceMove(src)
 		working_material = item
 	return TRUE
