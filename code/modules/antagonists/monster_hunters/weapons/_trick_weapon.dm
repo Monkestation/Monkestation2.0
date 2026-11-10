@@ -16,10 +16,26 @@
 	var/ui_desc
 	/// If TRUE, then the inhand state is changed when swapping modes.
 	var/inhand_icon_change = TRUE
+	/// If TRUE, a normal qdel sends us to nullspace instead of deleting us.
+	var/recall_bound = FALSE
 
 /obj/item/melee/trick_weapon/Initialize(mapload)
 	. = ..()
 	apply_transform_component()
+
+/obj/item/melee/trick_weapon/Destroy(force)
+	if(recall_bound && !force)
+		moveToNullspace()
+		return QDEL_HINT_LETMELIVE
+	return ..()
+
+/obj/item/melee/trick_weapon/proc/bind_to_recall()
+	recall_bound = TRUE
+	RegisterSignal(src, COMSIG_ADMIN_DELETING, PROC_REF(on_admin_delete))
+
+/obj/item/melee/trick_weapon/proc/on_admin_delete(datum/source, client/admin)
+	SIGNAL_HANDLER
+	recall_bound = FALSE
 
 /obj/item/melee/trick_weapon/proc/apply_transform_component()
 	AddComponent(/datum/component/transforming, \
