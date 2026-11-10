@@ -75,7 +75,22 @@
 	if(can_be_tied && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
-	oh_what_a_neat_hat(user, TRUE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags |= ITEM_SLOT_HEAD
+
+/obj/item/clothing/shoes/give_clothing_traits(mob/living/wearer, slot)
+	if((astype(wearer, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN) && (slot & ITEM_SLOT_HEAD))
+		return
+
+	return ..()
+
+/obj/item/clothing/shoes/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
+	if(!hand_index && (bodyshape & BODYSHAPE_CERULEAN))
+		// offsets up to head
+		offsets.y = 28
+
+	return offsets
 
 /obj/item/clothing/shoes/dropped(mob/user)
 	var/atom/movable/screen/alert/our_alert = our_alert_ref?.resolve()
@@ -84,7 +99,8 @@
 	if(our_alert?.owner == user)
 		user.clear_alert(ALERT_SHOES_KNOT)
 	. = ..()
-	oh_what_a_neat_hat(user, FALSE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags &= ~ITEM_SLOT_HEAD
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -288,11 +304,6 @@
 		wearer.update_equipment_speed_mods()
 	return ..()
 
-/obj/item/clothing/shoes/attach_clothing_traits(trait_or_traits)
-	if(!(astype(loc, /mob)?.get_slot_by_item(src) & ITEM_SLOT_FEET))
-		return
-	return ..()
-
 /// when the shoes are worn on the headslot we have to override the overlay's icon to look for the correct file
 /obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
@@ -303,15 +314,3 @@
 	var/mutable_appearance/standing_overlay = current_overlays[1]
 	standing_overlay.icon = icon_to_use
 	standing.icon = icon_to_use
-	worn_y_offset = 28 //about how many px up to draw on the head
-
-/// ceruleans wear shoes as a hat. are they doing a bit or are they dumb? i guess we will never know
-/obj/item/clothing/shoes/proc/oh_what_a_neat_hat(mob/living/carbon/user, up_or_down)
-	if(user && !(user?.bodyshape & BODYSHAPE_CERULEAN))
-		return
-	if(up_or_down)
-		slot_flags |= ITEM_SLOT_HEAD
-		detach_clothing_traits(clothing_traits)
-	else
-		slot_flags = initial(slot_flags)
-		worn_y_offset = initial(worn_y_offset)
