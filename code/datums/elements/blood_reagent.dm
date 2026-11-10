@@ -77,6 +77,11 @@
 	if(attached_reagent_holder)
 		UnregisterSignal(attached_reagent_holder, COMSIG_REAGENTS_TEMP_CHANGE)
 
+	blood_type = null
+	blood_source = null
+	attached_reagent = null
+	attached_reagent_holder = null
+
 /// Cover the mob in blood and transfer our viruses and resistances to them
 /datum/element/blood_reagent/proc/on_mob_expose(
 	datum/reagent/source,
