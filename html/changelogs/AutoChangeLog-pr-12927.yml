@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Oozelings can now eat/absorb coins. Beware your valuable coins, your local slime may just see them as a snack."
