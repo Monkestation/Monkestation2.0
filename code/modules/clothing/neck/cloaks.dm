@@ -3,6 +3,7 @@
 	desc = "A cloak made for civilian use, capable of being colored."
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	SETUP_MAP_ICONS("cloak", "/obj/item/clothing/neck/polycloak")
+	body_parts_covered = NECK|CHEST|GROIN|ARMS
 	worn_icon_state = "Wcloak"
 	greyscale_config = /datum/greyscale_config/polycloak
 	greyscale_config_worn = /datum/greyscale_config/polycloak_worn
@@ -14,6 +15,7 @@
 	desc = "A waterproof cloak meant to be worn on seabound vessels to protect clothing from the seawater."
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	SETUP_MAP_ICONS("boatcloak", "/obj/item/clothing/neck/boatcloak")
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "wboatcloak"
 	greyscale_config = /datum/greyscale_config/boatcloak
 	greyscale_config_worn = /datum/greyscale_config/boatcloak_worn
@@ -26,6 +28,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "knight_cloak"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "knight_cloak"
 
 /obj/item/clothing/neck/hornetcloak
@@ -34,6 +37,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "hornet_cloak"
+	body_parts_covered = NECK|CHEST|GROIN|ARMS
 	worn_icon_state = "hornet_cloak"
 
 /obj/item/clothing/neck/beecloak
@@ -66,6 +70,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "trans"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "trans"
 	resistance_flags = FIRE_PROOF
 
@@ -75,6 +80,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "pan"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "pan"
 	resistance_flags = FIRE_PROOF
 
@@ -84,6 +90,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "les"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "les"
 	resistance_flags = FIRE_PROOF
 
@@ -93,6 +100,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "intersex"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "intersex"
 	resistance_flags = FIRE_PROOF
 
@@ -102,6 +110,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "gay"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "gay"
 	resistance_flags = FIRE_PROOF
 
@@ -111,6 +120,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "enby"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "enby"
 	resistance_flags = FIRE_PROOF
 
@@ -120,6 +130,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "bi"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "bi"
 	resistance_flags = FIRE_PROOF
 
@@ -129,6 +140,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "aro"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "aro"
 	resistance_flags = FIRE_PROOF
 
@@ -138,6 +150,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/obj/clothing/necks.dmi'
 	icon_state = "ace"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "ace"
 	resistance_flags = FIRE_PROOF
 
@@ -146,6 +159,7 @@
 	desc = "Weh!"
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	SETUP_MAP_ICONS("admincloak", "/obj/item/clothing/neck/admincloak")
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "wadmincloak"
 	greyscale_config = /datum/greyscale_config/admincloak
 	greyscale_config_worn = /datum/greyscale_config/admincloak_worn
@@ -158,6 +172,7 @@
 	icon = 'icons/obj/clothing/necks/mentor_cloaks.dmi'
 	worn_icon = 'icons/mob/clothing/necks/mentor_cloaks.dmi'
 	icon_state = "green_cloak"
+	body_parts_covered = NECK|CHEST|ARMS
 	worn_icon_state = "green_cloak"
 	var/current_cloak = "green"
 	var/current_cloak_overlay = "lizar"
@@ -258,6 +273,7 @@
 	desc = "You'll hold this weight."
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	SETUP_MAP_ICONS("linjacket", "/obj/item/clothing/neck/linjacket")
+	body_parts_covered = NECK|CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/linjacket
 	greyscale_config_worn = /datum/greyscale_config/linjacket/worn
 	greyscale_colors = "#283c55#c4c36d"
@@ -278,6 +294,7 @@
 	icon = 'icons/obj/clothing/necks.dmi'
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	icon_state = "straw_coat"
+	body_parts_covered = NECK|CHEST|GROIN|ARMS
 	worn_icon_state = "straw_coat"
 
 /obj/item/clothing/neck/cloak/arbiter

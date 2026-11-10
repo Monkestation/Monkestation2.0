@@ -136,6 +136,7 @@
 		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
 	)
 	feature_key = "anime_halo"
+	overlay_flags = NONE
 
 /datum/bodypart_overlay/mutant/anime_halo/get_global_feature_list()
 	return GLOB.anime_halo_list
