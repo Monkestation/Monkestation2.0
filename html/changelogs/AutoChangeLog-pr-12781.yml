@@ -1,0 +1,6 @@
+author: "Melbert, vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "Large wings are now fully covered by limb textures and suit meshes"
+  - bugfix: "Emotes like blushing and visible implants no longer get covered by limb textures or suit meshes"
+  - refactor: "Refactored bodypart rendering ever so slightly to fix some bodypart texture issues, report anything weird like missing overlays"
