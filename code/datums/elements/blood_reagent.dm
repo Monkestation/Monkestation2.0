@@ -253,7 +253,7 @@
 	if(!_holder.my_atom)
 		return
 	var/atom/screamer = _holder.my_atom
-	screamer.audible_message(span_warning("\The [screamer] hisses boiling over violently!"))
+	screamer.audible_message(span_warning("\The [screamer] hisses and boils over violently!"))
 	playsound(screamer, 'sound/effects/chemistry/changeling_blood_scream.ogg', 75, TRUE) // scream cuz it hurts
 	on_turf_expose(attached_reagent, get_turf(screamer), attached_reagent.volume) // splatter the floor because it jumped out
 	_holder.del_reagent(attached_reagent.type)
