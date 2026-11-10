@@ -1,4 +1,3 @@
-#define MAX_DENT_DECALS 15
 #define LEANING_OFFSET 11
 
 /turf/closed/wall
@@ -490,5 +489,4 @@
 	smoothing_groups = SMOOTH_GROUP_SILK_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_SILK_WALLS
 
-#undef MAX_DENT_DECALS
 #undef LEANING_OFFSET

@@ -380,7 +380,7 @@
 		holder.adjust_thermal_energy(heat_energy, 0, CHEMICAL_MAXIMUM_TEMPERATURE) //heat is relative to the beaker conditions
 
 	//Give a chance of sounds
-	if(prob(5))
+	if(prob(5) && !HAS_TRAIT(holder.my_atom, TRAIT_SILENT_REACTIONS))
 		holder.my_atom.audible_message(span_notice("<img class='icon' src='\ref[holder.my_atom]'> [reaction.mix_message]"), push_appearance = holder.my_atom)
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
