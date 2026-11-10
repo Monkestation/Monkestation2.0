@@ -370,13 +370,39 @@
   - bugfix: Reload Job Rewards doesn't duplicate per round rewards.
   - bugfix: Rolling rollies only gives botanist XP to botanists.
   - qol: The XP menu only shows station jobs and shows how much XP you have.
+  Dominion, SirNightKnight:
+  - image: After decades of failing to compete with Cohiba Robustos, Havana cigars
+      have rebranded to a new colour theme.
+  - image: Cigar butts are now distinguishable based on the type of cigar it was.
+  - bugfix: fixed some discrepancies with onmob cigarette sprites.
+  EnterTheJake:
+  - balance: Codex Cicatrix is back to being a roundstart knowledge.
+  - balance: Cosmix expansion radius reverted back to 5x5, cooldown increased from
+      15 to 30 seconds.
   Melbert:
   - refactor: Species part rendering got refactored a bit, report any oddities with
       wings, snouts, tails and the like
   - refactor: Refactored how digitigrade legs and snouts render, report any oddities
       with that
+  Melbert, vinylspiders:
+  - bugfix: Large wings are now fully covered by limb textures and suit meshes
+  - bugfix: Emotes like blushing and visible implants no longer get covered by limb
+      textures or suit meshes
+  - refactor: Refactored bodypart rendering ever so slightly to fix some bodypart
+      texture issues, report anything weird like missing overlays
   SirNightKnight:
   - bugfix: fixed the summoning fantasy effect summoning megafauna.
+  SmArtKar, Stonetear:
+  - sound: MODsuits no longer spam error buzzes when taken off with their parts retracted.
+  - sound: Retracting a sealed MODsuit part no longer plays the hiss twice.
+  - refactor: MODsuit modules render on the part they're attached to, report any weird
+      module overlays.
+  - bugfix: MODsuit modules don't get painted with the suit color anymore unless they're
+      meant to.
+  - rscadd: When a MODsuit part overslots an item, it shows underneath the part while
+      it's unsealed.
+  Tractor-Maam:
+  - code_imp: undefined some chameleon bomb definitions.
   big-boss-crate:
   - rscadd: added the *plink emote
   - sound: added plink.ogg and plonk.ogg (equal chance for either to trigger when

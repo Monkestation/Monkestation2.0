@@ -1,8 +1,0 @@
-author: "SmArtKar, Stonetear"
-delete-after: True
-changes:
-  - sound: "MODsuits no longer spam error buzzes when taken off with their parts retracted."
-  - sound: "Retracting a sealed MODsuit part no longer plays the hiss twice."
-  - refactor: "MODsuit modules render on the part they're attached to, report any weird module overlays."
-  - bugfix: "MODsuit modules don't get painted with the suit color anymore unless they're meant to."
-  - rscadd: "When a MODsuit part overslots an item, it shows underneath the part while it's unsealed."
