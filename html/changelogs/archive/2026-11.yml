@@ -368,6 +368,23 @@
   - bugfix: Goliath cloaks actually provide armor now.
   - rscadd: Oozelings can now eat/absorb coins. Beware your valuable coins, your local
       slime may just see them as a snack.
+  - rscadd: station traits roll off a budget now, so small traits can sneak in next
+      to the big ones
+  - rscadd: some station traits give you a sign-up button in the lobby
+  - rscadd: cargo gorilla is a lobby sign-up now instead of a ghost poll
+  - rscadd: pun pun is a playable crewmember on monkey day
+  - rscadd: 'new negative trait: radioactive nebula. build the shielders or enjoy
+      a permanent rad storm'
+  - rscadd: 'new traits: dust stormfront, postal workers strike, geared assistants,
+      the great skub contention, glowsticks party, machine language malfunction, spiked
+      drinks'
+  - bugfix: blackouts, night shift, grid checks, electrical storms and the malf AI
+      blackout actually hit mapped APCs now
+  - bugfix: stuff that's supposed to change event odds (stormfront traits, shuttle
+      insurance, meteor shields) actually does now
+  - bugfix: the department resupply shuttle loan can actually show up
+  - bugfix: bureaucratic error can't give HoS or blueshield infinite slots anymore
+  - bugfix: yellow clown spawns with the clown instead of at arrivals
   AitorLogedo:
   - bugfix: Job XP actually saves now, so you can level up your jobs.
   - bugfix: Roundend job XP doesn't drop when the round goes over an hour.
@@ -385,6 +402,11 @@
   - balance: Codex Cicatrix is back to being a roundstart knowledge.
   - balance: Cosmix expansion radius reverted back to 5x5, cooldown increased from
       15 to 30 seconds.
+  LettuceGuardian:
+  - rscadd: Syndicate command has authorized 'Drip or Drown' procedures. A MOD paint
+      kit is now located inside the infiltrator.
+  - rscadd: Two new altskins for blood-red MODs.
+  - image: Updated the alt skin for sec MODs.
   Melbert:
   - refactor: Species part rendering got refactored a bit, report any oddities with
       wings, snouts, tails and the like
@@ -409,6 +431,8 @@
       it's unsealed.
   Tractor-Maam:
   - code_imp: undefined some chameleon bomb definitions.
+  V2LenKagamine:
+  - admin: Hehe funny lone wanderer reference.
   big-boss-crate:
   - rscadd: added the *plink emote
   - sound: added plink.ogg and plonk.ogg (equal chance for either to trigger when
