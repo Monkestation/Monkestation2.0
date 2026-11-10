@@ -2451,7 +2451,7 @@
 	extended_desc = "A lone stranger. Who are they? Where did they come from? Why did they lend aid? \
 	Where did they go? We may never know the answer to these questions."
 	default_skin = "myststranger"
-	armor_type = /datum/armor/mod_theme_myststranger
+	armor_type = /datum/armor/immune
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -2497,17 +2497,6 @@
 			),
 		),
 	)
-
-/datum/armor/mod_theme_myststranger
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-	wound = 100
 
 /datum/mod_theme/blueshield
 	name = "praetorian"
