@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Most clothes should actually cover the parts of the body their sprites imply they cover - i.e, morningstar coats don't cover literally nothing anymore"
+  - bugfix: "Goliath cloaks actually provide armor now."
