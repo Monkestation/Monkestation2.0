@@ -5,7 +5,9 @@
 	argument_hash_start_idx = 3
 	/// Blood type associated with this element
 	var/datum/blood_type/blood_type
-
+	var/mob/living/blood_source
+	var/datum/reagent/attached_reagent
+	var/datum/reagents/attached_reagent_holder
 /*
  * Arguments:
  * * blood_source - mob this blood came from, can be null
@@ -16,12 +18,17 @@
 	if (!istype(target) || !istype(blood_type))
 		return ELEMENT_INCOMPATIBLE
 
+	src.attached_reagent = target
 	src.blood_type = blood_type
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_MOB, PROC_REF(on_mob_expose))
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_TURF, PROC_REF(on_turf_expose))
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_OBJ, PROC_REF(on_obj_expose))
 	RegisterSignal(target, COMSIG_REAGENT_ON_MERGE, PROC_REF(on_merge))
 	RegisterSignal(target, COMSIG_REAGENT_ON_TRANSFER, PROC_REF(on_transfer))
+
+	if(target?.holder)
+		RegisterSignal(target.holder, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(on_temp_change), override = TRUE)
+		attached_reagent_holder = target.holder
 
 	if (!target.data)
 		target.data = list()
@@ -33,6 +40,8 @@
 
 	if (!blood_source)
 		return
+
+	src.blood_source = blood_source
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -64,6 +73,9 @@
 		COMSIG_REAGENT_ON_MERGE,
 		COMSIG_REAGENT_ON_TRANSFER,
 	))
+
+	if(attached_reagent_holder)
+		UnregisterSignal(attached_reagent_holder, COMSIG_REAGENTS_TEMP_CHANGE)
 
 /// Cover the mob in blood and transfer our viruses and resistances to them
 /datum/element/blood_reagent/proc/on_mob_expose(
@@ -222,3 +234,21 @@
 /datum/element/blood_reagent/proc/on_transfer(datum/reagent/reagent, datum/reagents/target_holder, datum/reagent/new_reagent)
 	SIGNAL_HANDLER
 	new_reagent.AddElement(/datum/element/blood_reagent, null, blood_type)
+
+/datum/element/blood_reagent/proc/on_temp_change(datum/reagents/_holder, old_temp)
+	SIGNAL_HANDLER
+	if(!_holder)
+		return
+	if(!blood_source)
+		return
+	if(!blood_source?.mind?.has_antag_datum(/datum/antagonist/changeling))
+		return
+	if(_holder.chem_temp < 395)
+		return
+	if(!_holder.my_atom)
+		return
+	var/atom/screamer = _holder.my_atom
+	screamer.audible_message(span_warning("\The [screamer] hisses boiling over violently!"))
+	playsound(screamer, 'sound/effects/chemistry/changeling_blood_scream.ogg', 75, TRUE) // scream cuz it hurts
+	on_turf_expose(attached_reagent, get_turf(screamer), attached_reagent.volume) // splatter the floor because it jumped out
+	_holder.del_reagent(attached_reagent.type)
