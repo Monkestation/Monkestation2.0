@@ -8,11 +8,10 @@
 	///Color we apply to our overlay (none by default)
 	var/draw_color
 
-/datum/bodypart_overlay/simple/get_image(layer, obj/item/bodypart/limb)
-	return image(icon, icon_state, layer = layer)
+/datum/bodypart_overlay/simple/get_image(obj/item/bodypart/limb, layer_index, layer_real)
+	return image(icon, icon_state, layer = layer_real)
 
-/datum/bodypart_overlay/simple/color_image(image/overlay, layer, obj/item/bodypart/limb)
-
+/datum/bodypart_overlay/simple/color_image(image/overlay, obj/item/bodypart/limb, layer_index)
 	overlay.color = draw_color
 
 /datum/bodypart_overlay/simple/generate_icon_cache()
@@ -23,4 +22,4 @@
 ///A sixpack drawn on the chest
 /datum/bodypart_overlay/simple/sixpack
 	icon_state = "sixpack"
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)

@@ -12,7 +12,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/arachnid_chelicerae
 
 /datum/bodypart_overlay/mutant/arachnid_chelicerae
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "arachnid_chelicerae"
 
 /datum/bodypart_overlay/mutant/arachnid_chelicerae/get_global_feature_list()

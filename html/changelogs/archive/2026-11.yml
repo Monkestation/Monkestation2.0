@@ -224,3 +224,186 @@
   - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
   - bugfix: arm implants always come out of the arm they're in, instead of any free
       hand on that side
+2026-11-05:
+  Absolucy:
+  - rscadd: (LemonInTheDark) Wall lights now shine out from the wall in a cone instead
+      of a circle
+  - rscadd: (LemonInTheDark) Light shining through open space gets dimmer on each
+      floor it reaches.
+  - rscadd: (LemonInTheDark) Starlight is brighter and blends into the hull better.
+  - rscadd: (MrMelbert) cable explosions flicker nearby lights, also cables are squishier
+  - balance: (MrMelbert) Cables have less integrity, and are much tougher to bombs
+      while hidden under the floor.
+  - bugfix: The tram indicator now actually points its light into the room.
+  - bugfix: Starlight around the hull keeps its intended falloff, and empty space
+      around shuttles no longer lights up.
+  - bugfix: Bar signs, chem masters, explosion flashes, a few spell projectiles, primitive
+      forges and translucent floors now actually give off light.
+  Fikou, FlufflesTheDog, Jackraxxus, mc-oofert, SmArtKar, necromanceranne, lelandkemble:
+  - refactor: MODsuit parts got refactored, report any bugs.
+  - balance: You no longer need all parts deployed to activate a MODsuit, you can
+      use them with missing limbs.
+  - rscadd: Added the portable suit, a deployable one-piece three-piece suit. Buy
+      it from the LawDrobe or print the plating after researching Civilian Modular
+      Suits.
+  - bugfix: MODules don't work or show overlays when the part they need isn't sealed.
+  - bugfix: Rad protection, ash accretion, sphere and stealth MODules need the full
+      suit out.
+  - bugfix: Springlock only activates when at least one part is sealed and no longer
+      damages body parts the suit doesn't cover.
+  - bugfix: MODsuit deactivation disables modules properly and deleted MODsuits delete
+      their parts.
+  - bugfix: An AI needs the boots out to move someone in a MODsuit.
+  - bugfix: Partially deployed MODsuits can be retracted with the deploy action.
+  - qol: You can extend or retract MODsuit parts from the UI, and cores have color
+      coded charge bars.
+  SirNightKnight:
+  - rscadd: ghosts/observers have new unique speak emotes.
+  V2LenKagamine:
+  - bugfix: missing discover text on powergen type artifacts
+  chumtoadmonke:
+  - rscadd: Added setting to disable tab autocomplete on command bar
+  notghosti:
+  - qol: Max CPU speed set to twice the original speed. Instead of 10.
+2026-11-07:
+  Absolucy:
+  - bugfix: Fixed runechat colors being unreadabley dark sometimes.
+  - balance: Borg hyposprays can no longer inject more than 10u of knockout chems
+      into a person at a time.
+  - balance: Piercing borg hyposprays now have a 2-second delay if their target is
+      wearing thick material, unless it's like, a nukie-borg injecting a nukie or
+      such.
+2026-11-08:
+  AitorLogedo, Deadgebert:
+  - balance: Capsaicin can't heat you up enough to burn you anymore, spicy donk pockets
+      are safe to eat again.
+  - balance: Superheated microfusion lasers give 0.5 fire stacks per hit instead of
+      2.
+  - balance: Unhusking with synthflesh needs 60u instead of 100u.
+  - bugfix: Dead bodies cool down after burning instead of staying hot and husking
+      if they wear insulating clothes.
+  EatsTheGrapes:
+  - rscadd: Robotics can build IPC shells after unlocking the required research by
+      assembling an IPC core, synthetic organs, a wired and secured head, limbs, and
+      a wired and secured screen, then finalizing the chassis with a multitool.
+  - rscadd: Built IPC shells start without a brain or charging cord. MMIs and positronic
+      brains, including brains recovered from roundstart IPCs, can be installed through
+      cybernetic brain surgery. Charging cords can be installed separately through
+      augmentation surgery.
+  - rscadd: Positronic brains can be imprinted to a master before their first activation.
+      Imprinted positronics and Syndicate MMIs can create IRCs bound to their master
+      or directive.
+  - rscadd: Robotics can build spiderbots by attaching a manipulator to a robotic
+      head. Spiderbots hold an MMI or positronic brain, can ventcrawl, and have no
+      hands. IDs with robotics access can eject their brain.
+  - rscadd: Emagging a spiderbot binds it to the emagger, strengthens it, and blocks
+      ID-based brain removal. Emagged spiderbots explode and gib on death, destroying
+      their installed brain.
+  - qol: IPC screens are now printable organs that can be removed and replaced.
+  - code_imp: IPC food processing is now handled by the synthetic stomach rather than
+      the species.
+  - qol: Surgically removing an IPC's brain returns its MMI or positronic brain with
+      the original name and personality, allowing it to be installed into another
+      shell.
+  - balance: Traumatic IPC brain removal causes a 30-second reboot in the recovered
+      MMI or positronic brain. When the reboot finishes, the occupant's ghost is brought
+      back using the same return mechanism as defibrillation.
+  - qol: Robotic limbs can be replaced with other robotic limb types through mechanical
+      augmentation surgery.
+  - qol: The MOD paint kit is now the robotics paint kit. It can restyle robotic limbs
+      and IPC chassis, still paints MODsuits, and no longer requires plastic to print.
+  - bugfix: Restyling robotic limbs with the robotics paint kit preserves their existing
+      limb type and upgrades.
+  Mantlecrawler:
+  - bugfix: Kinetic Hellhound now correctly states its mag size
+  - bugfix: Quartermaster's office is now spelled correctly on Deltastation
+  ThePooba:
+  - bugfix: dont starve and animal voices work again
+  Tractor-Maam:
+  - qol: Trying to hack the R&D console as a space ninja now pushes you to hack the
+      server instead.
+  V2LenKagamine:
+  - rscadd: '''Ass Pic'' smite. Spawns an ass pick, puts in targets hand if possible.'
+  - rscadd: Status affect 'Feeling funny';rotates client move by +-90/180 every 15
+      seconds.
+  - qol: '''Select Equipment'' now requires ''R_SPAWN'' permissions from ''R_FUN'''
+  chumtoadmonke:
+  - rscadd: shadekin, a new roundstart species that doesnt need to breathe and heals
+      and sees better in the dark in exchange for taking more damage and being vulnerable
+      to flashing
+  - rscadd: 2 tail options, 4 ears, (credits to bubberstation for the sprites), mutant
+      color picker for their skintone and eyes, their own unique language
+  - sound: added mar emote
+  ma44, MrMelbert, AnturK, leaKsi, TiviPlus, StrangeWeirdKitten, SmArtKar, afonamo, jlsnow301, FalloutFalcon:
+  - bugfix: Fixed a bunch of places where players could send unsanitized HTML to other
+      players or admins.
+  - bugfix: Cassette song titles are properly encoded in chat and admin messages.
+  - bugfix: Safes, the message monitor, netpods, limbgrowers, launch pads and a few
+      other machines validate their inputs properly.
+  - bugfix: Number inputs reject NaN.
+  - admin: View variables topic calls require R_VAREDIT.
+  - server: World topics require the comms key unless they're meant to be public.
+  tattax:
+  - rscadd: you can now switch between plasmaman suit styles using metal and crowbars
+  - bugfix: winter hoods now don't set you ablaze anymore when you toggle them as
+      plasmaman
+  - image: changed bulky plasmaman helmet icon slightly (and all variants with it)
+2026-11-09:
+  Mantlecrawler:
+  - rscadd: Command announcements now allow newlines
+  Melbert:
+  - refactor: Refactored clothing obscurity entirely. Items should be a lot more consistent
+      about what covers what, and update snappier. Report any oddities, like disappearing
+      clothes, hair or species parts
+  - refactor: Refactored handcuffs and legcuffs a bit, report anything odd like getting
+      stuck restrained
+  ThePooba:
+  - balance: this didnt need to be buffed in the first place GRAPES. *slap
+  V2LenKagamine:
+  - bugfix: Single typo
+2026-11-10:
+  AitorLogedo:
+  - bugfix: Job XP actually saves now, so you can level up your jobs.
+  - bugfix: Roundend job XP doesn't drop when the round goes over an hour.
+  - bugfix: Claiming job rewards doesn't eat your saved rewards and reconnecting doesn't
+      let you claim them again.
+  - bugfix: Reload Job Rewards doesn't duplicate per round rewards.
+  - bugfix: Rolling rollies only gives botanist XP to botanists.
+  - qol: The XP menu only shows station jobs and shows how much XP you have.
+  Dominion, SirNightKnight:
+  - image: After decades of failing to compete with Cohiba Robustos, Havana cigars
+      have rebranded to a new colour theme.
+  - image: Cigar butts are now distinguishable based on the type of cigar it was.
+  - bugfix: fixed some discrepancies with onmob cigarette sprites.
+  EnterTheJake:
+  - balance: Codex Cicatrix is back to being a roundstart knowledge.
+  - balance: Cosmix expansion radius reverted back to 5x5, cooldown increased from
+      15 to 30 seconds.
+  Melbert:
+  - refactor: Species part rendering got refactored a bit, report any oddities with
+      wings, snouts, tails and the like
+  - refactor: Refactored how digitigrade legs and snouts render, report any oddities
+      with that
+  Melbert, vinylspiders:
+  - bugfix: Large wings are now fully covered by limb textures and suit meshes
+  - bugfix: Emotes like blushing and visible implants no longer get covered by limb
+      textures or suit meshes
+  - refactor: Refactored bodypart rendering ever so slightly to fix some bodypart
+      texture issues, report anything weird like missing overlays
+  SirNightKnight:
+  - bugfix: fixed the summoning fantasy effect summoning megafauna.
+  SmArtKar, Stonetear:
+  - sound: MODsuits no longer spam error buzzes when taken off with their parts retracted.
+  - sound: Retracting a sealed MODsuit part no longer plays the hiss twice.
+  - refactor: MODsuit modules render on the part they're attached to, report any weird
+      module overlays.
+  - bugfix: MODsuit modules don't get painted with the suit color anymore unless they're
+      meant to.
+  - rscadd: When a MODsuit part overslots an item, it shows underneath the part while
+      it's unsealed.
+  Tractor-Maam:
+  - code_imp: undefined some chameleon bomb definitions.
+  big-boss-crate:
+  - rscadd: added the *plink emote
+  - sound: added plink.ogg and plonk.ogg (equal chance for either to trigger when
+      using the emote)

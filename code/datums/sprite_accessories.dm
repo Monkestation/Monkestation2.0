@@ -2657,6 +2657,18 @@ MONKESTATION EDIT
 	icon_state = SPRITE_ACCESSORY_NONE
 	color_src = FALSE
 
+/datum/sprite_accessory/tails/shadekin
+	icon = 'icons/mob/species/shadekin/shadekin_tails.dmi'
+	palette_key = MUTANT_COLOR_SECONDARY
+
+/datum/sprite_accessory/tails/shadekin/shadekinc
+	name = "Shadekin Classic"
+	icon_state = "shadekinc"
+
+/datum/sprite_accessory/tails/shadekin/shadekinshort
+	name = "Shadekin Short"
+	icon_state = "shadekinshort"
+
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/human/species/podperson_hair.dmi'
 	em_block = TRUE
@@ -2788,6 +2800,30 @@ MONKESTATION EDIT
 	locked = TRUE
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+
+/datum/sprite_accessory/ears/shadekin
+	icon = 'icons/mob/species/shadekin/shadekin_ears.dmi'
+	palette_key = MUTANT_COLOR
+
+/datum/sprite_accessory/ears/shadekin/shadekinearc
+	name = "Shadekin Classic Ears"
+	icon_state = "shadekinearc"
+
+/datum/sprite_accessory/ears/shadekin/shadekinfluffy
+	name = "Shadekin Fluffy"
+	icon_state = "shadekinfluffy"
+
+/datum/sprite_accessory/ears/shadekin/shadekinshort
+	name = "Shadekin Short"
+	icon_state = "shadekinshort"
+
+/datum/sprite_accessory/ears/shadekin/shadekinsaggy
+	name = "Shadekin Saggy"
+	icon_state = "shadekinsaggy"
+
+/datum/sprite_accessory/ears/shadekin/none
+	name = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 /datum/sprite_accessory/wings/none
 	name = "None"
