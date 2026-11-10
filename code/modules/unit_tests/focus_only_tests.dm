@@ -48,3 +48,6 @@
 
 /// Checks icon states generated at runtime are valid
 /datum/unit_test/focus_only/runtime_icon_states
+
+///Checks primarily that emissives aren't mistakenly not tagged with the meta flag
+/datum/unit_test/focus_only/bodypart_overlay_flags

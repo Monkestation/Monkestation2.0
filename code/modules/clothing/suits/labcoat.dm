@@ -6,7 +6,7 @@
 	worn_icon = 'icons/mob/clothing/suits/labcoat.dmi'
 	inhand_icon_state = "labcoat"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/biopsy_tool,

@@ -68,6 +68,7 @@
 /datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species, pref_load)
 	. = ..()
 	RegisterSignal(slime, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_reagent_expose))
+	RegisterSignal(slime, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	for(var/action_type in default_actions + extra_actions)
 		var/datum/action/action = new action_type(src)
 		action.Grant(slime)
@@ -77,7 +78,7 @@
 		slime.set_nutrition(rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_START_MAX))
 
 /datum/species/oozeling/on_species_loss(mob/living/carbon/human/former_slime, datum/species/new_species, pref_load)
-	UnregisterSignal(former_slime, COMSIG_ATOM_EXPOSE_REAGENTS)
+	UnregisterSignal(former_slime, list(COMSIG_ATOM_EXPOSE_REAGENTS, COMSIG_ATOM_ITEM_INTERACTION))
 	QDEL_LIST(actions_given)
 	. = ..()
 	former_slime.blood_volume = clamp(former_slime.blood_volume, BLOOD_VOLUME_SAFE, BLOOD_VOLUME_NORMAL)
@@ -223,6 +224,46 @@
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	return NONE
 
+/datum/species/oozeling/proc/on_item_interaction(mob/living/carbon/human/slime, mob/living/user, obj/item/tool, list/modifiers)
+	SIGNAL_HANDLER
+	if(!istype(tool, /obj/item/coin) || (user.istate & ISTATE_HARM))
+		return NONE
+	if(DOING_INTERACTION_WITH_TARGET(user, slime))
+		return ITEM_INTERACT_BLOCKING
+	INVOKE_ASYNC(src, PROC_REF(absorb_coin), slime, user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/datum/species/oozeling/proc/absorb_coin(mob/living/carbon/human/slime, mob/living/user, obj/item/coin/coin)
+	if(slime.nutrition >= NUTRITION_LEVEL_FULL)
+		user.balloon_alert(user, "too full!")
+		return
+	if(SEND_SIGNAL(slime, COMSIG_CARBON_ATTEMPT_EAT, coin) & COMSIG_CARBON_BLOCK_EAT)
+		return
+
+	var/membrane_zones = CHEST|HEAD|ARMS|HANDS|LEGS|FEET
+	var/covered_zones = NONE
+	for(var/obj/item/clothing/worn in slime.get_equipped_items())
+		covered_zones |= worn.body_parts_covered
+	if((covered_zones & membrane_zones) == membrane_zones && slime.is_mouth_covered())
+		to_chat(user, span_warning("You have to expose the membrane on [user == slime ? "your" : slime.p_their()] body."))
+		return
+
+	if(user != slime)
+		slime.visible_message(
+			span_danger("[user] attempts to feed [slime] [coin]."),
+			span_userdanger("[user] attempts to feed you [coin]."),
+		)
+		if(!do_after(user, 3 SECONDS, slime))
+			return
+
+	slime.adjust_nutrition(10 * sqrt(max(coin.value, 1))) // yumy
+	playsound(slime, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
+	slime.visible_message(
+		span_notice("[slime] absorbs [coin] into [slime.p_their()] body."),
+		span_notice("You absorb [coin] into your body."),
+	)
+	qdel(coin)
+
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
 	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
 		return FALSE
@@ -281,6 +322,12 @@
 			SPECIES_PERK_ICON = "hand",
 			SPECIES_PERK_NAME = "Limb Manipulation",
 			SPECIES_PERK_DESC = "[plural_form] are able to consume and regrow their limbs at will, if they have enough blood to do so.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "coins",
+			SPECIES_PERK_NAME = "Coin Absorption",
+			SPECIES_PERK_DESC = "[plural_form] can absorb coins for nourishment. The more a coin is worth, the more filling it is.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,

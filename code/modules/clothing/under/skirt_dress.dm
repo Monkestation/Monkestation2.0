@@ -10,6 +10,7 @@
 	name = "striped dress"
 	desc = "Fashion in space."
 	icon_state = "striped_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	inhand_icon_state = null
 	female_sprite_flags = FEMALE_UNIFORM_FULL
 
@@ -17,6 +18,7 @@
 	name = "sailor dress"
 	desc = "Formal wear for a leading lady."
 	icon_state = "sailor_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	inhand_icon_state = null
 
 /obj/item/clothing/under/dress/wedding_dress
@@ -151,6 +153,7 @@
 	name = "lace angel dress"
 	desc = "I can be your angle or your debil."
 	icon_state = "angeldress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	inhand_icon_state = "angeldress"
 
 /obj/item/clothing/under/dress/angel/alt
