@@ -11,7 +11,8 @@
 		/obj/item/storage/backpack/deforest_surgical/stocked = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/bodybag/bluespace = 1,
-		/obj/item/gun/ballistic/revolver/lone_wanderer = 1
+		/obj/item/gun/ballistic/revolver/lone_wanderer = 1,
+		/obj/item/holochip/tenthousand = 1
 	)
 	belt = /obj/item/defibrillator/compact/combat/loaded/nanotrasen
 	ears = /obj/item/radio/headset/headset_cent/commander
@@ -33,6 +34,17 @@
 	W.update_icon()
 	var/obj/item/implant/vanish/impl = new /obj/item/implant/vanish(H)//poof
 	impl.implant(H, null, silent = TRUE)
+	///Mysterious Stranger has been everywhere, they are everywhere; they might as well be god.
+	///Im gonna put this note here, please dont fucking use this to interfere with antags unless they ask for it.
+	H.add_traits(list(TRAIT_ALL_SURGERIES,TRAIT_ASHSTORM_IMMUNE,TRAIT_BATON_RESISTANCE, \
+	TRAIT_SHOCKIMMUNE,TRAIT_IMPACTIMMUNE,TRAIT_LAVA_IMMUNE,TRAIT_XENO_IMMUNE,TRAIT_MADNESS_IMMUNE,TRAIT_WEATHER_IMMUNE,TRAIT_RADSTORM_IMMUNE, \
+	TRAIT_TENTACLE_IMMUNE,TRAIT_OVERWATCH_IMMUNE,TRAIT_PUSHIMMUNE,TRAIT_RUSTIMMUNE,TRAIT_RADIMMUNE,TRAIT_TOXIMMUNE,TRAIT_BOMBIMMUNE,TRAIT_NUKEIMMUNE, \
+	TRAIT_SNOWSTORM_IMMUNE,TRAIT_TIME_STOP_IMMUNE,TRAIT_STUNIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_TESLA_SHOCKIMMUNE,TRAIT_KNOW_ENGI_WIRES,TRAIT_KNOW_ROBO_WIRES,\
+	TRAIT_BRAIN_TRAUMA_IMMUNITY,TRAIT_VIRUSIMMUNE,TRAIT_NO_MINDSWAP,TRAIT_NEVER_WOUNDED,TRAIT_TOWER_OF_BABEL,TRAIT_IGNORESLOWDOWN,\
+	TRAIT_FEARLESS,TRAIT_NO_SLIP_ALL,TRAIT_FAST_CLIMBER,TRAIT_FAST_CUFFING,TRAIT_FASTMED))
+
+/obj/item/holochip/tenthousand
+	credits = 10000
 
 /obj/item/implant/vanish
 	name = "V.A.N.I.S.H. implant"
