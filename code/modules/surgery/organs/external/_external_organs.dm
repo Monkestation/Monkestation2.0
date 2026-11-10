@@ -401,6 +401,7 @@
 	// layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT monkestation edit - original
 	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER)
 	feature_key = "pod_hair"
+	overlay_flags = NONE
 
 	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something
 	var/color_swapped_layer = EXTERNAL_FRONT
