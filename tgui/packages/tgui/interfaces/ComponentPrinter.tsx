@@ -25,7 +25,7 @@ export const ComponentPrinter = (props) => {
   }
 
   return (
-    <Window title={'Component Printer'} width={670} height={600}>
+    <Window title={'Component Printer'} width={920} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>

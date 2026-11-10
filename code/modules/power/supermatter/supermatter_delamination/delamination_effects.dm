@@ -228,3 +228,19 @@
 			spawn_location = pick_n_take(possible_spawns)
 		while(get_dist(spawn_location, avoid) < 30)
 		new /obj/crystal_mass(get_turf(spawn_location))
+	return TRUE
+
+/// Scatters crystal mass over the event spawns from a non-supermatter origin.
+/datum/sm_delam/proc/effect_crystal_mass_from_origin(atom/origin, avoid)
+	var/turf/origin_turf = get_turf(origin)
+	if(origin_turf)
+		new /obj/crystal_mass(origin_turf)
+
+	var/list/possible_spawns = GLOB.generic_event_spawns.Copy()
+	for(var/i in 1 to rand(4,6))
+		var/spawn_location
+		do
+			spawn_location = pick_n_take(possible_spawns)
+		while(get_dist(spawn_location, avoid) < 30)
+		new /obj/crystal_mass(get_turf(spawn_location))
+	return TRUE

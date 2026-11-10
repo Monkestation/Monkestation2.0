@@ -37,6 +37,16 @@ const MATERIAL_ICONS: Record<string, [number, string][]> = {
     [17, 'sheet-uranium_2'],
     [34, 'sheet-uranium_3'],
   ],
+  thorium: [
+    [0, 'sheet-thorium'],
+    [17, 'sheet-thorium_2'],
+    [34, 'sheet-thorium_3'],
+  ],
+  plutonium: [
+    [0, 'sheet-plutonium'],
+    [17, 'sheet-plutonium_2'],
+    [34, 'sheet-plutonium_3'],
+  ],
   bananium: [
     [0, 'sheet-bananium'],
     [17, 'sheet-bananium_2'],

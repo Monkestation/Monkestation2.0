@@ -46,7 +46,7 @@ export const Fabricator = (props) => {
   }
 
   return (
-    <Window title={fabName} width={670} height={600} theme={ui_theme}>
+    <Window title={fabName} width={920} height={600} theme={ui_theme}>
       <Window.Content>
         <Stack vertical fill>
           {!!machine_mode && (
