@@ -362,6 +362,12 @@
   V2LenKagamine:
   - bugfix: Single typo
 2026-11-10:
+  Absolucy:
+  - rscadd: Most clothes should actually cover the parts of the body their sprites
+      imply they cover - i.e, morningstar coats don't cover literally nothing anymore
+  - bugfix: Goliath cloaks actually provide armor now.
+  - rscadd: Oozelings can now eat/absorb coins. Beware your valuable coins, your local
+      slime may just see them as a snack.
   AitorLogedo:
   - bugfix: Job XP actually saves now, so you can level up your jobs.
   - bugfix: Roundend job XP doesn't drop when the round goes over an hour.
