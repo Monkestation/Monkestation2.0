@@ -16,8 +16,6 @@
 	 * This is cached, so be careful editing it at runtime (use the helpers!)
 	 */
 	VAR_PROTECTED/list/layers
-	/// Flags that determine how the overlay is handled by the bodypart.
-	var/overlay_flags = LIMB_OVERLAY_TEXTURED
 
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
@@ -42,11 +40,6 @@
 	existing_layers[layer_postfix] = layer_number
 	layers = string_assoc_list(existing_layers)
 
-/// Used for adding a layer at runtime without replacing existing layers
-/datum/bodypart_overlay/proc/add_layer(layer_postfix, layer_number)
-	if(isnull(LAZYACCESS(layers, layer_postfix)))
-		set_layer(layer_postfix, layer_number)
-
 /// Used for adding layers at runtime
 /datum/bodypart_overlay/proc/set_layers(list/layer_list)
 	if(!length(layer_list))
@@ -69,20 +62,21 @@
  *
  * * limb: the limb we're drawing onto
  *
- * Returns an assoc list of images/mutable appearances to their overlay flags
+ * Returns a list of images/mutable appearances
  */
 /datum/bodypart_overlay/proc/get_all_overlays(obj/item/bodypart/limb)
 	var/list/overlays = list()
 	for(var/overlay_postfix, overlay_layer in layers)
-		overlays[get_overlay(limb, overlay_postfix, -overlay_layer)] = overlay_flags
+		overlays += get_overlay(limb, overlay_postfix, -overlay_layer)
 		var/emissive_overlay = get_emissive_overlay(limb, overlay_postfix, -overlay_layer)
 		if(emissive_overlay)
-			overlays[emissive_overlay] = LIMB_OVERLAY_META
+			overlays += emissive_overlay
 		var/secondary_overlay = get_secondary_overlay(limb, overlay_postfix, -overlay_layer)
 		if(secondary_overlay)
-			overlays[secondary_overlay] = overlay_flags
-		for(var/image/extended_overlay as anything in get_extended_overlay(limb, overlay_postfix, -overlay_layer))
-			overlays[extended_overlay] = PLANE_TO_TRUE(extended_overlay.plane) == EMISSIVE_PLANE ? LIMB_OVERLAY_META : overlay_flags
+			overlays += secondary_overlay
+		var/list/extended_overlays = get_extended_overlay(limb, overlay_postfix, -overlay_layer)
+		if(length(extended_overlays))
+			overlays += extended_overlays
 	return overlays
 
 /**
