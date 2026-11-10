@@ -282,7 +282,7 @@
 	if(!open_status || !contents.len)
 		return
 
-	. += "[icon_state]_open"
+	. += open_icon_state()
 
 	if(!display_cigs)
 		return
@@ -302,6 +302,9 @@
 
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
+
+/obj/item/storage/fancy/cigarettes/proc/open_icon_state()
+	return "[icon_state]_open"
 
 /obj/item/storage/fancy/cigarettes/crafted
 	name = "cigarette packet"
@@ -485,10 +488,13 @@
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
-	icon_state = "cohibacase"
-	base_icon_state = "cohibacase"
+	icon_state = "havanacase"
+	base_icon_state = "havanacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
 	custom_premium_price = PAYCHECK_COMMAND * 2.25
+
+/obj/item/storage/fancy/cigarettes/cigars/havana/open_icon_state()
+	return "cohibacase_open"
 
 /obj/item/storage/fancy/cigarettes/cigars/intern
 	name = "\improper premium Classic cigar case"
