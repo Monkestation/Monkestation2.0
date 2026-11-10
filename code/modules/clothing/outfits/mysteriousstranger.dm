@@ -3,16 +3,18 @@
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit_store = /obj/item/tank/internals/oxygen
+	suit_store = /obj/item/tank/internals/oxygen/yellow
 	back = /obj/item/mod/control/pre_equipped/myststranger
+	box = /obj/item/storage/box/material
 	backpack_contents = list(
-		/obj/item/melee/energy/axe = 1,
+		/obj/item/melee/energy/axe/lone_wanderer = 1,
 		/obj/item/debug/omnitool = 1,
 		/obj/item/storage/backpack/deforest_surgical/stocked = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/bodybag/bluespace = 1,
 		/obj/item/gun/ballistic/revolver/lone_wanderer = 1,
-		/obj/item/holochip/tenthousand = 1
+		/obj/item/gps/advanced/lone_wanderer = 1,
+		/obj/item/holochip/tenthousand = 1,
 	)
 	belt = /obj/item/defibrillator/compact/combat/loaded/nanotrasen
 	ears = /obj/item/radio/headset/headset_cent/commander
@@ -43,6 +45,60 @@
 	TRAIT_BRAIN_TRAUMA_IMMUNITY,TRAIT_VIRUSIMMUNE,TRAIT_NO_MINDSWAP,TRAIT_NEVER_WOUNDED,TRAIT_TOWER_OF_BABEL,TRAIT_IGNORESLOWDOWN,\
 	TRAIT_FEARLESS,TRAIT_NO_SLIP_ALL,TRAIT_FAST_CLIMBER,TRAIT_FAST_CUFFING,TRAIT_FASTMED))
 
+/obj/item/melee/energy/axe/lone_wanderer
+	name = "experimental protonic inversal axe"
+	///Fallout NV OWB refrence FTW.
+	desc = "Yes, because the intellectually challenged see an M and a T next to each other and take Occam's razor to it!"
+	desc_controls = "Right-Click to dash."
+	var/datum/effect_system/spark_spread/spark_system
+	var/datum/action/innate/dash/lone_wanderer/jaunt
+
+/obj/item/melee/energy/axe/lone_wanderer/Initialize(mapload)
+	. = ..()
+	jaunt = new(src)
+	spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
+/obj/item/melee/energy/axe/lone_wanderer/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.density)
+		jaunt?.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/melee/energy/axe/lone_wanderer/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!QDELETED(jaunt))
+		jaunt.Grant(user, src)
+
+/obj/item/melee/energy/axe/lone_wanderer/dropped(mob/user)
+	. = ..()
+	if(!QDELETED(jaunt))
+		jaunt.Remove(user)
+
+/obj/item/melee/energy/axe/lone_wanderer/Destroy()
+	QDEL_NULL(spark_system)
+	QDEL_NULL(jaunt)
+	return ..()
+
+/datum/action/innate/dash/lone_wanderer
+	current_charges = 5
+	max_charges = 5
+	charge_rate = 20
+	beam_length = 0.1 SECONDS
+	recharge_sound = null
+
+/datum/action/innate/dash/lone_wanderer/GiveAction(mob/viewer)
+	return
+
+/datum/action/innate/dash/lone_wanderer/HideFrom(mob/viewer)
+	return
+
+/obj/item/gps/advanced/lone_wanderer
+	name = "ancient gps"
+	desc = "Far too many seek this signal, only to find their graves. Far too few carry their own to be saved by this ones carrier."
+	gpstag = "???"
+
 /obj/item/holochip/tenthousand
 	credits = 10000
 
@@ -50,10 +106,15 @@
 	name = "V.A.N.I.S.H. implant"
 	desc = "To go without leaving a corpse. That is the way of the Gerudo."
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
-	icon_state = "supermatter_sliver_pulse"
-	actions_types = list(/datum/action/item_action/dust_implant)
+	icon_state = "plutonium_core_pulse"
+	actions_types = list(/datum/action/item_action/vansish_implant)
 	var/popup = FALSE // is the window open?
 	var/active = FALSE
+
+
+/datum/action/item_action/vansish_implant
+	check_flags = NONE
+	name = "Activate V.A.N.I.S.H. Insurance Implant"
 
 /obj/item/implant/vanish/proc/on_death(datum/source)
 	SIGNAL_HANDLER
