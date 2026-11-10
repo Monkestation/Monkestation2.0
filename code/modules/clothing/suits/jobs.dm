@@ -156,6 +156,7 @@
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
+	body_parts_covered = CHEST|GROIN
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = null
@@ -275,6 +276,7 @@
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
+	body_parts_covered = CHEST|GROIN|LEGS
 	allowed = list(
 		/obj/item/bonesetter,
 		/obj/item/cautery,

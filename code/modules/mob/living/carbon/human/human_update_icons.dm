@@ -876,7 +876,7 @@ generate/load female uniform sprites matching all previously decided variables
 	//Find a valid layer from variables+arguments
 	var/layer2use = alternate_worn_layer || default_layer
 
-	var/mutable_appearance/standing // this is the actual resulting MA
+	var/mutable_appearance/draw_target // MA of the item itself, not the final result
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
 	if(female_uniform)
 		building_icon = wear_female_version(
@@ -897,26 +897,29 @@ generate/load female uniform sprites matching all previously decided variables
 		)
 
 	if(building_icon)
-		standing = mutable_appearance(building_icon, layer = -layer2use)
-
-	// no special handling done, default it
-	standing ||= mutable_appearance(file2use, t_state, layer = -layer2use)
-
-	var/width = isinhands ? inhand_x_dimension : worn_x_dimension
-	var/height = isinhands ? inhand_y_dimension : worn_y_dimension
-	standing = center_image(standing, width, height)
+		draw_target = mutable_appearance(building_icon, layer = -layer2use)
+	else
+		draw_target = mutable_appearance(file2use, t_state, layer = -layer2use)
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use, bodyshape)
+	var/list/worn_overlays = worn_overlays(draw_target, isinhands, file2use, bodyshape)
 	if(length(worn_overlays))
+		draw_target.overlays += worn_overlays
+	draw_target = color_atom_overlay(draw_target)
 
-		if (width != 32 || height != 32)
-			for (var/image/overlay in worn_overlays)
-				overlay.pixel_x -= standing.pixel_x
-				overlay.pixel_y -= standing.pixel_y
+	// Okay so this has to be done because some overlays, like blood, want to be KEEP_APART
+	// but KEEP_APART breaks float layering, so what we need to do is make fake KEEP_APART for us to use
+	var/mutable_appearance/standing = mutable_appearance(layer = -layer2use, appearance_flags = KEEP_TOGETHER)
+	standing.overlays += draw_target
+	var/list/separate_overlays = separate_worn_overlays(standing, draw_target, isinhands, file2use, bodyshape)
+	if(length(separate_overlays))
+		standing.overlays += separate_overlays
+	else // Don't nest overlays if there's nothing to nest against
+		standing.overlays -= draw_target
+		standing = draw_target
 
-		standing.overlays += worn_overlays
+	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
 	//Worn offsets
 	var/list/offsets = get_worn_offsets(isinhands)
@@ -924,7 +927,6 @@ generate/load female uniform sprites matching all previously decided variables
 	standing.pixel_y += offsets[2]
 
 	standing.alpha = alpha
-	standing = color_atom_overlay(standing)
 
 	return standing
 
@@ -1036,7 +1038,12 @@ generate/load female uniform sprites matching all previously decided variables
 //MONKESTATION EDIT START
 	// Pick a displacement mask depending on the height of the icon, ?x48 icons are used for features which would otherwise get clipped when tall players use them
 	// Note: Due to how this system works it's okay to use a mask which is wider than the appearence but NOT okay if the mask is thinner, taller or shorter
-	var/alist/dims = get_icon_dimensions(appearance.icon)
+	// Worn items with separate overlays are an empty KEEP_TOGETHER holder (see build_worn_icon), so size the mask off what's drawn inside it
+	var/sized_icon = appearance.icon
+	if(isnull(sized_icon) && length(appearance.overlays))
+		var/mutable_appearance/drawn = appearance.overlays[1]
+		sized_icon = drawn.icon
+	var/alist/dims = isnull(sized_icon) ? alist("width" = 0, "height" = 0) : get_icon_dimensions(sized_icon)
 	var/icon_width = dims["width"]
 	var/icon_height = dims["height"]
 
