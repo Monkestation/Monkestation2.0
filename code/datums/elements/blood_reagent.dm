@@ -80,7 +80,6 @@
 	QDEL_NULL(blood_source)
 	QDEL_NULL(attached_reagent)
 	QDEL_NULL(attached_reagent_holder)
-/*
 
 /// Cover the mob in blood and transfer our viruses and resistances to them
 /datum/element/blood_reagent/proc/on_mob_expose(
