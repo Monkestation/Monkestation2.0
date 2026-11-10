@@ -96,6 +96,8 @@
 	var/list/datum/slime_transformation/transformations
 	/// Every transformation's color mixed into one, for the warping core drawn inside us.
 	var/transformation_color
+	/// The warping core underlay we're currently showing, so we can swap it out.
+	var/mutable_appearance/warping_core
 	/// Extra babies we make per split.
 	var/extra_babies = 0
 	/// A split leaves us an adult.
@@ -209,6 +211,7 @@
 	QDEL_LIST(mutation_progress)
 	QDEL_LIST(transformations)
 	slime_type = null
+	warping_core = null
 	equipped_hat?.forceMove(drop_location())
 
 	return ..()
@@ -348,12 +351,15 @@
 
 /mob/living/basic/slime/update_overlays()
 	. = ..()
+	if(warping_core)
+		underlays -= warping_core
+	warping_core = null
 	if(stat == DEAD)
 		return
 	if(transformation_color)
-		var/mutable_appearance/warping_core = mutable_appearance('icons/obj/science/slimecrossing.dmi', "warping", MOB_BELOW_PIGGYBACK_LAYER)
+		warping_core = mutable_appearance('icons/obj/science/slimecrossing.dmi', "warping")
 		warping_core.color = transformation_color
-		. += warping_core
+		underlays += warping_core
 	if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
 		. += mutable_appearance(icon, "aslime-[current_mood]")
 	if(cat_slime)
