@@ -38,6 +38,17 @@
 
 	. = HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_EFFECTS
 
+	if(slime.blood_volume >= BLOOD_VOLUME_MAX_LETHAL)
+		if(SPT_PROB(7.5, seconds_per_tick))
+			to_chat(slime, span_userdanger("Slime jelly starts to tear your membrane apart. You're going to burst!"))
+			investigate_log("has been gibbed by having too much slime jelly.", INVESTIGATE_DEATHS)
+			addtimer(CALLBACK(slime, TYPE_PROC_REF(/mob/living/carbon/human, death), TRUE, "slime overexpansion"), 25)
+			addtimer(CALLBACK(src, PROC_REF(drop_items_to_ground), get_turf(slime), stored_items, TRUE), 27)
+			var/matrix/M = matrix()
+			M.Scale(1.8, 1.2)
+			animate(slime, time = 40, transform = M, easing = SINE_EASING)
+			return .
+
 	if(slime.blood_volume <= 0)
 		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
 		slime.adjustBruteLoss(2.5 * seconds_per_tick)
