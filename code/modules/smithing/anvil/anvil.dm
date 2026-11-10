@@ -95,15 +95,18 @@
 		user.put_in_active_hand(working_material)
 		visible_message("[user] takes the [working_material] off the anvil.")
 		working_material = null
+		user.balloon_alert(user,"item removed!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!chosen_recipe && working_material)
 		user.put_in_active_hand(working_material)
 		visible_message("[user] takes the [working_material] off the anvil.")
 		working_material = null
+		user.balloon_alert(user,"item removed!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(chosen_recipe)
 		chosen_recipe = null
 		visible_message("[user] changes their mind on what to make.")
+		user.balloon_alert(user,"recipe reset!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	. = ..()
 
@@ -172,6 +175,8 @@
 		if(in_anv.hit_counter > 0)
 			in_anv.smithed_quality++
 		in_anv.hit_counter--
+		if(in_anv.hit_counter % 10 == 4)
+			user.balloon_alert(user,"[in_anv] sparks as it cools!")
 		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, 50-(in_anv.hit_counter), mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.mind.adjust_experience(/datum/skill/smithing,1.5)
 		return
@@ -198,6 +203,8 @@
 		if(in_anv.hit_counter > 0)
 			in_anv.smithed_quality++
 		in_anv.hit_counter--
+		if(in_anv.hit_counter % 10 == 4)
+			user.balloon_alert(user,"[in_anv] sparks as it cools!")
 		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, 50-(in_anv.hit_counter), mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.mind.adjust_experience(/datum/skill/smithing,1.5)
 		return

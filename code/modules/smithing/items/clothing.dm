@@ -21,14 +21,15 @@
 	if(!complete)
 		. += "It's not finished yet; this won't protect me at all!"
 
+///Shows when you inspect an anvil with it, make sure to update anvil proc cool_text for anvil runechat!
 /obj/item/clothing/smithed_clothes/proc/forge_text()
 	. = null
 	if(complete)
 		return
 	switch(hit_counter)
-		if(30 to INFINITY)
+		if(35 to INFINITY)
 			. = "Looks like it's freshly heated, ready for hammering."
-		if(25 to 29)
+		if(25 to 34)
 			. = "Still hot, plenty of work able to be done."
 		if(15 to 24)
 			. = "Rather hot, but it's starting to cool down."
