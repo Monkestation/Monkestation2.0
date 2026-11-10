@@ -1,5 +1,6 @@
 ///MOD Module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
+	abstract_type = /obj/item/mod/module
 	name = "MOD module"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	icon_state = "module"

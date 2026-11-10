@@ -358,7 +358,7 @@
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
 
-			var/message = trim(params["message"], MAX_MESSAGE_LEN)
+			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
 			if (!message)
 				return
 
@@ -379,6 +379,9 @@
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			var/destination = params["destination"]
+			if (!(destination in CONFIG_GET(keyed_list/cross_server)) && destination != "all")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has passed an invalid destination into comms console cross-sector message. Message: \"[html_encode(message)]\"")
+				return
 
 			user.log_message("is about to send the following message to [destination]: [message]", LOG_GAME)
 			to_chat(
@@ -799,7 +802,7 @@
 	if(!GLOB.communications_controller.can_announce(user, is_ai))
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
-	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
+	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement", multiline = TRUE)
 	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(user.try_speak(input))

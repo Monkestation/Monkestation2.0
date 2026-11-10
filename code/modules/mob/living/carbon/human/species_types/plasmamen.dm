@@ -106,7 +106,7 @@
 	else if(H.fire_stacks)
 		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 		if(istype(P))
-			P.Extinguish(H)
+			P.suit_extinguish(H)
 			internal_fire = FALSE
 	else
 		internal_fire = FALSE

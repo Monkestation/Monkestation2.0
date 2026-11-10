@@ -1,5 +1,6 @@
 /// What a slime must eat or drain to mutate into another type.
 /datum/slime_mutation
+	abstract_type = /datum/slime_mutation
 	/// The slime type we pass on if we succeed
 	var/datum/slime_type/mutates_into
 	/// Items still needed to feed the slime in order to mutate.
