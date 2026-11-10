@@ -50,66 +50,15 @@
 
 /// Tries to create one influence at a safe station location.
 /datum/reality_smash_tracker/proc/try_generate_influence(amount = 1)
-	var/static/list/forbidden_area_typecache
-	if(isnull(forbidden_area_typecache))
-		forbidden_area_typecache = typecacheof(list(
-			/area/graveyard,
-			/area/station/ai_monitored,
-			/area/station/command/secure_bunker,
-			/area/station/engineering/atmospherics_engine,
-			/area/station/engineering/shipbreaker_hut,
-			/area/station/engineering/supermatter,
-			/area/station/maintenance,
-			/area/station/science/ordnance/bomb,
-			/area/station/science/ordnance/burnchamber,
-			/area/station/science/ordnance/freezerchamber,
-			/area/station/science/xenobiology/cell,
-			/area/station/solars,
-		))
-
 	var/influence_cap = get_influence_cap()
 
 	var/amount_to_make = min(amount, influence_cap - total_influences())
 	if(amount_to_make <= 0)
 		return
 
-	var/generated = 0
-	var/list/turf_groups = noise_turfs_station_equal_weight(6, forbidden_area_typecache)
-	main_loop:
-		while(generated < amount_to_make && length(turf_groups))
-			var/idx = rand(1, length(turf_groups))
-			var/list/chosen_group = turf_groups[idx]
-			var/turf/chosen_location = pick_n_take(chosen_group)
-			if(!length(chosen_group))
-				turf_groups.Cut(idx, idx + 1)
-
-			if(chosen_location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS) // no
-				continue
-
-			// gotta make sure we're an open, floor turf
-			if(chosen_location.density || isgroundlessturf(chosen_location))
-				continue
-
-			// make sure it's got at least 3x3 open space
-			for(var/turf/nearby_turf as anything in RANGE_TURFS(1, chosen_location))
-				if(!isopenturf(nearby_turf))
-					continue main_loop
-
-			// ensure there's no dense objects on the turf
-			for(var/obj/checked_object in chosen_location)
-				if(checked_object.density)
-					continue main_loop
-
-			// We don't want them close to each other - at least 1 tile of seperation
-			var/list/nearby_things = range(1, chosen_location)
-			var/obj/effect/heretic_influence/what_if_i_have_one = locate() in nearby_things
-			var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in nearby_things
-			if(what_if_i_have_one || what_if_i_had_one_but_its_used)
-				continue
-
-			log_game("Generated heretic influence at [AREACOORD(chosen_location)]")
-			new /obj/effect/heretic_influence(chosen_location)
-			generated++
+	for(var/turf/chosen_location as anything in pick_noise_station_turfs(amount_to_make, 6, list(/obj/effect/heretic_influence, /obj/effect/visible_heretic_influence)))
+		log_game("Generated heretic influence at [AREACOORD(chosen_location)]")
+		new /obj/effect/heretic_influence(chosen_location)
 
 /// Returns true if any tracked heretic is currently eligible for influence spawning.
 /datum/reality_smash_tracker/proc/has_spawn_eligible_heretic()

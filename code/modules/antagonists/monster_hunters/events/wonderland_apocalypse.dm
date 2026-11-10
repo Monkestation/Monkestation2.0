@@ -39,10 +39,10 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 /datum/round_event/wonderlandapocalypse/start()
 	GLOB.wonderland_apocalypse = TRUE
 	SSshuttle.emergency_no_recall = TRUE
-	for(var/i = 1 to 16)
-		new /obj/effect/anomaly/dimensional/wonderland(get_safe_random_station_turf_equal_weight(), null, FALSE)
-	for(var/i = 1 to 4)
-		var/obj/structure/wonderland_rift/rift = new(get_safe_random_station_turf_equal_weight())
+	for(var/turf/anomaly_turf as anything in pick_noise_station_turfs(16, 4))
+		new /obj/effect/anomaly/dimensional/wonderland(anomaly_turf, null, FALSE)
+	for(var/turf/rift_turf as anything in pick_noise_station_turfs(4, 4, list(/obj/effect/anomaly/dimensional/wonderland)))
+		var/obj/structure/wonderland_rift/rift = new(rift_turf)
 		notify_ghosts(
 			"A doorway to the wonderland has been opened!",
 			source = rift,
@@ -86,6 +86,16 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	src.forceMove(new_turf)
 	prepare_area(new_theme_path = /datum/dimension_theme/wonderland)
 
+/obj/effect/anomaly/dimensional/wonderland/rift
+	lifespan = 90 SECONDS
+	immortal = FALSE
+
+/obj/effect/anomaly/dimensional/wonderland/rift/relocate()
+	return
+
+/obj/effect/anomaly/dimensional/wonderland/rift/detonate()
+	return
+
 /obj/structure/wonderland_rift
 	name = "Wonderland Door"
 	desc = "A door leading to a magical beautiful land."
@@ -122,7 +132,8 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	enemy_spawned = TRUE
 	var/mob/living/basic/red_rabbit/evil_rabbit = new(get_turf(src))
 	evil_rabbit.PossessByPlayer(user.key)
-	to_chat(evil_rabbit, span_boldwarning("Destroy everything, spare no one."))
+	to_chat(evil_rabbit, span_boldwarning("(WRITER TODO) plain - ur a jabberwocky, wreck everything, spare nobody"))
+	to_chat(evil_rabbit, span_hearts_tantrum("(WRITER TODO) hearts - go collect every head on the station"))
 
 /datum/status_effect/wonderland_district
 	id = "wonderland_district"
@@ -176,7 +187,8 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 		remove_banned_traits()
 */
 	if(apply_message)
-		to_chat(owner, span_warning("You feel an ominous pressure fill the air around you..."))
+		to_chat(owner, span_warning(apply_message))
+		to_chat(owner, span_hearts_decree("(WRITER TODO) hearts - everyone's guilty, she'll figure out of what later"))
 	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(owner, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(after_spell_cast))
 	RegisterSignal(owner, COMSIG_MOB_GRANTED_ACTION, PROC_REF(owner_granted_action))
@@ -241,6 +253,11 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living, emote), "scream")
 	if(vis_msg)
 		owner.visible_message(vis_msg, self_msg)
+		to_chat(owner, span_hearts_decree(pick(
+			"(WRITER TODO) hearts - who said u could do that",
+			"(WRITER TODO) hearts - sit down",
+			"(WRITER TODO) hearts - permission denied",
+		)))
 	owner.take_overall_damage(brute = rand(5, 15))
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner

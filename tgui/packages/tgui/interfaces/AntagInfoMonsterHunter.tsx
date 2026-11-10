@@ -83,12 +83,13 @@ const HuntersGuide = () => {
     <Section fill title="Hunter's Guide">
       <Stack vertical textAlign="center">
         <Stack.Item>
-          Look for the white rabbits! Use their eyes to upgrade your
-          hunter&#39;s weapon, the red queen&#39;s card will guide you!
+          WRITER: red queen - still has to explain the mechanics: rifts are in
+          the floor, the card finds them, tear em open w ur weapon, eyes go to
+          the forge, rabbits that come out watch ur prey
         </Stack.Item>
         <Stack.Item>
-          Only once the contract is fullfilled and the rabbits are found will
-          you be able to bring upon the{' '}
+          WRITER: red queen - there was never a contract. kill the prey, open
+          every rift, then{' '}
           <Box inline color="red" bold>
             APOCALYPSE
           </Box>
@@ -97,11 +98,11 @@ const HuntersGuide = () => {
         <Stack.Item>
           {rabbits_remaining < 1 ? (
             <Box inline bold textColor="red">
-              YOU HAVE FOUND ALL THE WHITE RABBITS.
+              YOU HAVE OPENED ALL THE RIFTS.
             </Box>
           ) : (
             <Box inline>
-              {'You have found '}
+              {'You have opened '}
               <Box inline bold textColor="green">
                 {rabbits_spotted}
               </Box>
@@ -109,7 +110,7 @@ const HuntersGuide = () => {
               <Box inline bold textColor="red">
                 {total_rabbits}
               </Box>
-              {' white rabbits.'}
+              {' rifts.'}
             </Box>
           )}
         </Stack.Item>

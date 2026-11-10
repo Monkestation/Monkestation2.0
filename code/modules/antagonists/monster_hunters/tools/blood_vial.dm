@@ -86,7 +86,7 @@
 	icon_state = "blooddrunk"
 
 /datum/status_effect/cursed_blood/on_apply()
-	to_chat(owner, span_warning("You feel a great power surging through you!"))
+	to_chat(owner, span_warning("(WRITER TODO) red queen - drink all of it, don't be shy"))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 	owner.fully_heal(HEAL_NEGATIVE_DISEASES)
 	for(var/status_effect_type in status_effects_to_remove)

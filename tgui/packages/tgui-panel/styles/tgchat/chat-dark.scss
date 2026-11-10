@@ -846,6 +846,54 @@ em {
   font-style: italic;
 }
 
+.hearts_decree {
+  color: hsl(350, 70%, 45%);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-variant: small-caps;
+  font-size: 150%;
+}
+
+.hearts_fury {
+  color: hsl(350, 80%, 50%);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: bold;
+  font-size: 200%;
+  letter-spacing: 1px;
+  animation: hearts_fury 1200ms 3;
+  animation-direction: alternate;
+}
+
+@keyframes hearts_fury {
+  0% {
+    color: hsl(350, 80%, 50%);
+  }
+
+  100% {
+    color: hsl(285, 70%, 55%);
+  }
+}
+
+.hearts_tantrum {
+  color: hsl(355, 85%, 45%);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: bold;
+  font-size: 300%;
+  display: inline-block;
+  animation: hearts_tantrum 150ms 12;
+  animation-direction: alternate;
+}
+
+@keyframes hearts_tantrum {
+  0% {
+    transform: translate(-2px, 0);
+  }
+
+  100% {
+    transform: translate(2px, 1px);
+  }
+}
+
 .hypnophrase {
   color: hsl(0, 0%, 12.5%);
   font-weight: bold;

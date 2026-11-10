@@ -147,6 +147,9 @@ h1.alert, h2.alert		{color: #000000;}
 .clown					{color: #FF69Bf;	font-size: 3;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
 .singing				{font-family: "Trebuchet MS", cursive, sans-serif; font-style: italic;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
+.hearts_decree			{color: #a3142f;	font-family: Georgia, serif;	font-style: italic;	font-size: 150%;}
+.hearts_fury			{color: #b3122f;	font-family: Georgia, serif;	font-weight: bold;	font-size: 200%;}
+.hearts_tantrum			{color: #9c0a1e;	font-family: Georgia, serif;	font-weight: bold;	font-size: 300%;}
 .hypnophrase			{color: #3bb5d3;	font-weight: bold;}
 
 .phobia			{color: #dd0000;	font-weight: bold;}
