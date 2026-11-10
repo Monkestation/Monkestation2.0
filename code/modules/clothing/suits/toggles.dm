@@ -13,6 +13,9 @@
 	/// Hood respects the suit's greyscale.Initialize(mapload)
 	var/respect_suit_greyscale = FALSE
 
+/obj/item/clothing/head/hooded
+	abstract_type = /obj/item/clothing/head/hooded
+
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if (!hoodtype)
@@ -70,6 +73,7 @@
 	return
 
 /obj/item/clothing/suit/toggle
+	abstract_type = /obj/item/clothing/suit/toggle
 	/// The noun that is displayed to the user on toggle. EX: "Toggles the suit's [buttons]".
 	var/toggle_noun = "buttons"
 

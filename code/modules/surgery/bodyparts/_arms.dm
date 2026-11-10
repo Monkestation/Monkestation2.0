@@ -1,5 +1,6 @@
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm
+	abstract_type = /obj/item/bodypart/arm
 	name = "arm"
 	desc = "Hey buddy give me a HAND and report this to the github because you shouldn't be seeing this."
 	attack_verb_continuous = list("slaps", "punches")
@@ -41,9 +42,9 @@
 		UnregisterSignal(old_owner, COMSIG_MOB_SWAP_HANDS)
 		on_inactive_hand(old_owner)
 
-/obj/item/bodypart/arm/set_disabled(new_disabled)
+/obj/item/bodypart/arm/set_disabled(new_disabled, update_limbs = TRUE)
 	. = ..()
-	if(isnull(.) || !owner)
+	if(isnull(.) || !owner || !update_limbs)
 		return
 
 	if(!.)
