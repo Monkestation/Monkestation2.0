@@ -14,7 +14,6 @@
 	},
 	"traits": [
 		{
-			"Up": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
@@ -24,8 +23,6 @@
 			"Forced Safety": true
 		},
 		{
-			"Down": true,
-			"Up": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
@@ -34,7 +31,6 @@
 			"No Parallax": true
 		},
 		{
-			"Down": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
