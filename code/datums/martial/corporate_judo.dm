@@ -146,6 +146,9 @@
 
 /datum/martial_art/corpjudo/proc/eye_poke(mob/living/attacker, mob/living/defender)
 	reset_streak(defender)
+	if(defender.is_eyes_covered())
+		to_chat(span_warning("[defender] has [defender.p_their()] eyes covered."))
+		return MARTIAL_ATTACK_FAIL
 	defender.visible_message("<span class='warning'>[attacker] jabs [defender] in [attacker.p_their()] eyes!</span>", \
 						"<span class='userdanger'>[attacker] jabs you in the eyes!</span>")
 	playsound(get_turf(attacker), 'sound/items/weapons/whip.ogg', 40, TRUE, -1)
@@ -505,13 +508,8 @@
 
 /obj/projectile/golden_bolt/impact(atom/A)
 	def_zone = BODY_ZONE_CHEST
-
-	if(damage > 0 || !ishuman(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
-		return ..()
-
-	harmless_on_hit(A)
-	qdel(src)
-	return FALSE
+	. = ..()
+	return .
 
 /obj/projectile/golden_bolt/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
@@ -522,10 +520,6 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		try_slow(human_target)
-
-/obj/projectile/golden_bolt/proc/harmless_on_hit(mob/living/carbon/human/living_target)
-	playsound(get_turf(living_target), hitsound, 100, TRUE)
-	try_slow(living_target)
 
 /obj/projectile/golden_bolt/proc/try_slow(mob/living/carbon/human/living_target)
 	living_target.apply_status_effect(/datum/status_effect/judo_slow)
