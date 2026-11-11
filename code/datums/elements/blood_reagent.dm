@@ -5,6 +5,7 @@
 	argument_hash_start_idx = 3
 	/// Blood type associated with this element
 	var/datum/blood_type/blood_type
+	var/is_changeling_blood = FALSE
 
 /*
  * Arguments:
@@ -35,10 +36,8 @@
 	if(!blood_source)
 		return
 
-	if(!target.data["blood_source"])
-		target.data |= list("blood_source" = blood_source)
-	else
-		target.data["blood_source"] = blood_source
+	if(blood_source?.mind?.has_antag_datum(/datum/antagonist/changeling))
+		is_changeling_blood = TRUE
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -59,6 +58,7 @@
 		else
 			// Concat viruses, resistances, etc
 			target_data |= data_list
+
 
 // Shouldn't realistically happen but just in case
 /datum/element/blood_reagent/Detach(datum/reagent/target)
@@ -234,10 +234,7 @@
 	SIGNAL_HANDLER
 	if(!source.holder)
 		return
-	if(!source.data["blood_source"])
-		return
-	var/mob/living/potential_ling = source.data["blood_source"]
-	if(!potential_ling?.mind?.has_antag_datum(/datum/antagonist/changeling))
+	if(!is_changeling_blood)
 		return
 	if(new_holder_temperature < 395)
 		return
