@@ -199,6 +199,7 @@
 #include "operating_table.dm"
 #include "orderable_items.dm"
 #include "organ_set_bonus.dm"
+#include "orphaned_genturf.dm"
 #include "paintings.dm"
 #include "pills.dm"
 #include "plane_double_transform.dm"
