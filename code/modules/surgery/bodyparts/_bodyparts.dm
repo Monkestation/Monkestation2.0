@@ -1532,7 +1532,7 @@
 
 /// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_external_description()
-	if (biological_state == BIO_INORGANIC)
+	if (biological_state & BIO_JELLY)
 		return "membrane"
 	if (biological_state & BIO_FLESH)
 		return "flesh"
@@ -1543,7 +1543,7 @@
 
 /// Returns the generic description of our BIO_INTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_internal_description()
-	if (biological_state == BIO_INORGANIC)
+	if (biological_state & BIO_JELLY)
 		return "membrane"
 	if (biological_state & BIO_BONE)
 		return "bone"

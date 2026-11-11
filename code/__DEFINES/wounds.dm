@@ -77,6 +77,8 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_BLOODED (1<<4)
 /// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
 #define BIO_JOINTED (1<<5)
+/// Limb is comprised entirely of slime jelly - can suffer their own specific wounds and oozelings can cannibalize them to replenish blood.
+#define BIO_JELLY (1<<6)
 /// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH
