@@ -826,7 +826,7 @@
 	desc = "A vibrant bag for storing caught fish."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "fishing_bag"
-	worn_icon_state = "fishing_bag"
+	worn_icon_state = "satchel"
 	resistance_flags = FLAMMABLE
 	custom_price = PAYCHECK_CREW * 3
 	///How much holding this affects fishing difficulty
@@ -844,7 +844,7 @@
 	name = "carpskin fishing bag"
 	desc = "A dapper fishing bag made from carpskin. You can store quite a lot of fishing gear in the small pockets formed by larger scales."
 	icon_state = "fishing_bag_carpskin"
-	worn_icon_state = "fishing_bag_carpskin"
+	worn_icon_state = "satchel"
 	resistance_flags = ACID_PROOF
 	storage_type = /datum/storage/carpskin_bag
 	fishing_modifier = -4
