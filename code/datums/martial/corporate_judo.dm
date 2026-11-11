@@ -508,8 +508,7 @@
 
 /obj/projectile/golden_bolt/impact(atom/A)
 	def_zone = BODY_ZONE_CHEST
-	. = ..()
-	return .
+	return ..()
 
 /obj/projectile/golden_bolt/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
