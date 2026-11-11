@@ -9,6 +9,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_REINFORCED
+	leave_footprints = TRUE
 
 /turf/open/misc/beach/ex_act(severity, target)
 	return

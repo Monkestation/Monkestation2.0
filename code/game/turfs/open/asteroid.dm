@@ -1,5 +1,7 @@
 /**********************Asteroid**************************/
 
+#define DIG_SHEET_AMOUNT 5
+
 /turf/open/misc/asteroid //floor piece
 	gender = PLURAL
 	name = "asteroid sand"
@@ -56,22 +58,6 @@
 	if(has_floor_variance && prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,12)]"
 
-/// Drops itemstack when dug and changes icon
-/turf/open/misc/asteroid/proc/getDug()
-	dug = TRUE
-	broken = TRUE
-	new dig_result(src, 5)
-	if (prob(worm_chance))
-		new /obj/item/food/bait/worm(src)
-	update_appearance()
-
-/// If the user can dig the turf
-/turf/open/misc/asteroid/proc/can_dig(mob/user)
-	if(!dug)
-		return TRUE
-	if(user)
-		to_chat(user, span_warning("Looks like someone has dug here already!"))
-
 /turf/open/misc/asteroid/burn_tile()
 	return
 /turf/open/misc/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
@@ -99,16 +85,41 @@
 
 		balloon_alert(user, "digging...")
 
-		if(attacking_item.use_tool(src, user, 40, volume=50))
+		if(attacking_item.use_tool(src, user, 4 SECONDS, volume = 50))
 			if(!can_dig(user))
 				return TRUE
 			getDug()
 			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 			return TRUE
 	else if(istype(attacking_item, /obj/item/storage/bag/ore))
-		for(var/obj/item/stack/ore/O in src)
-			SEND_SIGNAL(attacking_item, COMSIG_ATOM_ATTACKBY, O)
+		for(var/obj/item/stack/ore/dropped_ore in src)
+			SEND_SIGNAL(attacking_item, COMSIG_ATOM_ATTACKBY, dropped_ore)
 
+/// Drops itemstack when dug and changes icon
+/turf/open/misc/asteroid/proc/getDug()
+	if(!break_tile())
+		return FALSE
+	new dig_result(src, DIG_SHEET_AMOUNT)
+	if(prob(worm_chance))
+		new /obj/item/food/bait/worm(src)
+	return TRUE
+
+/// If the user can dig the turf
+/turf/open/misc/asteroid/proc/can_dig(mob/user)
+	if(!dug && !broken)
+		return TRUE
+	if(user)
+		balloon_alert(user, "already excavated!")
+	return FALSE
+
+///Refills the previously dug tile
+/turf/open/misc/asteroid/proc/refill_dug()
+	dug = FALSE
+	broken = FALSE
+	icon_state = base_icon_state
+	if(has_floor_variance && prob(floor_variance))
+		icon_state = "[base_icon_state][rand(0,12)]"
+	update_appearance()
 
 /turf/open/floor/plating/lavaland_baseturf
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -140,13 +151,20 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	dig_result = /obj/item/stack/ore/glass/basalt
 
 /turf/open/misc/asteroid/basalt/getDug()
+	. = ..()
+	if(!.)
+		return
 	set_light(0)
 	GLOB.dug_up_basalt |= src
-	return ..()
 
 /turf/open/misc/asteroid/basalt/Destroy()
 	GLOB.dug_up_basalt -= src
 	return ..()
+
+/turf/open/misc/asteroid/basalt/refill_dug()
+	. = ..()
+	GLOB.dug_up_basalt -= src
+	set_basalt_light(src)
 
 /turf/open/misc/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
@@ -204,6 +222,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	dig_result = /obj/item/stack/sheet/mineral/snow
+	leave_footprints = TRUE
 
 /turf/open/misc/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -214,8 +233,69 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 		return TRUE
 	return FALSE
 
-/turf/open/misc/grass/burnt_states()
+/turf/open/misc/asteroid/snow/burnt_states()
 	return list("snow_dug")
+
+/turf/open/misc/asteroid/snow/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	if(HAS_TRAIT(walker, TRAIT_NO_SNOWPRINTS))
+		return
+	// skip the special logic if the level doesn't naturally have snowstorms
+	if(!SSmapping.level_trait(z, ZTRAIT_SNOWSTORM))
+		return ..()
+
+	// if an active snow storm affecting this turf is currently in its main or wind down stage, skip footprint creation
+	for(var/datum/weather/snow_storm/active_weather in SSweather.processing)
+		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)
+			continue
+		if(!(loc in active_weather.impacted_areas))
+			continue
+		return
+
+	. = ..()
+	// when a snow storm enters its main stage, clear all of our footprints
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		RegisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type), PROC_REF(snow_clear_footprints), override = TRUE)
+
+/turf/open/misc/asteroid/snow/proc/snow_clear_footprints(datum/source, datum/weather/storm)
+	SIGNAL_HANDLER
+
+	if(!(loc in storm.impacted_areas))
+		return
+
+	clear_footprints()
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
+
+/turf/open/misc/asteroid/snow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/mineral/snow))
+		return ..()
+
+	if(dug)
+		if(tool.use(DIG_SHEET_AMOUNT))
+			user.visible_message(
+				span_notice("[user] packs [src] back in."),
+				span_notice("You pack [src] back in."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			refill_dug()
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, "You don't have enough [tool.name] to fill the hole.")
+		return ITEM_INTERACT_BLOCKING
+
+	if(footprint_entrance_dirs || footprint_exit_dirs)
+		if(tool.use(1))
+			user.visible_message(
+				span_notice("[user] fills in the footprints in [src]."),
+				span_notice("You fill in the footprints in [src]."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			clear_footprints()
+			return ITEM_INTERACT_SUCCESS
+
+		return NONE
+
+	return NONE
 
 /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/openspace/icemoon
@@ -248,6 +328,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	damaged_dmi = null
+	leave_footprints = FALSE
 
 /turf/open/misc/asteroid/snow/ice/break_tile()
 	return FALSE
@@ -304,3 +385,5 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	floor_variance = 0
 	base_icon_state = "moon_dug"
 	icon_state = "moon_dug"
+
+#undef DIG_SHEET_AMOUNT
