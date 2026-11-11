@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useBackend } from '../../backend';
-import { Box, Icon, Stack, Tooltip } from '../../components';
+import { Box, Button, Icon, Stack, Tooltip } from '../../components';
 import type { PreferencesMenuData, Quirk } from './data';
+import { PersonalityPage } from './PersonalityPage';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const getValueClass = (value: number): string => {
@@ -335,3 +337,43 @@ export const QuirksPage = (props) => {
     />
   );
 };
+
+export function QuirkPersonalityPage() {
+  const [contentPage, setContentPage] = useState<'quirks' | 'personality'>(
+    'quirks',
+  );
+
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        <Stack>
+          <Stack.Item grow>
+            <Button
+              selected={contentPage === 'quirks'}
+              onClick={() => setContentPage('quirks')}
+              fluid
+              align="center"
+              fontSize="14px"
+            >
+              Quirks
+            </Button>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Button
+              selected={contentPage === 'personality'}
+              onClick={() => setContentPage('personality')}
+              fluid
+              align="center"
+              fontSize="14px"
+            >
+              Personality
+            </Button>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item grow>
+        {contentPage === 'personality' ? <PersonalityPage /> : <QuirksPage />}
+      </Stack.Item>
+    </Stack>
+  );
+}

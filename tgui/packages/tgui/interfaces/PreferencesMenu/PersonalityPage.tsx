@@ -11,9 +11,9 @@ import {
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
-import { useBackend } from '../../../backend';
-import type { Personality, PreferencesMenuData } from '../types';
-import { useServerPrefs } from '../useServerPrefs';
+import { useBackend } from '../../backend';
+import type { Personality, PreferencesMenuData, ServerData } from './data';
+import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 type ButtonData = {
   backgroundColor: string;
@@ -261,10 +261,18 @@ function getAllSelectedPersonalitiesString(
 }
 
 export function PersonalityPage() {
-  const { act, data } = useBackend<PreferencesMenuData>();
+  return (
+    <ServerPreferencesFetcher
+      render={(serverData) =>
+        serverData ? <PersonalityList serverData={serverData} /> : null
+      }
+    />
+  );
+}
 
-  const server_data = useServerPrefs();
-  if (!server_data) return;
+function PersonalityList(props: { serverData: ServerData }) {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const server_data = props.serverData;
 
   const personalities = server_data.personality.personalities;
   const personalityIncompatibilities =
