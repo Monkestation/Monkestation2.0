@@ -26,6 +26,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	 * Basically, set this if the color is a color matrix (list)
 	 */
 	var/greyscale_color
+	/// Old name of greyscale_color, the smithing material stats still read it
+	var/greyscale_colors
 	/// Base alpha of the material
 	var/alpha = 255
 	///Starlight color of the material
@@ -101,6 +103,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 		id = _id
 	else if(isnull(id))
 		id = type
+
+	greyscale_colors = greyscale_color || color
 
 	if(texture_layer_icon_state)
 		cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
