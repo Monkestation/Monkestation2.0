@@ -694,6 +694,7 @@
 	hook = /obj/item/fishing_hook/bone
 
 /obj/item/fishing_rod/telescopic
+	name = "telescopic fishing rod"
 	icon_state = "fishing_rod_telescopic"
 	desc = "A lightweight, ergonomic, easy to store telescopic fishing rod. "
 	inhand_icon_state = null
@@ -757,7 +758,7 @@
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 	QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
