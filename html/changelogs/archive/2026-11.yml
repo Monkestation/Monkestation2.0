@@ -437,3 +437,9 @@
   - rscadd: added the *plink emote
   - sound: added plink.ogg and plonk.ogg (equal chance for either to trigger when
       using the emote)
+2026-11-11:
+  Absolucy:
+  - bugfix: Maybe fix the frost miner ruin failing to spawn sometimes.
+  - bugfix: Fixed damage slowdown applying while floating/levitating.
+  ThePooba:
+  - bugfix: Wrong sound location for the animal and dont starve voices

@@ -185,8 +185,8 @@
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
 	// Area var pullouts to make accessing in the loop faster
-	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
-	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
+	var/mobs_allowed = (generate_in.area_flags_mapping & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
+	var/megas_allowed = (generate_in.area_flags_mapping & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
 	for(var/i in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = i

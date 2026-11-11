@@ -524,6 +524,38 @@
 		/obj/item/healthanalyzer = 1,
 	)
 	generate_items_inside(items_inside, src)
+///Used in /datum/outfit/myststranger
+/obj/item/storage/medkit/lone_wanderer_medkit
+	name = "ancient medical storage"
+	icon_state = "medkit_tactical_premium"
+	desc = "Give me your tired, your poor, your battered or bruised, all are welcome in my loving arms."
+
+/obj/item/storage/medkit/lone_wanderer_medkit/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_slots = 28
+
+/obj/item/storage/medkit/lone_wanderer_medkit/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/cautery/advanced = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/blood_filter/advanced = 1,
+		/obj/item/emergency_bed = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/bodybag/bluespace = 1,
+		/obj/item/reagent_containers/medipen/lone_wanderer = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/gauze/sterilized = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/bone_gel = 1,
+	)
+	generate_items_inside(items_inside, src)
 
 //medibot assembly
 /obj/item/storage/medkit/tool_act(mob/living/user, obj/item/tool, list/modifiers)
