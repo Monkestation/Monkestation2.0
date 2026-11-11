@@ -15,4 +15,5 @@
 	owner.adjustFireLoss(-healed, FALSE, TRUE, MOB_ORGANIC)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL - healed)
 		owner.blood_volume += healed
+	owner.updatehealth()
 	..()
