@@ -14,7 +14,6 @@
 		TRAIT_NOFIRE,
 		TRAIT_NOGUNS,
 		TRAIT_SHOCKIMMUNE,
-		TRAIT_TOSS_GUN_HARD,
 	)
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)

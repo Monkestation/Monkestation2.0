@@ -21,7 +21,7 @@
 	/// if false, it will be an overlay instead
 	var/special_screen_replace = TRUE
 	/// Owner of this mood event
-	var/mob/owner
+	var/mob/living/owner
 	/// List of required jobs for this mood event
 	var/list/required_job = list()
 

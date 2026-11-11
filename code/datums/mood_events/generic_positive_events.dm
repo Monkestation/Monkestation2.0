@@ -171,7 +171,7 @@
 	var/dog_fan = HAS_PERSONALITY(owner, /datum/personality/dog_fan)
 	var/isdog = istype(animal, /mob/living/basic/pet/dog)
 	var/cat_fan = HAS_PERSONALITY(owner, /datum/personality/cat_fan)
-	var/iscat = istype(animal, /mob/living/basic/pet/cat)
+	var/iscat = istype(animal, /mob/living/simple_animal/pet/cat)
 	if((dog_fan && isdog) || (cat_fan && iscat) || HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 		mood_change = 3
 		description = "I love [animal.name] so much, [animal.p_theyre()] so adorable! I can't stop petting [animal.p_them()]!"

@@ -12,7 +12,6 @@
 		/area/station/service/bar,
 		/area/station/service/cafeteria,
 		/area/station/service/library,
-		/area/station/service/minibar,
 		/area/station/service/theater,
 	)
 	/// Mood event applied when in a slacking area
