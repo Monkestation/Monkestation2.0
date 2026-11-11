@@ -120,7 +120,7 @@ There are several things that need to be remembered:
 		if(digi && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
-		else if(dna.species.visual_gender & dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		if(dna.species.visual_gender & dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
@@ -669,6 +669,8 @@ There are several things that need to be remembered:
 			digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
 
 		return icon(resulting_icon)
+
+	return base_icon
 
 /// Modifies a sprite to replace the legs with a new version
 /proc/replace_icon_legs(icon/base_icon, icon/new_legs)
