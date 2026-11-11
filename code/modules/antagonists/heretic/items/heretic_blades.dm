@@ -221,13 +221,13 @@
 
 /obj/item/melee/sickly_blade/dark/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/old_damtype = damtype
-	if(IS_BLOODSUCKER(target_mob))
+	if(IS_VAMPIRE(target_mob))
 		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, get_vamp_damage_multiplier(target_mob, user.zone_selected))
 		damtype = BURN
 	. = ..()
 	damtype = old_damtype
 
-/// Applies damage multipliers against bloodsuckers, causing them to take 1.2x damage, alongside bypassing any burn resistance.
+/// Applies damage multipliers against vampires, causing them to take 1.2x damage, alongside bypassing any burn resistance.
 /obj/item/melee/sickly_blade/dark/proc/get_vamp_damage_multiplier(mob/living/victim, def_zone)
 	. = 1.2
 	// negate physiology damage modifiers (i.e fortitude)

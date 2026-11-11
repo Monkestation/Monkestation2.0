@@ -45,7 +45,7 @@
 	/// A typecache of ability types that will be revealed to the monster hunter when they gain insight.
 	var/static/list/monster_abilities = typecacheof(list(
 		/datum/action/changeling,
-		/datum/action/cooldown/bloodsucker
+		/datum/action/cooldown/vampire,
 	))
 
 /datum/antagonist/monsterhunter/apply_innate_effects(mob/living/mob_override)
@@ -106,6 +106,10 @@
 	to_chat(owner.current, span_userdanger("\"That will do. Off the board with you,\" she says, very small now. Then nothing but purring."))
 	to_chat(owner.current, span_userdanger("You are no longer a Monster Hunter."))
 	owner.special_role = null
+	owner.forget_crafting_recipe(list(
+		/datum/crafting_recipe/hardened_stake,
+		/datum/crafting_recipe/silver_stake,
+	))
 	return ..()
 
 /datum/antagonist/monsterhunter/proc/spawn_rabbits(amount = 5)
@@ -394,7 +398,7 @@
 			continue
 		abilities |= "[ability.name]"
 	var/datum/antagonist/heretic/heretic_target = target.has_antag_datum(/datum/antagonist/heretic)
-	var/datum/antagonist/bloodsucker/bloodsucker_target = target.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/vampire/vampire_target = target.has_antag_datum(/datum/antagonist/vampire)
 	var/datum/antagonist/changeling/changeling_target = target.has_antag_datum(/datum/antagonist/changeling)
 	var/description
 	var/kind_icon
@@ -421,25 +425,27 @@
 				description = "[target_name] is a heretic of the moon - the other moon, the wrong one, the one that keeps jesters. Moonstruck. Do not clap for it."
 			else
 				description = "[target_name] is a heretic. It reads books it was told not to. Shoulders back when you meet it."
-	else if(bloodsucker_target)
+	else if(vampire_target)
 		kind_icon = FA_ICON_DROPLET
-		var/clan_name = bloodsucker_target.my_clan?.name
+		var/clan_name = vampire_target.my_clan?.name
 		if(!clan_name)
-			description = "[target_name] is a bloodsucker that has not yet chosen a clan. Undecided, at its age."
+			description = "[target_name] is a vampire that has not yet chosen a clan. Undecided, at its age."
 		else
 			switch(clan_name)
-				if(CLAN_NONE)
-					description = "[target_name] is a bloodsucker of no clan at all. Plain as porridge."
+				if(CLAN_BRUJAH)
+					description = "[target_name] is a Brujah vampire. It settles every argument with its fists and calls that philosophy. Keep your teacup out of reach."
+				if(CLAN_TOREADOR)
+					description = "[target_name] is a Toreador vampire. It is terribly fond of pretty things, itself most of all. Do not let it paint you."
 				if(CLAN_TREMERE)
-					description = "[target_name] is a Tremere bloodsucker. It does sums in blood and calls that magic, and the chapel burns it."
+					description = "[target_name] is a Tremere vampire. It does sums in blood and calls that magic."
 				if(CLAN_VENTRUE)
-					description = "[target_name] is a Ventrue bloodsucker. It is fussy about whom it drinks, and it is bringing up a favorite vassal to be a bloodsucker too."
-				if(CLAN_NOSFERATU)
-					description = "[target_name] is a Nosferatu bloodsucker. It cannot pass for crew, so it keeps to the vents. One does not crawl."
+					description = "[target_name] is a Ventrue vampire. It is fussy about whom it drinks, and it is quite sure it ought to be running the place."
 				if(CLAN_MALKAVIAN)
-					description = "[target_name] is a Malkavian bloodsucker. Quite mad. It prophesies at people without being asked."
+					description = "[target_name] is a Malkavian vampire. Quite mad. It prophesies at people without being asked."
+				if(CLAN_LASOMBRA)
+					description = "[target_name] is a Lasombra vampire. It brings its own dark to dinner. Carry a torch."
 				else
-					description = "[target_name] is a bloodsucker. It drinks people - at the table, I expect."
+					description = "[target_name] is a vampire. It drinks people - at the table, I expect."
 	else if(changeling_target)
 		kind_icon = FA_ICON_DNA
 		description = "[target_name] is a changeling. It wears faces it did not pay for, and none of them fit."
@@ -516,7 +522,7 @@
 
 /datum/objective/hunter/Destroy()
 	if(target)
-		UnregisterSignal(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_BLOODSUCKER_CLAN_CHOSEN))
+		UnregisterSignal(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_VAMPIRE_CLAN_CHOSEN))
 	return ..()
 
 /datum/objective/hunter/proc/uncover_target()
@@ -527,7 +533,7 @@
 	to_chat(owner.current, span_userdanger("One of your prey has been named. Your objective list has been updated!"))
 	owner.current?.log_message("identified one of their targets, [key_name(target.current)].", LOG_GAME)
 	target.current?.log_message("was identified by [key_name(owner.current)], a Monster Hunter.", LOG_GAME, log_globally = FALSE)
-	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_BLOODSUCKER_CLAN_CHOSEN), TYPE_PROC_REF(/datum/objective, update_explanation_text))
+	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_VAMPIRE_CLAN_CHOSEN), TYPE_PROC_REF(/datum/objective, update_explanation_text))
 
 /datum/objective/hunter/check_completion()
 	return completed || !considered_alive(target)
@@ -537,10 +543,10 @@
 		explanation_text = initial(explanation_text)
 		return
 	var/target_name = target.name || target.current?.real_name || target.current?.name
-	var/datum/antagonist/bloodsucker/bloodsucker = target.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/vampire/vampire = target.has_antag_datum(/datum/antagonist/vampire)
 	var/datum/antagonist/heretic/heretic = target.has_antag_datum(/datum/antagonist/heretic)
-	if(bloodsucker)
-		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
+	if(vampire)
+		explanation_text = "Slay the monster known as [target_name], a [vampire.my_clan?.name || "clanless"] Vampire."
 	else if(heretic)
 		if(!heretic.heretic_path || heretic.heretic_path.route == PATH_START)
 			explanation_text = "Slay the monster known as [target_name], a heretic."
@@ -632,11 +638,11 @@
 	var/static/list/antag_datums_to_check
 	if(!antag_datums_to_check)
 		antag_datums_to_check = typecacheof(list(
-			/datum/antagonist/bloodsucker,
 			/datum/antagonist/changeling,
 			/datum/antagonist/heretic,
 			/datum/antagonist/heretic_monster,
 			/datum/antagonist/teratoma, // as they're associated with changelings
+			/datum/antagonist/vampire,
 			/datum/antagonist/vassal,
 		))
 

@@ -99,7 +99,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HUSK "husk"
 ///Blacklisted from being revived via defibrilator
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
-///Prevented from reviving in special magical antagonist ways (changeling, bloodsucker)
+///Prevented from reviving in special magical antagonist ways (changeling, vampire)
 #define TRAIT_NO_SPECIAL_REVIVAL "no_special_revival"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
@@ -190,6 +190,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
 #define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
 #define TRAIT_GENELESS "geneless"
+/// Hides TRAIT_GENELESS if it's only from the same sources as TRAIT_FAKEGENES.
+#define TRAIT_FAKEGENES "fakegenes"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
 /// protects the holder from throw_impact
@@ -702,8 +704,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SHOVE_RESIST	"shove_resist"
 /// Allows the user to instantly reload.
 #define TRAIT_INSTANT_RELOAD "instant_reload"
-/// Falsifies Health analyzer blood levels
-#define TRAIT_MASQUERADE "masquerade"
 /// Prevents the user from entering stamina crit.
 #define TRAIT_CANT_STAMCRIT "cant_stamcrit"
 /// This mob will automatically revive when healed enough.
@@ -1509,13 +1509,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
-/// You have special interactions with bloodsuckers and the occult.
+/// You have special interactions with vampires and the occult.
 #define TRAIT_OCCULTIST "occultist"
 /// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
 #define TRAIT_UNBORGABLE "unborgable"
-/// The user is "bloodsucker aligned" - i.e a bloodsucker or vassal.
-/// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED)` instead of `IS_BLOODSUCKER(user) || IS_VASSAL(user)`
-#define TRAIT_BLOODSUCKER_ALIGNED "bloodsucker_aligned"
+/// The user is "vampire aligned" - i.e a vampire or vassal.
+/// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_VAMPIRE_ALIGNED)` instead of `IS_VAMPIRE(user) || IS_VASSAL(user)`
+#define TRAIT_VAMPIRE_ALIGNED "vampire_aligned"
 
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.

@@ -86,3 +86,5 @@
 #define CAT_GUNPARTS "Gunparts"
 #define CAT_LIMBS "Limbs"
 #define CAT_ORGANS "Organs"
+
+#define CAT_VAMPIRE "Vampire"

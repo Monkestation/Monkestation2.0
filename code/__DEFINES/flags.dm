@@ -153,8 +153,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define QUIET_LOGS (1<<14)
 /// This area does not allow the Binary channel
 #define BINARY_JAMMING (1<<15)
-/// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
-#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<16)
+/// This area can always be claimed as a vampire haven regardless of Z-level and such
+#define ALWAYS_VALID_VAMPIRE_HAVEN (1<<16)
 ///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
 #define AREA_BLOCKS_OUTGOING_RADIO (1<<17)
 /// Fishing here won't remove unique/limited loot from sources that are also used outside of it

@@ -135,7 +135,8 @@
 	name = "silver handcuffs"
 	desc = "A pair of silver handcuffs. Their brittle construction allows them to be used only once, and normal crew have little trouble breaking out of them, even while being moved. \
 	But some say they can contain certain creatures of the night..."
-	breakouttime = 45 SECONDS
+	breakouttime = 30 SECONDS
+	w_class = WEIGHT_CLASS_NORMAL
 
 	trashtype = /obj/item/restraints/handcuffs/silver/used
 
@@ -151,7 +152,7 @@
 
 /obj/item/restraints/handcuffs/silver/used/equipped(mob/user, slot, initial)
 	. = ..()
-	if(!IS_BLOODSUCKER_OR_VASSAL(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_VAMPIRE_ALIGNED))
 		breakout_while_moving = TRUE
 
 /obj/item/restraints/handcuffs/silver/used/dropped(mob/user)
@@ -162,7 +163,7 @@
 /obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
 	. = ..()
 
-	if (target.handcuffed && IS_BLOODSUCKER_OR_VASSAL(target))
+	if (target.handcuffed && HAS_MIND_TRAIT(target, TRAIT_VAMPIRE_ALIGNED))
 		target.apply_status_effect(/datum/status_effect/silver_cuffed)
 
 /**

@@ -274,7 +274,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
 	active_slot = sanitize_integer(active_slot, 1, max_save_slots, initial(active_slot))
 	toggles = sanitize_integer(toggles, 0, SHORT_REAL_LIMIT-1, initial(toggles))
-	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
+	be_special = sanitize_be_special(rename_be_special(SANITIZE_LIST(be_special), list("Bloodsucker" = ROLE_VAMPIRE, "Bloodsucker Breakout" = ROLE_VAMPIRE_BREAKOUT)))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 	job_preferences_overall = sanitize_job_preferences(job_preferences_overall)
@@ -323,7 +323,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			write_preference(preference, preference.serialize(value_cache[preference_type]))
 
 	savefile.set_entry("lastchangelog", lastchangelog)
-	savefile.set_entry("be_special", be_special)
+	savefile.set_entry("be_special", rename_be_special(be_special, list(ROLE_VAMPIRE = "Bloodsucker", ROLE_VAMPIRE_BREAKOUT = "Bloodsucker Breakout")))
 	savefile.set_entry("default_slot", active_slot)
 	savefile.set_entry("toggles", toggles)
 	savefile.set_entry("chat_toggles", chat_toggles)
@@ -481,6 +481,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.remove_entry("character[active_slot]")
 	tainted_character_profiles = TRUE
 	switch_to_slot(closest_slot)
+
+/// Returns a copy of a be_special list with roles swapped per `renames` (old name = new name).
+/// vampire roles still save under the bloodsucker names, so nobody loses their antag prefs if the rework gets testmerged then un-testmerged
+/datum/preferences/proc/rename_be_special(list/roles, list/renames)
+	var/list/output = list()
+	for(var/role in roles)
+		output |= renames[role] || role
+	return output
 
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()

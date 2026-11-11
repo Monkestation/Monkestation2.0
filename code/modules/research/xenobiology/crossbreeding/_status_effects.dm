@@ -765,6 +765,8 @@
 		return
 	if(owner.stat < SOFT_CRIT && owner.health > owner.crit_threshold)
 		return
+	if(HAS_TRAIT(owner, TRAIT_FAKEDEATH) && owner.health > owner.crit_threshold)
+		return
 	var/turf/safe_turf = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
 	var/range = 0
 	if(!safe_turf)

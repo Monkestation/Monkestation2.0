@@ -142,6 +142,10 @@
 	SEND_SOUND(owner, sound('sound/effects/bloodsilver_curse.ogg', volume = 75))
 	return TRUE
 
+/datum/status_effect/silver_bullet/refresh(effect, ...)
+	. = ..()
+	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
+
 /datum/status_effect/silver_bullet/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_BLOODSILVER_CURSE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_status_effect(/datum/status_effect/wonderland_district/bloodsilver)

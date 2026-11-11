@@ -242,8 +242,8 @@
 
 	target.blood_volume = min(target.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
 
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
-	bloodsuckerdatum?.bloodsucker_blood_volume -= amount
+	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(src)
+	vampiredatum?.adjust_blood_volume(-amount)
 
 	return TRUE
 

@@ -135,7 +135,7 @@ GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 			"Go on, peek through one of your little cracks in the world. Whatever used to whisper back is gone. There is only me now.",
 			"You reach for the Mansus out of habit, and nothing reaches back. There will be no ascension while this thing holds the station.",
 		),
-		/datum/antagonist/bloodsucker = list(
+		/datum/antagonist/vampire = list(
 			"A Masquerade in my court, and I was not invited? Masks off, Kindred. Without my word of acceptance you are nothing.",
 			"The Blood in your veins shrinks from her voice like prey. Every power you call on will cost you dearly now.",
 		),
@@ -349,11 +349,11 @@ GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 		/datum/action/cooldown/spell/florida_doorbuster,
 	))
 	register_action_typecache ||= zebra_typecacheof(list(
+		/datum/action/changeling = TRUE,
+		/datum/action/cooldown/vampire = TRUE,
+		/datum/action/innate/clockcult/quick_bind = TRUE,
 		/datum/action/innate/cult = TRUE,
 		/datum/action/innate/cult/comm = FALSE,
-		/datum/action/innate/clockcult/quick_bind = TRUE,
-		/datum/action/cooldown/bloodsucker = TRUE,
-		/datum/action/changeling = TRUE,
 	))
 
 /datum/status_effect/wonderland_district/on_apply()

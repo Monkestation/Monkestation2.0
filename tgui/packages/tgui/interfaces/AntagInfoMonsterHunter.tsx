@@ -333,7 +333,7 @@ const HuntersGuide = () => {
             vanish.
           </p>
           <p>
-            Bloodsuckers want a stake. You know how to make <b>hardened</b> and{' '}
+            Vampires want a stake. You know how to make <b>hardened</b> and{' '}
             <b>silver stakes</b>. Stake one while it is dead or in torpor, and
             it stays that way.
           </p>

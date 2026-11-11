@@ -10,3 +10,8 @@
 	starting_title = "the Codex Gigas"
 	starting_author = "Forces beyond your comprehension"
 	unique = TRUE
+
+/obj/item/book/codex_gigas/Initialize(mapload)
+	. = ..()
+	if(mapload && !(locate(/obj/item/book/kindred) in loc))
+		new /obj/item/book/kindred(loc)

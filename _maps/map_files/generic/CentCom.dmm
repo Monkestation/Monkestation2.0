@@ -6110,10 +6110,6 @@
 /obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
-"aqk" = (
-/obj/machinery/minimap_table,
-/turf/open/floor/circuit/red/no_power,
-/area/centcom/syndicate_mothership/control)
 "aql" = (
 /obj/structure/flora/grass/both/style_random,
 /obj/structure/flora/rock/pile/style_random,
@@ -15629,9 +15625,6 @@
 /obj/structure/railing/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
-"aPU" = (
-/turf/open/floor/circuit/red/no_power,
-/area/centcom/syndicate_mothership/control)
 "aPV" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -20462,16 +20455,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
-"cyV" = (
-/obj/structure/bloodsucker/bloodthrone,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood,
-/area/centcom/central_command_areas/adminroom)
 "cAA" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -24867,11 +24850,6 @@
 	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
-"juk" = (
-/obj/item/flashlight/flare/candle/amber,
-/obj/structure/closet/crate/coffin/meatcoffin,
-/turf/open/floor/carpet/red,
-/area/centcom/central_command_areas/adminroom)
 "juR" = (
 /turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/admin)
@@ -29324,6 +29302,9 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
+"qUy" = (
+/turf/open/floor/circuit/red/no_power,
+/area/centcom/syndicate_mothership/control)
 "qUI" = (
 /obj/machinery/computer/camera_advanced/syndie{
 	dir = 4
@@ -30807,10 +30788,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/admin)
-"tyk" = (
-/obj/structure/closet/crate/coffin/meatcoffin,
-/turf/open/floor/lowered/iron/pool/cobble/side,
-/area/centcom/central_command_areas/adminroom)
 "tyZ" = (
 /obj/machinery/light/cold/directional/east,
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
@@ -31072,6 +31049,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
+"tSg" = (
+/obj/item/flashlight/flare/candle/amber,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/adminroom)
 "tSS" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/cassette_deck,
@@ -32169,6 +32150,15 @@
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
+"vNC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/adminroom)
 "vNP" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4;
@@ -33059,6 +33049,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"xiU" = (
+/obj/machinery/minimap_table,
+/turf/open/floor/circuit/red/no_power,
+/area/centcom/syndicate_mothership/control)
 "xjq" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -48288,7 +48282,7 @@ aPQ
 aVK
 aKn
 aai
-aqk
+xiU
 anY
 aGE
 aiL
@@ -48545,7 +48539,7 @@ aVK
 aVK
 aKn
 aCw
-aPU
+qUy
 aOc
 aGE
 aiL
@@ -67946,7 +67940,7 @@ exa
 exa
 exa
 qja
-cyV
+vNC
 qag
 hkq
 jCt
@@ -68727,7 +68721,7 @@ gRi
 wBU
 uTO
 dPS
-tyk
+tou
 qja
 aOn
 aaa
@@ -69232,7 +69226,7 @@ exa
 exa
 qja
 dtm
-juk
+tSg
 qja
 hkq
 fGN
