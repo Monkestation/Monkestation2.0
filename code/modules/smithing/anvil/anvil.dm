@@ -177,7 +177,7 @@
 		in_anv.hit_counter--
 		if(in_anv.hit_counter % 10 == 4)
 			user.balloon_alert(user,"[in_anv] sparks as it cools!")
-		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, 50-(in_anv.hit_counter), mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE,frequency = 0.8 + (0.4 * (in_anv.hit_counter/33)), mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.mind.adjust_experience(/datum/skill/smithing,1.5)
 		return
 	if(istype(working_material,/obj/item/clothing/smithed_clothes))
@@ -205,7 +205,7 @@
 		in_anv.hit_counter--
 		if(in_anv.hit_counter % 10 == 4)
 			user.balloon_alert(user,"[in_anv] sparks as it cools!")
-		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE, 50-(in_anv.hit_counter), mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'code/modules/smithing/sounds/forge.ogg', 25, TRUE,frequency = 0.8 + (0.4 * (in_anv.hit_counter/33)), mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.mind.adjust_experience(/datum/skill/smithing,1.5)
 		return
 
