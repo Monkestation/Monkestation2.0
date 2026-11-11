@@ -366,5 +366,6 @@
 		possible_targets += thing
 	if(!possible_targets.len)
 		finish_action(controller, FALSE)
+		return
 	controller.set_blackboard_key(target_key, pick(possible_targets))
 	finish_action(controller, TRUE)

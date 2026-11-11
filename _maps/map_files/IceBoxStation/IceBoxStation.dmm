@@ -59250,7 +59250,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Medbay Mid-South";
-	network = "Medbay Mid-South"
+	network = list("Medbay Mid-South")
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)

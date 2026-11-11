@@ -124,14 +124,14 @@ Regenerative extracts:
 		return
 	var/mob/living/carbon/human/H = target
 	var/fireproofed = FALSE
-	if(H.get_item_by_slot(ITEM_SLOT_OCLOTHING))
+	var/obj/item/clothing/suit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	if(isclothing(suit))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		fireproof(C)
-	if(H.get_item_by_slot(ITEM_SLOT_HEAD))
+		fireproof(suit)
+	var/obj/item/clothing/hat = H.get_item_by_slot(ITEM_SLOT_HEAD)
+	if(isclothing(hat))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(ITEM_SLOT_HEAD)
-		fireproof(C)
+		fireproof(hat)
 	if(fireproofed)
 		target.visible_message(span_notice("Some of [target]'s clothing gets coated in the goo, and turns blue!"))
 
