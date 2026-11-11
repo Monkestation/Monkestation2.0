@@ -205,6 +205,7 @@ export type PreferencesMenuData = {
   keybindings: Record<string, string[]>;
   overflow_role: string;
   selected_quirks: string[];
+  default_quirk_balance: number;
   species_disallowed_quirks: string[];
   selected_personalities: string[] | null;
   max_personalities: number;

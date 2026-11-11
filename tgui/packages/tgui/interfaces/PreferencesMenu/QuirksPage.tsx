@@ -140,6 +140,7 @@ export const QuirksPage = (props) => {
   const { act, data } = useBackend<PreferencesMenuData>();
 
   const selectedQuirks = data.selected_quirks;
+  const defaultQuirkBalance = data.default_quirk_balance;
   const speciesDisallowedQuirks = data.species_disallowed_quirks;
 
   const setSelectedQuirks = (selected_quirks) => {
@@ -168,7 +169,7 @@ export const QuirksPage = (props) => {
           }
         });
 
-        let balance = 0;
+        let balance = -defaultQuirkBalance;
         let positiveQuirks = 0;
 
         for (const selectedQuirkName of selectedQuirks) {

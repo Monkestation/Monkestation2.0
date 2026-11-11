@@ -189,7 +189,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
-	var/balance = 0
+	var/balance = -CONFIG_GET(number/default_quirk_points)
 
 	var/list/all_quirks = get_quirks()
 
