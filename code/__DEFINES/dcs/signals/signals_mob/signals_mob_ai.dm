@@ -7,5 +7,11 @@
 ///Signal sent when a bot is reset
 #define COMSIG_BOT_RESET "bot_reset"
 
+///Signal sent off of ai/movement/proc/start_moving_towards
+#define COMSIG_MOB_AI_MOVEMENT_STARTED "mob_ai_movement_started"
+
+///Signal sent off of ai/movement/proc/increment_pathing_failures
+#define COMSIG_MOB_AI_MOVEMENT_FAILED "mob_ai_movement_failed"
+
 ///Called when an AI changes their screen icon ai/proc/set_core_display_icon
 #define COMSIG_AI_ICON_CHANGE "ai_icon_change"
