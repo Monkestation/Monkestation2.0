@@ -27,7 +27,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		Reboot(reason = 1)
 		return
 
-	var/static/regex/stack_workaround = regex("[WORKAROUND_IDENTIFIER](.+?)[WORKAROUND_IDENTIFIER]")
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
@@ -38,11 +37,26 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(!islist(error_last_seen))
 		return ..() //how the fuck?
 
-	if(stack_workaround.Find(E.name))
-		var/list/data = json_decode(stack_workaround.group[1])
-		E.file = data[1]
-		E.line = data[2]
-		E.name = stack_workaround.Replace(E.name, "")
+	var/callee/source = caller
+	// lua or call() can run stack_trace with nothing above it, then there's no real frame to swap in
+	if(source.proc == /proc/stack_trace && source.caller)
+		source = source.caller
+		E.file = source.file
+		E.line = source.line
+		var/list/desc_lines = splittext(E.desc, "\n")
+		var/call_stack_start = desc_lines.Find("  call stack:") || length(desc_lines) + 1
+		for(var/i in 1 to call_stack_start - 1)
+			var/desc_line = desc_lines[i]
+			if(findtext(desc_line, "proc name:") == 1)
+				desc_lines[i] = "proc name: [source.name] ([source.proc.type])"
+			else if(findtext(desc_line, "  source file:") == 1)
+				desc_lines[i] = "  source file: [source.file],[source.line]"
+			else if(findtext(desc_line, "  src:") == 1)
+				var/datum/source_src = source.src
+				desc_lines[i] = "  src: [source_src ? "[source_src] ([source_src.type])" : "null"]"
+		if(call_stack_start < length(desc_lines))
+			desc_lines.Cut(call_stack_start + 1, call_stack_start + 2)
+		E.desc = desc_lines.Join("\n")
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
@@ -162,7 +176,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		"name" = "[E.name]",
 		"desc" = "[E.desc]"
 	))
-	send_to_glitchtip(E)
+	send_to_glitchtip(E, source)
 #endif
 
 #undef ERROR_USEFUL_LEN
