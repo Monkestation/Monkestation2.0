@@ -12,7 +12,7 @@
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 	outdoors = TRUE
 	ambience_index = AMBIENCE_SPACE
 	flags_1 = CAN_BE_DIRTY_1
@@ -27,7 +27,7 @@
 
 /area/space/nearstation
 	icon_state = "space_near"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	static_lighting = TRUE
 
 /area/space/shipbreak
