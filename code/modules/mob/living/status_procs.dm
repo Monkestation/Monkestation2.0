@@ -641,7 +641,7 @@
 		tod = station_time_timestamp()
 
 	if(!HAS_TRAIT(src, TRAIT_FAKEDEATH) && !silent)
-		send_death_moodlets(/datum/mood_event/see_death)
+		send_death_moodlets()
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_FAKE_DEATH)
