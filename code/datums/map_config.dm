@@ -27,8 +27,17 @@
 	var/traits = null
 	var/space_ruin_levels = 5
 	var/space_empty_levels = 1
+
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
+	/// How many z's to generate around a planetary station
+	var/wilderness_levels = 0
+	/// Directory to the wilderness area we can spawn in
+	var/wilderness_directory
+	/// Z-Level traits our wilderness maps will get, ice box traits by default
+	var/list/wilderness_z_traits = ZTRAITS_ICY_WILDS
+	/// Index of map names (inside wilderness_directory) with the amount to spawn. ("ice_planes" = 1) for one ice spawn
+	var/list/wilderness_maps_to_spawn = list()
 
 	///The type of mining Z-level that should be loaded.
 	var/minetype = "lavaland"
@@ -192,6 +201,13 @@
 		log_world("map_config space_empty_levels is not a number!")
 		return
 
+	temp = json["wilderness_levels"]
+	if (isnum(temp))
+		wilderness_levels = temp
+	else if (!isnull(temp))
+		log_world("map_config wilderness_levels is not a number!")
+		return
+
 	if ("minetype" in json)
 		minetype = json["minetype"]
 
@@ -222,6 +238,21 @@
 
 	if ("height_autosetup" in json)
 		height_autosetup = json["height_autosetup"]
+
+	var/list/wilderness = json["wilderness"]
+	// If we got wilderness levels, fetch them from the config
+	if (islist(wilderness))
+		wilderness_directory = wilderness["directory"]
+		wilderness.Remove("directory")
+
+		// Just pick and take based on weight
+		for(var/i in 1 to wilderness_levels)
+			wilderness_maps_to_spawn += pick_weight_take(wilderness)
+		shuffle_inplace(wilderness_maps_to_spawn)
+
+	var/list/wilderness_level_traits = json["wilderness_level_traits"]
+	if (islist(wilderness_level_traits))
+		wilderness_z_traits = wilderness_level_traits
 
 #ifdef UNIT_TESTS
 	// Check for unit tests to skip, no reason to check these if we're not running tests

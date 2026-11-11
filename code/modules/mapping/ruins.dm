@@ -164,10 +164,7 @@
 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
 							var/turf/T = locate(1,1,target_z)
 							if(!GET_TURF_BELOW(T))
-								if(forced_z)
-									continue outer
-								else
-									break outer
+								continue outer
 				if(current_pick.undesirable_ruins && !forced_z)
 					var/original_zLevel = target_z
 					var/z_list = z_levels.Copy()

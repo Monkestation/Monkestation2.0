@@ -109,7 +109,7 @@
 /turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 
-/turf/open/openspace/proc/CanBuildHere()
+/turf/open/openspace/CanBuildHere()
 	return can_build_on
 
 /turf/open/openspace/attackby(obj/item/C, mob/user, params)
@@ -131,9 +131,6 @@
 	return ..()
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)

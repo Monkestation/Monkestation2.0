@@ -156,6 +156,14 @@ SUBSYSTEM_DEF(mapping)
 		++space_levels_so_far
 	SStitle.add_init_text("Empty Space", "> Space", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
+	if(current_map.wilderness_levels)
+		var/list/FailedZs = list()
+
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.wilderness_maps_to_spawn, default_traits = current_map.wilderness_z_traits, height_autosetup = FALSE)
+
+		if(LAZYLEN(FailedZs))
+			CRASH("Ice wilds failed to load!")
+
 	start_time = REALTIMEOFDAY
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
@@ -303,8 +311,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		var/river_type = HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED) ? /turf/open/lava/plasma/ice_moon : /turf/open/openspace/icemoon
-		spawn_rivers(ice_z, 4, river_type, /area/icemoon/surface/outdoors/unexplored/rivers)
+		spawn_rivers(ice_z, 6, /turf/open/lava/plasma/ice_moon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)

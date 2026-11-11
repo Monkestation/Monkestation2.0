@@ -1,4 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/surface/outdoors/nospawn)
+"ab" = (
+/turf/open/lava/plasma/ice_moon,
+/area/ruin/powered/shuttle)
 "bf" = (
 /obj/machinery/growing/soil,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -76,9 +82,6 @@
 /mob/living/basic/tree,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"sF" = (
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/surface/outdoors/nospawn)
 "tD" = (
 /obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -146,9 +149,6 @@
 /turf/open/floor/stone{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/ruin/powered/shuttle)
-"wN" = (
-/turf/open/openspace/icemoon/keep_below,
 /area/ruin/powered/shuttle)
 "ym" = (
 /obj/structure/chair/wood{
@@ -443,7 +443,7 @@ Sv
 "}
 (4,1,1) = {"
 Sv
-sF
+aa
 Sv
 Sv
 qd
@@ -467,9 +467,9 @@ Sv
 (5,1,1) = {"
 Sv
 Sv
-sF
-sF
-sF
+aa
+aa
+aa
 Ht
 ol
 Nz
@@ -491,9 +491,9 @@ Sv
 Sv
 Sv
 Sv
-sF
-sF
-sF
+aa
+aa
+aa
 ol
 uH
 ng
@@ -515,8 +515,8 @@ Sv
 Sv
 Sv
 Sv
-sF
-sF
+aa
+aa
 ol
 ol
 ol
@@ -538,11 +538,11 @@ Sv
 Sv
 Sv
 Sv
-sF
-sF
-sF
+aa
+aa
+aa
 Hy
-wN
+ab
 Zg
 ng
 ng

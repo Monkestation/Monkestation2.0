@@ -16,14 +16,14 @@
 		{
 			"Baseturf": "/turf/open/misc/asteroid",
 			"Mining": true,
-			"Linkage": "Cross",
+			"Linkage": null,
 			"Gravity": true,
 			"No Parallax": true
 		},
 		{
 			"Baseturf": "/turf/open/misc/dirt/jungle",
 			"Mining": false,
-			"Linkage": "Cross",
+			"Linkage": null,
 			"Gravity": true,
 			"No Parallax": true
 		}
