@@ -598,6 +598,14 @@
 	for(var/personality_type in personalities)
 		remove_personality(personality_type)
 
+/// Returns a string with the names of the personalities of this mob, and their description as tooltip
+/mob/living/proc/get_parsonality_string()
+	var/list/return_list = list()
+	for(var/personality_type in personalities)
+		var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
+		return_list += span_tooltip(personality.desc, personality.name)
+	return english_list(return_list)
+
 /mob/living/proc/cure_husk(source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
