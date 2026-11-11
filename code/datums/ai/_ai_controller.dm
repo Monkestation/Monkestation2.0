@@ -614,7 +614,7 @@ multiple modular subtrees with behaviors
 		living_pawn.ClickOn(final_target, params)
 		return TRUE
 
-	var/old_combat_mode = living_pawn.combat_mode
+	var/old_combat_mode = (living_pawn.istate & ISTATE_HARM)
 	living_pawn.set_combat_mode(combat_mode)
 	living_pawn.ClickOn(final_target, params)
 	living_pawn.set_combat_mode(old_combat_mode)

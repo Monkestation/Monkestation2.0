@@ -28,6 +28,7 @@
 		current_movement_target,
 		delay,
 		repath_delay = 0.5 SECONDS,
+		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
 		max_path_length = maximum_length,
 		minimum_distance = min_distance,
 		access = controller.get_access(),
@@ -35,11 +36,6 @@
 		diagonal_handling = diagonal_flags,
 		extra_info = controller,
 	)
-
-	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
-	RegisterSignal(loop, COMSIG_MOVELOOP_REPATH, PROC_REF(repath_incoming))
-
 	return loop
 
 /datum/ai_movement/jps/update_movement_target(datum/ai_controller/controller, atom/new_target)
@@ -56,7 +52,7 @@
 	// minimum_distance was set at loop creation; no need to update it on repath
 
 /datum/ai_movement/jps/bot
-	max_pathing_attempts = 25
+	max_pathing_attempts = 8
 	maximum_length = 25
 	diagonal_flags = DIAGONAL_REMOVE_ALL
 
@@ -64,8 +60,9 @@
 	var/datum/move_loop/loop = ..()
 	var/atom/our_pawn = controller.pawn
 	if(isnull(our_pawn))
-		return
-	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
+		return null
+	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
+	return loop
 
 /datum/ai_movement/jps/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH

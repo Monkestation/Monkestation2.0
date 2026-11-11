@@ -316,3 +316,23 @@
 #define DEFAULT_RANDOM_STOP_HIDING_CHANCE 2
 
 #define BB_TEMPORARY_TARGET "BB_targetting_temporary"
+
+///key holding our eating cooldown
+#define BB_EAT_FOOD_COOLDOWN "BB_eat_food_cooldown"
+
+///When looking for food, ignore drinks
+#define BB_IGNORE_DRINKS "bb_ignore_drinks"
+
+/// Soft-reinforcements requests which will cause the mob to prioritize the attacker
+#define BB_MINING_MOB_REINFORCEMENTS_REQUESTS "BB_mining_mob_reinforcements_requests"
+
+///key holding the next time we eat
+#define BB_NEXT_FOOD_EAT "BB_next_food_eat"
+
+/// the direction we started when executing stare at things
+#define BB_STARTING_DIRECTION "BB_startdir"
+
+///Only target mobs with these traits
+#define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
+
+#define BB_TARGET_PRIORITY_STRATEGY "target_priority_strategy"

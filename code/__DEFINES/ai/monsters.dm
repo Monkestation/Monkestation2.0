@@ -350,3 +350,13 @@
 #define BB_BDM_RANGED_ATTACK_COOLDOWN "BB_bdm_ranged_attack_cooldown"
 /// Cooldown duration for blood drunk miner ranged abilities
 #define BB_BDM_RANGED_ATTACK_COOLDOWN_DURATION "BB_bdm_ranged_attack_cooldown_duration"
+
+#define BB_BILEWORM_FLEE_DISTANCE "BB_bileworm_flee_distance"
+
+#define BB_BILEWORM_SCARED "BB_bileworm_scared"
+
+/// Does this carp run from scary fishermen?
+#define BB_CARPS_FEAR_FISHERMAN "BB_carp_fear_fisherman"
+
+/// key that holds things we can hunt
+#define BB_HUNTABLE_PREY "huntable_prey"

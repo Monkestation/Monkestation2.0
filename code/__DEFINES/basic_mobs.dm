@@ -136,3 +136,6 @@ GLOBAL_LIST_EMPTY(customized_pets)
 
 ///Time between idle behavior execution
 #define IDLE_BEHAVIOR_RATE 1.5 SECONDS
+
+///hunger cooldown for basic mobs
+#define EAT_FOOD_COOLDOWN 45 SECONDS

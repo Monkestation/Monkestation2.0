@@ -114,9 +114,10 @@
 	. = ..()
 	movement_path = null
 
+
 /datum/move_loop/has_target/jps/Destroy()
 	avoid = null
-	on_finish_callbacks.Cut()
+	on_finish_callbacks = null
 	return ..()
 
 ///Tries to calculate a new path for this moveloop.
@@ -126,25 +127,28 @@
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
 	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, on_finish = on_finish_callbacks))
 		is_pathing = TRUE
-		SEND_SIGNAL(src, COMSIG_MOVELOOP_REPATH)
+		SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
 
 ///Called when a path has finished being created
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_FINISHED_PATHING, path)
+	if(moving)
+		EVLOG_PATH(moving, EVLOG_CATEGORY_JPS, "Planned AI path", movement_path)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
 		if(is_pathing)
 			return MOVELOOP_NOT_READY
 		else
+			EVLOG_TEXT(moving, EVLOG_CATEGORY_JPS, "Path recalculating due to lack of path")
 			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 			return MOVELOOP_FAILURE
 
 	var/turf/next_step = movement_path[1]
 	var/atom/old_loc = moving.loc
-	moving.Move(next_step, get_dir(moving, next_step))
+	moving.Move(next_step, get_dir(moving, next_step), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	. = (old_loc != moving?.loc) ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
@@ -153,5 +157,94 @@
 		if(length(movement_path))
 			movement_path.Cut(1,2)
 	else
+		return handle_move_attempt_failure()
+
+
+/datum/move_loop/has_target/jps/proc/handle_move_attempt_failure()
+	EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Path recalculating due to obstruction")
+	INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+	return MOVELOOP_FAILURE
+
+/datum/move_loop/has_target/jps/frustrations
+	///maximum amount of frustrations before we recalculate path
+	var/maximum_frustrations
+	///what is our current frustration?
+	var/current_frustrations = 0
+	///how long before we're able to increment frustration?
+	var/frustration_delay
+	///have we drawn our initial path?
+	var/initial_path_drawn = FALSE
+	///cooldown between frustration increments
+	COOLDOWN_DECLARE(frustration_cooldown)
+
+
+/datum/move_manager/proc/frustrations_move(moving,
+	chasing,
+	delay,
+	timeout,
+	repath_delay,
+	max_path_length,
+	minimum_distance,
+	list/access,
+	simulated_only,
+	turf/avoid,
+	skip_first,
+	subsystem,
+	diagonal_handling,
+	priority,
+	flags,
+	datum/extra_info,
+	initial_path)
+	return add_to_loop(moving,
+		subsystem,
+		/datum/move_loop/has_target/jps/frustrations,
+		priority,
+		flags,
+		extra_info,
+		delay,
+		timeout,
+		chasing,
+		repath_delay,
+		max_path_length,
+		minimum_distance,
+		access,
+		simulated_only,
+		avoid,
+		skip_first,
+		diagonal_handling,
+		initial_path)
+
+/datum/move_loop/has_target/jps/frustrations/setup(delay, timeout, atom/chasing, maximum_frustrations = 10, frustration_delay = 2 SECONDS)
+	. = ..()
+	if(!.)
+		return
+	src.maximum_frustrations = maximum_frustrations
+	src.frustration_delay = frustration_delay
+
+/datum/move_loop/has_target/jps/frustrations/recalculate_path()
+	if(initial_path_drawn && current_frustrations < maximum_frustrations)
+		return
+	return ..()
+
+/datum/move_loop/has_target/jps/frustrations/loop_stopped()
+	. = ..()
+
+/datum/move_loop/has_target/jps/frustrations/on_finish_pathing(list/path)
+	. = ..()
+	if(movement_path)
+		initial_path_drawn = TRUE
+
+/datum/move_loop/has_target/jps/frustrations/handle_move_attempt_failure()
+	if(!initial_path_drawn)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE
+	if(!COOLDOWN_FINISHED(src, frustration_cooldown))
+		return NONE
+	COOLDOWN_START(src, frustration_cooldown, frustration_delay)
+	current_frustrations++
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FRUSTRATION_INCREMENTED, current_frustrations)
+	if(current_frustrations >= maximum_frustrations)
+		current_frustrations = 0
+		EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Path recalculating due to obstruction")
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE

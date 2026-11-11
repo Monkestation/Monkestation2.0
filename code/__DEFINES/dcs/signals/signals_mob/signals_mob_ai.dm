@@ -15,3 +15,9 @@
 
 ///Called when an AI changes their screen icon ai/proc/set_core_display_icon
 #define COMSIG_AI_ICON_CHANGE "ai_icon_change"
+
+///Signal sent before a blackboard key is cleared
+#define COMSIG_AI_BLACKBOARD_KEY_PRECLEAR(blackboard_key) "ai_blackboard_key_pre_clear_[blackboard_key]"
+
+///Sent off /mob/living/basic/bot/proc/set_mode_flags() : (new_flags)
+#define COMSIG_BOT_MODE_FLAGS_SET "bot_mode_flags_set"

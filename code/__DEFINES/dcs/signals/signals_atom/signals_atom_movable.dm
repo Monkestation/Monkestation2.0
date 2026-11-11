@@ -133,3 +133,9 @@
 
 /// From base of area/Exited(): (area/left, direction)
 #define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"
+
+///from /atom/movable/proc/buckle_mob(): (buckled_movable)
+#define COMSIG_MOB_BUCKLED "mob_buckle"
+
+///from /atom/movable/proc/unbuckle_mob(): (buckled_movable)
+#define COMSIG_MOB_UNBUCKLED "mob_unbuckle"

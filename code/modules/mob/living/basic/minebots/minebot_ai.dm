@@ -45,7 +45,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(check_obstacles_in_path(controller, target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(!living_pawn.combat_mode)
+	if(!(living_pawn.istate & ISTATE_HARM))
 		living_pawn.set_combat_mode(TRUE)
 	living_pawn.RangedAttack(target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
@@ -117,7 +117,7 @@
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/living_pawn = controller.pawn
-	if(living_pawn.combat_mode)
+	if((living_pawn.istate & ISTATE_HARM))
 		living_pawn.set_combat_mode(FALSE)
 	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

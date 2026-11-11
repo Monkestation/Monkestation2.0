@@ -101,3 +101,11 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 
 ///Use this if you dont want a controller to show up in the sidebar (e.g. when its a class that just sets BB keys)
 #define ABSTRACT_AI_CLASS "Abstract"
+
+#define AI_MULEBOT_PATH_LENGTH 150 //we making a pilgramage sometimes...
+
+///bypass canceling our actions on set_ai_status()
+#define AI_PREVENT_CANCEL_ACTIONS (1<<2)
+
+///pauses AI processing
+#define AI_UNABLE_TO_RUN (1<<1)

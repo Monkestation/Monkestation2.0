@@ -108,7 +108,7 @@
 	return ..()
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		if(ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
 			ai_controller.reset_ai_status() //wakes a performance-slept bot, no-op if it is off for a real reason
 		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI (and avoiding the UI popup), while Left Click simply does both.
@@ -129,7 +129,7 @@
 	data["plant_mines"] = ai_controller.blackboard[BB_MINEBOT_PLANT_MINES]
 	data["bot_maintain_distance"] = ai_controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE]
 	data["bot_name"] = name
-	data["bot_mode"] = combat_mode
+	data["bot_mode"] = (istate & ISTATE_HARM)
 	data["bot_health"] = health
 	data["bot_maxhealth"] = maxHealth
 	data["bot_color"] = ""
@@ -170,7 +170,7 @@
 			var/input_name = sanitize_name(params["chosen_name"], allow_numbers = TRUE)
 			name = (input_name ? input_name : initial(name))
 		if("toggle_mode")
-			set_combat_mode(!combat_mode)
+			set_combat_mode(!(istate & ISTATE_HARM))
 		if("set_color")
 			change_color(params["chosen_color"])
 			update_static_data(ui.user, ui)
@@ -184,10 +184,10 @@
 	update_appearance()
 
 /mob/living/basic/mining_drone/click_alt(mob/living/user)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return CLICK_ACTION_BLOCKING
-	set_combat_mode(!combat_mode)
-	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
+	set_combat_mode(!(istate & ISTATE_HARM))
+	balloon_alert(user, "now [(istate & ISTATE_HARM) ? "attacking wildlife" : "collecting loose ore"]")
 	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/mining_drone/RangedAttack(atom/target, list/modifiers)

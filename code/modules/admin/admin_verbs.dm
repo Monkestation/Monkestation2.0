@@ -640,3 +640,6 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, FALSE, "Clear Smart Asset Cache", "
 
 ADMIN_VERB(view_behavior_tree, R_DEBUG, FALSE, "View Behavior Tree", "Inspect the AI behavior tree of a mob.", ADMIN_CATEGORY_DEBUG)
 	GLOB.bt_viewer.ui_interact(user.mob)
+
+ADMIN_VERB(open_event_logger, R_DEBUG, FALSE, "Open Event Logger", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
+	GLOB.event_logger.ui_interact(user.mob)

@@ -267,3 +267,9 @@
 
 /// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
 #define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
+
+/// From /mob/living/proc/refresh_gravity() : (new_gravity, old_gravity)
+#define COMSIG_LIVING_GRAVITY_CHANGED "living_gravity_changed"
+
+///from mob/living/befriend()
+#define COMSIG_LIVING_MADE_NEW_FRIEND "living_made_new_friend"
