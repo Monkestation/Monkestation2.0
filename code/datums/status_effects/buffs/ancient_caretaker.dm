@@ -1,11 +1,8 @@
 /datum/status_effect/ancient_caretaker
 	id = "ancientcaretaker"
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	remove_on_fullheal = FALSE
-
-/datum/status_effect/ancient_caretaker/on_creation(mob/living/new_owner)
-	src.duration = -1
-	return ..()
 
 /datum/status_effect/ancient_caretaker/tick(seconds_between_ticks)
 	var/healed = 1 * REM * seconds_between_ticks
