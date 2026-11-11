@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/minebot
+	behavior_tree_json = "code/modules/mob/living/basic/minebots/minebot.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -14,34 +15,60 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot,
-		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot,
-		/datum/ai_planning_subtree/minebot_mining,
-		/datum/ai_planning_subtree/locate_dead_humans,
-	)
 
-///find dead humans and report their location on the radio
-/datum/ai_planning_subtree/locate_dead_humans/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard_key_exists(BB_NEARBY_DEAD_MINER))
-		controller.queue_behavior(/datum/ai_behavior/send_sos_message, BB_NEARBY_DEAD_MINER)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/unconscious_human, BB_NEARBY_DEAD_MINER, /mob/living/carbon/human)
+/datum/bt_node/subtree/minebot_combat
+	behavior_tree_json = "code/modules/mob/living/basic/minebots/minebot_combat.bt.json"
 
-/datum/ai_behavior/find_and_set/unconscious_human/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
-		if(target.stat >= UNCONSCIOUS && target.mind)
-			return target
+/datum/bt_node/subtree/minebot_mining
+	behavior_tree_json = "code/modules/mob/living/basic/minebots/minebot_mining.bt.json"
 
-/datum/ai_behavior/send_sos_message
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 2 MINUTES
+/// Mineral wall finder that skips turfs in the blacklist and the previously unreachable wall.
+/datum/bt_node/ai_behavior/find_mineral_wall/minebot
 
-/datum/ai_behavior/send_sos_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_mineral_wall/minebot/check_if_mineable(datum/ai_controller/controller, turf/target_wall)
+	var/list/forbidden = controller.blackboard[BB_BLACKLIST_MINERAL_TURFS]
+	var/turf/previous_unreachable = controller.blackboard[BB_PREVIOUS_UNREACHABLE_WALL]
+	if(is_type_in_list(target_wall, forbidden) || target_wall == previous_unreachable)
+		return FALSE
+	controller.clear_blackboard_key(BB_PREVIOUS_UNREACHABLE_WALL)
+	return ..()
+
+/// Mines a mineral turf at range using RangedAttack rather than ai_interact.
+/datum/bt_node/ai_behavior/minebot_mine_turf
+	time_between_perform = 3 SECONDS
+	var/target_key = BB_TARGET_MINERAL_TURF
+
+/datum/bt_node/ai_behavior/minebot_mine_turf/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/basic/living_pawn = controller.pawn
+	var/turf/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(check_obstacles_in_path(controller, target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(!living_pawn.combat_mode)
+		living_pawn.set_combat_mode(TRUE)
+	living_pawn.RangedAttack(target)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/bt_node/ai_behavior/minebot_mine_turf/proc/check_obstacles_in_path(datum/ai_controller/controller, turf/target)
+	var/mob/living/source = controller.pawn
+	var/list/turfs_in_path = get_line(source, target) - target
+	for(var/turf/turf in turfs_in_path)
+		if(turf.is_blocked_turf(ignore_atoms = list(source)))
+			controller.set_blackboard_key(BB_PREVIOUS_UNREACHABLE_WALL, target)
+			return TRUE
+	return FALSE
+
+/datum/bt_node/ai_behavior/minebot_mine_turf/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	controller.clear_blackboard_key(target_key)
+
+/// Sends a radio SOS message for a dead or unconscious miner. Clears the target key on finish.
+/datum/bt_node/ai_behavior/send_sos_message
+	time_between_perform = 2 MINUTES
+	var/target_key = BB_NEARBY_DEAD_MINER
+
+/datum/bt_node/ai_behavior/send_sos_message/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/carbon/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 	if(QDELETED(target) || is_station_level(target.z))
@@ -56,110 +83,85 @@
 	radio_implant.radio.talk_into(living_pawn, message, RADIO_CHANNEL_SUPPLY)
 	finish_action(controller, TRUE, target_key)
 
-/datum/ai_behavior/send_sos_message/finish_action(datum/ai_controller/controller, success, target_key)
+/datum/bt_node/ai_behavior/send_sos_message/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-///operational datums is null because we dont use a ranged component, we use a gun in our contents
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot
-	operational_datums = null
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/minebot
+/// Moves adjacent to an allied node drone and repairs it if its health is below the threshold.
+/// Fails if the drone is healthy, not allied, or repair is disabled.
+/datum/bt_node/ai_behavior/repair_drone
+	var/target_key = BB_DRONE_DEFEND
+	var/repair_threshold = 0.75
 
-/datum/ai_behavior/basic_ranged_attack/minebot
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+/datum/bt_node/ai_behavior/repair_drone/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(!controller.blackboard[BB_MINEBOT_REPAIR_DRONE])
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	var/mob/living/living_pawn = controller.pawn
+	if(!living_pawn.has_ally(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(target.health >= target.maxHealth * repair_threshold)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), "REPAIRING [target]!")
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/// Turns off combat mode then interacts with a nearby ore to collect it. Clears the target key on finish.
+/datum/bt_node/ai_behavior/collect_ore/minebot
+	var/target_key = BB_ORE_TARGET
+
+/datum/bt_node/ai_behavior/collect_ore/minebot/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/obj/item/stack/ore/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	var/mob/living/living_pawn = controller.pawn
+	if(living_pawn.combat_mode)
+		living_pawn.set_combat_mode(FALSE)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/bt_node/ai_behavior/collect_ore/minebot/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
+
+/// befriend_target variant that fails immediately if the target is already an ally  used to gate the drone-defend block.
+/datum/bt_node/ai_behavior/befriend_target/check_ally
+
+/datum/bt_node/ai_behavior/befriend_target/check_ally/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	var/mob/living/living_target = controller.blackboard[target_key]
+	if(QDELETED(living_target) || living_pawn.has_ally(living_target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	return ..()
+
+/// BT-native ranged attack for the minebot. Avoids friendly fire.
+/datum/bt_node/ai_behavior/basic_ranged_attack/minebot
 	avoid_friendly_fire = TRUE
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
-	if(!(living_pawn.istate & ISTATE_HARM)) //we are not on attack mode
-		return
-	return ..()
+/// Accepts humans with TRAIT_ROCK_STONER (miners).
+/datum/targeting_strategy/rock_stoner
 
-///mine walls if we are on automated mining mode
-/datum/ai_planning_subtree/minebot_mining/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard[BB_AUTOMATED_MINING])
-		return
-	if(controller.blackboard_key_exists(BB_TARGET_MINERAL_TURF))
-		controller.queue_behavior(/datum/ai_behavior/minebot_mine_turf, BB_TARGET_MINERAL_TURF)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall/minebot, BB_TARGET_MINERAL_TURF)
-
-/datum/ai_behavior/find_mineral_wall/minebot
-
-/datum/ai_behavior/find_mineral_wall/minebot/check_if_mineable(datum/ai_controller/controller, turf/target_wall)
-	var/list/forbidden_turfs = controller.blackboard[BB_BLACKLIST_MINERAL_TURFS]
-	var/turf/previous_unreachable_wall = controller.blackboard[BB_PREVIOUS_UNREACHABLE_WALL]
-	if(is_type_in_list(target_wall, forbidden_turfs) || target_wall == previous_unreachable_wall)
+/datum/targeting_strategy/rock_stoner/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
 		return FALSE
-	controller.clear_blackboard_key(BB_PREVIOUS_UNREACHABLE_WALL)
-	return ..()
-
-/datum/ai_behavior/minebot_mine_turf
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	required_distance = 2
-	action_cooldown = 3 SECONDS
-
-/datum/ai_behavior/minebot_mine_turf/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/turf/target = controller.blackboard[target_key]
-	if(isnull(target))
+	if(!istype(target, /mob/living/carbon/human))
 		return FALSE
-	set_movement_target(controller, target)
+	return HAS_TRAIT(target, TRAIT_ROCK_STONER)
 
-/datum/ai_behavior/minebot_mine_turf/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/// Accepts unconscious or dead humans that have a mind (i.e., real players/NPCs that need SOS).
+/datum/targeting_strategy/unconscious_human
+
+/datum/targeting_strategy/unconscious_human/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
-	var/mob/living/basic/living_pawn = controller.pawn
-	var/turf/target = controller.blackboard[target_key]
-
-	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
-
-	if(check_obstacles_in_path(controller, target))
-		finish_action(controller, FALSE, target_key)
-		return
-
-	if(!(living_pawn.istate & ISTATE_HARM))
-		living_pawn.set_combat_mode(TRUE)
-
-	living_pawn.RangedAttack(target)
-	finish_action(controller, TRUE, target_key)
-	return
-
-/datum/ai_behavior/minebot_mine_turf/proc/check_obstacles_in_path(datum/ai_controller/controller, turf/target)
-	var/mob/living/source = controller.pawn
-	var/list/turfs_in_path = get_line(source, target) - target
-	for(var/turf/turf in turfs_in_path)
-		if(turf.is_blocked_turf(ignore_atoms = list(source)))
-			controller.set_blackboard_key(BB_PREVIOUS_UNREACHABLE_WALL, target)
-			return TRUE
-	return FALSE
-
-/datum/ai_behavior/minebot_mine_turf/finish_action(datum/ai_controller/controller, success, target_key)
-	. = ..()
-	controller.clear_blackboard_key(target_key)
-
-///store ores in our body
-/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores/minebot
-	hunt_chance = 100
-
-/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/automated_mining = controller.blackboard[BB_AUTOMATED_MINING]
-	var/mob/living/living_pawn = controller.pawn
-
-	if(!automated_mining && (living_pawn.istate & ISTATE_HARM)) //are we not on automated mining or collect mode?
-		return
-
-	return ..()
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores/minebot
-	hunt_cooldown = 2 SECONDS
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores/minebot/target_caught(mob/living/hunter, obj/item/stack/ore/hunted)
-	if(hunter.istate & ISTATE_HARM)
-		hunter.set_combat_mode(FALSE)
-	return ..()
+	if(!.)
+		return FALSE
+	if(!istype(target, /mob/living/carbon/human))
+		return FALSE
+	var/mob/living/carbon/human/human_target = target
+	return human_target.stat >= UNCONSCIOUS && human_target.mind
 
 ///pet commands
 /datum/pet_command/free/minebot
@@ -190,9 +192,8 @@
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	if(!ability?.IsAvailable())
 		return
-	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, ability_key)
+	INVOKE_ASYNC(ability, TYPE_PROC_REF(/datum/action, Trigger))
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/minebot_ability/light
 	command_name = "Toggle lights"
@@ -208,8 +209,15 @@
 	radial_icon_state = "mech_eject"
 	ability_key = BB_MINEBOT_DUMP_ABILITY
 
-/datum/pet_command/point_targeting/attack/minebot
-	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot
+/datum/pet_command/minebot_ability/dump/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to dump its ore!"
+
+/datum/pet_command/minebot_ability/dump/execute_action(datum/ai_controller/controller)
+	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE) //else bro will just pick it up
+	return ..()
+
+/datum/pet_command/attack/minebot
+	attack_subtree = /datum/bt_node/subtree/pet_command/attack/minebot
 
 /datum/pet_command/point_targeting/attack/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
@@ -223,3 +231,18 @@
 /datum/pet_command/idle/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	return ..()
+
+/datum/pet_command/protect_owner/minebot
+
+/datum/pet_command/protect_owner/minebot/set_command_target(mob/living/parent, atom/target)
+	if(!parent.ai_controller.blackboard[BB_MINEBOT_AUTO_DEFEND])
+		return FALSE
+	if(!parent.ai_controller.blackboard_key_exists(BB_CURRENT_TARGET) && !QDELETED(target)) //we are already dealing with something,
+		parent.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, target)
+	return TRUE
+
+/datum/pet_command/protect_owner/minebot/execute_action(datum/ai_controller/controller)
+	if(controller.blackboard[BB_MINEBOT_AUTO_DEFEND])
+		var/mob/living/living_pawn = controller.pawn
+		living_pawn.set_combat_mode(TRUE)
+	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)

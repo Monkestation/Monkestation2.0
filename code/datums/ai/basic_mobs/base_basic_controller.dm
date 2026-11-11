@@ -1,5 +1,6 @@
 /datum/ai_controller/basic_controller
 	movement_delay = 0.4 SECONDS
+	behavior_tree_json = ABSTRACT_AI_CLASS
 
 /datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)
 	if(!isbasicmob(new_pawn))
@@ -29,3 +30,35 @@
 /datum/ai_controller/basic_controller/proc/update_speed(mob/living/basic/basic_mob)
 	SIGNAL_HANDLER
 	movement_delay = basic_mob.cached_multiplicative_slowdown
+
+/datum/ai_controller/basic_controller/proc/on_mob_eat()
+	SIGNAL_HANDLER
+	var/food_cooldown = blackboard[BB_EAT_FOOD_COOLDOWN] || EAT_FOOD_COOLDOWN
+	set_blackboard_key(BB_NEXT_FOOD_EAT, world.time + food_cooldown)
+
+
+/datum/ai_controller/proc/on_tamed(datum/source, mob/living/new_friend)
+	SIGNAL_HANDLER
+	forgive_target(new_friend)
+	clear_blackboard_key(BB_CURRENT_TARGET)
+	clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST) //we have just been tamed by a new party, clean slate for everyone!
+	cancel_current_plan()
+	RegisterSignal(new_friend, COMSIG_LIVING_MADE_NEW_FRIEND, PROC_REF(on_master_tame))
+
+/datum/ai_controller/proc/on_untamed(datum/source, mob/living/old_friend)
+	SIGNAL_HANDLER
+	UnregisterSignal(old_friend, COMSIG_LIVING_MADE_NEW_FRIEND)
+
+/datum/ai_controller/proc/on_master_tame(datum/master, mob/living/master_new_friend)
+	SIGNAL_HANDLER
+	forgive_target(master_new_friend)
+
+/datum/ai_controller/proc/forgive_target(atom/target)
+	var/static/list/keys_to_check = list(
+		BB_CURRENT_TARGET,
+		BB_CURRENT_PET_TARGET,
+	)
+	for(var/key in keys_to_check)
+		if(target == blackboard[key])
+			clear_blackboard_key(key)
+	remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, target) //make peace with our friend's new pet!

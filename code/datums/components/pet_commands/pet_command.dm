@@ -66,24 +66,58 @@
 /// Apply a command state if conditions are right, return command if successful
 /datum/pet_command/proc/try_activate_command(mob/living/commander)
 	var/mob/living/parent = weak_parent.resolve()
-	if (!parent)
-		return
-	if (!parent.ai_controller) // We stopped having a brain at some point
-		return
-	if (IS_DEAD_OR_INCAP(parent)) // Probably can't hear them if we're dead
-		return
-	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == src) // We're already doing it
-		return
-	set_command_active(parent, commander)
+	if(!pet_able_to_respond())
+		return FALSE
+	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == potential_target) // That's already our target
+		return FALSE
+	if (!can_see(parent, potential_target, sense_radius))
+		return FALSE
+
+	set_command_target(parent, potential_target)
+	return TRUE
 
 /// Activate the command, extend to add visible messages and the like
 /datum/pet_command/proc/set_command_active(mob/living/parent, mob/living/commander)
 	set_command_target(parent, null)
 
-	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
+	var/datum/pet_command/previous = parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND]
+	if(previous && previous != src)
+		previous.command_ended(parent.ai_controller)
 	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
+	execute_action(parent.ai_controller) // Install the BT override subtree for this command
 	if (command_feedback)
 		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
+	if(!radial_command)
+		return
+	if(!requires_pointing)
+		var/manual_emote_text = generate_emote_command()
+		commander.manual_emote(manual_emote_text)
+		return
+	RegisterSignal(commander, COMSIG_MOB_CLICKON, PROC_REF(click_on_target))
+	commander.client?.mouse_override_icon = 'icons/effects/mouse_pointers/pet_paw.dmi'
+	commander.update_mouse_pointer()
+
+
+/// Called when this command is replaced by another command or otherwise deactivated. Extend to add cleanup logic.
+/datum/pet_command/proc/command_ended(datum/ai_controller/controller)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
+	return
+
+/datum/pet_command/proc/click_on_target(mob/living/source, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+	if(!can_see(source, target, 9))
+		return COMSIG_MOB_CANCEL_CLICKON
+	var/manual_emote_text = generate_emote_command(target)
+	if(on_target_set(source, target) && !isnull(manual_emote_text))
+		INVOKE_ASYNC(source, TYPE_PROC_REF(/atom, manual_emote), manual_emote_text)
+	UnregisterSignal(source, COMSIG_MOB_CLICKON)
+	source.client?.mouse_override_icon = source.client::mouse_override_icon
+	source.update_mouse_pointer()
+	return COMSIG_MOB_CANCEL_CLICKON
+
+/datum/pet_command/proc/point_on_target(mob/living/friend, atom/potential_target)
+	SIGNAL_HANDLER
+	on_target_set(friend, potential_target)
 
 /// Store the target for the AI blackboard
 /datum/pet_command/proc/set_command_target(mob/living/parent, atom/target)
@@ -148,9 +182,8 @@
 	if (!can_see(parent, pointed_atom, sense_radius))
 		return FALSE
 
-	parent.ai_controller.CancelActions()
-	// Deciding if they can actually do anything with this target is the behaviour's job
-	set_command_target(parent, pointed_atom)
-	// These are usually hostile actions so should have a record in chat
-	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom] [pointed_reaction]!"))
+	parent.ai_controller.cancel_current_plan()
+	if(!look_for_target(friend, potential_target) || !set_command_target(parent, potential_target))
+		return FALSE
+	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [potential_target] [pointed_reaction]!"))
 	return TRUE

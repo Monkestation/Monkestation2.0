@@ -68,6 +68,42 @@
 	inhand_icon_state = "staffofanimation"
 	school = SCHOOL_EVOCATION
 
+/obj/item/gun/magic/staff/animate/do_suicide(mob/living/user)
+	user.Stun(20 SECONDS, ignore_canstun = TRUE)
+	var/list/my_shit = user.unequip_everything()
+	my_shit -= src
+	user.put_in_active_hand(src) // Keep this one for now
+	charges++ // We already subtracted one
+	user.Paralyze(2 SECONDS, ignore_canstun = TRUE) // We have at most 6 charges so this is slightly longer than necessary
+	while (length(my_shit) && charges > 0)
+		if(QDELETED(user) || user.stat == DEAD)
+			break
+		charges--
+		playsound(loc, fire_sound, 50, TRUE, -1)
+		var/obj/item/my_thing = pop(my_shit)
+		user.dropItemToGround(my_thing)
+		var/mob/living/angry_thing = my_thing.animate_atom_living()
+		angry_thing.ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, user)
+		angry_thing.ai_controller?.set_blackboard_key(BB_TARGET_MINIMUM_STAT, HARD_CRIT)
+		angry_thing.ai_controller?.ai_interact(user, combat_mode = TRUE)
+		user.apply_damage(35, BRUTE, forced = TRUE) // Mimics are not actually very strong so we pretend that it just bit us so we die faster, at least 3 charges & worn items should do it
+		sleep(0.25 SECONDS)
+
+	if (QDELETED(user))
+		return MANUAL_SUICIDE
+	if (user.stat == CONSCIOUS)
+		return SHAME
+	if (user.stat != DEAD)
+		user.death() // If you got put into crit by the mobs we'll finish you off
+	return MANUAL_SUICIDE
+
+/obj/item/gun/magic/staff/animate/animate_atom_living(mob/living/owner)
+	var/mob/living/basic/mimic/copy/ranged/living_staff = new(drop_location(), src, owner)
+	QDEL_NULL(living_staff.ai_controller)
+	living_staff.ai_controller = new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_staff)
+	return living_staff
+
+/// Heals people and even raises the dead
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
 	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."

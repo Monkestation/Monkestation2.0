@@ -36,13 +36,22 @@
 			holder.icon_state = ""
 
 ///proc that handles drawing and transforming the bot's path onto diagnostic huds
-/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
+/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source, list/path)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(src, COMSIG_MOVELOOP_FINISHED_PATHING)
 
 	if(isnull(ai_controller))
 		return
+
+	if(!length(path))
+		return
+
+
+	var/atom/move_target = path[path.len]
+	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
+		return
+
 
 	//Removes path images and handles removing hud client images
 	clear_path_hud()

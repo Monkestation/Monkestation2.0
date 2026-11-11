@@ -7,13 +7,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/generic_resist,
-		/datum/ai_planning_subtree/monkey_combat,
-		/datum/ai_planning_subtree/generic_hunger,
-		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/monkey_shenanigans,
-	)
+	behavior_tree_json = "code/datums/ai/monkey/monkey.bt.json"
 	blackboard = list(
 		BB_MONKEY_AGGRESSIVE = FALSE,
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
@@ -27,8 +21,23 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
+		BB_MONKEY_GIVE_CHANCE = 5,
+		BB_MONKEY_PICKUP_IS_PICKPOCKET = null,
+		BB_MONKEY_IDLE_COMMON_EMOTES = list("screech", "roar"),
+		BB_MONKEY_IDLE_RARE_EMOTES = list("scratch", "jump", "roll", "tail"),
 	)
-	idle_behavior = /datum/idle_behavior/idle_monkey
+
+/datum/targeting_strategy/basic/monkey
+	custom_faction_check = TRUE
+
+/datum/targeting_strategy/basic/monkey/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+	// if they wronged us, all bets are off
+	if(controller.blackboard[BB_MONKEY_ENEMIES][the_target])
+		return FALSE
+	// target was forcibly set, all bets are off again
+	if(controller.blackboard[BB_CURRENT_TARGET] == the_target)
+		return FALSE
+	return ..()
 
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	AddElement(/datum/element/ai_control_examine, list(
@@ -36,16 +45,18 @@ have ways of interacting with a specific mob and control it.
 	))
 	return ..()
 
-/datum/ai_controller/monkey/pun_pun
-	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/generic_resist,
-		/datum/ai_planning_subtree/monkey_combat,
-		/datum/ai_planning_subtree/generic_hunger,
-		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/punpun_shenanigans,
-	)
-	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
+/datum/ai_controller/monkey/pun_pun/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	if(. & AI_CONTROLLER_INCOMPATIBLE)
+		return
+	pawn = new_pawn
+	set_blackboard_key(BB_IGNORE_DRINKS, TRUE)
+	set_blackboard_key(BB_MONKEY_TAMED, TRUE)
+	set_blackboard_key(BB_MONKEY_GIVE_CHANCE, 30)
+	set_blackboard_key(BB_MONKEY_PRESS_TYPEPATH, /obj/structure/desk_bell)
+	override_blackboard_key(BB_MONKEY_IDLE_COMMON_EMOTES, list("tunesing", "dance", "bow"))
+	override_blackboard_key(BB_MONKEY_IDLE_RARE_EMOTES, list("clear", "sign", "tail"))
+	set_trip_mode(mode = FALSE)
 
 /datum/ai_controller/monkey/angry
 
@@ -102,50 +113,6 @@ have ways of interacting with a specific mob and control it.
 	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
 		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
 		monkeybrain.tripping = mode
-
-///re-used behavior pattern by monkeys for finding a weapon
-/datum/ai_controller/monkey/proc/TryFindWeapon()
-	var/mob/living/living_pawn = pawn
-
-	if(!(living_pawn.is_holding_item_of_type(/obj/item)))
-		set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, 0)
-
-	if(blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (living_pawn.is_holding_item_of_type(/obj/item/gun)))
-		// We have a gun, what could we possibly want?
-		return FALSE
-
-	var/obj/item/weapon
-	var/list/nearby_items = list()
-	for(var/obj/item/item in oview(2, living_pawn))
-		nearby_items += item
-
-	for(var/obj/item/item as anything in living_pawn.get_held_items()) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
-		if(item.force < 2)
-			living_pawn.dropItemToGround(item)
-
-	weapon = GetBestWeapon(src, nearby_items, living_pawn.get_held_items())
-
-	var/pickpocket = FALSE
-	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
-		var/obj/item/held_weapon = GetBestWeapon(src, human.get_held_items() + weapon, living_pawn.get_held_items())
-		if(held_weapon == weapon) // It's just the same one, not a held one
-			continue
-		pickpocket = TRUE
-		weapon = held_weapon
-
-	if(!weapon || living_pawn.is_holding(weapon))
-		return FALSE
-
-	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
-		return FALSE
-
-	set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)
-	set_movement_target(type, weapon)
-	if(pickpocket)
-		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
-	else
-		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
-	return TRUE
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)

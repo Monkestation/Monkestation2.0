@@ -77,6 +77,7 @@
 
 ///The basic ai controller for crabs
 /datum/ai_controller/basic_controller/crab
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/crab.bt.json"
 	blackboard = list(
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller,
@@ -85,12 +86,3 @@
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/crab,
-	)

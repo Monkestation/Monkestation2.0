@@ -637,3 +637,59 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, FALSE, "Clear Smart Asset Cache", "
 		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")
 		cleared++
 	to_chat(user, span_notice("Cleared [cleared] asset\s."))
+
+ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
+	GLOB.event_logger.ui_interact(user.mob)
+
+ADMIN_VERB(view_behavior_tree, R_DEBUG, "View Behavior Tree", "Inspect the AI behavior tree of a mob.", ADMIN_CATEGORY_DEBUG)
+	GLOB.bt_viewer.ui_interact(user.mob)
+
+ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS, object as text)
+	if(!object)
+		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
+		return
+	//first: have admins select a typepath for the item they want to offer.
+	var/obj/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
+	// second: poll admins for the name, description, price, and quantity.
+	if(isnull(chosen))
+		return
+	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "Arcane Object", max_length = MAX_NAME_LEN)
+	if(isnull(name))
+		return
+	var/description = tgui_input_text(user, "Custom description of the item to sell?", "Item listing description", "[chosen::desc]", max_length = 200)
+	if(isnull(description))
+		return
+	var/price = tgui_input_number(user, "Price for the item listing?", "Item listing price", max_value = INFINITY, min_value = 1, round_value = TRUE)
+	if(isnull(price))
+		return
+	var/quantity = tgui_input_number(user, "Quantity of the item to sell?", "Item listing quantity", default = 1, max_value = 100, min_value = 1, round_value = TRUE)
+	if(isnull(quantity))
+		return
+	//lastly: pick a category for the item to go under
+	var/category = tgui_input_list(user, "Category to list the item under?", "Item listing category", BLACKMARKET_CATEGORIES)
+	if(isnull(category))
+		return
+
+	var/datum/market_item/admin_item = new /datum/market_item()
+	// Making a note here that we don't need to assign to blackmarket because we still only have one market type, but if we ever start using multiple we'll want to poll admins.
+	admin_item.item = chosen
+	SSblackbox.record_feedback("tally", "admin blackmarket items", 1, chosen)
+
+	admin_item.name = name
+	admin_item.desc = description
+	admin_item.price = price
+	admin_item.stock = quantity
+	admin_item.category = category
+	admin_item.restockable = FALSE
+
+	SSmarket.admin_items_spawned++
+	admin_item.identifier = "admin_[SSmarket.admin_items_spawned]"
+
+	SSmarket.initialize_admin_item(admin_item)
+	log_admin("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
+	message_admins("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
+
+	BLACKBOX_LOG_ADMIN_VERB("Create Black Market Item")
+
+
+#undef STEALTH_MODE_TRAIT

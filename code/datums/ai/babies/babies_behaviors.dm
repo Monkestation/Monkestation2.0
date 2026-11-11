@@ -1,21 +1,30 @@
-/**
- * Find a compatible, living partner, if we're also alone.
- */
-/datum/ai_behavior/find_partner
-	/// Range to look.
+#define FIND_PARTNER_COOLDOWN 1 MINUTES
+
+/// Find someone to erp with
+/datum/bt_node/ai_behavior/find_partner
+	var/target_key
+	var/partner_types_key
+	var/child_types_key
+	time_between_perform = 5 SECONDS
 	var/range = 7
-	/// Maximum number of children
-	var/max_children = 3
+	var/max_nearby_pop = 3
 
-/datum/ai_behavior/find_partner/perform(seconds_per_tick, datum/ai_controller/controller, target_key, partner_types_key, child_types_key)
-	. = ..()
-	max_children = controller.blackboard[BB_MAX_CHILDREN] || max_children
-	var/mob/pawn_mob = controller.pawn
-	var/list/partner_types = controller.blackboard[partner_types_key]
-	var/list/child_types = controller.blackboard[child_types_key]
+/datum/bt_node/ai_behavior/find_partner/setup(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
+	if(living_pawn.gender == FEMALE)
+		return FALSE
+	if(!controller.blackboard[partner_types_key] || !controller.blackboard[child_types_key])
+		return FALSE
+	return TRUE
 
-	var/children = 0
+/datum/bt_node/ai_behavior/find_partner/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/pawn_mob = controller.pawn
+	var/mob/living/living_pawn = controller.pawn
+	var/maximum_pop = controller.blackboard[BB_MAX_CHILDREN] || max_nearby_pop
+	var/list/similar_species_types = controller.blackboard[partner_types_key] + controller.blackboard[child_types_key]
+	var/list/possible_partners = list()
+	var/nearby_pop = 0
+
 	for(var/mob/living/other in oview(range, pawn_mob))
 		if(!pawn_mob.faction_check_atom(other))
 			finish_action(controller, FALSE)
@@ -35,47 +44,34 @@
 		if(!is_type_in_list(other, partner_types) || !HAS_TRAIT(other, TRAIT_MOB_BREEDER))
 			continue
 
-		if(other.ckey)
+		if(other.stat != CONSCIOUS)
 			continue
 
-		if(other.gender != living_pawn.gender && !(other.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
-			controller.set_blackboard_key(target_key, other)
-			finish_action(controller, TRUE)
+		if(other.gender != living_pawn.gender && !(other.flags_1 & HOLOGRAM_1))
+			possible_partners += other
 
 	finish_action(controller, FALSE)
 
 
-/**
- * Reproduce.
- */
-/datum/ai_behavior/make_babies
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+/// I'm not saying what this behavior does :flushed:
+/datum/bt_node/ai_behavior/make_babies
+	var/target_key
+	var/child_types_key
 
-/datum/ai_behavior/make_babies/setup(datum/ai_controller/controller, target_key, child_types_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(!target)
-		return FALSE
-	set_movement_target(controller, target)
+/datum/bt_node/ai_behavior/make_babies/setup(datum/ai_controller/controller)
+	var/mob/target = controller.blackboard[target_key]
+	return !QDELETED(target) && target.stat == CONSCIOUS
 
-/datum/ai_behavior/make_babies/perform(seconds_per_tick, datum/ai_controller/controller, target_key, child_types_key)
-	. = ..()
+/datum/bt_node/ai_behavior/make_babies/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.stat != CONSCIOUS)
-		finish_action(controller, FALSE, target_key)
-		return
-	var/mob/living/basic/living_pawn = controller.pawn
-	//living_pawn.set_combat_mode(FALSE)
-	living_pawn.istate &= ~ISTATE_HARM
-	living_pawn.melee_attack(target)
-	finish_action(controller, TRUE, target_key)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target, FALSE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/make_babies/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/make_babies/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-	if(!succeeded)
-		return
-	var/mob/living/living_pawn = controller.pawn
-	if(QDELETED(living_pawn)) // pawn can be null at this point
-		return
-	living_pawn.istate = initial(living_pawn.istate)
+
+
+#undef FIND_PARTNER_COOLDOWN

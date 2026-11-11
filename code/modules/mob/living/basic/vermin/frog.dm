@@ -77,7 +77,12 @@
 			playsound(src, stepped_sound, 50, TRUE)
 monkestation end */
 
+/// Engage our current target: flee from scary fishermen, otherwise beat them up.
+/datum/bt_node/subtree/frog_engage_target
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/frog_engage_target.bt.json"
+
 /datum/ai_controller/basic_controller/frog
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/frog.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -89,17 +94,14 @@ monkestation end */
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/random_speech/frog,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /datum/ai_controller/basic_controller/frog/trash
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/frog,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/trash.bt.json"
+
+/datum/ai_controller/basic_controller/frog/suicide_frog
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/suicide_frog.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN, //No fear, only hatred. It has nothing to lose
 	)

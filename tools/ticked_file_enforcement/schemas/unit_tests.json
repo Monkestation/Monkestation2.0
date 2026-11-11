@@ -10,7 +10,6 @@
 		"antag_conversion.dm",
 		"hydroponics_harvest.dm",
 		"atmospherics_sanity.dm",
-		"ensure_subtree_operational_datum.dm",
 		"metabolizing.dm",
 		"confusion.dm",
 		"font_awesome_icons.dm",

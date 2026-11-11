@@ -97,10 +97,8 @@
 	)
 
 /datum/ai_controller/basic_controller/axolotl
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/axolotl.bt.json"
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-#undef AXOLOTL_FALLOFF_EXPONENT
-#undef AXOLOTL_NOISE_COOLDOWN
 #undef AXOLOTL_VOLUME

@@ -37,16 +37,41 @@
 	collar_icon_state = "bullterrier"
 	held_state = "bullterrier"
 
-/mob/living/basic/pet/dog/dobermann
-	name = "\improper dobermann"
-	desc = "A larger breed of dog."
-	real_name = "dobermnann"
-	icon = 'icons/mob/simple/pets.dmi'
-	icon_state = "dobber"
-	icon_living = "dobber"
-	icon_dead = "dobbydead"
-	butcher_results = list(/obj/item/food/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
-	gold_core_spawnable = FRIENDLY_SPAWN
+/mob/living/basic/pet/dog/bullterrier/lavaland_party
+	name = "Saint Nick's Helpful Associate"
+	desc = "Undergraduate in 'Being a Good Boy'."
+	habitable_atmos = null
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
+
+/mob/living/basic/pet/dog/bullterrier/guarddog //hostile dog variant for space ruins
+	name = "\improper guard dog"
+	real_name = "guard dog"
+	desc = "A vicious bull terrier. They look aggressive and territorial."
+	collar_icon_state = "spiked"
+	//slightly weaker than a bear, but not as slow
+	health = 60
+	maxHealth = 60
+	obj_damage = 20
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	wound_bonus = -25
+	exposed_wound_bonus = 45
+	sharpness = SHARP_EDGED
+	gold_core_spawnable = HOSTILE_SPAWN
+	faction = list(FACTION_HOSTILE)
+	ai_controller = /datum/ai_controller/basic_controller/guarddog
+
+/datum/ai_controller/basic_controller/guarddog
+	behavior_tree_json = "code/modules/mob/living/basic/pets/dog/guarddog.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_AGGRO_RANGE = 7,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
