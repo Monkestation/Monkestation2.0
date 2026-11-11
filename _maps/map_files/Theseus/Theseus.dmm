@@ -1,4 +1,22 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"aab" = (
+/obj/item/wrench,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aac" = (
+/obj/item/stack/cable_coil/five,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aad" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Armory External West"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "aae" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -6,6 +24,14 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"aaf" = (
+/obj/item/storage/backpack/meat,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aag" = (
+/obj/effect/mob_spawn/corpse/human/monkey,
+/turf/open/space/basic,
+/area/space/nearstation)
 "aah" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
@@ -15,6 +41,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"aai" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Security - Armory External East";
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aaj" = (
+/obj/structure/sign/warning/docking/directional/south,
+/turf/open/space/basic,
+/area/space/nearstation)
 "aak" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -34,6 +71,49 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet,
 /area/station/science/breakroom)
+"aam" = (
+/obj/item/toy/plush/lizard_plushie/space/green{
+	name = "Moes-the-Berry"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aan" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Command - AI external West"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aao" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - AI external North"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aap" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Command - AI external Upload"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aaq" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aar" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aas" = (
+/obj/tear_in_reality{
+	desc = "A strange anomaly found in the region of space surrounding the station. It's hard to look at..."
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aat" = (
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/bodypart/arm/left,
+/turf/open/space/basic,
+/area/space/nearstation)
 "aaB" = (
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -2829,12 +2909,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/chapel/office)
-"aQs" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Command - AI external Upload"
-	},
-/turf/open/space/basic,
-/area/space)
 "aQw" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -3457,10 +3531,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"baK" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/space/basic,
-/area/space)
 "baN" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/chair_flipped,
@@ -6016,10 +6086,6 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/cargo/miningdock/cafeteria)
-"bRq" = (
-/obj/item/storage/backpack/meat,
-/turf/open/space/basic,
-/area/space)
 "bRv" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -12076,12 +12142,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/circuit/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
-"dDL" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Command - AI external North"
-	},
-/turf/open/space/basic,
-/area/space)
 "dDU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -15233,10 +15293,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
-"exM" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/space/basic,
-/area/space)
 "exR" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16945,10 +17001,6 @@
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
-"fbf" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/space/basic,
-/area/space)
 "fbr" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -20046,12 +20098,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
-"fWL" = (
-/obj/tear_in_reality{
-	desc = "A strange anomaly found in the region of space surrounding the station. It's hard to look at..."
-	},
-/turf/open/space/basic,
-/area/space)
 "fWM" = (
 /obj/structure/flora/tree/jungle/small/style_2,
 /turf/open/floor/grass,
@@ -23995,10 +24041,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
-"heB" = (
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "heE" = (
 /obj/structure/chair/office,
 /obj/effect/landmark/start/warden,
@@ -25081,9 +25123,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"huY" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "hvl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -29904,10 +29943,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/grimey,
 /area/station/security/office)
-"iOD" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating/airless,
-/area/space)
 "iOH" = (
 /obj/effect/turf_decal/tile/blue/half,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30521,12 +30556,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"iYr" = (
-/obj/item/toy/plush/lizard_plushie/space/green{
-	name = "Moes-the-Berry"
-	},
-/turf/open/space/basic,
-/area/space)
 "iYt" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/bot,
@@ -30687,11 +30716,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
-"jbB" = (
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/bodypart/arm/left,
-/turf/open/space/basic,
-/area/space)
 "jbD" = (
 /obj/structure/sign/departments/science/directional/west,
 /obj/machinery/light/directional/west,
@@ -36379,10 +36403,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
-"kHp" = (
-/obj/effect/mob_spawn/corpse/human/monkey,
-/turf/open/space/basic,
-/area/space)
 "kHs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -37837,13 +37857,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
 /area/station/security/range)
-"laH" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Security - Armory External East";
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "laJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -38893,12 +38906,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/court,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
-"lpn" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Command - AI external West"
-	},
-/turf/open/space/basic,
-/area/space)
 "lpo" = (
 /obj/structure/bookcase/manuals/engineering,
 /turf/open/floor/wood,
@@ -47466,10 +47473,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/hydroponics/chicken)
-"nPn" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "nPw" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -47861,10 +47864,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms)
-"nVB" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "nVE" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/lattice,
@@ -50223,12 +50222,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"oEg" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Security - Armory External West"
-	},
-/turf/open/space/basic,
-/area/space)
 "oEk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -69793,10 +69786,6 @@
 /obj/machinery/atm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"uiF" = (
-/obj/item/stack/cable_coil/five,
-/turf/open/space/basic,
-/area/space)
 "uiJ" = (
 /obj/machinery/door/airlock/research{
 	name = "Artifact Storage"
@@ -76655,10 +76644,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/lower)
-"wji" = (
-/obj/item/wrench,
-/turf/open/space/basic,
-/area/space)
 "wjo" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -91470,11 +91455,11 @@ nhC
 nhC
 nhC
 nhC
-nVB
-nVB
-nVB
-nVB
-nVB
+gAM
+gAM
+gAM
+gAM
+gAM
 nhC
 nhC
 nhC
@@ -91494,11 +91479,11 @@ nhC
 nhC
 nhC
 nhC
-nVB
-nVB
-nVB
-nVB
-nVB
+gAM
+gAM
+gAM
+gAM
+gAM
 nhC
 nhC
 nhC
@@ -91727,7 +91712,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 lXw
 lXw
@@ -91755,7 +91740,7 @@ lXw
 lXw
 lXw
 lXw
-nVB
+gAM
 nhC
 nhC
 nhC
@@ -91984,7 +91969,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 tBz
 tBz
@@ -92012,7 +91997,7 @@ tBz
 tBz
 tBz
 lXw
-nVB
+gAM
 nhC
 nhC
 nhC
@@ -92241,7 +92226,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 tBz
 tBz
@@ -92269,7 +92254,7 @@ tBz
 tBz
 tBz
 lXw
-nVB
+gAM
 nhC
 nhC
 nhC
@@ -92498,7 +92483,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 tBz
 tBz
@@ -92526,7 +92511,7 @@ tBz
 tBz
 tBz
 lXw
-nVB
+gAM
 nhC
 nhC
 nhC
@@ -92783,9 +92768,9 @@ tBz
 tBz
 tBz
 lXw
-iOD
-iOD
-iOD
+aaa
+aaa
+aaa
 nhC
 nhC
 nhC
@@ -97638,7 +97623,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 tBz
 tBz
@@ -97666,7 +97651,7 @@ tBz
 tBz
 tBz
 lXw
-nVB
+gAM
 nhC
 nhC
 jTp
@@ -97895,7 +97880,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 tBz
 tBz
@@ -97923,7 +97908,7 @@ tBz
 tBz
 tBz
 lXw
-nVB
+gAM
 nhC
 nhC
 jTp
@@ -98152,7 +98137,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 tBz
 tBz
@@ -98180,7 +98165,7 @@ tBz
 tBz
 tBz
 lXw
-nVB
+gAM
 nhC
 nhC
 jTp
@@ -98409,7 +98394,7 @@ nhC
 nhC
 nhC
 nhC
-nVB
+gAM
 lXw
 lXw
 lXw
@@ -98437,7 +98422,7 @@ lXw
 lXw
 lXw
 lXw
-nVB
+gAM
 nhC
 nhC
 jTp
@@ -98447,7 +98432,7 @@ beu
 lXw
 nhC
 nhC
-huY
+plQ
 rzL
 xYk
 dHI
@@ -98666,11 +98651,11 @@ nhC
 nhC
 nhC
 nhC
-nVB
-nVB
-nVB
-nVB
-nVB
+gAM
+gAM
+gAM
+gAM
+gAM
 nhC
 nhC
 nhC
@@ -98704,7 +98689,7 @@ beu
 lXw
 nhC
 nhC
-huY
+plQ
 esh
 oVp
 tQt
@@ -103096,7 +103081,7 @@ tYZ
 tYZ
 tYZ
 rej
-wji
+aab
 nhC
 nhC
 ota
@@ -103353,7 +103338,7 @@ xAL
 tYZ
 lXw
 kfq
-uiF
+aac
 nhC
 nhC
 lXw
@@ -105566,8 +105551,8 @@ cvo
 swB
 mla
 oxj
-nPn
-nPn
+lXw
+lXw
 aDp
 qhg
 heQ
@@ -105824,7 +105809,7 @@ wFk
 fEi
 oxj
 lcz
-nPn
+lXw
 wvb
 wvb
 wvb
@@ -106837,7 +106822,7 @@ nhC
 lXw
 nhC
 nhC
-oEg
+aad
 lXw
 vXD
 vXD
@@ -108474,8 +108459,8 @@ jJy
 gxR
 lXw
 nhC
-kHp
-bRq
+aag
+aaf
 nhC
 lXw
 gxR
@@ -109146,7 +109131,7 @@ nhC
 lXw
 nhC
 lXw
-laH
+aai
 nhC
 nhC
 nhC
@@ -109409,7 +109394,7 @@ nhC
 nhC
 nhC
 lXw
-lKZ
+aaj
 qKe
 rzG
 xWR
@@ -114100,7 +114085,7 @@ nhC
 nhC
 nhC
 nhC
-iYr
+aam
 nhC
 aOe
 aOe
@@ -115382,7 +115367,7 @@ mVG
 mVG
 mVG
 nhC
-lpn
+aan
 wpT
 tYW
 hOd
@@ -116914,7 +116899,7 @@ vIO
 vIO
 rYC
 nhC
-dDL
+aao
 mVG
 mVG
 fKG
@@ -118477,7 +118462,7 @@ ccj
 kvE
 iCs
 nhC
-aQs
+aap
 nhC
 nhC
 lXw
@@ -119998,8 +119983,8 @@ nhC
 nhC
 nhC
 nhC
-nPn
-nPn
+lXw
+lXw
 lXw
 gcF
 sOE
@@ -120938,7 +120923,7 @@ nhC
 nhC
 nhC
 nhC
-baK
+aaq
 eFu
 lXw
 nhC
@@ -122480,7 +122465,7 @@ nhC
 nhC
 nhC
 nhC
-fbf
+aar
 iCs
 lXw
 nhC
@@ -127197,7 +127182,7 @@ lXw
 lXw
 euv
 euv
-nVB
+gAM
 nhC
 nhC
 nhC
@@ -127459,8 +127444,8 @@ rEn
 cFJ
 cFJ
 cFJ
-exM
-exM
+oaq
+oaq
 rEn
 rEn
 qwK
@@ -127549,15 +127534,15 @@ lXw
 nVE
 nVE
 mQm
-heB
-heB
-heB
-heB
-heB
-heB
-heB
-heB
-heB
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
 xTw
 lXw
 lXw
@@ -127806,7 +127791,7 @@ oTu
 cxt
 dCW
 dQY
-heB
+uhC
 nhC
 nhC
 nhC
@@ -127814,7 +127799,7 @@ nhC
 nhC
 nhC
 nhC
-heB
+uhC
 heU
 lXw
 lXw
@@ -127968,7 +127953,7 @@ tPe
 tPe
 tPe
 iCs
-nVB
+gAM
 nhC
 nhC
 euv
@@ -128063,7 +128048,7 @@ jHL
 ukb
 xJl
 drm
-heB
+uhC
 nhC
 nhC
 nhC
@@ -128071,7 +128056,7 @@ nhC
 nhC
 nhC
 nhC
-heB
+uhC
 heU
 lXw
 lXw
@@ -128320,7 +128305,7 @@ dCW
 osF
 xiI
 drm
-heB
+uhC
 nhC
 nhC
 nhC
@@ -128328,7 +128313,7 @@ nhC
 nhC
 nhC
 nhC
-heB
+uhC
 heU
 lXw
 lXw
@@ -128577,15 +128562,15 @@ xJP
 qVa
 xiI
 drm
-heB
+uhC
 nhC
 nhC
 nhC
-fWL
+aas
 nhC
 nhC
 nhC
-heB
+uhC
 heU
 lXw
 lXw
@@ -128834,7 +128819,7 @@ iqt
 luk
 oKJ
 drm
-heB
+uhC
 nhC
 nhC
 nhC
@@ -128842,7 +128827,7 @@ nhC
 nhC
 nhC
 nhC
-heB
+uhC
 heU
 lXw
 lXw
@@ -129091,7 +129076,7 @@ hzJ
 pVG
 xJl
 drm
-heB
+uhC
 nhC
 nhC
 nhC
@@ -129099,7 +129084,7 @@ nhC
 nhC
 nhC
 nhC
-heB
+uhC
 heU
 lXw
 lXw
@@ -129254,7 +129239,7 @@ ulY
 tPe
 nhC
 nhC
-jbB
+aat
 nhC
 nhC
 nhC
@@ -129348,7 +129333,7 @@ oTu
 tqN
 iqt
 qca
-heB
+uhC
 nhC
 nhC
 nhC
@@ -129356,7 +129341,7 @@ nhC
 nhC
 nhC
 nhC
-heB
+uhC
 heU
 lXw
 lXw
@@ -129605,15 +129590,15 @@ lXw
 wRS
 wRS
 lNe
-heB
-heB
-heB
-heB
-heB
-heB
-heB
-heB
-heB
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
+uhC
 xTw
 lXw
 lXw
@@ -130225,7 +130210,7 @@ nhC
 nhC
 nhC
 lXw
-huY
+plQ
 qrA
 eFe
 lVw
@@ -130482,7 +130467,7 @@ nhC
 nhC
 nhC
 lXw
-huY
+plQ
 vJO
 eFe
 lVw

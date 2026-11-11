@@ -1,4 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "aag" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/airless,
@@ -13261,12 +13267,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
 /area/station/service/chapel/funeral)
-"enE" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/space)
 "enT" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron,
@@ -116190,7 +116190,7 @@ ksa
 ksa
 ksa
 xXP
-enE
+aaa
 ksa
 ksa
 ksa

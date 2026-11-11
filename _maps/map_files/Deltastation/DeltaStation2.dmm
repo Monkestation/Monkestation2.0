@@ -15,6 +15,10 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
+"aae" = (
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
 "aaf" = (
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
@@ -23,6 +27,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/port/fore)
+"aag" = (
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
 "aah" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/hydroseeds{
@@ -30,6 +38,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
+"aai" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aaj" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "aak" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -42,6 +61,35 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
+"aal" = (
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aam" = (
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aan" = (
+/obj/item/wallframe/apc,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aao" = (
+/obj/structure/sign/warning/electric_shock/directional/west,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aap" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Security - Armory External";
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aaq" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "aaz" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/stool/directional/east,
@@ -3259,10 +3307,6 @@
 /obj/structure/trash_pile,
 /turf/open/floor/iron/white,
 /area/station/maintenance/fore)
-"aKU" = (
-/obj/structure/sign/warning/electric_shock/directional/west,
-/turf/open/space/basic,
-/area/space)
 "aLq" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
@@ -10654,10 +10698,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
-"cuz" = (
-/obj/item/wallframe/apc,
-/turf/open/space/basic,
-/area/space)
 "cuM" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Chapel - Fore Port";
@@ -13816,10 +13856,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
-"djY" = (
-/obj/structure/sign/warning/secure_area/directional/east,
-/turf/open/space/basic,
-/area/space)
 "dka" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -16592,12 +16628,6 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron,
 /area/station/medical/storage)
-"dTS" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/turf/open/space/basic,
-/area/space)
 "dUe" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -30034,10 +30064,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
-"haF" = (
-/obj/structure/sign/warning/secure_area/directional/west,
-/turf/open/space/basic,
-/area/space)
 "haH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -42541,10 +42567,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"jUT" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "jUU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -53121,11 +53143,6 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"mtz" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "mtL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/status_display/evac/directional/north,
@@ -58135,10 +58152,6 @@
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"nET" = (
-/obj/structure/sign/warning/electric_shock/directional/east,
-/turf/open/space/basic,
-/area/space)
 "nEY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -61522,10 +61535,6 @@
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
-"owK" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "owO" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -68196,13 +68205,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
-"pYW" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Security - Armory External";
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "pZc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -80634,11 +80636,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
-"sVm" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/electric_shock/directional/east,
-/turf/open/space/basic,
-/area/space)
 "sVC" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
@@ -89073,10 +89070,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
-"uXF" = (
-/obj/structure/sign/warning/secure_area/directional/south,
-/turf/open/space/basic,
-/area/space)
 "uXK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -95661,12 +95654,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/command/bridge)
-"wyN" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "wyV" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -119397,7 +119384,7 @@ aaa
 lvw
 vVc
 wyV
-nET
+aae
 qYo
 aaa
 qYo
@@ -119405,7 +119392,7 @@ qYo
 aaa
 qYo
 aaa
-nET
+aae
 qYo
 aaa
 uHd
@@ -119664,7 +119651,7 @@ fqm
 fqm
 nCi
 nCi
-djY
+aag
 uHd
 uHd
 aaa
@@ -121163,7 +121150,7 @@ wGy
 vVc
 vVc
 vVc
-sVm
+aai
 abj
 abj
 lbi
@@ -123424,7 +123411,7 @@ aaa
 qYo
 kvq
 aaa
-wyN
+aaj
 mJH
 pHl
 rQI
@@ -128684,18 +128671,18 @@ aaa
 aad
 aaa
 abj
-owK
-owK
-owK
-owK
-owK
-owK
-owK
-owK
-owK
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
 aaa
 aaa
-mtz
+uHd
 aaa
 efQ
 qYo
@@ -128941,7 +128928,7 @@ aaa
 aad
 aaa
 aaa
-owK
+vVc
 bTz
 bTz
 bTz
@@ -128949,11 +128936,11 @@ bTz
 bTz
 bTz
 bTz
-owK
-jUT
-jUT
-mtz
-jUT
+vVc
+qYo
+qYo
+uHd
+qYo
 qYo
 qYo
 pSj
@@ -129198,7 +129185,7 @@ aaa
 aad
 aaa
 aaa
-owK
+vVc
 bTz
 bTz
 bTz
@@ -129206,10 +129193,10 @@ bTz
 bTz
 bTz
 bTz
-owK
+vVc
 aaa
 aaa
-mtz
+uHd
 aaa
 efQ
 qYo
@@ -129455,7 +129442,7 @@ aaa
 aad
 aaa
 aaa
-owK
+vVc
 bTz
 bTz
 bTz
@@ -129463,7 +129450,7 @@ bTz
 bTz
 bTz
 bTz
-owK
+vVc
 aaa
 aaa
 aaa
@@ -129712,7 +129699,7 @@ aaa
 aad
 aaa
 aaa
-owK
+vVc
 bTz
 bTz
 bTz
@@ -129720,7 +129707,7 @@ bTz
 bTz
 bTz
 bTz
-owK
+vVc
 aaa
 aaa
 aaa
@@ -129969,7 +129956,7 @@ aaa
 aad
 aaa
 aaa
-owK
+vVc
 bTz
 bTz
 bTz
@@ -129977,7 +129964,7 @@ bTz
 bTz
 bTz
 bTz
-owK
+vVc
 aaa
 aaa
 aaa
@@ -130226,7 +130213,7 @@ aaa
 abj
 aad
 aad
-owK
+vVc
 bTz
 bTz
 bTz
@@ -130234,9 +130221,9 @@ bTz
 bTz
 bTz
 bTz
-owK
+vVc
 aaa
-mtz
+uHd
 aaa
 aaa
 aad
@@ -130388,7 +130375,7 @@ vOI
 etR
 xcU
 nmw
-haF
+aal
 qYo
 dQS
 qYo
@@ -130397,7 +130384,7 @@ aaa
 qYo
 cut
 qYo
-haF
+aal
 aaa
 xLZ
 nNK
@@ -130483,7 +130470,7 @@ aaa
 aad
 aaa
 aaa
-owK
+vVc
 bTz
 bTz
 bTz
@@ -130491,11 +130478,11 @@ bTz
 bTz
 bTz
 bTz
-owK
-jUT
-mtz
-jUT
-jUT
+vVc
+qYo
+uHd
+qYo
+qYo
 fuV
 fuV
 jNx
@@ -130740,17 +130727,17 @@ aaa
 abj
 abj
 abj
-owK
-owK
-owK
-owK
-owK
-owK
-owK
-owK
-owK
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
+vVc
 aaa
-mtz
+uHd
 aaa
 aaa
 dPR
@@ -130998,14 +130985,14 @@ kzc
 jIH
 qQM
 aaa
-jUT
+qYo
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-jUT
+qYo
 aaa
 aaa
 aaa
@@ -137961,7 +137948,7 @@ hvB
 gqm
 aaa
 lvw
-jUT
+qYo
 qYo
 aaa
 aaa
@@ -138456,7 +138443,7 @@ kzc
 aOD
 qQM
 qQM
-uXF
+aam
 tgT
 xPc
 xPc
@@ -139484,7 +139471,7 @@ kzc
 ecm
 uYH
 qQM
-uXF
+aam
 tgT
 riB
 tgT
@@ -141294,7 +141281,7 @@ aaa
 aaa
 qYo
 aaa
-cuz
+aan
 qYo
 aaa
 qYo
@@ -157410,7 +157397,7 @@ bLs
 aaa
 aad
 aaa
-aKU
+aao
 aaa
 aad
 aaa
@@ -157650,7 +157637,7 @@ aaa
 qYo
 aaa
 qYo
-aKU
+aao
 qYo
 aaa
 qYo
@@ -157915,7 +157902,7 @@ aaa
 aaa
 aaa
 mfO
-pYW
+aap
 aaa
 mfO
 aaa
@@ -158958,7 +158945,7 @@ aaa
 aaa
 aaa
 aad
-dTS
+aaq
 uKw
 mfC
 xFk
@@ -160465,13 +160452,13 @@ gJk
 aaa
 aad
 aaa
-aKU
+aao
 aad
 aaa
 aad
 aaa
 aad
-aKU
+aao
 aaa
 qYo
 aaa

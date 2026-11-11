@@ -43321,7 +43321,7 @@
 	maxHealth = 200;
 	wound_bonus = 10;
 	health = 200;
-	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."),"emote_hear"=list("honks","squeaks"),"emote_sound"=list('sound/items/bikehorn.ogg'),"emote_chance"=5)
+	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)
@@ -47570,10 +47570,6 @@
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall,
 /area/station/medical/office)
-"oRy" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "oRz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -69904,10 +69900,6 @@
 /obj/machinery/computer/security/qm,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
-"vNT" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "vOn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -123479,9 +123471,9 @@ cmU
 aeU
 aeU
 aaQ
-oRy
-vNT
-oRy
+acK
+acm
+acK
 acm
 aeu
 aeu

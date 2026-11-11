@@ -10,6 +10,30 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/fore)
+"aab" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aac" = (
+/obj/structure/sign/warning/biohazard/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aad" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"aae" = (
+/obj/structure/sign/warning/biohazard/directional/south,
+/turf/open/space/basic,
+/area/space/nearstation)
+"aaf" = (
+/obj/machinery/power/shuttle_engine/huge,
+/turf/open/space/basic,
+/area/space/nearstation)
 "aal" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance/two,
@@ -7985,10 +8009,6 @@
 /obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
 /turf/open/floor/iron/white/diagonal,
 /area/station/science/research)
-"cvG" = (
-/obj/structure/sign/warning/biohazard/directional/east,
-/turf/open/space/basic,
-/area/space)
 "cvH" = (
 /turf/closed/wall,
 /area/station/medical/psychology)
@@ -20682,10 +20702,6 @@
 /obj/machinery/meter,
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/atmos)
-"fYK" = (
-/obj/structure/sign/warning/biohazard/directional/south,
-/turf/open/space/basic,
-/area/space)
 "fYR" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -29620,12 +29636,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/blueshield)
-"iuX" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space)
 "iuZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39066,10 +39076,6 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/cargo/office)
-"kXK" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "kXW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -55630,11 +55636,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/fore)
-"pDv" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/teal,
-/turf/open/space/basic,
-/area/space)
 "pDx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69103,12 +69104,6 @@
 /obj/machinery/cell_charger,
 /turf/open/floor/iron/textured,
 /area/station/security/checkpoint/engineering)
-"tlW" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/space/basic,
-/area/space)
 "tmb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/light/small/directional/west,
@@ -86546,10 +86541,6 @@
 	dir = 8
 	},
 /area/station/security/brig)
-"ycM" = (
-/obj/machinery/power/shuttle_engine/huge,
-/turf/open/space/basic,
-/area/space)
 "ycQ" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -99515,7 +99506,7 @@ ttw
 gPJ
 kbK
 ttw
-iuX
+aab
 xMq
 xMq
 xMq
@@ -99785,7 +99776,7 @@ xMq
 xMq
 ttw
 odJ
-iuX
+aab
 gPJ
 gPJ
 gPJ
@@ -103217,7 +103208,7 @@ giG
 jgz
 xMq
 ttw
-cvG
+aac
 ttw
 ttw
 ttw
@@ -103409,7 +103400,7 @@ ttw
 ttw
 ttw
 ttw
-cvG
+aac
 ttw
 ttw
 ttw
@@ -103897,7 +103888,7 @@ xMq
 xMq
 ttw
 odJ
-tlW
+aad
 gPJ
 gPJ
 ttw
@@ -104141,7 +104132,7 @@ ttw
 gPJ
 kbK
 ttw
-tlW
+aad
 xMq
 xMq
 xMq
@@ -106212,7 +106203,7 @@ ttw
 ttw
 ttw
 ttw
-fYK
+aae
 dWX
 qLu
 ajP
@@ -106879,8 +106870,8 @@ mnM
 uUU
 oVO
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -107136,8 +107127,8 @@ rzh
 uUU
 jwC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -107393,8 +107384,8 @@ oOK
 uUU
 rmo
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -107908,8 +107899,8 @@ spp
 uUU
 oVO
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -108165,8 +108156,8 @@ iaq
 uUU
 jwC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -108422,8 +108413,8 @@ eMd
 uUU
 rmo
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -109035,7 +109026,7 @@ hdF
 hdF
 hdF
 hdF
-kXK
+xMq
 gPJ
 ttw
 ttw
@@ -109296,7 +109287,7 @@ ttw
 gPJ
 gPJ
 ttw
-fYK
+aae
 dWX
 qLu
 ajP
@@ -111077,7 +111068,7 @@ ttw
 ttw
 ttw
 gPJ
-kXK
+xMq
 hdF
 hdF
 hdF
@@ -111091,7 +111082,7 @@ hdF
 hdF
 hdF
 hdF
-kXK
+xMq
 gPJ
 ttw
 ttw
@@ -111511,8 +111502,8 @@ tot
 deE
 wTj
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -111768,8 +111759,8 @@ urO
 deE
 mwR
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -112025,8 +112016,8 @@ fon
 deE
 gyG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -114846,8 +114837,8 @@ cwa
 brI
 gAd
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -115103,8 +115094,8 @@ cwa
 brI
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -115360,8 +115351,8 @@ cwa
 brI
 wNk
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -116901,8 +116892,8 @@ tSH
 gmz
 gAd
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -117158,8 +117149,8 @@ sLM
 gmz
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -117415,8 +117406,8 @@ sBr
 gmz
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -117672,8 +117663,8 @@ pqO
 gmz
 ngt
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -117929,8 +117920,8 @@ aZH
 gmz
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -118186,8 +118177,8 @@ hUm
 gmz
 wNk
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -118696,8 +118687,8 @@ lhE
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -118953,8 +118944,8 @@ jfq
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -119210,8 +119201,8 @@ awv
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -119467,8 +119458,8 @@ czs
 qbp
 nIl
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -119724,8 +119715,8 @@ xgK
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -119981,8 +119972,8 @@ dyl
 qbp
 rTG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -120496,8 +120487,8 @@ rYy
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -120753,8 +120744,8 @@ avz
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -121010,8 +121001,8 @@ vau
 qbp
 rTG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -121523,8 +121514,8 @@ veD
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -121780,8 +121771,8 @@ ceN
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -122037,8 +122028,8 @@ koQ
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -122294,8 +122285,8 @@ rfk
 qbp
 nIl
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -122551,8 +122542,8 @@ eRP
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -122808,8 +122799,8 @@ xgK
 qbp
 rTG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -123324,8 +123315,8 @@ dyl
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -123581,8 +123572,8 @@ evE
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -123838,8 +123829,8 @@ kvZ
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -124095,8 +124086,8 @@ qbp
 qbp
 nIl
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -124352,8 +124343,8 @@ aXG
 xGA
 gdu
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -124609,8 +124600,8 @@ aXG
 xGA
 myC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -127443,8 +127434,8 @@ xAr
 sJd
 gUC
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -127700,8 +127691,8 @@ oxH
 sJd
 ykC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -127957,8 +127948,8 @@ bOP
 sJd
 wuU
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -130527,8 +130518,8 @@ gIT
 unI
 otq
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -130784,8 +130775,8 @@ ayt
 unI
 hqJ
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -131041,8 +131032,8 @@ sUV
 unI
 vag
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -131550,8 +131541,8 @@ wsc
 lAi
 jBK
 pkp
-ttw
-ycM
+xXo
+aaf
 ttw
 ttw
 ttw
@@ -131807,8 +131798,8 @@ ajL
 lAi
 uLA
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -132064,8 +132055,8 @@ ajL
 lAi
 ftr
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -132222,7 +132213,7 @@ kUb
 kUb
 ttw
 ttw
-kXK
+xMq
 ttw
 ttw
 skC
@@ -132472,14 +132463,14 @@ xMq
 ttw
 ttw
 ttw
-kXK
+xMq
 ttw
 ttw
-kXK
+xMq
 ttw
 ttw
 ttw
-pDv
+smE
 ttw
 ttw
 skC
@@ -132729,10 +132720,10 @@ xMq
 ttw
 ttw
 ttw
-pDv
+smE
 ttw
 ttw
-pDv
+smE
 ttw
 ttw
 ttw

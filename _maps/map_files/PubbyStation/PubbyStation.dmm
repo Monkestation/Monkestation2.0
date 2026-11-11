@@ -523,6 +523,10 @@
 	},
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
+"abp" = (
+/obj/item/shard,
+/turf/open/space/basic,
+/area/space/nearstation)
 "abq" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -13384,10 +13388,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
-"aYF" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space/basic,
-/area/space)
 "aYI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -49419,10 +49419,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"tgH" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "tgT" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
@@ -52197,10 +52193,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
-"viu" = (
-/obj/item/shard,
-/turf/open/space/basic,
-/area/space)
 "viB" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/sign/warning/deathsposal/directional/west,
@@ -93252,7 +93244,7 @@ gNv
 nnh
 epI
 tvj
-viu
+abp
 aaa
 aaa
 aaa
@@ -103047,7 +103039,7 @@ aaa
 aaa
 aaa
 aaa
-aYF
+bGI
 sZh
 cxg
 bbG
@@ -103294,7 +103286,7 @@ aaa
 uCT
 qcR
 aJw
-tgH
+aht
 cdm
 cdm
 cdm
@@ -103304,7 +103296,7 @@ aaa
 aaa
 aaa
 aaa
-aYF
+bGI
 sZh
 kKz
 bbG
@@ -103551,17 +103543,17 @@ aaa
 aJw
 dpD
 aJw
-tgH
-tgH
-tgH
-tgH
+aht
+aht
+aht
+aht
 aht
 cdm
 aaa
 aaa
 aaa
 aaa
-aYF
+bGI
 sZh
 cxg
 bbG
