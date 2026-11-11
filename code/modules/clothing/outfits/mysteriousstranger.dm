@@ -136,7 +136,6 @@
 	name = "ancient stim-pac"
 	desc = "Quit squirming, im trying to help you!"
 	icon_state = "syndipen"
-	inhand_icon_state = "syndipen"
 	base_icon_state = "syndipen"
 	amount_per_transfer_from_this = 10
 	list_reagents = list(/datum/reagent/medicine/lonehope = 10)
@@ -146,9 +145,9 @@
 /obj/item/reagent_containers/medipen/lone_wanderer/single
 	name = "super stim-pac"
 	desc = "Looks ancient; where did this come from?"
-	icon_state = "gorrillapen"
-	inhand_icon_state = "gorrillapen"
-	base_icon_state = "gorrillapen"
+	icon_state = "gorillapen"
+	inhand_icon_state = "gorillapen"
+	base_icon_state = "gorillapen"
 	label_text = "Something something not liable for.... wait how many sieverts did that just say this contains!?"
 	infinite = FALSE
 
