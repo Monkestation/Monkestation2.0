@@ -50,7 +50,8 @@
 
 /obj/item/melee/trick_weapon/update_name(updates)
 	. = ..()
-	name = "[initial(name)] +[upgrade_level]"
+	if(upgrade_level > 0)
+		name = "[initial(name)] +[upgrade_level]"
 
 /obj/item/melee/trick_weapon/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
