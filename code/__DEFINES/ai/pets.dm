@@ -55,3 +55,6 @@
 /// cooldown key throttling how often a parrot repeats a phrase
 #define BB_PARROT_SPEECH_COOLDOWN "BB_parrot_speech_cooldown"
 
+
+///Timeout for finding partners when theres too many of us in 1 location
+#define BB_PARTNER_SEARCH_TIMEOUT "BB_partner_search_timeout"

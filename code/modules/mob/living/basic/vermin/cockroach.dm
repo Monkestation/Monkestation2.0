@@ -58,6 +58,7 @@
 	return
 
 /datum/ai_controller/basic_controller/cockroach
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/cockroach/cockroach.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -65,16 +66,20 @@
 			"*me waves its antennae in disapproval.",
 			"*me chitters sadly.",
 			"*me chitters around in worry.",
-		)
+		),
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("chitters."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/insect/chitter.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
+
+/// AI controller for aggressive roach
+/datum/ai_controller/basic_controller/cockroach/aggro
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/cockroach/cockroach_aggro.bt.json"
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
@@ -114,19 +119,10 @@
 		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/cockroach/cockroach_glockroach.bt.json"
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
-
-/datum/ai_behavior/basic_ranged_attack/glockroach //Slightly slower, as this is being made in feature freeze ;)
-	action_cooldown = 1 SECONDS
+/datum/bt_node/ai_behavior/basic_ranged_attack/glockroach //Slightly slower, as this is being made in feature freeze ;)
+	time_between_perform = 1 SECONDS
 
 /mob/living/basic/cockroach/hauberoach
 	name = "hauberoach"
@@ -143,7 +139,7 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	sharpness = SHARP_POINTY
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/aggro
 	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
 
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
@@ -167,24 +163,6 @@
 	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE
 
-/datum/ai_controller/basic_controller/cockroach/hauberoach
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,  //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
-
-/datum/ai_controller/basic_controller/cockroach/sewer
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
-
 /mob/living/basic/cockroach/glockroach/mobroach
 	name = "mobroach"
 	desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
@@ -194,16 +172,7 @@
 	ranged_cooldown = 2 SECONDS
 
 /datum/ai_controller/basic_controller/cockroach/mobroach
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach, //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/cockroach/cockroach_mobroach.bt.json"
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/mobroach
-
-/datum/ai_behavior/basic_ranged_attack/mobroach
-	action_cooldown = 2 SECONDS
+/datum/bt_node/ai_behavior/basic_ranged_attack/mobroach
+	time_between_perform = 2 SECONDS

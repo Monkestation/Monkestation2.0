@@ -336,3 +336,6 @@
 #define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
 
 #define BB_TARGET_PRIORITY_STRATEGY "target_priority_strategy"
+
+///key holding any food we've found
+#define BB_TARGET_FOOD "BB_TARGET_FOOD"

@@ -360,3 +360,9 @@
 
 /// key that holds things we can hunt
 #define BB_HUNTABLE_PREY "huntable_prey"
+
+///key that holds our landmine ability
+#define BB_MINEBOT_LANDMINE_ABILITY "minebot_landmine_ability"
+
+///key that holds our missile ability
+#define BB_MINEBOT_MISSILE_ABILITY "minebot_missile_ability"

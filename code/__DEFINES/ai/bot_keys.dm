@@ -149,3 +149,6 @@
 #define BB_MULEBOT_HOME_BEACON "mulebot_home_beacon"
 ///key that holds our current delivery target atom
 #define BB_MULEBOT_TRAVEL_TARGET "mulebot_travel_target"
+
+///penalty cooldown if we are unable to path to any beacons
+#define BB_BOT_BEACON_COOLDOWN "bot_beacon_cooldown"
