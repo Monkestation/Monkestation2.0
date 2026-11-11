@@ -19,6 +19,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shipbreaker_templates = list()
 
+	///Ordered list of ruins that have been reserved. Each entry is list(ruin template, central turf, clear_below). Populated by seedRuins(), consumed by load_reserved_ruins().
+	var/list/reserved_ruins = list()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
@@ -54,7 +57,6 @@ SUBSYSTEM_DEF(mapping)
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
-	var/loading_ruins = FALSE
 	var/list/turf/unused_turfs = list() //Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
 	var/list/datum/turf_reservations //list of turf reservations
 	var/list/used_turfs = list() //list of turf = datum/turf_reservation
@@ -176,16 +178,19 @@ SUBSYSTEM_DEF(mapping)
 
 	start_time = REALTIMEOFDAY
 	SStitle.add_init_text("Ruins", "> Ruins", "<font color='yellow'>LOADING...</font>")
-	loading_ruins = TRUE
 	setup_ruins()
-	loading_ruins = FALSE
 	SStitle.add_init_text("Ruins", "> Ruins", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
 #endif
-	// Run map generation after ruin generation to prevent issues
+	// Run map generation after ruin space is reserved, since this space is used for the cave gen.
 	run_map_terrain_generation()
 	// Generate our rivers, we do this here so the map doesn't load on top of them
 	setup_rivers()
+	// Now that terrain generation is done, actually load the ruin maps in.
+	var/ruin_load_start = REALTIMEOFDAY
+	SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='yellow'>LOADING...</font>")
+	load_reserved_ruins()
+	SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='green'>DONE</font>", (REALTIMEOFDAY - ruin_load_start) / (1 SECONDS))
 	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
 	run_map_terrain_population()
 	// Add the first transit level
@@ -300,6 +305,26 @@ SUBSYSTEM_DEF(mapping)
 	var/list/oshan_ruins = levels_by_trait(ZTRAIT_OSHAN_MINING)
 	if (length(oshan_ruins))
 		seedRuins(oshan_ruins, CONFIG_GET(number/oshan_budget), list(/area/ocean/generated, /area/ocean/dark), themed_ruins[ZTRAIT_OSHAN_MINING], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_OSHAN)
+
+///loads all of the ruins we previously reserved space for
+/datum/controller/subsystem/mapping/proc/load_reserved_ruins()
+	for(var/list/reservation in reserved_ruins)
+		var/datum/map_template/ruin/reserved_ruin = reservation[1]
+		var/turf/central_turf = reservation[2]
+		var/clear_below = reservation[3]
+		load_ruin_now(reserved_ruin, central_turf, clear_below)
+	reserved_ruins.Cut()
+
+/**
+ * Immediately loads a single reserved ruin's map, and runs terrain generation for any
+ * of the areas, since they get spawned AFTER normal terrain gen runs its pass
+ */
+/datum/controller/subsystem/mapping/proc/load_ruin_now(datum/map_template/ruin/reserved_ruin, turf/central_turf, clear_below)
+	var/starting_area_count = length(GLOB.areas)
+	reserved_ruin.load_reserved(central_turf, clear_below)
+	for(var/i in starting_area_count + 1 to length(GLOB.areas))
+		var/area/ruin_area = GLOB.areas[i]
+		ruin_area.RunTerrainGeneration()
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
