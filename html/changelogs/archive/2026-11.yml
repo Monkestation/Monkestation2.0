@@ -441,5 +441,19 @@
   Absolucy:
   - bugfix: Maybe fix the frost miner ruin failing to spawn sometimes.
   - bugfix: Fixed damage slowdown applying while floating/levitating.
+  - rscadd: Added new xenobiology request and order consoles!
+  - rscadd: Xenobio request consoles, usually in the front of science, can be used
+      to order extracts and crossbreeds, with an optional payout, too. Also available
+      as a PDA app!
+  - rscadd: Xenobio has a purple console on their wall that allows them to view, approve,
+      deny, and fulfill orders! Sprite by kiaroh.
   ThePooba:
   - bugfix: Wrong sound location for the animal and dont starve voices
+  V2LenKagamine:
+  - admin: more larp to the stranger!
+  vinylspiders:
+  - bugfix: Radios are blocked again in the abductor ship and the heretic sacrifice
+      areas.
+  - bugfix: You can no longer send credits from inside a virtual domain to real bank
+      accounts.
+  - code_imp: Mapping related area flags now live in their own var, area_flags_mapping.
