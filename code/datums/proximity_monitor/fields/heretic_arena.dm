@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 /// If we try to enter a space turf that has a mirage, we will block the movement
 /datum/proximity_monitor/advanced/heretic_arena/proc/on_pre_move(atom/movable/mover, atom/newloc)
-	if(locate(/obj/effect/abstract/mirage_holder) in newloc.contents)
+	if(locate(/atom/movable/mirage_holder) in newloc.contents)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// Blocks Z movement to new z levels
