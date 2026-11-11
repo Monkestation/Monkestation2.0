@@ -106,6 +106,10 @@
 
 /// If the user can dig the turf
 /turf/open/misc/asteroid/proc/can_dig(mob/user)
+	if(isnull(damaged_dmi))
+		if(user)
+			balloon_alert(user, "too hard to dig!")
+		return FALSE
 	if(!dug && !broken)
 		return TRUE
 	if(user)
