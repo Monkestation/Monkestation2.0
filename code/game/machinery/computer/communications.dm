@@ -305,6 +305,7 @@
 			SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
 			for(var/datum/round_event_control/shuttle_insurance/insurance_event in SSevents.control)
 				insurance_event.weight *= 20
+				insurance_event.calculated_weight = null
 			SSshuttle.unload_preview()
 			SSshuttle.existing_shuttle = SSshuttle.emergency
 			SSshuttle.action_load(shuttle, replace = TRUE)
