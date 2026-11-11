@@ -145,18 +145,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/science/lab)
-"aar" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/obj/machinery/reagentgrinder,
-/obj/structure/table,
-/obj/structure/noticeboard{
-	pixel_y = 32
-	},
-/obj/item/stack/sheet/mineral/plasma/five,
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "aas" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -523,10 +511,6 @@
 	},
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
-"abp" = (
-/obj/item/shard,
-/turf/open/space/basic,
-/area/space/nearstation)
 "abq" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -15971,9 +15955,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/aft)
-"bkr" = (
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/aft)
 "bks" = (
 /obj/machinery/vending/modularpc,
 /turf/open/floor/iron/dark,
@@ -20475,6 +20456,23 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/freezer,
 /area/station/medical/virology)
+"bFN" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/reagentgrinder,
+/obj/structure/table,
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/machinery/requests_console/directional/east{
+	department = "Xenobiology";
+	name = "Xenobiology Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/ore_update,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "bFS" = (
 /obj/structure/cable,
 /obj/machinery/newscaster/directional/west,
@@ -31417,6 +31415,10 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"evF" = (
+/obj/item/shard,
+/turf/open/space/basic,
+/area/space/nearstation)
 "evL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -32260,6 +32262,10 @@
 "fbf" = (
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
+"fbk" = (
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/aft)
 "fby" = (
 /obj/structure/sign/poster/official/no_erp/directional/east,
 /obj/structure/chair/office{
@@ -35982,15 +35988,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"ilD" = (
-/obj/machinery/smartfridge/extract/preloaded,
-/obj/machinery/requests_console/directional/east{
-	department = "Xenobiology";
-	name = "Xenobiology Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/ore_update,
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "imd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -41601,6 +41598,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
+"nav" = (
+/obj/machinery/smartfridge/extract/preloaded,
+/obj/machinery/computer/extract_orders/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "naK" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/exit)
@@ -91752,7 +91754,7 @@ dyg
 xPQ
 bis
 bKM
-bkr
+fbk
 blC
 cqe
 eKI
@@ -93244,7 +93246,7 @@ gNv
 nnh
 epI
 tvj
-abp
+evF
 aaa
 aaa
 aaa
@@ -101776,9 +101778,9 @@ gvM
 iSi
 iSi
 iSi
-aar
+bFN
 mQm
-ilD
+nav
 edJ
 aaj
 nOY

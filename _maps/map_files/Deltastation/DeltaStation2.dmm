@@ -15,10 +15,6 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
-"aae" = (
-/obj/structure/sign/warning/electric_shock/directional/east,
-/turf/open/space/basic,
-/area/space/nearstation)
 "aaf" = (
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
@@ -27,10 +23,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/port/fore)
-"aag" = (
-/obj/structure/sign/warning/secure_area/directional/east,
-/turf/open/space/basic,
-/area/space/nearstation)
 "aah" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/hydroseeds{
@@ -38,17 +30,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
-"aai" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/electric_shock/directional/east,
-/turf/open/space/basic,
-/area/space/nearstation)
-"aaj" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "aak" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -61,35 +42,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
-"aal" = (
-/obj/structure/sign/warning/secure_area/directional/west,
-/turf/open/space/basic,
-/area/space/nearstation)
-"aam" = (
-/obj/structure/sign/warning/secure_area/directional/south,
-/turf/open/space/basic,
-/area/space/nearstation)
-"aan" = (
-/obj/item/wallframe/apc,
-/turf/open/space/basic,
-/area/space/nearstation)
-"aao" = (
-/obj/structure/sign/warning/electric_shock/directional/west,
-/turf/open/space/basic,
-/area/space/nearstation)
-"aap" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Security - Armory External";
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
-"aaq" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "aaz" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/stool/directional/east,
@@ -1045,18 +997,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
-"alM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/item/kirbyplants/random,
-/obj/machinery/camera/directional/north{
-	c_tag = "Science - Lobby";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
-/turf/open/floor/iron/white,
-/area/station/science/lobby)
 "alT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -21433,6 +21373,27 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
+"eZA" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/south{
+	id = "xenobio_maint_fore";
+	name = "Fore Pen Maintenance Windows";
+	pixel_x = 8;
+	req_access = list("science")
+	},
+/obj/machinery/button/door/directional/south{
+	id = "xenobio_maint_aft";
+	name = "Aft Pen Maintenance Windows";
+	pixel_x = -6;
+	req_access = list("science")
+	},
+/obj/machinery/smartfridge/extract/preloaded,
+/obj/machinery/computer/extract_orders/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "eZL" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
@@ -23967,6 +23928,10 @@
 "fEY" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space,
+/area/space/nearstation)
+"fFh" = (
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/space/basic,
 /area/space/nearstation)
 "fFr" = (
 /obj/machinery/computer/atmos_control{
@@ -29963,6 +29928,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"gZl" = (
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
 "gZv" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -31930,6 +31899,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
+"hwm" = (
+/obj/structure/sign/warning/electric_shock/directional/west,
+/turf/open/space/basic,
+/area/space/nearstation)
 "hwo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37201,6 +37174,10 @@
 /obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
+"iIx" = (
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/space/basic,
+/area/space/nearstation)
 "iIz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/electric_shock/directional/west,
@@ -41179,6 +41156,12 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/grimey,
 /area/station/service/library)
+"jEP" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "jET" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -41646,6 +41629,10 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
+"jKH" = (
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/space/basic,
+/area/space/nearstation)
 "jKN" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/white/corner{
@@ -53041,6 +53028,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"msH" = (
+/obj/item/wallframe/apc,
+/turf/open/space/basic,
+/area/space/nearstation)
 "msI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -65433,6 +65424,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/toilet/restrooms)
+"psA" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Security - Armory External";
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "psB" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/line,
 /obj/structure/chair/wood{
@@ -68205,6 +68203,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
+"pYM" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "pZc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69480,6 +69484,11 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"qoS" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
 "qoV" = (
 /obj/structure/cable,
 /obj/structure/chair/office{
@@ -83245,26 +83254,6 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"tDG" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/obj/machinery/button/door/directional/south{
-	id = "xenobio_maint_fore";
-	name = "Fore Pen Maintenance Windows";
-	pixel_x = 8;
-	req_access = list("science")
-	},
-/obj/machinery/button/door/directional/south{
-	id = "xenobio_maint_aft";
-	name = "Aft Pen Maintenance Windows";
-	pixel_x = -6;
-	req_access = list("science")
-	},
-/obj/machinery/smartfridge/extract/preloaded,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "tDK" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
@@ -90169,6 +90158,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
+"vmc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Science - Lobby";
+	name = "science camera";
+	network = list("ss13","rd")
+	},
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron/white,
+/area/station/science/lobby)
 "vmh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria,
@@ -119384,7 +119385,7 @@ aaa
 lvw
 vVc
 wyV
-aae
+fFh
 qYo
 aaa
 qYo
@@ -119392,7 +119393,7 @@ qYo
 aaa
 qYo
 aaa
-aae
+fFh
 qYo
 aaa
 uHd
@@ -119651,7 +119652,7 @@ fqm
 fqm
 nCi
 nCi
-aag
+gZl
 uHd
 uHd
 aaa
@@ -121150,7 +121151,7 @@ wGy
 vVc
 vVc
 vVc
-aai
+qoS
 abj
 abj
 lbi
@@ -123411,7 +123412,7 @@ aaa
 qYo
 kvq
 aaa
-aaj
+pYM
 mJH
 pHl
 rQI
@@ -127360,7 +127361,7 @@ aev
 rra
 goy
 xDz
-tDG
+eZA
 jDd
 tJX
 rjG
@@ -130375,7 +130376,7 @@ vOI
 etR
 xcU
 nmw
-aal
+iIx
 qYo
 dQS
 qYo
@@ -130384,7 +130385,7 @@ aaa
 qYo
 cut
 qYo
-aal
+iIx
 aaa
 xLZ
 nNK
@@ -136601,7 +136602,7 @@ jBH
 dJa
 qnY
 qnY
-alM
+vmc
 lVF
 bwE
 vXS
@@ -138443,7 +138444,7 @@ kzc
 aOD
 qQM
 qQM
-aam
+jKH
 tgT
 xPc
 xPc
@@ -139471,7 +139472,7 @@ kzc
 ecm
 uYH
 qQM
-aam
+jKH
 tgT
 riB
 tgT
@@ -141281,7 +141282,7 @@ aaa
 aaa
 qYo
 aaa
-aan
+msH
 qYo
 aaa
 qYo
@@ -157397,7 +157398,7 @@ bLs
 aaa
 aad
 aaa
-aao
+hwm
 aaa
 aad
 aaa
@@ -157637,7 +157638,7 @@ aaa
 qYo
 aaa
 qYo
-aao
+hwm
 qYo
 aaa
 qYo
@@ -157902,7 +157903,7 @@ aaa
 aaa
 aaa
 mfO
-aap
+psA
 aaa
 mfO
 aaa
@@ -158945,7 +158946,7 @@ aaa
 aaa
 aaa
 aad
-aaq
+jEP
 uKw
 mfC
 xFk
@@ -160452,13 +160453,13 @@ gJk
 aaa
 aad
 aaa
-aao
+hwm
 aad
 aaa
 aad
 aaa
 aad
-aao
+hwm
 aaa
 qYo
 aaa

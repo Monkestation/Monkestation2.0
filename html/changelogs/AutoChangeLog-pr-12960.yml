@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Added new xenobiology request and order consoles!"
+  - rscadd: "Xenobio request consoles, usually in the front of science, can be used to order extracts and crossbreeds, with an optional payout, too. Also available as a PDA app!"
+  - rscadd: "Xenobio has a purple console on their wall that allows them to view, approve, deny, and fulfill orders! Sprite by kiaroh."

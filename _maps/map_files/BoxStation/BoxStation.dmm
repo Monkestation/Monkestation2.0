@@ -1,10 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aaa" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "aag" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/airless,
@@ -925,13 +919,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/explab)
-"apT" = (
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/machinery/light/directional/north,
-/obj/structure/sign/departments/science/directional/north,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/starboard)
 "apU" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -5931,6 +5918,12 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
+"bSt" = (
+/obj/machinery/biomass_recycler,
+/obj/item/stack/biomass/twenty,
+/obj/machinery/computer/extract_orders/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "bSC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -12718,11 +12711,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
-"edf" = (
-/obj/machinery/biomass_recycler,
-/obj/item/stack/biomass/twenty,
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "edg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -41318,6 +41306,12 @@
 	dir = 8
 	},
 /area/station/engineering/shipbreaker_hut)
+"nqO" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "nrg" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51268,6 +51262,13 @@
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
+"qzN" = (
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/directional/north,
+/obj/structure/sign/departments/science/directional/north,
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/starboard)
 "qzQ" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/holopad,
@@ -112262,7 +112263,7 @@ vPS
 kUL
 sJi
 oIP
-apT
+qzN
 vOP
 cHJ
 wxL
@@ -116190,7 +116191,7 @@ ksa
 ksa
 ksa
 xXP
-aaa
+nqO
 ksa
 ksa
 ksa
@@ -120176,7 +120177,7 @@ rmg
 fJl
 oeH
 xCE
-edf
+bSt
 fRT
 fRT
 iqY

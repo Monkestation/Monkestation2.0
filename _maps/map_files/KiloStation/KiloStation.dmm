@@ -12780,6 +12780,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"dXW" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/clown{
+	name = "John Gamer The Prisoner Terminator";
+	limb_destroyer = 1;
+	desc = "Whenever you look at him you can sense an incomprehensible eldrich presence...";
+	maxHealth = 200;
+	wound_bonus = 10;
+	health = 200;
+	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
+	},
+/turf/open/ballpit,
+/area/station/security/bitden)
 "dYu" = (
 /obj/structure/chair{
 	dir = 8
@@ -15096,14 +15112,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
-"eLy" = (
-/obj/machinery/smartfridge/extract/preloaded,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/xenobiology)
 "eLz" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/corner{
@@ -31173,6 +31181,15 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/port/greater)
+"jAM" = (
+/obj/machinery/smartfridge/extract/preloaded,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/computer/extract_orders/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/xenobiology)
 "jBh" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -43309,22 +43326,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"nuI" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/old,
-/mob/living/basic/clown{
-	name = "John Gamer The Prisoner Terminator";
-	limb_destroyer = 1;
-	desc = "Whenever you look at him you can sense an incomprehensible eldrich presence...";
-	maxHealth = 200;
-	wound_bonus = 10;
-	health = 200;
-	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
-	},
-/turf/open/ballpit,
-/area/station/security/bitden)
 "nuL" = (
 /obj/structure/flora/rock/style_random,
 /obj/effect/decal/cleanable/dirt,
@@ -56822,6 +56823,24 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"rGV" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "Biohazard";
+	name = "Emergency Research Blast Door"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron/dark,
+/area/station/science/research)
 "rHi" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
@@ -82907,7 +82926,7 @@ kYY
 bpC
 gbu
 vlE
-nuI
+dXW
 hyT
 miD
 nEP
@@ -113674,7 +113693,7 @@ aeu
 wuc
 kar
 qpf
-eLy
+jAM
 tdT
 nJJ
 hGr
@@ -114737,7 +114756,7 @@ bBF
 sxB
 mUU
 qfo
-mUU
+rGV
 vFY
 ofs
 mnl

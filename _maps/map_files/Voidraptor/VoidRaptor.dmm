@@ -10,30 +10,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/fore)
-"aab" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
-"aac" = (
-/obj/structure/sign/warning/biohazard/directional/east,
-/turf/open/space/basic,
-/area/space/nearstation)
-"aad" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
-"aae" = (
-/obj/structure/sign/warning/biohazard/directional/south,
-/turf/open/space/basic,
-/area/space/nearstation)
-"aaf" = (
-/obj/machinery/power/shuttle_engine/huge,
-/turf/open/space/basic,
-/area/space/nearstation)
 "aal" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance/two,
@@ -9630,6 +9606,27 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/abandoned)
+"cUx" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/rack,
+/obj/item/vacuum_pack{
+	pixel_x = -8
+	},
+/obj/item/vacuum_pack{
+	pixel_x = 8
+	},
+/obj/item/disk/vacuum_upgrade/printer{
+	pixel_x = -4
+	},
+/obj/item/disk/vacuum_upgrade/printer{
+	pixel_x = 4
+	},
+/obj/machinery/computer/extract_orders/directional/south,
+/turf/open/floor/iron/white/textured_edge{
+	dir = 1
+	},
+/area/station/science/xenobiology)
 "cUA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18700,6 +18697,12 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/command/heads_quarters/hos)
+"ftF" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "ftL" = (
 /obj/machinery/computer/telecomms/traffic{
 	dir = 4
@@ -39258,6 +39261,14 @@
 /obj/effect/mapping_helpers/mail_sorting/science/rd_office,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/rd)
+"lao" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron/white/textured_edge{
+	dir = 1
+	},
+/area/station/hallway/primary/fore)
 "lar" = (
 /obj/machinery/air_sensor/plasma_tank,
 /turf/open/floor/engine/plasma,
@@ -39447,6 +39458,10 @@
 	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
+"ldq" = (
+/obj/structure/sign/warning/biohazard/directional/south,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ldr" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible{
@@ -43177,6 +43192,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/engineering/main)
+"mcU" = (
+/obj/structure/sign/warning/biohazard/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
 "mcW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/duct,
@@ -48639,13 +48658,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/science/ordnance_maint)
-"nJx" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron/white/textured_edge{
-	dir = 1
-	},
-/area/station/hallway/primary/fore)
 "nJF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
@@ -51296,27 +51308,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/theater)
-"owp" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/effect/turf_decal/bot_red,
-/obj/structure/sign/poster/contraband/arc_slimes/directional/south,
-/obj/structure/rack,
-/obj/item/vacuum_pack{
-	pixel_x = -8
-	},
-/obj/item/vacuum_pack{
-	pixel_x = 8
-	},
-/obj/item/disk/vacuum_upgrade/printer{
-	pixel_x = -4
-	},
-/obj/item/disk/vacuum_upgrade/printer{
-	pixel_x = 4
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 1
-	},
-/area/station/science/xenobiology)
 "ows" = (
 /obj/machinery/rnd/production/techfab/department/medical,
 /obj/effect/turf_decal/delivery,
@@ -52553,6 +52544,12 @@
 	dir = 8
 	},
 /area/station/security/prison/work)
+"oPg" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "oPj" = (
 /obj/machinery/door/airlock/command/cmo{
 	name = "Chief Medical Officer's Quarters"
@@ -54284,6 +54281,10 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/station/command/bridge)
+"pkU" = (
+/obj/machinery/power/shuttle_engine/huge,
+/turf/open/space/basic,
+/area/space/nearstation)
 "pkY" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced/rglass,
@@ -99506,7 +99507,7 @@ ttw
 gPJ
 kbK
 ttw
-aab
+ftF
 xMq
 xMq
 xMq
@@ -99776,7 +99777,7 @@ xMq
 xMq
 ttw
 odJ
-aab
+ftF
 gPJ
 gPJ
 gPJ
@@ -103208,7 +103209,7 @@ giG
 jgz
 xMq
 ttw
-aac
+mcU
 ttw
 ttw
 ttw
@@ -103400,7 +103401,7 @@ ttw
 ttw
 ttw
 ttw
-aac
+mcU
 ttw
 ttw
 ttw
@@ -103888,7 +103889,7 @@ xMq
 xMq
 ttw
 odJ
-aad
+oPg
 gPJ
 gPJ
 ttw
@@ -104132,7 +104133,7 @@ ttw
 gPJ
 kbK
 ttw
-aad
+oPg
 xMq
 xMq
 xMq
@@ -106203,7 +106204,7 @@ ttw
 ttw
 ttw
 ttw
-aae
+ldq
 dWX
 qLu
 ajP
@@ -106226,7 +106227,7 @@ dkb
 pxQ
 shd
 aLt
-owp
+cUx
 oMs
 jTu
 pJg
@@ -106871,7 +106872,7 @@ uUU
 oVO
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -107900,7 +107901,7 @@ uUU
 oVO
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -109287,7 +109288,7 @@ ttw
 gPJ
 gPJ
 ttw
-aae
+ldq
 dWX
 qLu
 ajP
@@ -111503,7 +111504,7 @@ deE
 wTj
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -114838,7 +114839,7 @@ brI
 gAd
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -116893,7 +116894,7 @@ gmz
 gAd
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -117664,7 +117665,7 @@ gmz
 ngt
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -118688,7 +118689,7 @@ qbp
 oWM
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -119459,7 +119460,7 @@ qbp
 nIl
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -119840,7 +119841,7 @@ aYo
 nXj
 rPp
 pGh
-nJx
+lao
 eLM
 eLH
 eLM
@@ -120488,7 +120489,7 @@ qbp
 oWM
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -121515,7 +121516,7 @@ qbp
 oWM
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -122286,7 +122287,7 @@ qbp
 nIl
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -123316,7 +123317,7 @@ qbp
 oWM
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -124087,7 +124088,7 @@ qbp
 nIl
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -127435,7 +127436,7 @@ sJd
 gUC
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -130519,7 +130520,7 @@ unI
 otq
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
@@ -131542,7 +131543,7 @@ lAi
 jBK
 pkp
 xXo
-aaf
+pkU
 ttw
 ttw
 ttw
