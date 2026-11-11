@@ -254,6 +254,8 @@ SUBSYSTEM_DEF(wardrobe)
 	stock_info[WARDROBE_STOCK_CONTENTS] += object
 
 /datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location)
+	if(!ispath(requested_type, /atom/movable))
+		CRASH("provide_type() was given [isnull(requested_type) ? "null" : requested_type], it needs an /atom/movable typepath!")
 	var/atom/movable/requested_object
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
