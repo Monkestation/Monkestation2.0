@@ -138,6 +138,7 @@
 	steps = list(
 		"make sure the flamethrower has a plasma tank attached",
 	)
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/toiletbong/check_requirements(mob/user, list/collected_requirements)
 	var/obj/item/flamethrower/flamethrower = collected_requirements[/obj/item/flamethrower][1]

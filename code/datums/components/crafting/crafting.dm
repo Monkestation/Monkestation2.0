@@ -86,6 +86,9 @@
 		if(needed_amount > 0)
 			return FALSE
 
+		if(!R.collect_requirements)
+			continue
+
 		// Store the instances of what we will use for R.check_requirements() for requirement_path
 		var/list/instances_list = list()
 		for(var/instance_path in item_instances)
@@ -115,6 +118,7 @@
 	.["instances"] = list()
 	.["machinery"] = list()
 	.["structures"] = list()
+	.["tool_instances"] = list()
 	for(var/obj/object in get_environment(a, blacklist))
 		if(isitem(object))
 			var/obj/item/item = object
@@ -136,46 +140,35 @@
 		else if (isstructure(object))
 			LAZYADDASSOCLIST(.["structures"], object.type, object)
 
+	var/list/within_source = list()
+	for(var/obj/item/item in a.contents)
+		within_source += item
+		if(item.atom_storage)
+			for(var/obj/item/item_stored_within in item.contents)
+				within_source += item_stored_within
 
+	for(var/obj/item/item as anything in within_source)
+		if(item.tool_behaviour)
+			.["tool_behaviour"] |= item.tool_behaviour
+
+	var/list/instances = .["instances"]
+	for(var/item_type in instances)
+		.["tool_instances"] += instances[item_type]
+	.["tool_instances"] += within_source
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
-/datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+/datum/component/personal_crafting/proc/check_tools(datum/crafting_recipe/recipe, list/surroundings)
 	if(!length(recipe.tool_behaviors) && !length(recipe.tool_paths))
 		return TRUE
-	var/list/available_tools = list()
-	var/list/present_qualities = list()
-
-	for(var/obj/item/contained_item in source.contents)
-		if(contained_item.atom_storage)
-			for(var/obj/item/subcontained_item in contained_item.contents)
-				available_tools[subcontained_item.type] = TRUE
-				if(subcontained_item.tool_behaviour)
-					present_qualities[subcontained_item.tool_behaviour] = TRUE
-		available_tools[contained_item.type] = TRUE
-		if(contained_item.tool_behaviour)
-			present_qualities[contained_item.tool_behaviour] = TRUE
-
-	for(var/quality in surroundings["tool_behaviour"])
-		present_qualities[quality] = TRUE
-
-	for(var/path in surroundings["other"])
-		available_tools[path] = TRUE
 
 	for(var/required_quality in recipe.tool_behaviors)
-		if(present_qualities[required_quality])
-			continue
-		return FALSE
+		if(!(required_quality in surroundings["tool_behaviour"]))
+			return FALSE
 
+	var/list/possible_tool_instances = surroundings["tool_instances"]
 	for(var/required_path in recipe.tool_paths)
-		var/found_this_tool = FALSE
-		for(var/tool_path in available_tools)
-			if(!ispath(required_path, tool_path))
-				continue
-			found_this_tool = TRUE
-			break
-		if(found_this_tool)
-			continue
-		return FALSE
+		if(!(locate(required_path) in possible_tool_instances))
+			return FALSE
 
 	return TRUE
 
@@ -184,7 +177,7 @@
 	var/list/contents = get_surroundings(a,R.blacklist)
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
-		if(check_tools(a, R, contents))
+		if(check_tools(R, contents))
 			if(R.one_per_turf)
 				for(var/content in get_turf(a))
 					if(istype(content, R.result))
@@ -195,7 +188,7 @@
 			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
 				return ", missing component."
-			if(!check_tools(a, R, contents))
+			if(!check_tools(R, contents))
 				return ", missing tool."
 			var/list/parts = del_reqs(R, a)
 			var/atom/movable/I
@@ -402,8 +395,8 @@
 	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
 		if(!is_recipe_available(recipe, user))
 			continue
-		if(check_tools(user, recipe, surroundings) && check_contents(user, recipe, surroundings))
-			craftability["[REF(recipe)]"] = TRUE
+		if(check_contents(user, recipe, surroundings) && check_tools(recipe, surroundings))
+			craftability[REF(recipe)] = TRUE
 
 	data["craftability"] = craftability
 	return data
