@@ -18,6 +18,8 @@
 	var/list/department_jobs = list()
 	/// For separatists, what independent name prefix does their nation get named?
 	var/list/nation_prefixes = list()
+	/// Root type for the area that people in this department primarily work in.
+	var/primary_work_area
 
 
 /// Handles adding jobs to the department and setting up the job bitflags.
@@ -46,6 +48,7 @@
 	department_name = DEPARTMENT_CAPTAIN
 	department_bitflags = DEPARTMENT_BITFLAG_CAPTAIN
 	department_head = /datum/job/captain
+	primary_work_area = /area/station/command
 
 /datum/job_department/command
 	department_name = DEPARTMENT_COMMAND
@@ -55,6 +58,7 @@
 	display_order = 1
 	label_class = "command"
 	ui_color = "#6681a5"
+	primary_work_area = /area/station/command
 
 /datum/job_department/central_command
 	department_name = DEPARTMENT_CENTRAL_COMMAND
@@ -73,6 +77,7 @@
 	display_order = 3
 	label_class = "security"
 	ui_color = "#d46a78"
+	primary_work_area = /area/station/security
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 
 /datum/job_department/engineering
@@ -83,6 +88,7 @@
 	display_order = 4
 	label_class = "engineering"
 	ui_color = "#dfb567"
+	primary_work_area = /area/station/engineering
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
 
 /datum/job_department/medical
@@ -93,6 +99,7 @@
 	display_order = 5
 	label_class = "medical"
 	ui_color = "#65b2bd"
+	primary_work_area = /area/station/medical
 	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 
 /datum/job_department/science
@@ -103,6 +110,7 @@
 	display_order = 6
 	label_class = "science"
 	ui_color = "#c973c9"
+	primary_work_area = /area/station/science
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 
 /datum/job_department/cargo
@@ -113,6 +121,7 @@
 	display_order = 7
 	label_class = "supply"
 	ui_color = "#cf9c6c"
+	primary_work_area = /area/station/cargo
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 
 /datum/job_department/engineering
@@ -133,6 +142,7 @@
 	display_order = 9
 	label_class = "service"
 	ui_color = "#7cc46a"
+	primary_work_area = /area/station/service
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
 /datum/job_department/silicon

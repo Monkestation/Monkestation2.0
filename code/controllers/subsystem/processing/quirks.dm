@@ -19,14 +19,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
 	var/static/list/quirk_blacklist = list(
 		list("Blind", "Nearsighted"),
-		list("Jolly", "Depression", "Apathetic", "Hypersensitive"),
+		list("Jolly", "Depression", "Hypersensitive"),
 		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
 		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
 		list("Alcohol Tolerance", "Light Drinker"),
 		list("Drunken Resilience", "Light Drinker"),
 		list("Clown Enjoyer", "Mime Fan"),
-		list("Bad Touch", "Friendly"),
-		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
 		list("Prosthetic Organ", "Tin Man", "Body Purist"),
 		list("Quadruple Amputee", "Paraplegic"),
@@ -125,7 +123,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
  *Randomises the quirks for a specified mob
  */
 /datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user)
-	var/bonus_quirks = max((length(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
+	var/bonus_quirks = max((LAZYLEN(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding
 	var/good_count = 0 //Maximum of 6 good perks
