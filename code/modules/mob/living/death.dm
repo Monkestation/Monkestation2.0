@@ -154,7 +154,11 @@
 	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src)
 
 /mob/living/simple_animal/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
-	return // I don't care about you anymore
+	// Most of our pets are still simple animals, so those still count
+	if(!istype(src, /mob/living/simple_animal/pet))
+		return // I don't care about you anymore
+	. = ..()
+	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src)
 
 /mob/living/carbon/human/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
 	for(var/datum/surgery/organ_manipulation/manipulation in surgeries)

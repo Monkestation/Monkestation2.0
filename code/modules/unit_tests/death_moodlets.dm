@@ -36,7 +36,7 @@
 	abstract_type = /datum/unit_test/death_moodlets/pet
 
 /datum/unit_test/death_moodlets/pet/get_dying_mob()
-	return allocate(/mob/living/basic/pet/cat/_proc)
+	return allocate(/mob/living/basic/pet/dog/pug)
 
 /// Test the normal ol default moodlet
 /datum/unit_test/death_moodlets/human/normal
@@ -81,6 +81,13 @@
 /// Tests animal moodlet
 /datum/unit_test/death_moodlets/pet/animal_moodlet
 	desired_moodlet = /datum/mood_event/conditional/see_death/pet
+
+/// Same as above but for a simple animal pet, most of our pets still are
+/datum/unit_test/death_moodlets/pet/simple_animal_moodlet
+	desired_moodlet = /datum/mood_event/conditional/see_death/pet
+
+/datum/unit_test/death_moodlets/pet/simple_animal_moodlet/get_dying_mob()
+	return allocate(/mob/living/simple_animal/pet/cat/_proc)
 
 /// Tests desensitized moodlet when a pet dies
 /datum/unit_test/death_moodlets/pet/desensitized_to_pet
