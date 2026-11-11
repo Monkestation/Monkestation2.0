@@ -65,11 +65,6 @@
 	force = UPGRADED_VAL(current_base_force, upgrade_level)
 	update_name()
 
-/obj/item/melee/trick_weapon/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers) //our weapon does 25% less damage on non monsters
-	if(!is_monster_hunter_prey(target_mob))
-		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0.75)
-	return ..()
-
 /obj/item/melee/trick_weapon/update_icon_state()
 	icon_state = "[base_icon_state][enabled ? "_active" : ""]"
 	if(inhand_icon_change)
