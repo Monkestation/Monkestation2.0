@@ -119,6 +119,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		migrate_legacy_sound_toggles(savefile)
 
 	if(current_version < 47)
+		// Gourmand is a personality now, the quirk got renamed so they don't share a name
+		if("Gourmand" in all_quirks)
+			all_quirks -= "Gourmand"
+			all_quirks += "Big Appetite"
 		migrate_quirk_to_personality(
 			quirk_to_migrate = "Extrovert",
 			new_typepath = /datum/personality/extrovert,
