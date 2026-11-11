@@ -122,6 +122,7 @@ If you make a derivative work from this code, you must include this notification
 	wrestle_slam.Remove(owner)
 	wrestle_throw.Remove(owner)
 	wrestle_strike.Remove(owner)
+	return ..()
 
 /datum/martial_art/wrestling/harm_act(mob/living/attacker, mob/living/defender)
 	if(check_streak(attacker, defender))

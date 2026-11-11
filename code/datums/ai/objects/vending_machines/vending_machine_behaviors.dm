@@ -21,6 +21,8 @@
 	addtimer(CALLBACK(src, PROC_REF(tiltonmob), controller, target_turf), time_to_tilt)
 
 /datum/ai_behavior/vendor_crush/proc/tiltonmob(datum/ai_controller/controller, turf/target_turf)
+	if(QDELETED(controller) || QDELETED(controller.pawn))
+		return
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
 	if(vendor_pawn.tilt(target_turf, 0) & SUCCESSFULLY_CRUSHED_MOB) //We hit something
 		vendor_pawn.say(pick("Supersize this!", "Eat my shiny metal ass!", "Want to consume some of my products?", "SMASH!", "Don't you love these smashing prices!"))
