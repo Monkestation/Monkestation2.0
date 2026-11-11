@@ -102,7 +102,6 @@
 /obj/item/storage/medkit/lone_wanderer_medkit
 	name = "ancient medical storage"
 	icon_state = "medkit_tactical_premium"
-	inhand_icon_state = "medkit_tactical_premium"
 	desc = "Give me your tired, your poor, your battered or bruised, all are welcome in my loving arms."
 
 /obj/item/storage/medkit/lone_wanderer_medkit/Initialize(mapload)
