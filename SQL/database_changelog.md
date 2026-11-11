@@ -22,12 +22,12 @@ Version 6.2 1 November 2026, by Ghommie
 Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
 
 ```sql
-CREATE TABLE `fish_progress` (
+CREATE TABLE IF NOT EXISTS `fish_progress` (
   `ckey` VARCHAR(32) NOT NULL,
   `progress_entry` VARCHAR(32) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ckey`,`progress_entry`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 ---
 

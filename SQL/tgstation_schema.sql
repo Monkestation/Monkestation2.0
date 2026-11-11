@@ -600,7 +600,7 @@ CREATE TABLE `fish_progress` (
   `progress_entry` VARCHAR(32) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ckey`,`progress_entry`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Table structure for table `ticket`
