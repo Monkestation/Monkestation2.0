@@ -5,6 +5,7 @@
  * as much as possible to the components/elements system
  */
 /atom
+	abstract_type = /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
@@ -119,6 +120,9 @@
 	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
+
+	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
+	var/spawn_blacklisted = FALSE
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE

@@ -1,4 +1,5 @@
 /obj/item/clothing/neck
+	abstract_type = /obj/item/clothing/neck
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
@@ -511,6 +512,7 @@
 	name = "infinity scarf"
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	SETUP_MAP_ICONS("infinity_scarf", "/obj/item/clothing/neck/infinity_scarf")
+	body_parts_covered = NECK|CHEST
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE"

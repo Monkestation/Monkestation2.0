@@ -587,7 +587,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	desc = "[desc] It has [uses] use\s remaining."
 
 /datum/action/innate/ai/blackout/Activate()
-	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(prob(30 * apc.overload))
 			apc.overload_lighting()
 		else
@@ -1049,14 +1049,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 				owner.speech_span = say_span
 			to_chat(owner, span_notice("Voice changed to [selection]."))
 		if("verb")
-			say_verb = params["verb"]
+			say_verb = strip_html(params["verb"], MAX_NAME_LEN)
 			if(changing_voice)
 				owner.verb_say = say_verb
 				owner.verb_ask = say_verb
 				owner.verb_exclaim = say_verb
 				owner.verb_yell = say_verb
 		if("name")
-			say_name = params["name"]
+			say_name = strip_html(params["name"], MAX_NAME_LEN)
 
 /datum/ai_module/malf/utility/emag
 	name = "Targetted Safeties Override"

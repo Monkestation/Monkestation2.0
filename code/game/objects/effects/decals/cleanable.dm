@@ -1,4 +1,5 @@
 /obj/effect/decal/cleanable
+	abstract_type = /obj/effect/decal/cleanable
 	gender = PLURAL
 	layer = FLOOR_CLEAN_LAYER
 	flags_1 = UNPAINTABLE_1

@@ -421,6 +421,31 @@
 	sawn_desc = "A sawn-off breaching shotgun, making for a more compact configuration while still having the same capability as before."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/dual/breacherslug
 
+///An underpowered shotgun given to Pun Pun when the station job trait roll.
+/obj/item/gun/ballistic/shotgun/monkey
+	name = "\improper Barback's Shot"
+	desc = "A chimp-sized, single-shot and break-action shotgun with an unpractical stock."
+	icon_state = "chimp_shottie"
+	inhand_icon_state = "shotgun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	force = 8
+	slot_flags = NONE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/single
+	obj_flags = UNIQUE_RENAME
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
+	semi_auto = TRUE
+	bolt_type = BOLT_TYPE_NO_BOLT
+	spread = 10
+	projectile_damage_multiplier = 0.5
+	projectile_wound_bonus = -25
+	recoil = 1
+	pin = /obj/item/firing_pin/monkey
+	pb_knockback = 1
+
 /obj/item/gun/ballistic/shotgun/hook
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."

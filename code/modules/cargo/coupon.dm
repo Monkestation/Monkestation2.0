@@ -11,6 +11,12 @@
 	var/discount_pct_off = 0.05
 	var/obj/machinery/computer/cargo/inserted_console
 
+/obj/item/coupon/Initialize(mapload)
+	. = ..()
+
+	if(discounted_pack)
+		update_name()
+
 /// Choose what our prize is :D
 /obj/item/coupon/proc/generate(rig_omen=FALSE)
 	discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
@@ -23,7 +29,7 @@
 
 	if(discount_pct_off != COUPON_OMEN)
 		discount_pct_off = text2num(discount_pct_off)
-		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
+		update_name()
 		return
 
 	name = "coupon - fuck you"
@@ -40,6 +46,10 @@
 	if(HAS_TRAIT(cursed, TRAIT_CURSED))
 		to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
 	addtimer(CALLBACK(src, PROC_REF(curse_heart), cursed), 5 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+
+/obj/item/coupon/update_name()
+	name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
+	return ..()
 
 /// Play stupid games, win stupid prizes
 /obj/item/coupon/proc/curse_heart(mob/living/cursed)

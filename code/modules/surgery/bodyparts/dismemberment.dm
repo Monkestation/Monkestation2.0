@@ -33,11 +33,8 @@
 			playsound(limb_owner, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
-// MONKESTATION ADDITION START
 	if(isipc(owner))
-		owner.dna.features["ipc_screen"] = "Blank"
 		playsound(get_turf(owner), 'sound/announcer/vox_fem/swhitenoise.ogg', 60, TRUE)
-// MONKESTATION ADDITION END
 
 	if (can_bleed())
 		limb_owner.bleed(rand(20, 40))
@@ -275,10 +272,9 @@
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1, violent = violent)
 		arm_owner.hand_bodyparts[held_index] = null
 	if(arm_owner.handcuffed)
-		arm_owner.handcuffed.forceMove(drop_location())
-		arm_owner.handcuffed.dropped(arm_owner)
+		var/obj/item/lost_cuffs = arm_owner.handcuffed
 		arm_owner.set_handcuffed(null)
-		arm_owner.update_handcuffed()
+		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
@@ -296,15 +292,12 @@
 
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
-	if(owner && !special)
-		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
-			owner.legcuffed.dropped(owner)
-			owner.legcuffed = null
-			owner.update_worn_legcuffs()
-		if(owner.shoes)
-			owner.dropItemToGround(owner.shoes, TRUE, violent = violent)
-	return ..()
+	var/mob/living/carbon/leg_owner = owner
+	. = ..()
+	if(special || !leg_owner)
+		return
+	leg_owner.dropItemToGround(leg_owner.legcuffed, force = TRUE)
+	leg_owner.dropItemToGround(leg_owner.shoes, TRUE, violent = violent)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
 	if(!special)
