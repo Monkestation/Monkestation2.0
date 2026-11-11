@@ -76,7 +76,10 @@
 
 ///Tail parent type (which is MONKEEEEEEEEEEE by default), with wagging functionality
 /datum/bodypart_overlay/mutant/tail
-	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "tail_monkey"
 	/// Tracks if it's currently wagging or not
 	var/wagging = FALSE
@@ -93,12 +96,13 @@
 	var/mob/living/carbon/human/human = bodypart_owner.owner
 	if(!istype(human))
 		return TRUE
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		if(!mesh_in_suits)
-			return FALSE
-		if(!(locate(/datum/bodypart_texture/mesh) in bodypart_owner.bodypart_textures))
-			return FALSE
-	if(human.w_uniform?.flags_inv & HIDETAIL)
+	if(human.obscured_slots & HIDETAIL)
+		return FALSE
+	if(!(human.obscured_slots & HIDEJUMPSUIT))
+		return TRUE
+	if(!mesh_in_suits)
+		return FALSE
+	if(!(locate(/datum/bodypart_texture/mesh) in bodypart_owner.bodypart_textures))
 		return FALSE
 	return TRUE
 
@@ -179,3 +183,18 @@
 /obj/item/organ/external/tail/lizard/fake
 	name = "fabricated lizard tail"
 	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
+
+
+/// end of lizard stuff
+
+/obj/item/organ/external/tail/shadekin
+	name = "shadekin tail"
+	desc = "A fluffy shadekin tail."
+	preference = "feature_shadekin_tail"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/shadekin
+
+/datum/bodypart_overlay/mutant/tail/shadekin
+	feature_key = "tail_shadekin"
+
+/datum/bodypart_overlay/mutant/tail/shadekin/get_global_feature_list()
+	return GLOB.tails_list_shadekin

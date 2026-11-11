@@ -118,13 +118,10 @@
 		QDEL_NULL(core)
 	QDEL_NULL(wires)
 	QDEL_NULL(mod_link)
-	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
-		var/obj/item/part_item = part_datum.part_item
-		part_datum.part_item = null
-		part_datum.overslotting = null
-		mod_parts -= part_datum
-		if(!QDELING(part_item))
-			qdel(part_item)
+	for(var/part_key in mod_parts)
+		var/datum/mod_part/part_datum = mod_parts[part_key]
+		mod_parts -= part_key
+		qdel(part_datum)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -202,6 +199,7 @@
 		set_wearer(user)
 	else if(wearer)
 		unset_wearer()
+	return ..()
 
 /obj/item/mod/control/dropped(mob/user)
 	. = ..()
@@ -446,12 +444,15 @@
 
 /// Returns the part item that goes in the given slot, if any.
 /obj/item/mod/control/proc/get_part_from_slot(slot)
-	var/datum/mod_part/part = mod_parts["[slot]"]
-	return part?.part_item
+	RETURN_TYPE(/obj/item)
+	return get_part_datum_from_slot(slot)?.part_item
 
 /// Returns the part datum of the part that goes in the given slot, if any.
 /obj/item/mod/control/proc/get_part_datum_from_slot(slot)
-	return mod_parts["[slot]"]
+	RETURN_TYPE(/datum/mod_part)
+	for (var/part_key in mod_parts)
+		if (text2num(part_key) & slot)
+			return mod_parts[part_key]
 
 /obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
 	if(wearer == user)
@@ -485,22 +486,6 @@
 		covered_slots |= part.slot_flags
 	return covered_slots
 
-/// Returns (and caches) a mask icon of the sealed parts of the suit, used to clip module overlays.
-/obj/item/mod/control/proc/generate_suit_mask()
-	var/list/parts = get_parts(all = TRUE)
-	var/covered_slots = get_sealed_slots(parts)
-	if(GLOB.mod_masks[skin])
-		if(GLOB.mod_masks[skin]["[covered_slots]"])
-			return GLOB.mod_masks[skin]["[covered_slots]"]
-	else
-		GLOB.mod_masks[skin] = list()
-	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
-	for(var/obj/item/part as anything in parts)
-		slot_mask.Blend(icon(part.worn_icon, part.icon_state), ICON_OVERLAY)
-	slot_mask.Blend("#fff", ICON_ADD)
-	GLOB.mod_masks[skin]["[covered_slots]"] = slot_mask
-	return GLOB.mod_masks[skin]["[covered_slots]"]
-
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))
 		unset_wearer()
@@ -513,6 +498,8 @@
 		for(var/obj/item/part as anything in get_parts())
 			seal_part(part, is_sealed = FALSE)
 	for(var/obj/item/part as anything in get_parts())
+		if(part.loc == src)
+			continue
 		INVOKE_ASYNC(src, PROC_REF(retract), wearer, part, /* instant = */ TRUE) // async to appease spaceman DMM because the branch we don't run has a do_after
 	if(active)
 		control_activation(is_on = FALSE)
@@ -591,7 +578,6 @@
 	modules += new_module
 	complexity += new_module.complexity
 	new_module.mod = src
-	new_module.RegisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, TYPE_PROC_REF(/obj/item/mod/module, add_module_overlay))
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
@@ -611,7 +597,6 @@
 		old_module.on_part_deactivation(deleting = deleting)
 		if(old_module.active)
 			old_module.deactivate(display_message = !deleting, deleting = deleting)
-	old_module.UnregisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS)
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null

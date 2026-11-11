@@ -8,7 +8,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
 
 /datum/design/rightarm
 	name = "Right Arm"
@@ -16,7 +16,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
 
 /datum/design/leftleg
 	name = "Left Leg"
@@ -24,7 +24,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
 
 /datum/design/rightleg
 	name = "Right Leg"
@@ -32,7 +32,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR,) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
 
 //Non-limb limb designs
 
@@ -82,7 +82,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/internal/eyes
-	category = list(SPECIES_HUMAN, RND_CATEGORY_INITIAL)
+	category = list(SPECIES_HUMAN, RND_CATEGORY_INITIAL, SPECIES_SHADEKIN)
 
 /datum/design/ears
 	name = "Ears"
@@ -268,3 +268,48 @@
 	desc = "Contains designs for ethereal organs for the limbgrower - Ethereal tongue and stomach."
 	id = "limbdesign_ethereal"
 	build_path = /obj/item/disk/design_disk/limbs/ethereal
+
+// Shadekin
+
+/datum/design/shadekin_eyes
+	name = "Shadekin Eyes"
+	id = "shadekin_eyes"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/eyes/shadekin
+	category = list(SPECIES_SHADEKIN, RND_CATEGORY_INITIAL)
+
+
+/datum/design/shadekin_tongue
+	name = "Shadekin Tongue"
+	id = "shadekin_tongue"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/tongue/shadekin
+	category = list(SPECIES_SHADEKIN, RND_CATEGORY_INITIAL)
+
+
+/datum/design/shadekin_ears
+	name = "Internal Shadekin Ears"
+	id = "shadekin_ears"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/ears/shadekin
+	category = list(SPECIES_SHADEKIN, RND_CATEGORY_INITIAL)
+
+
+/datum/design/external_shadekin_ears
+	name = "Protruding Shadekin Ears"
+	id = "shadekin_external_ears"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/external/ears/shadekin
+	category = list(SPECIES_SHADEKIN, RND_CATEGORY_INITIAL)
+
+/datum/design/shadekin_tail
+	name = "Shadekin Tail"
+	id = "shadekin_tail"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/external/tail/shadekin
+	category = list(SPECIES_SHADEKIN, RND_CATEGORY_INITIAL)

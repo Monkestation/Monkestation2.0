@@ -64,14 +64,7 @@
 	// Detonate once on death, then gib the chassis.
 	emagged = FALSE
 	QDEL_NULL(mmi)
-	explosion(
-		get_turf(src),
-		devastation_range = 1,
-		heavy_impact_range = 2,
-		light_impact_range = 3,
-		flash_range = 5,
-		explosion_cause = src,
-	)
+	explosion(get_turf(src), -1, -1, 3, 5, adminlog = "Emagged spiderbot destruction", explosion_cause = src)
 	if(!gibbed && !QDELETED(src))
 		gib()
 
