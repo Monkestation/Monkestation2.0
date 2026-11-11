@@ -291,6 +291,7 @@
 #include "code\__DEFINES\speech_controller.dm"
 #include "code\__DEFINES\sprite_accessories.dm"
 #include "code\__DEFINES\stack.dm"
+#include "code\__DEFINES\stack_trace.dm"
 #include "code\__DEFINES\stamina.dm"
 #include "code\__DEFINES\stat.dm"
 #include "code\__DEFINES\stat_tracking.dm"

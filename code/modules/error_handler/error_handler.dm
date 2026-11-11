@@ -38,6 +38,15 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		return ..() //how the fuck?
 
 	var/callee/source = caller
+#ifdef OPENDREAM
+	// opendream can't do the caller trick, so file/line ride along in the message instead
+	var/static/regex/stack_workaround = regex("[WORKAROUND_IDENTIFIER](.+?)[WORKAROUND_IDENTIFIER]")
+	if(stack_workaround.Find(E.name))
+		var/list/data = json_decode(stack_workaround.group[1])
+		E.file = data[1]
+		E.line = data[2]
+		E.name = stack_workaround.Replace(E.name, "")
+#else
 	// lua or call() can run stack_trace with nothing above it, then there's no real frame to swap in
 	if(source.proc == /proc/stack_trace && source.caller)
 		source = source.caller
@@ -57,6 +66,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		if(call_stack_start < length(desc_lines))
 			desc_lines.Cut(call_stack_start + 1, call_stack_start + 2)
 		E.desc = desc_lines.Join("\n")
+#endif
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
