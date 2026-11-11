@@ -24761,6 +24761,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/purple/half,
 /obj/machinery/vending/wardrobe/xeno_wardrobe,
+/obj/machinery/computer/extract_orders/directional/north,
 /turf/open/floor/iron/white/side,
 /area/station/science/xenobiology/control)
 "eKf" = (
@@ -25682,6 +25683,7 @@
 /area/station/maintenance/aft/upper)
 "eSw" = (
 /obj/machinery/extract_compressor,
+/obj/machinery/computer/extract_orders/directional/north,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "eSx" = (
@@ -28333,7 +28335,6 @@
 /obj/effect/turf_decal/siding/purple/end{
 	dir = 8
 	},
-/obj/structure/railing,
 /turf/open/floor/glass/reinforced,
 /area/station/science)
 "fue" = (
@@ -73537,7 +73538,6 @@
 /obj/effect/turf_decal/siding/purple/end{
 	dir = 4
 	},
-/obj/structure/railing,
 /turf/open/floor/glass/reinforced,
 /area/station/science)
 "ogX" = (
@@ -112490,7 +112490,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/purple,
-/obj/structure/railing,
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/glass/reinforced,
 /area/station/science)
 "vBF" = (

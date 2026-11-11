@@ -217,7 +217,7 @@
 		var/mob/card_holder = recursive_loc_check(card, /mob)
 		if(ismob(card_holder)) //If on a mob
 			if(!card_holder.client || (!(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
-				return
+				continue
 
 			if(!HAS_TRAIT(card_holder, TRAIT_DEAF))
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
