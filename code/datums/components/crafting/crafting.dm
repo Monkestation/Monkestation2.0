@@ -57,18 +57,17 @@
 
 	for(var/required_structure_path in R.structures)
 		// Check for the presence of the required structure. Allow for subtypes to be used if not blacklisted
-		var/needed_amount = R.structures[required_structure_path]
+		var/found = FALSE
 		for(var/structure_path in structures)
 			if(!ispath(structure_path, required_structure_path) || R.blacklist.Find(structure_path))
 				continue
 
-			needed_amount -= structures[required_structure_path]
 			requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
-			if(needed_amount <= 0)
-				break
+			found = TRUE
+			break
 
 		// We didn't find the required item
-		if(needed_amount > 0)
+		if(!found)
 			return FALSE
 
 	// Process all requirements

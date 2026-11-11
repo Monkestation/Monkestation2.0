@@ -1119,11 +1119,17 @@
 	if((reac_volume < 3) || isspaceturf(exposed_turf))
 		return
 
-	var/obj/effect/decal/cleanable/greenglow/glow = locate() in exposed_turf.contents
-	if(!glow)
-		glow = new(exposed_turf)
-	if(!QDELETED(glow))
-		glow.reagents.add_reagent(type, reac_volume)
+	var/obj/effect/decal/cleanable/greenglow/glow = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow)
+	if(QDELETED(glow))
+		return
+
+	glow.decal_reagent = type
+	var/rounded_volume = round(reac_volume, 1)
+	if(glow.reagents) // Decal already has reagents inited, add instead
+		glow.reagents.maximum_volume = min(glow.reagents.maximum_volume + rounded_volume, 300) // Increase reagent holder volume up to a max of 300
+		glow.reagents.add_reagent(type, rounded_volume)
+	else
+		glow.reagent_amount += rounded_volume
 
 /datum/reagent/uranium/generate_infusion_values(datum/reagents/chems)
 	if(chems.has_reagent(src.type, 1))
@@ -2888,11 +2894,16 @@
 	if(!istype(exposed_turf) || isspaceturf(exposed_turf)) // Is the turf valid
 		return
 
+	var/rounded_volume = round(reac_volume, 1)
 	var/obj/effect/decal/cleanable/ants/pests = locate() in range(5, exposed_turf)
 	if(!pests)
 		pests = new(exposed_turf)
-	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
-	pests.reagents.add_reagent(/datum/reagent/ants, spilled_ants)
+		pests.reagent_amount = rounded_volume
+	else if(pests.reagents) // Decal already has reagents inited, add instead
+		pests.reagents.maximum_volume = min(pests.reagents.maximum_volume + rounded_volume, 300) // Increase reagent holder volume up to a max of 300
+		pests.reagents.add_reagent(/datum/reagent/ants, rounded_volume)
+	else
+		pests.reagent_amount += rounded_volume
 	pests.update_ant_damage()
 
 //This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
