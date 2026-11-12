@@ -100,7 +100,7 @@
 
 /obj/item/smithed_part/weapon_part/shield/examine(mob/user)
 	. = ..()
-	var/healthpercent = floor((atom_integrity/max_integrity) * 100, 1)
+	var/healthpercent = floor((atom_integrity/max_integrity) * 100)
 	switch(healthpercent)
 		if(50 to 99)
 			. += span_info("It looks slightly damaged.")
