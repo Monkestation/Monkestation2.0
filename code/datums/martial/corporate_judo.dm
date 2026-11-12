@@ -147,7 +147,7 @@
 /datum/martial_art/corpjudo/proc/eye_poke(mob/living/attacker, mob/living/defender)
 	reset_streak(defender)
 	if(defender.is_eyes_covered())
-		to_chat(span_warning("[defender] has [defender.p_their()] eyes covered."))
+		to_chat(attacker, span_warning("[defender] has [defender.p_their()] eyes covered."))
 		return MARTIAL_ATTACK_FAIL
 	defender.visible_message("<span class='warning'>[attacker] jabs [defender] in [attacker.p_their()] eyes!</span>", \
 						"<span class='userdanger'>[attacker] jabs you in the eyes!</span>")
@@ -420,7 +420,7 @@
 	button_icon_state = "golden_bolt"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS|AB_CHECK_LYING
 
-	var/fired_cooldown = 30 SECONDS
+	var/fired_cooldown = 20 SECONDS
 	var/obj/item/hand_item/golden_bolt/hand_bolt
 
 //COMSIG_PROJECTILE_FIRER_BEFORE_FIRE
@@ -432,21 +432,30 @@
 /datum/action/cooldown/golden_bolt/Remove(mob/remove_from)
 	. = ..()
 	UnregisterSignal(remove_from, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
-	QDEL_NULL(hand_bolt)
+	clear_hand_bolt()
 
-/datum/action/cooldown/golden_bolt/Activate(atom/target)
+/datum/action/cooldown/golden_bolt/proc/clear_hand_bolt()
+	SIGNAL_HANDLER
+	if(!hand_bolt)
+		return
+	UnregisterSignal(hand_bolt, COMSIG_QDELETING)
 	if(QDELETED(hand_bolt))
 		hand_bolt = null
-	if(istype(hand_bolt))
+	else
 		QDEL_NULL(hand_bolt)
+
+/datum/action/cooldown/golden_bolt/Activate(atom/target)
+	if(hand_bolt)
+		clear_hand_bolt()
 		return
 	hand_bolt = new /obj/item/hand_item/golden_bolt(owner)
+	RegisterSignal(hand_bolt, COMSIG_QDELETING, PROC_REF(clear_hand_bolt))
 	if(owner.put_in_active_hand(hand_bolt))
 		owner.visible_message("[owner] summons a ball of energy into [owner.p_Their()] hand.",
 		"Your hand now crackles with the belt's energy."
 		)
 	else
-		QDEL_NULL(hand_bolt)
+		clear_hand_bolt()
 	return .
 
 /datum/action/cooldown/golden_bolt/proc/activate_cooldown(datum/source, obj/projectile/bullet, atom/firer, atom/original_target)
@@ -462,8 +471,6 @@
 	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	inhand_icon_state = "duffelcurse"
-
-	var/bolt_projectile = /obj/projectile/golden_bolt
 
 /obj/item/hand_item/golden_bolt/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
