@@ -13,7 +13,8 @@
 /area/virtual_domain
 	name = "Virtual Domain"
 	icon = 'icons/area/areas_station.dmi'
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 	has_gravity = STANDARD_GRAVITY
 
 /area/virtual_domain/powered
@@ -32,7 +33,8 @@
 
 /area/virtual_domain/safehouse
 	name = "Virtual Domain Safehouse"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | VIRTUAL_SAFE_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 	requires_power = FALSE
 	sound_environment = SOUND_ENVIRONMENT_ROOM
@@ -42,10 +44,12 @@
 /area/lavaland/surface/outdoors/virtual_domain
 	name = "Virtual Domain Lava Ruins"
 	icon_state = "bit_ruin"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 
 /area/lavaland/surface/outdoors/virtual_domain/protected_space
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | VIRTUAL_SAFE_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 
 /area/lavaland/surface/outdoors/virtual_domain/fullbright
@@ -53,21 +57,37 @@
 	base_lighting_alpha = 255
 
 /area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | VIRTUAL_SAFE_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 
 /area/icemoon/underground/explored/virtual_domain
 	name = "Virtual Domain Ice Ruins"
 	icon_state = "bit_ice"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 
 /area/ruin/space/has_grav/powered/virtual_domain
 	name = "Virtual Domain Space Ruins"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_space"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space
 	name = "Virtual Domain Safe Zone"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | VIRTUAL_SAFE_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
+
+/// A hash lookup list of all the virtual area types
+GLOBAL_LIST_INIT_TYPED(virtual_areas, /area, populate_virtual_areas())
+
+/// Constructs the list of virtual areas
+/proc/populate_virtual_areas()
+	RETURN_TYPE(/list/area)
+	var/list/area/virtual_areas = list()
+	for(var/area/area_type as anything in subtypesof(/area))
+		if (area_type::area_flags_mapping & VIRTUAL_AREA)
+			virtual_areas[area_type] = TRUE
+	return virtual_areas

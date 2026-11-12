@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(nightshift)
 	set waitfor = FALSE
 
 	if(!resumed)
-		currentrun = SSmachines.get_machines_by_type(/obj/machinery/power/apc)
+		currentrun = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 		nightshift_active = active
 		if(announce)
 			if (active)

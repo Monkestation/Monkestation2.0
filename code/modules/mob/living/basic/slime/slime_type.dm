@@ -11,6 +11,8 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 	/// Spaces become dashes in icon states, so if you touch these names,
 	/// remember to update icons/mob/simple/slimes.dmi!
 	var/color
+	/// How far along the breeding tree this color sits, 0 for grey up to 5. Rainbow is outside the tree and has none.
+	var/tier
 	///Whether the slime icons should be semi-transparent
 	var/transparent = FALSE
 	///The type our slime spawns
@@ -35,6 +37,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/grey
 	color = "grey"
+	tier = 0
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/grey
 	rgb_code = COLOR_SLIME_GREY
@@ -49,6 +52,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/blue
 	color = "blue"
+	tier = 1
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/blue
 	rgb_code = COLOR_SLIME_BLUE
@@ -61,6 +65,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/metal
 	color = "metal"
+	tier = 1
 	core_type = /obj/item/slime_extract/metal
 	rgb_code = COLOR_SLIME_METAL
 	crossbreed_color = "#7E7E7E"
@@ -72,6 +77,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/purple
 	color = "purple"
+	tier = 1
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/purple
 	rgb_code = COLOR_SLIME_PURPLE
@@ -84,6 +90,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/orange
 	color = "orange"
+	tier = 1
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/orange
 	rgb_code = COLOR_SLIME_ORANGE
@@ -98,6 +105,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/darkblue
 	color = "dark blue"
+	tier = 2
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/darkblue
 	rgb_code = COLOR_SLIME_DARK_BLUE
@@ -110,6 +118,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/darkpurple
 	color = "dark purple"
+	tier = 2
 	core_type = /obj/item/slime_extract/darkpurple
 	rgb_code = COLOR_SLIME_DARK_PURPLE
 	crossbreed_color = "#551A8B"
@@ -121,6 +130,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/silver
 	color = "silver"
+	tier = 2
 	core_type = /obj/item/slime_extract/silver
 	rgb_code = COLOR_SLIME_SILVER
 	crossbreed_color = "#D3D3D3"
@@ -132,6 +142,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/yellow
 	color = "yellow"
+	tier = 2
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/yellow
 	rgb_code = COLOR_SLIME_YELLOW
@@ -146,12 +157,14 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/bluespace
 	color = "bluespace"
+	tier = 3
 	core_type = /obj/item/slime_extract/bluespace
 	rgb_code = COLOR_SLIME_BLUESPACE
 	visual_effect = /obj/effect/abstract/visual_effect/bluespace
 
 /datum/slime_type/cerulean
 	color = "cerulean"
+	tier = 3
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/cerulean
 	rgb_code = COLOR_SLIME_CERULEAN
@@ -159,12 +172,14 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/pyrite
 	color = "pyrite"
+	tier = 3
 	core_type = /obj/item/slime_extract/pyrite
 	rgb_code = COLOR_SLIME_PYRITE
 	crossbreed_color = "#FAFAD2"
 
 /datum/slime_type/sepia
 	color = "sepia"
+	tier = 3
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/sepia
 	rgb_code = COLOR_SLIME_SEPIA
@@ -174,6 +189,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/gold
 	color = "gold"
+	tier = 4
 	core_type = /obj/item/slime_extract/gold
 	rgb_code = COLOR_SLIME_GOLD
 	visual_effect = /obj/effect/abstract/visual_effect/gold
@@ -183,6 +199,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/green
 	color = "green"
+	tier = 4
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/green
 	rgb_code = COLOR_SLIME_GREEN
@@ -193,6 +210,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/pink
 	color = "pink"
+	tier = 4
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/pink
 	rgb_code = COLOR_SLIME_PINK
@@ -203,6 +221,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/red
 	color = "red"
+	tier = 4
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/red
 	rgb_code = COLOR_SLIME_RED
@@ -215,12 +234,14 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/adamantine
 	color = "adamantine"
+	tier = 5
 	core_type = /obj/item/slime_extract/adamantine
 	rgb_code = COLOR_SLIME_ADAMANTINE
 	crossbreed_color = "#008B8B"
 
 /datum/slime_type/black
 	color = "black"
+	tier = 5
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/black
 	rgb_code = COLOR_SLIME_BLACK
@@ -228,6 +249,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/lightpink
 	color = "light pink"
+	tier = 5
 	transparent = TRUE
 	core_type = /obj/item/slime_extract/lightpink
 	rgb_code = COLOR_SLIME_LIGHT_PINK
@@ -235,6 +257,7 @@ GLOBAL_ALIST_INIT(slime_types_by_extract, init_slime_types_by_extract())
 
 /datum/slime_type/oil
 	color = "oil"
+	tier = 5
 	core_type = /obj/item/slime_extract/oil
 	rgb_code = COLOR_SLIME_OIL
 	visual_effect = /obj/effect/abstract/visual_effect/oil
