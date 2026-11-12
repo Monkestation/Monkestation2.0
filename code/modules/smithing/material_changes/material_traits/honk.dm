@@ -2,6 +2,8 @@
 	name = "Honkmother's Blessing"
 	desc = "Injects mobs with laughter on hit (scales with liquid flow), and squeaks."
 
+	examine_text = "Looks funny."
+
 /datum/material_trait/honk_blessed/on_trait_add(atom/movable/parent)
 	. = ..()
 	parent.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)

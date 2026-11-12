@@ -9,6 +9,8 @@
 	///our processing_reagents
 	var/datum/reagents/processing_reagents
 
+	examine_text = "Looks covered in tiny grooves and pores."
+
 /datum/material_trait/chemical_injector/on_trait_add(atom/movable/parent)
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(check_douse))

@@ -21,7 +21,7 @@
 	force = round(((material_stats.density + material_stats.hardness) / 9) * (smithed_quality * 0.01))
 	wield_force = round(force * 1.25)
 	unwield_force = force
-	throwforce = force * 1.5
+	throwforce = force * 1.25
 
 	AddComponent(/datum/component/multi_hit, icon_state = "stab", height = 2)
 	AddComponent(/datum/component/two_handed, \

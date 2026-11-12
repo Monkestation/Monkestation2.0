@@ -20,8 +20,8 @@
 	wound_bonus = -5 //aint cutting shit
 	bare_wound_bonus = 20 //Unless you are unarmored.
 
-	force = round(((material_stats.density + material_stats.hardness) / 35) * (smithed_quality * 0.01))
-	throwforce = force * 7.5 //Throwing weapon, mainly.
+	throwforce = round(((material_stats.density + material_stats.hardness) / 7.5) * (smithed_quality * 0.01))
+	force = round(throwforce * 0.2)
 	w_class = WEIGHT_CLASS_SMALL
 	..()
 

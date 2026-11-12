@@ -43,6 +43,7 @@
 /datum/mineral_sample_datum/sploop
 	name = "sploop"
 	icon_state = "fibrilith"
+	base_traits = list(/datum/material_trait/firestorm_bane)
 
 /datum/mineral_sample_datum/bingus
 	name = "bingus"

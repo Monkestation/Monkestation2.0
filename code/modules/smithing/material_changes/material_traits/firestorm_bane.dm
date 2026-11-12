@@ -4,6 +4,8 @@
 	trait_flags = MT_NO_STACK_ADD
 	value_bonus = 50
 
+	examine_text = "Looks like it hates ashstorms."
+
 /datum/material_trait/firestorm_bane/post_parent_init(obj/item/parent)
 	if(!isitem(parent))
 		return

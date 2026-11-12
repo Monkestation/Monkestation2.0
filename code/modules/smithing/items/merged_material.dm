@@ -15,6 +15,6 @@
 		if(material_stats.hardness >= 60)
 			. += "Looks hard to scratch."
 
-		for(var/datum/material_trait/trait in material_stats.material_traits)
+		for(var/datum/material_trait/trait as anything in material_stats.material_traits)
 			if(trait.examine_text)
 				. += trait.examine_text

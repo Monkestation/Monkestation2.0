@@ -19,7 +19,7 @@
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 
-	attack_speed = CLICK_CD_BULKY_WEAPON
+	attack_speed = CLICK_CD_LARGE_WEAPON
 
 	force = round(((material_stats.density + material_stats.hardness) / 7.5) * (smithed_quality * 0.01))
 	throwforce = round(force * 0.7)

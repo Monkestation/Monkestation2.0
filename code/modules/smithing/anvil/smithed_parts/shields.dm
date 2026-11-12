@@ -13,7 +13,7 @@
 
 /obj/item/smithed_part/weapon_part/shield/buckler/finish_weapon()
 	slot_flags = ITEM_SLOT_BACK
-	var quality = (smithed_quality/100)
+	var quality = (smithed_quality * 0.01)
 	force = round(10 * quality)
 	throwforce = round(force/1.5)
 
@@ -52,7 +52,7 @@
 
 /obj/item/smithed_part/weapon_part/shield/pavise/finish_weapon()
 	slot_flags = ITEM_SLOT_BACK
-	var quality = (smithed_quality/100)
+	var quality = (smithed_quality * 0.01)
 	force = round(10 * quality)
 	throwforce = round(force/2)
 	block_chance = round(((material_stats.hardness + material_stats.density)/3) * quality)

@@ -1,4 +1,4 @@
-
+///This minigame is never used, as it was deemed awful to play with, but feel free to browse for code or obliterate it.
 /datum/anvil_challenge
 	/// When the ui minigame phase started
 	var/start_time

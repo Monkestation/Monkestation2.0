@@ -13,7 +13,7 @@
 /obj/item/merged_material/mineral_sample/Initialize(mapload)
 	. = ..()
 
-	create_random_mineral_stats(120,30)
+	create_random_mineral_stats(100,30)
 
 	if(!length(starting_datums))
 		for(var/datum/mineral_sample_datum/datum as anything in subtypesof(/datum/mineral_sample_datum))
