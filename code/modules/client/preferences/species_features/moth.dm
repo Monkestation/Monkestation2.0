@@ -109,3 +109,27 @@
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value
+
+/datum/preference/choiced/moth_wings/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = list("wing_color")
+	return data
+
+/datum/preference/color/wing_color
+	savefile_key = "wing_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
+	default_null = TRUE
+	allows_nulls = TRUE
+
+/datum/preference/choiced/moth_antennae/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = list("antennae_color")
+	return data
+
+/datum/preference/color/antennae_color
+	savefile_key = "antennae_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
+	default_null = TRUE
+	allows_nulls = TRUE

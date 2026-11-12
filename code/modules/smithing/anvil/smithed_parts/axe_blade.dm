@@ -1,0 +1,31 @@
+/obj/item/smithed_part/weapon_part/axe_blade
+	icon_state = "axehead"
+	base_name = "axe blade"
+	weapon_name = "axe"
+
+	finished_desc = "A forged axe, weighted for chops or throwing."
+
+	weapon_inhand_icon_state = "axe"
+	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
+	hilt_icon_state = "axe-hilt"
+
+/obj/item/smithed_part/weapon_part/axe_blade/finish_weapon()
+	sharpness = SHARP_EDGED
+	embed_type = /datum/embedding/axe_blade
+	armour_penetration = 45 * (smithed_quality / 100)
+
+	tool_behaviour = TOOL_SAW
+
+	wound_bonus = 2
+	bare_wound_bonus = 10
+
+	force = floor(((material_stats.density + material_stats.hardness) / 8.75) * (smithed_quality * 0.01))
+	throwforce = floor(force * 1.75)
+	w_class = WEIGHT_CLASS_SMALL
+	..()
+
+/datum/embedding/axe_blade
+	embed_chance = 35
+	pain_mult = 4
+	fall_chance = 10
+	ignore_throwspeed_threshold = TRUE
