@@ -528,7 +528,7 @@
 /obj/item/storage/medkit/lone_wanderer_medkit
 	name = "ancient medical storage"
 	icon_state = "medkit_tactical_premium"
-	desc = "Give me your tired, your poor, your battered or bruised, all are welcome in my loving arms."
+	desc = "Give me your tired, your poor, your battered and bruised, all are welcome in my loving arms."
 
 /obj/item/storage/medkit/lone_wanderer_medkit/Initialize(mapload)
 	. = ..()
@@ -547,6 +547,7 @@
 		/obj/item/cautery/advanced = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/blood_filter/advanced = 1,
+		/obj/item/breathing_bag = 1,
 		/obj/item/emergency_bed = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/bodybag/bluespace = 1,
