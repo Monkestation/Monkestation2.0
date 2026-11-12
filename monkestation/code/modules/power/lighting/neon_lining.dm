@@ -75,6 +75,7 @@
 	removable_tube = FALSE
 	status = LIGHT_OK
 	overlay_icon = null
+	light_angle = 360
 
 	bulb_inner_range = 0.5
 	bulb_outer_range = 3

@@ -3,6 +3,7 @@
 	desc = "You are irrationally afraid of something."
 	icon = FA_ICON_SPIDER
 	value = 0
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
 	medical_record_text = "Patient has an irrational fear of something."
 	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/storage/pill_bottle/psicodine)
 	var/phobia

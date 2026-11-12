@@ -584,6 +584,7 @@
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
 		REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
+		refresh_obscured()
 		update_body()
 		return TRUE
 
@@ -591,6 +592,7 @@
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
 		ADD_TRAIT(src, TRAIT_HUSK, source)
 		ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
+		refresh_obscured()
 		update_body()
 	else
 		ADD_TRAIT(src, TRAIT_HUSK, source)

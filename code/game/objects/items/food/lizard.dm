@@ -469,6 +469,7 @@
 
 //Pizza Dishes
 /obj/item/food/pizza/flatbread
+	abstract_type = /obj/item/food/pizza/flatbread
 	icon = 'icons/obj/food/lizard.dmi'
 	slice_type = null
 

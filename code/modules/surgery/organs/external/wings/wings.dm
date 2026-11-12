@@ -15,20 +15,23 @@
 
 ///Bodypart overlay of default wings. Does not have any wing functionality
 /datum/bodypart_overlay/mutant/wings
-	layers = ALL_EXTERNAL_OVERLAYS
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+	)
 	feature_key = "wings"
+	overlay_flags = parent_type::overlay_flags | LIMB_OVERLAY_WIDE_ICON | LIMB_OVERLAY_TALL_ICON
 
 /datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
 	if(!istype(human))
 		return TRUE
-	if(human.w_uniform?.flags_inv & HIDEMUTWINGS)
+	if(human.obscured_slots & HIDEMUTWINGS)
 		return FALSE
-	if(!human.wear_suit)
+	if(!(human.obscured_slots & HIDEJUMPSUIT))
 		return TRUE
-	if(!(human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return TRUE
-	if(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception))
+	if(human.wear_suit?.species_exception && is_type_in_list(src, human.wear_suit.species_exception))
 		return TRUE
 	return FALSE
 

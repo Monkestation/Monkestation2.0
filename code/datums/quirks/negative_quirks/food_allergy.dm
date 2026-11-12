@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	lose_text = span_notice("You feel your immune system phase back into perfect shape.")
 	medical_record_text = "Patient's immune system responds violently to certain food."
 	hardcore_value = 1
-	quirk_flags = QUIRK_HUMAN_ONLY
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SKIP
 	mail_goodies = list(/obj/item/reagent_containers/medipen)
 	/// Footype flags that will trigger the allergy
 	var/target_foodtypes = NONE

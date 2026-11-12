@@ -12,7 +12,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	ambience_index = AMBIENCE_AWAY
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 	skip_minimap_rendering = TRUE
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/awaymission/beach
 	name = "Beach"
@@ -32,7 +32,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	has_gravity = STANDARD_GRAVITY
 
 /area/awaymission/secret
-	area_flags = UNIQUE_AREA|NOTELEPORT|HIDDEN_AREA
+	area_flags = NOTELEPORT | HIDDEN_AREA
 
 /area/awaymission/secret/unpowered
 	always_unpowered = TRUE

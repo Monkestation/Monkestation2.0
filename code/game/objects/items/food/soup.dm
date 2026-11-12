@@ -1,4 +1,5 @@
 /obj/item/food/bowled
+	abstract_type = /obj/item/food/bowled
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/food/soupsalad.dmi'
 	bite_consumption = 5

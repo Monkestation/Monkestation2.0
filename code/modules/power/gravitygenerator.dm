@@ -145,6 +145,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	/// Audio for when the gravgen is on
 	var/datum/looping_sound/gravgen/soundloop
 
+	///Amount of shielding we offer against a radioactive nebula
+	var/radioactive_nebula_shielding = 4
+
 ///Station generator that spawns with gravity turned off.
 /obj/machinery/gravity_generator/main/off
 	on = FALSE
@@ -158,6 +161,8 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	if(on)
 		enable()
 		center_part.add_overlay("activated")
+
+	add_to_nebula_shielding(src, /datum/station_trait/nebula/hostile/radiation, PROC_REF(get_radioactive_nebula_shielding))
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
@@ -412,6 +417,10 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		if(mobs.client)
 			shake_camera(mobs, 15, 1)
 			mobs.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)
+
+/// Returns the radioactive shielding (if there's a radioactive nebula). Called from a callback set in add_to_nebula_shielding()
+/obj/machinery/gravity_generator/main/proc/get_radioactive_nebula_shielding()
+	return on ? radioactive_nebula_shielding : 0
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)

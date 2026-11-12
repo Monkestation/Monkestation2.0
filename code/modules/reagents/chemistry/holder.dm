@@ -959,7 +959,7 @@
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 
-	if(length(mix_message) && my_atom) //This is only at the end
+	if(length(mix_message) && my_atom && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS)) //This is only at the end
 		my_atom.audible_message(span_notice("<img class='icon' src='\ref[my_atom]'> [mix_message.Join()]"), push_appearance = my_atom)
 
 	if(!LAZYLEN(reaction_list))
@@ -987,9 +987,12 @@
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
 
-	var/reaction_message = equilibrium.reaction.mix_message
-	if(equilibrium.reaction.mix_sound)
-		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
+	var/reaction_message = null
+
+	if (isnull(my_atom) || !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
+		reaction_message = equilibrium.reaction.mix_message
+		if(equilibrium.reaction.mix_sound)
+			playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
 
 	if(equilibrium.reaction.pollutant_type && my_atom)
 		var/turf/my_turf = get_turf(my_atom)
@@ -1026,7 +1029,7 @@
 	var/list/mix_message = list()
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
-	if(my_atom && length(mix_message))
+	if(my_atom && length(mix_message) && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
 		my_atom.audible_message(span_notice("<img class='icon' src='\ref[my_atom]'> [mix_message.Join()]"), push_appearance = my_atom)
 	finish_reacting()
 
@@ -1140,7 +1143,7 @@
 
 	var/iconhtml = "<img class='icon' src='\ref[cached_my_atom]'>"
 	if(cached_my_atom)
-		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
+		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component) && !HAS_TRAIT(cached_my_atom, TRAIT_SILENT_REACTIONS)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 

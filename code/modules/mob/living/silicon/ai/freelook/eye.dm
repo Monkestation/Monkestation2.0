@@ -139,10 +139,8 @@
 ///Called when the AI shiftclicks on something to examinate it.
 /mob/eye/camera/ai/proc/examinate_check(mob/user, atom/source)
 	SIGNAL_HANDLER
-	if(user.client.eye == src)
-		if(ishuman(source) && !ai.canExamineHumans)
-			return
-		return COMPONENT_ALLOW_EXAMINATE
+	if(user.client.eye == src && ishuman(source) && !ai.canExamineHumans)
+		return COMSIG_MOB_CANCEL_CLICKON
 
 /atom/proc/move_camera_by_click()
 	if(!isAI(usr))

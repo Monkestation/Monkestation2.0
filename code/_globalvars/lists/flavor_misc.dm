@@ -32,7 +32,9 @@ GLOBAL_LIST_EMPTY(animated_spines_list)
 GLOBAL_LIST_EMPTY(tails_list)
 GLOBAL_LIST_EMPTY(tails_list_human) //Only exists for preference choices. Use "tails_list" otherwise.
 GLOBAL_LIST_EMPTY(tails_list_lizard) //See above!
+GLOBAL_LIST_EMPTY(tails_list_shadekin)
 GLOBAL_LIST_EMPTY(ears_list)
+GLOBAL_LIST_EMPTY(ears_list_shadekin)
 GLOBAL_LIST_EMPTY(wings_list)
 GLOBAL_LIST_EMPTY(wings_open_list)
 GLOBAL_LIST_EMPTY(moth_wings_list)

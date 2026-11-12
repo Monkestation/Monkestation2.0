@@ -9,6 +9,7 @@
 #define PLASTIC_BREAK_PROBABILITY 25
 
 /obj/item/kitchen
+	abstract_type = /obj/item/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'

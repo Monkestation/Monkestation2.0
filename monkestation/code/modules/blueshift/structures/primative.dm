@@ -750,7 +750,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	)
 
 // This is so the linen reskin shows properly in the suit storage.
-/obj/item/storage/bag/plants/build_worn_icon(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, mutant_styles)
+/obj/item/storage/bag/plants/build_worn_icon(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, mutant_styles, bodyshape)
 	if(default_layer == SUIT_STORE_LAYER && current_skin == RESKIN_LINEN)
 		override_file = 'monkestation/code/modules/blueshift/icons/plant_bag_worn_mirror.dmi'
 
@@ -953,7 +953,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 		return
 
 	real_parent.icon_state = "[real_parent.base_icon_state]_on"
-	real_parent.set_light(3, 1, LIGHT_COLOR_FIRE)
+	real_parent.set_light(l_outer_range = 3, l_power = 1, l_color = LIGHT_COLOR_FIRE)
 
 	overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_fire_emissive", real_parent, alpha = real_parent.alpha)
 
@@ -2121,7 +2121,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		smoke.particles.position = list(6, 4, 0)
 
 	icon_state = "forge_active"
-	set_light(3, 1, LIGHT_COLOR_FIRE)
+	set_light(l_outer_range = 3, l_power = 1, l_color = LIGHT_COLOR_FIRE)
 
 /obj/structure/reagent_forge/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

@@ -6,7 +6,7 @@
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_DONT_CLONE
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_DONT_CLONE | QUIRK_OOZELING_SAVE
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/drug_list = list(/datum/reagent/drug/blastoff, /datum/reagent/drug/krokodil, /datum/reagent/medicine/painkiller/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs

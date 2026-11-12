@@ -1,4 +1,5 @@
 /turf/closed
+	abstract_type = /turf/closed
 	layer = CLOSED_TURF_LAYER
 	plane = WALL_PLANE
 	turf_flags = IS_SOLID

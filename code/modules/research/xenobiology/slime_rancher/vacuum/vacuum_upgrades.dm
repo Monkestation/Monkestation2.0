@@ -1,5 +1,6 @@
 /// Installed behavior and stat changes owned by one vacuum pack.
 /datum/vacuum_upgrade
+	abstract_type = /datum/vacuum_upgrade
 	/// Pack that owns this upgrade.
 	var/obj/item/vacuum_pack/pack
 	/// Display name used by pack examination.
@@ -100,6 +101,7 @@
 	name = "vacuum upgrade disk"
 	desc = "A one-use upgrade disk for a slime vacuum pack."
 	icon_state = "rndmajordisk"
+	abstract_type = /obj/item/disk/vacuum_upgrade
 	/// Upgrade datum installed by this disk.
 	var/upgrade_type
 

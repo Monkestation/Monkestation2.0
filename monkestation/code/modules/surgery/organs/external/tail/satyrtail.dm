@@ -10,7 +10,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/satyr_tail
 
 /datum/bodypart_overlay/mutant/satyr_tail
-	layers = EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "satyr_tail"
 	color_source = ORGAN_COLOR_HAIR
 

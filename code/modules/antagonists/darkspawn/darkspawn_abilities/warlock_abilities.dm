@@ -424,7 +424,7 @@
 
 	if(iscarbon(owner))
 		var/mob/living/carbon/user = owner
-		if(!(user.check_obscured_slots() & ITEM_SLOT_EYES)) //only show if the eyes are visible
+		if(!(user.obscured_slots & HIDEEYES)) //only show if the eyes are visible
 			user.visible_message(span_warning("<b>[user]'s eyes flash a deep purple</b>"))
 
 	owner.balloon_alert(owner, "sskr'aya")

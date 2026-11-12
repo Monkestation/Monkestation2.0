@@ -5,6 +5,7 @@
 #define MUZZLE_EFFECT_PIXEL_INCREMENT 17
 
 /obj/projectile
+	abstract_type = /obj/projectile
 	name = "projectile"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bullet"

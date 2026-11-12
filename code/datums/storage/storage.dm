@@ -1075,8 +1075,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param mob/to_show the mob to hide the storage from
  */
 /datum/storage/proc/hide_contents(mob/to_hide)
-	if(!to_hide.client)
-		return TRUE
 	if(to_hide.active_storage == src)
 		to_hide.active_storage = null
 

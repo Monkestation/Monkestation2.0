@@ -1,6 +1,6 @@
 /// Danger event - unskippable, if you have appriopriate tool you can mitigate damage.
 /datum/exploration_event/simple/danger
-	root_abstract_type = /datum/exploration_event/simple/danger
+	abstract_type = /datum/exploration_event/simple/danger
 	description = "You encounter a giant error."
 	var/required_tool = EXODRONE_TOOL_LASER
 	var/has_tool_action_text = "Fight"

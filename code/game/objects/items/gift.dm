@@ -156,9 +156,9 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	return gift_type
 
 /proc/initialize_possible_gifts()
-	. = subtypesof(/obj/item)
+	. = get_sane_item_types(/obj/item)
 	for(var/obj/item/item_type as anything in .)
-		if(!item_type::icon_state || !item_type::inhand_icon_state || (item_type::item_flags & (ABSTRACT | DROPDEL)))
+		if(item_type::item_flags & DROPDEL)
 			. -= item_type
 
 	// List of items we want to block the anything-gift from spawning. Reasons for blocking

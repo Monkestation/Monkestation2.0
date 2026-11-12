@@ -130,3 +130,6 @@
 ///from base of /atom/movable/living/can_track(): (mob/user)
 #define COMSIG_MOVABLE_CAN_TRACK "movable_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+
+/// From base of area/Exited(): (area/left, direction)
+#define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"

@@ -686,16 +686,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 20 MINUTES
 	chem_volume = 60
 	list_reagents = list(/datum/reagent/drug/nicotine = 30)
+	type_butt = /obj/item/cigbutt/cigarbutt/cohiba
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
 	desc = "A cigar fit for only the best of the best."
-	icon_state = "cigar2off"
-	icon_on = "cigar2on"
-	icon_off = "cigar2off"
+	icon_state = "cigar3off"
+	icon_on = "cigar3on"
+	icon_off = "cigar3off"
 	smoketime = 30 MINUTES
 	chem_volume = 75
 	list_reagents = list(/datum/reagent/drug/nicotine = 45)
+	type_butt = /obj/item/cigbutt/cigarbutt/havana
 
 /obj/item/cigbutt
 	name = "cigarette butt"
@@ -714,6 +716,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "cigar butt"
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
+
+/obj/item/cigbutt/cigarbutt/cohiba
+	icon_state = "cigar2butt"
+
+/obj/item/cigbutt/cigarbutt/havana
+	icon_state = "cigar3butt"
 
 /obj/item/clothing/mask/cigarette/cigar/intern
 	name = "the Classic"

@@ -32544,8 +32544,8 @@
 /area/station/medical/pharmacy)
 "lol" = (
 /obj/structure/cable,
-/obj/machinery/station_map/engineering/directional/west,
 /obj/machinery/vending/wardrobe/xeno_wardrobe,
+/obj/machinery/computer/extract_orders/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "lop" = (
@@ -35623,6 +35623,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "mrC" = (

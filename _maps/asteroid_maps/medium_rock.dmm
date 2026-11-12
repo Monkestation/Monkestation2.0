@@ -6,7 +6,7 @@
 /turf/closed/mineral/artifact,
 /area/template_noop)
 "K" = (
-/turf/closed/mineral/asteroid/tospace,
+/turf/closed/mineral/random/asteroid/tospace/mediumchance,
 /area/template_noop)
 
 (1,1,1) = {"

@@ -13,7 +13,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/floran_leaves
 
 /datum/bodypart_overlay/mutant/floran_leaves
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = "floran_leaves"
 	color_source = ORGAN_COLOR_MUTSECONDARY
 

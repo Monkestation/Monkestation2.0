@@ -186,6 +186,20 @@
 	hands_use_check = TRUE
 	wing_time = 10
 
+/datum/emote/living/mar
+	key = "mar"
+	key_third_person = "mars"
+	message = "lets out a mar!"
+	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+
+/datum/emote/living/mar/can_run_emote(mob/user, status_check, intentional)
+	return ..() && isshadekin(user)
+
+/datum/emote/living/mar/get_sound(mob/living/user)
+	return 'sound/creatures/mar.ogg'
+
 /datum/emote/living/frown
 	key = "frown"
 	key_third_person = "frowns"
@@ -597,7 +611,7 @@ monkestation edit end */
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(!carbon_user.is_face_visible())
+		if(carbon_user.obscured_slots & HIDEFACE)
 			return // if your face is obscured, skip propagation
 
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns

@@ -367,10 +367,10 @@
 
 	return TRUE
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, add_history, atom/research_source, atom/research_location)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, add_history, research_source, research_location)
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, add_history = FALSE, atom/research_source, atom/research_location)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -378,6 +378,8 @@
 		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))) || !have_experiments_for_node(node))
 			return FALSE
 	var/log_message = "[id]/[organization] researched node [node.id]"
+	if(add_history)
+		add_research_history(node, research_source, research_location)
 	if(auto_adjust_cost)
 		var/list/node_cost = node.get_price(src)
 		remove_point_list(node_cost)
@@ -564,3 +566,32 @@
 			handler.announce_message_to_all(announcetext)
 
 	return TRUE
+
+/// Adds a entry to to the techweb's research history
+/datum/techweb/proc/add_research_history(datum/techweb_node/node, mob/research_source, atom/research_location)
+	var/logname = "Unknown"
+	var/list/price = node.get_price(src)
+	var/research_location_string = "Automated Research - Cannot Source Location"
+	if(isAI(research_source))
+		logname = "AI [research_source.name]"
+	if(iscyborg(research_source))
+		logname = "CYBORG [research_source.name]"
+	if(iscarbon(research_source))
+		var/obj/item/card/id/idcard = research_source.get_active_held_item()
+		if(istype(idcard))
+			logname = "[idcard.registered_name]"
+	if(ishuman(research_source))
+		var/mob/living/carbon/human/H = research_source
+		var/obj/item/I = H.wear_id
+		if(istype(I))
+			var/obj/item/card/id/ID = I.GetID()
+			if(istype(ID))
+				logname = "[ID.registered_name]"
+	if(research_location)
+		research_location_string = "[get_area(research_location)] ([research_location.x],[research_location.y],[research_location.z])"
+	research_logs += list(list(
+		"node_name" = node.display_name,
+		"node_cost" = price["General Research"],
+		"node_researcher" = logname,
+		"node_research_location" = research_location_string
+	))

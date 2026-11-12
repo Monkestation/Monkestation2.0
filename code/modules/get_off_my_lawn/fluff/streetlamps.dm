@@ -6,3 +6,4 @@
 	base_state = "streetlight"
 
 	light_outer_range = 7
+	light_angle = 360

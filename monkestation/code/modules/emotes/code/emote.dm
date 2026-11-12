@@ -556,3 +556,14 @@
 /datum/emote/living/alert/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	user.do_alert_animation()
+
+/datum/emote/living/plink
+	key = "plink"
+	key_third_person = "plinks"
+	message = "plinks."
+
+/datum/emote/living/plink/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/plink.ogg',
+		'sound/mobs/plonk.ogg',
+	)

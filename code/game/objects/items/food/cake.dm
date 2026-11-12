@@ -1,4 +1,5 @@
 /obj/item/food/cake
+	abstract_type = /obj/item/food/cake
 	icon = 'icons/obj/food/piecake.dmi'
 	bite_consumption = 3
 	max_volume = 80
@@ -23,6 +24,7 @@
 		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/cakeslice
+	abstract_type = /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,

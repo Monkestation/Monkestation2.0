@@ -92,6 +92,7 @@
 		return
 	if(!builtin_bodycamera)
 		builtin_bodycamera = new(loc) //made in the vest it's located in.
+		builtin_bodycamera.follow_holder()
 	if(!id_card)
 		id_card = user.get_idcard() || null
 	if(id_card)
@@ -103,13 +104,17 @@
 		playsound(loc, 'sound/machines/beep/beep.ogg', get_clamped_volume(), TRUE, -1)
 	builtin_bodycamera.network = network //sync the network of the camera to us, the upgrade.
 	builtin_bodycamera.camera_enabled = TRUE
+	SScameras.add_camera_to_chunk(builtin_bodycamera)
 
 ///Turns the camera off. Will be silent if 'user' is null.
 /obj/item/bodycam_upgrade/proc/turn_off(mob/user)
 	if(user)
 		user.balloon_alert(user, "bodycamera deactivated")
 		playsound(loc, 'sound/machines/beep/beep.ogg', get_clamped_volume(), TRUE, -1)
+	if(isnull(builtin_bodycamera))
+		return
 	builtin_bodycamera.camera_enabled = FALSE
+	SScameras.remove_camera_from_chunk(builtin_bodycamera)
 
 /**
  * on_emp_act

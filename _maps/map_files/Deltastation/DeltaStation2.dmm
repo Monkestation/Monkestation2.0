@@ -1001,12 +1001,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/item/kirbyplants/random,
 /obj/machinery/camera/directional/north{
 	c_tag = "Science - Lobby";
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "alT" = (
@@ -13468,7 +13468,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
 /obj/machinery/door/airlock/mining{
-	name = "Quatermaster's Office"
+	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -24321,7 +24321,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
 /obj/machinery/door/airlock/mining{
-	name = "Quatermaster's Office"
+	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -83266,6 +83266,7 @@
 	req_access = list("science")
 	},
 /obj/machinery/smartfridge/extract/preloaded,
+/obj/machinery/computer/extract_orders/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "tDK" = (

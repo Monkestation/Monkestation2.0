@@ -113,6 +113,7 @@
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
 	icon_state = "goliath_cloak"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	desc = "A staunch, practical cape made out of numerous monster materials, it is coveted amongst exiles & hermits."
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
@@ -192,6 +193,7 @@
 	. = ..()
 	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -238,6 +240,7 @@
 /obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
@@ -252,6 +255,10 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/hooded/cloakhood/drake/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer
 	name = "godslayer armour"

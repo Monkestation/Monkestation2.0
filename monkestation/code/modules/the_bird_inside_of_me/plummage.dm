@@ -21,7 +21,7 @@
 
 /datum/bodypart_overlay/mutant/plumage
 	feature_key = "ears_avian"
-	layers = EXTERNAL_FRONT
+	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER)
 	color_source = ORGAN_COLOR_OVERRIDE
 	palette = /datum/color_palette/ornithids
 	palette_key = "plummage"

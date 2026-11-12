@@ -56,7 +56,7 @@
 /turf/open/misc/asteroid/airless/tospace,
 /area/template_noop)
 "x" = (
-/turf/closed/mineral/random/asteroid/tospace,
+/turf/closed/mineral/random/asteroid/tospace/lowchance,
 /area/template_noop)
 "y" = (
 /obj/structure/table/wood/shuttle_bar,

@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	if(!user.transferItemToLoc(attacked_by, src))
 		return
 	cell = attacked_by
-	balloon_alert(user, "installed [cell.name]")
+	balloon_alert(user, "cell installed")
 
 /obj/item/clothing/neck/link_scryer/update_name(updates)
 	. = ..()
@@ -301,7 +301,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /obj/item/clothing/neck/link_scryer/attack_hand_secondary(mob/user, list/modifiers)
 	if(!cell)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	balloon_alert(user, "removed [cell.name]")
+	balloon_alert(user, "cell removed")
 	user.put_in_hands(cell)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -539,7 +539,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	if(!link_user)
 		return
 	if(HAS_TRAIT(link_user, TRAIT_IN_CALL))
-		holder.balloon_alert(user, "user already in call!")
+		holder.balloon_alert(user, "already calling!")
 		return
 	var/mob/living/link_target = called.get_user_callback.Invoke()
 	if(!link_target)
