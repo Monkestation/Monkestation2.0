@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - rscadd: "Simian traitors can now buy the Banana-Stained Scroll for 8 TC, which teaches Jungle Arts. It only works while in combat mode, so you can still grab and shove normally with it off."
