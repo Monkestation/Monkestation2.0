@@ -47512,7 +47512,7 @@
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "syp" = (
-/obj/effect/spawner/backrooms_portal,
+/obj/effect/landmark/backrooms_portal,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)

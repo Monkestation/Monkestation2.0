@@ -12217,7 +12217,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "erA" = (
-/obj/effect/spawner/backrooms_portal,
+/obj/effect/landmark/backrooms_portal,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)

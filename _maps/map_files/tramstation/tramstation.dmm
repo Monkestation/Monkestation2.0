@@ -66030,7 +66030,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
 "toi" = (
-/obj/effect/spawner/backrooms_portal,
+/obj/effect/landmark/backrooms_portal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4

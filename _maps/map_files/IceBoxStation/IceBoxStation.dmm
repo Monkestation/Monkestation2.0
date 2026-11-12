@@ -26962,7 +26962,7 @@
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "imT" = (
-/obj/effect/spawner/backrooms_portal,
+/obj/effect/landmark/backrooms_portal,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "imU" = (

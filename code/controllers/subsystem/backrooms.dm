@@ -44,9 +44,18 @@ SUBSYSTEM_DEF(backrooms)
 
 	pick_theme()
 	generate_backrooms()
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BACKROOMS_INITIALIZED)
+	make_portals()
 	spawn_loot()
 	return SS_INIT_SUCCESS
+
+/// Replaces every backrooms portal landmark with a permanent portal pair to a random safe spot of the backrooms
+/datum/controller/subsystem/backrooms/proc/make_portals()
+	var/list/backrooms_level = SSmapping.levels_by_trait(ZTRAIT_PROCEDURAL_MAINTS)
+	for(var/obj/effect/landmark/backrooms_portal/portal_spot in GLOB.landmarks_list)
+		if(length(backrooms_level))
+			var/turf/way_out = find_safe_turf(zlevels = backrooms_level, dense_atoms = FALSE)
+			create_portal_pair(get_turf(portal_spot), way_out, _lifespan = -1, newtype = /obj/effect/portal/permanent/backrooms)
+		qdel(portal_spot)
 
 /datum/controller/subsystem/backrooms/stat_entry(msg)
 	if(no_need)
@@ -158,33 +167,8 @@ SUBSYSTEM_DEF(backrooms)
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "television"
 
-/// Opens a permanent two way portal between its spot and a random spot of the backrooms once they're generated
-/obj/effect/spawner/backrooms_portal
-	name = "backrooms two way portal spawner"
+/// Marks a spot that SSbackrooms links to a random spot of the backrooms with a permanent two way portal
+/obj/effect/landmark/backrooms_portal
+	name = "backrooms two way portal"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "television"
-
-/obj/effect/spawner/backrooms_portal/Initialize(mapload)
-	SHOULD_CALL_PARENT(FALSE)
-	flags_1 |= INITIALIZED_1
-	if(SSbackrooms.no_need || !CONFIG_GET(flag/backrooms_enabled)) // there won't be any backrooms to open a portal to
-		return INITIALIZE_HINT_QDEL
-	if(SSbackrooms.initialized) // the backrooms are already there
-		make_portals()
-		return INITIALIZE_HINT_QDEL
-	RegisterSignal(SSdcs, COMSIG_GLOB_BACKROOMS_INITIALIZED, PROC_REF(on_backrooms_initialized))
-	return INITIALIZE_HINT_NORMAL
-
-/// Makes the portals once the backrooms are generated, then deletes the spawner
-/obj/effect/spawner/backrooms_portal/proc/on_backrooms_initialized()
-	SIGNAL_HANDLER
-	make_portals()
-	qdel(src)
-
-/// Links the spawner's spot with a random safe spot of the backrooms
-/obj/effect/spawner/backrooms_portal/proc/make_portals()
-	var/list/backrooms_level = SSmapping.levels_by_trait(ZTRAIT_PROCEDURAL_MAINTS)
-	if(!length(backrooms_level))
-		return
-	var/turf/way_out = find_safe_turf(zlevels = backrooms_level, dense_atoms = FALSE)
-	create_portal_pair(get_turf(src), way_out, _lifespan = -1, newtype = /obj/effect/portal/permanent/backrooms)

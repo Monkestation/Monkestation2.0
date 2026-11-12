@@ -7350,7 +7350,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "cjG" = (
-/obj/effect/spawner/backrooms_portal,
+/obj/effect/landmark/backrooms_portal,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "cjH" = (

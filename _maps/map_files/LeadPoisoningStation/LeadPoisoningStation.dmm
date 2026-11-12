@@ -1433,7 +1433,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "aJM" = (
-/obj/effect/spawner/backrooms_portal,
+/obj/effect/landmark/backrooms_portal,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)

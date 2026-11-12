@@ -61296,7 +61296,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "tMl" = (
-/obj/effect/spawner/backrooms_portal,
+/obj/effect/landmark/backrooms_portal,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "tMn" = (
