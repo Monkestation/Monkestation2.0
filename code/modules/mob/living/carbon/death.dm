@@ -3,9 +3,6 @@
 		return
 
 	losebreath = 0
-
-	if(!gibbed)
-		add_memory_in_range(src, 7, /datum/memory/witnessed_death, protagonist = src)
 	reagents.end_metabolization(src)
 
 	. = ..()
@@ -24,7 +21,6 @@
 	animate(src, time = 40, transform = M, easing = SINE_EASING)
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
-	add_memory_in_range(src, 7, /datum/memory/witness_gib, protagonist = src)
 	if(safe_gib) // If you want to keep all the mob's items and not have them deleted MONKESTATION EDIT
 		for(var/obj/item/W in src)
 			dropItemToGround(W, violent = TRUE)

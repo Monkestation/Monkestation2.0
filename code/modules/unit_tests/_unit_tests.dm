@@ -129,6 +129,7 @@
 #include "container_sanity.dm"
 #include "create_and_destroy.dm"
 #include "dcs_get_id_from_elements.dm"
+#include "death_moodlets.dm"
 #include "designs.dm"
 #include "door_access.dm"
 #include "dragon_expiration.dm"

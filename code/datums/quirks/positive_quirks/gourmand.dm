@@ -1,6 +1,6 @@
 /datum/quirk/gourmand
-	name = "Gourmand"
-	desc = "You enjoy the finer things in life. You are able to have one more food buff applied at once."
+	name = "Big Appetite"
+	desc = "You can always fit in another meal. You are able to have one more food buff applied at once."
 	value = 2
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN
 	gain_text = span_notice("You start to enjoy fine cuisine.</span>")

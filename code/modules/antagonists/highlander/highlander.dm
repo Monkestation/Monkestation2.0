@@ -8,6 +8,7 @@
 	count_against_dynamic_roll_chance = FALSE
 	/// Traits we apply/remove to our target on-demand.
 	var/static/list/applicable_traits = list(
+		TRAIT_DESENSITIZED,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
