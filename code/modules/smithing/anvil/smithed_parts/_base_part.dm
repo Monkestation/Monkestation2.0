@@ -27,8 +27,6 @@
 	///Just how many hits until we have worked enough
 	var/hits_left = 100
 
-	///what its made of
-	var/datum/material_stats/made_of
 	///Quality, starts at 0 and goes up or down based on minigame
 	var/smithed_quality = 0
 	///What is base desc when finished and assembled?
@@ -136,7 +134,6 @@
 	update_appearance()
 
 	name = "[material_stats.material_name] [base_name]"
-	made_of = material_stats
 	var/damage_state
 	desc = finished_desc
 	switch(smithed_quality)
@@ -180,7 +177,7 @@
 		var/obj/item/smithed_part/weapon_part/weap = O
 		if(weap.complete)
 			total_val += round(CARGO_CRATE_VALUE * 0.75)
-	if(O.made_of)
-		for(var/datum/material_trait/trait in O.made_of.material_traits)
+	if(O.material_stats)
+		for(var/datum/material_trait/trait in O.material_stats.material_traits)
 			total_val += trait.value_bonus
-	return round(((O.made_of.density + O.made_of.hardness)/5) + total_val)
+	return round(((O.material_stats.density + O.material_stats.hardness)/5) + total_val)

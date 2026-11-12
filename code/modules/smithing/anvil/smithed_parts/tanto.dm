@@ -5,6 +5,7 @@
 
 	finished_desc = "A forged tanto, similar to a katana, but shorter for one-handed use."
 
+	weapon_inhand_icon_state = "katana"
 	hilt_icon = 'icons/modules/smithing/forge_items.dmi'
 	hilt_icon_state = "katana-hilt"
 	worn_icon = 'icons/modules/smithing/forge_weapon_worn.dmi'
@@ -21,7 +22,7 @@
 
 	attack_speed = CLICK_CD_LIGHT_WEAPON
 
-	force = round(((material_stats.density + material_stats.hardness) / 9.75) * (smithed_quality * 0.01))
-	throwforce = force * 0.75
+	force = floor(((material_stats.density + material_stats.hardness) / 9.75) * (smithed_quality * 0.01))
+	throwforce = floor(force * 0.75)
 	w_class = WEIGHT_CLASS_NORMAL
 	..()

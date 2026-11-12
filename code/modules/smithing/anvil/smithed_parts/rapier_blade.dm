@@ -18,7 +18,7 @@
 
 	attack_speed = CLICK_CD_LIGHT_WEAPON
 
-	force = round(((material_stats.density + material_stats.hardness) / 11.5) * (smithed_quality * 0.01))
+	force = floor(((material_stats.density + material_stats.hardness) / 11.5) * (smithed_quality * 0.01))
 	throwforce = force * 0.9
 	w_class = WEIGHT_CLASS_NORMAL
 	..()

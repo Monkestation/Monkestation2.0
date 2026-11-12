@@ -19,15 +19,14 @@
 
 	attack_speed = CLICK_CD_BULKY_WEAPON
 
-	force = round(((material_stats.density + material_stats.hardness) / 7) * (smithed_quality * 0.01))
-	throwforce = round(force * 0.5)
+	force = floor(((material_stats.density + material_stats.hardness) / 7) * (smithed_quality * 0.01))
+	throwforce = floor(force * 0.5)
 
 	unwield_force = round(force * 0.75)
 	wield_force = force
-
+	w_class = WEIGHT_CLASS_BULKY
+	..()
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded=unwield_force, \
 		force_wielded=wield_force, \
 	)
-	w_class = WEIGHT_CLASS_BULKY
-	..()

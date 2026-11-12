@@ -18,8 +18,8 @@
 	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
-	toolspeed = 1 / max(round(((material_stats.density + material_stats.hardness) / 25) * (smithed_quality * 0.01)),1)
-	force = round(((material_stats.density + material_stats.hardness) / 20) * (smithed_quality * 0.01))
+	toolspeed = 1 / max(floor(((material_stats.density + material_stats.hardness) / 25) * (smithed_quality * 0.01)),1)
+	force = floor(((material_stats.density + material_stats.hardness) / 20) * (smithed_quality * 0.01))
 
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	throwforce = force * 1.5

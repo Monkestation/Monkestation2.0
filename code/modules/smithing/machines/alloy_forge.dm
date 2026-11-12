@@ -178,8 +178,11 @@
 
 	if(prob(CHARCOAL_CHANCE) && !is_strong_fuel)
 		to_chat(user, span_notice("[src]'s fuel is packed densely enough to have made some charcoal!"))
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/reagent_forge,spawn_coal)), 1 MINUTES) //stolen
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/alloy_forge,spawn_coal)), 1 MINUTES)
 
+/obj/structure/alloy_forge/proc/spawn_coal()
+	var/obj/item/stack/sheet/mineral/coal/spawn_coal = new(get_turf(src))
+	spawn_coal.name = "charcoal"
 
 /obj/structure/alloy_forge/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -291,9 +294,9 @@
 /obj/structure/alloy_forge/attackby_secondary(obj/item/item, mob/user, params)
 	if(item.tool_behaviour == TOOL_WRENCH)
 		deconstruct()
-	if(item.type in fuels)
+	if(is_type_in_list(item,fuels))
 		refuel(item,user,fuels[item])
-	return ..()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/alloy_forge/proc/try_add_to_buffer(obj/item/adder)
 	if(!slot_one_item)

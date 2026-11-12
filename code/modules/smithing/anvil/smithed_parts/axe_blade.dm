@@ -19,8 +19,8 @@
 	wound_bonus = 2
 	bare_wound_bonus = 10
 
-	force = round(((material_stats.density + material_stats.hardness) / 8.75) * (smithed_quality * 0.01))
-	throwforce = force * 1.75
+	force = floor(((material_stats.density + material_stats.hardness) / 8.75) * (smithed_quality * 0.01))
+	throwforce = floor(force * 1.75)
 	w_class = WEIGHT_CLASS_SMALL
 	..()
 

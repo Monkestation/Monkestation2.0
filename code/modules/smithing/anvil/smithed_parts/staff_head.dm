@@ -17,15 +17,19 @@
 
 	wound_bonus = -20 //no
 
-	block_chance = round(((material_stats.hardness + material_stats.density)/10) * (smithed_quality/100))
+	block_chance = floor(((material_stats.hardness + material_stats.density)/10) * (smithed_quality/100))
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 
 	attack_speed = CLICK_CD_LARGE_WEAPON
 
-	force = round(((material_stats.density + material_stats.hardness) / 8) * (smithed_quality * 0.01))
+	force = floor(((material_stats.density + material_stats.hardness) / 8) * (smithed_quality * 0.01))
 	wield_force = force * 1.75 //You get hit with a metal fucking club
 	unwield_force = force
+
+	throwforce = force * 0.1 // good luck whipping a staff at something
+	w_class = WEIGHT_CLASS_HUGE
+	..()
 
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded=unwield_force, \
@@ -33,9 +37,6 @@
 		wield_callback=CALLBACK(src,TYPE_PROC_REF(/obj/item/smithed_part/weapon_part/staff_head,wield_callback),src), \
 		unwield_callback=CALLBACK(src,TYPE_PROC_REF(/obj/item/smithed_part/weapon_part/staff_head,unwield_callback),src), \
 	)
-	throwforce = force * 0.1 // good luck whipping a staff at something
-	w_class = WEIGHT_CLASS_HUGE
-	..()
 
 /obj/item/smithed_part/weapon_part/staff_head/proc/wield_callback(obj/item/parent)
 	parent.reach = 2

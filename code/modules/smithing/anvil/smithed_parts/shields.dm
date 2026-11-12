@@ -14,25 +14,25 @@
 /obj/item/smithed_part/weapon_part/shield/buckler/finish_weapon()
 	slot_flags = ITEM_SLOT_BACK
 	var quality = (smithed_quality * 0.01)
-	force = round(10 * quality)
-	throwforce = round(force/1.5)
+	force = floor(10 * quality)
+	throwforce = floor(force/1.5)
 
-	max_integrity = round(((material_stats.hardness + material_stats.density)) * quality)
+	max_integrity = floor(((material_stats.hardness + material_stats.density)) * quality)
 	atom_integrity = max_integrity
-	block_chance = round(((material_stats.hardness + material_stats.density)/6) * quality)
+	block_chance = floor(((material_stats.hardness + material_stats.density)/6) * quality)
 
 	w_class = WEIGHT_CLASS_NORMAL
 
 	var/datum/armor/temp = new() //Scuffed, but no idea how to better.
 	set_armor(temp.generate_new_with_modifiers(list(
-		ACID = clamp(round((material_stats.density / 1.4) * (smithed_quality/100)),30,100),
-		BOMB = clamp(round(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
-		BULLET = clamp(round(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
-		ENERGY = clamp(round((material_stats.refractiveness / 1.4) * (smithed_quality/100)),30,100),
-		FIRE = clamp(round(((100-material_stats.thermal)/1.4) * (smithed_quality/100)),30,100),
-		LASER = clamp(round(((material_stats.refractiveness + material_stats.density)/2.8) * (smithed_quality/100)),30,100),
-		MELEE = clamp(round(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
-		WOUND = clamp(round((material_stats.density/1.4) * (smithed_quality/100)),30,100)
+		ACID = clamp(floor((material_stats.density / 1.4) * (smithed_quality/100)),30,100),
+		BOMB = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
+		BULLET = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
+		ENERGY = clamp(floor((material_stats.refractiveness / 1.4) * (smithed_quality/100)),30,100),
+		FIRE = clamp(floor(((100-material_stats.thermal)/1.4) * (smithed_quality/100)),30,100),
+		LASER = clamp(floor(((material_stats.refractiveness + material_stats.density)/2.8) * (smithed_quality/100)),30,100),
+		MELEE = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
+		WOUND = clamp(floor((material_stats.density/1.4) * (smithed_quality/100)),30,100)
 	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 	..()
@@ -53,25 +53,25 @@
 /obj/item/smithed_part/weapon_part/shield/pavise/finish_weapon()
 	slot_flags = ITEM_SLOT_BACK
 	var quality = (smithed_quality * 0.01)
-	force = round(10 * quality)
-	throwforce = round(force/2)
-	block_chance = round(((material_stats.hardness + material_stats.density)/3) * quality)
+	force = floor(10 * quality)
+	throwforce = floor(force/2)
+	block_chance = floor(((material_stats.hardness + material_stats.density)/3) * quality)
 
-	max_integrity = round(((material_stats.hardness + material_stats.density)*1.5) * quality)
+	max_integrity = floor(((material_stats.hardness + material_stats.density)*1.5) * quality)
 	atom_integrity = max_integrity
 
 	w_class = WEIGHT_CLASS_BULKY
 
 	var/datum/armor/temp = new() //Scuffed, but no idea how to better.
 	set_armor(temp.generate_new_with_modifiers(list(
-		ACID = clamp(round((material_stats.density / 1.4) * (smithed_quality/100)),40,100),
-		BOMB = clamp(round(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
-		BULLET = clamp(round(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
-		ENERGY = clamp(round((material_stats.refractiveness / 1.4) * (smithed_quality/100)),40,100),
-		FIRE = clamp(round(((100-material_stats.thermal)/1.4) * (smithed_quality/100)),40,100),
-		LASER = clamp(round(((material_stats.refractiveness + material_stats.density)/2.8) * (smithed_quality/100)),40,100),
-		MELEE = clamp(round(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
-		WOUND = clamp(round((material_stats.density/1.4) * (smithed_quality/100)),40,100)
+		ACID = clamp(floor((material_stats.density / 1.4) * (smithed_quality/100)),40,100),
+		BOMB = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
+		BULLET = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
+		ENERGY = clamp(floor((material_stats.refractiveness / 1.4) * (smithed_quality/100)),40,100),
+		FIRE = clamp(floor(((100-material_stats.thermal)/1.4) * (smithed_quality/100)),40,100),
+		LASER = clamp(floor(((material_stats.refractiveness + material_stats.density)/2.8) * (smithed_quality/100)),40,100),
+		MELEE = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
+		WOUND = clamp(floor((material_stats.density/1.4) * (smithed_quality/100)),40,100)
 	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 	..()
@@ -100,7 +100,7 @@
 
 /obj/item/smithed_part/weapon_part/shield/examine(mob/user)
 	. = ..()
-	var/healthpercent = round((atom_integrity/max_integrity) * 100, 1)
+	var/healthpercent = floor((atom_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
 		if(50 to 99)
 			. += span_info("It looks slightly damaged.")

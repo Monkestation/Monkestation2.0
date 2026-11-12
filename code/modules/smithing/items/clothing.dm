@@ -2,7 +2,7 @@
 	name = "unfinished smithed clothes"
 	desc = "unfinished smithed clothes"
 	var/smithed_quality = 0
-	var/datum/material_stats/made_of
+
 	var/complete = FALSE
 	var/base_name = "generic smithed clothes"
 
@@ -88,7 +88,7 @@
 		add_filter("damage_filter", 1, alpha_mask_filter(icon = icon('icons/modules/smithing/forge_items.dmi', damage_state), flags = MASK_INVERSE))
 
 	max_integrity = round(200 * (smithed_quality/100))
-	repairable_by = made_of.type //This cant go wrong right
+
 	if(material_stats.conductivity <= 10)
 		siemens_coefficient = 0
 
@@ -120,7 +120,6 @@
 
 	if(!created_from)
 		created_from = new /obj/item/stack/sheet/mineral/gold
-	made_of = new created_from.type
 
 	if(isstack(created_from) && !created_from.material_stats)
 		var/obj/item/stack/stack = created_from
