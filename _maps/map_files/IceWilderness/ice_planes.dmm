@@ -82,7 +82,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "Z" = (
 /turf/open/genturf,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 
 (1,1,1) = {"
 j

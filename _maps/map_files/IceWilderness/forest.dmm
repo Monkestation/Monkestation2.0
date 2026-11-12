@@ -14,10 +14,10 @@
 /area/icemoon/surface/outdoors/nospawn)
 "M" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 "Z" = (
 /turf/open/genturf,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 
 (1,1,1) = {"
 j

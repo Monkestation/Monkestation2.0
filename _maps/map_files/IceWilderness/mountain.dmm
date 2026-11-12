@@ -8,10 +8,10 @@
 "p" = (
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/genturf,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 "r" = (
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 "t" = (
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -25,24 +25,24 @@
 "E" = (
 /obj/item/clothing/shoes/wheelys/skishoes,
 /turf/open/genturf,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 "M" = (
 /turf/open/cliff/snowrock,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 "P" = (
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/surface/outdoors/nospawn)
 "T" = (
 /obj/vehicle/ridden/wheelchair,
 /turf/open/genturf,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 "Y" = (
 /obj/structure/door_assembly/door_assembly_wood,
 /turf/open/genturf,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 "Z" = (
 /turf/open/genturf,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness)
 
 (1,1,1) = {"
 j

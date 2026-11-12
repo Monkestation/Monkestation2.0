@@ -274,6 +274,9 @@
 	area_flags = NONE
 	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED
 
+/area/icemoon/surface/outdoors/unexplored/rivers/wilderness
+	map_generator = /datum/map_generator/cave_generator/icemoon/surface/wilderness
+
 /area/icemoon/underground
 	name = "Icemoon Caves"
 	outdoors = TRUE
