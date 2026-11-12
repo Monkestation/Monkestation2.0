@@ -113,10 +113,8 @@
 	hair_gradient_style = LAZYLISTDUPLICATE(target.grad_style)
 	hair_gradient_colours = LAZYLISTDUPLICATE(target.grad_color)
 
-//monkestation removal start
-/*	voice = target.voice
-	voice_filter = target.voice_filter*/
-//monkestation removal end
+	voice = target.voice
+	voice_filter = target.voice_filter
 
 /// Make the targetted human look like this
 /datum/human_appearance_profile/proc/apply_to(mob/living/carbon/human/target)
@@ -125,10 +123,8 @@
 	target.physique = physique
 	target.grad_style = LAZYLISTDUPLICATE(hair_gradient_style)
 	target.grad_color = LAZYLISTDUPLICATE(hair_gradient_colours)
-//monkestation removal start
-	/*target.voice = voice
-	target.voice_filter = voice_filter*/
-//monkestation removal end
+	target.voice = voice
+	target.voice_filter = voice_filter
 
 	for(var/datum/quirk/target_quirk as anything in quirks)
 		target_quirk.add_to_holder(target)

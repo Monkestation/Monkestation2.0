@@ -212,8 +212,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				return
 			if(isliving(usr))
 				var/mob/living/L = usr
-//				message = L.treat_message(message)["message"] MONKESTATION EDIT CHANGE OLD -- we dont have TTS
-				message = L.treat_message(message) // MONKESTATION EDIT CHANGE NEW
+				message = L.treat_message(message)["message"]
 
 			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/announcer/announcement/announce_dig.ogg')
 			GLOB.news_network.submit_article(message, department, "Station Announcements", null)

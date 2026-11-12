@@ -108,6 +108,7 @@
 
 // /atom/movable
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
+#define VV_HK_SET_TTS_VOICE "set_tts_voice"
 
 // /obj
 #define VV_HK_OSAY "osay"

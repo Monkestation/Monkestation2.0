@@ -206,7 +206,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return null
 
 	COOLDOWN_START(src, forced_speech_cooldown, FORCED_SPEECH_COOLDOWN_DURATION)
-	return ai_controller.blackboard[BB_PARROT_REPEAT_STRING]
+	var/list/speech = ai_controller.blackboard[BB_PARROT_REPEAT_STRING]
+	return speech?["line"]
 
 /// Proc that listens for when a parrot is pet so we can dispatch a voice line.
 /mob/living/basic/parrot/proc/on_pet(mob/living/basic/source, mob/living/petter, modifiers)

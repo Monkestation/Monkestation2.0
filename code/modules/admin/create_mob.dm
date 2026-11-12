@@ -6,6 +6,7 @@
 	human.physique = human.gender
 	human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
 	human.name = human.get_visible_name()
+	human.voice = SStts.random_tts_voice(human.gender)
 	human.set_hairstyle(random_hairstyle(human.gender), update = FALSE)
 	human.set_facial_hairstyle(random_facial_hairstyle(human.gender), update = FALSE)
 	human.set_haircolor("#[random_color()]", update = FALSE)

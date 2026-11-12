@@ -4,6 +4,7 @@
 /obj/effect/landmark/transport/nav_beacon/tram
 	name = "tram destination" //the tram buttons will mention this.
 	icon_state = "tram"
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1

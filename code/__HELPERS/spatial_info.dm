@@ -217,6 +217,18 @@
 	for(var/obj/item/radio/radio as anything in radios)
 		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
+/**
+ * Returns a list of mobs who can hear any of the radios given in the given radio list, indexed by the radio.
+ * More expensive than get_hearers_in_radio_ranges()
+ */
+/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios)
+	. = list()
+	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive than get_hearers_in_radio_ranges()
+	for(var/obj/item/radio/radio as anything in radios)
+		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
+		if(length(possible_hearers))
+			.[radio] = possible_hearers
+
 ///Calculate if two atoms are in sight, returns TRUE or FALSE
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T

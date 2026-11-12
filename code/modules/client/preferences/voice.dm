@@ -1,153 +1,97 @@
-/*
-	--------- Character Preferences ---------
-*/
+/// TTS voice preference
+/datum/preference/choiced/voice
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "tts_voice"
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	should_update_preview = FALSE
 
-/*
-	----- Bark Middleware -----
-*/
-
-/datum/preference_middleware/bark
-	/// Cooldown on requesting a bark preview.
-	COOLDOWN_DECLARE(bark_cooldown)
-
-	action_delegations = list(
-		"play_bark" = PROC_REF(play_bark),
-		"open_voice_screen" = PROC_REF(open_voice_screen),
-	)
-	var/datum/voice_screen/voice_screen
-	var/atom/movable/barker
-
-/datum/preference_middleware/bark/proc/open_voice_screen(list/params, mob/user)
-	if(voice_screen)
-		voice_screen.ui_interact(user)
-		return TRUE
-	else
-		voice_screen = new(src)
-		voice_screen.ui_interact(user)
+/datum/preference/choiced/voice/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled)
 		return FALSE
-	// return TRUE
-
-/datum/preference_middleware/bark/proc/play_bark(list/params, mob/user)
-	if(!COOLDOWN_FINISHED(src, bark_cooldown))
-		return TRUE
-	if (!barker)
-		barker = new()
-		barker.voice = new()
-	barker.voice.set_from_prefs(preferences)
-	barker.voice.long_bark(list(user), 7, 300, FALSE, 32, barker)
-	COOLDOWN_START(src, bark_cooldown, 2 SECONDS)
-	return TRUE
-
-/datum/preference_middleware/bark/Destroy()
-	QDEL_NULL(barker)
 	return ..()
 
-/*
-	----- Bark Sound -----
-*/
+/datum/preference/choiced/voice/init_possible_values()
+	if(SStts.tts_enabled)
+		return SStts.available_speakers
+	if(fexists("data/cached_tts_voices.json"))
+		var/list/text_data = rustg_file_read("data/cached_tts_voices.json")
+		var/list/cached_data = json_decode(text_data)
+		if(!cached_data)
+			return list("invalid")
+		return cached_data
+	return list("invalid")
 
-/// Which sound does the player want to make
-/datum/preference/choiced/voice_pack
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+/datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
+	if(SStts.tts_enabled && !(value in SStts.available_speakers))
+		value = SStts.random_tts_voice(target.gender) // As a failsafe
+	target.voice = value
+
+/datum/preference/numeric/tts_voice_pitch
 	savefile_identifier = PREFERENCE_CHARACTER
-	savefile_key = "voice_pack"
+	savefile_key = "tts_voice_pitch"
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	minimum = -12
+	maximum = 12
+	should_update_preview = FALSE
 
-/datum/preference/choiced/voice_pack/compile_ui_data(mob/user, value)
-	var/datum/voice_pack/voicepack = GLOB.voice_pack_list[value]
-	return voicepack.group_name + ": " + voicepack.name
-
-/datum/preference/choiced/voice_pack/init_possible_values()
-	return assoc_to_keys(GLOB.voice_pack_list)
-
-/datum/preference/choiced/voice_pack/is_valid(value)
-	if (!istext(value))
+/datum/preference/numeric/tts_voice_pitch/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled || !SStts.pitch_enabled)
 		return FALSE
-	var/datum/voice_pack/voicepack = GLOB.voice_pack_list[value]
-	if (!voicepack)
+	return ..()
+
+/datum/preference/numeric/tts_voice_pitch/create_default_value()
+	return 0
+
+/datum/preference/numeric/tts_voice_pitch/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
+	if(SStts.tts_enabled && SStts.pitch_enabled)
+		target.pitch = value
+
+/datum/preference/choiced/tts_blip_base
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "tts_blip_base"
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	should_update_preview = FALSE
+
+/datum/preference/choiced/tts_blip_base/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled)
 		return FALSE
-	return !voicepack.hidden
+	return ..()
 
-/datum/preference/choiced/voice_pack/apply_to_human(mob/living/carbon/human/target, value)
-	target.set_voice_pack(value)
+/datum/preference/choiced/tts_blip_base/init_possible_values()
+	return list(TTS_BLIPS_VOICE_PACK, TTS_BLIPS_MASCULINE, TTS_BLIPS_FEMININE)
 
-/datum/preference/choiced/voice_pack/create_default_value()
-	return pick(GLOB.random_voice_packs)
+/datum/preference/choiced/tts_blip_base/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
+	if(SStts.tts_enabled)
+		switch(value)
+			if(TTS_BLIPS_VOICE_PACK)
+				target.blip_base = TTS_BLIP_BASE_VOICE_PACK
+			if(TTS_BLIPS_MASCULINE)
+				target.blip_base = "male"
+			else
+				target.blip_base = "female"
+	else
+		target.blip_base = "male"
 
-/*
-	----- Bark Speed / Duration -----
-*/
+/datum/preference/choiced/tts_blip_base/create_default_value()
+	return TTS_BLIPS_VOICE_PACK
 
-/datum/preference/numeric/bark_speech_speed
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+/datum/preference/numeric/tts_blip_number
 	savefile_identifier = PREFERENCE_CHARACTER
-	savefile_key = "bark_speech_speed"
-	minimum = VOICE_DEFAULT_MINSPEED
-	maximum = VOICE_DEFAULT_MAXSPEED
-	step = 0.01
+	savefile_key = "tts_blip_number"
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	minimum = 1
+	maximum = 4
+	should_update_preview = FALSE
 
-/datum/preference/numeric/bark_speech_speed/apply_to_human(mob/living/carbon/human/target, value)
-	target.voice.speed = value
+/datum/preference/numeric/tts_blip_number/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled || !SStts.pitch_enabled)
+		return FALSE
+	return ..()
 
-/datum/preference/numeric/bark_speech_speed/create_default_value()
-	return 6
+/datum/preference/numeric/tts_blip_number/create_default_value()
+	return rand(1, 4)
 
-/*
-	----- Bark Pitch -----
-*/
-
-/datum/preference/numeric/bark_speech_pitch
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	savefile_identifier = PREFERENCE_CHARACTER
-	savefile_key = "bark_speech_pitch"
-	minimum = VOICE_DEFAULT_MINPITCH
-	maximum = VOICE_DEFAULT_MAXPITCH
-	step = 0.01
-
-/datum/preference/numeric/bark_speech_pitch/apply_to_human(mob/living/carbon/human/target, value)
-	target.voice.pitch = value
-
-/datum/preference/numeric/bark_speech_pitch/create_default_value()
-	return 1
-
-/*
-	----- Bark Pitch Varience -----
-*/
-
-/datum/preference/numeric/bark_pitch_range
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	savefile_identifier = PREFERENCE_CHARACTER
-	savefile_key = "bark_pitch_range"
-	minimum = VOICE_DEFAULT_MINVARY
-	maximum = VOICE_DEFAULT_MAXVARY
-	step = 0.01
-
-/datum/preference/numeric/bark_pitch_range/apply_to_human(mob/living/carbon/human/target, value)
-	target.voice.pitch_range = value
-
-/datum/preference/numeric/bark_pitch_range/create_default_value()
-	return 0.2
-
-/*
-	--------- Game Preferences ---------
-*/
-
-/// Should this player only hear a single bark
-/datum/preference/toggle/barks_short
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "voice_sounds_short"
-	savefile_identifier = PREFERENCE_PLAYER
-	default_value = FALSE
-
-/// Should this player hear barks without pitch modification
-/datum/preference/toggle/barks_limited_pitch
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "voice_sounds_limited_pitch"
-	savefile_identifier = PREFERENCE_PLAYER
-	default_value = FALSE
-
-/// Should this player only hear goonstation speak barks
-/datum/preference/toggle/voice_sounds_only_simple
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "voice_sounds_only_goon"
-	savefile_identifier = PREFERENCE_PLAYER
-	default_value = FALSE
+/datum/preference/numeric/tts_blip_number/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
+	if(SStts.tts_enabled)
+		target.blip_number = value

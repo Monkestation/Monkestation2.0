@@ -139,3 +139,7 @@
 #define RADIO_FREQENCY_LOCKED 1
 /// Radio frequency is locked and unchangeable, but can be unlocked by an emag
 #define RADIO_FREQENCY_EMAGGABLE_LOCK 2
+
+/// Past this amount of compression, the resulting gibberish will actually
+/// replace characters, making it even harder to understand.
+#define COMPRESSION_REPLACE_CHARACTER_THRESHOLD 30

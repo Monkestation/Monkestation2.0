@@ -358,6 +358,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				CHANNEL_INSTRUMENTS,
 				CHANNEL_INSTRUMENTS_ROBOT,
 			)
+			if(channel == CHANNEL_TTS || channel == CHANNEL_MASTER_VOLUME)
+				SEND_SIGNAL(parent.mob, COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED)
+			if(channel == CHANNEL_TTS_RADIO || channel == CHANNEL_MASTER_VOLUME)
+				SEND_SIGNAL(parent.mob, COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED)
 			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
 				set_channel_volume(channel, volume)
 

@@ -54,6 +54,7 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	audio_cooldown = 5 SECONDS
 	vary = TRUE
+	affected_by_pitch = FALSE
 
 /datum/emote/living/carbon/clap/get_sound(mob/living/user)
 	if(ishuman(user))
@@ -191,6 +192,7 @@
 	message_param = "snaps their fingers at %t."
 	emote_type = EMOTE_AUDIBLE
 	hands_use_check = TRUE
+	affected_by_pitch = FALSE
 	muzzle_ignore = TRUE
 
 /datum/emote/living/carbon/snap/super
