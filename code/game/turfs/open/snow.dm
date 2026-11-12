@@ -19,6 +19,11 @@
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/sheet/mineral/snow, 2)
 
+/turf/open/misc/snow/Destroy(force)
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
+	return ..()
+
 /turf/open/misc/snow/broken_states()
 	return list("snow_dug")
 

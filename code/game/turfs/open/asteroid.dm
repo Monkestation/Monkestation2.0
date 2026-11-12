@@ -270,6 +270,11 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	for(var/snow_type in typesof(/datum/weather/snow_storm))
 		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
 
+/turf/open/misc/asteroid/snow/Destroy(force)
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
+	return ..()
+
 /turf/open/misc/asteroid/snow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stack/sheet/mineral/snow))
 		return ..()
